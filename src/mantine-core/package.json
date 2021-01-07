@@ -4,6 +4,9 @@
   "main": "dist/lib.js",
   "types": "dist/index.d.ts",
   "author": "Vitaly Rtishchev <vrtishchev@aligntech.com>",
+  "scripts": {
+    "prepublish": "cd ../.. && npm run build @mantine/core"
+  },
   "peerDependencies": {
     "react": "^16.14.0"
   },
