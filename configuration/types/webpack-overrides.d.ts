@@ -1,0 +1,10 @@
+declare module "*.less";
+declare module "*.gql";
+declare module "*.md";
+declare module "*.graphql";
+declare module "*.svg";
+declare module "*.png";
+declare module "*.jpg";
+declare module "*.gif";
+declare module "*.woff";
+declare module "*.woff2";
