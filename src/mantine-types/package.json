@@ -1,0 +1,15 @@
+{
+  "name": "@mantine/types",
+  "version": "0.1.0",
+  "main": "dist/lib.js",
+  "types": "dist/index.d.ts",
+  "author": "Vitaly Rtishchev <vrtishchev@aligntech.com>",
+  "scripts": {
+    "prepublish": "cd ../.. && npm run build @mantine/types"
+  },
+  "peerDependencies": {
+    "react": "^16.14.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
