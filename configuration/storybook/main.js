@@ -2,12 +2,9 @@
 
 const path = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-const mode = process.env.NODE_ENV;
 
 module.exports = {
-  stories: JSON.parse(process.env.STORIES),
+  stories: [path.join(__dirname, '../../src/**/*.story.@(ts|tsx)')],
   addons: ['@storybook/addon-essentials'],
   webpackFinal: async (config) => {
     config.resolve = {
@@ -24,22 +21,12 @@ module.exports = {
     config.module.rules.push({
       test: /\.(less)$/,
       use: [
-        mode === 'production'
-          ? {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                publicPath: '/',
-              },
-            }
-          : 'style-loader',
+        'style-loader',
         {
           loader: 'css-loader',
           options: {
             modules: {
-              localIdentName:
-                mode === 'production'
-                  ? '[hash:base64:10]'
-                  : '[path][name]__[local]--[hash:base64:5]',
+              localIdentName: '[path][name]__[local]',
             },
           },
         },
