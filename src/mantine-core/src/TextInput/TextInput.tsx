@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { useId } from 'xooks';
 import { DefaultProps } from '@mantine/types';
+import Input from '../Input/Input';
 import classes from './TextInput.styles.less';
 
 interface TextInputProps extends DefaultProps, Omit<React.HTMLProps<HTMLInputElement>, 'onChange'> {
@@ -31,12 +32,11 @@ export default function TextInput({
           {label}
         </label>
       )}
-      <input
-        className={classes.input}
+      <Input
         id={uuid}
         type={type}
         value={value}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(event) => onChange(event.currentTarget.value)}
         {...others}
       />
     </div>
