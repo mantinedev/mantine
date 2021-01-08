@@ -8,7 +8,7 @@ import classes from './Button.styles.less';
 
 interface ButtonProps extends DefaultProps, React.HTMLProps<HTMLButtonElement> {
   type?: 'submit' | 'button' | 'reset';
-  theme?: OpenColorTheme;
+  theme?: OpenColorTheme | 'white';
   disabled?: boolean;
   children: string;
 }

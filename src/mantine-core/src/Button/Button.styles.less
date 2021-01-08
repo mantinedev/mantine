@@ -1,3 +1,210 @@
 .button {
-  background-color: red;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  outline: 0;
+  height: 32px;
+  padding: 0 15px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  font-size: 12px;
+  color: @oc-white;
+  cursor: pointer;
+  user-select: none;
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    background-color: @oc-gray-4;
+    color: @oc-gray-6;
+    text-shadow: none;
+    pointer-events: none;
+  }
+}
+
+.white {
+  background-color: @oc-white;
+  color: @oc-gray-7;
+  border-color: @oc-gray-4;
+
+  &:hover {
+    background-color: @oc-gray-0;
+  }
+
+  &:focus {
+    border-color: @oc-blue-2;
+    box-shadow: 0 0 0 2px @oc-blue-2;
+  }
+}
+
+.gray {
+  background-color: @oc-gray-5;
+  text-shadow: 1px 1px 0 @oc-gray-7;
+
+  &:hover {
+    background-color: @oc-gray-6;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-gray-3;
+  }
+}
+
+.red {
+  background-color: @oc-red-6;
+  text-shadow: 1px 1px 0 @oc-red-9;
+
+  &:hover {
+    background-color: @oc-red-7;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-red-2;
+  }
+}
+
+.pink {
+  background-color: @oc-pink-6;
+  text-shadow: 1px 1px 0 @oc-pink-9;
+
+  &:hover {
+    background-color: @oc-pink-7;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-pink-2;
+  }
+}
+
+.grape {
+  background-color: @oc-grape-6;
+  text-shadow: 1px 1px 0 @oc-grape-9;
+
+  &:hover {
+    background-color: @oc-grape-7;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-grape-2;
+  }
+}
+
+.violet {
+  background-color: @oc-violet-5;
+  text-shadow: 1px 1px 0 @oc-violet-9;
+
+  &:hover {
+    background-color: @oc-violet-6;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-violet-2;
+  }
+}
+
+.indigo {
+  background-color: @oc-indigo-5;
+  text-shadow: 1px 1px 0 @oc-indigo-9;
+
+  &:hover {
+    background-color: @oc-indigo-6;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-indigo-2;
+  }
+}
+
+.cyan {
+  background-color: @oc-cyan-5;
+  text-shadow: 1px 1px 0 @oc-cyan-9;
+
+  &:hover {
+    background-color: @oc-cyan-6;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-cyan-2;
+  }
+}
+
+.blue {
+  background-color: @oc-blue-5;
+  text-shadow: 1px 1px 0 @oc-blue-9;
+
+  &:hover {
+    background-color: @oc-blue-6;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-blue-2;
+  }
+}
+
+.teal {
+  background-color: @oc-teal-6;
+  text-shadow: 1px 1px 0 @oc-teal-9;
+
+  &:hover {
+    background-color: @oc-teal-7;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-teal-2;
+  }
+}
+
+.green {
+  background-color: @oc-green-7;
+  text-shadow: 1px 1px 0 @oc-green-9;
+
+  &:hover {
+    background-color: @oc-green-8;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-green-2;
+  }
+}
+
+.lime {
+  background-color: @oc-lime-7;
+  text-shadow: 1px 1px 0 @oc-lime-9;
+
+  &:hover {
+    background-color: @oc-lime-8;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-lime-2;
+  }
+}
+
+.yellow {
+  background-color: @oc-yellow-7;
+  text-shadow: 1px 1px 0 @oc-yellow-9;
+
+  &:hover {
+    background-color: @oc-yellow-8;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-yellow-3;
+  }
+}
+
+.orange {
+  background-color: @oc-orange-6;
+  text-shadow: 1px 1px 0 @oc-orange-9;
+
+  &:hover {
+    background-color: @oc-orange-7;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px @oc-orange-2;
+  }
 }

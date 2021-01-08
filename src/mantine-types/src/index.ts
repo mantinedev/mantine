@@ -1,2 +1,3 @@
 export { DefaultProps } from './DefaultProps';
-export { OpenColorTheme } from './OpenColorTheme';
+export { OPEN_COLOR_THEMES } from './OpenColorTheme';
+export type { OpenColorTheme } from './OpenColorTheme';
