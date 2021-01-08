@@ -1,9 +1,8 @@
 import React from 'react';
-import cx from 'clsx';
 import { useId } from 'xooks';
 import { DefaultProps } from '@mantine/types';
 import Input from '../Input/Input';
-import classes from './TextInput.styles.less';
+import InputWrapper from '../InputWrapper/InputWrapper';
 
 interface TextInputProps extends DefaultProps, Omit<React.HTMLProps<HTMLInputElement>, 'onChange'> {
   type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url';
@@ -26,12 +25,7 @@ export default function TextInput({
   const uuid = useId(id);
 
   return (
-    <div className={cx(classes.textInput, className)} style={style}>
-      {label && (
-        <label className={classes.label} htmlFor={uuid}>
-          {label}
-        </label>
-      )}
+    <InputWrapper id={uuid} label={label} className={className} style={style}>
       <Input
         id={uuid}
         type={type}
@@ -39,6 +33,6 @@ export default function TextInput({
         onChange={(event) => onChange(event.currentTarget.value)}
         {...others}
       />
-    </div>
+    </InputWrapper>
   );
 }
