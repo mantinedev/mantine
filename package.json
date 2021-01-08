@@ -54,6 +54,7 @@
   "dependencies": {
     "clsx": "^1.1.1",
     "open-color": "^1.8.0",
-    "react": "^16.14.0"
+    "react": "^16.14.0",
+    "xooks": "^2.2.0"
   }
 }
