@@ -26,6 +26,7 @@ export default function Button({
       className={cx(classes.button, classes[theme], className)}
       type={type}
       disabled={disabled}
+      data-composable
       {...others}
     >
       {children}
