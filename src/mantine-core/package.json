@@ -1,8 +1,8 @@
 {
   "name": "@mantine/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/lib.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/mantine-core/src/index.d.ts",
   "author": "Vitaly Rtishchev <vrtishchev@aligntech.com>",
   "scripts": {
     "prepublish": "cd ../.. && npm run build @mantine/core"
