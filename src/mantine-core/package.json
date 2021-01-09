@@ -2,12 +2,14 @@
   "name": "@mantine/core",
   "version": "0.1.3",
   "main": "dist/lib.js",
+  "licence": "MIT",
   "types": "dist/mantine-core/src/index.d.ts",
   "author": "Vitaly Rtishchev <vrtishchev@aligntech.com>",
   "scripts": {
     "prepublish": "cd ../.. && npm run build @mantine/core"
   },
   "peerDependencies": {
+    "@modulz/radix-icons": "^3.3.0",
     "react": "^16.14.0"
   },
   "dependencies": {},

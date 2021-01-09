@@ -52,6 +52,7 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
+    "@modulz/radix-icons": "^3.3.0",
     "clsx": "^1.1.1",
     "open-color": "^1.8.0",
     "react": "^16.14.0",
