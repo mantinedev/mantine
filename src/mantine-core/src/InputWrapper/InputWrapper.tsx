@@ -5,6 +5,7 @@ import classes from './InputWrapper.styles.less';
 
 interface InputWrapperProps extends DefaultProps {
   label?: string;
+  error?: string;
   id: string;
   children: React.ReactChild;
 }
@@ -14,6 +15,7 @@ export default function InputWrapper({
   label,
   children,
   id,
+  error,
   ...others
 }: InputWrapperProps) {
   return (
@@ -24,6 +26,7 @@ export default function InputWrapper({
         </label>
       )}
       {children}
+      {error && <div className={classes.error}>{error}</div>}
     </div>
   );
 }

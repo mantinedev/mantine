@@ -7,6 +7,7 @@ import InputWrapper from '../InputWrapper/InputWrapper';
 interface TextInputProps extends DefaultProps, Omit<React.HTMLProps<HTMLInputElement>, 'onChange'> {
   type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url';
   label?: string;
+  error?: string;
   value: string;
   onChange(value: string): void;
   id?: string;
@@ -16,6 +17,7 @@ export default function TextInput({
   className,
   id,
   label,
+  error,
   type = 'text',
   value,
   style,
@@ -25,12 +27,13 @@ export default function TextInput({
   const uuid = useId(id);
 
   return (
-    <InputWrapper id={uuid} label={label} className={className} style={style}>
+    <InputWrapper id={uuid} label={label} error={error} className={className} style={style}>
       <Input
         id={uuid}
         type={type}
         value={value}
         onChange={(event) => onChange(event.currentTarget.value)}
+        invalid={!!error}
         {...others}
       />
     </InputWrapper>
