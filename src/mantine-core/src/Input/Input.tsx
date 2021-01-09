@@ -12,3 +12,5 @@ export default function Input({ className, invalid = false, ...others }: InputPr
     <input className={cx(classes.input, { [classes.invalid]: invalid }, className)} {...others} />
   );
 }
+
+Input.displayName = '@mantine/core/Input';

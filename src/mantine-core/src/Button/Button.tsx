@@ -33,3 +33,5 @@ export default function Button({
     </button>
   );
 }
+
+Button.displayName = '@mantine/core/Button';

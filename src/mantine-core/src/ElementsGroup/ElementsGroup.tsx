@@ -20,3 +20,5 @@ export default function ElementsGroup({
     </div>
   );
 }
+
+ElementsGroup.displayName = '@mantine/core/ElementsGroup';

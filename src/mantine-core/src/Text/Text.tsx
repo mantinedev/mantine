@@ -35,3 +35,5 @@ export default function Text({
     children
   );
 }
+
+Text.displayName = '@mantine/core/Text';

@@ -48,3 +48,5 @@ export default function TextInput({
     </InputWrapper>
   );
 }
+
+TextInput.displayName = '@mantine/core/TextInput';

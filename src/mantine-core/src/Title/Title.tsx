@@ -16,3 +16,5 @@ export default function Title({ className, order = 1, children }: TitleProps) {
     children
   );
 }
+
+Title.displayName = '@mantine/core/Title';

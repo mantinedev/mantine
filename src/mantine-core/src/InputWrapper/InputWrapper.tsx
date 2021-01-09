@@ -40,3 +40,5 @@ export default function InputWrapper({
     </div>
   );
 }
+
+InputWrapper.displayName = '@mantine/core/InputWrapper';

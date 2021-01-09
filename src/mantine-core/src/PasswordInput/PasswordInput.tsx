@@ -58,3 +58,5 @@ export default function PasswordInput({
     </InputWrapper>
   );
 }
+
+PasswordInput.displayName = '@mantine/core/PasswordInput';
