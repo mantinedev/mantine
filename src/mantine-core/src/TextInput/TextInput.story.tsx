@@ -16,6 +16,7 @@ function WrappedTextInput(
 storiesOf('@mantine/core/TextInput', module).add('General usage', () => (
   <div>
     <WrappedTextInput label="Email" required placeholder="Email" type="email" />
+    <WrappedTextInput label="Password" required placeholder="password" type="password" />
     <WrappedTextInput
       label="With error"
       placeholder="With error"
