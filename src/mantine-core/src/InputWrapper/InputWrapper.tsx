@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps } from '@mantine/types/src';
+import Text from '../Text/Text';
 import classes from './InputWrapper.styles.less';
 
 export interface InputWrapperBaseProps {
@@ -31,7 +32,11 @@ export default function InputWrapper({
         </label>
       )}
       {children}
-      {error && <div className={classes.error}>{error}</div>}
+      {error && (
+        <Text theme="error" size="sm" className={classes.error}>
+          {error}
+        </Text>
+      )}
     </div>
   );
 }
