@@ -3,9 +3,13 @@ import cx from 'clsx';
 import { DefaultProps } from '@mantine/types/src';
 import classes from './InputWrapper.styles.less';
 
-interface InputWrapperProps extends DefaultProps {
+export interface InputWrapperBaseProps {
   label?: string;
   error?: string;
+  required?: boolean;
+}
+
+interface InputWrapperProps extends DefaultProps, InputWrapperBaseProps {
   id: string;
   children: React.ReactChild;
 }
@@ -14,6 +18,7 @@ export default function InputWrapper({
   className,
   label,
   children,
+  required,
   id,
   error,
   ...others
@@ -22,7 +27,7 @@ export default function InputWrapper({
     <div className={cx(classes.inputWrapper, className)} {...others}>
       {label && (
         <label className={classes.label} htmlFor={id}>
-          {label}
+          {label} {required && <span className={classes.required}>*</span>}
         </label>
       )}
       {children}

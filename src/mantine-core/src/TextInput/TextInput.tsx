@@ -2,12 +2,13 @@ import React from 'react';
 import { useId } from 'xooks';
 import { DefaultProps } from '@mantine/types';
 import Input from '../Input/Input';
-import InputWrapper from '../InputWrapper/InputWrapper';
+import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
 
-interface TextInputProps extends DefaultProps, Omit<React.HTMLProps<HTMLInputElement>, 'onChange'> {
+interface TextInputProps
+  extends DefaultProps,
+    InputWrapperBaseProps,
+    Omit<React.HTMLProps<HTMLInputElement>, 'onChange'> {
   type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url';
-  label?: string;
-  error?: string;
   value: string;
   onChange(value: string): void;
   id?: string;
@@ -18,6 +19,7 @@ export default function TextInput({
   id,
   label,
   error,
+  required,
   type = 'text',
   value,
   style,
@@ -27,7 +29,14 @@ export default function TextInput({
   const uuid = useId(id);
 
   return (
-    <InputWrapper id={uuid} label={label} error={error} className={className} style={style}>
+    <InputWrapper
+      required={required}
+      id={uuid}
+      label={label}
+      error={error}
+      className={className}
+      style={style}
+    >
       <Input
         id={uuid}
         type={type}
