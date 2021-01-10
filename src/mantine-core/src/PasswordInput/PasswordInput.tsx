@@ -3,6 +3,7 @@ import { useId } from 'xooks';
 import { EyeOpenIcon, EyeClosedIcon } from '@modulz/radix-icons';
 import { DefaultProps } from '@mantine/types';
 import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
+import ActionIcon from '../ActionIcon/ActionIcon';
 import Input from '../Input/Input';
 import classes from './PasswordInput.styles.less';
 
@@ -47,13 +48,9 @@ export default function PasswordInput({
           invalid={!!error}
           onChange={(event) => onChange(event.currentTarget.value)}
         />
-        <button
-          type="button"
-          className={classes.control}
-          onClick={() => setReveal((current) => !current)}
-        >
+        <ActionIcon className={classes.control} onClick={() => setReveal((current) => !current)}>
           {reveal ? <EyeClosedIcon /> : <EyeOpenIcon />}
-        </button>
+        </ActionIcon>
       </div>
     </InputWrapper>
   );
