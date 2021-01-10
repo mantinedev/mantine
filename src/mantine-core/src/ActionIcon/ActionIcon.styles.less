@@ -1,0 +1,67 @@
+.actionIcon {
+  border: 0;
+  box-sizing: border-box;
+  background-color: transparent;
+  height: 27px;
+  width: 27px;
+  border-radius: 4px;
+  padding: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 100ms ease;
+  color: @oc-gray-6;
+}
+
+.muted {
+  &:hover {
+    color: @oc-gray-7;
+  }
+
+  &:focus {
+    outline: 0;
+    color: @oc-gray-7;
+    box-shadow: 0 0 0 1px @oc-blue-2;
+  }
+}
+
+.danger {
+  &:hover {
+    background-color: @oc-red-0;
+    color: @oc-red-7;
+  }
+
+  &:focus {
+    outline: 0;
+    color: @oc-red-7;
+    box-shadow: 0 0 0 1px @oc-red-2;
+  }
+}
+
+.warning {
+  &:hover {
+    background-color: @oc-yellow-0;
+    color: @oc-yellow-7;
+  }
+
+  &:focus {
+    outline: 0;
+    color: @oc-yellow-7;
+    box-shadow: 0 0 0 1px @oc-yellow-4;
+  }
+}
+
+.success {
+  &:hover {
+    background-color: @oc-teal-0;
+    color: @oc-teal-7;
+  }
+
+  &:focus {
+    outline: 0;
+    color: @oc-teal-7;
+    box-shadow: 0 0 0 1px @oc-teal-2;
+  }
+}
