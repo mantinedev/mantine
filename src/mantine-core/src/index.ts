@@ -1,6 +1,7 @@
 export { default as ActionIcon } from './ActionIcon/ActionIcon';
 export { default as Badge } from './Badge/Badge';
 export { default as Button } from './Button/Button';
+export { default as ColorSwatch } from './ColorSwatch/ColorSwatch';
 export { default as DropdownBody } from './DropdownBody/DropdownBody';
 export { default as ElementsGroup } from './ElementsGroup/ElementsGroup';
 export { default as Input } from './Input/Input';
