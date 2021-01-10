@@ -1,13 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, Size } from '@mantine/types';
+import { DefaultProps, Size, Theme } from '@mantine/types';
 import classes from './Text.styles.less';
 
 interface TextProps extends DefaultProps {
   component?: string;
   children?: React.ReactNode;
   size?: Size;
-  theme?: 'error' | 'warning' | 'success' | 'muted';
+  theme?: Theme;
   bold?: boolean;
 }
 
