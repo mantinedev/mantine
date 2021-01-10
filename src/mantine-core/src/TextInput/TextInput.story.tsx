@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { TwitterLogoIcon } from '@modulz/radix-icons';
 import TextInput from './TextInput';
 
 function WrappedTextInput(
@@ -16,6 +17,7 @@ function WrappedTextInput(
 storiesOf('@mantine/core/TextInput', module).add('General usage', () => (
   <div>
     <WrappedTextInput label="Email" required placeholder="Email" type="email" />
+    <WrappedTextInput label="Your twitter" placeholder="Twitter" icon={<TwitterLogoIcon />} />
     <WrappedTextInput label="Password" required placeholder="password" type="password" />
     <WrappedTextInput
       label="With error"

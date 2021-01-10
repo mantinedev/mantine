@@ -8,6 +8,7 @@ interface TextInputProps
   extends DefaultProps,
     InputWrapperBaseProps,
     Omit<React.HTMLProps<HTMLInputElement>, 'onChange'> {
+  icon?: React.ReactNode;
   type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url';
   value: string;
   onChange(value: string): void;
@@ -24,6 +25,7 @@ export default function TextInput({
   value,
   style,
   onChange,
+  icon,
   ...others
 }: TextInputProps) {
   const uuid = useId(id);
@@ -43,6 +45,7 @@ export default function TextInput({
         value={value}
         onChange={(event) => onChange(event.currentTarget.value)}
         invalid={!!error}
+        icon={icon}
         {...others}
       />
     </InputWrapper>
