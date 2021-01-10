@@ -1,0 +1,18 @@
+{
+  "name": "@mantine/tag-picker",
+  "version": "0.1.0",
+  "main": "dist/lib.js",
+  "licence": "MIT",
+  "types": "dist/mantine-tag-picker/src/index.d.ts",
+  "author": "Vitaly Rtishchev <vrtishchev@aligntech.com>",
+  "scripts": {
+    "prepublish": "cd ../.. && npm run build @mantine/tag-picker"
+  },
+  "peerDependencies": {
+    "@mantine/core": "0.1.4",
+    "@modulz/radix-icons": "^3.3.0",
+    "react": "^16.14.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
