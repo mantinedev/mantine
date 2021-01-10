@@ -5,6 +5,7 @@ export { default as ElementsGroup } from './ElementsGroup/ElementsGroup';
 export { default as Input } from './Input/Input';
 export { default as InputWrapper } from './InputWrapper/InputWrapper';
 export { default as PasswordInput } from './PasswordInput/PasswordInput';
+export { default as Table } from './Table/Table';
 export { default as Text } from './Text/Text';
 export { default as TextInput } from './TextInput/TextInput';
 export { default as Title } from './Title/Title';
