@@ -14,6 +14,7 @@ interface PasswordInputProps
   value: string;
   onChange(value: string): void;
   id?: string;
+  icon?: React.ReactNode;
 }
 
 export default function PasswordInput({
@@ -25,6 +26,7 @@ export default function PasswordInput({
   required,
   style,
   onChange,
+  icon,
   ...others
 }: PasswordInputProps) {
   const [reveal, setReveal] = useState(false);
@@ -42,11 +44,12 @@ export default function PasswordInput({
       <div className={classes.wrapper}>
         <Input
           {...others}
-          className={classes.input}
+          inputClassName={classes.input}
           type={reveal ? 'text' : 'password'}
           value={value}
           invalid={!!error}
           onChange={(event) => onChange(event.currentTarget.value)}
+          icon={icon}
         />
         <ActionIcon className={classes.control} onClick={() => setReveal((current) => !current)}>
           {reveal ? <EyeClosedIcon /> : <EyeOpenIcon />}

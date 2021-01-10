@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { LockClosedIcon } from '@modulz/radix-icons';
 import PasswordInput from './PasswordInput';
 
 function WrappedPasswordInput(
@@ -16,6 +17,12 @@ function WrappedPasswordInput(
 storiesOf('@mantine/core/PasswordInput', module).add('General usage', () => (
   <div>
     <WrappedPasswordInput label="Password" required placeholder="password" type="password" />
+    <WrappedPasswordInput
+      label="Password"
+      icon={<LockClosedIcon />}
+      placeholder="password"
+      type="password"
+    />
     <WrappedPasswordInput
       label="With error"
       placeholder="With error"
