@@ -5,11 +5,18 @@ import classes from './Input.styles.less';
 
 interface InputProps extends DefaultProps, React.HTMLProps<HTMLInputElement> {
   invalid?: boolean;
+  icon?: React.ReactNode;
 }
 
-export default function Input({ className, invalid = false, ...others }: InputProps) {
+export default function Input({ className, invalid = false, icon, style, ...others }: InputProps) {
   return (
-    <input className={cx(classes.input, { [classes.invalid]: invalid }, className)} {...others} />
+    <div className={cx(classes.inputWrapper, className)} style={style}>
+      {icon && <div className={classes.icon}>{icon}</div>}
+      <input
+        className={cx(classes.input, { [classes.invalid]: invalid, [classes.withIcon]: icon })}
+        {...others}
+      />
+    </div>
   );
 }
 

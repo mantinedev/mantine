@@ -1,3 +1,7 @@
+.inputWrapper {
+  position: relative;
+}
+
 .input {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -25,4 +29,19 @@
 
 .invalid {
   border-color: @oc-red-7;
+}
+
+.withIcon {
+  padding-left: 35px;
+}
+
+.icon {
+  pointer-events: none;
+  position: absolute;
+  color: @oc-gray-5;
+  height: 36px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
