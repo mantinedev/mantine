@@ -28,6 +28,8 @@ interface TagPickerState {
 }
 
 export default class TagPickerContainer extends Component<TagPickerProps, TagPickerState> {
+  contolRef = React.createRef<HTMLButtonElement>();
+
   state = {
     dropdownOpened: true,
     hovered: -1,
@@ -36,11 +38,14 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
   };
 
   closeDropdown = () =>
-    this.setState({
-      dropdownOpened: false,
-      hovered: -1,
-      query: '',
-    });
+    this.setState(
+      {
+        dropdownOpened: false,
+        hovered: -1,
+        query: '',
+      },
+      () => this.contolRef.current.focus()
+    );
 
   handleSearchChange = (value: string) => this.setState({ query: value, hovered: 0 });
 
@@ -76,6 +81,7 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
           query={this.state.query}
           hovered={this.state.hovered}
           dropdownOpened={this.state.dropdownOpened}
+          controlRef={this.contolRef}
         />
       </div>
     );
