@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { Input } from '@mantine/core';
+import { MagnifyingGlassIcon } from '@modulz/radix-icons';
+import { Input, Text } from '@mantine/core';
 import TagItem from '../TagItem/TagItem';
 import classes from './TagsList.styles.less';
 import { TagPickerColor, TagPickerTag } from '../types';
@@ -61,9 +62,14 @@ export default function TagsList({
         placeholder={searchPlaceholder}
         value={searchQuery}
         onChange={(event) => onSearchChange(event.currentTarget.value)}
+        icon={<MagnifyingGlassIcon />}
       />
 
-      {description && <div className={classes.description}>{description}</div>}
+      {description && (
+        <Text theme="muted" size="sm" className={classes.description}>
+          {description}
+        </Text>
+      )}
 
       <div className={classes.tags}>
         {tags}

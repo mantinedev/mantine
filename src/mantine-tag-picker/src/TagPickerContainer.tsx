@@ -28,6 +28,7 @@ interface TagPickerState {
   hovered: number;
   query: string;
   createColor: string;
+  canCreate: boolean;
 }
 
 export default class TagPickerContainer extends Component<TagPickerProps, TagPickerState> {
@@ -38,6 +39,7 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
     hovered: -1,
     query: '',
     createColor: getRandomColor(this.props.colors),
+    canCreate: false,
   };
 
   openDropdown = () => this.setState({ dropdownOpened: true });
@@ -52,7 +54,14 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
       () => this.contolRef.current.focus()
     );
 
-  handleSearchChange = (value: string) => this.setState({ query: value, hovered: 0 });
+  handleSearchChange = (value: string) =>
+    this.setState({
+      query: value,
+      hovered: 0,
+      canCreate: this.props.data.every(
+        (tag) => tag.name.toLowerCase().trim() !== value.trim().toLowerCase()
+      ),
+    });
 
   handleCreate = () => {
     this.props.onTagCreate({
@@ -87,6 +96,11 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
   handleHoveredChange = (index: number) => this.setState({ hovered: index });
 
   render() {
+    const { query } = this.state;
+    const filteredData = this.props.data.filter((tag) =>
+      tag.name.toLowerCase().trim().includes(query.toLowerCase().trim())
+    );
+
     return (
       <div onKeyDownCapture={this.handleKeyboardEvents}>
         <TagPicker
@@ -99,8 +113,8 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
           description={this.props.description}
           searchPlaceholder={this.props.searchPlaceholder}
           onSearchChange={this.handleSearchChange}
-          data={this.props.data}
-          canCreate
+          data={filteredData}
+          canCreate={this.state.canCreate}
           value={this.props.value}
           createLabel={this.props.createLabel}
           deleteLabel={this.props.deleteLabel}
