@@ -30,6 +30,7 @@ interface TagPickerState {
   query: string;
   createColor: string;
   canCreate: boolean;
+  filteredData: TagPickerTag[];
 }
 
 export default class TagPickerContainer extends Component<TagPickerProps, TagPickerState> {
@@ -41,6 +42,7 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
     query: '',
     createColor: getRandomColor(this.props.colors),
     canCreate: false,
+    filteredData: this.props.data,
   };
 
   openDropdown = () => this.setState({ dropdownOpened: true });
@@ -52,6 +54,7 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
         hovered: -1,
         query: '',
         canCreate: false,
+        filteredData: this.props.data,
       },
       () => this.contolRef.current.focus()
     );
@@ -60,6 +63,9 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
     this.setState({
       query: value,
       hovered: 0,
+      filteredData: this.props.data.filter((tag) =>
+        tag.name.toLowerCase().trim().includes(value.toLowerCase().trim())
+      ),
       canCreate:
         value.trim().length > 0 &&
         this.props.data.every(
@@ -85,15 +91,37 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
 
   handleKeyboardEvents = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (this.state.dropdownOpened) {
-      const { code } = event;
-
-      if (code === 'Tab') {
-        event.preventDefault();
-      }
+      const { code } = event.nativeEvent;
+      const { canCreate, hovered, filteredData } = this.state;
 
       if (code === 'Escape') {
         event.preventDefault();
         this.closeDropdown();
+      }
+
+      if (code === 'ArrowUp') {
+        event.preventDefault();
+        const targetIndex = canCreate ? filteredData.length : filteredData.length - 1;
+        this.setState({ hovered: hovered <= 0 ? targetIndex : hovered - 1 });
+      }
+
+      if (code === 'ArrowDown') {
+        event.preventDefault();
+        const targetIndex = canCreate ? hovered : hovered + 1;
+        this.setState({ hovered: targetIndex === filteredData.length ? 0 : hovered + 1 });
+      }
+
+      if (code === 'Enter' && hovered > -1) {
+        event.preventDefault();
+
+        if (filteredData[hovered]) {
+          this.handleChange(filteredData[hovered]);
+          this.closeDropdown();
+        }
+
+        if (canCreate && hovered === filteredData.length) {
+          this.handleCreate();
+        }
       }
     }
   };
@@ -106,11 +134,6 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
   handleHoveredChange = (index: number) => this.setState({ hovered: index });
 
   render() {
-    const { query } = this.state;
-    const filteredData = this.props.data.filter((tag) =>
-      tag.name.toLowerCase().trim().includes(query.toLowerCase().trim())
-    );
-
     return (
       <div onKeyDownCapture={this.handleKeyboardEvents}>
         <TagPicker
@@ -124,7 +147,7 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
           description={this.props.description}
           searchPlaceholder={this.props.searchPlaceholder}
           onSearchChange={this.handleSearchChange}
-          data={filteredData}
+          data={this.state.filteredData}
           canCreate={this.state.canCreate}
           value={this.props.value}
           createLabel={this.props.createLabel}
