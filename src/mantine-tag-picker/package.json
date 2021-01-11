@@ -9,7 +9,7 @@
     "prepublish": "cd ../.. && npm run build @mantine/tag-picker"
   },
   "peerDependencies": {
-    "@mantine/core": "0.1.4",
+    "@mantine/core": "0.1.5",
     "@modulz/radix-icons": "^3.3.0",
     "react": "^16.14.0"
   },
