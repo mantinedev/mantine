@@ -48,13 +48,15 @@ export default function TagItem({
         id={data.id}
       />
 
-      <button type="button" className={classes.control} onClick={() => onSelect(data)}>
-        <TagBadge data={data} />
-      </button>
+      <div className={classes.body}>
+        <button type="button" className={classes.control} onClick={() => onSelect(data)}>
+          <TagBadge data={data} />
+        </button>
 
-      <ActionIcon onClick={() => setEditDropdownOpened(true)}>
-        <DotsHorizontalIcon />
-      </ActionIcon>
+        <ActionIcon onClick={() => setEditDropdownOpened(true)}>
+          <DotsHorizontalIcon />
+        </ActionIcon>
+      </div>
     </div>
   );
 }

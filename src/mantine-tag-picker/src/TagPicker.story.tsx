@@ -38,7 +38,7 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
       data={data}
       searchPlaceholder="Search categories"
       colors={OPEN_COLOR_THEMES.map((theme) => ({ name: theme, color: oc[theme][0] }))}
-      description="Select category or create new"
+      description="Select category or create new one"
       createLabel="+ Create new category"
       deleteLabel="Delete category"
       noValueLabel="Not selected"

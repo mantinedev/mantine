@@ -2,8 +2,9 @@ import oc from 'open-color';
 import React, { useRef } from 'react';
 import { useClickOutside } from 'xooks';
 import { DropdownBody } from '@mantine/core';
-import TagsList, { TagsListProps } from './TagsList/TagsList';
-import TagBadge from './TagBadge/TagBadge';
+import TagsList, { TagsListProps } from '../TagsList/TagsList';
+import TagBadge from '../TagBadge/TagBadge';
+import classes from './TagPicker.styles.less';
 
 interface TagPickerProps extends TagsListProps {
   dropdownOpened: boolean;
@@ -27,13 +28,13 @@ export default function TagPicker({
   useClickOutside(dropdownRef, closeDropdown);
 
   return (
-    <div>
-      <button type="button" ref={controlRef} onClick={openDropdown}>
-        <TagBadge data={value || { id: 'no-value', color: oc.gray[6], name: noValueLabel }} />
+    <div className={classes.tagPicker}>
+      <button className={classes.control} type="button" ref={controlRef} onClick={openDropdown}>
+        <TagBadge data={value || { id: 'no-value', color: oc.gray[2], name: noValueLabel }} />
       </button>
 
       {dropdownOpened && (
-        <DropdownBody elementRef={dropdownRef}>
+        <DropdownBody className={classes.dropdown} elementRef={dropdownRef} noPadding>
           <TagsList value={value} {...others} />
         </DropdownBody>
       )}

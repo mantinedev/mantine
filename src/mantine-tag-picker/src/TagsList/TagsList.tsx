@@ -2,9 +2,10 @@ import React from 'react';
 import cx from 'clsx';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { Input, Text } from '@mantine/core';
-import TagItem from '../TagItem/TagItem';
-import classes from './TagsList.styles.less';
 import { TagPickerColor, TagPickerTag } from '../types';
+import TagItem from '../TagItem/TagItem';
+import TagBadge from '../TagBadge/TagBadge';
+import classes from './TagsList.styles.less';
 
 export interface TagsListProps {
   description?: string;
@@ -17,6 +18,7 @@ export interface TagsListProps {
   createLabel?: string;
   deleteLabel?: string;
   colors: TagPickerColor[];
+  createColor: string;
   onSearchChange(query: string): void;
   onCreate(): void;
   onTagUpdate(id: string, values: Omit<TagPickerTag, 'id'>): void;
@@ -26,7 +28,6 @@ export interface TagsListProps {
 }
 
 export default function TagsList({
-  onSearchChange,
   searchQuery,
   searchPlaceholder,
   description,
@@ -36,6 +37,8 @@ export default function TagsList({
   createLabel,
   deleteLabel,
   colors,
+  createColor,
+  onSearchChange,
   onCreate,
   onTagDelete,
   onTagUpdate,
@@ -59,10 +62,12 @@ export default function TagsList({
   return (
     <div className={classes.tagsList}>
       <Input
+        className={classes.searchInput}
         placeholder={searchPlaceholder}
         value={searchQuery}
         onChange={(event) => onSearchChange(event.currentTarget.value)}
         icon={<MagnifyingGlassIcon />}
+        autoFocus
       />
 
       {description && (
@@ -81,10 +86,10 @@ export default function TagsList({
             })}
             type="button"
             onClick={onCreate}
-            tabIndex={-1}
+            onMouseEnter={() => onHoveredChange(data.length)}
           >
-            <span className={classes.createControlLabel}>+ {createLabel || '+'}</span>
-            <div>{searchQuery}</div>
+            <span className={classes.createControlLabel}>{createLabel || '+'}</span>
+            <TagBadge data={{ id: 'create-placeholder', color: createColor, name: searchQuery }} />
           </button>
         )}
       </div>
