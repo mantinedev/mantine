@@ -5,6 +5,7 @@ import classes from './DropdownBody.styles.less';
 
 interface DropdownBodyProps extends DefaultProps {
   children: React.ReactNode;
+  elementRef?: React.RefObject<HTMLDivElement>;
   noPadding?: boolean;
 }
 
@@ -12,11 +13,13 @@ export default function DropdownBody({
   className,
   children,
   noPadding = false,
+  elementRef,
   ...others
 }: DropdownBodyProps) {
   return (
     <div
       className={cx(classes.dropdownBody, { [classes.withPadding]: !noPadding }, className)}
+      ref={elementRef}
       {...others}
     >
       {children}
