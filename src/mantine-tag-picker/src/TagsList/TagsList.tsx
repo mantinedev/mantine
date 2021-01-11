@@ -10,6 +10,7 @@ export interface TagsListProps {
   searchPlaceholder?: string;
   searchQuery: string;
   hovered: number;
+  value: TagPickerTag;
   data: TagPickerTag[];
   canCreate: boolean;
   createLabel?: string;

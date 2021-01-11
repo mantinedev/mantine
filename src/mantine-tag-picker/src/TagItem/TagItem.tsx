@@ -4,6 +4,7 @@ import { ActionIcon } from '@mantine/core';
 import { DotsHorizontalIcon } from '@modulz/radix-icons';
 import { TagPickerColor, TagPickerTag } from '../types';
 import TagEdit from '../TagEdit/TagEdit';
+import TagBadge from '../TagBadge/TagBadge';
 import classes from './TagItem.styles.less';
 
 interface TagItemProps {
@@ -46,8 +47,9 @@ export default function TagItem({
         onTagDelete={onTagDelete}
         id={data.id}
       />
+
       <button type="button" className={classes.control} onClick={() => onSelect(data)}>
-        {data.name}
+        <TagBadge data={data} />
       </button>
 
       <ActionIcon onClick={() => setEditDropdownOpened(true)}>
