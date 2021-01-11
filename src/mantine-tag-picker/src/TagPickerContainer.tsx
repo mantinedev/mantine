@@ -11,8 +11,9 @@ interface TagPickerProps extends DefaultProps {
   data: TagPickerTag[];
   colors?: TagPickerColor[];
   value?: TagPickerTag;
-  description?: React.ReactNode;
-  createLabel: React.ReactNode;
+  description?: string;
+  createLabel: string;
+  searchPlaceholder?: string;
   onChange(value: TagPickerTag): void;
   onSearchChange?(query: string): void;
   onTagCreate(values: Omit<TagPickerTag, 'id'>): void;
@@ -36,6 +37,8 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
     query: '',
     createColor: getRandomColor(this.props.colors),
   };
+
+  openDropdown = () => this.setState({ dropdownOpened: true });
 
   closeDropdown = () =>
     this.setState(
@@ -74,14 +77,33 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
     }
   };
 
+  handleChange = (value: TagPickerTag) => {
+    this.props.onChange(value);
+    this.closeDropdown();
+  };
+
+  handleHoveredChange = (index: number) => this.setState({ hovered: index });
+
   render() {
     return (
       <div onKeyDownCapture={this.handleKeyboardEvents}>
         <TagPicker
-          query={this.state.query}
+          searchQuery={this.state.query}
           hovered={this.state.hovered}
           dropdownOpened={this.state.dropdownOpened}
           controlRef={this.contolRef}
+          openDropdown={this.openDropdown}
+          closeDropdown={this.closeDropdown}
+          description={this.props.description}
+          searchPlaceholder={this.props.searchPlaceholder}
+          onSearchChange={this.handleSearchChange}
+          data={this.props.data}
+          canCreate
+          createLabel={this.props.createLabel}
+          onCreate={this.handleCreate}
+          onTagUpdate={this.props.onTagUpdate}
+          onChange={this.handleChange}
+          onHoveredChange={this.handleHoveredChange}
         />
       </div>
     );
