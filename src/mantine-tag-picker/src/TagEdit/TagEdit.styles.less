@@ -1,0 +1,77 @@
+.tagEdit {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: absolute;
+  top: 0;
+  width: 240px;
+  left: 240px;
+  z-index: 5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.deleteControl {
+  border: 0;
+  width: 100%;
+  background-color: transparent;
+  text-align: left;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: Roboto, sans-serif;
+  cursor: pointer;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: @oc-red-0;
+    color: @oc-red-7;
+  }
+}
+
+.deleteIcon {
+  margin-right: 10px;
+}
+
+.colorsList {
+  margin-top: 10px;
+}
+
+.colorControl {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: Roboto, sans-serif;
+  text-transform: capitalize;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 32px;
+  cursor: pointer;
+  outline: 0;
+
+  &:hover {
+    background-color: @oc-gray-0;
+  }
+}
+
+.colorLabel {
+  margin-left: 10px;
+}

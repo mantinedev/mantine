@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useClickOutside } from 'xooks';
-import { TrashIcon, CheckIcon } from '@modulz/radix-icons';
+import { TrashIcon, CheckIcon, Pencil1Icon } from '@modulz/radix-icons';
 import { DropdownBody, Input, ActionIcon, ColorSwatch } from '@mantine/core';
 import { TagPickerColor, TagPickerTag } from '../types';
 import classes from './TagEdit.styles.less';
@@ -53,18 +53,25 @@ export default function TagEdit({
   }
 
   const colorsList = colors.map((color) => (
-    <button type="button" key={color.color} onClick={() => handleColorChange(color.color)}>
+    <button
+      className={classes.colorControl}
+      type="button"
+      key={color.color}
+      onClick={() => handleColorChange(color.color)}
+    >
       <ColorSwatch color={color.color} />
       <span className={classes.colorLabel}>{color.name}</span>
     </button>
   ));
 
   return (
-    <DropdownBody elementRef={dropdownRef}>
+    <DropdownBody className={classes.tagEdit} elementRef={dropdownRef} noPadding>
       <div className={classes.header}>
         <Input
+          className={classes.input}
           value={values.name}
           onChange={(event) => handleNameChange(event.currentTarget.value)}
+          icon={<Pencil1Icon />}
         />
 
         <ActionIcon theme="success" onClick={handleSubmit}>
