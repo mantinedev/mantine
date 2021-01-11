@@ -24,6 +24,7 @@ module.exports = {
     // controlled with prettier
     'arrow-parens': 'off',
     'function-paren-newline': 'off',
+    'react/jsx-curly-newline': 'off',
 
     // disabled for condition && someFunc()
     'no-unused-expressions': 'off',
