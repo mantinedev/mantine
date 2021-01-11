@@ -1,17 +1,22 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps } from '@mantine/types';
-import classes from './ColorSwatch.styles.less';
 
 interface ColorSwatchProps extends DefaultProps {
   color: string;
+  size?: number;
 }
 
-export default function ColorSwatch({ className, color, style, ...others }: ColorSwatchProps) {
+export default function ColorSwatch({
+  className,
+  color,
+  size = 25,
+  style,
+  ...others
+}: ColorSwatchProps) {
   return (
     <div
-      className={cx(classes.colorSwatch, className)}
-      style={{ ...style, backgroundColor: color }}
+      className={className}
+      style={{ ...style, width: size, height: size, borderRadius: 25, backgroundColor: color }}
       data-composable
       {...others}
     />
