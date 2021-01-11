@@ -13,6 +13,7 @@ interface TagPickerProps extends DefaultProps {
   value?: TagPickerTag;
   description?: string;
   createLabel: string;
+  deleteLabel: string;
   searchPlaceholder?: string;
   onChange(value: TagPickerTag): void;
   onSearchChange?(query: string): void;
@@ -100,8 +101,11 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
           data={this.props.data}
           canCreate
           createLabel={this.props.createLabel}
+          deleteLabel={this.props.deleteLabel}
           onCreate={this.handleCreate}
+          colors={this.props.colors}
           onTagUpdate={this.props.onTagUpdate}
+          onTagDelete={this.props.onTagDelete}
           onChange={this.handleChange}
           onHoveredChange={this.handleHoveredChange}
         />

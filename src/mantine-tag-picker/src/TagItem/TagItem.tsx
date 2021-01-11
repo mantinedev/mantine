@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import cx from 'clsx';
 import { ActionIcon } from '@mantine/core';
 import { DotsHorizontalIcon } from '@modulz/radix-icons';
+import { TagPickerColor, TagPickerTag } from '../types';
+import TagEdit from '../TagEdit/TagEdit';
 import classes from './TagItem.styles.less';
-import { TagPickerTag } from '../types';
 
 interface TagItemProps {
   index: number;
   hovered: number;
   data: TagPickerTag;
+  colors: TagPickerColor[];
+  deleteLabel: string;
   onSelect(value: TagPickerTag): void;
   onTagUpdate(id: string, values: Omit<TagPickerTag, 'id'>): void;
+  onTagDelete(id: string): void;
   onHover(index: number): void;
 }
 
@@ -21,6 +25,9 @@ export default function TagItem({
   onSelect,
   onTagUpdate,
   onHover,
+  deleteLabel,
+  colors,
+  onTagDelete,
 }: TagItemProps) {
   const [editDropdownOpened, setEditDropdownOpened] = useState(false);
 
@@ -29,7 +36,16 @@ export default function TagItem({
       className={cx(classes.item, { [classes.hovered]: hovered === index })}
       onMouseEnter={() => onHover(index)}
     >
-      {editDropdownOpened && <div>edit</div>}
+      <TagEdit
+        opened={editDropdownOpened}
+        onClose={() => setEditDropdownOpened(false)}
+        initialValues={data}
+        deleteLabel={deleteLabel}
+        colors={colors}
+        onTagUpdate={onTagUpdate}
+        onTagDelete={onTagDelete}
+        id={data.id}
+      />
       <button type="button" className={classes.control} onClick={() => onSelect(data)}>
         {data.name}
       </button>

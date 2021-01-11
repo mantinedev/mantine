@@ -14,6 +14,7 @@ type TagPickerWrapperProps = Omit<
   | 'colors'
   | 'description'
   | 'createLabel'
+  | 'deleteLabel'
   | 'onTagCreate'
   | 'onTagDelete'
   | 'onTagUpdate'
@@ -38,6 +39,7 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
       colors={OPEN_COLOR_THEMES.map((theme) => ({ name: theme, color: oc[theme][0] }))}
       description="Select category or create new"
       createLabel="+ Create new category"
+      deleteLabel="Delete category"
       onTagCreate={(values) => setData((current) => [...current, { ...values, id: nanoid() }])}
       onTagDelete={(id) => setData((current) => current.filter((item) => item.id !== id))}
       onTagUpdate={(id, values) =>

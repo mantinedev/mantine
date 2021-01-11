@@ -3,19 +3,22 @@ import cx from 'clsx';
 import { Input } from '@mantine/core';
 import TagItem from '../TagItem/TagItem';
 import classes from './TagsList.styles.less';
-import { TagPickerTag } from '../types';
+import { TagPickerColor, TagPickerTag } from '../types';
 
 export interface TagsListProps {
   description?: string;
   searchPlaceholder?: string;
   searchQuery: string;
-  onSearchChange(query: string): void;
   hovered: number;
   data: TagPickerTag[];
   canCreate: boolean;
   createLabel?: string;
+  deleteLabel?: string;
+  colors: TagPickerColor[];
+  onSearchChange(query: string): void;
   onCreate(): void;
   onTagUpdate(id: string, values: Omit<TagPickerTag, 'id'>): void;
+  onTagDelete(id: string): void;
   onChange(value: TagPickerTag): void;
   onHoveredChange(index: number): void;
 }
@@ -29,7 +32,10 @@ export default function TagsList({
   data,
   canCreate,
   createLabel,
+  deleteLabel,
+  colors,
   onCreate,
+  onTagDelete,
   onTagUpdate,
   onChange,
   onHoveredChange,
@@ -43,6 +49,9 @@ export default function TagsList({
       onSelect={onChange}
       onTagUpdate={onTagUpdate}
       onHover={onHoveredChange}
+      colors={colors}
+      deleteLabel={deleteLabel}
+      onTagDelete={onTagDelete}
     />
   ));
   return (
