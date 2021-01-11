@@ -59,8 +59,11 @@ export default function TagEdit({
       key={color.color}
       onClick={() => handleColorChange(color.color)}
     >
-      <ColorSwatch color={color.color} />
-      <span className={classes.colorLabel}>{color.name}</span>
+      <div className={classes.colorControlBody}>
+        <ColorSwatch color={color.color} size={18} />
+        <span className={classes.colorLabel}>{color.name}</span>
+      </div>
+      {color.color === values.color && <CheckIcon />}
     </button>
   ));
 
