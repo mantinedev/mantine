@@ -37,7 +37,7 @@ export default class TagPickerContainer extends Component<TagPickerProps, TagPic
   contolRef = React.createRef<HTMLButtonElement>();
 
   state = {
-    dropdownOpened: true,
+    dropdownOpened: false,
     hovered: -1,
     query: '',
     createColor: getRandomColor(this.props.colors),
