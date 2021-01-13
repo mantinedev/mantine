@@ -6,6 +6,7 @@ import TerserPlugin from 'terser-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import tsTransformPaths from '@zerollup/ts-transform-paths';
 
 interface PageConfigInput {
   entry?: string;
@@ -65,6 +66,14 @@ export default function createPackageConfig(config: PageConfigInput): webpack.Co
               loader: 'ts-loader',
               options: {
                 configFile: path.join(config.basePath, 'tsconfig.json'),
+                getCustomTransformers: (program) => {
+                  const transformer = tsTransformPaths(program);
+
+                  return {
+                    before: [transformer.before],
+                    afterDeclarations: [transformer.afterDeclarations],
+                  };
+                },
               },
             },
           ],
