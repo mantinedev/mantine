@@ -42,7 +42,11 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
       createLabel="+ Create new category"
       deleteLabel="Delete category"
       noValueLabel="Not selected"
-      onTagCreate={(values) => setData((current) => [...current, { ...values, id: nanoid() }])}
+      onTagCreate={(values) => {
+        const tag = { ...values, id: nanoid() };
+        setData((current) => [...current, { ...values, id: nanoid() }]);
+        return tag;
+      }}
       onTagDelete={(id) => setData((current) => current.filter((item) => item.id !== id))}
       onTagUpdate={(id, values) =>
         setData((current) => {
