@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import cx from 'clsx';
 import { DefaultProps } from '@mantine/types';
 import Text from '../Text/Text';
@@ -23,7 +23,41 @@ export default function Month({
   disableOutsideEvents = false,
   locale = 'en',
 }: MonthProps) {
+  const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
+  const focusDay = (date: Date, offset: number) => {
+    const ofsetted = new Date(date);
+    ofsetted.setDate(date.getDate() + offset);
+
+    if (ofsetted.toISOString() in daysRefs.current) {
+      daysRefs.current[ofsetted.toISOString()].focus();
+    }
+  };
+
+  const handleKeyDown = (currentDate: Date, event: React.KeyboardEvent) => {
+    const { code } = event.nativeEvent;
+
+    if (code === 'ArrowUp') {
+      event.preventDefault();
+      focusDay(currentDate, -7);
+    }
+
+    if (code === 'ArrowDown') {
+      event.preventDefault();
+      focusDay(currentDate, 7);
+    }
+
+    if (code === 'ArrowRight') {
+      event.preventDefault();
+      focusDay(currentDate, 1);
+    }
+
+    if (code === 'ArrowLeft') {
+      event.preventDefault();
+      focusDay(currentDate, -1);
+    }
+  };
+
   const weekdays = getWeekdaysNames(locale).map((weekday) => (
     <th key={weekday}>
       <Text theme="muted" size="xs">
@@ -46,12 +80,16 @@ export default function Month({
       return (
         <td key={cellIndex}>
           <Day
-            onClick={() => onDayClick(date)}
+            elementRef={(button) => {
+              daysRefs.current[date.toISOString()] = button;
+            }}
+            onClick={() => typeof onDayClick === 'function' && onDayClick(date)}
             value={date}
             outside={outside}
             weekend={weekend}
             selected={isSelected}
             disableOutsideEvents={disableOutsideEvents}
+            onKeyDown={handleKeyDown}
           />
         </td>
       );
