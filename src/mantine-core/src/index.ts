@@ -8,6 +8,7 @@ export { default as Input } from './Input/Input';
 export { default as InputWrapper } from './InputWrapper/InputWrapper';
 export { default as Month } from './Month/Month';
 export { default as PasswordInput } from './PasswordInput/PasswordInput';
+export { default as Select } from './Select/Select';
 export { default as Table } from './Table/Table';
 export { default as Text } from './Text/Text';
 export { default as TextInput } from './TextInput/TextInput';
