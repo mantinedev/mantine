@@ -11,6 +11,7 @@ interface MonthProps extends DefaultProps {
   month: Date;
   locale?: string;
   selected?: Date;
+  disableOutsideEvents?: boolean;
   onDayClick?(day: Date): void;
 }
 
@@ -19,6 +20,7 @@ export default function Month({
   month,
   selected,
   onDayClick,
+  disableOutsideEvents = false,
   locale = 'en',
 }: MonthProps) {
   const days = getMonthDays(month);
@@ -49,6 +51,7 @@ export default function Month({
             outside={outside}
             weekend={weekend}
             selected={isSelected}
+            disableOutsideEvents={disableOutsideEvents}
           />
         </td>
       );

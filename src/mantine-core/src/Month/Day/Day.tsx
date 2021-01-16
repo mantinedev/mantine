@@ -8,10 +8,19 @@ interface DayProps extends DefaultProps {
   selected: boolean;
   outside: boolean;
   weekend: boolean;
+  disableOutsideEvents: boolean;
   onClick?(): void;
 }
 
-export default function Day({ className, value, selected, outside, weekend, onClick }: DayProps) {
+export default function Day({
+  className,
+  value,
+  selected,
+  outside,
+  weekend,
+  onClick,
+  disableOutsideEvents,
+}: DayProps) {
   return (
     <button
       type="button"
@@ -22,6 +31,7 @@ export default function Day({ className, value, selected, outside, weekend, onCl
           [classes.outside]: outside,
           [classes.weekend]: weekend,
           [classes.selected]: selected,
+          [classes.disableOutsideEvents]: disableOutsideEvents,
         },
         className
       )}
