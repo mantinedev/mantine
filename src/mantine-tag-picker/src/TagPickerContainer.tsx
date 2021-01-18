@@ -47,6 +47,14 @@ export default function TagPickerContainer(props: TagPickerProps) {
     closeDropdown();
   };
 
+  const handleUpdate = (id: string, values: Omit<TagPickerTag, 'id'>) => {
+    if (props.value && props.value.id === id) {
+      props.onChange({ ...values, id });
+    }
+
+    props.onTagUpdate(id, values);
+  };
+
   const handleChange = (value: TagPickerTag) => {
     props.onChange(value);
     closeDropdown();
@@ -117,7 +125,7 @@ export default function TagPickerContainer(props: TagPickerProps) {
         noValueLabel={props.noValueLabel}
         onCreate={handleCreate}
         colors={props.colors}
-        onTagUpdate={props.onTagUpdate}
+        onTagUpdate={handleUpdate}
         onTagDelete={props.onTagDelete}
         onChange={handleChange}
         onHoveredChange={setHovered}
