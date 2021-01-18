@@ -15,7 +15,12 @@ export default function ActionIcon({
   ...others
 }: ActionIconProps) {
   return (
-    <button {...others} className={cx(classes.actionIcon, classes[theme], className)} type="button">
+    <button
+      {...others}
+      data-composable
+      className={cx(classes.actionIcon, classes[theme], className)}
+      type="button"
+    >
       {children}
     </button>
   );
