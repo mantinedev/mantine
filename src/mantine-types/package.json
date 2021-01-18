@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "dist/lib.js",
   "types": "dist/index.d.ts",
-  "author": "Vitaly Rtishchev <vrtishchev@aligntech.com>",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "scripts": {
     "prepublish": "cd ../.. && npm run build @mantine/types"
   },

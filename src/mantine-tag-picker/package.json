@@ -4,7 +4,7 @@
   "main": "dist/lib.js",
   "licence": "MIT",
   "types": "dist/mantine-tag-picker/src/index.d.ts",
-  "author": "Vitaly Rtishchev <vrtishchev@aligntech.com>",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "scripts": {
     "prepublish": "cd ../.. && npm run build @mantine/tag-picker"
   },
