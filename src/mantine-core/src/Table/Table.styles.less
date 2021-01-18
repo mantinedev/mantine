@@ -5,36 +5,34 @@
   width: 100%;
   border-collapse: collapse;
 
-  th {
+  & > thead > tr > th {
     text-align: left;
     font-weight: bold;
     color: @oc-gray-7;
     font-size: 14px;
-  }
-
-  td,
-  th {
     padding: 7px 10px;
     border-bottom: 1px solid @oc-gray-3;
   }
 
-  td {
+  & > tbody > tr > td {
+    padding: 7px 10px;
+    border-bottom: 1px solid @oc-gray-3;
     font-size: 14px;
   }
 
-  tr:last-of-type td {
+  & > tbody > tr:last-of-type > td {
     border-bottom: none;
   }
 }
 
 .striped {
-  tbody tr:nth-of-type(odd) {
+  & > tbody > tr:nth-of-type(odd) {
     background-color: @oc-gray-0;
   }
 }
 
 .hover {
-  tbody tr:hover {
+  & > tbody > tr:hover {
     background-color: @oc-gray-1;
   }
 }
