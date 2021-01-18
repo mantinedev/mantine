@@ -40,6 +40,14 @@ export default function Select({
     </option>
   ));
 
+  if (placeholder) {
+    options.unshift(
+      <option key="placeholder" value="" disabled>
+        {placeholder}
+      </option>
+    );
+  }
+
   return (
     <InputWrapper
       required={required}
@@ -51,7 +59,10 @@ export default function Select({
     >
       <div className={classes.wrapper}>
         <select
-          className={cx(classes.select, { [classes.invalid]: error })}
+          className={cx(classes.select, {
+            [classes.invalid]: error,
+            [classes.placeholder]: !value,
+          })}
           id={uuid}
           value={value}
           onChange={(event) => onChange(event.currentTarget.value)}
