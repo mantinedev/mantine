@@ -10,6 +10,7 @@ export { default as Loader } from './Loader/Loader';
 export { default as LoadingOverlay } from './LoadingOverlay/LoadingOverlay';
 export { default as Month } from './Month/Month';
 export { default as PasswordInput } from './PasswordInput/PasswordInput';
+export { default as Pill } from './Pill/Pill';
 export { default as Select } from './Select/Select';
 export { default as Table } from './Table/Table';
 export { default as Text } from './Text/Text';
