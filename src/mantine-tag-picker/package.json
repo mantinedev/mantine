@@ -1,6 +1,6 @@
 {
   "name": "@mantine/tag-picker",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "dist/lib.js",
   "licence": "MIT",
   "types": "dist/mantine-tag-picker/src/index.d.ts",
@@ -9,7 +9,7 @@
     "prepublish": "cd ../.. && npm run build @mantine/tag-picker"
   },
   "peerDependencies": {
-    "@mantine/core": "0.1.8",
+    "@mantine/core": "0.1.9",
     "@modulz/radix-icons": "^3.3.0",
     "react": "^16.14.0"
   },
