@@ -6,6 +6,7 @@ export { default as DropdownBody } from './DropdownBody/DropdownBody';
 export { default as ElementsGroup } from './ElementsGroup/ElementsGroup';
 export { default as Input } from './Input/Input';
 export { default as InputWrapper } from './InputWrapper/InputWrapper';
+export { default as Loader } from './Loader/Loader';
 export { default as Month } from './Month/Month';
 export { default as PasswordInput } from './PasswordInput/PasswordInput';
 export { default as Select } from './Select/Select';

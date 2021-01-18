@@ -1,0 +1,17 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(3600deg);
+  }
+}
+
+.loader {
+  border-radius: 50%;
+  border-style: solid;
+  animation: spin 15s infinite linear;
+  border-color: @oc-blue-4;
+  border-top-color: @oc-blue-0;
+  border-bottom-color: @oc-blue-0;
+}
