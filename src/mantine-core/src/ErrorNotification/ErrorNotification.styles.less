@@ -1,0 +1,30 @@
+.errorNotification {
+  width: 100%;
+}
+
+.title {
+  background-color: @oc-red-5;
+  color: @oc-white;
+  text-align: center;
+  height: 34px;
+  line-height: 34px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+.body {
+  background-color: @oc-red-0;
+  padding: 15px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  line-height: 1.4;
+
+  &:only-child {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+  }
+}
+
+.error {
+  margin-top: 5px;
+}
