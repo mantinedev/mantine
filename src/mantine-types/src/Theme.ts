@@ -1,1 +1,1 @@
-export type Theme = 'danger' | 'warning' | 'success' | 'muted';
+export type Theme = 'primary' | 'danger' | 'warning' | 'success' | 'muted';
