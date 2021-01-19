@@ -1,4 +1,5 @@
 export { default as ActionIcon } from './ActionIcon/ActionIcon';
+export { default as Anchor } from './Anchor/Anchor';
 export { default as Avatar } from './Avatar/Avatar';
 export { default as Badge } from './Badge/Badge';
 export { default as Button } from './Button/Button';
