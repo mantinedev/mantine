@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import cx from 'clsx';
 import { DefaultProps } from '@mantine/types';
 import Text from '../Text/Text';
@@ -11,6 +11,7 @@ interface MonthProps extends DefaultProps {
   month: Date;
   locale?: string;
   selected?: Date;
+  autoFocus?: boolean;
   disableOutsideEvents?: boolean;
   onDayClick?(day: Date): void;
 }
@@ -20,11 +21,13 @@ export default function Month({
   month,
   selected,
   onDayClick,
+  autoFocus = false,
   disableOutsideEvents = false,
   locale = 'en',
 }: MonthProps) {
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
+
   const focusDay = (date: Date, offset: number) => {
     const ofsetted = new Date(date);
     ofsetted.setDate(date.getDate() + offset);
@@ -57,6 +60,20 @@ export default function Month({
       focusDay(currentDate, -1);
     }
   };
+
+  useEffect(() => {
+    if (autoFocus) {
+      const date = new Date(
+        month.getFullYear(),
+        month.getMonth(),
+        selected ? selected.getDate() : 1
+      ).toISOString();
+
+      if (date in daysRefs.current) {
+        daysRefs.current[date].focus();
+      }
+    }
+  }, []);
 
   const weekdays = getWeekdaysNames(locale).map((weekday) => (
     <th key={weekday}>
