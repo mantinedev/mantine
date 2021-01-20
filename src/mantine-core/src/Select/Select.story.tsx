@@ -27,6 +27,12 @@ storiesOf('@mantine/core/Select', module).add('General usage', () => (
     <WrappedSelect label="Your favourite library" required placeholder="Your favourite library" />
     <WrappedSelect
       label="Your favourite library"
+      required
+      placeholder="Your favourite library"
+      disabled
+    />
+    <WrappedSelect
+      label="Your favourite library"
       placeholder="Your favourite library"
       error="Your favourite library cannot be Angular"
     />

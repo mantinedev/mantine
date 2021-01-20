@@ -11,12 +11,16 @@ interface SelectItem {
   label: string;
 }
 
-interface SelectProps extends DefaultProps, InputWrapperBaseProps {
+interface SelectProps
+  extends DefaultProps,
+    InputWrapperBaseProps,
+    Omit<React.HTMLProps<HTMLSelectElement>, 'data' | 'onChange'> {
   id?: string;
   value: string;
   placeholder?: string;
   onChange(value: string): void;
   data: SelectItem[];
+  disabled?: boolean;
 }
 
 export default function Select({
@@ -30,6 +34,7 @@ export default function Select({
   value,
   onChange,
   placeholder,
+  disabled,
   ...others
 }: SelectProps) {
   const uuid = useId(id);
@@ -67,6 +72,7 @@ export default function Select({
           value={value}
           onChange={(event) => onChange(event.currentTarget.value)}
           placeholder={placeholder}
+          disabled={disabled}
           {...others}
         >
           {options}
