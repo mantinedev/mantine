@@ -1,6 +1,6 @@
 {
   "name": "@mantine/core",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "main": "dist/lib.js",
   "licence": "MIT",
   "types": "dist/mantine-core/src/index.d.ts",
