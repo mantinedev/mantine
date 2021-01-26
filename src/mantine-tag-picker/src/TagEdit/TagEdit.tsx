@@ -75,6 +75,7 @@ export default function TagEdit({
           value={values.name}
           onChange={(event) => handleNameChange(event.currentTarget.value)}
           icon={<Pencil1Icon />}
+          autoFocus
         />
 
         <ActionIcon theme="success" onClick={handleSubmit}>

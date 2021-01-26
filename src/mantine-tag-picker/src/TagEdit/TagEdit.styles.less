@@ -36,8 +36,10 @@
   font-family: Roboto, sans-serif;
   cursor: pointer;
   margin-top: 10px;
+  outline: 0;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: @oc-red-0;
     color: @oc-red-7;
   }
@@ -69,7 +71,8 @@
   cursor: pointer;
   outline: 0;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: @oc-gray-0;
   }
 }
