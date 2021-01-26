@@ -25,6 +25,7 @@ export interface TagsListProps {
   onTagDelete(id: string): void;
   onChange(value: TagPickerTag): void;
   onHoveredChange(index: number): void;
+  onEventsCaptureChange(shouldCaptureEvents: boolean): void;
 }
 
 export default function TagsList({
@@ -44,6 +45,7 @@ export default function TagsList({
   onTagUpdate,
   onChange,
   onHoveredChange,
+  onEventsCaptureChange,
 }: TagsListProps) {
   const tags = data.map((tag, index) => (
     <TagItem
@@ -57,8 +59,10 @@ export default function TagsList({
       colors={colors}
       deleteLabel={deleteLabel}
       onTagDelete={onTagDelete}
+      onEventsCaptureChange={onEventsCaptureChange}
     />
   ));
+
   return (
     <div className={classes.tagsList}>
       <Input

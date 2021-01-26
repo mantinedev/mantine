@@ -17,6 +17,7 @@ interface TagItemProps {
   onTagUpdate(id: string, values: Omit<TagPickerTag, 'id'>): void;
   onTagDelete(id: string): void;
   onHover(index: number): void;
+  onEventsCaptureChange(shouldCaptureEvents: boolean): void;
 }
 
 export default function TagItem({
@@ -29,8 +30,19 @@ export default function TagItem({
   deleteLabel,
   colors,
   onTagDelete,
+  onEventsCaptureChange,
 }: TagItemProps) {
   const [editDropdownOpened, setEditDropdownOpened] = useState(false);
+
+  const openEditDropdown = () => {
+    setEditDropdownOpened(true);
+    onEventsCaptureChange(false);
+  };
+
+  const closeEditDropdown = () => {
+    setEditDropdownOpened(false);
+    onEventsCaptureChange(true);
+  };
 
   return (
     <div
@@ -39,7 +51,7 @@ export default function TagItem({
     >
       <TagEdit
         opened={editDropdownOpened}
-        onClose={() => setEditDropdownOpened(false)}
+        onClose={closeEditDropdown}
         initialValues={data}
         deleteLabel={deleteLabel}
         colors={colors}
@@ -53,7 +65,7 @@ export default function TagItem({
           <TagBadge data={data} />
         </button>
 
-        <ActionIcon onClick={() => setEditDropdownOpened(true)}>
+        <ActionIcon onClick={openEditDropdown}>
           <DotsHorizontalIcon />
         </ActionIcon>
       </div>
