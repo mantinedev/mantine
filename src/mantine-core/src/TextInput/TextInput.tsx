@@ -1,5 +1,5 @@
 import React from 'react';
-import { useId } from 'xooks';
+import { useId } from '@mantine/hooks';
 import { DefaultProps } from '@mantine/types';
 import Input from '../Input/Input';
 import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';

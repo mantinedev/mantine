@@ -1,5 +1,5 @@
 import React from 'react';
-import { useId } from 'xooks';
+import { useId } from '@mantine/hooks';
 import cx from 'clsx';
 import { ChevronDownIcon } from '@modulz/radix-icons';
 import { DefaultProps } from '@mantine/types';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useId } from 'xooks';
+import { useId } from '@mantine/hooks';
 import { EyeOpenIcon, EyeClosedIcon } from '@modulz/radix-icons';
 import { DefaultProps } from '@mantine/types';
 import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';

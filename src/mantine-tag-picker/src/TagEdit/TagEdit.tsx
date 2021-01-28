@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useClickOutside } from 'xooks';
+import { useClickOutside } from '@mantine/hooks';
 import { TrashIcon, CheckIcon, Pencil1Icon } from '@modulz/radix-icons';
 import { DropdownBody, Input, ActionIcon, ColorSwatch } from '@mantine/core';
 import { TagPickerColor, TagPickerTag } from '../types';

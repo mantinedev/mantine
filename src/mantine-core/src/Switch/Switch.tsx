@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { useId } from 'xooks';
+import { useId } from '@mantine/hooks';
 import { DefaultProps } from '@mantine/types';
 import classes from './Switch.styles.less';
 

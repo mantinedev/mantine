@@ -1,6 +1,6 @@
 import oc from 'open-color';
 import React, { useRef } from 'react';
-import { useClickOutside } from 'xooks';
+import { useClickOutside } from '@mantine/hooks';
 import { DropdownBody } from '@mantine/core';
 import TagsList, { TagsListProps } from '../TagsList/TagsList';
 import TagBadge from '../TagBadge/TagBadge';
@@ -11,6 +11,7 @@ interface TagPickerProps extends TagsListProps {
   controlRef: React.RefObject<HTMLButtonElement>;
   openDropdown(): void;
   closeDropdown(): void;
+  onEventsCaptureChange(shouldCaptureEvents: boolean): void;
   noValueLabel: string;
 }
 
