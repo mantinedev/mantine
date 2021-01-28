@@ -9,6 +9,8 @@ const image =
 storiesOf('@mantine/core/Avatar', module).add('General usage', () => (
   <ElementsGroup>
     <Avatar size={80} src={image} />
+    <Avatar size={70} src={null} />
+    <Avatar size={60} src="broken-link" />
     <Avatar size={50} src={image} />
     <Avatar size={40} src={image} />
     <Avatar size={20} src={image} />
