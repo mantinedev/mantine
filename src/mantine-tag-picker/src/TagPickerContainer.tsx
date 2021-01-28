@@ -16,6 +16,8 @@ interface TagPickerProps extends DefaultProps {
   deleteLabel: string;
   noValueLabel: string;
   searchPlaceholder?: string;
+  onDropdownOpen?(): void;
+  onDropdownClose?(): void;
   onSearchChange?(query: string): void;
   controlRef?: React.RefCallback<HTMLButtonElement>;
   onChange(value: TagPickerTag): void;
@@ -38,7 +40,13 @@ export default function TagPickerContainer(props: TagPickerProps) {
       setHovered(-1);
       setQuery('');
       controlRef.current.focus();
+      typeof props.onDropdownClose === 'function' && props.onDropdownClose();
     }
+  };
+
+  const openDropdown = () => {
+    setDropdownOpened(true);
+    typeof props.onDropdownOpen === 'function' && props.onDropdownOpen();
   };
 
   const handleSearchChange = (value: string) => {
@@ -121,7 +129,7 @@ export default function TagPickerContainer(props: TagPickerProps) {
           controlRef.current = node;
           typeof props.controlRef === 'function' && props.controlRef(node);
         }}
-        openDropdown={() => setDropdownOpened(true)}
+        openDropdown={openDropdown}
         closeDropdown={closeDropdown}
         description={props.description}
         searchPlaceholder={props.searchPlaceholder}
