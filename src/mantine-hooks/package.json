@@ -1,0 +1,15 @@
+{
+  "name": "@mantine/hooks",
+  "version": "0.1.0",
+  "main": "dist/lib.js",
+  "types": "dist/index.d.ts",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "scripts": {
+    "prepublish": "cd ../.. && npm run build @mantine/hooks"
+  },
+  "peerDependencies": {
+    "react": "^16.14.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
