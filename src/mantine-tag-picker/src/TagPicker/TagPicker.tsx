@@ -8,7 +8,7 @@ import classes from './TagPicker.styles.less';
 
 interface TagPickerProps extends TagsListProps {
   dropdownOpened: boolean;
-  controlRef: React.RefObject<HTMLButtonElement>;
+  controlRef: React.RefCallback<HTMLButtonElement>;
   openDropdown(): void;
   closeDropdown(): void;
   onEventsCaptureChange(shouldCaptureEvents: boolean): void;

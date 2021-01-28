@@ -16,6 +16,7 @@ interface TagPickerProps extends DefaultProps {
   deleteLabel: string;
   noValueLabel: string;
   searchPlaceholder?: string;
+  controlRef?: React.RefCallback<HTMLButtonElement>;
   onChange(value: TagPickerTag): void;
   onTagCreate(values: Omit<TagPickerTag, 'id'>): TagPickerTag;
   onTagDelete(id: string): void;
@@ -114,7 +115,10 @@ export default function TagPickerContainer(props: TagPickerProps) {
         searchQuery={query}
         hovered={hovered}
         dropdownOpened={dropdownOpened}
-        controlRef={controlRef}
+        controlRef={(node: HTMLButtonElement) => {
+          controlRef.current = node;
+          typeof props.controlRef === 'function' && props.controlRef(node);
+        }}
         openDropdown={() => setDropdownOpened(true)}
         closeDropdown={closeDropdown}
         description={props.description}
