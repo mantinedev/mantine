@@ -31,10 +31,12 @@ export default function TagPickerContainer(props: TagPickerProps) {
   const [shouldCaptureEvents, setShouldCaptureEvents] = useState(true);
 
   const closeDropdown = () => {
-    setDropdownOpened(false);
-    setHovered(-1);
-    setQuery('');
-    controlRef.current.focus();
+    if (shouldCaptureEvents) {
+      setDropdownOpened(false);
+      setHovered(-1);
+      setQuery('');
+      controlRef.current.focus();
+    }
   };
 
   const handleSearchChange = (value: string) => {
