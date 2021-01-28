@@ -19,7 +19,7 @@ export default function Pill({ className, theme = 'blue', children, style, ...ot
       style={{
         ...style,
         backgroundColor: openColorTheme[6],
-        textShadow: `1px 1px 0 ${openColorTheme[9]}`,
+        textShadow: `1px 1px 0 ${openColorTheme[8]}`,
       }}
     >
       {children}
