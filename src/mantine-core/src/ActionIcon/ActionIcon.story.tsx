@@ -15,15 +15,19 @@ storiesOf('@mantine/core/ActionIcon', module).add('General Usage', () => (
     <ActionIcon>
       <GearIcon />
     </ActionIcon>
+
     <ActionIcon theme="primary">
       <LockOpen1Icon />
     </ActionIcon>
+
     <ActionIcon theme="danger">
       <TrashIcon />
     </ActionIcon>
+
     <ActionIcon theme="warning">
       <ExclamationTriangleIcon />
     </ActionIcon>
+
     <ActionIcon theme="success">
       <CheckIcon />
     </ActionIcon>
