@@ -16,6 +16,7 @@ interface TagPickerProps extends DefaultProps {
   deleteLabel: string;
   noValueLabel: string;
   searchPlaceholder?: string;
+  onSearchChange?(query: string): void;
   controlRef?: React.RefCallback<HTMLButtonElement>;
   onChange(value: TagPickerTag): void;
   onTagCreate(values: Omit<TagPickerTag, 'id'>): TagPickerTag;
@@ -43,6 +44,7 @@ export default function TagPickerContainer(props: TagPickerProps) {
   const handleSearchChange = (value: string) => {
     setQuery(value);
     setHovered(0);
+    typeof props.onSearchChange === 'function' && props.onSearchChange(value);
   };
 
   const handleCreate = () => {
