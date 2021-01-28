@@ -35,7 +35,7 @@ export default function TagPicker({
       </button>
 
       {dropdownOpened && (
-        <DropdownBody className={classes.dropdown} elementRef={dropdownRef} noPadding>
+        <DropdownBody className={classes.dropdown} ref={dropdownRef} noPadding>
           <TagsList value={value} {...others} />
         </DropdownBody>
       )}

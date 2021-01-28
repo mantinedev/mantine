@@ -68,7 +68,7 @@ export default function TagEdit({
   ));
 
   return (
-    <DropdownBody className={classes.tagEdit} elementRef={dropdownRef} noPadding>
+    <DropdownBody className={classes.tagEdit} ref={dropdownRef} noPadding>
       <div className={classes.header}>
         <Input
           className={classes.input}
