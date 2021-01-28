@@ -4,13 +4,14 @@ import cx from 'clsx';
 import { DefaultProps, OpenColorTheme } from '@mantine/types';
 import classes from './Pill.styles.less';
 
-interface PillProps extends DefaultProps {
+interface PillProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
   theme?: OpenColorTheme;
   children: React.ReactNode;
 }
 
 export default function Pill({ className, theme = 'blue', children, style, ...others }: PillProps) {
   const openColorTheme = theme in oc ? oc[theme] : oc.blue;
+
   return (
     <div
       {...others}

@@ -4,7 +4,9 @@ import { DefaultProps } from '@mantine/types';
 import Text from '../Text/Text';
 import classes from './ErrorNotification.styles.less';
 
-interface ErrorNotificationProps extends DefaultProps {
+interface ErrorNotificationProps
+  extends DefaultProps,
+    Omit<React.HTMLProps<HTMLDivElement>, 'title'> {
   title?: React.ReactNode;
   description?: React.ReactNode;
   error?: Error;

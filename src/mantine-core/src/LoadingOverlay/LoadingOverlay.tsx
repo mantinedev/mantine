@@ -4,7 +4,7 @@ import { DefaultProps } from '@mantine/types';
 import Loader from '../Loader/Loader';
 import classes from './LoadingOverlay.styles.less';
 
-interface LoadingOverlayProps extends DefaultProps {
+interface LoadingOverlayProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
   loaderSize?: number;
   visible: boolean;
 }

@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps } from '@mantine/types';
 import classes from './Hr.styles.less';
 
-interface HrProps extends DefaultProps {
+interface HrProps extends DefaultProps, React.HTMLProps<HTMLHRElement> {
   type?: 'solid' | 'dashed' | 'dotted';
 }
 

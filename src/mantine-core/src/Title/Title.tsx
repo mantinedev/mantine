@@ -10,6 +10,7 @@ interface TitleProps extends DefaultProps, Omit<React.HTMLProps<HTMLHeadingEleme
 
 export default function Title({ className, order = 1, children }: TitleProps) {
   const element = `h${order}`;
+
   return React.createElement(
     element,
     { className: cx(classes.title, classes[`title-${order}`], className) },

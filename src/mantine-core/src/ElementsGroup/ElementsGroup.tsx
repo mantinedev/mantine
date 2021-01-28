@@ -5,7 +5,6 @@ import classes from './ElementsGroup.styles.less';
 
 interface ElementsGroupProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
   position?: 'right' | 'center' | 'left';
-  children: React.ReactNode;
 }
 
 export default function ElementsGroup({

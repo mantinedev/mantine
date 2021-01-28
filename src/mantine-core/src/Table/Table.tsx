@@ -17,12 +17,12 @@ export default function Table({
 }: TableProps) {
   return (
     <table
+      {...others}
       className={cx(
         classes.table,
         { [classes.striped]: striped, [classes.hover]: highlighOnHover },
         className
       )}
-      {...others}
     >
       {children}
     </table>

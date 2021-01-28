@@ -10,7 +10,10 @@ export interface InputWrapperBaseProps {
   required?: boolean;
 }
 
-interface InputWrapperProps extends DefaultProps, InputWrapperBaseProps {
+interface InputWrapperProps
+  extends DefaultProps,
+    InputWrapperBaseProps,
+    React.HTMLProps<HTMLDivElement> {
   id: string;
   children: React.ReactChild;
 }

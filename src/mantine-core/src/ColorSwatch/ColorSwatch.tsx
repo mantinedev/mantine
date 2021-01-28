@@ -1,21 +1,14 @@
 import React from 'react';
 import { DefaultProps } from '@mantine/types';
 
-interface ColorSwatchProps extends DefaultProps {
+interface ColorSwatchProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
   color: string;
   size?: number;
 }
 
-export default function ColorSwatch({
-  className,
-  color,
-  size = 25,
-  style,
-  ...others
-}: ColorSwatchProps) {
+export default function ColorSwatch({ color, size = 25, style, ...others }: ColorSwatchProps) {
   return (
     <div
-      className={className}
       style={{ ...style, width: size, height: size, borderRadius: 25, backgroundColor: color }}
       data-composable
       {...others}

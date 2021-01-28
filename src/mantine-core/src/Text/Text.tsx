@@ -4,14 +4,14 @@ import { DefaultProps, Size, Theme } from '@mantine/types';
 import classes from './Text.styles.less';
 
 interface TextProps extends DefaultProps {
-  component?: string;
+  component?: React.ElementType<any>;
   children?: React.ReactNode;
   size?: Size;
   theme?: Theme;
   bold?: boolean;
 }
 
-export default function Text({
+export default function Text<T = Record<string, any>>({
   className,
   component = 'div',
   children,
@@ -19,7 +19,7 @@ export default function Text({
   bold = false,
   theme,
   ...others
-}: TextProps) {
+}: TextProps & T) {
   return React.createElement(
     component,
     {

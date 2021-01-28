@@ -7,7 +7,7 @@ import getWeekdaysNames from './get-weekdays-names';
 import Day from './Day/Day';
 import classes from './Month.styles.less';
 
-interface MonthProps extends DefaultProps {
+interface MonthProps extends DefaultProps, Omit<React.HTMLProps<HTMLTableElement>, 'selected'> {
   month: Date;
   locale?: string;
   selected?: Date;
@@ -24,6 +24,7 @@ export default function Month({
   autoFocus = false,
   disableOutsideEvents = false,
   locale = 'en',
+  ...others
 }: MonthProps) {
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
@@ -116,7 +117,7 @@ export default function Month({
   });
 
   return (
-    <table className={cx(classes.month, className)}>
+    <table className={cx(classes.month, className)} {...others}>
       <thead>
         <tr>{weekdays}</tr>
       </thead>
