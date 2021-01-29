@@ -1,10 +1,15 @@
 .elementsGroup {
   display: flex;
+  flex-wrap: wrap;
   margin: -5px;
 
   & [data-composable] {
     margin: 5px;
   }
+}
+
+.noWrap {
+  flex-wrap: nowrap;
 }
 
 .left {

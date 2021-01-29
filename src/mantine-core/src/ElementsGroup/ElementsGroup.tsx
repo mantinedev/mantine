@@ -5,16 +5,26 @@ import classes from './ElementsGroup.styles.less';
 
 interface ElementsGroupProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
   position?: 'right' | 'center' | 'left';
+  noWrap?: boolean;
 }
 
 export default function ElementsGroup({
   className,
   position = 'left',
   children,
+  noWrap = false,
   ...others
 }: ElementsGroupProps) {
   return (
-    <div className={cx(classes.elementsGroup, classes[position], className)} {...others}>
+    <div
+      className={cx(
+        classes.elementsGroup,
+        classes[position],
+        { [classes.noWrap]: noWrap },
+        className
+      )}
+      {...others}
+    >
       {children}
     </div>
   );
