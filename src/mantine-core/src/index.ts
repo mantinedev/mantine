@@ -16,7 +16,6 @@ export { default as LoadingOverlay } from './LoadingOverlay/LoadingOverlay';
 export { default as Month } from './Month/Month';
 export { default as Notification } from './Notification/Notification';
 export { default as PasswordInput } from './PasswordInput/PasswordInput';
-export { default as Pill } from './Pill/Pill';
 export { default as Select } from './Select/Select';
 export { default as Spoiler } from './Spoiler/Spoiler';
 export { default as Switch } from './Switch/Switch';
