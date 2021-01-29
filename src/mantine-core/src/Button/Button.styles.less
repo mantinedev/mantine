@@ -5,13 +5,11 @@
   box-sizing: border-box;
   border: 1px solid transparent;
   outline: 0;
-  height: 32px;
-  padding: 0 15px;
   border-radius: 4px;
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 0.5px;
-  font-size: 12px;
+
   color: @oc-white;
   cursor: pointer;
   user-select: none;
@@ -26,6 +24,36 @@
     text-shadow: none;
     pointer-events: none;
   }
+}
+
+.xs {
+  font-size: 10px;
+  height: 24px;
+  padding: 0 10px;
+}
+
+.sm {
+  font-size: 11px;
+  height: 26px;
+  padding: 0 12px;
+}
+
+.md {
+  font-size: 12px;
+  height: 28px;
+  padding: 0 14px;
+}
+
+.lg {
+  font-size: 13px;
+  height: 32px;
+  padding: 0 16px;
+}
+
+.xl {
+  font-size: 14px;
+  height: 36px;
+  padding: 0 18px;
 }
 
 .white {
@@ -45,7 +73,7 @@
 
 .gray {
   background-color: @oc-gray-5;
-  text-shadow: 1px 1px 0 @oc-gray-7;
+  text-shadow: 1px 1px 0 @oc-gray-6;
 
   &:hover {
     background-color: @oc-gray-6;
