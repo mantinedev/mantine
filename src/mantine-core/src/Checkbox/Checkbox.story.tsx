@@ -8,5 +8,8 @@ function CheckboxWrapper(props: Omit<React.ComponentProps<typeof Checkbox>, 'val
 }
 
 storiesOf('@mantine/core/Checkbox', module).add('General Usage', () => (
-  <CheckboxWrapper label="Turn on the notifications" />
+  <>
+    <CheckboxWrapper label="Turn on the notifications" />
+    <CheckboxWrapper label="Turn on the notifications" disabled style={{ marginTop: 15 }} />
+  </>
 ));
