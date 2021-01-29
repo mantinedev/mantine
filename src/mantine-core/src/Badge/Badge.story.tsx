@@ -10,6 +10,22 @@ const badges = OPEN_COLOR_THEMES.map((color) => (
   </Badge>
 ));
 
+const pills = OPEN_COLOR_THEMES.map((color) => (
+  <Badge theme={color} key={color} variant="pill">
+    {color}
+  </Badge>
+));
+
+const outlines = OPEN_COLOR_THEMES.map((color) => (
+  <Badge theme={color} key={color} variant="outline">
+    {color}
+  </Badge>
+));
+
 storiesOf('@mantine/core/Badge', module).add('General Usage', () => (
-  <ElementsGroup>{badges}</ElementsGroup>
+  <>
+    <ElementsGroup>{badges}</ElementsGroup>
+    <ElementsGroup style={{ marginTop: 20 }}>{pills}</ElementsGroup>
+    <ElementsGroup style={{ marginTop: 20 }}>{outlines}</ElementsGroup>
+  </>
 ));
