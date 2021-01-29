@@ -2,45 +2,34 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: Roboto, sans-serif;
-  display: inline-flex;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 11px;
+  border-radius: 100px;
+  font-weight: bold;
+  letter-spacing: 0.25px;
 }
 
 .variant-badge {
-  align-items: center;
-  line-height: 1;
+  line-height: 23px;
   height: 22px;
-  border-radius: 24px;
   padding-left: 10px;
   padding-right: 10px;
-  font-size: 11px;
-  text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 0.25px;
 }
 
 .variant-outline {
-  align-items: center;
-  line-height: 1;
+  background-color: @oc-white;
+  line-height: 23px;
   height: 22px;
-  border-radius: 24px;
   padding-left: 10px;
   padding-right: 10px;
-  font-size: 11px;
-  text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 0.25px;
-  border: 1px solid;
+  border: 1px solid transparent;
 }
 
 .variant-pill {
-  font-size: 11px;
-  font-weight: bold;
-  text-transform: uppercase;
   color: @oc-white;
   padding-left: 8px;
   padding-right: 8px;
-  border-radius: 20px;
   height: 19px;
   line-height: 19px;
-  letter-spacing: 0.2px;
 }
