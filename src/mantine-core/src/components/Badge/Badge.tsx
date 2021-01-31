@@ -1,8 +1,8 @@
 import React from 'react';
 import cx from 'clsx';
-import oc from 'open-color';
+import OpenColor from 'open-color';
 import { DefaultProps, OpenColorTheme, OPEN_COLOR_THEMES } from '@mantine/types';
-import classes from './Badge.styles.less';
+import useStyles from './Badge.styles';
 
 type BadgeVariant = 'badge' | 'pill' | 'outline';
 
@@ -12,7 +12,7 @@ interface BadgeProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
 }
 
 function getVariantStyle(variant: BadgeVariant, theme: OpenColorTheme) {
-  const ocTheme = oc[OPEN_COLOR_THEMES.includes(theme) ? theme : 'gray'];
+  const ocTheme = OpenColor[OPEN_COLOR_THEMES.includes(theme) ? theme : 'gray'];
 
   switch (variant) {
     case 'badge':
@@ -37,6 +37,8 @@ export default function Badge({
   style,
   ...others
 }: BadgeProps) {
+  const classes = useStyles();
+
   return (
     <div
       {...others}
