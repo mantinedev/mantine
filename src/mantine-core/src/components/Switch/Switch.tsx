@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { useId } from '@mantine/hooks';
 import { DefaultProps } from '@mantine/types';
-import classes from './Switch.styles.less';
+import useStyles from './Switch.styles';
 
 interface SwitchProps
   extends DefaultProps,
@@ -19,6 +19,7 @@ const Switch = forwardRef(
     { className, value, onChange, label, disabled, id, ...others }: SwitchProps,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
+    const classes = useStyles();
     const uuid = useId(id);
 
     return (

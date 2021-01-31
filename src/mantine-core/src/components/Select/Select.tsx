@@ -4,7 +4,7 @@ import cx from 'clsx';
 import { ChevronDownIcon } from '@modulz/radix-icons';
 import { DefaultProps } from '@mantine/types';
 import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
-import classes from './Select.styles.less';
+import useStyles from './Select.styles';
 
 interface SelectItem {
   value: string;
@@ -41,6 +41,7 @@ const Select = forwardRef(
     }: SelectProps,
     ref: React.ForwardedRef<HTMLSelectElement>
   ) => {
+    const classes = useStyles();
     const uuid = useId(id);
 
     const options = data.map((item) => (

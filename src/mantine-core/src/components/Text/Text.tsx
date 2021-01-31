@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, Size, Theme } from '@mantine/types';
-import classes from './Text.styles.less';
+import useStyles from './Text.styles';
 
 interface TextProps extends DefaultProps {
   component?: React.ElementType<any>;
@@ -20,6 +20,8 @@ export default function Text<T = Record<string, any>>({
   theme,
   ...others
 }: TextProps & T) {
+  const classes = useStyles();
+
   return React.createElement(
     component,
     {

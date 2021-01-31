@@ -5,7 +5,7 @@ import { DefaultProps } from '@mantine/types';
 import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
 import ActionIcon from '../ActionIcon/ActionIcon';
 import Input from '../Input/Input';
-import classes from './PasswordInput.styles.less';
+import useStyles from './PasswordInput.styles';
 
 interface PasswordInputProps
   extends DefaultProps,
@@ -33,6 +33,7 @@ const PasswordInput = forwardRef(
     }: PasswordInputProps,
     ref: React.ForwardedRef<HTMLInputElement>
   ) => {
+    const classes = useStyles();
     const [reveal, setReveal] = useState(false);
     const uuid = useId(id);
 

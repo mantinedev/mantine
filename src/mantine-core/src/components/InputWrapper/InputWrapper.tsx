@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { DefaultProps } from '@mantine/types/src';
 import Text from '../Text/Text';
-import classes from './InputWrapper.styles.less';
+import useStyles from './InputWrapper.styles';
 
 export interface InputWrapperBaseProps {
   label?: string;
@@ -27,6 +27,8 @@ export default function InputWrapper({
   error,
   ...others
 }: InputWrapperProps) {
+  const classes = useStyles();
+
   return (
     <div className={cx(classes.inputWrapper, className)} {...others}>
       {label && (

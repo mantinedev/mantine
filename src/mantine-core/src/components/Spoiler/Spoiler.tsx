@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import cx from 'clsx';
-import { DefaultProps } from '@mantine/core/dist/mantine-types/src';
-import classes from './Spoiler.styles.less';
+import { DefaultProps } from '@mantine/types';
+import useStyles from './Spoiler.styles';
 
 interface SpoilerProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
   maxHeight: number;
@@ -20,6 +20,7 @@ export default function Spoiler({
   overlayColor = '#fff',
   ...others
 }: SpoilerProps) {
+  const classes = useStyles();
   const [show, setShowState] = useState(false);
   const [spoiler, setSpoilerState] = useState(false);
   const contentRef = useRef(null);
@@ -32,10 +33,7 @@ export default function Spoiler({
 
   return (
     <div className={cx(classes.spoiler, { [classes.shown]: show }, className)} {...others}>
-      <div
-        className={cx({ [classes.hiddenContent]: !show })}
-        style={{ maxHeight: !show && maxHeight }}
-      >
+      <div style={{ maxHeight: !show && maxHeight }}>
         <div ref={contentRef}>{children}</div>
       </div>
       {spoiler && (
