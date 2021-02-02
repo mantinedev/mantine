@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { DefaultProps } from '@mantine/types';
 import Text from '../Text/Text';
-import classes from './ErrorNotification.styles.less';
+import useStyles from './ErrorNotification.styles';
 
 interface ErrorNotificationProps
   extends DefaultProps,
@@ -19,6 +19,8 @@ export default function ErrorNotification({
   error,
   ...others
 }: ErrorNotificationProps) {
+  const classes = useStyles();
+
   return (
     <div className={cx(classes.errorNotification, className)} {...others}>
       {title && (
@@ -28,12 +30,7 @@ export default function ErrorNotification({
       )}
 
       <div className={classes.body}>
-        {description && (
-          <Text className={classes.description} size="sm">
-            {description}
-          </Text>
-        )}
-
+        {description && <Text size="sm">{description}</Text>}
         {error instanceof Error && (
           <Text className={classes.error} theme="danger" size="sm">
             {error.message}

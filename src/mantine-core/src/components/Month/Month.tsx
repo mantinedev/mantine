@@ -5,7 +5,7 @@ import Text from '../Text/Text';
 import getMonthDays from './get-month-days';
 import getWeekdaysNames from './get-weekdays-names';
 import Day from './Day/Day';
-import classes from './Month.styles.less';
+import useStyles from './Month.styles';
 
 interface MonthProps extends DefaultProps, Omit<React.HTMLProps<HTMLTableElement>, 'selected'> {
   month: Date;
@@ -26,6 +26,7 @@ export default function Month({
   locale = 'en',
   ...others
 }: MonthProps) {
+  const classes = useStyles();
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
 

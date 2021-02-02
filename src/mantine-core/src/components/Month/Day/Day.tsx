@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps } from '@mantine/types';
-import classes from './Day.styles.less';
+import useStyles from './Day.styles';
 
 interface DayProps extends DefaultProps {
   value: Date;
@@ -25,6 +25,8 @@ export default function Day({
   onKeyDown,
   disableOutsideEvents,
 }: DayProps) {
+  const classes = useStyles();
+
   return (
     <button
       type="button"

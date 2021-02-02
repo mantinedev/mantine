@@ -4,7 +4,7 @@ import { Cross2Icon } from '@modulz/radix-icons';
 import { DefaultProps, Theme } from '@mantine/types';
 import Text from '../Text/Text';
 import ActionIcon from '../ActionIcon/ActionIcon';
-import classes from './Notification.styles.less';
+import useStyles from './Notification.styles';
 
 interface NotificationProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>, 'title'> {
   theme?: Theme;
@@ -22,6 +22,8 @@ export default function Notification({
   onClose,
   ...others
 }: NotificationProps) {
+  const classes = useStyles();
+
   return (
     <div
       className={cx(classes.notification, { [classes.withIcon]: icon }, classes[theme], className)}

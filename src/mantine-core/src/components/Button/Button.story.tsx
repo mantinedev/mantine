@@ -5,31 +5,31 @@ import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import Button from './Button';
 
 const xs = OPEN_COLOR_THEMES.map((theme) => (
-  <Button theme={theme} key={theme} size="xs">
+  <Button color={theme} key={theme} size="xs">
     {theme} xs
   </Button>
 ));
 
 const sm = OPEN_COLOR_THEMES.map((theme) => (
-  <Button theme={theme} key={theme} size="sm">
+  <Button color={theme} key={theme} size="sm">
     {theme} sm
   </Button>
 ));
 
 const md = OPEN_COLOR_THEMES.map((theme) => (
-  <Button theme={theme} key={theme} size="md">
+  <Button color={theme} key={theme} size="md">
     {theme} md
   </Button>
 ));
 
 const lg = OPEN_COLOR_THEMES.map((theme) => (
-  <Button theme={theme} key={theme} size="lg">
+  <Button color={theme} key={theme} size="lg">
     {theme} lg
   </Button>
 ));
 
 const xl = OPEN_COLOR_THEMES.map((theme) => (
-  <Button theme={theme} key={theme} size="xl">
+  <Button color={theme} key={theme} size="xl">
     {theme} xl
   </Button>
 ));
