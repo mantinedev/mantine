@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 const DEFAULT_HANDLERS = ['mousedown', 'touchstart'];
 
-export function useClickOutside(
-  ref: React.RefObject<HTMLElement>,
-  handler: () => void,
-  handlers = DEFAULT_HANDLERS
-) {
+export function useClickOutside(handler: () => void, handlers = DEFAULT_HANDLERS) {
+  const ref = useRef<any>();
   const isBrowser = typeof document !== 'undefined';
 
   useEffect(() => {
@@ -22,4 +19,6 @@ export function useClickOutside(
       isBrowser && handlers.forEach((fn) => document.removeEventListener(fn, listener));
     };
   }, [ref, handler]);
+
+  return ref;
 }
