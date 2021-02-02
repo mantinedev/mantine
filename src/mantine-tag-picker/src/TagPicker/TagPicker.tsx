@@ -1,5 +1,5 @@
-import oc from 'open-color';
-import React, { useRef } from 'react';
+import OpenColor from 'open-color';
+import React from 'react';
 import { useClickOutside } from '@mantine/hooks';
 import { DropdownBody } from '@mantine/core';
 import TagsList, { TagsListProps } from '../TagsList/TagsList';
@@ -24,14 +24,14 @@ export default function TagPicker({
   noValueLabel,
   ...others
 }: TagPickerProps) {
-  const dropdownRef = useRef<HTMLDivElement>();
-
-  useClickOutside(dropdownRef, closeDropdown);
+  const dropdownRef = useClickOutside(closeDropdown);
 
   return (
     <div className={classes.tagPicker}>
       <button className={classes.control} type="button" ref={controlRef} onClick={openDropdown}>
-        <TagBadge data={value || { id: 'no-value', color: oc.gray[2], name: noValueLabel }} />
+        <TagBadge
+          data={value || { id: 'no-value', color: OpenColor.gray[2], name: noValueLabel }}
+        />
       </button>
 
       {dropdownOpened && (

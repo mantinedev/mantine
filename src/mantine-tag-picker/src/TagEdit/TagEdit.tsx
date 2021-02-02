@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useClickOutside } from '@mantine/hooks';
 import { TrashIcon, CheckIcon, Pencil1Icon } from '@modulz/radix-icons';
 import { DropdownBody, Input, ActionIcon, ColorSwatch } from '@mantine/core';
@@ -26,7 +26,6 @@ export default function TagEdit({
   onTagDelete,
   id,
 }: TagEditProps) {
-  const dropdownRef = useRef<HTMLDivElement>();
   const [values, setValues] = useState<Omit<TagPickerTag, 'id'>>(null);
   const handleNameChange = (value: string) => setValues((current) => ({ ...current, name: value }));
   const handleColorChange = (value: string) =>
@@ -46,7 +45,7 @@ export default function TagEdit({
     setValues(initialValues);
   }, [initialValues]);
 
-  useClickOutside(dropdownRef, onClose);
+  const dropdownRef = useClickOutside(onClose);
 
   if (!opened) {
     return null;
