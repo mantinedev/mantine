@@ -8,7 +8,8 @@ export default createUseStyles({
     fontFamily: 'Roboto, sans-serif',
   },
 
-  bold: { fontWeight: 'bold' },
+  bold: { fontWeight: 700 },
+  semibold: { fontWeight: 500 },
   primary: { color: OpenColor.blue[6] },
   success: { color: OpenColor.teal[6] },
   warning: { color: OpenColor.yellow[8] },

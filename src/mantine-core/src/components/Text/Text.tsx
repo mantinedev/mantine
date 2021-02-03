@@ -9,6 +9,7 @@ interface TextProps extends DefaultProps {
   size?: Size;
   theme?: Theme;
   bold?: boolean;
+  semibold?: boolean;
 }
 
 export default function Text<T = Record<string, any>>({
@@ -17,6 +18,7 @@ export default function Text<T = Record<string, any>>({
   children,
   size = 'md',
   bold = false,
+  semibold = false,
   theme,
   ...others
 }: TextProps & T) {
@@ -29,7 +31,7 @@ export default function Text<T = Record<string, any>>({
         classes.text,
         classes[size],
         classes[theme],
-        { [classes.bold]: bold },
+        { [classes.bold]: bold, [classes.semibold]: semibold },
         className
       ),
       ...others,

@@ -5,6 +5,7 @@ import Text from './Text';
 storiesOf('@mantine/core/Text', module).add('General usage', () => (
   <div>
     <Text>Default text</Text>
+    <Text semibold>Semibold default text</Text>
     <Text bold>Bold default text</Text>
     <Text theme="success">Success text</Text>
     <Text theme="warning">Warning text</Text>
