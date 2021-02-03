@@ -5,7 +5,7 @@ import { Input, Text } from '@mantine/core';
 import { TagPickerColor, TagPickerTag } from '../types';
 import TagItem from '../TagItem/TagItem';
 import TagBadge from '../TagBadge/TagBadge';
-import classes from './TagsList.styles.less';
+import useStyles from './TagsList.styles';
 
 export interface TagsListProps {
   description?: string;
@@ -47,6 +47,8 @@ export default function TagsList({
   onHoveredChange,
   onEventsCaptureChange,
 }: TagsListProps) {
+  const classes = useStyles();
+
   const tags = data.map((tag, index) => (
     <TagItem
       key={tag.id}
@@ -80,7 +82,7 @@ export default function TagsList({
         </Text>
       )}
 
-      <div className={classes.tags}>
+      <div>
         {tags}
 
         {canCreate && (

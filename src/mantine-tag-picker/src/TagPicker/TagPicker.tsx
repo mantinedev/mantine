@@ -4,7 +4,7 @@ import { useClickOutside } from '@mantine/hooks';
 import { DropdownBody } from '@mantine/core';
 import TagsList, { TagsListProps } from '../TagsList/TagsList';
 import TagBadge from '../TagBadge/TagBadge';
-import classes from './TagPicker.styles.less';
+import useStyles from './TagPicker.styles';
 
 interface TagPickerProps extends TagsListProps {
   dropdownOpened: boolean;
@@ -24,6 +24,7 @@ export default function TagPicker({
   noValueLabel,
   ...others
 }: TagPickerProps) {
+  const classes = useStyles();
   const dropdownRef = useClickOutside(closeDropdown);
 
   return (

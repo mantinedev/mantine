@@ -3,7 +3,7 @@ import cx from 'clsx';
 import OpenColor from 'open-color';
 import { TagPickerTag } from '../types';
 import isBrightColor from './is-bright-color';
-import classes from './TagBadge.styles.less';
+import useStyles from './TagBadge.styles';
 
 interface TagBadgeProps {
   className?: string;
@@ -11,6 +11,8 @@ interface TagBadgeProps {
 }
 
 export default function TagBadge({ className, data }: TagBadgeProps) {
+  const classes = useStyles();
+
   return (
     <div
       className={cx(classes.tagBadge, className)}

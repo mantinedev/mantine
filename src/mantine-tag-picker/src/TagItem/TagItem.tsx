@@ -5,7 +5,7 @@ import { DotsHorizontalIcon } from '@modulz/radix-icons';
 import { TagPickerColor, TagPickerTag } from '../types';
 import TagEdit from '../TagEdit/TagEdit';
 import TagBadge from '../TagBadge/TagBadge';
-import classes from './TagItem.styles.less';
+import useStyles from './TagItem.styles';
 
 interface TagItemProps {
   index: number;
@@ -32,6 +32,7 @@ export default function TagItem({
   onTagDelete,
   onEventsCaptureChange,
 }: TagItemProps) {
+  const classes = useStyles();
   const controlRef = useRef<HTMLButtonElement>();
   const [editDropdownOpened, setEditDropdownOpened] = useState(false);
 

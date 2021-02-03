@@ -3,7 +3,7 @@ import { useClickOutside } from '@mantine/hooks';
 import { TrashIcon, CheckIcon, Pencil1Icon } from '@modulz/radix-icons';
 import { DropdownBody, Input, ActionIcon, ColorSwatch } from '@mantine/core';
 import { TagPickerColor, TagPickerTag } from '../types';
-import classes from './TagEdit.styles.less';
+import useStyles from './TagEdit.styles';
 
 export interface TagEditProps {
   opened: boolean;
@@ -26,6 +26,7 @@ export default function TagEdit({
   onTagDelete,
   id,
 }: TagEditProps) {
+  const classes = useStyles();
   const dropdownRef = useClickOutside(onClose);
   const [values, setValues] = useState<Omit<TagPickerTag, 'id'>>(null);
   const handleNameChange = (value: string) => setValues((current) => ({ ...current, name: value }));
@@ -95,7 +96,7 @@ export default function TagEdit({
 
       <button className={classes.deleteControl} type="button" onClick={handleDelete}>
         <TrashIcon className={classes.deleteIcon} />
-        <span className={classes.deleteLabel}>{deleteLabel}</span>
+        <span>{deleteLabel}</span>
       </button>
 
       <div className={classes.colorsList}>{colorsList}</div>
