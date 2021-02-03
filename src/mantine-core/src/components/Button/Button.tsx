@@ -3,8 +3,7 @@
 
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
-import OpenColor from 'open-color';
-import { DefaultProps, OpenColorTheme, Size, OPEN_COLOR_THEMES } from '@mantine/types';
+import { DefaultProps, OpenColorTheme, Size } from '@mantine/types';
 import useStyles from './Button.styles';
 
 interface ButtonProps extends DefaultProps, Omit<React.HTMLProps<HTMLButtonElement>, 'size'> {
@@ -26,11 +25,11 @@ const Button = forwardRef(
     }: ButtonProps,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
-    const classes = useStyles({ color });
+    const classes = useStyles({ color, size });
     return (
       <button
         {...others}
-        className={cx(classes.button, classes[size], className)}
+        className={cx(classes.button, className)}
         type={type}
         disabled={disabled}
         data-composable
