@@ -5,19 +5,19 @@ import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import Badge from './Badge';
 
 const badges = OPEN_COLOR_THEMES.map((color) => (
-  <Badge theme={color} key={color}>
+  <Badge color={color} key={color}>
     {color}
   </Badge>
 ));
 
 const pills = OPEN_COLOR_THEMES.map((color) => (
-  <Badge theme={color} key={color} variant="pill">
+  <Badge color={color} key={color} variant="pill">
     {color}
   </Badge>
 ));
 
 const outlines = OPEN_COLOR_THEMES.map((color) => (
-  <Badge theme={color} key={color} variant="outline">
+  <Badge color={color} key={color} variant="outline">
     {color}
   </Badge>
 ));
