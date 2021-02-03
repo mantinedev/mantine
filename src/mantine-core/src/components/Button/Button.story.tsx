@@ -11,7 +11,7 @@ const md = OPEN_COLOR_THEMES.map((theme) => (
 ));
 
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as Size[]).map((size) => (
-  <Button color="teal" key={size} size={size}>
+  <Button color="blue" key={size} size={size}>
     Button {size}
   </Button>
 ));

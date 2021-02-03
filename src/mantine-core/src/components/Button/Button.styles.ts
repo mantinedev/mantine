@@ -10,32 +10,32 @@ interface ButtonThemeProps {
 const sizes = {
   xs: {
     fontSize: 10,
-    height: 24,
-    padding: [0, 10],
+    height: 22,
+    padding: [0, 11],
   },
 
   sm: {
     fontSize: 11,
     height: 26,
-    padding: [0, 12],
+    padding: [0, 13],
   },
 
   md: {
     fontSize: 13,
-    height: 28,
-    padding: [0, 14],
+    height: 30,
+    padding: [0, 15],
   },
 
   lg: {
     fontSize: 14,
-    height: 32,
-    padding: [0, 16],
+    height: 36,
+    padding: [0, 18],
   },
 
   xl: {
     fontSize: 16,
-    height: 36,
-    padding: [0, 18],
+    height: 44,
+    padding: [0, 22],
   },
 };
 
@@ -50,6 +50,10 @@ export default createUseStyles({
           '&:focus': {
             boxShadow: `0 0 1px 3px ${OpenColor[props.color][2]}`,
           },
+
+          '&:hover': {
+            backgroundColor: OpenColor[props.color][6],
+          },
         }
       : {
           backgroundColor: OpenColor.white,
@@ -59,6 +63,10 @@ export default createUseStyles({
           '&:focus': {
             borderColor: OpenColor.blue[6],
             boxShadow: `0 0 4px ${OpenColor.gray[3]}`,
+          },
+
+          '&:hover': {
+            backgroundColor: OpenColor.gray[0],
           },
         };
 
@@ -85,7 +93,8 @@ export default createUseStyles({
       },
 
       '&:disabled': {
-        backgroundColor: OpenColor.gray[4],
+        borderColor: 'transparent',
+        backgroundColor: OpenColor.gray[3],
         color: OpenColor.gray[6],
         textShadow: 'none',
         pointerEvents: 'none',
