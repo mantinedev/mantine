@@ -26,6 +26,7 @@ export default function TagEdit({
   onTagDelete,
   id,
 }: TagEditProps) {
+  const dropdownRef = useClickOutside(onClose);
   const [values, setValues] = useState<Omit<TagPickerTag, 'id'>>(null);
   const handleNameChange = (value: string) => setValues((current) => ({ ...current, name: value }));
   const handleColorChange = (value: string) =>
@@ -41,11 +42,15 @@ export default function TagEdit({
     onClose();
   };
 
+  const handleKeyDownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.nativeEvent.code === 'Escape') {
+      onClose();
+    }
+  };
+
   useEffect(() => {
     setValues(initialValues);
   }, [initialValues]);
-
-  const dropdownRef = useClickOutside(onClose);
 
   if (!opened) {
     return null;
@@ -67,12 +72,18 @@ export default function TagEdit({
   ));
 
   return (
-    <DropdownBody className={classes.tagEdit} ref={dropdownRef} noPadding>
+    <DropdownBody
+      className={classes.tagEdit}
+      ref={dropdownRef}
+      noPadding
+      onKeyDownCapture={handleKeyDownCapture}
+    >
       <div className={classes.header}>
         <Input
           className={classes.input}
           value={values.name}
           onChange={(event) => handleNameChange(event.currentTarget.value)}
+          onKeyDown={(event) => event.nativeEvent.code === 'Enter' && handleSubmit()}
           icon={<Pencil1Icon />}
           autoFocus
         />

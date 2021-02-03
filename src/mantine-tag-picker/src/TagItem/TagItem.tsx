@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { ActionIcon } from '@mantine/core';
 import { DotsHorizontalIcon } from '@modulz/radix-icons';
@@ -32,6 +32,7 @@ export default function TagItem({
   onTagDelete,
   onEventsCaptureChange,
 }: TagItemProps) {
+  const controlRef = useRef<HTMLButtonElement>();
   const [editDropdownOpened, setEditDropdownOpened] = useState(false);
 
   const openEditDropdown = () => {
@@ -42,6 +43,9 @@ export default function TagItem({
   const closeEditDropdown = () => {
     setEditDropdownOpened(false);
     onEventsCaptureChange(true);
+
+    // Focus should be wrapped in setImmediate to prevent multiple keyboard events capturing
+    setImmediate(() => controlRef.current.focus());
   };
 
   return (
@@ -65,7 +69,7 @@ export default function TagItem({
           <TagBadge data={data} />
         </button>
 
-        <ActionIcon onClick={openEditDropdown}>
+        <ActionIcon onClick={openEditDropdown} ref={controlRef}>
           <DotsHorizontalIcon />
         </ActionIcon>
       </div>
