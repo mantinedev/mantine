@@ -18,27 +18,6 @@ module.exports = {
       ],
     };
 
-    config.module.rules.push({
-      test: /\.(less)$/,
-      use: [
-        'style-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            modules: {
-              localIdentName: '[path][name]__[local]',
-            },
-          },
-        },
-        {
-          loader: 'less-loader',
-          options: {
-            additionalData: "@import 'open-color/open-color.less';",
-          },
-        },
-      ],
-    });
-
     return config;
   },
 };

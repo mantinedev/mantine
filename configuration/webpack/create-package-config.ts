@@ -4,8 +4,6 @@ import webpack from 'webpack';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import tsTransformPaths from '@zerollup/ts-transform-paths';
 
 interface PageConfigInput {
@@ -34,7 +32,7 @@ export default function createPackageConfig(config: PageConfigInput): webpack.Co
 
     optimization: {
       minimize: true,
-      minimizer: [new TerserPlugin({}), new CssMinimizerPlugin()],
+      minimizer: [new TerserPlugin({})],
     },
 
     entry: config.entry || path.join(config.basePath, './src/index.ts'),
@@ -79,30 +77,9 @@ export default function createPackageConfig(config: PageConfigInput): webpack.Co
           ],
           exclude: /node_modules/,
         },
-        {
-          test: /\.(less)$/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            {
-              loader: 'css-loader',
-              options: {
-                importLoaders: 1,
-                modules: {
-                  localIdentName: '[path][name]__[local]',
-                },
-              },
-            },
-            {
-              loader: 'less-loader',
-              options: {
-                additionalData: "@import 'open-color/open-color.less';",
-              },
-            },
-          ],
-        },
       ],
     },
 
-    plugins: [new CaseSensitivePathsPlugin(), new MiniCssExtractPlugin({ filename: 'lib.css' })],
+    plugins: [new CaseSensitivePathsPlugin()],
   };
 }
