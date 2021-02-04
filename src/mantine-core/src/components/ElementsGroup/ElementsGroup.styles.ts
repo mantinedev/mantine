@@ -1,29 +1,30 @@
 import { createUseStyles } from 'react-jss';
 
+export type ElementsGroupPosition = 'right' | 'center' | 'left';
+
+interface ElementsGroupStylesProps {
+  position: ElementsGroupPosition;
+  noWrap: boolean;
+  grow: boolean;
+  spacing: number;
+}
+
+const JUSTIFY_CONTENT = {
+  left: 'flex-start',
+  center: 'center',
+  right: 'flex-end',
+};
+
 export default createUseStyles({
-  elementsGroup: {
+  elementsGroup: (props: ElementsGroupStylesProps) => ({
     display: 'flex',
-    flexWrap: 'wrap',
-    margin: -5,
+    flexWrap: props.noWrap ? 'nowrap' : 'wrap',
+    justifyContent: JUSTIFY_CONTENT[props.position],
+    margin: -1 * (props.spacing / 2),
 
     '& [data-composable]': {
-      margin: 5,
+      margin: props.spacing / 2,
+      flexGrow: props.grow ? 1 : 0,
     },
-  },
-
-  noWrap: {
-    flexWrap: 'nowrap',
-  },
-
-  left: {
-    justifyContent: 'flex-start',
-  },
-
-  center: {
-    justifyContent: 'center',
-  },
-
-  right: {
-    justifyContent: 'flex-end',
-  },
+  }),
 });
