@@ -10,6 +10,8 @@ interface ButtonProps extends DefaultProps, Omit<React.HTMLProps<HTMLButtonEleme
   size?: Size;
   type?: 'submit' | 'button' | 'reset';
   color?: OpenColorTheme;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
 }
 
 const Button = forwardRef(
@@ -21,6 +23,8 @@ const Button = forwardRef(
       type = 'button',
       disabled = false,
       children,
+      leftIcon,
+      rightIcon,
       ...others
     }: ButtonProps,
     ref: React.ForwardedRef<HTMLButtonElement>
@@ -35,7 +39,9 @@ const Button = forwardRef(
         data-composable
         ref={ref}
       >
-        {children}
+        {leftIcon && <span className={classes.leftIcon}>{leftIcon}</span>}
+        <span>{children}</span>
+        {rightIcon && <span className={classes.rightIcon}>{rightIcon}</span>}
       </button>
     );
   }

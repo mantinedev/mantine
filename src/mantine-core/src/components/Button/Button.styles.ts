@@ -40,6 +40,14 @@ const sizes = {
 };
 
 export default createUseStyles({
+  leftIcon: {
+    marginRight: 10,
+  },
+
+  rightIcon: {
+    marginLeft: 10,
+  },
+
   button: (props: ButtonThemeProps) => {
     const colorStyles = Array.isArray(OpenColor[props.color])
       ? {
@@ -87,6 +95,9 @@ export default createUseStyles({
       cursor: 'pointer',
       userSelect: 'none',
       appearance: 'none',
+      lineHeight: 1,
+      display: 'inline-flex',
+      alignItems: 'center',
 
       '&:active': {
         transform: 'translateY(1px)',
