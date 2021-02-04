@@ -1,4 +1,3 @@
-import OpenColor from 'open-color';
 import { createUseStyles } from 'react-jss';
 
 export default createUseStyles({
@@ -11,8 +10,5 @@ export default createUseStyles({
     borderRadius: '50%',
     borderStyle: 'solid',
     animation: '$spin 15s infinite linear',
-    borderColor: OpenColor.blue[4],
-    borderTopColor: OpenColor.blue[0],
-    borderBottomColor: OpenColor.blue[0],
   },
 });
