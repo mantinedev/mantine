@@ -46,8 +46,10 @@ export function useForm<T extends { [key: string]: any }>({
     values,
     errors,
     validate,
-    setField: <K extends keyof T, U extends T[K]>(field: K, value: U) =>
-      setValues((currentValues) => ({ ...currentValues, [field]: value })),
+    setField: <K extends keyof T, U extends T[K]>(field: K, value: U) => {
+      setValues((currentValues) => ({ ...currentValues, [field]: value }));
+      setErrors((currentErrors) => ({ ...currentErrors, [field]: false }));
+    },
     invalidateField: (field: keyof T) =>
       setErrors((currentErrors) => ({ ...currentErrors, [field]: false })),
     onSubmit: (onSubmit: (values: T) => any) => (event: React.FormEvent) => {
