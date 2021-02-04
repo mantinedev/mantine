@@ -7,17 +7,29 @@ interface InputProps extends DefaultProps, Omit<React.HTMLProps<HTMLInputElement
   invalid?: boolean;
   icon?: React.ReactNode;
   inputClassName?: string;
+  variant?: 'default' | 'unstyled';
 }
 
 const Input = forwardRef(
   (
-    { className, invalid = false, icon, style, inputClassName, ...others }: InputProps,
+    {
+      className,
+      invalid = false,
+      variant = 'default',
+      icon,
+      style,
+      inputClassName,
+      ...others
+    }: InputProps,
     ref: React.ForwardedRef<HTMLInputElement>
   ) => {
     const classes = useStyles();
 
     return (
-      <div className={cx(classes.inputWrapper, className)} style={style}>
+      <div
+        className={cx(classes.inputWrapper, classes[`${variant}Variant`], className)}
+        style={style}
+      >
         {icon && <div className={classes.icon}>{icon}</div>}
         <input
           {...others}
