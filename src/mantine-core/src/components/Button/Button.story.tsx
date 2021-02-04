@@ -20,8 +20,26 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as Size[]).map((size) => (
 storiesOf('@mantine/core/Button', module).add('General usage', () => (
   <>
     <ElementsGroup>
-      <Button style={{ marginTop: 10 }} disabled>
-        Disabled
+      <Button disabled>Disabled</Button>
+
+      <Button loading size="xs" color="blue">
+        Book meeting
+      </Button>
+
+      <Button loading size="sm" color="blue">
+        Book meeting
+      </Button>
+
+      <Button loading size="md" color="cyan">
+        Book meeting
+      </Button>
+
+      <Button loading size="lg" color="lime">
+        Book meeting
+      </Button>
+
+      <Button loading size="xl" color="red">
+        Book meeting
       </Button>
     </ElementsGroup>
 

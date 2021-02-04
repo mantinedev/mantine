@@ -48,6 +48,26 @@ export default createUseStyles({
     marginLeft: 10,
   },
 
+  loading: {
+    position: 'relative',
+    pointerEvents: 'none',
+
+    '&::before': {
+      content: '""',
+      borderRadius: 4,
+      position: 'absolute',
+      top: -1,
+      right: -1,
+      left: -1,
+      bottom: -1,
+      backgroundColor: 'rgba(255, 255, 255, .6)',
+    },
+  },
+
+  loader: {
+    marginRight: 10,
+  },
+
   button: (props: ButtonThemeProps) => {
     const colorStyles = Array.isArray(OpenColor[props.color])
       ? {
