@@ -30,7 +30,7 @@ export default function InputWrapper({
   const classes = useStyles();
 
   return (
-    <div className={cx(classes.inputWrapper, className)} {...others}>
+    <div className={cx(classes.inputWrapper, className)} data-composable {...others}>
       {label && (
         <label className={classes.label} htmlFor={id}>
           {label} {required && <span className={classes.required}>*</span>}
