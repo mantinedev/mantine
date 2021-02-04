@@ -4,6 +4,7 @@ import { DefaultProps } from '@mantine/types';
 import Text from '../Text/Text';
 import getMonthDays from './get-month-days';
 import getWeekdaysNames from './get-weekdays-names';
+import isSameMonth from './is-same-month';
 import Day from './Day/Day';
 import useStyles from './Month.styles';
 
@@ -31,11 +32,13 @@ export default function Month({
   const days = getMonthDays(month);
 
   const focusDay = (date: Date, offset: number) => {
-    const ofsetted = new Date(date);
-    ofsetted.setDate(date.getDate() + offset);
+    const offsetted = new Date(date);
+    offsetted.setDate(date.getDate() + offset);
 
-    if (ofsetted.toISOString() in daysRefs.current) {
-      daysRefs.current[ofsetted.toISOString()].focus();
+    if (offsetted.toISOString() in daysRefs.current) {
+      if (!(!isSameMonth(month, offsetted) && disableOutsideEvents)) {
+        daysRefs.current[offsetted.toISOString()].focus();
+      }
     }
   };
 
