@@ -1,0 +1,11 @@
+{
+  "name": "@mantine/demos",
+  "version": "1.0.0",
+  "main": "dist/lib.js",
+  "types": "dist/index.d.ts",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "scripts": {},
+  "peerDependencies": {},
+  "dependencies": {},
+  "devDependencies": {}
+}
