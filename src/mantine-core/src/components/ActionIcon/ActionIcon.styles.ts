@@ -1,7 +1,7 @@
-import OpenColor from 'open-color';
 import { createUseStyles } from 'react-jss';
+import { MantineTheme } from '../../types';
 
-export default createUseStyles({
+export default createUseStyles((theme: MantineTheme) => ({
   actionIcon: {
     border: '1px solid transparent',
     boxSizing: 'border-box',
@@ -16,32 +16,32 @@ export default createUseStyles({
     justifyContent: 'center',
     cursor: 'pointer',
     transition: 'color 100ms ease',
-    color: OpenColor.gray[6],
+    color: theme.colors.gray[6],
     outline: 0,
   },
 
   muted: {
-    '&:hover': { color: OpenColor.gray[7] },
-    '&:focus': { color: OpenColor.gray[7], borderColor: OpenColor.blue[2] },
+    '&:hover': { color: theme.colors.gray[7] },
+    '&:focus': { color: theme.colors.gray[7], borderColor: theme.colors.blue[2] },
   },
 
   danger: {
-    '&:hover': { backgroundColor: OpenColor.red[0], color: OpenColor.red[7] },
-    '&:focus': { color: OpenColor.red[7], borderColor: OpenColor.red[2] },
+    '&:hover': { backgroundColor: theme.colors.red[0], color: theme.colors.red[7] },
+    '&:focus': { color: theme.colors.red[7], borderColor: theme.colors.red[2] },
   },
 
   warning: {
-    '&:hover': { backgroundColor: OpenColor.yellow[0], color: OpenColor.yellow[7] },
-    '&:focus': { color: OpenColor.yellow[7], borderColor: OpenColor.yellow[4] },
+    '&:hover': { backgroundColor: theme.colors.yellow[0], color: theme.colors.yellow[7] },
+    '&:focus': { color: theme.colors.yellow[7], borderColor: theme.colors.yellow[4] },
   },
 
   success: {
-    '&:hover': { backgroundColor: OpenColor.teal[0], color: OpenColor.teal[7] },
-    '&:focus': { color: OpenColor.teal[7], borderColor: OpenColor.teal[2] },
+    '&:hover': { backgroundColor: theme.colors.teal[0], color: theme.colors.teal[7] },
+    '&:focus': { color: theme.colors.teal[7], borderColor: theme.colors.teal[2] },
   },
 
   primary: {
-    '&:hover': { backgroundColor: OpenColor.blue[0], color: OpenColor.blue[7] },
-    '&:focus': { color: OpenColor.blue[7], borderColor: OpenColor.blue[2] },
+    '&:hover': { backgroundColor: theme.colors.blue[0], color: theme.colors.blue[7] },
+    '&:focus': { color: theme.colors.blue[7], borderColor: theme.colors.blue[2] },
   },
-});
+}));

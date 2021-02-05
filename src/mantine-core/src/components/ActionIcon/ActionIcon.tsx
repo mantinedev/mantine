@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { useTheme } from 'react-jss';
 import cx from 'clsx';
 import { DefaultProps, Theme } from '@mantine/types';
 import useStyles from './ActionIcon.styles';
@@ -12,7 +13,7 @@ const ActionIcon = forwardRef(
     { className, theme = 'muted', children, ...others }: ActionIconProps,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
-    const classes = useStyles();
+    const classes = useStyles({ theme: useTheme() });
 
     return (
       <button

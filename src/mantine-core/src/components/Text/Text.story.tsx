@@ -1,9 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import MantineProvider from '../../MantineProvider/MantineProvider';
 import Text from './Text';
 
 storiesOf('@mantine/core', module).add('Text', () => (
-  <div>
+  <MantineProvider>
     <Text>Default text</Text>
     <Text semibold>Semibold default text</Text>
     <Text bold>Bold default text</Text>
@@ -31,5 +32,5 @@ storiesOf('@mantine/core', module).add('Text', () => (
       molestias cupiditate numquam ipsa ratione doloremque repudiandae? Eveniet deleniti consequatur
       officia rem quisquam enim.
     </Text>
-  </div>
+  </MantineProvider>
 ));

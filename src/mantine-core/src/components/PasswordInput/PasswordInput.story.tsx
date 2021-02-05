@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { LockClosedIcon } from '@modulz/radix-icons';
+import MantineProvider from '../../MantineProvider/MantineProvider';
 import PasswordInput from './PasswordInput';
 
 function WrappedPasswordInput(
@@ -15,7 +16,7 @@ function WrappedPasswordInput(
 }
 
 storiesOf('@mantine/core', module).add('PasswordInput', () => (
-  <div>
+  <MantineProvider>
     <WrappedPasswordInput label="Password" required placeholder="password" type="password" />
     <WrappedPasswordInput
       label="Password"
@@ -28,5 +29,5 @@ storiesOf('@mantine/core', module).add('PasswordInput', () => (
       placeholder="With error"
       error="This field is invalid"
     />
-  </div>
+  </MantineProvider>
 ));

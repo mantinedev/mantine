@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { OPEN_COLOR_THEMES } from '@mantine/types';
+import MantineProvider from '../../MantineProvider/MantineProvider';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import Badge from './Badge';
 
@@ -23,9 +24,9 @@ const outlines = OPEN_COLOR_THEMES.map((color) => (
 ));
 
 storiesOf('@mantine/core', module).add('Badge', () => (
-  <>
+  <MantineProvider>
     <ElementsGroup>{badges}</ElementsGroup>
     <ElementsGroup style={{ marginTop: 20 }}>{pills}</ElementsGroup>
     <ElementsGroup style={{ marginTop: 20 }}>{outlines}</ElementsGroup>
-  </>
+  </MantineProvider>
 ));

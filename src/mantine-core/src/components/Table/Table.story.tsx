@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import MantineProvider from '../../MantineProvider/MantineProvider';
 import Table from './Table';
 
 const elements = [
@@ -34,15 +35,17 @@ const table = (
 );
 
 storiesOf('@mantine/core', module).add('Table', () => (
-  <div style={{ maxWidth: 600 }}>
-    <Table>{table}</Table>
-    <div style={{ marginTop: 30 }}>
-      <Table striped>{table}</Table>
+  <MantineProvider>
+    <div style={{ maxWidth: 600 }}>
+      <Table>{table}</Table>
+      <div style={{ marginTop: 30 }}>
+        <Table striped>{table}</Table>
+      </div>
+      <div style={{ marginTop: 30 }}>
+        <Table highlighOnHover striped>
+          {table}
+        </Table>
+      </div>
     </div>
-    <div style={{ marginTop: 30 }}>
-      <Table highlighOnHover striped>
-        {table}
-      </Table>
-    </div>
-  </div>
+  </MantineProvider>
 ));

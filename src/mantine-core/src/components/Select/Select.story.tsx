@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import MantineProvider from '../../MantineProvider/MantineProvider';
 import Select from './Select';
 
 const data = [
@@ -21,7 +22,7 @@ function WrappedSelect(
 }
 
 storiesOf('@mantine/core', module).add('Select', () => (
-  <div>
+  <MantineProvider>
     <WrappedSelect label="Your favourite library" required placeholder="Your favourite library" />
     <WrappedSelect label="Your favourite library" placeholder="Your favourite library" />
     <WrappedSelect label="Your favourite library" required placeholder="Your favourite library" />
@@ -36,5 +37,5 @@ storiesOf('@mantine/core', module).add('Select', () => (
       placeholder="Your favourite library"
       error="Your favourite library cannot be Angular"
     />
-  </div>
+  </MantineProvider>
 ));

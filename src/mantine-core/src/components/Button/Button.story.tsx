@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { OPEN_COLOR_THEMES, Size } from '@mantine/types';
+import MantineProvider from '../../MantineProvider/MantineProvider';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import Button from './Button';
 
@@ -18,7 +19,7 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as Size[]).map((size) => (
 ));
 
 storiesOf('@mantine/core', module).add('Button', () => (
-  <>
+  <MantineProvider>
     <ElementsGroup>
       <Button disabled>Disabled</Button>
 
@@ -71,5 +72,5 @@ storiesOf('@mantine/core', module).add('Button', () => (
         Open in new tab
       </Button>
     </ElementsGroup>
-  </>
+  </MantineProvider>
 ));
