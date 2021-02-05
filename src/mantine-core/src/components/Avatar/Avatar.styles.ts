@@ -5,6 +5,7 @@ export default createUseStyles((theme: MantineTheme) => ({
   avatar: {
     boxSizing: 'border-box',
     position: 'relative',
+    userSelect: 'none',
   },
 
   image: {
