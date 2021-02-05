@@ -1,5 +1,5 @@
 import OpenColor from 'open-color';
-import { MantineTheme } from './types';
+import { MantineTheme } from '@mantine/types';
 
 const defaultTheme: MantineTheme = {
   colors: OpenColor,

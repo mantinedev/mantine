@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme } from '../../types';
+import { MantineTheme } from '@mantine/types';
 
 export default createUseStyles((theme: MantineTheme) => ({
   actionIcon: {
