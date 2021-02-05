@@ -61,4 +61,4 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
   );
 }
 
-storiesOf('@mantine/tag-picker/TagPicker', module).add('General Usage', () => <TagPickerWrapper />);
+storiesOf('@mantine/tag-picker', module).add('General Usage', () => <TagPickerWrapper />);
