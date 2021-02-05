@@ -66,6 +66,7 @@ export default createUseStyles({
 
   loader: {
     marginRight: 10,
+    opacity: 0.6,
   },
 
   button: (props: ButtonThemeProps) => {
