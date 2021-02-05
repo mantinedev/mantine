@@ -1,3 +1,6 @@
+export { default as MantineProvider } from './MantineProvider/MantineProvider';
+export { MantineTheme } from './types';
+
 export { default as ActionIcon } from './components/ActionIcon/ActionIcon';
 export { default as Anchor } from './components/Anchor/Anchor';
 export { default as Avatar } from './components/Avatar/Avatar';
