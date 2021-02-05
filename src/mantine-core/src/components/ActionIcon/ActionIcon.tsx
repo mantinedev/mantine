@@ -4,7 +4,7 @@ import cx from 'clsx';
 import { DefaultProps, Theme } from '@mantine/types';
 import useStyles from './ActionIcon.styles';
 
-interface ActionIconProps extends DefaultProps, React.HTMLProps<HTMLButtonElement> {
+interface ActionIconProps extends DefaultProps, Omit<React.HTMLProps<HTMLButtonElement>, 'ref'> {
   theme?: Theme;
 }
 
