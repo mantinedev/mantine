@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
+import { useTheme } from 'react-jss';
 import cx from 'clsx';
 import { AvatarIcon } from '@modulz/radix-icons';
 import { DefaultProps } from '@mantine/types';
 import useStyles from './Avatar.styles';
 
-interface AvatarProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
+interface AvatarProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>, 'ref'> {
   src: string;
   size?: number;
   alt?: string;
 }
 
 export default function Avatar({ className, size = 60, style, src, alt, ...others }: AvatarProps) {
-  const classes = useStyles();
+  const classes = useStyles({ theme: useTheme() });
   const [error, setError] = useState(!src);
 
   return (

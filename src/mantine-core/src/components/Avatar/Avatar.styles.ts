@@ -1,7 +1,7 @@
-import OpenColor from 'open-color';
 import { createUseStyles } from 'react-jss';
+import { MantineTheme } from '@mantine/types';
 
-export default createUseStyles({
+export default createUseStyles((theme: MantineTheme) => ({
   avatar: {
     boxSizing: 'border-box',
     position: 'relative',
@@ -14,7 +14,7 @@ export default createUseStyles({
   },
 
   placeholder: {
-    backgroundColor: OpenColor.gray[1],
+    backgroundColor: theme.colors.gray[1],
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -23,6 +23,6 @@ export default createUseStyles({
   placeholderIcon: {
     width: '70%',
     height: '70%',
-    color: OpenColor.gray[5],
+    color: theme.colors.gray[5],
   },
-});
+}));
