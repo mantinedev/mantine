@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import Button from '../Button/Button';
 import ElementsGroup from './ElementsGroup';
 
-storiesOf('@mantine/core/ElementsGroup', module).add('General Usage', () => (
+storiesOf('@mantine/core', module).add('ElementsGroup', () => (
   <div>
     <ElementsGroup position="left">
       <Button>Button 1</Button>

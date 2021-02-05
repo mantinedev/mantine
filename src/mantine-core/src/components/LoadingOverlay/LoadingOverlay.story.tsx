@@ -20,6 +20,4 @@ function LoadingOverlayDemo() {
   );
 }
 
-storiesOf('@mantine/core/LoadingOverlay', module).add('General Usage', () => (
-  <LoadingOverlayDemo />
-));
+storiesOf('@mantine/core', module).add('LoadingOverlay', () => <LoadingOverlayDemo />);

@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import ErrorNotification from './ErrorNotification';
 
-storiesOf('@mantine/core/ErrorNotification', module).add('General Usage', () => (
+storiesOf('@mantine/core', module).add('ErrorNotification', () => (
   <div style={{ maxWidth: 400 }}>
     <ErrorNotification
       title="An error occured"

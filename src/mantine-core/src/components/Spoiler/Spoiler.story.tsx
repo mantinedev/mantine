@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import Text from '../Text/Text';
 import Spoiler from './Spoiler';
 
-storiesOf('@mantine/core/Spoiler', module).add('General Usage', () => (
+storiesOf('@mantine/core', module).add('Spoiler', () => (
   <div style={{ maxWidth: 400 }}>
     <Spoiler showLabel="Show more" hideLabel="Hide" maxHeight={100}>
       <Text>

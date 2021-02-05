@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { LockClosedIcon } from '@modulz/radix-icons';
 import Input from './Input';
 
-storiesOf('@mantine/core/Input', module).add('General Usage', () => (
+storiesOf('@mantine/core', module).add('Input', () => (
   <div style={{ maxWidth: 300 }}>
     <Input placeholder="Input" />
     <Input placeholder="Input" invalid style={{ marginTop: 15 }} />

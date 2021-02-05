@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Hr from './Hr';
 
-storiesOf('@mantine/core/Hr', module).add('General Usage', () => (
+storiesOf('@mantine/core', module).add('Hr', () => (
   <>
     <Hr />
     <Hr type="dotted" style={{ marginTop: 15 }} />

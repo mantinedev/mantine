@@ -10,7 +10,7 @@ import {
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import ActionIcon from './ActionIcon';
 
-storiesOf('@mantine/core/ActionIcon', module).add('General Usage', () => (
+storiesOf('@mantine/core', module).add('ActionIcon', () => (
   <ElementsGroup>
     <ActionIcon>
       <GearIcon />

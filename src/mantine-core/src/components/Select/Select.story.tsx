@@ -20,7 +20,7 @@ function WrappedSelect(
   );
 }
 
-storiesOf('@mantine/core/Select', module).add('General usage', () => (
+storiesOf('@mantine/core', module).add('Select', () => (
   <div>
     <WrappedSelect label="Your favourite library" required placeholder="Your favourite library" />
     <WrappedSelect label="Your favourite library" placeholder="Your favourite library" />

@@ -14,7 +14,7 @@ function WrappedPasswordInput(
   );
 }
 
-storiesOf('@mantine/core/PasswordInput', module).add('General usage', () => (
+storiesOf('@mantine/core', module).add('PasswordInput', () => (
   <div>
     <WrappedPasswordInput label="Password" required placeholder="password" type="password" />
     <WrappedPasswordInput

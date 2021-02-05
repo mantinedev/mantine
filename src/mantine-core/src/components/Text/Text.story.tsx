@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Text from './Text';
 
-storiesOf('@mantine/core/Text', module).add('General usage', () => (
+storiesOf('@mantine/core', module).add('Text', () => (
   <div>
     <Text>Default text</Text>
     <Text semibold>Semibold default text</Text>

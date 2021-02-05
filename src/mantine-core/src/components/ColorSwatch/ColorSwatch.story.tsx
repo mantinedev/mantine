@@ -7,6 +7,6 @@ import ColorSwatch from './ColorSwatch';
 
 const swatches = OPEN_COLOR_THEMES.map((theme) => <ColorSwatch color={oc[theme][5]} key={theme} />);
 
-storiesOf('@mantine/core/ColorSwatch', module).add('General Usage', () => (
+storiesOf('@mantine/core', module).add('ColorSwatch', () => (
   <ElementsGroup>{swatches}</ElementsGroup>
 ));

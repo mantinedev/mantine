@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Title from './Title';
 
-storiesOf('@mantine/core/Title', module).add('General usage', () => (
+storiesOf('@mantine/core', module).add('Title', () => (
   <div>
     <Title order={1}>h1 title</Title>
     <Title order={2}>h2 title</Title>

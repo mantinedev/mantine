@@ -9,7 +9,7 @@ import {
 } from '@modulz/radix-icons';
 import Notification from './Notification';
 
-storiesOf('@mantine/core/Notification', module).add('General Usage', () => (
+storiesOf('@mantine/core', module).add('Notification', () => (
   <div style={{ maxWidth: 400 }}>
     <Notification
       theme="muted"

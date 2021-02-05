@@ -14,7 +14,7 @@ function WrappedTextInput(
   );
 }
 
-storiesOf('@mantine/core/TextInput', module).add('General usage', () => (
+storiesOf('@mantine/core', module).add('TextInput', () => (
   <div>
     <WrappedTextInput label="Email" required placeholder="Email" type="email" />
     <WrappedTextInput label="Your twitter" placeholder="Twitter" icon={<TwitterLogoIcon />} />

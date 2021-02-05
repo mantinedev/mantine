@@ -7,7 +7,7 @@ function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' 
   return <Switch value={value} onChange={onChange} {...props} />;
 }
 
-storiesOf('@mantine/core/Switch', module).add('General Usage', () => (
+storiesOf('@mantine/core', module).add('Switch', () => (
   <>
     <SwitchWrapper label="Turn on the notifications" />
     <SwitchWrapper label="Turn on the notifications" disabled style={{ marginTop: 15 }} />

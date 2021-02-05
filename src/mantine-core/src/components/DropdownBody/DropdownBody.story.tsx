@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import Text from '../Text/Text';
 import DropdownBody from './DropdownBody';
 
-storiesOf('@mantine/core/DropdownBody', module).add('General Usage', () => (
+storiesOf('@mantine/core', module).add('DropdownBody', () => (
   <DropdownBody style={{ width: 260, height: 300 }}>
     <Text>
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque, temporibus excepturi, placeat

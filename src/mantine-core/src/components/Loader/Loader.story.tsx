@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Loader from './Loader';
 
-storiesOf('@mantine/core/Loader', module).add('General Usage', () => (
+storiesOf('@mantine/core', module).add('Loader', () => (
   <>
     <Loader color="teal" style={{ marginTop: 20 }} size={60} />
     <Loader color="indigo" style={{ marginTop: 20 }} size={42} />

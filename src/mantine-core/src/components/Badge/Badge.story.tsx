@@ -22,7 +22,7 @@ const outlines = OPEN_COLOR_THEMES.map((color) => (
   </Badge>
 ));
 
-storiesOf('@mantine/core/Badge', module).add('General Usage', () => (
+storiesOf('@mantine/core', module).add('Badge', () => (
   <>
     <ElementsGroup>{badges}</ElementsGroup>
     <ElementsGroup style={{ marginTop: 20 }}>{pills}</ElementsGroup>
