@@ -4,6 +4,7 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { DefaultProps, OpenColorTheme, Size } from '@mantine/types';
+import { useMantineTheme } from '@mantine/theme';
 import Loader from '../Loader/Loader';
 import useStyles from './Button.styles';
 
@@ -40,7 +41,7 @@ const Button = forwardRef(
     }: ButtonProps,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
-    const classes = useStyles({ color, size });
+    const classes = useStyles({ color, size, theme: useMantineTheme() });
 
     return (
       <button

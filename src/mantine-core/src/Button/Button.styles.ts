@@ -1,6 +1,6 @@
-import OpenColor from 'open-color';
-import { OpenColorTheme, Size } from '@mantine/types';
 import { createUseStyles } from 'react-jss';
+import { OpenColorTheme, Size } from '@mantine/types';
+import { theming, MantineTheme } from '@mantine/theme';
 
 interface ButtonThemeProps {
   color?: OpenColorTheme;
@@ -39,98 +39,101 @@ const sizes = {
   },
 };
 
-export default createUseStyles({
-  leftIcon: {
-    marginRight: 10,
-  },
-
-  rightIcon: {
-    marginLeft: 10,
-  },
-
-  loading: {
-    position: 'relative',
-    pointerEvents: 'none',
-
-    '&::before': {
-      content: '""',
-      borderRadius: 4,
-      position: 'absolute',
-      top: -1,
-      right: -1,
-      left: -1,
-      bottom: -1,
-      backgroundColor: 'rgba(255, 255, 255, .6)',
+export default createUseStyles(
+  (theme: MantineTheme) => ({
+    leftIcon: {
+      marginRight: 10,
     },
-  },
 
-  loader: {
-    marginRight: 10,
-    opacity: 0.6,
-  },
+    rightIcon: {
+      marginLeft: 10,
+    },
 
-  button: (props: ButtonThemeProps) => {
-    const colorStyles = Array.isArray(OpenColor[props.color])
-      ? {
-          backgroundColor: OpenColor[props.color][5],
-          textShadow: `1px 1px 0 ${OpenColor[props.color][7]}`,
-          color: OpenColor.white,
+    loading: {
+      position: 'relative',
+      pointerEvents: 'none',
 
-          '&:focus': {
-            boxShadow: `0 0 1px 3px ${OpenColor[props.color][2]}`,
-          },
-
-          '&:hover': {
-            backgroundColor: OpenColor[props.color][6],
-          },
-        }
-      : {
-          backgroundColor: OpenColor.white,
-          color: OpenColor.gray[7],
-          borderColor: OpenColor.gray[4],
-
-          '&:focus': {
-            borderColor: OpenColor.blue[6],
-            boxShadow: `0 0 4px ${OpenColor.gray[3]}`,
-          },
-
-          '&:hover': {
-            backgroundColor: OpenColor.gray[0],
-          },
-        };
-
-    return {
-      ...colorStyles,
-      ...sizes[props.size],
-
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
-      fontFamily: 'Roboto, sans-serif',
-      boxSizing: 'border-box',
-      border: '1px solid transparent',
-      outline: 0,
-      borderRadius: 4,
-      textTransform: 'uppercase',
-      fontWeight: 'bold',
-      letterSpacing: 0.5,
-      cursor: 'pointer',
-      userSelect: 'none',
-      appearance: 'none',
-      lineHeight: 1,
-      display: 'inline-flex',
-      alignItems: 'center',
-
-      '&:active': {
-        transform: 'translateY(1px)',
+      '&::before': {
+        content: '""',
+        borderRadius: 4,
+        position: 'absolute',
+        top: -1,
+        right: -1,
+        left: -1,
+        bottom: -1,
+        backgroundColor: 'rgba(255, 255, 255, .6)',
       },
+    },
 
-      '&:disabled': {
-        borderColor: 'transparent',
-        backgroundColor: OpenColor.gray[3],
-        color: OpenColor.gray[6],
-        textShadow: 'none',
-        pointerEvents: 'none',
-      },
-    };
-  },
-});
+    loader: {
+      marginRight: 10,
+      opacity: 0.6,
+    },
+
+    button: (props: ButtonThemeProps) => {
+      const colorStyles = Array.isArray(theme.colors[props.color])
+        ? {
+            backgroundColor: theme.colors[props.color][5],
+            textShadow: `1px 1px 0 ${theme.colors[props.color][7]}`,
+            color: theme.colors.white,
+
+            '&:focus': {
+              boxShadow: `0 0 1px 3px ${theme.colors[props.color][2]}`,
+            },
+
+            '&:hover': {
+              backgroundColor: theme.colors[props.color][6],
+            },
+          }
+        : {
+            backgroundColor: theme.colors.white,
+            color: theme.colors.gray[7],
+            borderColor: theme.colors.gray[4],
+
+            '&:focus': {
+              borderColor: theme.colors.blue[6],
+              boxShadow: `0 0 4px ${theme.colors.gray[3]}`,
+            },
+
+            '&:hover': {
+              backgroundColor: theme.colors.gray[0],
+            },
+          };
+
+      return {
+        ...colorStyles,
+        ...sizes[props.size],
+
+        WebkitFontSmoothing: 'antialiased',
+        MozOsxFontSmoothing: 'grayscale',
+        fontFamily: 'Roboto, sans-serif',
+        boxSizing: 'border-box',
+        border: '1px solid transparent',
+        outline: 0,
+        borderRadius: 4,
+        textTransform: 'uppercase',
+        fontWeight: 'bold',
+        letterSpacing: 0.5,
+        cursor: 'pointer',
+        userSelect: 'none',
+        appearance: 'none',
+        lineHeight: 1,
+        display: 'inline-flex',
+        alignItems: 'center',
+
+        '&:active': {
+          transform: 'translateY(1px)',
+        },
+
+        '&:disabled': {
+          borderColor: 'transparent',
+          backgroundColor: theme.colors.gray[3],
+          color: theme.colors.gray[6],
+          textShadow: 'none',
+          pointerEvents: 'none',
+        },
+      };
+    },
+  }),
+  { theming }
+);
