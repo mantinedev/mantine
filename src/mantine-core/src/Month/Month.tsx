@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import cx from 'clsx';
-import { DefaultProps } from '@mantine/types';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import Text from '../Text/Text';
 import getMonthDays from './get-month-days';
 import getWeekdaysNames from './get-weekdays-names';
@@ -25,19 +25,20 @@ export default function Month({
   autoFocus = false,
   disableOutsideEvents = false,
   locale = 'en',
+  themeOverride,
   ...others
 }: MonthProps) {
-  const classes = useStyles();
+  const classes = useStyles({ theme: useMantineTheme() });
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
 
-  const focusDay = (date: Date, offset: number) => {
-    const offsetted = new Date(date);
-    offsetted.setDate(date.getDate() + offset);
+  const focusDay = (date: Date, diff: number) => {
+    const offset = new Date(date);
+    offset.setDate(date.getDate() + diff);
 
-    if (offsetted.toISOString() in daysRefs.current) {
-      if (!(!isSameMonth(month, offsetted) && disableOutsideEvents)) {
-        daysRefs.current[offsetted.toISOString()].focus();
+    if (offset.toISOString() in daysRefs.current) {
+      if (!(!isSameMonth(month, offset) && disableOutsideEvents)) {
+        daysRefs.current[offset.toISOString()].focus();
       }
     }
   };
@@ -112,6 +113,7 @@ export default function Month({
             selected={isSelected}
             disableOutsideEvents={disableOutsideEvents}
             onKeyDown={handleKeyDown}
+            themeOverride={themeOverride}
           />
         </td>
       );

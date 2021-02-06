@@ -1,47 +1,50 @@
-import OpenColor from 'open-color';
 import { createUseStyles } from 'react-jss';
+import { theming, MantineTheme } from '@mantine/theme';
 
-export default createUseStyles({
-  disableOutsideEvents: {},
+export default createUseStyles(
+  (theme: MantineTheme) => ({
+    disableOutsideEvents: {},
 
-  day: {
-    WebkitFontSmoothing: 'antialiased',
-    MozOsxFontSmoothing: 'grayscale',
-    fontFamily: 'Roboto, sans-serif',
-    backgroundColor: 'transparent',
-    width: 30,
-    height: 30,
-    lineHeight: '30px',
-    padding: 0,
-    borderRadius: 4,
-    border: '1px solid transparent',
-    cursor: 'pointer',
-    fontSize: 13,
-    userSelect: 'none',
+    day: {
+      WebkitFontSmoothing: 'antialiased',
+      MozOsxFontSmoothing: 'grayscale',
+      fontFamily: theme.fontFamily,
+      backgroundColor: 'transparent',
+      width: 30,
+      height: 30,
+      lineHeight: '30px',
+      padding: 0,
+      borderRadius: 4,
+      border: '1px solid transparent',
+      cursor: 'pointer',
+      fontSize: theme.fontSizes.sm,
+      userSelect: 'none',
 
-    '&:hover': {
-      backgroundColor: OpenColor.gray[0],
+      '&:hover': {
+        backgroundColor: theme.colors.gray[0],
+      },
+      '&:focus': {
+        outline: '0',
+        borderColor: theme.colors.blue[6],
+      },
     },
-    '&:focus': {
-      outline: '0',
-      borderColor: OpenColor.blue[6],
+
+    weekend: {
+      color: theme.colors.red[7],
     },
-  },
 
-  weekend: {
-    color: OpenColor.red[7],
-  },
+    outside: {
+      color: theme.colors.gray[4],
 
-  outside: {
-    color: OpenColor.gray[4],
-
-    '&$disableOutsideEvents': {
-      pointerEvents: 'none',
+      '&$disableOutsideEvents': {
+        pointerEvents: 'none',
+      },
     },
-  },
 
-  selected: {
-    backgroundColor: OpenColor.blue[0],
-    color: OpenColor.blue[6],
-  },
-});
+    selected: {
+      backgroundColor: theme.colors.blue[0],
+      color: theme.colors.blue[6],
+    },
+  }),
+  { theming }
+);
