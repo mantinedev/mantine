@@ -5,7 +5,7 @@ export const DEFAULT_THEME: MantineTheme = {
   __mantine_theme: true,
   colors: OpenColor,
   fontFamily: 'Roboto, sans-serif',
-  primaryColor: 'blue',
+  primaryColor: 'green',
 
   fontSizes: {
     xs: 12,
@@ -13,6 +13,14 @@ export const DEFAULT_THEME: MantineTheme = {
     md: 16,
     lg: 18,
     xl: 20,
+  },
+
+  spacing: {
+    xs: 10,
+    sm: 12,
+    md: 16,
+    lg: 20,
+    xl: 24,
   },
 
   headings: {

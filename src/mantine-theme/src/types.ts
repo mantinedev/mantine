@@ -21,6 +21,14 @@ export interface MantineTheme {
     xl: number;
   };
 
+  spacing: {
+    xs: number;
+    sm: number;
+    md: number;
+    lg: number;
+    xl: number;
+  };
+
   headings: {
     h1: HeadingStyle;
     h2: HeadingStyle;
