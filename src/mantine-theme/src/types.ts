@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type OpenColor from 'open-color';
 
 export interface MantineTheme {
@@ -10,4 +11,8 @@ export type MantineThemeOverride = Partial<Omit<MantineTheme, '__mantine_theme'>
 
 export type MantineColor = Exclude<keyof OpenColor, 'white' | 'black'>;
 
-export type MantineColorTheme = 'primary' | 'danger' | 'warning' | 'success' | 'muted';
+export interface DefaultProps {
+  className?: string;
+  style?: CSSProperties;
+  themeOverride?: MantineThemeOverride;
+}
