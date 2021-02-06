@@ -1,59 +1,63 @@
-import OpenColor from 'open-color';
 import { createUseStyles } from 'react-jss';
+import { theming, MantineTheme, MantineColor } from '@mantine/theme';
 
-export default createUseStyles({
-  wrapper: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-
-  switch: {
-    backgroundColor: OpenColor.gray[2],
-    border: `1px solid ${OpenColor.gray[3]}`,
-    height: 18,
-    width: 36,
-    borderRadius: 36,
-    padding: '0 2px',
-    cursor: 'pointer',
-    transition: 'background-color 150ms ease, border-color 100ms ease',
-    outline: 0,
-    boxSizing: 'border-box',
-
-    '&::before': {
-      content: "''",
-      display: 'block',
-      backgroundColor: OpenColor.white,
-      height: 12,
-      width: 12,
-      borderRadius: 12,
-      border: `1px solid ${OpenColor.gray[3]}`,
-      transition: 'transform 150ms ease',
+export default createUseStyles(
+  (theme: MantineTheme) => ({
+    wrapper: {
+      display: 'flex',
+      alignItems: 'center',
     },
 
-    '&:focus': {
-      boxShadow: `0 0 0 2px ${OpenColor.blue[2]}`,
+    switch: {
+      backgroundColor: theme.colors.gray[2],
+      border: `1px solid ${theme.colors.gray[3]}`,
+      height: 22,
+      width: 42,
+      borderRadius: 36,
+      padding: '0 2px',
+      cursor: 'pointer',
+      transition: 'background-color 150ms ease, border-color 100ms ease',
+      outline: 0,
+      boxSizing: 'border-box',
+
+      '&::before': {
+        content: "''",
+        display: 'block',
+        backgroundColor: theme.colors.white,
+        height: 14,
+        width: 14,
+        borderRadius: 14,
+        border: `1px solid ${theme.colors.gray[3]}`,
+        transition: 'transform 150ms ease',
+      },
+
+      '&:focus': {
+        boxShadow: ({ color }: { color: MantineColor }) =>
+          `0 0 0 2px ${theme.colors[color || theme.primaryColor][2]}`,
+      },
+
+      '&:disabled::before': {
+        backgroundColor: theme.colors.gray[2],
+      },
     },
 
-    '&:disabled::before': {
-      backgroundColor: OpenColor.gray[2],
+    checked: ({ color }: { color: MantineColor }) => ({
+      backgroundColor: theme.colors[color || theme.primaryColor][6],
+      borderColor: theme.colors[color || theme.primaryColor][5],
+
+      '&::before': {
+        transform: 'translateX(21px)',
+        borderColor: theme.colors[color || theme.primaryColor][6],
+      },
+    }),
+
+    label: {
+      fontFamily: theme.fontFamily,
+      WebkitFontSmoothing: 'antialiased',
+      MozOsxFontSmoothing: 'grayscale',
+      marginLeft: theme.spacing.sm,
+      fontSize: theme.fontSizes.sm,
     },
-  },
-
-  checked: {
-    backgroundColor: OpenColor.blue[6],
-    borderColor: OpenColor.blue[5],
-
-    '&::before': {
-      transform: 'translateX(17px)',
-      borderColor: OpenColor.blue[6],
-    },
-  },
-
-  label: {
-    fontFamily: 'Roboto, sans-serif',
-    WebkitFontSmoothing: 'antialiased',
-    MozOsxFontSmoothing: 'grayscale',
-    marginLeft: 10,
-    fontSize: 14,
-  },
-});
+  }),
+  { theming }
+);
