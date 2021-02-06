@@ -8,17 +8,17 @@ storiesOf('@mantine/core', module).add('Text', () => (
     <Text>Default text</Text>
     <Text semibold>Semibold default text</Text>
     <Text bold>Bold default text</Text>
-    <Text theme="success">Success text</Text>
-    <Text theme="warning">Warning text</Text>
-    <Text theme="primary">Primary text</Text>
-    <Text theme="danger">Danger text</Text>
-    <Text theme="muted">Muted text</Text>
+    <Text color="teal">Success text</Text>
+    <Text color="yellow">Warning text</Text>
+    <Text color="blue">Primary text</Text>
+    <Text color="red">Danger text</Text>
+    <Text color="gray">Muted text</Text>
     <Text size="xs">xs text</Text>
     <Text size="sm">sm text</Text>
     <Text size="md">md text</Text>
     <Text size="lg">lg text</Text>
     <Text size="xl">xl text</Text>
-    <Text component="p" theme="muted" bold>
+    <Text component="p" color="gray" bold>
       Bold muted paragraph text
     </Text>
     <Text>

@@ -1,13 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, Size, Theme } from '@mantine/types';
+import { useMantineTheme, DefaultProps, MantineColor, MantineSize } from '@mantine/theme';
 import useStyles from './Text.styles';
 
 interface TextProps extends DefaultProps {
   component?: React.ElementType<any>;
   children?: React.ReactNode;
-  size?: Size;
-  theme?: Theme;
+  size?: MantineSize;
+  color?: MantineColor;
   bold?: boolean;
   semibold?: boolean;
 }
@@ -19,10 +19,11 @@ export default function Text<T = Record<string, any>>({
   size = 'md',
   bold = false,
   semibold = false,
-  theme,
+  color,
+  themeOverride,
   ...others
 }: TextProps & T) {
-  const classes = useStyles();
+  const classes = useStyles({ color, size, theme: useMantineTheme(themeOverride) });
 
   return React.createElement(
     component,
@@ -30,7 +31,6 @@ export default function Text<T = Record<string, any>>({
       className: cx(
         classes.text,
         classes[size],
-        classes[theme],
         { [classes.bold]: bold, [classes.semibold]: semibold },
         className
       ),
