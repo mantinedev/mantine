@@ -1,4 +1,10 @@
-export type { MantineTheme, MantineThemeOverride, MantineColor, DefaultProps } from './types';
+export type {
+  MantineTheme,
+  MantineThemeOverride,
+  MantineColor,
+  MantineSize,
+  DefaultProps,
+} from './types';
 
 export { MantineProvider } from './MantineProvider';
 export { useMantineTheme } from './use-mantine-theme';

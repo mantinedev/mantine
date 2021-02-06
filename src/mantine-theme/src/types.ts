@@ -1,6 +1,8 @@
 import type { CSSProperties } from 'react';
 import type OpenColor from 'open-color';
 
+export type MantineSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
 export type MantineColor = Exclude<keyof OpenColor, 'white' | 'black'>;
 
 type HeadingStyle = [number, number];
@@ -10,6 +12,15 @@ export interface MantineTheme {
   colors: typeof OpenColor;
   fontFamily: string;
   primaryColor: MantineColor;
+
+  fontSizes: {
+    xs: number;
+    sm: number;
+    md: number;
+    lg: number;
+    xl: number;
+  };
+
   headings: {
     h1: HeadingStyle;
     h2: HeadingStyle;

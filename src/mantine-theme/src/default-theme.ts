@@ -6,6 +6,15 @@ export const DEFAULT_THEME: MantineTheme = {
   colors: OpenColor,
   fontFamily: 'Roboto, sans-serif',
   primaryColor: 'blue',
+
+  fontSizes: {
+    xs: 12,
+    sm: 14,
+    md: 16,
+    lg: 18,
+    xl: 20,
+  },
+
   headings: {
     h1: [38, 1.2],
     h2: [30, 1.3],
