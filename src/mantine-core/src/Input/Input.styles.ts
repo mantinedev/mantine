@@ -22,7 +22,7 @@ export default createUseStyles(
 
         '&:focus': {
           outline: 'none',
-          borderColor: theme.colors.blue[6],
+          borderColor: theme.colors[theme.primaryColor][6],
           boxShadow: `0 0 4px ${theme.colors.gray[3]}`,
         },
       },
