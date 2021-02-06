@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { nanoid } from 'nanoid';
-import { OPEN_COLOR_THEMES } from '@mantine/types';
 import oc from 'open-color';
+import { OPEN_COLOR_THEMES } from '@mantine/types';
+import { MantineProvider } from '@mantine/theme';
 import TagPicker from './TagPickerContainer';
 import { TagPickerTag } from './types';
 
@@ -61,4 +62,8 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
   );
 }
 
-storiesOf('@mantine/tag-picker', module).add('General Usage', () => <TagPickerWrapper />);
+storiesOf('@mantine/tag-picker', module).add('General Usage', () => (
+  <MantineProvider>
+    <TagPickerWrapper />
+  </MantineProvider>
+));
