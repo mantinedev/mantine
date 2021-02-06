@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps } from '@mantine/types';
+import { DefaultProps } from '@mantine/theme';
 import Input from '../Input/Input';
 import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
 
@@ -28,6 +28,7 @@ const TextInput = forwardRef(
       style,
       onChange,
       icon,
+      themeOverride,
       ...others
     }: TextInputProps,
     ref: React.ForwardedRef<HTMLInputElement>
@@ -42,6 +43,7 @@ const TextInput = forwardRef(
         error={error}
         className={className}
         style={style}
+        themeOverride={themeOverride}
       >
         <Input
           {...others}
@@ -52,6 +54,7 @@ const TextInput = forwardRef(
           onChange={(event) => onChange(event.currentTarget.value)}
           invalid={!!error}
           icon={icon}
+          themeOverride={themeOverride}
         />
       </InputWrapper>
     );

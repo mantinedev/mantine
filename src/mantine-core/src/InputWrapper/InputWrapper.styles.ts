@@ -1,26 +1,29 @@
-import OpenColor from 'open-color';
 import { createUseStyles } from 'react-jss';
+import { MantineTheme, theming } from '@mantine/theme';
 
-export default createUseStyles({
-  inputWrapper: {
-    WebkitFontSmoothing: 'antialiased',
-    MozOsxFontSmoothing: 'grayscale',
-    fontFamily: 'Roboto, sans-serif',
-  },
+export default createUseStyles(
+  (theme: MantineTheme) => ({
+    inputWrapper: {
+      WebkitFontSmoothing: 'antialiased',
+      MozOsxFontSmoothing: 'grayscale',
+      fontFamily: theme.fontFamily,
+    },
 
-  label: {
-    display: 'block',
-    marginBottom: 5,
-    fontSize: 14,
-    fontWeight: 500,
-    color: OpenColor.gray[6],
-  },
+    label: {
+      display: 'block',
+      marginBottom: 5,
+      fontSize: 14,
+      fontWeight: 500,
+      color: theme.colors.gray[6],
+    },
 
-  error: {
-    marginTop: 4,
-  },
+    error: {
+      marginTop: 4,
+    },
 
-  required: {
-    color: OpenColor.red[7],
-  },
-});
+    required: {
+      color: theme.colors.red[7],
+    },
+  }),
+  { theming }
+);

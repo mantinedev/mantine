@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
-import { DefaultProps } from '@mantine/types';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './Input.styles';
 
 interface InputProps extends DefaultProps, Omit<React.HTMLProps<HTMLInputElement>, 'ref'> {
@@ -19,11 +19,12 @@ const Input = forwardRef(
       icon,
       style,
       inputClassName,
+      themeOverride,
       ...others
     }: InputProps,
     ref: React.ForwardedRef<HTMLInputElement>
   ) => {
-    const classes = useStyles();
+    const classes = useStyles({ theme: useMantineTheme(themeOverride) });
 
     return (
       <div

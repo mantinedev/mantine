@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps } from '@mantine/types/src';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import Text from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
@@ -25,9 +25,10 @@ export default function InputWrapper({
   required,
   id,
   error,
+  themeOverride,
   ...others
 }: InputWrapperProps) {
-  const classes = useStyles();
+  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
 
   return (
     <div className={cx(classes.inputWrapper, className)} data-composable {...others}>
