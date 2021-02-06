@@ -7,7 +7,7 @@ import type OpenColor from 'open-color';
 import { useTheme } from './theme-context';
 import { MantineTheme, MantineThemeOverride } from './types';
 
-export function useMantineTheme(themeOverride: MantineThemeOverride) {
+export function useMantineTheme(themeOverride?: MantineThemeOverride) {
   const theme = useTheme<MantineTheme>();
 
   if (!theme.__mantine_theme) {
