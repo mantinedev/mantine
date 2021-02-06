@@ -4,6 +4,7 @@
  * */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type OpenColor from 'open-color';
+
 import { useTheme } from './theme-context';
 import { MantineTheme, MantineThemeOverride } from './types';
 
