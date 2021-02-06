@@ -1,12 +1,14 @@
 import { createUseStyles } from 'react-jss';
+import { theming, MantineTheme, MantineSize } from '@mantine/theme';
 
 export type ElementsGroupPosition = 'right' | 'center' | 'left';
+export type ElementsGroupSpacing = MantineSize | number;
 
 interface ElementsGroupStylesProps {
   position: ElementsGroupPosition;
   noWrap: boolean;
   grow: boolean;
-  spacing: number;
+  spacing: ElementsGroupSpacing;
 }
 
 const JUSTIFY_CONTENT = {
@@ -15,16 +17,24 @@ const JUSTIFY_CONTENT = {
   right: 'flex-end',
 };
 
-export default createUseStyles({
-  elementsGroup: (props: ElementsGroupStylesProps) => ({
-    display: 'flex',
-    flexWrap: props.noWrap ? 'nowrap' : 'wrap',
-    justifyContent: JUSTIFY_CONTENT[props.position],
-    margin: -1 * (props.spacing / 2),
+export default createUseStyles(
+  (theme: MantineTheme) => ({
+    elementsGroup: (props: ElementsGroupStylesProps) => {
+      const spacing =
+        typeof props.spacing === 'number' ? props.spacing / 2 : theme.spacing[props.spacing] / 2;
 
-    '& [data-composable]': {
-      margin: props.spacing / 2,
-      flexGrow: props.grow ? 1 : 0,
+      return {
+        display: 'flex',
+        flexWrap: props.noWrap ? 'nowrap' : 'wrap',
+        justifyContent: JUSTIFY_CONTENT[props.position],
+        margin: -1 * spacing,
+
+        '& [data-composable]': {
+          margin: spacing,
+          flexGrow: props.grow ? 1 : 0,
+        },
+      };
     },
   }),
-});
+  { theming }
+);

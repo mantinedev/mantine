@@ -1,13 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps } from '@mantine/types';
-import useStyles, { ElementsGroupPosition } from './ElementsGroup.styles';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import useStyles, { ElementsGroupPosition, ElementsGroupSpacing } from './ElementsGroup.styles';
 
 interface ElementsGroupProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
   position?: ElementsGroupPosition;
   noWrap?: boolean;
   grow?: boolean;
-  spacing?: number;
+  spacing?: ElementsGroupSpacing;
 }
 
 export default function ElementsGroup({
@@ -16,10 +16,17 @@ export default function ElementsGroup({
   children,
   noWrap = false,
   grow = false,
-  spacing = 10,
+  spacing = 'md',
+  themeOverride,
   ...others
 }: ElementsGroupProps) {
-  const classes = useStyles({ grow, noWrap, spacing, position });
+  const classes = useStyles({
+    grow,
+    noWrap,
+    spacing,
+    position,
+    theme: useMantineTheme(themeOverride),
+  });
 
   return (
     <div className={cx(classes.elementsGroup, className)} {...others}>
