@@ -1,10 +1,9 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme } from '@mantine/types';
-import { theming } from '@mantine/theme';
+import { MantineTheme, MantineColor, theming } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
-    actionIcon: {
+    actionIcon: ({ color }: { color: MantineColor }) => ({
       border: '1px solid transparent',
       boxSizing: 'border-box',
       backgroundColor: 'transparent',
@@ -20,32 +19,17 @@ export default createUseStyles(
       transition: 'color 100ms ease',
       color: theme.colors.gray[6],
       outline: 0,
-    },
 
-    muted: {
-      '&:hover': { color: theme.colors.gray[7] },
-      '&:focus': { color: theme.colors.gray[7], borderColor: theme.colors.blue[2] },
-    },
+      '&:hover': {
+        backgroundColor: theme.colors[color][0],
+        color: theme.colors[color][6],
+      },
 
-    danger: {
-      '&:hover': { backgroundColor: theme.colors.red[0], color: theme.colors.red[7] },
-      '&:focus': { color: theme.colors.red[7], borderColor: theme.colors.red[2] },
-    },
-
-    warning: {
-      '&:hover': { backgroundColor: theme.colors.yellow[0], color: theme.colors.yellow[7] },
-      '&:focus': { color: theme.colors.yellow[7], borderColor: theme.colors.yellow[4] },
-    },
-
-    success: {
-      '&:hover': { backgroundColor: theme.colors.teal[0], color: theme.colors.teal[7] },
-      '&:focus': { color: theme.colors.teal[7], borderColor: theme.colors.teal[2] },
-    },
-
-    primary: {
-      '&:hover': { backgroundColor: theme.colors.blue[0], color: theme.colors.blue[7] },
-      '&:focus': { color: theme.colors.blue[7], borderColor: theme.colors.blue[2] },
-    },
+      '&:focus': {
+        color: theme.colors[color][6],
+        borderColor: theme.colors[color][6],
+      },
+    }),
   }),
   { theming }
 );

@@ -14,23 +14,23 @@ import ActionIcon from './ActionIcon';
 storiesOf('@mantine/core', module).add('ActionIcon', () => (
   <MantineProvider>
     <ElementsGroup>
-      <ActionIcon>
+      <ActionIcon color="gray">
         <GearIcon />
       </ActionIcon>
 
-      <ActionIcon theme="primary">
+      <ActionIcon color="blue">
         <LockOpen1Icon />
       </ActionIcon>
 
-      <ActionIcon theme="danger">
+      <ActionIcon color="red">
         <TrashIcon />
       </ActionIcon>
 
-      <ActionIcon theme="warning">
+      <ActionIcon color="yellow">
         <ExclamationTriangleIcon />
       </ActionIcon>
 
-      <ActionIcon theme="success">
+      <ActionIcon color="teal">
         <CheckIcon />
       </ActionIcon>
     </ElementsGroup>

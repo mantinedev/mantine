@@ -1,25 +1,24 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
-import { DefaultProps, Theme } from '@mantine/types';
-import { useMantineTheme } from '@mantine/theme';
+import { useMantineTheme, DefaultProps, MantineColor } from '@mantine/theme';
 import useStyles from './ActionIcon.styles';
 
 interface ActionIconProps extends DefaultProps, Omit<React.HTMLProps<HTMLButtonElement>, 'ref'> {
-  theme?: Theme;
+  color?: MantineColor;
 }
 
 const ActionIcon = forwardRef(
   (
-    { className, theme = 'muted', children, ...others }: ActionIconProps,
+    { className, color = 'blue', children, themeOverride, ...others }: ActionIconProps,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
-    const classes = useStyles({ theme: useMantineTheme() });
+    const classes = useStyles({ color, theme: useMantineTheme(themeOverride) });
 
     return (
       <button
         {...others}
         data-composable
-        className={cx(classes.actionIcon, classes[theme], className)}
+        className={cx(classes.actionIcon, className)}
         type="button"
         ref={ref}
       >
