@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
+import { useMantineTheme } from '@mantine/theme';
 import { DefaultProps, OpenColorTheme } from '@mantine/types';
 import useStyles, { BadgeVariant } from './Badge.styles';
 
@@ -15,7 +16,7 @@ export default function Badge({
   children,
   ...others
 }: BadgeProps) {
-  const classes = useStyles({ variant, color });
+  const classes = useStyles({ variant, color, theme: useMantineTheme() });
 
   return (
     <div {...others} data-composable className={cx(classes.badge, className)}>
