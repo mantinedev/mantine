@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider } from 'react-jss';
+import { ThemeProvider } from '../theme';
 import defaultTheme from '../default-theme';
 
 interface MantineProviderProps {

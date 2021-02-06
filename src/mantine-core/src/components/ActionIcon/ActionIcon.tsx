@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
-import { useTheme } from 'react-jss';
 import cx from 'clsx';
 import { DefaultProps, Theme } from '@mantine/types';
+import { useMantineTheme } from '../../theme';
 import useStyles from './ActionIcon.styles';
 
 interface ActionIconProps extends DefaultProps, Omit<React.HTMLProps<HTMLButtonElement>, 'ref'> {
@@ -13,7 +13,7 @@ const ActionIcon = forwardRef(
     { className, theme = 'muted', children, ...others }: ActionIconProps,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
-    const classes = useStyles({ theme: useTheme() });
+    const classes = useStyles({ theme: useMantineTheme() });
 
     return (
       <button

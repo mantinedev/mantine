@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps } from '@mantine/types';
-import { useTheme } from 'react-jss';
+import { useMantineTheme } from '../../theme';
 import useStyles from './Hr.styles';
 
 interface HrProps extends DefaultProps, React.HTMLProps<HTMLHRElement> {
@@ -9,7 +9,7 @@ interface HrProps extends DefaultProps, React.HTMLProps<HTMLHRElement> {
 }
 
 export default function Hr({ className, variant = 'dashed', style, ...others }: HrProps) {
-  const classes = useStyles({ theme: useTheme() });
+  const classes = useStyles({ theme: useMantineTheme() });
 
   return (
     <hr
