@@ -28,7 +28,7 @@ export default createUseStyles(
       cursor: 'pointer',
 
       '&:focus': {
-        boxShadow: `0 0 0 2px ${theme.colors[color][2]}`,
+        boxShadow: `0 0 0 2px ${theme.colors[color || theme.primaryColor][2]}`,
       },
 
       '&:disabled': {
@@ -38,9 +38,9 @@ export default createUseStyles(
     }),
 
     checked: ({ color }: { color: MantineColor }) => ({
-      backgroundColor: theme.colors[color][5],
+      backgroundColor: theme.colors[color || theme.primaryColor][5],
       color: theme.colors.white,
-      borderColor: theme.colors[color][5],
+      borderColor: theme.colors[color || theme.primaryColor][5],
     }),
   }),
   { theming }

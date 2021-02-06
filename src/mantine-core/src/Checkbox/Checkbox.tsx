@@ -22,7 +22,7 @@ const Checkbox = forwardRef(
       className,
       value,
       onChange,
-      color = 'blue',
+      color,
       themeOverride,
       label,
       disabled,
