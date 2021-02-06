@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { OPEN_COLOR_THEMES, Size } from '@mantine/types';
-import MantineProvider from '../../MantineProvider/MantineProvider';
+import { MantineProvider } from '@mantine/theme';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import Button from './Button';
 

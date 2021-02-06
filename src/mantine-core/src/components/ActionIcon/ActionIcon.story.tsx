@@ -7,8 +7,8 @@ import {
   CheckIcon,
   LockOpen1Icon,
 } from '@modulz/radix-icons';
+import { MantineProvider } from '@mantine/theme';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
-import MantineProvider from '../../MantineProvider/MantineProvider';
 import ActionIcon from './ActionIcon';
 
 storiesOf('@mantine/core', module).add('ActionIcon', () => (

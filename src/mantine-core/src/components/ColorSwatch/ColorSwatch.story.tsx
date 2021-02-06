@@ -2,7 +2,7 @@ import React from 'react';
 import oc from 'open-color';
 import { OPEN_COLOR_THEMES } from '@mantine/types';
 import { storiesOf } from '@storybook/react';
-import MantineProvider from '../../MantineProvider/MantineProvider';
+import { MantineProvider } from '@mantine/theme';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import ColorSwatch from './ColorSwatch';
 

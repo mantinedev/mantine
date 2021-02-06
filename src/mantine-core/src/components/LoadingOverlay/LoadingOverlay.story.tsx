@@ -1,7 +1,7 @@
 import oc from 'open-color';
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import MantineProvider from '../../MantineProvider/MantineProvider';
+import { MantineProvider } from '@mantine/theme';
 import Button from '../Button/Button';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import LoadingOverlay from './LoadingOverlay';

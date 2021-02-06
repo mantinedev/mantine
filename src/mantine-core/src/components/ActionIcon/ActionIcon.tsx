@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { DefaultProps, Theme } from '@mantine/types';
-import { useMantineTheme } from '../../theme';
+import { useMantineTheme } from '@mantine/theme';
 import useStyles from './ActionIcon.styles';
 
 interface ActionIconProps extends DefaultProps, Omit<React.HTMLProps<HTMLButtonElement>, 'ref'> {

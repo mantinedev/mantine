@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import cx from 'clsx';
 import { AvatarIcon } from '@modulz/radix-icons';
 import { DefaultProps } from '@mantine/types';
-import { useMantineTheme } from '../../theme';
+import { useMantineTheme } from '@mantine/theme';
 import useStyles from './Avatar.styles';
 
 interface AvatarProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>, 'ref'> {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { TwitterLogoIcon } from '@modulz/radix-icons';
-import MantineProvider from '../../MantineProvider/MantineProvider';
+import { MantineProvider } from '@mantine/theme';
 import TextInput from './TextInput';
 
 function WrappedTextInput(

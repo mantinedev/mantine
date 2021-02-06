@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { OPEN_COLOR_THEMES } from '@mantine/types';
-import MantineProvider from '../../MantineProvider/MantineProvider';
+import { MantineProvider } from '@mantine/theme';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import Badge from './Badge';
 

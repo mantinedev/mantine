@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { MantineProvider } from '@mantine/theme';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
-import MantineProvider from '../../MantineProvider/MantineProvider';
 import Avatar from './Avatar';
 
 const image =

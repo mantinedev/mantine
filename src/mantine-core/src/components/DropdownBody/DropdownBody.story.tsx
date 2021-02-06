@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { MantineProvider } from '@mantine/theme';
 import Text from '../Text/Text';
-import MantineProvider from '../../MantineProvider/MantineProvider';
 import DropdownBody from './DropdownBody';
 
 storiesOf('@mantine/core', module).add('DropdownBody', () => (
