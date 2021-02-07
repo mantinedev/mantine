@@ -39,7 +39,13 @@ export default createUseStyles(
       justifyContent: 'center',
 
       '&:focus': {
-        boxShadow: `0 0 0 2px ${theme.colors[color || theme.primaryColor][2]}`,
+        boxShadow: `0 0 0 2px ${theme.colors.white}, 0 0 0 4px ${
+          theme.colors[color || theme.primaryColor][5]
+        }`,
+      },
+
+      '&:focus:not(:focus-visible)': {
+        boxShadow: 'none',
       },
 
       '&:disabled': {
