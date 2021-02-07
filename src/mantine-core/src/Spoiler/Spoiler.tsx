@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import cx from 'clsx';
-import { DefaultProps } from '@mantine/types';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './Spoiler.styles';
 
 interface SpoilerProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
@@ -18,9 +18,10 @@ export default function Spoiler({
   hideLabel,
   showLabel,
   overlayColor = '#fff',
+  themeOverride,
   ...others
 }: SpoilerProps) {
-  const classes = useStyles();
+  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const [show, setShowState] = useState(false);
   const [spoiler, setSpoilerState] = useState(false);
   const contentRef = useRef(null);
