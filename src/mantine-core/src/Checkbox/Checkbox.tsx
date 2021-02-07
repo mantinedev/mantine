@@ -2,13 +2,14 @@ import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { CheckIcon } from '@modulz/radix-icons';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineColor } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, MantineColor, MantineSize } from '@mantine/theme';
 import useStyles from './Checkbox.styles';
 
 interface CheckboxProps
   extends DefaultProps,
-    Omit<React.HTMLProps<HTMLDivElement>, 'label' | 'value' | 'onChange'> {
+    Omit<React.HTMLProps<HTMLDivElement>, 'label' | 'value' | 'onChange' | 'size'> {
   color?: MantineColor;
+  size?: MantineSize | number;
   value: boolean;
   onChange(value: boolean): void;
   label: React.ReactNode;
@@ -27,12 +28,13 @@ const Checkbox = forwardRef(
       label,
       disabled,
       id,
+      size,
       ...others
     }: CheckboxProps,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
     const uuid = useId(id);
-    const classes = useStyles({ color, theme: useMantineTheme(themeOverride) });
+    const classes = useStyles({ size, color, theme: useMantineTheme(themeOverride) });
 
     return (
       <div className={cx(classes.wrapper, className)} {...others}>
@@ -46,7 +48,7 @@ const Checkbox = forwardRef(
           aria-checked={value}
           id={uuid}
         >
-          {value && <CheckIcon />}
+          {value && <CheckIcon className={classes.icon} />}
         </button>
 
         <label className={classes.label} htmlFor={uuid}>
