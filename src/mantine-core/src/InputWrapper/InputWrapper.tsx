@@ -39,7 +39,7 @@ export default function InputWrapper({
       )}
       {children}
       {error && (
-        <Text theme="danger" size="sm" className={classes.error}>
+        <Text color="red" size="sm" className={classes.error}>
           {error}
         </Text>
       )}
