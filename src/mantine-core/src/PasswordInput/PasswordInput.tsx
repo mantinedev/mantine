@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import { useId } from '@mantine/hooks';
 import { EyeOpenIcon, EyeClosedIcon } from '@modulz/radix-icons';
-import { DefaultProps } from '@mantine/types';
+import { DefaultProps } from '@mantine/theme';
 import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
 import ActionIcon from '../ActionIcon/ActionIcon';
 import Input from '../Input/Input';
@@ -29,6 +29,7 @@ const PasswordInput = forwardRef(
       style,
       onChange,
       icon,
+      themeOverride,
       ...others
     }: PasswordInputProps,
     ref: React.ForwardedRef<HTMLInputElement>
@@ -45,6 +46,7 @@ const PasswordInput = forwardRef(
         label={label}
         error={error}
         style={style}
+        themeOverride={themeOverride}
       >
         <div className={classes.wrapper}>
           <Input
@@ -56,8 +58,13 @@ const PasswordInput = forwardRef(
             invalid={!!error}
             onChange={(event) => onChange(event.currentTarget.value)}
             icon={icon}
+            themeOverride={themeOverride}
           />
-          <ActionIcon className={classes.control} onClick={() => setReveal((current) => !current)}>
+          <ActionIcon
+            className={classes.control}
+            onClick={() => setReveal((current) => !current)}
+            themeOverride={themeOverride}
+          >
             {reveal ? <EyeClosedIcon /> : <EyeOpenIcon />}
           </ActionIcon>
         </div>
