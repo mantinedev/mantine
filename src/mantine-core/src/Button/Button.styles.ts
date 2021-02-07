@@ -1,11 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { OpenColorTheme, Size } from '@mantine/types';
-import { theming, MantineTheme } from '@mantine/theme';
-
-interface ButtonThemeProps {
-  color?: OpenColorTheme;
-  size: Size;
-}
+import { theming, MantineTheme, MantineColor, MantineSize } from '@mantine/theme';
 
 const sizes = {
   xs: {
@@ -49,17 +43,15 @@ export default createUseStyles(
       marginLeft: 10,
     },
 
-    button: (props: ButtonThemeProps) => {
-      const colorStyles = Array.isArray(theme.colors[props.color])
+    button: ({ color, size }: { color?: MantineColor; size: MantineSize }) => {
+      const colorStyles = Array.isArray(theme.colors[color])
         ? {
-            backgroundColor: theme.colors[props.color][5],
-            textShadow: `1px 1px 0 ${theme.colors[props.color][7]}`,
+            backgroundColor: theme.colors[color][5],
+            textShadow: `1px 1px 0 ${theme.colors[color][7]}`,
             color: theme.colors.white,
 
             '&:focus': {
-              boxShadow: `0 0 0 2px ${theme.colors.white}, 0 0 0 4px ${
-                theme.colors[props.color][5]
-              }`,
+              boxShadow: `0 0 0 2px ${theme.colors.white}, 0 0 0 4px ${theme.colors[color][5]}`,
             },
 
             '&:focus:not(:focus-visible)': {
@@ -67,7 +59,7 @@ export default createUseStyles(
             },
 
             '&:hover': {
-              backgroundColor: theme.colors[props.color][6],
+              backgroundColor: theme.colors[color][6],
             },
           }
         : {
@@ -92,7 +84,7 @@ export default createUseStyles(
 
       return {
         ...colorStyles,
-        ...sizes[props.size],
+        ...sizes[size],
 
         WebkitFontSmoothing: 'antialiased',
         MozOsxFontSmoothing: 'grayscale',

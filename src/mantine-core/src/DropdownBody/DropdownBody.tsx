@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
-import { DefaultProps } from '@mantine/types';
+import { DefaultProps } from '@mantine/theme';
 import useStyles from './DropdownBody.styles';
 
 interface DropdownBodyProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>, 'ref'> {

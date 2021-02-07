@@ -1,11 +1,12 @@
 import { createUseStyles } from 'react-jss';
-import { OpenColorTheme, OPEN_COLOR_THEMES } from '@mantine/types';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme, MantineColor } from '@mantine/theme';
 
 export type BadgeVariant = 'badge' | 'pill' | 'outline';
 
-function getVariantStyle(variant: BadgeVariant, color: OpenColorTheme, theme: MantineTheme) {
-  const colors = theme.colors[OPEN_COLOR_THEMES.includes(color) ? color : 'gray'];
+function getVariantStyle(variant: BadgeVariant, color: MantineColor, theme: MantineTheme) {
+  const colors = Array.isArray(theme.colors[color])
+    ? theme.colors[color]
+    : theme.colors[theme.primaryColor];
 
   switch (variant) {
     case 'badge':

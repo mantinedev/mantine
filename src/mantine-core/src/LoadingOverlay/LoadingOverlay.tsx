@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps } from '@mantine/types';
+import { DefaultProps } from '@mantine/theme';
 import Loader from '../Loader/Loader';
 import useStyles from './LoadingOverlay.styles';
 
@@ -13,6 +13,7 @@ export default function LoadingOverlay({
   className,
   visible,
   loaderSize,
+  themeOverride,
   ...others
 }: LoadingOverlayProps) {
   const classes = useStyles();
@@ -23,7 +24,7 @@ export default function LoadingOverlay({
 
   return (
     <div className={cx(classes.loadingOverlay, className)} {...others}>
-      <Loader size={loaderSize} />
+      <Loader size={loaderSize} themeOverride={themeOverride} />
     </div>
   );
 }

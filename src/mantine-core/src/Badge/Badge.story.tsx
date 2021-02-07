@@ -1,23 +1,26 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { OPEN_COLOR_THEMES } from '@mantine/types';
-import { MantineProvider } from '@mantine/theme';
+import { MantineProvider, DEFAULT_THEME, MantineColor } from '@mantine/theme';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import Badge from './Badge';
 
-const badges = OPEN_COLOR_THEMES.map((color) => (
+const colors = Object.keys(DEFAULT_THEME.colors).filter(
+  (color) => color !== 'white' && color !== 'black'
+);
+
+const badges = colors.map((color: MantineColor) => (
   <Badge color={color} key={color}>
     {color}
   </Badge>
 ));
 
-const pills = OPEN_COLOR_THEMES.map((color) => (
+const pills = colors.map((color: MantineColor) => (
   <Badge color={color} key={color} variant="pill">
     {color}
   </Badge>
 ));
 
-const outlines = OPEN_COLOR_THEMES.map((color) => (
+const outlines = colors.map((color: MantineColor) => (
   <Badge color={color} key={color} variant="outline">
     {color}
   </Badge>
@@ -25,7 +28,10 @@ const outlines = OPEN_COLOR_THEMES.map((color) => (
 
 storiesOf('@mantine/core', module).add('Badge', () => (
   <MantineProvider>
-    <ElementsGroup>{badges}</ElementsGroup>
+    <ElementsGroup>
+      <Badge>Default badge</Badge>
+      {badges}
+    </ElementsGroup>
     <ElementsGroup style={{ marginTop: 20 }}>{pills}</ElementsGroup>
     <ElementsGroup style={{ marginTop: 20 }}>{outlines}</ElementsGroup>
   </MantineProvider>

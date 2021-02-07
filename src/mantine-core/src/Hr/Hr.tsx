@@ -1,7 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps } from '@mantine/types';
-import { useMantineTheme } from '@mantine/theme';
+import { useMantineTheme, DefaultProps } from '@mantine/theme';
 import useStyles from './Hr.styles';
 
 interface HrProps extends DefaultProps, React.HTMLProps<HTMLHRElement> {

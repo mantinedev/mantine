@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/types';
+import { DefaultProps } from '@mantine/theme';
 
 interface ColorSwatchProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
   color: string;

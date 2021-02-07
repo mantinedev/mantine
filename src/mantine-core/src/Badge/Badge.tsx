@@ -1,17 +1,16 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme } from '@mantine/theme';
-import { DefaultProps, OpenColorTheme } from '@mantine/types';
+import { useMantineTheme, DefaultProps, MantineColor } from '@mantine/theme';
 import useStyles, { BadgeVariant } from './Badge.styles';
 
 interface BadgeProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
-  color?: OpenColorTheme;
+  color?: MantineColor;
   variant?: BadgeVariant;
 }
 
 export default function Badge({
   className,
-  color = 'gray',
+  color,
   variant = 'badge',
   children,
   ...others

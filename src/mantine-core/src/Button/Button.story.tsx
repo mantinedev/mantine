@@ -1,18 +1,21 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
-import { OPEN_COLOR_THEMES, Size } from '@mantine/types';
-import { MantineProvider } from '@mantine/theme';
+import { MantineColor, MantineProvider, MantineSize, DEFAULT_THEME } from '@mantine/theme';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import Button from './Button';
 
-const md = OPEN_COLOR_THEMES.map((theme) => (
+const colors = Object.keys(DEFAULT_THEME.colors).filter(
+  (color) => color !== 'white' && color !== 'black'
+) as MantineColor[];
+
+const md = colors.map((theme) => (
   <Button color={theme} key={theme} size="md">
     {theme} md
   </Button>
 ));
 
-const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as Size[]).map((size) => (
+const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
   <Button color="blue" key={size} size={size}>
     Button {size}
   </Button>

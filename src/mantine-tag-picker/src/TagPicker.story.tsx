@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { nanoid } from 'nanoid';
 import oc from 'open-color';
-import { OPEN_COLOR_THEMES } from '@mantine/types';
-import { MantineProvider } from '@mantine/theme';
+import { MantineProvider, DEFAULT_THEME, MantineColor } from '@mantine/theme';
 import TagPicker from './TagPickerContainer';
 import { TagPickerTag } from './types';
+
+const colors = Object.keys(DEFAULT_THEME.colors).filter(
+  (color) => color !== 'white' && color !== 'black'
+) as MantineColor[];
 
 type TagPickerWrapperProps = Omit<
   React.ComponentProps<typeof TagPicker>,
@@ -38,7 +41,7 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
       onChange={onChange}
       data={data}
       searchPlaceholder="Search categories"
-      colors={OPEN_COLOR_THEMES.map((theme) => ({ name: theme, color: oc[theme][0] }))}
+      colors={colors.map((theme) => ({ name: theme, color: oc[theme][0] }))}
       description="Select category or create new one"
       createLabel="+ Create new category"
       deleteLabel="Delete category"
