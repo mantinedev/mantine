@@ -25,8 +25,8 @@ export default createUseStyles(
       },
 
       '&:focus': {
-        color: theme.colors[color][6],
-        borderColor: theme.colors[color][6],
+        color: theme.colors[color || theme.primaryColor][6],
+        borderColor: theme.colors[color || theme.primaryColor][6],
       },
 
       '&:focus:not(:focus-visible)': {
@@ -34,13 +34,13 @@ export default createUseStyles(
         borderColor: 'transparent',
 
         '&:hover': {
-          color: theme.colors[color][6],
+          color: theme.colors[color || theme.primaryColor][6],
         },
       },
 
       '&:hover': {
-        backgroundColor: theme.colors[color][0],
-        color: theme.colors[color][6],
+        backgroundColor: theme.colors[color || theme.primaryColor][0],
+        color: theme.colors[color || theme.primaryColor][6],
       },
     }),
   }),
