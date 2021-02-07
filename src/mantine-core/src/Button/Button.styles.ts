@@ -88,7 +88,7 @@ export default createUseStyles(
 
         WebkitFontSmoothing: 'antialiased',
         MozOsxFontSmoothing: 'grayscale',
-        fontFamily: 'Roboto, sans-serif',
+        fontFamily: theme.fontFamily,
         boxSizing: 'border-box',
         border: '1px solid transparent',
         outline: 0,

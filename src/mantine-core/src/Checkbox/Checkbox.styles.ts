@@ -19,7 +19,7 @@ export default createUseStyles(
     label: {
       WebkitFontSmoothing: 'antialiased',
       MozOsxFontSmoothing: 'grayscale',
-      fontFamily: 'Roboto, sans-serif',
+      fontFamily: theme.fontFamily,
       marginLeft: 10,
       fontSize: 14,
     },
