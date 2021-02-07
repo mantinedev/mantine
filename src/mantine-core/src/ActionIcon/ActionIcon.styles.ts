@@ -20,14 +20,23 @@ export default createUseStyles(
       color: theme.colors.gray[6],
       outline: 0,
 
-      '&:hover': {
-        backgroundColor: theme.colors[color][0],
-        color: theme.colors[color][6],
-      },
-
       '&:focus': {
         color: theme.colors[color][6],
         borderColor: theme.colors[color][6],
+      },
+
+      '&:focus:not(:focus-visible)': {
+        color: theme.colors.gray[6],
+        borderColor: 'transparent',
+
+        '&:hover': {
+          color: theme.colors[color][6],
+        },
+      },
+
+      '&:hover': {
+        backgroundColor: theme.colors[color][0],
+        color: theme.colors[color][6],
       },
     }),
   }),
