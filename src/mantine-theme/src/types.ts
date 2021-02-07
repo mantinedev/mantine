@@ -5,15 +5,15 @@ export type MantineSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export type MantineColor = Exclude<keyof OpenColor, 'white' | 'black'>;
 
-type HeadingStyle = [number, number];
+type HeadingStyle = readonly [number, number];
 
 export interface MantineTheme {
-  __mantine_theme: boolean;
-  colors: typeof OpenColor;
-  fontFamily: string;
-  primaryColor: MantineColor;
+  readonly __mantine_theme: boolean;
+  readonly colors: typeof OpenColor;
+  readonly fontFamily: string;
+  readonly primaryColor: MantineColor;
 
-  fontSizes: {
+  readonly fontSizes: {
     xs: number;
     sm: number;
     md: number;
@@ -21,7 +21,7 @@ export interface MantineTheme {
     xl: number;
   };
 
-  spacing: {
+  readonly spacing: {
     xs: number;
     sm: number;
     md: number;
@@ -29,7 +29,7 @@ export interface MantineTheme {
     xl: number;
   };
 
-  headings: {
+  readonly headings: {
     h1: HeadingStyle;
     h2: HeadingStyle;
     h3: HeadingStyle;
@@ -44,5 +44,5 @@ export type MantineThemeOverride = Partial<Omit<MantineTheme, '__mantine_theme'>
 export interface DefaultProps {
   className?: string;
   style?: CSSProperties;
-  themeOverride?: MantineThemeOverride;
+  readonly themeOverride?: MantineThemeOverride;
 }
