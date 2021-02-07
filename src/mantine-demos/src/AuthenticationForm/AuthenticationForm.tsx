@@ -29,20 +29,20 @@ export default function AuthenticationForm() {
           required
           placeholder="Your first name"
           label="First name"
-          value={form.values.firstName}
-          onChange={(value) => form.setField('firstName', value)}
-          onFocus={() => form.invalidateField('firstName')}
-          error={form.errors.firstName && 'First name should include at least 2 characters'}
+          {...form.getInputProps({
+            field: 'firstName',
+            error: 'First name should include at least 2 characters',
+          })}
         />
 
         <TextInput
           required
           placeholder="Your last name"
           label="Last name"
-          value={form.values.lastName}
-          onChange={(value) => form.setField('lastName', value)}
-          onFocus={() => form.invalidateField('lastName')}
-          error={form.errors.lastName && 'Last name should include at least 2 characters'}
+          {...form.getInputProps({
+            field: 'lastName',
+            error: 'Last name should include at least 2 characters',
+          })}
         />
       </ElementsGroup>
 
@@ -51,10 +51,10 @@ export default function AuthenticationForm() {
         required
         placeholder="Your email"
         label="Email"
-        value={form.values.email}
-        onChange={(value) => form.setField('email', value)}
-        onFocus={() => form.invalidateField('email')}
-        error={form.errors.email && 'Field should contain a valid email'}
+        {...form.getInputProps({
+          field: 'email',
+          error: 'Field should contain a valid email',
+        })}
       />
 
       <PasswordInput
@@ -62,13 +62,10 @@ export default function AuthenticationForm() {
         required
         placeholder="Password"
         label="Password"
-        value={form.values.password}
-        onChange={(value) => form.setField('password', value)}
-        onFocus={() => form.invalidateField('password')}
-        error={
-          form.errors.password &&
-          'Password should contain 1 number, 1 letter and at least 6 characters'
-        }
+        {...form.getInputProps({
+          field: 'password',
+          error: 'Password should contain 1 number, 1 letter and at least 6 characters',
+        })}
       />
 
       <Checkbox
