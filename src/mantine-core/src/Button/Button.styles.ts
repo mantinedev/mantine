@@ -78,7 +78,13 @@ export default createUseStyles(
             color: theme.colors.white,
 
             '&:focus': {
-              boxShadow: `0 0 1px 3px ${theme.colors[props.color][2]}`,
+              boxShadow: `0 0 0 2px ${theme.colors.white}, 0 0 0 4px ${
+                theme.colors[props.color][5]
+              }`,
+            },
+
+            '&:focus:not(:focus-visible)': {
+              boxShadow: 'none',
             },
 
             '&:hover': {
@@ -91,8 +97,13 @@ export default createUseStyles(
             borderColor: theme.colors.gray[4],
 
             '&:focus': {
-              borderColor: theme.colors.blue[6],
-              boxShadow: `0 0 4px ${theme.colors.gray[3]}`,
+              boxShadow: `0 0 0 2px ${theme.colors.white}, 0 0 0 4px ${
+                theme.colors[theme.primaryColor][5]
+              }`,
+            },
+
+            '&:focus:not(:focus-visible)': {
+              boxShadow: 'none',
             },
 
             '&:hover': {
