@@ -42,19 +42,39 @@ export function useForm<T extends { [key: string]: any }>({
     return isValid;
   };
 
+  const invalidateField = (field: keyof T) =>
+    setErrors((currentErrors) => ({ ...currentErrors, [field]: false }));
+
+  const setField = <K extends keyof T, U extends T[K]>(field: K, value: U) => {
+    setValues((currentValues) => ({ ...currentValues, [field]: value }));
+    invalidateField(field);
+  };
+
+  const onSubmit = (handleSubmit: (values: T) => any) => (event: React.FormEvent) => {
+    event.preventDefault();
+    validate() && handleSubmit(values);
+  };
+
+  const getInputProps = <K extends keyof T, U extends T[K]>({
+    field,
+    error,
+  }: {
+    field: keyof T;
+    error?: string;
+  }) => ({
+    value: values[field] as U,
+    onChange: (value: U) => setField(field, value),
+    onFocus: () => invalidateField(field),
+    error: errors[field] && error,
+  });
+
   return {
     values,
     errors,
     validate,
-    setField: <K extends keyof T, U extends T[K]>(field: K, value: U) => {
-      setValues((currentValues) => ({ ...currentValues, [field]: value }));
-      setErrors((currentErrors) => ({ ...currentErrors, [field]: false }));
-    },
-    invalidateField: (field: keyof T) =>
-      setErrors((currentErrors) => ({ ...currentErrors, [field]: false })),
-    onSubmit: (onSubmit: (values: T) => any) => (event: React.FormEvent) => {
-      event.preventDefault();
-      validate() && onSubmit(values);
-    },
+    setField,
+    invalidateField,
+    onSubmit,
+    getInputProps,
   };
 }
