@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
-import { ActionIcon } from '@mantine/core';
+import { ActionIcon, useMantineTheme, MantineThemeOverride } from '@mantine/core';
 import { DotsHorizontalIcon } from '@modulz/radix-icons';
 import { TagPickerColor, TagPickerTag } from '../types';
 import TagEdit from '../TagEdit/TagEdit';
@@ -18,6 +18,7 @@ interface TagItemProps {
   onTagDelete(id: string): void;
   onHover(index: number): void;
   onEventsCaptureChange(shouldCaptureEvents: boolean): void;
+  themeOverride?: MantineThemeOverride;
 }
 
 export default function TagItem({
@@ -31,8 +32,9 @@ export default function TagItem({
   colors,
   onTagDelete,
   onEventsCaptureChange,
+  themeOverride,
 }: TagItemProps) {
-  const classes = useStyles();
+  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const controlRef = useRef<HTMLButtonElement>();
   const [editDropdownOpened, setEditDropdownOpened] = useState(false);
 

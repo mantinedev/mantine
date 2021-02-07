@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useClickOutside } from '@mantine/hooks';
 import { TrashIcon, CheckIcon, Pencil1Icon } from '@modulz/radix-icons';
-import { DropdownBody, Input, ActionIcon, ColorSwatch } from '@mantine/core';
+import {
+  DropdownBody,
+  Input,
+  ActionIcon,
+  ColorSwatch,
+  useMantineTheme,
+  MantineThemeOverride,
+} from '@mantine/core';
 import { TagPickerColor, TagPickerTag } from '../types';
 import useStyles from './TagEdit.styles';
 
@@ -14,6 +21,7 @@ export interface TagEditProps {
   onTagDelete(id: string): void;
   onClose(): void;
   id: string;
+  themeOverride?: MantineThemeOverride;
 }
 
 export default function TagEdit({
@@ -25,8 +33,9 @@ export default function TagEdit({
   onTagUpdate,
   onTagDelete,
   id,
+  themeOverride,
 }: TagEditProps) {
-  const classes = useStyles();
+  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const dropdownRef = useClickOutside(onClose);
   const [values, setValues] = useState<Omit<TagPickerTag, 'id'>>(null);
   const handleNameChange = (value: string) => setValues((current) => ({ ...current, name: value }));
@@ -89,7 +98,7 @@ export default function TagEdit({
           autoFocus
         />
 
-        <ActionIcon theme="success" onClick={handleSubmit}>
+        <ActionIcon color="teal" onClick={handleSubmit}>
           <CheckIcon />
         </ActionIcon>
       </div>

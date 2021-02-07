@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
-import { Input, Text } from '@mantine/core';
+import { Input, MantineThemeOverride, Text, useMantineTheme } from '@mantine/core';
 import { TagPickerColor, TagPickerTag } from '../types';
 import TagItem from '../TagItem/TagItem';
 import TagBadge from '../TagBadge/TagBadge';
@@ -26,6 +26,7 @@ export interface TagsListProps {
   onChange(value: TagPickerTag): void;
   onHoveredChange(index: number): void;
   onEventsCaptureChange(shouldCaptureEvents: boolean): void;
+  themeOverride?: MantineThemeOverride;
 }
 
 export default function TagsList({
@@ -46,8 +47,9 @@ export default function TagsList({
   onChange,
   onHoveredChange,
   onEventsCaptureChange,
+  themeOverride,
 }: TagsListProps) {
-  const classes = useStyles();
+  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
 
   const tags = data.map((tag, index) => (
     <TagItem
@@ -77,7 +79,7 @@ export default function TagsList({
       />
 
       {description && (
-        <Text theme="muted" size="sm" className={classes.description}>
+        <Text color="gray" size="sm" className={classes.description}>
           {description}
         </Text>
       )}

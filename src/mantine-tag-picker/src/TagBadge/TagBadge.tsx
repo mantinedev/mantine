@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import OpenColor from 'open-color';
+import { useMantineTheme, MantineThemeOverride } from '@mantine/core';
 import { TagPickerTag } from '../types';
 import isBrightColor from './is-bright-color';
 import useStyles from './TagBadge.styles';
@@ -8,16 +8,18 @@ import useStyles from './TagBadge.styles';
 interface TagBadgeProps {
   className?: string;
   data: TagPickerTag;
+  themeOverride?: MantineThemeOverride;
 }
 
-export default function TagBadge({ className, data }: TagBadgeProps) {
-  const classes = useStyles();
+export default function TagBadge({ className, data, themeOverride }: TagBadgeProps) {
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme });
 
   return (
     <div
       className={cx(classes.tagBadge, className)}
       style={{
-        color: isBrightColor(data.color) ? OpenColor.black : OpenColor.white,
+        color: isBrightColor(data.color) ? theme.colors.black : theme.colors.white,
         backgroundColor: data.color,
       }}
     >

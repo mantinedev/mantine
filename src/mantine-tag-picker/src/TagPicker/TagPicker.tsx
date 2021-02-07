@@ -1,7 +1,7 @@
 import OpenColor from 'open-color';
 import React from 'react';
 import { useClickOutside } from '@mantine/hooks';
-import { DropdownBody } from '@mantine/core';
+import { DropdownBody, useMantineTheme } from '@mantine/core';
 import TagsList, { TagsListProps } from '../TagsList/TagsList';
 import TagBadge from '../TagBadge/TagBadge';
 import useStyles from './TagPicker.styles';
@@ -22,9 +22,10 @@ export default function TagPicker({
   controlRef,
   value,
   noValueLabel,
+  themeOverride,
   ...others
 }: TagPickerProps) {
-  const classes = useStyles();
+  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const dropdownRef = useClickOutside(closeDropdown);
 
   return (

@@ -1,27 +1,36 @@
-import OpenColor from 'open-color';
 import { createUseStyles } from 'react-jss';
+import { theming, MantineTheme } from '@mantine/core';
 
-export default createUseStyles({
-  tagPicker: {
-    position: 'relative',
-  },
-
-  dropdown: {
-    width: 280,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
-
-  control: {
-    border: '1px solid transparent',
-    padding: [0, 0],
-    borderRadius: 24,
-    cursor: 'pointer',
-
-    '&:focus': {
-      outline: 0,
-      borderColor: OpenColor.blue[6],
+export default createUseStyles(
+  (theme: MantineTheme) => ({
+    tagPicker: {
+      position: 'relative',
     },
-  },
-});
+
+    dropdown: {
+      width: 280,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+    },
+
+    control: {
+      border: 0,
+      padding: [0, 0],
+      borderRadius: 24,
+      cursor: 'pointer',
+      outline: 0,
+
+      '&:focus': {
+        boxShadow: `0 0 0 2px ${theme.colors.white}, 0 0 0 4px ${
+          theme.colors[theme.primaryColor][5]
+        }`,
+      },
+
+      '&:focus:not(:focus-visible)': {
+        boxShadow: 'none',
+      },
+    },
+  }),
+  { theming }
+);
