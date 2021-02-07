@@ -19,6 +19,7 @@ export default createUseStyles(
       transition: 'background-color 150ms ease, border-color 100ms ease',
       outline: 0,
       boxSizing: 'border-box',
+      appearance: 'none',
 
       '&::before': {
         content: "''",
@@ -34,6 +35,10 @@ export default createUseStyles(
       '&:focus': {
         boxShadow: ({ color }: { color: MantineColor }) =>
           `0 0 0 2px ${theme.colors[color || theme.primaryColor][2]}`,
+      },
+
+      '&:focus:not(:focus-visible)': {
+        boxShadow: 'none',
       },
 
       '&:disabled::before': {
