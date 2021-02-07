@@ -1,4 +1,4 @@
-export { MantineProvider, useMantineTheme, theming as mantineTheming } from '@mantine/theme';
+export * from '@mantine/theme';
 
 export { default as ActionIcon } from './ActionIcon/ActionIcon';
 export { default as Anchor } from './Anchor/Anchor';
