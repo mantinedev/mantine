@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps } from '@mantine/types';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './Table.styles';
 
 interface TableProps extends DefaultProps, React.HTMLProps<HTMLTableElement> {
@@ -13,9 +13,10 @@ export default function Table({
   children,
   striped = false,
   highlighOnHover = false,
+  themeOverride,
   ...others
 }: TableProps) {
-  const classes = useStyles();
+  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
 
   return (
     <table
