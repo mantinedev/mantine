@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles, { ElementsGroupPosition, ElementsGroupSpacing } from './ElementsGroup.styles';
 
@@ -29,8 +28,8 @@ export default function ElementsGroup({
   });
 
   return (
-    <div className={cx(classes.elementsGroup, className)} {...others}>
-      {children}
+    <div className={className} {...others}>
+      <div className={classes.elementsGroup}>{children}</div>
     </div>
   );
 }
