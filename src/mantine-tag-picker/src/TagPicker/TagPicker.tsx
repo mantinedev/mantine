@@ -1,7 +1,7 @@
 import OpenColor from 'open-color';
 import React from 'react';
 import { useClickOutside } from '@mantine/hooks';
-import { DropdownBody, useMantineTheme } from '@mantine/core';
+import { Paper, useMantineTheme } from '@mantine/core';
 import TagsList, { TagsListProps } from '../TagsList/TagsList';
 import TagBadge from '../TagBadge/TagBadge';
 import useStyles from './TagPicker.styles';
@@ -37,9 +37,9 @@ export default function TagPicker({
       </button>
 
       {dropdownOpened && (
-        <DropdownBody className={classes.dropdown} ref={dropdownRef} noPadding>
+        <Paper shadow="xs" className={classes.dropdown} ref={dropdownRef}>
           <TagsList value={value} {...others} />
-        </DropdownBody>
+        </Paper>
       )}
     </div>
   );

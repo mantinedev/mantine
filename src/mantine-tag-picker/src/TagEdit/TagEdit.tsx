@@ -3,7 +3,7 @@ import { useClickOutside } from '@mantine/hooks';
 import { TrashIcon, CheckIcon, Pencil1Icon } from '@modulz/radix-icons';
 import useFocusTrap from '@charlietango/use-focus-trap';
 import {
-  DropdownBody,
+  Paper,
   Input,
   ActionIcon,
   ColorSwatch,
@@ -84,10 +84,10 @@ export default function TagEdit({
   ));
 
   return (
-    <DropdownBody
+    <Paper
+      shadow="xs"
       className={classes.tagEdit}
       ref={dropdownRef}
-      noPadding
       onKeyDownCapture={handleKeyDownCapture}
     >
       <div ref={focusTrapRef}>
@@ -113,7 +113,7 @@ export default function TagEdit({
 
         <div className={classes.colorsList}>{colorsList}</div>
       </div>
-    </DropdownBody>
+    </Paper>
   );
 }
 
