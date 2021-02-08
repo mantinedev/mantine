@@ -1,6 +1,7 @@
 export * from '@mantine/theme';
 
 export { default as ActionIcon } from './ActionIcon/ActionIcon';
+export { default as Alert } from './Alert/Alert';
 export { default as Anchor } from './Anchor/Anchor';
 export { default as Avatar } from './Avatar/Avatar';
 export { default as Badge } from './Badge/Badge';
@@ -8,7 +9,6 @@ export { default as Button } from './Button/Button';
 export { default as Checkbox } from './Checkbox/Checkbox';
 export { default as ColorSwatch } from './ColorSwatch/ColorSwatch';
 export { default as ElementsGroup } from './ElementsGroup/ElementsGroup';
-export { default as ErrorNotification } from './ErrorNotification/ErrorNotification';
 export { default as Hr } from './Hr/Hr';
 export { default as Input } from './Input/Input';
 export { default as InputWrapper } from './InputWrapper/InputWrapper';
