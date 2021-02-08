@@ -33,13 +33,14 @@ export default function TagPickerContainer(props: TagPickerProps) {
   const [query, setQuery] = useState('');
   const [createColor, setCreateColor] = useState(getRandomColor(props.colors));
   const [shouldCaptureEvents, setShouldCaptureEvents] = useState(true);
+  const [shouldCaptureArrowEvents, setShouldCaptureArrowEvents] = useState(true);
 
   const closeDropdown = () => {
     if (shouldCaptureEvents) {
       setDropdownOpened(false);
       setHovered(-1);
       setQuery('');
-      controlRef.current.focus();
+      setImmediate(() => controlRef.current.focus());
       typeof props.onDropdownClose === 'function' && props.onDropdownClose();
     }
   };
@@ -91,13 +92,13 @@ export default function TagPickerContainer(props: TagPickerProps) {
         closeDropdown();
       }
 
-      if (code === 'ArrowUp') {
+      if (code === 'ArrowUp' && shouldCaptureArrowEvents) {
         event.preventDefault();
         const targetIndex = canCreate ? filteredData.length : filteredData.length - 1;
         setHovered(hovered <= 0 ? targetIndex : hovered - 1);
       }
 
-      if (code === 'ArrowDown') {
+      if (code === 'ArrowDown' && shouldCaptureArrowEvents) {
         event.preventDefault();
         const targetIndex = canCreate ? hovered : hovered + 1;
         setHovered(targetIndex === filteredData.length ? 0 : hovered + 1);
@@ -147,6 +148,7 @@ export default function TagPickerContainer(props: TagPickerProps) {
         onChange={handleChange}
         onHoveredChange={setHovered}
         onEventsCaptureChange={setShouldCaptureEvents}
+        onArrowsCaptureChange={setShouldCaptureArrowEvents}
       />
     </div>
   );

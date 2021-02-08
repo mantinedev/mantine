@@ -27,6 +27,7 @@ export interface TagsListProps {
   onChange(value: TagPickerTag): void;
   onHoveredChange(index: number): void;
   onEventsCaptureChange(shouldCaptureEvents: boolean): void;
+  onArrowsCaptureChange(shouldCaptureArrowEvents: boolean): void;
   themeOverride?: MantineThemeOverride;
 }
 
@@ -48,6 +49,7 @@ export default function TagsList({
   onChange,
   onHoveredChange,
   onEventsCaptureChange,
+  onArrowsCaptureChange,
   themeOverride,
 }: TagsListProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
@@ -76,8 +78,12 @@ export default function TagsList({
         placeholder={searchPlaceholder}
         value={searchQuery}
         onChange={(event) => onSearchChange(event.currentTarget.value)}
+        onFocus={() => onArrowsCaptureChange(true)}
+        onBlur={() => {
+          onHoveredChange(-1);
+          onArrowsCaptureChange(false);
+        }}
         icon={<MagnifyingGlassIcon />}
-        autoFocus
       />
 
       {description && (
