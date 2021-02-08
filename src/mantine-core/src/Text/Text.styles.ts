@@ -10,6 +10,7 @@ export default createUseStyles(
       color: ({ color }: { color: MantineColor }) =>
         color ? theme.colors[color][5] : theme.colors.black,
       fontSize: ({ size }: { size: MantineSize }) => theme.fontSizes[size],
+      lineHeight: 1.4,
     },
 
     bold: { fontWeight: 700 },
