@@ -14,7 +14,7 @@ interface SelectItem {
 interface SelectProps
   extends DefaultProps,
     InputWrapperBaseProps,
-    Omit<React.HTMLProps<HTMLSelectElement>, 'data' | 'onChange' | 'ref'> {
+    Omit<React.HTMLProps<HTMLSelectElement>, 'data' | 'onChange' | 'ref' | 'label'> {
   id?: string;
   value: string;
   placeholder?: string;

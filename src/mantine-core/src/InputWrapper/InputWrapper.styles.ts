@@ -18,7 +18,11 @@ export default createUseStyles(
     },
 
     error: {
-      marginTop: 4,
+      marginTop: theme.spacing.xs / 2,
+    },
+
+    description: {
+      marginTop: theme.spacing.xs / 2,
     },
 
     required: {

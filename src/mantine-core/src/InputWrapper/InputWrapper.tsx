@@ -5,15 +5,16 @@ import Text from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
 export interface InputWrapperBaseProps {
-  label?: string;
-  error?: string;
+  label?: React.ReactNode;
+  error?: React.ReactNode;
+  description?: React.ReactNode;
   required?: boolean;
 }
 
 interface InputWrapperProps
   extends DefaultProps,
     InputWrapperBaseProps,
-    React.HTMLProps<HTMLDivElement> {
+    Omit<React.HTMLProps<HTMLDivElement>, 'label'> {
   id: string;
   children: React.ReactChild;
 }
@@ -25,6 +26,7 @@ export default function InputWrapper({
   required,
   id,
   error,
+  description,
   themeOverride,
   ...others
 }: InputWrapperProps) {
@@ -37,10 +39,18 @@ export default function InputWrapper({
           {label} {required && <span className={classes.required}>*</span>}
         </label>
       )}
+
       {children}
+
       {error && (
         <Text color="red" size="sm" className={classes.error}>
           {error}
+        </Text>
+      )}
+
+      {description && (
+        <Text color="gray" size="sm" className={classes.description}>
+          {description}
         </Text>
       )}
     </div>
