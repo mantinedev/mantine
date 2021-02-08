@@ -16,13 +16,9 @@ export default createUseStyles(
       alignItems: 'center',
       justifyContent: 'center',
       cursor: 'pointer',
-      transition: 'color 100ms ease, transform 100ms ease',
+      transition: 'color 100ms ease, background-color 100ms ease',
       color: theme.colors.gray[6],
       outline: 0,
-
-      '&:active': {
-        transform: 'scale(0.92)',
-      },
 
       '&:focus': {
         color: theme.colors[color || theme.primaryColor][6],
@@ -41,6 +37,10 @@ export default createUseStyles(
       '&:hover': {
         backgroundColor: theme.colors[color || theme.primaryColor][0],
         color: theme.colors[color || theme.primaryColor][6],
+      },
+
+      '&:active': {
+        backgroundColor: theme.colors[color || theme.primaryColor][1],
       },
     }),
   }),
