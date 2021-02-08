@@ -2,11 +2,14 @@ import React from 'react';
 import cx from 'clsx';
 import { Cross2Icon } from '@modulz/radix-icons';
 import { DefaultProps, MantineColor, useMantineTheme } from '@mantine/theme';
+import Paper from '../Paper/Paper';
 import Text from '../Text/Text';
 import ActionIcon from '../ActionIcon/ActionIcon';
 import useStyles from './Notification.styles';
 
-interface NotificationProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>, 'title'> {
+interface NotificationProps
+  extends DefaultProps,
+    Omit<React.HTMLProps<HTMLDivElement>, 'title' | 'ref'> {
   color?: MantineColor;
   icon?: React.ReactNode;
   title?: React.ReactNode;
@@ -26,7 +29,12 @@ export default function Notification({
   const classes = useStyles({ color, theme: useMantineTheme(themeOverride) });
 
   return (
-    <div className={cx(classes.notification, { [classes.withIcon]: icon }, className)} {...others}>
+    <Paper
+      shadow="sm"
+      padding="sm"
+      className={cx(classes.notification, { [classes.withIcon]: icon }, className)}
+      {...others}
+    >
       {icon && <div className={classes.icon}>{icon}</div>}
 
       <div className={classes.body}>
@@ -44,7 +52,7 @@ export default function Notification({
       <ActionIcon onClick={onClose} themeOverride={themeOverride}>
         <Cross2Icon />
       </ActionIcon>
-    </div>
+    </Paper>
   );
 }
 

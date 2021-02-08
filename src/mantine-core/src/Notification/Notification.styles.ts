@@ -16,13 +16,11 @@ export default createUseStyles(
       position: 'relative',
       display: 'flex',
       alignItems: 'center',
-      boxShadow: '1px 1px 3px 1px rgba(0,0,0,.14)',
       paddingLeft: 22,
       paddingRight: 5,
       paddingTop: 10,
       paddingBottom: 10,
       borderRadius: 4,
-      backgroundColor: theme.colors.white,
 
       '&::before': {
         content: "''",
@@ -49,7 +47,7 @@ export default createUseStyles(
 
     icon: {
       boxSizing: 'border-box',
-      marginRight: 12,
+      marginRight: theme.spacing.md,
       width: 28,
       height: 28,
       borderRadius: 28,

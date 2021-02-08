@@ -7,12 +7,12 @@ import {
   ExclamationTriangleIcon,
   BookmarkIcon,
 } from '@modulz/radix-icons';
-import { MantineProvider } from '@mantine/theme';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/theme';
 import Notification from './Notification';
 
 storiesOf('@mantine/core', module).add('Notification', () => (
   <MantineProvider>
-    <div style={{ maxWidth: 400 }}>
+    <div style={{ maxWidth: 400, padding: 60, backgroundColor: DEFAULT_THEME.colors.gray[0] }}>
       <Notification
         color="gray"
         onClose={() => {}}
