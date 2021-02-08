@@ -29,6 +29,14 @@ export interface MantineTheme {
     xl: number;
   };
 
+  readonly shadows: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+
   readonly headings: {
     h1: HeadingStyle;
     h2: HeadingStyle;
