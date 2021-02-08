@@ -5,7 +5,7 @@ export const DEFAULT_THEME: MantineTheme = {
   __mantine_theme: true,
   colors: OpenColor,
   fontFamily: 'Roboto, sans-serif',
-  primaryColor: 'green',
+  primaryColor: 'blue',
 
   shadows: {
     xs: '0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.2)',
