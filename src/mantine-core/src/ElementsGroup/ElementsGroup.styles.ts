@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { theming, MantineTheme, MantineSize } from '@mantine/theme';
 
-export type ElementsGroupPosition = 'right' | 'center' | 'left';
+export type ElementsGroupPosition = 'right' | 'center' | 'left' | 'apart';
 export type ElementsGroupSpacing = MantineSize | number;
 
 interface ElementsGroupStylesProps {
@@ -15,6 +15,7 @@ const JUSTIFY_CONTENT = {
   left: 'flex-start',
   center: 'center',
   right: 'flex-end',
+  apart: 'space-between',
 };
 
 export default createUseStyles(
