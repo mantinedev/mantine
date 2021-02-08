@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from '@mantine/hooks';
-import { TextInput, PasswordInput, ElementsGroup, Checkbox, Button } from '@mantine/core';
+import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
+import { TextInput, PasswordInput, ElementsGroup, Checkbox, Button, Paper } from '@mantine/core';
 
 const atLeastTwoCharacters = (value: string) => value.trim().length >= 2;
 
@@ -23,63 +24,69 @@ export default function AuthenticationForm() {
   });
 
   return (
-    <form onSubmit={form.onSubmit((values) => values)}>
-      <ElementsGroup spacing={20} grow>
+    <Paper padding="lg" shadow="sm">
+      <form onSubmit={form.onSubmit((values) => values)}>
+        <div style={{ display: 'flex' }}>
+          <TextInput
+            required
+            placeholder="Your first name"
+            label="First name"
+            style={{ marginRight: 20, flex: '0 0 calc(50% - 10px)' }}
+            {...form.getInputProps({
+              field: 'firstName',
+              error: 'First name should include at least 2 characters',
+            })}
+          />
+
+          <TextInput
+            required
+            placeholder="Your last name"
+            label="Last name"
+            style={{ flex: '0 0 calc(50% - 10px)' }}
+            {...form.getInputProps({
+              field: 'lastName',
+              error: 'Last name should include at least 2 characters',
+            })}
+          />
+        </div>
+
         <TextInput
+          style={{ marginTop: 15 }}
           required
-          placeholder="Your first name"
-          label="First name"
+          placeholder="Your email"
+          label="Email"
+          icon={<EnvelopeClosedIcon />}
           {...form.getInputProps({
-            field: 'firstName',
-            error: 'First name should include at least 2 characters',
+            field: 'email',
+            error: 'Field should contain a valid email',
           })}
         />
 
-        <TextInput
+        <PasswordInput
+          style={{ marginTop: 15 }}
           required
-          placeholder="Your last name"
-          label="Last name"
+          placeholder="Password"
+          label="Password"
+          icon={<LockClosedIcon />}
           {...form.getInputProps({
-            field: 'lastName',
-            error: 'Last name should include at least 2 characters',
+            field: 'password',
+            error: 'Password should contain 1 number, 1 letter and at least 6 characters',
           })}
         />
-      </ElementsGroup>
 
-      <TextInput
-        style={{ marginTop: 15 }}
-        required
-        placeholder="Your email"
-        label="Email"
-        {...form.getInputProps({
-          field: 'email',
-          error: 'Field should contain a valid email',
-        })}
-      />
+        <Checkbox
+          style={{ marginTop: 20 }}
+          label="I agree to sell my soul and privacy to this corporation"
+          value={form.values.termsOfService}
+          onChange={(value) => form.setField('termsOfService', value)}
+        />
 
-      <PasswordInput
-        style={{ marginTop: 15 }}
-        required
-        placeholder="Password"
-        label="Password"
-        {...form.getInputProps({
-          field: 'password',
-          error: 'Password should contain 1 number, 1 letter and at least 6 characters',
-        })}
-      />
-
-      <Checkbox
-        style={{ marginTop: 15 }}
-        label="I agree to sell my soul and privacy to this corporation"
-        value={form.values.termsOfService}
-        onChange={(value) => form.setField('termsOfService', value)}
-      />
-
-      <ElementsGroup position="right" style={{ marginTop: 10 }}>
-        <Button color="blue" type="submit">
-          Register
-        </Button>
-      </ElementsGroup>
-    </form>
+        <ElementsGroup position="right" style={{ marginTop: 25 }}>
+          <Button color="blue" type="submit">
+            Register
+          </Button>
+        </ElementsGroup>
+      </form>
+    </Paper>
   );
 }
