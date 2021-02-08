@@ -10,7 +10,7 @@ export default createUseStyles(
       backgroundColor: OpenColor.white,
       boxSizing: 'border-box',
       borderRadius: 4,
-      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.2)',
+      boxShadow: ({ shadow }: { shadow?: MantineSize }) => theme.shadows[shadow] || 'none',
       padding: ({ padding }: { padding: PaperPadding }) =>
         typeof padding === 'number' ? padding : theme.spacing[padding],
     },

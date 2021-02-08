@@ -7,7 +7,7 @@ import Paper from './Paper';
 
 storiesOf('@mantine/core', module).add('Paper', () => (
   <MantineProvider>
-    <ElementsGroup grow style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], padding: 40 }}>
+    <ElementsGroup grow style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], padding: 80 }}>
       <Paper style={{ width: 260 }}>
         <Text>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque, temporibus excepturi,
@@ -16,7 +16,7 @@ storiesOf('@mantine/core', module).add('Paper', () => (
         </Text>
       </Paper>
 
-      <Paper style={{ width: 260 }} padding="xs">
+      <Paper style={{ width: 260 }} padding="xs" shadow="xs">
         <Text>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque, temporibus excepturi,
           placeat quam eius quisquam ad nostrum magnam molestias voluptates minima minus natus
@@ -24,7 +24,7 @@ storiesOf('@mantine/core', module).add('Paper', () => (
         </Text>
       </Paper>
 
-      <Paper style={{ width: 260 }} padding="sm">
+      <Paper style={{ width: 260 }} padding="sm" shadow="sm">
         <Text>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque, temporibus excepturi,
           placeat quam eius quisquam ad nostrum magnam molestias voluptates minima minus natus
@@ -32,7 +32,7 @@ storiesOf('@mantine/core', module).add('Paper', () => (
         </Text>
       </Paper>
 
-      <Paper style={{ width: 260 }} padding="md">
+      <Paper style={{ width: 260 }} padding="md" shadow="md">
         <Text>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque, temporibus excepturi,
           placeat quam eius quisquam ad nostrum magnam molestias voluptates minima minus natus
@@ -40,7 +40,15 @@ storiesOf('@mantine/core', module).add('Paper', () => (
         </Text>
       </Paper>
 
-      <Paper style={{ width: 260 }} padding="xl">
+      <Paper style={{ width: 260 }} padding="lg" shadow="lg">
+        <Text>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque, temporibus excepturi,
+          placeat quam eius quisquam ad nostrum magnam molestias voluptates minima minus natus
+          dignissimos reiciendis quasi repellat quos voluptas ullam.
+        </Text>
+      </Paper>
+
+      <Paper style={{ width: 260 }} padding="xl" shadow="xl">
         <Text>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque, temporibus excepturi,
           placeat quam eius quisquam ad nostrum magnam molestias voluptates minima minus natus
