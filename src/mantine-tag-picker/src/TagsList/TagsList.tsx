@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
+import useFocusTrap from '@charlietango/use-focus-trap';
 import { Input, MantineThemeOverride, Text, useMantineTheme } from '@mantine/core';
 import { TagPickerColor, TagPickerTag } from '../types';
 import TagItem from '../TagItem/TagItem';
@@ -50,6 +51,7 @@ export default function TagsList({
   themeOverride,
 }: TagsListProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const focusTrapRef = useFocusTrap();
 
   const tags = data.map((tag, index) => (
     <TagItem
@@ -68,7 +70,7 @@ export default function TagsList({
   ));
 
   return (
-    <div className={classes.tagsList}>
+    <div className={classes.tagsList} ref={focusTrapRef}>
       <Input
         className={classes.searchInput}
         placeholder={searchPlaceholder}

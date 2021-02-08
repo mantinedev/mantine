@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useClickOutside } from '@mantine/hooks';
 import { TrashIcon, CheckIcon, Pencil1Icon } from '@modulz/radix-icons';
+import useFocusTrap from '@charlietango/use-focus-trap';
 import {
   DropdownBody,
   Input,
@@ -37,6 +38,7 @@ export default function TagEdit({
 }: TagEditProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const dropdownRef = useClickOutside(onClose);
+  const focusTrapRef = useFocusTrap();
   const [values, setValues] = useState<Omit<TagPickerTag, 'id'>>(null);
   const handleNameChange = (value: string) => setValues((current) => ({ ...current, name: value }));
   const handleColorChange = (value: string) =>
@@ -88,27 +90,29 @@ export default function TagEdit({
       noPadding
       onKeyDownCapture={handleKeyDownCapture}
     >
-      <div className={classes.header}>
-        <Input
-          className={classes.input}
-          value={values.name}
-          onChange={(event) => handleNameChange(event.currentTarget.value)}
-          onKeyDown={(event) => event.nativeEvent.code === 'Enter' && handleSubmit()}
-          icon={<Pencil1Icon />}
-          autoFocus
-        />
+      <div ref={focusTrapRef}>
+        <div className={classes.header}>
+          <Input
+            className={classes.input}
+            value={values.name}
+            onChange={(event) => handleNameChange(event.currentTarget.value)}
+            onKeyDown={(event) => event.nativeEvent.code === 'Enter' && handleSubmit()}
+            icon={<Pencil1Icon />}
+            autoFocus
+          />
 
-        <ActionIcon color="teal" onClick={handleSubmit}>
-          <CheckIcon />
-        </ActionIcon>
+          <ActionIcon color="teal" onClick={handleSubmit}>
+            <CheckIcon />
+          </ActionIcon>
+        </div>
+
+        <button className={classes.deleteControl} type="button" onClick={handleDelete}>
+          <TrashIcon className={classes.deleteIcon} />
+          <span>{deleteLabel}</span>
+        </button>
+
+        <div className={classes.colorsList}>{colorsList}</div>
       </div>
-
-      <button className={classes.deleteControl} type="button" onClick={handleDelete}>
-        <TrashIcon className={classes.deleteIcon} />
-        <span>{deleteLabel}</span>
-      </button>
-
-      <div className={classes.colorsList}>{colorsList}</div>
     </DropdownBody>
   );
 }
