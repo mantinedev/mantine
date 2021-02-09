@@ -12,7 +12,7 @@ interface CheckboxProps
   size?: MantineNumberSize;
   value: boolean;
   onChange(value: boolean): void;
-  label: React.ReactNode;
+  label?: React.ReactNode;
   disabled?: boolean;
   id?: string;
 }
@@ -51,9 +51,11 @@ const Checkbox = forwardRef(
           {value && <CheckIcon className={classes.icon} />}
         </button>
 
-        <label className={classes.label} htmlFor={uuid}>
-          {label}
-        </label>
+        {label && (
+          <label className={classes.label} htmlFor={uuid}>
+            {label}
+          </label>
+        )}
       </div>
     );
   }

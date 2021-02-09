@@ -20,8 +20,8 @@ export default createUseStyles(
       WebkitFontSmoothing: 'antialiased',
       MozOsxFontSmoothing: 'grayscale',
       fontFamily: theme.fontFamily,
-      marginLeft: 10,
-      fontSize: 14,
+      marginLeft: theme.spacing.sm,
+      fontSize: theme.fontSizes.sm,
     },
 
     checkbox: ({ color, size }: { color: MantineColor; size: MantineNumberSize }) => ({
