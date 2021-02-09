@@ -10,22 +10,27 @@ export default createUseStyles(
       MozOsxFontSmoothing: 'grayscale',
       fontFamily: theme.fontFamily,
       backgroundColor: 'transparent',
-      width: 30,
-      height: 30,
-      lineHeight: '30px',
+      width: 34,
+      height: 34,
+      lineHeight: '34px',
       padding: 0,
-      borderRadius: 4,
-      border: '1px solid transparent',
+      borderRadius: theme.radius.sm,
+      border: '1px dotted transparent',
       cursor: 'pointer',
       fontSize: theme.fontSizes.sm,
       userSelect: 'none',
+      outline: 0,
 
       '&:hover': {
         backgroundColor: theme.colors.gray[0],
       },
+
       '&:focus': {
-        outline: '0',
-        borderColor: theme.colors.blue[6],
+        borderColor: theme.colors[theme.primaryColor][6],
+      },
+
+      '&:focus:not(:focus-visible)': {
+        borderColor: 'transparent',
       },
     },
 
@@ -42,8 +47,12 @@ export default createUseStyles(
     },
 
     selected: {
-      backgroundColor: theme.colors.blue[0],
-      color: theme.colors.blue[6],
+      backgroundColor: theme.colors[theme.primaryColor][0],
+      color: theme.colors[theme.primaryColor][6],
+
+      '&:hover': {
+        backgroundColor: theme.colors[theme.primaryColor][0],
+      },
     },
   }),
   { theming }
