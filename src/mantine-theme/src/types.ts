@@ -21,6 +21,14 @@ export interface MantineTheme {
     xl: number;
   };
 
+  readonly radius: {
+    xs: number;
+    sm: number;
+    md: number;
+    lg: number;
+    xl: number;
+  };
+
   readonly spacing: {
     xs: number;
     sm: number;

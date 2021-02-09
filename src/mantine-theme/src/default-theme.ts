@@ -27,6 +27,14 @@ export const DEFAULT_THEME: MantineTheme = {
     xl: 20,
   },
 
+  radius: {
+    xs: 2,
+    sm: 4,
+    md: 8,
+    lg: 16,
+    xl: 32,
+  },
+
   spacing: {
     xs: 10,
     sm: 12,
