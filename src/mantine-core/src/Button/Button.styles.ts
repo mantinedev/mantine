@@ -116,6 +116,7 @@ export default createUseStyles(
         lineHeight: 1,
         display: 'inline-flex',
         alignItems: 'center',
+        justifyContent: 'center',
 
         '&:active': {
           transform: 'translateY(1px)',
