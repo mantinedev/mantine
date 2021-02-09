@@ -33,7 +33,7 @@ export default function InputWrapper({
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
 
   return (
-    <div className={cx(classes.inputWrapper, className)} data-composable {...others}>
+    <div className={cx(classes.inputWrapper, className)} data-mantine-composable {...others}>
       {label && (
         <label className={classes.label} htmlFor={id}>
           {label} {required && <span className={classes.required}>*</span>}

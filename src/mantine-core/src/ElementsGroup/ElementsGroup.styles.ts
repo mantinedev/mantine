@@ -29,7 +29,7 @@ export default createUseStyles(
         justifyContent: JUSTIFY_CONTENT[props.position],
         margin: -1 * spacing,
 
-        '& [data-composable]': {
+        '& [data-mantine-composable]': {
           margin: spacing,
           flexGrow: props.grow ? 1 : 0,
         },

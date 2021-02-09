@@ -37,7 +37,7 @@ const Button = forwardRef(
         className={cx(classes.button, className)}
         type={type}
         disabled={disabled}
-        data-composable
+        data-mantine-composable
         ref={ref}
       >
         {leftIcon && <span className={classes.leftIcon}>{leftIcon}</span>}

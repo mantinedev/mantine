@@ -10,7 +10,7 @@ export default function ColorSwatch({ color, size = 25, style, ...others }: Colo
   return (
     <div
       style={{ ...style, width: size, height: size, borderRadius: 25, backgroundColor: color }}
-      data-composable
+      data-mantine-composable
       {...others}
     />
   );

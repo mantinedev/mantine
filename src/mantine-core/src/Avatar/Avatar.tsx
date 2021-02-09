@@ -17,7 +17,7 @@ export default function Avatar({ className, size = 60, style, src, alt, ...other
   return (
     <div
       {...others}
-      data-composable
+      data-mantine-composable
       className={cx(classes.avatar, className)}
       style={{ ...style, width: size, height: size, borderRadius: size }}
     >

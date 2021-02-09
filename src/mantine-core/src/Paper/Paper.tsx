@@ -17,7 +17,7 @@ const Paper = forwardRef(
     const classes = useStyles({ shadow, padding, theme: useMantineTheme(themeOverride) });
 
     return (
-      <div data-composable className={cx(classes.paper, className)} ref={ref} {...others}>
+      <div data-mantine-composable className={cx(classes.paper, className)} ref={ref} {...others}>
         {children}
       </div>
     );

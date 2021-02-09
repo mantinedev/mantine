@@ -18,7 +18,7 @@ export default function Badge({
   const classes = useStyles({ variant, color, theme: useMantineTheme() });
 
   return (
-    <div {...others} data-composable className={cx(classes.badge, className)}>
+    <div {...others} data-mantine-composable className={cx(classes.badge, className)}>
       {children}
     </div>
   );

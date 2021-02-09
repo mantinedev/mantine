@@ -17,7 +17,7 @@ const ActionIcon = forwardRef(
     return (
       <button
         {...others}
-        data-composable
+        data-mantine-composable
         className={cx(classes.actionIcon, className)}
         type="button"
         ref={ref}
