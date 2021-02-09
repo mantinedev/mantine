@@ -11,7 +11,9 @@ storiesOf('@mantine/core', module).add('Textarea', () => (
       label="Textarea"
       error="Please fill in this field"
       required
+      description="Description"
       placeholder="Textarea placeholder"
+      ref={(node) => node.focus()}
     />
   </MantineProvider>
 ));

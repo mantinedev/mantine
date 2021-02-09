@@ -23,5 +23,6 @@ export { default as Spoiler } from './Spoiler/Spoiler';
 export { default as Switch } from './Switch/Switch';
 export { default as Table } from './Table/Table';
 export { default as Text } from './Text/Text';
+export { default as Textarea } from './Textarea/Textarea';
 export { default as TextInput } from './TextInput/TextInput';
 export { default as Title } from './Title/Title';
