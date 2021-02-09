@@ -9,10 +9,10 @@ interface SwitchProps
     Omit<React.HTMLProps<HTMLDivElement>, 'label' | 'value' | 'onChange'> {
   value: boolean;
   onChange(value: boolean): void;
-  label: React.ReactNode;
+  label?: React.ReactNode;
   disabled?: boolean;
   id?: string;
-  color: MantineColor;
+  color?: MantineColor;
 }
 
 const Switch = forwardRef(
@@ -36,9 +36,11 @@ const Switch = forwardRef(
           id={uuid}
         />
 
-        <label className={classes.label} htmlFor={uuid}>
-          {label}
-        </label>
+        {label && (
+          <label className={classes.label} htmlFor={uuid}>
+            {label}
+          </label>
+        )}
       </div>
     );
   }

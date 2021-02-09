@@ -10,7 +10,8 @@ function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' 
 
 storiesOf('@mantine/core', module).add('Switch', () => (
   <MantineProvider>
-    <SwitchWrapper label="Turn on the notifications" />
+    <SwitchWrapper />
+    <SwitchWrapper label="Turn on the notifications" style={{ marginTop: 15 }} />
     <SwitchWrapper label="Turn on the notifications" disabled style={{ marginTop: 15 }} />
   </MantineProvider>
 ));
