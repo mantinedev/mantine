@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme, MantineNumberSize } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -18,7 +18,8 @@ export default createUseStyles(
       height: 36,
       paddingLeft: 15,
       paddingRight: 15,
-      borderRadius: 4,
+      borderRadius: ({ radius }: { radius: MantineNumberSize }) =>
+        typeof radius === 'number' ? radius : theme.radius[radius],
       border: `1px solid ${theme.colors.gray[5]}`,
       transition: 'border-color 100ms ease, box-shadow 100ms ease',
       cursor: 'pointer',

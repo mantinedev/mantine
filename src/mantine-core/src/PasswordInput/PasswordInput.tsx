@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import { useId } from '@mantine/hooks';
 import { EyeOpenIcon, EyeClosedIcon } from '@modulz/radix-icons';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
 import ActionIcon from '../ActionIcon/ActionIcon';
 import Input from '../Input/Input';
@@ -15,6 +15,7 @@ interface PasswordInputProps
   onChange(value: string): void;
   id?: string;
   icon?: React.ReactNode;
+  radius?: MantineNumberSize;
 }
 
 const PasswordInput = forwardRef(
@@ -29,6 +30,7 @@ const PasswordInput = forwardRef(
       style,
       onChange,
       icon,
+      radius,
       themeOverride,
       ...others
     }: PasswordInputProps,
@@ -51,6 +53,7 @@ const PasswordInput = forwardRef(
         <div className={classes.wrapper}>
           <Input
             {...others}
+            radius={radius}
             ref={ref}
             inputClassName={classes.input}
             type={reveal ? 'text' : 'password'}

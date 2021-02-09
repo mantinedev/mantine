@@ -24,7 +24,7 @@ storiesOf('@mantine/core', module).add('Paper', () => (
         </Text>
       </Paper>
 
-      <Paper style={{ width: 260 }} padding="sm" shadow="sm">
+      <Paper radius="lg" style={{ width: 260 }} padding="sm" shadow="sm">
         <Text>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque, temporibus excepturi,
           placeat quam eius quisquam ad nostrum magnam molestias voluptates minima minus natus

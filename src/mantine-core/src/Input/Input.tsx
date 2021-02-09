@@ -1,12 +1,13 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import useStyles from './Input.styles';
 
 interface InputProps extends DefaultProps, Omit<React.HTMLProps<HTMLInputElement>, 'ref'> {
   invalid?: boolean;
   icon?: React.ReactNode;
   inputClassName?: string;
+  radius?: MantineNumberSize;
   variant?: 'default' | 'unstyled';
 }
 
@@ -18,13 +19,14 @@ const Input = forwardRef(
       variant = 'default',
       icon,
       style,
+      radius = 'sm',
       inputClassName,
       themeOverride,
       ...others
     }: InputProps,
     ref: React.ForwardedRef<HTMLInputElement>
   ) => {
-    const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+    const classes = useStyles({ radius, theme: useMantineTheme(themeOverride) });
 
     return (
       <div

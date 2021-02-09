@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { useId } from '@mantine/hooks';
 import cx from 'clsx';
 import { ChevronDownIcon } from '@modulz/radix-icons';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
 import useStyles from './Select.styles';
 
@@ -21,6 +21,7 @@ interface SelectProps
   onChange(value: string): void;
   data: SelectItem[];
   disabled?: boolean;
+  radius?: MantineNumberSize;
 }
 
 const Select = forwardRef(
@@ -37,12 +38,13 @@ const Select = forwardRef(
       onChange,
       placeholder,
       disabled,
+      radius = 'sm',
       themeOverride,
       ...others
     }: SelectProps,
     ref: React.ForwardedRef<HTMLSelectElement>
   ) => {
-    const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+    const classes = useStyles({ radius, theme: useMantineTheme(themeOverride) });
     const uuid = useId(id);
 
     const options = data.map((item) => (

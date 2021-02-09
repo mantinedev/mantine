@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useMantineTheme, DefaultProps } from '@mantine/theme';
+import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { useId } from '@mantine/hooks';
 import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
 import useStyles from './Textarea.styles';
@@ -15,11 +15,13 @@ interface TextareaProps
   autosize?: boolean;
   maxRows?: number;
   minRows?: number;
+  radius?: MantineNumberSize;
 }
 
 const Textarea = forwardRef(
   (
     {
+      radius = 'sm',
       autosize = false,
       maxRows = 4,
       minRows,
@@ -36,7 +38,7 @@ const Textarea = forwardRef(
     ref: React.ForwardedRef<HTMLTextAreaElement>
   ) => {
     const uuid = useId(id);
-    const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+    const classes = useStyles({ radius, theme: useMantineTheme(themeOverride) });
 
     return (
       <InputWrapper

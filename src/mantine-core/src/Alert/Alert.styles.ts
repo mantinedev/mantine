@@ -10,19 +10,19 @@ export default createUseStyles(
       textAlign: 'center',
       height: 34,
       lineHeight: '34px',
-      borderTopRightRadius: 4,
-      borderTopLeftRadius: 4,
+      borderTopRightRadius: theme.radius.sm,
+      borderTopLeftRadius: theme.radius.sm,
     }),
 
     body: ({ color }: { color: MantineColor }) => ({
       backgroundColor: theme.colors[color || theme.primaryColor][0],
       padding: theme.spacing.md,
-      borderBottomLeftRadius: 4,
-      borderBottomRightRadius: 4,
+      borderBottomLeftRadius: theme.radius.sm,
+      borderBottomRightRadius: theme.radius.sm,
 
       '&:only-child': {
-        borderTopRightRadius: 4,
-        borderTopLeftRadius: 4,
+        borderTopRightRadius: theme.radius.sm,
+        borderTopLeftRadius: theme.radius.sm,
       },
     }),
   }),

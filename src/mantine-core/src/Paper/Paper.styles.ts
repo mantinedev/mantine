@@ -7,7 +7,8 @@ export default createUseStyles(
     paper: {
       backgroundColor: OpenColor.white,
       boxSizing: 'border-box',
-      borderRadius: 4,
+      borderRadius: ({ radius }: { radius: MantineNumberSize }) =>
+        typeof radius === 'number' ? radius : theme.radius[radius],
       boxShadow: ({ shadow }: { shadow?: MantineSize }) => theme.shadows[shadow] || 'none',
       padding: ({ padding }: { padding: MantineNumberSize }) =>
         typeof padding === 'number' ? padding : theme.spacing[padding],

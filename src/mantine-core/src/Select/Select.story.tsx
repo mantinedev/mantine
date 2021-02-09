@@ -27,6 +27,7 @@ storiesOf('@mantine/core', module).add('Select', () => (
     <WrappedSelect label="Your favourite library" placeholder="Your favourite library" />
     <WrappedSelect label="Your favourite library" required placeholder="Your favourite library" />
     <WrappedSelect
+      radius="xl"
       label="Your favourite library"
       required
       placeholder="Your favourite library"

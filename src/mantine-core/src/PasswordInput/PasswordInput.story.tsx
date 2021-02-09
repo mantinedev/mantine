@@ -28,6 +28,7 @@ storiesOf('@mantine/core', module).add('PasswordInput', () => (
       label="With error"
       placeholder="With error"
       error="This field is invalid"
+      radius="lg"
     />
   </MantineProvider>
 ));

@@ -30,7 +30,7 @@ export default createUseStyles(
       border: `1px solid ${theme.colors.gray[4]}`,
       width: typeof size === 'number' ? size : CHECKBOX_SIZES[size] || CHECKBOX_SIZES.md,
       height: typeof size === 'number' ? size : CHECKBOX_SIZES[size] || CHECKBOX_SIZES.md,
-      borderRadius: 4,
+      borderRadius: theme.radius.sm,
       padding: 0,
       outline: 0,
       cursor: 'pointer',

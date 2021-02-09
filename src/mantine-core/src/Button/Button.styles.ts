@@ -1,5 +1,11 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineColor, MantineSize } from '@mantine/theme';
+import {
+  theming,
+  MantineTheme,
+  MantineColor,
+  MantineSize,
+  MantineNumberSize,
+} from '@mantine/theme';
 
 const sizes = {
   xs: {
@@ -43,7 +49,15 @@ export default createUseStyles(
       marginLeft: 10,
     },
 
-    button: ({ color, size }: { color?: MantineColor; size: MantineSize }) => {
+    button: ({
+      color,
+      size,
+      radius,
+    }: {
+      color?: MantineColor;
+      size: MantineSize;
+      radius: MantineNumberSize;
+    }) => {
       const colorStyles = Array.isArray(theme.colors[color])
         ? {
             backgroundColor: theme.colors[color][5],
@@ -92,7 +106,7 @@ export default createUseStyles(
         boxSizing: 'border-box',
         border: '1px solid transparent',
         outline: 0,
-        borderRadius: 4,
+        borderRadius: typeof radius === 'number' ? radius : theme.radius[radius],
         textTransform: 'uppercase',
         fontWeight: 'bold',
         letterSpacing: 0.5,

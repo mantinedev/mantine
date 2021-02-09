@@ -3,7 +3,13 @@
 
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineColor, MantineSize } from '@mantine/theme';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineColor,
+  MantineSize,
+  MantineNumberSize,
+} from '@mantine/theme';
 import useStyles from './Button.styles';
 
 interface ButtonProps extends DefaultProps, Omit<React.HTMLProps<HTMLButtonElement>, 'size'> {
@@ -12,6 +18,7 @@ interface ButtonProps extends DefaultProps, Omit<React.HTMLProps<HTMLButtonEleme
   color?: MantineColor;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  radius?: MantineNumberSize;
 }
 
 const Button = forwardRef(
@@ -25,11 +32,12 @@ const Button = forwardRef(
       children,
       leftIcon,
       rightIcon,
+      radius = 'sm',
       ...others
     }: ButtonProps,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
-    const classes = useStyles({ color, size, theme: useMantineTheme() });
+    const classes = useStyles({ radius, color, size, theme: useMantineTheme() });
 
     return (
       <button

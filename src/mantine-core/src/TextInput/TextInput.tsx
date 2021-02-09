@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import Input from '../Input/Input';
 import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
 
@@ -13,6 +13,7 @@ interface TextInputProps
   value: string;
   onChange(value: string): void;
   id?: string;
+  radius?: MantineNumberSize;
 }
 
 const TextInput = forwardRef(
@@ -28,6 +29,7 @@ const TextInput = forwardRef(
       style,
       onChange,
       icon,
+      radius = 'sm',
       themeOverride,
       ...others
     }: TextInputProps,
@@ -55,6 +57,7 @@ const TextInput = forwardRef(
           invalid={!!error}
           icon={icon}
           themeOverride={themeOverride}
+          radius={radius}
         />
       </InputWrapper>
     );

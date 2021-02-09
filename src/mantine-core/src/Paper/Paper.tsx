@@ -7,14 +7,23 @@ interface PaperProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>,
   children: React.ReactNode;
   padding?: MantineNumberSize;
   shadow?: MantineSize;
+  radius?: MantineNumberSize;
 }
 
 const Paper = forwardRef(
   (
-    { className, children, padding = 0, shadow, themeOverride, ...others }: PaperProps,
+    {
+      className,
+      children,
+      padding = 0,
+      radius = 'sm',
+      shadow,
+      themeOverride,
+      ...others
+    }: PaperProps,
     ref: React.ForwardedRef<HTMLDivElement>
   ) => {
-    const classes = useStyles({ shadow, padding, theme: useMantineTheme(themeOverride) });
+    const classes = useStyles({ radius, shadow, padding, theme: useMantineTheme(themeOverride) });
 
     return (
       <div data-mantine-composable className={cx(classes.paper, className)} ref={ref} {...others}>

@@ -6,6 +6,7 @@ import Textarea from './Textarea';
 storiesOf('@mantine/core', module).add('Textarea', () => (
   <MantineProvider>
     <Textarea
+      radius="md"
       autosize
       minRows={3}
       label="Textarea"

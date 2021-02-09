@@ -49,7 +49,7 @@ export default function Notification({
         </Text>
       </div>
 
-      <ActionIcon onClick={onClose} themeOverride={themeOverride}>
+      <ActionIcon color="gray" onClick={onClose} themeOverride={themeOverride}>
         <Cross2Icon />
       </ActionIcon>
     </Paper>
