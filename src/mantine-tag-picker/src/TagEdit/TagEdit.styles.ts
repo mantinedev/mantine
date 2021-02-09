@@ -68,15 +68,23 @@ export default createUseStyles(
       display: 'flex',
       alignItems: 'center',
       backgroundColor: 'transparent',
-      border: 0,
+      border: '1px dotted transparent',
       paddingLeft: 10,
       paddingRight: 10,
       height: 28,
       cursor: 'pointer',
       outline: 0,
 
-      '&:hover, &:focus': {
+      '&:hover': {
         backgroundColor: theme.colors.gray[0],
+      },
+
+      '&:focus': {
+        borderColor: theme.colors[theme.primaryColor][6],
+      },
+
+      '&:focus:not(:focus-visible)': {
+        borderColor: 'transparent',
       },
     },
 
