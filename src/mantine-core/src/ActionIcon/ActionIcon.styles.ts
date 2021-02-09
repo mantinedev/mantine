@@ -1,15 +1,15 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, MantineColor, theming } from '@mantine/theme';
+import { MantineTheme, MantineColor, MantineNumberSize, theming } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
-    actionIcon: ({ color }: { color: MantineColor }) => ({
+    actionIcon: ({ color, radius }: { color: MantineColor; radius: MantineNumberSize }) => ({
       border: '1px solid transparent',
       boxSizing: 'border-box',
       backgroundColor: 'transparent',
       height: 27,
       width: 27,
-      borderRadius: 4,
+      borderRadius: typeof radius === 'number' ? radius : theme.radius[radius],
       padding: 0,
       lineHeight: 1,
       display: 'flex',
