@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
-import { DefaultProps, MantineSize, useMantineTheme } from '@mantine/theme';
-import useStyles, { PaperPadding } from './Paper.styles';
+import { DefaultProps, MantineSize, MantineNumberSize, useMantineTheme } from '@mantine/theme';
+import useStyles from './Paper.styles';
 
 interface PaperProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>, 'ref'> {
   children: React.ReactNode;
-  padding?: PaperPadding;
+  padding?: MantineNumberSize;
   shadow?: MantineSize;
 }
 

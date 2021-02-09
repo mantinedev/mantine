@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineColor, MantineSize } from '@mantine/theme';
+import { theming, MantineTheme, MantineColor, MantineNumberSize } from '@mantine/theme';
 
 const CHECKBOX_SIZES = {
   xs: 14,
@@ -24,7 +24,7 @@ export default createUseStyles(
       fontSize: 14,
     },
 
-    checkbox: ({ color, size }: { color: MantineColor; size: MantineSize }) => ({
+    checkbox: ({ color, size }: { color: MantineColor; size: MantineNumberSize }) => ({
       appearance: 'none',
       backgroundColor: theme.colors.gray[0],
       border: `1px solid ${theme.colors.gray[4]}`,

@@ -1,14 +1,13 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineSize } from '@mantine/theme';
+import { theming, MantineTheme, MantineNumberSize } from '@mantine/theme';
 
 export type ElementsGroupPosition = 'right' | 'center' | 'left' | 'apart';
-export type ElementsGroupSpacing = MantineSize | number;
 
 interface ElementsGroupStylesProps {
   position: ElementsGroupPosition;
   noWrap: boolean;
   grow: boolean;
-  spacing: ElementsGroupSpacing;
+  spacing: MantineNumberSize;
 }
 
 const JUSTIFY_CONTENT = {

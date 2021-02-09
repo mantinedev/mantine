@@ -2,14 +2,14 @@ import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { CheckIcon } from '@modulz/radix-icons';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineColor, MantineSize } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, MantineColor, MantineNumberSize } from '@mantine/theme';
 import useStyles from './Checkbox.styles';
 
 interface CheckboxProps
   extends DefaultProps,
     Omit<React.HTMLProps<HTMLDivElement>, 'label' | 'value' | 'onChange' | 'size'> {
   color?: MantineColor;
-  size?: MantineSize | number;
+  size?: MantineNumberSize;
   value: boolean;
   onChange(value: boolean): void;
   label: React.ReactNode;

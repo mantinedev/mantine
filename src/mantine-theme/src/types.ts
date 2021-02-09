@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import type OpenColor from 'open-color';
 
 export type MantineSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type MantineNumberSize = MantineSize | number;
 
 export type MantineColor = Exclude<keyof OpenColor, 'white' | 'black'>;
 

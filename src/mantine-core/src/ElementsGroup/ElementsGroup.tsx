@@ -1,12 +1,12 @@
 import React from 'react';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import useStyles, { ElementsGroupPosition, ElementsGroupSpacing } from './ElementsGroup.styles';
+import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
+import useStyles, { ElementsGroupPosition } from './ElementsGroup.styles';
 
 interface ElementsGroupProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
   position?: ElementsGroupPosition;
   noWrap?: boolean;
   grow?: boolean;
-  spacing?: ElementsGroupSpacing;
+  spacing?: MantineNumberSize;
 }
 
 export default function ElementsGroup({

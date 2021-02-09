@@ -3,6 +3,7 @@ export type {
   MantineThemeOverride,
   MantineColor,
   MantineSize,
+  MantineNumberSize,
   DefaultProps,
 } from './types';
 
