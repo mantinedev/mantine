@@ -22,7 +22,7 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
 ));
 
 storiesOf('@mantine/core', module).add('Button', () => (
-  <MantineProvider>
+  <MantineProvider theme={{ fontFamily: "'IBM Plex Mono', monospace" }}>
     <ElementsGroup>
       <Button disabled>Disabled</Button>
       <Button radius="lg">With lg radius</Button>
