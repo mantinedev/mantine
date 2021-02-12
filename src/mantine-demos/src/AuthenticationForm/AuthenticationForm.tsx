@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from '@mantine/hooks';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
-import { TextInput, PasswordInput, ElementsGroup, Checkbox, Button, Paper } from '@mantine/core';
+import {
+  TextInput,
+  PasswordInput,
+  ElementsGroup,
+  Checkbox,
+  Button,
+  Paper,
+  Text,
+  LoadingOverlay,
+} from '@mantine/core';
 
 const atLeastTwoCharacters = (value: string) => value.trim().length >= 2;
 
 export default function AuthenticationForm() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>(null);
+
   const form = useForm({
     initialValues: {
       firstName: '',
@@ -23,9 +35,18 @@ export default function AuthenticationForm() {
     },
   });
 
+  const handleSubmit = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setError('User with this email already exists');
+    }, 3000);
+  };
+
   return (
     <Paper padding="lg" shadow="sm">
-      <form onSubmit={form.onSubmit((values) => values)}>
+      <form onSubmit={form.onSubmit(handleSubmit)} style={{ position: 'relative' }}>
+        <LoadingOverlay visible={loading} />
         <div style={{ display: 'flex' }}>
           <TextInput
             required
@@ -80,6 +101,12 @@ export default function AuthenticationForm() {
           value={form.values.termsOfService}
           onChange={(value) => form.setField('termsOfService', value)}
         />
+
+        {error && (
+          <Text color="red" style={{ marginTop: 10 }}>
+            {error}
+          </Text>
+        )}
 
         <ElementsGroup position="right" style={{ marginTop: 25 }}>
           <Button color="blue" type="submit">
