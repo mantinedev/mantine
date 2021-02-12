@@ -1,19 +1,51 @@
 import React from 'react';
 import { TrashIcon } from '@modulz/radix-icons';
-import { Paper, Table, ActionIcon, Title } from '@mantine/core';
+import { Paper, Table, ActionIcon, Title, Input } from '@mantine/core';
+import { useListState } from '@mantine/hooks';
 import * as mockdata from './mockdata';
 
 export default function TransactionsTable() {
-  const transactions = mockdata.transactions.map((transaction) => (
+  const [transactionsState, transactionsHandlers] = useListState(mockdata.transactions);
+
+  const transactions = transactionsState.map((transaction, index) => (
     <tr key={transaction.id}>
-      <td>{transaction.amount}</td>
-      <td>{transaction.category.toString()}</td>
+      <td>
+        <Input
+          icon="$"
+          inputStyle={{ textAlign: 'right' }}
+          variant="unstyled"
+          value={transaction.amount}
+          onChange={(event) =>
+            transactionsHandlers.setItemProp(
+              index,
+              'amount',
+              Number.isNaN(parseFloat(event.currentTarget.value))
+                ? 0
+                : parseFloat(event.currentTarget.value)
+            )
+          }
+        />
+      </td>
+      <td>{transaction.category.name}</td>
       <td>
         {transaction.date.getDate()} {transaction.date.toLocaleDateString('en', { month: 'short' })}
       </td>
-      <td>{transaction.title}</td>
       <td>
-        <ActionIcon color="red" title="Remove transaction">
+        <Input
+          placeholder="Transaction description"
+          variant="unstyled"
+          value={transaction.title}
+          onChange={(event) =>
+            transactionsHandlers.setItemProp(index, 'title', event.currentTarget.value)
+          }
+        />
+      </td>
+      <td>
+        <ActionIcon
+          color="red"
+          title="Remove transaction"
+          onClick={() => transactionsHandlers.remove(index)}
+        >
           <TrashIcon />
         </ActionIcon>
       </td>
@@ -30,7 +62,7 @@ export default function TransactionsTable() {
         <Table style={{ tableLayout: 'fixed' }}>
           <thead>
             <tr>
-              <th style={{ width: 80 }}>Amount, $</th>
+              <th style={{ width: 80 }}>Amount</th>
               <th style={{ width: 100 }}>Category</th>
               <th style={{ width: 60 }}>Date</th>
               <th>Description</th>

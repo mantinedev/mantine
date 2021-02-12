@@ -12,9 +12,10 @@ storiesOf('@mantine/demos', module).add('TransactionsTable', () => (
         padding: '40px 10px',
         justifyContent: 'center',
         height: '100vh',
+        boxSizing: 'border-box',
       }}
     >
-      <div style={{ width: 640 }}>
+      <div style={{ width: 700 }}>
         <TransactionsTable />
       </div>
     </div>
