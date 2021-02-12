@@ -4,7 +4,6 @@ const DEFAULT_HANDLERS = ['mousedown', 'touchstart'];
 
 export function useClickOutside(handler: () => void, handlers = DEFAULT_HANDLERS) {
   const ref = useRef<any>();
-  const isBrowser = typeof document !== 'undefined';
 
   useEffect(() => {
     const listener = (event: any) => {
@@ -13,10 +12,10 @@ export function useClickOutside(handler: () => void, handlers = DEFAULT_HANDLERS
       }
     };
 
-    isBrowser && handlers.forEach((fn) => document.addEventListener(fn, listener));
+    handlers.forEach((fn) => document.addEventListener(fn, listener));
 
     return () => {
-      isBrowser && handlers.forEach((fn) => document.removeEventListener(fn, listener));
+      handlers.forEach((fn) => document.removeEventListener(fn, listener));
     };
   }, [ref, handler]);
 
