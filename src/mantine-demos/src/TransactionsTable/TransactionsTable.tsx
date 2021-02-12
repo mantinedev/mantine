@@ -1,11 +1,18 @@
 import React from 'react';
+import OpenColor from 'open-color';
 import { TrashIcon } from '@modulz/radix-icons';
+import { TagPicker } from '@mantine/tag-picker';
 import { Paper, Table, ActionIcon, Title, Input } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import * as mockdata from './mockdata';
 
+const colors = Object.keys(OpenColor)
+  .filter((key) => key !== 'white' && key !== 'black')
+  .map((key) => ({ name: key, color: OpenColor[key][0] as string }));
+
 export default function TransactionsTable() {
   const [transactionsState, transactionsHandlers] = useListState(mockdata.transactions);
+  const [categoriesState, categoriesHandlers] = useListState(mockdata.categories);
 
   const transactions = transactionsState.map((transaction, index) => (
     <tr key={transaction.id}>
@@ -26,7 +33,39 @@ export default function TransactionsTable() {
           }
         />
       </td>
-      <td>{transaction.category.name}</td>
+      <td style={{ position: 'relative' }}>
+        <TagPicker
+          data={categoriesState}
+          colors={colors}
+          value={transaction.category}
+          description="Select or create new category"
+          createLabel="Create category"
+          deleteLabel="Delete category"
+          noValueLabel="Select category"
+          searchPlaceholder="Search categories"
+          onChange={(value) => transactionsHandlers.setItemProp(index, 'category', value)}
+          onTagCreate={(value) => {
+            const category = { ...value, id: value.name };
+            categoriesHandlers.append(category);
+            return category;
+          }}
+          onTagDelete={(id) =>
+            categoriesHandlers.setState(categoriesState.filter((c) => c.id !== id))
+          }
+          onTagUpdate={(id, values) => {
+            const category = { id, ...values };
+
+            categoriesHandlers.setItem(
+              categoriesState.findIndex((c) => c.id === id),
+              category
+            );
+
+            transactionsHandlers.setState(
+              transactionsState.map((t) => (t.category.id === category.id ? { ...t, category } : t))
+            );
+          }}
+        />
+      </td>
       <td>
         {transaction.date.getDate()} {transaction.date.toLocaleDateString('en', { month: 'short' })}
       </td>
@@ -63,7 +102,7 @@ export default function TransactionsTable() {
           <thead>
             <tr>
               <th style={{ width: 80 }}>Amount</th>
-              <th style={{ width: 100 }}>Category</th>
+              <th style={{ width: 140 }}>Category</th>
               <th style={{ width: 60 }}>Date</th>
               <th>Description</th>
               <th style={{ width: 40 }} />

@@ -8,7 +8,7 @@ export const categories = [
   { id: 'healthcare', name: 'Healthcare', color: OpenColor.orange[0] },
   { id: 'entertainment', name: 'Entertainment', color: OpenColor.violet[0] },
   { id: 'rent', name: 'Rent', color: OpenColor.gray[0] },
-  { id: 'gifts', name: 'Gifts', color: OpenColor.violet[0] },
+  { id: 'gifts', name: 'Gifts', color: OpenColor.yellow[0] },
 ];
 
 const category = (id: string) => categories.find((c) => c.id === id);
@@ -16,7 +16,7 @@ const category = (id: string) => categories.find((c) => c.id === id);
 export const transactions = [
   {
     id: '0',
-    amount: 11276,
+    amount: 112,
     title: 'Weekly grocery',
     category: category('home'),
     date: new Date(2021, 1, 1),
@@ -30,14 +30,14 @@ export const transactions = [
   },
   {
     id: '2',
-    amount: 1487,
+    amount: 14,
     title: 'Domain name for personal project',
     category: category('personal-projects'),
     date: new Date(2021, 1, 6),
   },
   {
     id: '3',
-    amount: 13723,
+    amount: 137,
     title: 'Weekly grocery',
     category: category('home'),
     date: new Date(2021, 1, 7),
@@ -65,14 +65,14 @@ export const transactions = [
   },
   {
     id: '7',
-    amount: 699,
+    amount: 6,
     title: 'Spotify',
     category: category('subscriptions'),
     date: new Date(2021, 1, 11),
   },
   {
     id: '8',
-    amount: 10971,
+    amount: 109,
     title: 'Weekly grocery',
     category: category('home'),
     date: new Date(2021, 1, 12),
@@ -107,8 +107,8 @@ export const transactions = [
   },
   {
     id: '13',
-    amount: 33765,
-    title: 'Guns from Wallmart',
+    amount: 1337,
+    title: 'Sniper riffle from Wallmart',
     category: category('entertainment'),
     date: new Date(2021, 1, 18),
   },
