@@ -7,6 +7,7 @@ interface InputProps extends DefaultProps, Omit<React.HTMLProps<HTMLInputElement
   invalid?: boolean;
   icon?: React.ReactNode;
   inputClassName?: string;
+  inputStyle?: React.CSSProperties;
   radius?: MantineNumberSize;
   variant?: 'default' | 'unstyled';
 }
@@ -21,6 +22,7 @@ const Input = forwardRef(
       style,
       radius = 'sm',
       inputClassName,
+      inputStyle,
       themeOverride,
       ...others
     }: InputProps,
@@ -36,6 +38,7 @@ const Input = forwardRef(
         {icon && <div className={classes.icon}>{icon}</div>}
         <input
           {...others}
+          style={inputStyle}
           ref={ref}
           className={cx(
             classes.input,
