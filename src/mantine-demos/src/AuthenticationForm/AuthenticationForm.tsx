@@ -88,6 +88,8 @@ export default function AuthenticationForm() {
           required
           placeholder="Password"
           label="Password"
+          showPasswordLabel="Show password"
+          hidePasswordLabel="Hide password"
           icon={<LockClosedIcon />}
           {...form.getInputProps({
             field: 'password',

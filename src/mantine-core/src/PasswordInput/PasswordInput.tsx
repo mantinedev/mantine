@@ -16,6 +16,8 @@ interface PasswordInputProps
   id?: string;
   icon?: React.ReactNode;
   radius?: MantineNumberSize;
+  showPasswordLabel?: string;
+  hidePasswordLabel?: string;
 }
 
 const PasswordInput = forwardRef(
@@ -31,6 +33,8 @@ const PasswordInput = forwardRef(
       onChange,
       icon,
       radius,
+      hidePasswordLabel,
+      showPasswordLabel,
       themeOverride,
       ...others
     }: PasswordInputProps,
@@ -67,6 +71,8 @@ const PasswordInput = forwardRef(
             className={classes.control}
             onClick={() => setReveal((current) => !current)}
             themeOverride={themeOverride}
+            title={reveal ? hidePasswordLabel : showPasswordLabel}
+            aria-label={reveal ? hidePasswordLabel : showPasswordLabel}
           >
             {reveal ? <EyeClosedIcon /> : <EyeOpenIcon />}
           </ActionIcon>
