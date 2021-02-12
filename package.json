@@ -52,6 +52,7 @@
     "nanoid": "^3.1.20",
     "open-color": "^1.8.0",
     "react": "^16.14.0",
+    "react-feather": "^2.0.9",
     "react-jss": "^10.5.1",
     "react-textarea-autosize": "^8.3.0"
   }

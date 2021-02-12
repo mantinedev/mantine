@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
+import { Calendar } from 'react-feather';
 import { MantineColor, MantineProvider, MantineSize, DEFAULT_THEME } from '@mantine/theme';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import Button from './Button';
@@ -41,26 +42,19 @@ storiesOf('@mantine/core', module).add('Button', () => (
 
     <ElementsGroup style={{ marginTop: 10 }}>{sizes}</ElementsGroup>
     <ElementsGroup style={{ marginTop: 10 }}>
-      <Button color="blue" leftIcon={<CalendarIcon style={{ width: 14, height: 14 }} />}>
+      <Button color="blue" leftIcon={<Calendar size={16} />}>
         Book meeting
       </Button>
 
-      <Button size="xl" color="blue" leftIcon={<CalendarIcon style={{ height: 18, width: 18 }} />}>
+      <Button size="xl" color="blue" leftIcon={<CalendarIcon style={{ height: 22, width: 22 }} />}>
         Book meeting
       </Button>
 
-      <Button
-        disabled
-        size="xl"
-        color="blue"
-        leftIcon={<CalendarIcon style={{ height: 18, width: 18 }} />}
-      >
+      <Button disabled size="xl" color="blue" leftIcon={<CalendarIcon style={{ width: 18 }} />}>
         Book meeting
       </Button>
 
-      <Button rightIcon={<ExternalLinkIcon style={{ width: 13, height: 13 }} />}>
-        Open in new tab
-      </Button>
+      <Button rightIcon={<ExternalLinkIcon style={{ width: 15 }} />}>Open in new tab</Button>
     </ElementsGroup>
   </MantineProvider>
 ));

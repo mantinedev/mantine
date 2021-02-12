@@ -48,9 +48,11 @@ const Button = forwardRef(
         data-mantine-composable
         ref={ref}
       >
-        {leftIcon && <span className={classes.leftIcon}>{leftIcon}</span>}
-        <span>{children}</span>
-        {rightIcon && <span className={classes.rightIcon}>{rightIcon}</span>}
+        <div className={classes.inner}>
+          {leftIcon && <span className={cx(classes.icon, classes.leftIcon)}>{leftIcon}</span>}
+          <span>{children}</span>
+          {rightIcon && <span className={cx(classes.icon, classes.rightIcon)}>{rightIcon}</span>}
+        </div>
       </button>
     );
   }

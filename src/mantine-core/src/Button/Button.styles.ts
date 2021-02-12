@@ -41,6 +41,11 @@ const sizes = {
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
+    icon: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+
     leftIcon: {
       marginRight: 10,
     },
@@ -114,9 +119,6 @@ export default createUseStyles(
         userSelect: 'none',
         appearance: 'none',
         lineHeight: 1,
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
 
         '&:active': {
           transform: 'translateY(1px)',
@@ -130,6 +132,12 @@ export default createUseStyles(
           pointerEvents: 'none',
         },
       };
+    },
+
+    inner: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   }),
   { theming }
