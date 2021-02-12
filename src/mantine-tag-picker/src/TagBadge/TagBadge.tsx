@@ -19,7 +19,7 @@ export default function TagBadge({ className, data, themeOverride }: TagBadgePro
     <div
       className={cx(classes.tagBadge, className)}
       style={{
-        color: isBrightColor(data.color) ? theme.colors.black : theme.colors.white,
+        color: isBrightColor(data.color) ? theme.black : theme.white,
         backgroundColor: data.color,
       }}
     >
