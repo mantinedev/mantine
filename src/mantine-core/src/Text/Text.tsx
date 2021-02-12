@@ -1,13 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineColor, MantineSize } from '@mantine/theme';
+import { useMantineTheme, DefaultProps, MantineSize } from '@mantine/theme';
 import useStyles from './Text.styles';
 
 interface TextProps extends DefaultProps {
   component?: React.ElementType<any>;
   children?: React.ReactNode;
   size?: MantineSize;
-  color?: MantineColor;
+  color?: string;
   bold?: boolean;
   semibold?: boolean;
 }

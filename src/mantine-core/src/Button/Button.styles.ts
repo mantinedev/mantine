@@ -1,11 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import {
-  theming,
-  MantineTheme,
-  MantineColor,
-  MantineSize,
-  MantineNumberSize,
-} from '@mantine/theme';
+import { theming, MantineTheme, MantineSize, MantineNumberSize } from '@mantine/theme';
 
 const sizes = {
   xs: {
@@ -59,7 +53,7 @@ export default createUseStyles(
       size,
       radius,
     }: {
-      color?: MantineColor;
+      color?: string;
       size: MantineSize;
       radius: MantineNumberSize;
     }) => {
@@ -67,10 +61,10 @@ export default createUseStyles(
         ? {
             backgroundColor: theme.colors[color][5],
             textShadow: `1px 1px 0 ${theme.colors[color][7]}`,
-            color: theme.colors.white,
+            color: theme.white,
 
             '&:focus': {
-              boxShadow: `0 0 0 2px ${theme.colors.white}, 0 0 0 4px ${theme.colors[color][5]}`,
+              boxShadow: `0 0 0 2px ${theme.white}, 0 0 0 4px ${theme.colors[color][5]}`,
             },
 
             '&:focus:not(:focus-visible)': {
@@ -82,12 +76,12 @@ export default createUseStyles(
             },
           }
         : {
-            backgroundColor: theme.colors.white,
+            backgroundColor: theme.white,
             color: theme.colors.gray[7],
             borderColor: theme.colors.gray[4],
 
             '&:focus': {
-              boxShadow: `0 0 0 2px ${theme.colors.white}, 0 0 0 4px ${
+              boxShadow: `0 0 0 2px ${theme.white}, 0 0 0 4px ${
                 theme.colors[theme.primaryColor][5]
               }`,
             },

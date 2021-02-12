@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineColor, MantineNumberSize } from '@mantine/theme';
+import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
 import useStyles from './ActionIcon.styles';
 
 interface ActionIconProps extends DefaultProps, Omit<React.HTMLProps<HTMLButtonElement>, 'ref'> {
-  color?: MantineColor;
+  color?: string;
   radius?: MantineNumberSize;
 }
 

@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { useId } from '@mantine/hooks';
-import { MantineColor, DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './Switch.styles';
 
 interface SwitchProps
@@ -12,7 +12,7 @@ interface SwitchProps
   label?: React.ReactNode;
   disabled?: boolean;
   id?: string;
-  color?: MantineColor;
+  color?: string;
 }
 
 const Switch = forwardRef(

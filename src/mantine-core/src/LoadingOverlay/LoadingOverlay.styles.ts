@@ -17,7 +17,7 @@ export default createUseStyles(
     },
 
     background: {
-      backgroundColor: theme.colors.white,
+      backgroundColor: theme.white,
       position: 'absolute',
       top: 0,
       left: 0,

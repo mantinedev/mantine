@@ -1,10 +1,3 @@
-/**
- * ts cannot resolve OpenColor without direct import
- * details – https://stackoverflow.com/questions/43335336/error-ts4058-return-type-of-exported-function-has-or-is-using-name-x-from-exter
- * */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type OpenColor from 'open-color';
-
 import { useTheme } from './theme-context';
 import { MantineTheme, MantineThemeOverride } from './types';
 

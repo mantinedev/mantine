@@ -1,9 +1,9 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, MantineColor, MantineNumberSize, theming } from '@mantine/theme';
+import { MantineTheme, MantineNumberSize, theming } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
-    actionIcon: ({ color, radius }: { color: MantineColor; radius: MantineNumberSize }) => ({
+    actionIcon: ({ color, radius }: { color: string; radius: MantineNumberSize }) => ({
       border: '1px solid transparent',
       boxSizing: 'border-box',
       backgroundColor: 'transparent',

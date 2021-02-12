@@ -1,9 +1,9 @@
 import React from 'react';
-import { DefaultProps, MantineColor, MantineNumberSize, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
 
 interface LoaderProps extends DefaultProps, Omit<React.SVGProps<SVGElement>, 'ref'> {
   size?: MantineNumberSize;
-  color?: MantineColor;
+  color?: string;
 }
 
 const LOADER_SIZES = {

@@ -1,9 +1,27 @@
 import OpenColor from 'open-color';
 import { MantineTheme } from './types';
 
+const {
+  gray,
+  red,
+  pink,
+  grape,
+  violet,
+  indigo,
+  blue,
+  cyan,
+  teal,
+  green,
+  lime,
+  yellow,
+  orange,
+} = OpenColor;
+
 export const DEFAULT_THEME: MantineTheme = {
   __mantine_theme: true,
-  colors: OpenColor,
+  white: '#fff',
+  black: '#000',
+  colors: { gray, red, pink, grape, violet, indigo, blue, cyan, teal, green, lime, yellow, orange },
   fontFamily: 'Roboto, sans-serif',
   primaryColor: 'blue',
 

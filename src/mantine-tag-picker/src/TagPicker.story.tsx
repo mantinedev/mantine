@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { nanoid } from 'nanoid';
 import oc from 'open-color';
-import { MantineProvider, DEFAULT_THEME, MantineColor } from '@mantine/theme';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/theme';
 import TagPicker from './TagPickerContainer';
 import { TagPickerTag } from './types';
 
 const colors = Object.keys(DEFAULT_THEME.colors).filter(
   (color) => color !== 'white' && color !== 'black'
-) as MantineColor[];
+);
 
 type TagPickerWrapperProps = Omit<
   React.ComponentProps<typeof TagPicker>,

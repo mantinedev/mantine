@@ -1,9 +1,9 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineColor } from '@mantine/theme';
+import { theming, MantineTheme } from '@mantine/theme';
 
 export type BadgeVariant = 'badge' | 'pill' | 'outline';
 
-function getVariantStyle(variant: BadgeVariant, color: MantineColor, theme: MantineTheme) {
+function getVariantStyle(variant: BadgeVariant, color: string, theme: MantineTheme) {
   const colors = Array.isArray(theme.colors[color])
     ? theme.colors[color]
     : theme.colors[theme.primaryColor];
@@ -23,7 +23,7 @@ function getVariantStyle(variant: BadgeVariant, color: MantineColor, theme: Mant
       return {
         backgroundColor: colors[6],
         textShadow: `1px 1px 0 ${colors[8]}`,
-        color: theme.colors.white,
+        color: theme.white,
         paddingLeft: 8,
         paddingRight: 8,
         height: 19,
@@ -34,7 +34,7 @@ function getVariantStyle(variant: BadgeVariant, color: MantineColor, theme: Mant
       return {
         borderColor: colors[6],
         color: colors[6],
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.white,
         lineHeight: '22px',
         height: 22,
         paddingLeft: 10,

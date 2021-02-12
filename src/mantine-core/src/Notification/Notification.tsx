@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { Cross2Icon } from '@modulz/radix-icons';
-import { DefaultProps, MantineColor, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import Paper from '../Paper/Paper';
 import Text from '../Text/Text';
 import ActionIcon from '../ActionIcon/ActionIcon';
@@ -10,7 +10,7 @@ import useStyles from './Notification.styles';
 interface NotificationProps
   extends DefaultProps,
     Omit<React.HTMLProps<HTMLDivElement>, 'title' | 'ref'> {
-  color?: MantineColor;
+  color?: string;
   icon?: React.ReactNode;
   title?: React.ReactNode;
   onClose(): void;

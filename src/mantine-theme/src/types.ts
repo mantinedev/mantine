@@ -1,18 +1,30 @@
 import type { CSSProperties } from 'react';
-import type OpenColor from 'open-color';
 
 export type MantineSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type MantineNumberSize = MantineSize | number;
 
-export type MantineColor = Exclude<keyof OpenColor, 'white' | 'black'>;
-
 type HeadingStyle = readonly [number, number];
+
+export type MantineColorsList = [
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string
+];
 
 export interface MantineTheme {
   readonly __mantine_theme: boolean;
-  readonly colors: typeof OpenColor;
+  readonly white: string;
+  readonly black: string;
+  readonly colors: Record<string, string[]>;
   readonly fontFamily: string;
-  readonly primaryColor: MantineColor;
+  readonly primaryColor: string;
 
   readonly fontSizes: {
     xs: number;

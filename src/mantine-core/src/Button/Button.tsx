@@ -3,19 +3,13 @@
 
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineColor,
-  MantineSize,
-  MantineNumberSize,
-} from '@mantine/theme';
+import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '@mantine/theme';
 import useStyles from './Button.styles';
 
 interface ButtonProps extends DefaultProps, Omit<React.HTMLProps<HTMLButtonElement>, 'size'> {
   size?: MantineSize;
   type?: 'submit' | 'button' | 'reset';
-  color?: MantineColor;
+  color?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   radius?: MantineNumberSize;

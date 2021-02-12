@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineColor } from '@mantine/theme';
+import { theming, MantineTheme } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -24,7 +24,7 @@ export default createUseStyles(
       '&::before': {
         content: "''",
         display: 'block',
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.white,
         height: 14,
         width: 14,
         borderRadius: 14,
@@ -33,7 +33,7 @@ export default createUseStyles(
       },
 
       '&:focus': {
-        boxShadow: ({ color }: { color: MantineColor }) =>
+        boxShadow: ({ color }: { color: string }) =>
           `0 0 0 2px ${theme.colors[color || theme.primaryColor][2]}`,
       },
 
@@ -46,7 +46,7 @@ export default createUseStyles(
       },
     },
 
-    checked: ({ color }: { color: MantineColor }) => ({
+    checked: ({ color }: { color: string }) => ({
       backgroundColor: theme.colors[color || theme.primaryColor][6],
       borderColor: theme.colors[color || theme.primaryColor][5],
 

@@ -1,11 +1,16 @@
 import { createUseStyles } from 'react-jss';
+import { theming, MantineTheme } from '@mantine/theme';
 
-export default createUseStyles({
-  anchor: {
-    textDecoration: 'none',
+export default createUseStyles(
+  (theme: MantineTheme) => ({
+    anchor: {
+      color: theme.colors[theme.primaryColor][6],
+      textDecoration: 'none',
 
-    '&:hover': {
-      textDecoration: 'underline',
+      '&:hover': {
+        textDecoration: 'underline',
+      },
     },
-  },
-});
+  }),
+  { theming }
+);

@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineColor } from '@mantine/theme';
+import { theming, MantineTheme } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -11,7 +11,7 @@ export default createUseStyles(
       },
     },
 
-    notification: ({ color }: { color: MantineColor }) => ({
+    notification: ({ color }: { color: string }) => ({
       boxSizing: 'border-box',
       position: 'relative',
       display: 'flex',
@@ -36,7 +36,7 @@ export default createUseStyles(
 
       '& $icon': {
         backgroundColor: theme.colors[color || theme.primaryColor][5],
-        color: theme.colors.white,
+        color: theme.white,
       },
     }),
 
@@ -54,7 +54,7 @@ export default createUseStyles(
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      color: theme.colors.white,
+      color: theme.white,
     },
 
     title: {

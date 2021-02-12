@@ -2,13 +2,13 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { Calendar } from 'react-feather';
-import { MantineColor, MantineProvider, MantineSize, DEFAULT_THEME } from '@mantine/theme';
+import { MantineProvider, MantineSize, DEFAULT_THEME } from '@mantine/theme';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
 import Button from './Button';
 
 const colors = Object.keys(DEFAULT_THEME.colors).filter(
   (color) => color !== 'white' && color !== 'black'
-) as MantineColor[];
+);
 
 const md = colors.map((theme) => (
   <Button color={theme} key={theme} size="md">

@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineColor, MantineSize } from '@mantine/theme';
+import { theming, MantineTheme, MantineSize } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -7,8 +7,7 @@ export default createUseStyles(
       WebkitFontSmoothing: 'antialiased',
       MozOsxFontSmoothing: 'grayscale',
       fontFamily: theme.fontFamily,
-      color: ({ color }: { color: MantineColor }) =>
-        color ? theme.colors[color][5] : theme.colors.black,
+      color: ({ color }: { color: string }) => (color ? theme.colors[color][5] : theme.black),
       fontSize: ({ size }: { size: MantineSize }) => theme.fontSizes[size],
       lineHeight: 1.4,
     },

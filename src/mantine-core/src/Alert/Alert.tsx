@@ -1,11 +1,11 @@
 import React from 'react';
-import { DefaultProps, MantineColor, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import Text from '../Text/Text';
 import useStyles from './Alert.styles';
 
 interface AlertProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>, 'title'> {
   title?: React.ReactNode;
-  color?: MantineColor;
+  color?: string;
 }
 
 export default function Alert({
