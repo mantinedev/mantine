@@ -40,6 +40,10 @@ export default createUseStyles(
       },
     },
 
+    withIcon: {
+      paddingLeft: 35,
+    },
+
     invalid: {
       borderColor: theme.colors.red[7],
     },
@@ -49,9 +53,20 @@ export default createUseStyles(
     },
 
     icon: {
+      pointerEvents: 'none',
       position: 'absolute',
-      top: '10px',
-      right: '10px',
+      color: theme.colors.gray[5],
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      top: 10,
+      left: 10,
+    },
+
+    chevron: {
+      position: 'absolute',
+      top: 10,
+      right: 10,
     },
   }),
   { theming }

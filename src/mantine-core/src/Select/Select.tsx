@@ -22,6 +22,7 @@ interface SelectProps
   data: SelectItem[];
   disabled?: boolean;
   radius?: MantineNumberSize;
+  icon?: React.ReactNode;
 }
 
 const Select = forwardRef(
@@ -39,6 +40,7 @@ const Select = forwardRef(
       placeholder,
       disabled,
       radius = 'sm',
+      icon,
       themeOverride,
       ...others
     }: SelectProps,
@@ -72,10 +74,13 @@ const Select = forwardRef(
         themeOverride={themeOverride}
       >
         <div className={classes.wrapper}>
+          {icon && <div className={classes.icon}>{icon}</div>}
+
           <select
             {...others}
             ref={ref}
             className={cx(classes.select, {
+              [classes.withIcon]: icon,
               [classes.invalid]: error,
               [classes.placeholder]: !value,
             })}
@@ -88,7 +93,7 @@ const Select = forwardRef(
             {options}
           </select>
 
-          <ChevronDownIcon className={classes.icon} />
+          <ChevronDownIcon className={classes.chevron} />
         </div>
       </InputWrapper>
     );

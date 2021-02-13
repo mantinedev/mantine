@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { RocketIcon } from '@modulz/radix-icons';
 import { MantineProvider } from '@mantine/theme';
 import Select from './Select';
 
@@ -23,20 +24,25 @@ function WrappedSelect(
 
 storiesOf('@mantine/core', module).add('Select', () => (
   <MantineProvider>
-    <WrappedSelect label="Your favourite library" required placeholder="Your favourite library" />
-    <WrappedSelect label="Your favourite library" placeholder="Your favourite library" />
-    <WrappedSelect label="Your favourite library" required placeholder="Your favourite library" />
+    <WrappedSelect
+      icon={<RocketIcon />}
+      label="Your favorite library"
+      required
+      placeholder="Your favorite library"
+    />
+    <WrappedSelect label="Your favorite library" placeholder="Your favorite library" />
+    <WrappedSelect label="Your favorite library" required placeholder="Your favorite library" />
     <WrappedSelect
       radius="xl"
-      label="Your favourite library"
+      label="Your favorite library"
       required
-      placeholder="Your favourite library"
+      placeholder="Your favorite library"
       disabled
     />
     <WrappedSelect
-      label="Your favourite library"
-      placeholder="Your favourite library"
-      error="Your favourite library cannot be Angular"
+      label="Your favorite library"
+      placeholder="Your favorite library"
+      error="Your favorite library cannot be Angular"
     />
   </MantineProvider>
 ));
