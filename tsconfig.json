@@ -1,7 +1,7 @@
 {
   "plugins": [],
   "include": ["./"],
-  "exclude": ["dist"],
+  "exclude": ["dist", "public"],
 
   "compilerOptions": {
     "jsx": "react",
@@ -11,6 +11,7 @@
     "target": "es5",
     "sourceMap": false,
     "noEmitOnError": true,
+    "allowJs": true,
     "types": ["node", "webpack", "jest"],
     "typeRoots": ["./node_modules/@types", "./configuration/types"],
     "baseUrl": ".",
