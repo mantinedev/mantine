@@ -9,7 +9,7 @@ interface TextInputProps
     InputWrapperBaseProps,
     Omit<React.HTMLProps<HTMLInputElement>, 'onChange' | 'ref' | 'label'> {
   icon?: React.ReactNode;
-  type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url';
+  type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url' | 'number';
   value: string;
   onChange(value: string): void;
   id?: string;

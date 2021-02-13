@@ -26,6 +26,7 @@ storiesOf('@mantine/core', module).add('TextInput', () => (
       placeholder="Password"
       type="password"
     />
+    <WrappedTextInput radius="xl" label="Number" required placeholder="Number" type="number" />
     <WrappedTextInput
       label="With error"
       placeholder="With error"
