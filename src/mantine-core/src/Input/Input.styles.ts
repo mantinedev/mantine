@@ -70,6 +70,10 @@ export default createUseStyles(
       '&::placeholder': {
         color: theme.colors.gray[5],
       },
+
+      '&::-webkit-inner-spin-button': {
+        appearance: 'none',
+      },
     },
 
     icon: {
