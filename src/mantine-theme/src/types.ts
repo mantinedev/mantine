@@ -18,6 +18,8 @@ export type MantineColorsList = [
   string
 ];
 
+export type MantineSizes = Record<MantineSize, number>;
+
 export interface MantineTheme {
   readonly __mantine_theme: boolean;
   readonly white: string;
@@ -26,37 +28,10 @@ export interface MantineTheme {
   readonly fontFamily: string;
   readonly primaryColor: string;
 
-  readonly fontSizes: {
-    xs: number;
-    sm: number;
-    md: number;
-    lg: number;
-    xl: number;
-  };
-
-  readonly radius: {
-    xs: number;
-    sm: number;
-    md: number;
-    lg: number;
-    xl: number;
-  };
-
-  readonly spacing: {
-    xs: number;
-    sm: number;
-    md: number;
-    lg: number;
-    xl: number;
-  };
-
-  readonly shadows: {
-    xs: string;
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
-  };
+  readonly fontSizes: MantineSizes;
+  readonly radius: MantineSizes;
+  readonly spacing: MantineSizes;
+  readonly shadows: Record<MantineSize, string>;
 
   readonly headings: {
     h1: HeadingStyle;

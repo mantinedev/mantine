@@ -1,11 +1,13 @@
 export type {
   MantineTheme,
   MantineThemeOverride,
-  MantineColor,
   MantineSize,
   MantineNumberSize,
   DefaultProps,
 } from './types';
+
+export { getThemeColor } from './get-theme-color';
+export { getSizeValue } from './get-size-value';
 
 export { MantineProvider } from './MantineProvider';
 export { useMantineTheme } from './use-mantine-theme';
