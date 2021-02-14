@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps } from '@mantine/theme';
+import Overlay from '../Overlay/Overlay';
 import Loader from '../Loader/Loader';
 import useStyles from './LoadingOverlay.styles';
 
@@ -18,7 +19,7 @@ export default function LoadingOverlay({
   themeOverride,
   ...others
 }: LoadingOverlayProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const classes = useStyles({});
 
   if (!visible) {
     return null;
@@ -27,7 +28,7 @@ export default function LoadingOverlay({
   return (
     <div className={cx(classes.loadingOverlay, className)} {...others}>
       <Loader className={classes.loader} size={loaderSize} themeOverride={themeOverride} />
-      <div style={{ opacity }} className={classes.background} />
+      <Overlay opacity={opacity} />
     </div>
   );
 }
