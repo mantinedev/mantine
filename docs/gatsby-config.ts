@@ -9,11 +9,20 @@ export default {
   plugins: [
     'gatsby-plugin-tsconfig-paths',
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-mdx',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'images',
         path: `${__dirname}/src/images`,
+      },
+    },
+
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'docs',
+        path: `${__dirname}/src/docs/`,
       },
     },
 

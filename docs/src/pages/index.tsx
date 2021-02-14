@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from '@mantine/core';
+import ButtonDocs from '../docs/Button.mdx';
 
 export default function IndexPage() {
-  return <Button>Mantine button</Button>;
+  return <ButtonDocs />;
 }
