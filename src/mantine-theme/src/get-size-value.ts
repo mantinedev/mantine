@@ -7,7 +7,7 @@ export function getSizeValue({
 }: {
   size: MantineNumberSize;
   sizes: MantineSizes;
-  defaultSize: MantineSize;
+  defaultSize?: MantineSize;
 }) {
   if (typeof size === 'number') {
     return size;
