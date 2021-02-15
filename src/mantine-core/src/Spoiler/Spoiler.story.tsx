@@ -6,7 +6,7 @@ import Spoiler from './Spoiler';
 
 storiesOf('@mantine/core', module).add('Spoiler', () => (
   <MantineProvider>
-    <div style={{ maxWidth: 400 }}>
+    <div style={{ maxWidth: 400, padding: 50 }}>
       <Spoiler showLabel="Show more" hideLabel="Hide" maxHeight={100}>
         <Text>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, delectus ad non natus nam

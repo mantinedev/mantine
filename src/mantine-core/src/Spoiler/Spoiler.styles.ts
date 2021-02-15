@@ -12,7 +12,7 @@ export default createUseStyles(
       overflowY: 'visible',
 
       '& $more': {
-        bottom: -24,
+        position: 'relative',
         backgroundImage: 'none !important',
       },
     },
