@@ -10,8 +10,8 @@
   },
   "peerDependencies": {
     "@modulz/radix-icons": "^3.3.0",
-    "react": "^16.14.0",
-    "react-jss": "^10.5.1"
+    "react": ">=16.8.0",
+    "react-jss": ">=10.1.1"
   },
   "dependencies": {},
   "devDependencies": {}

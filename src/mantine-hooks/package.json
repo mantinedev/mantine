@@ -8,7 +8,7 @@
     "prepublish": "cd ../.. && npm run build @mantine/hooks"
   },
   "peerDependencies": {
-    "react": "^16.14.0"
+    "react": ">=16.8.0"
   },
   "dependencies": {},
   "devDependencies": {}
