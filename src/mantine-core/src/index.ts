@@ -14,6 +14,7 @@ export { default as Input } from './Input/Input';
 export { default as InputWrapper } from './InputWrapper/InputWrapper';
 export { default as Loader } from './Loader/Loader';
 export { default as LoadingOverlay } from './LoadingOverlay/LoadingOverlay';
+export { default as Modal } from './Modal/Modal';
 export { default as Month } from './Month/Month';
 export { default as Notification } from './Notification/Notification';
 export { default as Overlay } from './Overlay/Overlay';
