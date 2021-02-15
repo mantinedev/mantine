@@ -8,6 +8,7 @@ export type {
 
 export { getThemeColor } from './get-theme-color';
 export { getSizeValue } from './get-size-value';
+export { getFontStyles } from './get-font-styles';
 
 export { MantineProvider } from './MantineProvider';
 export { useMantineTheme } from './use-mantine-theme';
