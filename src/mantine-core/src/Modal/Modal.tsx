@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import cx from 'clsx';
 import { Cross1Icon } from '@modulz/radix-icons';
 import useFocusTrap from '@charlietango/use-focus-trap';
@@ -35,30 +35,36 @@ export default function Modal({
   const clickOutsideRef = useClickOutside(onClose);
   const focusTrapRef = useFocusTrap();
 
+  useEffect(() => {
+    document.body.style.overflow = opened ? 'hidden' : '';
+  }, [opened]);
+
   if (!opened) {
     return null;
   }
 
   return (
     <div className={cx(classes.wrapper, className)}>
-      <Paper
-        className={classes.modal}
-        shadow="sm"
-        style={{ width: modalWidth }}
-        ref={clickOutsideRef}
-      >
-        <div ref={focusTrapRef}>
-          {(title || !hideCloseButton) && (
-            <div className={classes.header}>
-              <Text size="md">{title}</Text>
-              <ActionIcon onClick={onClose}>
-                <Cross1Icon />
-              </ActionIcon>
-            </div>
-          )}
-        </div>
-        <div className={classes.body}>{children}</div>
-      </Paper>
+      <div className={classes.inner}>
+        <Paper
+          className={classes.modal}
+          shadow="sm"
+          style={{ width: modalWidth }}
+          ref={clickOutsideRef}
+        >
+          <div ref={focusTrapRef}>
+            {(title || !hideCloseButton) && (
+              <div className={classes.header}>
+                <Text size="md">{title}</Text>
+                <ActionIcon onClick={onClose}>
+                  <Cross1Icon />
+                </ActionIcon>
+              </div>
+            )}
+          </div>
+          <div className={classes.body}>{children}</div>
+        </Paper>
+      </div>
 
       <Overlay color={theme.black} opacity={overlayOpacity} />
     </div>
