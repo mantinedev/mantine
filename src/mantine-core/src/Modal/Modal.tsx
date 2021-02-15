@@ -58,7 +58,9 @@ export default function Modal({
           <div ref={focusTrapRef}>
             {(title || !hideCloseButton) && (
               <div className={classes.header}>
-                <Text size="md">{title}</Text>
+                <Text className={classes.title} size="md">
+                  {title}
+                </Text>
                 <ActionIcon onClick={onClose}>
                   <Cross1Icon />
                 </ActionIcon>

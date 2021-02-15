@@ -23,6 +23,14 @@ export default createUseStyles(
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'flex-start',
+
+      '@media (max-width: 755px)': {
+        padding: theme.spacing.sm,
+      },
+    },
+
+    title: {
+      marginRight: theme.spacing.md,
     },
 
     modal: {
