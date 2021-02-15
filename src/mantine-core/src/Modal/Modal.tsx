@@ -45,7 +45,10 @@ export default function Modal({
 
   return (
     <div className={cx(classes.wrapper, className)}>
-      <div className={classes.inner}>
+      <div
+        className={classes.inner}
+        onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}
+      >
         <Paper
           className={classes.modal}
           shadow="sm"
