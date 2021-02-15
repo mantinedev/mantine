@@ -10,8 +10,16 @@ interface AvatarProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>
   alt?: string;
 }
 
-export default function Avatar({ className, size = 60, style, src, alt, ...others }: AvatarProps) {
-  const classes = useStyles({ theme: useMantineTheme() });
+export default function Avatar({
+  className,
+  size = 60,
+  style,
+  src,
+  alt,
+  themeOverride,
+  ...others
+}: AvatarProps) {
+  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const [error, setError] = useState(!src);
 
   return (

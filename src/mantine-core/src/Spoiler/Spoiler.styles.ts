@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme, getFontStyles } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -18,9 +18,7 @@ export default createUseStyles(
     },
 
     more: {
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
-      fontFamily: theme.fontFamily,
+      ...getFontStyles(theme),
       display: 'block',
       width: '100%',
       textAlign: 'left',

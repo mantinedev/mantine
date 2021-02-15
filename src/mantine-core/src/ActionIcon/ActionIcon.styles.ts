@@ -1,15 +1,23 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, MantineNumberSize, theming } from '@mantine/theme';
+import {
+  MantineTheme,
+  MantineNumberSize,
+  theming,
+  getSizeValue,
+  getFontStyles,
+  getThemeColor,
+} from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
     actionIcon: ({ color, radius }: { color: string; radius: MantineNumberSize }) => ({
+      ...getFontStyles(theme),
       border: '1px solid transparent',
       boxSizing: 'border-box',
       backgroundColor: 'transparent',
       height: 27,
       width: 27,
-      borderRadius: typeof radius === 'number' ? radius : theme.radius[radius],
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       padding: 0,
       lineHeight: 1,
       display: 'flex',
@@ -21,8 +29,8 @@ export default createUseStyles(
       outline: 0,
 
       '&:focus': {
-        color: theme.colors[color || theme.primaryColor][6],
-        borderColor: theme.colors[color || theme.primaryColor][6],
+        color: getThemeColor({ theme, color, shade: 6 }),
+        borderColor: getThemeColor({ theme, color, shade: 6 }),
       },
 
       '&:focus:not(:focus-visible)': {
@@ -30,17 +38,17 @@ export default createUseStyles(
         borderColor: 'transparent',
 
         '&:hover': {
-          color: theme.colors[color || theme.primaryColor][6],
+          color: getThemeColor({ theme, color, shade: 6 }),
         },
       },
 
       '&:hover': {
-        backgroundColor: theme.colors[color || theme.primaryColor][0],
-        color: theme.colors[color || theme.primaryColor][6],
+        backgroundColor: getThemeColor({ theme, color, shade: 0 }),
+        color: getThemeColor({ theme, color, shade: 6 })[6],
       },
 
       '&:active': {
-        backgroundColor: theme.colors[color || theme.primaryColor][1],
+        backgroundColor: getThemeColor({ theme, color, shade: 1 }),
       },
     }),
   }),

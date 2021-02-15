@@ -1,5 +1,11 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineNumberSize } from '@mantine/theme';
+import {
+  theming,
+  MantineTheme,
+  MantineNumberSize,
+  getFontStyles,
+  getSizeValue,
+} from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -8,18 +14,16 @@ export default createUseStyles(
     },
 
     select: {
+      ...getFontStyles(theme),
       appearance: 'none',
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
       boxSizing: 'border-box',
-      fontFamily: theme.fontFamily,
       fontSize: 14,
       width: '100%',
       height: 36,
       paddingLeft: 15,
       paddingRight: 15,
       borderRadius: ({ radius }: { radius: MantineNumberSize }) =>
-        typeof radius === 'number' ? radius : theme.radius[radius],
+        getSizeValue({ size: radius, sizes: theme.radius }),
       border: `1px solid ${theme.colors.gray[5]}`,
       transition: 'border-color 100ms ease, box-shadow 100ms ease',
       cursor: 'pointer',

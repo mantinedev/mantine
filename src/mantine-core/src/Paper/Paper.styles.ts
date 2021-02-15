@@ -1,17 +1,22 @@
-import OpenColor from 'open-color';
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineNumberSize, MantineSize } from '@mantine/theme';
+import {
+  theming,
+  MantineTheme,
+  MantineNumberSize,
+  MantineSize,
+  getSizeValue,
+} from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
     paper: {
-      backgroundColor: OpenColor.white,
+      backgroundColor: theme.white,
       boxSizing: 'border-box',
       borderRadius: ({ radius }: { radius: MantineNumberSize }) =>
-        typeof radius === 'number' ? radius : theme.radius[radius],
+        getSizeValue({ size: radius, sizes: theme.radius }),
       boxShadow: ({ shadow }: { shadow?: MantineSize }) => theme.shadows[shadow] || 'none',
       padding: ({ padding }: { padding: MantineNumberSize }) =>
-        typeof padding === 'number' ? padding : theme.spacing[padding],
+        getSizeValue({ size: padding, sizes: theme.spacing }),
     },
   }),
   { theming }

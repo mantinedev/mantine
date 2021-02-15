@@ -1,7 +1,14 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineNumberSize } from '@mantine/theme';
+import {
+  theming,
+  MantineTheme,
+  MantineNumberSize,
+  getFontStyles,
+  getSizeValue,
+  getThemeColor,
+} from '@mantine/theme';
 
-const CHECKBOX_SIZES = {
+const sizes = {
   xs: 14,
   sm: 16,
   md: 20,
@@ -17,19 +24,17 @@ export default createUseStyles(
     },
 
     label: {
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
-      fontFamily: theme.fontFamily,
+      ...getFontStyles(theme),
       marginLeft: theme.spacing.sm,
       fontSize: theme.fontSizes.sm,
     },
 
-    checkbox: ({ color, size }: { color: string; size: MantineNumberSize }) => ({
+    checkbox: ({ size }: { size: MantineNumberSize }) => ({
       appearance: 'none',
       backgroundColor: theme.colors.gray[0],
       border: `1px solid ${theme.colors.gray[4]}`,
-      width: typeof size === 'number' ? size : CHECKBOX_SIZES[size] || CHECKBOX_SIZES.md,
-      height: typeof size === 'number' ? size : CHECKBOX_SIZES[size] || CHECKBOX_SIZES.md,
+      width: getSizeValue({ size, sizes }),
+      height: getSizeValue({ size, sizes }),
       borderRadius: theme.radius.sm,
       padding: 0,
       outline: 0,
@@ -39,9 +44,7 @@ export default createUseStyles(
       justifyContent: 'center',
 
       '&:focus': {
-        boxShadow: `0 0 0 2px ${theme.white}, 0 0 0 4px ${
-          theme.colors[color || theme.primaryColor][5]
-        }`,
+        boxShadow: `0 0 0 2px ${theme.white}, 0 0 0 4px ${theme.colors[theme.primaryColor][5]}`,
       },
 
       '&:focus:not(:focus-visible)': {
@@ -55,9 +58,9 @@ export default createUseStyles(
     }),
 
     checked: ({ color }: { color: string }) => ({
-      backgroundColor: theme.colors[color || theme.primaryColor][5],
+      backgroundColor: getThemeColor({ theme, color, shade: 5 }),
+      borderColor: getThemeColor({ theme, color, shade: 5 }),
       color: theme.white,
-      borderColor: theme.colors[color || theme.primaryColor][5],
     }),
 
     icon: {

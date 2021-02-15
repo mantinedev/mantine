@@ -21,7 +21,7 @@ export default function Alert({
   return (
     <div className={className} {...others}>
       {title && (
-        <Text bold className={classes.title} size="sm">
+        <Text weight={700} className={classes.title} size="sm">
           {title}
         </Text>
       )}

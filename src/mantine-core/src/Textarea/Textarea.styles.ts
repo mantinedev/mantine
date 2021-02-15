@@ -1,15 +1,21 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineNumberSize } from '@mantine/theme';
+import {
+  theming,
+  MantineTheme,
+  MantineNumberSize,
+  getFontStyles,
+  getSizeValue,
+} from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
     textarea: {
+      ...getFontStyles(theme),
       boxSizing: 'border-box',
       width: '100%',
-      fontFamily: theme.fontFamily,
       padding: theme.spacing.sm,
       borderRadius: ({ radius }: { radius: MantineNumberSize }) =>
-        typeof radius === 'number' ? radius : theme.radius[radius],
+        getSizeValue({ size: radius, sizes: theme.radius }),
       border: `1px solid ${theme.colors.gray[4]}`,
       resize: 'none',
       transition: 'border-color 100ms ease, box-shadow 100ms ease',

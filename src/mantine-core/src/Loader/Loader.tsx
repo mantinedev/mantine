@@ -1,12 +1,18 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  useMantineTheme,
+  getThemeColor,
+  getSizeValue,
+} from '@mantine/theme';
 
 interface LoaderProps extends DefaultProps, Omit<React.SVGProps<SVGElement>, 'ref'> {
   size?: MantineNumberSize;
   color?: string;
 }
 
-const LOADER_SIZES = {
+const sizes = {
   xs: 18,
   sm: 22,
   md: 36,
@@ -25,8 +31,8 @@ export default function Loader({
 
   return (
     <svg
-      width={typeof size === 'number' ? size : LOADER_SIZES[size]}
-      fill={theme.colors[color || theme.primaryColor][5]}
+      width={getSizeValue({ size, sizes })}
+      fill={getThemeColor({ theme, color, shade: 5 })}
       viewBox="0 0 135 140"
       xmlns="http://www.w3.org/2000/svg"
       {...others}

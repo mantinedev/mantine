@@ -9,7 +9,7 @@ storiesOf('@mantine/core', module).add('Anchor', () => (
       Google link
     </Anchor>
 
-    <Anchor href="https://google.com" target="_blank" semibold>
+    <Anchor href="https://google.com" target="_blank" weight={700}>
       Google link
     </Anchor>
   </MantineProvider>

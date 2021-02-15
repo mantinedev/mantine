@@ -1,14 +1,12 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme, getFontStyles } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
     disableOutsideEvents: {},
 
     day: {
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
-      fontFamily: theme.fontFamily,
+      ...getFontStyles(theme),
       backgroundColor: 'transparent',
       width: 34,
       height: 34,

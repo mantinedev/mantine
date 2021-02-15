@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme, getFontStyles, getThemeColor } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -33,8 +33,7 @@ export default createUseStyles(
       },
 
       '&:focus': {
-        boxShadow: ({ color }: { color: string }) =>
-          `0 0 0 2px ${theme.colors[color || theme.primaryColor][2]}`,
+        boxShadow: `0 0 0 2px ${theme.white}, 0 0 0 4px ${theme.colors[theme.primaryColor][5]}`,
       },
 
       '&:focus:not(:focus-visible)': {
@@ -47,19 +46,18 @@ export default createUseStyles(
     },
 
     checked: ({ color }: { color: string }) => ({
-      backgroundColor: theme.colors[color || theme.primaryColor][6],
-      borderColor: theme.colors[color || theme.primaryColor][5],
+      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+      borderColor: getThemeColor({ theme, color, shade: 5 }),
 
       '&::before': {
         transform: 'translateX(21px)',
-        borderColor: theme.colors[color || theme.primaryColor][6],
+        borderColor: getThemeColor({ theme, color, shade: 6 }),
       },
     }),
 
     label: {
+      ...getFontStyles(theme),
       fontFamily: theme.fontFamily,
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
       marginLeft: theme.spacing.sm,
       fontSize: theme.fontSizes.sm,
     },

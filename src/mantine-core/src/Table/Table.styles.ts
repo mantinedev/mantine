@@ -1,12 +1,10 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme, getFontStyles } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
     table: {
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
-      fontFamily: theme.fontFamily,
+      ...getFontStyles(theme),
       width: '100%',
       borderCollapse: 'collapse',
 

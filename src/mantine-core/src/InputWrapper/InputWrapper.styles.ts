@@ -1,13 +1,9 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, theming } from '@mantine/theme';
+import { MantineTheme, theming, getFontStyles } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
-    inputWrapper: {
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
-      fontFamily: theme.fontFamily,
-    },
+    inputWrapper: getFontStyles(theme),
 
     label: {
       display: 'block',

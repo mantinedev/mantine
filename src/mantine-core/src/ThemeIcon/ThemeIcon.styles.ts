@@ -1,9 +1,15 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineNumberSize } from '@mantine/theme';
+import {
+  theming,
+  MantineTheme,
+  MantineNumberSize,
+  getSizeValue,
+  getThemeColor,
+} from '@mantine/theme';
 
 export type ThemeIconVariant = 'filled' | 'light';
 
-const SIZES = {
+const sizes = {
   xs: 16,
   sm: 20,
   md: 26,
@@ -24,20 +30,18 @@ export default createUseStyles(
       radius: MantineNumberSize;
       variant: ThemeIconVariant;
     }) => {
-      const iconSize = typeof size === 'number' ? size : SIZES[size];
-      const iconColor = color || theme.primaryColor;
+      const iconSize = getSizeValue({ size, sizes });
 
       return {
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
         boxSizing: 'border-box',
-        backgroundColor:
-          variant === 'filled' ? theme.colors[iconColor][6] : theme.colors[iconColor][1],
-        color: variant === 'filled' ? theme.white : theme.colors[iconColor][6],
+        backgroundColor: getThemeColor({ theme, color, shade: variant === 'filled' ? 6 : 1 }),
+        color: variant === 'filled' ? theme.white : getThemeColor({ theme, color, shade: 6 }),
         width: iconSize,
         height: iconSize,
-        borderRadius: typeof radius === 'number' ? radius : theme.radius[radius],
+        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       };
     },
   }),

@@ -39,7 +39,7 @@ export default function Notification({
 
       <div className={classes.body}>
         {title && (
-          <Text className={classes.title} size="sm" semibold themeOverride={themeOverride}>
+          <Text className={classes.title} size="sm" weight={500} themeOverride={themeOverride}>
             {title}
           </Text>
         )}

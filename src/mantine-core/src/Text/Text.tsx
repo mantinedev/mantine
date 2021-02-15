@@ -8,8 +8,7 @@ interface TextProps extends DefaultProps {
   children?: React.ReactNode;
   size?: MantineSize;
   color?: string;
-  bold?: boolean;
-  semibold?: boolean;
+  weight?: number;
 }
 
 export default function Text<T = Record<string, any>>({
@@ -17,8 +16,8 @@ export default function Text<T = Record<string, any>>({
   component = 'div',
   children,
   size = 'md',
-  bold = false,
-  semibold = false,
+  weight = 400,
+  style,
   color,
   themeOverride,
   ...others
@@ -28,12 +27,8 @@ export default function Text<T = Record<string, any>>({
   return React.createElement(
     component,
     {
-      className: cx(
-        classes.text,
-        classes[size],
-        { [classes.bold]: bold, [classes.semibold]: semibold },
-        className
-      ),
+      className: cx(classes.text, className),
+      style: { fontWeight: weight, ...style },
       ...others,
     },
     children

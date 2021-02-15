@@ -6,8 +6,8 @@ import Text from './Text';
 storiesOf('@mantine/core', module).add('Text', () => (
   <MantineProvider>
     <Text>Default text</Text>
-    <Text semibold>Semibold default text</Text>
-    <Text bold>Bold default text</Text>
+    <Text weight={500}>Semibold default text</Text>
+    <Text weight={700}>Bold default text</Text>
     <Text color="teal">Success text</Text>
     <Text color="yellow">Warning text</Text>
     <Text color="blue">Primary text</Text>
@@ -18,7 +18,7 @@ storiesOf('@mantine/core', module).add('Text', () => (
     <Text size="md">md text</Text>
     <Text size="lg">lg text</Text>
     <Text size="xl">xl text</Text>
-    <Text component="p" color="gray" bold>
+    <Text component="p" color="gray" weight={900}>
       Bold muted paragraph text
     </Text>
     <Text>
