@@ -22,9 +22,12 @@ export default createUseStyles(
       height: 22,
       width: 42,
       borderRadius: 36,
-      padding: '0 2px',
+      padding: [0, 2],
       cursor: 'pointer',
-      transition: 'background-color 150ms ease, border-color 100ms ease',
+      transitionProperty: 'background-color, border-color',
+      transitionTimingFunction: 'ease',
+      transitionDuration: ({ reduceMotion }: { reduceMotion: boolean }) =>
+        reduceMotion ? '1ms' : '150ms',
       outline: 0,
       boxSizing: 'border-box',
       appearance: 'none',
@@ -37,7 +40,8 @@ export default createUseStyles(
         width: 14,
         borderRadius: 14,
         border: `1px solid ${theme.colors.gray[3]}`,
-        transition: 'transform 150ms ease',
+        transition: ({ reduceMotion }: { reduceMotion: boolean }) =>
+          reduceMotion ? 'none' : 'transform 150ms ease',
       },
 
       '&:disabled::before': {
