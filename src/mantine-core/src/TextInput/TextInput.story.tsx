@@ -20,6 +20,12 @@ storiesOf('@mantine/core', module).add('TextInput', () => (
     <WrappedTextInput label="Email" required placeholder="Email" type="email" />
     <WrappedTextInput label="Your twitter" placeholder="Twitter" icon={<TwitterLogoIcon />} />
     <WrappedTextInput
+      label="Your twitter"
+      disabled
+      placeholder="Twitter"
+      icon={<TwitterLogoIcon />}
+    />
+    <WrappedTextInput
       radius="xl"
       label="Password"
       required

@@ -33,6 +33,7 @@ const PasswordInput = forwardRef(
       onChange,
       icon,
       radius,
+      disabled,
       hidePasswordLabel,
       showPasswordLabel,
       themeOverride,
@@ -57,6 +58,7 @@ const PasswordInput = forwardRef(
         <div className={classes.wrapper}>
           <Input
             {...others}
+            disabled={disabled}
             radius={radius}
             ref={ref}
             inputClassName={classes.input}
@@ -67,15 +69,17 @@ const PasswordInput = forwardRef(
             icon={icon}
             themeOverride={themeOverride}
           />
-          <ActionIcon
-            className={classes.control}
-            onClick={() => setReveal((current) => !current)}
-            themeOverride={themeOverride}
-            title={reveal ? hidePasswordLabel : showPasswordLabel}
-            aria-label={reveal ? hidePasswordLabel : showPasswordLabel}
-          >
-            {reveal ? <EyeClosedIcon /> : <EyeOpenIcon />}
-          </ActionIcon>
+          {!disabled && (
+            <ActionIcon
+              className={classes.control}
+              onClick={() => setReveal((current) => !current)}
+              themeOverride={themeOverride}
+              title={reveal ? hidePasswordLabel : showPasswordLabel}
+              aria-label={reveal ? hidePasswordLabel : showPasswordLabel}
+            >
+              {reveal ? <EyeClosedIcon /> : <EyeOpenIcon />}
+            </ActionIcon>
+          )}
         </div>
       </InputWrapper>
     );

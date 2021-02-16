@@ -8,6 +8,7 @@ interface InputProps extends DefaultProps, React.ComponentPropsWithoutRef<'input
   icon?: React.ReactNode;
   inputClassName?: string;
   inputStyle?: React.CSSProperties;
+  disabled?: boolean;
   radius?: MantineNumberSize;
   variant?: 'default' | 'unstyled';
 }
@@ -17,6 +18,7 @@ const Input = forwardRef(
     {
       className,
       invalid = false,
+      disabled = false,
       variant = 'default',
       icon,
       style,
@@ -38,6 +40,7 @@ const Input = forwardRef(
         {icon && <div className={classes.icon}>{icon}</div>}
         <input
           {...others}
+          disabled={disabled}
           style={inputStyle}
           ref={ref}
           className={cx(

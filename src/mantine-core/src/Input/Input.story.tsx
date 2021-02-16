@@ -9,6 +9,7 @@ storiesOf('@mantine/core', module).add('Input', () => (
     <div style={{ maxWidth: 300 }}>
       <Input placeholder="Input" />
       <Input placeholder="Input" invalid style={{ marginTop: 15 }} />
+      <Input placeholder="Disabled" disabled style={{ marginTop: 15 }} />
       <Input
         radius="lg"
         placeholder="Your password"

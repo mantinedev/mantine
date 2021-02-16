@@ -70,6 +70,11 @@ export default createUseStyles(
       fontSize: 14,
       width: '100%',
 
+      '&:disabled': {
+        backgroundColor: theme.colors.gray[1],
+        cursor: 'not-allowed',
+      },
+
       '&::placeholder': {
         color: theme.colors.gray[5],
       },

@@ -20,6 +20,13 @@ storiesOf('@mantine/core', module).add('PasswordInput', () => (
     <WrappedPasswordInput label="Password" required placeholder="password" type="password" />
     <WrappedPasswordInput
       label="Password"
+      disabled
+      required
+      placeholder="password"
+      type="password"
+    />
+    <WrappedPasswordInput
+      label="Password"
       icon={<LockClosedIcon />}
       placeholder="password"
       type="password"
