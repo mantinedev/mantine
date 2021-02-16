@@ -4,9 +4,9 @@ import { useMantineTheme } from '@mantine/theme';
 import Text from '../Text/Text';
 import useStyles from './Anchor.styles';
 
-type HTMLAnchorProps = Omit<React.HTMLProps<HTMLAnchorElement>, 'size' | 'color'>;
-
-interface AnchorProps extends React.ComponentProps<typeof Text>, HTMLAnchorProps {}
+interface AnchorProps
+  extends Omit<React.ComponentProps<typeof Text>, 'symbol'>,
+    React.ComponentProps<'a'> {}
 
 const Anchor = forwardRef(
   (
@@ -16,12 +16,7 @@ const Anchor = forwardRef(
     const classes = useStyles({ theme: useMantineTheme(themeOverride) });
 
     return (
-      <Text<HTMLAnchorProps>
-        component="a"
-        className={cx(classes.anchor, className)}
-        ref={ref}
-        {...others}
-      >
+      <Text<'a'> component="a" className={cx(classes.anchor, className)} ref={ref} {...others}>
         {children}
       </Text>
     );
