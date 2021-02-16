@@ -20,7 +20,7 @@ export default createUseStyles(
       textAlign: 'left',
       padding: 0,
       backgroundColor: 'transparent',
-      border: '1px dotted transparent',
+      border: '1px solid transparent',
       cursor: 'pointer',
       paddingLeft: 10,
       outline: 0,

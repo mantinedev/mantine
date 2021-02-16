@@ -1,12 +1,10 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/core';
+import { theming, MantineTheme, getFontStyles } from '@mantine/core';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
     tagBadge: {
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
-      fontFamily: theme.fontFamily,
+      ...getFontStyles(theme),
       display: 'inline-flex',
       alignItems: 'center',
       height: 22,

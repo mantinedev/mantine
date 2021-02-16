@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/core';
+import { theming, MantineTheme, getFontStyles, getFocusStyles } from '@mantine/core';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -27,9 +27,7 @@ export default createUseStyles(
     },
 
     deleteControl: {
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
-      fontFamily: theme.fontFamily,
+      ...getFontStyles(theme),
       border: 0,
       width: '100%',
       backgroundColor: 'transparent',
@@ -60,9 +58,8 @@ export default createUseStyles(
     },
 
     colorControl: {
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
-      fontFamily: theme.fontFamily,
+      ...getFontStyles(theme),
+      ...getFocusStyles(theme),
       textTransform: 'capitalize',
       width: '100%',
       display: 'flex',
@@ -77,14 +74,6 @@ export default createUseStyles(
 
       '&:hover': {
         backgroundColor: theme.colors.gray[0],
-      },
-
-      '&:focus': {
-        borderColor: theme.colors[theme.primaryColor][6],
-      },
-
-      '&:focus:not(:focus-visible)': {
-        borderColor: 'transparent',
       },
     },
 

@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/core';
+import { theming, MantineTheme, getFontStyles } from '@mantine/core';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -20,9 +20,7 @@ export default createUseStyles(
     },
 
     createControl: {
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
-      fontFamily: theme.fontFamily,
+      ...getFontStyles(theme),
       backgroundColor: 'transparent',
       border: 0,
       outline: 0,
