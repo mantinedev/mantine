@@ -6,6 +6,7 @@ import {
   MantineNumberSize,
   getFontStyles,
   getSizeValue,
+  getFocusStyles,
 } from '@mantine/theme';
 
 const sizes = {
@@ -70,14 +71,6 @@ export default createUseStyles(
             textShadow: `1px 1px 0 ${theme.colors[color][7]}`,
             color: theme.white,
 
-            '&:focus': {
-              boxShadow: `0 0 0 2px ${theme.white}, 0 0 0 4px ${theme.colors[color][5]}`,
-            },
-
-            '&:focus:not(:focus-visible)': {
-              boxShadow: 'none',
-            },
-
             '&:hover': {
               backgroundColor: theme.colors[color][6],
             },
@@ -86,16 +79,6 @@ export default createUseStyles(
             backgroundColor: theme.white,
             color: theme.colors.gray[7],
             borderColor: theme.colors.gray[4],
-
-            '&:focus': {
-              boxShadow: `0 0 0 2px ${theme.white}, 0 0 0 4px ${
-                theme.colors[theme.primaryColor][5]
-              }`,
-            },
-
-            '&:focus:not(:focus-visible)': {
-              boxShadow: 'none',
-            },
 
             '&:hover': {
               backgroundColor: theme.colors.gray[0],
@@ -106,6 +89,7 @@ export default createUseStyles(
         ...colorStyles,
         ...sizes[size],
         ...getFontStyles(theme),
+        ...getFocusStyles(theme),
         boxSizing: 'border-box',
         border: '1px solid transparent',
         outline: 0,

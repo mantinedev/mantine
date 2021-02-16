@@ -6,6 +6,7 @@ import {
   getFontStyles,
   getSizeValue,
   getThemeColor,
+  getFocusStyles,
 } from '@mantine/theme';
 
 const sizes = {
@@ -30,6 +31,7 @@ export default createUseStyles(
     },
 
     checkbox: ({ size }: { size: MantineNumberSize }) => ({
+      ...getFocusStyles(theme),
       appearance: 'none',
       backgroundColor: theme.colors.gray[0],
       border: `1px solid ${theme.colors.gray[4]}`,
@@ -42,14 +44,6 @@ export default createUseStyles(
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',
-
-      '&:focus': {
-        boxShadow: `0 0 0 2px ${theme.white}, 0 0 0 4px ${theme.colors[theme.primaryColor][5]}`,
-      },
-
-      '&:focus:not(:focus-visible)': {
-        boxShadow: 'none',
-      },
 
       '&:disabled': {
         backgroundColor: theme.colors.gray[2],

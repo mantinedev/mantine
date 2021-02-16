@@ -1,5 +1,11 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, getFontStyles, getThemeColor } from '@mantine/theme';
+import {
+  theming,
+  MantineTheme,
+  getFontStyles,
+  getThemeColor,
+  getFocusStyles,
+} from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -9,6 +15,8 @@ export default createUseStyles(
     },
 
     switch: {
+      ...getFocusStyles(theme),
+
       backgroundColor: theme.colors.gray[2],
       border: `1px solid ${theme.colors.gray[3]}`,
       height: 22,
@@ -30,14 +38,6 @@ export default createUseStyles(
         borderRadius: 14,
         border: `1px solid ${theme.colors.gray[3]}`,
         transition: 'transform 150ms ease',
-      },
-
-      '&:focus': {
-        boxShadow: `0 0 0 2px ${theme.white}, 0 0 0 4px ${theme.colors[theme.primaryColor][5]}`,
-      },
-
-      '&:focus:not(:focus-visible)': {
-        boxShadow: 'none',
       },
 
       '&:disabled::before': {
