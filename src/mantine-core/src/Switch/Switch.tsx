@@ -8,7 +8,7 @@ interface SwitchProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   value: boolean;
-  onChange(value: boolean): void;
+  onChange(value: boolean, event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
   label?: React.ReactNode;
   disabled?: boolean;
   id?: string;
@@ -31,7 +31,7 @@ const Switch = forwardRef(
           className={cx(classes.switch, { [classes.checked]: value })}
           type="button"
           role="checkbox"
-          onClick={() => onChange(!value)}
+          onClick={(event) => onChange(!value, event)}
           aria-checked={value}
           id={uuid}
         />

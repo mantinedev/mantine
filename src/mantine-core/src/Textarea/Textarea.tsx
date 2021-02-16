@@ -9,13 +9,15 @@ import useStyles from './Textarea.styles';
 interface TextareaProps
   extends DefaultProps,
     InputWrapperBaseProps,
-    React.ComponentPropsWithoutRef<'textarea'> {
+    Omit<React.ComponentPropsWithoutRef<'textarea'>, 'onChange'> {
   id?: string;
   placeholder?: string;
   autosize?: boolean;
   maxRows?: number;
   minRows?: number;
   radius?: MantineNumberSize;
+  value: string;
+  onChange(value: string, event: React.ChangeEvent<HTMLTextAreaElement>): void;
 }
 
 const Textarea = forwardRef(
@@ -33,6 +35,8 @@ const Textarea = forwardRef(
       required,
       themeOverride,
       style,
+      value,
+      onChange,
       ...others
     }: TextareaProps,
     ref: React.ForwardedRef<HTMLTextAreaElement>
@@ -57,6 +61,8 @@ const Textarea = forwardRef(
             minRows={minRows}
             id={uuid}
             ref={ref}
+            value={value}
+            onChange={(event) => onChange(event.currentTarget.value, event)}
             {...others}
           />
         ) : (
@@ -66,6 +72,8 @@ const Textarea = forwardRef(
             className={cx(classes.textarea, { [classes.invalid]: error })}
             rows={maxRows}
             ref={ref}
+            value={value}
+            onChange={(event) => onChange(event.currentTarget.value, event)}
             {...others}
           />
         )}

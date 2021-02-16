@@ -18,7 +18,7 @@ interface SelectProps
   id?: string;
   value: string;
   placeholder?: string;
-  onChange(value: string): void;
+  onChange(value: string, event: React.ChangeEvent<HTMLSelectElement>): void;
   data: SelectItem[];
   disabled?: boolean;
   radius?: MantineNumberSize;
@@ -86,7 +86,7 @@ const Select = forwardRef(
             })}
             id={uuid}
             value={value}
-            onChange={(event) => onChange(event.currentTarget.value)}
+            onChange={(event) => onChange(event.currentTarget.value, event)}
             placeholder={placeholder}
             disabled={disabled}
           >

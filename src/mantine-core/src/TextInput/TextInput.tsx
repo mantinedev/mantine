@@ -11,7 +11,7 @@ interface TextInputProps
   icon?: React.ReactNode;
   type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url' | 'number';
   value: string;
-  onChange(value: string): void;
+  onChange(value: string, event: React.ChangeEvent<HTMLInputElement>): void;
   id?: string;
   radius?: MantineNumberSize;
 }
@@ -53,7 +53,7 @@ const TextInput = forwardRef(
           id={uuid}
           type={type}
           value={value}
-          onChange={(event) => onChange(event.currentTarget.value)}
+          onChange={(event) => onChange(event.currentTarget.value, event)}
           invalid={!!error}
           icon={icon}
           themeOverride={themeOverride}

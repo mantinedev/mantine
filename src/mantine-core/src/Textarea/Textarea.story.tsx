@@ -14,6 +14,8 @@ storiesOf('@mantine/core', module).add('Textarea', () => (
       required
       description="Description"
       placeholder="Textarea placeholder"
+      value=""
+      onChange={(f) => f}
       ref={(node) => node.focus()}
     />
   </MantineProvider>
