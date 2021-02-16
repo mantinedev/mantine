@@ -21,6 +21,9 @@ storiesOf('@mantine/core', module).add('Text', () => (
     <Text component="p" color="gray" weight={900}>
       Bold muted paragraph text
     </Text>
+    <Text<'a'> component="a" color="blue" href="https://google.com">
+      Link
+    </Text>
     <Text>
       Multiline: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque commodi
       perferendis velit itaque. Harum magnam voluptas molestias a dolore atque hic. Repudiandae
