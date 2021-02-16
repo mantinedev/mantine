@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { useMantineTheme, DefaultProps } from '@mantine/theme';
 import useStyles, { BadgeVariant } from './Badge.styles';
 
-interface BadgeProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
+interface BadgeProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   color?: string;
   variant?: BadgeVariant;
 }

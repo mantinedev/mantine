@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
 import useStyles from './ThemeIcon.styles';
 
-interface ThemeIconProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>, 'size'> {
+interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'> {
   size?: MantineNumberSize;
   radius?: MantineNumberSize;
   color?: string;

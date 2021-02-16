@@ -7,7 +7,7 @@ import {
   getSizeValue,
 } from '@mantine/theme';
 
-interface LoaderProps extends DefaultProps, Omit<React.SVGProps<SVGElement>, 'ref'> {
+interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'svg'> {
   size?: MantineNumberSize;
   color?: string;
 }

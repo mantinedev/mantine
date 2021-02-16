@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './Spoiler.styles';
 
-interface SpoilerProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
+interface SpoilerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   maxHeight: number;
   hideLabel: React.ReactNode;
   showLabel: React.ReactNode;

@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import useStyles from './Input.styles';
 
-interface InputProps extends DefaultProps, Omit<React.HTMLProps<HTMLInputElement>, 'ref'> {
+interface InputProps extends DefaultProps, React.ComponentPropsWithoutRef<'input'> {
   invalid?: boolean;
   icon?: React.ReactNode;
   inputClassName?: string;

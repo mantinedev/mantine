@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './Table.styles';
 
-interface TableProps extends DefaultProps, React.HTMLProps<HTMLTableElement> {
+interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef<'table'> {
   striped?: boolean;
   highlighOnHover?: boolean;
 }

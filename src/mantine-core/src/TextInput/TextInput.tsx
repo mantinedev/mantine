@@ -7,7 +7,7 @@ import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrappe
 interface TextInputProps
   extends DefaultProps,
     InputWrapperBaseProps,
-    Omit<React.HTMLProps<HTMLInputElement>, 'onChange' | 'ref' | 'label'> {
+    Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange'> {
   icon?: React.ReactNode;
   type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url' | 'number';
   value: string;

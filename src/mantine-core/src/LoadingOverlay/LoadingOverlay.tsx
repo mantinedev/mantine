@@ -5,7 +5,7 @@ import Overlay from '../Overlay/Overlay';
 import Loader from '../Loader/Loader';
 import useStyles from './LoadingOverlay.styles';
 
-interface LoadingOverlayProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
+interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   loaderSize?: number;
   opacity?: number;
   visible: boolean;

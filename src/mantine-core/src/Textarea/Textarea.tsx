@@ -9,7 +9,7 @@ import useStyles from './Textarea.styles';
 interface TextareaProps
   extends DefaultProps,
     InputWrapperBaseProps,
-    Omit<React.HTMLProps<HTMLTextAreaElement>, 'label' | 'ref'> {
+    React.ComponentPropsWithoutRef<'textarea'> {
   id?: string;
   placeholder?: string;
   autosize?: boolean;

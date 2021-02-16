@@ -9,7 +9,7 @@ import useStyles from './Notification.styles';
 
 interface NotificationProps
   extends DefaultProps,
-    Omit<React.HTMLProps<HTMLDivElement>, 'title' | 'ref'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   color?: string;
   icon?: React.ReactNode;
   title?: React.ReactNode;

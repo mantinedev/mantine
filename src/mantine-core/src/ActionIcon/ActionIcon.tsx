@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
 import useStyles from './ActionIcon.styles';
 
-interface ActionIconProps extends DefaultProps, Omit<React.HTMLProps<HTMLButtonElement>, 'ref'> {
+interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   color?: string;
   radius?: MantineNumberSize;
 }

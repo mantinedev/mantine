@@ -4,7 +4,7 @@ import { AvatarIcon } from '@modulz/radix-icons';
 import { useMantineTheme, DefaultProps } from '@mantine/theme';
 import useStyles from './Avatar.styles';
 
-interface AvatarProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>, 'ref'> {
+interface AvatarProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   src: string;
   size?: number;
   alt?: string;

@@ -6,7 +6,7 @@ import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '@mantine/theme';
 import useStyles from './Button.styles';
 
-interface ButtonProps extends DefaultProps, Omit<React.HTMLProps<HTMLButtonElement>, 'size'> {
+interface ButtonProps extends DefaultProps, React.ComponentProps<'button'> {
   size?: MantineSize;
   type?: 'submit' | 'button' | 'reset';
   color?: string;

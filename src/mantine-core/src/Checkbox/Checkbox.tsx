@@ -7,7 +7,7 @@ import useStyles from './Checkbox.styles';
 
 interface CheckboxProps
   extends DefaultProps,
-    Omit<React.HTMLProps<HTMLDivElement>, 'label' | 'value' | 'onChange' | 'size'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   color?: string;
   size?: MantineNumberSize;
   value: boolean;

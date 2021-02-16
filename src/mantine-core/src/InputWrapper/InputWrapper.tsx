@@ -14,7 +14,7 @@ export interface InputWrapperBaseProps {
 interface InputWrapperProps
   extends DefaultProps,
     InputWrapperBaseProps,
-    Omit<React.HTMLProps<HTMLDivElement>, 'label'> {
+    React.ComponentPropsWithoutRef<'div'> {
   id: string;
   children: React.ReactChild;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface OverlayProps extends React.HTMLProps<HTMLDivElement> {
+interface OverlayProps extends React.ComponentPropsWithoutRef<'div'> {
   opacity?: number;
   color?: string;
 }

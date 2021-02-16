@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './Title.styles';
 
-interface TitleProps extends DefaultProps, React.HTMLProps<HTMLHeadingElement> {
+interface TitleProps extends DefaultProps, React.ComponentPropsWithoutRef<'h1'> {
   order?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 

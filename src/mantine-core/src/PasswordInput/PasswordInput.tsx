@@ -10,7 +10,7 @@ import useStyles from './PasswordInput.styles';
 interface PasswordInputProps
   extends DefaultProps,
     InputWrapperBaseProps,
-    Omit<React.HTMLProps<HTMLInputElement>, 'onChange' | 'ref' | 'label'> {
+    Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange'> {
   value: string;
   onChange(value: string): void;
   id?: string;

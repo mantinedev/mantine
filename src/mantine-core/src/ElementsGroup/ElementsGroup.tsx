@@ -2,7 +2,7 @@ import React from 'react';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import useStyles, { ElementsGroupPosition } from './ElementsGroup.styles';
 
-interface ElementsGroupProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
+interface ElementsGroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   position?: ElementsGroupPosition;
   noWrap?: boolean;
   grow?: boolean;

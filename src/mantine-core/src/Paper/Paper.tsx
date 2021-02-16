@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, MantineSize, MantineNumberSize, useMantineTheme } from '@mantine/theme';
 import useStyles from './Paper.styles';
 
-interface PaperProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>, 'ref'> {
+interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   children: React.ReactNode;
   padding?: MantineNumberSize;
   shadow?: MantineSize;

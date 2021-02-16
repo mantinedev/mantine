@@ -3,7 +3,7 @@ import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import Text from '../Text/Text';
 import useStyles from './Alert.styles';
 
-interface AlertProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>, 'title'> {
+interface AlertProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   title?: React.ReactNode;
   color?: string;
 }

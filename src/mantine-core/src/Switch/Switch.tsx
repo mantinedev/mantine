@@ -6,7 +6,7 @@ import useStyles from './Switch.styles';
 
 interface SwitchProps
   extends DefaultProps,
-    Omit<React.HTMLProps<HTMLDivElement>, 'label' | 'value' | 'onChange'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   value: boolean;
   onChange(value: boolean): void;
   label?: React.ReactNode;

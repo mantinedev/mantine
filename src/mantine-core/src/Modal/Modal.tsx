@@ -10,7 +10,7 @@ import Paper from '../Paper/Paper';
 import Overlay from '../Overlay/Overlay';
 import useStyles from './Modal.styles';
 
-interface ModalProps extends DefaultProps, Omit<React.HTMLProps<HTMLDivElement>, 'title'> {
+interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   title?: React.ReactNode;
   opened: boolean;
   onClose(): void;
@@ -29,6 +29,7 @@ export default function Modal({
   hideCloseButton = false,
   overlayOpacity = 0.65,
   modalWidth = 440,
+  ...others
 }: ModalProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme });
@@ -44,7 +45,7 @@ export default function Modal({
   }
 
   return (
-    <div className={cx(classes.wrapper, className)}>
+    <div className={cx(classes.wrapper, className)} {...others}>
       <div
         className={classes.inner}
         onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}

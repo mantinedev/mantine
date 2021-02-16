@@ -8,7 +8,7 @@ import isSameMonth from './is-same-month';
 import Day from './Day/Day';
 import useStyles from './Month.styles';
 
-interface MonthProps extends DefaultProps, Omit<React.HTMLProps<HTMLTableElement>, 'selected'> {
+interface MonthProps extends DefaultProps, React.ComponentPropsWithoutRef<'table'> {
   month: Date;
   locale?: string;
   selected?: Date;
@@ -83,7 +83,7 @@ export default function Month({
 
   const weekdays = getWeekdaysNames(locale).map((weekday) => (
     <th key={weekday}>
-      <Text theme="muted" size="xs">
+      <Text color="gray" size="xs">
         {weekday.slice(0, 1).toUpperCase()}
       </Text>
     </th>

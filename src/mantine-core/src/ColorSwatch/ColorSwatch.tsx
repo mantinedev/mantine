@@ -1,7 +1,7 @@
 import React from 'react';
 import { DefaultProps } from '@mantine/theme';
 
-interface ColorSwatchProps extends DefaultProps, React.HTMLProps<HTMLDivElement> {
+interface ColorSwatchProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   color: string;
   size?: number;
 }
