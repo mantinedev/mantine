@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { useId, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '@mantine/theme';
 import useStyles from './Switch.styles';
 
 interface SwitchProps
@@ -13,6 +13,8 @@ interface SwitchProps
   disabled?: boolean;
   id?: string;
   color?: string;
+  size?: MantineSize;
+  radius?: MantineNumberSize;
 }
 
 const Switch = forwardRef(
@@ -25,13 +27,17 @@ const Switch = forwardRef(
       label,
       disabled,
       id,
+      size = 'md',
+      radius = 'xl',
       themeOverride,
       ...others
     }: SwitchProps,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
     const classes = useStyles({
+      size,
       color,
+      radius,
       reduceMotion: useReducedMotion(),
       theme: useMantineTheme(themeOverride),
     });
