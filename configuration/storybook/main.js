@@ -18,6 +18,9 @@ module.exports = {
       ],
     };
 
+    // Turn off docgen plugin as it breaks bundle with displayName
+    config.plugins.pop();
+
     return config;
   },
 };
