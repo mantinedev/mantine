@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/theme';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 import Text from '../Text/Text';
 import Modal from './Modal';
 

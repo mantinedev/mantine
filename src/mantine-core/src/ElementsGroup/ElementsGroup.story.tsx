@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/theme';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 import ElementsGroup from './ElementsGroup';
 
 storiesOf('@mantine/core', module).add('ElementsGroup', () => (

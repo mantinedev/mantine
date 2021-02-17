@@ -90,6 +90,8 @@ export default createUseStyles(
         ...sizes[size],
         ...getFontStyles(theme),
         ...getFocusStyles(theme),
+        display: 'inline-block',
+        textDecoration: 'none',
         boxSizing: 'border-box',
         border: '1px solid transparent',
         outline: 0,
@@ -101,6 +103,10 @@ export default createUseStyles(
         userSelect: 'none',
         appearance: 'none',
         lineHeight: 1,
+
+        '& $inner': {
+          height: sizes[size].height - 2,
+        },
 
         '&:active': {
           transform: 'translateY(1px)',

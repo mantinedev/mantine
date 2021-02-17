@@ -4,9 +4,10 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '@mantine/theme';
+import { ComponentPassThrough } from '@mantine/types';
 import useStyles from './Button.styles';
 
-interface ButtonProps extends DefaultProps, React.ComponentProps<'button'> {
+interface ButtonBaseProps extends DefaultProps {
   size?: MantineSize;
   type?: 'submit' | 'button' | 'reset';
   color?: string;
@@ -15,43 +16,61 @@ interface ButtonProps extends DefaultProps, React.ComponentProps<'button'> {
   radius?: MantineNumberSize;
 }
 
-const Button = forwardRef(
-  (
-    {
-      className,
-      size = 'md',
-      color,
-      type = 'button',
-      disabled = false,
-      children,
-      leftIcon,
-      rightIcon,
-      radius = 'sm',
-      ...others
-    }: ButtonProps,
-    ref: React.ForwardedRef<HTMLButtonElement>
-  ) => {
-    const classes = useStyles({ radius, color, size, theme: useMantineTheme() });
+type _ButtonProps<T extends React.ElementType, U extends HTMLElement> = ComponentPassThrough<
+  T,
+  ButtonBaseProps
+> & { elementRef: React.ForwardedRef<U> };
 
-    return (
-      <button
-        {...others}
-        className={cx(classes.button, className)}
-        type={type}
-        disabled={disabled}
-        data-mantine-composable
-        ref={ref}
-      >
-        <div className={classes.inner}>
-          {leftIcon && <span className={cx(classes.icon, classes.leftIcon)}>{leftIcon}</span>}
-          <span>{children}</span>
-          {rightIcon && <span className={cx(classes.icon, classes.rightIcon)}>{rightIcon}</span>}
-        </div>
-      </button>
-    );
-  }
+function _Button<
+  T extends React.ElementType = 'button',
+  U extends HTMLElement = HTMLButtonElement
+>({
+  className,
+  size = 'md',
+  color,
+  type = 'button',
+  disabled = false,
+  children,
+  leftIcon,
+  rightIcon,
+  radius = 'sm',
+  component: Element = 'button',
+  elementRef,
+  ...others
+}: _ButtonProps<T, U>) {
+  const classes = useStyles({ radius, color, size, theme: useMantineTheme() });
+
+  return (
+    <Element
+      {...others}
+      className={cx(classes.button, className)}
+      type={type}
+      disabled={disabled}
+      data-mantine-composable
+      ref={elementRef}
+    >
+      <div className={classes.inner}>
+        {leftIcon && <span className={cx(classes.icon, classes.leftIcon)}>{leftIcon}</span>}
+        <span>{children}</span>
+        {rightIcon && <span className={cx(classes.icon, classes.rightIcon)}>{rightIcon}</span>}
+      </div>
+    </Element>
+  );
+}
+
+export const Button = forwardRef(
+  (
+    props: ComponentPassThrough<'button', ButtonBaseProps>,
+    ref: React.ForwardedRef<HTMLButtonElement>
+  ) => <_Button {...props} elementRef={ref} />
+);
+
+export const LinkButton = forwardRef(
+  (
+    props: ComponentPassThrough<'a', ButtonBaseProps>,
+    ref: React.ForwardedRef<HTMLAnchorElement>
+  ) => <_Button<'a', HTMLAnchorElement> component="a" type={null} elementRef={ref} {...props} />
 );
 
 Button.displayName = '@mantine/core/Button';
-
-export default Button;
+LinkButton.displayName = '@mantine/core/LinkButton';

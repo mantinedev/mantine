@@ -4,16 +4,16 @@ import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { Calendar } from 'react-feather';
 import { MantineProvider, MantineSize, DEFAULT_THEME } from '@mantine/theme';
 import ElementsGroup from '../ElementsGroup/ElementsGroup';
-import Button from './Button';
+import { Button, LinkButton } from './Button';
 
 const colors = Object.keys(DEFAULT_THEME.colors).filter(
   (color) => color !== 'white' && color !== 'black'
 );
 
 const md = colors.map((theme) => (
-  <Button color={theme} key={theme} size="md">
+  <LinkButton color={theme} key={theme} size="md" href="https://mantine.dev" target="_blank">
     {theme} md
-  </Button>
+  </LinkButton>
 ));
 
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
