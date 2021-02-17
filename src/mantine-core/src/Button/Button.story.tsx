@@ -11,9 +11,9 @@ const colors = Object.keys(DEFAULT_THEME.colors).filter(
 );
 
 const md = colors.map((theme) => (
-  <LinkButton color={theme} key={theme} size="md" href="https://mantine.dev" target="_blank">
+  <Button color={theme} key={theme} size="md">
     {theme} md
-  </LinkButton>
+  </Button>
 ));
 
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
@@ -54,7 +54,13 @@ storiesOf('@mantine/core', module).add('Button', () => (
         Book meeting
       </Button>
 
-      <Button rightIcon={<ExternalLinkIcon style={{ width: 15 }} />}>Open in new tab</Button>
+      <LinkButton
+        rightIcon={<ExternalLinkIcon style={{ width: 15 }} />}
+        href="https://mantine.dev"
+        target="_blank"
+      >
+        Open in new tab
+      </LinkButton>
     </ElementsGroup>
   </MantineProvider>
 ));
