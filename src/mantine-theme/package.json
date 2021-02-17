@@ -1,15 +1,8 @@
 {
   "name": "@mantine/theme",
+  "private": true,
   "version": "1.0.0",
   "main": "dist/lib.js",
   "licence": "MIT",
-  "types": "dist/mantine-theme/src/index.d.ts",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "scripts": {},
-  "peerDependencies": {
-    "react": "^16.14.0",
-    "react-jss": "^10.5.1"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>"
 }
