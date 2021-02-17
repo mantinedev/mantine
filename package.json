@@ -14,6 +14,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "build": "ts-node scripts/build",
+    "test": "jest",
     "storybook": "ts-node scripts/storybook-start"
   },
   "devDependencies": {
@@ -30,6 +31,8 @@
     "@typescript-eslint/parser": "^4.12.0",
     "@zerollup/ts-transform-paths": "^1.7.18",
     "case-sensitive-paths-webpack-plugin": "^2.3.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "eslint": "^7.17.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-plugin-import": "^2.22.0",
@@ -41,6 +44,7 @@
     "jest": "^26.6.3",
     "react-dom": "^16.14.0",
     "terser-webpack-plugin": "^4.2.0",
+    "ts-jest": "^26.5.1",
     "ts-loader": "^8.0.14",
     "ts-node": "^9.1.1",
     "tsconfig-paths-webpack-plugin": "^3.3.0",
