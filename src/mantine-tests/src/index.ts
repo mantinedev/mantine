@@ -1,1 +1,1 @@
-export { shallow } from './enzyme';
+export { shallow, unwrapForwardedRef } from './enzyme';
