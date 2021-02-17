@@ -11,7 +11,7 @@ interface SpoilerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div
   overlayColor?: string;
 }
 
-export default function Spoiler({
+export function Spoiler({
   className,
   children,
   maxHeight = 100,

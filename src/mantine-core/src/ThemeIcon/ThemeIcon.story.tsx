@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { RocketIcon } from '@modulz/radix-icons';
 import { MantineProvider } from '@mantine/theme';
-import ElementsGroup from '../ElementsGroup/ElementsGroup';
-import ThemeIcon from './ThemeIcon';
+import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
+import { ThemeIcon } from './ThemeIcon';
 
 storiesOf('@mantine/core', module).add('ThemeIcon', () => (
   <div style={{ padding: 20 }}>

@@ -2,9 +2,9 @@ import React, { forwardRef, useState } from 'react';
 import { useId } from '@mantine/hooks';
 import { EyeOpenIcon, EyeClosedIcon } from '@modulz/radix-icons';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
-import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
-import ActionIcon from '../ActionIcon/ActionIcon';
-import Input from '../Input/Input';
+import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
+import { ActionIcon } from '../ActionIcon/ActionIcon';
+import { Input } from '../Input/Input';
 import useStyles from './PasswordInput.styles';
 
 interface PasswordInputProps
@@ -20,7 +20,7 @@ interface PasswordInputProps
   hidePasswordLabel?: string;
 }
 
-const PasswordInput = forwardRef(
+export const PasswordInput = forwardRef(
   (
     {
       className,
@@ -88,5 +88,3 @@ const PasswordInput = forwardRef(
 );
 
 PasswordInput.displayName = '@mantine/core/PasswordInput';
-
-export default PasswordInput;

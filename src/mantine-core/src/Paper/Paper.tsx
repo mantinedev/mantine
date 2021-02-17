@@ -10,7 +10,7 @@ interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'>
   radius?: MantineNumberSize;
 }
 
-const Paper = forwardRef(
+export const Paper = forwardRef(
   (
     {
       className,
@@ -34,5 +34,3 @@ const Paper = forwardRef(
 );
 
 Paper.displayName = '@mantine/core/Paper';
-
-export default Paper;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { LockClosedIcon } from '@modulz/radix-icons';
 import { MantineProvider } from '@mantine/theme';
-import PasswordInput from './PasswordInput';
+import { PasswordInput } from './PasswordInput';
 
 function WrappedPasswordInput(
   props: Omit<React.ComponentProps<typeof PasswordInput>, 'value' | 'onChange'>

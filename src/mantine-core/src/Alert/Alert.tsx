@@ -1,6 +1,6 @@
 import React from 'react';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import Text from '../Text/Text';
+import { Text } from '../Text/Text';
 import useStyles from './Alert.styles';
 
 interface AlertProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
@@ -8,14 +8,7 @@ interface AlertProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   color?: string;
 }
 
-export default function Alert({
-  className,
-  title,
-  children,
-  themeOverride,
-  color,
-  ...others
-}: AlertProps) {
+export function Alert({ className, title, children, themeOverride, color, ...others }: AlertProps) {
   const classes = useStyles({ color, theme: useMantineTheme(themeOverride) });
 
   return (

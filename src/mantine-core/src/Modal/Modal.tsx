@@ -4,10 +4,10 @@ import { Cross1Icon } from '@modulz/radix-icons';
 import useFocusTrap from '@charlietango/use-focus-trap';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { useClickOutside } from '@mantine/hooks';
-import ActionIcon from '../ActionIcon/ActionIcon';
-import Text from '../Text/Text';
-import Paper from '../Paper/Paper';
-import Overlay from '../Overlay/Overlay';
+import { ActionIcon } from '../ActionIcon/ActionIcon';
+import { Text } from '../Text/Text';
+import { Paper } from '../Paper/Paper';
+import { Overlay } from '../Overlay/Overlay';
 import useStyles from './Modal.styles';
 
 interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
@@ -19,7 +19,7 @@ interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   modalWidth?: number;
 }
 
-export default function Modal({
+export function Modal({
   className,
   opened,
   themeOverride,

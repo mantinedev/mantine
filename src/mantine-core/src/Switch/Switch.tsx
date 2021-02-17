@@ -17,7 +17,7 @@ interface SwitchProps
   radius?: MantineNumberSize;
 }
 
-const Switch = forwardRef(
+export const Switch = forwardRef(
   (
     {
       className,
@@ -68,5 +68,3 @@ const Switch = forwardRef(
 );
 
 Switch.displayName = '@mantine/core/Switch';
-
-export default Switch;

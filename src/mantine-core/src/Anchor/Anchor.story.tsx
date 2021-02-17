@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/theme';
-import Anchor from './Anchor';
+import { Anchor } from './Anchor';
 
 storiesOf('@mantine/core', module).add('Anchor', () => (
   <MantineProvider>

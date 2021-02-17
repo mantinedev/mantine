@@ -8,8 +8,8 @@ import {
   LockOpen1Icon,
 } from '@modulz/radix-icons';
 import { MantineProvider } from '@mantine/theme';
-import ElementsGroup from '../ElementsGroup/ElementsGroup';
-import ActionIcon from './ActionIcon';
+import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
+import { ActionIcon } from './ActionIcon';
 
 storiesOf('@mantine/core', module).add('ActionIcon', () => (
   <MantineProvider>

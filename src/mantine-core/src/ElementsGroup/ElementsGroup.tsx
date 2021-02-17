@@ -9,7 +9,7 @@ interface ElementsGroupProps extends DefaultProps, React.ComponentPropsWithoutRe
   spacing?: MantineNumberSize;
 }
 
-export default function ElementsGroup({
+export function ElementsGroup({
   className,
   position = 'left',
   children,

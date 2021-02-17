@@ -2,9 +2,9 @@ import React from 'react';
 import cx from 'clsx';
 import { Cross2Icon } from '@modulz/radix-icons';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import Paper from '../Paper/Paper';
-import Text from '../Text/Text';
-import ActionIcon from '../ActionIcon/ActionIcon';
+import { Paper } from '../Paper/Paper';
+import { Text } from '../Text/Text';
+import { ActionIcon } from '../ActionIcon/ActionIcon';
 import useStyles from './Notification.styles';
 
 interface NotificationProps
@@ -16,7 +16,7 @@ interface NotificationProps
   onClose(): void;
 }
 
-export default function Notification({
+export function Notification({
   className,
   color = 'blue',
   title,

@@ -1,8 +1,8 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps } from '@mantine/theme';
-import Overlay from '../Overlay/Overlay';
-import Loader from '../Loader/Loader';
+import { Overlay } from '../Overlay/Overlay';
+import { Loader } from '../Loader/Loader';
 import useStyles from './LoadingOverlay.styles';
 
 interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -11,7 +11,7 @@ interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutR
   visible: boolean;
 }
 
-export default function LoadingOverlay({
+export function LoadingOverlay({
   className,
   visible,
   loaderSize,

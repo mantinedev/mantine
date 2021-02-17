@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/theme';
-import Checkbox from './Checkbox';
+import { Checkbox } from './Checkbox';
 
 function CheckboxWrapper(props: Omit<React.ComponentProps<typeof Checkbox>, 'value' | 'onChange'>) {
   const [value, onChange] = useState(false);

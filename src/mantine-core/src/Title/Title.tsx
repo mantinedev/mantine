@@ -7,7 +7,7 @@ interface TitleProps extends DefaultProps, React.ComponentPropsWithoutRef<'h1'> 
   order?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
-export default function Title({
+export function Title({
   className,
   themeOverride,
   order = 1,

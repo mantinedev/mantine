@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import Text from '../Text/Text';
+import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
 export interface InputWrapperBaseProps {
@@ -19,7 +19,7 @@ interface InputWrapperProps
   children: React.ReactChild;
 }
 
-export default function InputWrapper({
+export function InputWrapper({
   className,
   label,
   children,

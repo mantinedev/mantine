@@ -1,14 +1,14 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { useMantineTheme } from '@mantine/theme';
-import Text from '../Text/Text';
+import { Text } from '../Text/Text';
 import useStyles from './Anchor.styles';
 
 interface AnchorProps
   extends Omit<React.ComponentProps<typeof Text>, 'symbol'>,
     React.ComponentProps<'a'> {}
 
-const Anchor = forwardRef(
+export const Anchor = forwardRef(
   (
     { className, children, themeOverride, ...others }: AnchorProps,
     ref: React.ForwardedRef<HTMLAnchorElement>
@@ -24,5 +24,3 @@ const Anchor = forwardRef(
 );
 
 Anchor.displayName = '@mantine/core/Anchor';
-
-export default Anchor;

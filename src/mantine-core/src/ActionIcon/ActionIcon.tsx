@@ -8,7 +8,7 @@ interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   radius?: MantineNumberSize;
 }
 
-const ActionIcon = forwardRef(
+export const ActionIcon = forwardRef(
   (
     { className, color, children, radius = 'sm', themeOverride, ...others }: ActionIconProps,
     ref: React.ForwardedRef<HTMLButtonElement>
@@ -30,5 +30,3 @@ const ActionIcon = forwardRef(
 );
 
 ActionIcon.displayName = '@mantine/core/ActionIcon';
-
-export default ActionIcon;

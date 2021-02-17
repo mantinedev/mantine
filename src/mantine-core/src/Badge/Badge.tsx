@@ -8,13 +8,7 @@ interface BadgeProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'>
   variant?: BadgeVariant;
 }
 
-export default function Badge({
-  className,
-  color,
-  variant = 'badge',
-  children,
-  ...others
-}: BadgeProps) {
+export function Badge({ className, color, variant = 'badge', children, ...others }: BadgeProps) {
   const classes = useStyles({ variant, color, theme: useMantineTheme() });
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/theme';
-import Textarea from './Textarea';
+import { Textarea } from './Textarea';
 
 storiesOf('@mantine/core', module).add('Textarea', () => (
   <MantineProvider>

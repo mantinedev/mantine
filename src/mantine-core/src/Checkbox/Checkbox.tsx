@@ -17,7 +17,7 @@ interface CheckboxProps
   id?: string;
 }
 
-const Checkbox = forwardRef(
+export const Checkbox = forwardRef(
   (
     {
       className,
@@ -62,5 +62,3 @@ const Checkbox = forwardRef(
 );
 
 Checkbox.displayName = '@mantine/core/Checkbox';
-
-export default Checkbox;

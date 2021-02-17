@@ -3,7 +3,7 @@ import { useId } from '@mantine/hooks';
 import cx from 'clsx';
 import { ChevronDownIcon } from '@modulz/radix-icons';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
-import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
+import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import useStyles from './Select.styles';
 
 interface SelectItem {
@@ -25,7 +25,7 @@ interface SelectProps
   icon?: React.ReactNode;
 }
 
-const Select = forwardRef(
+export const Select = forwardRef(
   (
     {
       id,
@@ -101,5 +101,3 @@ const Select = forwardRef(
 );
 
 Select.displayName = '@mantine/core/Select';
-
-export default Select;

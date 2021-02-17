@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/theme';
-import Text from '../Text/Text';
-import Spoiler from './Spoiler';
+import { Text } from '../Text/Text';
+import { Spoiler } from './Spoiler';
 
 storiesOf('@mantine/core', module).add('Spoiler', () => (
   <MantineProvider>

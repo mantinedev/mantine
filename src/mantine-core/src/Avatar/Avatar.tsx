@@ -10,7 +10,7 @@ interface AvatarProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'
   alt?: string;
 }
 
-export default function Avatar({
+export function Avatar({
   className,
   size = 60,
   style,

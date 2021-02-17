@@ -11,7 +11,7 @@ interface TextProps extends DefaultProps {
   weight?: number;
 }
 
-export default function Text<T extends React.ElementType = 'div'>({
+export function Text<T extends React.ElementType = 'div'>({
   className,
   component = 'div',
   children,

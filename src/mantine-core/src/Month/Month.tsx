@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import Text from '../Text/Text';
+import { Text } from '../Text/Text';
 import getMonthDays from './get-month-days';
 import getWeekdaysNames from './get-weekdays-names';
 import isSameMonth from './is-same-month';
@@ -17,7 +17,7 @@ interface MonthProps extends DefaultProps, React.ComponentPropsWithoutRef<'table
   onDayClick?(day: Date): void;
 }
 
-export default function Month({
+export function Month({
   className,
   month,
   selected,

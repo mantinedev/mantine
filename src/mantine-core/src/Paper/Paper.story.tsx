@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider, DEFAULT_THEME } from '@mantine/theme';
-import ElementsGroup from '../ElementsGroup/ElementsGroup';
-import Text from '../Text/Text';
-import Paper from './Paper';
+import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
+import { Text } from '../Text/Text';
+import { Paper } from './Paper';
 
 storiesOf('@mantine/core', module).add('Paper', () => (
   <MantineProvider>

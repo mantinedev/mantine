@@ -20,13 +20,7 @@ const sizes = {
   xl: 58,
 };
 
-export default function Loader({
-  size = 'md',
-  color,
-  style,
-  themeOverride,
-  ...others
-}: LoaderProps) {
+export function Loader({ size = 'md', color, style, themeOverride, ...others }: LoaderProps) {
   const theme = useMantineTheme(themeOverride);
 
   return (

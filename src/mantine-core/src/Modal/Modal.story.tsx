@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/theme';
 import { Button } from '../Button/Button';
-import Text from '../Text/Text';
-import Modal from './Modal';
+import { Text } from '../Text/Text';
+import { Modal } from './Modal';
 
 function WrappedModal(props: Omit<React.ComponentProps<typeof Modal>, 'opened' | 'onClose'>) {
   const [opened, setOpened] = useState(false);

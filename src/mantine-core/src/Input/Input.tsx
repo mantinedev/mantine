@@ -13,7 +13,7 @@ interface InputProps extends DefaultProps, React.ComponentPropsWithoutRef<'input
   variant?: 'default' | 'unstyled';
 }
 
-const Input = forwardRef(
+export const Input = forwardRef(
   (
     {
       className,
@@ -55,5 +55,3 @@ const Input = forwardRef(
 );
 
 Input.displayName = '@mantine/core/Input';
-
-export default Input;

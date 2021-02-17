@@ -2,8 +2,8 @@ import React from 'react';
 import oc from 'open-color';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider, DEFAULT_THEME } from '@mantine/theme';
-import ElementsGroup from '../ElementsGroup/ElementsGroup';
-import ColorSwatch from './ColorSwatch';
+import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
+import { ColorSwatch } from './ColorSwatch';
 
 const swatches = Object.keys(DEFAULT_THEME.colors)
   .filter((color) => color !== 'white' && color !== 'black')

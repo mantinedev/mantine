@@ -8,7 +8,7 @@ import {
   BookmarkIcon,
 } from '@modulz/radix-icons';
 import { MantineProvider, DEFAULT_THEME } from '@mantine/theme';
-import Notification from './Notification';
+import { Notification } from './Notification';
 
 storiesOf('@mantine/core', module).add('Notification', () => (
   <MantineProvider>

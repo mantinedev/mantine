@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { Calendar } from 'react-feather';
 import { MantineProvider, MantineSize, DEFAULT_THEME } from '@mantine/theme';
-import ElementsGroup from '../ElementsGroup/ElementsGroup';
+import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
 import { Button, LinkButton } from './Button';
 
 const colors = Object.keys(DEFAULT_THEME.colors).filter(

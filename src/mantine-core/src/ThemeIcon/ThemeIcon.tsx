@@ -11,7 +11,7 @@ interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'> {
   variant?: 'filled' | 'light';
 }
 
-export default function ThemeIcon({
+export function ThemeIcon({
   className,
   size = 'md',
   radius = 'sm',

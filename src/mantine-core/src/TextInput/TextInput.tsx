@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
-import Input from '../Input/Input';
-import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
+import { Input } from '../Input/Input';
+import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 
 interface TextInputProps
   extends DefaultProps,
@@ -16,7 +16,7 @@ interface TextInputProps
   radius?: MantineNumberSize;
 }
 
-const TextInput = forwardRef(
+export const TextInput = forwardRef(
   (
     {
       className,
@@ -65,5 +65,3 @@ const TextInput = forwardRef(
 );
 
 TextInput.displayName = '@mantine/core/TextInput';
-
-export default TextInput;

@@ -6,7 +6,7 @@ interface ColorSwatchProps extends DefaultProps, React.ComponentPropsWithoutRef<
   size?: number;
 }
 
-export default function ColorSwatch({ color, size = 25, style, ...others }: ColorSwatchProps) {
+export function ColorSwatch({ color, size = 25, style, ...others }: ColorSwatchProps) {
   return (
     <div
       style={{ ...style, width: size, height: size, borderRadius: 25, backgroundColor: color }}

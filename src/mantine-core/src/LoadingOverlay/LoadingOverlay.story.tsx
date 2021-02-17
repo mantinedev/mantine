@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/theme';
 import { Button } from '../Button/Button';
-import ElementsGroup from '../ElementsGroup/ElementsGroup';
-import LoadingOverlay from './LoadingOverlay';
+import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
+import { LoadingOverlay } from './LoadingOverlay';
 
 function LoadingOverlayDemo() {
   const [visible, setVisible] = useState(false);

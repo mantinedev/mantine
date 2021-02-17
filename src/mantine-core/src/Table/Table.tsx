@@ -8,7 +8,7 @@ interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef<'table
   highlighOnHover?: boolean;
 }
 
-export default function Table({
+export function Table({
   className,
   children,
   striped = false,

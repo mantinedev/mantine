@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { TwitterLogoIcon } from '@modulz/radix-icons';
 import { MantineProvider } from '@mantine/theme';
-import TextInput from './TextInput';
+import { TextInput } from './TextInput';
 
 function WrappedTextInput(
   props: Omit<React.ComponentProps<typeof TextInput>, 'value' | 'onChange'>

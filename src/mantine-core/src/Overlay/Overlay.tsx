@@ -5,7 +5,7 @@ interface OverlayProps extends React.ComponentPropsWithoutRef<'div'> {
   color?: string;
 }
 
-export default function Overlay({ opacity, color = '#fff', style, ...others }: OverlayProps) {
+export function Overlay({ opacity, color = '#fff', style, ...others }: OverlayProps) {
   return (
     <div
       style={{

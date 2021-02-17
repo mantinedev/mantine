@@ -10,7 +10,7 @@ interface BurgerProps extends DefaultProps, React.ComponentPropsWithoutRef<'butt
   opened: boolean;
 }
 
-export default function Burger({
+export function Burger({
   className,
   opened,
   color = 'gray',

@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { LockClosedIcon } from '@modulz/radix-icons';
 import { MantineProvider } from '@mantine/theme';
-import Input from './Input';
+import { Input } from './Input';
 
 storiesOf('@mantine/core', module).add('Input', () => (
   <MantineProvider>

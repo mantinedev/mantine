@@ -3,7 +3,7 @@ import cx from 'clsx';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { useId } from '@mantine/hooks';
-import InputWrapper, { InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
+import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import useStyles from './Textarea.styles';
 
 interface TextareaProps
@@ -20,7 +20,7 @@ interface TextareaProps
   onChange(value: string, event: React.ChangeEvent<HTMLTextAreaElement>): void;
 }
 
-const Textarea = forwardRef(
+export const Textarea = forwardRef(
   (
     {
       radius = 'sm',
@@ -83,5 +83,3 @@ const Textarea = forwardRef(
 );
 
 Textarea.displayName = '@mantine/core/Textarea';
-
-export default Textarea;
