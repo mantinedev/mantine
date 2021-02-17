@@ -1,0 +1,1 @@
+export { shallow } from './enzyme';
