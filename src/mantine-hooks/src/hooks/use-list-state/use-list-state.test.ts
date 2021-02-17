@@ -7,7 +7,7 @@ const DEFAULT_VALUES = [
   { name: 'Bill', age: 36, skills: ['Python', 'Django'] },
 ];
 
-describe('@mantine/hooks/use-id', () => {
+describe('@mantine/hooks/use-list-state', () => {
   it('returns initial state of no modifications were applied', () => {
     const hook = renderHook(() => useListState(DEFAULT_VALUES));
     const [state] = hook.result.current;
@@ -34,5 +34,59 @@ describe('@mantine/hooks/use-id', () => {
 
     const [state] = hook.result.current;
     expect(state).toEqual([DEFAULT_VALUES[0], ...DEFAULT_VALUES, DEFAULT_VALUES[1]]);
+  });
+
+  it('adds item to the end of the list with handlers.append', () => {
+    const hook = renderHook(() => useListState(DEFAULT_VALUES));
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.append(DEFAULT_VALUES[0]);
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual([...DEFAULT_VALUES, DEFAULT_VALUES[0]]);
+  });
+
+  it('support multiple items adding with handlers.append', () => {
+    const hook = renderHook(() => useListState(DEFAULT_VALUES));
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.append(DEFAULT_VALUES[0], DEFAULT_VALUES[1], DEFAULT_VALUES[1]);
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual([
+      ...DEFAULT_VALUES,
+      DEFAULT_VALUES[0],
+      DEFAULT_VALUES[1],
+      DEFAULT_VALUES[1],
+    ]);
+  });
+
+  it('adds item to the start of the list with handlers.prepend', () => {
+    const hook = renderHook(() => useListState(DEFAULT_VALUES));
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.prepend(DEFAULT_VALUES[0]);
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual([DEFAULT_VALUES[0], ...DEFAULT_VALUES]);
+  });
+
+  it('support multiple items adding with handlers.prepend', () => {
+    const hook = renderHook(() => useListState(DEFAULT_VALUES));
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.prepend(DEFAULT_VALUES[0], DEFAULT_VALUES[1], DEFAULT_VALUES[1]);
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual([
+      DEFAULT_VALUES[0],
+      DEFAULT_VALUES[1],
+      DEFAULT_VALUES[1],
+      ...DEFAULT_VALUES,
+    ]);
   });
 });
