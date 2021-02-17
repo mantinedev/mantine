@@ -17,7 +17,7 @@ describe('@mantine/hooks/use-list-state', () => {
     expect(state).toEqual(TEST_STATE);
   });
 
-  it('sets state with provided value or callback', () => {
+  it('sets state with given value or callback', () => {
     const withValue = renderHook(() => useListState(TEST_STATE));
     const withCallback = renderHook(() => useListState(TEST_STATE));
 
@@ -74,7 +74,7 @@ describe('@mantine/hooks/use-list-state', () => {
     expect(multipleState).toEqual([TEST_ITEM_1, TEST_ITEM_2, ...TEST_STATE]);
   });
 
-  it('inserts item with handlers.insert', () => {
+  it('inserts item at given position with handlers.insert', () => {
     const start = renderHook(() => useListState(TEST_STATE));
     const middle = renderHook(() => useListState(TEST_STATE));
     const end = renderHook(() => useListState(TEST_STATE));
@@ -109,7 +109,7 @@ describe('@mantine/hooks/use-list-state', () => {
     ]);
   });
 
-  it('removes items with provided indices with handlers.remove', () => {
+  it('removes items with given indices with handlers.remove', () => {
     const single = renderHook(() => useListState(TEST_STATE));
     const multiple = renderHook(() => useListState(TEST_STATE));
 
@@ -126,5 +126,57 @@ describe('@mantine/hooks/use-list-state', () => {
 
     expect(singleState).toEqual([TEST_STATE[0], TEST_STATE[2]]);
     expect(multipleState).toEqual([TEST_STATE[2]]);
+  });
+
+  it('applies given function to all items with handlers.apply', () => {
+    const hook = renderHook(() => useListState(TEST_STATE));
+
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.apply((item, index) => ({ ...item, age: index + item.age }));
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual([
+      TEST_STATE[0],
+      { ...TEST_STATE[1], age: TEST_STATE[1].age + 1 },
+      { ...TEST_STATE[2], age: TEST_STATE[2].age + 2 },
+    ]);
+  });
+
+  it('reorders item at given position with handlers.reorder', () => {
+    const hook = renderHook(() => useListState(TEST_STATE));
+
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.reorder({ from: 0, to: 2 });
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual([TEST_STATE[1], TEST_STATE[2], TEST_STATE[0]]);
+  });
+
+  it('sets item at given position with handlers.setItem', () => {
+    const hook = renderHook(() => useListState(TEST_STATE));
+
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.setItem(1, TEST_ITEM_1);
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual([TEST_STATE[0], TEST_ITEM_1, TEST_STATE[2]]);
+  });
+
+  it('sets given item property at given position with handlers.setItemProp', () => {
+    const hook = renderHook(() => useListState(TEST_STATE));
+
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.setItemProp(1, 'age', 90);
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual([TEST_STATE[0], { ...TEST_STATE[1], age: 90 }, TEST_STATE[2]]);
   });
 });
