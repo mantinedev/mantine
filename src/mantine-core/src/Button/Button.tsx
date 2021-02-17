@@ -21,7 +21,7 @@ type _ButtonProps<T extends React.ElementType, U extends HTMLElement> = Componen
   ButtonBaseProps
 > & { elementRef: React.ForwardedRef<U> };
 
-function _Button<
+export function MantineButton<
   T extends React.ElementType = 'button',
   U extends HTMLElement = HTMLButtonElement
 >({
@@ -62,15 +62,18 @@ export const Button = forwardRef(
   (
     props: ComponentPassThrough<'button', ButtonBaseProps>,
     ref: React.ForwardedRef<HTMLButtonElement>
-  ) => <_Button {...props} elementRef={ref} />
+  ) => <MantineButton {...props} elementRef={ref} />
 );
 
 export const LinkButton = forwardRef(
   (
     props: ComponentPassThrough<'a', ButtonBaseProps>,
     ref: React.ForwardedRef<HTMLAnchorElement>
-  ) => <_Button<'a', HTMLAnchorElement> component="a" type={null} elementRef={ref} {...props} />
+  ) => (
+    <MantineButton<'a', HTMLAnchorElement> component="a" type={null} elementRef={ref} {...props} />
+  )
 );
 
+MantineButton.displayName = '@mantine/core/MantineButton';
 Button.displayName = '@mantine/core/Button';
 LinkButton.displayName = '@mantine/core/LinkButton';
