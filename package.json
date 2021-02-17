@@ -12,6 +12,7 @@
   "license": "MIT",
   "scripts": {
     "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
     "build": "ts-node scripts/build",
     "storybook": "ts-node scripts/storybook-start"
   },
