@@ -7,7 +7,7 @@ export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadC
   const sheets = new SheetsRegistry();
 
   const App = () => (
-    <JssProvider registry={sheets} id={{ minify: true }}>
+    <JssProvider registry={sheets}>
       <MantineProvider>{bodyComponent}</MantineProvider>
     </JssProvider>
   );

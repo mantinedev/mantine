@@ -18,9 +18,15 @@
     "gatsby-plugin-ts-config": "^1.1.5",
     "gatsby-plugin-tsconfig-paths": "^1.0.2",
     "gatsby-source-filesystem": "^2.11.0",
-    "react-helmet": "^6.1.0"
+    "normalize.css": "^8.0.1",
+    "react-helmet": "^6.1.0",
+    "typeface-ibm-plex-mono": "^1.1.13",
+    "typeface-roboto": "^1.1.13"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "typescript": "^4.1.5"
+  },
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
