@@ -37,7 +37,7 @@ export default {
         background_color: OpenColor.blue[6],
         theme_color: OpenColor.blue[6],
         display: 'minimal-ui',
-        icon: 'src/images/favicon.png',
+        icon: 'src/images/favicon.svg',
       },
     },
   ],
