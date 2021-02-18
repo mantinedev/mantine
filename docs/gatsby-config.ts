@@ -5,8 +5,10 @@ export default {
     title: 'Mantine Docs',
     description: 'Mantine documentation',
     author: '@rtivital',
+    siteUrl: 'https://mantine.dev',
   },
   plugins: [
+    'gatsby-plugin-cname',
     'gatsby-plugin-tsconfig-paths',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-mdx',
