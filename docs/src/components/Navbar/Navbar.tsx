@@ -4,7 +4,6 @@ import {
   RocketIcon,
   BlendingModeIcon,
   GitHubLogoIcon,
-  LayersIcon,
   LightningBoltIcon,
   StarIcon,
 } from '@modulz/radix-icons';
@@ -40,17 +39,9 @@ export default function Navbar({ className }: { className: string }) {
         <NavbarMainLink
           to="/integrations/"
           color="blue"
-          icon={<LayersIcon style={{ height: 18, width: 18 }} />}
-        >
-          Integrations
-        </NavbarMainLink>
-
-        <NavbarMainLink
-          to="/ssr/"
-          color="yellow"
           icon={<LightningBoltIcon style={{ height: 18, width: 18 }} />}
         >
-          Server side rendering
+          Integrations and SSR
         </NavbarMainLink>
 
         <NavbarMainLink
@@ -66,7 +57,7 @@ export default function Navbar({ className }: { className: string }) {
           color="gray"
           icon={<GitHubLogoIcon style={{ height: 18, width: 18 }} />}
         >
-          Source code
+          Contribute
         </NavbarMainLink>
       </div>
     </nav>
