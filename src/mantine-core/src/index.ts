@@ -9,6 +9,7 @@ export { Burger } from './Burger/Burger';
 export { Button, LinkButton, MantineButton } from './Button/Button';
 export { Checkbox } from './Checkbox/Checkbox';
 export { ColorSwatch } from './ColorSwatch/ColorSwatch';
+export { Container } from './Container/Container';
 export { ElementsGroup } from './ElementsGroup/ElementsGroup';
 export { Hr } from './Hr/Hr';
 export { Input } from './Input/Input';
