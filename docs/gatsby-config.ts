@@ -8,7 +8,6 @@ export default {
     siteUrl: 'https://mantine.dev',
   },
   plugins: [
-    'gatsby-plugin-jss',
     'gatsby-plugin-cname',
     'gatsby-plugin-tsconfig-paths',
     'gatsby-plugin-react-helmet',
