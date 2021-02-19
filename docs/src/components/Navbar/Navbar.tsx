@@ -10,6 +10,7 @@ import {
 } from '@modulz/radix-icons';
 import { useMantineTheme } from '@mantine/core';
 import NavbarMainLink from './NavbarMainLink/NavbarMainLink';
+import NavbarLogo from './NavbarLogo/NavbarLogo';
 import useStyles from './Navbar.styles';
 
 export default function Navbar({ className }: { className: string }) {
@@ -17,29 +18,57 @@ export default function Navbar({ className }: { className: string }) {
 
   return (
     <nav className={cx(classes.navbar, className)}>
-      <NavbarMainLink to="/getting-started/" color="pink" icon={<RocketIcon />}>
-        Getting started
-      </NavbarMainLink>
+      <NavbarLogo />
 
-      <NavbarMainLink to="/theming/" color="indigo" icon={<BlendingModeIcon />}>
-        Theming
-      </NavbarMainLink>
+      <div className={classes.body}>
+        <NavbarMainLink
+          to="/getting-started/"
+          color="pink"
+          icon={<RocketIcon style={{ height: 18, width: 18 }} />}
+        >
+          Getting started
+        </NavbarMainLink>
 
-      <NavbarMainLink to="/integrations/" color="blue" icon={<LayersIcon />}>
-        Integrations
-      </NavbarMainLink>
+        <NavbarMainLink
+          to="/theming/"
+          color="indigo"
+          icon={<BlendingModeIcon style={{ height: 18, width: 18 }} />}
+        >
+          Theming
+        </NavbarMainLink>
 
-      <NavbarMainLink to="/ssr/" color="lime" icon={<LightningBoltIcon />}>
-        Server side rendering
-      </NavbarMainLink>
+        <NavbarMainLink
+          to="/integrations/"
+          color="blue"
+          icon={<LayersIcon style={{ height: 18, width: 18 }} />}
+        >
+          Integrations
+        </NavbarMainLink>
 
-      <NavbarMainLink to="/examples/" color="orange" icon={<StarIcon />}>
-        Examples
-      </NavbarMainLink>
+        <NavbarMainLink
+          to="/ssr/"
+          color="yellow"
+          icon={<LightningBoltIcon style={{ height: 18, width: 18 }} />}
+        >
+          Server side rendering
+        </NavbarMainLink>
 
-      <NavbarMainLink to="/source/" color="gray" icon={<GitHubLogoIcon />}>
-        Source code
-      </NavbarMainLink>
+        <NavbarMainLink
+          to="/examples/"
+          color="orange"
+          icon={<StarIcon style={{ height: 18, width: 18 }} />}
+        >
+          Examples
+        </NavbarMainLink>
+
+        <NavbarMainLink
+          to="/source/"
+          color="gray"
+          icon={<GitHubLogoIcon style={{ height: 18, width: 18 }} />}
+        >
+          Source code
+        </NavbarMainLink>
+      </div>
     </nav>
   );
 }
