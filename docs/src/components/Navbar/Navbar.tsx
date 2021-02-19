@@ -17,27 +17,27 @@ export default function Navbar({ className }: { className: string }) {
 
   return (
     <nav className={cx(classes.navbar, className)}>
-      <NavbarMainLink to="/getting-started" color="pink" icon={<RocketIcon />}>
+      <NavbarMainLink to="/getting-started/" color="pink" icon={<RocketIcon />}>
         Getting started
       </NavbarMainLink>
 
-      <NavbarMainLink to="/theming" color="indigo" icon={<BlendingModeIcon />}>
+      <NavbarMainLink to="/theming/" color="indigo" icon={<BlendingModeIcon />}>
         Theming
       </NavbarMainLink>
 
-      <NavbarMainLink to="/integrations" color="blue" icon={<LayersIcon />}>
+      <NavbarMainLink to="/integrations/" color="blue" icon={<LayersIcon />}>
         Integrations
       </NavbarMainLink>
 
-      <NavbarMainLink to="/ssr" color="lime" icon={<LightningBoltIcon />}>
+      <NavbarMainLink to="/ssr/" color="lime" icon={<LightningBoltIcon />}>
         Server side rendering
       </NavbarMainLink>
 
-      <NavbarMainLink to="/examples" color="orange" icon={<StarIcon />}>
+      <NavbarMainLink to="/examples/" color="orange" icon={<StarIcon />}>
         Examples
       </NavbarMainLink>
 
-      <NavbarMainLink to="/source" color="gray" icon={<GitHubLogoIcon />}>
+      <NavbarMainLink to="/source/" color="gray" icon={<GitHubLogoIcon />}>
         Source code
       </NavbarMainLink>
     </nav>
