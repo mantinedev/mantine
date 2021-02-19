@@ -40,4 +40,9 @@ describe('@mantine/core/ActionIcon', () => {
     mount(<ActionIcon ref={ref} />);
     expect(ref.current instanceof HTMLButtonElement).toBe(true);
   });
+
+  it('support ...others props', () => {
+    const element = shallow(<ActionIcon data-other-attribute="test" />);
+    expect(element.render().attr('data-other-attribute')).toBe('test');
+  });
 });
