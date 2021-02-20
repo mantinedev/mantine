@@ -62,7 +62,7 @@ export function Modal({
                 <Text className={classes.title} size="md">
                   {title}
                 </Text>
-                <ActionIcon onClick={onClose}>
+                <ActionIcon onClick={onClose} color="gray">
                   <Cross1Icon />
                 </ActionIcon>
               </div>
