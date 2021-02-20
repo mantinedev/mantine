@@ -15,6 +15,7 @@ import {
 const atLeastTwoCharacters = (value: string) => value.trim().length >= 2;
 
 export default function AuthenticationForm() {
+  const [formType, setFormType] = useState<'register' | 'login'>('register');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>(null);
 
@@ -47,32 +48,33 @@ export default function AuthenticationForm() {
     <Paper padding="lg" shadow="sm">
       <form onSubmit={form.onSubmit(handleSubmit)} style={{ position: 'relative' }}>
         <LoadingOverlay visible={loading} />
-        <div style={{ display: 'flex' }}>
-          <TextInput
-            required
-            placeholder="Your first name"
-            label="First name"
-            style={{ marginRight: 20, flex: '0 0 calc(50% - 10px)' }}
-            {...form.getInputProps({
-              field: 'firstName',
-              error: 'First name should include at least 2 characters',
-            })}
-          />
+        {formType === 'register' && (
+          <div style={{ display: 'flex', marginBottom: 15 }}>
+            <TextInput
+              required
+              placeholder="Your first name"
+              label="First name"
+              style={{ marginRight: 20, flex: '0 0 calc(50% - 10px)' }}
+              {...form.getInputProps({
+                field: 'firstName',
+                error: 'First name should include at least 2 characters',
+              })}
+            />
 
-          <TextInput
-            required
-            placeholder="Your last name"
-            label="Last name"
-            style={{ flex: '0 0 calc(50% - 10px)' }}
-            {...form.getInputProps({
-              field: 'lastName',
-              error: 'Last name should include at least 2 characters',
-            })}
-          />
-        </div>
+            <TextInput
+              required
+              placeholder="Your last name"
+              label="Last name"
+              style={{ flex: '0 0 calc(50% - 10px)' }}
+              {...form.getInputProps({
+                field: 'lastName',
+                error: 'Last name should include at least 2 characters',
+              })}
+            />
+          </div>
+        )}
 
         <TextInput
-          style={{ marginTop: 15 }}
           required
           placeholder="Your email"
           label="Email"
@@ -97,12 +99,14 @@ export default function AuthenticationForm() {
           })}
         />
 
-        <Checkbox
-          style={{ marginTop: 20 }}
-          label="I agree to sell my soul and privacy to this corporation"
-          value={form.values.termsOfService}
-          onChange={(value) => form.setField('termsOfService', value)}
-        />
+        {formType === 'register' && (
+          <Checkbox
+            style={{ marginTop: 20 }}
+            label="I agree to sell my soul and privacy to this corporation"
+            value={form.values.termsOfService}
+            onChange={(value) => form.setField('termsOfService', value)}
+          />
+        )}
 
         {error && (
           <Text color="red" style={{ marginTop: 10 }}>
@@ -111,8 +115,14 @@ export default function AuthenticationForm() {
         )}
 
         <ElementsGroup position="apart" style={{ marginTop: 25 }}>
-          <Button variant="link" color="gray">
-            Have an account? Login
+          <Button
+            variant="link"
+            color="gray"
+            onClick={() =>
+              setFormType((current) => (current === 'register' ? 'login' : 'register'))
+            }
+          >
+            {formType === 'register' ? 'Have an account? Login' : "Don't have an account? Register"}
           </Button>
 
           <Button color="blue" type="submit">
