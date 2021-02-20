@@ -11,9 +11,7 @@ export default createUseStyles(
       alignItems: 'center',
       textDecoration: 'none',
       color: theme.colors.gray[7],
-      // backgroundColor: 'red',
-      paddingLeft: 5,
-      paddingRight: 5,
+      userSelect: 'none',
     },
 
     image: {

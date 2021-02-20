@@ -12,6 +12,10 @@ export default createUseStyles(
     body: {
       marginTop: theme.spacing.md,
     },
+
+    docs: {
+      marginTop: theme.spacing.xl,
+    },
   }),
   { theming }
 );

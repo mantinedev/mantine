@@ -4,7 +4,7 @@ interface DocsQuery {
   };
 }
 
-interface DocItem {
+export interface DocItem {
   slug: string;
   to: string;
   category: string;

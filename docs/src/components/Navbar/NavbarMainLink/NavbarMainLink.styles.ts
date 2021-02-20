@@ -11,7 +11,10 @@ export default createUseStyles(
       fontWeight: 500,
       fontSize: theme.fontSizes.sm,
       padding: 5,
+      marginLeft: -5,
+      marginRight: -5,
       borderRadius: theme.radius.sm,
+      userSelect: 'none',
 
       '& + &': {
         marginTop: 5,
