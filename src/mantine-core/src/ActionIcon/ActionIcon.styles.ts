@@ -44,7 +44,7 @@ export default createUseStyles(
 
       '&:hover': {
         backgroundColor: getThemeColor({ theme, color, shade: 0 }),
-        color: getThemeColor({ theme, color, shade: 6 })[6],
+        color: getThemeColor({ theme, color, shade: 6 }),
       },
 
       '&:active': {
