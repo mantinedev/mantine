@@ -1,65 +1,49 @@
 import React from 'react';
 import cx from 'clsx';
-import {
-  RocketIcon,
-  BlendingModeIcon,
-  GitHubLogoIcon,
-  LightningBoltIcon,
-  StarIcon,
-} from '@modulz/radix-icons';
+import { graphql, useStaticQuery } from 'gatsby';
 import { useMantineTheme } from '@mantine/core';
 import NavbarMainLink from './NavbarMainLink/NavbarMainLink';
 import NavbarLogo from './NavbarLogo/NavbarLogo';
+import getDocsData from './get-docs-data';
+import mainLinks from './main-links';
 import useStyles from './Navbar.styles';
+
+const query = graphql`
+  {
+    allMdx {
+      edges {
+        node {
+          id
+          slug
+          frontmatter {
+            category
+          }
+        }
+      }
+    }
+  }
+`;
 
 export default function Navbar({ className }: { className: string }) {
   const classes = useStyles({ theme: useMantineTheme() });
+  const data = useStaticQuery(query);
+  console.log(getDocsData(data));
+
+  const main = mainLinks.map((item) => (
+    <NavbarMainLink
+      key={item.to}
+      to={item.to}
+      color={item.theme}
+      icon={<item.icon style={{ height: 18, width: 18 }} />}
+    >
+      {item.label}
+    </NavbarMainLink>
+  ));
 
   return (
     <nav className={cx(classes.navbar, className)}>
       <NavbarLogo />
-
-      <div className={classes.body}>
-        <NavbarMainLink
-          to="/getting-started/"
-          color="pink"
-          icon={<RocketIcon style={{ height: 18, width: 18 }} />}
-        >
-          Getting started
-        </NavbarMainLink>
-
-        <NavbarMainLink
-          to="/theming/"
-          color="indigo"
-          icon={<BlendingModeIcon style={{ height: 18, width: 18 }} />}
-        >
-          Theming
-        </NavbarMainLink>
-
-        <NavbarMainLink
-          to="/integrations/"
-          color="blue"
-          icon={<LightningBoltIcon style={{ height: 18, width: 18 }} />}
-        >
-          Integrations and SSR
-        </NavbarMainLink>
-
-        <NavbarMainLink
-          to="/examples/"
-          color="orange"
-          icon={<StarIcon style={{ height: 18, width: 18 }} />}
-        >
-          Examples
-        </NavbarMainLink>
-
-        <NavbarMainLink
-          to="/source/"
-          color="gray"
-          icon={<GitHubLogoIcon style={{ height: 18, width: 18 }} />}
-        >
-          Contribute
-        </NavbarMainLink>
-      </div>
+      <div className={classes.body}>{main}</div>
     </nav>
   );
 }

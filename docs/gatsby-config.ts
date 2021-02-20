@@ -11,7 +11,14 @@ export default {
     'gatsby-plugin-cname',
     'gatsby-plugin-tsconfig-paths',
     'gatsby-plugin-react-helmet',
-    'gatsby-plugin-mdx',
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        defaultLayouts: {
+          default: require.resolve('./src/components/Layout/Layout.tsx'),
+        },
+      },
+    },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -23,8 +30,8 @@ export default {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'docs',
-        path: `${__dirname}/src/docs/`,
+        name: 'components-docs',
+        path: `${__dirname}/src/pages/components/`,
       },
     },
 
