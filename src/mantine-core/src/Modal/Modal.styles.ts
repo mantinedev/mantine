@@ -3,6 +3,38 @@ import { theming, MantineTheme } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
+    inState: {
+      '& $overlay': {
+        opacity: 1,
+      },
+
+      '& $modal': {
+        transform: 'translateY(0) scaleY(1)',
+      },
+    },
+
+    outState: {
+      '& $overlay': {
+        opacity: 0,
+      },
+
+      '& $modal': {
+        transform: 'translateY(-200px) scaleY(0)',
+      },
+    },
+
+    overlay: {
+      transitionProperty: 'opacity',
+      transitionTimingFunction: 'cubic-bezier(.11,1.07,.71,.89)',
+      transitionDuration: ({
+        transitionDuration,
+        reduceMotion,
+      }: {
+        transitionDuration: number;
+        reduceMotion: boolean;
+      }) => (reduceMotion ? 1 : transitionDuration),
+    },
+
     wrapper: {
       position: 'fixed',
       top: 0,
@@ -35,6 +67,15 @@ export default createUseStyles(
 
     modal: {
       padding: theme.spacing.lg,
+      transformOrigin: 'top',
+      transitionProperty: 'transform',
+      transitionDuration: ({
+        transitionDuration,
+        reduceMotion,
+      }: {
+        transitionDuration: number;
+        reduceMotion: boolean;
+      }) => (reduceMotion ? 1 : transitionDuration),
     },
 
     header: {

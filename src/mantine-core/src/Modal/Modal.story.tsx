@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/theme';
+import { AuthenticationForm } from '@mantine/demos';
 import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
 import { Modal } from './Modal';
@@ -19,8 +20,9 @@ function WrappedModal(props: Omit<React.ComponentProps<typeof Modal>, 'opened' |
 storiesOf('@mantine/core', module).add('Modal', () => (
   <MantineProvider>
     <WrappedModal title="Confirm your action">
-      <Text>This is modal</Text>
+      <AuthenticationForm />
     </WrappedModal>
+
     <WrappedModal title="Long content modal">
       <Text>Modal with scroll</Text>
       <Text>
