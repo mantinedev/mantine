@@ -14,12 +14,14 @@ export function Alert({ className, title, children, themeOverride, color, ...oth
   return (
     <div className={className} {...others}>
       {title && (
-        <Text weight={700} className={classes.title} size="sm">
+        <Text data-mantine-alert-title weight={700} className={classes.title} size="sm">
           {title}
         </Text>
       )}
 
-      <div className={classes.body}>{children}</div>
+      <div data-mantine-alert-body className={classes.body}>
+        {children}
+      </div>
     </div>
   );
 }
