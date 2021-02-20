@@ -5,7 +5,7 @@ import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '@mantine/theme';
 import { ComponentPassThrough } from '@mantine/types';
-import useStyles from './Button.styles';
+import useStyles, { ButtonVariant } from './Button.styles';
 
 interface ButtonBaseProps extends DefaultProps {
   size?: MantineSize;
@@ -14,6 +14,7 @@ interface ButtonBaseProps extends DefaultProps {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   radius?: MantineNumberSize;
+  variant?: ButtonVariant;
 }
 
 type _ButtonProps<T extends React.ElementType, U extends HTMLElement> = ComponentPassThrough<
@@ -33,17 +34,18 @@ export function MantineButton<
   children,
   leftIcon,
   rightIcon,
+  variant = 'button',
   radius = 'sm',
   component: Element = 'button',
   elementRef,
   ...others
 }: _ButtonProps<T, U>) {
-  const classes = useStyles({ radius, color, size, theme: useMantineTheme() });
+  const classes = useStyles({ variant, radius, color, size, theme: useMantineTheme() });
 
   return (
     <Element
       {...others}
-      className={cx(classes.button, className)}
+      className={cx(classes[variant], className)}
       type={type}
       disabled={disabled}
       data-mantine-composable

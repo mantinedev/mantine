@@ -7,7 +7,10 @@ import {
   getFontStyles,
   getSizeValue,
   getFocusStyles,
+  getThemeColor,
 } from '@mantine/theme';
+
+export type ButtonVariant = 'link' | 'button';
 
 const sizes = {
   xs: {
@@ -121,6 +124,34 @@ export default createUseStyles(
         },
       };
     },
+
+    link: ({
+      color,
+      size,
+      radius,
+    }: {
+      color?: string;
+      size: MantineSize;
+      radius: MantineNumberSize;
+    }) => ({
+      ...sizes[size],
+      ...getFontStyles(theme),
+      ...getFocusStyles(theme),
+
+      padding: 0,
+
+      outline: 0,
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      backgroundColor: 'transparent',
+      border: 0,
+      display: 'inline-block',
+      color: getThemeColor({ theme, color, shade: 6 }),
+      cursor: 'pointer',
+
+      '&:hover': {
+        textDecoration: 'underline',
+      },
+    }),
 
     inner: {
       display: 'flex',

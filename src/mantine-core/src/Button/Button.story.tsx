@@ -33,6 +33,12 @@ storiesOf('@mantine/core', module).add('Button', () => (
       <Button color="blue" radius="xl" size="xl">
         XL With xl radius
       </Button>
+      <Button color="blue" variant="link">
+        Link variant
+      </Button>
+      <Button color="gray" variant="link">
+        Link variant
+      </Button>
     </ElementsGroup>
 
     <ElementsGroup style={{ marginTop: 10 }}>

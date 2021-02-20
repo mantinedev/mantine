@@ -110,7 +110,11 @@ export default function AuthenticationForm() {
           </Text>
         )}
 
-        <ElementsGroup position="right" style={{ marginTop: 25 }}>
+        <ElementsGroup position="apart" style={{ marginTop: 25 }}>
+          <Button variant="link" color="gray">
+            Have an account? Login
+          </Button>
+
           <Button color="blue" type="submit">
             Register
           </Button>
