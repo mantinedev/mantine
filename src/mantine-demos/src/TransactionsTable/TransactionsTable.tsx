@@ -1,8 +1,9 @@
 import React from 'react';
 import OpenColor from 'open-color';
+import { nanoid } from 'nanoid';
 import { TrashIcon } from '@modulz/radix-icons';
 import { TagPicker } from '@mantine/tag-picker';
-import { Paper, Table, ActionIcon, Title, Input } from '@mantine/core';
+import { Paper, Table, ActionIcon, Title, Text, Input, Button } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import * as mockdata from './mockdata';
 
@@ -108,7 +109,41 @@ export default function TransactionsTable() {
               <th style={{ width: 40 }} />
             </tr>
           </thead>
-          <tbody>{transactions}</tbody>
+          <tbody>
+            {transactions}
+            <tr>
+              <td colSpan={5} style={{ borderBottomStyle: 'dashed' }}>
+                <Button
+                  variant="link"
+                  style={{ width: '100%' }}
+                  size="lg"
+                  onClick={() =>
+                    transactionsHandlers.append({
+                      id: nanoid(),
+                      amount: 0,
+                      category: null,
+                      date: new Date(2021, 1, 19),
+                      title: '',
+                    })
+                  }
+                >
+                  + Add new transaction
+                </Button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <Text style={{ textAlign: 'right', paddingTop: 7 }} size="sm">
+                  {transactionsState.reduce((acc, transaction) => acc + transaction.amount, 0)}
+                </Text>
+              </td>
+              <td>
+                <Text size="sm" weight={500} style={{ paddingTop: 7 }}>
+                  Total
+                </Text>
+              </td>
+            </tr>
+          </tbody>
         </Table>
       </Paper>
     </div>
