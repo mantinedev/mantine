@@ -52,7 +52,7 @@ export function Modal({
       >
         <Paper
           className={classes.modal}
-          shadow="sm"
+          shadow="lg"
           style={{ width: modalWidth }}
           ref={clickOutsideRef}
         >
