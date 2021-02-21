@@ -8,8 +8,14 @@ import { Button, LinkButton } from './Button';
 
 const colors = Object.keys(DEFAULT_THEME.colors);
 
-const md = colors.map((theme) => (
-  <Button color={theme} key={theme} size="md">
+const filled = colors.map((theme) => (
+  <Button color={theme} key={theme}>
+    {theme} md
+  </Button>
+));
+
+const outline = colors.map((theme) => (
+  <Button color={theme} key={theme} variant="outline">
     {theme} md
   </Button>
 ));
@@ -41,7 +47,8 @@ storiesOf('@mantine/core', module).add('Button', () => (
 
     <ElementsGroup style={{ marginTop: 10 }}>
       <Button>Primary color (default)</Button>
-      {md}
+      {filled}
+      {outline}
     </ElementsGroup>
 
     <ElementsGroup style={{ marginTop: 10 }}>{sizes}</ElementsGroup>

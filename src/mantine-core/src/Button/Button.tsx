@@ -34,7 +34,7 @@ export function MantineButton<
   children,
   leftIcon,
   rightIcon,
-  variant = 'button',
+  variant = 'filled',
   radius = 'sm',
   component: Element = 'button',
   elementRef,

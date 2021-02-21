@@ -10,7 +10,7 @@ import {
   getThemeColor,
 } from '@mantine/theme';
 
-export type ButtonVariant = 'link' | 'button' | 'outline';
+export type ButtonVariant = 'link' | 'filled' | 'outline';
 
 const sizes = {
   xs: {
@@ -59,7 +59,37 @@ export default createUseStyles(
       marginLeft: 10,
     },
 
-    button: ({
+    outline: ({
+      color,
+      size,
+      radius,
+    }: {
+      color?: string;
+      size: MantineSize;
+      radius: MantineNumberSize;
+    }) => ({
+      ...sizes[size],
+      ...getFontStyles(theme),
+      ...getFocusStyles(theme),
+      backgroundColor: 'transparent',
+      display: 'inline-block',
+      textDecoration: 'none',
+      boxSizing: 'border-box',
+      outline: 0,
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      textTransform: 'uppercase',
+      fontWeight: 'bold',
+      letterSpacing: 0.5,
+      color: getThemeColor({ theme, color, shade: 8 }),
+      border: `1px solid ${getThemeColor({ theme, color, shade: 8 })}`,
+      cursor: 'pointer',
+
+      '&:active': {
+        transform: 'translateY(1px)',
+      },
+    }),
+
+    filled: ({
       color,
       size,
       radius,
@@ -85,13 +115,9 @@ export default createUseStyles(
       appearance: 'none',
       lineHeight: 1,
 
-      backgroundColor: getThemeColor({ theme, color, shade: 5 }),
-      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 7 })}`,
+      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}`,
       color: theme.white,
-
-      '&:hover': {
-        backgroundColor: getThemeColor({ theme, color, shade: 6 }),
-      },
 
       '& $inner': {
         height: sizes[size].height - 2,
