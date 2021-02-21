@@ -10,7 +10,7 @@ import {
   getThemeColor,
 } from '@mantine/theme';
 
-export type ButtonVariant = 'link' | 'button';
+export type ButtonVariant = 'link' | 'button' | 'outline';
 
 const sizes = {
   xs: {
@@ -67,63 +67,48 @@ export default createUseStyles(
       color?: string;
       size: MantineSize;
       radius: MantineNumberSize;
-    }) => {
-      const colorStyles = Array.isArray(theme.colors[color])
-        ? {
-            backgroundColor: theme.colors[color][5],
-            textShadow: `1px 1px 0 ${theme.colors[color][7]}`,
-            color: theme.white,
+    }) => ({
+      ...sizes[size],
+      ...getFontStyles(theme),
+      ...getFocusStyles(theme),
+      display: 'inline-block',
+      textDecoration: 'none',
+      boxSizing: 'border-box',
+      border: '1px solid transparent',
+      outline: 0,
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      textTransform: 'uppercase',
+      fontWeight: 'bold',
+      letterSpacing: 0.5,
+      cursor: 'pointer',
+      userSelect: 'none',
+      appearance: 'none',
+      lineHeight: 1,
 
-            '&:hover': {
-              backgroundColor: theme.colors[color][6],
-            },
-          }
-        : {
-            backgroundColor: theme.white,
-            color: theme.colors.gray[7],
-            borderColor: theme.colors.gray[4],
+      backgroundColor: getThemeColor({ theme, color, shade: 5 }),
+      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 7 })}`,
+      color: theme.white,
 
-            '&:hover': {
-              backgroundColor: theme.colors.gray[0],
-            },
-          };
+      '&:hover': {
+        backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+      },
 
-      return {
-        ...colorStyles,
-        ...sizes[size],
-        ...getFontStyles(theme),
-        ...getFocusStyles(theme),
-        display: 'inline-block',
-        textDecoration: 'none',
-        boxSizing: 'border-box',
-        border: '1px solid transparent',
-        outline: 0,
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-        textTransform: 'uppercase',
-        fontWeight: 'bold',
-        letterSpacing: 0.5,
-        cursor: 'pointer',
-        userSelect: 'none',
-        appearance: 'none',
-        lineHeight: 1,
+      '& $inner': {
+        height: sizes[size].height - 2,
+      },
 
-        '& $inner': {
-          height: sizes[size].height - 2,
-        },
+      '&:active': {
+        transform: 'translateY(1px)',
+      },
 
-        '&:active': {
-          transform: 'translateY(1px)',
-        },
-
-        '&:disabled': {
-          borderColor: 'transparent',
-          backgroundColor: theme.colors.gray[3],
-          color: theme.colors.gray[6],
-          textShadow: 'none',
-          pointerEvents: 'none',
-        },
-      };
-    },
+      '&:disabled': {
+        borderColor: 'transparent',
+        backgroundColor: theme.colors.gray[3],
+        color: theme.colors.gray[6],
+        textShadow: 'none',
+        pointerEvents: 'none',
+      },
+    }),
 
     link: ({
       color,

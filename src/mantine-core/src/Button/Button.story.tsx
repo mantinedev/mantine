@@ -6,9 +6,7 @@ import { MantineProvider, MantineSize, DEFAULT_THEME } from '@mantine/theme';
 import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
 import { Button, LinkButton } from './Button';
 
-const colors = Object.keys(DEFAULT_THEME.colors).filter(
-  (color) => color !== 'white' && color !== 'black'
-);
+const colors = Object.keys(DEFAULT_THEME.colors);
 
 const md = colors.map((theme) => (
   <Button color={theme} key={theme} size="md">
@@ -26,7 +24,7 @@ storiesOf('@mantine/core', module).add('Button', () => (
   <MantineProvider>
     <ElementsGroup>
       <Button disabled>Disabled</Button>
-      <Button radius="lg">With lg radius</Button>
+      <Button radius="lg">Lg radius</Button>
       <Button size="xs" color="blue" radius="xl">
         xs with xl radius
       </Button>
@@ -42,7 +40,7 @@ storiesOf('@mantine/core', module).add('Button', () => (
     </ElementsGroup>
 
     <ElementsGroup style={{ marginTop: 10 }}>
-      <Button>White (default)</Button>
+      <Button>Primary color (default)</Button>
       {md}
     </ElementsGroup>
 

@@ -4,9 +4,7 @@ import { MantineProvider, DEFAULT_THEME } from '@mantine/theme';
 import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
 import { Badge } from './Badge';
 
-const colors = Object.keys(DEFAULT_THEME.colors).filter(
-  (color) => color !== 'white' && color !== 'black'
-);
+const colors = Object.keys(DEFAULT_THEME.colors);
 
 const badges = colors.map((color) => (
   <Badge color={color} key={color}>
