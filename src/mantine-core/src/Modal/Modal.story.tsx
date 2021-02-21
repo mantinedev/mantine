@@ -18,8 +18,8 @@ function WrappedModal(props: Omit<React.ComponentProps<typeof Modal>, 'opened' |
 
 storiesOf('@mantine/core', module).add('Modal', () => (
   <MantineProvider>
-    <WrappedModal title="Confirm your action">
-      <AuthenticationForm />
+    <WrappedModal title="Authentication form">
+      <AuthenticationForm noPadding noShadow />
     </WrappedModal>
   </MantineProvider>
 ));

@@ -14,7 +14,12 @@ import {
 
 const atLeastTwoCharacters = (value: string) => value.trim().length >= 2;
 
-export default function AuthenticationForm() {
+interface AuthenticationFormProps {
+  noShadow?: boolean;
+  noPadding?: boolean;
+}
+
+export default function AuthenticationForm({ noShadow, noPadding }: AuthenticationFormProps) {
   const [formType, setFormType] = useState<'register' | 'login'>('register');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>(null);
@@ -45,7 +50,7 @@ export default function AuthenticationForm() {
   };
 
   return (
-    <Paper padding="lg" shadow="sm">
+    <Paper padding={noPadding ? 0 : 'lg'} shadow={noShadow ? null : 'sm'}>
       <form onSubmit={form.onSubmit(handleSubmit)} style={{ position: 'relative' }}>
         <LoadingOverlay visible={loading} />
         {formType === 'register' && (
@@ -126,7 +131,7 @@ export default function AuthenticationForm() {
           </Button>
 
           <Button color="blue" type="submit">
-            Register
+            {formType === 'register' ? 'Register' : 'Login'}
           </Button>
         </ElementsGroup>
       </form>
