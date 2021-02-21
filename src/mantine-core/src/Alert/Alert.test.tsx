@@ -1,8 +1,17 @@
 import React from 'react';
-import { shallow } from '@mantine/tests';
+import { shallow, checkAccessibility } from '@mantine/tests';
+import { Text } from '../Text/Text';
 import { Alert } from './Alert';
 
 describe('@mantine/core/Alert', () => {
+  checkAccessibility([
+    shallow(
+      <Alert title="Error happened" color="red">
+        <Text>Something bad happened</Text>
+      </Alert>
+    ),
+  ]);
+
   it('has correct displayName', () => {
     expect(Alert.displayName).toEqual('@mantine/core/Alert');
   });

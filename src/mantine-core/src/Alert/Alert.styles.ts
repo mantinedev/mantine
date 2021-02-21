@@ -12,6 +12,7 @@ export default createUseStyles(
       lineHeight: '34px',
       borderTopRightRadius: theme.radius.sm,
       borderTopLeftRadius: theme.radius.sm,
+      margin: 0,
     }),
 
     body: ({ color }: { color: string }) => ({

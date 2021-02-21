@@ -7,7 +7,7 @@ import { Alert } from './Alert';
 storiesOf('@mantine/core', module).add('Alert', () => (
   <MantineProvider>
     <div style={{ maxWidth: 400 }}>
-      <Alert title="Everything is fine!">
+      <Alert title="Everything is fine!" color="teal">
         <Text>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea doloribus, consequatur
           possimus enim ab dolores dolor provident maiores autem? Eos, ea accusantium. Ex rem
