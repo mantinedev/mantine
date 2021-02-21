@@ -26,6 +26,11 @@ export default createUseStyles(
         boxShadow: `0 0 4px ${theme.colors.gray[3]}`,
       },
 
+      '&:disabled': {
+        backgroundColor: theme.colors.gray[1],
+        cursor: 'not-allowed',
+      },
+
       '&::placeholder': {
         color: theme.colors.gray[5],
       },
