@@ -9,6 +9,7 @@ interface TextProps extends DefaultProps {
   size?: MantineSize;
   color?: string;
   weight?: number;
+  transform?: 'uppercase' | 'lowercase' | 'capitalize';
 }
 
 export function Text<T extends React.ElementType = 'div'>({
@@ -17,6 +18,7 @@ export function Text<T extends React.ElementType = 'div'>({
   children,
   size = 'md',
   weight = 400,
+  transform,
   style,
   color,
   themeOverride,
@@ -28,7 +30,7 @@ export function Text<T extends React.ElementType = 'div'>({
     component,
     {
       className: cx(classes.text, className),
-      style: { fontWeight: weight, ...style },
+      style: { fontWeight: weight, textTransform: transform, ...style },
       ...others,
     },
     children

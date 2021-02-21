@@ -18,6 +18,8 @@ storiesOf('@mantine/core', module).add('Text', () => (
     <Text size="md">md text</Text>
     <Text size="lg">lg text</Text>
     <Text size="xl">xl text</Text>
+    <Text transform="uppercase">uppercase</Text>
+    <Text transform="lowercase">LOWERcase</Text>
     <Text component="p" color="gray" weight={900}>
       Bold muted paragraph text
     </Text>
