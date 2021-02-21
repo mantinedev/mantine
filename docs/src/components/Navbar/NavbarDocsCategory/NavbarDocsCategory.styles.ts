@@ -31,9 +31,9 @@ export default createUseStyles(
     },
 
     title: {
-      textTransform: 'uppercase',
       marginBottom: 5,
       userSelect: 'none',
+      color: theme.colors.gray[6],
     },
   }),
   { theming }

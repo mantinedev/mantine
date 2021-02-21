@@ -22,7 +22,7 @@ export default function NavbarMainLink({
   const classes = useStyles({ color, theme: useMantineTheme() });
   return (
     <Link className={cx(classes.mainLink, className)} activeClassName={classes.active} to={to}>
-      <ThemeIcon size={30} color={color} variant="light">
+      <ThemeIcon size={30} color={color} variant="light" radius="lg">
         {icon}
       </ThemeIcon>
       <div className={classes.body}>{children}</div>

@@ -20,7 +20,7 @@ export default function NavbarDocsCategory({ links, category }: NavbarDocsCatego
 
   return (
     <div className={classes.category}>
-      <Text className={classes.title} weight={700} color="gray" size="xs">
+      <Text className={classes.title} weight={700} color="gray" size="xs" transform="uppercase">
         {category}
       </Text>
       {items}
