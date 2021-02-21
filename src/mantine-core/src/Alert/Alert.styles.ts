@@ -1,12 +1,12 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme, getThemeColor } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
     title: ({ color }: { color: string }) => ({
-      backgroundColor: theme.colors[color || theme.primaryColor][5],
+      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
       color: theme.white,
-      textShadow: `1px 1px 0 ${theme.colors[color || theme.primaryColor][7]}`,
+      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}`,
       textAlign: 'center',
       height: 34,
       lineHeight: '34px',
@@ -16,7 +16,7 @@ export default createUseStyles(
     }),
 
     body: ({ color }: { color: string }) => ({
-      backgroundColor: theme.colors[color || theme.primaryColor][0],
+      backgroundColor: getThemeColor({ theme, color, shade: 0 }),
       padding: theme.spacing.md,
       borderBottomLeftRadius: theme.radius.sm,
       borderBottomRightRadius: theme.radius.sm,
