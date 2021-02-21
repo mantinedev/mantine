@@ -1,8 +1,17 @@
 import React from 'react';
-import { shallow, mount, unwrapForwardedRef } from '@mantine/tests';
+import { RocketIcon } from '@modulz/radix-icons';
+import { shallow, mount, unwrapForwardedRef, checkAccessibility } from '@mantine/tests';
 import { ActionIcon } from './ActionIcon';
 
 describe('@mantine/core/ActionIcon', () => {
+  checkAccessibility([
+    shallow(
+      <ActionIcon>
+        <RocketIcon />
+      </ActionIcon>
+    ),
+  ]);
+
   it('has correct displayName', () => {
     expect(ActionIcon.displayName).toEqual('@mantine/core/ActionIcon');
   });
