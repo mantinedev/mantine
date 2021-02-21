@@ -28,7 +28,7 @@ export function Month({
   themeOverride,
   ...others
 }: MonthProps) {
-  const classes = useStyles({ theme: useMantineTheme() });
+  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
 

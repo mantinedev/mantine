@@ -38,9 +38,16 @@ export function MantineButton<
   radius = 'sm',
   component: Element = 'button',
   elementRef,
+  themeOverride,
   ...others
 }: _ButtonProps<T, U>) {
-  const classes = useStyles({ variant, radius, color, size, theme: useMantineTheme() });
+  const classes = useStyles({
+    variant,
+    radius,
+    color,
+    size,
+    theme: useMantineTheme(themeOverride),
+  });
 
   return (
     <Element

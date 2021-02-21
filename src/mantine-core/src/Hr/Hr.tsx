@@ -7,8 +7,8 @@ interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
   variant?: 'solid' | 'dashed' | 'dotted';
 }
 
-export function Hr({ className, variant = 'dashed', style, ...others }: HrProps) {
-  const classes = useStyles({ theme: useMantineTheme() });
+export function Hr({ className, variant = 'dashed', style, themeOverride, ...others }: HrProps) {
+  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
 
   return (
     <hr
