@@ -6,7 +6,7 @@ export default createUseStyles(
     text: {
       ...getFontStyles(theme),
       color: ({ color }: { color: string }) =>
-        color in theme.colors ? theme.colors[color][5] : theme.black,
+        color in theme.colors ? theme.colors[color][7] : theme.black,
       fontSize: ({ size }: { size: MantineSize }) => theme.fontSizes[size],
       lineHeight: 1.4,
     },
