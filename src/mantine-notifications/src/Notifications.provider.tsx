@@ -5,6 +5,7 @@ import { Transition, TransitionGroup } from 'react-transition-group';
 import { DefaultProps, useMantineTheme } from '@mantine/core';
 import { NotificationsContext, NotificationProps } from './Notifications.context';
 import getPositionStyles, { Position } from './get-position-styles';
+import getNotificationStateStyles from './get-notification-state-styles';
 import Notification from './Notification';
 import useStyles from './Notification.provider.styles';
 
@@ -24,24 +25,6 @@ interface NotificationProviderProps extends DefaultProps, React.ComponentPropsWi
   notificationMaxHeight?: number;
 }
 
-const inState = {
-  opacity: 1,
-  transform: 'translateX(0)',
-};
-
-const outState = {
-  opacity: 0,
-  maxHeight: 0,
-  transform: 'translateX(100%)',
-};
-
-const transitionStyles = {
-  entering: inState,
-  entered: inState,
-  exiting: outState,
-  exited: outState,
-};
-
 export function NotificationsProvider({
   className,
   position = 'bottom-right',
@@ -59,15 +42,6 @@ export function NotificationsProvider({
   const positioning = (POSITIONS.includes(position) ? position : 'bottom-right').split(
     '-'
   ) as Position;
-
-  const notificationStyles: React.CSSProperties = {
-    opacity: 0,
-    maxHeight: notificationMaxHeight,
-    transform: 'translateX(-100%)',
-    transitionDuration: `${duration}ms, ${duration}ms, ${duration}ms`,
-    transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21), cubic-bezier(.51,.3,0,1.21), linear',
-    transitionProperty: 'opacity, transform, max-height',
-  };
 
   const showNotification = (notification: NotificationProps) =>
     setNotifications((currentNotifications) => [
@@ -93,7 +67,13 @@ export function NotificationsProvider({
           notification={notification}
           onHide={hideNotification}
           className={classes.notification}
-          style={{ ...notificationStyles, ...transitionStyles[state] }}
+          style={{
+            ...getNotificationStateStyles({
+              state,
+              maxHeight: notificationMaxHeight,
+              transitionDuration: duration,
+            }),
+          }}
         />
       )}
     </Transition>

@@ -71,28 +71,28 @@ storiesOf('@mantine/notifications', module)
   ))
   .add('top-left', () => (
     <MantineProvider>
-      <NotificationsProvider position="top-right">
+      <NotificationsProvider position="top-left">
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
   ))
   .add('bottom-left', () => (
     <MantineProvider>
-      <NotificationsProvider position="top-right">
+      <NotificationsProvider position="bottom-left">
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
   ))
   .add('bottom-center', () => (
     <MantineProvider>
-      <NotificationsProvider position="top-right">
+      <NotificationsProvider position="bottom-center">
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
   ))
   .add('top-center', () => (
     <MantineProvider>
-      <NotificationsProvider position="top-right">
+      <NotificationsProvider position="top-center">
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
