@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { Transition, TransitionGroup } from 'react-transition-group';
 import { DefaultProps, useMantineTheme } from '@mantine/core';
 import { NotificationsContext, NotificationProps } from './Notifications.context';
+import getPositionStyles, { Position } from './get-position-styles';
 import Notification from './Notification';
 import useStyles from './Notification.provider.styles';
 
@@ -19,6 +20,8 @@ const POSITIONS = [
 interface NotificationProviderProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   position?: typeof POSITIONS[number];
   duration?: number;
+  containerWidth?: number;
+  notificationMaxHeight?: number;
 }
 
 const inState = {
@@ -28,6 +31,7 @@ const inState = {
 
 const outState = {
   opacity: 0,
+  maxHeight: 0,
   transform: 'translateX(100%)',
 };
 
@@ -43,18 +47,26 @@ export function NotificationsProvider({
   position = 'bottom-right',
   themeOverride,
   duration = 250,
+  containerWidth = 440,
+  notificationMaxHeight = 200,
+  style,
   children,
   ...others
 }: NotificationProviderProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme });
   const [notifications, setNotifications] = useState<NotificationProps[]>([]);
+  const positioning = (POSITIONS.includes(position) ? position : 'bottom-right').split(
+    '-'
+  ) as Position;
 
   const notificationStyles: React.CSSProperties = {
     opacity: 0,
+    maxHeight: notificationMaxHeight,
     transform: 'translateX(-100%)',
-    transitionDuration: `${duration}ms`,
-    transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21)',
-    transitionProperty: 'opacity, transform',
+    transitionDuration: `${duration}ms, ${duration}ms, ${duration}ms`,
+    transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21), cubic-bezier(.51,.3,0,1.21), linear',
+    transitionProperty: 'opacity, transform, max-height',
   };
 
   const showNotification = (notification: NotificationProps) =>
@@ -89,7 +101,15 @@ export function NotificationsProvider({
 
   return (
     <NotificationsContext.Provider value={{ notifications, showNotification, hideNotification }}>
-      <div className={cx(classes.notifications, className)} {...others}>
+      <div
+        className={cx(classes.notifications, className)}
+        style={{
+          maxWidth: containerWidth,
+          ...getPositionStyles(positioning, containerWidth, theme.spacing.md),
+          ...style,
+        }}
+        {...others}
+      >
         <TransitionGroup>{items}</TransitionGroup>
       </div>
 

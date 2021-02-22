@@ -54,10 +54,46 @@ function NotificationsDemo() {
   );
 }
 
-storiesOf('@mantine/notifications', module).add('default', () => (
-  <MantineProvider>
-    <NotificationsProvider>
-      <NotificationsDemo />
-    </NotificationsProvider>
-  </MantineProvider>
-));
+storiesOf('@mantine/notifications', module)
+  .add('bottom-right (default)', () => (
+    <MantineProvider>
+      <NotificationsProvider>
+        <NotificationsDemo />
+      </NotificationsProvider>
+    </MantineProvider>
+  ))
+  .add('top-right', () => (
+    <MantineProvider>
+      <NotificationsProvider position="top-right">
+        <NotificationsDemo />
+      </NotificationsProvider>
+    </MantineProvider>
+  ))
+  .add('top-left', () => (
+    <MantineProvider>
+      <NotificationsProvider position="top-right">
+        <NotificationsDemo />
+      </NotificationsProvider>
+    </MantineProvider>
+  ))
+  .add('bottom-left', () => (
+    <MantineProvider>
+      <NotificationsProvider position="top-right">
+        <NotificationsDemo />
+      </NotificationsProvider>
+    </MantineProvider>
+  ))
+  .add('bottom-center', () => (
+    <MantineProvider>
+      <NotificationsProvider position="top-right">
+        <NotificationsDemo />
+      </NotificationsProvider>
+    </MantineProvider>
+  ))
+  .add('top-center', () => (
+    <MantineProvider>
+      <NotificationsProvider position="top-right">
+        <NotificationsDemo />
+      </NotificationsProvider>
+    </MantineProvider>
+  ));

@@ -4,10 +4,9 @@ import { theming, MantineTheme } from '@mantine/core';
 export default createUseStyles(
   (theme: MantineTheme) => ({
     notifications: {
+      width: `calc(100% - ${theme.spacing.md * 2}px)`,
+      boxSizing: 'border-box',
       position: 'fixed',
-      bottom: theme.spacing.md,
-      right: theme.spacing.md,
-      width: 400,
     },
 
     notification: {
