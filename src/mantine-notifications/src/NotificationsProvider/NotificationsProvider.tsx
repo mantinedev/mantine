@@ -71,6 +71,7 @@ export function NotificationsProvider({
           style={{
             ...getNotificationStateStyles({
               state,
+              positioning,
               maxHeight: notificationMaxHeight,
               transitionDuration: duration,
             }),

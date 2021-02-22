@@ -1,34 +1,54 @@
 import { TransitionStatus } from 'react-transition-group';
+import { NotificationsProviderPositioning } from '../../types';
 
 interface NotificationStateStylesProps {
   state: TransitionStatus;
   maxHeight: number;
+  positioning: NotificationsProviderPositioning;
   transitionDuration: number;
 }
+
+const transforms = {
+  left: 'translateX(-100%)',
+  right: 'translateX(100%)',
+  'top-center': 'translateY(-100%)',
+  'bottom-center': 'translateY(100%)',
+};
+
+const noTransform = {
+  left: 'translateX(0)',
+  right: 'translateX(0)',
+  'top-center': 'translateY(0)',
+  'bottom=center': 'translateY(0)',
+};
 
 export default function getNotificationStateStyles({
   state,
   maxHeight,
+  positioning,
   transitionDuration,
-}: NotificationStateStylesProps) {
-  const defaultStyles: React.CSSProperties = {
+}: NotificationStateStylesProps): React.CSSProperties {
+  const [vertical, horizontal] = positioning;
+  const property = horizontal === 'center' ? `${vertical}-center` : horizontal;
+
+  const commonStyles: React.CSSProperties = {
     opacity: 0,
     maxHeight,
-    transform: 'translateX(-100%)',
+    transform: transforms[property],
     transitionDuration: `${transitionDuration}ms, ${transitionDuration}ms, ${transitionDuration}ms`,
     transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21), cubic-bezier(.51,.3,0,1.21), linear',
     transitionProperty: 'opacity, transform, max-height',
   };
 
-  const inState = {
+  const inState: React.CSSProperties = {
     opacity: 1,
-    transform: 'translateX(0)',
+    transform: noTransform[property],
   };
 
-  const outState = {
+  const outState: React.CSSProperties = {
     opacity: 0,
     maxHeight: 0,
-    transform: 'translateX(100%)',
+    transform: transforms[property],
   };
 
   const transitionStyles = {
@@ -38,5 +58,5 @@ export default function getNotificationStateStyles({
     exited: outState,
   };
 
-  return { ...defaultStyles, ...transitionStyles[state] };
+  return { ...commonStyles, ...transitionStyles[state] };
 }
