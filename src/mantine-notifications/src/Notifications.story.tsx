@@ -2,8 +2,8 @@ import React from 'react';
 import { CheckIcon } from '@modulz/radix-icons';
 import { storiesOf } from '@storybook/react';
 import { Button, ElementsGroup, MantineProvider } from '@mantine/core';
-import { useNotifications } from './use-notifications';
-import { NotificationsProvider } from './Notifications.provider';
+import { useNotifications } from './use-notifications/use-notifications';
+import { NotificationsProvider } from './NotificationsProvider/NotificationsProvider';
 
 function NotificationsDemo() {
   const notifications = useNotifications();

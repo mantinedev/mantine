@@ -1,5 +1,5 @@
 import React from 'react';
-import { NotificationsProviderPositioning } from './types';
+import { NotificationsProviderPositioning } from '../../types';
 
 export default function getPositionStyles(
   [vertical, horizontal]: NotificationsProviderPositioning,

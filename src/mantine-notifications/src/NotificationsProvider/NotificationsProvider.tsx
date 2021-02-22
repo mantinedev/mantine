@@ -3,12 +3,12 @@ import cx from 'clsx';
 import { nanoid } from 'nanoid';
 import { Transition, TransitionGroup } from 'react-transition-group';
 import { DefaultProps, useMantineTheme } from '@mantine/core';
-import { NotificationsContext } from './Notifications.context';
-import { NotificationProps, NotificationsProviderPositioning } from './types';
-import getPositionStyles from './get-position-styles';
-import getNotificationStateStyles from './get-notification-state-styles';
-import Notification from './Notification';
-import useStyles from './Notification.provider.styles';
+import { NotificationsContext } from '../Notifications.context';
+import { NotificationProps, NotificationsProviderPositioning } from '../types';
+import getPositionStyles from './get-position-styles/get-position-styles';
+import getNotificationStateStyles from './get-notification-state-styles/get-notification-state-styles';
+import Notification from '../Notification/Notification';
+import useStyles from './NotificationsProvider.styles';
 
 const POSITIONS = [
   'top-left',
