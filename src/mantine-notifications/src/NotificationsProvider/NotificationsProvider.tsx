@@ -3,6 +3,7 @@ import cx from 'clsx';
 import { nanoid } from 'nanoid';
 import { Transition, TransitionGroup } from 'react-transition-group';
 import { DefaultProps, useMantineTheme } from '@mantine/core';
+import { useReducedMotion } from '@mantine/hooks';
 import { NotificationsContext } from '../Notifications.context';
 import { NotificationProps, NotificationsProviderPositioning } from '../types';
 import getPositionStyles from './get-position-styles/get-position-styles';
@@ -37,6 +38,8 @@ export function NotificationsProvider({
   children,
   ...others
 }: NotificationProviderProps) {
+  const reduceMotion = useReducedMotion();
+  const transitionDuration = reduceMotion ? 1 : duration;
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme });
   const [notifications, setNotifications] = useState<NotificationProps[]>([]);
@@ -58,7 +61,7 @@ export function NotificationsProvider({
   const items = notifications.map((notification) => (
     <Transition
       key={notification.id}
-      timeout={duration}
+      timeout={transitionDuration}
       unmountOnExit
       mountOnEnter
       onEnter={(node: any) => node.offsetHeight}
@@ -72,8 +75,8 @@ export function NotificationsProvider({
             ...getNotificationStateStyles({
               state,
               positioning,
+              transitionDuration,
               maxHeight: notificationMaxHeight,
-              transitionDuration: duration,
             }),
           }}
         />
