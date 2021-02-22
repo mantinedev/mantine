@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { DefaultProps, Notification } from '@mantine/core';
-import { NotificationProps } from './Notifications.context';
+import { NotificationProps } from './types';
 
 interface _NotificationProps extends DefaultProps {
   notification: NotificationProps;

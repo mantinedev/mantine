@@ -1,9 +1,8 @@
 import React from 'react';
-
-export type Position = ['top' | 'bottom', 'left' | 'right' | 'center'];
+import { NotificationsProviderPositioning } from './types';
 
 export default function getPositionStyles(
-  [vertical, horizontal]: Position,
+  [vertical, horizontal]: NotificationsProviderPositioning,
   containerWidth: number,
   spacing: number
 ) {

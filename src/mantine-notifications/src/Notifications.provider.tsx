@@ -3,8 +3,9 @@ import cx from 'clsx';
 import { nanoid } from 'nanoid';
 import { Transition, TransitionGroup } from 'react-transition-group';
 import { DefaultProps, useMantineTheme } from '@mantine/core';
-import { NotificationsContext, NotificationProps } from './Notifications.context';
-import getPositionStyles, { Position } from './get-position-styles';
+import { NotificationsContext } from './Notifications.context';
+import { NotificationProps, NotificationsProviderPositioning } from './types';
+import getPositionStyles from './get-position-styles';
 import getNotificationStateStyles from './get-notification-state-styles';
 import Notification from './Notification';
 import useStyles from './Notification.provider.styles';
@@ -41,7 +42,7 @@ export function NotificationsProvider({
   const [notifications, setNotifications] = useState<NotificationProps[]>([]);
   const positioning = (POSITIONS.includes(position) ? position : 'bottom-right').split(
     '-'
-  ) as Position;
+  ) as NotificationsProviderPositioning;
 
   const showNotification = (notification: NotificationProps) =>
     setNotifications((currentNotifications) => [
