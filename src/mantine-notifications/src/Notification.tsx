@@ -39,6 +39,7 @@ export default function _Notification({
   return (
     <Notification
       style={style}
+      title={notification.title}
       themeOverride={themeOverride}
       onClose={handleHide}
       color={notification.color}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { CheckIcon } from '@modulz/radix-icons';
 import { storiesOf } from '@storybook/react';
 import { Button, ElementsGroup, MantineProvider } from '@mantine/core';
 import { useNotifications } from './use-notifications';
@@ -19,6 +20,35 @@ function NotificationsDemo() {
         }
       >
         Show default notification
+      </Button>
+
+      <Button
+        variant="outline"
+        color="teal"
+        onClick={() =>
+          notifications.showNotification({
+            color: 'teal',
+            title: 'You did great',
+            message: 'Data was saved',
+            icon: <CheckIcon />,
+          })
+        }
+      >
+        Show success notification
+      </Button>
+
+      <Button
+        variant="outline"
+        color="red"
+        onClick={() =>
+          notifications.showNotification({
+            color: 'red',
+            title: 'Bummer!',
+            message: 'You have no right to do this',
+          })
+        }
+      >
+        Show error notification
       </Button>
     </ElementsGroup>
   );
