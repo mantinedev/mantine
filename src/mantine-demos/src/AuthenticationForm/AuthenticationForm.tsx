@@ -109,7 +109,7 @@ export default function AuthenticationForm({ noShadow, noPadding }: Authenticati
             style={{ marginTop: 20 }}
             label="I agree to sell my soul and privacy to this corporation"
             value={form.values.termsOfService}
-            onChange={(value) => form.setField('termsOfService', value)}
+            onChange={(value) => form.setFieldValue('termsOfService', value)}
           />
         )}
 
