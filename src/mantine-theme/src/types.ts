@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import type { DeepPartial } from '@mantine/types';
 
 export type MantineSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type MantineNumberSize = MantineSize | number;
@@ -46,7 +47,7 @@ export interface InternalMantineTheme extends MantineTheme {
   readonly __mantine_theme: boolean;
 }
 
-export type MantineThemeOverride = Partial<MantineTheme>;
+export type MantineThemeOverride = DeepPartial<MantineTheme>;
 
 export interface DefaultProps {
   className?: string;
