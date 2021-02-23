@@ -42,12 +42,21 @@ export function useForm<T extends { [key: string]: any }>({
     return isValid;
   };
 
-  const invalidateField = (field: keyof T) =>
-    setErrors((currentErrors) => ({ ...currentErrors, [field]: false }));
+  const validateField = (field: keyof T) =>
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      [field]:
+        typeof validationRules[field] === 'function'
+          ? validationRules[field](values[field])
+          : false,
+    }));
 
-  const setField = <K extends keyof T, U extends T[K]>(field: K, value: U) => {
+  const setFieldError = (field: keyof T, error: boolean) =>
+    setErrors((currentErrors) => ({ ...currentErrors, [field]: error }));
+
+  const setFieldValue = <K extends keyof T, U extends T[K]>(field: K, value: U) => {
     setValues((currentValues) => ({ ...currentValues, [field]: value }));
-    invalidateField(field);
+    setFieldError(field, false);
   };
 
   const onSubmit = (handleSubmit: (values: T) => any) => (event: React.FormEvent) => {
@@ -63,8 +72,8 @@ export function useForm<T extends { [key: string]: any }>({
     error?: string;
   }) => ({
     value: values[field] as U,
-    onChange: (value: U) => setField(field, value),
-    onFocus: () => invalidateField(field),
+    onChange: (value: U) => setFieldValue(field, value),
+    onFocus: () => setFieldError(field, false),
     error: errors[field] && error,
   });
 
@@ -72,8 +81,9 @@ export function useForm<T extends { [key: string]: any }>({
     values,
     errors,
     validate,
-    setField,
-    invalidateField,
+    setFieldValue,
+    setFieldError,
+    validateField,
     onSubmit,
     getInputProps,
   };
