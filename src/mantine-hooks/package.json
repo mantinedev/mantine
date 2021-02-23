@@ -4,6 +4,7 @@
   "main": "dist/lib.js",
   "types": "dist/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
   "scripts": {
     "prepublish": "cd ../.. && npm run build @mantine/hooks"
   },
