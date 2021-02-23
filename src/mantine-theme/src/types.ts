@@ -44,7 +44,7 @@ export interface MantineTheme {
 }
 
 export interface InternalMantineTheme extends MantineTheme {
-  readonly __mantine_theme: boolean;
+  __mantine_theme: boolean;
 }
 
 export type MantineThemeOverride = DeepPartial<MantineTheme>;

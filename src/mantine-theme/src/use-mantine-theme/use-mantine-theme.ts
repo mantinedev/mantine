@@ -3,11 +3,14 @@ import { InternalMantineTheme, MantineThemeOverride, MantineTheme } from '../typ
 import { mergeTheme } from '../utils/merge-theme/merge-theme';
 
 export function useMantineTheme(themeOverride?: MantineThemeOverride): MantineTheme {
-  const theme = useTheme<InternalMantineTheme>();
+  const internalTheme = { ...useTheme<InternalMantineTheme>() };
 
-  if (!theme.__mantine_theme) {
+  if (!internalTheme.__mantine_theme) {
     throw new Error('MantineProvider was not found in tree');
   }
 
-  return mergeTheme(theme, themeOverride);
+  const theme = mergeTheme(internalTheme, themeOverride);
+  delete theme.__mantine_theme;
+
+  return theme;
 }
