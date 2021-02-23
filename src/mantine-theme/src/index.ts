@@ -6,12 +6,12 @@ export type {
   DefaultProps,
 } from './types';
 
-export { getThemeColor } from './get-theme-color';
-export { getFocusStyles } from './get-focus-styles';
-export { getFontStyles } from './get-font-styles';
-export { getSizeValue } from './get-size-value';
+export { getThemeColor } from './utils/get-theme-color';
+export { getFocusStyles } from './utils/get-focus-styles';
+export { getFontStyles } from './utils/get-font-styles';
+export { getSizeValue } from './utils/get-size-value';
 
-export { MantineProvider } from './MantineProvider';
-export { useMantineTheme } from './use-mantine-theme';
-export { theming } from './theme-context';
+export { MantineProvider } from './MantineProvider/MantineProvider';
+export { useMantineTheme } from './use-mantine-theme/use-mantine-theme';
+export { theming } from './MantineProvider/theme-context';
 export { DEFAULT_THEME } from './default-theme';

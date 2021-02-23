@@ -1,4 +1,4 @@
-import { MantineNumberSize, MantineSizes, MantineSize } from './types';
+import { MantineNumberSize, MantineSizes, MantineSize } from '../types';
 
 export function getSizeValue({
   size,

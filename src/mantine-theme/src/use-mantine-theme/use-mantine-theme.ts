@@ -1,5 +1,5 @@
-import { useTheme } from './theme-context';
-import { MantineTheme, MantineThemeOverride } from './types';
+import { useTheme } from '../MantineProvider/theme-context';
+import { MantineTheme, MantineThemeOverride } from '../types';
 
 export function useMantineTheme(themeOverride?: MantineThemeOverride) {
   const theme = useTheme<MantineTheme>();
