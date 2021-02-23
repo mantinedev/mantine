@@ -1,7 +1,7 @@
 import React from 'react';
 import { MantineThemeOverride } from '../types';
 import { DEFAULT_THEME } from '../default-theme';
-import { mergeTheme } from '../utils/merge-theme';
+import { mergeTheme } from '../utils/merge-theme/merge-theme';
 import { ThemeProvider } from './theme-context';
 
 interface MantineProviderProps {

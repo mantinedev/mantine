@@ -1,4 +1,4 @@
-import { MantineTheme } from '../types';
+import { MantineTheme } from '../../types';
 
 export function getThemeColor({
   theme,
