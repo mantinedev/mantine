@@ -1,7 +1,7 @@
-import { MantineTheme, MantineThemeOverride } from '../types';
+import { InternalMantineTheme, MantineTheme, MantineThemeOverride } from '../types';
 
 export function mergeTheme(
-  currentTheme: MantineTheme,
+  currentTheme: InternalMantineTheme,
   themeOverride?: MantineThemeOverride
 ): MantineTheme {
   if (!themeOverride) {

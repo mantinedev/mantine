@@ -10,7 +10,11 @@ interface MantineProviderProps {
 }
 
 export function MantineProvider({ children, theme }: MantineProviderProps) {
-  return <ThemeProvider theme={mergeTheme(DEFAULT_THEME, theme)}>{children}</ThemeProvider>;
+  return (
+    <ThemeProvider theme={mergeTheme({ __mantine_theme: true, ...DEFAULT_THEME }, theme)}>
+      {children}
+    </ThemeProvider>
+  );
 }
 
 MantineProvider.displayName = '@mantine/Provider';

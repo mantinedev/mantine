@@ -18,7 +18,6 @@ const {
 } = OpenColor;
 
 export const DEFAULT_THEME: MantineTheme = {
-  __mantine_theme: true,
   white: '#fff',
   black: '#000',
   colors: { gray, red, pink, grape, violet, indigo, blue, cyan, teal, green, lime, yellow, orange },
