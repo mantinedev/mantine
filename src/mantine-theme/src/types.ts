@@ -21,7 +21,6 @@ export type MantineColorsList = [
 export type MantineSizes = Record<MantineSize, number>;
 
 export interface MantineTheme {
-  readonly __mantine_theme: boolean;
   readonly white: string;
   readonly black: string;
   readonly colors: Record<string, string[]>;
@@ -43,7 +42,11 @@ export interface MantineTheme {
   };
 }
 
-export type MantineThemeOverride = Partial<Omit<MantineTheme, '__mantine_theme'>>;
+export interface InternalMantineTheme extends MantineTheme {
+  readonly __mantine_theme: boolean;
+}
+
+export type MantineThemeOverride = Partial<MantineTheme>;
 
 export interface DefaultProps {
   className?: string;
