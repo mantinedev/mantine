@@ -51,7 +51,7 @@ export default function _Notification({
   useEffect(() => {
     handleDelayedHide();
     return cancelDelayedHide;
-  }, []);
+  }, [autoClose, notification.autoClose]);
 
   return (
     <Notification

@@ -80,6 +80,31 @@ function NotificationsDemo() {
       >
         Will close automatically in 3 seconds
       </Button>
+      <Button
+        variant="outline"
+        color="indigo"
+        onClick={() => {
+          notifications.showNotification({
+            id: 'data-loading',
+            color: 'indigo',
+            title: 'Loading your data',
+            message: 'Data will be loaded in 2 seconds',
+            autoClose: false,
+          });
+
+          setTimeout(() => {
+            notifications.updateNotification('data-loading', {
+              id: 'data-loading',
+              color: 'teal',
+              title: 'Data was loaded',
+              message: 'Notification will close in 3 seconds',
+              autoClose: 3000,
+            });
+          }, 2000);
+        }}
+      >
+        Update notification
+      </Button>
     </ElementsGroup>
   );
 }

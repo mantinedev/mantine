@@ -55,6 +55,18 @@ export function NotificationsProvider({
       { ...notification, id: notification.id || nanoid() },
     ]);
 
+  const updateNotification = (id: string, notification: NotificationProps) =>
+    setNotifications((currentNotifications) => {
+      const index = currentNotifications.findIndex((n) => n.id === id);
+      if (index === -1) {
+        return currentNotifications;
+      }
+
+      const newNotifications = [...currentNotifications];
+      newNotifications[index] = notification;
+      return newNotifications;
+    });
+
   const hideNotification = (id: string) =>
     setNotifications((currentNotifications) =>
       currentNotifications.filter((notification) => notification.id !== id)
@@ -88,7 +100,9 @@ export function NotificationsProvider({
   ));
 
   return (
-    <NotificationsContext.Provider value={{ notifications, showNotification, hideNotification }}>
+    <NotificationsContext.Provider
+      value={{ notifications, showNotification, hideNotification, updateNotification }}
+    >
       <div
         className={cx(classes.notifications, className)}
         style={{

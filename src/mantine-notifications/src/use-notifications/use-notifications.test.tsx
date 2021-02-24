@@ -25,5 +25,6 @@ describe('@mantine/notifications/use-notifications', () => {
     expect(current.notifications).toBeDefined();
     expect(current.showNotification).toBeDefined();
     expect(current.hideNotification).toBeDefined();
+    expect(current.updateNotification).toBeDefined();
   });
 });
