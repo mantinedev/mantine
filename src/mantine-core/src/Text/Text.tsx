@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineSize } from '@mantine/theme';
 import { ComponentPassThrough } from '@mantine/types';
-import useStyles from './Text.styles';
+import useStyles, { TextVariant } from './Text.styles';
 
 interface TextProps extends DefaultProps {
   children?: React.ReactNode;
@@ -10,6 +10,7 @@ interface TextProps extends DefaultProps {
   color?: string;
   weight?: number;
   transform?: 'uppercase' | 'lowercase' | 'capitalize';
+  variant?: TextVariant;
 }
 
 export function Text<T extends React.ElementType = 'div'>({
@@ -21,10 +22,11 @@ export function Text<T extends React.ElementType = 'div'>({
   transform,
   style,
   color,
+  variant = 'text',
   themeOverride,
   ...others
 }: ComponentPassThrough<T, TextProps>) {
-  const classes = useStyles({ color, size, theme: useMantineTheme(themeOverride) });
+  const classes = useStyles({ variant, color, size, theme: useMantineTheme(themeOverride) });
 
   return React.createElement(
     component,

@@ -3,6 +3,19 @@ import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/theme';
 import { Text } from './Text';
 
+const CustomComponent = ({
+  emoji,
+  children,
+  ...others
+}: {
+  emoji: string;
+  children: React.ReactNode;
+}) => (
+  <div {...others}>
+    {emoji} {children}
+  </div>
+);
+
 storiesOf('@mantine/core', module).add('Text', () => (
   <MantineProvider>
     <Text>Default text</Text>
@@ -24,8 +37,12 @@ storiesOf('@mantine/core', module).add('Text', () => (
     <Text component="p" color="gray" weight={900}>
       Bold muted paragraph text
     </Text>
-    <Text<'a'> component="a" color="blue" href="https://google.com">
+    <Text<'a'> component="a" color="blue" href="https://google.com" variant="link">
       Link
+    </Text>
+
+    <Text<typeof CustomComponent> component={CustomComponent} emoji="😮">
+      Custom component
     </Text>
     <Text>
       Multiline: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque commodi
