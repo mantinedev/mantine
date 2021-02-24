@@ -87,6 +87,7 @@ function NotificationsDemo() {
           notifications.showNotification({
             id: 'data-loading',
             color: 'indigo',
+            loading: true,
             title: 'Loading your data',
             message: 'Data will be loaded in 2 seconds',
             autoClose: false,

@@ -61,6 +61,7 @@ export default function _Notification({
       onClose={handleHide}
       color={notification.color}
       icon={notification.icon}
+      loading={notification.loading}
       className={className}
       onMouseEnter={cancelDelayedHide}
       onMouseLeave={handleDelayedHide}

@@ -5,6 +5,7 @@ export interface NotificationProps {
   style?: React.CSSProperties;
   icon?: React.ReactNode;
   title?: React.ReactNode;
+  loading?: boolean;
   message: React.ReactNode;
   autoClose?: boolean | number;
 }
