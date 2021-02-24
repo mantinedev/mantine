@@ -50,10 +50,13 @@ export function NotificationsProvider({
   ) as NotificationsProviderPositioning;
 
   const showNotification = (notification: NotificationProps) =>
-    setNotifications((currentNotifications) => [
-      ...currentNotifications,
-      { ...notification, id: notification.id || nanoid() },
-    ]);
+    setNotifications((currentNotifications) => {
+      const index = currentNotifications.findIndex((n) => n.id === notification.id);
+      if (index === -1) {
+        return [...currentNotifications, { ...notification, id: notification.id || nanoid() }];
+      }
+      return currentNotifications;
+    });
 
   const updateNotification = (id: string, notification: NotificationProps) =>
     setNotifications((currentNotifications) => {
