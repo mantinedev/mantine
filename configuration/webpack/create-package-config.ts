@@ -4,6 +4,7 @@ import webpack from 'webpack';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import tsTransformPaths from '@zerollup/ts-transform-paths';
 
 interface PageConfigInput {
@@ -12,6 +13,7 @@ interface PageConfigInput {
   outputPath: string;
   externals?: string[];
   publicPath?: string;
+  analyze?: boolean;
 }
 
 export default function createPackageConfig(config: PageConfigInput): webpack.Configuration {
@@ -80,6 +82,9 @@ export default function createPackageConfig(config: PageConfigInput): webpack.Co
       ],
     },
 
-    plugins: [new CaseSensitivePathsPlugin()],
+    plugins: [
+      new CaseSensitivePathsPlugin(),
+      new BundleAnalyzerPlugin({ analyzerMode: config.analyze ? 'static' : 'disabled' }),
+    ],
   };
 }

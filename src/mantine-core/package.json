@@ -10,8 +10,10 @@
     "prepublish": "cd ../.. && npm run build @mantine/core"
   },
   "peerDependencies": {
+    "@mantine/hooks": "0.1.0",
     "@modulz/radix-icons": ">=4.0.0",
     "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
     "react-jss": ">=10.1.1"
   },
   "dependencies": {},

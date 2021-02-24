@@ -6,6 +6,7 @@ import locatePackage from './utils/locate-package';
 import compile from './utils/compile';
 
 (async () => {
+  const analyze = argv._[1] === 'analyze';
   const packagePath = await locatePackage((argv._[0] as string) || '');
   if (!packagePath) {
     process.stdout.write('Package does not exist\n');
@@ -18,6 +19,7 @@ import compile from './utils/compile';
     basePath: packagePath,
     outputPath: path.join(packagePath, 'dist'),
     externals: Object.keys(packageJson.peerDependencies || {}),
+    analyze,
   });
 
   try {
