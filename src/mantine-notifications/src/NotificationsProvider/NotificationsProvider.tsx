@@ -8,7 +8,7 @@ import { NotificationsContext } from '../Notifications.context';
 import { NotificationProps, NotificationsProviderPositioning } from '../types';
 import getPositionStyles from './get-position-styles/get-position-styles';
 import getNotificationStateStyles from './get-notification-state-styles/get-notification-state-styles';
-import Notification from '../Notification/Notification';
+import NotificationContainer from '../Notification/NotificationContainer';
 import useStyles from './NotificationsProvider.styles';
 
 const POSITIONS = [
@@ -84,7 +84,7 @@ export function NotificationsProvider({
       onEnter={(node: any) => node.offsetHeight}
     >
       {(state) => (
-        <Notification
+        <NotificationContainer
           notification={notification}
           onHide={hideNotification}
           className={classes.notification}

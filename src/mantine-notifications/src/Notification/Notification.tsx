@@ -1,74 +1,68 @@
-import React, { useEffect, useRef } from 'react';
-import { DefaultProps, Notification } from '@mantine/core';
-import { NotificationProps } from '../types';
+import React from 'react';
+import cx from 'clsx';
+import { Cross2Icon } from '@modulz/radix-icons';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { Paper } from '../../../mantine-core/src/Paper/Paper';
+import { Text } from '../../../mantine-core/src/Text/Text';
+import { Loader } from '../../../mantine-core/src/Loader/Loader';
+import { ActionIcon } from '../../../mantine-core/src/ActionIcon/ActionIcon';
+import useStyles from './Notification.styles';
 
-interface _NotificationProps extends DefaultProps {
-  notification: NotificationProps;
-  onHide(id: string): void;
-  autoClose: false | number;
+interface NotificationProps
+  extends DefaultProps,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+  color?: string;
+  icon?: React.ReactNode;
+  title?: React.ReactNode;
+  loading?: boolean;
+  disallowClose?: boolean;
+  onClose(): void;
 }
 
-function getAutoClose(autoClose: boolean | number, notification: NotificationProps) {
-  if (typeof notification.autoClose === 'number') {
-    return notification.autoClose;
-  }
-
-  if (notification.autoClose === false || autoClose === false) {
-    return false;
-  }
-
-  return autoClose;
-}
-
-export default function _Notification({
+export function Notification({
   className,
-  style,
+  color = 'blue',
+  loading = false,
+  disallowClose = false,
+  title,
+  icon,
+  children,
+  onClose,
   themeOverride,
-  notification,
-  autoClose,
-  onHide,
-}: _NotificationProps) {
-  const autoCloseTimeout = getAutoClose(autoClose, notification);
-  const hideTimeout = useRef<number>();
-
-  const handleHide = () => {
-    onHide(notification.id);
-    window.clearTimeout(hideTimeout.current);
-  };
-
-  const cancelDelayedHide = () => {
-    clearTimeout(hideTimeout.current);
-  };
-
-  const handleDelayedHide = () => {
-    if (typeof autoCloseTimeout === 'number') {
-      hideTimeout.current = window.setTimeout(() => {
-        onHide(notification.id);
-      }, autoCloseTimeout);
-    }
-  };
-
-  useEffect(() => {
-    handleDelayedHide();
-    return cancelDelayedHide;
-  }, [autoClose, notification.autoClose]);
+  ...others
+}: NotificationProps) {
+  const classes = useStyles({ color, theme: useMantineTheme(themeOverride) });
 
   return (
-    <Notification
-      style={style}
-      title={notification.title}
-      themeOverride={themeOverride}
-      onClose={handleHide}
-      color={notification.color}
-      icon={notification.icon}
-      loading={notification.loading}
-      className={className}
-      onMouseEnter={cancelDelayedHide}
-      onMouseLeave={handleDelayedHide}
+    <Paper
+      shadow="sm"
+      padding="sm"
+      className={cx(classes.notification, { [classes.withIcon]: icon || loading }, className)}
+      role="alert"
+      {...others}
     >
-      {notification.message}
-    </Notification>
+      {icon && !loading && <div className={classes.icon}>{icon}</div>}
+      {loading && <Loader size={28} color={color} className={classes.loader} />}
+
+      <div className={classes.body}>
+        {title && (
+          <Text className={classes.title} size="sm" weight={500} themeOverride={themeOverride}>
+            {title}
+          </Text>
+        )}
+
+        <Text className={classes.description} size="sm" themeOverride={themeOverride}>
+          {children}
+        </Text>
+      </div>
+
+      {!disallowClose && (
+        <ActionIcon color="gray" onClick={onClose} themeOverride={themeOverride}>
+          <Cross2Icon />
+        </ActionIcon>
+      )}
+    </Paper>
   );
 }
 
-_Notification.displayName = '@mantine/notifications/Notification';
+Notification.displayName = '@mantine/core/Notification';

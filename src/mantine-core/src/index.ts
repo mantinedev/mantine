@@ -17,7 +17,6 @@ export { Loader } from './Loader/Loader';
 export { LoadingOverlay } from './LoadingOverlay/LoadingOverlay';
 export { Modal } from './Modal/Modal';
 export { Month } from './Month/Month';
-export { Notification } from './Notification/Notification';
 export { Overlay } from './Overlay/Overlay';
 export { Paper } from './Paper/Paper';
 export { PasswordInput } from './PasswordInput/PasswordInput';

@@ -10,7 +10,7 @@ import {
 import { MantineProvider, DEFAULT_THEME } from '@mantine/theme';
 import { Notification } from './Notification';
 
-storiesOf('@mantine/core', module).add('Notification', () => (
+storiesOf('@mantine/notifications', module).add('Notification', () => (
   <MantineProvider>
     <div style={{ padding: 60, backgroundColor: DEFAULT_THEME.colors.gray[0] }}>
       <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
