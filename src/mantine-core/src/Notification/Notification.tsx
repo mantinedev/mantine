@@ -33,6 +33,7 @@ export function Notification({
       shadow="sm"
       padding="sm"
       className={cx(classes.notification, { [classes.withIcon]: icon }, className)}
+      role="alert"
       {...others}
     >
       {icon && <div className={classes.icon}>{icon}</div>}
