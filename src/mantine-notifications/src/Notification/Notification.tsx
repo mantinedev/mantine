@@ -5,6 +5,19 @@ import { NotificationProps } from '../types';
 interface _NotificationProps extends DefaultProps {
   notification: NotificationProps;
   onHide(id: string): void;
+  autoClose: false | number;
+}
+
+function getAutoClose(autoClose: boolean | number, notification: NotificationProps) {
+  if (typeof notification.autoClose === 'number') {
+    return notification.autoClose;
+  }
+
+  if (notification.autoClose === false || autoClose === false) {
+    return false;
+  }
+
+  return autoClose;
 }
 
 export default function _Notification({
@@ -12,8 +25,10 @@ export default function _Notification({
   style,
   themeOverride,
   notification,
+  autoClose,
   onHide,
 }: _NotificationProps) {
+  const autoCloseTimeout = getAutoClose(autoClose, notification);
   const hideTimeout = useRef<number>();
 
   const handleHide = () => {
@@ -26,9 +41,11 @@ export default function _Notification({
   };
 
   const handleDelayedHide = () => {
-    hideTimeout.current = window.setTimeout(() => {
-      onHide(notification.id);
-    }, 4000);
+    if (typeof autoCloseTimeout === 'number') {
+      hideTimeout.current = window.setTimeout(() => {
+        onHide(notification.id);
+      }, autoCloseTimeout);
+    }
   };
 
   useEffect(() => {

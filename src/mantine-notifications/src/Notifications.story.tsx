@@ -50,6 +50,36 @@ function NotificationsDemo() {
       >
         Show error notification
       </Button>
+
+      <Button
+        variant="outline"
+        color="grape"
+        onClick={() =>
+          notifications.showNotification({
+            color: 'grape',
+            title: 'I will never close',
+            message: 'unless you click X',
+            autoClose: false,
+          })
+        }
+      >
+        Never closes automatically
+      </Button>
+
+      <Button
+        variant="outline"
+        color="indigo"
+        onClick={() =>
+          notifications.showNotification({
+            color: 'indigo',
+            title: 'Custom autoClose timeout',
+            message: 'notification will be closed in 3 seconds',
+            autoClose: 3000,
+          })
+        }
+      >
+        Will close automatically in 3 seconds
+      </Button>
     </ElementsGroup>
   );
 }
@@ -57,7 +87,7 @@ function NotificationsDemo() {
 storiesOf('@mantine/notifications', module)
   .add('bottom-right (default)', () => (
     <MantineProvider>
-      <NotificationsProvider>
+      <NotificationsProvider autoClose={500}>
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>

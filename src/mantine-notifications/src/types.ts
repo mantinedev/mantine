@@ -6,6 +6,7 @@ export interface NotificationProps {
   icon?: React.ReactNode;
   title?: React.ReactNode;
   message: React.ReactNode;
+  autoClose?: boolean | number;
 }
 
 export interface NotificationsContextProps {

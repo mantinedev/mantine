@@ -22,6 +22,7 @@ const POSITIONS = [
 
 interface NotificationProviderProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   position?: typeof POSITIONS[number];
+  autoClose?: number | false;
   duration?: number;
   containerWidth?: number;
   notificationMaxHeight?: number;
@@ -31,6 +32,7 @@ export function NotificationsProvider({
   className,
   position = 'bottom-right',
   themeOverride,
+  autoClose = 4000,
   duration = 250,
   containerWidth = 440,
   notificationMaxHeight = 200,
@@ -71,6 +73,7 @@ export function NotificationsProvider({
           notification={notification}
           onHide={hideNotification}
           className={classes.notification}
+          autoClose={autoClose}
           style={{
             ...getNotificationStateStyles({
               state,
