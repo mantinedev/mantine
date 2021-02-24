@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckIcon } from '@modulz/radix-icons';
 import { storiesOf } from '@storybook/react';
-import { Button, ElementsGroup, MantineProvider } from '@mantine/core';
+import { Button, ElementsGroup, MantineProvider, Text } from '@mantine/core';
 import { useNotifications } from './use-notifications/use-notifications';
 import { NotificationsProvider } from './NotificationsProvider/NotificationsProvider';
 
@@ -20,6 +20,18 @@ function NotificationsDemo() {
         }
       >
         Show default notification
+      </Button>
+
+      <Button
+        variant="outline"
+        onClick={() =>
+          notifications.showNotification({
+            title: 'Custom component notification',
+            message: <Text color="red">Custom component</Text>,
+          })
+        }
+      >
+        Custom component
       </Button>
 
       <Button
