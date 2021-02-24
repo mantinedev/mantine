@@ -2,7 +2,6 @@ export * from '@mantine/theme';
 
 export { ActionIcon } from './ActionIcon/ActionIcon';
 export { Alert } from './Alert/Alert';
-export { Anchor } from './Anchor/Anchor';
 export { Avatar } from './Avatar/Avatar';
 export { Badge } from './Badge/Badge';
 export { Burger } from './Burger/Burger';
