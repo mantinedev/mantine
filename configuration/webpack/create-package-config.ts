@@ -65,7 +65,7 @@ export default function createPackageConfig(config: PageConfigInput): webpack.Co
             {
               loader: 'ts-loader',
               options: {
-                configFile: path.join(config.basePath, 'tsconfig.json'),
+                configFile: path.join(config.basePath, '_tsconfig.json'),
                 getCustomTransformers: (program) => {
                   const transformer = tsTransformPaths(program);
 
