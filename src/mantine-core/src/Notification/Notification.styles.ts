@@ -45,6 +45,10 @@ export default createUseStyles(
       marginRight: 10,
     },
 
+    loader: {
+      marginRight: theme.spacing.md,
+    },
+
     icon: {
       boxSizing: 'border-box',
       marginRight: theme.spacing.md,

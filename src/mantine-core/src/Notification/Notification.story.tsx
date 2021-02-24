@@ -13,9 +13,14 @@ import { Notification } from './Notification';
 storiesOf('@mantine/core', module).add('Notification', () => (
   <MantineProvider>
     <div style={{ maxWidth: 400, padding: 60, backgroundColor: DEFAULT_THEME.colors.gray[0] }}>
+      <Notification loading color="indigo" onClose={() => {}} title="Loading notification">
+        Data is saving now
+      </Notification>
+
       <Notification
         color="gray"
         onClose={() => {}}
+        style={{ marginTop: 20 }}
         title="Muted notification with icon"
         icon={<FaceIcon />}
       >
