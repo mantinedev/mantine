@@ -99,6 +99,7 @@ function NotificationsDemo() {
               color: 'teal',
               title: 'Data was loaded',
               message: 'Notification will close in 3 seconds',
+              icon: <CheckIcon />,
               autoClose: 3000,
             });
           }, 2000);
