@@ -8,6 +8,7 @@ export interface NotificationProps {
   loading?: boolean;
   message: React.ReactNode;
   autoClose?: boolean | number;
+  disallowClose?: boolean;
 }
 
 export interface NotificationsContextProps {

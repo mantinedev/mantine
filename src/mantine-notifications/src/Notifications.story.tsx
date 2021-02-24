@@ -89,8 +89,9 @@ function NotificationsDemo() {
             color: 'indigo',
             loading: true,
             title: 'Loading your data',
-            message: 'Data will be loaded in 2 seconds',
+            message: 'Data will be loaded in 3 seconds, you cannot close this yet',
             autoClose: false,
+            disallowClose: true,
           });
 
           setTimeout(() => {
@@ -98,11 +99,11 @@ function NotificationsDemo() {
               id: 'data-loading',
               color: 'teal',
               title: 'Data was loaded',
-              message: 'Notification will close in 3 seconds',
+              message: 'Notification will close in 3 seconds, you can close this notification now',
               icon: <CheckIcon />,
               autoClose: 3000,
             });
-          }, 2000);
+          }, 3000);
         }}
       >
         Update notification

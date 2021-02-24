@@ -63,6 +63,7 @@ export default function NotificationContainer({
       color={notification.color}
       icon={notification.icon}
       loading={notification.loading}
+      disallowClose={notification.disallowClose}
       className={className}
       onMouseEnter={cancelDelayedHide}
       onMouseLeave={handleDelayedHide}
