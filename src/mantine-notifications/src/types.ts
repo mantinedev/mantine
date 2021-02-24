@@ -9,6 +9,8 @@ export interface NotificationProps {
   message: React.ReactNode;
   autoClose?: boolean | number;
   disallowClose?: boolean;
+  onClose?(props: NotificationProps): void;
+  onOpen?(props: NotificationProps): void;
 }
 
 export interface NotificationsContextProps {

@@ -33,6 +33,7 @@ export default function NotificationContainer({
   const hideTimeout = useRef<number>();
 
   const handleHide = () => {
+    typeof notification.onClose === 'function' && notification.onClose(notification);
     onHide(notification.id);
     window.clearTimeout(hideTimeout.current);
   };
@@ -43,11 +44,15 @@ export default function NotificationContainer({
 
   const handleDelayedHide = () => {
     if (typeof autoCloseTimeout === 'number') {
-      hideTimeout.current = window.setTimeout(() => {
-        onHide(notification.id);
-      }, autoCloseTimeout);
+      hideTimeout.current = window.setTimeout(handleHide, autoCloseTimeout);
     }
   };
+
+  useEffect(() => {
+    if (typeof notification.onOpen === 'function') {
+      notification.onOpen(notification);
+    }
+  }, []);
 
   useEffect(() => {
     handleDelayedHide();
