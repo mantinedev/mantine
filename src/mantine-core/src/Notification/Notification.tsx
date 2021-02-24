@@ -15,6 +15,7 @@ interface NotificationProps
   icon?: React.ReactNode;
   title?: React.ReactNode;
   loading?: boolean;
+  disallowClose?: boolean;
   onClose(): void;
 }
 
@@ -22,6 +23,7 @@ export function Notification({
   className,
   color = 'blue',
   loading = false,
+  disallowClose = false,
   title,
   icon,
   children,
@@ -54,9 +56,11 @@ export function Notification({
         </Text>
       </div>
 
-      <ActionIcon color="gray" onClick={onClose} themeOverride={themeOverride}>
-        <Cross2Icon />
-      </ActionIcon>
+      {!disallowClose && (
+        <ActionIcon color="gray" onClick={onClose} themeOverride={themeOverride}>
+          <Cross2Icon />
+        </ActionIcon>
+      )}
     </Paper>
   );
 }

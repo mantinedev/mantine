@@ -14,8 +14,14 @@ storiesOf('@mantine/core', module).add('Notification', () => (
   <MantineProvider>
     <div style={{ padding: 60, backgroundColor: DEFAULT_THEME.colors.gray[0] }}>
       <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
-        <Notification loading color="indigo" onClose={() => {}} title="Loading notification">
-          Data is saving now
+        <Notification
+          loading
+          disallowClose
+          color="indigo"
+          onClose={() => {}}
+          title="You will not close this notification"
+        >
+          It is loading you have to wait
         </Notification>
 
         <Notification
