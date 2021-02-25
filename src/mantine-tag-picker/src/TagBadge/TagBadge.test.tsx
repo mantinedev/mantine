@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from '@mantine/tests';
+import { shallow, mount, checkAccessibility } from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/core';
 import TagBadge from './TagBadge';
 
@@ -10,6 +10,8 @@ const data = {
 };
 
 describe('@mantine/tag-picker/TagBadge', () => {
+  checkAccessibility([mount(<TagBadge data={data} />)]);
+
   it('has correct displayName', () => {
     expect(TagBadge.displayName).toEqual('@mantine/tag-picker/TagBadge');
   });

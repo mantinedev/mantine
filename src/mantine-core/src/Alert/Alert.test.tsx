@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow, checkAccessibility } from '@mantine/tests';
+import { shallow, mount, checkAccessibility } from '@mantine/tests';
 import { Text } from '../Text/Text';
 import { Alert } from './Alert';
 
 describe('@mantine/core/Alert', () => {
   checkAccessibility([
-    shallow(
+    mount(
       <Alert title="Error happened" color="red">
         <Text>Something bad happened</Text>
       </Alert>

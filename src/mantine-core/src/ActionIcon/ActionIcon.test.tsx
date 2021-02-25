@@ -5,8 +5,8 @@ import { ActionIcon } from './ActionIcon';
 
 describe('@mantine/core/ActionIcon', () => {
   checkAccessibility([
-    shallow(
-      <ActionIcon>
+    mount(
+      <ActionIcon title="Action icon">
         <RocketIcon />
       </ActionIcon>
     ),

@@ -1,9 +1,9 @@
 import React from 'react';
-import { shallow, checkAccessibility } from '@mantine/tests';
+import { shallow, mount, checkAccessibility } from '@mantine/tests';
 import { Progress } from './Progress';
 
 describe('@mantine/core/Progress', () => {
-  checkAccessibility([shallow(<Progress value={80} />)]);
+  checkAccessibility([mount(<Progress value={80} />)]);
 
   it('has correct displayName', () => {
     expect(Progress.displayName).toEqual('@mantine/core/Progress');
