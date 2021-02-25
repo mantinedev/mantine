@@ -2,10 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { Cross2Icon } from '@modulz/radix-icons';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import { Paper } from '../../../mantine-core/src/Paper/Paper';
-import { Text } from '../../../mantine-core/src/Text/Text';
-import { Loader } from '../../../mantine-core/src/Loader/Loader';
-import { ActionIcon } from '../../../mantine-core/src/ActionIcon/ActionIcon';
+import { Paper, Text, Loader, ActionIcon } from '@mantine/core';
 import useStyles from './Notification.styles';
 
 interface NotificationProps
