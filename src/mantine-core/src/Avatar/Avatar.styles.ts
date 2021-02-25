@@ -1,18 +1,25 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme, getSizeValue } from '@mantine/theme';
+
+const sizes = {
+  xs: 14,
+  sm: 18,
+  md: 26,
+  lg: 36,
+  xl: 52,
+};
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
-    avatar: {
+    avatar: ({ size, radius }) => ({
       boxSizing: 'border-box',
       position: 'relative',
       userSelect: 'none',
       overflow: 'hidden',
-    },
-
-    loading: {
-      backgroundColor: theme.colors.gray[1],
-    },
+      width: getSizeValue({ size, sizes }),
+      height: getSizeValue({ size, sizes }),
+      borderRadius: radius ? getSizeValue({ size: radius, sizes: theme.radius }) : size,
+    }),
 
     image: {
       objectFit: 'cover',
@@ -25,6 +32,8 @@ export default createUseStyles(
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      width: '100%',
+      height: '100%',
     },
 
     placeholderIcon: {
