@@ -14,6 +14,7 @@ interface NotificationProps
   loading?: boolean;
   disallowClose?: boolean;
   onClose(): void;
+  closeButtonProps?: React.ComponentPropsWithoutRef<typeof ActionIcon>;
 }
 
 export function Notification({
@@ -25,6 +26,7 @@ export function Notification({
   icon,
   children,
   onClose,
+  closeButtonProps,
   themeOverride,
   ...others
 }: NotificationProps) {
@@ -54,7 +56,12 @@ export function Notification({
       </div>
 
       {!disallowClose && (
-        <ActionIcon color="gray" onClick={onClose} themeOverride={themeOverride}>
+        <ActionIcon
+          {...closeButtonProps}
+          color="gray"
+          onClick={onClose}
+          themeOverride={themeOverride}
+        >
           <Cross2Icon />
         </ActionIcon>
       )}
@@ -62,4 +69,4 @@ export function Notification({
   );
 }
 
-Notification.displayName = '@mantine/core/Notification';
+Notification.displayName = '@mantine/notifications/Notification';
