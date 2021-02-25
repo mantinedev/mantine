@@ -29,9 +29,9 @@ export function Avatar({
   }, [src]);
 
   return (
-    <div {...others} data-mantine-composable className={cx(classes.avatar, className)}>
+    <div {...others} className={cx(classes.avatar, className)}>
       {error ? (
-        <div className={classes.placeholder}>
+        <div data-mantine-placeholder role="presentation" className={classes.placeholder}>
           <AvatarIcon className={classes.placeholderIcon} />
         </div>
       ) : (

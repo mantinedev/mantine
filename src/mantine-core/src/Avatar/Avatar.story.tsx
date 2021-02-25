@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/theme';
-import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
 import { Avatar } from './Avatar';
 
 const image =
@@ -9,7 +8,7 @@ const image =
 
 storiesOf('@mantine/core', module).add('Avatar', () => (
   <MantineProvider>
-    <ElementsGroup>
+    <>
       <Avatar size="xs" src={image} />
       <Avatar size="sm" src={image} />
       <Avatar size="md" src={image} />
@@ -26,6 +25,6 @@ storiesOf('@mantine/core', module).add('Avatar', () => (
       />
       <Avatar size={40} src={image} />
       <Avatar size={20} src={image} />
-    </ElementsGroup>
+    </>
   </MantineProvider>
 ));
