@@ -25,6 +25,6 @@ import compile from './utils/compile';
   try {
     await compile(config);
   } catch (err) {
-    console.log(err.toString('minimal'));
+    process.stdout.write(`${err.toString('minimal')}\n`);
   }
 })();
