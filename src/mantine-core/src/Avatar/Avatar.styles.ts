@@ -7,6 +7,11 @@ export default createUseStyles(
       boxSizing: 'border-box',
       position: 'relative',
       userSelect: 'none',
+      overflow: 'hidden',
+    },
+
+    loading: {
+      backgroundColor: theme.colors.gray[1],
     },
 
     image: {

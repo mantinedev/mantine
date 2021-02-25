@@ -14,6 +14,11 @@ storiesOf('@mantine/core', module).add('Avatar', () => (
       <Avatar size={70} src={null} />
       <Avatar size={60} src="broken-link" />
       <Avatar size={50} src={image} />
+      <Avatar
+        size={50}
+        src="https://images.unsplash.com/photo-1549772090-bcbf7e7d1775?crop=entropy&cs=srgb&fm=jpg&ixid=MXwyNDF8MHwxfHJhbmRvbXx8fHx8fHx8&ixlib=rb-1.2.1&q=85&dl=unsplash-Bardia%20Boomer.jpg"
+        radius="lg"
+      />
       <Avatar size={40} src={image} />
       <Avatar size={20} src={image} />
     </ElementsGroup>
