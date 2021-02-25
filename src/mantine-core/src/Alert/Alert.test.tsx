@@ -1,9 +1,19 @@
 import React from 'react';
-import { shallow, mount, checkAccessibility } from '@mantine/tests';
+import {
+  shallow,
+  mount,
+  checkAccessibility,
+  itSupportsStyle,
+  itSupportsOthers,
+  itSupportsClassName,
+} from '@mantine/tests';
 import { Text } from '../Text/Text';
 import { Alert } from './Alert';
 
 describe('@mantine/core/Alert', () => {
+  itSupportsClassName(Alert, {});
+  itSupportsOthers(Alert, {});
+  itSupportsStyle(Alert, {});
   checkAccessibility([
     mount(
       <Alert title="Error happened" color="red">
@@ -14,22 +24,6 @@ describe('@mantine/core/Alert', () => {
 
   it('has correct displayName', () => {
     expect(Alert.displayName).toEqual('@mantine/core/Alert');
-  });
-
-  it('accepts className from props', () => {
-    const element = shallow(<Alert className="test-class-name" />);
-    expect(element.render().hasClass('test-class-name')).toBe(true);
-  });
-
-  it('support ...others props', () => {
-    const element = shallow(<Alert data-other-attribute="test" />);
-    expect(element.render().attr('data-other-attribute')).toBe('test');
-  });
-
-  it('accepts style property', () => {
-    const element = shallow(<Alert style={{ border: '1px solid red', lineHeight: 1 }} />).render();
-    expect(element.css('border')).toBe('1px solid red');
-    expect(element.css('line-height')).toBe('1');
   });
 
   it('renders given title', () => {
