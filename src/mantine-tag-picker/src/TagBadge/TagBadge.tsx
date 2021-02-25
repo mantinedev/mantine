@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps } from '@mantine/core';
 import { TagPickerTag } from '../types';
-import isBrightColor from './is-bright-color';
+import { isBrightColor } from './is-bright-color/is-bright-color';
 import useStyles from './TagBadge.styles';
 
 interface TagBadgeProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
