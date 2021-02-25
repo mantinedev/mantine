@@ -78,6 +78,7 @@ export const Select = forwardRef(
 
           <select
             {...others}
+            aria-required={required}
             ref={ref}
             className={cx(classes.select, {
               [classes.withIcon]: icon,

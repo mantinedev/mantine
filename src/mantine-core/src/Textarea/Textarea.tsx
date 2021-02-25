@@ -55,6 +55,7 @@ export const Textarea = forwardRef(
       >
         {autosize ? (
           <TextareaAutosize
+            aria-required={required}
             placeholder={placeholder}
             className={cx(classes.textarea, { [classes.invalid]: error })}
             maxRows={maxRows}
@@ -67,6 +68,7 @@ export const Textarea = forwardRef(
           />
         ) : (
           <textarea
+            aria-required={required}
             id={uuid}
             placeholder={placeholder}
             className={cx(classes.textarea, { [classes.invalid]: error })}

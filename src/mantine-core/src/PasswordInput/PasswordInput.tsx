@@ -58,6 +58,7 @@ export const PasswordInput = forwardRef(
         <div className={classes.wrapper}>
           <Input
             {...others}
+            required={required}
             disabled={disabled}
             radius={radius}
             ref={ref}
