@@ -26,6 +26,7 @@ interface NotificationProviderProps extends DefaultProps, React.ComponentPropsWi
   duration?: number;
   containerWidth?: number;
   notificationMaxHeight?: number;
+  limit?: number;
 }
 
 export function NotificationsProvider({
@@ -36,6 +37,7 @@ export function NotificationsProvider({
   duration = 250,
   containerWidth = 440,
   notificationMaxHeight = 200,
+  limit = 5,
   style,
   children,
   ...others
@@ -51,6 +53,10 @@ export function NotificationsProvider({
 
   const showNotification = (notification: NotificationProps) =>
     setNotifications((currentNotifications) => {
+      if (currentNotifications.length >= limit) {
+        return currentNotifications;
+      }
+
       const index = currentNotifications.findIndex((n) => n.id === notification.id);
       if (index === -1) {
         return [...currentNotifications, { ...notification, id: notification.id || nanoid() }];

@@ -134,7 +134,7 @@ storiesOf('@mantine/notifications', module)
   ))
   .add('top-right', () => (
     <MantineProvider>
-      <NotificationsProvider position="top-right">
+      <NotificationsProvider position="top-right" limit={2}>
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
