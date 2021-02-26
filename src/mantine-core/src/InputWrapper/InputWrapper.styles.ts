@@ -10,7 +10,7 @@ export default createUseStyles(
       marginBottom: 5,
       fontSize: 14,
       fontWeight: 500,
-      color: theme.colors.gray[6],
+      color: theme.colors.gray[7],
     },
 
     error: {
@@ -19,6 +19,7 @@ export default createUseStyles(
 
     description: {
       marginTop: theme.spacing.xs / 2,
+      marginBottom: theme.spacing.xs / 2,
     },
 
     required: {

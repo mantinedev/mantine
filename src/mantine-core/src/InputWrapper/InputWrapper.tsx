@@ -5,9 +5,16 @@ import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
 export interface InputWrapperBaseProps {
+  /** Input label, displayed before input */
   label?: React.ReactNode;
-  error?: React.ReactNode;
+
+  /** Input description, displayed after label */
   description?: React.ReactNode;
+
+  /** Displays error message after input */
+  error?: React.ReactNode;
+
+  /** Adds red asterisk on the right side of label */
   required?: boolean;
 }
 
@@ -40,17 +47,17 @@ export function InputWrapper({
         </label>
       )}
 
+      {description && (
+        <Text color="gray" size="xs" className={classes.description}>
+          {description}
+        </Text>
+      )}
+
       {children}
 
       {error && (
         <Text color="red" size="sm" className={classes.error}>
           {error}
-        </Text>
-      )}
-
-      {description && (
-        <Text color="gray" size="sm" className={classes.description}>
-          {description}
         </Text>
       )}
     </div>
