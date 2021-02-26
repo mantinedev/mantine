@@ -105,4 +105,5 @@ dist
 
 dist 
 public
+.docgen
 .DS_Store

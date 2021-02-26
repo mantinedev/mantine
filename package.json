@@ -11,6 +11,8 @@
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "docgen": "ts-node scripts/docgen",
+    "docgen:clean": "rimraf .docgen",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "build": "ts-node scripts/build",
@@ -48,7 +50,9 @@
     "fs-extra": "^9.0.1",
     "jest": "^26.6.3",
     "jest-axe": "^4.1.0",
+    "react-docgen-typescript": "^1.21.0",
     "react-dom": "^16.14.0",
+    "rimraf": "^3.0.2",
     "terser-webpack-plugin": "^4.2.0",
     "ts-jest": "^26.5.1",
     "ts-loader": "^8.0.14",
