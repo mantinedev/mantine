@@ -41,11 +41,11 @@ function prepareDeclaration(declaration: ComponentDoc) {
     delete data.props[prop].declarations;
 
     if (data.props[prop].type.name === 'MantineNumberSize') {
-      data.props[prop].type.name = "number | 'xs' | 'sm' | 'md' | 'lg' | 'xl'";
+      data.props[prop].type.name = 'number | "xs" | "sm" | "md" | "lg" | "xl"';
     }
 
     if (data.props[prop].type.name === 'MantineSize') {
-      data.props[prop].type.name = "'xs' | 'sm' | 'md' | 'lg' | 'xl'";
+      data.props[prop].type.name = 'xs" | "sm" | "md" | "lg" | "xl"';
     }
   });
 
