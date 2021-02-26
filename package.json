@@ -11,8 +11,9 @@
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "docgen": "ts-node scripts/docgen",
     "docgen:clean": "rimraf docs/.docgen",
+    "docgen": "npm run docgen:clean && ts-node scripts/docgen",
+    "docs": "npm run docgen && cd docs && npm start",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "build": "ts-node scripts/build",
