@@ -12,7 +12,7 @@
   "license": "MIT",
   "scripts": {
     "docgen": "ts-node scripts/docgen",
-    "docgen:clean": "rimraf .docgen",
+    "docgen:clean": "rimraf docs/.docgen",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "build": "ts-node scripts/build",

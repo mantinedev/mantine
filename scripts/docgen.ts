@@ -33,12 +33,12 @@ const declarations = paths.reduce((acc, folder) => {
 }, {});
 
 Object.keys(declarations).forEach((key) => {
-  fs.ensureDirSync(path.join(__dirname, '../.docgen', key));
+  fs.ensureDirSync(path.join(__dirname, '../docs/.docgen', key));
   docgen.parse(declarations[key]).forEach((declaration) => {
     const packageName = `@mantine/${key.split('-')[1]}/`;
     const componentName = declaration.displayName.replace(packageName, '');
     fs.writeJSONSync(
-      path.join(__dirname, '../.docgen', key, `${componentName}.json`),
+      path.join(__dirname, '../docs/.docgen', key, `${componentName}.json`),
       declaration,
       { spaces: 2 }
     );
