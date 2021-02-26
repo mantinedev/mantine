@@ -3,8 +3,7 @@ category: misc
 ---
 
 import { Hr } from '@mantine/core';
+import PropsTable from '../../components/PropsTable/PropsTable';
 import docs from '../../../.docgen/mantine-core/Hr.json';
 
-<div>{JSON.stringify(docs, null, 2)}</div>
-
-<Hr />
+<PropsTable data={docs} />
