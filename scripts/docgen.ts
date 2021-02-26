@@ -1,12 +1,11 @@
 import path from 'path';
 import fs from 'fs-extra';
-import { withCustomConfig, PropItem } from 'react-docgen-typescript';
+import { withCustomConfig, PropItem, ComponentDoc } from 'react-docgen-typescript';
 
 const EXCLUDE_PROPS = ['className', 'key', 'ref', 'style', 'themeOverride'];
 
 const docgen = withCustomConfig(path.join(__dirname, '../tsconfig.json'), {
   savePropValueAsString: true,
-  shouldExtractValuesFromUnion: true,
   propFilter: (prop: PropItem) => {
     if (EXCLUDE_PROPS.includes(prop.name)) {
       return false;
@@ -32,6 +31,27 @@ const declarations = paths.reduce((acc, folder) => {
   return acc;
 }, {});
 
+function prepareDeclaration(declaration: ComponentDoc) {
+  const data = { ...declaration };
+  delete data.tags;
+  delete data.methods;
+
+  Object.keys(data.props).forEach((prop) => {
+    delete data.props[prop].parent;
+    delete data.props[prop].declarations;
+
+    if (data.props[prop].type.name === 'MantineNumberSize') {
+      data.props[prop].type.name = "number | 'xs' | 'sm' | 'md' | 'lg' | 'xl'";
+    }
+
+    if (data.props[prop].type.name === 'MantineSize') {
+      data.props[prop].type.name = "'xs' | 'sm' | 'md' | 'lg' | 'xl'";
+    }
+  });
+
+  return data;
+}
+
 Object.keys(declarations).forEach((key) => {
   fs.ensureDirSync(path.join(__dirname, '../docs/.docgen', key));
   docgen.parse(declarations[key]).forEach((declaration) => {
@@ -39,7 +59,7 @@ Object.keys(declarations).forEach((key) => {
     const componentName = declaration.displayName.replace(packageName, '');
     fs.writeJSONSync(
       path.join(__dirname, '../docs/.docgen', key, `${componentName}.json`),
-      declaration,
+      prepareDeclaration(declaration),
       { spaces: 2 }
     );
   });
