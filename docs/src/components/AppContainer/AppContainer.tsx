@@ -1,6 +1,8 @@
 import 'normalize.css';
-import 'typeface-roboto';
-import 'typeface-ibm-plex-mono';
+import '@fontsource/ibm-plex-mono/700.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 import React from 'react';
 import { useMantineTheme } from '@mantine/core';
