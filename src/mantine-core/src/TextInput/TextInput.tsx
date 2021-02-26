@@ -29,6 +29,7 @@ export const TextInput = forwardRef(
       style,
       onChange,
       icon,
+      description,
       radius = 'sm',
       themeOverride,
       ...others
@@ -43,6 +44,7 @@ export const TextInput = forwardRef(
         id={uuid}
         label={label}
         error={error}
+        description={description}
         className={className}
         style={style}
         themeOverride={themeOverride}

@@ -26,9 +26,9 @@ storiesOf('@mantine/core', module).add('TextInput', () => (
       icon={<TwitterLogoIcon />}
     />
     <WrappedTextInput
-      radius="xl"
       label="Password"
       required
+      description="Password should include 8 symbols: 2 numbers, uppercase and lowercase letters"
       placeholder="Password"
       type="password"
     />
