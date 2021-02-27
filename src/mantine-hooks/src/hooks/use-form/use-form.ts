@@ -64,19 +64,6 @@ export function useForm<T extends { [key: string]: any }>({
     validate() && handleSubmit(values);
   };
 
-  const getInputProps = <K extends keyof T, U extends T[K]>({
-    field,
-    error,
-  }: {
-    field: keyof T;
-    error?: string;
-  }) => ({
-    value: values[field] as U,
-    onChange: (event: React.FormEvent<U>) => setFieldValue(field, event.currentTarget.value),
-    onFocus: () => setFieldError(field, false),
-    error: errors[field] && error,
-  });
-
   return {
     values,
     errors,
@@ -85,6 +72,5 @@ export function useForm<T extends { [key: string]: any }>({
     setFieldError,
     validateField,
     onSubmit,
-    getInputProps,
   };
 }
