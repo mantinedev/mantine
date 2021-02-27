@@ -12,8 +12,6 @@ import {
   LoadingOverlay,
 } from '@mantine/core';
 
-const atLeastTwoCharacters = (value: string) => value.trim().length >= 2;
-
 interface AuthenticationFormProps {
   noShadow?: boolean;
   noPadding?: boolean;
@@ -23,6 +21,11 @@ export default function AuthenticationForm({ noShadow, noPadding }: Authenticati
   const [formType, setFormType] = useState<'register' | 'login'>('register');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>(null);
+
+  const toggleFormType = () => {
+    setFormType((current) => (current === 'register' ? 'login' : 'register'));
+    setError(null);
+  };
 
   const form = useForm({
     initialValues: {
@@ -34,8 +37,8 @@ export default function AuthenticationForm({ noShadow, noPadding }: Authenticati
     },
 
     validationRules: {
-      firstName: atLeastTwoCharacters,
-      lastName: atLeastTwoCharacters,
+      firstName: (value) => formType === 'login' || value.trim().length >= 2,
+      lastName: (value) => formType === 'login' || value.trim().length >= 2,
       email: (value) => /^\S+@\S+$/.test(value),
       password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
     },
@@ -45,7 +48,11 @@ export default function AuthenticationForm({ noShadow, noPadding }: Authenticati
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setError('User with this email already exists');
+      setError(
+        formType === 'register'
+          ? 'User with this email already exists'
+          : 'User with this email does not exist'
+      );
     }, 3000);
   };
 
@@ -117,19 +124,13 @@ export default function AuthenticationForm({ noShadow, noPadding }: Authenticati
         )}
 
         {error && (
-          <Text color="red" style={{ marginTop: 10 }}>
+          <Text color="red" size="sm" style={{ marginTop: 10 }}>
             {error}
           </Text>
         )}
 
         <ElementsGroup position="apart" style={{ marginTop: 25 }}>
-          <Button
-            variant="link"
-            color="gray"
-            onClick={() =>
-              setFormType((current) => (current === 'register' ? 'login' : 'register'))
-            }
-          >
+          <Button variant="link" color="gray" onClick={toggleFormType}>
             {formType === 'register' ? 'Have an account? Login' : "Don't have an account? Register"}
           </Button>
 
