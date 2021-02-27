@@ -5,4 +5,20 @@ category: forms
 import PropsTable from '../../components/PropsTable/PropsTable';
 import docs from '../../../.docgen/mantine-core/TextInput.json';
 
+# TextInput
+
+This is a text input component description placeholder
+
+## Import
+
+```tsx
+import React, { useState } from 'react';
+import { TextInput } from '@mantine/core';
+
+function TextInput() {
+  const [value, onChange] = useState('');
+  return <TextInput value={value} onChange={onChange} />;
+}
+```
+
 <PropsTable data={docs} />
