@@ -43,11 +43,11 @@ export const Checkbox = forwardRef(
             id={uuid}
             ref={ref}
             type="checkbox"
-            className={cx(classes.checkbox, { [classes.checked]: value })}
+            className={classes.checkbox}
             checked={value}
             onChange={onChange}
           />
-          {value && <CheckIcon className={classes.icon} />}
+          <CheckIcon className={classes.icon} />
         </div>
 
         {label && (

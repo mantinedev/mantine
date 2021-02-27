@@ -17,6 +17,7 @@ function CheckboxWrapper(props: Omit<React.ComponentProps<typeof Checkbox>, 'val
 storiesOf('@mantine/core', module).add('Checkbox', () => (
   <MantineProvider>
     <CheckboxWrapper size="xl" />
+    <Checkbox size="xl" label="Uncontrolled" style={{ marginTop: 15 }} />
     <CheckboxWrapper size="xl" label="Turn on the notifications" style={{ marginTop: 15 }} />
     <CheckboxWrapper
       size="lg"

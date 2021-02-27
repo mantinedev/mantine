@@ -34,7 +34,15 @@ export default createUseStyles({
     fontSize: theme.fontSizes.sm,
   }),
 
-  checkbox: ({ size, theme }: { size: MantineNumberSize; theme: MantineTheme }) => ({
+  checkbox: ({
+    size,
+    theme,
+    color,
+  }: {
+    size: MantineNumberSize;
+    theme: MantineTheme;
+    color: string;
+  }) => ({
     ...getFocusStyles(theme),
     appearance: 'none',
     margin: 0,
@@ -54,15 +62,21 @@ export default createUseStyles({
       backgroundColor: theme.colors.gray[2],
       cursor: 'not-allowed',
     },
+
+    '&:checked': {
+      backgroundColor: getThemeColor({ theme, color, shade: 5 }),
+      borderColor: getThemeColor({ theme, color, shade: 5 }),
+      color: theme.white,
+
+      '& + $icon': {
+        color: theme.white,
+        display: 'block',
+      },
+    },
   }),
 
-  checked: ({ color, theme }: { color: string; theme: MantineTheme }) => ({
-    backgroundColor: getThemeColor({ theme, color, shade: 5 }),
-    borderColor: getThemeColor({ theme, color, shade: 5 }),
-    color: theme.white,
-  }),
-
-  icon: ({ theme }) => ({
+  icon: {
+    display: 'none',
     pointerEvents: 'none',
     width: '80%',
     height: '80%',
@@ -73,6 +87,5 @@ export default createUseStyles({
     left: 0,
     right: 0,
     margin: 'auto',
-    color: theme.white,
-  }),
+  },
 });
