@@ -72,7 +72,7 @@ export function useForm<T extends { [key: string]: any }>({
     error?: string;
   }) => ({
     value: values[field] as U,
-    onChange: (value: U) => setFieldValue(field, value),
+    onChange: (event: React.FormEvent<U>) => setFieldValue(field, event.currentTarget.value),
     onFocus: () => setFieldError(field, false),
     error: errors[field] && error,
   });
