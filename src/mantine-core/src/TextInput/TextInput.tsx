@@ -10,8 +10,8 @@ interface TextInputProps
     Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange'> {
   icon?: React.ReactNode;
   type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url' | 'number';
-  value: string;
-  onChange(value: string, event: React.ChangeEvent<HTMLInputElement>): void;
+  value?: string;
+  onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
   id?: string;
   radius?: MantineNumberSize;
 }
@@ -56,7 +56,7 @@ export const TextInput = forwardRef(
           id={uuid}
           type={type}
           value={value}
-          onChange={(event) => onChange(event.currentTarget.value, event)}
+          onChange={onChange}
           invalid={!!error}
           icon={icon}
           themeOverride={themeOverride}

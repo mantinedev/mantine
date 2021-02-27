@@ -40,6 +40,7 @@ export const Input = forwardRef(
         style={style}
       >
         {icon && <div className={classes.icon}>{icon}</div>}
+
         <input
           {...others}
           aria-required={required}

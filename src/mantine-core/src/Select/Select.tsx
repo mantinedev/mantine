@@ -16,9 +16,9 @@ interface SelectProps
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'select'>, 'onChange'> {
   id?: string;
-  value: string;
+  value?: string;
   placeholder?: string;
-  onChange(value: string, event: React.ChangeEvent<HTMLSelectElement>): void;
+  onChange?(event: React.ChangeEvent<HTMLSelectElement>): void;
   data: SelectItem[];
   disabled?: boolean;
   radius?: MantineNumberSize;
@@ -87,7 +87,7 @@ export const Select = forwardRef(
             })}
             id={uuid}
             value={value}
-            onChange={(event) => onChange(event.currentTarget.value, event)}
+            onChange={onChange}
             placeholder={placeholder}
             disabled={disabled}
           >

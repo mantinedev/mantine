@@ -12,7 +12,7 @@ interface PasswordInputProps
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange'> {
   value: string;
-  onChange(value: string, event: React.ChangeEvent<HTMLInputElement>): void;
+  onChange(event: React.ChangeEvent<HTMLInputElement>): void;
   id?: string;
   icon?: React.ReactNode;
   radius?: MantineNumberSize;
@@ -66,7 +66,7 @@ export const PasswordInput = forwardRef(
             type={reveal ? 'text' : 'password'}
             value={value}
             invalid={!!error}
-            onChange={(event) => onChange(event.currentTarget.value, event)}
+            onChange={onChange}
             icon={icon}
             themeOverride={themeOverride}
           />
