@@ -1,77 +1,71 @@
 import { createUseStyles } from 'react-jss';
-import {
-  theming,
-  MantineTheme,
-  MantineNumberSize,
-  getFontStyles,
-  getSizeValue,
-} from '@mantine/theme';
+import { MantineTheme, MantineNumberSize, getFontStyles, getSizeValue } from '@mantine/theme';
 
-export default createUseStyles(
-  (theme: MantineTheme) => ({
-    wrapper: {
-      position: 'relative',
+export default createUseStyles({
+  invalid: {},
+  placeholder: {},
+  withIcon: {},
+
+  wrapper: {
+    position: 'relative',
+  },
+
+  select: ({ theme, radius }: { radius: MantineNumberSize; theme: MantineTheme }) => ({
+    ...getFontStyles(theme),
+    appearance: 'none',
+    boxSizing: 'border-box',
+    fontSize: 14,
+    width: '100%',
+    height: 36,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    border: `1px solid ${theme.colors.gray[5]}`,
+    transition: 'border-color 100ms ease, box-shadow 100ms ease',
+    cursor: 'pointer',
+
+    '&::placeholder': {
+      color: theme.colors.gray[5],
     },
 
-    select: {
-      ...getFontStyles(theme),
-      appearance: 'none',
-      boxSizing: 'border-box',
-      fontSize: 14,
-      width: '100%',
-      height: 36,
-      paddingLeft: 15,
-      paddingRight: 15,
-      borderRadius: ({ radius }: { radius: MantineNumberSize }) =>
-        getSizeValue({ size: radius, sizes: theme.radius }),
-      border: `1px solid ${theme.colors.gray[5]}`,
-      transition: 'border-color 100ms ease, box-shadow 100ms ease',
-      cursor: 'pointer',
-
-      '&::placeholder': {
-        color: theme.colors.gray[5],
-      },
-
-      '&:focus': {
-        outline: 'none',
-        borderColor: theme.colors[theme.primaryColor][5],
-        boxShadow: `0 0 4px ${theme.colors.gray[3]}`,
-      },
-
-      '&:disabled': {
-        backgroundColor: theme.colors.gray[1],
-        cursor: 'not-allowed',
-      },
+    '&:focus': {
+      outline: 'none',
+      borderColor: theme.colors[theme.primaryColor][5],
+      boxShadow: `0 0 4px ${theme.colors.gray[3]}`,
     },
 
-    withIcon: {
-      paddingLeft: 35,
+    '&:disabled': {
+      backgroundColor: theme.colors.gray[1],
+      cursor: 'not-allowed',
     },
 
-    invalid: {
+    '&$placeholder': {
+      color: theme.colors.gray[5],
+    },
+
+    '&$invalid': {
       borderColor: theme.colors.red[7],
     },
 
-    placeholder: {
-      color: theme.colors.gray[5],
-    },
-
-    icon: {
-      pointerEvents: 'none',
-      position: 'absolute',
-      color: theme.colors.gray[5],
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      top: 10,
-      left: 10,
-    },
-
-    chevron: {
-      position: 'absolute',
-      top: 10,
-      right: 10,
+    '&$withIcon': {
+      paddingLeft: 35,
     },
   }),
-  { theming }
-);
+
+  icon: ({ theme }: { theme: MantineTheme }) => ({
+    pointerEvents: 'none',
+    position: 'absolute',
+    color: theme.colors.gray[5],
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: 10,
+    left: 10,
+  }),
+
+  chevron: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+});

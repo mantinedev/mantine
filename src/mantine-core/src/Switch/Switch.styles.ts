@@ -1,6 +1,5 @@
 import { createUseStyles } from 'react-jss';
 import {
-  theming,
   MantineTheme,
   MantineNumberSize,
   getFontStyles,
@@ -34,74 +33,79 @@ const handleSizes = {
   xl: 26,
 };
 
-export default createUseStyles(
-  (theme: MantineTheme) => ({
-    wrapper: {
-      display: 'flex',
-      alignItems: 'center',
-    },
+export default createUseStyles({
+  wrapper: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 
-    switch: ({ size, radius }: { size: MantineSize; radius: MantineNumberSize }) => {
-      const handleSize = getSizeValue({ size, sizes: handleSizes });
-      const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
+  switch: ({
+    size,
+    radius,
+    theme,
+  }: {
+    size: MantineSize;
+    radius: MantineNumberSize;
+    theme: MantineTheme;
+  }) => {
+    const handleSize = getSizeValue({ size, sizes: handleSizes });
+    const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
 
-      return {
-        ...getFocusStyles(theme),
-        borderRadius,
-        backgroundColor: theme.colors.gray[2],
-        border: `1px solid ${theme.colors.gray[3]}`,
-        height: getSizeValue({ size, sizes: switchHeight }),
-        width: getSizeValue({ size, sizes: switchWidth }),
-        padding: [0, 2],
-        cursor: 'pointer',
-        transitionProperty: 'background-color, border-color',
-        transitionTimingFunction: 'ease',
-        transitionDuration: ({ reduceMotion }: { reduceMotion: boolean }) =>
-          reduceMotion ? '1ms' : '150ms',
-        outline: 0,
-        boxSizing: 'border-box',
-        appearance: 'none',
-
-        '&::before': {
-          borderRadius,
-          boxSizing: 'border-box',
-          content: "''",
-          display: 'block',
-          backgroundColor: theme.white,
-          height: handleSize,
-          width: handleSize,
-          border: `1px solid ${theme.colors.gray[3]}`,
-          transition: ({ reduceMotion }: { reduceMotion: boolean }) =>
-            reduceMotion ? 'none' : 'transform 150ms ease',
-        },
-
-        '&:disabled::before': {
-          backgroundColor: theme.colors.gray[2],
-        },
-      };
-    },
-
-    checked: ({ color }: { color: string }) => ({
-      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
-      borderColor: getThemeColor({ theme, color, shade: 5 }),
+    return {
+      ...getFocusStyles(theme),
+      borderRadius,
+      backgroundColor: theme.colors.gray[2],
+      border: `1px solid ${theme.colors.gray[3]}`,
+      height: getSizeValue({ size, sizes: switchHeight }),
+      width: getSizeValue({ size, sizes: switchWidth }),
+      padding: [0, 2],
+      cursor: 'pointer',
+      transitionProperty: 'background-color, border-color',
+      transitionTimingFunction: 'ease',
+      transitionDuration: ({ reduceMotion }: { reduceMotion: boolean }) =>
+        reduceMotion ? '1ms' : '150ms',
+      outline: 0,
+      boxSizing: 'border-box',
+      appearance: 'none',
 
       '&::before': {
-        transform: ({ size }) =>
-          `translateX(${
-            getSizeValue({ size, sizes: switchWidth }) -
-            getSizeValue({ size, sizes: handleSizes }) -
-            6 // borderWidth: 2 + padding: 2 * 2
-          }px)`,
-        borderColor: getThemeColor({ theme, color, shade: 6 }),
+        borderRadius,
+        boxSizing: 'border-box',
+        content: "''",
+        display: 'block',
+        backgroundColor: theme.white,
+        height: handleSize,
+        width: handleSize,
+        border: `1px solid ${theme.colors.gray[3]}`,
+        transition: ({ reduceMotion }: { reduceMotion: boolean }) =>
+          reduceMotion ? 'none' : 'transform 150ms ease',
       },
-    }),
 
-    label: {
-      ...getFontStyles(theme),
-      fontFamily: theme.fontFamily,
-      marginLeft: theme.spacing.sm,
-      fontSize: theme.fontSizes.sm,
+      '&:disabled::before': {
+        backgroundColor: theme.colors.gray[2],
+      },
+    };
+  },
+
+  checked: ({ color, theme }: { color: string; theme: MantineTheme }) => ({
+    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+    borderColor: getThemeColor({ theme, color, shade: 5 }),
+
+    '&::before': {
+      transform: ({ size }) =>
+        `translateX(${
+          getSizeValue({ size, sizes: switchWidth }) -
+          getSizeValue({ size, sizes: handleSizes }) -
+          6 // borderWidth: 2 + padding: 2 * 2
+        }px)`,
+      borderColor: getThemeColor({ theme, color, shade: 6 }),
     },
   }),
-  { theming }
-);
+
+  label: ({ theme }: { theme: MantineTheme }) => ({
+    ...getFontStyles(theme),
+    fontFamily: theme.fontFamily,
+    marginLeft: theme.spacing.sm,
+    fontSize: theme.fontSizes.sm,
+  }),
+});

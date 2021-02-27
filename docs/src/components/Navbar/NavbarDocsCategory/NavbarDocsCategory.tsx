@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { useMantineTheme, Text } from '@mantine/core';
+import { Text } from '@mantine/core';
 import { DocItem } from '../get-docs-data';
 import useStyles from './NavbarDocsCategory.styles';
 
@@ -10,7 +10,7 @@ interface NavbarDocsCategoryProps {
 }
 
 export default function NavbarDocsCategory({ links, category }: NavbarDocsCategoryProps) {
-  const classes = useStyles({ theme: useMantineTheme() });
+  const classes = useStyles();
 
   const items = links.map((link) => (
     <Link

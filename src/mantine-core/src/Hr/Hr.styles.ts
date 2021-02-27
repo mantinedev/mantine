@@ -1,13 +1,10 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { MantineTheme } from '@mantine/theme';
 
-export default createUseStyles(
-  (theme: MantineTheme) => ({
-    hr: {
-      border: 0,
-      borderTopWidth: 1,
-      borderTopColor: theme.colors.gray[5],
-    },
+export default createUseStyles({
+  hr: ({ theme }: { theme: MantineTheme }) => ({
+    border: 0,
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.gray[5],
   }),
-  { theming }
-);
+});

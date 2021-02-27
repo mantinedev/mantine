@@ -13,7 +13,14 @@ interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'
 
 export const ActionIcon = forwardRef(
   (
-    { className, color, children, radius = 'sm', themeOverride, ...others }: ActionIconProps,
+    {
+      className,
+      color = 'gray',
+      children,
+      radius = 'sm',
+      themeOverride,
+      ...others
+    }: ActionIconProps,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
     const classes = useStyles({ radius, color, theme: useMantineTheme(themeOverride) });

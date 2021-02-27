@@ -1,23 +1,22 @@
 import { createUseStyles } from 'react-jss';
-import {
-  theming,
-  MantineTheme,
-  MantineNumberSize,
-  MantineSize,
-  getSizeValue,
-} from '@mantine/theme';
+import { MantineTheme, MantineNumberSize, MantineSize, getSizeValue } from '@mantine/theme';
 
-export default createUseStyles(
-  (theme: MantineTheme) => ({
-    paper: {
-      backgroundColor: theme.white,
-      boxSizing: 'border-box',
-      borderRadius: ({ radius }: { radius: MantineNumberSize }) =>
-        getSizeValue({ size: radius, sizes: theme.radius }),
-      boxShadow: ({ shadow }: { shadow?: MantineSize }) => theme.shadows[shadow] || 'none',
-      padding: ({ padding }: { padding: MantineNumberSize }) =>
-        getSizeValue({ size: padding, sizes: theme.spacing }),
-    },
+export default createUseStyles({
+  paper: ({
+    theme,
+    radius,
+    shadow,
+    padding,
+  }: {
+    theme: MantineTheme;
+    radius: MantineNumberSize;
+    shadow: MantineSize;
+    padding: MantineNumberSize;
+  }) => ({
+    backgroundColor: theme.white,
+    boxSizing: 'border-box',
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    boxShadow: theme.shadows[shadow] || 'none',
+    padding: getSizeValue({ size: padding, sizes: theme.spacing }),
   }),
-  { theming }
-);
+});

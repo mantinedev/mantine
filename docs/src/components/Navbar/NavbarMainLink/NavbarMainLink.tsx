@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import cx from 'clsx';
-import { useMantineTheme, ThemeIcon } from '@mantine/core';
+import { ThemeIcon } from '@mantine/core';
 import useStyles from './NavbarMainLink.styles';
 
 interface NavbarMainLinkProps {
@@ -19,7 +19,7 @@ export default function NavbarMainLink({
   children,
   color,
 }: NavbarMainLinkProps) {
-  const classes = useStyles({ color, theme: useMantineTheme() });
+  const classes = useStyles({ color });
   return (
     <Link className={cx(classes.mainLink, className)} activeClassName={classes.active} to={to}>
       <ThemeIcon size={30} color={color} variant="light" radius="lg">

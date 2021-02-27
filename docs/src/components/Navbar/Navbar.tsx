@@ -1,7 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
 import { graphql, useStaticQuery } from 'gatsby';
-import { useMantineTheme } from '@mantine/core';
 import NavbarMainLink from './NavbarMainLink/NavbarMainLink';
 import NavbarLogo from './NavbarLogo/NavbarLogo';
 import NavbarDocsCategory from './NavbarDocsCategory/NavbarDocsCategory';
@@ -26,7 +25,7 @@ const query = graphql`
 `;
 
 export default function Navbar({ className }: { className: string }) {
-  const classes = useStyles({ theme: useMantineTheme() });
+  const classes = useStyles();
   const data = getDocsData(useStaticQuery(query));
 
   const main = mainLinks.map((item) => (

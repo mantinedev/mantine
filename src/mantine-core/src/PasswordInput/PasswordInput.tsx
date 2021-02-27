@@ -70,6 +70,7 @@ export const PasswordInput = forwardRef(
             icon={icon}
             themeOverride={themeOverride}
           />
+
           {!disabled && (
             <ActionIcon
               className={classes.control}

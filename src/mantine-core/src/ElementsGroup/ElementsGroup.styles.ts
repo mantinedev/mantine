@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineNumberSize } from '@mantine/theme';
+import { MantineTheme, MantineNumberSize } from '@mantine/theme';
 
 export type ElementsGroupPosition = 'right' | 'center' | 'left' | 'apart';
 
@@ -8,6 +8,7 @@ interface ElementsGroupStylesProps {
   noWrap: boolean;
   grow: boolean;
   spacing: MantineNumberSize;
+  theme: MantineTheme;
 }
 
 const JUSTIFY_CONTENT = {
@@ -17,24 +18,23 @@ const JUSTIFY_CONTENT = {
   apart: 'space-between',
 };
 
-export default createUseStyles(
-  (theme: MantineTheme) => ({
-    elementsGroup: (props: ElementsGroupStylesProps) => {
-      const spacing =
-        typeof props.spacing === 'number' ? props.spacing / 2 : theme.spacing[props.spacing] / 2;
+export default createUseStyles({
+  elementsGroup: (props: ElementsGroupStylesProps) => {
+    const spacing =
+      typeof props.spacing === 'number'
+        ? props.spacing / 2
+        : props.theme.spacing[props.spacing] / 2;
 
-      return {
-        display: 'flex',
-        flexWrap: props.noWrap ? 'nowrap' : 'wrap',
-        justifyContent: JUSTIFY_CONTENT[props.position],
-        margin: -1 * spacing,
+    return {
+      display: 'flex',
+      flexWrap: props.noWrap ? 'nowrap' : 'wrap',
+      justifyContent: JUSTIFY_CONTENT[props.position],
+      margin: -1 * spacing,
 
-        '& [data-mantine-composable]': {
-          margin: spacing,
-          flexGrow: props.grow ? 1 : 0,
-        },
-      };
-    },
-  }),
-  { theming }
-);
+      '& [data-mantine-composable]': {
+        margin: spacing,
+        flexGrow: props.grow ? 1 : 0,
+      },
+    };
+  },
+});

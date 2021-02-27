@@ -20,5 +20,7 @@ storiesOf('@mantine/core', module).add('Burger', () => (
     <WrappedBurger size="lg" />
     <WrappedBurger size="xl" color="teal" />
     <WrappedBurger size={120} color="blue" />
+    <WrappedBurger size={20} color="blue" />
+    <WrappedBurger size={12} color="blue" />
   </MantineProvider>
 ));

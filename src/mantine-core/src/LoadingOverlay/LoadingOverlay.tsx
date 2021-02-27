@@ -19,7 +19,7 @@ export function LoadingOverlay({
   themeOverride,
   ...others
 }: LoadingOverlayProps) {
-  const classes = useStyles({});
+  const classes = useStyles();
 
   if (!visible) {
     return null;

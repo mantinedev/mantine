@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, getFontStyles } from '@mantine/theme';
+import { MantineTheme, getFontStyles } from '@mantine/theme';
 
 export type BadgeVariant = 'badge' | 'pill' | 'outline';
 
@@ -47,20 +47,25 @@ function getVariantStyle(variant: BadgeVariant, color: string, theme: MantineThe
   }
 }
 
-export default createUseStyles(
-  (theme: MantineTheme) => ({
-    badge: (props) => ({
-      ...getFontStyles(theme),
-      boxSizing: 'border-box',
-      display: 'inline-block',
-      textTransform: 'uppercase',
-      fontSize: 11,
-      borderRadius: 100,
-      fontWeight: 700,
-      letterSpacing: 0.25,
+export default createUseStyles({
+  badge: ({
+    variant,
+    color,
+    theme,
+  }: {
+    variant: BadgeVariant;
+    color: string;
+    theme: MantineTheme;
+  }) => ({
+    ...getFontStyles(theme),
+    boxSizing: 'border-box',
+    display: 'inline-block',
+    textTransform: 'uppercase',
+    fontSize: 11,
+    borderRadius: 100,
+    fontWeight: 700,
+    letterSpacing: 0.25,
 
-      ...getVariantStyle(props.variant, props.color, theme),
-    }),
+    ...getVariantStyle(variant, color, theme),
   }),
-  { theming }
-);
+});

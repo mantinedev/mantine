@@ -1,42 +1,32 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/core';
+import { MantineTheme, getFocusStyles } from '@mantine/core';
 
-export default createUseStyles(
-  (theme: MantineTheme) => ({
-    item: {
-      position: 'relative',
-    },
+export default createUseStyles({
+  item: {
+    position: 'relative',
+  },
 
-    body: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      paddingRight: 10,
-    },
+  body: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingRight: 10,
+  },
 
-    control: {
-      height: 32,
-      flex: 1,
-      textAlign: 'left',
-      padding: 0,
-      backgroundColor: 'transparent',
-      border: '1px solid transparent',
-      cursor: 'pointer',
-      paddingLeft: 10,
-      outline: 0,
-
-      '&:focus': {
-        borderColor: theme.colors[theme.primaryColor][6],
-      },
-
-      '&:focus:not(:focus-visible)': {
-        borderColor: 'transparent',
-      },
-    },
-
-    hovered: {
-      backgroundColor: theme.colors.gray[0],
-    },
+  control: ({ theme }: { theme: MantineTheme }) => ({
+    ...getFocusStyles(theme),
+    height: 32,
+    flex: 1,
+    textAlign: 'left',
+    padding: 0,
+    backgroundColor: 'transparent',
+    border: '1px solid transparent',
+    cursor: 'pointer',
+    paddingLeft: 10,
+    outline: 0,
   }),
-  { theming }
-);
+
+  hovered: ({ theme }: { theme: MantineTheme }) => ({
+    backgroundColor: theme.colors.gray[0],
+  }),
+});

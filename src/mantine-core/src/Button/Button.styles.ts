@@ -1,6 +1,5 @@
 import { createUseStyles } from 'react-jss';
 import {
-  theming,
   MantineTheme,
   MantineSize,
   MantineNumberSize,
@@ -44,131 +43,134 @@ const sizes = {
   },
 };
 
-export default createUseStyles(
-  (theme: MantineTheme) => ({
-    icon: {
-      display: 'flex',
-      alignItems: 'center',
-    },
+export default createUseStyles({
+  icon: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 
-    leftIcon: {
-      marginRight: 10,
-    },
+  leftIcon: {
+    marginRight: 10,
+  },
 
-    rightIcon: {
-      marginLeft: 10,
-    },
+  rightIcon: {
+    marginLeft: 10,
+  },
 
-    outline: ({
-      color,
-      size,
-      radius,
-    }: {
-      color?: string;
-      size: MantineSize;
-      radius: MantineNumberSize;
-    }) => ({
-      ...sizes[size],
-      ...getFontStyles(theme),
-      ...getFocusStyles(theme),
-      backgroundColor: 'transparent',
-      display: 'inline-block',
-      textDecoration: 'none',
-      boxSizing: 'border-box',
-      outline: 0,
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      textTransform: 'uppercase',
-      fontWeight: 'bold',
-      letterSpacing: 0.5,
-      color: getThemeColor({ theme, color, shade: 8 }),
-      border: `1px solid ${getThemeColor({ theme, color, shade: 8 })}`,
-      cursor: 'pointer',
+  outline: ({
+    color,
+    size,
+    radius,
+    theme,
+  }: {
+    color?: string;
+    size: MantineSize;
+    radius: MantineNumberSize;
+    theme: MantineTheme;
+  }) => ({
+    ...sizes[size],
+    ...getFontStyles(theme),
+    ...getFocusStyles(theme),
+    backgroundColor: 'transparent',
+    display: 'inline-block',
+    textDecoration: 'none',
+    boxSizing: 'border-box',
+    outline: 0,
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
+    color: getThemeColor({ theme, color, shade: 8 }),
+    border: `1px solid ${getThemeColor({ theme, color, shade: 8 })}`,
+    cursor: 'pointer',
 
-      '&:active': {
-        transform: 'translateY(1px)',
-      },
-    }),
-
-    filled: ({
-      color,
-      size,
-      radius,
-    }: {
-      color?: string;
-      size: MantineSize;
-      radius: MantineNumberSize;
-    }) => ({
-      ...sizes[size],
-      ...getFontStyles(theme),
-      ...getFocusStyles(theme),
-      display: 'inline-block',
-      textDecoration: 'none',
-      boxSizing: 'border-box',
-      border: '1px solid transparent',
-      outline: 0,
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      textTransform: 'uppercase',
-      fontWeight: 'bold',
-      letterSpacing: 0.5,
-      cursor: 'pointer',
-      userSelect: 'none',
-      appearance: 'none',
-      lineHeight: 1,
-
-      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
-      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}`,
-      color: theme.white,
-
-      '& $inner': {
-        height: sizes[size].height - 2,
-      },
-
-      '&:active': {
-        transform: 'translateY(1px)',
-      },
-
-      '&:disabled': {
-        borderColor: 'transparent',
-        backgroundColor: theme.colors.gray[3],
-        color: theme.colors.gray[6],
-        textShadow: 'none',
-        pointerEvents: 'none',
-      },
-    }),
-
-    link: ({
-      color,
-      size,
-      radius,
-    }: {
-      color?: string;
-      size: MantineSize;
-      radius: MantineNumberSize;
-    }) => ({
-      ...sizes[size],
-      ...getFontStyles(theme),
-      ...getFocusStyles(theme),
-
-      padding: 0,
-
-      outline: 0,
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      backgroundColor: 'transparent',
-      border: 0,
-      display: 'inline-block',
-      color: getThemeColor({ theme, color, shade: 6 }),
-      cursor: 'pointer',
-
-      '&:hover': {
-        textDecoration: 'underline',
-      },
-    }),
-
-    inner: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+    '&:active': {
+      transform: 'translateY(1px)',
     },
   }),
-  { theming }
-);
+
+  filled: ({
+    color,
+    size,
+    radius,
+    theme,
+  }: {
+    color?: string;
+    size: MantineSize;
+    radius: MantineNumberSize;
+    theme: MantineTheme;
+  }) => ({
+    ...sizes[size],
+    ...getFontStyles(theme),
+    ...getFocusStyles(theme),
+    display: 'inline-block',
+    textDecoration: 'none',
+    boxSizing: 'border-box',
+    border: '1px solid transparent',
+    outline: 0,
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
+    cursor: 'pointer',
+    userSelect: 'none',
+    appearance: 'none',
+    lineHeight: 1,
+
+    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}`,
+    color: theme.white,
+
+    '& $inner': {
+      height: sizes[size].height - 2,
+    },
+
+    '&:active': {
+      transform: 'translateY(1px)',
+    },
+
+    '&:disabled': {
+      borderColor: 'transparent',
+      backgroundColor: theme.colors.gray[3],
+      color: theme.colors.gray[6],
+      textShadow: 'none',
+      pointerEvents: 'none',
+    },
+  }),
+
+  link: ({
+    color,
+    size,
+    radius,
+    theme,
+  }: {
+    color?: string;
+    size: MantineSize;
+    radius: MantineNumberSize;
+    theme: MantineTheme;
+  }) => ({
+    ...sizes[size],
+    ...getFontStyles(theme),
+    ...getFocusStyles(theme),
+
+    padding: 0,
+
+    outline: 0,
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    backgroundColor: 'transparent',
+    border: 0,
+    display: 'inline-block',
+    color: getThemeColor({ theme, color, shade: 6 }),
+    cursor: 'pointer',
+
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  }),
+
+  inner: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

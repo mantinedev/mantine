@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
+import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 const sizes = {
   xs: 570,
@@ -9,16 +9,20 @@ const sizes = {
   xl: 1370,
 };
 
-export default createUseStyles(
-  (theme: MantineTheme) => ({
-    container: {
-      maxWidth: ({ fluid, size }: { fluid: boolean; size: MantineNumberSize }) =>
-        fluid ? '100%' : getSizeValue({ size, sizes }),
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      paddingLeft: theme.spacing.md,
-      paddingRight: theme.spacing.md,
-    },
+export default createUseStyles({
+  container: ({
+    fluid,
+    size,
+    theme,
+  }: {
+    fluid: boolean;
+    size: MantineNumberSize;
+    theme: MantineTheme;
+  }) => ({
+    maxWidth: fluid ? '100%' : getSizeValue({ size, sizes }),
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    paddingLeft: theme.spacing.md,
+    paddingRight: theme.spacing.md,
   }),
-  { theming }
-);
+});

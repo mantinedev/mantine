@@ -1,79 +1,76 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, getThemeColor } from '@mantine/theme';
+import { MantineTheme, getThemeColor } from '@mantine/theme';
 
-export default createUseStyles(
-  (theme: MantineTheme) => ({
-    withIcon: {
-      paddingLeft: '10px !important',
+export default createUseStyles({
+  withIcon: {
+    paddingLeft: '10px !important',
 
-      '&::before': {
-        display: 'none !important',
-      },
+    '&::before': {
+      display: 'none !important',
     },
+  },
 
-    notification: ({ color }: { color: string }) => ({
-      boxSizing: 'border-box',
-      position: 'relative',
-      display: 'flex',
-      alignItems: 'center',
-      paddingLeft: 22,
-      paddingRight: 5,
-      paddingTop: 10,
-      paddingBottom: 10,
+  notification: ({ color, theme }: { color: string; theme: MantineTheme }) => ({
+    boxSizing: 'border-box',
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: 22,
+    paddingRight: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: 4,
+
+    '&::before': {
+      content: "''",
+      display: 'block',
+      position: 'absolute',
+      width: 6,
+      top: 4,
+      bottom: 4,
+      left: 4,
       borderRadius: 4,
-
-      '&::before': {
-        content: "''",
-        display: 'block',
-        position: 'absolute',
-        width: 6,
-        top: 4,
-        bottom: 4,
-        left: 4,
-        borderRadius: 4,
-        backgroundColor: getThemeColor({ theme, color, shade: 5 }),
-      },
-
-      '& $icon': {
-        backgroundColor: getThemeColor({ theme, color, shade: 5 }),
-        color: theme.white,
-      },
-    }),
-
-    body: {
-      flex: 1,
-      marginRight: 10,
+      backgroundColor: getThemeColor({ theme, color, shade: 5 }),
     },
 
-    loader: {
-      marginRight: theme.spacing.md,
-    },
-
-    icon: {
-      boxSizing: 'border-box',
-      marginRight: theme.spacing.md,
-      width: 28,
-      height: 28,
-      borderRadius: 28,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+    '& $icon': {
+      backgroundColor: getThemeColor({ theme, color, shade: 5 }),
       color: theme.white,
     },
+  }),
 
-    title: {
-      lineHeight: 1.4,
-      marginBottom: 2,
-    },
+  body: {
+    flex: 1,
+    marginRight: 10,
+  },
 
-    description: {
-      color: theme.colors.gray[6],
-      lineHeight: 1.4,
+  loader: ({ theme }: { theme: MantineTheme }) => ({
+    marginRight: theme.spacing.md,
+  }),
 
-      '&:only-child': {
-        color: theme.colors.gray[9],
-      },
+  icon: ({ theme }: { theme: MantineTheme }) => ({
+    boxSizing: 'border-box',
+    marginRight: theme.spacing.md,
+    width: 28,
+    height: 28,
+    borderRadius: 28,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: theme.white,
+  }),
+
+  title: {
+    lineHeight: 1.4,
+    marginBottom: 2,
+  },
+
+  description: ({ theme }: { theme: MantineTheme }) => ({
+    color: theme.colors.gray[6],
+    lineHeight: 1.4,
+
+    '&:only-child': {
+      color: theme.colors.gray[9],
     },
   }),
-  { theming }
-);
+});
