@@ -3,7 +3,9 @@ import { theming, MantineTheme } from '@mantine/core';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
-    layout: {},
+    layout: {
+      backgroundColor: theme.colors.gray[0],
+    },
 
     inner: {
       display: 'flex',

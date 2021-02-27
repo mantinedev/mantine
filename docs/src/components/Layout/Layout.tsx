@@ -9,10 +9,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <AppContainer>
       <main className={classes.layout}>
-        <Container className={classes.inner} size="lg">
+        <div className={classes.inner}>
           <Navbar className={classes.navbar} />
-          <div className={classes.main}>{children}</div>
-        </Container>
+          <div className={classes.main}>
+            <Container size="sm">{children}</Container>
+          </div>
+        </div>
       </main>
     </AppContainer>
   );

@@ -6,7 +6,9 @@ export default createUseStyles(
     navbar: {
       minHeight: '100vh',
       paddingRight: theme.spacing.md,
+      paddingLeft: theme.spacing.md,
       borderRight: `1px solid ${theme.colors.gray[1]}`,
+      backgroundColor: theme.white,
     },
 
     body: {

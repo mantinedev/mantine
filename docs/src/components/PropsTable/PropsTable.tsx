@@ -1,5 +1,5 @@
 import React from 'react';
-import { Title, Table, Text } from '@mantine/core';
+import { Title, Table, Text, Paper } from '@mantine/core';
 import { Docgen } from './docgen.types';
 
 interface PropsTableProps {
@@ -49,21 +49,25 @@ export default function PropsTable({ data }: PropsTableProps) {
 
   return (
     <div>
-      <Title order={4} style={{ fontFamily: 'IBM Plex Mono, monospace', marginBottom: 15 }}>
+      <Title order={3} style={{ fontFamily: 'IBM Plex Mono, monospace', marginBottom: 15 }}>
         Component props
       </Title>
 
-      <Table style={{ tableLayout: 'fixed' }}>
-        <thead>
-          <tr>
-            <th style={{ width: 100 }}>Name</th>
-            <th style={{ width: 100 }}>Default</th>
-            <th>Type</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
+      <Paper padding="md" style={{ width: '100%' }} shadow="xs">
+        <div style={{ minWidth: 500 }}>
+          <Table style={{ tableLayout: 'fixed' }}>
+            <thead>
+              <tr>
+                <th style={{ width: 100 }}>Name</th>
+                <th style={{ width: 100 }}>Default</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </Table>
+        </div>
+      </Paper>
     </div>
   );
 }
