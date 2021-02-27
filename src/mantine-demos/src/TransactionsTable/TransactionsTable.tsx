@@ -133,13 +133,20 @@ export default function TransactionsTable() {
             </tr>
             <tr>
               <td>
-                <Text style={{ textAlign: 'right', paddingTop: 7 }} size="sm">
-                  {transactionsState.reduce((acc, transaction) => acc + transaction.amount, 0)}
-                </Text>
+                <Input
+                  readOnly
+                  icon="$"
+                  inputStyle={{ textAlign: 'right' }}
+                  variant="unstyled"
+                  value={transactionsState.reduce(
+                    (acc, transaction) => acc + transaction.amount,
+                    0
+                  )}
+                />
               </td>
-              <td>
-                <Text size="sm" weight={500} style={{ paddingTop: 7 }}>
-                  Total
+              <td colSpan={4}>
+                <Text size="sm" weight={500} style={{ paddingTop: 2 }}>
+                  Total for February 2021
                 </Text>
               </td>
             </tr>
