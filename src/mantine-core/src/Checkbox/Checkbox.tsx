@@ -10,8 +10,8 @@ interface CheckboxProps
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   color?: string;
   size?: MantineNumberSize;
-  value: boolean;
-  onChange(value: boolean, event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
+  value?: boolean;
+  onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
   label?: React.ReactNode;
   disabled?: boolean;
   id?: string;
@@ -31,25 +31,24 @@ export const Checkbox = forwardRef(
       size,
       ...others
     }: CheckboxProps,
-    ref: React.ForwardedRef<HTMLButtonElement>
+    ref: React.ForwardedRef<HTMLInputElement>
   ) => {
     const uuid = useId(id);
     const classes = useStyles({ size, color, theme: useMantineTheme(themeOverride) });
 
     return (
       <div className={cx(classes.wrapper, className)} {...others}>
-        <button
-          ref={ref}
-          disabled={disabled}
-          className={cx(classes.checkbox, { [classes.checked]: value })}
-          type="button"
-          role="checkbox"
-          onClick={(event) => onChange(!value, event)}
-          aria-checked={value}
-          id={uuid}
-        >
+        <div className={classes.checkboxWrapper}>
+          <input
+            id={uuid}
+            ref={ref}
+            type="checkbox"
+            className={cx(classes.checkbox, { [classes.checked]: value })}
+            checked={value}
+            onChange={onChange}
+          />
           {value && <CheckIcon className={classes.icon} />}
-        </button>
+        </div>
 
         {label && (
           <label className={classes.label} htmlFor={uuid}>

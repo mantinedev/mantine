@@ -22,6 +22,12 @@ export default createUseStyles({
     alignItems: 'center',
   },
 
+  checkboxWrapper: ({ size }) => ({
+    position: 'relative',
+    width: getSizeValue({ size, sizes }),
+    height: getSizeValue({ size, sizes }),
+  }),
+
   label: ({ theme }: { theme: MantineTheme }) => ({
     ...getFontStyles(theme),
     marginLeft: theme.spacing.sm,
@@ -31,6 +37,7 @@ export default createUseStyles({
   checkbox: ({ size, theme }: { size: MantineNumberSize; theme: MantineTheme }) => ({
     ...getFocusStyles(theme),
     appearance: 'none',
+    margin: 0,
     backgroundColor: theme.colors.gray[0],
     border: `1px solid ${theme.colors.gray[4]}`,
     width: getSizeValue({ size, sizes }),
@@ -55,8 +62,17 @@ export default createUseStyles({
     color: theme.white,
   }),
 
-  icon: {
+  icon: ({ theme }) => ({
+    pointerEvents: 'none',
     width: '80%',
     height: '80%',
-  },
+    position: 'absolute',
+    zIndex: 1,
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    margin: 'auto',
+    color: theme.white,
+  }),
 });

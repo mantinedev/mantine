@@ -5,7 +5,13 @@ import { Checkbox } from './Checkbox';
 
 function CheckboxWrapper(props: Omit<React.ComponentProps<typeof Checkbox>, 'value' | 'onChange'>) {
   const [value, onChange] = useState(false);
-  return <Checkbox value={value} onChange={onChange} {...props} />;
+  return (
+    <Checkbox
+      value={value}
+      onChange={(event) => onChange(event.currentTarget.checked)}
+      {...props}
+    />
+  );
 }
 
 storiesOf('@mantine/core', module).add('Checkbox', () => (
