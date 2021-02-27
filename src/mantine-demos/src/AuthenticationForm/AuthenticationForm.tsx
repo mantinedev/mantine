@@ -60,10 +60,10 @@ export default function AuthenticationForm({ noShadow, noPadding }: Authenticati
               placeholder="Your first name"
               label="First name"
               style={{ marginRight: 20, flex: '0 0 calc(50% - 10px)' }}
-              {...form.getInputProps({
-                field: 'firstName',
-                error: 'First name should include at least 2 characters',
-              })}
+              value={form.values.firstName}
+              onChange={(event) => form.setFieldValue('firstName', event.currentTarget.value)}
+              onFocus={() => form.setFieldError('firstName', false)}
+              error={form.errors.firstName && 'First name should include at least 2 characters'}
             />
 
             <TextInput
@@ -71,10 +71,10 @@ export default function AuthenticationForm({ noShadow, noPadding }: Authenticati
               placeholder="Your last name"
               label="Last name"
               style={{ flex: '0 0 calc(50% - 10px)' }}
-              {...form.getInputProps({
-                field: 'lastName',
-                error: 'Last name should include at least 2 characters',
-              })}
+              value={form.values.lastName}
+              onChange={(event) => form.setFieldValue('lastName', event.currentTarget.value)}
+              onFocus={() => form.setFieldError('lastName', false)}
+              error={form.errors.lastName && 'Last name should include at least 2 characters'}
             />
           </div>
         )}
@@ -84,10 +84,10 @@ export default function AuthenticationForm({ noShadow, noPadding }: Authenticati
           placeholder="Your email"
           label="Email"
           icon={<EnvelopeClosedIcon />}
-          {...form.getInputProps({
-            field: 'email',
-            error: 'Field should contain a valid email',
-          })}
+          value={form.values.email}
+          onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+          onFocus={() => form.setFieldError('email', false)}
+          error={form.errors.email && 'Field should contain a valid email'}
         />
 
         <PasswordInput
@@ -98,10 +98,13 @@ export default function AuthenticationForm({ noShadow, noPadding }: Authenticati
           showPasswordLabel="Show password"
           hidePasswordLabel="Hide password"
           icon={<LockClosedIcon />}
-          {...form.getInputProps({
-            field: 'password',
-            error: 'Password should contain 1 number, 1 letter and at least 6 characters',
-          })}
+          value={form.values.password}
+          onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
+          onFocus={() => form.setFieldError('password', false)}
+          error={
+            form.errors.password &&
+            'Password should contain 1 number, 1 letter and at least 6 characters'
+          }
         />
 
         {formType === 'register' && (
