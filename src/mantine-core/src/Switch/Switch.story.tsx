@@ -5,13 +5,16 @@ import { Switch } from './Switch';
 
 function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' | 'onChange'>) {
   const [value, onChange] = useState(false);
-  return <Switch value={value} onChange={onChange} {...props} />;
+  return (
+    <Switch value={value} onChange={(event) => onChange(event.currentTarget.checked)} {...props} />
+  );
 }
 
 storiesOf('@mantine/core', module).add('Switch', () => (
   <div style={{ padding: 50 }}>
     <MantineProvider>
-      <SwitchWrapper />
+      <Switch label="Uncontrolled" />
+      <SwitchWrapper style={{ marginTop: 15 }} />
       <SwitchWrapper size="xs" label="Turn on the notifications" style={{ marginTop: 15 }} />
       <SwitchWrapper size="sm" label="Turn on the notifications" style={{ marginTop: 15 }} />
       <SwitchWrapper size="md" label="Turn on the notifications" style={{ marginTop: 15 }} />

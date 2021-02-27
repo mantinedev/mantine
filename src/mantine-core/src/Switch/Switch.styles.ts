@@ -43,7 +43,11 @@ export default createUseStyles({
     size,
     radius,
     theme,
+    reduceMotion,
+    color,
   }: {
+    reduceMotion: boolean;
+    color: string;
     size: MantineSize;
     radius: MantineNumberSize;
     theme: MantineTheme;
@@ -53,20 +57,23 @@ export default createUseStyles({
 
     return {
       ...getFocusStyles(theme),
+      position: 'relative',
       borderRadius,
       backgroundColor: theme.colors.gray[2],
       border: `1px solid ${theme.colors.gray[3]}`,
       height: getSizeValue({ size, sizes: switchHeight }),
       width: getSizeValue({ size, sizes: switchWidth }),
       padding: [0, 2],
+      margin: 0,
       cursor: 'pointer',
       transitionProperty: 'background-color, border-color',
       transitionTimingFunction: 'ease',
-      transitionDuration: ({ reduceMotion }: { reduceMotion: boolean }) =>
-        reduceMotion ? '1ms' : '150ms',
+      transitionDuration: reduceMotion ? '1ms' : '150ms',
       outline: 0,
       boxSizing: 'border-box',
       appearance: 'none',
+      display: 'flex',
+      alignItems: 'center',
 
       '&::before': {
         borderRadius,
@@ -77,30 +84,28 @@ export default createUseStyles({
         height: handleSize,
         width: handleSize,
         border: `1px solid ${theme.colors.gray[3]}`,
-        transition: ({ reduceMotion }: { reduceMotion: boolean }) =>
-          reduceMotion ? 'none' : 'transform 150ms ease',
+        transition: reduceMotion ? 'none' : 'transform 150ms ease',
       },
 
       '&:disabled::before': {
         backgroundColor: theme.colors.gray[2],
       },
+
+      '&:checked': {
+        backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+        borderColor: getThemeColor({ theme, color, shade: 5 }),
+
+        '&::before': {
+          transform: `translateX(${
+            getSizeValue({ size, sizes: switchWidth }) -
+            getSizeValue({ size, sizes: handleSizes }) -
+            6 // borderWidth: 2 + padding: 2 * 2
+          }px)`,
+          borderColor: getThemeColor({ theme, color, shade: 6 }),
+        },
+      },
     };
   },
-
-  checked: ({ color, theme }: { color: string; theme: MantineTheme }) => ({
-    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
-    borderColor: getThemeColor({ theme, color, shade: 5 }),
-
-    '&::before': {
-      transform: ({ size }) =>
-        `translateX(${
-          getSizeValue({ size, sizes: switchWidth }) -
-          getSizeValue({ size, sizes: handleSizes }) -
-          6 // borderWidth: 2 + padding: 2 * 2
-        }px)`,
-      borderColor: getThemeColor({ theme, color, shade: 6 }),
-    },
-  }),
 
   label: ({ theme }: { theme: MantineTheme }) => ({
     ...getFontStyles(theme),

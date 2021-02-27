@@ -7,8 +7,8 @@ import useStyles from './Switch.styles';
 interface SwitchProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
-  value: boolean;
-  onChange(value: boolean, event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
+  value?: boolean;
+  onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
   label?: React.ReactNode;
   disabled?: boolean;
   id?: string;
@@ -32,7 +32,7 @@ export const Switch = forwardRef(
       themeOverride,
       ...others
     }: SwitchProps,
-    ref: React.ForwardedRef<HTMLButtonElement>
+    ref: React.ForwardedRef<HTMLInputElement>
   ) => {
     const classes = useStyles({
       size,
@@ -46,15 +46,13 @@ export const Switch = forwardRef(
 
     return (
       <div className={cx(classes.wrapper, className)} {...others}>
-        <button
-          ref={ref}
-          disabled={disabled}
-          className={cx(classes.switch, { [classes.checked]: value })}
-          type="button"
-          role="checkbox"
-          onClick={(event) => onChange(!value, event)}
-          aria-checked={value}
+        <input
           id={uuid}
+          ref={ref}
+          type="checkbox"
+          className={classes.switch}
+          checked={value}
+          onChange={onChange}
         />
 
         {label && (
