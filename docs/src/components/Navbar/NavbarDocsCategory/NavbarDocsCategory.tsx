@@ -13,7 +13,12 @@ export default function NavbarDocsCategory({ links, category }: NavbarDocsCatego
   const classes = useStyles({ theme: useMantineTheme() });
 
   const items = links.map((link) => (
-    <Link key={link.to} className={classes.link} activeClassName={classes.linkActive} to={link.to}>
+    <Link
+      key={link.to}
+      className={classes.link}
+      activeClassName={classes.linkActive}
+      to={`${link.to}/`}
+    >
       {link.slug}
     </Link>
   ));
