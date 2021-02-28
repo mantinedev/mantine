@@ -5,9 +5,9 @@ import { useMantineTheme } from './use-mantine-theme';
 import { DEFAULT_THEME } from '../default-theme';
 
 describe('@mantine/theme/use-mantine-theme', () => {
-  it('throws error if called outside of MantineProvider', () => {
+  it('returns default theme if called outside of MantineProvider', () => {
     const hook = renderHook(() => useMantineTheme());
-    expect(hook.result.error).toEqual(Error('MantineProvider was not found in tree'));
+    expect(hook.result.current).toEqual(DEFAULT_THEME);
   });
 
   it('returns theme from context', () => {
