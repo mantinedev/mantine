@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from './enzyme';
+import { shallow } from 'enzyme';
 
 export function itSupportsStyle(Component: React.ElementType, requiredProps: Record<string, any>) {
   it('accepts style property', () => {

@@ -1,4 +1,3 @@
-export { shallow, mount, unwrapForwardedRef } from './enzyme';
 export { checkAccessibility } from './check-accessibility';
 export { isHasComposableAttribute } from './it-has-composable-attribute';
 export { itRendersChildren } from './it-renders-children';

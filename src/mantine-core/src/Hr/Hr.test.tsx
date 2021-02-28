@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
+import { shallow } from 'enzyme';
+import { itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
 import { Hr } from './Hr';
 
 describe('@mantine/core/Hr', () => {

@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, itSupportsClassName, itSupportsStyle, itSupportsOthers } from '@mantine/tests';
+import { shallow } from 'enzyme';
+import { itSupportsClassName, itSupportsStyle, itSupportsOthers } from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/theme';
 import { Loader } from './Loader';
 

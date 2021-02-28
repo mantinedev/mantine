@@ -1,8 +1,7 @@
 import React from 'react';
 import { RocketIcon } from '@modulz/radix-icons';
+import { shallow, mount } from 'enzyme';
 import {
-  shallow,
-  mount,
   checkAccessibility,
   itSupportsStyle,
   itSupportsOthers,

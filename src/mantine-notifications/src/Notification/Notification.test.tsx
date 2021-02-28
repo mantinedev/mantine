@@ -1,7 +1,7 @@
 import React from 'react';
 import { Cross1Icon } from '@modulz/radix-icons';
+import { mount } from 'enzyme';
 import {
-  mount,
   checkAccessibility,
   itSupportsClassName,
   itSupportsStyle,
