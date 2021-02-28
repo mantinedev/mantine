@@ -57,7 +57,7 @@ export const Select = forwardRef(
 
     if (placeholder) {
       options.unshift(
-        <option key="placeholder" value="" disabled>
+        <option key="placeholder" value="" selected disabled hidden>
           {placeholder}
         </option>
       );
@@ -83,7 +83,7 @@ export const Select = forwardRef(
             className={cx(classes.select, {
               [classes.withIcon]: icon,
               [classes.invalid]: error,
-              [classes.placeholder]: !value,
+              [classes.placeholder]: !value && !!onChange,
             })}
             id={uuid}
             value={value}

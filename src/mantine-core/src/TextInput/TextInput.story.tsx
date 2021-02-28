@@ -10,13 +10,18 @@ function WrappedTextInput(
   const [value, onChange] = useState('');
   return (
     <div style={{ maxWidth: 300, marginTop: 20 }}>
-      <TextInput value={value} onChange={onChange} {...props} />
+      <TextInput
+        value={value}
+        onChange={(event) => onChange(event.currentTarget.value)}
+        {...props}
+      />
     </div>
   );
 }
 
 storiesOf('@mantine/core', module).add('TextInput', () => (
   <MantineProvider>
+    <TextInput label="Uncontrolled" placeholder="Uncontrolled input" />
     <WrappedTextInput label="Email" required placeholder="Email" type="email" />
     <WrappedTextInput label="Your twitter" placeholder="Twitter" icon={<TwitterLogoIcon />} />
     <WrappedTextInput

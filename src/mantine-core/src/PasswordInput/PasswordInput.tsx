@@ -11,8 +11,8 @@ interface PasswordInputProps
   extends DefaultProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange'> {
-  value: string;
-  onChange(event: React.ChangeEvent<HTMLInputElement>): void;
+  value?: string;
+  onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
   id?: string;
   icon?: React.ReactNode;
   radius?: MantineNumberSize;

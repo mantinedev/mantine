@@ -10,13 +10,18 @@ function WrappedPasswordInput(
   const [value, onChange] = useState('');
   return (
     <div style={{ maxWidth: 300, marginTop: 20 }}>
-      <PasswordInput value={value} onChange={onChange} {...props} />
+      <PasswordInput
+        value={value}
+        onChange={(event) => onChange(event.currentTarget.value)}
+        {...props}
+      />
     </div>
   );
 }
 
 storiesOf('@mantine/core', module).add('PasswordInput', () => (
   <MantineProvider>
+    <PasswordInput label="Uncontrolled" placeholder="Uncontrolled" />
     <WrappedPasswordInput label="Password" required placeholder="password" type="password" />
     <WrappedPasswordInput
       label="Password"

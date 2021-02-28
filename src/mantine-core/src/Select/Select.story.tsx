@@ -17,13 +17,19 @@ function WrappedSelect(
   const [value, onChange] = useState('');
   return (
     <div style={{ maxWidth: 300, marginTop: 20 }}>
-      <Select value={value} onChange={onChange} data={data} {...props} />
+      <Select
+        value={value}
+        onChange={(event) => onChange(event.currentTarget.value)}
+        data={data}
+        {...props}
+      />
     </div>
   );
 }
 
 storiesOf('@mantine/core', module).add('Select', () => (
   <MantineProvider>
+    <Select label="Uncontrolled" data={data} placeholder="Your favorite library" />
     <WrappedSelect
       icon={<RocketIcon />}
       label="Your favorite library"
