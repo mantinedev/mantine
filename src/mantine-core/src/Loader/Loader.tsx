@@ -21,12 +21,12 @@ const sizes = {
   xl: 58,
 };
 
-export function Loader({ size = 'md', color, style, themeOverride, ...others }: LoaderProps) {
+export function Loader({ size = 'md', color, themeOverride, ...others }: LoaderProps) {
   const theme = useMantineTheme(themeOverride);
 
   return (
     <svg
-      width={getSizeValue({ size, sizes })}
+      width={`${getSizeValue({ size, sizes })}px`}
       fill={getThemeColor({ theme, color, shade: 5 })}
       viewBox="0 0 135 140"
       xmlns="http://www.w3.org/2000/svg"
