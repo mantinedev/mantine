@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { RocketIcon } from '@modulz/radix-icons';
-import { MantineProvider } from '@mantine/theme';
 import { Select } from './Select';
 
 const data = [
@@ -28,7 +27,7 @@ function WrappedSelect(
 }
 
 storiesOf('@mantine/core', module).add('Select', () => (
-  <MantineProvider>
+  <>
     <Select label="Uncontrolled" data={data} placeholder="Your favorite library" />
     <WrappedSelect
       icon={<RocketIcon />}
@@ -50,5 +49,5 @@ storiesOf('@mantine/core', module).add('Select', () => (
       placeholder="Your favorite library"
       error="Your favorite library cannot be Angular"
     />
-  </MantineProvider>
+  </>
 ));

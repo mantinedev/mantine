@@ -1,12 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/theme';
 import { Text } from '../Text/Text';
 import { Title } from '../Title/Title';
 import { Container } from './Container';
 
 storiesOf('@mantine/core', module).add('Container', () => (
-  <MantineProvider>
+  <>
     <Container size="xs">
       <Title order={4}>XS Container</Title>
       <Text>
@@ -51,5 +50,5 @@ storiesOf('@mantine/core', module).add('Container', () => (
         expedita. Eos, ipsa!
       </Text>
     </Container>
-  </MantineProvider>
+  </>
 ));

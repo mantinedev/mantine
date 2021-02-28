@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { Calendar } from 'react-feather';
-import { MantineProvider, MantineSize, DEFAULT_THEME } from '@mantine/theme';
+import { MantineSize, DEFAULT_THEME } from '@mantine/theme';
 import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
 import { Button, LinkButton } from './Button';
 
@@ -27,7 +27,7 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
 ));
 
 storiesOf('@mantine/core', module).add('Button', () => (
-  <MantineProvider>
+  <>
     <ElementsGroup>
       <Button disabled>Disabled</Button>
       <Button radius="lg">Lg radius</Button>
@@ -73,5 +73,5 @@ storiesOf('@mantine/core', module).add('Button', () => (
         Open in new tab
       </LinkButton>
     </ElementsGroup>
-  </MantineProvider>
+  </>
 ));

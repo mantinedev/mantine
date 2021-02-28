@@ -1,11 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/theme';
 import { Text } from '../Text/Text';
 import { Alert } from './Alert';
 
 storiesOf('@mantine/core', module).add('Alert', () => (
-  <MantineProvider>
+  <>
     <div style={{ maxWidth: 400 }}>
       <Alert title="Everything is fine!" color="teal">
         <Text>
@@ -29,5 +28,5 @@ storiesOf('@mantine/core', module).add('Alert', () => (
         </Text>
       </Alert>
     </div>
-  </MantineProvider>
+  </>
 ));

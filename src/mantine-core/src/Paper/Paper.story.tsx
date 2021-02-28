@@ -1,12 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider, DEFAULT_THEME } from '@mantine/theme';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
 import { Text } from '../Text/Text';
 import { Paper } from './Paper';
 
 storiesOf('@mantine/core', module).add('Paper', () => (
-  <MantineProvider>
+  <>
     <ElementsGroup grow style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], padding: 80 }}>
       <Paper style={{ width: 260 }}>
         <Text>
@@ -56,5 +56,5 @@ storiesOf('@mantine/core', module).add('Paper', () => (
         </Text>
       </Paper>
     </ElementsGroup>
-  </MantineProvider>
+  </>
 ));

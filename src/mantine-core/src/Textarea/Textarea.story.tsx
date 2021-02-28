@@ -1,11 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/theme';
 import { Textarea } from './Textarea';
 
 storiesOf('@mantine/core', module).add('Textarea', () => (
   <div style={{ padding: 50 }}>
-    <MantineProvider>
+    <>
       <Textarea
         radius="md"
         autosize
@@ -24,6 +23,6 @@ storiesOf('@mantine/core', module).add('Textarea', () => (
         label="Textarea"
         placeholder="Textarea placeholder"
       />
-    </MantineProvider>
+    </>
   </div>
 ));

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/theme';
 import { Switch } from './Switch';
 
 function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' | 'onChange'>) {
@@ -12,7 +11,7 @@ function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' 
 
 storiesOf('@mantine/core', module).add('Switch', () => (
   <div style={{ padding: 50 }}>
-    <MantineProvider>
+    <>
       <Switch label="Uncontrolled" />
       <SwitchWrapper style={{ marginTop: 15 }} />
       <SwitchWrapper size="xs" label="Turn on the notifications" style={{ marginTop: 15 }} />
@@ -28,6 +27,6 @@ storiesOf('@mantine/core', module).add('Switch', () => (
       <SwitchWrapper label="Turn on the notifications" radius="sm" style={{ marginTop: 15 }} />
       <SwitchWrapper label="Turn on the notifications" radius={0} style={{ marginTop: 15 }} />
       <SwitchWrapper label="Turn on the notifications" disabled style={{ marginTop: 15 }} />
-    </MantineProvider>
+    </>
   </div>
 ));

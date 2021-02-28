@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/theme';
 import { Month } from './Month';
 
 function WrappedMonth(
@@ -11,7 +10,7 @@ function WrappedMonth(
 }
 
 storiesOf('@mantine/core', module).add('Month', () => (
-  <MantineProvider>
+  <>
     <WrappedMonth disableOutsideEvents autoFocus />
-  </MantineProvider>
+  </>
 ));

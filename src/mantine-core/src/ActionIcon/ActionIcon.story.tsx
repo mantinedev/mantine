@@ -7,12 +7,11 @@ import {
   CheckIcon,
   LockOpen1Icon,
 } from '@modulz/radix-icons';
-import { MantineProvider } from '@mantine/theme';
 import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
 import { ActionIcon } from './ActionIcon';
 
 storiesOf('@mantine/core', module).add('ActionIcon', () => (
-  <MantineProvider>
+  <>
     <ElementsGroup>
       <ActionIcon color="gray">
         <GearIcon />
@@ -34,5 +33,5 @@ storiesOf('@mantine/core', module).add('ActionIcon', () => (
         <CheckIcon />
       </ActionIcon>
     </ElementsGroup>
-  </MantineProvider>
+  </>
 ));

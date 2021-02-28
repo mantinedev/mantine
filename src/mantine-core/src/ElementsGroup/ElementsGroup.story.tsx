@@ -1,11 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/theme';
 import { Button } from '../Button/Button';
 import { ElementsGroup } from './ElementsGroup';
 
 storiesOf('@mantine/core', module).add('ElementsGroup', () => (
-  <MantineProvider>
+  <>
     <ElementsGroup position="left">
       <Button>Button 1</Button>
       <Button>Button 2</Button>
@@ -35,5 +34,5 @@ storiesOf('@mantine/core', module).add('ElementsGroup', () => (
       <Button>Button 2</Button>
       <Button>Button 3</Button>
     </ElementsGroup>
-  </MantineProvider>
+  </>
 ));

@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/theme';
 import { Table } from './Table';
 
 const elements = [
@@ -35,7 +34,7 @@ const table = (
 );
 
 storiesOf('@mantine/core', module).add('Table', () => (
-  <MantineProvider>
+  <>
     <div style={{ maxWidth: 600 }}>
       <Table>{table}</Table>
       <div style={{ marginTop: 30 }}>
@@ -47,5 +46,5 @@ storiesOf('@mantine/core', module).add('Table', () => (
         </Table>
       </div>
     </div>
-  </MantineProvider>
+  </>
 ));

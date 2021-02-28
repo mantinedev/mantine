@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/theme';
 import { Burger } from './Burger';
 
 function WrappedBurger(props: Omit<React.ComponentProps<typeof Burger>, 'opened' | 'onChange'>) {
@@ -13,7 +12,7 @@ function WrappedBurger(props: Omit<React.ComponentProps<typeof Burger>, 'opened'
 }
 
 storiesOf('@mantine/core', module).add('Burger', () => (
-  <MantineProvider>
+  <>
     <WrappedBurger size="xs" />
     <WrappedBurger size="sm" />
     <WrappedBurger size="md" />
@@ -22,5 +21,5 @@ storiesOf('@mantine/core', module).add('Burger', () => (
     <WrappedBurger size={120} color="blue" />
     <WrappedBurger size={20} color="blue" />
     <WrappedBurger size={12} color="blue" />
-  </MantineProvider>
+  </>
 ));

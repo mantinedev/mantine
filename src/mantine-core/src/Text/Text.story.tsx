@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/theme';
 import { Text } from './Text';
 
 const CustomComponent = ({
@@ -17,7 +16,7 @@ const CustomComponent = ({
 );
 
 storiesOf('@mantine/core', module).add('Text', () => (
-  <MantineProvider>
+  <>
     <Text>Default text</Text>
     <Text weight={500}>Semibold text</Text>
     <Text weight={700}>Bold text</Text>
@@ -55,5 +54,5 @@ storiesOf('@mantine/core', module).add('Text', () => (
       molestias cupiditate numquam ipsa ratione doloremque repudiandae? Eveniet deleniti consequatur
       officia rem quisquam enim.
     </Text>
-  </MantineProvider>
+  </>
 ));

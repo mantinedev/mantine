@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { TwitterLogoIcon } from '@modulz/radix-icons';
-import { MantineProvider } from '@mantine/theme';
 import { TextInput } from './TextInput';
 
 function WrappedTextInput(
@@ -20,7 +19,7 @@ function WrappedTextInput(
 }
 
 storiesOf('@mantine/core', module).add('TextInput', () => (
-  <MantineProvider>
+  <>
     <TextInput label="Uncontrolled" placeholder="Uncontrolled input" />
     <WrappedTextInput label="Email" required placeholder="Email" type="email" />
     <WrappedTextInput label="Your twitter" placeholder="Twitter" icon={<TwitterLogoIcon />} />
@@ -44,5 +43,5 @@ storiesOf('@mantine/core', module).add('TextInput', () => (
       error="This field is invalid"
       type="email"
     />
-  </MantineProvider>
+  </>
 ));
