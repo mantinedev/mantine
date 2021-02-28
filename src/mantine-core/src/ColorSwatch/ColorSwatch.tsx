@@ -11,7 +11,7 @@ interface ColorSwatchProps extends DefaultProps, React.ComponentPropsWithoutRef<
 export function ColorSwatch({ color, size = 25, style, ...others }: ColorSwatchProps) {
   return (
     <div
-      style={{ ...style, width: size, height: size, borderRadius: size, backgroundColor: color }}
+      style={{ width: size, height: size, borderRadius: size, backgroundColor: color, ...style }}
       data-mantine-composable
       {...others}
     />
