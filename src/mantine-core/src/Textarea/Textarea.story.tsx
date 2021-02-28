@@ -15,20 +15,14 @@ storiesOf('@mantine/core', module).add('Textarea', () => (
         required
         description="Description"
         placeholder="Textarea placeholder"
-        value=""
-        onChange={(f) => f}
         ref={(node) => node.focus()}
       />
       <Textarea
         style={{ marginTop: 20 }}
-        disabled
         radius="md"
-        autosize
         minRows={3}
         label="Textarea"
         placeholder="Textarea placeholder"
-        value=""
-        onChange={(f) => f}
       />
     </MantineProvider>
   </div>

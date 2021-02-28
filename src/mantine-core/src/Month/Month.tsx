@@ -9,11 +9,21 @@ import Day from './Day/Day';
 import useStyles from './Month.styles';
 
 interface MonthProps extends DefaultProps, React.ComponentPropsWithoutRef<'table'> {
+  /** Date at which month should be shown */
   month: Date;
+
+  /** Locale is used to get weekdays names with date.toLocaleDateString  */
   locale?: string;
+
+  /** Selected date */
   selected?: Date;
+
+  /** Autofocus selected date on mount, if no date is selected autofocus is applied to first month day */
   autoFocus?: boolean;
+
+  /** When true dates that are outside of given month cannot be clicked or focused */
   disableOutsideEvents?: boolean;
+
   onDayClick?(day: Date): void;
 }
 

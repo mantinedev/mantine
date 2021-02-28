@@ -4,8 +4,10 @@ import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme
 import useStyles from './Container.styles';
 
 interface ContainerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
-  fluid?: boolean;
   size?: MantineNumberSize;
+
+  /** If fluid is set to true, size prop is ignored and Container always take 100% of width */
+  fluid?: boolean;
 }
 
 export function Container({ className, fluid, size, themeOverride, ...others }: ContainerProps) {

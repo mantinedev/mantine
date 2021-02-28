@@ -14,6 +14,8 @@ interface CheckboxProps
   onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
   label?: React.ReactNode;
   disabled?: boolean;
+
+  /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
 }
 
@@ -46,6 +48,7 @@ export const Checkbox = forwardRef(
             className={classes.checkbox}
             checked={value}
             onChange={onChange}
+            disabled={disabled}
           />
           <CheckIcon className={classes.icon} />
         </div>

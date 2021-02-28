@@ -4,6 +4,7 @@ import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './Title.styles';
 
 interface TitleProps extends DefaultProps, React.ComponentPropsWithoutRef<'h1'> {
+  /** Defines component and styles which will be used */
   order?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 

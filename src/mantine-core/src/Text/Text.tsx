@@ -8,7 +8,7 @@ interface TextProps extends DefaultProps {
   children?: React.ReactNode;
   size?: MantineSize;
   color?: string;
-  weight?: number;
+  weight?: number | string;
   transform?: 'uppercase' | 'lowercase' | 'capitalize';
   variant?: TextVariant;
 }

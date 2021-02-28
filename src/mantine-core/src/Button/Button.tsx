@@ -11,7 +11,11 @@ interface ButtonBaseProps extends DefaultProps {
   size?: MantineSize;
   type?: 'submit' | 'button' | 'reset';
   color?: string;
+
+  /** Adds icon before button label  */
   leftIcon?: React.ReactNode;
+
+  /** Adds icon after button label  */
   rightIcon?: React.ReactNode;
   radius?: MantineNumberSize;
   variant?: ButtonVariant;

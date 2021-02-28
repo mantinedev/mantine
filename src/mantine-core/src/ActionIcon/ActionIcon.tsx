@@ -4,10 +4,7 @@ import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme
 import useStyles from './ActionIcon.styles';
 
 interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
-  /** Button color revealed on hover and focus, defaults to theme.primaryColor */
   color?: string;
-
-  /** Button border radius, defaults to theme.radius.sm */
   radius?: MantineNumberSize;
 }
 

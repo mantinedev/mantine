@@ -7,11 +7,12 @@ import useStyles from './Switch.styles';
 interface SwitchProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
+  /** id is used to bind input and label, if not passed unique id will be generated for each input */
+  id?: string;
   value?: boolean;
   onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
   label?: React.ReactNode;
   disabled?: boolean;
-  id?: string;
   color?: string;
   size?: MantineSize;
   radius?: MantineNumberSize;

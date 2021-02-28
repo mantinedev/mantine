@@ -5,6 +5,7 @@ import useStyles from './Input.styles';
 
 interface InputProps extends DefaultProps, React.ComponentPropsWithoutRef<'input'> {
   invalid?: boolean;
+  /** Adds icon on the left side of input */
   icon?: React.ReactNode;
   inputClassName?: string;
   inputStyle?: React.CSSProperties;

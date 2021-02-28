@@ -8,11 +8,14 @@ interface TextInputProps
   extends DefaultProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange'> {
+  /** id is used to bind input and label, if not passed unique id will be generated for each input */
+  id?: string;
+
+  /** Adds icon on the left side of input */
   icon?: React.ReactNode;
   type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url' | 'number';
   value?: string;
   onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
-  id?: string;
   radius?: MantineNumberSize;
 }
 

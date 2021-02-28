@@ -7,6 +7,8 @@ import useStyles from './Burger.styles';
 interface BurgerProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   color?: string;
   size?: MantineNumberSize;
+
+  /** Burger state: true for cross, false for burger */
   opened: boolean;
 }
 

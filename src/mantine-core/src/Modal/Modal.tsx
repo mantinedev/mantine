@@ -12,12 +12,18 @@ import { Overlay } from '../Overlay/Overlay';
 import useStyles from './Modal.styles';
 
 interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+  /** Modal title, displayed in header before close button */
   title?: React.ReactNode;
+
+  /** Mounts modal if true */
   opened: boolean;
   onClose(): void;
+
+  /** Hides close button, modal still can be closed with escape key and by clicking outside */
   hideCloseButton?: boolean;
   overlayOpacity?: number;
   modalWidth?: number;
+  /** Duration in ms of modal mount and unmount animations */
   transitionDuration?: number;
 }
 

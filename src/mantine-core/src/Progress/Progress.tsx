@@ -5,6 +5,7 @@ import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme
 import useStyles from './Progress.styles';
 
 interface ProgressProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  /** Percent of filled bar (0-100) */
   value: number;
   color?: string;
   size?: MantineNumberSize;

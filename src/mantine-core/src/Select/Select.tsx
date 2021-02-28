@@ -15,13 +15,20 @@ interface SelectProps
   extends DefaultProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'select'>, 'onChange'> {
+  /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
   value?: string;
+
+  /** Adds hidden option to select and sets it as selected if value is not present */
   placeholder?: string;
   onChange?(event: React.ChangeEvent<HTMLSelectElement>): void;
+
+  /** Data used to render options */
   data: SelectItem[];
   disabled?: boolean;
   radius?: MantineNumberSize;
+
+  /** Adds icon on the left side of input */
   icon?: React.ReactNode;
 }
 

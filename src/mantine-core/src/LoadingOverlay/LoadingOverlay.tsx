@@ -6,8 +6,13 @@ import { Loader } from '../Loader/Loader';
 import useStyles from './LoadingOverlay.styles';
 
 interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  /** Defines width of loader */
   loaderSize?: number;
+
+  /** Sets overlay opacity */
   opacity?: number;
+
+  /** If visible overlay will take 100% width and height of first parent with relative position and overlay all of its content */
   visible: boolean;
 }
 

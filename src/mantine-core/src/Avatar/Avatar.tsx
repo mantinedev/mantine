@@ -5,9 +5,16 @@ import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme
 import useStyles from './Avatar.styles';
 
 interface AvatarProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  /** Image link */
   src: string;
+
+  /** Image alt text */
   alt?: string;
+
+  /** Image width and height */
   size?: MantineNumberSize;
+
+  /** Image border-radius */
   radius?: MantineNumberSize;
 }
 

@@ -10,14 +10,21 @@ interface TextareaProps
   extends DefaultProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'textarea'>, 'onChange'> {
+  /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
-  placeholder?: string;
+
+  /** If true textarea will grow with content until maxRows are reached  */
   autosize?: boolean;
+  placeholder?: string;
+
+  /** Defines maxRows in autosize variant, not applicable to regular variant */
   maxRows?: number;
+
+  /** Defined minRows in autosize variant and rows in regular variant */
   minRows?: number;
   radius?: MantineNumberSize;
-  value: string;
-  onChange(value: string, event: React.ChangeEvent<HTMLTextAreaElement>): void;
+  value?: string;
+  onChange?(event: React.ChangeEvent<HTMLTextAreaElement>): void;
 }
 
 export const Textarea = forwardRef(
@@ -25,7 +32,7 @@ export const Textarea = forwardRef(
     {
       radius = 'sm',
       autosize = false,
-      maxRows = 4,
+      maxRows,
       minRows,
       label,
       error,
@@ -63,7 +70,7 @@ export const Textarea = forwardRef(
             id={uuid}
             ref={ref}
             value={value}
-            onChange={(event) => onChange(event.currentTarget.value, event)}
+            onChange={onChange}
             {...others}
           />
         ) : (
@@ -72,10 +79,10 @@ export const Textarea = forwardRef(
             id={uuid}
             placeholder={placeholder}
             className={cx(classes.textarea, { [classes.invalid]: error })}
-            rows={maxRows}
+            rows={minRows}
             ref={ref}
             value={value}
-            onChange={(event) => onChange(event.currentTarget.value, event)}
+            onChange={onChange}
             {...others}
           />
         )}

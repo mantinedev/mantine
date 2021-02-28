@@ -4,9 +4,16 @@ import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './Spoiler.styles';
 
 interface SpoilerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  /** Max height of visible content, when this point is reached spoiler appears */
   maxHeight: number;
+
+  /** Label for close spoiler action */
   hideLabel: React.ReactNode;
+
+  /** Label for open spoiler action */
   showLabel: React.ReactNode;
+
+  /** Get ref of spoiler toggle button */
   controlRef?: React.MutableRefObject<HTMLButtonElement> | React.RefCallback<HTMLButtonElement>;
   overlayColor?: string;
 }
