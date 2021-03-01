@@ -24,7 +24,7 @@ interface ButtonBaseProps extends DefaultProps {
 type _ButtonProps<T extends React.ElementType, U extends HTMLElement> = ComponentPassThrough<
   T,
   ButtonBaseProps
-> & { elementRef: React.ForwardedRef<U> };
+> & { elementRef?: React.ForwardedRef<U> };
 
 export function MantineButton<
   T extends React.ElementType = 'button',
@@ -63,9 +63,19 @@ export function MantineButton<
       ref={elementRef}
     >
       <div className={classes.inner}>
-        {leftIcon && <span className={cx(classes.icon, classes.leftIcon)}>{leftIcon}</span>}
-        <span>{children}</span>
-        {rightIcon && <span className={cx(classes.icon, classes.rightIcon)}>{rightIcon}</span>}
+        {leftIcon && (
+          <span data-mantine-left-icon className={cx(classes.icon, classes.leftIcon)}>
+            {leftIcon}
+          </span>
+        )}
+
+        <span data-mantine-label>{children}</span>
+
+        {rightIcon && (
+          <span data-mantine-right-icon className={cx(classes.icon, classes.rightIcon)}>
+            {rightIcon}
+          </span>
+        )}
       </div>
     </Element>
   );
