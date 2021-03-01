@@ -71,6 +71,7 @@ export default createUseStyles({
     ...sizes[size],
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    userSelect: 'none',
     backgroundColor: 'transparent',
     display: 'inline-block',
     textDecoration: 'none',
@@ -86,6 +87,13 @@ export default createUseStyles({
 
     '&:active': {
       transform: 'translateY(1px)',
+    },
+
+    '&:disabled': {
+      borderColor: 'transparent',
+      backgroundColor: theme.colors.gray[3],
+      color: theme.colors.gray[6],
+      pointerEvents: 'none',
     },
   }),
 
@@ -154,7 +162,6 @@ export default createUseStyles({
     ...getFocusStyles(theme),
 
     padding: 0,
-
     outline: 0,
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     backgroundColor: 'transparent',
@@ -165,6 +172,15 @@ export default createUseStyles({
 
     '&:hover': {
       textDecoration: 'underline',
+    },
+
+    '&:disabled': {
+      color: theme.colors.gray[5],
+      cursor: 'not-allowed',
+
+      '&:hover': {
+        textDecoration: 'none',
+      },
     },
   }),
 

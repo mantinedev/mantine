@@ -72,6 +72,12 @@ storiesOf('@mantine/core', module).add('Button', () => (
       >
         Open in new tab
       </LinkButton>
+      <Button variant="outline" disabled>
+        Outline Disabled
+      </Button>
+      <Button variant="link" disabled>
+        Link Disabled
+      </Button>
     </ElementsGroup>
   </>
 ));
