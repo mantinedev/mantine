@@ -71,6 +71,7 @@ export default createUseStyles({
     ...sizes[size],
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
     userSelect: 'none',
     backgroundColor: 'transparent',
     display: 'inline-block',
@@ -111,6 +112,7 @@ export default createUseStyles({
     ...sizes[size],
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
     display: 'inline-block',
     textDecoration: 'none',
     boxSizing: 'border-box',
@@ -135,6 +137,7 @@ export default createUseStyles({
 
     '&:active': {
       transform: 'translateY(1px)',
+      backgroundColor: getThemeColor({ theme, color, shade: 7 }),
     },
 
     '&:disabled': {
@@ -160,7 +163,7 @@ export default createUseStyles({
     ...sizes[size],
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
-
+    WebkitTapHighlightColor: 'transparent',
     padding: 0,
     outline: 0,
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),

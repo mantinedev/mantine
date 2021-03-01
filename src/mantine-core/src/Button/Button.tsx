@@ -61,6 +61,7 @@ export function MantineButton<
       disabled={disabled}
       data-mantine-composable
       ref={elementRef}
+      onTouchStart={() => {}}
     >
       <div className={classes.inner}>
         {leftIcon && (
