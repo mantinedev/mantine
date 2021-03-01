@@ -2,7 +2,7 @@ import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { Title } from '@mantine/core';
 import Highlight, { defaultProps } from 'prism-react-renderer';
-import theme from 'prism-react-renderer/themes/dracula';
+import theme from 'prism-react-renderer/themes/palenight';
 
 const h = (order: 1 | 2 | 3 | 4 | 5 | 6) => ({ ...others }: any) => (
   <Title order={order} themeOverride={{ fontFamily: 'IBM Plex Mono, monospace' }} {...others} />
@@ -31,9 +31,11 @@ const components = {
             style={{
               ...style,
               fontFamily: 'IBM Plex Mono, monospace',
+              fontSize: 13,
               lineHeight: 1.4,
               padding: '15px 20px',
               borderRadius: 4,
+              marginBottom: 30,
             }}
           >
             {tokens

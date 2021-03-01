@@ -18,6 +18,7 @@ export default createUseStyles(
     main: {
       flex: 1,
       paddingTop: theme.spacing.lg,
+      paddingBottom: theme.spacing.xl * 2,
       paddingLeft: theme.spacing.md,
     },
   }),
