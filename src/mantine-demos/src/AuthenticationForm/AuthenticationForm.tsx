@@ -118,7 +118,7 @@ export default function AuthenticationForm({ noShadow, noPadding }: Authenticati
           <Checkbox
             style={{ marginTop: 20 }}
             label="I agree to sell my soul and privacy to this corporation"
-            value={form.values.termsOfService}
+            checked={form.values.termsOfService}
             onChange={(event) => form.setFieldValue('termsOfService', event.currentTarget.checked)}
           />
         )}
