@@ -6,7 +6,7 @@ function CheckboxWrapper(props: Omit<React.ComponentProps<typeof Checkbox>, 'val
   const [value, onChange] = useState(false);
   return (
     <Checkbox
-      value={value}
+      checked={value}
       onChange={(event) => onChange(event.currentTarget.checked)}
       {...props}
     />

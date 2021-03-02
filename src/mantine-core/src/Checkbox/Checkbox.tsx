@@ -7,13 +7,15 @@ import useStyles from './Checkbox.styles';
 
 interface CheckboxProps
   extends DefaultProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
+    Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
   color?: string;
   size?: MantineNumberSize;
-  value?: boolean;
-  onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
   label?: React.ReactNode;
   disabled?: boolean;
+  inputStyle?: React.CSSProperties;
+
+  /** Props spread to wrapper element */
+  wrapperProps?: Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'>;
 
   /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
@@ -23,7 +25,7 @@ export const Checkbox = forwardRef(
   (
     {
       className,
-      value,
+      checked,
       onChange,
       color,
       themeOverride,
@@ -31,6 +33,9 @@ export const Checkbox = forwardRef(
       disabled,
       id,
       size,
+      wrapperProps,
+      style,
+      inputStyle,
       ...others
     }: CheckboxProps,
     ref: React.ForwardedRef<HTMLInputElement>
@@ -39,16 +44,18 @@ export const Checkbox = forwardRef(
     const classes = useStyles({ size, color, theme: useMantineTheme(themeOverride) });
 
     return (
-      <div className={cx(classes.wrapper, className)} {...others}>
+      <div className={cx(classes.wrapper, className)} style={style} {...wrapperProps}>
         <div className={classes.checkboxWrapper}>
           <input
+            {...others}
             id={uuid}
             ref={ref}
             type="checkbox"
             className={classes.checkbox}
-            checked={value}
+            checked={checked}
             onChange={onChange}
             disabled={disabled}
+            style={inputStyle}
           />
           <CheckIcon className={classes.icon} />
         </div>
