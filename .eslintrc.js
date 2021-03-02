@@ -15,6 +15,9 @@ module.exports = {
     // We do export
     'jest/no-export': 'off',
 
+    // This looks very messy
+    'jest/expect-expect': 'off',
+
     // some props require dangle
     'no-underscore-dangle': 'off',
 
