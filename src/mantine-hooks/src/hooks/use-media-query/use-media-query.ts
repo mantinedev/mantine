@@ -23,5 +23,5 @@ export function useMediaQuery(query: string, onChange: MediaQueryCallback) {
     queryRef.current = window.matchMedia(query);
     onChange({ matches: queryRef.current.matches, media: queryRef.current.media });
     return attachMediaListener(queryRef.current, onChange);
-  }, []);
+  }, [query]);
 }
