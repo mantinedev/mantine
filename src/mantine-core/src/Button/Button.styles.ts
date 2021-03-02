@@ -43,6 +43,11 @@ const sizes = {
   },
 };
 
+const getWidthStyles = (fullWidth: boolean) => ({
+  display: fullWidth ? 'block' : 'inline-block',
+  width: fullWidth ? '100%' : 'auto',
+});
+
 export default createUseStyles({
   icon: {
     display: 'flex',
@@ -62,15 +67,18 @@ export default createUseStyles({
     size,
     radius,
     theme,
+    fullWidth,
   }: {
     color?: string;
     size: MantineSize;
     radius: MantineNumberSize;
     theme: MantineTheme;
+    fullWidth: boolean;
   }) => ({
     ...sizes[size],
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    ...getWidthStyles(fullWidth),
     WebkitTapHighlightColor: 'transparent',
     userSelect: 'none',
     backgroundColor: 'transparent',
@@ -103,17 +111,19 @@ export default createUseStyles({
     size,
     radius,
     theme,
+    fullWidth,
   }: {
     color?: string;
     size: MantineSize;
     radius: MantineNumberSize;
     theme: MantineTheme;
+    fullWidth: boolean;
   }) => ({
     ...sizes[size],
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    ...getWidthStyles(fullWidth),
     WebkitTapHighlightColor: 'transparent',
-    display: 'inline-block',
     textDecoration: 'none',
     boxSizing: 'border-box',
     border: '1px solid transparent',
@@ -154,15 +164,18 @@ export default createUseStyles({
     size,
     radius,
     theme,
+    fullWidth,
   }: {
     color?: string;
     size: MantineSize;
     radius: MantineNumberSize;
     theme: MantineTheme;
+    fullWidth: boolean;
   }) => ({
     ...sizes[size],
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    ...getWidthStyles(fullWidth),
     WebkitTapHighlightColor: 'transparent',
     padding: 0,
     outline: 0,

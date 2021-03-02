@@ -17,6 +17,10 @@ interface ButtonBaseProps extends DefaultProps {
 
   /** Adds icon after button label  */
   rightIcon?: React.ReactNode;
+
+  /** Sets button width to 100% of parent element */
+  fullWidth?: boolean;
+
   radius?: MantineNumberSize;
   variant?: ButtonVariant;
 }
@@ -38,6 +42,7 @@ export function MantineButton<
   children,
   leftIcon,
   rightIcon,
+  fullWidth = false,
   variant = 'filled',
   radius = 'sm',
   component: Element = 'button',
@@ -50,6 +55,7 @@ export function MantineButton<
     radius,
     color,
     size,
+    fullWidth,
     theme: useMantineTheme(themeOverride),
   });
 

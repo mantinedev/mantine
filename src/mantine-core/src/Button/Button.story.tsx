@@ -79,5 +79,14 @@ storiesOf('@mantine/core', module).add('Button', () => (
         Link Disabled
       </Button>
     </ElementsGroup>
+    <div style={{ width: 500, padding: 10, backgroundColor: '#eee' }}>
+      <Button fullWidth>Full width</Button>
+      <Button style={{ marginTop: 15 }} fullWidth variant="outline">
+        Full width outline
+      </Button>
+      <Button style={{ marginTop: 15 }} fullWidth variant="link">
+        Full width link
+      </Button>
+    </div>
   </>
 ));
