@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
-import { CheckIcon } from '@modulz/radix-icons';
+import { CheckIcon, DividerHorizontalIcon } from '@modulz/radix-icons';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import useStyles from './Checkbox.styles';
@@ -13,6 +13,9 @@ interface CheckboxProps
   label?: React.ReactNode;
   disabled?: boolean;
   inputStyle?: React.CSSProperties;
+
+  /** Intermediate state of checkbox, overwrites checked */
+  intermediate?: boolean;
 
   /** Props spread to wrapper element */
   wrapperProps?: Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'>;
@@ -31,6 +34,7 @@ export const Checkbox = forwardRef(
       themeOverride,
       label,
       disabled,
+      intermediate,
       id,
       size,
       wrapperProps,
@@ -52,12 +56,16 @@ export const Checkbox = forwardRef(
             ref={ref}
             type="checkbox"
             className={classes.checkbox}
-            checked={checked}
+            checked={intermediate || checked}
             onChange={onChange}
             disabled={disabled}
             style={inputStyle}
           />
-          <CheckIcon className={classes.icon} />
+          {intermediate ? (
+            <DividerHorizontalIcon className={classes.icon} />
+          ) : (
+            <CheckIcon className={classes.icon} />
+          )}
         </div>
 
         {label && (

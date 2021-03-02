@@ -67,6 +67,19 @@ describe('@mantine/core/Checkbox', () => {
     expect(element.render().find('input').css('line-height')).toBe('1px');
   });
 
+  it('sets checked state based on checked prop', () => {
+    const checked = shallow(<Checkbox checked onChange={() => {}} />);
+    const notChecked = shallow(<Checkbox checked={false} onChange={() => {}} />);
+
+    expect(checked.render().find('input').attr('checked')).toBe('checked');
+    expect(notChecked.render().find('input').attr('checked')).toBe(undefined);
+  });
+
+  it('sets checked state based on intermediate prop', () => {
+    const element = shallow(<Checkbox intermediate checked={false} onChange={() => {}} />);
+    expect(element.render().find('input').attr('checked')).toBe('checked');
+  });
+
   it('spreads ...others to input element', () => {
     const element = shallow(<Checkbox aria-checked width="30px" />);
 
