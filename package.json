@@ -19,7 +19,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "build": "ts-node scripts/build",
-    "test": "jest",
+    "test": "npm run typecheck && npm run lint && npm run jest",
+    "jest": "jest",
     "storybook": "ts-node scripts/storybook-start"
   },
   "devDependencies": {
