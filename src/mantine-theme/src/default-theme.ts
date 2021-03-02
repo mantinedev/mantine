@@ -61,11 +61,15 @@ export const DEFAULT_THEME: MantineTheme = {
   },
 
   headings: {
-    h1: [30, 1.3],
-    h2: [24, 1.35],
-    h3: [20, 1.4],
-    h4: [18, 1.45],
-    h5: [16, 1.5],
-    h6: [14, 1.5],
+    fontFamily: 'Roboto, sans-serif',
+    fontWeight: 700,
+    sizes: {
+      h1: { fontSize: 30, lineHeight: 1.3 },
+      h2: { fontSize: 24, lineHeight: 1.35 },
+      h3: { fontSize: 20, lineHeight: 1.4 },
+      h4: { fontSize: 18, lineHeight: 1.45 },
+      h5: { fontSize: 16, lineHeight: 1.5 },
+      h6: { fontSize: 14, lineHeight: 1.5 },
+    },
   },
 };

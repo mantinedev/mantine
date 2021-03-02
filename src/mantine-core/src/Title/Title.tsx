@@ -16,16 +16,13 @@ export function Title({
   children,
   ...others
 }: TitleProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme });
   const element = `h${order}`;
-  const [fontSize, lineHeight] = theme.headings[element];
+  const classes = useStyles({ theme: useMantineTheme(themeOverride), element });
 
   return React.createElement(
     element,
     {
       className: cx(classes.title, className),
-      style: { fontSize, lineHeight, ...style },
       ...others,
     },
     children
