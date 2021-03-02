@@ -9,6 +9,10 @@ describe('@mantine/core/Loader', () => {
   itSupportsClassName(Loader, {});
   itSupportsStyle(Loader, {});
 
+  it('has correct displayName', () => {
+    expect(Loader.displayName).toEqual('@mantine/core/Loader');
+  });
+
   it('sets svg width based on size prop', () => {
     const element = shallow(<Loader size={41} />);
     expect(element.render().attr('width')).toBe('41px');

@@ -14,6 +14,10 @@ describe('@mantine/core/ColorSwatch', () => {
   itSupportsStyle(ColorSwatch, { color: '#fff' });
   isHasComposableAttribute(ColorSwatch, { color: '#fff' });
 
+  it('has correct displayName', () => {
+    expect(ColorSwatch.displayName).toEqual('@mantine/core/ColorSwatch');
+  });
+
   it('sets correct width, height and border-radius based on size property', () => {
     const element = shallow(<ColorSwatch size={51} color="red" />).render();
     expect(element.css('width')).toBe('51px');

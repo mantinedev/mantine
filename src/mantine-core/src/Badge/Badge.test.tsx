@@ -17,4 +17,8 @@ describe('@mantine/core/Badge', () => {
   itRendersChildren(Badge, {});
   itSupportsStyle(Badge, {});
   isHasComposableAttribute(Badge, {});
+
+  it('has correct displayName', () => {
+    expect(Badge.displayName).toEqual('@mantine/core/Badge');
+  });
 });

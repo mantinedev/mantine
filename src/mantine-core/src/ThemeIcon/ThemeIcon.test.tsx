@@ -13,4 +13,8 @@ describe('@mantine/core/ThemeIcon', () => {
   itSupportsOthers(ThemeIcon, {});
   itSupportsStyle(ThemeIcon, {});
   isHasComposableAttribute(ThemeIcon, {});
+
+  it('has correct displayName', () => {
+    expect(ThemeIcon.displayName).toEqual('@mantine/core/ThemeIcon');
+  });
 });

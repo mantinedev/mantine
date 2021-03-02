@@ -19,6 +19,10 @@ describe('@mantine/core/MantineButton', () => {
   itSupportsClassName(MantineButton, {});
   isHasComposableAttribute(MantineButton, {});
 
+  it('has correct displayName', () => {
+    expect(MantineButton.displayName).toEqual('@mantine/core/MantineButton');
+  });
+
   it('passes type to button component', () => {
     const element = shallow(<Button type="submit" />);
     expect(element.render().attr('type')).toBe('submit');
@@ -59,6 +63,10 @@ describe('@mantine/core/Button', () => {
   itSupportsStyle(Button, {});
   itSupportsClassName(Button, {});
   itSupportsRef(Button, {}, HTMLButtonElement);
+
+  it('has correct displayName', () => {
+    expect(Button.displayName).toEqual('@mantine/core/Button');
+  });
 });
 
 describe('@mantine/core/LinkButton', () => {
@@ -74,4 +82,8 @@ describe('@mantine/core/LinkButton', () => {
   itSupportsStyle(LinkButton, {});
   itSupportsClassName(LinkButton, {});
   itSupportsRef(LinkButton, {}, HTMLAnchorElement);
+
+  it('has correct displayName', () => {
+    expect(LinkButton.displayName).toEqual('@mantine/core/LinkButton');
+  });
 });

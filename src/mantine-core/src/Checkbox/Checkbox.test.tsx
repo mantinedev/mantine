@@ -18,6 +18,10 @@ describe('@mantine/core/Checkbox', () => {
     mount(<Checkbox id="with-id" label="With id" />),
   ]);
 
+  it('has correct displayName', () => {
+    expect(Checkbox.displayName).toEqual('@mantine/core/Checkbox');
+  });
+
   it('renders label based on label prop', () => {
     const withLabel = shallow(<Checkbox label="test-label" />);
     const withoutLabel = shallow(<Checkbox />);

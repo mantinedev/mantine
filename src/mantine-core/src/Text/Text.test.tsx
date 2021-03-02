@@ -14,6 +14,10 @@ describe('@mantine/core/Text', () => {
   itSupportsClassName(Text, {});
   itSupportsOthers(Text, {});
 
+  it('has correct displayName', () => {
+    expect(Text.displayName).toEqual('@mantine/core/Text');
+  });
+
   it('sets font-weight based on weight prop', () => {
     const element = shallow(<Text weight={600} />);
     expect(element.render().css('font-weight')).toBe('600');

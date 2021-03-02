@@ -13,4 +13,8 @@ describe('@mantine/core/Burger', () => {
   itSupportsOthers(Burger, {});
   itSupportsClassName(Burger, {});
   itSupportsStyle(Burger, {});
+
+  it('has correct displayName', () => {
+    expect(Burger.displayName).toEqual('@mantine/core/Burger');
+  });
 });
