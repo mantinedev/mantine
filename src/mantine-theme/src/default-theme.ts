@@ -15,7 +15,7 @@ const {
   lime,
   yellow,
   orange,
-} = OpenColor;
+} = OpenColor as any;
 
 export const DEFAULT_THEME: MantineTheme = {
   white: '#fff',

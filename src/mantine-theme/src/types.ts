@@ -1,30 +1,17 @@
 import type { CSSProperties } from 'react';
-import type { DeepPartial } from '@mantine/types';
+import type { DeepPartial, Tuple } from '@mantine/types';
 
 export type MantineSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type MantineNumberSize = MantineSize | number;
 
 type HeadingStyle = readonly [number, number];
 
-export type MantineColorsList = [
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string
-];
-
 export type MantineSizes = Record<MantineSize, number>;
 
 export interface MantineTheme {
   readonly white: string;
   readonly black: string;
-  readonly colors: Record<string, string[]>;
+  readonly colors: Record<string, Tuple<string, 10>>;
   readonly fontFamily: string;
   readonly primaryColor: string;
 
