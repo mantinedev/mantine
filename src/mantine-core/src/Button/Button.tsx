@@ -62,7 +62,7 @@ export function MantineButton<
   return (
     <Element
       {...others}
-      className={cx(classes[variant], className)}
+      className={cx(classes.shared, classes[variant], className)}
       type={type}
       disabled={disabled}
       data-mantine-composable

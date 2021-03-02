@@ -11,6 +11,14 @@ import {
 
 export type ButtonVariant = 'link' | 'filled' | 'outline';
 
+interface ButtonStylesProps {
+  color: string;
+  size: MantineSize;
+  radius: MantineNumberSize;
+  theme: MantineTheme;
+  fullWidth: boolean;
+}
+
 const sizes = {
   xs: {
     fontSize: 10,
@@ -62,37 +70,34 @@ export default createUseStyles({
     marginLeft: 10,
   },
 
-  outline: ({
-    color,
-    size,
-    radius,
-    theme,
-    fullWidth,
-  }: {
-    color?: string;
-    size: MantineSize;
-    radius: MantineNumberSize;
-    theme: MantineTheme;
-    fullWidth: boolean;
-  }) => ({
-    ...sizes[size],
-    ...getFontStyles(theme),
-    ...getFocusStyles(theme),
-    ...getWidthStyles(fullWidth),
+  inner: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  shared: (props: ButtonStylesProps) => ({
+    ...sizes[props.size],
+    ...getFontStyles(props.theme),
+    ...getFocusStyles(props.theme),
+    ...getWidthStyles(props.fullWidth),
     WebkitTapHighlightColor: 'transparent',
     userSelect: 'none',
-    backgroundColor: 'transparent',
-    display: 'inline-block',
-    textDecoration: 'none',
-    boxSizing: 'border-box',
     outline: 0,
+    boxSizing: 'border-box',
+    textDecoration: 'none',
+    cursor: 'pointer',
+    appearance: 'none',
+  }),
+
+  outline: ({ color, radius, theme }: ButtonStylesProps) => ({
+    backgroundColor: 'transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     textTransform: 'uppercase',
     fontWeight: 'bold',
     letterSpacing: 0.5,
     color: getThemeColor({ theme, color, shade: 8 }),
     border: `1px solid ${getThemeColor({ theme, color, shade: 8 })}`,
-    cursor: 'pointer',
 
     '&:active': {
       transform: 'translateY(1px)',
@@ -106,37 +111,13 @@ export default createUseStyles({
     },
   }),
 
-  filled: ({
-    color,
-    size,
-    radius,
-    theme,
-    fullWidth,
-  }: {
-    color?: string;
-    size: MantineSize;
-    radius: MantineNumberSize;
-    theme: MantineTheme;
-    fullWidth: boolean;
-  }) => ({
-    ...sizes[size],
-    ...getFontStyles(theme),
-    ...getFocusStyles(theme),
-    ...getWidthStyles(fullWidth),
-    WebkitTapHighlightColor: 'transparent',
-    textDecoration: 'none',
-    boxSizing: 'border-box',
+  filled: ({ color, size, radius, theme }: ButtonStylesProps) => ({
     border: '1px solid transparent',
-    outline: 0,
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     textTransform: 'uppercase',
     fontWeight: 'bold',
     letterSpacing: 0.5,
-    cursor: 'pointer',
-    userSelect: 'none',
-    appearance: 'none',
     lineHeight: 1,
-
     backgroundColor: getThemeColor({ theme, color, shade: 6 }),
     textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}`,
     color: theme.white,
@@ -159,26 +140,8 @@ export default createUseStyles({
     },
   }),
 
-  link: ({
-    color,
-    size,
-    radius,
-    theme,
-    fullWidth,
-  }: {
-    color?: string;
-    size: MantineSize;
-    radius: MantineNumberSize;
-    theme: MantineTheme;
-    fullWidth: boolean;
-  }) => ({
-    ...sizes[size],
-    ...getFontStyles(theme),
-    ...getFocusStyles(theme),
-    ...getWidthStyles(fullWidth),
-    WebkitTapHighlightColor: 'transparent',
+  link: ({ color, radius, theme }: ButtonStylesProps) => ({
     padding: 0,
-    outline: 0,
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     backgroundColor: 'transparent',
     border: 0,
@@ -199,10 +162,4 @@ export default createUseStyles({
       },
     },
   }),
-
-  inner: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 });
