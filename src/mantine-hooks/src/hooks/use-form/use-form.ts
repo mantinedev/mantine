@@ -13,15 +13,17 @@ export function useForm<T extends { [key: string]: any }>({
   initialValues,
   validationRules = {},
 }: UseForm<T>) {
+  type ValidationErrors = { [P in keyof T]: boolean };
+
   const initialErrors =
     validationRules instanceof Object
       ? Object.keys(validationRules).reduce((acc, field) => {
           acc[field as keyof T] = false;
           return acc;
-        }, {} as { [P in keyof T]: boolean })
-      : ({} as { [P in keyof T]: boolean });
+        }, {} as ValidationErrors)
+      : ({} as ValidationErrors);
 
-  const [errors, setErrors] = useState<{ [P in keyof T]: boolean }>(initialErrors);
+  const [errors, setErrors] = useState<ValidationErrors>(initialErrors);
   const [values, setValues] = useState(initialValues);
 
   const validate = () => {
@@ -47,7 +49,7 @@ export function useForm<T extends { [key: string]: any }>({
       ...currentErrors,
       [field]:
         typeof validationRules[field] === 'function'
-          ? validationRules[field](values[field])
+          ? !validationRules[field](values[field])
           : false,
     }));
 
@@ -59,8 +61,8 @@ export function useForm<T extends { [key: string]: any }>({
     setFieldError(field, false);
   };
 
-  const onSubmit = (handleSubmit: (values: T) => any) => (event: React.FormEvent) => {
-    event.preventDefault();
+  const onSubmit = (handleSubmit: (values: T) => any) => (event?: React.FormEvent) => {
+    event && event.preventDefault();
     validate() && handleSubmit(values);
   };
 
