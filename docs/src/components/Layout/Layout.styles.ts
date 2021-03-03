@@ -8,15 +8,12 @@ export default createUseStyles(
     },
 
     inner: {
-      display: 'flex',
-    },
-
-    navbar: {
-      flex: '0 0 260px',
+      paddingLeft: 260,
     },
 
     main: {
       flex: 1,
+      minHeight: '100vh',
       paddingTop: theme.spacing.lg,
       paddingBottom: theme.spacing.xl * 2,
       paddingLeft: theme.spacing.md,

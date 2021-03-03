@@ -6,6 +6,8 @@ export const LOGO_SIZE = 30;
 export default createUseStyles(
   (theme: MantineTheme) => ({
     logo: {
+      paddingRight: theme.spacing.md,
+      paddingLeft: theme.spacing.md,
       height: 60,
       display: 'flex',
       alignItems: 'center',

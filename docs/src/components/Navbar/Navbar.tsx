@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { graphql, useStaticQuery } from 'gatsby';
+import { Scrollbars } from 'react-custom-scrollbars';
 import NavbarMainLink from './NavbarMainLink/NavbarMainLink';
 import NavbarLogo from './NavbarLogo/NavbarLogo';
 import NavbarDocsCategory from './NavbarDocsCategory/NavbarDocsCategory';
@@ -24,7 +25,7 @@ const query = graphql`
   }
 `;
 
-export default function Navbar({ className }: { className: string }) {
+export default function Navbar({ className }: { className?: string }) {
   const classes = useStyles();
   const data = getDocsData(useStaticQuery(query));
 
@@ -46,10 +47,12 @@ export default function Navbar({ className }: { className: string }) {
   return (
     <nav className={cx(classes.navbar, className)}>
       <NavbarLogo />
-      <div className={classes.body}>
-        {main}
-        <div className={classes.docs}>{docs}</div>
-      </div>
+      <Scrollbars style={{ height: 'calc(100vh - 60px)' }}>
+        <div className={classes.body}>
+          {main}
+          <div className={classes.docs}>{docs}</div>
+        </div>
+      </Scrollbars>
     </nav>
   );
 }

@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <AppContainer>
       <main className={classes.layout}>
         <div className={classes.inner}>
-          <Navbar className={classes.navbar} />
+          <Navbar />
           <div className={classes.main}>
             <Container size="sm">
               <MdxProvider>{children}</MdxProvider>

@@ -4,15 +4,22 @@ import { theming, MantineTheme } from '@mantine/core';
 export default createUseStyles(
   (theme: MantineTheme) => ({
     navbar: {
-      minHeight: '100vh',
-      paddingRight: theme.spacing.md,
-      paddingLeft: theme.spacing.md,
+      boxSizing: 'border-box',
+      height: '100vh',
       borderRight: `1px solid ${theme.colors.gray[1]}`,
       backgroundColor: theme.white,
+      position: 'fixed',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      width: 260,
     },
 
     body: {
-      marginTop: theme.spacing.md,
+      paddingRight: theme.spacing.md,
+      paddingBottom: theme.spacing.xl * 2,
+      paddingLeft: theme.spacing.md,
+      paddingTop: theme.spacing.md,
     },
 
     docs: {
