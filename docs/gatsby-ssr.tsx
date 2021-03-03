@@ -8,7 +8,9 @@ export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadC
 
   const App = () => (
     <JssProvider registry={sheets}>
-      <MantineProvider>{bodyComponent}</MantineProvider>
+      <MantineProvider theme={{ headings: { fontFamily: 'IBM Plex Mono, monospace' } }}>
+        {bodyComponent}
+      </MantineProvider>
     </JssProvider>
   );
 

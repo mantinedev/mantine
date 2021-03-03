@@ -5,7 +5,7 @@ import Highlight, { defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/palenight';
 
 const h = (order: 1 | 2 | 3 | 4 | 5 | 6) => ({ ...others }: any) => (
-  <Title order={order} themeOverride={{ fontFamily: 'IBM Plex Mono, monospace' }} {...others} />
+  <Title order={order} {...others} />
 );
 
 const components = {
