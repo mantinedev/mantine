@@ -12,21 +12,25 @@ export default function useNotificationsState({ limit }: { limit: number }) {
       }
 
       const index = currentNotifications.findIndex((n) => n.id === notification.id);
+
       if (index === -1) {
         return [...currentNotifications, { ...notification, id: notification.id || nanoid() }];
       }
+
       return currentNotifications;
     });
 
   const updateNotification = (id: string, notification: NotificationProps) =>
     setNotifications((currentNotifications) => {
       const index = currentNotifications.findIndex((n) => n.id === id);
+
       if (index === -1) {
         return currentNotifications;
       }
 
       const newNotifications = [...currentNotifications];
       newNotifications[index] = notification;
+
       return newNotifications;
     });
 
