@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'gatsby';
+import cx from 'clsx';
+import { ChevronDownIcon } from '@modulz/radix-icons';
 import { Text } from '@mantine/core';
 import { DocItem } from '../get-docs-data';
 import useStyles from './NavbarDocsCategory.styles';
@@ -11,6 +13,7 @@ interface NavbarDocsCategoryProps {
 
 export default function NavbarDocsCategory({ links, category }: NavbarDocsCategoryProps) {
   const classes = useStyles();
+  const [collapsed, setCollapsed] = useState(false);
 
   const items = links.map((link) => (
     <Link
@@ -25,10 +28,14 @@ export default function NavbarDocsCategory({ links, category }: NavbarDocsCatego
 
   return (
     <div className={classes.category}>
-      <Text className={classes.title} weight={700} color="gray" size="xs" transform="uppercase">
-        {category}
-      </Text>
-      {items}
+      <button className={classes.header} type="button" onClick={() => setCollapsed((c) => !c)}>
+        <Text className={classes.title} weight={700} color="gray" size="xs" transform="uppercase">
+          {category}
+        </Text>
+
+        <ChevronDownIcon className={cx(classes.icon, { [classes.iconCollapsed]: collapsed })} />
+      </button>
+      {!collapsed && items}
     </div>
   );
 }

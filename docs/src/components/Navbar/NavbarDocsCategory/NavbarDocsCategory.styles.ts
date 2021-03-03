@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/core';
+import { theming, MantineTheme, getFocusStyles } from '@mantine/core';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -11,7 +11,41 @@ export default createUseStyles(
       },
     },
 
+    header: {
+      ...getFocusStyles(theme),
+      outline: 0,
+      display: 'flex',
+      alignItems: 'center',
+      width: `calc(100% + ${theme.spacing.md * 2}px)`,
+      justifyContent: 'space-between',
+      backgroundColor: 'transparent',
+      borderRadius: theme.radius.sm,
+      color: theme.colors.gray[6],
+      height: 32,
+      border: 0,
+      padding: [0, theme.spacing.md],
+      marginBottom: theme.spacing.xs,
+      marginLeft: -1 * theme.spacing.md,
+      marginRight: -1 * theme.spacing.md,
+      cursor: 'pointer',
+
+      '&:hover': {
+        backgroundColor: theme.colors.gray[0],
+      },
+    },
+
+    icon: {
+      transform: 'rotate(0deg)',
+      transition: 'transform 150ms ease',
+    },
+
+    iconCollapsed: {
+      transform: 'rotate(-90deg)',
+    },
+
     link: {
+      outline: 0,
+      ...getFocusStyles(theme),
       display: 'block',
       textDecoration: 'none',
       color: theme.colors.gray[7],
@@ -31,9 +65,7 @@ export default createUseStyles(
     },
 
     title: {
-      marginBottom: 5,
       userSelect: 'none',
-      color: theme.colors.gray[6],
     },
   }),
   { theming }
