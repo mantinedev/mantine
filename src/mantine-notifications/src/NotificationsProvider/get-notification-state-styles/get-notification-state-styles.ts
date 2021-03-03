@@ -19,7 +19,7 @@ const noTransform = {
   left: 'translateX(0)',
   right: 'translateX(0)',
   'top-center': 'translateY(0)',
-  'bottom=center': 'translateY(0)',
+  'bottom-center': 'translateY(0)',
 };
 
 export default function getNotificationStateStyles({
