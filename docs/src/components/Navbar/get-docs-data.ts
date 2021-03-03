@@ -18,7 +18,7 @@ export default function getDocsData(query: DocsQuery) {
       acc[category] = [];
     }
 
-    acc[category].push({ slug: item.node.slug, to: `/core/${item.node.slug}`, category });
+    acc[category].push({ slug: item.node.slug, to: `/core/${item.node.slug}/`, category });
     return acc;
   }, {});
 }
