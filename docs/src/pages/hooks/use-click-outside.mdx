@@ -13,29 +13,4 @@ import { UseClickOutsideDemo } from '../../demos/hooks/use-click-outside.demos';
 This hook allows detection of clicks outside of specified element.
 It is usually used with modals and dropdowns to close overlay when user clicks outside.
 
-## Usage
-
-```tsx
-import React, { useState } from 'react';
-import { Paper, Button } from '@mantine/core';
-import { useClickOutside } from '@mantine/hooks';
-
-export function UseClickOutsideDemo() {
-  const [opened, setOpened] = useState(false);
-  const ref = useClickOutside(() => setOpened(false));
-
-  return (
-    <>
-      <Button onClick={() => setOpened(true)}>Open dropdown</Button>
-
-      {opened && (
-        <Paper ref={ref} shadow="md">
-          <span>Click outside to close</span>
-        </Paper>
-      )}
-    </>
-  );
-}
-```
-
 <UseClickOutsideDemo />

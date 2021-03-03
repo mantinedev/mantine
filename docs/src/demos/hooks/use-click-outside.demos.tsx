@@ -1,14 +1,35 @@
 import React, { useState } from 'react';
 import { Paper, Button, ElementsGroup } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
-import Demo from '../../components/Demo/Demo';
+import CodeDemo from '../../components/CodeDemo/CodeDemo';
+
+const code = `import React, { useState } from 'react';
+import { Paper, Button } from '@mantine/core';
+import { useClickOutside } from '@mantine/hooks';
 
 export function UseClickOutsideDemo() {
   const [opened, setOpened] = useState(false);
   const ref = useClickOutside(() => setOpened(false));
 
   return (
-    <Demo>
+    <>
+      <Button onClick={() => setOpened(true)}>Open dropdown</Button>
+
+      {opened && (
+        <Paper ref={ref} shadow="md">
+          <span>Click outside to close</span>
+        </Paper>
+      )}
+    </>
+  );
+}`;
+
+export function UseClickOutsideDemo() {
+  const [opened, setOpened] = useState(false);
+  const ref = useClickOutside(() => setOpened(false));
+
+  return (
+    <CodeDemo code={code} language="tsx" title="Demo">
       <div style={{ position: 'relative' }}>
         <ElementsGroup position="center">
           <Button onClick={() => setOpened(true)}>Open dropdown</Button>
@@ -33,6 +54,6 @@ export function UseClickOutsideDemo() {
           </Paper>
         )}
       </div>
-    </Demo>
+    </CodeDemo>
   );
 }
