@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import cx from 'clsx';
-import { nanoid } from 'nanoid';
 import { Transition, TransitionGroup } from 'react-transition-group';
 import { DefaultProps, useMantineTheme } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 import { NotificationsContext } from '../Notifications.context';
-import { NotificationProps, NotificationsProviderPositioning } from '../types';
+import { NotificationsProviderPositioning } from '../types';
 import getPositionStyles from './get-position-styles/get-position-styles';
 import getNotificationStateStyles from './get-notification-state-styles/get-notification-state-styles';
 import NotificationContainer from '../Notification/NotificationContainer';
 import useStyles from './NotificationsProvider.styles';
+import useNotificationsState from './use-notifications-state/use-notifications-state';
 
 const POSITIONS = [
   'top-left',
@@ -42,44 +42,19 @@ export function NotificationsProvider({
   children,
   ...others
 }: NotificationProviderProps) {
+  const {
+    notifications,
+    showNotification,
+    updateNotification,
+    hideNotification,
+  } = useNotificationsState({ limit });
   const reduceMotion = useReducedMotion();
   const transitionDuration = reduceMotion ? 1 : duration;
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme });
-  const [notifications, setNotifications] = useState<NotificationProps[]>([]);
   const positioning = (POSITIONS.includes(position) ? position : 'bottom-right').split(
     '-'
   ) as NotificationsProviderPositioning;
-
-  const showNotification = (notification: NotificationProps) =>
-    setNotifications((currentNotifications) => {
-      if (currentNotifications.length >= limit) {
-        return currentNotifications;
-      }
-
-      const index = currentNotifications.findIndex((n) => n.id === notification.id);
-      if (index === -1) {
-        return [...currentNotifications, { ...notification, id: notification.id || nanoid() }];
-      }
-      return currentNotifications;
-    });
-
-  const updateNotification = (id: string, notification: NotificationProps) =>
-    setNotifications((currentNotifications) => {
-      const index = currentNotifications.findIndex((n) => n.id === id);
-      if (index === -1) {
-        return currentNotifications;
-      }
-
-      const newNotifications = [...currentNotifications];
-      newNotifications[index] = notification;
-      return newNotifications;
-    });
-
-  const hideNotification = (id: string) =>
-    setNotifications((currentNotifications) =>
-      currentNotifications.filter((notification) => notification.id !== id)
-    );
 
   const items = notifications.map((notification) => (
     <Transition
