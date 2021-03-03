@@ -18,6 +18,8 @@ const query = graphql`
           slug
           frontmatter {
             category
+            title
+            order
           }
         }
       }
