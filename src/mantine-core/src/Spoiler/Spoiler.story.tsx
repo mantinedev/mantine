@@ -39,5 +39,9 @@ storiesOf('@mantine/core', module).add('Spoiler', () => (
     >
       {content}
     </Spoiler>
+
+    <Spoiler maxHeight={100} showLabel="Show" hideLabel="Hide">
+      <Text>No Spoiler here when content is not high enough for spoiler</Text>
+    </Spoiler>
   </div>
 ));

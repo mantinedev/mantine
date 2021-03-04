@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
+import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
 
 interface SpoilerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -19,8 +20,6 @@ interface SpoilerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div
 
   /** Spoiler reveal transition duration in ms, 0 or null to turn off animation */
   transitionDuration?: number;
-
-  overlayColor?: string;
 }
 
 export function Spoiler({
@@ -29,16 +28,12 @@ export function Spoiler({
   maxHeight = 100,
   hideLabel,
   showLabel,
-  overlayColor = '#fff',
   themeOverride,
   transitionDuration = 200,
   controlRef,
   ...others
 }: SpoilerProps) {
-  const classes = useStyles({
-    transitionDuration: !useReducedMotion() && transitionDuration,
-    theme: useMantineTheme(themeOverride),
-  });
+  const classes = useStyles({ transitionDuration: !useReducedMotion() && transitionDuration });
   const [show, setShowState] = useState(false);
   const [spoiler, setSpoilerState] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -50,7 +45,7 @@ export function Spoiler({
   }, [maxHeight, children]);
 
   return (
-    <div className={cx(classes.spoiler, { [classes.shown]: show }, className)} {...others}>
+    <div className={cx(classes.spoiler, className)} {...others}>
       <div
         className={classes.content}
         style={{
@@ -59,18 +54,16 @@ export function Spoiler({
       >
         <div ref={contentRef}>{children}</div>
       </div>
+
       {spoiler && (
-        <button
+        <Button
+          variant="link"
           ref={controlRef}
-          type="button"
-          className={classes.more}
           onClick={() => setShowState((opened) => !opened)}
-          style={{
-            backgroundImage: `linear-gradient(0deg, ${overlayColor} 20%, rgba(0, 0, 0, 0) 1000%)`,
-          }}
+          themeOverride={themeOverride}
         >
           {spoilerMoreContent}
-        </button>
+        </Button>
       )}
     </div>
   );
