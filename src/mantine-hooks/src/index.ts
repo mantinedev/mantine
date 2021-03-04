@@ -1,5 +1,6 @@
 export { useBreakpoint } from './hooks/use-breakpoint/use-breakpoint';
 export { useClickOutside } from './hooks/use-click-outside/use-click-outside';
+export { useDocumentTitle } from './hooks/use-document-title/use-document-title';
 export { useForm } from './hooks/use-form/use-form';
 export { useId } from './hooks/use-id/use-id';
 export { useListState } from './hooks/use-list-state/use-list-state';
