@@ -10,6 +10,7 @@ export { Checkbox } from './Checkbox/Checkbox';
 export { ColorSwatch } from './ColorSwatch/ColorSwatch';
 export { Container } from './Container/Container';
 export { ElementsGroup } from './ElementsGroup/ElementsGroup';
+export { Highlight } from './Highlight/Highlight';
 export { Hr } from './Hr/Hr';
 export { Input } from './Input/Input';
 export { InputWrapper } from './InputWrapper/InputWrapper';

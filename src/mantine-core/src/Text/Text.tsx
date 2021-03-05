@@ -4,7 +4,7 @@ import { useMantineTheme, DefaultProps, MantineSize } from '@mantine/theme';
 import { ComponentPassThrough } from '@mantine/types';
 import useStyles, { TextVariant } from './Text.styles';
 
-interface TextProps extends DefaultProps {
+export interface TextProps extends DefaultProps {
   children?: React.ReactNode;
   size?: MantineSize;
   color?: string;
