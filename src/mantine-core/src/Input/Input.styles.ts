@@ -39,6 +39,48 @@ export default createUseStyles({
     },
   }),
 
+  filledVariant: ({ theme, radius }: { theme: MantineTheme; radius: MantineNumberSize }) => ({
+    '& $input': {
+      height: 36,
+      paddingLeft: 15,
+      paddingRight: 15,
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      border: '1px solid transparent',
+      backgroundColor: theme.colors.gray[1],
+      transition: 'border-color 100ms ease, box-shadow 100ms ease',
+
+      '&:focus': {
+        outline: 'none',
+        borderColor: theme.colors[theme.primaryColor][6],
+        boxShadow: `0 0 4px ${theme.colors.gray[3]}`,
+      },
+
+      '&::placeholder': {
+        color: theme.colors.gray[6],
+      },
+    },
+
+    '& $input:disabled': {
+      '&::placeholder': {
+        color: theme.colors.gray[5],
+      },
+    },
+
+    '& $invalid': {
+      borderColor: theme.colors.red[6],
+    },
+
+    '& $withIcon': {
+      paddingLeft: 35,
+    },
+
+    '& $icon': {
+      height: 36,
+      width: 36,
+      color: theme.colors.gray[6],
+    },
+  }),
+
   unstyledVariant: {
     '& $input': {
       height: 28,

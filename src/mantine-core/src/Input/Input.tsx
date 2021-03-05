@@ -15,7 +15,7 @@ interface InputProps extends DefaultProps, React.ComponentPropsWithoutRef<'input
   disabled?: boolean;
   required?: boolean;
   radius?: MantineNumberSize;
-  variant?: 'default' | 'unstyled';
+  variant?: 'default' | 'filled' | 'unstyled';
 }
 
 export const Input = forwardRef(
