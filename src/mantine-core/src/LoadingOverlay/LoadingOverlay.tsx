@@ -12,22 +12,27 @@ interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutR
   loaderSize?: number;
 
   /** Sets overlay opacity */
-  opacity?: number;
+  overlayOpacity?: number;
+
+  /** Sets overlay color */
+  overlayColor?: string;
 
   /** If visible overlay will take 100% width and height of first parent with relative position and overlay all of its content */
   visible: boolean;
 
   /** Appear and disappear animation duration */
-  transitionDuration: number;
+  transitionDuration?: number;
 }
 
 export function LoadingOverlay({
   className,
   visible,
   loaderSize,
-  opacity = 0.75,
+  overlayOpacity = 0.75,
+  overlayColor = '#fff',
   themeOverride,
   transitionDuration = 200,
+  style,
   ...others
 }: LoadingOverlayProps) {
   const classes = useStyles();
@@ -48,11 +53,12 @@ export function LoadingOverlay({
           style={{
             transition: `opacity ${duration}ms cubic-bezier(.51,.3,0,1.21)`,
             opacity: state === 'entering' || state === 'entered' ? 1 : 0,
+            ...style,
           }}
           {...others}
         >
           <Loader className={classes.loader} size={loaderSize} themeOverride={themeOverride} />
-          <Overlay opacity={opacity} />
+          <Overlay opacity={overlayOpacity} color={overlayColor} />
         </div>
       )}
     </Transition>
