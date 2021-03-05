@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
+import { Subtract } from '@mantine/types';
 import { Input } from '../Input/Input';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 
@@ -17,6 +18,14 @@ interface TextInputProps
   value?: string;
   onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
   radius?: MantineNumberSize;
+
+  /** Props passed to root element (InputWrapper component) */
+  wrapperProps?: Partial<
+    Subtract<
+      React.ComponentPropsWithoutRef<typeof InputWrapper>,
+      InputWrapperBaseProps & DefaultProps
+    >
+  >;
 }
 
 export const TextInput = forwardRef(
@@ -35,6 +44,7 @@ export const TextInput = forwardRef(
       description,
       radius = 'sm',
       themeOverride,
+      wrapperProps,
       ...others
     }: TextInputProps,
     ref: React.ForwardedRef<HTMLInputElement>
@@ -51,6 +61,7 @@ export const TextInput = forwardRef(
         className={className}
         style={style}
         themeOverride={themeOverride}
+        {...wrapperProps}
       >
         <Input
           {...others}
