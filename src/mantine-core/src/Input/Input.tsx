@@ -8,6 +8,9 @@ interface InputProps extends DefaultProps, React.ComponentPropsWithoutRef<'input
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
   inputClassName?: string;
+
+  /** Properties spread to root element */
+  wrapperProps?: Omit<React.ComponentPropsWithoutRef<'div'>, 'className' | 'style' | 'children'>;
   inputStyle?: React.CSSProperties;
   disabled?: boolean;
   required?: boolean;
@@ -29,6 +32,7 @@ export const Input = forwardRef(
       inputClassName,
       inputStyle,
       themeOverride,
+      wrapperProps,
       ...others
     }: InputProps,
     ref: React.ForwardedRef<HTMLInputElement>
@@ -39,8 +43,13 @@ export const Input = forwardRef(
       <div
         className={cx(classes.inputWrapper, classes[`${variant}Variant`], className)}
         style={style}
+        {...wrapperProps}
       >
-        {icon && <div className={classes.icon}>{icon}</div>}
+        {icon && (
+          <div data-mantine-icon className={classes.icon}>
+            {icon}
+          </div>
+        )}
 
         <input
           {...others}
