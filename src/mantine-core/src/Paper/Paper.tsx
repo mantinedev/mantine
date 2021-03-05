@@ -26,7 +26,7 @@ export const Paper = forwardRef(
     const classes = useStyles({ radius, shadow, padding, theme: useMantineTheme(themeOverride) });
 
     return (
-      <div data-mantine-composable className={cx(classes.paper, className)} ref={ref} {...others}>
+      <div className={cx(classes.paper, className)} ref={ref} {...others}>
         {children}
       </div>
     );
