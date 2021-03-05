@@ -40,15 +40,21 @@ export function InputWrapper({
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
 
   return (
-    <div className={cx(classes.inputWrapper, className)} data-mantine-composable {...others}>
+    <div className={cx(classes.inputWrapper, className)} {...others}>
       {label && (
         <label className={classes.label} htmlFor={id}>
-          {label} {required && <span className={classes.required}>*</span>}
+          {label}
+          {required && (
+            <span data-mantine-required className={classes.required}>
+              {' '}
+              *
+            </span>
+          )}
         </label>
       )}
 
       {description && (
-        <Text color="gray" size="xs" className={classes.description}>
+        <Text data-mantine-description color="gray" size="xs" className={classes.description}>
           {description}
         </Text>
       )}
@@ -56,7 +62,7 @@ export function InputWrapper({
       {children}
 
       {error && (
-        <Text color="red" size="sm" className={classes.error}>
+        <Text data-mantine-error color="red" size="sm" className={classes.error}>
           {error}
         </Text>
       )}
