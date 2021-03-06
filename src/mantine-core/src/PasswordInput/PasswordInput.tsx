@@ -1,7 +1,9 @@
 import React, { forwardRef, useState } from 'react';
-import { useId } from '@mantine/hooks';
+import cx from 'clsx';
 import { EyeOpenIcon, EyeClosedIcon } from '@modulz/radix-icons';
+import { useId } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
+import { Subtract } from '@mantine/types';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from '../Input/Input';
@@ -21,11 +23,25 @@ interface PasswordInputProps
   icon?: React.ReactNode;
   radius?: MantineNumberSize;
 
-  /** aria-label for visibility toggle button in hidden state */
+  /** Title for visibility toggle button in hidden state */
   showPasswordLabel?: string;
 
-  /** aria-label for visibility toggle button in visible state */
+  /** Title for visibility toggle button in visible state */
   hidePasswordLabel?: string;
+
+  /** Style properties added to input element */
+  inputStyle?: React.CSSProperties;
+
+  /** Class name added to input input element */
+  inputClassName?: string;
+
+  /** Props passed to root element (InputWrapper component) */
+  wrapperProps?: Partial<
+    Subtract<
+      React.ComponentPropsWithoutRef<typeof InputWrapper>,
+      InputWrapperBaseProps & DefaultProps
+    >
+  >;
 }
 
 export const PasswordInput = forwardRef(
@@ -37,6 +53,7 @@ export const PasswordInput = forwardRef(
       label,
       error,
       required,
+      description,
       style,
       onChange,
       icon,
@@ -45,6 +62,9 @@ export const PasswordInput = forwardRef(
       hidePasswordLabel,
       showPasswordLabel,
       themeOverride,
+      wrapperProps,
+      inputStyle,
+      inputClassName,
       ...others
     }: PasswordInputProps,
     ref: React.ForwardedRef<HTMLInputElement>
@@ -61,22 +81,26 @@ export const PasswordInput = forwardRef(
         label={label}
         error={error}
         style={style}
+        description={description}
         themeOverride={themeOverride}
+        {...wrapperProps}
       >
         <div className={classes.wrapper}>
           <Input
             {...others}
+            id={uuid}
             required={required}
             disabled={disabled}
             radius={radius}
             ref={ref}
-            inputClassName={classes.input}
+            inputClassName={cx(classes.input, inputClassName)}
             type={reveal ? 'text' : 'password'}
             value={value}
             invalid={!!error}
             onChange={onChange}
             icon={icon}
             themeOverride={themeOverride}
+            style={inputStyle}
           />
 
           {!disabled && (
@@ -85,7 +109,6 @@ export const PasswordInput = forwardRef(
               onClick={() => setReveal((current) => !current)}
               themeOverride={themeOverride}
               title={reveal ? hidePasswordLabel : showPasswordLabel}
-              aria-label={reveal ? hidePasswordLabel : showPasswordLabel}
               radius={radius}
             >
               {reveal ? <EyeClosedIcon /> : <EyeOpenIcon />}
