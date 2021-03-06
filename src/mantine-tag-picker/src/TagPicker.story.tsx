@@ -37,6 +37,7 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
 
   return (
     <TagPicker
+      enableCreate
       value={value}
       onChange={onChange}
       data={data}

@@ -29,6 +29,7 @@ export interface TagsListProps {
   onEventsCaptureChange(shouldCaptureEvents: boolean): void;
   onArrowsCaptureChange(shouldCaptureArrowEvents: boolean): void;
   themeOverride?: MantineThemeOverride;
+  enableCreate?: boolean;
 }
 
 export default function TagsList({
@@ -51,6 +52,7 @@ export default function TagsList({
   onEventsCaptureChange,
   onArrowsCaptureChange,
   themeOverride,
+  enableCreate,
 }: TagsListProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const focusTrapRef = useFocusTrap();
@@ -95,7 +97,7 @@ export default function TagsList({
       <div>
         {tags}
 
-        {canCreate && (
+        {enableCreate && canCreate && (
           <button
             className={cx(classes.createControl, {
               [classes.createControlHovered]: hovered === data.length,

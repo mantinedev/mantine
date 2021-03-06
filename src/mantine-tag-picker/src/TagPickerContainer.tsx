@@ -16,14 +16,15 @@ interface TagPickerProps extends DefaultProps {
   deleteLabel: string;
   noValueLabel: string;
   searchPlaceholder?: string;
+  enableCreate?: boolean;
   onDropdownOpen?(): void;
   onDropdownClose?(): void;
   onSearchChange?(query: string): void;
   controlRef?: React.RefCallback<HTMLButtonElement>;
   onChange(value: TagPickerTag): void;
-  onTagCreate(values: Omit<TagPickerTag, 'id'>): TagPickerTag;
-  onTagDelete(id: string): void;
-  onTagUpdate(id: string, values: Omit<TagPickerTag, 'id'>): void;
+  onTagCreate?(values: Omit<TagPickerTag, 'id'>): TagPickerTag;
+  onTagDelete?(id: string): void;
+  onTagUpdate?(id: string, values: Omit<TagPickerTag, 'id'>): void;
 }
 
 export default function TagPickerContainer(props: TagPickerProps) {
@@ -149,6 +150,7 @@ export default function TagPickerContainer(props: TagPickerProps) {
         onHoveredChange={setHovered}
         onEventsCaptureChange={setShouldCaptureEvents}
         onArrowsCaptureChange={setShouldCaptureArrowEvents}
+        enableCreate={props.enableCreate}
       />
     </div>
   );
