@@ -12,10 +12,15 @@ interface CheckboxProps
   size?: MantineNumberSize;
   label?: React.ReactNode;
   disabled?: boolean;
-  inputStyle?: React.CSSProperties;
 
   /** Intermediate state of checkbox, overwrites checked */
   intermediate?: boolean;
+
+  /** Style properties added to input element */
+  inputStyle?: React.CSSProperties;
+
+  /** Class name added to input element */
+  inputClassName?: string;
 
   /** Props spread to wrapper element */
   wrapperProps?: Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'>;
@@ -40,6 +45,7 @@ export const Checkbox = forwardRef(
       wrapperProps,
       style,
       inputStyle,
+      inputClassName,
       ...others
     }: CheckboxProps,
     ref: React.ForwardedRef<HTMLInputElement>
@@ -55,7 +61,7 @@ export const Checkbox = forwardRef(
             id={uuid}
             ref={ref}
             type="checkbox"
-            className={classes.checkbox}
+            className={cx(classes.checkbox, inputClassName)}
             checked={intermediate || checked}
             onChange={onChange}
             disabled={disabled}

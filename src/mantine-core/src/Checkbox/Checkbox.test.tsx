@@ -84,6 +84,11 @@ describe('@mantine/core/Checkbox', () => {
     expect(element.render().find('input').attr('checked')).toBe('checked');
   });
 
+  it('adds className to input with inputClassName prop', () => {
+    const element = shallow(<Checkbox inputClassName="test-input" />);
+    expect(element.render().find('input').hasClass('test-input')).toBe(true);
+  });
+
   it('spreads ...others to input element', () => {
     const element = shallow(<Checkbox aria-checked width="30px" />);
 
