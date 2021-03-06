@@ -19,6 +19,7 @@ interface TagItemProps {
   onHover(index: number): void;
   onEventsCaptureChange(shouldCaptureEvents: boolean): void;
   themeOverride?: MantineThemeOverride;
+  enableUpdate?: boolean;
 }
 
 export default function TagItem({
@@ -33,6 +34,7 @@ export default function TagItem({
   onTagDelete,
   onEventsCaptureChange,
   themeOverride,
+  enableUpdate,
 }: TagItemProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const controlRef = useRef<HTMLButtonElement>();
@@ -56,25 +58,28 @@ export default function TagItem({
       className={cx(classes.item, { [classes.hovered]: hovered === index })}
       onMouseEnter={() => onHover(index)}
     >
-      <TagEdit
-        opened={editDropdownOpened}
-        onClose={closeEditDropdown}
-        initialValues={data}
-        deleteLabel={deleteLabel}
-        colors={colors}
-        onTagUpdate={onTagUpdate}
-        onTagDelete={onTagDelete}
-        id={data.id}
-      />
-
+      {enableUpdate && (
+        <TagEdit
+          opened={editDropdownOpened}
+          onClose={closeEditDropdown}
+          initialValues={data}
+          deleteLabel={deleteLabel}
+          colors={colors}
+          onTagUpdate={onTagUpdate}
+          onTagDelete={onTagDelete}
+          id={data.id}
+        />
+      )}
       <div className={classes.body}>
         <button type="button" className={classes.control} onClick={() => onSelect(data)}>
           <TagBadge data={data} />
         </button>
 
-        <ActionIcon onClick={openEditDropdown} ref={controlRef}>
-          <DotsHorizontalIcon />
-        </ActionIcon>
+        {enableUpdate && (
+          <ActionIcon onClick={openEditDropdown} ref={controlRef}>
+            <DotsHorizontalIcon />
+          </ActionIcon>
+        )}
       </div>
     </div>
   );

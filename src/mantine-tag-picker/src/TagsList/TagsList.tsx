@@ -30,6 +30,7 @@ export interface TagsListProps {
   onArrowsCaptureChange(shouldCaptureArrowEvents: boolean): void;
   themeOverride?: MantineThemeOverride;
   enableCreate?: boolean;
+  enableUpdate?: boolean;
 }
 
 export default function TagsList({
@@ -53,6 +54,7 @@ export default function TagsList({
   onArrowsCaptureChange,
   themeOverride,
   enableCreate,
+  enableUpdate,
 }: TagsListProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const focusTrapRef = useFocusTrap();
@@ -70,6 +72,7 @@ export default function TagsList({
       deleteLabel={deleteLabel}
       onTagDelete={onTagDelete}
       onEventsCaptureChange={onEventsCaptureChange}
+      enableUpdate={enableUpdate}
     />
   ));
 

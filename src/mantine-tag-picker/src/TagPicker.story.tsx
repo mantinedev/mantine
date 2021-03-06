@@ -39,6 +39,7 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
     <div style={{ padding: 50 }}>
       <TagPicker
         enableCreate
+        enableUpdate
         value={value}
         onChange={onChange}
         data={data}
