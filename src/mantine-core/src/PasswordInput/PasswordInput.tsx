@@ -32,7 +32,7 @@ interface PasswordInputProps
   /** Style properties added to input element */
   inputStyle?: React.CSSProperties;
 
-  /** Class name added to input input element */
+  /** Class name added to input element */
   inputClassName?: string;
 
   /** Props passed to root element (InputWrapper component) */
