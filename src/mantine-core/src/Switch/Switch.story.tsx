@@ -5,7 +5,11 @@ import { Switch } from './Switch';
 function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' | 'onChange'>) {
   const [value, onChange] = useState(false);
   return (
-    <Switch value={value} onChange={(event) => onChange(event.currentTarget.checked)} {...props} />
+    <Switch
+      checked={value}
+      onChange={(event) => onChange(event.currentTarget.checked)}
+      {...props}
+    />
   );
 }
 
