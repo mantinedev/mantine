@@ -1,6 +1,6 @@
 import React from 'react';
 import { RocketIcon } from '@modulz/radix-icons';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import {
   checkAccessibility,
   itSupportsStyle,
@@ -8,6 +8,7 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itRendersChildren,
+  isHasComposableAttribute,
 } from '@mantine/tests';
 import { ActionIcon } from './ActionIcon';
 
@@ -17,6 +18,7 @@ describe('@mantine/core/ActionIcon', () => {
   itSupportsStyle(ActionIcon, {});
   itSupportsRef(ActionIcon, {}, HTMLButtonElement);
   itRendersChildren(ActionIcon, {});
+  isHasComposableAttribute(ActionIcon, {});
   checkAccessibility([
     mount(
       <ActionIcon title="Action icon">
@@ -27,10 +29,5 @@ describe('@mantine/core/ActionIcon', () => {
 
   it('has correct displayName', () => {
     expect(ActionIcon.displayName).toEqual('@mantine/core/ActionIcon');
-  });
-
-  it('has data-mantine-composable attribute', () => {
-    const element = shallow(<ActionIcon />);
-    expect(element.render().attr('data-mantine-composable')).toBe('true');
   });
 });
