@@ -1,0 +1,25 @@
+import { getMonthDays } from './get-month-days';
+
+describe('@mantine/dates/get-month-days', () => {
+  it('returns all month days for given date', () => {
+    // February 2021 is ideal month (4 weeks, month starts on monday and ends on sunday)
+    const monthDays = getMonthDays(new Date(2021, 1, 2));
+    expect(monthDays).toHaveLength(4);
+
+    expect(monthDays[0][1]).toEqual(new Date(2021, 1, 2));
+    expect(monthDays[0][2]).toEqual(new Date(2021, 1, 3));
+    expect(monthDays[1][0]).toEqual(new Date(2021, 1, 8));
+    expect(monthDays[2][0]).toEqual(new Date(2021, 1, 15));
+    expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toEqual(new Date(2021, 2, 0));
+  });
+
+  it('returns outside days for given month', () => {
+    // April 2021 has outside days in the beginning and end of month
+    const monthDays = getMonthDays(new Date(2021, 3, 2));
+
+    expect(monthDays).toHaveLength(5);
+    expect(monthDays[0][0]).toEqual(new Date(2021, 2, 29));
+    expect(monthDays[0][1]).toEqual(new Date(2021, 2, 30));
+    expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toEqual(new Date(2021, 4, 2));
+  });
+});
