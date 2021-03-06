@@ -19,8 +19,8 @@ storiesOf('@mantine/core', module).add('ThemeIcon', () => (
         <RocketIcon />
       </ThemeIcon>
 
-      <ThemeIcon color="indigo" variant="filled">
-        <RocketIcon />
+      <ThemeIcon color="violet" variant="gradient" size={100} radius={100}>
+        <RocketIcon style={{ width: 60, height: 60 }} />
       </ThemeIcon>
     </ElementsGroup>
   </div>
