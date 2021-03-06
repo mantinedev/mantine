@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react';
-import { useId } from '@mantine/hooks';
 import cx from 'clsx';
 import { ChevronDownIcon } from '@modulz/radix-icons';
+import { useId } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
+import { Subtract } from '@mantine/types';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import useStyles from './Select.styles';
 
@@ -30,6 +31,20 @@ interface SelectProps
 
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
+
+  /** Class name added to select element */
+  inputClassName?: string;
+
+  /** Style properties added to select element */
+  inputStyle?: React.CSSProperties;
+
+  /** Props passed to root element (InputWrapper component) */
+  wrapperProps?: Partial<
+    Subtract<
+      React.ComponentPropsWithoutRef<typeof InputWrapper>,
+      InputWrapperBaseProps & DefaultProps
+    >
+  >;
 }
 
 export const Select = forwardRef(
@@ -49,6 +64,10 @@ export const Select = forwardRef(
       radius = 'sm',
       icon,
       themeOverride,
+      wrapperProps,
+      inputStyle,
+      inputClassName,
+      description,
       ...others
     }: SelectProps,
     ref: React.ForwardedRef<HTMLSelectElement>
@@ -72,6 +91,7 @@ export const Select = forwardRef(
 
     return (
       <InputWrapper
+        {...wrapperProps}
         required={required}
         id={uuid}
         label={label}
@@ -79,19 +99,29 @@ export const Select = forwardRef(
         className={className}
         style={style}
         themeOverride={themeOverride}
+        description={description}
       >
         <div className={classes.wrapper}>
-          {icon && <div className={classes.icon}>{icon}</div>}
+          {icon && (
+            <div data-mantine-icon className={classes.icon}>
+              {icon}
+            </div>
+          )}
 
           <select
             {...others}
+            style={inputStyle}
             aria-required={required}
             ref={ref}
-            className={cx(classes.select, {
-              [classes.withIcon]: icon,
-              [classes.invalid]: error,
-              [classes.placeholder]: !value && !!onChange,
-            })}
+            className={cx(
+              classes.select,
+              {
+                [classes.withIcon]: icon,
+                [classes.invalid]: error,
+                [classes.placeholder]: !value && !!onChange,
+              },
+              inputClassName
+            )}
             id={uuid}
             value={value}
             onChange={onChange}
