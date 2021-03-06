@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { Transition } from 'react-transition-group';
 import { Cross1Icon } from '@modulz/radix-icons';
@@ -22,9 +22,14 @@ interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   /** Hides close button, modal still can be closed with escape key and by clicking outside */
   hideCloseButton?: boolean;
   overlayOpacity?: number;
+  overlayColor?: string;
   modalWidth?: number;
+
   /** Duration in ms of modal mount and unmount animations */
   transitionDuration?: number;
+
+  /** Close button aria-label attribute */
+  closeButtonLabel?: string;
 }
 
 const inState = {
@@ -55,8 +60,11 @@ export function Modal({
   overlayOpacity = 0.65,
   modalWidth = 440,
   transitionDuration = 400,
+  closeButtonLabel,
+  overlayColor,
   ...others
 }: ModalProps) {
+  const bodyOverflow = useRef<React.CSSProperties['overflow']>(null);
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme });
@@ -78,7 +86,12 @@ export function Modal({
   };
 
   useEffect(() => {
-    document.body.style.overflow = opened ? 'hidden' : '';
+    if (opened) {
+      bodyOverflow.current = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = bodyOverflow.current || '';
+    }
   }, [opened]);
 
   return (
@@ -102,19 +115,21 @@ export function Modal({
               style={{ width: modalWidth, ...defaultStyle.modal, ...transitionStyles[state].modal }}
               ref={clickOutsideRef}
             >
-              <div>
-                {(title || !hideCloseButton) && (
-                  <div className={classes.header}>
-                    <Text className={classes.title} size="md">
-                      {title}
-                    </Text>
-                    <ActionIcon onClick={onClose} color="gray">
+              {(title || !hideCloseButton) && (
+                <div data-mantine-modal-header className={classes.header}>
+                  <Text data-mantine-modal-title className={classes.title} size="md">
+                    {title}
+                  </Text>
+
+                  {!hideCloseButton && (
+                    <ActionIcon onClick={onClose} color="gray" aria-label={closeButtonLabel}>
                       <Cross1Icon />
                     </ActionIcon>
-                  </div>
-                )}
-              </div>
-              <div className={classes.body}>{children}</div>
+                  )}
+                </div>
+              )}
+
+              {children}
             </Paper>
           </div>
 
@@ -124,7 +139,7 @@ export function Modal({
               ...transitionStyles[state].overlay,
             }}
           >
-            <Overlay color={theme.black} opacity={overlayOpacity} />
+            <Overlay color={overlayColor || theme.black} opacity={overlayOpacity} />
           </div>
         </div>
       )}

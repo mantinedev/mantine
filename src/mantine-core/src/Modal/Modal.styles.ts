@@ -36,13 +36,10 @@ export default createUseStyles({
     padding: theme.spacing.lg,
   }),
 
-  header: {
+  header: ({ theme }: { theme: MantineTheme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-
-  body: ({ theme }: { theme: MantineTheme }) => ({
-    marginTop: theme.spacing.md,
+    marginBottom: theme.spacing.md,
   }),
 });
