@@ -66,12 +66,12 @@ export function Month({
 
     if (code === 'ArrowRight') {
       event.preventDefault();
-      focusDay(currentDate, 1);
+      currentDate.getDay() !== 0 && focusDay(currentDate, 1);
     }
 
     if (code === 'ArrowLeft') {
       event.preventDefault();
-      focusDay(currentDate, -1);
+      currentDate.getDay() !== 1 && focusDay(currentDate, -1);
     }
   };
 

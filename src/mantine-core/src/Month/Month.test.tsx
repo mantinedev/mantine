@@ -19,6 +19,10 @@ describe('@mantine/core/Month', () => {
   itSupportsClassName(Month, { month: new Date() });
   itSupportsOthers(Month, { month: new Date() });
 
+  it('has correct displayName', () => {
+    expect(Month.displayName).toEqual('@mantine/core/Month');
+  });
+
   it('renders correct amount of weekdays', () => {
     const element = shallow(<Month month={new Date()} />);
     expect(element.render().find('thead th')).toHaveLength(7);
