@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { useId } from '@mantine/hooks';
+import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
+import { Subtract } from '@mantine/types';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import useStyles from './Textarea.styles';
 
@@ -25,6 +26,20 @@ interface TextareaProps
   radius?: MantineNumberSize;
   value?: string;
   onChange?(event: React.ChangeEvent<HTMLTextAreaElement>): void;
+
+  /** Style properties added to input element */
+  inputStyle?: React.CSSProperties;
+
+  /** Class name added to input element */
+  inputClassName?: string;
+
+  /** Props passed to root element (InputWrapper component) */
+  wrapperProps?: Partial<
+    Subtract<
+      React.ComponentPropsWithoutRef<typeof InputWrapper>,
+      InputWrapperBaseProps & DefaultProps
+    >
+  >;
 }
 
 export const Textarea = forwardRef(
@@ -38,12 +53,16 @@ export const Textarea = forwardRef(
       error,
       description,
       id,
+      className,
       placeholder,
       required,
       themeOverride,
       style,
       value,
       onChange,
+      wrapperProps,
+      inputStyle,
+      inputClassName,
       ...others
     }: TextareaProps,
     ref: React.ForwardedRef<HTMLTextAreaElement>
@@ -59,18 +78,21 @@ export const Textarea = forwardRef(
         description={description}
         required={required}
         style={style}
+        className={className}
+        {...wrapperProps}
       >
         {autosize ? (
           <TextareaAutosize
             aria-required={required}
             placeholder={placeholder}
-            className={cx(classes.textarea, { [classes.invalid]: error })}
+            className={cx(classes.textarea, { [classes.invalid]: error }, inputClassName)}
             maxRows={maxRows}
             minRows={minRows}
             id={uuid}
             ref={ref}
             value={value}
             onChange={onChange}
+            style={{ ...inputStyle, height: undefined }}
             {...others}
           />
         ) : (
@@ -78,11 +100,12 @@ export const Textarea = forwardRef(
             aria-required={required}
             id={uuid}
             placeholder={placeholder}
-            className={cx(classes.textarea, { [classes.invalid]: error })}
+            className={cx(classes.textarea, { [classes.invalid]: error }, inputClassName)}
             rows={minRows}
             ref={ref}
             value={value}
             onChange={onChange}
+            style={inputStyle}
             {...others}
           />
         )}
