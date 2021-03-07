@@ -1,14 +1,14 @@
 import OpenColor from 'open-color';
 
 export const categories = [
-  { id: 'home', name: 'Home', color: OpenColor.teal[0] },
-  { id: 'pets', name: 'Pets', color: OpenColor.blue[0] },
-  { id: 'subscriptions', name: 'Subscriptions', color: OpenColor.red[0] },
-  { id: 'personal-projects', name: 'Personal projects', color: OpenColor.lime[0] },
-  { id: 'healthcare', name: 'Healthcare', color: OpenColor.orange[0] },
-  { id: 'entertainment', name: 'Entertainment', color: OpenColor.violet[0] },
-  { id: 'rent', name: 'Rent', color: OpenColor.gray[0] },
-  { id: 'gifts', name: 'Gifts', color: OpenColor.yellow[0] },
+  { id: 'home', name: 'Home', background: OpenColor.teal[0] },
+  { id: 'pets', name: 'Pets', background: OpenColor.blue[0] },
+  { id: 'subscriptions', name: 'Subscriptions', background: OpenColor.red[0] },
+  { id: 'personal-projects', name: 'Personal projects', background: OpenColor.lime[0] },
+  { id: 'healthcare', name: 'Healthcare', background: OpenColor.orange[0] },
+  { id: 'entertainment', name: 'Entertainment', background: OpenColor.violet[0] },
+  { id: 'rent', name: 'Rent', background: OpenColor.gray[0] },
+  { id: 'gifts', name: 'Gifts', background: OpenColor.yellow[0] },
 ];
 
 const category = (id: string) => categories.find((c) => c.id === id);
