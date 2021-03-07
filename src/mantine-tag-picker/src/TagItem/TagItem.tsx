@@ -76,9 +76,12 @@ export default function TagItem({
           enableColorChange={enableColorChange}
         />
       )}
+
       <div className={classes.body}>
         <button type="button" className={classes.control} onClick={() => onSelect(data)}>
-          <TagBadge data={data} />
+          <div className={classes.controlInner}>
+            <TagBadge className={classes.badge} data={data} />
+          </div>
         </button>
 
         {enableUpdate && (

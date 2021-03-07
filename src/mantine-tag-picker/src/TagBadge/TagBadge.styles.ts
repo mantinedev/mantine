@@ -7,8 +7,12 @@ export default createUseStyles({
     display: 'inline-flex',
     alignItems: 'center',
     height: 22,
+    lineHeight: '22px',
     paddingLeft: 12,
     paddingRight: 12,
     borderRadius: 22,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   }),
 });

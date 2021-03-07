@@ -116,7 +116,10 @@ export default function TagsList({
             onMouseEnter={() => onHoveredChange(data.length)}
           >
             <span className={classes.createControlLabel}>{createLabel || '+'}</span>
-            <TagBadge data={{ id: 'create-placeholder', color: createColor, name: searchQuery }} />
+            <TagBadge
+              className={classes.createControlBadge}
+              data={{ id: 'create-placeholder', color: createColor, name: searchQuery }}
+            />
           </button>
         )}
       </div>

@@ -30,7 +30,15 @@ export default createUseStyles({
     height: 32,
     color: theme.colors.gray[7],
     cursor: 'pointer',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
   }),
+
+  createControlBadge: {
+    display: 'block !important',
+  },
 
   createControlLabel: {
     marginRight: 10,

@@ -24,7 +24,17 @@ export default createUseStyles({
     cursor: 'pointer',
     paddingLeft: 10,
     outline: 0,
+    maxWidth: '80%',
   }),
+
+  controlInner: {
+    display: 'flex',
+  },
+
+  badge: {
+    display: 'block !important',
+    width: 'auto',
+  },
 
   hovered: ({ theme }: { theme: MantineTheme }) => ({
     backgroundColor: theme.colors.gray[0],
