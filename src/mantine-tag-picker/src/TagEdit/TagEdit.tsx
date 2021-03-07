@@ -23,6 +23,7 @@ export interface TagEditProps {
   onClose(): void;
   id: string;
   themeOverride?: MantineThemeOverride;
+  enableDelete?: boolean;
 }
 
 export default function TagEdit({
@@ -35,6 +36,7 @@ export default function TagEdit({
   onTagDelete,
   id,
   themeOverride,
+  enableDelete,
 }: TagEditProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const dropdownRef = useClickOutside(onClose);
@@ -106,11 +108,12 @@ export default function TagEdit({
           </ActionIcon>
         </div>
 
-        <button className={classes.deleteControl} type="button" onClick={handleDelete}>
-          <TrashIcon className={classes.deleteIcon} />
-          <span>{deleteLabel}</span>
-        </button>
-
+        {enableDelete && (
+          <button className={classes.deleteControl} type="button" onClick={handleDelete}>
+            <TrashIcon className={classes.deleteIcon} />
+            <span>{deleteLabel}</span>
+          </button>
+        )}
         <div className={classes.colorsList}>{colorsList}</div>
       </div>
     </Paper>

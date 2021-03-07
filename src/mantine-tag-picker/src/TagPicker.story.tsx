@@ -40,6 +40,7 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
       <TagPicker
         enableCreate
         enableUpdate
+        enableDelete
         value={value}
         onChange={onChange}
         data={data}

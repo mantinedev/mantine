@@ -20,6 +20,7 @@ interface TagItemProps {
   onEventsCaptureChange(shouldCaptureEvents: boolean): void;
   themeOverride?: MantineThemeOverride;
   enableUpdate?: boolean;
+  enableDelete?: boolean;
 }
 
 export default function TagItem({
@@ -35,6 +36,7 @@ export default function TagItem({
   onEventsCaptureChange,
   themeOverride,
   enableUpdate,
+  enableDelete,
 }: TagItemProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const controlRef = useRef<HTMLButtonElement>();
@@ -68,6 +70,7 @@ export default function TagItem({
           onTagUpdate={onTagUpdate}
           onTagDelete={onTagDelete}
           id={data.id}
+          enableDelete={enableDelete}
         />
       )}
       <div className={classes.body}>

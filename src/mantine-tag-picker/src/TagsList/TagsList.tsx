@@ -31,6 +31,7 @@ export interface TagsListProps {
   themeOverride?: MantineThemeOverride;
   enableCreate?: boolean;
   enableUpdate?: boolean;
+  enableDelete?: boolean;
 }
 
 export default function TagsList({
@@ -55,6 +56,7 @@ export default function TagsList({
   themeOverride,
   enableCreate,
   enableUpdate,
+  enableDelete,
 }: TagsListProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const focusTrapRef = useFocusTrap();
@@ -73,6 +75,7 @@ export default function TagsList({
       onTagDelete={onTagDelete}
       onEventsCaptureChange={onEventsCaptureChange}
       enableUpdate={enableUpdate}
+      enableDelete={enableDelete}
     />
   ));
 

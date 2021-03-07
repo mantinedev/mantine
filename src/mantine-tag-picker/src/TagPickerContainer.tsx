@@ -18,6 +18,7 @@ interface TagPickerProps extends DefaultProps {
   searchPlaceholder?: string;
   enableCreate?: boolean;
   enableUpdate?: boolean;
+  enableDelete?: boolean;
   onDropdownOpen?(): void;
   onDropdownClose?(): void;
   onSearchChange?(query: string): void;
@@ -153,6 +154,7 @@ export default function TagPickerContainer(props: TagPickerProps) {
         onArrowsCaptureChange={setShouldCaptureArrowEvents}
         enableCreate={props.enableCreate}
         enableUpdate={props.enableUpdate}
+        enableDelete={props.enableDelete}
       />
     </div>
   );
