@@ -1,10 +1,13 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
-import { ActionIcon, useMantineTheme, MantineThemeOverride } from '@mantine/core';
+import { Transition } from 'react-transition-group';
 import { DotsHorizontalIcon } from '@modulz/radix-icons';
+import { ActionIcon, useMantineTheme, MantineThemeOverride } from '@mantine/core';
+import { useReducedMotion } from '@mantine/hooks';
 import { TagPickerColor, TagPickerTag } from '../types';
 import TagEdit from '../TagEdit/TagEdit';
 import TagBadge from '../TagBadge/TagBadge';
+import getTransitionStyle from '../get-transition-styles';
 import useStyles from './TagItem.styles';
 
 interface TagItemProps {
@@ -22,6 +25,7 @@ interface TagItemProps {
   enableUpdate?: boolean;
   enableDelete?: boolean;
   enableColorChange?: boolean;
+  transitionDuration?: number;
 }
 
 export default function TagItem({
@@ -39,10 +43,13 @@ export default function TagItem({
   enableUpdate,
   enableDelete,
   enableColorChange,
+  transitionDuration,
 }: TagItemProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const controlRef = useRef<HTMLButtonElement>();
   const [editDropdownOpened, setEditDropdownOpened] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const duration = reduceMotion ? 1 : transitionDuration;
 
   const openEditDropdown = () => {
     setEditDropdownOpened(true);
@@ -53,8 +60,11 @@ export default function TagItem({
     setEditDropdownOpened(false);
     onEventsCaptureChange(true);
 
-    // Focus should be wrapped in setImmediate to prevent multiple keyboard events capturing
-    setImmediate(() => controlRef.current.focus());
+    // Focus should be wrapped in setTimeout to prevent multiple keyboard events capturing
+    // since edit dropdown has focus trap, control cannot be focused until transition ended + 10ms for buffer
+    setTimeout(() => {
+      controlRef.current.focus();
+    }, transitionDuration + 10);
   };
 
   return (
@@ -62,20 +72,28 @@ export default function TagItem({
       className={cx(classes.item, { [classes.hovered]: hovered === index })}
       onMouseEnter={() => onHover(index)}
     >
-      {enableUpdate && (
-        <TagEdit
-          opened={editDropdownOpened}
-          onClose={closeEditDropdown}
-          initialValues={data}
-          deleteLabel={deleteLabel}
-          colors={colors}
-          onTagUpdate={onTagUpdate}
-          onTagDelete={onTagDelete}
-          id={data.id}
-          enableDelete={enableDelete}
-          enableColorChange={enableColorChange}
-        />
-      )}
+      <Transition
+        timeout={duration}
+        unmountOnExit
+        mountOnEnter
+        onEnter={(node: any) => node.offsetHeight}
+        in={editDropdownOpened}
+      >
+        {(state) => (
+          <TagEdit
+            style={getTransitionStyle({ state, duration })}
+            onClose={closeEditDropdown}
+            initialValues={data}
+            deleteLabel={deleteLabel}
+            colors={colors}
+            onTagUpdate={onTagUpdate}
+            onTagDelete={onTagDelete}
+            id={data.id}
+            enableDelete={enableDelete}
+            enableColorChange={enableColorChange}
+          />
+        )}
+      </Transition>
 
       <div className={classes.body}>
         <button type="button" className={classes.control} onClick={() => onSelect(data)}>

@@ -1,9 +1,11 @@
 import OpenColor from 'open-color';
 import React from 'react';
-import { useClickOutside } from '@mantine/hooks';
+import { Transition } from 'react-transition-group';
+import { useClickOutside, useReducedMotion } from '@mantine/hooks';
 import { Paper, useMantineTheme } from '@mantine/core';
 import TagsList, { TagsListProps } from '../TagsList/TagsList';
 import TagBadge from '../TagBadge/TagBadge';
+import getTransitionStyle from '../get-transition-styles';
 import useStyles from './TagPicker.styles';
 
 interface TagPickerProps extends TagsListProps {
@@ -23,10 +25,13 @@ export default function TagPicker({
   value,
   noValueLabel,
   themeOverride,
+  transitionDuration,
   ...others
 }: TagPickerProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const dropdownRef = useClickOutside(closeDropdown);
+  const reduceMotion = useReducedMotion();
+  const duration = reduceMotion ? 1 : transitionDuration;
 
   return (
     <div className={classes.tagPicker}>
@@ -36,11 +41,24 @@ export default function TagPicker({
         />
       </button>
 
-      {dropdownOpened && (
-        <Paper shadow="xs" className={classes.dropdown} ref={dropdownRef}>
-          <TagsList value={value} {...others} />
-        </Paper>
-      )}
+      <Transition
+        timeout={duration}
+        unmountOnExit
+        mountOnEnter
+        onEnter={(node: any) => node.offsetHeight}
+        in={dropdownOpened}
+      >
+        {(state) => (
+          <Paper
+            shadow="xs"
+            className={classes.dropdown}
+            ref={dropdownRef}
+            style={getTransitionStyle({ state, duration })}
+          >
+            <TagsList value={value} transitionDuration={transitionDuration} {...others} />
+          </Paper>
+        )}
+      </Transition>
     </div>
   );
 }

@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { nanoid } from 'nanoid';
-import oc from 'open-color';
-import { DEFAULT_THEME } from '@mantine/theme';
+import OpenColor from 'open-color';
 import TagPicker from './TagPickerContainer';
 import { TagPickerTag } from './types';
 
-const colors = Object.keys(DEFAULT_THEME.colors).filter(
-  (color) => color !== 'white' && color !== 'black'
-);
+const colors = Object.keys(OpenColor).filter((color) => color !== 'white' && color !== 'black');
 
 type TagPickerWrapperProps = Omit<
   React.ComponentProps<typeof TagPicker>,
@@ -26,13 +23,13 @@ type TagPickerWrapperProps = Omit<
 >;
 
 const defaultData: TagPickerTag[] = [
-  { id: '1', name: 'Pets', background: oc.indigo[0] },
-  { id: '2', name: 'Home', background: oc.red[0] },
-  { id: '3', name: 'Subscriptions', background: oc.teal[0] },
+  { id: '1', name: 'Pets', background: OpenColor.indigo[0] },
+  { id: '2', name: 'Home', background: OpenColor.red[0] },
+  { id: '3', name: 'Subscriptions', background: OpenColor.teal[0] },
   {
     id: '4',
     name: 'Too long data that will overflow no matter what',
-    background: oc.blue[5],
+    background: OpenColor.blue[5],
     color: '#fff',
   },
 ];
@@ -52,7 +49,7 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
         onChange={onChange}
         data={data}
         searchPlaceholder="Search categories"
-        colors={colors.map((theme) => ({ name: theme, color: oc[theme][0] }))}
+        colors={colors.map((theme) => ({ name: theme, color: OpenColor[theme][0] }))}
         description="Select category or create new one"
         createLabel="+ Create new category"
         deleteLabel="Delete category"

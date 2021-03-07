@@ -20,6 +20,7 @@ interface TagPickerProps extends DefaultProps {
   enableUpdate?: boolean;
   enableDelete?: boolean;
   enableColorChange?: boolean;
+  transitionDuration?: number;
   onDropdownOpen?(): void;
   onDropdownClose?(): void;
   onSearchChange?(query: string): void;
@@ -30,7 +31,7 @@ interface TagPickerProps extends DefaultProps {
   onTagUpdate?(id: string, values: Omit<TagPickerTag, 'id'>): void;
 }
 
-export default function TagPickerContainer(props: TagPickerProps) {
+export default function TagPickerContainer({ transitionDuration = 250, ...props }: TagPickerProps) {
   const controlRef = useRef<HTMLButtonElement>();
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const [hovered, setHovered] = useState(-1);
@@ -157,6 +158,7 @@ export default function TagPickerContainer(props: TagPickerProps) {
         enableUpdate={props.enableUpdate}
         enableDelete={props.enableDelete}
         enableColorChange={props.enableColorChange}
+        transitionDuration={transitionDuration}
       />
     </div>
   );

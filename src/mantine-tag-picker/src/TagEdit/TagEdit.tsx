@@ -14,7 +14,7 @@ import { TagPickerColor, TagPickerTag } from '../types';
 import useStyles from './TagEdit.styles';
 
 export interface TagEditProps {
-  opened: boolean;
+  style?: React.CSSProperties;
   initialValues: TagPickerTag;
   colors: TagPickerColor[];
   deleteLabel: string;
@@ -28,7 +28,7 @@ export interface TagEditProps {
 }
 
 export default function TagEdit({
-  opened,
+  style,
   onClose,
   initialValues,
   deleteLabel,
@@ -43,13 +43,21 @@ export default function TagEdit({
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const dropdownRef = useClickOutside(onClose);
   const focusTrapRef = useFocusTrap();
-  const [values, setValues] = useState<Omit<TagPickerTag, 'id'>>(null);
+  const [values, setValues] = useState<Omit<TagPickerTag, 'id'>>({
+    name: '',
+    color: '',
+    background: '',
+  });
   const handleNameChange = (value: string) => setValues((current) => ({ ...current, name: value }));
   const handleColorChange = (value: string) =>
-    setValues((current) => ({ ...current, color: value }));
+    setValues((current) => ({ ...current, background: value }));
 
   const handleSubmit = () => {
-    onTagUpdate(id, { name: values.name, background: values.color });
+    onTagUpdate(id, {
+      name: values.name,
+      background: values.background,
+      color: initialValues.color,
+    });
     onClose();
   };
 
@@ -68,10 +76,6 @@ export default function TagEdit({
     setValues(initialValues);
   }, [initialValues]);
 
-  if (!opened) {
-    return null;
-  }
-
   const colorsList = colors.map((color) => (
     <button
       className={classes.colorControl}
@@ -83,7 +87,7 @@ export default function TagEdit({
         <ColorSwatch color={color.color} size={18} />
         <span className={classes.colorLabel}>{color.name}</span>
       </div>
-      {color.color === values.color && <CheckIcon />}
+      {color.color === values.background && <CheckIcon />}
     </button>
   ));
 
@@ -93,6 +97,7 @@ export default function TagEdit({
       className={classes.tagEdit}
       ref={dropdownRef}
       onKeyDownCapture={handleKeyDownCapture}
+      style={style}
     >
       <div ref={focusTrapRef}>
         <div className={classes.header}>
