@@ -34,7 +34,7 @@ function getVariantStyle(variant: BadgeVariant, color: string, theme: MantineThe
       return {
         borderColor: colors[6],
         color: colors[6],
-        backgroundColor: theme.white,
+        backgroundColor: 'transparent',
         lineHeight: '22px',
         height: 22,
         paddingLeft: 10,
@@ -52,19 +52,25 @@ export default createUseStyles({
     variant,
     color,
     theme,
+    fullWidth,
   }: {
     variant: BadgeVariant;
     color: string;
     theme: MantineTheme;
+    fullWidth: boolean;
   }) => ({
     ...getFontStyles(theme),
     boxSizing: 'border-box',
-    display: 'inline-block',
+    display: fullWidth ? 'block' : 'inline-block',
+    width: fullWidth ? '100%' : 'auto',
     textTransform: 'uppercase',
     fontSize: 11,
     borderRadius: 100,
     fontWeight: 700,
     letterSpacing: 0.25,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
 
     ...getVariantStyle(variant, color, theme),
   }),

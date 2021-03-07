@@ -32,5 +32,16 @@ storiesOf('@mantine/core', module).add('Badge', () => (
     </ElementsGroup>
     <ElementsGroup style={{ marginTop: 20 }}>{pills}</ElementsGroup>
     <ElementsGroup style={{ marginTop: 20 }}>{outlines}</ElementsGroup>
+    <div style={{ width: 180, padding: 20, backgroundColor: '#eee', marginTop: 20 }}>
+      <Badge fullWidth>Content of this badge will definitely overflow its container</Badge>
+
+      <Badge fullWidth variant="pill" style={{ marginTop: 10 }}>
+        Content of this badge will definitely overflow its container
+      </Badge>
+
+      <Badge fullWidth variant="outline" style={{ marginTop: 10 }}>
+        Content of this badge will definitely overflow its container
+      </Badge>
+    </div>
   </>
 ));
