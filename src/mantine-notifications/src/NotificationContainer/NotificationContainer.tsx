@@ -1,24 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { DefaultProps } from '@mantine/core';
-import { Notification } from './Notification';
+import { Notification } from '../Notification/Notification';
+import getAutoClose from './get-auto-close/get-auto-close';
 import { NotificationProps } from '../types';
 
 interface NotificationContainerProps extends DefaultProps {
   notification: NotificationProps;
   onHide(id: string): void;
   autoClose: false | number;
-}
-
-function getAutoClose(autoClose: boolean | number, notification: NotificationProps) {
-  if (typeof notification.autoClose === 'number') {
-    return notification.autoClose;
-  }
-
-  if (notification.autoClose === false || autoClose === false) {
-    return false;
-  }
-
-  return autoClose;
 }
 
 export default function NotificationContainer({
