@@ -51,6 +51,7 @@ export default function NotificationContainer({
   return (
     <Notification
       style={style}
+      className={className}
       title={notification.title}
       themeOverride={themeOverride}
       onClose={handleHide}
@@ -58,7 +59,6 @@ export default function NotificationContainer({
       icon={notification.icon}
       loading={notification.loading}
       disallowClose={notification.disallowClose}
-      className={className}
       onMouseEnter={cancelDelayedHide}
       onMouseLeave={handleDelayedHide}
     >
@@ -67,4 +67,4 @@ export default function NotificationContainer({
   );
 }
 
-NotificationContainer.displayName = '@mantine/notifications/Notification';
+NotificationContainer.displayName = '@mantine/notifications/NotificationContainer';
