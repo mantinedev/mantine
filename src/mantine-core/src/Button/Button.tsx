@@ -76,7 +76,9 @@ export function MantineButton<
           </span>
         )}
 
-        <span data-mantine-label>{children}</span>
+        <span className={classes.label} data-mantine-label>
+          {children}
+        </span>
 
         {rightIcon && (
           <span data-mantine-right-icon className={cx(classes.icon, classes.rightIcon)}>

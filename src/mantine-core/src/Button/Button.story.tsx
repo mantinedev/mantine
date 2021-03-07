@@ -27,7 +27,7 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
 ));
 
 storiesOf('@mantine/core', module).add('Button', () => (
-  <>
+  <div style={{ padding: 50 }}>
     <ElementsGroup>
       <Button disabled>Disabled</Button>
       <Button radius="lg">Lg radius</Button>
@@ -79,7 +79,7 @@ storiesOf('@mantine/core', module).add('Button', () => (
         Link Disabled
       </Button>
     </ElementsGroup>
-    <div style={{ width: 500, padding: 10, backgroundColor: '#eee' }}>
+    <div style={{ width: 500, padding: 10, backgroundColor: '#eee', marginTop: 20 }}>
       <Button fullWidth>Full width</Button>
       <Button style={{ marginTop: 15 }} fullWidth variant="outline">
         Full width outline
@@ -88,5 +88,15 @@ storiesOf('@mantine/core', module).add('Button', () => (
         Full width link
       </Button>
     </div>
-  </>
+
+    <div style={{ width: 180, padding: 10, backgroundColor: '#eee', marginTop: 20 }}>
+      <Button fullWidth>Content of this button will definitely overflow its container</Button>
+      <Button style={{ marginTop: 15 }} fullWidth variant="outline">
+        Content of this button will definitely overflow its container
+      </Button>
+      <Button style={{ marginTop: 15 }} fullWidth variant="link">
+        Content of this button will definitely overflow its container
+      </Button>
+    </div>
+  </div>
 ));

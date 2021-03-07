@@ -76,6 +76,13 @@ export default createUseStyles({
     justifyContent: 'center',
   },
 
+  label: {
+    display: 'block',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+
   shared: (props: ButtonStylesProps) => ({
     ...sizes[props.size],
     ...getFontStyles(props.theme),
