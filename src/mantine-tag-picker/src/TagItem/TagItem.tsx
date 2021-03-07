@@ -21,6 +21,7 @@ interface TagItemProps {
   themeOverride?: MantineThemeOverride;
   enableUpdate?: boolean;
   enableDelete?: boolean;
+  enableColorChange?: boolean;
 }
 
 export default function TagItem({
@@ -37,6 +38,7 @@ export default function TagItem({
   themeOverride,
   enableUpdate,
   enableDelete,
+  enableColorChange,
 }: TagItemProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const controlRef = useRef<HTMLButtonElement>();
@@ -71,6 +73,7 @@ export default function TagItem({
           onTagDelete={onTagDelete}
           id={data.id}
           enableDelete={enableDelete}
+          enableColorChange={enableColorChange}
         />
       )}
       <div className={classes.body}>

@@ -19,6 +19,7 @@ interface TagPickerProps extends DefaultProps {
   enableCreate?: boolean;
   enableUpdate?: boolean;
   enableDelete?: boolean;
+  enableColorChange?: boolean;
   onDropdownOpen?(): void;
   onDropdownClose?(): void;
   onSearchChange?(query: string): void;
@@ -155,6 +156,7 @@ export default function TagPickerContainer(props: TagPickerProps) {
         enableCreate={props.enableCreate}
         enableUpdate={props.enableUpdate}
         enableDelete={props.enableDelete}
+        enableColorChange={props.enableColorChange}
       />
     </div>
   );

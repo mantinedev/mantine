@@ -41,6 +41,7 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
         enableCreate
         enableUpdate
         enableDelete
+        enableColorChange
         value={value}
         onChange={onChange}
         data={data}

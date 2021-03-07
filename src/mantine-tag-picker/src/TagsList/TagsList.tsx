@@ -32,6 +32,7 @@ export interface TagsListProps {
   enableCreate?: boolean;
   enableUpdate?: boolean;
   enableDelete?: boolean;
+  enableColorChange?: boolean;
 }
 
 export default function TagsList({
@@ -57,6 +58,7 @@ export default function TagsList({
   enableCreate,
   enableUpdate,
   enableDelete,
+  enableColorChange,
 }: TagsListProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const focusTrapRef = useFocusTrap();
@@ -76,6 +78,7 @@ export default function TagsList({
       onEventsCaptureChange={onEventsCaptureChange}
       enableUpdate={enableUpdate}
       enableDelete={enableDelete}
+      enableColorChange={enableColorChange}
     />
   ));
 

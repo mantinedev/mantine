@@ -24,6 +24,7 @@ export interface TagEditProps {
   id: string;
   themeOverride?: MantineThemeOverride;
   enableDelete?: boolean;
+  enableColorChange?: boolean;
 }
 
 export default function TagEdit({
@@ -37,6 +38,7 @@ export default function TagEdit({
   id,
   themeOverride,
   enableDelete,
+  enableColorChange,
 }: TagEditProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const dropdownRef = useClickOutside(onClose);
@@ -114,7 +116,8 @@ export default function TagEdit({
             <span>{deleteLabel}</span>
           </button>
         )}
-        <div className={classes.colorsList}>{colorsList}</div>
+
+        {enableColorChange && <div className={classes.colorsList}>{colorsList}</div>}
       </div>
     </Paper>
   );
