@@ -32,7 +32,7 @@ export default function TagPicker({
     <div className={classes.tagPicker}>
       <button className={classes.control} type="button" ref={controlRef} onClick={openDropdown}>
         <TagBadge
-          data={value || { id: 'no-value', color: OpenColor.gray[2], name: noValueLabel }}
+          data={value || { id: 'no-value', background: OpenColor.gray[2], name: noValueLabel }}
         />
       </button>
 

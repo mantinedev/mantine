@@ -118,7 +118,7 @@ export default function TagsList({
             <span className={classes.createControlLabel}>{createLabel || '+'}</span>
             <TagBadge
               className={classes.createControlBadge}
-              data={{ id: 'create-placeholder', color: createColor, name: searchQuery }}
+              data={{ id: 'create-placeholder', background: createColor, name: searchQuery }}
             />
           </button>
         )}

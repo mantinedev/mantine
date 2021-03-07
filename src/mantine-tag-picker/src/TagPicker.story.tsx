@@ -26,10 +26,15 @@ type TagPickerWrapperProps = Omit<
 >;
 
 const defaultData: TagPickerTag[] = [
-  { id: '1', name: 'Pets', color: oc.indigo[0] },
-  { id: '2', name: 'Home', color: oc.red[0] },
-  { id: '3', name: 'Subscriptions', color: oc.teal[0] },
-  { id: '4', name: 'Too long data that will overflow no matter what', color: oc.yellow[0] },
+  { id: '1', name: 'Pets', background: oc.indigo[0] },
+  { id: '2', name: 'Home', background: oc.red[0] },
+  { id: '3', name: 'Subscriptions', background: oc.teal[0] },
+  {
+    id: '4',
+    name: 'Too long data that will overflow no matter what',
+    background: oc.blue[5],
+    color: '#fff',
+  },
 ];
 
 function TagPickerWrapper(props: TagPickerWrapperProps) {

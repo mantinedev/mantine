@@ -49,7 +49,7 @@ export default function TagEdit({
     setValues((current) => ({ ...current, color: value }));
 
   const handleSubmit = () => {
-    onTagUpdate(id, { name: values.name, color: values.color });
+    onTagUpdate(id, { name: values.name, background: values.color });
     onClose();
   };
 

@@ -23,8 +23,8 @@ export default function TagBadge({
     <div
       className={cx(classes.tagBadge, className)}
       style={{
-        color: isBrightColor(data.color) ? theme.black : theme.white,
-        backgroundColor: data.color,
+        color: data.color || (isBrightColor(data.background) ? theme.black : theme.white),
+        backgroundColor: data.background,
         ...style,
       }}
       {...others}
