@@ -6,6 +6,7 @@ import useStyles from './ActionIcon.styles';
 interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   color?: string;
   radius?: MantineNumberSize;
+  size?: MantineNumberSize;
 }
 
 export const ActionIcon = forwardRef(
@@ -15,12 +16,13 @@ export const ActionIcon = forwardRef(
       color = 'gray',
       children,
       radius = 'sm',
+      size = 'md',
       themeOverride,
       ...others
     }: ActionIconProps,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
-    const classes = useStyles({ radius, color, theme: useMantineTheme(themeOverride) });
+    const classes = useStyles({ size, radius, color, theme: useMantineTheme(themeOverride) });
 
     return (
       <button

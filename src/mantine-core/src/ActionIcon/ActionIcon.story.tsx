@@ -17,7 +17,7 @@ storiesOf('@mantine/core', module).add('ActionIcon', () => (
         <GearIcon />
       </ActionIcon>
 
-      <ActionIcon color="blue" radius="xl">
+      <ActionIcon color="blue" radius="xl" size="xl">
         <LockOpen1Icon />
       </ActionIcon>
 

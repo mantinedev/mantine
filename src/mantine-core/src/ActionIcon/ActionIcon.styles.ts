@@ -8,13 +8,23 @@ import {
   getThemeColor,
 } from '@mantine/theme';
 
+const sizes = {
+  xs: 18,
+  sm: 22,
+  md: 28,
+  lg: 34,
+  xl: 44,
+};
+
 export default createUseStyles({
   actionIcon: ({
     color,
     radius,
     theme,
+    size,
   }: {
     color: string;
+    size: MantineNumberSize;
     radius: MantineNumberSize;
     theme: MantineTheme;
   }) => ({
@@ -23,8 +33,8 @@ export default createUseStyles({
     border: '1px solid transparent',
     boxSizing: 'border-box',
     backgroundColor: 'transparent',
-    height: 27,
-    width: 27,
+    height: getSizeValue({ size, sizes }),
+    width: getSizeValue({ size, sizes }),
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     padding: 0,
     lineHeight: 1,
