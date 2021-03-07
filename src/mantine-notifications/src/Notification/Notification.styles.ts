@@ -41,6 +41,7 @@ export default createUseStyles({
 
   body: {
     flex: 1,
+    maxWidth: 'calc(100% - 40px)', // space for close button and margin
     marginRight: 10,
   },
 
@@ -63,11 +64,15 @@ export default createUseStyles({
   title: {
     lineHeight: 1.4,
     marginBottom: 2,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
 
   description: ({ theme }: { theme: MantineTheme }) => ({
     color: theme.colors.gray[6],
     lineHeight: 1.4,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
 
     '&:only-child': {
       color: theme.colors.gray[9],

@@ -27,6 +27,14 @@ storiesOf('@mantine/notifications', module).add('Notification', () => (
         <Notification
           onClose={() => {}}
           style={{ marginTop: 20 }}
+          title="NotificationTitleSoLargeThatItWillUseOverflowEllipsisOption"
+        >
+          NotificationDescriptionSoLargeThatItShouldUseOverflowEllipsis
+        </Notification>
+
+        <Notification
+          onClose={() => {}}
+          style={{ marginTop: 20 }}
           title="Too large title Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, facilis eveniet. Voluptas quo voluptate laudantium in nesciunt modi accusamus ipsam, iusto pariatur excepturi et porro minima expedita vitae mollitia quae!"
         >
           Title seems to be too large, you better put this content in description
