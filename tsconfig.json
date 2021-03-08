@@ -1,6 +1,5 @@
 {
-  "plugins": [],
-  "include": ["./"],
+  "include": ["./src", "./docs/src", "./scripts"],
   "exclude": ["dist", "public"],
 
   "compilerOptions": {
