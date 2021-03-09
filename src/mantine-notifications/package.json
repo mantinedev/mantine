@@ -1,6 +1,6 @@
 {
   "name": "@mantine/notifications",
-  "version": "0.4.0",
+  "version": "0.4.3",
   "main": "dist/lib.js",
   "licence": "MIT",
   "types": "dist/mantine-notifications/src/index.d.ts",
@@ -10,8 +10,8 @@
     "prepublish": "cd ../.. && npm run build @mantine/notifications"
   },
   "peerDependencies": {
-    "@mantine/core": "0.4.0",
-    "@mantine/hooks": "0.4.0",
+    "@mantine/core": "0.4.3",
+    "@mantine/hooks": "0.4.3",
     "@modulz/radix-icons": ">=4.0.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
