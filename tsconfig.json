@@ -1,5 +1,5 @@
 {
-  "include": ["./src", "./docs/src", "./scripts", "./configuration"],
+  "include": ["./src", "./docs", "./scripts", "./configuration"],
   "exclude": ["dist", "public"],
 
   "compilerOptions": {

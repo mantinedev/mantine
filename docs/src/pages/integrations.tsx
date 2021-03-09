@@ -1,11 +1,10 @@
 import React from 'react';
-import Layout from '../components/Layout/Layout';
 import AppContainer from '../components/AppContainer/AppContainer';
 
 export default function IntegrationsPage() {
   return (
     <AppContainer>
-      <Layout>Integrations</Layout>
+      <>Integrations</>
     </AppContainer>
   );
 }
