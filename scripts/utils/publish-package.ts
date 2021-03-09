@@ -6,7 +6,7 @@ const logger = new Logger('publish-package');
 
 export async function publishPackage({ path, name }: { path: string; name: string }) {
   try {
-    await execa('yarn', [path]);
+    await execa('yarn', ['publish', path]);
     logger.success(`Package ${chalk.cyan(name)} was published`);
   } catch (error) {
     logger.error(`Failed to publish package ${chalk.red(name)}`);
