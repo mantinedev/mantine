@@ -6,9 +6,6 @@
   "types": "dist/mantine-core/src/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
-  "scripts": {
-    "prepublish": "cd ../.. && npm run build @mantine/core"
-  },
   "peerDependencies": {
     "@mantine/hooks": "0.4.5",
     "@modulz/radix-icons": ">=4.0.0",

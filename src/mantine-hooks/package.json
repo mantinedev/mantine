@@ -5,9 +5,6 @@
   "types": "dist/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
-  "scripts": {
-    "prepublish": "cd ../.. && npm run build @mantine/hooks"
-  },
   "peerDependencies": {
     "react": ">=16.8.0"
   },

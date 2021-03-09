@@ -6,9 +6,6 @@
   "types": "dist/mantine-tag-picker/src/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
-  "scripts": {
-    "prepublish": "cd ../.. && npm run build @mantine/tag-picker"
-  },
   "peerDependencies": {
     "@mantine/core": "0.4.5",
     "@mantine/hooks": "0.4.5",
