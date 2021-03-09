@@ -22,7 +22,8 @@
     "test": "npm run typecheck && npm run lint && npm run jest",
     "jest": "jest",
     "storybook": "ts-node scripts/storybook-start",
-    "release": "ts-node scripts/release"
+    "release": "ts-node scripts/release",
+    "clean": "rimraf src/*/dist"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^6.1.11",
