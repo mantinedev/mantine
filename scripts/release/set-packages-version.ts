@@ -4,6 +4,15 @@ import fs from 'fs-extra';
 function writeVersionToPackageJson(filePath: string, version: string) {
   const current = fs.readJSONSync(filePath);
   current.version = version;
+
+  if (current.peerDependencies) {
+    Object.keys(current.peerDependencies).forEach((packageName) => {
+      if (packageName.includes('@mantine/')) {
+        current.peerDependencies[packageName] = version;
+      }
+    });
+  }
+
   fs.writeJSONSync(filePath, current, { spaces: 2 });
 }
 

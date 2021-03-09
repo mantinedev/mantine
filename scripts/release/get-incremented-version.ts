@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import chalk from 'chalk';
-import { Logger } from './Logger';
+import { Logger } from '../utils/Logger';
 
 const logger = new Logger('increment-version');
 

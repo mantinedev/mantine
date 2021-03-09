@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/rtivital/mantine",
@@ -21,7 +21,8 @@
     "build": "ts-node scripts/build",
     "test": "npm run typecheck && npm run lint && npm run jest",
     "jest": "jest",
-    "storybook": "ts-node scripts/storybook-start"
+    "storybook": "ts-node scripts/storybook-start",
+    "release": "ts-node scripts/release"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^6.1.11",
