@@ -1,7 +1,7 @@
 {
   "name": "@mantine/dates",
   "private": true,
-  "version": "0.4.7",
+  "version": "0.4.8",
   "main": "dist/lib.js",
   "licence": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>"

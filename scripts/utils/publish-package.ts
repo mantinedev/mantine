@@ -11,5 +11,6 @@ export async function publishPackage({ path, name }: { path: string; name: strin
   } catch (error) {
     logger.error(`Failed to publish package ${chalk.red(name)}`);
     process.stdout.write(chalk.red`${error.message}\n`);
+    process.exit(1);
   }
 }

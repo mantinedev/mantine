@@ -1,17 +1,14 @@
 {
   "name": "@mantine/notifications",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "main": "dist/lib.js",
   "licence": "MIT",
   "types": "dist/mantine-notifications/src/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
-  "scripts": {
-    "prepublish": "cd ../.. && npm run build @mantine/notifications"
-  },
   "peerDependencies": {
-    "@mantine/core": "0.4.7",
-    "@mantine/hooks": "0.4.7",
+    "@mantine/core": "0.4.8",
+    "@mantine/hooks": "0.4.8",
     "@modulz/radix-icons": ">=4.0.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",

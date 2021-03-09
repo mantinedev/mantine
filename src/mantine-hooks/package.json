@@ -1,8 +1,9 @@
 {
   "name": "@mantine/hooks",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "main": "dist/lib.js",
   "types": "dist/index.d.ts",
+  "licence": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
   "peerDependencies": {
