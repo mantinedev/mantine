@@ -1,6 +1,6 @@
 {
   "name": "@mantine/core",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "dist/lib.js",
   "licence": "MIT",
   "types": "dist/mantine-core/src/index.d.ts",
@@ -10,7 +10,7 @@
     "prepublish": "cd ../.. && npm run build @mantine/core"
   },
   "peerDependencies": {
-    "@mantine/hooks": "0.1.0",
+    "@mantine/hooks": "0.4.0",
     "@modulz/radix-icons": ">=4.0.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
