@@ -17,7 +17,7 @@ interface PackageJson {
   readonly devDependencies?: Record<string, string>;
 }
 
-interface Package {
+export interface Package {
   path: string;
   packageJsonPath: string;
   packageJson: PackageJson;
