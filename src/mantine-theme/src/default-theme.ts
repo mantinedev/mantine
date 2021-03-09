@@ -20,8 +20,23 @@ const {
 export const DEFAULT_THEME: MantineTheme = {
   white: '#fff',
   black: '#000',
-  colors: { gray, red, pink, grape, violet, indigo, blue, cyan, teal, green, lime, yellow, orange },
-  fontFamily: 'Roboto, sans-serif',
+  colors: {
+    gray,
+    red,
+    pink,
+    grape,
+    violet,
+    indigo,
+    blue,
+    cyan,
+    teal,
+    green,
+    lime,
+    yellow,
+    orange,
+  },
+  fontFamily:
+    '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
   primaryColor: 'blue',
 
   shadows: {
@@ -61,7 +76,8 @@ export const DEFAULT_THEME: MantineTheme = {
   },
 
   headings: {
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily:
+      '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
     fontWeight: 700,
     sizes: {
       h1: { fontSize: 30, lineHeight: 1.3 },
