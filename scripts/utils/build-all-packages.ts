@@ -4,7 +4,11 @@ import { buildPackage } from './build-package';
 import { getPackagesBuildOrder } from './get-packages-build-order';
 
 export async function buildAllPackages() {
-  for (const item of await getPackagesBuildOrder()) {
+  const packages = await getPackagesBuildOrder();
+
+  for (const item of packages) {
     await buildPackage(item.packageJson.name);
   }
+
+  return packages;
 }

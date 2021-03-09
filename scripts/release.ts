@@ -5,6 +5,7 @@ import githubRelease from 'new-github-release-url';
 import open from 'open';
 import { argv } from 'yargs';
 import { Logger } from './utils/Logger';
+import { publishPackage } from './utils/publish-package';
 import { VersionIncrement, getIncrementedVersion } from './release/get-incremented-version';
 import { setPackagesVersion } from './release/set-packages-version';
 import { buildAllPackages } from './utils/build-all-packages';
@@ -35,8 +36,16 @@ const git = simpleGit();
   logger.info(`New version: ${chalk.cyan(incrementedVersion)}`);
 
   await setPackagesVersion(incrementedVersion);
-  await buildAllPackages();
+  const packages = await buildAllPackages();
   logger.success('All packages were built successfully');
+
+  logger.info('Publishing packages to npm');
+
+  await Promise.all(
+    packages.map((p) => publishPackage({ path: p.path, name: p.packageJson.name }))
+  );
+
+  logger.success('All packages were published successfully');
 
   await git.add([path.join(__dirname, '../src'), path.join(__dirname, '../package.json')]);
   await git.commit(`[release] Version: ${incrementedVersion}`);
