@@ -1,6 +1,6 @@
 {
   "name": "@mantine/hooks",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "main": "dist/lib.js",
   "types": "dist/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
