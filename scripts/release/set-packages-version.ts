@@ -13,6 +13,14 @@ async function writeVersionToPackageJson(filePath: string, version: string) {
     });
   }
 
+  if (current.dependencies) {
+    Object.keys(current.dependencies).forEach((packageName) => {
+      if (packageName.includes('@mantine/')) {
+        current.dependencies[packageName] = version;
+      }
+    });
+  }
+
   await fs.writeJSON(filePath, current, { spaces: 2 });
 }
 
