@@ -8,5 +8,3 @@ export async function buildAllPackages() {
     await buildPackage(item.packageJson.name);
   }
 }
-
-buildAllPackages();
