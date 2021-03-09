@@ -1,6 +1,8 @@
 import path from 'path';
 import chalk from 'chalk';
 import simpleGit from 'simple-git';
+import githubRelease from 'new-github-release-url';
+import open from 'open';
 import { argv } from 'yargs';
 import { Logger } from './utils/Logger';
 import { VersionIncrement, getIncrementedVersion } from './release/get-incremented-version';
@@ -38,4 +40,14 @@ const git = simpleGit();
 
   await git.add([path.join(__dirname, '../src'), path.join(__dirname, '../package.json')]);
   await git.commit(`[release] Version: ${incrementedVersion}`);
+  await git.push();
+
+  open(
+    githubRelease({
+      user: 'mantinedev',
+      repo: 'mantine',
+      tag: incrementedVersion,
+      title: incrementedVersion,
+    })
+  );
 })();
