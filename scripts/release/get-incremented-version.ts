@@ -8,7 +8,7 @@ const logger = new Logger('increment-version');
 const VERSION_INCREMENT = ['patch', 'minor', 'major'] as const;
 export type VersionIncrement = typeof VERSION_INCREMENT[number];
 
-export default function getIncrementedVersion(increment: VersionIncrement) {
+export async function getIncrementedVersion(increment: VersionIncrement): Promise<string> {
   if (!VERSION_INCREMENT.includes(increment)) {
     logger.error(
       `Incorrect version type: ${chalk.cyan(
@@ -20,7 +20,7 @@ export default function getIncrementedVersion(increment: VersionIncrement) {
   }
 
   try {
-    const currentVersion = fs.readJSONSync(path.join(__dirname, '../../package.json')).version;
+    const currentVersion = (await fs.readJSON(path.join(__dirname, '../../package.json'))).version;
     const splitted = currentVersion.split('.');
 
     if (increment === 'patch') {
