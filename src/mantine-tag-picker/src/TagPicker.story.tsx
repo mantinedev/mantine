@@ -26,12 +26,6 @@ const defaultData: TagPickerTag[] = [
   { id: '1', name: 'Pets', background: OpenColor.indigo[0] },
   { id: '2', name: 'Home', background: OpenColor.red[0] },
   { id: '3', name: 'Subscriptions', background: OpenColor.teal[0] },
-  {
-    id: '4',
-    name: 'Too long data that will overflow no matter what',
-    background: OpenColor.blue[5],
-    color: '#fff',
-  },
 ];
 
 function TagPickerWrapper(props: TagPickerWrapperProps) {
