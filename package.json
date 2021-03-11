@@ -14,7 +14,8 @@
     "docgen:clean": "rimraf docs/.docgen",
     "docgen": "npm run docgen:clean && ts-node scripts/docgen",
     "docs": "npm run docgen && cd docs && npm start",
-    "docs:build": "npm run docgen && cd docs && npm run build",
+    "docs:clean": "cd docs && npm run clean",
+    "docs:build": "npm run docs:clean && npm run docgen && cd docs && npm run build",
     "docs:deploy": "npm run docs:build && gh-pages -d docs/public",
     "docs:generate": "ts-node scripts/generate-doc-page",
     "typecheck": "tsc --noEmit",
@@ -25,8 +26,7 @@
     "storybook": "ts-node scripts/storybook-start",
     "release:prepare": "npm test && npm run clean && npm run docs:deploy",
     "release": "npm run release:prepare && ts-node scripts/release",
-    "clean": "rimraf src/*/dist",
-    "i": ""
+    "clean": "rimraf src/*/dist"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^6.1.11",
