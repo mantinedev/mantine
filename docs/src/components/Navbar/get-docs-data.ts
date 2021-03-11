@@ -13,6 +13,8 @@ export interface DocItem {
   title: string;
 }
 
+const order = ['mantine-hooks', 'mantine-core', 'mantine-notifications'];
+
 export default function getDocsData(query: DocsQuery) {
   const results = query.allMdx.edges.reduce((acc: Record<string, DocItem[]>, item) => {
     if (!(item.node.frontmatter.package in acc)) {
@@ -32,5 +34,8 @@ export default function getDocsData(query: DocsQuery) {
     results[category].sort((a, b) => a.order - b.order);
   });
 
-  return results;
+  return order.reduce((acc, item) => {
+    acc[item] = results[item];
+    return acc;
+  }, {});
 }
