@@ -1,5 +1,8 @@
 import { createUseStyles } from 'react-jss';
 import { theming, MantineTheme } from '@mantine/core';
+import { HEADER_HEIGHT } from '../Header/Header.styles';
+
+export const NAVBAR_WIDTH = 260;
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -12,14 +15,14 @@ export default createUseStyles(
       top: 0,
       bottom: 0,
       left: 0,
-      width: 260,
+      width: NAVBAR_WIDTH,
     },
 
     body: {
       paddingRight: theme.spacing.md,
       paddingBottom: theme.spacing.xl * 2,
       paddingLeft: theme.spacing.md,
-      paddingTop: theme.spacing.md,
+      paddingTop: HEADER_HEIGHT + theme.spacing.md,
     },
 
     docs: {

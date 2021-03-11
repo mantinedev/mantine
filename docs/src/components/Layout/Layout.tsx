@@ -3,6 +3,7 @@ import { Container } from '@mantine/core';
 import AppContainer from '../AppContainer/AppContainer';
 import MdxProvider from '../MdxProvider/MdxProvider';
 import Navbar from '../Navbar/Navbar';
+import Header from '../Header/Header';
 import useStyles from './Layout.styles';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -12,6 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <AppContainer>
       <main className={classes.layout}>
         <div className={classes.inner}>
+          <Header />
           <Navbar />
           <div className={classes.main}>
             <Container size="sm">
