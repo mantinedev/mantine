@@ -13,12 +13,12 @@ export default createUseStyles(
 
     header: {
       ...getFocusStyles(theme),
-      backgroundColor: theme.white,
+      backgroundColor: theme.colors.gray[0],
       outline: 0,
       display: 'flex',
       alignItems: 'center',
       width: `calc(100% + ${theme.spacing.md}px)`,
-      color: theme.colors.gray[6],
+      color: theme.colors.gray[7],
       height: 32,
       border: 0,
       padding: [0, theme.spacing.md],
@@ -40,7 +40,7 @@ export default createUseStyles(
 
     link: {
       ...getFocusStyles(theme),
-      borderLeft: `1px solid ${theme.colors.gray[2]}`,
+      borderLeft: `1px solid ${theme.colors.gray[4]}`,
       outline: 0,
       display: 'block',
       textDecoration: 'none',

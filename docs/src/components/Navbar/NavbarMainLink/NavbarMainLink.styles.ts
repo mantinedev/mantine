@@ -22,7 +22,7 @@ export default createUseStyles(
     },
 
     active: {
-      backgroundColor: ({ color }: { color: string }) => theme.colors[color][0],
+      backgroundColor: theme.white,
     },
 
     body: {

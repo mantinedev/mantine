@@ -7,7 +7,7 @@ export default createUseStyles(
       boxSizing: 'border-box',
       height: '100vh',
       borderRight: `1px solid ${theme.colors.gray[1]}`,
-      backgroundColor: theme.white,
+      backgroundColor: theme.colors.gray[0],
       position: 'fixed',
       top: 0,
       bottom: 0,

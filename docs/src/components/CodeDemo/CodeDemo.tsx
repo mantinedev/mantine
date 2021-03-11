@@ -39,10 +39,10 @@ export default function CodeDemo({
           </Text>
         )}
       </div>
-      <CodeHighlight code={code} language={language} />
-      <Paper padding="md" shadow="xs">
+      <Paper padding="md" className={classes.demo}>
         {children}
       </Paper>
+      <CodeHighlight code={code} language={language} className={classes.code} />
     </div>
   );
 }

@@ -3,9 +3,7 @@ import { theming, MantineTheme } from '@mantine/core';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
-    layout: {
-      backgroundColor: theme.colors.gray[0],
-    },
+    layout: {},
 
     inner: {
       paddingLeft: 260,

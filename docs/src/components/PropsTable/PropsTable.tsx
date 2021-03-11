@@ -1,5 +1,5 @@
 import React from 'react';
-import { Title, Table, Text, Paper } from '@mantine/core';
+import { Title, Table, Text, Paper, useMantineTheme } from '@mantine/core';
 import PROPS_DATA from '../../../.docgen/mantine-core/props.json';
 
 interface PropsTableProps {
@@ -7,6 +7,8 @@ interface PropsTableProps {
 }
 
 export default function PropsTable({ component }: PropsTableProps) {
+  const theme = useMantineTheme();
+
   const rows = Object.keys(PROPS_DATA[component].props).map((propKey) => {
     const prop = PROPS_DATA[component].props[propKey];
     return (
@@ -53,7 +55,7 @@ export default function PropsTable({ component }: PropsTableProps) {
         Component props
       </Title>
 
-      <Paper padding="md" style={{ width: '100%' }} shadow="xs">
+      <Paper padding="md" style={{ width: '100%', border: `1px solid ${theme.colors.gray[3]}` }}>
         <div style={{ minWidth: 500 }}>
           <Table style={{ tableLayout: 'fixed' }}>
             <thead>
