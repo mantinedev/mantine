@@ -32,8 +32,8 @@ export default {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'mantine-docs',
-        path: `${__dirname}/src/pages/`,
+        name: 'docs',
+        path: `${__dirname}/src/docs/`,
       },
     },
 

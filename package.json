@@ -16,6 +16,7 @@
     "docs": "npm run docgen && cd docs && npm start",
     "docs:build": "npm run docgen && cd docs && npm run build",
     "docs:deploy": "npm run docs:build && gh-pages -d docs/public",
+    "docs:generate": "ts-node scripts/generate-doc-page",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "build": "ts-node scripts/build",
@@ -24,7 +25,8 @@
     "storybook": "ts-node scripts/storybook-start",
     "release:prepare": "npm test && npm run clean && npm run docs:deploy",
     "release": "npm run release:prepare && ts-node scripts/release",
-    "clean": "rimraf src/*/dist"
+    "clean": "rimraf src/*/dist",
+    "i": ""
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^6.1.11",

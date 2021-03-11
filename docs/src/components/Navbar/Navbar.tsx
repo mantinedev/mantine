@@ -15,11 +15,11 @@ const query = graphql`
       edges {
         node {
           id
-          slug
           frontmatter {
-            category
+            package
             title
             order
+            slug
           }
         }
       }

@@ -1,31 +1,29 @@
 interface DocsQuery {
   allMdx: {
     edges: {
-      node: { frontmatter: { category: string; title?: string; order?: number }; slug: string };
+      node: { frontmatter: { package: string; title?: string; order?: number; slug: string } };
     }[];
   };
 }
 
 export interface DocItem {
-  slug: string;
   to: string;
-  category: string;
+  package: string;
   order: number;
+  title: string;
 }
 
 export default function getDocsData(query: DocsQuery) {
   const results = query.allMdx.edges.reduce((acc: Record<string, DocItem[]>, item) => {
-    const { category } = item.node.frontmatter;
-
-    if (!(category in acc)) {
-      acc[category] = [];
+    if (!(item.node.frontmatter.package in acc)) {
+      acc[item.node.frontmatter.package] = [];
     }
 
-    acc[category].push({
+    acc[item.node.frontmatter.package].push({
+      title: item.node.frontmatter.title,
       order: item.node.frontmatter.order || 0,
-      slug: item.node.frontmatter.title || item.node.slug.split('/')[1],
-      to: `/${item.node.slug}/`,
-      category,
+      to: item.node.frontmatter.slug,
+      package: item.node.frontmatter.package,
     });
     return acc;
   }, {});

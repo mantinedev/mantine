@@ -5,7 +5,7 @@ import banner from '../../images/banner.svg';
 interface HeadProps {
   title: string;
   description?: string;
-  disableTitleTemplate: boolean;
+  disableTitleTemplate?: boolean;
 }
 
 export default function Head({ title, description, disableTitleTemplate }: HeadProps) {
