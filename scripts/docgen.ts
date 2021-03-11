@@ -39,6 +39,7 @@ function prepareDeclaration(declaration: ComponentDoc) {
   Object.keys(data.props).forEach((prop) => {
     delete data.props[prop].parent;
     delete data.props[prop].declarations;
+    delete data.description;
 
     if (data.props[prop].type.name === 'MantineNumberSize') {
       data.props[prop].type.name = 'number | "xs" | "sm" | "md" | "lg" | "xl"';
@@ -54,13 +55,13 @@ function prepareDeclaration(declaration: ComponentDoc) {
 
 Object.keys(declarations).forEach((key) => {
   fs.ensureDirSync(path.join(__dirname, '../docs/.docgen', key));
-  docgen.parse(declarations[key]).forEach((declaration) => {
+
+  const data = docgen.parse(declarations[key]).reduce((acc, declaration) => {
     const packageName = `@mantine/${key.split('-')[1]}/`;
     const componentName = declaration.displayName.replace(packageName, '');
-    fs.writeJSONSync(
-      path.join(__dirname, '../docs/.docgen', key, `${componentName}.json`),
-      prepareDeclaration(declaration),
-      { spaces: 2 }
-    );
-  });
+    acc[componentName] = prepareDeclaration(declaration);
+    return acc;
+  }, {});
+
+  fs.writeJSONSync(path.join(__dirname, '../docs/.docgen', key, 'props.json'), data, { spaces: 2 });
 });

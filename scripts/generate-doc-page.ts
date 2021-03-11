@@ -12,7 +12,6 @@ slug: /core/${component.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()}/
 ---
 
 import PropsTable from '../../components/PropsTable/PropsTable';
-import docs from '../../../.docgen/mantine-core/${component}.json';
 
 # ${component}
 
@@ -24,7 +23,7 @@ This is a ${component} component description placeholder
 import { ${component} } from '@mantine/core';
 \`\`\`
 
-<PropsTable data={docs} />
+<PropsTable component="${component}" />
 `;
 
 files.forEach((filePath) => {

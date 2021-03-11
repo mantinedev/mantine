@@ -1,14 +1,14 @@
 import React from 'react';
 import { Title, Table, Text, Paper } from '@mantine/core';
-import { Docgen } from './docgen.types';
+import PROPS_DATA from '../../../.docgen/mantine-core/props.json';
 
 interface PropsTableProps {
-  data: Docgen;
+  component: string;
 }
 
-export default function PropsTable({ data }: PropsTableProps) {
-  const rows = Object.keys(data.props).map((propKey) => {
-    const prop = data.props[propKey];
+export default function PropsTable({ component }: PropsTableProps) {
+  const rows = Object.keys(PROPS_DATA[component].props).map((propKey) => {
+    const prop = PROPS_DATA[component].props[propKey];
     return (
       <tr key={propKey}>
         <td>

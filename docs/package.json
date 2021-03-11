@@ -15,7 +15,7 @@
     "gatsby-plugin-cname": "^1.0.0",
     "gatsby-plugin-google-analytics": "^3.0.0",
     "gatsby-plugin-manifest": "^3.0.0",
-    "gatsby-plugin-mdx": "^2.0.0",
+    "gatsby-plugin-mdx": "^2.0.1",
     "gatsby-plugin-offline": "^4.0.0",
     "gatsby-plugin-react-helmet": "^4.0.0",
     "gatsby-plugin-ts-config": "^1.1.5",
