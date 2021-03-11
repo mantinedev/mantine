@@ -12,10 +12,17 @@ slug: /core/${component.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()}/
 ---
 
 import PropsTable from '../../components/PropsTable/PropsTable';
+import PageHeader from '../../components/PageHeader/PageHeader';
 
 # ${component}
 
 This is a ${component} component description placeholder
+
+<PageHeader
+  source="mantine-core/src/${component}/${component}.tsx"
+  docs="core/${component}.mdx"
+  package="@mantine/core"
+/>
 
 ## Import
 
