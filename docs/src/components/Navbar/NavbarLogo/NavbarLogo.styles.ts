@@ -12,14 +12,11 @@ export default createUseStyles(
       display: 'flex',
       alignItems: 'center',
       textDecoration: 'none',
-      color: theme.colors.gray[7],
       userSelect: 'none',
     },
 
     image: {
-      width: LOGO_SIZE,
       height: LOGO_SIZE,
-      marginRight: theme.spacing.sm,
     },
   }),
   { theming }

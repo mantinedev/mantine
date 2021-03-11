@@ -48,8 +48,8 @@ export default function PropsTable({ data }: PropsTableProps) {
   });
 
   return (
-    <div>
-      <Title order={2} style={{ fontFamily: 'IBM Plex Mono, monospace', marginBottom: 15 }}>
+    <div style={{ marginTop: 30 }}>
+      <Title order={2} style={{ marginBottom: 15 }}>
         Component props
       </Title>
 
