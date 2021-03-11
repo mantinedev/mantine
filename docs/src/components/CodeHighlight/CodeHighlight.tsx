@@ -7,11 +7,12 @@ import useStyles from './CodeHighlight.styles';
 interface CodeHighlightProps {
   code: string;
   language: Language;
-  className: string;
+  className?: string;
 }
 
 export default function CodeHighlight({ code, className, language }: CodeHighlightProps) {
   const classes = useStyles();
+
   return (
     <Highlight {...defaultProps} theme={theme} code={code} language={language}>
       {({ className: inheritedClassName, style, tokens, getLineProps, getTokenProps }) => (
