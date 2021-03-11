@@ -9,6 +9,7 @@ export default createUseStyles(
       lineHeight: 1.4,
       padding: [theme.spacing.md, theme.spacing.lg],
       borderRadius: theme.radius.sm,
+      marginBottom: theme.spacing.xl,
     },
   }),
   { theming }
