@@ -27,13 +27,12 @@ export default function NavbarDocsCategory({ links, category }: NavbarDocsCatego
   ));
 
   return (
-    <div className={classes.category}>
+    <div className={cx(classes.category, { [classes.categoryCollapsed]: collapsed })}>
       <button className={classes.header} type="button" onClick={() => setCollapsed((c) => !c)}>
+        <ChevronDownIcon className={cx(classes.icon, { [classes.iconCollapsed]: collapsed })} />
         <Text className={classes.title} weight={700} color="gray" size="xs" transform="uppercase">
           {category}
         </Text>
-
-        <ChevronDownIcon className={cx(classes.icon, { [classes.iconCollapsed]: collapsed })} />
       </button>
       {!collapsed && items}
     </div>
