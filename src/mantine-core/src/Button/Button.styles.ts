@@ -74,6 +74,7 @@ export default createUseStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    height: '100%',
   },
 
   label: {
