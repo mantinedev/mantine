@@ -103,7 +103,6 @@ export default createUseStyles({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    letterSpacing: 0.5,
     color: getThemeColor({ theme, color, shade: 8 }),
     border: `1px solid ${getThemeColor({ theme, color, shade: 8 })}`,
 
@@ -124,7 +123,6 @@ export default createUseStyles({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    letterSpacing: 0.5,
     lineHeight: 1,
     backgroundColor: getThemeColor({ theme, color, shade: 6 }),
     textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}`,
