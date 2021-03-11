@@ -12,6 +12,12 @@ export default createUseStyles(
       borderRadius: theme.radius.sm,
       marginBottom: theme.spacing.xl,
     },
+
+    copy: {
+      position: 'absolute',
+      top: theme.spacing.xs,
+      right: theme.spacing.xs,
+    },
   }),
   { theming }
 );
