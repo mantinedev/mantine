@@ -15,6 +15,7 @@ const components = {
   h5: h(5),
   h6: h(6),
   p: (props: any) => <p {...props} style={{ lineHeight: 1.6 }} />,
+  ul: (props: any) => <ul {...props} style={{ lineHeight: 1.4 }} />,
   pre: (props: any) => {
     const matches = (props.children.props.className || '').match(/language-(?<lang>.*)/);
 
