@@ -10,7 +10,7 @@ export default createUseStyles(
       left: 0,
       right: 0,
       height: HEADER_HEIGHT,
-      zIndex: 1,
+      zIndex: 1000,
       position: 'fixed',
       backgroundColor: theme.white,
       borderBottom: `1px solid ${theme.colors.gray[2]}`,
