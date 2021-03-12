@@ -1,0 +1,35 @@
+---
+package: mantine-hooks
+title: 'use-media-query'
+order: 1
+slug: /hooks/use-media-query/
+---
+
+import { Button, Paper } from '@mantine/core';
+import { useClickOutside } from '@mantine/hooks';
+import { UseBreakpointDemo } from '../../demos/hooks/use-media-query.demos';
+import PageHeader from '../../components/PageHeader/PageHeader';
+
+# use-media-query
+
+<PageHeader
+  source="mantine-hooks/src/hooks/use-media-query/use-media-query.ts"
+  docs="hooks/use-media-query.mdx"
+  package="@mantine/hooks"
+/>
+
+use-media-query hook allows detection of viewport width changes. Hook receives max-width and returns boolean value with `window.matchMedia().matches` execution result.
+
+## Usage
+
+```tsx
+import { useMediaQuery } from '@mantine/hooks';
+
+function Example() {
+  // matches will be true if (max-width: 765px) media query is satisfied
+  const matches = useMediaQuery('(max-width: 765px)');
+  return <div />;
+}
+```
+
+<UseBreakpointDemo />
