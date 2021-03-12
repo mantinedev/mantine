@@ -3,7 +3,7 @@ import { MantineTheme } from '@mantine/theme';
 
 export default createUseStyles({
   code: ({ theme }: { theme: MantineTheme }) => ({
-    padding: [theme.spacing.xs / 4, theme.spacing.xs / 2],
+    padding: [3, theme.spacing.xs / 2],
     borderRadius: theme.radius.sm,
     color: theme.black,
     backgroundColor: theme.colors.gray[1],
