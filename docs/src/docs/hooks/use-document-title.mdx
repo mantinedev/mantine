@@ -1,0 +1,33 @@
+---
+package: mantine-hooks
+title: 'use-document-title'
+order: 1
+slug: /hooks/use-document-title/
+---
+
+import PageHeader from '../../components/PageHeader/PageHeader';
+import { UseDocumentTitleDemo } from '../../demos/hooks/use-document-title.demos';
+
+# use-document-title
+
+<PageHeader
+  source="mantine-hooks/src/hooks/use-document-title/use-document-title.ts"
+  docs="hooks/use-document-title.mdx"
+  package="@mantine/hooks"
+/>
+
+Sets `document.title` property with `React.useLayoutEffect` hook.
+
+## Usage
+
+```tsx
+import React from 'react';
+import { useDocumentTitle } from '@mantine/hooks';
+
+function ApplicationRoute() {
+  useDocumentTitle('My application route');
+  return <div />;
+}
+```
+
+<UseDocumentTitleDemo />
