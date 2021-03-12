@@ -20,6 +20,8 @@ export default createUseStyles(
       borderBottom: 0,
       borderBottomRightRadius: 0,
       borderBottomLeftRadius: 0,
+      position: 'relative',
+      zIndex: 1,
     },
 
     code: {

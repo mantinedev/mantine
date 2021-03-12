@@ -16,7 +16,7 @@ export function UseClickOutsideDemo() {
       <Button onClick={() => setOpened(true)}>Open dropdown</Button>
 
       {opened && (
-        <Paper ref={ref} shadow="md">
+        <Paper ref={ref} shadow="sm">
           <span>Click outside to close</span>
         </Paper>
       )}
@@ -38,7 +38,7 @@ export function UseClickOutsideDemo() {
         {opened && (
           <Paper
             ref={ref}
-            shadow="md"
+            shadow="sm"
             style={{
               width: 300,
               height: 60,
