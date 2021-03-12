@@ -16,6 +16,7 @@ export interface MantineTheme {
   readonly black: string;
   readonly colors: Record<string, Tuple<string, 10>>;
   readonly fontFamily: CSSProperties['fontFamily'];
+  readonly fontFamilyMonospace: CSSProperties['fontFamily'];
   readonly primaryColor: string;
 
   readonly fontSizes: MantineSizes;
