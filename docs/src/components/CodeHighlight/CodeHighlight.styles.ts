@@ -4,6 +4,7 @@ import { theming, MantineTheme } from '@mantine/core';
 export default createUseStyles(
   (theme: MantineTheme) => ({
     code: {
+      overflowX: 'auto',
       position: 'relative',
       fontFamily: 'IBM Plex Mono, monospace',
       fontSize: theme.fontSizes.sm,
