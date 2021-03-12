@@ -18,34 +18,36 @@ export default function CodeHighlight({ code, className, language }: CodeHighlig
   const clipboard = useClipboard();
 
   return (
-    <Highlight {...defaultProps} theme={theme} code={code} language={language}>
-      {({ className: inheritedClassName, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={cx(classes.code, inheritedClassName, className)} style={style}>
-          <ActionIcon
-            className={classes.copy}
-            title={clipboard.copied ? 'Copied' : 'Copy code to clipboard'}
-            onClick={() => clipboard.copy(code)}
-          >
-            {clipboard.copied ? <CheckIcon /> : <ClipboardIcon />}
-          </ActionIcon>
+    <div className={classes.wrapper}>
+      <ActionIcon
+        className={classes.copy}
+        title={clipboard.copied ? 'Copied' : 'Copy code to clipboard'}
+        onClick={() => clipboard.copy(code)}
+      >
+        {clipboard.copied ? <CheckIcon /> : <ClipboardIcon />}
+      </ActionIcon>
 
-          {tokens
-            .map((line, i) => {
-              if (i === tokens.length - 1 && line.length === 1 && line[0].content === '\n') {
-                return null;
-              }
+      <Highlight {...defaultProps} theme={theme} code={code} language={language}>
+        {({ className: inheritedClassName, style, tokens, getLineProps, getTokenProps }) => (
+          <pre className={cx(classes.code, inheritedClassName, className)} style={style}>
+            {tokens
+              .map((line, i) => {
+                if (i === tokens.length - 1 && line.length === 1 && line[0].content === '\n') {
+                  return null;
+                }
 
-              return (
-                <div {...getLineProps({ line, key: i })}>
-                  {line.map((token, key) => (
-                    <span {...getTokenProps({ token, key })} />
-                  ))}
-                </div>
-              );
-            })
-            .filter(Boolean)}
-        </pre>
-      )}
-    </Highlight>
+                return (
+                  <div {...getLineProps({ line, key: i })}>
+                    {line.map((token, key) => (
+                      <span {...getTokenProps({ token, key })} />
+                    ))}
+                  </div>
+                );
+              })
+              .filter(Boolean)}
+          </pre>
+        )}
+      </Highlight>
+    </div>
   );
 }
