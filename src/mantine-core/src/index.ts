@@ -7,6 +7,7 @@ export { Badge } from './Badge/Badge';
 export { Burger } from './Burger/Burger';
 export { Button, LinkButton, MantineButton } from './Button/Button';
 export { Checkbox } from './Checkbox/Checkbox';
+export { Code } from './Code/Code';
 export { ColorSwatch } from './ColorSwatch/ColorSwatch';
 export { Container } from './Container/Container';
 export { ElementsGroup } from './ElementsGroup/ElementsGroup';
