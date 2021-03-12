@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/core';
+import { theming, MantineTheme, getFocusStyles } from '@mantine/core';
 
 export const HEADER_HEIGHT = 60;
 
@@ -14,6 +14,9 @@ export default createUseStyles(
       position: 'fixed',
       backgroundColor: theme.white,
       borderBottom: `1px solid ${theme.colors.gray[2]}`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
     },
 
     logo: {
@@ -28,6 +31,31 @@ export default createUseStyles(
 
     image: {
       height: 30,
+    },
+
+    links: {
+      display: 'flex',
+      paddingRight: theme.spacing.md,
+    },
+
+    link: {
+      ...getFocusStyles(theme),
+      outline: 0,
+      display: 'flex',
+      alignItems: 'center',
+      color: theme.colors.gray[7],
+      textDecoration: 'none',
+      borderRadius: theme.radius.sm,
+      padding: [theme.spacing.xs, theme.spacing.md],
+
+      '&:hover': {
+        backgroundColor: theme.colors.blue[0],
+        color: theme.colors.blue[6],
+      },
+    },
+
+    linkLabel: {
+      marginLeft: theme.spacing.xs,
     },
   }),
   { theming }
