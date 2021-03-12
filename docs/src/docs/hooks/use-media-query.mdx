@@ -16,7 +16,7 @@ import PageHeader from '../../components/PageHeader/PageHeader';
   package="@mantine/hooks"
 />
 
-use-media-query hook allows to subscribe to media queries. It receives media query as an argument and returns true if given media query matches current state.
+use-media-query hook allows to subscribe to media queries. It receives media query as an argument and returns true if given media query matches current state. Hook relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) and will always return false if api is not available (e.g. during server side rendering).
 
 ## Usage
 

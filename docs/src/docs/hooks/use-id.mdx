@@ -23,8 +23,11 @@ It is used to bind input elements to labels.
 ```tsx
 import { useId } from '@mantine/hooks';
 
-const providedId = useId('email'); // returns given id -> email
-const randomId = useId(); // generates random id if id was not provided –> mantine-j_YSXk1CdUip5gPldwCjy
+// returns given id -> email
+const providedId = useId('email');
+
+// generates random id if id was not provided –> mantine-j_YSXk1CdUip5gPldwCjy
+const randomId = useId();
 ```
 
 ## Example

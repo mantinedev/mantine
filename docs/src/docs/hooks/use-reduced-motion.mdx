@@ -1,0 +1,36 @@
+---
+package: mantine-hooks
+title: 'use-reduced-motion'
+order: 1
+slug: /hooks/use-reduced-motion/
+---
+
+import PageHeader from '../../components/PageHeader/PageHeader';
+import GatsbyLink from '../../components/GatsbyLink/GatsbyLink';
+import { UseReducedMotionDemo } from '../../demos/hooks/use-reduced-motion.demos';
+
+# use-reduced-motion
+
+<PageHeader
+  source="mantine-hooks/src/hooks/use-reduced-motion/use-reduced-motion.ts"
+  docs="hooks/use-reduced-motion.mdx"
+  package="@mantine/hooks"
+/>
+
+use-reduced-motion detects if user [prefers to reduce motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion).
+It uses <GatsbyLink to="/hooks/use-media-query">use-media-query</GatsbyLink> hook under the hood.
+Hook relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) and will always return false if api is not available (e.g. during server side rendering).
+
+## Usage
+
+```tsx
+import React from 'react';
+import { useReducedMotion } from '@mantine/hooks';
+
+function Example() {
+  const reduceMotion = useReducedMotion();
+  return <div style={{ transitionDuration: reduceMotion ? '1ms' : '200ms' }} />;
+}
+```
+
+<UseReducedMotionDemo />
