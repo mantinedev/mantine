@@ -21,6 +21,12 @@ use-reduced-motion detects if user [prefers to reduce motion](https://developer.
 It uses <GatsbyLink to="/hooks/use-media-query">use-media-query</GatsbyLink> hook under the hood.
 Hook relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) and will always return false if api is not available (e.g. during server side rendering).
 
+## Import
+
+```tsx
+import { useReducedMotion } from '@mantine/hooks';
+```
+
 ## Usage
 
 ```tsx
