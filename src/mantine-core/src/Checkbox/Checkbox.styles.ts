@@ -32,6 +32,7 @@ export default createUseStyles({
     ...getFontStyles(theme),
     marginLeft: theme.spacing.sm,
     fontSize: theme.fontSizes.sm,
+    lineHeight: theme.lineHeight,
   }),
 
   checkbox: ({

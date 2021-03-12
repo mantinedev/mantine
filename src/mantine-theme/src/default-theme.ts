@@ -35,7 +35,7 @@ export const DEFAULT_THEME: MantineTheme = {
     yellow,
     orange,
   },
-  lineHeight: 1.5,
+  lineHeight: 1.4,
   fontFamily:
     '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
   fontFamilyMonospace: 'Monaco, Courier, monospace',

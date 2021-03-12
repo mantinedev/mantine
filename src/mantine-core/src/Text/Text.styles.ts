@@ -25,7 +25,7 @@ export default createUseStyles({
         ? theme.colors[theme.primaryColor][6]
         : theme.black,
     fontSize: theme.fontSizes[size],
-    lineHeight: 1.4,
+    lineHeight: theme.lineHeight,
     textDecoration: variant === 'link' ? 'underline' : 'none',
   }),
 });
