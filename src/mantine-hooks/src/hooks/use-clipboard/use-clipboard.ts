@@ -6,6 +6,7 @@ export function useClipboard({ timeout = 2000 } = {}) {
   const [copyTimeout, setCopyTimeout] = useState(null);
 
   const handleCopyResult = (value: boolean) => {
+    clearTimeout(copyTimeout);
     setCopyTimeout(setTimeout(() => setCopied(false), timeout));
     setCopied(value);
   };
