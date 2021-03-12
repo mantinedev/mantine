@@ -1,0 +1,31 @@
+---
+package: mantine-hooks
+title: 'use-form'
+order: 1
+slug: /hooks/use-form/
+---
+
+import PageHeader from '../../components/PageHeader/PageHeader';
+import {
+  UseFormSimpleDemo,
+  UseFormValidationDemo,
+  UseFormComplexDemo,
+} from '../../demos/hooks/use-form.demos';
+
+# use-form
+
+<PageHeader
+  source="mantine-hooks/src/hooks/use-form/use-form.ts"
+  docs="hooks/use-id.mdx"
+  package="@mantine/hooks"
+/>
+
+use-form provides bare minimum api to manage simple forms.
+It includes handlers to set and validate values.
+Hook does not depend on `@mantine/core` inputs and does not work with dom.
+
+## Basic usage
+
+<UseFormSimpleDemo />
+<UseFormValidationDemo />
+<UseFormComplexDemo />
