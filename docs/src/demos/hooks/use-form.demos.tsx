@@ -1,3 +1,4 @@
+import OpenColor from 'open-color';
 import React from 'react';
 import { TextInput, ElementsGroup, Button, Checkbox } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
@@ -310,6 +311,7 @@ export function UseFormComplexDemo() {
       language="tsx"
       title="Authentication form"
       demoLink="/hooks/use-form.demos.tsx"
+      demoBackground={OpenColor.gray[0]}
     >
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <AuthenticationForm />
