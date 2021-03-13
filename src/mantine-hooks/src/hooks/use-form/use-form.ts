@@ -26,6 +26,11 @@ export function useForm<T extends { [key: string]: any }>({
   const [errors, setErrors] = useState<ValidationErrors>(initialErrors);
   const [values, setValues] = useState(initialValues);
 
+  const reset = () => {
+    setValues(initialValues);
+    setErrors(initialErrors);
+  };
+
   const validate = () => {
     let isValid = true;
 
@@ -70,6 +75,7 @@ export function useForm<T extends { [key: string]: any }>({
     values,
     errors,
     validate,
+    reset,
     setValues,
     setFieldValue,
     setFieldError,
