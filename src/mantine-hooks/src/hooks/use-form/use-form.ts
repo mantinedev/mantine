@@ -70,6 +70,7 @@ export function useForm<T extends { [key: string]: any }>({
     values,
     errors,
     validate,
+    setValues,
     setFieldValue,
     setFieldError,
     validateField,
