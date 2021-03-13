@@ -5,80 +5,6 @@ import { useForm } from '@mantine/hooks';
 import { AuthenticationForm } from '@mantine/demos';
 import CodeDemo from '../../components/CodeDemo/CodeDemo';
 
-const simpleCode = `import React from 'react';
-import { TextInput, Button, Checkbox } from '@mantine/core';
-import { useForm } from '@mantine/hooks';
-
-export function UseFormDemo() {
-  const form = useForm({
-    initialValues: {
-      email: '',
-      termsOfService: false,
-    },
-  });
-
-  return (
-    <form onSubmit={form.onSubmit((values) => console.log(values))}>
-      <TextInput
-        required
-        label="Email"
-        value={form.values.email}
-        onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-      />
-
-      <Checkbox
-        label="I agree to seel my privacy to this corporation"
-        checked={form.values.termsOfService}
-        onChange={(event) => form.setFieldValue('termsOfService', event.currentTarget.checked)}
-      />
-
-      <Button type="submit">Submit</Button>
-    </form>
-  );
-}
-`;
-
-export function UseFormSimpleDemo() {
-  const form = useForm({
-    initialValues: {
-      email: '',
-      termsOfService: false,
-    },
-  });
-
-  return (
-    <CodeDemo
-      code={simpleCode}
-      language="tsx"
-      title="Simple: no validation"
-      demoLink="/hooks/use-form.demos.tsx"
-    >
-      <div style={{ maxWidth: 360, margin: 'auto' }}>
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
-          <TextInput
-            required
-            label="Email"
-            placeholder="your@email.com"
-            value={form.values.email}
-            onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-          />
-
-          <Checkbox
-            style={{ marginTop: 15 }}
-            label="I agree to seel my privacy to this corporation"
-            checked={form.values.termsOfService}
-            onChange={(event) => form.setFieldValue('termsOfService', event.currentTarget.checked)}
-          />
-
-          <ElementsGroup position="right" style={{ marginTop: 15 }}>
-            <Button type="submit">Submit</Button>
-          </ElementsGroup>
-        </form>
-      </div>
-    </CodeDemo>
-  );
-}
-
 const validationCode = `import React from 'react';
 import { TextInput, Button, Checkbox } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
@@ -87,7 +13,7 @@ export function UseFormDemo() {
   const form = useForm({
     initialValues: {
       email: '',
-      name: '',
+      termsOfService: false,
     },
 
     validationRules: {
@@ -133,8 +59,8 @@ export function UseFormValidationDemo() {
     <CodeDemo
       code={validationCode}
       language="tsx"
-      title="Field validation"
-      demoLink="/hooks/use-form.demos.tsx"
+      title="Simple form example"
+      demoLink="/hooks/use-form.demos.tsx#L46"
     >
       <div style={{ maxWidth: 360, margin: 'auto' }}>
         <form onSubmit={form.onSubmit((values) => console.log(values))}>
@@ -309,8 +235,8 @@ export function UseFormComplexDemo() {
     <CodeDemo
       code={complexCode}
       language="tsx"
-      title="Authentication form"
-      demoLink="/hooks/use-form.demos.tsx"
+      title="Authentication form example"
+      demoLink="/hooks/use-form.demos.tsx#L233"
       demoBackground={OpenColor.gray[0]}
     >
       <div style={{ maxWidth: 400, margin: 'auto' }}>
