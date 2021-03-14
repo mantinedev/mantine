@@ -101,4 +101,36 @@ describe('@mantine/hooks/use-form', () => {
 
     expect(spy).toHaveBeenCalledWith({ email: 'test@email.dev', name: 'test-name', age: 1 });
   });
+
+  it('resets state to default with reset handler', () => {
+    const hook = renderHook(() => useForm(TEST_FORM));
+    act(() => {
+      hook.result.current.setFieldValue('email', 'test@email.dev');
+      hook.result.current.validateField('name');
+    });
+
+    expect(hook.result.current.errors.name).toBe(true);
+    expect(hook.result.current.values).toEqual({
+      ...TEST_FORM.initialValues,
+      email: 'test@email.dev',
+    });
+
+    act(() => hook.result.current.reset());
+
+    expect(hook.result.current.values).toEqual(TEST_FORM.initialValues);
+    expect(hook.result.current.errors.name).toBe(false);
+  });
+
+  it('sets form values with setValues handler', () => {
+    const hook = renderHook(() => useForm(TEST_FORM));
+    act(() => {
+      hook.result.current.setValues({ email: 'hello@mantine.dev', name: 'Mantine', age: 1 });
+    });
+
+    expect(hook.result.current.values).toEqual({
+      email: 'hello@mantine.dev',
+      name: 'Mantine',
+      age: 1,
+    });
+  });
 });
