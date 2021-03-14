@@ -24,8 +24,11 @@
     "test": "npm run typecheck && npm run lint && npm run jest",
     "jest": "jest",
     "storybook": "ts-node scripts/storybook-start",
+    "_release": "npm run release:prepare && ts-node scripts/release",
     "release:prepare": "npm test && npm run clean && npm run docs:deploy",
-    "release": "npm run release:prepare && ts-node scripts/release",
+    "release:patch": "npm run _release patch",
+    "release:minor": "npm run _release minor",
+    "release:major": "npm run _release major",
     "clean": "rimraf src/*/dist"
   },
   "devDependencies": {
