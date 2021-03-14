@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://mantine-docs/./src/pages/404.tsx"],"names":["NotFoundPage"],"mappings":"4KAEe,SAASA,IACtB,OAAO","file":"component---src-pages-404-tsx-39495a2db7ac06c3b6d6.js","sourcesContent":["import React from 'react';\n\nexport default function NotFoundPage() {\n  return <>404 page</>;\n}\n"],"sourceRoot":""}

@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[37],{"+kQr":function(n,e,t){"use strict";t.r(e),t.d(e,"default",(function(){return i}));var a=t("mXGw"),r=t.n(a),u=t("4XLq"),c=t("Z9Zh");function i(){return r.a.createElement(c.a,null,r.a.createElement(u.a,null,"GettingStarted"))}}}]);
-//# sourceMappingURL=component---src-pages-getting-started-tsx-8dad41d6941fcaff4259.js.map

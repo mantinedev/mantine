@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://mantine-docs/./src/pages/examples.tsx"],"names":["ExamplesPage"],"mappings":"4KAEe,SAASA,IACtB,OAAO","file":"component---src-pages-examples-tsx-4aa204dc1507319bc687.js","sourcesContent":["import React from 'react';\n\nexport default function ExamplesPage() {\n  return <>Examples</>;\n}\n"],"sourceRoot":""}

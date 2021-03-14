@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[36],{"RNt/":function(n,e,t){"use strict";t.r(e),t.d(e,"default",(function(){return l}));var a=t("mXGw"),u=t.n(a),r=t("4XLq"),c=t("Z9Zh");function l(){return u.a.createElement(c.a,null,u.a.createElement(r.a,null,"Examples"))}}}]);
-//# sourceMappingURL=component---src-pages-examples-tsx-7cd65049fc980ae452b2.js.map

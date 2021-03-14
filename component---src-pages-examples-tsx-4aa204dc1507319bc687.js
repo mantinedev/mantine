@@ -1,0 +1,2 @@
+(self.webpackChunkmantine_docs=self.webpackChunkmantine_docs||[]).push([[488],{1092:function(n,e,t){"use strict";t.r(e),t.d(e,{default:function(){return a}});var u=t(7378);function a(){return u.createElement(u.Fragment,null,"Examples")}}}]);
+//# sourceMappingURL=component---src-pages-examples-tsx-4aa204dc1507319bc687.js.map

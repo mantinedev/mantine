@@ -1,0 +1,2 @@
+(self.webpackChunkmantine_docs=self.webpackChunkmantine_docs||[]).push([[691],{2494:function(e,n,t){"use strict";t.r(n),t.d(n,{default:function(){return u}});var a=t(7378),l=t(205);function u(){return a.createElement(a.Fragment,null,a.createElement(l.Z,{title:"Mantine",disableTitleTemplate:!0}))}}}]);
+//# sourceMappingURL=component---src-pages-index-tsx-fe561faebecfb06558e2.js.map

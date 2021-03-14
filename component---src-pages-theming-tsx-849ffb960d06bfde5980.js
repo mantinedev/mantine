@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[41],{SPAa:function(n,e,t){"use strict";t.r(e),t.d(e,"default",(function(){return i}));var a=t("mXGw"),u=t.n(a),r=t("4XLq"),c=t("Z9Zh");function i(){return u.a.createElement(c.a,null,u.a.createElement(r.a,null,"Theming"))}}}]);
-//# sourceMappingURL=component---src-pages-theming-tsx-849ffb960d06bfde5980.js.map
