@@ -11,6 +11,7 @@
     "sourceMap": false,
     "noEmitOnError": true,
     "allowJs": true,
+    "resolveJsonModule": true,
     "types": ["node", "webpack", "jest"],
     "typeRoots": ["./node_modules/@types", "./configuration/types"],
     "baseUrl": ".",
