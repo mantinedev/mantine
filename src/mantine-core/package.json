@@ -1,13 +1,13 @@
 {
   "name": "@mantine/core",
-  "version": "0.4.10",
+  "version": "0.4.11",
   "main": "dist/lib.js",
   "licence": "MIT",
   "types": "dist/mantine-core/src/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
   "peerDependencies": {
-    "@mantine/hooks": "0.4.10",
+    "@mantine/hooks": "0.4.11",
     "@modulz/radix-icons": ">=4.0.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
