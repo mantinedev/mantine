@@ -7,12 +7,25 @@ import useStyles from './Tabs.styles';
 
 export { Tab };
 
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}
+
 interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   children: React.ReactNode;
   initialTab?: number;
+  active?: number;
+  onTabChange?(tabIndex: number): void;
 }
 
-export function Tabs({ children, initialTab = 0, themeOverride, ...others }: TabsProps) {
+export function Tabs({
+  children,
+  initialTab = 0,
+  themeOverride,
+  active,
+  onTabChange,
+  ...others
+}: TabsProps) {
   const classes = useStyles({
     reduceMotion: useReducedMotion(),
     theme: useMantineTheme(themeOverride),
@@ -24,7 +37,15 @@ export function Tabs({ children, initialTab = 0, themeOverride, ...others }: Tab
     (item: TabType) => item.type === Tab
   ) as TabType[];
 
-  const [activeTab, setActiveTab] = useState(Math.min(Math.max(initialTab, 0), tabs.length - 1));
+  const [_activeTab, _setActiveTab] = useState(initialTab);
+  const activeTab = clamp(typeof active === 'number' ? active : _activeTab, 0, tabs.length - 1);
+  const setActiveTab = (tabIndex: number) => {
+    _setActiveTab(tabIndex);
+
+    if (typeof onTabChange === 'function') {
+      onTabChange(tabIndex);
+    }
+  };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if (event.nativeEvent.code === 'ArrowRight') {
