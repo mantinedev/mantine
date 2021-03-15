@@ -18,9 +18,11 @@ export function TabControl({
   ...others
 }: TabControlProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const { label, icon, ...props } = tabProps;
   return (
     <button
       {...others}
+      {...props}
       tabIndex={active ? 0 : -1}
       className={cx(classes.tab, { [classes.tabActive]: active })}
       type="button"
@@ -29,8 +31,8 @@ export function TabControl({
       ref={elementRef}
     >
       <div className={classes.tabInner}>
-        {tabProps.icon && <div className={classes.tabIcon}>{tabProps.icon}</div>}
-        {tabProps.title && <div>{tabProps.title}</div>}
+        {icon && <div className={classes.tabIcon}>{icon}</div>}
+        {label && <div>{label}</div>}
       </div>
     </button>
   );

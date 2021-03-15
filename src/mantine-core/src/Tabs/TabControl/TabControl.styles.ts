@@ -17,6 +17,11 @@ export default createUseStyles({
     fontSize: theme.fontSizes.sm,
     cursor: 'pointer',
     transition: reduceMotion ? 'none' : 'border-color 150ms ease, color 150ms ease',
+
+    '&:disabled': {
+      cursor: 'not-allowed',
+      color: theme.colors.gray[5],
+    },
   }),
 
   tabActive: ({ theme }: { theme: MantineTheme }) => ({
