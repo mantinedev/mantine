@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface TabProps {
-  title: React.ReactNode;
+  title?: React.ReactNode;
   icon?: React.ReactNode;
   children: React.ReactNode;
 }

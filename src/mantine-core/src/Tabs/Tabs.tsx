@@ -56,7 +56,7 @@ export function Tabs({ children, initialTab = 0, themeOverride, ...others }: Tab
     >
       <div className={classes.paneInner}>
         {tab.props.icon && <div className={classes.paneIcon}>{tab.props.icon}</div>}
-        <div>{tab.props.title}</div>
+        {tab.props.title && <div>{tab.props.title}</div>}
       </div>
     </button>
   ));

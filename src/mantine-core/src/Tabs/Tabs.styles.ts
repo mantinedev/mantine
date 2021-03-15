@@ -42,7 +42,9 @@ export default createUseStyles({
   },
 
   paneIcon: ({ theme }: { theme: MantineTheme }) => ({
-    marginRight: theme.spacing.xs,
+    '&:not(:only-child)': {
+      marginRight: theme.spacing.xs,
+    },
 
     // this fixes alignment as by default images and svg are inline and will have extra space on the bottom
     '& *': {
