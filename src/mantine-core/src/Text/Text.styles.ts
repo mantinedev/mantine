@@ -26,6 +26,10 @@ export default createUseStyles({
         : theme.black,
     fontSize: theme.fontSizes[size],
     lineHeight: theme.lineHeight,
-    textDecoration: variant === 'link' ? 'underline' : 'none',
+    textDecoration: 'none',
+
+    '&:hover': {
+      textDecoration: variant === 'link' ? 'underline' : 'none',
+    },
   }),
 });
