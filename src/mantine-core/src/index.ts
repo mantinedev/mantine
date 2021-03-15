@@ -28,7 +28,7 @@ export { Select } from './Select/Select';
 export { Spoiler } from './Spoiler/Spoiler';
 export { Switch } from './Switch/Switch';
 export { Table } from './Table/Table';
-export { Text } from './Text/Text';
+export { Anchor, Text } from './Text/Text';
 export { Textarea } from './Textarea/Textarea';
 export { TextInput } from './TextInput/TextInput';
 export { ThemeIcon } from './ThemeIcon/ThemeIcon';
