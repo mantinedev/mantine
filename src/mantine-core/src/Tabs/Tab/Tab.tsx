@@ -3,7 +3,7 @@ import React from 'react';
 export interface TabProps extends React.ComponentPropsWithoutRef<'button'> {
   label?: React.ReactNode;
   icon?: React.ReactNode;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export interface TabType {

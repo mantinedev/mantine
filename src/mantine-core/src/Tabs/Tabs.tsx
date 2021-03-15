@@ -77,10 +77,12 @@ export function Tabs({
     />
   ));
 
+  const content = tabs[activeTab].props.children;
+
   return (
     <div {...others}>
       <div className={classes.tabs}>{panes}</div>
-      <div className={classes.body}>{tabs[activeTab].props.children}</div>
+      {content && <div className={classes.body}>{content}</div>}
     </div>
   );
 }

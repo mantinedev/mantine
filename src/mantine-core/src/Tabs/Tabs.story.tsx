@@ -86,5 +86,11 @@ storiesOf('@mantine/core', module).add('Tabs', () => (
         </Text>
       </Tab>
     </Tabs>
+
+    <Tabs>
+      <Tab label="No body" />
+      <Tab label="Only tabs" />
+      <Tab label="Nothing here" />
+    </Tabs>
   </div>
 ));
