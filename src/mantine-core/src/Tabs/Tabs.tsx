@@ -47,6 +47,8 @@ export function Tabs({ children, initialTab = 0, themeOverride, ...others }: Tab
       type="button"
       key={index}
       onKeyDown={handleKeyDown}
+      role="tab"
+      aria-selected={index === activeTab}
       ref={(node) => {
         controlRefs.current[index] = node;
       }}
