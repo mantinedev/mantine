@@ -4,6 +4,7 @@ export { ActionIcon } from './ActionIcon/ActionIcon';
 export { Alert } from './Alert/Alert';
 export { Avatar } from './Avatar/Avatar';
 export { Badge } from './Badge/Badge';
+export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 export { Burger } from './Burger/Burger';
 export { Button, LinkButton, MantineButton } from './Button/Button';
 export { Checkbox } from './Checkbox/Checkbox';
