@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles, getFocusStyles } from '@mantine/theme';
+import { MantineTheme, getFontStyles, getFocusStyles, getThemeColor } from '@mantine/theme';
 
 export default createUseStyles({
   tab: ({ theme, reduceMotion }: { theme: MantineTheme; reduceMotion: boolean }) => ({
@@ -24,9 +24,9 @@ export default createUseStyles({
     },
   }),
 
-  tabActive: ({ theme }: { theme: MantineTheme }) => ({
-    color: theme.colors[theme.primaryColor][6],
-    borderBottomColor: theme.colors[theme.primaryColor][6],
+  tabActive: ({ theme, color }: { theme: MantineTheme; color: string }) => ({
+    color: getThemeColor({ theme, color, shade: 6 }),
+    borderBottomColor: getThemeColor({ theme, color, shade: 6 }),
   }),
 
   tabInner: {

@@ -15,6 +15,7 @@ interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
   children: React.ReactNode;
   initialTab?: number;
   active?: number;
+  color?: string;
   onTabChange?(tabIndex: number): void;
 }
 
@@ -24,6 +25,7 @@ export function Tabs({
   themeOverride,
   active,
   onTabChange,
+  color,
   ...others
 }: TabsProps) {
   const classes = useStyles({
@@ -67,6 +69,7 @@ export function Tabs({
       active={activeTab === index}
       tabProps={tab.props}
       onKeyDown={handleKeyDown}
+      color={color}
       elementRef={(node) => {
         controlRefs.current[index] = node;
       }}

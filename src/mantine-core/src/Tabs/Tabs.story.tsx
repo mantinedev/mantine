@@ -42,7 +42,7 @@ function VueIcon() {
 storiesOf('@mantine/core', module).add('Tabs', () => (
   <div style={{ padding: 50 }}>
     <Tabs>
-      <Tab label="React">
+      <Tab label="React" color="teal">
         <Text color="gray" size="sm">
           A JavaScript library for building user interfaces
         </Text>
@@ -57,7 +57,7 @@ storiesOf('@mantine/core', module).add('Tabs', () => (
         </Text>
       </Tab>
 
-      <Tab label="Angular" icon={<NgIcon />} disabled>
+      <Tab label="Angular" icon={<NgIcon />}>
         <Text color="gray" size="sm">
           The modern web developer&apos;s platform
         </Text>

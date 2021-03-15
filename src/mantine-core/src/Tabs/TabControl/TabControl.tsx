@@ -8,6 +8,7 @@ interface TabControlProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   active: boolean;
   elementRef(node: HTMLButtonElement): void;
   tabProps: TabProps;
+  color?: string;
 }
 
 export function TabControl({
@@ -15,10 +16,15 @@ export function TabControl({
   active,
   elementRef,
   tabProps,
+  color,
   ...others
 }: TabControlProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
-  const { label, icon, ...props } = tabProps;
+  const { label, icon, color: overrideColor, ...props } = tabProps;
+  const classes = useStyles({
+    color: overrideColor || color,
+    theme: useMantineTheme(themeOverride),
+  });
+
   return (
     <button
       {...others}
