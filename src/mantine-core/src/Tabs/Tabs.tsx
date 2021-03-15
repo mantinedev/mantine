@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
-import { Tab, TabType } from './Tab';
+import { Tab, TabType } from './Tab/Tab';
+import { TabControl } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
 
 export { Tab };
@@ -41,29 +41,21 @@ export function Tabs({ children, initialTab = 0, themeOverride, ...others }: Tab
   };
 
   const panes = tabs.map((tab, index) => (
-    <button
-      className={cx(classes.pane, { [classes.paneActive]: index === activeTab })}
-      tabIndex={activeTab === index ? 0 : -1}
-      type="button"
+    <TabControl
       key={index}
+      active={activeTab === index}
+      tabProps={tab.props}
       onKeyDown={handleKeyDown}
-      role="tab"
-      aria-selected={index === activeTab}
-      ref={(node) => {
+      elementRef={(node) => {
         controlRefs.current[index] = node;
       }}
       onClick={() => setActiveTab(index)}
-    >
-      <div className={classes.paneInner}>
-        {tab.props.icon && <div className={classes.paneIcon}>{tab.props.icon}</div>}
-        {tab.props.title && <div>{tab.props.title}</div>}
-      </div>
-    </button>
+    />
   ));
 
   return (
     <div {...others}>
-      <div className={classes.panes}>{panes}</div>
+      <div className={classes.tabs}>{panes}</div>
       <div className={classes.body}>{tabs[activeTab].props.children}</div>
     </div>
   );
