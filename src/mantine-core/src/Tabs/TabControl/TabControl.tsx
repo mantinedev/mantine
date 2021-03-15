@@ -29,6 +29,7 @@ export function TabControl({
     <button
       {...others}
       {...props}
+      data-mantine-tab
       tabIndex={active ? 0 : -1}
       className={cx(classes.tab, { [classes.tabActive]: active })}
       type="button"
@@ -37,8 +38,12 @@ export function TabControl({
       ref={elementRef}
     >
       <div className={classes.tabInner}>
-        {icon && <div className={classes.tabIcon}>{icon}</div>}
-        {label && <div>{label}</div>}
+        {icon && (
+          <div data-mantine-icon className={classes.tabIcon}>
+            {icon}
+          </div>
+        )}
+        {label && <div data-mantine-label>{label}</div>}
       </div>
     </button>
   );

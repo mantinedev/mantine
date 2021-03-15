@@ -73,7 +73,7 @@ export function Tabs({
       elementRef={(node) => {
         controlRefs.current[index] = node;
       }}
-      onClick={() => setActiveTab(index)}
+      onClick={() => activeTab !== index && setActiveTab(index)}
     />
   ));
 
@@ -81,8 +81,15 @@ export function Tabs({
 
   return (
     <div {...others}>
-      <div className={classes.tabs}>{panes}</div>
-      {content && <div className={classes.body}>{content}</div>}
+      <div className={classes.tabs} role="tablist" aria-orientation="horizontal">
+        {panes}
+      </div>
+
+      {content && (
+        <div data-mantine-tab-content className={classes.body} role="tabpanel">
+          {content}
+        </div>
+      )}
     </div>
   );
 }
