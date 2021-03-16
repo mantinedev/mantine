@@ -17,10 +17,10 @@ To start using Mantine you need to install [`@mantine/core`](https://www.npmjs.c
 
 ```sh
 # With yarn
-yarn add @mantine/core @mantine/hooks react-jss @modulz/radix-icons
+yarn add @mantine/core @mantine/hooks react-jss
 
 # With npm
-yarn add @mantine/core @mantine/hooks react-jss @modulz/radix-icons
+yarn add @mantine/core @mantine/hooks react-jss
 
 # With install-peerdeps
 npx install-peerdeps @mantine/core

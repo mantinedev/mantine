@@ -45,7 +45,7 @@ export default function TagPickerContainer({ transitionDuration = 250, ...props 
       setDropdownOpened(false);
       setHovered(-1);
       setQuery('');
-      setImmediate(() => controlRef.current.focus());
+      setTimeout(() => controlRef.current.focus(), 4);
       typeof props.onDropdownClose === 'function' && props.onDropdownClose();
     }
   };
