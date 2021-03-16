@@ -34,12 +34,12 @@ interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
 
 const inState = {
   overlay: { opacity: 1 },
-  modal: { transform: 'translateY(0) scaleY(1)' },
+  modal: { opacity: 1, transform: 'translateY(0) skew(0deg, 0deg)' },
 };
 
 const outState = {
   overlay: { opacity: 0 },
-  modal: { transform: 'translateY(-200px) scaleY(0)' },
+  modal: { opacity: 0, transform: 'translateY(-100%) skew(-10deg, -5deg)' },
 };
 
 const transitionStyles = {
@@ -59,7 +59,7 @@ export function Modal({
   hideCloseButton = false,
   overlayOpacity = 0.65,
   modalWidth = 440,
-  transitionDuration = 400,
+  transitionDuration = 350,
   closeButtonLabel,
   overlayColor,
   ...others
@@ -81,7 +81,9 @@ export function Modal({
     modal: {
       transformOrigin: 'top',
       transform: 'translateY(-200px) scaleY(0)',
-      transition: `transform ${duration}ms cubic-bezier(.51,.3,0,1.21)`,
+      transitionDuration: `${duration}ms`,
+      transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21)',
+      transitionProperty: 'transform, opacity',
     },
   };
 
