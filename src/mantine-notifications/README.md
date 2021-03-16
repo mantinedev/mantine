@@ -6,10 +6,10 @@ Notifications system built on top of [Mantine](https://mantine.dev/) components 
 
 ```sh
 # With yarn
-yarn add @mantine/notifications @mantine/core @mantine/hooks react-jss
+yarn add @mantine/notifications @mantine/core @mantine/theme @mantine/hooks react-jss
 
 # With npm
-yarn add @mantine/notifications @mantine/core @mantine/hooks react-jss
+yarn add @mantine/notifications @mantine/core @mantine/theme @mantine/hooks react-jss
 
 # With install-peerdeps
 npx install-peerdeps @mantine/notifications

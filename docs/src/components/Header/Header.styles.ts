@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, getFocusStyles } from '@mantine/core';
+import { theming, MantineTheme, getFocusStyles } from '@mantine/theme';
 
 export const HEADER_HEIGHT = 60;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps } from '@mantine/core';
+import { useMantineTheme, DefaultProps } from '@mantine/theme';
 import { TagPickerTag } from '../types';
 import { isBrightColor } from './is-bright-color/is-bright-color';
 import useStyles from './TagBadge.styles';

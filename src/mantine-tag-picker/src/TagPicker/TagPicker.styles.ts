@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFocusStyles } from '@mantine/core';
+import { MantineTheme, getFocusStyles } from '@mantine/theme';
 
 export default createUseStyles({
   tagPicker: {

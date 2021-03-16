@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider } from '@mantine/theme';
 import Layout from './src/components/Layout/Layout';
 
 export const onInitialClientRender = () => {

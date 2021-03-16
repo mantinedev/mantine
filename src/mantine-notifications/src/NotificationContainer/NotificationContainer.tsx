@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { DefaultProps } from '@mantine/core';
+import { DefaultProps } from '@mantine/theme';
 import { Notification } from '../Notification/Notification';
 import getAutoClose from './get-auto-close/get-auto-close';
 import { NotificationProps } from '../types';

@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/core';
+import { theming, MantineTheme } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({

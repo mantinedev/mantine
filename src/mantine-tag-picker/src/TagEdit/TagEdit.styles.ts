@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles, getFocusStyles } from '@mantine/core';
+import { MantineTheme, getFontStyles, getFocusStyles } from '@mantine/theme';
 
 export default createUseStyles({
   tagEdit: {

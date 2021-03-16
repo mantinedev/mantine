@@ -6,7 +6,7 @@ import {
   itSupportsStyle,
   itSupportsOthers,
 } from '@mantine/tests';
-import { DEFAULT_THEME } from '@mantine/core';
+import { DEFAULT_THEME } from '@mantine/theme';
 import TagBadge from './TagBadge';
 
 const data = {

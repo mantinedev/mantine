@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme } from '@mantine/core';
+import { MantineTheme } from '@mantine/theme';
 
 export default createUseStyles({
   notifications: ({ theme }: { theme: MantineTheme }) => ({

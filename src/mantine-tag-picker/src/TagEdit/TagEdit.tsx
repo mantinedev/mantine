@@ -2,14 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useClickOutside } from '@mantine/hooks';
 import { TrashIcon, CheckIcon, Pencil1Icon } from '@modulz/radix-icons';
 import useFocusTrap from '@charlietango/use-focus-trap';
-import {
-  Paper,
-  Input,
-  ActionIcon,
-  ColorSwatch,
-  useMantineTheme,
-  MantineThemeOverride,
-} from '@mantine/core';
+import { Paper, Input, ActionIcon, ColorSwatch } from '@mantine/core';
+import { useMantineTheme, MantineThemeOverride } from '@mantine/theme';
 import { TagPickerColor, TagPickerTag } from '../types';
 import useStyles from './TagEdit.styles';
 

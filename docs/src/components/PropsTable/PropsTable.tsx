@@ -1,5 +1,6 @@
 import React from 'react';
-import { Title, Table, Text, Paper, useMantineTheme } from '@mantine/core';
+import { Title, Table, Text, Paper } from '@mantine/core';
+import { useMantineTheme } from '@mantine/theme';
 import PROPS_DATA from '../../../.docgen/mantine-core/props.json';
 
 interface PropsTableProps {

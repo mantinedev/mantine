@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider } from '@mantine/theme';
 import { useNotifications } from './use-notifications';
 import { NotificationsProvider } from '../NotificationsProvider/NotificationsProvider';
 

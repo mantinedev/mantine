@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles } from '@mantine/core';
+import { MantineTheme, getFontStyles } from '@mantine/theme';
 
 export default createUseStyles({
   tagsList: {

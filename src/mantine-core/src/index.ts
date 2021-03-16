@@ -1,5 +1,3 @@
-export * from '@mantine/theme';
-
 export { ActionIcon } from './ActionIcon/ActionIcon';
 export { Alert } from './Alert/Alert';
 export { Avatar } from './Avatar/Avatar';
