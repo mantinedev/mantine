@@ -54,9 +54,8 @@ export default createUseStyles({
     padding: 0,
     outline: 0,
     cursor: 'pointer',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: 'block',
+    margin: 0,
 
     '&:disabled': {
       backgroundColor: theme.colors.gray[2],
