@@ -3,6 +3,6 @@
   "private": true,
   "version": "0.4.11",
   "main": "dist/lib.js",
-  "licence": "MIT",
+  "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>"
 }

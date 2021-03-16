@@ -2,7 +2,7 @@
   "name": "@mantine/notifications",
   "version": "0.4.11",
   "main": "dist/lib.js",
-  "licence": "MIT",
+  "license": "MIT",
   "types": "dist/mantine-notifications/src/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,

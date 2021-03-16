@@ -3,7 +3,7 @@
   "version": "0.4.11",
   "main": "dist/lib.js",
   "types": "dist/index.d.ts",
-  "licence": "MIT",
+  "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
   "peerDependencies": {
