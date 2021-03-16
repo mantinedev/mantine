@@ -45,6 +45,10 @@ function prepareDeclaration(declaration: ComponentDoc) {
       data.props[prop].type.name = 'number | "xs" | "sm" | "md" | "lg" | "xl"';
     }
 
+    if (data.props[prop].type.name === 'ElementsGroupPosition') {
+      data.props[prop].type.name = '"right" | "center" | "left" | "apart"';
+    }
+
     if (data.props[prop].type.name === 'MantineSize') {
       data.props[prop].type.name = 'xs" | "sm" | "md" | "lg" | "xl"';
     }
