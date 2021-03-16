@@ -116,5 +116,25 @@ storiesOf('@mantine/core/Tabs', module).add('Tabs', () => (
       <Tab label="Only tabs" />
       <Tab label="Nothing here" />
     </Tabs>
+
+    <Tabs style={{ marginTop: 20 }}>
+      <Tab label="First Disabled" disabled />
+      <Tab label="Only tabs" />
+      <Tab label="Nothing here" />
+    </Tabs>
+
+    <Tabs style={{ marginTop: 20 }}>
+      <Tab label="Multiple disabled" />
+      <Tab label="2" disabled />
+      <Tab label="3" disabled />
+      <Tab label="4" />
+      <Tab label="5" />
+      <Tab label="5" disabled />
+      <Tab label="6a" disabled />
+      <Tab label="6b" disabled />
+      <Tab label="6c" />
+      <Tab label="7" disabled />
+      <Tab label="8" />
+    </Tabs>
   </div>
 ));

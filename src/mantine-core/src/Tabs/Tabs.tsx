@@ -35,9 +35,39 @@ interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
   onTabChange?(tabIndex: number): void;
 }
 
+function getPreviousTab(active: number, tabs: TabType[]) {
+  for (let i = active - 1; i >= 0; i -= 1) {
+    if (!tabs[i].props.disabled) {
+      return i;
+    }
+  }
+
+  return active;
+}
+
+function getNextTab(active: number, tabs: TabType[]) {
+  for (let i = active + 1; i < tabs.length; i += 1) {
+    if (!tabs[i].props.disabled) {
+      return i;
+    }
+  }
+
+  return active;
+}
+
+function findInitialTab(tabs: TabType[]) {
+  for (let i = 0; i < tabs.length; i += 1) {
+    if (!tabs[i].props.disabled) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
 export function Tabs({
   children,
-  initialTab = 0,
+  initialTab,
   themeOverride,
   active,
   position = 'left',
@@ -58,7 +88,9 @@ export function Tabs({
     (item: TabType) => item.type === Tab
   ) as TabType[];
 
-  const [_activeTab, _setActiveTab] = useState(initialTab);
+  const [_activeTab, _setActiveTab] = useState(
+    typeof initialTab === 'number' ? initialTab : findInitialTab(tabs)
+  );
   const activeTab = clamp(typeof active === 'number' ? active : _activeTab, 0, tabs.length - 1);
   const setActiveTab = (tabIndex: number) => {
     _setActiveTab(tabIndex);
@@ -70,15 +102,15 @@ export function Tabs({
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if (event.nativeEvent.code === 'ArrowRight') {
-      const nextTab = activeTab < tabs.length - 1 ? activeTab + 1 : activeTab;
+      const nextTab = getNextTab(activeTab, tabs);
       setActiveTab(nextTab);
       controlRefs.current[nextTab].focus();
     }
 
     if (event.nativeEvent.code === 'ArrowLeft') {
-      const prevTab = activeTab > 0 ? activeTab - 1 : activeTab;
-      setActiveTab(prevTab);
-      controlRefs.current[prevTab].focus();
+      const previousTab = getPreviousTab(activeTab, tabs);
+      setActiveTab(previousTab);
+      controlRefs.current[previousTab].focus();
     }
   };
 

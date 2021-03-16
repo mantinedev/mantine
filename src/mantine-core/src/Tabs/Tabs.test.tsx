@@ -100,4 +100,53 @@ describe('@mantine/core/Tabs', () => {
     activateTab(element, 1);
     expect(element.render().find('[data-mantine-tab-content]')).toHaveLength(0);
   });
+
+  it('correctly handles initial disabled tabs with uncontrolled mode', () => {
+    const firstDisabled = shallow(
+      <Tabs>
+        <Tab label="1" disabled>
+          test-content-1
+        </Tab>
+        <Tab label="2">test-content-2</Tab>
+        <Tab label="3">test-content-3</Tab>
+      </Tabs>
+    );
+
+    const first2Disabled = shallow(
+      <Tabs>
+        <Tab label="1" disabled>
+          test-content-1
+        </Tab>
+        <Tab label="2" disabled>
+          test-content-2
+        </Tab>
+        <Tab label="3">test-content-3</Tab>
+        <Tab label="4">test-content-4</Tab>
+      </Tabs>
+    );
+
+    expect(tabContent(firstDisabled)).toBe('test-content-2');
+    expect(tabContent(first2Disabled)).toBe('test-content-3');
+  });
+
+  it('correctly handles disabled tabs keyboard events', () => {
+    const element = mount(
+      <Tabs>
+        <Tab label="1">test-content-1</Tab>
+        <Tab label="2" disabled>
+          test-content-2
+        </Tab>
+        <Tab label="3">test-content-3</Tab>
+      </Tabs>
+    );
+
+    const keydown = (position: number, code: string) =>
+      element.find(TabControl).at(position).simulate('keydown', { nativeEvent: { code } });
+
+    keydown(0, 'ArrowRight');
+    expect(tabContent(element)).toBe('test-content-3');
+
+    keydown(2, 'ArrowLeft');
+    expect(tabContent(element)).toBe('test-content-1');
+  });
 });
