@@ -1,0 +1,30 @@
+---
+package: mantine-core
+title: Tabs
+slug: /core/tabs/
+---
+
+import PropsTable from '../../components/PropsTable/PropsTable';
+import PageHeader from '../../components/PageHeader/PageHeader';
+import { TabsSimpleDemo } from '../../demos/core/Tabs/tabs-simple.demo';
+
+# Tabs
+
+This is a Tabs component description placeholder
+
+<PageHeader source="mantine-core/src/Tabs/Tabs.tsx" docs="core/Tabs.mdx" package="@mantine/core" />
+
+## Import
+
+```tsx
+import { Tabs, Tab } from '@mantine/core';
+```
+
+## Components
+
+- `Tab` – utility component to pass data to `Tabs` component, does not render anything on its own. Do not use outside of `Tabs` component.
+- `Tabs` – receives data from `Tab` content and renders component
+
+<TabsSimpleDemo />
+
+<PropsTable component="Tabs" />
