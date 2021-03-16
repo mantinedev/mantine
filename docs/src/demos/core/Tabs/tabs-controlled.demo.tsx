@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tabs, Tab } from '@mantine/core';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
 import { Tabs, Tab } from '@mantine/core';
 
-function TabsDemo() {
+function ControlledTabsDemo() {
+  const [activeTab, setActiveTab] = useState(1);
+  
   return (
-    <Tabs>
+    <Tabs active={activeTab} onTabChange={setActiveTab}>
       <Tab label="First">First tab content</Tab>
       <Tab label="Second">Second tab content</Tab>
       <Tab label="Third">Third tab content</Tab>
@@ -15,15 +17,17 @@ function TabsDemo() {
   );
 }`;
 
-export function TabsSimpleDemo() {
+export function TabsControlledDemo() {
+  const [activeTab, setActiveTab] = useState(1);
+
   return (
     <CodeDemo
       code={code}
       language="tsx"
-      title="General usage"
-      demoLink="/core/Tabs/tabs-simple.demo.tsx"
+      title="Controlled tabs example"
+      demoLink="/core/Tabs/tabs-controlled.demo.tsx"
     >
-      <Tabs>
+      <Tabs active={activeTab} onTabChange={setActiveTab}>
         <Tab label="First">First tab content</Tab>
         <Tab label="Second">Second tab content</Tab>
         <Tab label="Third">Third tab content</Tab>

@@ -6,7 +6,11 @@ export default createUseStyles(
     link: {
       ...getFocusStyles(theme),
       color: theme.colors[theme.primaryColor][6],
-      textDecoration: 'underline',
+      textDecoration: 'none',
+
+      '&:hover': {
+        textDecoration: 'underline',
+      },
     },
   }),
   { theming }

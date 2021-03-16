@@ -4,9 +4,14 @@ title: Tabs
 slug: /core/tabs/
 ---
 
+import GatsbyLink from '../../components/GatsbyLink/GatsbyLink';
 import PropsTable from '../../components/PropsTable/PropsTable';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import { TabsSimpleDemo } from '../../demos/core/Tabs/tabs-simple.demo';
+import { TabsControlledDemo } from '../../demos/core/Tabs/tabs-controlled.demo';
+import { TabsIconDemo } from '../../demos/core/Tabs/tabs-icon.demo';
+import { TabsTabPropsDemo } from '../../demos/core/Tabs/tabs-tab-props.demo';
+import { TabsColorDemo } from '../../demos/core/Tabs/tabs-color.demo';
 import { TabsConfigurator } from '../../demos/core/Tabs/tabs.configurator';
 
 # Tabs
@@ -29,5 +34,41 @@ import { Tabs, Tab } from '@mantine/core';
 <TabsConfigurator />
 
 <TabsSimpleDemo />
+
+## Controlled Tabs
+
+Tabs state can be controlled, to implement this pass `active` and `onTabChange` props.
+You can alse use `onTabChange` callback with uncontrolled Tabs.
+
+<TabsControlledDemo />
+
+## Tabs with icons
+
+You can add any React node as icon by setting `icon` prop on `Tab` component.
+If `icon` prop is set, it is not necessary to pass `label`. You can use icons from any react icons library, for example:
+
+- [radix icons](https://icons.modulz.app/) (used in mantine packages)
+- [feather](https://feathericons.com/)
+- [react-icons](https://react-icons.github.io/react-icons)
+
+<TabsIconDemo />
+
+## Change colors
+
+You can change color of individual tab by passing `color` property to `Tab` component,
+or change color of all tabs by passing color to `Tabs` component.
+Color that you pass to these components should be defined in <GatsbyLink to="/theming">theme</GatsbyLink>.
+
+Color calculation prioritizes deeper values: first `<Tab color="value" />` value will be used if defined, then `<Tabs color="value">`, after that value will be set to `theme.primaryColor`.
+
+<TabsColorDemo />
+
+## Tab component props
+
+In addition to `icon` and `label` props shown before,
+`Tab` component accepts `color`, `disabled` and any other props from regular button (e.g. style, title, aria-, data-).
+`color` prop will override `color` defined in `Tabs` component.
+
+<TabsTabPropsDemo />
 
 <PropsTable component="Tabs" />
