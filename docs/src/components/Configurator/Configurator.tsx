@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Title } from '@mantine/core';
+import { Title, Text } from '@mantine/core';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import controls from './controls';
 import useStyles from './Configurator.styles';
@@ -100,6 +100,11 @@ export default function Configurator({
       <Title className={classes.title} order={2}>
         Props configurator
       </Title>
+      <Text color="gray" size="xs" className={classes.description}>
+        Props configurator allows you to change component props and get immediate preview. Note that
+        not all available props are included in props configurator due to complexity, refer to
+        component documentation to get full information about component.
+      </Text>
       <div className={classes.configurator}>
         <div className={classes.preview}>
           <Component {...state} />
