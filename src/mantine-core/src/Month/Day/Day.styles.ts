@@ -20,7 +20,6 @@ export default createUseStyles({
     cursor: 'pointer',
     fontSize: theme.fontSizes.sm,
     userSelect: 'none',
-    outline: 0,
 
     '&:hover': {
       backgroundColor: theme.colors.gray[0],

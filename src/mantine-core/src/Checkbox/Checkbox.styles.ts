@@ -46,7 +46,6 @@ export default createUseStyles({
   }) => ({
     ...getFocusStyles(theme),
     appearance: 'none',
-    margin: 0,
     backgroundColor: theme.colors.gray[0],
     border: `1px solid ${theme.colors.gray[4]}`,
     width: getSizeValue({ size, sizes }),

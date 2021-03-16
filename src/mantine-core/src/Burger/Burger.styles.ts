@@ -26,7 +26,6 @@ export default createUseStyles({
     padding: theme.spacing.xs / 2,
     backgroundColor: 'transparent',
     border: 0,
-    outline: 0,
     cursor: 'pointer',
   }),
 

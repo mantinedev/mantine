@@ -43,7 +43,6 @@ export default createUseStyles({
     justifyContent: 'center',
     cursor: 'pointer',
     transition: 'color 100ms ease, background-color 100ms ease',
-    outline: 0,
     color: getThemeColor({ theme, color, shade: 6 }),
 
     '&:hover': {

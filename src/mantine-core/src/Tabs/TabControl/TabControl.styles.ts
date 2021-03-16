@@ -8,7 +8,6 @@ export default createUseStyles({
     boxSizing: 'border-box',
     display: 'block',
     height: 40,
-    outline: 0,
     backgroundColor: 'transparent',
     border: 0,
     borderBottom: '2px solid transparent',

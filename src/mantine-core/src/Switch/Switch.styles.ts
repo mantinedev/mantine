@@ -69,7 +69,6 @@ export default createUseStyles({
       transitionProperty: 'background-color, border-color',
       transitionTimingFunction: 'ease',
       transitionDuration: reduceMotion ? '1ms' : '150ms',
-      outline: 0,
       boxSizing: 'border-box',
       appearance: 'none',
       display: 'flex',

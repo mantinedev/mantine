@@ -91,7 +91,6 @@ export default createUseStyles({
     ...getWidthStyles(props.fullWidth),
     WebkitTapHighlightColor: 'transparent',
     userSelect: 'none',
-    outline: 0,
     boxSizing: 'border-box',
     textDecoration: 'none',
     cursor: 'pointer',

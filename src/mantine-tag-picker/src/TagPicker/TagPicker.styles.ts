@@ -20,6 +20,5 @@ export default createUseStyles({
     padding: [0, 0],
     borderRadius: 24,
     cursor: 'pointer',
-    outline: 0,
   }),
 });

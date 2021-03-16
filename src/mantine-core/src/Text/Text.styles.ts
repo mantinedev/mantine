@@ -17,7 +17,6 @@ export default createUseStyles({
   }) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
-    outline: 0,
     color:
       color in theme.colors
         ? theme.colors[color][6]

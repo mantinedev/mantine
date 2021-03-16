@@ -39,7 +39,6 @@ export default createUseStyles({
     paddingRight: 10,
     cursor: 'pointer',
     marginTop: 10,
-    outline: 0,
 
     '&:hover, &:focus': {
       backgroundColor: theme.colors.red[0],

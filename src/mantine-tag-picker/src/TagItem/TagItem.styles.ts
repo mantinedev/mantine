@@ -23,7 +23,6 @@ export default createUseStyles({
     border: '1px solid transparent',
     cursor: 'pointer',
     paddingLeft: 10,
-    outline: 0,
     maxWidth: '80%',
   }),
 
