@@ -87,7 +87,31 @@ storiesOf('@mantine/core/Tabs', module).add('Tabs', () => (
       </Tab>
     </Tabs>
 
-    <Tabs>
+    <Tabs style={{ marginTop: 20 }}>
+      <Tab label="No body" />
+      <Tab label="Only tabs" />
+      <Tab label="Nothing here" />
+    </Tabs>
+
+    <Tabs style={{ marginTop: 20 }} position="right">
+      <Tab label="No body" />
+      <Tab label="Only tabs" />
+      <Tab label="Nothing here" />
+    </Tabs>
+
+    <Tabs style={{ marginTop: 20 }} position="center">
+      <Tab label="No body" />
+      <Tab label="Only tabs" />
+      <Tab label="Nothing here" />
+    </Tabs>
+
+    <Tabs style={{ marginTop: 20 }} position="apart">
+      <Tab label="No body" />
+      <Tab label="Only tabs" />
+      <Tab label="Nothing here" />
+    </Tabs>
+
+    <Tabs style={{ marginTop: 20 }} grow>
       <Tab label="No body" />
       <Tab label="Only tabs" />
       <Tab label="Nothing here" />

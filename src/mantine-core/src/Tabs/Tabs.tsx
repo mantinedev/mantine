@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
+import { ElementsGroup, ElementsGroupPosition } from '../ElementsGroup/ElementsGroup';
 import { Tab, TabType } from './Tab/Tab';
 import { TabControl } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
@@ -16,6 +17,8 @@ interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
   initialTab?: number;
   active?: number;
   color?: string;
+  grow?: boolean;
+  position?: ElementsGroupPosition;
   onTabChange?(tabIndex: number): void;
 }
 
@@ -24,11 +27,14 @@ export function Tabs({
   initialTab = 0,
   themeOverride,
   active,
+  position = 'left',
+  grow = false,
   onTabChange,
   color,
   ...others
 }: TabsProps) {
   const classes = useStyles({
+    position,
     reduceMotion: useReducedMotion(),
     theme: useMantineTheme(themeOverride),
   });
@@ -81,8 +87,17 @@ export function Tabs({
 
   return (
     <div {...others}>
-      <div className={classes.tabs} role="tablist" aria-orientation="horizontal">
-        {panes}
+      <div className={classes.tabs}>
+        <ElementsGroup
+          className={classes.tabsInner}
+          role="tablist"
+          aria-orientation="horizontal"
+          spacing={0}
+          position={position}
+          grow={grow}
+        >
+          {panes}
+        </ElementsGroup>
       </div>
 
       {content && (

@@ -30,6 +30,7 @@ export function TabControl({
       {...others}
       {...props}
       data-mantine-tab
+      data-mantine-composable
       tabIndex={active ? 0 : -1}
       className={cx(classes.tab, { [classes.tabActive]: active })}
       type="button"
