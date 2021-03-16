@@ -14,7 +14,7 @@ const items = [
   </Text>
 ));
 
-storiesOf('@mantine/core', module).add('Breadcrumbs', () => (
+storiesOf('@mantine/core/Breadcrumbs', module).add('Breadcrumbs', () => (
   <div style={{ padding: 50 }}>
     <Breadcrumbs>{items}</Breadcrumbs>
     <Breadcrumbs style={{ marginTop: 20 }} separator="→">

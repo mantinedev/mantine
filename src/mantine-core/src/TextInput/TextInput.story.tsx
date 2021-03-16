@@ -18,7 +18,7 @@ function WrappedTextInput(
   );
 }
 
-storiesOf('@mantine/core', module).add('TextInput', () => (
+storiesOf('@mantine/core/TextInput', module).add('TextInput', () => (
   <>
     <TextInput label="Uncontrolled" placeholder="Uncontrolled input" />
     <WrappedTextInput label="Email" required placeholder="Email" type="email" />

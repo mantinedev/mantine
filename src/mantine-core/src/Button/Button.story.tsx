@@ -26,7 +26,7 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
   </Button>
 ));
 
-storiesOf('@mantine/core', module).add('Button', () => (
+storiesOf('@mantine/core/Button', module).add('Button', () => (
   <div style={{ padding: 50 }}>
     <ElementsGroup>
       <Button disabled>Disabled</Button>

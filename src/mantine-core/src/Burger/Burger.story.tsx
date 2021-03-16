@@ -11,7 +11,7 @@ function WrappedBurger(props: Omit<React.ComponentProps<typeof Burger>, 'opened'
   );
 }
 
-storiesOf('@mantine/core', module).add('Burger', () => (
+storiesOf('@mantine/core/Burger', module).add('Burger', () => (
   <>
     <WrappedBurger size="xs" />
     <WrappedBurger size="sm" />

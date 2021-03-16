@@ -24,7 +24,7 @@ const outlines = colors.map((color) => (
   </Badge>
 ));
 
-storiesOf('@mantine/core', module).add('Badge', () => (
+storiesOf('@mantine/core/Badge', module).add('Badge', () => (
   <>
     <ElementsGroup>
       <Badge>Default badge</Badge>

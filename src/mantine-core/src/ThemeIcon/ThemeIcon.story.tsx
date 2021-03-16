@@ -4,7 +4,7 @@ import { RocketIcon } from '@modulz/radix-icons';
 import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
 import { ThemeIcon } from './ThemeIcon';
 
-storiesOf('@mantine/core', module).add('ThemeIcon', () => (
+storiesOf('@mantine/core/ThemeIcon', module).add('ThemeIcon', () => (
   <div style={{ padding: 20 }}>
     <ElementsGroup>
       <ThemeIcon size="sm">

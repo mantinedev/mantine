@@ -5,7 +5,7 @@ import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
 import { Text } from '../Text/Text';
 import { Paper } from './Paper';
 
-storiesOf('@mantine/core', module).add('Paper', () => (
+storiesOf('@mantine/core/Paper', module).add('Paper', () => (
   <>
     <ElementsGroup grow style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], padding: 80 }}>
       <Paper style={{ width: 260 }}>

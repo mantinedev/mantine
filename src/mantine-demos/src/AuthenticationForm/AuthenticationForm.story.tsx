@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { MantineProvider, DEFAULT_THEME } from '@mantine/core';
 import AuthenticationForm from './AuthenticationForm';
 
-storiesOf('@mantine/demos', module).add('AuthenticationForm', () => (
+storiesOf('@mantine/demos/AuthenticationForm', module).add('AuthenticationForm', () => (
   <MantineProvider>
     <div
       style={{

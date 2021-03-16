@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { MantineProvider, DEFAULT_THEME } from '@mantine/core';
 import TransactionsTable from './TransactionsTable';
 
-storiesOf('@mantine/demos', module).add('TransactionsTable', () => (
+storiesOf('@mantine/demos/TransactionsTable', module).add('TransactionsTable', () => (
   <MantineProvider>
     <div
       style={{

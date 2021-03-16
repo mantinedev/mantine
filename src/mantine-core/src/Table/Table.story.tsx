@@ -33,7 +33,7 @@ const table = (
   </>
 );
 
-storiesOf('@mantine/core', module).add('Table', () => (
+storiesOf('@mantine/core/Table', module).add('Table', () => (
   <>
     <div style={{ maxWidth: 600 }}>
       <Table>{table}</Table>

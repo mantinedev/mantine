@@ -13,7 +13,7 @@ function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' 
   );
 }
 
-storiesOf('@mantine/core', module).add('Switch', () => (
+storiesOf('@mantine/core/Switch', module).add('Switch', () => (
   <div style={{ padding: 50 }}>
     <>
       <Switch label="Uncontrolled" />

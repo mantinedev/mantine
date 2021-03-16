@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Progress } from './Progress';
 
-storiesOf('@mantine/core', module).add('Progress', () => (
+storiesOf('@mantine/core/Progress', module).add('Progress', () => (
   <div style={{ maxWidth: 500, padding: 50, marginLeft: 'auto', marginRight: 'auto' }}>
     <Progress value={0} />
     <Progress value={10} style={{ marginTop: 20 }} />

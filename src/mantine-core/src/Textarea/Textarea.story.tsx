@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Textarea } from './Textarea';
 
-storiesOf('@mantine/core', module).add('Textarea', () => (
+storiesOf('@mantine/core/Textarea', module).add('Textarea', () => (
   <div style={{ padding: 50 }}>
     <>
       <Textarea

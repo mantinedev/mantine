@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { Text } from '../Text/Text';
 import { Alert } from './Alert';
 
-storiesOf('@mantine/core', module).add('Alert', () => (
+storiesOf('@mantine/core/Alert', module).add('Alert', () => (
   <>
     <div style={{ maxWidth: 400 }}>
       <Alert title="Everything is fine!" color="teal">

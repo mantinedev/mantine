@@ -15,7 +15,7 @@ const CustomComponent = ({
   </div>
 );
 
-storiesOf('@mantine/core', module).add('Text', () => (
+storiesOf('@mantine/core/Text', module).add('Text', () => (
   <>
     <Text>Default text</Text>
     <Text weight={500}>Semibold text</Text>

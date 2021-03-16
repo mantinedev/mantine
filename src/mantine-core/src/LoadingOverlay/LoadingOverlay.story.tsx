@@ -22,4 +22,6 @@ function LoadingOverlayDemo() {
   );
 }
 
-storiesOf('@mantine/core', module).add('LoadingOverlay', () => <LoadingOverlayDemo />);
+storiesOf('@mantine/core/LoadingOverlay', module).add('LoadingOverlay', () => (
+  <LoadingOverlayDemo />
+));

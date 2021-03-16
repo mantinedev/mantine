@@ -26,7 +26,7 @@ function WrappedSelect(
   );
 }
 
-storiesOf('@mantine/core', module).add('Select', () => (
+storiesOf('@mantine/core/Select', module).add('Select', () => (
   <>
     <Select label="Uncontrolled" data={data} placeholder="Your favorite library" />
     <WrappedSelect

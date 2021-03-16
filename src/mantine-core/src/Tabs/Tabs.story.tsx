@@ -39,7 +39,7 @@ function VueIcon() {
   );
 }
 
-storiesOf('@mantine/core', module).add('Tabs', () => (
+storiesOf('@mantine/core/Tabs', module).add('Tabs', () => (
   <div style={{ padding: 50 }}>
     <Tabs>
       <Tab label="React" color="teal">

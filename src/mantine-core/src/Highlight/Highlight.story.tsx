@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Highlight } from './Highlight';
 
-storiesOf('@mantine/core', module).add('Highlight', () => (
+storiesOf('@mantine/core/Highlight', module).add('Highlight', () => (
   <>
     <Highlight<'a'>
       highlight="this"

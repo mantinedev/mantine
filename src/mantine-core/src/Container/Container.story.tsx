@@ -4,7 +4,7 @@ import { Text } from '../Text/Text';
 import { Title } from '../Title/Title';
 import { Container } from './Container';
 
-storiesOf('@mantine/core', module).add('Container', () => (
+storiesOf('@mantine/core/Container', module).add('Container', () => (
   <>
     <Container size="xs">
       <Title order={4}>XS Container</Title>

@@ -13,7 +13,7 @@ function CheckboxWrapper(props: Omit<React.ComponentProps<typeof Checkbox>, 'val
   );
 }
 
-storiesOf('@mantine/core', module).add('Checkbox', () => (
+storiesOf('@mantine/core/Checkbox', module).add('Checkbox', () => (
   <>
     <CheckboxWrapper intermediate label="intermediate" />
     <CheckboxWrapper size="xl" style={{ marginTop: 15 }} />

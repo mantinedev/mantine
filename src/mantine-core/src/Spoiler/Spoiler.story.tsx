@@ -25,7 +25,7 @@ const content = (
   </>
 );
 
-storiesOf('@mantine/core', module).add('Spoiler', () => (
+storiesOf('@mantine/core/Spoiler', module).add('Spoiler', () => (
   <div style={{ maxWidth: 400, padding: 50 }}>
     <Spoiler showLabel="Show more" hideLabel="Hide" maxHeight={100}>
       {content}

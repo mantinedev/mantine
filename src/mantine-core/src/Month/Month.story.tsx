@@ -9,7 +9,7 @@ function WrappedMonth(
   return <Month month={value} selected={value} onDayClick={onChange} {...props} />;
 }
 
-storiesOf('@mantine/core', module).add('Month', () => (
+storiesOf('@mantine/core/Month', module).add('Month', () => (
   <>
     <WrappedMonth disableOutsideEvents autoFocus />
   </>

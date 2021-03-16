@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { InputWrapper } from './InputWrapper';
 import { Text } from '../Text/Text';
 
-storiesOf('@mantine/core', module).add('InputWrapper', () => (
+storiesOf('@mantine/core/InputWrapper', module).add('InputWrapper', () => (
   <>
     <InputWrapper
       label="Input label"
