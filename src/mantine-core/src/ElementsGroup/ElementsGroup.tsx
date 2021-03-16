@@ -16,6 +16,8 @@ interface ElementsGroupProps extends DefaultProps, React.ComponentPropsWithoutRe
   spacing?: MantineNumberSize;
 }
 
+export type { ElementsGroupPosition };
+
 export function ElementsGroup({
   className,
   position = 'left',
