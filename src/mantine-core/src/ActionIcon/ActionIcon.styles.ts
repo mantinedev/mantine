@@ -43,14 +43,22 @@ export default createUseStyles({
     justifyContent: 'center',
     cursor: 'pointer',
     transition: 'color 100ms ease, background-color 100ms ease',
-    color: getThemeColor({ theme, color, shade: 6 }),
 
-    '&:hover': {
-      backgroundColor: getThemeColor({ theme, color, shade: 0 }),
+    '&:not(:disabled)': {
+      color: getThemeColor({ theme, color, shade: 6 }),
+
+      '&:hover': {
+        backgroundColor: getThemeColor({ theme, color, shade: 0 }),
+      },
+
+      '&:active': {
+        backgroundColor: getThemeColor({ theme, color, shade: 1 }),
+      },
     },
 
-    '&:active': {
-      backgroundColor: getThemeColor({ theme, color, shade: 1 }),
+    '&:disabled': {
+      color: theme.colors.gray[5],
+      cursor: 'not-allowed',
     },
   }),
 });

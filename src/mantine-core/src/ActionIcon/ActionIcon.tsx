@@ -4,8 +4,13 @@ import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme
 import useStyles from './ActionIcon.styles';
 
 interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
+  /** icon color from theme */
   color?: string;
+
+  /** icon radius from theme or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** predefined icon size or number to set width and height in px */
   size?: MantineNumberSize;
 }
 
