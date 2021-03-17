@@ -7,6 +7,7 @@ interface AlertProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   /** Alert title */
   title?: React.ReactNode;
 
+  /** Alert title and body colors from theme */
   color?: string;
 
   /** Alert body content */
