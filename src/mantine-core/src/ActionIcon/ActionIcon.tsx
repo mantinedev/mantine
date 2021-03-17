@@ -10,7 +10,7 @@ interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   /** button hover, active and icon colors from theme */
   color?: string;
 
-  /** icon radius from theme or number to set border-radius in px */
+  /** button radius from theme or number to set border-radius in px */
   radius?: MantineNumberSize;
 
   /** predefined icon size or number to set width and height in px */
