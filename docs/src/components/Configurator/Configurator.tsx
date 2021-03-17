@@ -5,7 +5,7 @@ import DocsSection from '../DocsSection/DocsSection';
 import controls from './controls';
 import useStyles from './Configurator.styles';
 
-type PropType = 'boolean' | 'number' | 'color' | 'select' | 'string';
+type PropType = 'boolean' | 'number' | 'color' | 'select' | 'string' | 'size';
 
 interface ConfiguratorProps {
   component: any;
@@ -16,6 +16,7 @@ interface ConfiguratorProps {
     name: string;
     initialValue?: any;
     defaultValue?: any;
+    capitalize?: boolean;
     data?: { label: string; value: string }[];
   }[];
 }
@@ -79,6 +80,7 @@ export default function Configurator({
         label={prop.name}
         onChange={(value: any) => setStateField(prop.name, value)}
         data={prop.data}
+        capitalize={prop.capitalize}
         style={{ marginTop: index !== 0 ? 15 : 0 }}
       />
     );
@@ -105,7 +107,9 @@ export default function Configurator({
       </Title>
       <div className={classes.configurator}>
         <div className={classes.preview}>
-          <Component {...state} />
+          <div>
+            <Component {...state} />
+          </div>
         </div>
         <div className={classes.controls}>{items}</div>
       </div>

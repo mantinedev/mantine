@@ -4,9 +4,16 @@ title: ActionIcon
 slug: /core/action-icon/
 ---
 
+import {
+  ActionIconBaseDemo,
+  ActionIconGroupDemo,
+} from '../../demos/core/ActionIcon/action-icon.demos';
+import { ActionIconConfigurator } from '../../demos/core/ActionIcon/action-icon.configurator';
+
 # ActionIcon
 
-This is a ActionIcon component description placeholder
+ActionIcon communicates action that user can take.
+Usually action is secondary as component does not have high emphasis.
 
 <PageHeader
   source="mantine-core/src/ActionIcon/ActionIcon.tsx"
@@ -14,10 +21,60 @@ This is a ActionIcon component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { ActionIcon } from '@mantine/core';
 ```
 
+<ActionIconBaseDemo />
+
+You can use any React node as icon by passing it as a child to ActionIcon component.
+Note that component **does not control icon size** and you need to specify it to fit in.
+
+You can use icons from any react icons library, for example:
+
+- [radix icons](https://icons.modulz.app/) (used in mantine packages)
+- [feather](https://feathericons.com/)
+- [react-icons](https://react-icons.github.io/react-icons)
+
+## Change color, size and radius
+
+ActionIcon has predefined sizes: xs, sm, md, lg, xl.
+You can pass size as number and it will be set as width and height in px.
+
+```tsx
+<ActionIcon size="sm" /> // -> predefined small size
+<ActionIcon size={50} /> // -> { width: 50, height: 50 }
+```
+
+Same with radius – predefined values for xs, sm, md, lg, xl are defined in <GatsbyLink to="/theming">theme</GatsbyLink>,
+or pass in number to set border-radius in px:
+
+```tsx
+<ActionIcon radius="lg" /> // -> theme predefined large radius
+<ActionIcon radius={10} /> // -> { borderRadius: 10 }
+```
+
+Size and color are only visible when user interacts with hover, active and focus.
+
+You can choose any color defined in <GatsbyLink to="/theming">theme</GatsbyLink> for ActionIcon.
+
+```tsx
+<ActionIcon color="red" />
+<ActionIcon color="blue" />
+```
+
+<ActionIconConfigurator />
+
+## Compose with ElementsGroup
+
+You can compose ActionIcon with any other components that support composition feature with <GatsbyLink to="/core/elements-group">ElementGroup</GatsbyLink> component.
+
+<ActionIconGroupDemo />
+
 <PropsTable component="ActionIcon" />
+
+## Accessibility
+
+ActionIcon renders a regular button element.
+As by design element does not have text content
+make sure to include `title` and `aria-label` props for better accessibility.

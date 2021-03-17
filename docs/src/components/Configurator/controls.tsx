@@ -6,6 +6,8 @@ function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+const sizesData = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => ({ value: size, label: size }));
+
 const colorsData = Object.keys(DEFAULT_THEME.colors).map((color) => ({
   label: capitalize(color),
   value: color,
@@ -98,10 +100,12 @@ function SelectControl({
   label,
   onChange,
   data,
+  capitalize: capitalizeItems = true,
   ...others
 }: {
   value: string;
   label: string;
+  capitalize: boolean;
   onChange(value: string): void;
   data: { label: string; value: string }[];
 }) {
@@ -109,12 +113,34 @@ function SelectControl({
     <Select
       data={data.map((item) => ({
         value: item.value,
-        label: capitalize(item.label),
+        label: capitalizeItems ? capitalize(item.label) : item.label,
       }))}
       value={value}
       label={capitalize(label)}
       onChange={(event) => onChange(event.currentTarget.value)}
       {...others}
+    />
+  );
+}
+
+function SizeControl({
+  value,
+  label,
+  onChange,
+  ...others
+}: {
+  value: string;
+  label: string;
+  capitalize: boolean;
+  onChange(value: string): void;
+}) {
+  return (
+    <Select
+      {...others}
+      data={sizesData}
+      value={value}
+      label={capitalize(label)}
+      onChange={(event) => onChange(event.currentTarget.value)}
     />
   );
 }
@@ -125,4 +151,5 @@ export default {
   color: ColorControl,
   select: SelectControl,
   string: StringControl,
+  size: SizeControl,
 };
