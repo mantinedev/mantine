@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { GitHubLogoIcon, ChatBubbleIcon, ExclamationTriangleIcon } from '@modulz/radix-icons';
-import logo from '../../images/logo.svg';
+import logo from '../../../images/logo.svg';
 import useStyles from './Header.styles';
 
 export default function Header() {

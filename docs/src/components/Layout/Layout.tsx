@@ -5,8 +5,8 @@ import '@fontsource/ibm-plex-mono/700.css';
 import React from 'react';
 import { Container } from '@mantine/core';
 import MdxProvider from '../MdxProvider/MdxProvider';
-import Navbar from '../Navbar/Navbar';
-import Header from '../Header/Header';
+import Navbar from './Navbar/Navbar';
+import Header from './Header/Header';
 import useStyles from './Layout.styles';
 
 export default function Layout({ children }: { children: React.ReactNode }) {

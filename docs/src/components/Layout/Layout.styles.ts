@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { theming, MantineTheme, getFontStyles } from '@mantine/theme';
-import { HEADER_HEIGHT } from '../Header/Header.styles';
-import { NAVBAR_WIDTH } from '../Navbar/Navbar.styles';
+import { HEADER_HEIGHT } from './Header/Header.styles';
+import { NAVBAR_WIDTH } from './Navbar/Navbar.styles';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({

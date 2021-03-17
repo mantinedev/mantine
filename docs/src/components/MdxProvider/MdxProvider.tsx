@@ -1,9 +1,9 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { Title, Code, Text } from '@mantine/core';
-import GatsbyLink from '../GatsbyLink/GatsbyLink';
-import PropsTable from '../PropsTable/PropsTable';
-import PageHeader from '../PageHeader/PageHeader';
+import GatsbyLink from './GatsbyLink/GatsbyLink';
+import PropsTable from './PropsTable/PropsTable';
+import PageHeader from './PageHeader/PageHeader';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 
 const h = (order: 1 | 2 | 3 | 4 | 5 | 6) => ({ ...others }: any) => (
