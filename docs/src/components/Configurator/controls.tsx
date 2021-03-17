@@ -68,6 +68,7 @@ function StringControl({
     <TextInput
       {...others}
       label={capitalize(label)}
+      placeholder={capitalize(label)}
       value={value.toString()}
       onChange={(event) => onChange(event.currentTarget.value)}
     />

@@ -10,7 +10,7 @@ type PropType = 'boolean' | 'number' | 'color' | 'select' | 'string' | 'size';
 interface ConfiguratorProps {
   component: any;
   title: string;
-  codeTemplate(props: string): string;
+  codeTemplate(props: string, children?: string): string;
   props: {
     type: PropType;
     name: string;
@@ -40,7 +40,11 @@ function transformPropToCode({
   value: any;
   defaultValue: any;
 }) {
-  if (value === defaultValue) {
+  if (value === defaultValue || name === 'children') {
+    return '';
+  }
+
+  if (type === 'string' && value.trim().length === 0) {
     return '';
   }
 
@@ -98,7 +102,10 @@ export default function Configurator({
     .join(' ')
     .trim();
 
-  const code = codeTemplate(propsCode.length > 0 ? ` ${propsCode}` : propsCode);
+  const code = codeTemplate(
+    propsCode.length > 0 ? ` ${propsCode}` : propsCode,
+    (state as any).children
+  );
 
   return (
     <DocsSection>
