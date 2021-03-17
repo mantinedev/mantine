@@ -5,6 +5,7 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsClassName,
+  itRendersChildren,
 } from '@mantine/tests';
 import { Text } from '../Text/Text';
 import { Alert } from './Alert';
@@ -13,6 +14,7 @@ describe('@mantine/core/Alert', () => {
   itSupportsClassName(Alert, { children: 'test-alert' });
   itSupportsOthers(Alert, { children: 'test-alert' });
   itSupportsStyle(Alert, { children: 'test-alert' });
+  itRendersChildren(Alert, {});
   checkAccessibility([
     mount(
       <Alert title="Error happened" color="red">
@@ -33,16 +35,5 @@ describe('@mantine/core/Alert', () => {
   it('does not render title if title prop was not passed', () => {
     const element = shallow(<Alert>test-alert</Alert>);
     expect(element.render().find('[data-mantine-alert-title]')).toHaveLength(0);
-  });
-
-  it('renders given children in alert body', () => {
-    const element = shallow(
-      <Alert>
-        <span className="test-children">test-children</span>
-      </Alert>
-    );
-    expect(element.render().find('[data-mantine-alert-body]').find('.test-children')).toHaveLength(
-      1
-    );
   });
 });
