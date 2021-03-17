@@ -1,6 +1,9 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { Title, Code, Text } from '@mantine/core';
+import GatsbyLink from '../GatsbyLink/GatsbyLink';
+import PropsTable from '../PropsTable/PropsTable';
+import PageHeader from '../PageHeader/PageHeader';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 
 const h = (order: 1 | 2 | 3 | 4 | 5 | 6) => ({ ...others }: any) => (
@@ -8,6 +11,10 @@ const h = (order: 1 | 2 | 3 | 4 | 5 | 6) => ({ ...others }: any) => (
 );
 
 const components = {
+  GatsbyLink,
+  PropsTable,
+  PageHeader,
+
   h1: h(1),
   h2: h(2),
   h3: h(3),
