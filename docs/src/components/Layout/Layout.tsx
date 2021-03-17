@@ -11,17 +11,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <AppContainer>
-      <main className={classes.layout}>
+      <div className={classes.layout}>
         <div className={classes.inner}>
           <Header />
           <Navbar />
-          <div className={classes.main}>
+          <main className={classes.main}>
             <Container size="sm">
               <MdxProvider>{children}</MdxProvider>
             </Container>
-          </div>
+          </main>
         </div>
-      </main>
+      </div>
     </AppContainer>
   );
 }
