@@ -12,14 +12,6 @@ export default createUseStyles(
       marginBottom: theme.spacing.xs,
     },
 
-    description: {
-      marginBottom: theme.spacing.xs,
-
-      '&:hover': {
-        color: theme.black,
-      },
-    },
-
     configurator: {
       display: 'flex',
       border: `1px solid ${theme.colors.gray[3]}`,

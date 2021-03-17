@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Title, Text } from '@mantine/core';
+import { Title } from '@mantine/core';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import controls from './controls';
 import useStyles from './Configurator.styles';
@@ -8,6 +8,7 @@ type PropType = 'boolean' | 'number' | 'color' | 'select' | 'string';
 
 interface ConfiguratorProps {
   component: any;
+  title: string;
   codeTemplate(props: string): string;
   props: {
     type: PropType;
@@ -56,6 +57,7 @@ export default function Configurator({
   component: Component,
   codeTemplate,
   props: componentProps,
+  title,
 }: ConfiguratorProps) {
   const classes = useStyles();
   const initialState = componentProps.reduce((acc, prop) => {
@@ -98,13 +100,8 @@ export default function Configurator({
   return (
     <div className={classes.wrapper}>
       <Title className={classes.title} order={2}>
-        Props configurator
+        {title}
       </Title>
-      <Text color="gray" size="xs" className={classes.description}>
-        Props configurator allows you to change component props and get immediate preview. Note that
-        not all available props are included in props configurator due to complexity, refer to
-        component documentation to get full information about component.
-      </Text>
       <div className={classes.configurator}>
         <div className={classes.preview}>
           <Component {...state} />

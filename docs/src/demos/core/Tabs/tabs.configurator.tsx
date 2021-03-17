@@ -18,9 +18,10 @@ const codeTemplate = (props: string) => `<Tabs${props}>
   <Tab label="Third">Third tab content</Tab>
 </Tabs>`;
 
-export function TabsConfigurator() {
+export function TabsPositionConfigurator() {
   return (
     <Configurator
+      title="Tabs position example"
       component={TabsWrapper}
       codeTemplate={codeTemplate}
       props={[
@@ -37,8 +38,18 @@ export function TabsConfigurator() {
             { label: 'apart', value: 'apart' },
           ],
         },
-        { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
       ]}
+    />
+  );
+}
+
+export function TabsColorConfigurator() {
+  return (
+    <Configurator
+      title="Default theme colors"
+      component={TabsWrapper}
+      codeTemplate={codeTemplate}
+      props={[{ name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' }]}
     />
   );
 }

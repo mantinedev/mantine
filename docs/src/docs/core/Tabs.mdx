@@ -12,7 +12,10 @@ import { TabsControlledDemo } from '../../demos/core/Tabs/tabs-controlled.demo';
 import { TabsIconDemo } from '../../demos/core/Tabs/tabs-icon.demo';
 import { TabsTabPropsDemo } from '../../demos/core/Tabs/tabs-tab-props.demo';
 import { TabsColorDemo } from '../../demos/core/Tabs/tabs-color.demo';
-import { TabsConfigurator } from '../../demos/core/Tabs/tabs.configurator';
+import {
+  TabsPositionConfigurator,
+  TabsColorConfigurator,
+} from '../../demos/core/Tabs/tabs.configurator';
 
 # Tabs
 
@@ -30,8 +33,6 @@ import { Tabs, Tab } from '@mantine/core';
 
 - `Tab` – utility component to pass data to `Tabs` component, does not render anything on its own. Do not use outside of `Tabs` component.
 - `Tabs` – receives data from `Tab` content and renders component
-
-<TabsConfigurator />
 
 <TabsSimpleDemo />
 
@@ -62,6 +63,16 @@ Color that you pass to these components should be defined in <GatsbyLink to="/th
 Color calculation prioritizes deeper values: first `<Tab color="value" />` value will be used if defined, then `<Tabs color="value">`, after that value will be set to `theme.primaryColor`.
 
 <TabsColorDemo />
+
+<TabsColorConfigurator />
+
+## Tabs position
+
+Tabs controls position is controlled with `grow` and `position` props.
+If `grow` property is set to true, controls will take 100% of available space
+and `position` property is ignored.
+
+<TabsPositionConfigurator />
 
 ## Tab component props
 
