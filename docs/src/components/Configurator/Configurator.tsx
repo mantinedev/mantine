@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Title } from '@mantine/core';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
+import DocsSection from '../DocsSection/DocsSection';
 import controls from './controls';
 import useStyles from './Configurator.styles';
 
@@ -98,7 +99,7 @@ export default function Configurator({
   const code = codeTemplate(propsCode.length > 0 ? ` ${propsCode}` : propsCode);
 
   return (
-    <div className={classes.wrapper}>
+    <DocsSection>
       <Title className={classes.title} order={2}>
         {title}
       </Title>
@@ -109,6 +110,6 @@ export default function Configurator({
         <div className={classes.controls}>{items}</div>
       </div>
       <CodeHighlight code={code} language="tsx" className={classes.code} />
-    </div>
+    </DocsSection>
   );
 }

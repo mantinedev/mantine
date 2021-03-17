@@ -1,6 +1,7 @@
 import React from 'react';
 import { Title, Table, Text, Paper } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
+import DocsSection from '../DocsSection/DocsSection';
 import PROPS_DATA from '../../../.docgen/mantine-core/props.json';
 
 interface PropsTableProps {
@@ -51,7 +52,7 @@ export default function PropsTable({ component }: PropsTableProps) {
   });
 
   return (
-    <div style={{ marginTop: theme.spacing.xl * 1.5, marginBottom: theme.spacing.xl * 1.5 }}>
+    <DocsSection>
       <Title order={2} style={{ marginBottom: 15 }}>
         Component props
       </Title>
@@ -71,6 +72,6 @@ export default function PropsTable({ component }: PropsTableProps) {
           </Table>
         </div>
       </Paper>
-    </div>
+    </DocsSection>
   );
 }

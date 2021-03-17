@@ -2,6 +2,7 @@ import React from 'react';
 import { Language } from 'prism-react-renderer';
 import { Paper, Title, Text } from '@mantine/core';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
+import DocsSection from '../DocsSection/DocsSection';
 import useStyles from './CodeDemo.styles';
 
 interface CodeDemoProps {
@@ -26,7 +27,7 @@ export default function CodeDemo({
   const classes = useStyles();
 
   return (
-    <div className={classes.wrapper}>
+    <DocsSection>
       <div className={classes.header}>
         <Title order={2}>{title}</Title>
         {demoLink && (
@@ -46,6 +47,6 @@ export default function CodeDemo({
       </Paper>
 
       <CodeHighlight code={code} language={language} className={classes.code} />
-    </div>
+    </DocsSection>
   );
 }
