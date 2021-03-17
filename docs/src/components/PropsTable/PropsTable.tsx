@@ -51,7 +51,7 @@ export default function PropsTable({ component }: PropsTableProps) {
   });
 
   return (
-    <div style={{ marginTop: theme.spacing.xl, marginBottom: theme.spacing.xl }}>
+    <div style={{ marginTop: theme.spacing.xl * 1.5, marginBottom: theme.spacing.xl * 1.5 }}>
       <Title order={2} style={{ marginBottom: 15 }}>
         Component props
       </Title>
