@@ -25,7 +25,7 @@ export function ActionIconBaseDemo() {
       code={code}
       language="tsx"
       title="General usage"
-      demoLink="/core/Tabs/action-icon.demos.tsx"
+      demoLink="/core/ActionIcon/action-icon.demos.tsx"
     >
       <ElementsGroup position="center">
         <ActionIcon title="Settings" aria-label="Settings">
@@ -62,7 +62,7 @@ export function ActionIconGroupDemo() {
       code={groupCode}
       language="tsx"
       title="ElementsGroup example"
-      demoLink="/core/Tabs/action-icon.demos.tsx"
+      demoLink="/core/ActionIcon/action-icon.demos.tsx"
     >
       <ElementsGroup position="center">
         <Button>Submit</Button>

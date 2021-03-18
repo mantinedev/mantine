@@ -5,6 +5,7 @@ slug: /core/alert/
 ---
 
 import { AlertConfigurator } from '../../demos/core/Alert/alert.configurator';
+import { AlertBaseDemo } from '../../demos/core/Alert/alert.demos';
 
 # Alert
 
@@ -20,6 +21,24 @@ Attract user attention with important message
 
 ```tsx
 import { Alert } from '@mantine/core';
+```
+
+<AlertBaseDemo />
+
+## Color and title props
+
+You can choose any color defined in <GatsbyLink to="/theming">theme</GatsbyLink>. By default Alert will have `theme.primaryColor` color.
+
+```tsx
+<Alert /> // -> theme.primaryColor (defaults to blue)
+<Alert color="red" /> // -> red color
+```
+
+If you pass `title` prop high contrast title will be rendered.
+
+```tsx
+<Alert title="Bummer!" /> // -> with title
+<Alert /> // -> no title, just body
 ```
 
 <AlertConfigurator />
