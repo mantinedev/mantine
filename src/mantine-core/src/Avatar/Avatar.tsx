@@ -23,7 +23,7 @@ export function Avatar({
   size = 'md',
   src,
   alt,
-  radius,
+  radius = 'sm',
   themeOverride,
   ...others
 }: AvatarProps) {
@@ -36,7 +36,7 @@ export function Avatar({
   }, [src]);
 
   return (
-    <div {...others} className={cx(classes.avatar, className)}>
+    <div {...others} data-mantine-composable className={cx(classes.avatar, className)}>
       {error ? (
         <div data-mantine-placeholder role="presentation" className={classes.placeholder}>
           <AvatarIcon className={classes.placeholderIcon} />

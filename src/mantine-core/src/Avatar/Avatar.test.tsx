@@ -5,6 +5,7 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
+  isHasComposableAttribute,
 } from '@mantine/tests';
 import { Avatar } from './Avatar';
 
@@ -16,6 +17,7 @@ describe('@mantine/core/Avatar', () => {
   itSupportsClassName(Avatar, { src: img });
   itSupportsOthers(Avatar, { src: img });
   itSupportsStyle(Avatar, { src: img });
+  isHasComposableAttribute(Avatar, { src: img });
 
   it('has correct displayName', () => {
     expect(Avatar.displayName).toEqual('@mantine/core/Avatar');
