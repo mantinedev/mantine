@@ -22,31 +22,33 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
     .map((heading, index) => {
       const slug = slugger.slug(heading.value);
       return (
-        <Text<'a'>
-          component="a"
-          size="sm"
-          className={classes.link}
-          key={index}
-          href={`#${slug}`}
-          style={{ paddingLeft: (heading.depth - 2) * 15 }}
-          onClick={(event) => {
-            event.preventDefault();
-            const element = document.getElementById(slug);
-            window.scrollTo({
-              top: element.getBoundingClientRect().top + window.pageYOffset - HEADER_HEIGHT - 10,
-              behavior: 'smooth',
-            });
-          }}
-        >
-          {heading.value}
-        </Text>
+        <li>
+          <Text<'a'>
+            component="a"
+            size="sm"
+            className={classes.link}
+            key={index}
+            href={`#${slug}`}
+            style={{ paddingLeft: (heading.depth - 2) * 15 }}
+            onClick={(event) => {
+              event.preventDefault();
+              const element = document.getElementById(slug);
+              window.scrollTo({
+                top: element.getBoundingClientRect().top + window.pageYOffset - HEADER_HEIGHT - 10,
+                behavior: 'smooth',
+              });
+            }}
+          >
+            {heading.value}
+          </Text>
+        </li>
       );
     });
 
   return (
     <nav className={classes.wrapper}>
       <Text>Table of contents</Text>
-      {items}
+      <ul className={classes.list}>{items}</ul>
     </nav>
   );
 }
