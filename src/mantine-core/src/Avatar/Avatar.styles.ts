@@ -2,11 +2,11 @@ import { createUseStyles } from 'react-jss';
 import { MantineTheme, getSizeValue, MantineNumberSize } from '@mantine/theme';
 
 const sizes = {
-  xs: 14,
-  sm: 18,
-  md: 26,
-  lg: 36,
-  xl: 52,
+  xs: 16,
+  sm: 26,
+  md: 38,
+  lg: 56,
+  xl: 84,
 };
 
 export default createUseStyles({
