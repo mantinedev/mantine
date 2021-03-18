@@ -7,15 +7,22 @@ import useStyles from './Blockquote.styles';
 interface BlockquoteProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'blockquote'>, 'cite'> {
+  /** Border and icon color from theme */
   color?: string;
+
+  /** Icon, defaults to QuoteIcon from @modulz/radix-icons */
   icon?: React.ReactNode;
+
+  /** Describe a reference to a cited quote */
   cite?: React.ReactNode;
 }
+
+const defaultIcon = <QuoteIcon style={{ width: 20, height: 20 }} />;
 
 export function Blockquote({
   className,
   color,
-  icon = <QuoteIcon style={{ width: 20, height: 20 }} />,
+  icon = defaultIcon,
   cite,
   children,
   themeOverride,
