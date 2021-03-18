@@ -32,7 +32,8 @@ describe('@mantine/core/Avatar', () => {
   });
 
   it('renders placeholder if src was not provided', () => {
-    const element = shallow(<Avatar src={null} />);
+    const element = shallow(<Avatar src={null} alt="no-image-test" />);
     expect(element.render().find('[data-mantine-placeholder]')).toHaveLength(1);
+    expect(element.render().find('[data-mantine-placeholder]').attr('title')).toBe('no-image-test');
   });
 });

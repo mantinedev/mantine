@@ -38,7 +38,7 @@ export function Avatar({
   return (
     <div {...others} data-mantine-composable className={cx(classes.avatar, className)}>
       {error ? (
-        <div data-mantine-placeholder role="presentation" className={classes.placeholder}>
+        <div data-mantine-placeholder className={classes.placeholder} title={alt}>
           <AvatarIcon className={classes.placeholderIcon} />
         </div>
       ) : (
