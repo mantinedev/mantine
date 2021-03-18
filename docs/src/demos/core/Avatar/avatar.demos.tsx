@@ -12,12 +12,7 @@ export function AvatarDemo() {
 
 export function AvatarBaseDemo() {
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      title="General usage"
-      demoLink="/core/Avatar/avatar.demos.tsx"
-    >
+    <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center">
         <Avatar
           src="https://avatars.githubusercontent.com/u/10353856?s=460&u=88394dfd67727327c1f7670a1764dc38a8a24831&v=4"
@@ -37,12 +32,7 @@ export function AvatarDemo() {
 
 export function AvatarPlaceholderDemo() {
   return (
-    <CodeDemo
-      code={placeholderCode}
-      language="tsx"
-      title="Placeholder"
-      demoLink="/core/Avatar/avatar.demos.tsx"
-    >
+    <CodeDemo code={placeholderCode} language="tsx">
       <ElementsGroup position="center">
         <Avatar src={null} alt="no image here" />
       </ElementsGroup>

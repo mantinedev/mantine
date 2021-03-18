@@ -5,7 +5,7 @@ export default createUseStyles(
   (theme: MantineTheme) => ({
     wrapper: {
       marginBottom: theme.spacing.xl * 1.5,
-      marginTop: theme.spacing.xl * 1.5,
+      marginTop: theme.spacing.sm,
     },
   }),
   { theming }

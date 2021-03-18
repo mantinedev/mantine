@@ -19,11 +19,11 @@ use-form provides bare minimum api to manage simple forms.
 It includes handlers to set and validate values.
 Hook does not depend on `@mantine/core` inputs and does not work with dom.
 
-## Import
-
 ```tsx
 import { useForm } from '@mantine/hooks';
 ```
+
+## Basic example
 
 <UseFormValidationDemo />
 
@@ -58,6 +58,10 @@ const form = useForm({
 - `validate` – handler to validate all fields with given `validationRules`
 - `onSubmit` – wrapper function for form onSubmit event
 
+## Authentication form example
+
+<UseFormComplexDemo />
+
 ## TypeScript integration
 
 use-form will use values types from initialValues, usually its better to initialize form with these placeholder values.
@@ -71,5 +75,3 @@ const form = useForm<{ name?: string; termsOfService?: boolean }>({
 // later
 form.setValues({ name: 'name', termsOfService: false });
 ```
-
-<UseFormComplexDemo />

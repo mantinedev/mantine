@@ -20,12 +20,7 @@ export function UseReducedMotionDemo() {
 export function UseReducedMotionDemo() {
   const reduceMotion = useReducedMotion();
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      title="Demo"
-      demoLink="/hooks/use-reduced-motion.demos.tsx"
-    >
+    <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center">
         <Button color={reduceMotion ? 'red' : 'teal'}>
           {reduceMotion ? 'You prefer to reduce motion' : 'You prefer not to reduce motion'}

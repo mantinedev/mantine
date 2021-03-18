@@ -1,5 +1,5 @@
 import React from 'react';
-import { Title, Table, Text, Paper } from '@mantine/core';
+import { Table, Text, Paper } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
 import DocsSection from '../../DocsSection/DocsSection';
 import PROPS_DATA from '../../../../.docgen/mantine-core/props.json';
@@ -53,10 +53,6 @@ export default function PropsTable({ component }: PropsTableProps) {
 
   return (
     <DocsSection>
-      <Title order={2} style={{ marginBottom: 15 }}>
-        Component props
-      </Title>
-
       <Paper padding="md" style={{ width: '100%', border: `1px solid ${theme.colors.gray[3]}` }}>
         <div style={{ minWidth: 500 }}>
           <Table style={{ tableLayout: 'fixed' }}>

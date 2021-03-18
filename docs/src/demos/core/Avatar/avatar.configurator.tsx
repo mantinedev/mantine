@@ -15,7 +15,6 @@ const codeTemplate = (props: string) => `<Avatar${props} />`;
 export function AvatarConfigurator() {
   return (
     <Configurator
-      title="Size, radius and src props"
       component={AvatarWrapper}
       codeTemplate={codeTemplate}
       props={[

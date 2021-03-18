@@ -25,12 +25,7 @@ export function UseDocumentTitleDemo() {
   useDocumentTitle(title);
 
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      title="Demo"
-      demoLink="/hooks/use-document-title.demos.tsx"
-    >
+    <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center">
         <Button onClick={() => setTitle(nanoid())}>Set document title to random id</Button>
       </ElementsGroup>

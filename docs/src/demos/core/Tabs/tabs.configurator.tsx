@@ -21,7 +21,6 @@ const codeTemplate = (props: string) => `<Tabs${props}>
 export function TabsPositionConfigurator() {
   return (
     <Configurator
-      title="Tabs position example"
       component={TabsWrapper}
       codeTemplate={codeTemplate}
       props={[
@@ -46,7 +45,6 @@ export function TabsPositionConfigurator() {
 export function TabsColorConfigurator() {
   return (
     <Configurator
-      title="Default theme colors"
       component={TabsWrapper}
       codeTemplate={codeTemplate}
       props={[{ name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' }]}

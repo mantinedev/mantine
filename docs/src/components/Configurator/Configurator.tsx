@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Title } from '@mantine/core';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import DocsSection from '../DocsSection/DocsSection';
 import controls from './controls';
@@ -9,7 +8,6 @@ type PropType = 'boolean' | 'number' | 'color' | 'select' | 'string' | 'size';
 
 interface ConfiguratorProps {
   component: any;
-  title: string;
   codeTemplate(props: string, children?: string): string;
   props: {
     type: PropType;
@@ -63,7 +61,6 @@ export default function Configurator({
   component: Component,
   codeTemplate,
   props: componentProps,
-  title,
 }: ConfiguratorProps) {
   const classes = useStyles();
   const initialState = componentProps.reduce((acc, prop) => {
@@ -110,9 +107,6 @@ export default function Configurator({
 
   return (
     <DocsSection>
-      <Title className={classes.title} order={2}>
-        {title}
-      </Title>
       <div className={classes.configurator}>
         <div className={classes.preview}>
           <div>

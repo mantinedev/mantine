@@ -24,7 +24,7 @@ export function UseClipboardDemo() {
   const clipboard = useClipboard({ timeout: 500 });
 
   return (
-    <CodeDemo code={code} language="tsx" title="Demo" demoLink="/hooks/use-clipboard.demos.tsx">
+    <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center">
         <Button
           color={clipboard.copied ? 'teal' : 'blue'}

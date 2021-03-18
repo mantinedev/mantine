@@ -21,12 +21,7 @@ export function TabsControlledDemo() {
   const [activeTab, setActiveTab] = useState(1);
 
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      title="Controlled tabs example"
-      demoLink="/core/Tabs/tabs-controlled.demo.tsx"
-    >
+    <CodeDemo code={code} language="tsx">
       <Tabs active={activeTab} onTabChange={setActiveTab}>
         <Tab label="First">First tab content</Tab>
         <Tab label="Second">Second tab content</Tab>

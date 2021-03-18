@@ -20,7 +20,6 @@ const codeTemplate = (props: string) => `<ActionIcon${props}>
 export function ActionIconConfigurator() {
   return (
     <Configurator
-      title="Size, radius and color props"
       component={ActionIconWrapper}
       codeTemplate={codeTemplate}
       props={[

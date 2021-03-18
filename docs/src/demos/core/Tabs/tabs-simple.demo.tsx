@@ -17,12 +17,7 @@ function TabsDemo() {
 
 export function TabsSimpleDemo() {
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      title="General usage"
-      demoLink="/core/Tabs/tabs-simple.demo.tsx"
-    >
+    <CodeDemo code={code} language="tsx">
       <Tabs>
         <Tab label="First">First tab content</Tab>
         <Tab label="Second">Second tab content</Tab>

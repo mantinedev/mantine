@@ -3,10 +3,6 @@ import { theming, MantineTheme } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
-    title: {
-      marginBottom: theme.spacing.xs,
-    },
-
     configurator: {
       display: 'flex',
       border: `1px solid ${theme.colors.gray[3]}`,

@@ -17,8 +17,6 @@ import { UseBreakpointDemo } from '../../demos/hooks/use-media-query.demos';
 
 use-media-query hook allows to subscribe to media queries. It receives media query as an argument and returns true if given media query matches current state. Hook relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) and will always return false if api is not available (e.g. during server side rendering).
 
-## Import
-
 ```tsx
 import { useMediaQuery } from '@mantine/hooks';
 ```
@@ -34,5 +32,7 @@ function Example() {
   return <div />;
 }
 ```
+
+## Demo
 
 <UseBreakpointDemo />

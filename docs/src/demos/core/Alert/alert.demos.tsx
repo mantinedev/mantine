@@ -25,12 +25,7 @@ export function AlertDemo() {
 
 export function AlertBaseDemo() {
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      title="General usage"
-      demoLink="/core/Alert/alert.demos.tsx"
-    >
+    <CodeDemo code={code} language="tsx">
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <Alert color="red" title="Something went wrong">
           Application crashed, try refreshing the page, if it does not help please contact our

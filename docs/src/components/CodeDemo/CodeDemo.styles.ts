@@ -3,13 +3,6 @@ import { theming, MantineTheme } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
-    header: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: theme.spacing.xs,
-    },
-
     demo: {
       border: `1px solid ${theme.colors.gray[3]}`,
       borderBottom: 0,

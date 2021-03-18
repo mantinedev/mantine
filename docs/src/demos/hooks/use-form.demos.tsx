@@ -56,12 +56,7 @@ export function UseFormValidationDemo() {
   });
 
   return (
-    <CodeDemo
-      code={validationCode}
-      language="tsx"
-      title="Simple form example"
-      demoLink="/hooks/use-form.demos.tsx#L46"
-    >
+    <CodeDemo code={validationCode} language="tsx">
       <div style={{ maxWidth: 360, margin: 'auto' }}>
         <form onSubmit={form.onSubmit((values) => console.log(values))}>
           <TextInput
@@ -232,13 +227,7 @@ function AuthenticationForm() {
 
 export function UseFormComplexDemo() {
   return (
-    <CodeDemo
-      code={complexCode}
-      language="tsx"
-      title="Authentication form example"
-      demoLink="/hooks/use-form.demos.tsx#L233"
-      demoBackground={OpenColor.gray[0]}
-    >
+    <CodeDemo code={complexCode} language="tsx" demoBackground={OpenColor.gray[0]}>
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <AuthenticationForm />
       </div>

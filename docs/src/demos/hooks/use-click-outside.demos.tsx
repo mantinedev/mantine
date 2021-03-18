@@ -29,7 +29,7 @@ export function UseClickOutsideDemo() {
   const ref = useClickOutside(() => setOpened(false));
 
   return (
-    <CodeDemo code={code} language="tsx" title="Demo" demoLink="/hooks/use-click-outside.demos.tsx">
+    <CodeDemo code={code} language="tsx">
       <div style={{ position: 'relative' }}>
         <ElementsGroup position="center">
           <Button onClick={() => setOpened(true)}>Open dropdown</Button>

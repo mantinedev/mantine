@@ -18,16 +18,14 @@ import { UseClickOutsideDemo } from '../../demos/hooks/use-click-outside.demos';
 use-click-outside allows detection of clicks outside of specified element. It is usually used with modals
 and dropdowns to close overlay when user clicks outside.
 
-Hook receives function as argument and calls this function once outside click was detected.
-Hook returns ref that should be passed to element on which outside clicks should be captured.
-
-## Import
-
 ```tsx
 import { useClickOutside } from '@mantine/hooks';
 ```
 
 ## Usage
+
+Hook receives function as argument and calls this function once outside click was detected.
+Hook returns ref that should be passed to element on which outside clicks should be captured.
 
 ```tsx
 import { useClickOutside } from '@mantine/hooks';
@@ -38,5 +36,7 @@ function Example() {
   return <div ref={ref} />;
 }
 ```
+
+## Demo
 
 <UseClickOutsideDemo />

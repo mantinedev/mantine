@@ -22,7 +22,7 @@ export function UseBreakpointDemo() {
   const matches = useMediaQuery('(min-width: 900px)');
 
   return (
-    <CodeDemo code={code} language="tsx" title="Demo" demoLink="/hooks/use-breakpoint.demos.tsx">
+    <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center">
         <Button color={matches ? 'teal' : 'red'}>
           Breakpoint {matches ? 'matches' : 'does not match'}

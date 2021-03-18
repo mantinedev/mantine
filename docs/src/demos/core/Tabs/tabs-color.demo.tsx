@@ -19,12 +19,7 @@ function TabsDemo() {
 
 export function TabsColorDemo() {
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      title="Tabs color example"
-      demoLink="/core/Tabs/tabs-color.demo.tsx"
-    >
+    <CodeDemo code={code} language="tsx">
       <Tabs color="teal">
         <Tab label="Teal tab">Teal tab content</Tab>
         <Tab label="Still teal">Teal tab #2</Tab>

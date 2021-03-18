@@ -17,8 +17,6 @@ import { UseClipboardDemo } from '../../demos/hooks/use-clipboard.demos';
 
 use-clipboard hook provides interface to work with `navigator.clipboard`
 
-## Import
-
 ```tsx
 import { useClipboard } from '@mantine/hooks';
 ```
@@ -54,5 +52,7 @@ By default `copied` is reset to false in 2000 ms, this timeout can be changed by
 ```tsx
 const oneSecondTimeoutClipboard = useClipboard({ timeout: 1000 });
 ```
+
+## Demo
 
 <UseClipboardDemo />

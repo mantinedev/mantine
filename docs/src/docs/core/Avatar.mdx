@@ -21,13 +21,17 @@ Display user profile image or fallback icon
 import { Avatar } from '@mantine/core';
 ```
 
+## General usage
+
 <AvatarBaseDemo />
+
+## Placeholder
 
 Set `src` prop to user image. If `src` prop is null or image cannot be loaded, pleaceholader will be rendered instead.
 
 <AvatarPlaceholderDemo />
 
-<AvatarConfigurator />
+## Size and radius
 
 Avatar has predefined sizes: xs, sm, md, lg, xl.
 You can pass size as number and it will be set as width and height in px.
@@ -44,6 +48,10 @@ or pass in number to set border-radius in px:
 <Avatar radius="lg" /> // -> theme predefined large radius
 <Avatar radius={1000} /> // -> { borderRadius: 1000 }
 ```
+
+<AvatarConfigurator />
+
+## Component props
 
 <PropsTable component="Avatar" />
 

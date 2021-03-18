@@ -17,7 +17,6 @@ const codeTemplate = (props: string, children: string) => `<Alert${props}>
 export function AlertConfigurator() {
   return (
     <Configurator
-      title="Color, title and children props"
       component={AlertWrapper}
       codeTemplate={codeTemplate}
       props={[

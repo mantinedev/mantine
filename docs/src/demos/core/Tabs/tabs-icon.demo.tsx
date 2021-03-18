@@ -19,12 +19,7 @@ function IconsTabsDemo() {
 
 export function TabsIconDemo() {
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      title="Tabs with icons example"
-      demoLink="/core/Tabs/tabs-icon.demo.tsx"
-    >
+    <CodeDemo code={code} language="tsx">
       <Tabs>
         <Tab label="Chat" icon={<ChatBubbleIcon />}>
           Chat here

@@ -21,12 +21,7 @@ function ActionIconDemo() {
 
 export function ActionIconBaseDemo() {
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      title="General usage"
-      demoLink="/core/ActionIcon/action-icon.demos.tsx"
-    >
+    <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center">
         <ActionIcon title="Settings" aria-label="Settings">
           <GearIcon />
@@ -58,12 +53,7 @@ function ActionIconDemo() {
 
 export function ActionIconGroupDemo() {
   return (
-    <CodeDemo
-      code={groupCode}
-      language="tsx"
-      title="ElementsGroup example"
-      demoLink="/core/ActionIcon/action-icon.demos.tsx"
-    >
+    <CodeDemo code={groupCode} language="tsx">
       <ElementsGroup position="center">
         <Button>Submit</Button>
 

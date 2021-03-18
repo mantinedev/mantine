@@ -23,12 +23,7 @@ function TabsDemo() {
 
 export function TabsTabPropsDemo() {
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      title="Tab props example"
-      demoLink="/core/Tabs/tabs-tab-props.demo.tsx"
-    >
+    <CodeDemo code={code} language="tsx">
       <Tabs>
         <Tab label="First" title="Reveal hidden truth on long mouse over">
           First tab content
