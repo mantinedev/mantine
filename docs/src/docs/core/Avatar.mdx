@@ -17,16 +17,37 @@ Display user profile image or fallback icon
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Avatar } from '@mantine/core';
 ```
 
 <AvatarBaseDemo />
 
+Set `src` prop to user image. If `src` prop is null or image cannot be loaded, pleaceholader will be rendered instead.
+
 <AvatarPlaceholderDemo />
 
 <AvatarConfigurator />
 
+Avatar has predefined sizes: xs, sm, md, lg, xl.
+You can pass size as number and it will be set as width and height in px.
+
+```tsx
+<Avatar size="sm" /> // -> predefined small size
+<Avatar size={50} /> // -> { width: 50, height: 50 }
+```
+
+Same with radius – predefined values for xs, sm, md, lg, xl are defined in <GatsbyLink to="/theming">theme</GatsbyLink>,
+or pass in number to set border-radius in px:
+
+```tsx
+<Avatar radius="lg" /> // -> theme predefined large radius
+<Avatar radius={1000} /> // -> { borderRadius: 1000 }
+```
+
 <PropsTable component="Avatar" />
+
+## Accessibility
+
+Avatar renders img html element. It is important to add alt text.
+In case of image load failing alt will be used as `title` for placeholder.
