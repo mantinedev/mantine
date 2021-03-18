@@ -10,6 +10,13 @@ export default createUseStyles(
       body: {
         ...getFontStyles(theme),
       },
+
+      ':target': {
+        display: 'block',
+        position: 'relative',
+        top: HEADER_HEIGHT * -1 - 10,
+        visibility: 'hidden',
+      },
     },
 
     layout: {
