@@ -99,6 +99,7 @@ export default function Configurator({
         defaultValue: prop.defaultValue,
       })
     )
+    .filter(Boolean)
     .join(' ')
     .trim();
 
