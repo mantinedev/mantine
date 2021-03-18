@@ -1,4 +1,5 @@
 import OpenColor from 'open-color';
+import remarkSlug from 'remark-slug';
 
 export default {
   siteMetadata: {
@@ -20,7 +21,12 @@ export default {
     'gatsby-plugin-cname',
     'gatsby-plugin-tsconfig-paths',
     'gatsby-plugin-react-helmet',
-    'gatsby-plugin-mdx',
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        remarkPlugins: [remarkSlug],
+      },
+    },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
