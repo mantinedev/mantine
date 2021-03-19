@@ -4,10 +4,13 @@ import { useMantineTheme, DefaultProps } from '@mantine/theme';
 import useStyles, { BadgeVariant } from './Badge.styles';
 
 interface BadgeProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  /** Badge color from theme */
   color?: string;
+
+  /** Controls badge background, color and border styles */
   variant?: BadgeVariant;
 
-  /** Sets badge width to 100% of parent element */
+  /** Sets badge width to 100% of parent element, hides overflow text with text-overflow: ellipsis */
   fullWidth?: boolean;
 }
 
