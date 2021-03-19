@@ -28,6 +28,7 @@ export default createUseStyles({
     color: getThemeColor({ theme, color, shade: 6 }),
     marginRight: theme.spacing.md,
     marginTop: 2,
+    width: 22,
   }),
 
   cite: ({ theme }: { theme: MantineTheme; color: string }) => ({
