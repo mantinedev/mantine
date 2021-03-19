@@ -15,6 +15,7 @@ export { Highlight } from './Highlight/Highlight';
 export { Hr } from './Hr/Hr';
 export { Input } from './Input/Input';
 export { InputWrapper } from './InputWrapper/InputWrapper';
+export { Kbd } from './Kbd/Kbd';
 export { Loader } from './Loader/Loader';
 export { LoadingOverlay } from './LoadingOverlay/LoadingOverlay';
 export { Modal } from './Modal/Modal';
