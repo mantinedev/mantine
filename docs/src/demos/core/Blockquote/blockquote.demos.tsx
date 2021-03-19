@@ -34,7 +34,7 @@ export function BlockquoteDemo() {
   return (
     <Blockquote
       cite="– Your poor i3 from 2012 struggling its best"
-      icon={<LightningBoltIcon />}
+      icon={<LightningBoltIcon style={{ width: 18, height: 18 }} />}
     >
       webpack built 40a9bf3d1a0a0914ed84 in 28259ms
     </Blockquote>
@@ -47,7 +47,7 @@ export function BlockquoteIconDemo() {
       <div style={{ maxWidth: 420, margin: 'auto' }}>
         <Blockquote
           cite="– Your poor i3 from 2012 struggling its best"
-          icon={<LightningBoltIcon />}
+          icon={<LightningBoltIcon style={{ width: 18, height: 18 }} />}
         >
           webpack built 40a9bf3d1a0a0914ed84 in 28259ms
         </Blockquote>
