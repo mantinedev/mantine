@@ -1,8 +1,13 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getFontStyles, getThemeColor } from '@mantine/theme';
 
+interface BlockquoteStylesProps {
+  theme: MantineTheme;
+  color: string;
+}
+
 export default createUseStyles({
-  blockquote: ({ theme, color }: { theme: MantineTheme; color: string }) => ({
+  blockquote: ({ theme, color }: BlockquoteStylesProps) => ({
     ...getFontStyles(theme),
     fontSize: theme.fontSizes.lg,
     lineHeight: theme.lineHeight,
@@ -24,14 +29,14 @@ export default createUseStyles({
     textOverflow: 'ellipsis',
   },
 
-  icon: ({ theme, color }: { theme: MantineTheme; color: string }) => ({
+  icon: ({ theme, color }: BlockquoteStylesProps) => ({
     color: getThemeColor({ theme, color, shade: 6 }),
     marginRight: theme.spacing.md,
     marginTop: 2,
     width: 22,
   }),
 
-  cite: ({ theme }: { theme: MantineTheme; color: string }) => ({
+  cite: ({ theme }: BlockquoteStylesProps) => ({
     display: 'block',
     fontSize: theme.fontSizes.sm,
     marginTop: theme.spacing.xs,

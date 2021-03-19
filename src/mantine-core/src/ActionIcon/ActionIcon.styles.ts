@@ -8,6 +8,13 @@ import {
   getThemeColor,
 } from '@mantine/theme';
 
+interface ActionIconStylesProps {
+  color: string;
+  size: MantineNumberSize;
+  radius: MantineNumberSize;
+  theme: MantineTheme;
+}
+
 const sizes = {
   xs: 18,
   sm: 22,
@@ -17,17 +24,7 @@ const sizes = {
 };
 
 export default createUseStyles({
-  actionIcon: ({
-    color,
-    radius,
-    theme,
-    size,
-  }: {
-    color: string;
-    size: MantineNumberSize;
-    radius: MantineNumberSize;
-    theme: MantineTheme;
-  }) => ({
+  actionIcon: ({ color, radius, theme, size }: ActionIconStylesProps) => ({
     ...getFocusStyles(theme),
     ...getFontStyles(theme),
     border: '1px solid transparent',

@@ -1,8 +1,13 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getThemeColor, getFontStyles } from '@mantine/theme';
 
+interface AlertStylesProps {
+  color: string;
+  theme: MantineTheme;
+}
+
 export default createUseStyles({
-  title: ({ color, theme }: { color: string; theme: MantineTheme }) => ({
+  title: ({ color, theme }: AlertStylesProps) => ({
     boxSizing: 'border-box',
     textAlign: 'center',
     backgroundColor: getThemeColor({ theme, color, shade: 7 }),
@@ -16,7 +21,7 @@ export default createUseStyles({
     overflow: 'hidden',
   }),
 
-  body: ({ color, theme }: { color: string; theme: MantineTheme }) => ({
+  body: ({ color, theme }: AlertStylesProps) => ({
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,
     backgroundColor: getThemeColor({ theme, color, shade: 0 }),

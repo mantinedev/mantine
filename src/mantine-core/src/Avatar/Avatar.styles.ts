@@ -9,16 +9,14 @@ const sizes = {
   xl: 84,
 };
 
+interface AvatarStylesProps {
+  size: MantineNumberSize;
+  radius: MantineNumberSize;
+  theme: MantineTheme;
+}
+
 export default createUseStyles({
-  avatar: ({
-    size,
-    radius,
-    theme,
-  }: {
-    size: MantineNumberSize;
-    radius: MantineNumberSize;
-    theme: MantineTheme;
-  }) => ({
+  avatar: ({ size, radius, theme }: AvatarStylesProps) => ({
     boxSizing: 'border-box',
     position: 'relative',
     userSelect: 'none',
