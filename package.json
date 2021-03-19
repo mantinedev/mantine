@@ -12,7 +12,7 @@
   "license": "MIT",
   "scripts": {
     "docgen:clean": "rimraf docs/.docgen",
-    "docgen": "npm run docgen:clean && ts-node scripts/docgen",
+    "docgen": "ts-node scripts/docgen",
     "docs": "npm run docgen && cd docs && npm start",
     "docs:clean": "cd docs && npm run clean",
     "docs:build": "npm run docs:clean && npm run docgen && cd docs && npm run build",
