@@ -9,7 +9,7 @@ interface DocsQuery {
 export interface DocItem {
   to: string;
   package: string;
-  order: number;
+  order?: number;
   title: string;
 }
 
@@ -31,7 +31,25 @@ export default function getDocsData(query: DocsQuery): Record<string, DocItem[]>
   }, {});
 
   Object.keys(results).forEach((category) => {
-    results[category].sort((a, b) => a.order - b.order);
+    results[category].sort((a, b) => {
+      if ('order' in a && 'order' in b) {
+        if (a.order === b.order) {
+          return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+        }
+
+        return a.order - b.order;
+      }
+
+      if ('order' in a) {
+        return 1;
+      }
+
+      if ('order' in b) {
+        return -1;
+      }
+
+      return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+    });
   });
 
   return order.reduce((acc, item) => {
