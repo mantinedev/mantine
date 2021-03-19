@@ -1,34 +1,17 @@
 import React from 'react';
-import cx from 'clsx';
-import { graphql, useStaticQuery } from 'gatsby';
 import { Scrollbars } from 'react-custom-scrollbars';
 import NavbarMainLink from './NavbarMainLink/NavbarMainLink';
 import NavbarDocsCategory from './NavbarDocsCategory/NavbarDocsCategory';
-import getDocsData from './get-docs-data';
+import getDocsData from '../get-docs-data';
 import mainLinks from './main-links';
 import useStyles from './Navbar.styles';
 
-const query = graphql`
-  {
-    allMdx {
-      edges {
-        node {
-          id
-          frontmatter {
-            package
-            title
-            order
-            slug
-          }
-        }
-      }
-    }
-  }
-`;
+interface NavbarProps {
+  data: ReturnType<typeof getDocsData>;
+}
 
-export default function Navbar({ className }: { className?: string }) {
+export default function Navbar({ data }: NavbarProps) {
   const classes = useStyles();
-  const data = getDocsData(useStaticQuery(query));
 
   const main = mainLinks.map((item) => (
     <NavbarMainLink
@@ -46,7 +29,7 @@ export default function Navbar({ className }: { className?: string }) {
   ));
 
   return (
-    <nav className={cx(classes.navbar, className)}>
+    <nav className={classes.navbar}>
       <Scrollbars style={{ height: '100vh' }}>
         <div className={classes.body}>
           {main}

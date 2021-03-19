@@ -15,7 +15,7 @@ export interface DocItem {
 
 const order = ['mantine-hooks', 'mantine-core', 'mantine-notifications'];
 
-export default function getDocsData(query: DocsQuery) {
+export default function getDocsData(query: DocsQuery): Record<string, DocItem[]> {
   const results = query.allMdx.edges.reduce((acc: Record<string, DocItem[]>, item) => {
     if (!(item.node.frontmatter.package in acc)) {
       acc[item.node.frontmatter.package] = [];

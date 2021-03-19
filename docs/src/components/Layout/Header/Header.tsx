@@ -2,10 +2,17 @@ import React from 'react';
 import { Link } from 'gatsby';
 import { GitHubLogoIcon, ChatBubbleIcon, ExclamationTriangleIcon } from '@modulz/radix-icons';
 import logo from '../../../images/logo.svg';
+import getDocsData from '../get-docs-data';
+import Search from './Search/Search';
 import useStyles from './Header.styles';
 
-export default function Header() {
+interface HeaderProps {
+  data: ReturnType<typeof getDocsData>;
+}
+
+export default function Header({ data }: HeaderProps) {
   const classes = useStyles();
+
   return (
     <div className={classes.header}>
       <div>
@@ -15,6 +22,7 @@ export default function Header() {
       </div>
 
       <div className={classes.links}>
+        <Search data={data} />
         <a className={classes.link} href="https://github.com/mantinedev/mantine">
           <GitHubLogoIcon />
           <span className={classes.linkLabel}>Source code</span>

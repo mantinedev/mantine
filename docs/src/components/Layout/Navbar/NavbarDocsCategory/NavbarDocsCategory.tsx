@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 import cx from 'clsx';
 import { ChevronDownIcon } from '@modulz/radix-icons';
 import { Text } from '@mantine/core';
-import { DocItem } from '../get-docs-data';
+import { DocItem } from '../../get-docs-data';
 import useStyles from './NavbarDocsCategory.styles';
 
 interface NavbarDocsCategoryProps {
