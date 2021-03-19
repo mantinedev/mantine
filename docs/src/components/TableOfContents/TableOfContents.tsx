@@ -22,7 +22,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
     .map((heading, index) => {
       const slug = slugger.slug(heading.value);
       return (
-        <li>
+        <li key={index}>
           <Text<'a'>
             component="a"
             size="sm"
