@@ -8,8 +8,13 @@ import { ComponentPassThrough } from '@mantine/types';
 import useStyles, { ButtonVariant } from './Button.styles';
 
 interface ButtonBaseProps extends DefaultProps {
+  /** Predefined button size */
   size?: MantineSize;
+
+  /** Button type attribute */
   type?: 'submit' | 'button' | 'reset';
+
+  /** Button color from theme */
   color?: string;
 
   /** Adds icon before button label  */
@@ -21,7 +26,10 @@ interface ButtonBaseProps extends DefaultProps {
   /** Sets button width to 100% of parent element */
   fullWidth?: boolean;
 
+  /** Button border-radius from theme or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Controls button appearance */
   variant?: ButtonVariant;
 }
 

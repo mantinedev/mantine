@@ -105,7 +105,7 @@ export default createUseStyles({
     color: getThemeColor({ theme, color, shade: 8 }),
     border: `1px solid ${getThemeColor({ theme, color, shade: 8 })}`,
 
-    '&:active': {
+    '&:not(:disabled)active': {
       transform: 'translateY(1px)',
     },
 
@@ -113,7 +113,7 @@ export default createUseStyles({
       borderColor: 'transparent',
       backgroundColor: theme.colors.gray[3],
       color: theme.colors.gray[6],
-      pointerEvents: 'none',
+      cursor: 'not-allowed',
     },
   }),
 
@@ -131,7 +131,7 @@ export default createUseStyles({
       height: sizes[size].height - 2,
     },
 
-    '&:active': {
+    '&:not(:disabled):active': {
       transform: 'translateY(1px)',
       backgroundColor: getThemeColor({ theme, color, shade: 7 }),
     },
@@ -141,7 +141,7 @@ export default createUseStyles({
       backgroundColor: theme.colors.gray[3],
       color: theme.colors.gray[6],
       textShadow: 'none',
-      pointerEvents: 'none',
+      cursor: 'not-allowed',
     },
   }),
 
