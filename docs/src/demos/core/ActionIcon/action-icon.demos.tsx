@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionIcon, Button, ElementsGroup } from '@mantine/core';
+import { ActionIcon, Button, ElementsGroup, PasswordInput } from '@mantine/core';
 import { GearIcon, ChatBubbleIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
@@ -65,6 +65,20 @@ export function ActionIconGroupDemo() {
           <ChatBubbleIcon />
         </ActionIcon>
       </ElementsGroup>
+    </CodeDemo>
+  );
+}
+
+export function ActionIconUsageDemo() {
+  return (
+    <CodeDemo>
+      <div style={{ maxWidth: 400, margin: 'auto' }}>
+        <PasswordInput
+          placeholder="Password"
+          hidePasswordLabel="Hide password"
+          showPasswordLabel="Show password"
+        />
+      </div>
     </CodeDemo>
   );
 }

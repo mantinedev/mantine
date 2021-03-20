@@ -6,8 +6,8 @@ import DocsSection from '../DocsSection/DocsSection';
 import useStyles from './CodeDemo.styles';
 
 interface CodeDemoProps {
-  code: string;
-  language: Language;
+  code?: string;
+  language?: Language;
   demoBackground?: string;
   children: React.ReactNode;
 }
@@ -25,7 +25,7 @@ export default function CodeDemo({
       <Paper padding="md" className={classes.demo} style={{ backgroundColor: demoBackground }}>
         {children}
       </Paper>
-      <CodeHighlight code={code} language={language} className={classes.code} />
+      {code && <CodeHighlight code={code} language={language} className={classes.code} />}
     </DocsSection>
   );
 }
