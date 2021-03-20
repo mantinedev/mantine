@@ -109,6 +109,7 @@ export const PasswordInput = forwardRef(
               onClick={() => setReveal((current) => !current)}
               themeOverride={themeOverride}
               title={reveal ? hidePasswordLabel : showPasswordLabel}
+              aria-label={reveal ? hidePasswordLabel : showPasswordLabel}
               radius={radius}
             >
               {reveal ? <EyeClosedIcon /> : <EyeOpenIcon />}

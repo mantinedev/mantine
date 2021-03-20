@@ -33,13 +33,15 @@ describe('@mantine/core/PasswordInput', () => {
     expect(element.find(Input).prop('type')).toBe('text');
   });
 
-  it('sets correct title attribute on hide/show button based on state', () => {
+  it('sets correct title and aria-label attributes on hide/show button based on state', () => {
     const element = shallow(
       <PasswordInput hidePasswordLabel="test-hide" showPasswordLabel="test-show" />
     );
     expect(element.find(ActionIcon).prop('title')).toBe('test-show');
+    expect(element.find(ActionIcon).prop('aria-label')).toBe('test-show');
     element.find(ActionIcon).simulate('click');
     expect(element.find(ActionIcon).prop('title')).toBe('test-hide');
+    expect(element.find(ActionIcon).prop('aria-label')).toBe('test-hide');
   });
 
   it('passes required, inputStyle, inputClassName, id, invalid, icon and radius props to Input component', () => {
