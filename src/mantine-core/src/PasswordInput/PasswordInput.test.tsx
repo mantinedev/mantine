@@ -7,9 +7,15 @@ import {
   itSupportsRef,
 } from '@mantine/tests';
 import { Input } from '../Input/Input';
+import { TextInput } from '../TextInput/TextInput';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
-import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { PasswordInput } from './PasswordInput';
+
+// retrieves Input component from nested TextInput component
+const getInput = (element: any) => element.find(TextInput).dive().find(Input);
+
+// retrieves ActionIcon node from nested TextInput and Input components
+const getActionIcon = (element: any) => getInput(element).dive().find(ActionIcon);
 
 describe('@mantine/core/PasswordInput', () => {
   checkAccessibility([
@@ -28,64 +34,22 @@ describe('@mantine/core/PasswordInput', () => {
     const element = shallow(
       <PasswordInput hidePasswordLabel="test-hide" showPasswordLabel="test-show" />
     );
-    expect(element.find(Input).prop('type')).toBe('password');
-    element.find(ActionIcon).simulate('click');
-    expect(element.find(Input).prop('type')).toBe('text');
+    expect(getInput(element).prop('type')).toBe('password');
+    getActionIcon(element).simulate('click');
+    expect(getInput(element).prop('type')).toBe('text');
   });
 
   it('sets correct title and aria-label attributes on hide/show button based on state', () => {
     const element = shallow(
       <PasswordInput hidePasswordLabel="test-hide" showPasswordLabel="test-show" />
     );
-    expect(element.find(ActionIcon).prop('title')).toBe('test-show');
-    expect(element.find(ActionIcon).prop('aria-label')).toBe('test-show');
-    element.find(ActionIcon).simulate('click');
-    expect(element.find(ActionIcon).prop('title')).toBe('test-hide');
-    expect(element.find(ActionIcon).prop('aria-label')).toBe('test-hide');
-  });
 
-  it('passes required, inputStyle, inputClassName, id, invalid, icon and radius props to Input component', () => {
-    const element = shallow(
-      <PasswordInput
-        required
-        id="test-id"
-        error="test-error"
-        icon="$"
-        radius="sm"
-        inputStyle={{ border: '1px solid red' }}
-        inputClassName="test-input-class"
-      />
-    );
+    expect(getActionIcon(element).prop('title')).toBe('test-show');
+    expect(getActionIcon(element).prop('aria-label')).toBe('test-show');
 
-    expect(element.find(Input).prop('id')).toBe('test-id');
-    expect(element.find(Input).prop('required')).toBe(true);
-    expect(element.find(Input).prop('invalid')).toBe(true);
-    expect(element.find(Input).prop('icon')).toBe('$');
-    expect(element.find(Input).prop('radius')).toBe('sm');
-    expect(element.find(Input).prop('style')).toEqual({ border: '1px solid red' });
-    expect(element.render().find('input').hasClass('test-input-class')).toBe(true);
-  });
+    getActionIcon(element).simulate('click');
 
-  it('passes required, id, label, error and description props to InputWrapper component', () => {
-    const element = shallow(
-      <PasswordInput
-        id="test-id"
-        required
-        label="test-label"
-        error="test-error"
-        description="test-description"
-      />
-    );
-
-    expect(element.find(InputWrapper).prop('id')).toBe('test-id');
-    expect(element.find(InputWrapper).prop('required')).toBe(true);
-    expect(element.find(InputWrapper).prop('label')).toBe('test-label');
-    expect(element.find(InputWrapper).prop('error')).toBe('test-error');
-    expect(element.find(InputWrapper).prop('description')).toBe('test-description');
-  });
-
-  it('passes wrapperProps to InputWrapper', () => {
-    const element = shallow(<PasswordInput wrapperProps={{ 'aria-label': 'test' }} />);
-    expect(element.render().attr('aria-label')).toBe('test');
+    expect(getActionIcon(element).prop('title')).toBe('test-hide');
+    expect(getActionIcon(element).prop('aria-label')).toBe('test-hide');
   });
 });
