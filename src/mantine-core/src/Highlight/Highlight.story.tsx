@@ -2,9 +2,15 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Highlight } from './Highlight';
 
-storiesOf('@mantine/core/Highlight', module).add('Highlight', () => (
-  <>
-    <Highlight<'a'>
+storiesOf('@mantine/core/Highlight', module)
+  .add('General usage', () => (
+    <>
+      <Highlight highlight="that">Nothing nothing</Highlight>
+      <Highlight highlight="Highlight all">Highlight all</Highlight>
+    </>
+  ))
+  .add('Custom component', () => (
+    <Highlight
       highlight="this"
       transform="uppercase"
       size="sm"
@@ -16,7 +22,4 @@ storiesOf('@mantine/core/Highlight', module).add('Highlight', () => (
     >
       Highlight this
     </Highlight>
-    <Highlight highlight="that">Nothing nothing</Highlight>
-    <Highlight highlight="Highlight all">Highlight all</Highlight>
-  </>
-));
+  ));
