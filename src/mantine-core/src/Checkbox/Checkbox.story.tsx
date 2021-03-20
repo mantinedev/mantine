@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Checkbox } from './Checkbox';
 
 function CheckboxWrapper(props: Omit<React.ComponentProps<typeof Checkbox>, 'value' | 'onChange'>) {
-  const [value, onChange] = useState(false);
+  const [value, onChange] = useState(true);
   return (
     <Checkbox
       checked={value}
@@ -13,38 +14,25 @@ function CheckboxWrapper(props: Omit<React.ComponentProps<typeof Checkbox>, 'val
   );
 }
 
-storiesOf('@mantine/core/Checkbox', module).add('Checkbox', () => (
-  <>
-    <CheckboxWrapper intermediate label="intermediate" />
-    <CheckboxWrapper size="xl" style={{ marginTop: 15 }} />
-    <Checkbox size="xl" label="Uncontrolled" style={{ marginTop: 15 }} />
-    <CheckboxWrapper size="xl" label="Turn on the notifications" style={{ marginTop: 15 }} />
-    <CheckboxWrapper
-      size="lg"
-      label="Turn on the notifications"
-      color="red"
-      style={{ marginTop: 15 }}
-    />
-    <CheckboxWrapper label="Turn on the notifications" color="teal" style={{ marginTop: 15 }} />
-    <CheckboxWrapper
-      size="sm"
-      label="Turn on the notifications"
-      color="grape"
-      style={{ marginTop: 15 }}
-    />
-    <CheckboxWrapper
-      size="xs"
-      label="Turn on the notifications"
-      color="violet"
-      style={{ marginTop: 15 }}
-    />
-
-    <CheckboxWrapper
-      size={42}
-      label="Turn on the notifications"
-      color="indigo"
-      style={{ marginTop: 15 }}
-    />
-    <CheckboxWrapper label="Turn on the notifications" disabled style={{ marginTop: 15 }} />
-  </>
+const sizes = (['xs', 'sm', 'md', 'lg', 'xl', 50, 75] as any[]).map((size) => (
+  <Checkbox
+    color="blue"
+    key={size}
+    size={size}
+    label={`Checkbox ${size}`}
+    style={{ marginTop: 15 }}
+  />
 ));
+
+const getThemes = (props?: any) =>
+  Object.keys(DEFAULT_THEME.colors).map((color) => (
+    <Checkbox key={color} color={color} {...props} label={color} style={{ marginTop: 15 }} />
+  ));
+
+storiesOf('@mantine/core/Checkbox', module)
+  .add('Themes', () => <div style={{ padding: 15 }}>{getThemes({ checked: true })}</div>)
+  .add('Sizes', () => <div style={{ padding: 15 }}>{sizes}</div>)
+  .add('Controlled', () => <CheckboxWrapper label="Controlled" style={{ padding: 15 }} />)
+  .add('Intermediate', () => (
+    <Checkbox intermediate label="Intermediate" style={{ padding: 15 }} />
+  ));
