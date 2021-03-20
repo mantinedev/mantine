@@ -6,6 +6,7 @@ import {
   itSupportsRef,
   itSupportsStyle,
 } from '@mantine/tests';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Input } from './Input';
 
 describe('@mantine/core/Input', () => {
@@ -58,5 +59,27 @@ describe('@mantine/core/Input', () => {
       .find('input');
     expect(element.css('border')).toBe('1px solid red');
     expect(element.css('line-height')).toBe('1');
+  });
+
+  it('renders given right section', () => {
+    const withRightSection = shallow(<Input rightSection="test-right-section" />);
+    const withoutRightSection = shallow(<Input />);
+
+    expect(withoutRightSection.render().find('[data-mantine-input-section]')).toHaveLength(0);
+    expect(withRightSection.render().find('[data-mantine-input-section]').text()).toBe(
+      'test-right-section'
+    );
+  });
+
+  it('sets input paddingRight based on given rightSectionWidth value', () => {
+    const withRightSection = shallow(
+      <Input rightSection="test-right-section" rightSectionWidth={47} />
+    );
+    const withoutRightSection = shallow(<Input />);
+
+    expect(withRightSection.render().find('input').css('padding-right')).toBe('47px');
+    expect(withoutRightSection.render().find('input').css('padding-right')).toBe(
+      `${DEFAULT_THEME.spacing.md}px`
+    );
   });
 });

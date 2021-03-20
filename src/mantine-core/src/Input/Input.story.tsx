@@ -1,7 +1,14 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
+import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
+
+const actionIcon = (
+  <ActionIcon size="sm">
+    <MagnifyingGlassIcon />
+  </ActionIcon>
+);
 
 const getStates = (props?: any) => (
   <div style={{ maxWidth: 300, padding: 50 }}>
@@ -18,6 +25,19 @@ const getStates = (props?: any) => (
       placeholder="With icon"
       icon={<MagnifyingGlassIcon />}
       style={{ marginTop: 15 }}
+      {...props}
+    />
+    <Input
+      style={{ marginTop: 15 }}
+      placeholder="With right section"
+      rightSection={actionIcon}
+      {...props}
+    />
+    <Input
+      style={{ marginTop: 15 }}
+      placeholder="Right Section width"
+      rightSection={actionIcon}
+      rightSectionWidth={50}
       {...props}
     />
   </div>

@@ -10,6 +10,12 @@ interface InputProps extends DefaultProps, React.ComponentPropsWithoutRef<'input
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
 
+  /** Right section of input, similar to icon but on the right */
+  rightSection?: React.ReactNode;
+
+  /** Width of right section, is used to calculate input padding-right */
+  rightSectionWidth?: number;
+
   /** Add className to input element */
   inputClassName?: string;
 
@@ -38,6 +44,8 @@ export const Input = forwardRef(
       variant = 'default',
       icon,
       style,
+      rightSectionWidth = 36,
+      rightSection,
       radius = 'sm',
       inputClassName,
       inputStyle,
@@ -47,7 +55,8 @@ export const Input = forwardRef(
     }: InputProps,
     ref: React.ForwardedRef<HTMLInputElement>
   ) => {
-    const classes = useStyles({ radius, theme: useMantineTheme(themeOverride) });
+    const theme = useMantineTheme(themeOverride);
+    const classes = useStyles({ radius, theme });
 
     return (
       <div
@@ -68,11 +77,24 @@ export const Input = forwardRef(
 
         <input
           {...others}
-          aria-required={required}
-          style={inputStyle}
           ref={ref}
+          aria-required={required}
           className={cx({ [classes.withIcon]: icon }, classes.input, inputClassName)}
+          style={{
+            paddingRight: rightSection ? rightSectionWidth : theme.spacing.md,
+            ...inputStyle,
+          }}
         />
+
+        {rightSection && (
+          <div
+            data-mantine-input-section
+            style={{ width: rightSectionWidth }}
+            className={classes.rightSection}
+          >
+            {rightSection}
+          </div>
+        )}
       </div>
     );
   }

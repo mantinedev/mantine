@@ -9,9 +9,11 @@ interface InputStylesProps {
 export default createUseStyles({
   withIcon: {},
 
-  inputWrapper: {
+  inputWrapper: ({ radius, theme }: InputStylesProps) => ({
     position: 'relative',
-  },
+    overflow: 'hidden',
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+  }),
 
   defaultVariant: ({ theme, radius }: InputStylesProps) => ({
     '& $input': {
@@ -46,8 +48,8 @@ export default createUseStyles({
   filledVariant: ({ theme, radius }: InputStylesProps) => ({
     '& $input': {
       height: 36,
-      paddingLeft: 15,
-      paddingRight: 15,
+      paddingLeft: theme.spacing.md,
+      paddingRight: theme.spacing.md,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: '1px solid transparent',
       backgroundColor: theme.colors.gray[1],
@@ -131,6 +133,7 @@ export default createUseStyles({
   icon: ({ theme }: InputStylesProps) => ({
     pointerEvents: 'none',
     position: 'absolute',
+    left: 0,
     color: theme.colors.gray[5],
     display: 'flex',
     alignItems: 'center',
@@ -151,4 +154,14 @@ export default createUseStyles({
       color: theme.colors.red[6],
     },
   }),
+
+  rightSection: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
