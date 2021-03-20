@@ -10,6 +10,8 @@ import {
 interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'svg'> {
   /** Defines width of loader */
   size?: MantineNumberSize;
+
+  /** Loader color from theme */
   color?: string;
 }
 
@@ -30,6 +32,7 @@ export function Loader({ size = 'md', color, themeOverride, ...others }: LoaderP
       fill={getThemeColor({ theme, color, shade: 5 })}
       viewBox="0 0 135 140"
       xmlns="http://www.w3.org/2000/svg"
+      role="presentation"
       {...others}
     >
       <rect y="10" width="15" height="120" rx="6">
