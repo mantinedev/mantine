@@ -15,7 +15,7 @@ interface ActionIconStylesProps {
   theme: MantineTheme;
 }
 
-const sizes = {
+export const sizes = {
   xs: 18,
   sm: 22,
   md: 28,

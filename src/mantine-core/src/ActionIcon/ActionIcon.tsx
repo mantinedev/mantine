@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
-import useStyles from './ActionIcon.styles';
+import useStyles, { sizes } from './ActionIcon.styles';
 
 interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   /** Icon rendered inside button */
@@ -16,6 +16,8 @@ interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   /** Predefined icon size or number to set width and height in px */
   size?: MantineNumberSize;
 }
+
+export const ACTION_ICON_SIZES = sizes;
 
 export const ActionIcon = forwardRef(
   (

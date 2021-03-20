@@ -1,4 +1,4 @@
-export { ActionIcon } from './ActionIcon/ActionIcon';
+export { ActionIcon, ACTION_ICON_SIZES } from './ActionIcon/ActionIcon';
 export { Alert } from './Alert/Alert';
 export { Avatar } from './Avatar/Avatar';
 export { Badge } from './Badge/Badge';
