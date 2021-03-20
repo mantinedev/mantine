@@ -1,15 +1,19 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, getFontStyles, getSizeValue } from '@mantine/theme';
 
+interface InputStylesProps {
+  theme: MantineTheme;
+  radius: MantineNumberSize;
+}
+
 export default createUseStyles({
   withIcon: {},
-  invalid: {},
 
   inputWrapper: {
     position: 'relative',
   },
 
-  defaultVariant: ({ theme, radius }: { theme: MantineTheme; radius: MantineNumberSize }) => ({
+  defaultVariant: ({ theme, radius }: InputStylesProps) => ({
     '& $input': {
       height: 36,
       paddingLeft: 15,
@@ -39,7 +43,7 @@ export default createUseStyles({
     },
   }),
 
-  filledVariant: ({ theme, radius }: { theme: MantineTheme; radius: MantineNumberSize }) => ({
+  filledVariant: ({ theme, radius }: InputStylesProps) => ({
     '& $input': {
       height: 36,
       paddingLeft: 15,
@@ -66,8 +70,8 @@ export default createUseStyles({
       },
     },
 
-    '& $invalid': {
-      borderColor: theme.colors.red[6],
+    '&$invalid $input': {
+      backgroundColor: theme.colors.red[0],
     },
 
     '& $withIcon': {
@@ -86,6 +90,11 @@ export default createUseStyles({
       height: 28,
       border: 0,
       outline: 0,
+
+      '&:disabled': {
+        backgroundColor: 'transparent',
+        opacity: 0.6,
+      },
     },
 
     '& $icon': {
@@ -98,11 +107,12 @@ export default createUseStyles({
     },
   },
 
-  input: ({ theme }: { theme: MantineTheme }) => ({
+  input: ({ theme }: InputStylesProps) => ({
     ...getFontStyles(theme),
     boxSizing: 'border-box',
     fontSize: 14,
     width: '100%',
+    color: theme.black,
 
     '&:disabled': {
       backgroundColor: theme.colors.gray[1],
@@ -118,12 +128,27 @@ export default createUseStyles({
     },
   }),
 
-  icon: ({ theme }: { theme: MantineTheme }) => ({
+  icon: ({ theme }: InputStylesProps) => ({
     pointerEvents: 'none',
     position: 'absolute',
     color: theme.colors.gray[5],
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  }),
+
+  invalid: ({ theme }: InputStylesProps) => ({
+    '& $input': {
+      color: theme.colors.red[6],
+      borderColor: theme.colors.red[6],
+
+      '&::placeholder': {
+        color: theme.colors.red[6],
+      },
+    },
+
+    '& $icon': {
+      color: theme.colors.red[6],
+    },
   }),
 });

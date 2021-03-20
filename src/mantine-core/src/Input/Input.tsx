@@ -4,17 +4,28 @@ import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme
 import useStyles from './Input.styles';
 
 interface InputProps extends DefaultProps, React.ComponentPropsWithoutRef<'input'> {
+  /** Sets border color to red */
   invalid?: boolean;
+
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
+
+  /** Add className to input element */
   inputClassName?: string;
 
   /** Properties spread to root element */
   wrapperProps?: Omit<React.ComponentPropsWithoutRef<'div'>, 'className' | 'style' | 'children'>;
+
+  /** Adds style to input element */
   inputStyle?: React.CSSProperties;
-  disabled?: boolean;
+
+  /** Sets aria-required=true on input element */
   required?: boolean;
+
+  /** Input border-radius from theme or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Defines input appearance */
   variant?: 'default' | 'filled' | 'unstyled';
 }
 
@@ -23,7 +34,6 @@ export const Input = forwardRef(
     {
       className,
       invalid = false,
-      disabled = false,
       required = false,
       variant = 'default',
       icon,
@@ -41,7 +51,12 @@ export const Input = forwardRef(
 
     return (
       <div
-        className={cx(classes.inputWrapper, classes[`${variant}Variant`], className)}
+        className={cx(
+          classes.inputWrapper,
+          { [classes.invalid]: invalid },
+          classes[`${variant}Variant`],
+          className
+        )}
         style={style}
         {...wrapperProps}
       >
@@ -54,14 +69,9 @@ export const Input = forwardRef(
         <input
           {...others}
           aria-required={required}
-          disabled={disabled}
           style={inputStyle}
           ref={ref}
-          className={cx(
-            classes.input,
-            { [classes.invalid]: invalid, [classes.withIcon]: icon },
-            inputClassName
-          )}
+          className={cx({ [classes.withIcon]: icon }, classes.input, inputClassName)}
         />
       </div>
     );
