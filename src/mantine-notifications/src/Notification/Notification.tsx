@@ -14,7 +14,7 @@ interface NotificationProps
   loading?: boolean;
   disallowClose?: boolean;
   onClose(): void;
-  closeButtonProps?: React.ComponentPropsWithoutRef<typeof ActionIcon>;
+  closeButtonProps?: Omit<React.ComponentPropsWithoutRef<typeof ActionIcon>, 'children'>;
 }
 
 export function Notification({
