@@ -82,9 +82,9 @@ export const DEFAULT_THEME: MantineTheme = {
       '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
     fontWeight: 700,
     sizes: {
-      h1: { fontSize: 30, lineHeight: 1.3 },
-      h2: { fontSize: 24, lineHeight: 1.35 },
-      h3: { fontSize: 20, lineHeight: 1.4 },
+      h1: { fontSize: 34, lineHeight: 1.3 },
+      h2: { fontSize: 26, lineHeight: 1.35 },
+      h3: { fontSize: 22, lineHeight: 1.4 },
       h4: { fontSize: 18, lineHeight: 1.45 },
       h5: { fontSize: 16, lineHeight: 1.5 },
       h6: { fontSize: 14, lineHeight: 1.5 },
