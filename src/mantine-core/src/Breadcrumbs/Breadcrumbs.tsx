@@ -5,7 +5,10 @@ import { Text } from '../Text/Text';
 import useStyles from './Breadcrumbs.styles';
 
 interface BreadcrumbsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  /** Separator between breadcrumbs */
   separator?: React.ReactNode;
+
+  /** React nodes that should be separated */
   children: React.ReactNode;
 }
 

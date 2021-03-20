@@ -14,17 +14,22 @@ const items = [
   </Text>
 ));
 
-storiesOf('@mantine/core/Breadcrumbs', module).add('Breadcrumbs', () => (
-  <div style={{ padding: 50 }}>
-    <Breadcrumbs>{items}</Breadcrumbs>
-    <Breadcrumbs style={{ marginTop: 20 }} separator="→">
-      {items}
-    </Breadcrumbs>
-    <Breadcrumbs
-      style={{ marginTop: 20 }}
-      separator={<CaretRightIcon style={{ width: 18, height: 18 }} />}
-    >
-      {items}
-    </Breadcrumbs>
-  </div>
-));
+storiesOf('@mantine/core/Breadcrumbs', module)
+  .add('General usage', () => (
+    <div style={{ padding: 50 }}>
+      <Breadcrumbs>{items}</Breadcrumbs>
+    </div>
+  ))
+  .add('Custom separator', () => (
+    <div style={{ padding: 50 }}>
+      <Breadcrumbs style={{ marginTop: 20 }} separator="→">
+        {items}
+      </Breadcrumbs>
+      <Breadcrumbs
+        style={{ marginTop: 20 }}
+        separator={<CaretRightIcon style={{ width: 18, height: 18 }} />}
+      >
+        {items}
+      </Breadcrumbs>
+    </div>
+  ));

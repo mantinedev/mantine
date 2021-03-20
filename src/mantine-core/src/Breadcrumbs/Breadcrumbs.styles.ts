@@ -1,6 +1,10 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme } from '@mantine/theme';
 
+interface BreadcrumbsStylesProps {
+  theme: MantineTheme;
+}
+
 export default createUseStyles({
   breadcrumbs: {
     display: 'flex',
@@ -11,7 +15,7 @@ export default createUseStyles({
     whiteSpace: 'nowrap',
   },
 
-  separator: ({ theme }: { theme: MantineTheme }) => ({
+  separator: ({ theme }: BreadcrumbsStylesProps) => ({
     marginLeft: theme.spacing.xs,
     marginRight: theme.spacing.xs,
     color: theme.colors.gray[7],
