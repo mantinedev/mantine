@@ -8,7 +8,7 @@ import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrappe
 interface TextInputProps
   extends DefaultProps,
     InputWrapperBaseProps,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange'> {
+    React.ComponentPropsWithoutRef<typeof Input> {
   /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
 
@@ -16,7 +16,6 @@ interface TextInputProps
   icon?: React.ReactNode;
   type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url' | 'number';
   value?: string;
-  onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
   radius?: MantineNumberSize;
 
   /** Props passed to root element (InputWrapper component) */
