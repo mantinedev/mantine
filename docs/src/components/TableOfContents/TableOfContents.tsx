@@ -1,6 +1,7 @@
 import React from 'react';
 import Slugger from 'github-slugger';
 import { Text } from '@mantine/core';
+import { useMantineTheme } from '@mantine/theme';
 import { HEADER_HEIGHT } from '../Layout/Header/Header.styles';
 import useStyles from './TableOfContents.styles';
 
@@ -14,6 +15,7 @@ interface TableOfContentsProps {
 }
 
 export default function TableOfContents({ headings }: TableOfContentsProps) {
+  const theme = useMantineTheme();
   const classes = useStyles();
   const slugger = new Slugger();
 
@@ -29,7 +31,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
             className={classes.link}
             key={index}
             href={`#${slug}`}
-            style={{ paddingLeft: (heading.depth - 2) * 15 }}
+            style={{ paddingLeft: (heading.depth - 2) * theme.spacing.lg }}
             onClick={(event) => {
               event.preventDefault();
               const element = document.getElementById(slug);

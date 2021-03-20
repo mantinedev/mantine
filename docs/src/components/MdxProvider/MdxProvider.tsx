@@ -4,6 +4,7 @@ import { Code, Text } from '@mantine/core';
 import GatsbyLink from './GatsbyLink/GatsbyLink';
 import PropsTable from './PropsTable/PropsTable';
 import PageHeader from './PageHeader/PageHeader';
+import DataTable from './DataTable/DataTable';
 import MdxTitle from './MdxTitle/MdxTitle';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 
@@ -13,6 +14,7 @@ const components = {
   GatsbyLink,
   PropsTable,
   PageHeader,
+  DataTable,
   h1: h(1),
   h2: h(2),
   h3: h(3),

@@ -31,9 +31,10 @@ export default createUseStyles(
     },
 
     list: {
+      listStyle: 'none',
       marginTop: theme.spacing.sm,
       color: theme.colors.gray[4],
-      paddingLeft: 20,
+      padding: 0,
     },
   }),
   { theming }

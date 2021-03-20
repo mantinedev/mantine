@@ -4,6 +4,7 @@ title: ActionIcon
 slug: /core/action-icon/
 ---
 
+import { ACTION_ICON_SIZES } from '@mantine/core';
 import {
   ActionIconBaseDemo,
   ActionIconGroupDemo,
@@ -47,6 +48,19 @@ You can pass size as number and it will be set as width and height in px.
 <ActionIcon size="sm" /> // -> predefined small size
 <ActionIcon size={50} /> // -> { width: 50, height: 50 }
 ```
+
+### Default size values
+
+You can get default sizes for action icon by importing `ACTION_ICON_SIZES`:
+
+```tsx
+import { ACTION_ICON_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Width and height']}
+  data={Object.keys(ACTION_ICON_SIZES).map((size) => [size, `${ACTION_ICON_SIZES[size]}px`])}
+/>
 
 Same with radius – predefined values for xs, sm, md, lg, xl are defined in <GatsbyLink to="/theming">theme</GatsbyLink>,
 or pass in number to set border-radius in px:
