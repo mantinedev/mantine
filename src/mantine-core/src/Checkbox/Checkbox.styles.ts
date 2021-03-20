@@ -16,34 +16,32 @@ const sizes = {
   xl: 32,
 };
 
+interface CheckboxStylesProps {
+  theme: MantineTheme;
+  size: MantineNumberSize;
+  color: string;
+}
+
 export default createUseStyles({
   wrapper: {
     display: 'flex',
     alignItems: 'center',
   },
 
-  checkboxWrapper: ({ size }) => ({
+  checkboxWrapper: ({ size }: CheckboxStylesProps) => ({
     position: 'relative',
     width: getSizeValue({ size, sizes }),
     height: getSizeValue({ size, sizes }),
   }),
 
-  label: ({ theme }: { theme: MantineTheme }) => ({
+  label: ({ theme }: CheckboxStylesProps) => ({
     ...getFontStyles(theme),
     marginLeft: theme.spacing.sm,
     fontSize: theme.fontSizes.sm,
     lineHeight: theme.lineHeight,
   }),
 
-  checkbox: ({
-    size,
-    theme,
-    color,
-  }: {
-    size: MantineNumberSize;
-    theme: MantineTheme;
-    color: string;
-  }) => ({
+  checkbox: ({ size, theme, color }: CheckboxStylesProps) => ({
     ...getFocusStyles(theme),
     appearance: 'none',
     backgroundColor: theme.colors.gray[0],
@@ -74,7 +72,7 @@ export default createUseStyles({
     },
   }),
 
-  icon: {
+  icon: ({ theme, color }: CheckboxStylesProps) => ({
     display: 'none',
     pointerEvents: 'none',
     width: '80%',
@@ -86,5 +84,6 @@ export default createUseStyles({
     left: 0,
     right: 0,
     margin: 'auto',
-  },
+    filter: `drop-shadow(1px 1px 0px ${getThemeColor({ theme, color, shade: 7 })})`,
+  }),
 });
