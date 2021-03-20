@@ -4,51 +4,26 @@ import { Text } from '../Text/Text';
 import { Title } from '../Title/Title';
 import { Container } from './Container';
 
-storiesOf('@mantine/core/Container', module).add('Container', () => (
-  <>
-    <Container size="xs">
-      <Title order={4}>XS Container</Title>
-      <Text>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit natus illum quaerat dicta
-        maxime dolore saepe sit quibusdam error eos libero exercitationem vitae a qui rerum, eveniet
-        expedita. Eos, ipsa!
-      </Text>
-    </Container>
+const content = (
+  <Text>
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit natus illum quaerat dicta maxime
+    dolore saepe sit quibusdam error eos libero exercitationem vitae a qui rerum, eveniet expedita.
+    Eos, ipsa!
+  </Text>
+);
 
-    <Container size="sm" style={{ marginTop: 20 }}>
-      <Title order={4}>SM Container</Title>
-      <Text>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit natus illum quaerat dicta
-        maxime dolore saepe sit quibusdam error eos libero exercitationem vitae a qui rerum, eveniet
-        expedita. Eos, ipsa!
-      </Text>
-    </Container>
-
-    <Container size="md" style={{ marginTop: 20 }}>
-      <Title order={4}>MD Container</Title>
-      <Text>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit natus illum quaerat dicta
-        maxime dolore saepe sit quibusdam error eos libero exercitationem vitae a qui rerum, eveniet
-        expedita. Eos, ipsa!
-      </Text>
-    </Container>
-
-    <Container size="lg" style={{ marginTop: 20 }}>
-      <Title order={4}>LG Container</Title>
-      <Text>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit natus illum quaerat dicta
-        maxime dolore saepe sit quibusdam error eos libero exercitationem vitae a qui rerum, eveniet
-        expedita. Eos, ipsa!
-      </Text>
-    </Container>
-
-    <Container size="xl" style={{ marginTop: 20 }}>
-      <Title order={4}>XL Container</Title>
-      <Text>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit natus illum quaerat dicta
-        maxime dolore saepe sit quibusdam error eos libero exercitationem vitae a qui rerum, eveniet
-        expedita. Eos, ipsa!
-      </Text>
-    </Container>
-  </>
+const containers = ([200, 'xs', 'sm', 'md', 'lg', 'xl', 2000] as const).map((size) => (
+  <Container size={size} key={size} style={{ marginTop: 20 }}>
+    <Title order={4}>Container size: {size}</Title>
+    {content}
+  </Container>
 ));
+
+storiesOf('@mantine/core/Container', module)
+  .add('Sizes', () => <>{containers}</>)
+  .add('Fluid', () => (
+    <Container fluid>
+      <Title order={4}>Fluid Container</Title>
+      {content}
+    </Container>
+  ));

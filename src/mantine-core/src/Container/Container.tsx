@@ -4,6 +4,7 @@ import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme
 import useStyles from './Container.styles';
 
 interface ContainerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  /** Predefined container max-width or number for max-width in px */
   size?: MantineNumberSize;
 
   /** If fluid is set to true, size prop is ignored and Container always take 100% of width */
