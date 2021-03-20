@@ -11,4 +11,8 @@ describe('@mantine/core/ElementsGroup', () => {
   itSupportsClassName(ElementsGroup, {});
   itSupportsStyle(ElementsGroup, {});
   itRendersChildren(ElementsGroup, {});
+
+  it('has correct displayName', () => {
+    expect(ElementsGroup.displayName).toEqual('@mantine/core/ElementsGroup');
+  });
 });
