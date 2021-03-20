@@ -7,6 +7,11 @@ import {
   getFocusStyles,
 } from '@mantine/theme';
 
+interface BurgerStylesProps {
+  size: MantineNumberSize;
+  theme: MantineTheme;
+}
+
 const sizes = {
   xs: 12,
   sm: 18,
@@ -18,7 +23,7 @@ const sizes = {
 export default createUseStyles({
   opened: {},
 
-  wrapper: ({ size, theme }: { size: MantineNumberSize; theme: MantineTheme }) => ({
+  wrapper: ({ size, theme }: BurgerStylesProps) => ({
     ...getFocusStyles(theme),
     borderRadius: theme.radius.sm,
     width: getSizeValue({ size, sizes }) + theme.spacing.xs,
@@ -29,7 +34,7 @@ export default createUseStyles({
     cursor: 'pointer',
   }),
 
-  burger: ({ size, theme }: { size: MantineNumberSize; theme: MantineTheme }) => {
+  burger: ({ size, theme }: BurgerStylesProps) => {
     const sizeValue = getSizeValue({ size, sizes });
 
     return {

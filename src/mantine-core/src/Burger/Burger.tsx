@@ -5,7 +5,10 @@ import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme
 import useStyles from './Burger.styles';
 
 interface BurgerProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
+  /** Burger color from theme */
   color?: string;
+
+  /** Predefined burger size or number to set width and height in px */
   size?: MantineNumberSize;
 
   /** Burger state: true for cross, false for burger */

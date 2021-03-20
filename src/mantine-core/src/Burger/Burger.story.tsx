@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Burger } from './Burger';
 
 function WrappedBurger(props: Omit<React.ComponentProps<typeof Burger>, 'opened' | 'onChange'>) {
@@ -11,15 +12,15 @@ function WrappedBurger(props: Omit<React.ComponentProps<typeof Burger>, 'opened'
   );
 }
 
-storiesOf('@mantine/core/Burger', module).add('Burger', () => (
-  <>
-    <WrappedBurger size="xs" />
-    <WrappedBurger size="sm" />
-    <WrappedBurger size="md" />
-    <WrappedBurger size="lg" />
-    <WrappedBurger size="xl" color="teal" />
-    <WrappedBurger size={120} color="blue" />
-    <WrappedBurger size={20} color="blue" />
-    <WrappedBurger size={12} color="blue" />
-  </>
+const getThemes = (props?: any) =>
+  Object.keys(DEFAULT_THEME.colors).map((color) => (
+    <WrappedBurger key={color} color={color} {...props} />
+  ));
+
+const sizes = (['xs', 'sm', 'md', 'lg', 'xl', 80, 120] as any).map((size) => (
+  <WrappedBurger size={size} key={size} />
 ));
+
+storiesOf('@mantine/core/Burger', module)
+  .add('Themes', () => <div style={{ display: 'flex' }}>{getThemes()}</div>)
+  .add('Sizes', () => <div style={{ display: 'flex' }}>{sizes}</div>);
