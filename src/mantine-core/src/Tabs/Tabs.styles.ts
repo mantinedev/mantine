@@ -1,8 +1,12 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme } from '@mantine/theme';
 
+interface TabsStylesProps {
+  theme: MantineTheme;
+}
+
 export default createUseStyles({
-  tabs: ({ theme }: { theme: MantineTheme }) => ({
+  tabs: ({ theme }: TabsStylesProps) => ({
     borderBottom: `2px solid ${theme.colors.gray[3]}`,
   }),
 
@@ -10,7 +14,7 @@ export default createUseStyles({
     marginBottom: -2,
   },
 
-  body: ({ theme }: { theme: MantineTheme }) => ({
+  body: ({ theme }: TabsStylesProps) => ({
     paddingTop: theme.spacing.sm,
   }),
 });

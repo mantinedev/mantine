@@ -39,102 +39,112 @@ function VueIcon() {
   );
 }
 
-storiesOf('@mantine/core/Tabs', module).add('Tabs', () => (
-  <div style={{ padding: 50 }}>
-    <Tabs>
-      <Tab label="React" color="teal">
-        <Text color="gray" size="sm">
-          A JavaScript library for building user interfaces
-        </Text>
-        <Text style={{ marginTop: 7 }}>
-          React makes it painless to create interactive UIs. Design simple views for each state in
-          your application, and React will efficiently update and render just the right components
-          when your data changes.
-        </Text>
-        <Text style={{ marginTop: 7 }}>
-          Build encapsulated components that manage their own state, then compose them to make
-          complex UIs.
-        </Text>
-      </Tab>
+storiesOf('@mantine/core/Tabs', module)
+  .add('General usage', () => (
+    <div style={{ padding: 50 }}>
+      <Tabs>
+        <Tab label="React" color="teal">
+          <Text color="gray" size="sm">
+            A JavaScript library for building user interfaces
+          </Text>
+          <Text style={{ marginTop: 7 }}>
+            React makes it painless to create interactive UIs. Design simple views for each state in
+            your application, and React will efficiently update and render just the right components
+            when your data changes.
+          </Text>
+          <Text style={{ marginTop: 7 }}>
+            Build encapsulated components that manage their own state, then compose them to make
+            complex UIs.
+          </Text>
+        </Tab>
 
-      <Tab label="Angular" icon={<NgIcon />}>
-        <Text color="gray" size="sm">
-          The modern web developer&apos;s platform
-        </Text>
-        <Text style={{ marginTop: 7 }}>
-          Learn one way to build applications with Angular and reuse your code and abilities to
-          build apps for any deployment target. For web, mobile web, native mobile and native
-          desktop.
-        </Text>
-        <Text style={{ marginTop: 7 }}>
-          Achieve the maximum speed possible on the Web Platform today, and take it further, via Web
-          Workers and server-side rendering.
-        </Text>
-      </Tab>
+        <Tab label="Angular" icon={<NgIcon />}>
+          <Text color="gray" size="sm">
+            The modern web developer&apos;s platform
+          </Text>
+          <Text style={{ marginTop: 7 }}>
+            Learn one way to build applications with Angular and reuse your code and abilities to
+            build apps for any deployment target. For web, mobile web, native mobile and native
+            desktop.
+          </Text>
+          <Text style={{ marginTop: 7 }}>
+            Achieve the maximum speed possible on the Web Platform today, and take it further, via
+            Web Workers and server-side rendering.
+          </Text>
+        </Tab>
 
-      <Tab icon={<VueIcon />}>
-        <Text color="gray" size="sm">
-          The Progressive JavaScript Framework
-        </Text>
-        <Text style={{ marginTop: 7 }}>
-          Already know HTML, CSS and JavaScript? Read the guide and start building things in no
-          time!
-        </Text>
-        <Text style={{ marginTop: 7 }}>
-          An incrementally adoptable ecosystem that scales between a library and a full-featured
-          framework.
-        </Text>
-      </Tab>
-    </Tabs>
+        <Tab icon={<VueIcon />}>
+          <Text color="gray" size="sm">
+            The Progressive JavaScript Framework
+          </Text>
+          <Text style={{ marginTop: 7 }}>
+            Already know HTML, CSS and JavaScript? Read the guide and start building things in no
+            time!
+          </Text>
+          <Text style={{ marginTop: 7 }}>
+            An incrementally adoptable ecosystem that scales between a library and a full-featured
+            framework.
+          </Text>
+        </Tab>
+      </Tabs>
+    </div>
+  ))
+  .add('Positions', () => (
+    <div style={{ padding: 50 }}>
+      <Tabs style={{ marginTop: 20 }}>
+        <Tab label="No body" />
+        <Tab label="Only tabs" />
+        <Tab label="Nothing here" />
+      </Tabs>
 
-    <Tabs style={{ marginTop: 20 }}>
-      <Tab label="No body" />
-      <Tab label="Only tabs" />
-      <Tab label="Nothing here" />
-    </Tabs>
+      <Tabs style={{ marginTop: 20 }} position="right">
+        <Tab label="No body" />
+        <Tab label="Only tabs" />
+        <Tab label="Nothing here" />
+      </Tabs>
 
-    <Tabs style={{ marginTop: 20 }} position="right">
-      <Tab label="No body" />
-      <Tab label="Only tabs" />
-      <Tab label="Nothing here" />
-    </Tabs>
+      <Tabs style={{ marginTop: 20 }} position="center">
+        <Tab label="No body" />
+        <Tab label="Only tabs" />
+        <Tab label="Nothing here" />
+      </Tabs>
 
-    <Tabs style={{ marginTop: 20 }} position="center">
-      <Tab label="No body" />
-      <Tab label="Only tabs" />
-      <Tab label="Nothing here" />
-    </Tabs>
+      <Tabs style={{ marginTop: 20 }} position="apart">
+        <Tab label="No body" />
+        <Tab label="Only tabs" />
+        <Tab label="Nothing here" />
+      </Tabs>
+    </div>
+  ))
+  .add('Grow', () => (
+    <div style={{ padding: 50 }}>
+      <Tabs style={{ marginTop: 20 }} grow>
+        <Tab label="No body" />
+        <Tab label="Only tabs" />
+        <Tab label="Nothing here" />
+      </Tabs>
+    </div>
+  ))
+  .add('Disabled', () => (
+    <div style={{ padding: 50 }}>
+      <Tabs style={{ marginTop: 20 }}>
+        <Tab label="First Disabled" disabled />
+        <Tab label="Only tabs" />
+        <Tab label="Nothing here" />
+      </Tabs>
 
-    <Tabs style={{ marginTop: 20 }} position="apart">
-      <Tab label="No body" />
-      <Tab label="Only tabs" />
-      <Tab label="Nothing here" />
-    </Tabs>
-
-    <Tabs style={{ marginTop: 20 }} grow>
-      <Tab label="No body" />
-      <Tab label="Only tabs" />
-      <Tab label="Nothing here" />
-    </Tabs>
-
-    <Tabs style={{ marginTop: 20 }}>
-      <Tab label="First Disabled" disabled />
-      <Tab label="Only tabs" />
-      <Tab label="Nothing here" />
-    </Tabs>
-
-    <Tabs style={{ marginTop: 20 }}>
-      <Tab label="Multiple disabled" />
-      <Tab label="2" disabled />
-      <Tab label="3" disabled />
-      <Tab label="4" />
-      <Tab label="5" />
-      <Tab label="5" disabled />
-      <Tab label="6a" disabled />
-      <Tab label="6b" disabled />
-      <Tab label="6c" />
-      <Tab label="7" disabled />
-      <Tab label="8" />
-    </Tabs>
-  </div>
-));
+      <Tabs style={{ marginTop: 20 }}>
+        <Tab label="Multiple disabled" />
+        <Tab label="2" disabled />
+        <Tab label="3" disabled />
+        <Tab label="4" />
+        <Tab label="5" />
+        <Tab label="5" disabled />
+        <Tab label="6a" disabled />
+        <Tab label="6b" disabled />
+        <Tab label="6c" />
+        <Tab label="7" disabled />
+        <Tab label="8" />
+      </Tabs>
+    </div>
+  ));

@@ -1,8 +1,14 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getFontStyles, getFocusStyles, getThemeColor } from '@mantine/theme';
 
+interface TabControlStylesProps {
+  theme: MantineTheme;
+  reduceMotion: boolean;
+  color: string;
+}
+
 export default createUseStyles({
-  tab: ({ theme, reduceMotion }: { theme: MantineTheme; reduceMotion: boolean }) => ({
+  tab: ({ theme, reduceMotion }: TabControlStylesProps) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     boxSizing: 'border-box',
@@ -23,7 +29,7 @@ export default createUseStyles({
     },
   }),
 
-  tabActive: ({ theme, color }: { theme: MantineTheme; color: string }) => ({
+  tabActive: ({ theme, color }: TabControlStylesProps) => ({
     color: getThemeColor({ theme, color, shade: 6 }),
     borderBottomColor: getThemeColor({ theme, color, shade: 6 }),
   }),
@@ -37,7 +43,7 @@ export default createUseStyles({
     height: 40,
   },
 
-  tabIcon: ({ theme }: { theme: MantineTheme }) => ({
+  tabIcon: ({ theme }: TabControlStylesProps) => ({
     '&:not(:only-child)': {
       marginRight: theme.spacing.xs,
     },
