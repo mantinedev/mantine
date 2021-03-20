@@ -22,7 +22,6 @@ describe('@mantine/core/ColorSwatch', () => {
     const element = shallow(<ColorSwatch size={51} color="red" />).render();
     expect(element.css('width')).toBe('51px');
     expect(element.css('height')).toBe('51px');
-    expect(element.css('border-radius')).toBe('51px');
   });
 
   it('sets correct background-color based on color property', () => {
@@ -41,7 +40,6 @@ describe('@mantine/core/ColorSwatch', () => {
 
     expect(element.css('width')).toBe('41px');
     expect(element.css('height')).toBe('41px');
-    expect(element.css('border-radius')).toBe('51px');
     expect(element.css('background-color')).toBe('blue');
   });
 });

@@ -8,6 +8,10 @@ const swatches = Object.keys(DEFAULT_THEME.colors).map((theme) => (
   <ColorSwatch color={DEFAULT_THEME.colors[theme][5]} key={theme} size={20} />
 ));
 
-storiesOf('@mantine/core/ColorSwatch', module).add('ColorSwatch', () => (
-  <ElementsGroup>{swatches}</ElementsGroup>
+const radiuses = ([0, 'xs', 'sm', 'md', 'lg', 'xl', 1000] as any[]).map((radius) => (
+  <ColorSwatch color={DEFAULT_THEME.colors.blue[5]} key={radius} radius={radius} size={100} />
 ));
+
+storiesOf('@mantine/core/ColorSwatch', module)
+  .add('General Usage', () => <ElementsGroup style={{ padding: 15 }}>{swatches}</ElementsGroup>)
+  .add('Custom radius', () => <ElementsGroup style={{ padding: 15 }}>{radiuses}</ElementsGroup>);
