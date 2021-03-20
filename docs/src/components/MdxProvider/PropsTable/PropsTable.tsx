@@ -53,7 +53,10 @@ export default function PropsTable({ component }: PropsTableProps) {
 
   return (
     <DocsSection>
-      <Paper padding="md" style={{ width: '100%', border: `1px solid ${theme.colors.gray[3]}` }}>
+      <Paper
+        padding="md"
+        style={{ width: '100%', border: `1px solid ${theme.colors.gray[3]}`, overflowX: 'auto' }}
+      >
         <div style={{ minWidth: 500 }}>
           <Table style={{ tableLayout: 'fixed' }}>
             <thead>
