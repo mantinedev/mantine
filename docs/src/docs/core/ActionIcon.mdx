@@ -9,6 +9,8 @@ import {
   ActionIconBaseDemo,
   ActionIconGroupDemo,
   ActionIconUsageDemo,
+  ActionIconVariantDemo,
+  ActionIconVariantToggleDemo,
 } from '../../demos/core/ActionIcon/action-icon.demos';
 import { ActionIconConfigurator } from '../../demos/core/ActionIcon/action-icon.configurator';
 
@@ -47,6 +49,22 @@ Use action icon to indicate secondary action, for example to close modal or togg
 Password input visibility toggle example:
 
 <ActionIconUsageDemo />
+
+## Variants
+
+ActionIcon has 3 variants:
+
+- `transparent` – icon without background, hover and active styles
+- `hover` (default) – icon without background, with hover and active styles
+- `filled` – icon with background, hove and active styles
+
+<ActionIconVariantDemo />
+
+By combining `variant` and `color` props you can create switch/checkbox with ActionIcon.
+Make sure to check if <GatsbyLink to="/core/switch">Switch</GatsbyLink> or <GatsbyLink to="/core/checkbox">Checkbox</GatsbyLink> components
+fit your needs first as ActionIcon will be less accessible in this case.
+
+<ActionIconVariantToggleDemo />
 
 ## Change color, size and radius
 

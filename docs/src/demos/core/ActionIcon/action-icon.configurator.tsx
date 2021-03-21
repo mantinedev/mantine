@@ -26,6 +26,17 @@ export function ActionIconConfigurator() {
         { name: 'color', type: 'color', initialValue: 'gray', defaultValue: 'gray' },
         { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
         { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
+        {
+          name: 'variant',
+          type: 'select',
+          data: [
+            { label: 'transparent', value: 'transparent' },
+            { label: 'hover', value: 'hover' },
+            { label: 'filled', value: 'filled' },
+          ],
+          initialValue: 'hover',
+          defaultValue: 'hover',
+        },
       ]}
     />
   );

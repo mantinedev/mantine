@@ -9,6 +9,7 @@ interface CodeDemoProps {
   code?: string;
   language?: Language;
   demoBackground?: string;
+  demoBorder?: boolean;
   children: React.ReactNode;
 }
 
@@ -17,12 +18,20 @@ export default function CodeDemo({
   language,
   children,
   demoBackground = '#fff',
+  demoBorder = true,
 }: CodeDemoProps) {
   const classes = useStyles();
 
   return (
     <DocsSection>
-      <Paper padding="md" className={classes.demo} style={{ backgroundColor: demoBackground }}>
+      <Paper
+        padding="md"
+        className={classes.demo}
+        style={{
+          backgroundColor: demoBackground,
+          borderColor: demoBorder ? undefined : 'transparent',
+        }}
+      >
         {children}
       </Paper>
       {code && <CodeHighlight code={code} language={language} className={classes.code} />}
