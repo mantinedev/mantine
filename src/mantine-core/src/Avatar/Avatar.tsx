@@ -37,7 +37,7 @@ export function Avatar({
   const [error, setError] = useState(!src);
 
   useEffect(() => {
-    !src && setError(true);
+    !src ? setError(true) : setError(false);
   }, [src]);
 
   return (
