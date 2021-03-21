@@ -1,6 +1,6 @@
 export { ActionIcon, ACTION_ICON_SIZES } from './ActionIcon/ActionIcon';
 export { Alert } from './Alert/Alert';
-export { Avatar } from './Avatar/Avatar';
+export { Avatar, AVATAR_SIZES } from './Avatar/Avatar';
 export { Badge } from './Badge/Badge';
 export { Blockquote } from './Blockquote/Blockquote';
 export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';

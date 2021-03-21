@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import cx from 'clsx';
 import { AvatarIcon } from '@modulz/radix-icons';
 import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
-import useStyles from './Avatar.styles';
+import useStyles, { sizes } from './Avatar.styles';
+
+export const AVATAR_SIZES = sizes;
 
 interface AvatarProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Image link */

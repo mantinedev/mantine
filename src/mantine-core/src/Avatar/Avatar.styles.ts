@@ -7,7 +7,7 @@ import {
   getThemeColor,
 } from '@mantine/theme';
 
-const sizes = {
+export const sizes = {
   xs: 16,
   sm: 26,
   md: 38,
