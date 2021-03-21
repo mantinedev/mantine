@@ -50,6 +50,7 @@ export default createUseStyles({
     justifyContent: 'center',
     width: '100%',
     height: '100%',
+    userSelect: 'none',
   }),
 
   placeholderIcon: ({ theme, color }: AvatarStylesProps) => ({
