@@ -6,7 +6,7 @@ import useStyles from './Avatar.styles';
 
 interface AvatarProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Image link */
-  src: string;
+  src?: string;
 
   /** Image alt text */
   alt?: string;
@@ -16,6 +16,9 @@ interface AvatarProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'
 
   /** Image border-radius */
   radius?: MantineNumberSize;
+
+  /** Color from theme used for letter and icon variant */
+  color?: string;
 }
 
 export function Avatar({
@@ -24,11 +27,13 @@ export function Avatar({
   src,
   alt,
   radius = 'sm',
+  children,
+  color = 'gray',
   themeOverride,
   ...others
 }: AvatarProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, size, theme });
+  const classes = useStyles({ color, radius, size, theme });
   const [error, setError] = useState(!src);
 
   useEffect(() => {
@@ -39,7 +44,7 @@ export function Avatar({
     <div {...others} data-mantine-composable className={cx(classes.avatar, className)}>
       {error ? (
         <div data-mantine-placeholder className={classes.placeholder} title={alt}>
-          <AvatarIcon className={classes.placeholderIcon} />
+          {children || <AvatarIcon className={classes.placeholderIcon} />}
         </div>
       ) : (
         <img className={classes.image} src={src} alt={alt} onError={() => setError(true)} />

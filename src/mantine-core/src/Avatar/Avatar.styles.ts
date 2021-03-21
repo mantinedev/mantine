@@ -1,5 +1,11 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, getSizeValue, MantineNumberSize } from '@mantine/theme';
+import {
+  MantineTheme,
+  getSizeValue,
+  MantineNumberSize,
+  getFontStyles,
+  getThemeColor,
+} from '@mantine/theme';
 
 const sizes = {
   xs: 16,
@@ -13,6 +19,7 @@ interface AvatarStylesProps {
   size: MantineNumberSize;
   radius: MantineNumberSize;
   theme: MantineTheme;
+  color: string;
 }
 
 export default createUseStyles({
@@ -32,8 +39,12 @@ export default createUseStyles({
     height: '100%',
   },
 
-  placeholder: ({ theme }: { theme: MantineTheme }) => ({
-    backgroundColor: theme.colors.gray[1],
+  placeholder: ({ theme, size, color }: AvatarStylesProps) => ({
+    ...getFontStyles(theme),
+    fontSize: getSizeValue({ size, sizes }) / 2.5,
+    color: getThemeColor({ theme, color, shade: 5 }),
+    fontWeight: 700,
+    backgroundColor: getThemeColor({ theme, color, shade: 1 }),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -41,9 +52,9 @@ export default createUseStyles({
     height: '100%',
   }),
 
-  placeholderIcon: ({ theme }: { theme: MantineTheme }) => ({
+  placeholderIcon: ({ theme, color }: AvatarStylesProps) => ({
     width: '70%',
     height: '70%',
-    color: theme.colors.gray[5],
+    color: getThemeColor({ theme, color, shade: 6 }),
   }),
 });

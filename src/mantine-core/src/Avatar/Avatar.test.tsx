@@ -36,4 +36,16 @@ describe('@mantine/core/Avatar', () => {
     expect(element.render().find('[data-mantine-placeholder]')).toHaveLength(1);
     expect(element.render().find('[data-mantine-placeholder]').attr('title')).toBe('no-image-test');
   });
+
+  it('renders children if src was not given', () => {
+    const element = shallow(
+      <Avatar src={null} alt="no-image-test">
+        <span className="test">test-placeholder</span>
+      </Avatar>
+    );
+
+    expect(element.render().find('[data-mantine-placeholder]').find('.test').text()).toBe(
+      'test-placeholder'
+    );
+  });
 });
