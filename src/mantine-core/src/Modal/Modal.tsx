@@ -17,18 +17,26 @@ interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
 
   /** Mounts modal if true */
   opened: boolean;
+
+  /** Called when close button clicked and when escape key is pressed */
   onClose(): void;
 
   /** Hides close button, modal still can be closed with escape key and by clicking outside */
   hideCloseButton?: boolean;
-  overlayOpacity?: number;
-  overlayColor?: string;
-  modalWidth?: number;
+
+  /** Overlay below modal opacity */
+  overlayOpacity?: React.CSSProperties['opacity'];
+
+  /** Overlay below modal color */
+  overlayColor?: React.CSSProperties['color'];
+
+  /** Modal body width */
+  modalWidth?: React.CSSProperties['width'];
 
   /** Duration in ms of modal mount and unmount animations */
   transitionDuration?: number;
 
-  /** Close button aria-label attribute */
+  /** Close button aria-label and title attributes */
   closeButtonLabel?: string;
 }
 
@@ -39,7 +47,7 @@ const inState = {
 
 const outState = {
   overlay: { opacity: 0 },
-  modal: { opacity: 0, transform: 'translateY(-100%) skew(-10deg, -5deg)' },
+  modal: { opacity: 0, transform: 'translateY(-200px) skew(-10deg, -5deg)' },
 };
 
 const transitionStyles = {
@@ -80,7 +88,6 @@ export function Modal({
 
     modal: {
       transformOrigin: 'top',
-      transform: 'translateY(-200px) scaleY(0)',
       transitionDuration: `${duration}ms`,
       transitionTimingFunction: theme.transitionTimingFunction,
       transitionProperty: 'transform, opacity',
