@@ -8,11 +8,14 @@ import {
   getThemeColor,
 } from '@mantine/theme';
 
+export type ActionIconVariant = 'transparent' | 'hover' | 'filled';
+
 interface ActionIconStylesProps {
   color: string;
   size: MantineNumberSize;
   radius: MantineNumberSize;
   theme: MantineTheme;
+  variant: ActionIconVariant;
 }
 
 export const sizes = {
@@ -24,12 +27,13 @@ export const sizes = {
 };
 
 export default createUseStyles({
-  actionIcon: ({ color, radius, theme, size }: ActionIconStylesProps) => ({
+  actionIcon: ({ color, radius, theme, size, variant }: ActionIconStylesProps) => ({
     ...getFocusStyles(theme),
     ...getFontStyles(theme),
     border: '1px solid transparent',
     boxSizing: 'border-box',
-    backgroundColor: 'transparent',
+    backgroundColor:
+      variant === 'filled' ? getThemeColor({ theme, color, shade: 6 }) : 'transparent',
     height: getSizeValue({ size, sizes }),
     width: getSizeValue({ size, sizes }),
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
@@ -42,14 +46,20 @@ export default createUseStyles({
     transition: 'color 100ms ease, background-color 100ms ease',
 
     '&:not(:disabled)': {
-      color: getThemeColor({ theme, color, shade: 6 }),
+      color: variant === 'filled' ? theme.white : getThemeColor({ theme, color, shade: 6 }),
 
       '&:hover': {
-        backgroundColor: getThemeColor({ theme, color, shade: 0 }),
+        backgroundColor:
+          variant === 'transparent'
+            ? 'transparent'
+            : getThemeColor({ theme, color, shade: variant === 'hover' ? 0 : 7 }),
       },
 
       '&:active': {
-        backgroundColor: getThemeColor({ theme, color, shade: 1 }),
+        backgroundColor:
+          variant === 'transparent'
+            ? 'transparent'
+            : getThemeColor({ theme, color, shade: variant === 'hover' ? 1 : 8 }),
       },
     },
 

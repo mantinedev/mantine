@@ -14,6 +14,11 @@ const getThemes = (props?: any, iconProps?: any) =>
 
 storiesOf('@mantine/core/ActionIcon', module)
   .add('Themes', () => <ElementsGroup>{getThemes()}</ElementsGroup>)
+  .add('Transparent variant', () => (
+    <ElementsGroup>{getThemes({ variant: 'transparent' })}</ElementsGroup>
+  ))
+  .add('Filled variant', () => <ElementsGroup>{getThemes({ variant: 'filled' })}</ElementsGroup>)
+  .add('Hover variant', () => <ElementsGroup>{getThemes({ variant: 'hover' })}</ElementsGroup>)
   .add('Disabled', () => <ElementsGroup>{getThemes({ disabled: true })}</ElementsGroup>)
   .add('Sizes', () => (
     <>
