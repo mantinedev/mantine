@@ -1,7 +1,33 @@
 import React, { useState } from 'react';
 import { ActionIcon, Button, ElementsGroup, PasswordInput } from '@mantine/core';
-import { GearIcon, ChatBubbleIcon, ActivityLogIcon, SunIcon, MoonIcon } from '@modulz/radix-icons';
+import {
+  GearIcon,
+  ChatBubbleIcon,
+  ActivityLogIcon,
+  SunIcon,
+  MoonIcon,
+  CheckIcon,
+  ImageIcon,
+} from '@modulz/radix-icons';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
+
+export function ActionIconRootDemo() {
+  return (
+    <CodeDemo>
+      <ElementsGroup position="center">
+        <ActionIcon title="Settings" aria-label="Settings">
+          <GearIcon />
+        </ActionIcon>
+        <ActionIcon title="Good" aria-label="Good" color="green">
+          <CheckIcon />
+        </ActionIcon>
+        <ActionIcon title="Upload image" aria-label="Upload image" color="indigo" variant="filled">
+          <ImageIcon />
+        </ActionIcon>
+      </ElementsGroup>
+    </CodeDemo>
+  );
+}
 
 const code = `import React from 'react';
 import { ActionIcon } from '@mantine/core';
@@ -114,7 +140,7 @@ import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 function ActionIconDemo() {
   const [darkTheme, setDarkTheme] = useState(false);
   const title = darkTheme ? 'Light theme' : 'Dark theme';
-  
+
   return (
     <ActionIcon
       variant={darkTheme ? 'transparent' : 'filled'}
