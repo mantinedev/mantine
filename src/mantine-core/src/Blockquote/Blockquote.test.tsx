@@ -20,6 +20,10 @@ describe('@mantine/core/Blockquote', () => {
   itSupportsOthers(Blockquote, {});
   itSupportsStyle(Blockquote, {});
 
+  it('has correct displayName', () => {
+    expect(Blockquote.displayName).toEqual('@mantine/core/Blockquote');
+  });
+
   it('renders given icon based on icon prop', () => {
     const withIcon = shallow(<Blockquote icon="$" />);
     const withoutIcon = shallow(<Blockquote icon={null} />);
