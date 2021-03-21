@@ -1,0 +1,56 @@
+---
+package: mantine-core
+title: InnerHtml
+slug: /core/inner-html/
+---
+
+import {
+  InnerHtmlBaseDemo,
+  InnerHtmlAllPartsDemo,
+} from '../../demos/core/InnerHtml/InnerHtml.demo';
+
+# InnerHtml
+
+Render html from string with styles from mantine theme
+
+<PageHeader
+  source="mantine-core/src/InnerHtml/InnerHtml.tsx"
+  docs="core/InnerHtml.mdx"
+  package="@mantine/core"
+/>
+
+```tsx
+import { InnerHtml } from '@mantine/core';
+```
+
+## Usage
+
+InnerHtml sets given html string to `innerHtml` of div element.
+Html has all styles from mantine theme as all other components.
+**Warning:** when working with user input consider [purifying](https://github.com/cure53/DOMPurify) html string to avoid XSS attacks
+– `dangerouslySetInnerHTML` prop called so for a reason.
+
+## Example
+
+Example with [Wikipedia page](https://en.wikipedia.org/wiki/We_Butter_the_Bread_with_Butter) part
+
+<InnerHtmlBaseDemo />
+
+## All styles demo
+
+InnerHtml includes styles for:
+
+- paragraphs
+- headings
+- lists
+- blockquotes
+- tables
+- links
+- images
+- hr
+
+<InnerHtmlAllPartsDemo />
+
+## Component props
+
+<PropsTable component="InnerHtml" />

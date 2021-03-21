@@ -15,7 +15,7 @@ export default function PropsTable({ component }: PropsTableProps) {
     const prop = PROPS_DATA[component].props[propKey];
     return (
       <tr key={propKey}>
-        <td>
+        <td style={{ whiteSpace: 'nowrap' }}>
           <Text component="span" size="sm">
             {prop.name}
           </Text>
@@ -29,7 +29,7 @@ export default function PropsTable({ component }: PropsTableProps) {
         </td>
         <td>
           <Text size="sm" color={prop.defaultValue && prop.defaultValue.value ? null : 'gray'}>
-            {(prop.defaultValue && prop.defaultValue.value) || '–'}
+            {(prop.defaultValue && prop.defaultValue.value) || ''}
           </Text>
         </td>
         <td style={{ verticalAlign: 'middle' }}>
@@ -58,11 +58,11 @@ export default function PropsTable({ component }: PropsTableProps) {
         style={{ width: '100%', border: `1px solid ${theme.colors.gray[3]}`, overflowX: 'auto' }}
       >
         <div style={{ minWidth: 500 }}>
-          <Table style={{ tableLayout: 'fixed' }}>
+          <Table>
             <thead>
               <tr>
-                <th style={{ width: 100 }}>Name</th>
-                <th style={{ width: 100 }}>Default</th>
+                <th>Name</th>
+                <th>Default</th>
                 <th>Type</th>
                 <th>Description</th>
               </tr>
