@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface OverlayProps extends React.ComponentPropsWithoutRef<'div'> {
-  opacity?: number;
-  color?: string;
+  opacity?: React.CSSProperties['opacity'];
+  color?: React.CSSProperties['backgroundColor'];
 }
 
 export function Overlay({ opacity, color = '#fff', style, ...others }: OverlayProps) {
