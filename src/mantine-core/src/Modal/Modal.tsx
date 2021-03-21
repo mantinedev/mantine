@@ -82,7 +82,7 @@ export function Modal({
       transformOrigin: 'top',
       transform: 'translateY(-200px) scaleY(0)',
       transitionDuration: `${duration}ms`,
-      transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21)',
+      transitionTimingFunction: theme.transitionTimingFunction,
       transitionProperty: 'transform, opacity',
     },
   };

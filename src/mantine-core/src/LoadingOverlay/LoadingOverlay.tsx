@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { Transition } from 'react-transition-group';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
 import { Overlay } from '../Overlay/Overlay';
 import { Loader, LoaderProps } from '../Loader/Loader';
@@ -35,6 +35,7 @@ export function LoadingOverlay({
   style,
   ...others
 }: LoadingOverlayProps) {
+  const theme = useMantineTheme(themeOverride);
   const classes = useStyles();
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -51,7 +52,7 @@ export function LoadingOverlay({
         <div
           className={cx(classes.loadingOverlay, className)}
           style={{
-            transition: `opacity ${duration}ms cubic-bezier(.51,.3,0,1.21)`,
+            transition: `opacity ${duration}ms ${theme.transitionTimingFunction}`,
             opacity: state === 'entering' || state === 'entered' ? 1 : 0,
             ...style,
           }}

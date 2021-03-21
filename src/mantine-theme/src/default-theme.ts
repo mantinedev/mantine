@@ -20,6 +20,7 @@ const {
 export const DEFAULT_THEME: MantineTheme = {
   white: '#fff',
   black: '#000',
+  transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21)',
   colors: {
     gray,
     red,

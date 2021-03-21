@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import cx from 'clsx';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
 import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
@@ -33,7 +33,10 @@ export function Spoiler({
   controlRef,
   ...others
 }: SpoilerProps) {
-  const classes = useStyles({ transitionDuration: !useReducedMotion() && transitionDuration });
+  const classes = useStyles({
+    transitionDuration: !useReducedMotion() && transitionDuration,
+    theme: useMantineTheme(themeOverride),
+  });
   const [show, setShowState] = useState(false);
   const [spoiler, setSpoilerState] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);

@@ -1,14 +1,20 @@
 import { createUseStyles } from 'react-jss';
+import { MantineTheme } from '@mantine/theme';
+
+interface SpoilerStylesProps {
+  theme: MantineTheme;
+  transitionDuration: number;
+}
 
 export default createUseStyles({
   spoiler: {
     position: 'relative',
   },
 
-  content: ({ transitionDuration }: { transitionDuration: number }) => ({
+  content: ({ transitionDuration, theme }: SpoilerStylesProps) => ({
     overflow: 'hidden',
     transitionProperty: 'max-height',
-    transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21)',
+    transitionTimingFunction: theme.transitionTimingFunction,
     transitionDuration: transitionDuration || 0,
   }),
 });

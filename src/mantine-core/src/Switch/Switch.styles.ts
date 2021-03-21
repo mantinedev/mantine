@@ -67,7 +67,7 @@ export default createUseStyles({
       margin: 0,
       cursor: 'pointer',
       transitionProperty: 'background-color, border-color',
-      transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21)',
+      transitionTimingFunction: theme.transitionTimingFunction,
       transitionDuration: reduceMotion ? '1ms' : '150ms',
       boxSizing: 'border-box',
       appearance: 'none',
@@ -83,7 +83,7 @@ export default createUseStyles({
         height: handleSize,
         width: handleSize,
         border: `1px solid ${theme.colors.gray[3]}`,
-        transition: reduceMotion ? 'none' : 'transform 150ms cubic-bezier(.51,.3,0,1.21)',
+        transition: reduceMotion ? 'none' : `transform 150ms ${theme.transitionTimingFunction}`,
       },
 
       '&:disabled::before': {
