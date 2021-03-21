@@ -4,7 +4,8 @@ import { useMantineTheme, DefaultProps } from '@mantine/theme';
 import useStyles from './Hr.styles';
 
 interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
-  variant?: 'solid' | 'dashed' | 'dotted';
+  /** Hr borderStyle */
+  variant?: React.CSSProperties['borderTopStyle'];
 }
 
 export function Hr({ className, variant = 'dashed', style, themeOverride, ...others }: HrProps) {
