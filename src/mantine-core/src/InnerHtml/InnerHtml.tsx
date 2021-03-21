@@ -3,7 +3,10 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './InnerHtml.styles';
 
-interface InnerHtmlProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {}
+interface InnerHtmlProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  /** Html to set as innerHtml, make sure to purify */
+  dangerouslySetInnerHTML: { __html: string };
+}
 
 export function InnerHtml({
   className,
