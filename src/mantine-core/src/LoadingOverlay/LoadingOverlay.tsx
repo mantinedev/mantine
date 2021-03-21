@@ -4,12 +4,12 @@ import { Transition } from 'react-transition-group';
 import { DefaultProps } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
 import { Overlay } from '../Overlay/Overlay';
-import { Loader } from '../Loader/Loader';
+import { Loader, LoaderProps } from '../Loader/Loader';
 import useStyles from './LoadingOverlay.styles';
 
 interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
-  /** Defines width of loader */
-  loaderSize?: number;
+  /** Loader component props */
+  loaderProps?: Omit<LoaderProps, 'themeOverride'>;
 
   /** Sets overlay opacity */
   overlayOpacity?: number;
@@ -27,7 +27,7 @@ interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutR
 export function LoadingOverlay({
   className,
   visible,
-  loaderSize,
+  loaderProps = {},
   overlayOpacity = 0.75,
   overlayColor = '#fff',
   themeOverride,
@@ -57,7 +57,11 @@ export function LoadingOverlay({
           }}
           {...others}
         >
-          <Loader className={classes.loader} size={loaderSize} themeOverride={themeOverride} />
+          <Loader
+            className={cx(classes.loader, loaderProps.className)}
+            themeOverride={themeOverride}
+            {...loaderProps}
+          />
           <Overlay opacity={overlayOpacity} color={overlayColor} />
         </div>
       )}

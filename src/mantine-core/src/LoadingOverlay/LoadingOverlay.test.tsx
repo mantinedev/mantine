@@ -19,9 +19,10 @@ describe('@mantine/core/LoadingOverlay', () => {
     expect(element.render().html()).toBe(null);
   });
 
-  it('passes loaderSize to Loader component', () => {
-    const element = mount(<LoadingOverlay visible loaderSize={91} />);
+  it('passes loaderProps to Loader component', () => {
+    const element = mount(<LoadingOverlay visible loaderProps={{ size: 91, color: 'grape' }} />);
     expect(element.find(Loader).prop('size')).toBe(91);
+    expect(element.find(Loader).prop('color')).toBe('grape');
   });
 
   it('passes opacity and color to Overlay component', () => {
