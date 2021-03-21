@@ -4,6 +4,7 @@ title: Avatar
 slug: /core/avatar/
 ---
 
+import { AVATAR_SIZES } from '@mantine/core';
 import {
   AvatarBaseDemo,
   AvatarPlaceholderDemo,
@@ -47,6 +48,19 @@ or pass in number to set border-radius in px:
 <Avatar radius="lg" /> // -> theme predefined large radius
 <Avatar radius={1000} /> // -> { borderRadius: 1000 }
 ```
+
+### Default size values
+
+You can get default sizes for Avatar by importing `AVATAR_SIZES`:
+
+```tsx
+import { AVATAR_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Width and height']}
+  data={Object.keys(AVATAR_SIZES).map((size) => [size, `${AVATAR_SIZES[size]}px`])}
+/>
 
 ### Image avatar props configurator
 
