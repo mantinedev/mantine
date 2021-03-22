@@ -20,6 +20,10 @@ describe('@mantine/core/Title', () => {
   itSupportsStyle(Title, {});
   itSupportsClassName(Title, {});
 
+  it('has correct displayName', () => {
+    expect(Title.displayName).toEqual('@mantine/core/Title');
+  });
+
   it('uses order prop to set tag name', () => {
     ([1, 2, 3, 4, 5, 6] as const).forEach((order) => {
       const element = shallow(<Title order={order} />);
