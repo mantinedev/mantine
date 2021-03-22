@@ -5,8 +5,13 @@ import { ComponentPassThrough } from '@mantine/types';
 import useStyles, { TextVariant } from './Text.styles';
 
 export interface TextProps extends DefaultProps {
+  /** Text itself */
   children?: React.ReactNode;
+
+  /** Predefined font-size from theme.fontSizes */
   size?: MantineSize;
+
+  /** Text color from theme */
   color?: string;
 
   /** Sets font-weight css property */
@@ -14,6 +19,8 @@ export interface TextProps extends DefaultProps {
 
   /** Sets text-transform css property */
   transform?: React.CSSProperties['textTransform'];
+
+  /** Link or text variant */
   variant?: TextVariant;
 }
 

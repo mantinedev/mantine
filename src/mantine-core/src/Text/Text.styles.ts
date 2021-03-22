@@ -3,18 +3,15 @@ import { MantineTheme, MantineSize, getFocusStyles, getFontStyles } from '@manti
 
 export type TextVariant = 'text' | 'link';
 
+interface TextStylesProps {
+  theme: MantineTheme;
+  color: string;
+  variant: TextVariant;
+  size: MantineSize;
+}
+
 export default createUseStyles({
-  text: ({
-    theme,
-    color,
-    variant,
-    size,
-  }: {
-    theme: MantineTheme;
-    color: string;
-    variant: TextVariant;
-    size: MantineSize;
-  }) => ({
+  text: ({ theme, color, variant, size }: TextStylesProps) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     color:
