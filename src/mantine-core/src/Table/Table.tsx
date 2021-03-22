@@ -8,7 +8,7 @@ interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef<'table
   striped?: boolean;
 
   /** If true row will have hover color */
-  highlighOnHover?: boolean;
+  highlightOnHover?: boolean;
 
   /** Table caption position */
   captionSide?: 'top' | 'bottom';
@@ -18,7 +18,7 @@ export function Table({
   className,
   children,
   striped = false,
-  highlighOnHover = false,
+  highlightOnHover = false,
   themeOverride,
   captionSide = 'top',
   ...others
@@ -30,7 +30,7 @@ export function Table({
       {...others}
       className={cx(
         classes.table,
-        { [classes.striped]: striped, [classes.hover]: highlighOnHover },
+        { [classes.striped]: striped, [classes.hover]: highlightOnHover },
         className
       )}
     >

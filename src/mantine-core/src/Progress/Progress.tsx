@@ -20,7 +20,7 @@ interface ProgressProps extends DefaultProps, React.ComponentPropsWithoutRef<'di
   radius?: MantineNumberSize;
 
   /** Adds stripes */
-  stripped?: boolean;
+  striped?: boolean;
 }
 
 export function Progress({
@@ -29,7 +29,7 @@ export function Progress({
   color,
   size = 'md',
   radius = 'sm',
-  stripped = false,
+  striped = false,
   themeOverride,
   ...others
 }: ProgressProps) {
@@ -37,7 +37,7 @@ export function Progress({
     color,
     size,
     radius,
-    stripped,
+    striped,
     reduceMotion: useReducedMotion(),
     theme: useMantineTheme(themeOverride),
   });

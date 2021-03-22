@@ -36,13 +36,13 @@ storiesOf('@mantine/core/Progress', module)
       <Progress value={40} style={{ marginTop: 20 }} />
       <Progress value={60} style={{ marginTop: 20 }} />
       <Progress value={80} style={{ marginTop: 20 }} />
-      <Progress value={80} style={{ marginTop: 20 }} stripped />
+      <Progress value={80} style={{ marginTop: 20 }} striped />
       <Progress value={100} style={{ marginTop: 20 }} />
     </div>
   ))
   .add('Sizes', () => <div style={{ maxWidth: 500, padding: 50 }}>{sizes}</div>)
   .add('Themes', () => <div style={{ maxWidth: 500, padding: 50 }}>{getThemes()}</div>)
-  .add('Stripped', () => (
-    <div style={{ maxWidth: 500, padding: 50 }}>{getThemes({ stripped: true })}</div>
+  .add('Striped', () => (
+    <div style={{ maxWidth: 500, padding: 50 }}>{getThemes({ striped: true })}</div>
   ))
   .add('Value changes', () => <SetDemo />);

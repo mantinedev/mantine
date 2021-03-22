@@ -43,13 +43,13 @@ storiesOf('@mantine/core/Table', module)
       <Table>{table}</Table>
     </div>
   ))
-  .add('Stripped', () => (
+  .add('Striped', () => (
     <div style={{ maxWidth: 600, padding: 20 }}>
       <Table striped>{table}</Table>
     </div>
   ))
   .add('Highlight on hover', () => (
     <div style={{ maxWidth: 600, padding: 20 }}>
-      <Table highlighOnHover>{table}</Table>
+      <Table highlightOnHover>{table}</Table>
     </div>
   ));
