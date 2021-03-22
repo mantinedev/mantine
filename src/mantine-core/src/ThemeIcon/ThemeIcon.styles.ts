@@ -3,7 +3,15 @@ import { MantineTheme, MantineNumberSize, getSizeValue, getThemeColor } from '@m
 
 export type ThemeIconVariant = 'filled' | 'light' | 'gradient';
 
-const sizes = {
+interface ThemeIconStylesProps {
+  theme: MantineTheme;
+  color: string;
+  size: MantineNumberSize;
+  radius: MantineNumberSize;
+  variant: ThemeIconVariant;
+}
+
+export const sizes = {
   xs: 16,
   sm: 20,
   md: 26,
@@ -12,19 +20,7 @@ const sizes = {
 };
 
 export default createUseStyles({
-  themeIcon: ({
-    theme,
-    color,
-    size,
-    radius,
-    variant,
-  }: {
-    theme: MantineTheme;
-    color: string;
-    size: MantineNumberSize;
-    radius: MantineNumberSize;
-    variant: ThemeIconVariant;
-  }) => {
+  themeIcon: ({ theme, color, size, radius, variant }: ThemeIconStylesProps) => {
     const iconSize = getSizeValue({ size, sizes });
 
     return {
@@ -42,7 +38,7 @@ export default createUseStyles({
             })} 0%, ${getThemeColor({ theme, color, shade: 6 })} 60%, ${getThemeColor({
               theme,
               color,
-              shade: 8,
+              shade: 6,
             })} 100%)`
           : undefined,
       color:
@@ -59,7 +55,7 @@ export default createUseStyles({
             ? `drop-shadow(1px 1px 0px ${getThemeColor({
                 theme,
                 color,
-                shade: 8,
+                shade: 7,
               })})`
             : undefined,
       },

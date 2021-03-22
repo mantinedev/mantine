@@ -33,5 +33,5 @@ export { Tabs, Tab } from './Tabs/Tabs';
 export { Anchor, Text } from './Text/Text';
 export { Textarea } from './Textarea/Textarea';
 export { TextInput } from './TextInput/TextInput';
-export { ThemeIcon } from './ThemeIcon/ThemeIcon';
+export { ThemeIcon, THEME_ICON_SIZES } from './ThemeIcon/ThemeIcon';
 export { Title } from './Title/Title';
