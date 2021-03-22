@@ -4,9 +4,13 @@ import { DefaultProps, MantineSize, MantineNumberSize, useMantineTheme } from '@
 import useStyles from './Paper.styles';
 
 interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
-  children: React.ReactNode;
+  /** Predefined padding value from theme.spacing or number for padding in px */
   padding?: MantineNumberSize;
+
+  /** Predefined box-shadow from theme.shadows */
   shadow?: MantineSize;
+
+  /** Predefined border-radius value from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;
 }
 

@@ -1,18 +1,15 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, MantineSize, getSizeValue } from '@mantine/theme';
 
+interface PaperStylesProps {
+  theme: MantineTheme;
+  radius: MantineNumberSize;
+  shadow: MantineSize;
+  padding: MantineNumberSize;
+}
+
 export default createUseStyles({
-  paper: ({
-    theme,
-    radius,
-    shadow,
-    padding,
-  }: {
-    theme: MantineTheme;
-    radius: MantineNumberSize;
-    shadow: MantineSize;
-    padding: MantineNumberSize;
-  }) => ({
+  paper: ({ theme, radius, shadow, padding }: PaperStylesProps) => ({
     backgroundColor: theme.white,
     boxSizing: 'border-box',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
