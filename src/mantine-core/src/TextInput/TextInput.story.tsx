@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { TwitterLogoIcon } from '@modulz/radix-icons';
+import { LockClosedIcon } from '@modulz/radix-icons';
 import { TextInput } from './TextInput';
 
 function WrappedTextInput(
@@ -8,40 +8,48 @@ function WrappedTextInput(
 ) {
   const [value, onChange] = useState('');
   return (
-    <div style={{ maxWidth: 300, marginTop: 20 }}>
-      <TextInput
-        value={value}
-        onChange={(event) => onChange(event.currentTarget.value)}
-        {...props}
-      />
-    </div>
+    <TextInput value={value} onChange={(event) => onChange(event.currentTarget.value)} {...props} />
   );
 }
 
-storiesOf('@mantine/core/TextInput', module).add('TextInput', () => (
-  <>
-    <TextInput label="Uncontrolled" placeholder="Uncontrolled input" />
-    <WrappedTextInput label="Email" required placeholder="Email" type="email" />
-    <WrappedTextInput label="Your twitter" placeholder="Twitter" icon={<TwitterLogoIcon />} />
-    <WrappedTextInput
-      label="Your twitter"
-      disabled
-      placeholder="Twitter"
-      icon={<TwitterLogoIcon />}
-    />
-    <WrappedTextInput
-      label="Password"
-      required
-      description="Password should include 8 symbols: 2 numbers, uppercase and lowercase letters"
-      placeholder="Password"
-      type="password"
-    />
-    <WrappedTextInput radius="xl" label="Number" required placeholder="Number" type="number" />
-    <WrappedTextInput
-      label="With error"
-      placeholder="With error"
-      error="This field is invalid"
-      type="email"
-    />
-  </>
-));
+storiesOf('@mantine/core/TextInput', module)
+  .add('General usage', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <WrappedTextInput label="text" placeholder="text" type="text" />
+    </div>
+  ))
+  .add('With icon', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <WrappedTextInput label="text" placeholder="text" icon={<LockClosedIcon />} />
+    </div>
+  ))
+  .add('Uncontrolled', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <TextInput label="Uncontrolled" placeholder="Uncontrolled" />
+    </div>
+  ))
+  .add('Required', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <TextInput label="Required" placeholder="Required" required />
+    </div>
+  ))
+  .add('Disabled', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <TextInput disabled label="Disabled" placeholder="Disabled" required />
+    </div>
+  ))
+  .add('Error', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <TextInput label="With error" placeholder="With error" error="text too short" />
+    </div>
+  ))
+  .add('Custom radius', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <TextInput label="Radius" placeholder="Radius" radius="lg" />
+    </div>
+  ))
+  .add('Autofocus', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <TextInput label="Autofocus" placeholder="Autofocus" autoFocus />
+    </div>
+  ));

@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize } from '@mantine/theme';
-import { Subtract } from '@mantine/types';
+import { DefaultProps } from '@mantine/theme';
 import { Input } from '../Input/Input';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 
@@ -14,17 +13,12 @@ interface TextInputProps
 
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
+
+  /** Input element type */
   type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url' | 'number';
-  value?: string;
-  radius?: MantineNumberSize;
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: Partial<
-    Subtract<
-      React.ComponentPropsWithoutRef<typeof InputWrapper>,
-      InputWrapperBaseProps & DefaultProps
-    >
-  >;
+  wrapperProps?: Record<string, any>;
 }
 
 export const TextInput = forwardRef(
@@ -36,12 +30,9 @@ export const TextInput = forwardRef(
       error,
       required,
       type = 'text',
-      value,
       style,
-      onChange,
       icon,
       description,
-      radius = 'sm',
       themeOverride,
       wrapperProps,
       ...others
@@ -68,12 +59,9 @@ export const TextInput = forwardRef(
           ref={ref}
           id={uuid}
           type={type}
-          value={value}
-          onChange={onChange}
           invalid={!!error}
           icon={icon}
           themeOverride={themeOverride}
-          radius={radius}
         />
       </InputWrapper>
     );
