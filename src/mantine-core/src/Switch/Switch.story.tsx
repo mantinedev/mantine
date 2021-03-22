@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Switch } from './Switch';
 
 function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' | 'onChange'>) {
-  const [value, onChange] = useState(false);
+  const [value, onChange] = useState(true);
   return (
     <Switch
       checked={value}
@@ -13,24 +14,17 @@ function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' 
   );
 }
 
-storiesOf('@mantine/core/Switch', module).add('Switch', () => (
-  <div style={{ padding: 50 }}>
-    <>
-      <Switch label="Uncontrolled" />
-      <SwitchWrapper style={{ marginTop: 15 }} />
-      <SwitchWrapper size="xs" label="Turn on the notifications" style={{ marginTop: 15 }} />
-      <SwitchWrapper size="sm" label="Turn on the notifications" style={{ marginTop: 15 }} />
-      <SwitchWrapper size="md" label="Turn on the notifications" style={{ marginTop: 15 }} />
-      <SwitchWrapper size="lg" label="Turn on the notifications" style={{ marginTop: 15 }} />
-      <SwitchWrapper
-        color="red"
-        size="xl"
-        label="Turn on the notifications"
-        style={{ marginTop: 15 }}
-      />
-      <SwitchWrapper label="Turn on the notifications" radius="sm" style={{ marginTop: 15 }} />
-      <SwitchWrapper label="Turn on the notifications" radius={0} style={{ marginTop: 15 }} />
-      <SwitchWrapper label="Turn on the notifications" disabled style={{ marginTop: 15 }} />
-    </>
-  </div>
+const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as any[]).map((size) => (
+  <Switch color="blue" key={size} size={size} label={`Switch ${size}`} style={{ marginTop: 15 }} />
 ));
+
+const getThemes = (props?: any) =>
+  Object.keys(DEFAULT_THEME.colors).map((color) => (
+    <Switch key={color} color={color} {...props} label={color} style={{ marginTop: 15 }} />
+  ));
+
+storiesOf('@mantine/core/Switch', module)
+  .add('Themes', () => <div style={{ padding: 15 }}>{getThemes({ checked: true })}</div>)
+  .add('Sizes', () => <div style={{ padding: 15 }}>{sizes}</div>)
+  .add('Controlled', () => <SwitchWrapper label="Controlled" style={{ padding: 15 }} />)
+  .add('Autofocus', () => <SwitchWrapper label="Autofocus" style={{ padding: 15 }} autoFocus />);

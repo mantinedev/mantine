@@ -9,6 +9,14 @@ import {
   MantineSize,
 } from '@mantine/theme';
 
+interface SwitchStylesProps {
+  reduceMotion: boolean;
+  color: string;
+  size: MantineSize;
+  radius: MantineNumberSize;
+  theme: MantineTheme;
+}
+
 const switchHeight = {
   xs: 14,
   sm: 18,
@@ -39,19 +47,7 @@ export default createUseStyles({
     alignItems: 'center',
   },
 
-  switch: ({
-    size,
-    radius,
-    theme,
-    reduceMotion,
-    color,
-  }: {
-    reduceMotion: boolean;
-    color: string;
-    size: MantineSize;
-    radius: MantineNumberSize;
-    theme: MantineTheme;
-  }) => {
+  switch: ({ size, radius, theme, reduceMotion, color }: SwitchStylesProps) => {
     const handleSize = getSizeValue({ size, sizes: handleSizes });
     const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
 
@@ -106,7 +102,7 @@ export default createUseStyles({
     };
   },
 
-  label: ({ theme }: { theme: MantineTheme }) => ({
+  label: ({ theme }: SwitchStylesProps) => ({
     ...getFontStyles(theme),
     fontFamily: theme.fontFamily,
     marginLeft: theme.spacing.sm,

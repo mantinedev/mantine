@@ -7,14 +7,19 @@ import useStyles from './Switch.styles';
 interface SwitchProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
-  /** id is used to bind input and label, if not passed unique id will be generated for each input */
+  /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
-  checked?: boolean;
-  onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
+
+  /** Switch label */
   label?: React.ReactNode;
-  disabled?: boolean;
+
+  /** Switch checked state color from theme, defaults to theme.primaryColor */
   color?: string;
+
+  /** Predefined size value */
   size?: MantineSize;
+
+  /** Predefined border-radius value from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;
 
   /** Style properties added to input element */
@@ -24,18 +29,15 @@ interface SwitchProps
   inputClassName?: string;
 
   /** Props spread to wrapper element */
-  wrapperProps?: Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'>;
+  wrapperProps?: Record<string, any>;
 }
 
 export const Switch = forwardRef(
   (
     {
       className,
-      checked,
       color,
-      onChange,
       label,
-      disabled,
       id,
       style,
       size = 'md',
@@ -65,10 +67,7 @@ export const Switch = forwardRef(
           ref={ref}
           type="checkbox"
           className={cx(classes.switch, inputClassName)}
-          checked={checked}
-          onChange={onChange}
           style={inputStyle}
-          disabled={disabled}
           {...others}
         />
 
