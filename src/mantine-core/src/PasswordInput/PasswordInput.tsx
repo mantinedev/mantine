@@ -44,6 +44,7 @@ export const PasswordInput = forwardRef(
         ref={ref}
         type={reveal ? 'text' : 'password'}
         rightSection={disabled ? null : rightSection}
+        radius={radius}
       />
     );
   }

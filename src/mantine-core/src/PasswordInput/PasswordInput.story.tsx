@@ -47,6 +47,11 @@ storiesOf('@mantine/core/PasswordInput', module)
       <PasswordInput label="Uncontrolled" placeholder="Uncontrolled" error="Password too short" />
     </div>
   ))
+  .add('Custom radius', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <PasswordInput label="Uncontrolled" placeholder="Uncontrolled" radius="lg" />
+    </div>
+  ))
   .add('Autofocus', () => (
     <div style={{ width: 300, padding: 20 }}>
       <PasswordInput label="Autofocus" placeholder="Autofocus" autoFocus />
