@@ -15,6 +15,7 @@ interface ProgressStylesProps {
   radius: MantineNumberSize;
   reduceMotion: boolean;
   size: MantineNumberSize;
+  stripped: boolean;
 }
 
 export default createUseStyles({
@@ -24,10 +25,14 @@ export default createUseStyles({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   }),
 
-  bar: ({ theme, color, radius, reduceMotion }: ProgressStylesProps) => ({
+  bar: ({ theme, color, radius, reduceMotion, stripped }: ProgressStylesProps) => ({
     height: '100%',
     backgroundColor: getThemeColor({ theme, color, shade: 6 }),
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     transition: reduceMotion ? 'none' : `width 200ms ${theme.transitionTimingFunction}`,
+    backgroundSize: [theme.spacing.md, theme.spacing.md],
+    backgroundImage: stripped
+      ? 'linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)'
+      : 'none',
   }),
 });

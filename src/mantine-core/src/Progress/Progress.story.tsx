@@ -12,7 +12,7 @@ function SetDemo() {
   return (
     <div style={{ maxWidth: 500, padding: 50 }}>
       <Progress value={value} />
-      <ElementsGroup style={{ marginTop: 20 }}>
+      <ElementsGroup style={{ marginTop: 20 }} position="center">
         <Button onClick={setValueToRandom}>Set random value</Button>
       </ElementsGroup>
     </div>
@@ -23,9 +23,10 @@ const sizes = ([2, 'xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
   <Progress size={size} value={50} key={size} style={{ marginTop: 20 }} />
 ));
 
-const themes = Object.keys(DEFAULT_THEME.colors).map((color) => (
-  <Progress key={color} color={color} value={50} style={{ marginTop: 20 }} />
-));
+const getThemes = (props?: any) =>
+  Object.keys(DEFAULT_THEME.colors).map((color) => (
+    <Progress key={color} color={color} value={50} style={{ marginTop: 20 }} {...props} />
+  ));
 
 storiesOf('@mantine/core/Progress', module)
   .add('General usage', () => (
@@ -35,9 +36,13 @@ storiesOf('@mantine/core/Progress', module)
       <Progress value={40} style={{ marginTop: 20 }} />
       <Progress value={60} style={{ marginTop: 20 }} />
       <Progress value={80} style={{ marginTop: 20 }} />
+      <Progress value={80} style={{ marginTop: 20 }} stripped />
       <Progress value={100} style={{ marginTop: 20 }} />
     </div>
   ))
   .add('Sizes', () => <div style={{ maxWidth: 500, padding: 50 }}>{sizes}</div>)
-  .add('Themes', () => <div style={{ maxWidth: 500, padding: 50 }}>{themes}</div>)
+  .add('Themes', () => <div style={{ maxWidth: 500, padding: 50 }}>{getThemes()}</div>)
+  .add('Stripped', () => (
+    <div style={{ maxWidth: 500, padding: 50 }}>{getThemes({ stripped: true })}</div>
+  ))
   .add('Value changes', () => <SetDemo />);

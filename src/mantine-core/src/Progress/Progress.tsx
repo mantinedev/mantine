@@ -18,14 +18,18 @@ interface ProgressProps extends DefaultProps, React.ComponentPropsWithoutRef<'di
 
   /** Predefined progress radius from theme.radius or number for height in px */
   radius?: MantineNumberSize;
+
+  /** Adds stripes */
+  stripped?: boolean;
 }
 
 export function Progress({
   className,
   value,
   color,
-  size,
-  radius,
+  size = 'md',
+  radius = 'sm',
+  stripped = false,
   themeOverride,
   ...others
 }: ProgressProps) {
@@ -33,6 +37,7 @@ export function Progress({
     color,
     size,
     radius,
+    stripped,
     reduceMotion: useReducedMotion(),
     theme: useMantineTheme(themeOverride),
   });
