@@ -21,6 +21,7 @@ const rows = elements.map((element) => (
 
 const table = (
   <>
+    <caption>Some elements from periodic table</caption>
     <thead>
       <tr>
         <th>Element position</th>

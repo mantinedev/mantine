@@ -9,6 +9,9 @@ interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef<'table
 
   /** If true row will have hover color */
   highlighOnHover?: boolean;
+
+  /** Table caption position */
+  captionSide?: 'top' | 'bottom';
 }
 
 export function Table({
@@ -17,9 +20,10 @@ export function Table({
   striped = false,
   highlighOnHover = false,
   themeOverride,
+  captionSide = 'top',
   ...others
 }: TableProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const classes = useStyles({ captionSide, theme: useMantineTheme(themeOverride) });
 
   return (
     <table

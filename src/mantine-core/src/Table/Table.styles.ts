@@ -3,16 +3,25 @@ import { MantineTheme, getFontStyles } from '@mantine/theme';
 
 interface TableStylesProps {
   theme: MantineTheme;
+  captionSide: 'top' | 'bottom';
 }
 
 export default createUseStyles({
   striped: {},
   hover: {},
 
-  table: ({ theme }: TableStylesProps) => ({
+  table: ({ theme, captionSide }: TableStylesProps) => ({
     ...getFontStyles(theme),
     width: '100%',
     borderCollapse: 'collapse',
+    captionSide,
+
+    '& > caption': {
+      marginTop: captionSide === 'top' ? 0 : theme.spacing.xs,
+      marginBottom: captionSide === 'bottom' ? 0 : theme.spacing.xs,
+      fontSize: theme.fontSizes.sm,
+      color: theme.colors.gray[6],
+    },
 
     '& > thead > tr > th': {
       textAlign: 'left',
