@@ -40,6 +40,7 @@ export const PasswordInput = forwardRef(
     return (
       <TextInput
         {...others}
+        disabled={disabled}
         themeOverride={themeOverride}
         ref={ref}
         type={reveal ? 'text' : 'password'}

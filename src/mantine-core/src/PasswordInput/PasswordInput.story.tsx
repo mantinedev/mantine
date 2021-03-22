@@ -39,17 +39,22 @@ storiesOf('@mantine/core/PasswordInput', module)
   ))
   .add('Required', () => (
     <div style={{ width: 300, padding: 20 }}>
-      <PasswordInput label="Uncontrolled" placeholder="Uncontrolled" required />
+      <PasswordInput label="Required" placeholder="Required" required />
+    </div>
+  ))
+  .add('Disabled', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <PasswordInput disabled label="Disabled" placeholder="Disabled" required />
     </div>
   ))
   .add('Error', () => (
     <div style={{ width: 300, padding: 20 }}>
-      <PasswordInput label="Uncontrolled" placeholder="Uncontrolled" error="Password too short" />
+      <PasswordInput label="With error" placeholder="With error" error="Password too short" />
     </div>
   ))
   .add('Custom radius', () => (
     <div style={{ width: 300, padding: 20 }}>
-      <PasswordInput label="Uncontrolled" placeholder="Uncontrolled" radius="lg" />
+      <PasswordInput label="Radius" placeholder="Radius" radius="lg" />
     </div>
   ))
   .add('Autofocus', () => (
