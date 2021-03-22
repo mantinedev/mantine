@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface TabProps extends React.ComponentPropsWithoutRef<'button'> {
+export interface TabProps extends React.ComponentProps<'button'> {
   label?: React.ReactNode;
   icon?: React.ReactNode;
   children?: React.ReactNode;
@@ -9,6 +9,7 @@ export interface TabProps extends React.ComponentPropsWithoutRef<'button'> {
 export interface TabType {
   type: any;
   props: TabProps;
+  ref?: React.RefObject<HTMLButtonElement> | ((instance: HTMLButtonElement) => void);
 }
 
 // Props should be kept for ts integration

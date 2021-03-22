@@ -149,4 +149,14 @@ describe('@mantine/core/Tabs', () => {
     keydown(2, 'ArrowLeft');
     expect(tabContent(element)).toBe('test-content-1');
   });
+
+  it('supports getting tab ref', () => {
+    const ref = React.createRef<HTMLButtonElement>();
+    mount(
+      <Tabs>
+        <Tab ref={ref} label="test" />
+      </Tabs>
+    );
+    expect(ref.current instanceof HTMLButtonElement).toBe(true);
+  });
 });

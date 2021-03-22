@@ -43,7 +43,7 @@ storiesOf('@mantine/core/Tabs', module)
   .add('General usage', () => (
     <div style={{ padding: 50 }}>
       <Tabs>
-        <Tab label="React" color="teal">
+        <Tab label="React" color="cyan">
           <Text color="gray" size="sm">
             A JavaScript library for building user interfaces
           </Text>
