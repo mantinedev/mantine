@@ -1,10 +1,15 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, getFontStyles, getSizeValue } from '@mantine/theme';
 
+interface TextareaStylesProps {
+  radius: MantineNumberSize;
+  theme: MantineTheme;
+}
+
 export default createUseStyles({
   invalid: {},
 
-  textarea: ({ theme, radius }: { radius: MantineNumberSize; theme: MantineTheme }) => ({
+  textarea: ({ theme, radius }: TextareaStylesProps) => ({
     ...getFontStyles(theme),
     boxSizing: 'border-box',
     width: '100%',
