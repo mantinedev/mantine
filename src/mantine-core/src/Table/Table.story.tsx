@@ -19,18 +19,21 @@ const rows = elements.map((element) => (
   </tr>
 ));
 
+const ths = (
+  <tr>
+    <th>Element position</th>
+    <th>Element name</th>
+    <th>Symbol</th>
+    <th>Atomic mass</th>
+  </tr>
+);
+
 const table = (
   <>
     <caption>Some elements from periodic table</caption>
-    <thead>
-      <tr>
-        <th>Element position</th>
-        <th>Element name</th>
-        <th>Symbol</th>
-        <th>Atomic mass</th>
-      </tr>
-    </thead>
+    <thead>{ths}</thead>
     <tbody>{rows}</tbody>
+    <tfoot>{ths}</tfoot>
   </>
 );
 

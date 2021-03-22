@@ -23,13 +23,20 @@ export default createUseStyles({
       color: theme.colors.gray[6],
     },
 
-    '& > thead > tr > th': {
+    '& > thead > tr > th, & > tfoot > tr > th': {
       textAlign: 'left',
       fontWeight: 'bold',
       color: theme.colors.gray[7],
       fontSize: 14,
       padding: [7, 10],
+    },
+
+    '& > thead > tr > th': {
       borderBottom: `1px solid ${theme.colors.gray[3]}`,
+    },
+
+    '& > tfoot > tr > th': {
+      borderTop: `1px solid ${theme.colors.gray[3]}`,
     },
 
     '& > tbody > tr > td': {
