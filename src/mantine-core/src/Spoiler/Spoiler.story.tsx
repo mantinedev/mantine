@@ -25,23 +25,30 @@ const content = (
   </>
 );
 
-storiesOf('@mantine/core/Spoiler', module).add('Spoiler', () => (
-  <div style={{ maxWidth: 400, padding: 50 }}>
-    <Spoiler showLabel="Show more" hideLabel="Hide" maxHeight={100}>
-      {content}
-    </Spoiler>
-
-    <Spoiler
-      showLabel="No animations"
-      hideLabel="No animations"
-      transitionDuration={null}
-      maxHeight={100}
-    >
-      {content}
-    </Spoiler>
-
-    <Spoiler maxHeight={100} showLabel="Show" hideLabel="Hide">
-      <Text>No Spoiler here when content is not high enough for spoiler</Text>
-    </Spoiler>
-  </div>
-));
+storiesOf('@mantine/core/Spoiler', module)
+  .add('General usage', () => (
+    <div style={{ maxWidth: 400, padding: 50 }}>
+      <Spoiler showLabel="Show more" hideLabel="Hide" maxHeight={100}>
+        {content}
+      </Spoiler>
+    </div>
+  ))
+  .add('No animations', () => (
+    <div style={{ maxWidth: 400, padding: 50 }}>
+      <Spoiler
+        showLabel="No animations"
+        hideLabel="No animations"
+        transitionDuration={null}
+        maxHeight={100}
+      >
+        {content}
+      </Spoiler>
+    </div>
+  ))
+  .add('No spoiler', () => (
+    <div style={{ maxWidth: 400, padding: 50 }}>
+      <Spoiler maxHeight={100} showLabel="Show" hideLabel="Hide">
+        <Text>No Spoiler here when content is not high enough for spoiler</Text>
+      </Spoiler>
+    </div>
+  ));
