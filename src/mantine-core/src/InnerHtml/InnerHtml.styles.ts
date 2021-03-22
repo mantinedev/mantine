@@ -64,10 +64,12 @@ export default createUseStyles({
       '& table': {
         width: '100%',
         borderCollapse: 'collapse',
+        captionSide: 'top',
 
-        '& caption': {
-          fontWeight: 700,
+        '& > caption': {
           marginBottom: theme.spacing.xs,
+          fontSize: theme.fontSizes.sm,
+          color: theme.colors.gray[6],
         },
 
         '& th': {
@@ -76,7 +78,14 @@ export default createUseStyles({
           color: theme.colors.gray[7],
           fontSize: 14,
           padding: [7, 10],
+        },
+
+        '& thead th': {
           borderBottom: `1px solid ${theme.colors.gray[3]}`,
+        },
+
+        '& tfoot th': {
+          borderTop: `1px solid ${theme.colors.gray[3]}`,
         },
 
         '& td': {
@@ -85,7 +94,7 @@ export default createUseStyles({
           fontSize: 14,
         },
 
-        '& tr:last-of-type > td': {
+        '& tr:last-of-type td': {
           borderBottom: 'none',
         },
       },
