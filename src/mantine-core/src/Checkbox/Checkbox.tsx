@@ -5,8 +5,6 @@ import { useId } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import useStyles from './Checkbox.styles';
 
-type WrapperProps = Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'>;
-
 interface CheckboxProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
@@ -29,7 +27,7 @@ interface CheckboxProps
   inputClassName?: string;
 
   /** Props spread to wrapper element */
-  wrapperProps?: WrapperProps;
+  wrapperProps?: Record<string, any>;
 
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;

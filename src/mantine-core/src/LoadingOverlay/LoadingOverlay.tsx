@@ -9,7 +9,7 @@ import useStyles from './LoadingOverlay.styles';
 
 interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Loader component props */
-  loaderProps?: Omit<LoaderProps, 'themeOverride'>;
+  loaderProps?: LoaderProps;
 
   /** Sets overlay opacity */
   overlayOpacity?: number;

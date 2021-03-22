@@ -20,7 +20,7 @@ interface InputProps extends DefaultProps, React.ComponentPropsWithoutRef<'input
   inputClassName?: string;
 
   /** Properties spread to root element */
-  wrapperProps?: Omit<React.ComponentPropsWithoutRef<'div'>, 'className' | 'style' | 'children'>;
+  wrapperProps?: Record<string, any>;
 
   /** Adds style to input element */
   inputStyle?: React.CSSProperties;
