@@ -79,6 +79,29 @@ In addition to `icon` and `label` props shown before,
 
 <TabsTabPropsDemo />
 
+## Get tab control ref
+
+You can get tab control ref by passing `ref` prop to `Tab` component
+
+```tsx
+import React, { useRef } from 'react';
+import { Tabs, Tab } from '@mantine/core';
+
+function TabsDemo() {
+  const secondTabRef = useRef<HTMLButtonElement>();
+
+  return (
+    <Tabs>
+      <Tab label="First">First tab content</Tab>
+      <Tab label="Second" ref={secondTabRef}>
+        Second tab content
+      </Tab>
+      <Tab label="Third">Third tab content</Tab>
+    </Tabs>
+  );
+}
+```
+
 ## Component props
 
 <PropsTable component="Tabs" />
