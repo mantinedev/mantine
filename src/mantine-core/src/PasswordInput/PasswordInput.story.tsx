@@ -8,38 +8,47 @@ function WrappedPasswordInput(
 ) {
   const [value, onChange] = useState('');
   return (
-    <div style={{ maxWidth: 300, marginTop: 20 }}>
-      <PasswordInput
-        value={value}
-        onChange={(event) => onChange(event.currentTarget.value)}
-        {...props}
-      />
-    </div>
+    <PasswordInput
+      value={value}
+      onChange={(event) => onChange(event.currentTarget.value)}
+      {...props}
+    />
   );
 }
 
-storiesOf('@mantine/core/PasswordInput', module).add('PasswordInput', () => (
-  <>
-    <PasswordInput label="Uncontrolled" placeholder="Uncontrolled" />
-    <WrappedPasswordInput label="Password" required placeholder="password" type="password" />
-    <WrappedPasswordInput
-      label="Password"
-      disabled
-      required
-      placeholder="password"
-      type="password"
-    />
-    <WrappedPasswordInput
-      label="Password"
-      icon={<LockClosedIcon />}
-      placeholder="password"
-      type="password"
-    />
-    <WrappedPasswordInput
-      label="With error"
-      placeholder="With error"
-      error="This field is invalid"
-      radius="lg"
-    />
-  </>
-));
+storiesOf('@mantine/core/PasswordInput', module)
+  .add('General usage', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <WrappedPasswordInput label="Password" placeholder="Password" type="password" />
+    </div>
+  ))
+  .add('With icon', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <WrappedPasswordInput
+        label="Password"
+        placeholder="Password"
+        type="password"
+        icon={<LockClosedIcon />}
+      />
+    </div>
+  ))
+  .add('Uncontrolled', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <PasswordInput label="Uncontrolled" placeholder="Uncontrolled" />
+    </div>
+  ))
+  .add('Required', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <PasswordInput label="Uncontrolled" placeholder="Uncontrolled" required />
+    </div>
+  ))
+  .add('Error', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <PasswordInput label="Uncontrolled" placeholder="Uncontrolled" error="Password too short" />
+    </div>
+  ))
+  .add('Autofocus', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <PasswordInput label="Autofocus" placeholder="Autofocus" autoFocus />
+    </div>
+  ));
