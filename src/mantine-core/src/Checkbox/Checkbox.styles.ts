@@ -55,11 +55,6 @@ export default createUseStyles({
     display: 'block',
     margin: 0,
 
-    '&:disabled': {
-      backgroundColor: theme.colors.gray[2],
-      cursor: 'not-allowed',
-    },
-
     '&:checked': {
       backgroundColor: getThemeColor({ theme, color, shade: 5 }),
       borderColor: getThemeColor({ theme, color, shade: 5 }),
@@ -70,9 +65,20 @@ export default createUseStyles({
         display: 'block',
       },
     },
+
+    '&:disabled': {
+      backgroundColor: theme.colors.gray[2],
+      borderColor: theme.colors.gray[2],
+      cursor: 'not-allowed',
+
+      '& + $icon': {
+        color: theme.colors.gray[5],
+        filter: 'none',
+      },
+    },
   }),
 
-  icon: ({ theme, color }: CheckboxStylesProps) => ({
+  icon: {
     display: 'none',
     pointerEvents: 'none',
     width: '80%',
@@ -84,6 +90,5 @@ export default createUseStyles({
     left: 0,
     right: 0,
     margin: 'auto',
-    filter: `drop-shadow(1px 1px 0px ${getThemeColor({ theme, color, shade: 7 })})`,
-  }),
+  },
 });

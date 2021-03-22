@@ -33,6 +33,10 @@ storiesOf('@mantine/core/Checkbox', module)
   .add('Themes', () => <div style={{ padding: 15 }}>{getThemes({ checked: true })}</div>)
   .add('Sizes', () => <div style={{ padding: 15 }}>{sizes}</div>)
   .add('Controlled', () => <CheckboxWrapper label="Controlled" style={{ padding: 15 }} />)
-  .add('Intermediate', () => (
-    <Checkbox intermediate label="Intermediate" style={{ padding: 15 }} />
+  .add('Intermediate', () => <Checkbox intermediate label="Intermediate" style={{ padding: 15 }} />)
+  .add('Disabled', () => (
+    <div style={{ padding: 15 }}>
+      <Checkbox label="Disabled" disabled />
+      <Checkbox checked label="Disabled checked" disabled style={{ marginTop: 15 }} />
+    </div>
   ));
