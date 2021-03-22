@@ -4,9 +4,11 @@ title: Title
 slug: /core/title/
 ---
 
+import { TitleBaseDemo } from '../../demos/core/Title/title.demos';
+
 # Title
 
-This is a Title component description placeholder
+Renders h1-h6 headings
 
 <PageHeader
   source="mantine-core/src/Title/Title.tsx"
@@ -14,10 +16,16 @@ This is a Title component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Title } from '@mantine/core';
 ```
+
+## Usage
+
+Pass `order` prop to render specific element (h1-h6):
+
+<TitleBaseDemo />
+
+## Component props
 
 <PropsTable component="Title" />
