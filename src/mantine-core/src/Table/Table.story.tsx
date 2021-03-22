@@ -33,18 +33,19 @@ const table = (
   </>
 );
 
-storiesOf('@mantine/core/Table', module).add('Table', () => (
-  <>
-    <div style={{ maxWidth: 600 }}>
+storiesOf('@mantine/core/Table', module)
+  .add('General usage', () => (
+    <div style={{ maxWidth: 600, padding: 20 }}>
       <Table>{table}</Table>
-      <div style={{ marginTop: 30 }}>
-        <Table striped>{table}</Table>
-      </div>
-      <div style={{ marginTop: 30 }}>
-        <Table highlighOnHover striped>
-          {table}
-        </Table>
-      </div>
     </div>
-  </>
-));
+  ))
+  .add('Stripped', () => (
+    <div style={{ maxWidth: 600, padding: 20 }}>
+      <Table striped>{table}</Table>
+    </div>
+  ))
+  .add('Highlight on hover', () => (
+    <div style={{ maxWidth: 600, padding: 20 }}>
+      <Table highlighOnHover>{table}</Table>
+    </div>
+  ));

@@ -1,11 +1,15 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getFontStyles } from '@mantine/theme';
 
+interface TableStylesProps {
+  theme: MantineTheme;
+}
+
 export default createUseStyles({
   striped: {},
   hover: {},
 
-  table: ({ theme }: { theme: MantineTheme }) => ({
+  table: ({ theme }: TableStylesProps) => ({
     ...getFontStyles(theme),
     width: '100%',
     borderCollapse: 'collapse',

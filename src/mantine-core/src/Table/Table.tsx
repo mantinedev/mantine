@@ -7,7 +7,7 @@ interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef<'table
   /** If true every odd row of table will have gray background color */
   striped?: boolean;
 
-  /** if true row will have hover color */
+  /** If true row will have hover color */
   highlighOnHover?: boolean;
 }
 
