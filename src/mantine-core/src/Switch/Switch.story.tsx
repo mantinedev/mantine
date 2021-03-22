@@ -27,4 +27,10 @@ storiesOf('@mantine/core/Switch', module)
   .add('Themes', () => <div style={{ padding: 15 }}>{getThemes({ checked: true })}</div>)
   .add('Sizes', () => <div style={{ padding: 15 }}>{sizes}</div>)
   .add('Controlled', () => <SwitchWrapper label="Controlled" style={{ padding: 15 }} />)
-  .add('Autofocus', () => <SwitchWrapper label="Autofocus" style={{ padding: 15 }} autoFocus />);
+  .add('Autofocus', () => <SwitchWrapper label="Autofocus" style={{ padding: 15 }} autoFocus />)
+  .add('Disabled', () => (
+    <div style={{ padding: 15 }}>
+      <Switch label="Disabled" disabled />
+      <Switch checked label="Disabled checked" disabled style={{ marginTop: 15 }} />
+    </div>
+  ));

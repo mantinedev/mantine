@@ -82,10 +82,6 @@ export default createUseStyles({
         transition: reduceMotion ? 'none' : `transform 150ms ${theme.transitionTimingFunction}`,
       },
 
-      '&:disabled::before': {
-        backgroundColor: theme.colors.gray[2],
-      },
-
       '&:checked': {
         backgroundColor: getThemeColor({ theme, color, shade: 6 }),
         borderColor: getThemeColor({ theme, color, shade: 5 }),
@@ -97,6 +93,17 @@ export default createUseStyles({
             6 // borderWidth: 2 + padding: 2 * 2
           }px)`,
           borderColor: getThemeColor({ theme, color, shade: 6 }),
+        },
+      },
+
+      '&:disabled': {
+        backgroundColor: theme.colors.gray[2],
+        borderColor: theme.colors.gray[2],
+        cursor: 'not-allowed',
+
+        '&::before': {
+          borderColor: theme.colors.gray[2],
+          backgroundColor: theme.colors.gray[0],
         },
       },
     };
