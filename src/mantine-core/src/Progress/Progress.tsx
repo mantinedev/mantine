@@ -2,13 +2,21 @@ import React from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
-import useStyles from './Progress.styles';
+import useStyles, { sizes } from './Progress.styles';
+
+export const PROGRESS_SIZES = sizes;
 
 interface ProgressProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Percent of filled bar (0-100) */
   value: number;
+
+  /** Progress color from theme */
   color?: string;
+
+  /** Predefined progress height or number for height in px */
   size?: MantineNumberSize;
+
+  /** Predefined progress radius from theme.radius or number for height in px */
   radius?: MantineNumberSize;
 }
 
