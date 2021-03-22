@@ -3,7 +3,6 @@ import cx from 'clsx';
 import { ChevronDownIcon } from '@modulz/radix-icons';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
-import { Subtract } from '@mantine/types';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import useStyles from './Select.styles';
 
@@ -18,15 +17,20 @@ interface SelectProps
     Omit<React.ComponentPropsWithoutRef<'select'>, 'onChange'> {
   /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
+
+  /** Select element value for controlled variant */
   value?: string;
 
   /** Adds hidden option to select and sets it as selected if value is not present */
   placeholder?: string;
+
+  /** Select element onChange event */
   onChange?(event: React.ChangeEvent<HTMLSelectElement>): void;
 
   /** Data used to render options */
   data: SelectItem[];
-  disabled?: boolean;
+
+  /** Predefined border-radius from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;
 
   /** Adds icon on the left side of input */
@@ -39,12 +43,7 @@ interface SelectProps
   inputStyle?: React.CSSProperties;
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: Partial<
-    Subtract<
-      React.ComponentPropsWithoutRef<typeof InputWrapper>,
-      InputWrapperBaseProps & DefaultProps
-    >
-  >;
+  wrapperProps?: Record<string, any>;
 }
 
 export const Select = forwardRef(
@@ -60,7 +59,6 @@ export const Select = forwardRef(
       value,
       onChange,
       placeholder,
-      disabled,
       radius = 'sm',
       icon,
       themeOverride,
@@ -126,7 +124,6 @@ export const Select = forwardRef(
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            disabled={disabled}
           >
             {options}
           </select>

@@ -15,39 +15,85 @@ function WrappedSelect(
 ) {
   const [value, onChange] = useState('');
   return (
-    <div style={{ maxWidth: 300, marginTop: 20 }}>
-      <Select
-        value={value}
-        onChange={(event) => onChange(event.currentTarget.value)}
-        data={data}
-        {...props}
-      />
-    </div>
+    <Select
+      value={value}
+      onChange={(event) => onChange(event.currentTarget.value)}
+      data={data}
+      {...props}
+    />
   );
 }
 
-storiesOf('@mantine/core/Select', module).add('Select', () => (
-  <>
-    <Select label="Uncontrolled" data={data} placeholder="Your favorite library" />
-    <WrappedSelect
-      icon={<RocketIcon />}
-      label="Your favorite library"
-      required
-      placeholder="Your favorite library"
-    />
-    <WrappedSelect label="Your favorite library" placeholder="Your favorite library" />
-    <WrappedSelect label="Your favorite library" required placeholder="Your favorite library" />
-    <WrappedSelect
-      radius="xl"
-      label="Your favorite library"
-      required
-      placeholder="Your favorite library"
-      disabled
-    />
-    <WrappedSelect
-      label="Your favorite library"
-      placeholder="Your favorite library"
-      error="Your favorite library cannot be Angular"
-    />
-  </>
-));
+storiesOf('@mantine/core/Select', module)
+  .add('General usage', () => (
+    <div style={{ maxWidth: 300, padding: 20 }}>
+      <WrappedSelect label="Your favorite library" placeholder="Your favorite library" />
+    </div>
+  ))
+  .add('Uncontrolled', () => (
+    <div style={{ maxWidth: 300, padding: 20 }}>
+      <Select label="Your favorite library" placeholder="Your favorite library" data={data} />
+    </div>
+  ))
+  .add('Required', () => (
+    <div style={{ maxWidth: 300, padding: 20 }}>
+      <WrappedSelect required label="Your favorite library" placeholder="Your favorite library" />
+    </div>
+  ))
+  .add('With description', () => (
+    <div style={{ maxWidth: 300, padding: 20 }}>
+      <WrappedSelect
+        description="Please choose wisely, you will not be able to change answer"
+        required
+        label="Your favorite library"
+        placeholder="Your favorite library"
+      />
+    </div>
+  ))
+  .add('With error', () => (
+    <div style={{ maxWidth: 300, padding: 20 }}>
+      <WrappedSelect
+        required
+        label="Your favorite library"
+        placeholder="Your favorite library"
+        error="You need to choose value"
+      />
+    </div>
+  ))
+  .add('Custom radius', () => (
+    <div style={{ maxWidth: 300, padding: 20 }}>
+      <WrappedSelect
+        label="Your favorite library"
+        placeholder="Your favorite library"
+        radius="xl"
+      />
+    </div>
+  ))
+  .add('Disabled', () => (
+    <div style={{ maxWidth: 300, padding: 20 }}>
+      <Select
+        disabled
+        label="Your favorite library"
+        placeholder="Your favorite library"
+        data={data}
+      />
+      <Select
+        style={{ marginTop: 20 }}
+        disabled
+        label="Your favorite library"
+        placeholder="Your favorite library"
+        value="react"
+        data={data}
+      />
+    </div>
+  ))
+  .add('With icon', () => (
+    <div style={{ maxWidth: 300, padding: 20 }}>
+      <WrappedSelect
+        icon={<RocketIcon />}
+        label="Your favorite library"
+        required
+        placeholder="Your favorite library"
+      />
+    </div>
+  ));

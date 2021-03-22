@@ -1,6 +1,11 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, getFontStyles, getSizeValue } from '@mantine/theme';
 
+interface SelectStylesProps {
+  radius: MantineNumberSize;
+  theme: MantineTheme;
+}
+
 export default createUseStyles({
   invalid: {},
   placeholder: {},
@@ -10,7 +15,7 @@ export default createUseStyles({
     position: 'relative',
   },
 
-  select: ({ theme, radius }: { radius: MantineNumberSize; theme: MantineTheme }) => ({
+  select: ({ theme, radius }: SelectStylesProps) => ({
     ...getFontStyles(theme),
     appearance: 'none',
     boxSizing: 'border-box',
@@ -45,6 +50,7 @@ export default createUseStyles({
 
     '&$invalid': {
       borderColor: theme.colors.red[7],
+      color: theme.colors.red[7],
     },
 
     '&$withIcon': {
