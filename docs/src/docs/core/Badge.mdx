@@ -4,9 +4,16 @@ title: Badge
 slug: /core/badge/
 ---
 
-# Badge
+import {
+  BadgeBaseDemo,
+  BadgeLightVariantDemo,
+  BadgeOutlineVariantDemo,
+  BadgeFilledVariantDemo,
+  BadgeComposeDemo,
+  BadgeFullWidthDemo,
+} from '../../demos/core/Badge/badge.demos';
 
-This is a Badge component description placeholder
+# Badge
 
 <PageHeader
   source="mantine-core/src/Badge/Badge.tsx"
@@ -14,10 +21,47 @@ This is a Badge component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Badge } from '@mantine/core';
 ```
+
+## Usage
+
+Badge has 3 variants:
+
+- `light` (default) – light background, dark color, no border
+- `outline` – transparent background, dark color and border
+- `filled` – dark background, white color, no border
+
+Default Badge color is `theme.primaryColor`. You can choose any color defined in <GatsbyLink to="/theming">theme</GatsbyLink>.
+
+<BadgeBaseDemo />
+
+### Light variant
+
+<BadgeLightVariantDemo />
+
+### Outline variant
+
+<BadgeOutlineVariantDemo />
+
+### Filled variant
+
+<BadgeFilledVariantDemo />
+
+## Full width
+
+Badge can take full width of container if you pass `fullWidth` prop.
+If badge is too large for its container, overflow content will be hidden with ellipsis.
+
+<BadgeFullWidthDemo />
+
+## Compose with ElementsGroup
+
+You can compose Badge with itself and any other components that support composition feature with <GatsbyLink to="/core/elements-group">ElementGroup</GatsbyLink> component.
+
+<BadgeComposeDemo />
+
+## Component props
 
 <PropsTable component="Badge" />
