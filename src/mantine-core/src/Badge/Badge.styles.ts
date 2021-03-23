@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles, getThemeColor } from '@mantine/theme';
+import { MantineTheme, getFontStyles, getThemeColor, getFocusStyles } from '@mantine/theme';
 
 export type BadgeVariant = 'light' | 'filled' | 'outline';
 
@@ -12,6 +12,7 @@ interface BadgeStylesProps {
 
 export default createUseStyles({
   badge: ({ theme, variant, fullWidth, color }: BadgeStylesProps) => ({
+    ...getFocusStyles(theme),
     ...getFontStyles(theme),
     backgroundColor:
       variant === 'outline'
@@ -26,6 +27,7 @@ export default createUseStyles({
     border: `1px solid ${
       variant === 'outline' ? getThemeColor({ theme, color, shade: 6 }) : 'transparent'
     }`,
+    textDecoration: 'none',
     textAlign: 'center',
     padding: [3, theme.spacing.xs],
     boxSizing: 'border-box',

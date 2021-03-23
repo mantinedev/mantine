@@ -1,9 +1,10 @@
 import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps } from '@mantine/theme';
+import { ComponentPassThrough } from '@mantine/types';
 import useStyles, { BadgeVariant } from './Badge.styles';
 
-interface BadgeProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+interface BadgeProps extends DefaultProps {
   /** Badge color from theme */
   color?: string;
 
@@ -14,7 +15,8 @@ interface BadgeProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'>
   fullWidth?: boolean;
 }
 
-export function Badge({
+export function Badge<T extends React.ElementType = 'div'>({
+  component: Component = 'div',
   className,
   color,
   variant = 'light',
@@ -22,13 +24,13 @@ export function Badge({
   children,
   themeOverride,
   ...others
-}: BadgeProps) {
+}: ComponentPassThrough<T, BadgeProps>) {
   const classes = useStyles({ fullWidth, variant, color, theme: useMantineTheme(themeOverride) });
 
   return (
-    <div {...others} data-mantine-composable className={cx(classes.badge, className)}>
+    <Component {...others} data-mantine-composable className={cx(classes.badge, className)}>
       {children}
-    </div>
+    </Component>
   );
 }
 
