@@ -4,9 +4,12 @@ title: Highlight
 slug: /core/highlight/
 ---
 
+import { HighlightConfigurator } from '../../demos/core/Highlight/highlight.configurator';
+import { HighlightComponentDemo } from '../../demos/core/Highlight/highlight.demos';
+
 # Highlight
 
-This is a Highlight component description placeholder
+Highlight part in given string with mark tag
 
 <PageHeader
   source="mantine-core/src/Highlight/Highlight.tsx"
@@ -14,10 +17,26 @@ This is a Highlight component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Highlight } from '@mantine/core';
 ```
+
+## Usage
+
+Pass main string as children to Highlight component and string part that should be highlighted to `highlight` prop.
+If main string does not include `highlight` part, it will be ignored.
+Component ignores trailing whitespace and highlights only first matched charachters sequence.
+
+You can change color of mark by passing `highlightColor` prop with <GatsbyLink to="/theming">theme</GatsbyLink> color.
+
+<HighlightConfigurator />
+
+## Text props
+
+Highlight accepts the same props as <GatsbyLink to="/core/Text">Text</GatsbyLink> component:
+
+<HighlightComponentDemo />
+
+## Component props
 
 <PropsTable component="Highlight" />
