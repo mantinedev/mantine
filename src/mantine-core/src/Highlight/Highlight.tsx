@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, getThemeColor } from '@mantine/theme';
 import { ComponentPassThrough } from '@mantine/types';
 import { Text, TextProps } from '../Text/Text';
 
@@ -25,6 +25,9 @@ interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'> {
   /** String part to highligh in children */
   highlight: string;
 
+  /** Color from theme that is used for highlighting */
+  highlightColor?: string;
+
   /** Full string part of which will be highlighted */
   children: string;
 }
@@ -35,18 +38,18 @@ export function Highlight<T extends React.ElementType = 'div'>({
   className,
   component,
   themeOverride,
+  highlightColor = 'yellow',
   ...others
 }: ComponentPassThrough<T, HighlightProps>) {
   const theme = useMantineTheme(themeOverride);
+  const color = getThemeColor({ theme, color: highlightColor, shade: 2 });
   const { start, end, highlighted } = highlighter(children, highlight);
 
   return (
     <Text component={component} className={className} {...others}>
       {!!start && start}
       {!!highlighted && (
-        <mark style={{ color: 'inherit', backgroundColor: theme.colors.yellow[2] }}>
-          {highlighted}
-        </mark>
+        <mark style={{ color: 'inherit', backgroundColor: color }}>{highlighted}</mark>
       )}
       {!!end && end}
     </Text>

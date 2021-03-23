@@ -42,11 +42,11 @@ describe('@mantine/core/Highlight', () => {
 describe('@mantine/core/Highlight/highlighter', () => {
   const VALUE = 'Hello, World';
 
-  test('highlights start of string', () => {
+  it('highlights start of string', () => {
     expect(highlighter(VALUE, 'Hell')).toEqual({ start: '', highlighted: 'Hell', end: 'o, World' });
   });
 
-  test('Highlights middle of string', () => {
+  it('Highlights middle of string', () => {
     expect(highlighter(VALUE, 'llo, W')).toEqual({
       start: 'He',
       highlighted: 'llo, W',
@@ -54,7 +54,7 @@ describe('@mantine/core/Highlight/highlighter', () => {
     });
   });
 
-  test('highlights uppercased value', () => {
+  it('highlights uppercased value', () => {
     expect(highlighter(VALUE, 'HELL')).toEqual({ start: '', highlighted: 'Hell', end: 'o, World' });
     expect(highlighter(VALUE, 'Hello,')).toEqual({
       start: '',
@@ -63,7 +63,7 @@ describe('@mantine/core/Highlight/highlighter', () => {
     });
   });
 
-  test('highlights value with whitespace', () => {
+  it('highlights value with whitespace', () => {
     expect(highlighter(VALUE, 'Hello  \t')).toEqual({
       start: '',
       highlighted: 'Hello',
@@ -71,7 +71,7 @@ describe('@mantine/core/Highlight/highlighter', () => {
     });
   });
 
-  test('does not highlight if nothing found', () => {
+  it('does not highlight if nothing found', () => {
     expect(highlighter(VALUE, 'Hi, there')).toEqual({ start: VALUE, highlighted: '', end: '' });
   });
 });
