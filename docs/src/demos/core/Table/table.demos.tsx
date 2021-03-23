@@ -97,7 +97,7 @@ export function TableDemo() {
   ));
 
   return (
-    <Table>
+    <Table captionSide="bottom">
       <caption>Some elements from periodic table</caption>
       <thead>{ths}</thead>
       <tbody>{rows}</tbody>
