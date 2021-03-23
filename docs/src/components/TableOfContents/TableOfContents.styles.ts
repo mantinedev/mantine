@@ -34,7 +34,13 @@ export default createUseStyles(
     },
 
     header: {
+      display: 'flex',
+      alignItems: 'center',
       marginBottom: theme.spacing.md,
+    },
+
+    title: {
+      marginLeft: theme.spacing.md,
     },
   }),
   { theming }

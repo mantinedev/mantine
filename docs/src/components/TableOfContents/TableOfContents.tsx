@@ -4,6 +4,7 @@ import Slugger from 'github-slugger';
 import debounce from 'lodash.debounce';
 import { Text } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
+import { ActivityLogIcon } from '@modulz/radix-icons';
 import { HEADER_HEIGHT } from '../Layout/Header/Header.styles';
 import useStyles from './TableOfContents.styles';
 
@@ -87,7 +88,8 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   return (
     <nav className={classes.wrapper}>
       <header className={classes.header}>
-        <Text>Table of contents</Text>
+        <ActivityLogIcon />
+        <Text className={classes.title}>Table of contents</Text>
       </header>
       {items}
     </nav>
