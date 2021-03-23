@@ -30,6 +30,7 @@ export default createUseStyles(
       paddingTop: HEADER_HEIGHT + theme.spacing.sm,
       paddingBottom: theme.spacing.xl * 2,
       paddingLeft: theme.spacing.md,
+      paddingRight: theme.spacing.md,
     },
   }),
   { theming }
