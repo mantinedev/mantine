@@ -26,6 +26,7 @@ export default createUseStyles({
     border: `1px solid ${
       variant === 'outline' ? getThemeColor({ theme, color, shade: 6 }) : 'transparent'
     }`,
+    textAlign: 'center',
     padding: [3, theme.spacing.xs],
     boxSizing: 'border-box',
     display: fullWidth ? 'block' : 'inline-block',
