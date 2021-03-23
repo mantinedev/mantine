@@ -1,8 +1,8 @@
 import React from 'react';
 import { LinkButton, ElementsGroup } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
+import { GitHubLogoIcon } from '@modulz/radix-icons';
 import NpmIcon from './NpmIcon';
-import GithubIcon from './GithubIcon';
 
 interface PageHeaderProps {
   source: string;
@@ -29,7 +29,7 @@ export default function PageHeader(props: PageHeaderProps) {
       <LinkButton
         variant="outline"
         color="gray"
-        leftIcon={<GithubIcon />}
+        leftIcon={<GitHubLogoIcon />}
         target="_blank"
         href={`https://github.com/mantinedev/mantine/blob/master/src/${props.source}`}
         style={{ borderColor: theme.colors.gray[3], color: theme.colors.gray[7] }}
