@@ -21,20 +21,20 @@ export default createUseStyles(
     },
 
     link: {
-      marginTop: theme.spacing.xs,
       display: 'block',
       color: theme.colors.gray[7],
-
-      '&:hover': {
-        color: theme.colors[theme.primaryColor][6],
-      },
+      borderLeft: `1px solid ${theme.colors.gray[3]}`,
+      padding: [6, theme.spacing.md],
     },
 
-    list: {
-      listStyle: 'none',
-      marginTop: theme.spacing.sm,
-      color: theme.colors.gray[4],
-      padding: 0,
+    linkActive: {
+      borderLeftColor: theme.colors.blue[5],
+      backgroundColor: theme.colors.blue[0],
+      color: theme.colors.blue[8],
+    },
+
+    header: {
+      marginBottom: theme.spacing.md,
     },
   }),
   { theming }
