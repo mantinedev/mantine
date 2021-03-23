@@ -4,9 +4,13 @@ title: Burger
 slug: /core/burger/
 ---
 
+import { BURGER_SIZES } from '@mantine/core';
+import { BurgerBaseDemo } from '../../demos/core/Burger/burger.demos';
+import { BurgerConfigurator } from '../../demos/core/Burger/burger.configurator';
+
 # Burger
 
-This is a Burger component description placeholder
+Renders open/close menu button
 
 <PageHeader
   source="mantine-core/src/Burger/Burger.tsx"
@@ -14,10 +18,59 @@ This is a Burger component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Burger } from '@mantine/core';
 ```
+
+## Usage
+
+Pass `opened` and `onClick` props to control Burger state.
+If `opened` prop is set to true cross will be rendered, otherwise – burger.
+
+<BurgerBaseDemo />
+
+## Change color and size
+
+Burger has predefined sizes: xs, sm, md, lg, xl.
+You can pass size as number and it will be set as width and height in px.
+
+```tsx
+<Burger size="sm" /> // -> predefined small size
+<Burger size={50} /> // -> { width: 50, height: 50 }
+```
+
+### Default size values
+
+You can get default sizes for burger by importing `BURGER_SIZES`:
+
+```tsx
+import { BURGER_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Width and height']}
+  data={Object.keys(BURGER_SIZES).map((size) => [size, `${BURGER_SIZES[size]}px`])}
+/>
+
+Default Burger color is gray. You can choose any color defined in <GatsbyLink to="/theming">theme</GatsbyLink> for Burger.
+
+<BurgerConfigurator />
+
+## Get element ref
+
+You can get button ref by passing `ref` prop to Burger component:
+
+```tsx
+import React, { useRef } from 'react';
+import { Burger } from '@mantine/core';
+
+function BurgerDemo() {
+  // ref.current instanceof HTMLButtonElement
+  const ref = useRef<HTMLButtonElement>(null);
+  return <Burger ref={ref} opened />;
+}
+```
+
+## Component props
 
 <PropsTable component="Burger" />
