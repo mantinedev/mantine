@@ -11,7 +11,7 @@ interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<'code'>
   color?: string;
 
   /** True for code block, false for inline code */
-  block: boolean;
+  block?: boolean;
 }
 
 export function Code({
