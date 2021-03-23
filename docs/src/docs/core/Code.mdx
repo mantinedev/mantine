@@ -1,0 +1,39 @@
+---
+package: mantine-core
+title: Code
+slug: /core/code/
+---
+
+import { CodeInlineDemo, CodeBlockDemo, CodeColorDemo } from '../../demos/core/Code/code.demos';
+
+# Code
+
+Render inline and block code snippets without code highlight
+
+<PageHeader source="mantine-core/src/Code/Code.tsx" docs="core/Code.mdx" package="@mantine/core" />
+
+```tsx
+import { Code } from '@mantine/core';
+```
+
+## Inline code
+
+By default Code component renders inline `code` html element
+
+<CodeInlineDemo />
+
+## Block code
+
+To render code in `pre` element pass `block` prop to Code component
+
+<CodeBlockDemo />
+
+## Custom color
+
+By default code has gray color, you can change it to any color from <GatsbyLink to="/theming">theme</GatsbyLink>
+
+<CodeColorDemo />
+
+## Component props
+
+<PropsTable component="Code" />
