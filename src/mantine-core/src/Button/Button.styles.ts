@@ -105,7 +105,7 @@ export default createUseStyles({
     color: getThemeColor({ theme, color, shade: 8 }),
     border: `1px solid ${getThemeColor({ theme, color, shade: 8 })}`,
 
-    '&:not(:disabled)active': {
+    '&:not(:disabled):active': {
       transform: 'translateY(1px)',
     },
 
