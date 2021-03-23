@@ -12,11 +12,11 @@ interface BurgerStylesProps {
   theme: MantineTheme;
 }
 
-const sizes = {
+export const sizes = {
   xs: 12,
   sm: 18,
   md: 24,
-  lg: 33,
+  lg: 34,
   xl: 42,
 };
 

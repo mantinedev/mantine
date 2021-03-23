@@ -5,14 +5,16 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsOthers,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Burger } from './Burger';
 
 describe('@mantine/core/Burger', () => {
   checkAccessibility([mount(<Burger opened title="Close navigation" />)]);
-  itSupportsOthers(Burger, {});
-  itSupportsClassName(Burger, {});
-  itSupportsStyle(Burger, {});
+  itSupportsOthers(Burger, { opened: true });
+  itSupportsClassName(Burger, { opened: true });
+  itSupportsStyle(Burger, { opened: true });
+  itSupportsRef(Burger, { opened: true }, HTMLButtonElement);
 
   it('has correct displayName', () => {
     expect(Burger.displayName).toEqual('@mantine/core/Burger');
