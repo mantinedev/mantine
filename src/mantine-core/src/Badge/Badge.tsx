@@ -17,7 +17,7 @@ interface BadgeProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'>
 export function Badge({
   className,
   color,
-  variant = 'badge',
+  variant = 'light',
   fullWidth,
   children,
   themeOverride,
