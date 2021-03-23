@@ -27,6 +27,7 @@ export default createUseStyles({
 
     return {
       display: 'flex',
+      alignItems: 'center',
       flexWrap: props.noWrap ? 'nowrap' : 'wrap',
       justifyContent: JUSTIFY_CONTENT[props.position],
       margin: -1 * spacing,
