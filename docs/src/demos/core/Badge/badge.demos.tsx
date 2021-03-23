@@ -60,6 +60,64 @@ export function BadgeFullWidthDemo() {
   );
 }
 
+const customComponentCode = `import React from 'react';
+import { Badge, ElementsGroup } from '@mantine/core';
+
+const CustomComponent = ({
+  pads,
+  children,
+  ...others
+}: {
+  pads: string;
+  children: React.ReactNode;
+}) => (
+  <div {...others}>
+    {pads} {children} {pads}
+  </div>
+);
+
+
+export function BadgeDemo() {
+  return (
+    <ElementsGroup position="center">
+      <Badge component="a" href="https://mantine.dev">
+        Link badge
+      </Badge>
+      <Badge component={CustomComponent} pads="$$$" variant="filled">
+        Get lots of money
+      </Badge>
+    </ElementsGroup>
+  );
+}`;
+
+const CustomComponent = ({
+  pads,
+  children,
+  ...others
+}: {
+  pads: string;
+  children: React.ReactNode;
+}) => (
+  <div {...others}>
+    {pads} {children} {pads}
+  </div>
+);
+
+export function BadgeCustomComponentDemo() {
+  return (
+    <CodeDemo code={customComponentCode} language="tsx">
+      <ElementsGroup position="center">
+        <Badge component="a" href="https://mantine.dev">
+          Link badge
+        </Badge>
+        <Badge component={CustomComponent} pads="$$$" variant="filled">
+          Get lots of money
+        </Badge>
+      </ElementsGroup>
+    </CodeDemo>
+  );
+}
+
 const composeCode = `import React from 'react';
 import { Badge, Button, ActionIcon, ElementsGroup } from '@mantine/core';
 import { GearIcon } from '@modulz/radix-icons';

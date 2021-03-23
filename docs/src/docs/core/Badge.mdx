@@ -11,6 +11,7 @@ import {
   BadgeFilledVariantDemo,
   BadgeComposeDemo,
   BadgeFullWidthDemo,
+  BadgeCustomComponentDemo,
 } from '../../demos/core/Badge/badge.demos';
 
 # Badge
@@ -55,6 +56,12 @@ Badge can take full width of container if you pass `fullWidth` prop.
 If badge is too large for its container, overflow content will be hidden with ellipsis.
 
 <BadgeFullWidthDemo />
+
+## Custom component
+
+You can change badge root element by passing React element to `component` prop.
+
+<BadgeCustomComponentDemo />
 
 ## Compose with ElementsGroup
 
