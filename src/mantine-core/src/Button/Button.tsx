@@ -35,11 +35,6 @@ interface ButtonBaseProps extends DefaultProps {
   variant?: ButtonVariant;
 }
 
-type _ButtonProps<T extends React.ElementType, U extends HTMLElement> = ComponentPassThrough<
-  T,
-  ButtonBaseProps
-> & { elementRef?: React.ForwardedRef<U> };
-
 export function Button<
   T extends React.ElementType = 'button',
   U extends HTMLElement = HTMLButtonElement
@@ -59,7 +54,7 @@ export function Button<
   elementRef,
   themeOverride,
   ...others
-}: _ButtonProps<T, U>) {
+}: ComponentPassThrough<T, ButtonBaseProps> & { elementRef?: React.ForwardedRef<U> }) {
   const classes = useStyles({
     variant,
     radius,
