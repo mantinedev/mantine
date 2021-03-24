@@ -4,9 +4,12 @@ title: Container
 slug: /core/container/
 ---
 
+import { CONTAINER_SIZES } from '@mantine/core';
+import { ContainerBaseDemo } from '../../demos/core/Container/container.demos.tsx';
+
 # Container
 
-This is a Container component description placeholder
+Container is the basic layout element, it centers content horizontally and add horizontal padding from theme.
 
 <PageHeader
   source="mantine-core/src/Container/Container.tsx"
@@ -14,10 +17,30 @@ This is a Container component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Container } from '@mantine/core';
 ```
+
+## Usage
+
+Container accepts 2 props:
+
+- `size` – controls default max width
+- `fluid` – overwrites `size` and sets max width to 100%
+
+<ContainerBaseDemo />
+
+You can get default sizes for Container by importing `CONTAINER_SIZES` variable:
+
+```tsx
+import { CONTAINER_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'max-width']}
+  data={Object.keys(CONTAINER_SIZES).map((size) => [size, `${CONTAINER_SIZES[size]}px`])}
+/>
+
+## Component props
 
 <PropsTable component="Container" />
