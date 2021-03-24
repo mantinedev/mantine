@@ -4,9 +4,11 @@ title: Button
 slug: /core/button/
 ---
 
-# Button
+import { BUTTON_SIZES } from '@mantine/core';
+import { ButtonGroupDemo } from '../../demos/core/Button/button-group.demo';
+import { ButtonRootDemo } from '../../demos/core/Button/button-root.demo';
 
-This is a Button component description placeholder
+# Button
 
 <PageHeader
   source="mantine-core/src/Button/Button.tsx"
@@ -14,10 +16,62 @@ This is a Button component description placeholder
   package="@mantine/core"
 />
 
-## Import
+```tsx
+import { Button, LinkButton, MantineButton } from '@mantine/core';
+```
+
+<ButtonRootDemo />
+
+## Sizes
+
+Button has predefined sizes: xs, sm, md, lg, xl.
+Size prop controls button height, padding and font-size.
 
 ```tsx
-import { Button } from '@mantine/core';
+<Button size="sm" /> // -> predefined small size
+<Button size="xl" /> // -> predefined extra large size
 ```
+
+### Predefined size values
+
+You can get predefined button heights by importing `BUTTON_SIZES`:
+
+```tsx
+import { BUTTON_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Button height']}
+  data={Object.keys(BUTTON_SIZES).map((size) => [size, `${BUTTON_SIZES[size]}px`])}
+/>
+
+## Compose with ElementsGroup
+
+You can compose Button with any other components that support composition feature with <GatsbyLink to="/core/elements-group">ElementGroup</GatsbyLink> component.
+
+<ButtonGroupDemo />
+
+## Get element ref
+
+You can get button ref by passing `ref` prop to Button and LinkButton components:
+
+```tsx
+import React, { useRef } from 'react';
+import { Button, LinkButton } from '@mantine/core';
+
+function ButtonDemo() {
+  const linkRef = useRef<HTMLAnchorElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  return (
+    <>
+      <Button ref={buttonRef} />
+      <LinkButton ref={linkRef} />
+    </>
+  );
+}
+```
+
+## Component props
 
 <PropsTable component="Button" />
