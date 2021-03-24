@@ -23,6 +23,15 @@ storiesOf('@mantine/core/TextInput', module)
       <WrappedTextInput label="text" placeholder="text" icon={<LockClosedIcon />} />
     </div>
   ))
+  .add('With description', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <WrappedTextInput
+        label="text"
+        placeholder="text"
+        description="Enter your name 2-30 characters"
+      />
+    </div>
+  ))
   .add('Uncontrolled', () => (
     <div style={{ width: 300, padding: 20 }}>
       <TextInput label="Uncontrolled" placeholder="Uncontrolled" />

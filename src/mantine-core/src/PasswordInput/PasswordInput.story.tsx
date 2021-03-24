@@ -32,6 +32,16 @@ storiesOf('@mantine/core/PasswordInput', module)
       />
     </div>
   ))
+  .add('With description', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <WrappedPasswordInput
+        label="Password"
+        placeholder="Password"
+        type="password"
+        description="Password must include numbers, letters, emojis, your favorite anime character name, year of first World War"
+      />
+    </div>
+  ))
   .add('Uncontrolled', () => (
     <div style={{ width: 300, padding: 20 }}>
       <PasswordInput label="Uncontrolled" placeholder="Uncontrolled" />
