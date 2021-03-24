@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import cx from 'clsx';
+import { Scrollbars } from 'react-custom-scrollbars';
 import Slugger from 'github-slugger';
 import debounce from 'lodash.debounce';
 import { Text } from '@mantine/core';
@@ -87,11 +88,15 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
 
   return (
     <nav className={classes.wrapper}>
-      <header className={classes.header}>
-        <ActivityLogIcon />
-        <Text className={classes.title}>Table of contents</Text>
-      </header>
-      <div className={classes.items}>{items}</div>
+      <Scrollbars style={{ height: '100vh' }}>
+        <div className={classes.inner}>
+          <header className={classes.header}>
+            <ActivityLogIcon />
+            <Text className={classes.title}>Table of contents</Text>
+          </header>
+          <div className={classes.items}>{items}</div>
+        </div>
+      </Scrollbars>
     </nav>
   );
 }

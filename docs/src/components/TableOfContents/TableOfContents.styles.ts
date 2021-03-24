@@ -13,11 +13,15 @@ export default createUseStyles(
       position: 'fixed',
       top: 0,
       right: 0,
-      paddingTop: HEADER_HEIGHT + theme.spacing.md,
-      paddingRight: theme.spacing.md,
-      paddingLeft: theme.spacing.md,
       height: '100vh',
       borderLeft: `1px solid ${theme.colors.gray[1]}`,
+    },
+
+    inner: {
+      paddingTop: HEADER_HEIGHT + theme.spacing.md,
+      paddingBottom: theme.spacing.xl,
+      paddingRight: theme.spacing.md,
+      paddingLeft: theme.spacing.md,
     },
 
     items: {
