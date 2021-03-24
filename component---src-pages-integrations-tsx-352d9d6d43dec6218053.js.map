@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://mantine-docs/./src/pages/integrations.tsx"],"names":["IntegrationsPage"],"mappings":"4KAEe,SAASA,IACtB,OAAO","file":"component---src-pages-integrations-tsx-352d9d6d43dec6218053.js","sourcesContent":["import React from 'react';\n\nexport default function IntegrationsPage() {\n  return <>Integrations</>;\n}\n"],"sourceRoot":""}
