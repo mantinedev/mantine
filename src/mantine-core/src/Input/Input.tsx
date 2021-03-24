@@ -4,7 +4,7 @@ import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme
 import { ComponentPassThrough } from '@mantine/types';
 import useStyles from './Input.styles';
 
-interface InputProps extends DefaultProps {
+export interface InputProps extends DefaultProps {
   /** Sets border color to red */
   invalid?: boolean;
 
@@ -16,6 +16,9 @@ interface InputProps extends DefaultProps {
 
   /** Width of right section, is used to calculate input padding-right */
   rightSectionWidth?: number;
+
+  /** Props spread to rightSection div element */
+  rightSectionProps?: Record<string, any>;
 
   /** Add className to input element */
   inputClassName?: string;
@@ -49,6 +52,7 @@ export function Input<
   style,
   rightSectionWidth = 36,
   rightSection,
+  rightSectionProps = {},
   radius = 'sm',
   inputClassName,
   inputStyle,
@@ -91,9 +95,10 @@ export function Input<
 
       {rightSection && (
         <div
+          {...rightSectionProps}
           data-mantine-input-section
-          style={{ width: rightSectionWidth }}
-          className={classes.rightSection}
+          style={{ ...rightSectionProps.style, width: rightSectionWidth }}
+          className={cx(classes.rightSection, rightSectionProps.className)}
         >
           {rightSection}
         </div>

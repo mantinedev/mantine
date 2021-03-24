@@ -32,9 +32,9 @@ describe('@mantine/core/Select', () => {
       />
     );
 
-    expect(element.find('select').prop('id')).toBe('test-id');
-    expect(element.find('select').prop('aria-required')).toBe(true);
-    expect(element.find('select').prop('style')).toEqual({ border: '1px solid red' });
+    expect(element.render().find('select').attr('id')).toBe('test-id');
+    expect(element.render().find('select').attr('aria-required')).toBe('true');
+    expect(element.render().find('select').css('border')).toBe('1px solid red');
     expect(element.render().find('select').hasClass('test-input-class')).toBe(true);
   });
 
@@ -58,24 +58,8 @@ describe('@mantine/core/Select', () => {
   });
 
   it('passes wrapperProps to InputWrapper', () => {
-    const element = shallow(<Select data={TEST_DATA} wrapperProps={{ 'aria-label': 'test' }} />);
-    expect(element.render().attr('aria-label')).toBe('test');
-  });
-
-  it('sets disabled attribute on select based on disabled prop', () => {
-    const disabled = shallow(<Select data={TEST_DATA} disabled />);
-    const notDisabled = shallow(<Select data={TEST_DATA} />);
-
-    expect(disabled.render().find('select').attr('disabled')).toBe('disabled');
-    expect(notDisabled.render().find('select').attr('disabled')).toBe(undefined);
-  });
-
-  it('renders icon it it was provided', () => {
-    const withIcon = shallow(<Select data={TEST_DATA} icon="$" />);
-    const withoutIcon = shallow(<Select data={TEST_DATA} />);
-
-    expect(withIcon.render().find('[data-mantine-icon]').text()).toBe('$');
-    expect(withoutIcon.render().find('[data-mantine-icon]')).toHaveLength(0);
+    const element = shallow(<Select data={TEST_DATA} wrapperProps={{ 'data-label': 'test' }} />);
+    expect(element.render().attr('data-label')).toBe('test');
   });
 
   it('renders correct amount of options', () => {
