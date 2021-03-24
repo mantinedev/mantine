@@ -5,7 +5,7 @@ export { Badge } from './Badge/Badge';
 export { Blockquote } from './Blockquote/Blockquote';
 export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 export { Burger, BURGER_SIZES } from './Burger/Burger';
-export { Button, LinkButton, MantineButton } from './Button/Button';
+export { Button, LinkButton, MantineButton, BUTTON_SIZES } from './Button/Button';
 export { Checkbox } from './Checkbox/Checkbox';
 export { Code } from './Code/Code';
 export { ColorSwatch } from './ColorSwatch/ColorSwatch';

@@ -7,6 +7,7 @@ import {
   getSizeValue,
   getFocusStyles,
   getThemeColor,
+  MantineSizes,
 } from '@mantine/theme';
 
 export type ButtonVariant = 'link' | 'filled' | 'outline';
@@ -50,6 +51,11 @@ const sizes = {
     padding: [0, 22],
   },
 };
+
+export const heights = Object.keys(sizes).reduce((acc, size) => {
+  acc[size] = sizes[size].height;
+  return acc;
+}, {} as MantineSizes);
 
 const getWidthStyles = (fullWidth: boolean) => ({
   display: fullWidth ? 'block' : 'inline-block',

@@ -5,7 +5,9 @@ import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '@mantine/theme';
 import { ComponentPassThrough } from '@mantine/types';
-import useStyles, { ButtonVariant } from './Button.styles';
+import useStyles, { ButtonVariant, heights } from './Button.styles';
+
+export const BUTTON_SIZES = heights;
 
 interface ButtonBaseProps extends DefaultProps {
   /** Predefined button size */

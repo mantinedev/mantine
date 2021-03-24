@@ -4,6 +4,7 @@ export type {
   MantineSize,
   MantineNumberSize,
   DefaultProps,
+  MantineSizes,
 } from './types';
 
 export { getThemeColor } from './utils/get-theme-color/get-theme-color';
