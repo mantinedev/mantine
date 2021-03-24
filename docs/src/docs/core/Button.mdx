@@ -7,6 +7,13 @@ slug: /core/button/
 import { BUTTON_SIZES } from '@mantine/core';
 import { ButtonGroupDemo } from '../../demos/core/Button/button-group.demo';
 import { ButtonRootDemo } from '../../demos/core/Button/button-root.demo';
+import { ButtonFullWidthDemo } from '../../demos/core/Button/button-width.demo';
+import {
+  ButtonFilledVariantDemo,
+  ButtonOutlineVariantDemo,
+  ButtonLinkVariantDemo,
+} from '../../demos/core/Button/button-colors.demo';
+import { ButtonConfigurator } from '../../demos/core/Button/button.configurator';
 
 # Button
 
@@ -22,7 +29,35 @@ import { Button, LinkButton, MantineButton } from '@mantine/core';
 
 <ButtonRootDemo />
 
-## Sizes
+## Variants and colors
+
+Button component supports all colors defined in <GatsbyLink to="/theming">theme</GatsbyLink> and has 3 variants:
+
+- `filled` (default) – high emphasis button with dark background
+- `outline` – lower emphasis button with border and transparent background
+- `link` – lowest emphasis button that looks like regular text
+
+Default Button color is `theme.primaryColor`, to change color and variant pass `color` and `variant` props:
+
+```tsx
+<Button color="red" /> // filled button with red color
+<Button variant="outline" /> // outline button with theme.primaryColor color
+<Button variant="link" color="indigo" /> // indigo link button
+```
+
+### Filled variant
+
+<ButtonFilledVariantDemo />
+
+### Outline variant
+
+<ButtonOutlineVariantDemo />
+
+### Link variant
+
+<ButtonLinkVariantDemo />
+
+## Size
 
 Button has predefined sizes: xs, sm, md, lg, xl.
 Size prop controls button height, padding and font-size.
@@ -44,6 +79,27 @@ import { BUTTON_SIZES } from '@mantine/core';
   head={['Prop value', 'Button height']}
   data={Object.keys(BUTTON_SIZES).map((size) => [size, `${BUTTON_SIZES[size]}px`])}
 />
+
+## Radius
+
+Radius has predefined values: xs, sm, md, lg, xl which are defined in <GatsbyLink to="/theming">theme</GatsbyLink>,
+or you can pass number to set border-radius in px:
+
+```tsx
+<Button radius="lg" /> // -> theme predefined large radius
+<Button radius={10} /> // -> { borderRadius: 10 }
+```
+
+## Size, radius, color and variant demo
+
+<ButtonConfigurator />
+
+## Full width
+
+Button can take full width of container if you pass `fullWidth` prop.
+If button is too large for its container, overflow content will be hidden with ellipsis.
+
+<ButtonFullWidthDemo />
 
 ## Compose with ElementsGroup
 
