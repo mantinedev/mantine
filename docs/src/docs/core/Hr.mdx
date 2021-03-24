@@ -4,7 +4,8 @@ title: Hr
 slug: /core/hr/
 ---
 
-import { HrBaseDemo } from '../../demos/core/Hr/hr.demos';
+import { HR_SIZES } from '@mantine/core';
+import { HrBaseDemo, HrSizesDemo, HrColorDemo } from '../../demos/core/Hr/hr.demos';
 
 # Hr
 
@@ -21,6 +22,37 @@ import { Hr } from '@mantine/core';
 Customize hr style by setting `variant` prop:
 
 <HrBaseDemo />
+
+## Colors
+
+You can choose any color defined in <GatsbyLink to="/theming">theme</GatsbyLink>
+
+<HrColorDemo />
+
+## Sizes
+
+Hr has predefined sizes: xs, sm, md, lg, xl.
+You can pass size as number and it will be set as width and height in px.
+
+```tsx
+<Hr size="sm" /> // -> predefined small size
+<Hr size={50} /> // -> { width: 50, height: 50 }
+```
+
+### Default size values
+
+You can get default sizes for action icon by importing `HR_SIZES`:
+
+```tsx
+import { HR_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Width and height']}
+  data={Object.keys(HR_SIZES).map((size) => [size, `${HR_SIZES[size]}px`])}
+/>
+
+<HrSizesDemo />
 
 ## Component props
 
