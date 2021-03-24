@@ -28,7 +28,7 @@ export function ButtonComponentsDemo() {
   return (
     <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center">
-        <Button onClick={() => console.log('Hello')}>Regular button</Button>
+        <Button>Regular button</Button>
         <Button
           component="a"
           href="https://mantine.dev"

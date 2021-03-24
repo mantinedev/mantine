@@ -147,6 +147,36 @@ function ButtonDemo() {
 }
 ```
 
+## TypeScript support
+
+Usage of some props in typescript require type specification.
+Button component is a generic and you can pass 2 generic arguments to enhance type support:
+
+```tsx
+// Custom element button
+<Button<'a', HTMLAnchorElement>
+  component="a"
+  onClick={(event) => {}} // -> event will now have correct types
+  elementRef={(node) => {}} // node type is set to HTMLAnchorElement
+/>
+
+// Custom component button – react-router-dom link
+<Button<typeof Link, HTMLAnchorElement>
+  component={Link}
+  onClick={(event) => {}} // -> event will now have correct types
+  elementRef={(node) => {}} // node type is set to HTMLAnchorElement
+/>
+```
+
+Usually it is not necessary to use generics and you can avoid it by setting types directly on callbacks:
+
+```tsx
+<Button
+  onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {}}
+  elementRef={(node: HTMLAnchorElement) => {}}
+/>
+```
+
 ## Component props
 
 <PropsTable component="Button" />
