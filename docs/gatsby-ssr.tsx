@@ -1,27 +1,38 @@
 import React from 'react';
 import { JssProvider, SheetsRegistry } from 'react-jss';
-import { renderToString } from 'react-dom/server';
 import { MantineProvider } from '@mantine/theme';
+import Layout from './src/components/Layout/Layout';
 
-export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadComponents }) => {
+const sheetsRegistryManager = new Map();
+
+export const wrapRootElement = ({ element, pathname }) => {
   const sheets = new SheetsRegistry();
+  sheetsRegistryManager.set(pathname, sheets);
 
-  const App = () => (
+  return (
     <JssProvider registry={sheets}>
-      <MantineProvider theme={{ headings: { fontFamily: 'IBM Plex Mono, monospace' } }}>
-        {bodyComponent}
+      <MantineProvider theme={{ fontFamilyMonospace: 'IBM Plex Mono, Monaco, Courier, monospace' }}>
+        <div>
+          <Layout>{element}</Layout>
+        </div>
       </MantineProvider>
     </JssProvider>
   );
+};
 
-  replaceBodyHTMLString(renderToString(<App />));
+export const onRenderBody = ({ setHeadComponents, pathname }) => {
+  const sheets = sheetsRegistryManager.get(pathname);
 
-  setHeadComponents([
-    <style
-      type="text/css"
-      id="server-side-jss"
-      key="server-side-jss"
-      dangerouslySetInnerHTML={{ __html: sheets.toString() }}
-    />,
-  ]);
+  if (sheets) {
+    setHeadComponents([
+      <style
+        type="text/css"
+        id="server-side-jss"
+        key="server-side-jss"
+        dangerouslySetInnerHTML={{ __html: sheets.toString() }}
+      />,
+    ]);
+
+    sheetsRegistryManager.delete(pathname);
+  }
 };
