@@ -128,7 +128,6 @@ export default createUseStyles({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    lineHeight: 1,
     backgroundColor: getThemeColor({ theme, color, shade: 6 }),
     textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}`,
     color: theme.white,
