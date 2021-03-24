@@ -70,7 +70,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
         size="sm"
         className={cx(classes.link, { [classes.linkActive]: active === index })}
         href={`#${slug}`}
-        style={{ marginLeft: (heading.depth - 2) * theme.spacing.lg }}
+        style={{ paddingLeft: (heading.depth - 1) * theme.spacing.lg }}
         onClick={(event) => {
           event.preventDefault();
           const element = document.getElementById(slug);
@@ -91,7 +91,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
         <ActivityLogIcon />
         <Text className={classes.title}>Table of contents</Text>
       </header>
-      {items}
+      <div className={classes.items}>{items}</div>
     </nav>
   );
 }

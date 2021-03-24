@@ -20,11 +20,16 @@ export default createUseStyles(
       borderLeft: `1px solid ${theme.colors.gray[1]}`,
     },
 
+    items: {
+      borderLeft: `1px solid ${theme.colors.gray[3]}`,
+    },
+
     link: {
       display: 'block',
       color: theme.colors.gray[7],
-      borderLeft: `1px solid ${theme.colors.gray[3]}`,
-      padding: [6, theme.spacing.md],
+      borderLeft: '1px solid transparent',
+      padding: [8, theme.spacing.md],
+      marginLeft: -1,
     },
 
     linkActive: {
