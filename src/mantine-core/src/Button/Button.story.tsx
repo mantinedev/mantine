@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link, MemoryRouter } from 'react-router-dom';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { MantineSize, DEFAULT_THEME } from '@mantine/theme';
 import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
-import { Button, LinkButton } from './Button';
+import { Button, LinkButton, MantineButton } from './Button';
 
 const getThemes = (props?: any) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (
@@ -100,4 +101,16 @@ storiesOf('@mantine/core/Button', module)
         Full width link variant
       </Button>
     </div>
+  ))
+  .add('React router', () => (
+    <MemoryRouter>
+      <ElementsGroup style={{ padding: 20 }}>
+        <Link to="/hello" component={LinkButton}>
+          React Router link
+        </Link>
+        <MantineButton component={Link} to="/hello">
+          Mantine button
+        </MantineButton>
+      </ElementsGroup>
+    </MemoryRouter>
   ));
