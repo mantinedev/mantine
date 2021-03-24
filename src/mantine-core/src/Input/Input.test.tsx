@@ -17,7 +17,7 @@ describe('@mantine/core/Input', () => {
 
   itSupportsClassName(Input, {});
   itSupportsStyle(Input, {});
-  itSupportsRef(Input, {}, HTMLInputElement);
+  itSupportsRef(Input, {}, HTMLInputElement, 'elementRef');
 
   it('spread wrapperProps to root element', () => {
     const element = shallow(<Input wrapperProps={{ 'aria-label': 'test-input' }} />);
@@ -81,5 +81,15 @@ describe('@mantine/core/Input', () => {
     expect(withoutRightSection.render().find('input').css('padding-right')).toBe(
       `${DEFAULT_THEME.spacing.md}px`
     );
+  });
+
+  it('accepts component from component prop', () => {
+    const TestComponent = (props: any) => <select data-test-prop {...props} />;
+    const withTag = shallow(<Input<'button'> component="button" />);
+    const withComponent = shallow(<Input<typeof TestComponent> component={TestComponent} />);
+
+    expect(withTag.find('[data-mantine-input]').type()).toBe('button');
+    expect(withComponent.find('[data-mantine-input]').type()).toBe(TestComponent);
+    expect(withComponent.render().find('[data-mantine-input]').attr('data-test-prop')).toBe('true');
   });
 });

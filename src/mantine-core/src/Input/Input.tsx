@@ -1,9 +1,10 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
+import { ComponentPassThrough } from '@mantine/types';
 import useStyles from './Input.styles';
 
-interface InputProps extends DefaultProps, React.ComponentPropsWithoutRef<'input'> {
+interface InputProps extends DefaultProps {
   /** Sets border color to red */
   invalid?: boolean;
 
@@ -35,69 +36,70 @@ interface InputProps extends DefaultProps, React.ComponentPropsWithoutRef<'input
   variant?: 'default' | 'filled' | 'unstyled';
 }
 
-export const Input = forwardRef(
-  (
-    {
-      className,
-      invalid = false,
-      required = false,
-      variant = 'default',
-      icon,
-      style,
-      rightSectionWidth = 36,
-      rightSection,
-      radius = 'sm',
-      inputClassName,
-      inputStyle,
-      themeOverride,
-      wrapperProps,
-      ...others
-    }: InputProps,
-    ref: React.ForwardedRef<HTMLInputElement>
-  ) => {
-    const theme = useMantineTheme(themeOverride);
-    const classes = useStyles({ radius, theme });
+export function Input<
+  T extends React.ElementType = 'input',
+  U extends HTMLElement = HTMLButtonElement
+>({
+  component: Element = 'input',
+  className,
+  invalid = false,
+  required = false,
+  variant = 'default',
+  icon,
+  style,
+  rightSectionWidth = 36,
+  rightSection,
+  radius = 'sm',
+  inputClassName,
+  inputStyle,
+  themeOverride,
+  wrapperProps,
+  elementRef,
+  ...others
+}: ComponentPassThrough<T, InputProps> & { elementRef?: React.ForwardedRef<U> }) {
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ radius, theme });
 
-    return (
-      <div
-        className={cx(
-          classes.inputWrapper,
-          { [classes.invalid]: invalid },
-          classes[`${variant}Variant`],
-          className
-        )}
-        style={style}
-        {...wrapperProps}
-      >
-        {icon && (
-          <div data-mantine-icon className={classes.icon}>
-            {icon}
-          </div>
-        )}
+  return (
+    <div
+      className={cx(
+        classes.inputWrapper,
+        { [classes.invalid]: invalid },
+        classes[`${variant}Variant`],
+        className
+      )}
+      style={style}
+      {...wrapperProps}
+    >
+      {icon && (
+        <div data-mantine-icon className={classes.icon}>
+          {icon}
+        </div>
+      )}
 
-        <input
-          {...others}
-          ref={ref}
-          aria-required={required}
-          className={cx({ [classes.withIcon]: icon }, classes.input, inputClassName)}
-          style={{
-            paddingRight: rightSection ? rightSectionWidth : theme.spacing.md,
-            ...inputStyle,
-          }}
-        />
+      <Element
+        {...others}
+        data-mantine-input
+        ref={elementRef}
+        aria-required={required}
+        className={cx({ [classes.withIcon]: icon }, classes.input, inputClassName)}
+        style={{
+          paddingRight: rightSection ? rightSectionWidth : theme.spacing.md,
+          ...inputStyle,
+        }}
+      />
 
-        {rightSection && (
-          <div
-            data-mantine-input-section
-            style={{ width: rightSectionWidth }}
-            className={classes.rightSection}
-          >
-            {rightSection}
-          </div>
-        )}
-      </div>
-    );
-  }
-);
+      {rightSection && (
+        <div
+          data-mantine-input-section
+          style={{ width: rightSectionWidth }}
+          className={classes.rightSection}
+        >
+          {rightSection}
+        </div>
+      )}
+    </div>
+  );
+}
 
 Input.displayName = '@mantine/core/Input';

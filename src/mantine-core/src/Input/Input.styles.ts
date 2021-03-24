@@ -13,11 +13,13 @@ export default createUseStyles({
     position: 'relative',
     overflow: 'hidden',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+
+    '&, & *': { boxSizing: 'border-box' },
   }),
 
   defaultVariant: ({ theme, radius }: InputStylesProps) => ({
     '& $input': {
-      height: 36,
+      minHeight: 36,
       paddingLeft: 15,
       paddingRight: 15,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
@@ -40,14 +42,13 @@ export default createUseStyles({
     },
 
     '& $icon': {
-      height: 36,
       width: 36,
     },
   }),
 
   filledVariant: ({ theme, radius }: InputStylesProps) => ({
     '& $input': {
-      height: 36,
+      minHeight: 36,
       paddingLeft: theme.spacing.md,
       paddingRight: theme.spacing.md,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
@@ -81,7 +82,6 @@ export default createUseStyles({
     },
 
     '& $icon': {
-      height: 36,
       width: 36,
       color: theme.colors.gray[6],
     },
@@ -100,7 +100,6 @@ export default createUseStyles({
     },
 
     '& $icon': {
-      height: 28,
       width: 28,
     },
 
@@ -111,10 +110,14 @@ export default createUseStyles({
 
   input: ({ theme }: InputStylesProps) => ({
     ...getFontStyles(theme),
+    lineHeight: theme.lineHeight,
+    appearance: 'none',
+    resize: 'none',
     boxSizing: 'border-box',
     fontSize: 14,
     width: '100%',
     color: theme.black,
+    display: 'block',
 
     '&:disabled': {
       backgroundColor: theme.colors.gray[1],
@@ -134,6 +137,8 @@ export default createUseStyles({
     pointerEvents: 'none',
     position: 'absolute',
     left: 0,
+    top: 0,
+    bottom: 0,
     color: theme.colors.gray[5],
     display: 'flex',
     alignItems: 'center',

@@ -56,7 +56,7 @@ export const TextInput = forwardRef(
         <Input
           {...others}
           required={required}
-          ref={ref}
+          elementRef={ref}
           id={uuid}
           type={type}
           invalid={!!error}
