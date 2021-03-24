@@ -128,6 +128,25 @@ function ButtonDemo() {
 }
 ```
 
+## Usage with react-router and other libraries
+
+You can use Button component with [react-router-dom](https://reactrouter.com/web/guides/quick-start)
+or other similar libraries by passing `Link` as component to Button:
+
+```tsx
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@mantine/core';
+
+function ButtonDemo() {
+  return (
+    <Button component={Link} to="/react-router">
+      React router link
+    </Button>
+  );
+}
+```
+
 ## Component props
 
 <PropsTable component="Button" />
