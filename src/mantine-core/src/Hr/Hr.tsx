@@ -1,23 +1,31 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps } from '@mantine/theme';
-import useStyles from './Hr.styles';
+import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
+import useStyles, { sizes } from './Hr.styles';
+
+export const HR_SIZES = sizes;
 
 interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
   /** Hr borderStyle */
-  variant?: React.CSSProperties['borderTopStyle'];
+  variant?: 'solid' | 'dashed' | 'dotted';
+
+  /** Hr height */
+  size?: MantineNumberSize;
+
+  /** Hr color */
+  color?: string;
 }
 
-export function Hr({ className, variant = 'dashed', style, themeOverride, ...others }: HrProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
-
-  return (
-    <hr
-      className={cx(classes.hr, className)}
-      style={{ ...style, borderTopStyle: variant }}
-      {...others}
-    />
-  );
+export function Hr({
+  size = 'xs',
+  className,
+  variant = 'dashed',
+  themeOverride,
+  color = 'gray',
+  ...others
+}: HrProps) {
+  const classes = useStyles({ color, variant, size, theme: useMantineTheme(themeOverride) });
+  return <hr className={cx(classes.hr, className)} {...others} />;
 }
 
 Hr.displayName = '@mantine/core/Hr';

@@ -1,14 +1,27 @@
+import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { MantineTheme } from '@mantine/theme';
+import { MantineNumberSize, MantineTheme, getSizeValue, getThemeColor } from '@mantine/theme';
 
 interface HrStylesProps {
   theme: MantineTheme;
+  size: MantineNumberSize;
+  variant: React.CSSProperties['borderTopStyle'];
+  color: string;
 }
 
+export const sizes = {
+  xs: 1,
+  sm: 2,
+  md: 3,
+  lg: 4,
+  xl: 5,
+};
+
 export default createUseStyles({
-  hr: ({ theme }: HrStylesProps) => ({
+  hr: ({ theme, size, variant, color }: HrStylesProps) => ({
     border: 0,
-    borderTopWidth: 1,
-    borderTopColor: theme.colors.gray[5],
+    borderTopWidth: getSizeValue({ size, sizes }),
+    borderTopColor: getThemeColor({ theme, color, shade: 6 }),
+    borderTopStyle: variant,
   }),
 });

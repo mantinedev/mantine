@@ -40,7 +40,7 @@ export default createUseStyles({
         borderBottom: 0,
         borderLeft: 0,
         borderRight: 0,
-        borderTop: `1px solid ${theme.colors.gray[5]}`,
+        borderTop: `1px dashed ${theme.colors.gray[6]}`,
       },
 
       '& a': {

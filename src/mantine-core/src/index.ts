@@ -12,7 +12,7 @@ export { ColorSwatch } from './ColorSwatch/ColorSwatch';
 export { Container } from './Container/Container';
 export { ElementsGroup } from './ElementsGroup/ElementsGroup';
 export { Highlight } from './Highlight/Highlight';
-export { Hr } from './Hr/Hr';
+export { Hr, HR_SIZES } from './Hr/Hr';
 export { InnerHtml } from './InnerHtml/InnerHtml';
 export { Input } from './Input/Input';
 export { InputWrapper } from './InputWrapper/InputWrapper';
