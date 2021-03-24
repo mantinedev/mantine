@@ -1,7 +1,9 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
-import useStyles from './Container.styles';
+import useStyles, { sizes } from './Container.styles';
+
+export const CONTAINER_SIZES = sizes;
 
 interface ContainerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Predefined container max-width or number for max-width in px */

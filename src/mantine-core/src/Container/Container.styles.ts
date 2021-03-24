@@ -7,7 +7,7 @@ interface ContainerStylesProps {
   theme: MantineTheme;
 }
 
-const sizes = {
+export const sizes = {
   xs: 570,
   sm: 770,
   md: 970,

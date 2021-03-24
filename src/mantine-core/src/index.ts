@@ -9,7 +9,7 @@ export { Button, BUTTON_SIZES } from './Button/Button';
 export { Checkbox } from './Checkbox/Checkbox';
 export { Code } from './Code/Code';
 export { ColorSwatch } from './ColorSwatch/ColorSwatch';
-export { Container } from './Container/Container';
+export { Container, CONTAINER_SIZES } from './Container/Container';
 export { ElementsGroup } from './ElementsGroup/ElementsGroup';
 export { Highlight } from './Highlight/Highlight';
 export { Hr, HR_SIZES } from './Hr/Hr';
