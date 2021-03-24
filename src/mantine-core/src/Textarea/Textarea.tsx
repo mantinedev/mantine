@@ -1,14 +1,14 @@
 import React, { forwardRef } from 'react';
-import cx from 'clsx';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useId } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
+import { useMantineTheme, DefaultProps } from '@mantine/theme';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
-import useStyles from './Textarea.styles';
+import { Input, InputProps } from '../Input/Input';
 
 interface TextareaProps
   extends DefaultProps,
     InputWrapperBaseProps,
+    InputProps,
     React.ComponentPropsWithoutRef<'textarea'> {
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
@@ -22,14 +22,8 @@ interface TextareaProps
   /** Defined minRows in autosize variant and rows in regular variant */
   minRows?: number;
 
-  /** Textarea border-radius defined in theme.radius or number for border-radius in px */
-  radius?: MantineNumberSize;
-
   /** Style properties added to input element */
   inputStyle?: React.CSSProperties;
-
-  /** Class name added to input element */
-  inputClassName?: string;
 
   /** Props passed to root element (InputWrapper component) */
   wrapperProps?: Record<string, any>;
@@ -38,7 +32,6 @@ interface TextareaProps
 export const Textarea = forwardRef(
   (
     {
-      radius = 'sm',
       autosize = false,
       maxRows,
       minRows,
@@ -52,13 +45,12 @@ export const Textarea = forwardRef(
       style,
       wrapperProps,
       inputStyle,
-      inputClassName,
       ...others
     }: TextareaProps,
     ref: React.ForwardedRef<HTMLTextAreaElement>
   ) => {
     const uuid = useId(id);
-    const classes = useStyles({ radius, theme: useMantineTheme(themeOverride) });
+    const theme = useMantineTheme(themeOverride);
 
     return (
       <InputWrapper
@@ -72,24 +64,35 @@ export const Textarea = forwardRef(
         {...wrapperProps}
       >
         {autosize ? (
-          <TextareaAutosize
-            aria-required={required}
-            className={cx(classes.textarea, { [classes.invalid]: error }, inputClassName)}
+          <Input
+            required={required}
+            component={TextareaAutosize}
+            invalid={!!error}
             maxRows={maxRows}
             minRows={minRows}
             id={uuid}
-            ref={ref}
-            style={{ ...inputStyle, height: undefined }}
+            elementRef={ref}
+            inputStyle={{
+              paddingTop: theme.spacing.xs,
+              paddingBottom: theme.spacing.xs,
+              ...inputStyle,
+              height: undefined,
+            }}
             {...others}
           />
         ) : (
-          <textarea
-            aria-required={required}
+          <Input
+            component="textarea"
+            required={required}
             id={uuid}
-            className={cx(classes.textarea, { [classes.invalid]: error }, inputClassName)}
+            invalid={!!error}
             rows={minRows}
-            ref={ref}
-            style={inputStyle}
+            elementRef={ref}
+            inputStyle={{
+              paddingTop: theme.spacing.xs,
+              paddingBottom: theme.spacing.xs,
+              ...inputStyle,
+            }}
             {...others}
           />
         )}

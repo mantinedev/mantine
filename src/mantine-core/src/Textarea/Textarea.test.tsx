@@ -3,7 +3,10 @@ import { shallow, mount } from 'enzyme';
 import TextareaAutosize from 'react-textarea-autosize';
 import { checkAccessibility, itSupportsStyle, itSupportsClassName } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
+import { Input } from '../Input/Input';
 import { Textarea } from './Textarea';
+
+const getInput = (element: any, input: any) => element.find(Input).dive().find(input);
 
 describe('@mantine/core/Textarea', () => {
   checkAccessibility([
@@ -19,10 +22,8 @@ describe('@mantine/core/Textarea', () => {
     const autosize = shallow(<Textarea autosize />);
     const notAutosize = shallow(<Textarea />);
 
-    expect(autosize.find(TextareaAutosize)).toHaveLength(1);
-    expect(autosize.find('textarea')).toHaveLength(0);
-    expect(notAutosize.find(TextareaAutosize)).toHaveLength(0);
-    expect(notAutosize.find('textarea')).toHaveLength(1);
+    expect(getInput(autosize, TextareaAutosize)).toHaveLength(1);
+    expect(getInput(notAutosize, 'textarea')).toHaveLength(1);
   });
 
   it('passes correct props to TextareaAutosize component and textarea element', () => {
@@ -49,25 +50,25 @@ describe('@mantine/core/Textarea', () => {
       />
     );
 
-    expect(autosize.find(TextareaAutosize).prop('aria-required')).toBe(true);
-    expect(autosize.find(TextareaAutosize).prop('maxRows')).toBe(9);
-    expect(autosize.find(TextareaAutosize).prop('minRows')).toBe(1);
-    expect(autosize.find(TextareaAutosize).prop('id')).toBe('test-id');
-    expect(autosize.find(TextareaAutosize).prop('placeholder')).toBe('test-placeholder');
-    expect(autosize.find(TextareaAutosize).prop('style').border).toBe('1px solid red');
-    expect(autosize.find(TextareaAutosize).hasClass('test-class')).toBe(true);
+    expect(getInput(autosize, TextareaAutosize).prop('aria-required')).toBe(true);
+    expect(getInput(autosize, TextareaAutosize).prop('maxRows')).toBe(9);
+    expect(getInput(autosize, TextareaAutosize).prop('minRows')).toBe(1);
+    expect(getInput(autosize, TextareaAutosize).prop('id')).toBe('test-id');
+    expect(getInput(autosize, TextareaAutosize).prop('placeholder')).toBe('test-placeholder');
+    expect(getInput(autosize, TextareaAutosize).prop('style').border).toBe('1px solid red');
+    expect(getInput(autosize, TextareaAutosize).hasClass('test-class')).toBe(true);
 
-    expect(notAutosize.find('textarea').prop('aria-required')).toBe(true);
-    expect(notAutosize.find('textarea').prop('rows')).toBe(2);
-    expect(notAutosize.find('textarea').prop('id')).toBe('test-id');
-    expect(notAutosize.find('textarea').prop('placeholder')).toBe('test-placeholder');
-    expect(notAutosize.find('textarea').prop('style').border).toBe('1px solid red');
-    expect(notAutosize.find('textarea').hasClass('test-class')).toBe(true);
+    expect(getInput(notAutosize, 'textarea').prop('aria-required')).toBe(true);
+    expect(getInput(notAutosize, 'textarea').prop('rows')).toBe(2);
+    expect(getInput(notAutosize, 'textarea').prop('id')).toBe('test-id');
+    expect(getInput(notAutosize, 'textarea').prop('placeholder')).toBe('test-placeholder');
+    expect(getInput(notAutosize, 'textarea').prop('style').border).toBe('1px solid red');
+    expect(getInput(notAutosize, 'textarea').hasClass('test-class')).toBe(true);
   });
 
   it('passes wrapperProps to InputWrapper', () => {
-    const element = shallow(<Textarea wrapperProps={{ 'aria-label': 'test' }} />);
-    expect(element.render().attr('aria-label')).toBe('test');
+    const element = shallow(<Textarea wrapperProps={{ 'data-label': 'test' }} />);
+    expect(element.render().attr('data-label')).toBe('test');
   });
 
   it('passes required, id, label, error and description props to InputWrapper component', () => {
