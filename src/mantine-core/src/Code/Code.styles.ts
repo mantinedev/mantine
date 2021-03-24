@@ -9,6 +9,7 @@ interface CodeStylesProps {
 export default createUseStyles({
   code: ({ theme, color }: CodeStylesProps) => ({
     ...getFontStyles(theme),
+    lineHeight: theme.lineHeight,
     padding: [3, theme.spacing.xs / 2],
     borderRadius: theme.radius.sm,
     color: getThemeColor({ theme, color, shade: 9 }),
