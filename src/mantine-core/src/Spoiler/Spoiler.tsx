@@ -61,7 +61,7 @@ export function Spoiler({
       {spoiler && (
         <Button
           variant="link"
-          ref={controlRef}
+          elementRef={controlRef}
           onClick={() => setShowState((opened) => !opened)}
           themeOverride={themeOverride}
         >

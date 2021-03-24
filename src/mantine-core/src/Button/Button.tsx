@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 // ^ this is fun – https://github.com/yannickcr/eslint-plugin-react/issues/1555
 
-import React, { forwardRef } from 'react';
+import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '@mantine/theme';
 import { ComponentPassThrough } from '@mantine/types';
@@ -40,7 +40,7 @@ type _ButtonProps<T extends React.ElementType, U extends HTMLElement> = Componen
   ButtonBaseProps
 > & { elementRef?: React.ForwardedRef<U> };
 
-export function MantineButton<
+export function Button<
   T extends React.ElementType = 'button',
   U extends HTMLElement = HTMLButtonElement
 >({
@@ -100,22 +100,4 @@ export function MantineButton<
   );
 }
 
-export const Button = forwardRef(
-  (
-    props: ComponentPassThrough<'button', ButtonBaseProps>,
-    ref: React.ForwardedRef<HTMLButtonElement>
-  ) => <MantineButton {...props} elementRef={ref} />
-);
-
-export const LinkButton = forwardRef(
-  (
-    props: ComponentPassThrough<'a', ButtonBaseProps>,
-    ref: React.ForwardedRef<HTMLAnchorElement>
-  ) => (
-    <MantineButton<'a', HTMLAnchorElement> component="a" type={null} elementRef={ref} {...props} />
-  )
-);
-
-MantineButton.displayName = '@mantine/core/MantineButton';
 Button.displayName = '@mantine/core/Button';
-LinkButton.displayName = '@mantine/core/LinkButton';

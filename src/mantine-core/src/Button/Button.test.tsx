@@ -9,18 +9,19 @@ import {
   itSupportsOthers,
   isHasComposableAttribute,
 } from '@mantine/tests';
-import { Button, LinkButton, MantineButton } from './Button';
+import { Button } from './Button';
 
-describe('@mantine/core/MantineButton', () => {
-  checkAccessibility([mount(<MantineButton>Mantine button</MantineButton>)]);
-  itSupportsOthers(MantineButton, {});
-  itRendersChildren(MantineButton, {});
-  itSupportsStyle(MantineButton, {});
-  itSupportsClassName(MantineButton, {});
-  isHasComposableAttribute(MantineButton, {});
+describe('@mantine/core/Button', () => {
+  checkAccessibility([mount(<Button>Mantine button</Button>)]);
+  itSupportsOthers(Button, {});
+  itRendersChildren(Button, {});
+  itSupportsStyle(Button, {});
+  itSupportsRef(Button, {}, HTMLButtonElement, 'elementRef');
+  itSupportsClassName(Button, {});
+  isHasComposableAttribute(Button, {});
 
   it('has correct displayName', () => {
-    expect(MantineButton.displayName).toEqual('@mantine/core/MantineButton');
+    expect(Button.displayName).toEqual('@mantine/core/Button');
   });
 
   it('passes type to button component', () => {
@@ -53,37 +54,5 @@ describe('@mantine/core/MantineButton', () => {
 
     expect(disabled.render().attr('disabled')).toBe('disabled');
     expect(notDisabled.render().attr('disabled')).toBe(undefined);
-  });
-});
-
-describe('@mantine/core/Button', () => {
-  checkAccessibility([mount(<Button>Mantine button</Button>)]);
-  itSupportsOthers(Button, {});
-  itRendersChildren(Button, {});
-  itSupportsStyle(Button, {});
-  itSupportsClassName(Button, {});
-  itSupportsRef(Button, {}, HTMLButtonElement);
-
-  it('has correct displayName', () => {
-    expect(Button.displayName).toEqual('@mantine/core/Button');
-  });
-});
-
-describe('@mantine/core/LinkButton', () => {
-  checkAccessibility([
-    mount(
-      <LinkButton href="https://mantine.dev" target="_blank">
-        Mantine button
-      </LinkButton>
-    ),
-  ]);
-  itSupportsOthers(LinkButton, {});
-  itRendersChildren(LinkButton, {});
-  itSupportsStyle(LinkButton, {});
-  itSupportsClassName(LinkButton, {});
-  itSupportsRef(LinkButton, {}, HTMLAnchorElement);
-
-  it('has correct displayName', () => {
-    expect(LinkButton.displayName).toEqual('@mantine/core/LinkButton');
   });
 });

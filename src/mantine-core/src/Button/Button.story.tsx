@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { MantineSize, DEFAULT_THEME } from '@mantine/theme';
 import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
-import { Button, LinkButton, MantineButton } from './Button';
+import { Button } from './Button';
 
 const getThemes = (props?: any) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (
@@ -15,9 +15,16 @@ const getThemes = (props?: any) =>
 
 const getLinkThemes = (props?: any) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (
-    <LinkButton href="https://mantine.dev" target="_blank" key={color} color={color} {...props}>
+    <Button
+      component="a"
+      href="https://mantine.dev"
+      target="_blank"
+      key={color}
+      color={color}
+      {...props}
+    >
       link - {color}
-    </LinkButton>
+    </Button>
   ));
 
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
@@ -34,7 +41,7 @@ storiesOf('@mantine/core/Button', module)
       <ElementsGroup style={{ padding: 20 }}>{getThemes({ variant: 'link' })}</ElementsGroup>
     </>
   ))
-  .add('LinkButton themes', () => (
+  .add('Link button themes', () => (
     <>
       <ElementsGroup style={{ padding: 20 }}>{getLinkThemes()}</ElementsGroup>
       <ElementsGroup style={{ padding: 20 }}>{getLinkThemes({ variant: 'outline' })}</ElementsGroup>
@@ -83,9 +90,9 @@ storiesOf('@mantine/core/Button', module)
   .add('Full width', () => (
     <div style={{ padding: 20 }}>
       <Button fullWidth>Full width button</Button>
-      <LinkButton fullWidth style={{ marginTop: 20 }}>
+      <Button component="a" fullWidth style={{ marginTop: 20 }}>
         Full width link button
-      </LinkButton>
+      </Button>
       <Button variant="link" fullWidth style={{ marginTop: 20 }}>
         Full width link variant
       </Button>
@@ -94,9 +101,9 @@ storiesOf('@mantine/core/Button', module)
   .add('Overflow', () => (
     <div style={{ width: 120, padding: 20, backgroundColor: '#f3f3f3' }}>
       <Button fullWidth>Full width button</Button>
-      <LinkButton fullWidth style={{ marginTop: 20 }}>
+      <Button component="a" fullWidth style={{ marginTop: 20 }}>
         Full width link button
-      </LinkButton>
+      </Button>
       <Button variant="link" fullWidth style={{ marginTop: 20 }}>
         Full width link variant
       </Button>
@@ -105,12 +112,9 @@ storiesOf('@mantine/core/Button', module)
   .add('React router', () => (
     <MemoryRouter>
       <ElementsGroup style={{ padding: 20 }}>
-        <Link to="/hello" component={LinkButton}>
-          React Router link
-        </Link>
-        <MantineButton component={Link} to="/hello">
+        <Button component={Link} to="/hello">
           Mantine button
-        </MantineButton>
+        </Button>
       </ElementsGroup>
     </MemoryRouter>
   ));

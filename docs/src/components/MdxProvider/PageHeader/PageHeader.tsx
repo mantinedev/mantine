@@ -1,5 +1,5 @@
 import React from 'react';
-import { LinkButton, ElementsGroup } from '@mantine/core';
+import { Button, ElementsGroup } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
 import { GitHubLogoIcon } from '@modulz/radix-icons';
 import NpmIcon from './NpmIcon';
@@ -15,7 +15,8 @@ export default function PageHeader(props: PageHeaderProps) {
 
   return (
     <ElementsGroup style={{ marginTop: theme.spacing.xs, marginBottom: theme.spacing.md }}>
-      <LinkButton
+      <Button
+        component="a"
         variant="outline"
         color="gray"
         target="_blank"
@@ -24,9 +25,10 @@ export default function PageHeader(props: PageHeaderProps) {
         title="Edit this page on Github"
       >
         Edit this page
-      </LinkButton>
+      </Button>
 
-      <LinkButton
+      <Button
+        component="a"
         variant="outline"
         color="gray"
         leftIcon={<GitHubLogoIcon />}
@@ -36,9 +38,10 @@ export default function PageHeader(props: PageHeaderProps) {
         title="Browse source page on Github"
       >
         Source code
-      </LinkButton>
+      </Button>
 
-      <LinkButton
+      <Button
+        component="a"
         variant="outline"
         color="gray"
         leftIcon={<NpmIcon />}
@@ -53,7 +56,7 @@ export default function PageHeader(props: PageHeaderProps) {
         }}
       >
         {props.package}
-      </LinkButton>
+      </Button>
     </ElementsGroup>
   );
 }

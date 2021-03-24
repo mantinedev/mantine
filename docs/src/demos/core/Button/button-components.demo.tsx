@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, LinkButton, ElementsGroup } from '@mantine/core';
+import { Button, ElementsGroup } from '@mantine/core';
 import { ExternalLinkIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
@@ -11,14 +11,15 @@ function ButtonDemo() {
     <ElementsGroup position="center">
       <Button onClick={() => console.log('Hello')}>Regular button</Button>
       
-      <LinkButton
+      <Button
+        component="a"
         href="https://mantine.dev"
         target="_blank"
         variant="outline"
         leftIcon={<ExternalLinkIcon />}
       >
         Mantine docs
-      </LinkButton>
+      </Button>
     </ElementsGroup>
   );
 }`;
@@ -28,14 +29,15 @@ export function ButtonComponentsDemo() {
     <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center">
         <Button onClick={() => console.log('Hello')}>Regular button</Button>
-        <LinkButton
+        <Button
+          component="a"
           href="https://mantine.dev"
           target="_blank"
           variant="outline"
           leftIcon={<ExternalLinkIcon />}
         >
           Mantine docs
-        </LinkButton>
+        </Button>
       </ElementsGroup>
     </CodeDemo>
   );

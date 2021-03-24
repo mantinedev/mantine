@@ -25,15 +25,14 @@ import { ButtonConfigurator } from '../../demos/core/Button/button.configurator'
 />
 
 ```tsx
-import { Button, LinkButton, MantineButton } from '@mantine/core';
+import { Button } from '@mantine/core';
 ```
 
 <ButtonRootDemo />
 
-## Button and LinkButton
+## Usage
 
-Use Button component for `button` element and LinkButton for `a` element.
-Components have the same style but accept different props:
+You can use Button component both as `button` and `a` elements
 
 <ButtonComponentsDemo />
 
@@ -117,22 +116,15 @@ You can compose Button with any other components that support composition featur
 
 ## Get element ref
 
-You can get button ref by passing `ref` prop to Button and LinkButton components:
+You can get button ref by passing `elementRef` prop to Button component:
 
 ```tsx
 import React, { useRef } from 'react';
-import { Button, LinkButton } from '@mantine/core';
+import { Button } from '@mantine/core';
 
 function ButtonDemo() {
-  const linkRef = useRef<HTMLAnchorElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-
-  return (
-    <>
-      <Button ref={buttonRef} />
-      <LinkButton ref={linkRef} />
-    </>
-  );
+  return <Button elementRef={buttonRef} />;
 }
 ```
 
