@@ -1,8 +1,11 @@
 import { createUseStyles } from 'react-jss';
 import { theming, MantineTheme, getFontStyles } from '@mantine/theme';
 import { HEADER_HEIGHT } from './Header/Header.styles';
-import { NAVBAR_WIDTH } from './Navbar/Navbar.styles';
-import { TABLE_OF_CONTENTS_WIDTH } from '../TableOfContents/TableOfContents.styles';
+import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from './Navbar/Navbar.styles';
+import {
+  TABLE_OF_CONTENTS_WIDTH,
+  TABLE_OF_CONTENTS_BREAKPOINT,
+} from '../TableOfContents/TableOfContents.styles';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -22,6 +25,14 @@ export default createUseStyles(
     layout: {
       paddingLeft: NAVBAR_WIDTH,
       paddingRight: TABLE_OF_CONTENTS_WIDTH,
+
+      [`@media (max-width: ${TABLE_OF_CONTENTS_BREAKPOINT}px)`]: {
+        paddingRight: 0,
+      },
+
+      [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
+        paddingLeft: 0,
+      },
     },
 
     main: {
@@ -31,6 +42,11 @@ export default createUseStyles(
       paddingBottom: theme.spacing.xl * 2,
       paddingLeft: theme.spacing.md,
       paddingRight: theme.spacing.md,
+
+      [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
+        paddingLeft: 0,
+        paddingRight: 0,
+      },
     },
   }),
   { theming }

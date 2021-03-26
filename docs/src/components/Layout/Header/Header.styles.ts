@@ -1,7 +1,10 @@
 import { createUseStyles } from 'react-jss';
 import { theming, MantineTheme, getFocusStyles } from '@mantine/theme';
+// eslint-disable-next-line import/no-cycle
+import { NAVBAR_BREAKPOINT } from '../Navbar/Navbar.styles';
 
 export const HEADER_HEIGHT = 60;
+export const HEADER_BREAKPOINT = 960;
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -36,6 +39,31 @@ export default createUseStyles(
     links: {
       display: 'flex',
       paddingRight: theme.spacing.md,
+
+      [`@media (max-width: ${HEADER_BREAKPOINT}px)`]: {
+        display: 'none',
+      },
+    },
+
+    mainSection: {
+      [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+      },
+    },
+
+    burger: {
+      display: 'none',
+
+      [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
+        display: 'block',
+        position: 'absolute',
+        top: 17,
+        left: theme.spacing.md - 4,
+      },
     },
 
     link: {

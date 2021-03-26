@@ -10,6 +10,7 @@ interface NavbarMainLinkProps {
   icon: React.ReactNode;
   children: React.ReactNode;
   color: string;
+  onClick(): void;
 }
 
 export default function NavbarMainLink({
@@ -18,10 +19,16 @@ export default function NavbarMainLink({
   icon,
   children,
   color,
+  onClick,
 }: NavbarMainLinkProps) {
   const classes = useStyles({ color });
   return (
-    <Link className={cx(classes.mainLink, className)} activeClassName={classes.active} to={to}>
+    <Link
+      className={cx(classes.mainLink, className)}
+      activeClassName={classes.active}
+      to={to}
+      onClick={onClick}
+    >
       <ThemeIcon size={30} color={color} variant="light" radius="lg">
         {icon}
       </ThemeIcon>

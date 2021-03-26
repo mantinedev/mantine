@@ -2,7 +2,7 @@ import 'normalize.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import '@fontsource/ibm-plex-mono/700.css';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Container } from '@mantine/core';
 import { graphql, useStaticQuery } from 'gatsby';
 import MdxProvider from '../MdxProvider/MdxProvider';
@@ -31,12 +31,17 @@ const query = graphql`
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const classes = useStyles();
+  const [navbarOpened, setNavbarState] = useState(false);
   const data = getDocsData(useStaticQuery(query));
 
   return (
     <div className={classes.layout}>
-      <Header data={data} />
-      <Navbar data={data} />
+      <Header
+        data={data}
+        navbarOpened={navbarOpened}
+        toggleNavbar={() => setNavbarState((o) => !o)}
+      />
+      <Navbar data={data} opened={navbarOpened} onClose={() => setNavbarState(false)} />
 
       <main className={classes.main}>
         <Container size="sm">

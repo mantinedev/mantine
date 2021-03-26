@@ -9,9 +9,14 @@ import useStyles from './NavbarDocsCategory.styles';
 interface NavbarDocsCategoryProps {
   category: string;
   links: DocItem[];
+  onLinkClick(): void;
 }
 
-export default function NavbarDocsCategory({ links, category }: NavbarDocsCategoryProps) {
+export default function NavbarDocsCategory({
+  links,
+  category,
+  onLinkClick,
+}: NavbarDocsCategoryProps) {
   const classes = useStyles();
   const [collapsed, setCollapsed] = useState(true);
 
@@ -21,7 +26,13 @@ export default function NavbarDocsCategory({ links, category }: NavbarDocsCatego
   }, []);
 
   const items = links.map((link) => (
-    <Link key={link.to} className={classes.link} activeClassName={classes.linkActive} to={link.to}>
+    <Link
+      key={link.to}
+      className={classes.link}
+      activeClassName={classes.linkActive}
+      to={link.to}
+      onClick={onLinkClick}
+    >
       {link.title}
     </Link>
   ));

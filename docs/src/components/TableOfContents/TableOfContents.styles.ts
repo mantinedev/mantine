@@ -3,6 +3,7 @@ import { theming, MantineTheme } from '@mantine/theme';
 import { HEADER_HEIGHT } from '../Layout/Header/Header.styles';
 
 export const TABLE_OF_CONTENTS_WIDTH = 260;
+export const TABLE_OF_CONTENTS_BREAKPOINT = 1080;
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -15,6 +16,10 @@ export default createUseStyles(
       right: 0,
       height: '100vh',
       borderLeft: `1px solid ${theme.colors.gray[1]}`,
+
+      [`@media (max-width: ${TABLE_OF_CONTENTS_BREAKPOINT}px)`]: {
+        display: 'none',
+      },
     },
 
     inner: {
