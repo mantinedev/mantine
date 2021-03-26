@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'gatsby';
 import cx from 'clsx';
 import { ChevronDownIcon } from '@modulz/radix-icons';
@@ -18,12 +18,7 @@ export default function NavbarDocsCategory({
   onLinkClick,
 }: NavbarDocsCategoryProps) {
   const classes = useStyles();
-  const [collapsed, setCollapsed] = useState(true);
-
-  useEffect(() => {
-    const hasActiveLinks = links.some((link) => link.to === window.location.pathname);
-    setCollapsed(!hasActiveLinks);
-  }, []);
+  const [collapsed, setCollapsed] = useState(false);
 
   const items = links.map((link) => (
     <Link
