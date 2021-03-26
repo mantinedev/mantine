@@ -13,6 +13,7 @@ export default createUseStyles({
   breadcrumb: {
     lineHeight: 1,
     whiteSpace: 'nowrap',
+    WebkitTapHighlightColor: 'transparent',
   },
 
   separator: ({ theme }: BreadcrumbsStylesProps) => ({

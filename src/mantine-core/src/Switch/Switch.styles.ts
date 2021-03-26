@@ -53,6 +53,7 @@ export default createUseStyles({
 
     return {
       ...getFocusStyles(theme),
+      WebkitTapHighlightColor: 'transparent',
       position: 'relative',
       borderRadius,
       backgroundColor: theme.colors.gray[2],

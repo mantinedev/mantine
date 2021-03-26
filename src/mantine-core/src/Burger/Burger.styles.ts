@@ -25,6 +25,7 @@ export default createUseStyles({
 
   wrapper: ({ size, theme }: BurgerStylesProps) => ({
     ...getFocusStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
     borderRadius: theme.radius.sm,
     width: getSizeValue({ size, sizes }) + theme.spacing.xs,
     height: getSizeValue({ size, sizes }) + theme.spacing.xs,

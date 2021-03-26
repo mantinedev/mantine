@@ -23,6 +23,7 @@ export default createUseStyles({
     fontSize: theme.fontSizes[size],
     lineHeight: theme.lineHeight,
     textDecoration: 'none',
+    WebkitTapHighlightColor: 'transparent',
 
     '&:hover': {
       textDecoration: variant === 'link' ? 'underline' : 'none',

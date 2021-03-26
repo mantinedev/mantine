@@ -110,6 +110,7 @@ export default createUseStyles({
 
   input: ({ theme }: InputStylesProps) => ({
     ...getFontStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
     lineHeight: theme.lineHeight,
     appearance: 'none',
     resize: 'none',

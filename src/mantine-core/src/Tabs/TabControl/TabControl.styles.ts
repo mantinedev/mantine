@@ -11,6 +11,7 @@ export default createUseStyles({
   tab: ({ theme, reduceMotion }: TabControlStylesProps) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
     boxSizing: 'border-box',
     display: 'block',
     height: 40,

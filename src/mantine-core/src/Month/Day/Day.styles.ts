@@ -10,6 +10,7 @@ export default createUseStyles({
   day: ({ theme }: { theme: MantineTheme }) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
     backgroundColor: 'transparent',
     width: 34,
     height: 34,
