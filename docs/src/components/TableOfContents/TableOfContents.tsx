@@ -19,6 +19,10 @@ interface TableOfContentsProps {
 }
 
 function getActiveElement(rects: DOMRect[]) {
+  if (rects.length === 0) {
+    return -1;
+  }
+
   const closest = rects.reduce(
     (acc, item, index) => {
       if (Math.abs(acc.position) < Math.abs(item.y)) {
@@ -61,6 +65,10 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  if (filteredHeadings.length === 0) {
+    return null;
+  }
 
   const items = filteredHeadings.map((heading, index) => {
     const slug = slugger.slug(heading.value);
