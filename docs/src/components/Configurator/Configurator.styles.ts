@@ -1,6 +1,8 @@
 import { createUseStyles } from 'react-jss';
 import { theming, MantineTheme } from '@mantine/theme';
 
+const BREAKPOINT = 760;
+
 export default createUseStyles(
   (theme: MantineTheme) => ({
     configurator: {
@@ -10,6 +12,10 @@ export default createUseStyles(
       borderTopLeftRadius: theme.radius.sm,
       borderTopRightRadius: theme.radius.sm,
       borderBottom: 0,
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        flexDirection: 'column',
+      },
     },
 
     preview: {
@@ -22,9 +28,14 @@ export default createUseStyles(
     },
 
     controls: {
+      boxSizing: 'border-box',
       width: 250,
       padding: theme.spacing.md,
       backgroundColor: theme.colors.gray[0],
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        width: '100%',
+      },
     },
 
     code: {
