@@ -11,7 +11,7 @@ export default createUseStyles({
   }),
 
   tabsInner: {
-    marginBottom: -1,
+    marginBottom: -2,
   },
 
   body: ({ theme }: TabsStylesProps) => ({

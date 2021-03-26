@@ -17,7 +17,6 @@ export default createUseStyles({
     backgroundColor: 'transparent',
     border: 0,
     borderBottom: '2px solid transparent',
-    marginBottom: '-2px !important',
     padding: [0, theme.spacing.md],
     fontSize: theme.fontSizes.sm,
     cursor: 'pointer',
