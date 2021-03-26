@@ -40,14 +40,6 @@ export default function getDocsData(query: DocsQuery): Record<string, DocItem[]>
         return a.order - b.order;
       }
 
-      if ('order' in a) {
-        return 1;
-      }
-
-      if ('order' in b) {
-        return -1;
-      }
-
       return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
     });
   });
