@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme, getFocusStyles } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -38,7 +38,19 @@ export default createUseStyles(
     },
 
     dropdownBody: {
-      padding: [theme.spacing.xs, theme.spacing.md],
+      padding: [theme.spacing.xs, 0],
+    },
+
+    item: {
+      ...getFocusStyles(theme),
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      height: 44,
+      background: theme.white,
+      padding: [0, theme.spacing.md],
+      border: 0,
     },
   }),
   { theming }

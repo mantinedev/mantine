@@ -3,12 +3,12 @@ import { Link } from 'gatsby';
 import { Burger } from '@mantine/core';
 import { GitHubLogoIcon, ChatBubbleIcon, ExclamationTriangleIcon } from '@modulz/radix-icons';
 import logo from '../../../images/logo.svg';
-import getDocsData from '../get-docs-data';
+import { DocsData } from '../get-docs-data';
 import Search from './Search/Search';
 import useStyles from './Header.styles';
 
 interface HeaderProps {
-  data: ReturnType<typeof getDocsData>;
+  data: DocsData;
   navbarOpened: boolean;
   toggleNavbar(): void;
 }

@@ -1,12 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { TextInput, Kbd, Text, Paper } from '@mantine/core';
+import cx from 'clsx';
+import { navigate } from 'gatsby';
+import { TextInput, Kbd, Text, Paper, Highlight } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
-import getDocsData from '../../get-docs-data';
+import { DocItem, DocsData } from '../../get-docs-data';
 import useStyles from './Search.styles';
 
 interface SearchProps {
-  data: ReturnType<typeof getDocsData>;
+  data: DocsData;
+}
+
+function filterData(query: string, data: DocsData): DocItem[] {
+  return Object.keys(data)
+    .reduce((acc: DocItem[], key) => {
+      const filteredItems = data[key].filter(
+        (item) =>
+          item.title.toLowerCase().includes(query.trim().toLowerCase()) &&
+          item.title.toLowerCase() !== 'getting started'
+      );
+
+      return [...acc, ...filteredItems];
+    }, [])
+    .slice(0, 10);
 }
 
 export default function Search({ data }: SearchProps) {
@@ -16,6 +32,12 @@ export default function Search({ data }: SearchProps) {
   const closeDropdown = () => setDropdownOpened(false);
   const dropdownRef = useClickOutside(closeDropdown);
   const inputRef = useRef<HTMLInputElement>();
+  const filteredData = filterData(query, data);
+  const handleSubmit = (to: string) => {
+    navigate(to);
+    closeDropdown();
+    setQuery('');
+  };
 
   const handleKeyboardEvents = (event: KeyboardEvent) => {
     if (event.code === 'KeyK' && (event.ctrlKey || event.metaKey)) {
@@ -27,6 +49,21 @@ export default function Search({ data }: SearchProps) {
     window.addEventListener('keydown', handleKeyboardEvents);
     return () => window.removeEventListener('keydown', handleKeyboardEvents);
   }, []);
+
+  const items = filteredData.map((item) => (
+    <button
+      type="button"
+      key={item.to}
+      onClick={() => handleSubmit(item.to)}
+      className={cx(classes.item)}
+      tabIndex={-1}
+    >
+      <Highlight highlight={query}>{item.title}</Highlight>
+      <Text color="gray" size="sm">
+        {item.package}
+      </Text>
+    </button>
+  ));
 
   const rightSection = (
     <div className={classes.shortcut}>
@@ -52,9 +89,12 @@ export default function Search({ data }: SearchProps) {
       {dropdownOpened && (
         <Paper className={classes.dropdown} shadow="md" ref={dropdownRef}>
           <div className={classes.dropdownBody}>
-            <Text color="gray" size="lg" align="center">
-              Nothing found
-            </Text>
+            {items}
+            {filteredData.length === 0 && (
+              <Text color="gray" size="sm" align="center">
+                Nothing found
+              </Text>
+            )}
           </div>
         </Paper>
       )}

@@ -13,10 +13,12 @@ export interface DocItem {
   title: string;
 }
 
+export type DocsData = Record<string, DocItem[]>;
+
 const order = ['mantine-hooks', 'mantine-core', 'mantine-notifications'];
 
-export default function getDocsData(query: DocsQuery): Record<string, DocItem[]> {
-  const results = query.allMdx.edges.reduce((acc: Record<string, DocItem[]>, item) => {
+export default function getDocsData(query: DocsQuery): DocsData {
+  const results = query.allMdx.edges.reduce((acc: DocsData, item) => {
     if (!(item.node.frontmatter.package in acc)) {
       acc[item.node.frontmatter.package] = [];
     }

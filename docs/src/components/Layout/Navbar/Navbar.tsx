@@ -3,12 +3,12 @@ import cx from 'clsx';
 import { Scrollbars } from 'react-custom-scrollbars';
 import NavbarMainLink from './NavbarMainLink/NavbarMainLink';
 import NavbarDocsCategory from './NavbarDocsCategory/NavbarDocsCategory';
-import getDocsData from '../get-docs-data';
+import { DocsData } from '../get-docs-data';
 import mainLinks from './main-links';
 import useStyles from './Navbar.styles';
 
 interface NavbarProps {
-  data: ReturnType<typeof getDocsData>;
+  data: DocsData;
   opened: boolean;
   onClose(): void;
 }
