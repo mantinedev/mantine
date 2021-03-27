@@ -23,6 +23,10 @@ export default createUseStyles(
       },
     },
 
+    kbdEnter: {
+      width: 40,
+    },
+
     input: {
       position: 'relative',
       zIndex: 2,
@@ -51,6 +55,14 @@ export default createUseStyles(
       background: theme.white,
       padding: [0, theme.spacing.md],
       border: 0,
+    },
+
+    itemHovered: {
+      backgroundColor: theme.colors.blue[0],
+    },
+
+    package: {
+      fontFamily: theme.fontFamilyMonospace,
     },
   }),
   { theming }

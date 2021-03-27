@@ -28,7 +28,8 @@ function filterData(query: string, data: DocsData): DocItem[] {
 export default function Search({ data }: SearchProps) {
   const classes = useStyles();
   const [query, setQuery] = useState('');
-  const [dropdownOpened, setDropdownOpened] = useState(true);
+  const [hovered, setHovered] = useState(0);
+  const [dropdownOpened, setDropdownOpened] = useState(false);
   const closeDropdown = () => setDropdownOpened(false);
   const dropdownRef = useClickOutside(closeDropdown);
   const inputRef = useRef<HTMLInputElement>();
@@ -45,27 +46,58 @@ export default function Search({ data }: SearchProps) {
     }
   };
 
+  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDropdownOpened(true);
+    setQuery(event.currentTarget.value);
+    setHovered(0);
+  };
+
+  const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.nativeEvent.code === 'ArrowDown') {
+      event.preventDefault();
+      setHovered((current) => (current < filteredData.length - 1 ? current + 1 : current));
+    }
+
+    if (event.nativeEvent.code === 'ArrowUp') {
+      event.preventDefault();
+      setHovered((current) => (current > 0 ? current - 1 : current));
+    }
+
+    if (event.nativeEvent.code === 'Enter') {
+      handleSubmit(filteredData[hovered].to);
+    }
+
+    if (event.nativeEvent.code === 'Escape') {
+      setQuery('');
+      setDropdownOpened(false);
+    }
+  };
+
   useEffect(() => {
     window.addEventListener('keydown', handleKeyboardEvents);
     return () => window.removeEventListener('keydown', handleKeyboardEvents);
   }, []);
 
-  const items = filteredData.map((item) => (
+  const items = filteredData.map((item, index) => (
     <button
       type="button"
       key={item.to}
       onClick={() => handleSubmit(item.to)}
-      className={cx(classes.item)}
+      className={cx(classes.item, { [classes.itemHovered]: hovered === index })}
       tabIndex={-1}
     >
       <Highlight highlight={query}>{item.title}</Highlight>
-      <Text color="gray" size="sm">
-        {item.package}
+      <Text color="gray" size="sm" className={classes.package}>
+        {item.package.replace('mantine-', '@mantine/')}
       </Text>
     </button>
   ));
 
-  const rightSection = (
+  const rightSection = dropdownOpened ? (
+    <div className={classes.shortcut}>
+      <Kbd className={classes.kbdEnter}>↵</Kbd>
+    </div>
+  ) : (
     <div className={classes.shortcut}>
       <Kbd className={classes.kbd}>⌘</Kbd>
       <Kbd className={classes.kbd}>K</Kbd>
@@ -78,12 +110,14 @@ export default function Search({ data }: SearchProps) {
         className={classes.input}
         ref={inputRef}
         value={query}
-        onChange={(event) => setQuery(event.currentTarget.value)}
+        onChange={handleQueryChange}
         placeholder="Search"
         icon={<MagnifyingGlassIcon />}
         rightSection={rightSection}
         rightSectionWidth={50}
         onFocus={() => setDropdownOpened(true)}
+        onBlur={closeDropdown}
+        onKeyDown={handleInputKeydown}
       />
 
       {dropdownOpened && (
