@@ -18,7 +18,10 @@ export interface TextProps extends DefaultProps {
   weight?: React.CSSProperties['fontWeight'];
 
   /** Sets text-transform css property */
-  transform?: React.CSSProperties['textTransform'];
+  transform?: 'capitalize' | 'uppercase' | 'lowercase';
+
+  /** Sets text-align css property */
+  align?: 'left' | 'center' | 'right';
 
   /** Link or text variant */
   variant?: TextVariant;
@@ -33,6 +36,7 @@ export function Text<T extends React.ElementType = 'div'>({
   transform,
   style,
   color,
+  align = 'left',
   variant = 'text',
   themeOverride,
   ...others
@@ -43,7 +47,7 @@ export function Text<T extends React.ElementType = 'div'>({
     component,
     {
       className: cx(classes.text, className),
-      style: { fontWeight: weight, textTransform: transform, ...style },
+      style: { fontWeight: weight, textTransform: transform, textAlign: align, ...style },
       ...others,
     },
     children
