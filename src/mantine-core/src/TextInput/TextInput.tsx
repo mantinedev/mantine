@@ -1,13 +1,14 @@
 import React, { forwardRef } from 'react';
 import { useId } from '@mantine/hooks';
 import { DefaultProps } from '@mantine/theme';
-import { Input } from '../Input/Input';
+import { Input, InputProps } from '../Input/Input';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 
 interface TextInputProps
   extends DefaultProps,
+    InputProps,
     InputWrapperBaseProps,
-    React.ComponentPropsWithoutRef<typeof Input> {
+    React.ComponentPropsWithoutRef<'input'> {
   /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
 
@@ -53,7 +54,7 @@ export const TextInput = forwardRef(
         themeOverride={themeOverride}
         {...wrapperProps}
       >
-        <Input
+        <Input<'input', HTMLInputElement>
           {...others}
           required={required}
           elementRef={ref}

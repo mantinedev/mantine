@@ -78,7 +78,7 @@ export const Select = forwardRef(
         themeOverride={themeOverride}
         description={description}
       >
-        <Input
+        <Input<'select', HTMLSelectElement>
           {...others}
           component="select"
           invalid={!!error}

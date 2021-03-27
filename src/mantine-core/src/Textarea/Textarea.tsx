@@ -64,7 +64,7 @@ export const Textarea = forwardRef(
         {...wrapperProps}
       >
         {autosize ? (
-          <Input
+          <Input<typeof TextareaAutosize, HTMLTextAreaElement>
             required={required}
             component={TextareaAutosize}
             invalid={!!error}
@@ -81,7 +81,7 @@ export const Textarea = forwardRef(
             {...others}
           />
         ) : (
-          <Input
+          <Input<'textarea', HTMLTextAreaElement>
             component="textarea"
             required={required}
             id={uuid}

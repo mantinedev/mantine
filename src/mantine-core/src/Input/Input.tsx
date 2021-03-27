@@ -41,7 +41,7 @@ export interface InputProps extends DefaultProps {
 
 export function Input<
   T extends React.ElementType = 'input',
-  U extends HTMLElement = HTMLButtonElement
+  U extends HTMLElement = HTMLInputElement
 >({
   component: Element = 'input',
   className,
