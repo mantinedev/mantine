@@ -37,7 +37,10 @@ export default createUseStyles(
     },
 
     links: {
+      flex: 1,
+      marginLeft: theme.spacing.xl,
       display: 'flex',
+      justifyContent: 'flex-end',
       paddingRight: theme.spacing.md,
 
       [`@media (max-width: ${HEADER_BREAKPOINT}px)`]: {
@@ -74,11 +77,12 @@ export default createUseStyles(
       color: theme.colors.gray[7],
       textDecoration: 'none',
       borderRadius: theme.radius.sm,
-      padding: [theme.spacing.xs, theme.spacing.md],
+      padding: [6, theme.spacing.md],
+      height: 36,
+      boxSizing: 'border-box',
 
       '&:hover': {
-        backgroundColor: theme.colors.blue[0],
-        color: theme.colors.blue[6],
+        backgroundColor: theme.colors.gray[0],
       },
     },
 
