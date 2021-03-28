@@ -24,7 +24,7 @@ import { useClickOutside } from '@mantine/hooks';
 
 ## Definition
 
-Hook accepts 2 arguments:
+use-click-outside hook accepts 2 arguments:
 
 - `handler` – function that will be called on outside click
 - `events` – optional list of events that indicate outside click
@@ -34,7 +34,7 @@ Hook returns React ref object that should be passed to element on which outside 
 ```tsx
 useClickOutside<T extends HTMLElement = any>(
   handler: () => void,
-  events?: string[] = ['mousedown', 'touchstart']
+  events: string[] = ['mousedown', 'touchstart']
 ): React.MutableRefObject<T>
 ```
 
