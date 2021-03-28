@@ -21,38 +21,27 @@ use-clipboard hook provides interface to work with `navigator.clipboard`
 import { useClipboard } from '@mantine/hooks';
 ```
 
-## Usage
+## Definition
+
+use-clipboard hook accepts one argument `options` in which copied status timeout duration is defined (defaults to 2000).
+Hook returns object with properties:
+
+- `copy` – function to copy value to clipboard
+- `copied` – value that indicates that copy handler was called less than `options.timeout` ms ago
+- `reset` – function to clear timeout and reset `copied` to false
+- `error` – contains `Error` object if something goes wrong
 
 ```tsx
-import React from 'react';
-import { useClipboard } from '@mantine/hooks';
-
-function Example() {
-  const clipboard = useClipboard();
-
-  return (
-    <button type="button" onClick={() => clipboard.copy('Hello, world!')}>
-      {clipboard.copied ? 'Copied' : 'Copy to clipboard'}
-    </button>
-  );
+useClipboard(
+  options: { timeout: number } = { timeout: 2000 }
+): {
+  copy: (valueToCopy: any) => void;
+  reset: () => void;
+  error: Error;
+  copied: boolean;
 }
 ```
 
-Clipboard object contains properties:
-
-- `copy` – handler to copy given value to clipboard
-- `copied` – boolean value that indicates that copy handler was recently called
-- `reset` – handler to reset `copied` to false, by default reset will be automatically called in 2000 ms after `copy` handler
-- `error` – contains Error if anything goes wrong
-
-## Customize reset timeout
-
-By default `copied` is reset to false in 2000 ms, this timeout can be changed by providing argument to hook call.
-
-```tsx
-const oneSecondTimeoutClipboard = useClipboard({ timeout: 1000 });
-```
-
-## Demo
+## Usage
 
 <UseClipboardDemo />
