@@ -21,6 +21,21 @@ storiesOf('@mantine/core/Paper', module)
       {getShadows()}
     </div>
   ))
+  .add('Custom shadow', () => (
+    <div style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], padding: 40 }}>
+      <Paper
+        shadow="13px 18px 25px #e5e5e5, 1px 3px 3px #e5e5e5, -1px 3px 3px #e5e5e5"
+        style={{ width: 260 }}
+        padding="md"
+      >
+        <Text>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque, temporibus excepturi,
+          placeat quam eius quisquam ad nostrum magnam molestias voluptates minima minus natus
+          dignissimos reiciendis quasi repellat quos voluptas ullam.
+        </Text>
+      </Paper>
+    </div>
+  ))
   .add('Custom padding', () => (
     <div style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], paddingBottom: 40 }}>
       {getShadows({ padding: 'lg' })}

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import cx from 'clsx';
-import { DefaultProps, MantineSize, MantineNumberSize, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
 import useStyles from './Paper.styles';
 
 interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -8,7 +8,7 @@ interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'>
   padding?: MantineNumberSize;
 
   /** Predefined box-shadow from theme.shadows */
-  shadow?: MantineSize;
+  shadow?: string;
 
   /** Predefined border-radius value from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;

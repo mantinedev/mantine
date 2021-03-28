@@ -13,7 +13,7 @@ export default createUseStyles({
     backgroundColor: theme.white,
     boxSizing: 'border-box',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-    boxShadow: theme.shadows[shadow] || 'none',
+    boxShadow: theme.shadows[shadow] || shadow || 'none',
     padding: getSizeValue({ size: padding, sizes: theme.spacing }),
   }),
 });
