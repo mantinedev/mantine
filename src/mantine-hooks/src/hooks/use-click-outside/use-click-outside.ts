@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
 
-const DEFAULT_HANDLERS = ['mousedown', 'touchstart'];
-
-export function useClickOutside(handler: () => void, handlers = DEFAULT_HANDLERS) {
-  const ref = useRef<any>();
+export function useClickOutside<T extends HTMLElement = any>(
+  handler: () => void,
+  events = ['mousedown', 'touchstart']
+) {
+  const ref = useRef<T>();
 
   useEffect(() => {
     const listener = (event: any) => {
@@ -12,10 +13,10 @@ export function useClickOutside(handler: () => void, handlers = DEFAULT_HANDLERS
       }
     };
 
-    handlers.forEach((fn) => document.addEventListener(fn, listener));
+    events.forEach((fn) => document.addEventListener(fn, listener));
 
     return () => {
-      handlers.forEach((fn) => document.removeEventListener(fn, listener));
+      events.forEach((fn) => document.removeEventListener(fn, listener));
     };
   }, [ref, handler]);
 
