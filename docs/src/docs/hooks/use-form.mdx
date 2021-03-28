@@ -23,55 +23,63 @@ Hook does not depend on `@mantine/core` inputs and does not work with dom.
 import { useForm } from '@mantine/hooks';
 ```
 
-## Basic example
+## Definition
 
-<UseFormValidationDemo />
+use-form hook accepts `configuration` object as single argument:
 
-## Basic usage
+- `initialValues` – object with initial form values
+- `validationRules` – objects of functions that will be used to validate form values
 
-Initialize form with initial values and optional validation rules. If you use TypeScript these initial values will determine form values types.
+Hook returns object with properties:
+
+- `values` – current form values
+- `setValues` – React useState hook setState action to set `values`
+- `setFieldValue` – function to set value of single field
+- `validate` – function to validate all `values` with `validationRules`
+- `validateField` – function to validate single field value with `validationRules`
+- `errors` – object of booleans which contains results of running `validationRules` functions on corresponding fields
+- `setFieldError` – function to set single field error in `errors`
+- `resetErrors` – function to set all `errors` to false
+- `reset` – function to reset all `values` and `errors` to initial state
+- `onSubmit` – wrapper function for form onSubmit event handler
 
 ```tsx
-const form = useForm({
-  // initial values are required
-  initiaValues: {
-    email: '',
-    termsOfService: false,
-  },
-
-  // validation rules are optional, add them if validation is required
+useForm<T extends { [key: string]: any }>(configuration: {
+  initialValues: T,
   validationRules: {
-    email: (value) => /^\S+@\S+$/.test(value),
-  },
-});
+    [P in keyof T]?: (value: T[P]) => boolean;
+  }
+}): {
+  values: T;
+  errors: { [P in keyof T]: boolean };
+  validate: () => boolean;
+  reset: () => void;
+  resetErrors: () => void;
+  setValues: React.Dispatch<React.SetStateAction<T>>;
+  setFieldValue: <K extends keyof T, U extends T[K]>(field: K, value: U) => void;
+  setFieldError: (field: keyof T, error: boolean) => void;
+  validateField: (field: keyof T) => void;
+  onSubmit: (handleSubmit: (values: T) => any) => (event?: React.FormEvent) => void;
+}
 ```
 
-`form` object contains these values:
+## Usage
 
-- `values` – fields values with the same shape as `initialValues` passed to useForm
-- `errors` – object of booleans, indicates if field has validation error, has the same shape as `validationRules` passed to useForm
-- `setFieldValue` – handler to set field value
-- `setValues` – handler to set all form values
-- `reset` – handler to reset form values to initialValues and set all errors to false
-- `validateField` – handler to validate single field
-- `setFieldError` – handler to set single field error
-- `validate` – handler to validate all fields with given `validationRules`
-- `onSubmit` – wrapper function for form onSubmit event
+<UseFormValidationDemo />
 
 ## Authentication form example
 
 <UseFormComplexDemo />
 
-## TypeScript integration
+## TypeScript
 
-use-form will use values types from initialValues, usually its better to initialize form with these placeholder values.
-If it is not possible you can provide values type with generic:
+use-form will use values types from initialValues, but you can pass your own type:
 
 ```tsx
 const form = useForm<{ name?: string; termsOfService?: boolean }>({
-  initialValues: {},
+  initialValues: {
+    name: '',
+    termsOfService: false,
+  },
 });
-
-// later
-form.setValues({ name: 'name', termsOfService: false });
 ```
