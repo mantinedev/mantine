@@ -9,6 +9,7 @@ type PropType = 'boolean' | 'number' | 'color' | 'select' | 'string' | 'size';
 interface ConfiguratorProps {
   component: any;
   codeTemplate(props: string, children?: string): string;
+  previewBackground?: string;
   props: {
     type: PropType;
     name: string;
@@ -60,6 +61,7 @@ function transformPropToCode({
 export default function Configurator({
   component: Component,
   codeTemplate,
+  previewBackground = '#fff',
   props: componentProps,
 }: ConfiguratorProps) {
   const classes = useStyles();
@@ -108,7 +110,7 @@ export default function Configurator({
   return (
     <DocsSection>
       <div className={classes.configurator}>
-        <div className={classes.preview}>
+        <div className={classes.preview} style={{ background: previewBackground }}>
           <div>
             <Component {...state} />
           </div>

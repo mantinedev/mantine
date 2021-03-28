@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Paper, Button, ElementsGroup } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
+import { DEFAULT_THEME } from '@mantine/theme';
 import CodeDemo from '../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
@@ -29,7 +30,7 @@ export function UseClickOutsideDemo() {
   const ref = useClickOutside(() => setOpened(false));
 
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo code={code} language="tsx" demoBackground={DEFAULT_THEME.colors.gray[0]}>
       <div style={{ position: 'relative' }}>
         <ElementsGroup position="center">
           <Button onClick={() => setOpened(true)}>Open dropdown</Button>

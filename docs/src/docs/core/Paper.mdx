@@ -5,9 +5,13 @@ order: 1
 slug: /core/paper/
 ---
 
+import { PaperConfigurator } from '../../demos/core/Paper/paper.configurator';
+import { PaperShadowDemo } from '../../demos/core/Paper/paper.demos';
+import { UseClickOutsideDemo } from '../../demos/hooks/use-click-outside.demos';
+
 # Paper
 
-This is a Paper component description placeholder
+Renders white background with shadow, border-radius and padding from theme
 
 <PageHeader
   source="mantine-core/src/Paper/Paper.tsx"
@@ -15,10 +19,56 @@ This is a Paper component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Paper } from '@mantine/core';
 ```
+
+## Shadow
+
+You can use predefined shadows defined in <GatsbyLink to="/theming">theme</GatsbyLink> or your own:
+
+<PaperShadowDemo />
+
+## Padding and radius
+
+Paper has predefined padding: xs, sm, md, lg, xl defined in <GatsbyLink to="/theming">theme</GatsbyLink>.
+You can pass padding as number and it will be set as padding on all sides in px.
+
+```tsx
+<Paper size="sm" /> // -> theme predefined small spacing
+<Paper size={20} /> // -> { padding: 20 }
+```
+
+Same with radius – predefined values for xs, sm, md, lg, xl are defined in <GatsbyLink to="/theming">theme</GatsbyLink>,
+or pass in number to set border-radius in px:
+
+```tsx
+<Paper radius="lg" /> // -> theme predefined large radius
+<Paper radius={0} /> // -> { borderRadius: 0 }
+```
+
+## Padding, radius and shadow example
+
+<PaperConfigurator />
+
+## Get element ref
+
+You can get button ref by passing `ref` prop to Button component:
+
+```tsx
+import React, { useRef } from 'react';
+import { Paper } from '@mantine/core';
+
+function PaperDemo() {
+  const paperRef = useRef<HTMLDivElement>(null);
+  return <Paper ref={buttonRef} />;
+}
+```
+
+The most common usage of ref is with <GatsbyLink to="/hooks/use-click-outside">use-click-outside</GatsbyLink> hook:
+
+<UseClickOutsideDemo />
+
+## Component Props
 
 <PropsTable component="Paper" />
