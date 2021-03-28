@@ -2,6 +2,8 @@ import { useLayoutEffect } from 'react';
 
 export function useDocumentTitle(title: string) {
   useLayoutEffect(() => {
-    title && (document.title = title);
+    if (typeof title === 'string' && title.trim().length > 0) {
+      document.title = title.trim();
+    }
   }, [title]);
 }

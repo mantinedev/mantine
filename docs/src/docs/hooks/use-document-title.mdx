@@ -22,10 +22,18 @@ Use this hook with client only applications, for isomorphic use more advanced op
 import { useDocumentTitle } from '@mantine/hooks';
 ```
 
+## Definition
+
+use-document-title does not return anything and accepts one argument `title` – string value that should be set as `document.title`.
+
+```tsx
+useDocumentTitle(title: string): void
+```
+
 ## Usage
 
 Call hook with string that should be set as document title inside any component.
-Hook is triggered every time value changes and value is not empty string or null.
+Hook is triggered every time value changes and value is not empty string (trailing whitespace is trimmed) or null.
 
 ```tsx
 import React from 'react';
