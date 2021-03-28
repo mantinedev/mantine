@@ -66,19 +66,19 @@ describe('@mantine/hooks/use-form', () => {
     act(() => {
       hook.result.current.validate();
     });
-    expect(hook.result.current.errors).toEqual({ name: true, email: true });
+    expect(hook.result.current.errors).toEqual({ age: false, name: true, email: true });
 
     act(() => hook.result.current.setFieldValue('email', 'test@email.dev'));
     act(() => {
       hook.result.current.validate();
     });
-    expect(hook.result.current.errors).toEqual({ name: true, email: false });
+    expect(hook.result.current.errors).toEqual({ age: false, name: true, email: false });
 
     act(() => hook.result.current.setFieldValue('name', 'test-name'));
     act(() => {
       hook.result.current.validate();
     });
-    expect(hook.result.current.errors).toEqual({ name: false, email: false });
+    expect(hook.result.current.errors).toEqual({ age: false, name: false, email: false });
   });
 
   it('calls given onSubmit callback only with valid values', () => {
@@ -89,7 +89,7 @@ describe('@mantine/hooks/use-form', () => {
       hook.result.current.onSubmit(spy)();
     });
 
-    expect(hook.result.current.errors).toEqual({ name: true, email: true });
+    expect(hook.result.current.errors).toEqual({ age: false, name: true, email: true });
     expect(spy).not.toHaveBeenCalled();
 
     act(() => hook.result.current.setFieldValue('email', 'test@email.dev'));
@@ -132,5 +132,32 @@ describe('@mantine/hooks/use-form', () => {
       name: 'Mantine',
       age: 1,
     });
+  });
+
+  it('resets errors with resetErrors handler', () => {
+    const hook = renderHook(() => useForm(TEST_FORM));
+
+    act(() => {
+      hook.result.current.validate();
+    });
+
+    expect(hook.result.current.errors).toEqual({ age: false, name: true, email: true });
+
+    act(() => {
+      hook.result.current.resetErrors();
+    });
+
+    expect(hook.result.current.errors).toEqual({ age: false, name: false, email: false });
+  });
+
+  it('allows to set errors object with setErrors handler', () => {
+    const hook = renderHook(() => useForm(TEST_FORM));
+    expect(hook.result.current.errors).toEqual({ age: false, name: false, email: false });
+
+    act(() => {
+      hook.result.current.setErrors({ age: true, name: false, email: true });
+    });
+
+    expect(hook.result.current.errors).toEqual({ age: true, name: false, email: true });
   });
 });

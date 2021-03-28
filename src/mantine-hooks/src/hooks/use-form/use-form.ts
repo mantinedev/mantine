@@ -13,17 +13,14 @@ export function useForm<T extends { [key: string]: any }>({
   initialValues,
   validationRules = {},
 }: UseForm<T>) {
-  type ValidationErrors = { [P in keyof T]: boolean };
+  type ValidationErrors = Record<keyof T, boolean>;
 
-  const initialErrors =
-    validationRules instanceof Object
-      ? Object.keys(validationRules).reduce((acc, field) => {
-          acc[field as keyof T] = false;
-          return acc;
-        }, {} as ValidationErrors)
-      : ({} as ValidationErrors);
+  const initialErrors = Object.keys(initialValues).reduce((acc, field) => {
+    acc[field as keyof T] = false;
+    return acc;
+  }, {} as ValidationErrors);
 
-  const [errors, setErrors] = useState<ValidationErrors>(initialErrors);
+  const [errors, setErrors] = useState(initialErrors);
   const [values, setValues] = useState(initialValues);
 
   const resetErrors = () => setErrors(initialErrors);
@@ -36,8 +33,12 @@ export function useForm<T extends { [key: string]: any }>({
   const validate = () => {
     let isValid = true;
 
-    const validationErrors = Object.keys(validationRules).reduce((acc, field) => {
-      if (!validationRules[field](values[field])) {
+    const validationErrors = Object.keys(values).reduce((acc, field) => {
+      if (
+        validationRules &&
+        typeof validationRules[field] === 'function' &&
+        !validationRules[field](values[field])
+      ) {
         acc[field as keyof T] = true;
         isValid = false;
       } else {
@@ -45,7 +46,7 @@ export function useForm<T extends { [key: string]: any }>({
       }
 
       return acc;
-    }, {} as { [P in keyof T]: boolean });
+    }, {} as ValidationErrors);
 
     setErrors(validationErrors);
     return isValid;
@@ -78,6 +79,7 @@ export function useForm<T extends { [key: string]: any }>({
     errors,
     validate,
     reset,
+    setErrors,
     setValues,
     setFieldValue,
     setFieldError,
