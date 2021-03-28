@@ -15,13 +15,17 @@ import { UseDocumentTitleDemo } from '../../demos/hooks/use-document-title.demos
   package="@mantine/hooks"
 />
 
-Sets `document.title` property with `React.useLayoutEffect` hook.
+Sets `document.title` property with `React.useLayoutEffect` hook. Hook is not called during server side rendering.
+Use this hook with client only applications, for isomorphic use more advanced options, for example, [react-helmet](https://github.com/nfl/react-helmet).
 
 ```tsx
 import { useDocumentTitle } from '@mantine/hooks';
 ```
 
 ## Usage
+
+Call hook with string that should be set as document title inside any component.
+Hook is triggered every time value changes and value is not empty string or null.
 
 ```tsx
 import React from 'react';
@@ -34,5 +38,7 @@ function ApplicationRoute() {
 ```
 
 ## Demo
+
+Document title will not be set with first hook call as it is called with empty string.
 
 <UseDocumentTitleDemo />

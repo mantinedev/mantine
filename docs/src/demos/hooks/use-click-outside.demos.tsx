@@ -4,13 +4,13 @@ import { useClickOutside } from '@mantine/hooks';
 import { DEFAULT_THEME } from '@mantine/theme';
 import CodeDemo from '../../components/CodeDemo/CodeDemo';
 
-const code = `import React, { useState } from 'react';
+const getCode = (events?: string) => `import React, { useState } from 'react';
 import { Paper, Button } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 
 export function UseClickOutsideDemo() {
   const [opened, setOpened] = useState(false);
-  const ref = useClickOutside(() => setOpened(false));
+  const ref = useClickOutside(() => setOpened(false)${events});
 
   return (
     <>
@@ -25,12 +25,16 @@ export function UseClickOutsideDemo() {
   );
 }`;
 
-export function UseClickOutsideDemo() {
+export function UseClickOutsideDemo({ events }: { events?: string[] }) {
   const [opened, setOpened] = useState(false);
-  const ref = useClickOutside(() => setOpened(false));
+  const ref = useClickOutside(() => setOpened(false), events || ['mouseup', 'touchend']);
 
   return (
-    <CodeDemo code={code} language="tsx" demoBackground={DEFAULT_THEME.colors.gray[0]}>
+    <CodeDemo
+      code={getCode(events ? `, [${events.map((event) => `'${event}'`).join(', ')}]` : '')}
+      language="tsx"
+      demoBackground={DEFAULT_THEME.colors.gray[0]}
+    >
       <div style={{ position: 'relative' }}>
         <ElementsGroup position="center">
           <Button onClick={() => setOpened(true)}>Open dropdown</Button>
