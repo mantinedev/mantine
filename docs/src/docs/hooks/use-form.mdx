@@ -23,6 +23,10 @@ Hook does not depend on `@mantine/core` inputs and does not work with dom.
 import { useForm } from '@mantine/hooks';
 ```
 
+## Usage
+
+<UseFormValidationDemo />
+
 ## Definition
 
 use-form hook accepts `configuration` object as single argument:
@@ -40,22 +44,24 @@ Hook returns object with properties:
 - `errors` – object of booleans which contains results of running `validationRules` functions on corresponding fields
 - `setFieldError` – function to set single field error in `errors`
 - `resetErrors` – function to set all `errors` to false
+- `setErrors` – React useState hook setState action to set `errors`
 - `reset` – function to reset all `values` and `errors` to initial state
 - `onSubmit` – wrapper function for form onSubmit event handler
 
 ```tsx
 useForm<T extends { [key: string]: any }>(configuration: {
   initialValues: T,
-  validationRules: {
+  validationRules?: {
     [P in keyof T]?: (value: T[P]) => boolean;
   }
 }): {
   values: T;
-  errors: { [P in keyof T]: boolean };
+  errors: Record<keyof T, boolean>;
   validate: () => boolean;
   reset: () => void;
   resetErrors: () => void;
   setValues: React.Dispatch<React.SetStateAction<T>>;
+  setErrors: React.Dispatch<React.SetStateAction<Record<keyof T, boolean>>>;
   setFieldValue: <K extends keyof T, U extends T[K]>(field: K, value: U) => void;
   setFieldError: (field: keyof T, error: boolean) => void;
   validateField: (field: keyof T) => void;
@@ -63,11 +69,235 @@ useForm<T extends { [key: string]: any }>(configuration: {
 }
 ```
 
-## Usage
+## API
 
-<UseFormValidationDemo />
+<br />
 
-## Authentication form example
+### initialValues
+
+`initialValues` is required for any form and defines `form.values` shape.
+When form is reset with `form.reset` function these values are set to `form.values`.
+
+### validationRules
+
+`validationRules` is an optional object of functions which are used to validate `form.values`.
+If you do not need validation in your form, you can skip them:
+
+```tsx
+// Form without validation
+const form = useForm({ initialValues: { name: '', age: 0 } });
+```
+
+`validationRules` must include only keys from `initialValues`,
+keys from `initialValues` that do not have corresponding validation rule will always be considered valid.
+
+```tsx
+// validation will run only on name field
+const form = useForm({
+  initialValues: {
+    name: '',
+    age: 0, // age field is always valid
+  },
+  validationRules: {
+    // imposter validation rule is noop and will be ignored, ts will complain
+    imposter: (value) => value.trim().length >= 2,
+    name: (value) => value.trim().length >= 2,
+  },
+});
+```
+
+### form.values
+
+`values` contains current values of form, it has the same shape as `initialValues`
+
+```tsx
+const form = useForm({ initialValues: { name: '', age: 0 } });
+form.values; // -> { name: '', age: 0 }
+
+form.setFieldValue('name', 'Bob');
+form.values; // -> { name: 'Bob', age: 0 }
+```
+
+### form.setFieldValue
+
+`setFieldValue` function sets value at given key on `values` object:
+
+```tsx
+const form = useForm({ initialValues: { name: '', age: 0 } });
+
+form.setFieldValue('name', 'Bob');
+form.setFieldValue('age', 25);
+form.values; // -> { name: 'Bob', age: 25 }
+```
+
+Usually this function is used to work with input elements:
+
+```tsx
+const form = useForm({ initialValues: { name: '' } });
+
+const input = (
+  <input
+    value={form.values.name}
+    onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
+  />
+);
+```
+
+### form.setValues
+
+`setValues` allows you to set all `values` with single function call:
+
+```tsx
+const form = useForm({ initialValues: { name: '', age: 0 } });
+
+// setValues with object
+form.setValues({ name: 'Bob', age: 25 });
+form.values; // -> { name: 'Bob', age: 25 }
+
+// setValues with callback
+form.setValues((currentValues) => ({ ...currentValues, age: currentValues.age + 10 }));
+form.values; // -> { name: 'Bob', age: 35 }
+```
+
+### form.validate
+
+`validate` function runs all validation rules on corresponding `values` key:
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', age: 0 },
+  validationRules: {
+    name: (value) => value.trim().length >= 2,
+  },
+});
+
+form.errors; // -> { name: false, age: false }
+
+form.validate();
+form.errors; // -> { name: true, age: false }
+
+form.setFieldValue('name', 'Bob');
+form.validate();
+form.errors; // -> { name: false, age: false }
+```
+
+### form.validateField
+
+`validateField` function allows you to run validations for individual fields,
+for example, it can be useful if you want to validate field when it loses focus:
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', age: 0 },
+  validationRules: {
+    name: (value) => value.trim().length >= 2,
+    age: (value) => value >= 18,
+  },
+});
+
+form.setFieldValue('age', 12);
+form.validateField('age');
+form.errors; // -> { age: true, name: false }
+
+form.validateField('name');
+form.errors; // -> { age: true, name: true }
+```
+
+### form.setFieldError
+
+`setFieldError` allows you to bypass validation and manipulate `errors` object as you wish.
+For example, you can remove error from field once it was focused or perform your own validation.
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', age: 0 },
+  validationRules: {
+    name: (value) => value.trim().length >= 2,
+  },
+});
+
+form.errors; // -> { name: false, age: false }
+
+form.setFieldError('name', true);
+form.errors; // -> { name: true, age: false }
+
+form.setFieldError('name', true);
+form.errors; // -> { name: false, age: false }
+```
+
+### form.setErrors
+
+`setErrors` sets `errors` object.
+Use it when external fields validation occurs, e.g. on server.
+
+```tsx
+const form = useForm({ initialValues: { name: '', age: 0 } });
+form.errors; // -> { name: false, age: false }
+
+// You can set errors with object
+form.setErrors({ name: true, age: true });
+form.errors; // -> { name: true, age: true }
+
+// or with callback
+form.setErrors((errors) => ({
+  name: !errors.name,
+  age: !errors.age,
+}));
+form.errors; // -> { name: false, age: false }
+```
+
+### form.resetErrors
+
+`resetErrors` sets all `errors` to false:
+
+```tsx
+const form = useForm({ initialValues: { name: '', age: 0 } });
+form.errors; // -> { name: false, age: false }
+
+form.setErrors({ name: true, age: true });
+form.errors; // -> { name: true, age: true }
+
+form.resetErrors();
+form.errors; // -> { name: false, age: false }
+```
+
+### form.reset
+
+`reset` function sets all `errors` to false and sets `values` to `initialValues`:
+
+```tsx
+const form = useForm({ initialValues: { name: '', age: 0 } });
+form.setErrors({ name: true, age: true });
+form.setValues({ name: 'Bob', age: 25 });
+
+form.errors; // -> { name: true, age: true }
+form.values; // -> { name: 'Bob', age: 25 }
+
+form.reset();
+form.errors; // -> { name: false, age: false }
+form.values; // -> { name: '', age: 0 }
+```
+
+### form.onSubmit
+
+`onSubmit` takes function as an argument and calls it with values if form has no validation errors.
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', age: 0 },
+  validationRules: {
+    name: (value) => value.trim().length >= 2,
+  },
+});
+
+// console.log will be called with form.values only if
+// form.validate does not encounter errors
+const authForm = <form onSubmit={form.onSubmit((values) => console.log(values))} />;
+```
+
+## Complex example: Auth form
+
+[Browse code on Github](https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/AuthenticationForm/AuthenticationForm.tsx)
 
 <UseFormComplexDemo />
 
