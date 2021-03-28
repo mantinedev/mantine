@@ -7,9 +7,14 @@ import {
 } from '@modulz/radix-icons';
 
 export default [
-  { to: '/getting-started', label: 'Getting Started', theme: 'red', icon: RocketIcon },
-  { to: '/theming', label: 'Theming', theme: 'indigo', icon: BlendingModeIcon },
-  { to: '/integrations', label: 'Integrations and SSR', theme: 'green', icon: LightningBoltIcon },
-  { to: '/examples', label: 'Examples', theme: 'orange', icon: StarIcon },
-  { to: '/source', label: 'Contribute', theme: 'gray', icon: GitHubLogoIcon },
+  { to: '/pages/getting-started/', label: 'Getting Started', theme: 'red', icon: RocketIcon },
+  { to: '/pages/theming/', label: 'Theming', theme: 'indigo', icon: BlendingModeIcon },
+  {
+    to: '/pages/integrations/',
+    label: 'Integrations and SSR',
+    theme: 'green',
+    icon: LightningBoltIcon,
+  },
+  { to: '/pages/examples/', label: 'Examples', theme: 'orange', icon: StarIcon },
+  { to: '/pages/contribute/', label: 'Contribute', theme: 'gray', icon: GitHubLogoIcon },
 ];
