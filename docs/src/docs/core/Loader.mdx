@@ -5,9 +5,12 @@ order: 1
 slug: /core/loader/
 ---
 
+import { LOADER_SIZES } from '@mantine/core';
+import { LoaderConfigurator } from '../../demos/core/Loader/loader.configurator';
+
 # Loader
 
-This is a Loader component description placeholder
+Indicate loading state
 
 <PageHeader
   source="mantine-core/src/Loader/Loader.tsx"
@@ -15,10 +18,37 @@ This is a Loader component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Loader } from '@mantine/core';
 ```
+
+## Usage
+
+You can change loader color by passing `color` prop, by default `theme.primaryColor` will be used.
+
+<LoaderConfigurator />
+
+## Size
+
+Loader has predefined sizes: xs, sm, md, lg, xl.
+You can pass size as number and it will be set as height in px.
+
+```tsx
+<Loader size="sm" /> // -> predefined small size
+<Loader size={50} /> // -> { height: 50 }
+```
+
+You can get default sizes for action icon by importing `LOADER_SIZES`:
+
+```tsx
+import { LOADER_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Height']}
+  data={Object.keys(LOADER_SIZES).map((size) => [size, `${LOADER_SIZES[size]}px`])}
+/>
+
+## Component props
 
 <PropsTable component="Loader" />
