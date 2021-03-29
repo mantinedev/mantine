@@ -179,4 +179,16 @@ describe('@mantine/hooks/use-list-state', () => {
     const [state] = hook.result.current;
     expect(state).toEqual([TEST_STATE[0], { ...TEST_STATE[1], age: 90 }, TEST_STATE[2]]);
   });
+
+  it('works with primitive values', () => {
+    const hook = renderHook(() => useListState(['test-1', 'test-2']));
+
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.setItem(1, 'test-3');
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual(['test-1', 'test-3']);
+  });
 });
