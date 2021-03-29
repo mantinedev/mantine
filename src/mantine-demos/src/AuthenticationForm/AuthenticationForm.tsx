@@ -15,9 +15,14 @@ import {
 interface AuthenticationFormProps {
   noShadow?: boolean;
   noPadding?: boolean;
+  noSubmit?: boolean;
 }
 
-export default function AuthenticationForm({ noShadow, noPadding }: AuthenticationFormProps) {
+export default function AuthenticationForm({
+  noShadow,
+  noPadding,
+  noSubmit,
+}: AuthenticationFormProps) {
   const [formType, setFormType] = useState<'register' | 'login'>('register');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>(null);
@@ -129,15 +134,19 @@ export default function AuthenticationForm({ noShadow, noPadding }: Authenticati
           </Text>
         )}
 
-        <ElementsGroup position="apart" style={{ marginTop: 25 }}>
-          <Button variant="link" color="gray" onClick={toggleFormType}>
-            {formType === 'register' ? 'Have an account? Login' : "Don't have an account? Register"}
-          </Button>
+        {!noSubmit && (
+          <ElementsGroup position="apart" style={{ marginTop: 25 }}>
+            <Button variant="link" color="gray" onClick={toggleFormType}>
+              {formType === 'register'
+                ? 'Have an account? Login'
+                : "Don't have an account? Register"}
+            </Button>
 
-          <Button color="blue" type="submit">
-            {formType === 'register' ? 'Register' : 'Login'}
-          </Button>
-        </ElementsGroup>
+            <Button color="blue" type="submit">
+              {formType === 'register' ? 'Register' : 'Login'}
+            </Button>
+          </ElementsGroup>
+        )}
       </form>
     </Paper>
   );

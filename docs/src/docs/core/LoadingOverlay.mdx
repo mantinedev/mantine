@@ -5,9 +5,11 @@ order: 1
 slug: /core/loading-overlay/
 ---
 
+import { LoadingOverlayBaseDemo } from '../../demos/core/LoadingOverlay/loading-overlay.demos';
+
 # LoadingOverlay
 
-This is a LoadingOverlay component description placeholder
+Overlay element to disable interactions and indicate loading state
 
 <PageHeader
   source="mantine-core/src/LoadingOverlay/LoadingOverlay.tsx"
@@ -15,10 +17,44 @@ This is a LoadingOverlay component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { LoadingOverlay } from '@mantine/core';
 ```
+
+## Usage
+
+Overlay had absolute position and will take 100% of width and height of parent container.
+Use it when you need to disable user interactions and indicate loading state, for example, while form is submitting.
+
+`visible` is the only required prop, if it set to false component will not render anything.
+
+<LoadingOverlayBaseDemo />
+
+## Transition duration
+
+You can change appear and disappear animations duration by passing `transitionDuration` prop:
+
+```tsx
+// 500ms animations
+<LoadingOverlay transitionDuration={500} />
+
+// disable animations
+<LoadingOverlay transitionDuration={0} />
+```
+
+## Loader and Overlay props
+
+LoadingOverlay is built using <GatsbyLink to="/core/overlay">Overlay</GatsbyLink> and <GatsbyLink to="/core/loader">Loader</GatsbyLink> components.
+You can change all props of Loader component and opacity and color of Overlay:
+
+```tsx
+<LoadingOverlay
+  loaderProps={{ size: 'sm', color: 'pink' }}
+  overlayOpacity={0.3}
+  overlayColor="#c5c5c5"
+/>
+```
+
+## Component props
 
 <PropsTable component="LoadingOverlay" />
