@@ -89,6 +89,16 @@ export default createUseStyles(
     linkLabel: {
       marginLeft: theme.spacing.xs,
     },
+
+    logoWrapper: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+
+    version: {
+      fontWeight: 700,
+      textDecoration: 'none',
+    },
   }),
   { theming }
 );
