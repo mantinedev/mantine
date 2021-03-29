@@ -5,9 +5,13 @@ order: 1
 slug: /core/progress/
 ---
 
+import { PROGRESS_SIZES } from '@mantine/core';
+import { ProgressBaseDemo } from '../../demos/core/Progress/progress.demos';
+import { ProgressConfigurator } from '../../demos/core/Progress/progress.configurator';
+
 # Progress
 
-This is a Progress component description placeholder
+Display progress of action that takes long time or includes multiple steps
 
 <PageHeader
   source="mantine-core/src/Progress/Progress.tsx"
@@ -15,10 +19,53 @@ This is a Progress component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Progress } from '@mantine/core';
 ```
+
+## Usage
+
+Progress component has one required prop `value` – filled bar width in %.
+You can change bar color by passing `color` prop, by default `theme.primaryColor` will be used.
+If you set `stiped` prop to true bar will have stipes.
+
+<ProgressBaseDemo />
+
+## Size and radius
+
+Progress has predefined sizes: xs, sm, md, lg, xl.
+You can pass size as number and it will be set as height in px.
+
+```tsx
+<Progress size="sm" /> // -> predefined small size
+<Progress size={50} /> // -> { height: 50 }
+```
+
+### Default size values
+
+You can get default sizes for action icon by importing `PROGRESS_SIZES`:
+
+```tsx
+import { PROGRESS_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Height']}
+  data={Object.keys(PROGRESS_SIZES).map((size) => [size, `${PROGRESS_SIZES[size]}px`])}
+/>
+
+Same with radius – predefined values for xs, sm, md, lg, xl are defined in <GatsbyLink to="/theming">theme</GatsbyLink>,
+or pass in number to set border-radius in px:
+
+```tsx
+<Progress radius="lg" /> // -> theme predefined large radius
+<Progress radius={10} /> // -> { borderRadius: 10 }
+```
+
+## Size, radius, color and stiped example
+
+<ProgressConfigurator />
+
+## Component props
 
 <PropsTable component="Progress" />
