@@ -11,7 +11,7 @@ export const wrapRootElement = ({ element, pathname }) => {
 
   return (
     <JssProvider registry={sheets}>
-      <MantineProvider theme={{ fontFamilyMonospace: 'IBM Plex Mono, Monaco, Courier, monospace' }}>
+      <MantineProvider>
         <div>
           <Layout>{element}</Layout>
         </div>

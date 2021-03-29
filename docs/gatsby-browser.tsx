@@ -10,7 +10,7 @@ export const onInitialClientRender = () => {
 };
 
 export const wrapRootElement = ({ element }) => (
-  <MantineProvider theme={{ fontFamilyMonospace: 'IBM Plex Mono, Monaco, Courier, monospace' }}>
+  <MantineProvider>
     <div>
       <Layout>{element}</Layout>
     </div>

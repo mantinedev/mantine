@@ -1,6 +1,4 @@
 import 'normalize.css';
-import '@fontsource/ibm-plex-mono/500.css';
-import '@fontsource/ibm-plex-mono/700.css';
 
 import React, { useState } from 'react';
 import { Container } from '@mantine/core';
