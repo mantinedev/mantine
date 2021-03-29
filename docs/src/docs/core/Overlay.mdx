@@ -5,9 +5,9 @@ order: 1
 slug: /core/overlay/
 ---
 
-# Overlay
+import { OverlayBaseDemo } from '../../demos/core/Overlay/overlay.demos';
 
-This is a Overlay component description placeholder
+# Overlay
 
 <PageHeader
   source="mantine-core/src/Overlay/Overlay.tsx"
@@ -15,10 +15,19 @@ This is a Overlay component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Overlay } from '@mantine/core';
 ```
+
+## Usage
+
+Overlay had absolute position and will take 100% of width and height of parent container.
+It is used to build components like <GatsbyLink to="/core/modal">Modal</GatsbyLink> and <GatsbyLink to="/core/loading-overlay">LoadingOverlay</GatsbyLink>.
+
+You can change overlay opacity (from 0 to 1) and color (css color value, not connected to mantine theme).
+
+<OverlayBaseDemo />
+
+## Component props
 
 <PropsTable component="Overlay" />
