@@ -10,7 +10,7 @@ interface ColorSwatchProps extends DefaultProps, React.ComponentPropsWithoutRef<
   /** Width, height and border-radius in px */
   size?: number;
 
-  /** Swatch border-radius predefined from theme or number for px value, defaults to size prop */
+  /** Swatch border-radius predefined from theme or number for px value */
   radius?: MantineNumberSize;
 }
 
@@ -18,7 +18,7 @@ export function ColorSwatch({
   color,
   size = 25,
   style,
-  radius = size,
+  radius = 25,
   className,
   ...others
 }: ColorSwatchProps) {
