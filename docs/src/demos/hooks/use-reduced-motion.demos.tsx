@@ -1,7 +1,6 @@
 import React from 'react';
 import { ElementsGroup, Button } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
-
 import CodeDemo from '../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
