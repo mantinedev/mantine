@@ -1,9 +1,9 @@
 import React from 'react';
-import { Table } from '@mantine/core';
+import { Table, Code, Badge } from '@mantine/core';
 import DocsSection from '../../DocsSection/DocsSection';
 
 interface DataTableProps {
-  data: string[][];
+  data: React.ReactNode[][];
   head?: string[];
 }
 
@@ -26,5 +26,35 @@ export default function DataTable({ data, head }: DataTableProps) {
         <tbody>{rows}</tbody>
       </Table>
     </DocsSection>
+  );
+}
+
+interface PackageJson {
+  dependencies: Record<string, string>;
+  peerDependencies: Record<string, string>;
+}
+
+export function DependenciesTable({ packageJson }: { packageJson: PackageJson }) {
+  const dependencies = Object.keys(packageJson.dependencies).map((p) => [
+    <a href={`https://npmjs.com/package/${p}`} style={{ textDecoration: 'none' }}>
+      <Code>{p}</Code>
+    </a>,
+    <Badge color="gray">dependency</Badge>,
+    packageJson.dependencies[p],
+  ]);
+
+  const peerDependencies = Object.keys(packageJson.peerDependencies).map((p) => [
+    <a href={`https://npmjs.com/package/${p}`} style={{ textDecoration: 'none' }}>
+      <Code>{p}</Code>
+    </a>,
+    <Badge>peer dependency</Badge>,
+    packageJson.peerDependencies[p],
+  ]);
+
+  return (
+    <DataTable
+      data={[...peerDependencies, ...dependencies]}
+      head={['Dependency', 'Type', 'Version']}
+    />
   );
 }

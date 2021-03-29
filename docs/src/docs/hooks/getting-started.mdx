@@ -5,4 +5,59 @@ order: 0
 slug: /hooks/getting-started/
 ---
 
-# Getting started
+import packageJson from '../../../../src/mantine-hooks/package.json';
+
+# Mantine hooks
+
+All other @mantine/ packages depend on @mantine/hooks.
+
+Package includes hooks that are used to build components in @mantine/ scoped packages.
+You can use these hooks in your applications with or without other @mantine/ packages.
+
+## Installation
+
+```sh
+# With yarn
+yarn add @mantine/hooks
+
+# With npm
+npm install @mantine/hooks
+```
+
+## Included hooks
+
+- <GatsbyLink to="/hooks/use-click-outside/">use-click-outside</GatsbyLink> – capture click and touch
+  events from outside of given container
+- <GatsbyLink to="/hooks/use-clipboard/">use-clipboard</GatsbyLink> – provides convenient interface to
+  work with clipboard api
+- <GatsbyLink to="/hooks/use-document-title/">use-document-title</GatsbyLink> - set document.title property
+- <GatsbyLink to="/hooks/use-form/">use-form</GatsbyLink> – bare minimum form state management
+- <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> – ensure id for form controls binding
+- <GatsbyLink to="/hooks/use-list-state/">use-list-state</GatsbyLink> – hook for convenient array state
+  management
+- <GatsbyLink to="/hooks/use-media-query/">use-media-query</GatsbyLink> – execute and subscribe to window.matchMedia
+  queries
+- <GatsbyLink to="/hooks/use-reduced-motion/">use-reduced-motion</GatsbyLink> – check if user prefers
+  to reduce motion
+
+## Dependencies
+
+To use @mantine/hooks you will need React version 16.8.0 or above.
+Package depends on nanoid for unique random id generation in <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook.
+
+<DependenciesTable packageJson={packageJson} />
+
+## Browser support
+
+All hooks are tested to work in all major modern browsers.
+
+Some hooks depend on web APIs that may not be supported by old browsers:
+
+- use-media-query and use-reduced-motion hooks relay on [window.matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
+  API
+- use-id hook relies on [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) via nanoid package
+- use-clipboard hook uses [Navigator.clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard)
+
+## Licence
+
+All @mantine/ scoped packages, dependencies and peer dependencies have MIT licence.
