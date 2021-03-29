@@ -23,6 +23,7 @@ export default createUseStyles({
     height: getSizeValue({ size, sizes }),
     backgroundColor: theme.colors.gray[2],
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    overflow: 'hidden',
   }),
 
   bar: ({ theme, color, radius, reduceMotion, striped }: ProgressStylesProps) => ({
