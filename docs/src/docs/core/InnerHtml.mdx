@@ -31,6 +31,15 @@ Html has all styles from mantine theme as all other components.
 **Warning:** when working with user input consider [purifying](https://github.com/cure53/DOMPurify) html string to avoid XSS attacks
 – `dangerouslySetInnerHTML` prop called so for a reason.
 
+```tsx
+import React from 'react';
+import { InnerHtml } from '@mantine/core';
+
+function InnerHtmlExample() {
+  return <InnerHtml dangerouslySetInnerHTML={{ __html: '<p>Your html here' }} />;
+}
+```
+
 ## Example
 
 Example with [Wikipedia page](https://en.wikipedia.org/wiki/We_Butter_the_Bread_with_Butter) part
