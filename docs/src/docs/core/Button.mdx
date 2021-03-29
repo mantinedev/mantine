@@ -150,8 +150,8 @@ function ButtonDemo() {
 
 ## TypeScript support
 
-Usage of some props in typescript require type specification.
-Button component is a generic and you can pass 2 generic arguments to enhance type support:
+Usage of some props with custom component in TypeScript require type specification.
+Button component is a generic and you can pass 2 types to enhance type support:
 
 ```tsx
 // Custom element button
@@ -169,10 +169,11 @@ Button component is a generic and you can pass 2 generic arguments to enhance ty
 />
 ```
 
-Usually it is not necessary to use generics and you can avoid it by setting types directly on callbacks:
+Usually it is not necessary to pass types and you can avoid it by setting types directly on callbacks:
 
 ```tsx
 <Button
+  component="a"
   onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {}}
   elementRef={(node: HTMLAnchorElement) => {}}
 />
