@@ -1,6 +1,9 @@
 # Mantine Hooks
 
-React hooks for [Mantine](https://mantine.dev/) components library.
+React hooks for [Mantine](https://mantine.dev/) components library. All other @mantine/ packages depend on @mantine/hooks.
+
+Package includes hooks that are used to build components in @mantine/ scoped packages.
+You can use these hooks in your applications with or without other @mantine/ packages.
 
 ## Installation
 
@@ -9,7 +12,7 @@ React hooks for [Mantine](https://mantine.dev/) components library.
 yarn add @mantine/hooks
 
 # With npm
-yarn add @mantine/hooks
+npm install @mantine/hooks
 ```
 
 ## Included hooks
