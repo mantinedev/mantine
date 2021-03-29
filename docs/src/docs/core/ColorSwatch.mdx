@@ -5,6 +5,8 @@ order: 1
 slug: /core/color-swatch/
 ---
 
+import { ColorSwatchBaseDemo } from '../../demos/core/ColorSwatch/color-swatch.demos';
+
 # ColorSwatch
 
 <PageHeader
@@ -15,6 +17,34 @@ slug: /core/color-swatch/
 
 ```tsx
 import { ColorSwatch } from '@mantine/core';
+```
+
+## Usage
+
+Use ColorSwatch to display color
+
+```tsx
+<ColorSwatch color="#c3c3c3" />
+```
+
+Example with default Mantine theme colors:
+
+<ColorSwatchBaseDemo />
+
+## Size and radius
+
+ColorSwatch does not have predefined size values, pass number value to set width and height in px:
+
+```tsx
+<ColorSwatch size={50} /> // -> { width: 50, height: 50 }
+```
+
+Radius has predefined values for xs, sm, md, lg, xl which are defined in <GatsbyLink to="/theming">theme</GatsbyLink>,
+or you can pass in number to set border-radius in px:
+
+```tsx
+<ColorSwatch radius="lg" /> // -> theme predefined large radius
+<ColorSwatch radius={10} /> // -> { borderRadius: 10 }
 ```
 
 ## Component props
