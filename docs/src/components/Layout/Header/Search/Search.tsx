@@ -25,7 +25,16 @@ function filterData(query: string, data: DocsData): DocItem[] {
     .slice(0, 10);
 }
 
+function isMac() {
+  if ('navigator' in window) {
+    return window.navigator.platform.includes('Mac');
+  }
+
+  return false;
+}
+
 export default function Search({ data }: SearchProps) {
+  const [isMacOS, setIsMacOS] = useState(true);
   const classes = useStyles();
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(0);
@@ -42,6 +51,7 @@ export default function Search({ data }: SearchProps) {
 
   const handleKeyboardEvents = (event: KeyboardEvent) => {
     if (event.code === 'KeyK' && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault();
       inputRef.current.focus();
     }
   };
@@ -74,6 +84,7 @@ export default function Search({ data }: SearchProps) {
   };
 
   useEffect(() => {
+    setIsMacOS(isMac());
     window.addEventListener('keydown', handleKeyboardEvents);
     return () => window.removeEventListener('keydown', handleKeyboardEvents);
   }, []);
@@ -99,7 +110,7 @@ export default function Search({ data }: SearchProps) {
     </div>
   ) : (
     <div className={classes.shortcut}>
-      <Kbd className={classes.kbd}>⌘</Kbd>
+      <Kbd className={classes.kbd}>{isMacOS ? '⌘' : 'Ctrl'}</Kbd>
       <Kbd className={classes.kbd}>K</Kbd>
     </div>
   );
@@ -114,7 +125,7 @@ export default function Search({ data }: SearchProps) {
         placeholder="Search"
         icon={<MagnifyingGlassIcon />}
         rightSection={rightSection}
-        rightSectionWidth={50}
+        rightSectionWidth={isMacOS ? 50 : 72}
         onFocus={() => setDropdownOpened(true)}
         onBlur={closeDropdown}
         onKeyDown={handleInputKeydown}
