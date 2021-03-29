@@ -7,6 +7,8 @@ slug: /hooks/use-form/
 
 import { UseFormAuthDemo } from '../../demos/hooks/use-form/use-form.auth-demo';
 import { UseFormBaseDemo } from '../../demos/hooks/use-form/use-form.base-demo';
+import { UseFormBlurValidateDemo } from '../../demos/hooks/use-form/use-form.blur-validate-demo';
+import { UseFormServerValidationDemo } from '../../demos/hooks/use-form/use-form.server-validation-demo';
 
 # use-form
 
@@ -296,13 +298,7 @@ const form = useForm({
 const authForm = <form onSubmit={form.onSubmit((values) => console.log(values))} />;
 ```
 
-## Complex example: Auth form
-
-[Browse code on Github](https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/AuthenticationForm/AuthenticationForm.tsx)
-
-<UseFormAuthDemo />
-
-## TypeScript
+### TypeScript: Set form type
 
 use-form will use values types from initialValues, but you can pass your own type:
 
@@ -314,3 +310,35 @@ const form = useForm<{ name?: string; termsOfService?: boolean }>({
   },
 });
 ```
+
+### TypeScript: Get form values type
+
+Use `typeof` to get form values type:
+
+```tsx
+const form = useForm({ initialValues: { email: '' } });
+
+const handleSubmit = (values: typeof form['values']) => {
+  // values – { email: string }
+};
+```
+
+## Examples
+
+<br />
+
+### Validate field on blur
+
+<UseFormBlurValidateDemo />
+
+### External field validation
+
+Submit form with `test@mantine.dev` email to see external validation error:
+
+<UseFormServerValidationDemo />
+
+### Authentication form
+
+[Browse code on Github](https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/AuthenticationForm/AuthenticationForm.tsx)
+
+<UseFormAuthDemo />
