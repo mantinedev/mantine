@@ -7,6 +7,14 @@ import {
   getSizeValue,
 } from '@mantine/theme';
 
+export const LOADER_SIZES = {
+  xs: 18,
+  sm: 22,
+  md: 36,
+  lg: 44,
+  xl: 58,
+};
+
 export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'svg'> {
   /** Defines width of loader */
   size?: MantineNumberSize;
@@ -15,20 +23,12 @@ export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRe
   color?: string;
 }
 
-const sizes = {
-  xs: 18,
-  sm: 22,
-  md: 36,
-  lg: 44,
-  xl: 58,
-};
-
 export function Loader({ size = 'md', color, themeOverride, ...others }: LoaderProps) {
   const theme = useMantineTheme(themeOverride);
 
   return (
     <svg
-      width={`${getSizeValue({ size, sizes })}px`}
+      width={`${getSizeValue({ size, sizes: LOADER_SIZES })}px`}
       fill={getThemeColor({ theme, color, shade: 5 })}
       viewBox="0 0 135 140"
       xmlns="http://www.w3.org/2000/svg"

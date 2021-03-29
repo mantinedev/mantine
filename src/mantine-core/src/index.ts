@@ -17,7 +17,7 @@ export { InnerHtml } from './InnerHtml/InnerHtml';
 export { Input } from './Input/Input';
 export { InputWrapper } from './InputWrapper/InputWrapper';
 export { Kbd } from './Kbd/Kbd';
-export { Loader } from './Loader/Loader';
+export { Loader, LOADER_SIZES } from './Loader/Loader';
 export { LoadingOverlay } from './LoadingOverlay/LoadingOverlay';
 export { Modal } from './Modal/Modal';
 export { Month } from './Month/Month';
