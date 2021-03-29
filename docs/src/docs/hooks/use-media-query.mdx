@@ -21,18 +21,16 @@ use-media-query hook allows to subscribe to media queries. It receives media que
 import { useMediaQuery } from '@mantine/hooks';
 ```
 
-## Usage
+## Definition
+
+use-media-query hook takes media query as first argument and returns true if query is satisfied:
 
 ```tsx
-import { useMediaQuery } from '@mantine/hooks';
-
-function Example() {
-  // matches will be true if (max-width: 765px) media query is satisfied
-  const matches = useMediaQuery('(max-width: 765px)');
-  return <div />;
-}
+useMediaQuery(query: string): boolean
 ```
 
-## Demo
+## Usage
+
+Resize browser window to trigger `window.matchMedia` event:
 
 <UseBreakpointDemo />

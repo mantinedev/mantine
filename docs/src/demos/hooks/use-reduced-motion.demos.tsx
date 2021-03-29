@@ -10,8 +10,12 @@ import { useReducedMotion } from '@mantine/hooks';
 
 export function UseReducedMotionDemo() {
   const reduceMotion = useReducedMotion();
+  
   return (
-    <Button color={reduceMotion ? 'red' : 'teal'}>
+    <Button
+      color={reduceMotion ? 'red' : 'teal'}
+      style={{ transitionDuration: reduceMotion ? '1ms' : '200ms' }}
+    >
       {reduceMotion ? 'You prefer to reduce motion' : 'You prefer not to reduce motion'}
     </Button>
   );
@@ -22,7 +26,10 @@ export function UseReducedMotionDemo() {
   return (
     <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center">
-        <Button color={reduceMotion ? 'red' : 'teal'}>
+        <Button
+          color={reduceMotion ? 'red' : 'teal'}
+          style={{ transitionDuration: reduceMotion ? '1ms' : '200ms' }}
+        >
           {reduceMotion ? 'You prefer to reduce motion' : 'You prefer not to reduce motion'}
         </Button>
       </ElementsGroup>

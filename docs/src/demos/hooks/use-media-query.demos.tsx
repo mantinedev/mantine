@@ -8,7 +8,6 @@ import { Button } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
 export function UseBreakpointDemo() {
-  // Resize browser window to trigger window.matchMedia event
   const matches = useMediaQuery('(min-width: 900px)');
 
   return (

@@ -23,18 +23,17 @@ Hook relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/d
 import { useReducedMotion } from '@mantine/hooks';
 ```
 
-## Usage
+## Definition
+
+use-reduced-motion hook returns true if `(prefers-reduced-motion: reduce)` media query is satisfied:
 
 ```tsx
-import React from 'react';
-import { useReducedMotion } from '@mantine/hooks';
-
-function Example() {
-  const reduceMotion = useReducedMotion();
-  return <div style={{ transitionDuration: reduceMotion ? '1ms' : '200ms' }} />;
-}
+useReducedMotion(): boolean
 ```
 
-## Demo
+## Usage
+
+Use use-reduced-motion hook to detect if user prefers to reduce motion and set animations duration based on this value.
+All Mantine components which use animations support it by default:
 
 <UseReducedMotionDemo />
