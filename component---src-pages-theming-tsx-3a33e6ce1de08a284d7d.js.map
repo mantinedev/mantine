@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://mantine-docs/./src/pages/theming.tsx"],"names":["ThemingPage"],"mappings":"4KAEe,SAASA,IACtB,OAAO","file":"component---src-pages-theming-tsx-3a33e6ce1de08a284d7d.js","sourcesContent":["import React from 'react';\n\nexport default function ThemingPage() {\n  return <>Theming</>;\n}\n"],"sourceRoot":""}

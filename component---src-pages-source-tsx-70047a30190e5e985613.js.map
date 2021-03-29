@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://mantine-docs/./src/pages/source.tsx"],"names":["SourcePage"],"mappings":"4KAEe,SAASA,IACtB,OAAO","file":"component---src-pages-source-tsx-70047a30190e5e985613.js","sourcesContent":["import React from 'react';\n\nexport default function SourcePage() {\n  return <>Source</>;\n}\n"],"sourceRoot":""}

@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://mantine-docs/./src/pages/getting-started.tsx"],"names":["GettingStartedPage"],"mappings":"2KAEe,SAASA,IACtB,OAAO","file":"component---src-pages-getting-started-tsx-1ac010acf2c8ddc94be4.js","sourcesContent":["import React from 'react';\n\nexport default function GettingStartedPage() {\n  return <>GettingStarted</>;\n}\n"],"sourceRoot":""}

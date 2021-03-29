@@ -1,2 +1,0 @@
-(self.webpackChunkmantine_docs=self.webpackChunkmantine_docs||[]).push([[48],{3915:function(n,e,t){"use strict";t.r(e),t.d(e,{default:function(){return r}});var u=t(7378);function r(){return u.createElement(u.Fragment,null,"GettingStarted")}}}]);
-//# sourceMappingURL=component---src-pages-getting-started-tsx-1ac010acf2c8ddc94be4.js.map
