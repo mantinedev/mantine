@@ -16,3 +16,77 @@ slug: /hooks/use-list-state/
 ```tsx
 import { useListState } from '@mantine/hooks';
 ```
+
+## Usage
+
+use-list-state hook provides an API to work work with list state:
+
+```tsx
+const [values, handlers] = useListState([{ a: 1 }]);
+
+// add one or more items to the end of the list
+const append = () => handlers.append({ a: 2 });
+// values -> [{ a: 1 }, { a: 2 }]
+
+// add one or more items to the start of the list
+const prepend = () => handlers.prepend({ a: 3 }, { a: 4 });
+// values -> [{ a: 3 }, { a: 4 }, { a: 1 }, { a: 2 }]
+
+// remove items at given positions
+const remove = () => handlers.remove(0, 2);
+// values -> [{ a: 4 }, { a: 2 }]
+
+// insert one or more items at given position
+const insert = () => handlers.insert(1, { a: 5 });
+// values -> [{ a: 4 }, { a: 5 }, { a: 2 }]
+
+// apply function to each element of the list
+const apply = () => handlers.apply((item, index) => ({ a: item.a * index }));
+// values -> [{ a: 0 }, { a: 5 }, { a: 4 }]
+
+// move item from one position to another
+const reorder = () => handlers.reorder({ from: 2, to: 0 });
+// values -> [{ a: 4 }, { a: 0 }, { a: 5 }]
+
+// set entirely new state
+const setState = () => handlers.setState([{ a: 6 }, { a: 7 }]);
+// values -> [{ a: 6 }, { a: 7 }]
+
+// set individual item at given position
+const setItem = () => handlers.setItem(0, { a: 8 });
+// values -> [{ a: 8 }, { a: 7 }]
+
+// set item property at given position
+const setItemProp = () => handlers.setItemProp(1, 'a', 'new-prop');
+// values -> [{ a: 8 }, { a: 'new-prop' }]
+```
+
+## Definition
+
+use-list-state takes array as single argument and returns list values and handlers to change them in tuple, similar to react use-state hook.
+
+Hook provides handlers to work with array data:
+
+- `append` – add items to the end of the list
+- `prepend` – add items to the start of the list
+- `insert` – insert items at given index
+- `remove` – remove items at given indicies
+- `reorder` – move item from one position to another
+- `apply` – apply given function to all items in the list
+- `setItem` – replace item at given index
+- `setItemProp` – set item property at given index
+- `setState` – set list state with react action
+
+```tsx
+useListState<T>(initialValue: T[] = []): [T[], {
+  setState: Dispatch<SetStateAction<T[]>>;
+  append: (...items: T[]) => void;
+  prepend: (...items: T[]) => void;
+  insert: (index: number, ...items: T[]) => void;
+  apply: (fn: (item: T, index?: number) => T) => void;
+  remove: (...indices: number[]) => void;
+  reorder: ({ from, to }: { from: number; to: number; }) => void;
+  setItem: (index: number, item: T) => void;
+  setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => void;
+}]
+```
