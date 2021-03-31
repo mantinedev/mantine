@@ -17,4 +17,15 @@ describe('@mantine/core/Overlay', () => {
     expect(element.render().css('background-color')).toBe('#cecece');
     expect(element.render().css('opacity')).toBe('0.99');
   });
+
+  it('accepts component from component prop', () => {
+    const TestComponent = (props: any) => <span data-test-prop {...props} />;
+    const withTag = shallow(<Overlay<'a'> component="a" href="https://mantine.dev" />);
+    const withComponent = shallow(<Overlay<typeof TestComponent> component={TestComponent} />);
+
+    expect(withTag.type()).toBe('a');
+    expect(withTag.render().attr('href')).toBe('https://mantine.dev');
+    expect(withComponent.type()).toBe(TestComponent);
+    expect(withComponent.render().attr('data-test-prop')).toBe('true');
+  });
 });

@@ -1,6 +1,7 @@
 import React from 'react';
+import { ComponentPassThrough } from '@mantine/types';
 
-interface OverlayProps extends React.ComponentPropsWithoutRef<'div'> {
+interface OverlayProps {
   /** Overlay opacity */
   opacity?: React.CSSProperties['opacity'];
 
@@ -8,9 +9,15 @@ interface OverlayProps extends React.ComponentPropsWithoutRef<'div'> {
   color?: React.CSSProperties['backgroundColor'];
 }
 
-export function Overlay({ opacity, color = '#fff', style, ...others }: OverlayProps) {
+export function Overlay<T extends React.ElementType = 'div'>({
+  opacity,
+  color = '#fff',
+  style,
+  component: Element = 'div',
+  ...others
+}: ComponentPassThrough<T, OverlayProps>) {
   return (
-    <div
+    <Element
       style={{
         opacity,
         backgroundColor: color,
