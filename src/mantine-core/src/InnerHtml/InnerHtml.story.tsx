@@ -15,13 +15,14 @@ const html = `
 <h3>Dates</h3>
 <ul><li>On June 28, 2012, Kenneth Duncan announced his departure from the band via his personal Facebook page, citing creative and personal differences.</li><li>On October 28, 2012 the band posted a video on YouTube called We Butter the Bread with Butter - New EP and Album Trailer. The video says that the EP will come out in 2012 and new album will come out on April 12, 2013. The day after the band Posted a picture of the album art for Projekt Herz EP on Facebook.</li><li>On November 11, 2012 the band posted one of the new songs from their new EP on Facebook. The song name is USA. On December 19, 2012 the band released an EP titled Projekt Herz.</li><li>On February 17, 2013 the band posted a video on YouTube announcing the release date of their upcoming album - August 9, 2013 On April 21, 2013 the band revealed via Facebook the cover and the name of the third album, Goldkinder, which will be released on August 9, 2013.</li></ul>
 
-<hr />
-
-<h3>Random quote</h3>
-<blockquote>Life is like an npm install – you never know what you are going to get.<cite>– Forrest Gump</cite></blockquote>
-
 <table class="wikitable plainrowheaders" style="text-align:left;"><caption>List of music videos, showing year released and director</caption><tbody><tr><th scope="col">Year</th><th scope="col">Title</th><th scope="col">Album</th><th scope="col">Director(s)</th></tr><tr><td rowspan="2">2013</td><td scope="row"><a rel="nofollow" class="external text" href="https://www.youtube.com/watch?v=8aQRpfLxieI">"Alles was ich will"</a></td><td rowspan="3"><i><a href="/wiki/Goldkinder" title="Goldkinder">Goldkinder</a></i></td><td rowspan="2">Soeren Schaller, Martin Grau</td></tr><tr><td scope="row"><a rel="nofollow" class="external text" href="https://www.youtube.com/watch?v=pwLGYSIAe-k">"Meine Brille"</a></td></tr><tr><td rowspan="2">2014</td><td scope="row"><a rel="nofollow" class="external text" href="https://www.youtube.com/watch?v=sBE5HNLOMMo">"Ohne Herz"</a></td><td data-sort-value="" style="background: #ececec; color: #2C2C2C; vertical-align: middle; text-align: center;" class="table-na">N/A</td></tr><tr><td scope="row"><a rel="nofollow" class="external text" href="https://www.youtube.com/watch?v=jN7wD-EzBRM">"Weltmeister"</a></td><td>non-album track</td><td data-sort-value="" style="background: #ececec; color: #2C2C2C; vertical-align: middle; text-align: center;" class="table-na">N/A</td></tr><tr><td rowspan="2">2015</td><td scope="row"><a rel="nofollow" class="external text" href="https://www.youtube.com/watch?v=Ku7q5rsNUbc">"Berlin, Berlin!"</a></td><td rowspan="2"><i><a href="/wiki/Wieder_geil!" title="Wieder geil!">Wieder geil!</a></i></td><td data-sort-value="" style="background: #ececec; color: #2C2C2C; vertical-align: middle; text-align: center;" class="table-na">N/A</td></tr><tr><td scope="row"><a rel="nofollow" class="external text" href="https://www.youtube.com/watch?v=W--Dtr27Tiw">"Exorzist"</a></td><td data-sort-value="" style="background: #ececec; color: #2C2C2C; vertical-align: middle; text-align: center;" class="table-na">N/A</td></tr><tr><td rowspan="1">2017</td><td scope="row"><a rel="nofollow" class="external text" href="https://www.youtube.com/watch?v=3AGBjTRDDAM">"Klicks. Likes. Fame. Geil!"</a></td><td>non-album track</td><td data-sort-value="" style="background: #ececec; color: #2C2C2C; vertical-align: middle; text-align: center;" class="table-na">N/A</td></tr><tr><td rowspan="1">2019</td><td scope="row"><a rel="nofollow" class="external text" href="https://youtube.com/Y33G71HbBVw">"Dreh Auf!"</a></td><td>non-album track</td><td data-sort-value="" style="background: #ececec; color: #2C2C2C; vertical-align: middle; text-align: center;" class="table-na">N/A</td></tr></tbody></table>
 `;
+
+const paragraphs = `<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum nisi nam qui iste accusantium a odit incidunt iure reprehenderit quod. Pariatur, ipsam! Ex eius accusamus praesentium facere provident quam cupiditate!</p>
+<p>Deleniti itaque veritatis enim dicta quidem excepturi consequatur minus velit sequi error? Molestias error ex, deleniti facilis, inventore voluptatem recusandae illo delectus non labore dolorem temporibus assumenda qui! Sit, laboriosam?</p>
+<p>Voluptas quo deserunt quis dignissimos, corporis illum dolorem ratione quae necessitatibus possimus quisquam accusamus porro adipisci quidem quasi esse voluptate sequi blanditiis architecto error, assumenda magni nemo. Ratione, esse debitis?</p>
+<p>Est sequi ducimus ad odio? Placeat error, quas itaque dolores natus quo amet labore ad tenetur quisquam, ut voluptas alias. Placeat suscipit, doloremque itaque quibusdam fugit impedit deserunt dolore enim.</p>
+<p>In impedit tempore dignissimos alias facere, dolor fugiat vero eveniet quo neque hic consequuntur quia. Corrupti, est ab, porro beatae culpa ex dolores, quos rerum non eos necessitatibus vitae accusamus.</p>`;
 
 const blockquote = `
 <blockquote>
@@ -36,4 +37,13 @@ storiesOf('@mantine/core/InnerHtml', module)
       <InnerHtml dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   ))
-  .add('Blockquote', () => <InnerHtml dangerouslySetInnerHTML={{ __html: blockquote }} />);
+  .add('Paragraphs', () => (
+    <div style={{ maxWidth: 600, padding: 20, margin: 'auto' }}>
+      <InnerHtml dangerouslySetInnerHTML={{ __html: paragraphs }} />
+    </div>
+  ))
+  .add('Blockquote', () => (
+    <div style={{ maxWidth: 600, padding: 20, margin: 'auto' }}>
+      <InnerHtml dangerouslySetInnerHTML={{ __html: blockquote }} />
+    </div>
+  ));

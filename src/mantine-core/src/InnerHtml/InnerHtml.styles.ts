@@ -12,7 +12,7 @@ export default createUseStyles({
         fontFamily: theme.headings.fontFamily,
         fontWeight: theme.headings.fontWeight,
         marginTop: theme.spacing.md * theme.headings.sizes[h].lineHeight,
-        marginBottom: theme.spacing.sm * theme.headings.sizes[h].lineHeight,
+        marginBottom: theme.spacing.xs * theme.headings.sizes[h].lineHeight,
         ...theme.headings.sizes[h],
       };
 
@@ -27,10 +27,11 @@ export default createUseStyles({
 
       '& img': {
         maxWidth: '100%',
+        marginBottom: theme.spacing.xs,
       },
 
       '& p': {
-        marginTop: theme.spacing.md,
+        marginTop: 0,
         marginBottom: theme.spacing.sm,
       },
 
@@ -53,21 +54,22 @@ export default createUseStyles({
       },
 
       '& ul, & ol': {
-        marginTop: theme.spacing.sm,
+        marginBottom: theme.spacing.md,
         paddingLeft: theme.spacing.lg * 2,
 
         '& li': {
-          marginTop: theme.spacing.xs / 2,
+          marginTop: theme.spacing.xs,
         },
       },
 
       '& table': {
         width: '100%',
         borderCollapse: 'collapse',
-        captionSide: 'top',
+        captionSide: 'bottom',
+        marginBottom: theme.spacing.md,
 
         '& > caption': {
-          marginBottom: theme.spacing.xs,
+          marginTop: theme.spacing.xs,
           fontSize: theme.fontSizes.sm,
           color: theme.colors.gray[6],
         },
