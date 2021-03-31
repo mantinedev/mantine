@@ -5,9 +5,11 @@ order: 1
 slug: /core/spoiler/
 ---
 
+import { SpoilerBaseDemo, SpoilerNoAnimationDemo } from '../../demos/core/Spoiler/spoiler.demos';
+
 # Spoiler
 
-This is a Spoiler component description placeholder
+Hide content that exceeds given height
 
 <PageHeader
   source="mantine-core/src/Spoiler/Spoiler.tsx"
@@ -15,10 +17,41 @@ This is a Spoiler component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Spoiler } from '@mantine/core';
 ```
+
+## Usage
+
+Use Spoiler to hide logn section of content.
+Pass `maxHeight` prop to control point at which content will be hidden under spoiler and control to show/hide extra appears.
+If content height is less than `maxHeight` spoiler will just render children.
+
+Props `hideLabel` and `showLabel` are required – they are used as spoiler toggle button label in corresponding state.
+
+<SpoilerBaseDemo />
+
+## Transition duration
+
+Control transition duration by setting `transitionDuration` prop (transition-duration css property in ms).
+To disable animations set prop to 0:
+
+<SpoilerNoAnimationDemo />
+
+## Get control ref
+
+You can get control button ref by passing `controlRef` prop to Spolier component:
+
+```tsx
+import React, { useRef } from 'react';
+import { Spoiler } from '@mantine/core';
+
+function ButtonDemo() {
+  const spoilerControlRef = useRef<HTMLButtonElement>(null);
+  return <Spoiler controlRef={buttonRef} />;
+}
+```
+
+## Component props
 
 <PropsTable component="Spoiler" />
