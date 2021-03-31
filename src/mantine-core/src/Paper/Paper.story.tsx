@@ -6,7 +6,7 @@ import { Paper } from './Paper';
 
 const getShadows = (props?: any) =>
   ([null, 'xs', 'sm', 'md', 'lg', 'xl'] as const).map((shadow) => (
-    <Paper style={{ width: 260, margin: 50 }} key={shadow} shadow={shadow} padding="md" {...props}>
+    <Paper style={{ width: 260, margin: 30 }} key={shadow} shadow={shadow} padding="md" {...props}>
       <Text>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque, temporibus excepturi,
         placeat quam eius quisquam ad nostrum magnam molestias voluptates minima minus natus
@@ -17,9 +17,7 @@ const getShadows = (props?: any) =>
 
 storiesOf('@mantine/core/Paper', module)
   .add('Shadows', () => (
-    <div style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], paddingBottom: 40 }}>
-      {getShadows()}
-    </div>
+    <div style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], padding: 40 }}>{getShadows()}</div>
   ))
   .add('Custom shadow', () => (
     <div style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], padding: 40 }}>
@@ -37,7 +35,7 @@ storiesOf('@mantine/core/Paper', module)
     </div>
   ))
   .add('Custom padding', () => (
-    <div style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], paddingBottom: 40 }}>
+    <div style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], padding: 40 }}>
       {getShadows({ padding: 'lg' })}
     </div>
   ));
