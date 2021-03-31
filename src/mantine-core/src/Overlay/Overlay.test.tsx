@@ -12,10 +12,11 @@ describe('@mantine/core/Overlay', () => {
     expect(Overlay.displayName).toEqual('@mantine/core/Overlay');
   });
 
-  it('sets background-color and opacity from props', () => {
-    const element = shallow(<Overlay opacity={0.99} color="#cecece" />);
+  it('sets background-color, opacity and z-index from props', () => {
+    const element = shallow(<Overlay opacity={0.99} color="#cecece" zIndex={5} />);
     expect(element.render().css('background-color')).toBe('#cecece');
     expect(element.render().css('opacity')).toBe('0.99');
+    expect(element.render().css('z-index')).toBe('5');
   });
 
   it('accepts component from component prop', () => {
