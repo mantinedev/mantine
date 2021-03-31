@@ -32,11 +32,11 @@ export function Text<T extends React.ElementType = 'div'>({
   component = 'div',
   children,
   size = 'md',
-  weight = 400,
+  weight,
   transform,
   style,
   color,
-  align = 'left',
+  align,
   variant = 'text',
   themeOverride,
   ...others
