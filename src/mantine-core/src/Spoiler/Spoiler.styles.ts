@@ -11,10 +11,10 @@ export default createUseStyles({
     position: 'relative',
   },
 
-  content: ({ transitionDuration, theme }: SpoilerStylesProps) => ({
+  content: ({ transitionDuration }: SpoilerStylesProps) => ({
     overflow: 'hidden',
     transitionProperty: 'max-height',
-    transitionTimingFunction: theme.transitionTimingFunction,
+    transitionTimingFunction: 'ease',
     transitionDuration: transitionDuration || 0,
   }),
 });
