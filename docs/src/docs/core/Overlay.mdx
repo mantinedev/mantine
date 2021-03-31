@@ -5,7 +5,7 @@ order: 1
 slug: /core/overlay/
 ---
 
-import { OverlayBaseDemo } from '../../demos/core/Overlay/overlay.demos';
+import { OverlayBaseDemo, OverlayLinkDemo } from '../../demos/core/Overlay/overlay.demos';
 
 # Overlay
 
@@ -27,6 +27,21 @@ It is used to build components like <GatsbyLink to="/core/modal">Modal</GatsbyLi
 You can change overlay opacity (from 0 to 1) and color (css color value, not connected to mantine theme).
 
 <OverlayBaseDemo />
+
+## Custom component
+
+You can pass custom tag or component that will be used as root element:
+
+```tsx
+import { Link } from 'react-router-dom';
+
+<Overlay component="a" href="https://mantine.dev" />
+<Overlay component={Link} to="/mantine" />
+```
+
+For example, you can create link overlay and intercept all clicks:
+
+<OverlayLinkDemo />
 
 ## Component props
 
