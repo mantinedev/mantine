@@ -5,6 +5,7 @@ interface ContainerStylesProps {
   fluid: boolean;
   size: MantineNumberSize;
   theme: MantineTheme;
+  padding: MantineNumberSize;
 }
 
 export const sizes = {
@@ -16,11 +17,11 @@ export const sizes = {
 };
 
 export default createUseStyles({
-  container: ({ fluid, size, theme }: ContainerStylesProps) => ({
+  container: ({ fluid, size, padding, theme }: ContainerStylesProps) => ({
     maxWidth: fluid ? '100%' : getSizeValue({ size, sizes }),
     marginLeft: 'auto',
     marginRight: 'auto',
-    paddingLeft: theme.spacing.md,
-    paddingRight: theme.spacing.md,
+    paddingLeft: getSizeValue({ size: padding, sizes: theme.spacing }),
+    paddingRight: getSizeValue({ size: padding, sizes: theme.spacing }),
   }),
 });
