@@ -37,6 +37,15 @@ describe('@mantine/core/InputWrapper', () => {
     expect(withoutProps.render().find('[data-mantine-error]')).toHaveLength(0);
   });
 
+  it('does not render error if error prop is boolean', () => {
+    const element = shallow(
+      <InputWrapper id="test-id" error>
+        test-children
+      </InputWrapper>
+    );
+    expect(element.render().find('[data-mantine-error]')).toHaveLength(0);
+  });
+
   it('renders required asterisk with required prop is true', () => {
     const required = shallow(
       <InputWrapper id="test-id" required label="test-label">

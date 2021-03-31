@@ -60,6 +60,11 @@ storiesOf('@mantine/core/Select', module)
       />
     </div>
   ))
+  .add('Invalid without error', () => (
+    <div style={{ maxWidth: 300, padding: 20 }}>
+      <WrappedSelect label="Your favorite library" placeholder="Your favorite library" error />
+    </div>
+  ))
   .add('Custom radius', () => (
     <div style={{ maxWidth: 300, padding: 20 }}>
       <WrappedSelect

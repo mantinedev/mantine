@@ -52,6 +52,11 @@ storiesOf('@mantine/core/TextInput', module)
       <TextInput label="With error" placeholder="With error" error="text too short" />
     </div>
   ))
+  .add('Invalid without error', () => (
+    <div style={{ width: 300, padding: 20 }}>
+      <TextInput label="With error" placeholder="With error" error />
+    </div>
+  ))
   .add('Custom radius', () => (
     <div style={{ width: 300, padding: 20 }}>
       <TextInput label="Radius" placeholder="Radius" radius="lg" />

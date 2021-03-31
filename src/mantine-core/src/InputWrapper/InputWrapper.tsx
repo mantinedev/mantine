@@ -61,7 +61,7 @@ export function InputWrapper({
 
       {children}
 
-      {error && (
+      {typeof error !== 'boolean' && error && (
         <Text data-mantine-error color="red" size="sm" className={classes.error}>
           {error}
         </Text>

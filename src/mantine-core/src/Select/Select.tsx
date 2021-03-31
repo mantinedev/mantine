@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { ChevronDownIcon } from '@modulz/radix-icons';
 import { useId } from '@mantine/hooks';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input, InputProps } from '../Input/Input';
 
@@ -50,6 +50,7 @@ export const Select = forwardRef(
     }: SelectProps,
     ref: React.ForwardedRef<HTMLSelectElement>
   ) => {
+    const theme = useMantineTheme(themeOverride);
     const uuid = useId(id);
 
     const options = data.map((item) => (
@@ -65,6 +66,10 @@ export const Select = forwardRef(
         </option>
       );
     }
+
+    const chevron = (
+      <ChevronDownIcon style={{ color: error ? theme.colors.red[6] : theme.colors.gray[6] }} />
+    );
 
     return (
       <InputWrapper
@@ -87,7 +92,7 @@ export const Select = forwardRef(
           elementRef={ref}
           id={uuid}
           inputStyle={inputStyle}
-          rightSection={<ChevronDownIcon />}
+          rightSection={chevron}
           rightSectionProps={{ style: { pointerEvents: 'none' } }}
           required={required}
         >
