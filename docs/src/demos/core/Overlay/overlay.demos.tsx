@@ -12,8 +12,10 @@ export function OverlayDemo() {
   return (
     <>
       <div style={{ width: 400, height: 100, position: 'relative' }}>
-        {visible && <Overlay opacity={0.6} color="#000" />}
-        <Text>I will be overlaid</Text>
+        {visible && <Overlay opacity={0.6} color="#000" zIndex={5} />}
+        <Button color={visible ? 'red' : 'teal'}>
+          {!visible ? 'Click as much as you like' : "Won't click, haha"}
+        </Button>
       </div>
 
       <ElementsGroup position="center">
@@ -40,7 +42,9 @@ export function OverlayBaseDemo() {
         }}
       >
         {visible && <Overlay opacity={0.6} color="#000" />}
-        <Text>I will be overlaid</Text>
+        <Button color={visible ? 'red' : 'teal'}>
+          {!visible ? 'Click as much as you like' : "Won't click, haha"}
+        </Button>
       </div>
 
       <ElementsGroup position="center" style={{ marginTop: 20 }}>
