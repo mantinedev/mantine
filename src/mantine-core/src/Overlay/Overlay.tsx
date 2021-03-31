@@ -13,7 +13,7 @@ interface OverlayProps {
 }
 
 export function Overlay<T extends React.ElementType = 'div'>({
-  opacity,
+  opacity = 0.6,
   color = '#fff',
   zIndex = 1000,
   style,
