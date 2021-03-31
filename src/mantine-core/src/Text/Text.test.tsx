@@ -19,14 +19,14 @@ describe('@mantine/core/Text', () => {
     expect(Anchor.displayName).toEqual('@mantine/core/Anchor');
   });
 
-  it('sets font-weight based on weight prop', () => {
-    const element = shallow(<Text weight={600} />);
-    expect(element.render().css('font-weight')).toBe('600');
-  });
+  it('sets font-weight, test-transform and text-align based on props', () => {
+    const withWeight = shallow(<Text weight={600} />);
+    const withTransform = shallow(<Text transform="uppercase" />);
+    const withAlign = shallow(<Text align="right" />);
 
-  it('sets text-transform based on transform prop', () => {
-    const element = shallow(<Text transform="uppercase" />);
-    expect(element.render().css('text-transform')).toBe('uppercase');
+    expect(withWeight.render().css('font-weight')).toBe('600');
+    expect(withTransform.render().css('text-transform')).toBe('uppercase');
+    expect(withAlign.render().css('text-align')).toBe('right');
   });
 
   it('accepts component from component prop', () => {
