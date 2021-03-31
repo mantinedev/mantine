@@ -96,6 +96,7 @@ export default createUseStyles(
     },
 
     version: {
+      ...getFocusStyles(theme),
       fontWeight: 700,
       textDecoration: 'none',
     },
