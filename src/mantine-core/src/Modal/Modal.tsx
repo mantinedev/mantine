@@ -12,14 +12,17 @@ import { Overlay } from '../Overlay/Overlay';
 import useStyles from './Modal.styles';
 
 interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
-  /** Modal title, displayed in header before close button */
-  title?: React.ReactNode;
-
   /** Mounts modal if true */
   opened: boolean;
 
   /** Called when close button clicked and when escape key is pressed */
   onClose(): void;
+
+  /** Modal title, displayed in header before close button */
+  title?: React.ReactNode;
+
+  /** Modal z-index property */
+  zIndex?: number;
 
   /** Hides close button, modal still can be closed with escape key and by clicking outside */
   hideCloseButton?: boolean;
@@ -70,6 +73,7 @@ export function Modal({
   transitionDuration = 350,
   closeButtonLabel,
   overlayColor,
+  zIndex = 1000,
   ...others
 }: ModalProps) {
   const bodyOverflow = useRef<React.CSSProperties['overflow']>(null);
@@ -114,8 +118,10 @@ export function Modal({
       {(state) => (
         <div className={cx(classes.wrapper, className)} {...others}>
           <div
+            data-mantine-modal-inner
             className={classes.inner}
             onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}
+            style={{ zIndex: zIndex + 1 }}
             ref={focusTrapRef}
           >
             <Paper
@@ -148,7 +154,7 @@ export function Modal({
               ...transitionStyles[state].overlay,
             }}
           >
-            <Overlay color={overlayColor || theme.black} opacity={overlayOpacity} />
+            <Overlay color={overlayColor || theme.black} opacity={overlayOpacity} zIndex={zIndex} />
           </div>
         </div>
       )}

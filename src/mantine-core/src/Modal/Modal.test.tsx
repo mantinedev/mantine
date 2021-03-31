@@ -87,4 +87,10 @@ describe('@mantine/core/Modal', () => {
     expect(element.find(Overlay).prop('opacity')).toBe(0.99);
     expect(element.find(Overlay).prop('color')).toBe('#fff');
   });
+
+  it('sets correct z-index based on zIndex prop', () => {
+    const element = mount(<Modal opened onClose={() => {}} zIndex={87} />);
+    expect(element.find(Overlay).prop('zIndex')).toBe(87);
+    expect(element.render().find('[data-mantine-modal-inner]').css('z-index')).toBe('88');
+  });
 });

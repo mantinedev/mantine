@@ -12,7 +12,6 @@ export default createUseStyles({
 
   inner: ({ theme }: { theme: MantineTheme }) => ({
     position: 'absolute',
-    zIndex: 1,
     top: 0,
     left: 0,
     right: 0,

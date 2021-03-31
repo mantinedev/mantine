@@ -18,7 +18,6 @@ export default createUseStyles(
       bottom: 0,
       left: 0,
       width: NAVBAR_WIDTH,
-      zIndex: 10,
 
       [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
         display: 'none',
