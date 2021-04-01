@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, ElementsGroup } from '@mantine/core';
+import { Modal, Button, ElementsGroup, Portal } from '@mantine/core';
 import { AuthenticationForm } from '@mantine/demos';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
@@ -16,7 +16,7 @@ export function ModalDemo() {
         onClose={() => setOpened(false)}
         title="Introduce yourself!"
       >
-        <AuthenticationForm noShadow noPadding />
+        <AuthenticationForm />
       </Modal>
 
       <ElementsGroup position="center">
@@ -31,9 +31,11 @@ export function ModalBaseDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <Modal opened={opened} onClose={() => setOpened(false)} title="Introduce yourself!">
-        <AuthenticationForm noShadow noPadding />
-      </Modal>
+      <Portal zIndex={10}>
+        <Modal opened={opened} onClose={() => setOpened(false)} title="Introduce yourself!">
+          <AuthenticationForm noShadow noPadding />
+        </Modal>
+      </Portal>
 
       <ElementsGroup position="center">
         <Button onClick={() => setOpened(true)}>Open Modal</Button>
