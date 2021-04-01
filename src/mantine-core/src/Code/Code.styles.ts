@@ -10,12 +10,14 @@ export default createUseStyles({
   code: ({ theme, color }: CodeStylesProps) => ({
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,
-    padding: [3, theme.spacing.xs / 2],
+    padding: [1, theme.spacing.xs / 2],
     borderRadius: theme.radius.sm,
     color: getThemeColor({ theme, color, shade: 9 }),
     backgroundColor: getThemeColor({ theme, color, shade: 0 }),
     fontFamily: theme.fontFamilyMonospace,
     fontSize: theme.fontSizes.xs,
+    fontWeight: 700,
+    border: `1px solid ${getThemeColor({ theme, color, shade: 3 })}`,
   }),
 
   pre: ({ theme }: CodeStylesProps) => ({
