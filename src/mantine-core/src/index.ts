@@ -24,6 +24,7 @@ export { Month } from './Month/Month';
 export { Overlay } from './Overlay/Overlay';
 export { Paper } from './Paper/Paper';
 export { PasswordInput } from './PasswordInput/PasswordInput';
+export { Portal } from './Portal/Portal';
 export { Progress, PROGRESS_SIZES } from './Progress/Progress';
 export { Select } from './Select/Select';
 export { Spoiler } from './Spoiler/Spoiler';
