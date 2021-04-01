@@ -129,6 +129,7 @@ export function Modal({
               shadow="lg"
               style={{ width: modalWidth, ...defaultStyle.modal, ...transitionStyles[state].modal }}
               ref={clickOutsideRef}
+              tabIndex={-1}
             >
               {(title || !hideCloseButton) && (
                 <div data-mantine-modal-header className={classes.header}>

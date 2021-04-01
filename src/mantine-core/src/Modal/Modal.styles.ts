@@ -33,6 +33,7 @@ export default createUseStyles({
 
   modal: ({ theme }: { theme: MantineTheme }) => ({
     padding: theme.spacing.lg,
+    outline: 0,
   }),
 
   header: ({ theme }: { theme: MantineTheme }) => ({
