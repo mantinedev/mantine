@@ -132,12 +132,12 @@ export function Modal({
             >
               {(title || !hideCloseButton) && (
                 <div data-mantine-modal-header className={classes.header}>
-                  <Text data-mantine-modal-title className={classes.title} size="md">
+                  <Text data-mantine-modal-title className={classes.title}>
                     {title}
                   </Text>
 
                   {!hideCloseButton && (
-                    <ActionIcon onClick={onClose} color="gray" aria-label={closeButtonLabel}>
+                    <ActionIcon onClick={onClose} aria-label={closeButtonLabel}>
                       <Cross1Icon />
                     </ActionIcon>
                   )}
