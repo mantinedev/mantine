@@ -1,0 +1,69 @@
+---
+package: mantine-core
+title: Portal
+order: 1
+slug: /core/portal/
+---
+
+# Portal
+
+Wrapper component for [ReactDOM.createPortal](https://reactjs.org/docs/portals.html) API.
+Render any component or element at the end of `document.body` or at given element.
+
+<PageHeader
+  source="mantine-core/src/Portal/Portal.tsx"
+  docs="core/Portal.mdx"
+  package="@mantine/core"
+/>
+
+```tsx
+import { Portal } from '@mantine/core';
+```
+
+## Usage
+
+Use Portal to render component or element at different place (defaults to the end of `document.body`).
+Portal is usefull when you want to prevent parent styles from interfering with child,
+usually all these styles are related to `position` and `z-index` properties
+and portals are used for components with fixed position, for example, modals.
+
+```tsx
+import React, { useState } from 'react';
+import { Modal, Portal } from '@mantine/core';
+
+function PortalDemo() {
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <div style={{ position: 'relative', zIndex: 1 }}>
+      <Portal zIndex={5}>
+        <Modal opened={opened} onClose={() => setOpened(false)}>
+          Modal content
+        </Modal>
+      </Portal>
+
+      <button onClick={() => setOpened(true)}>Open modal</button>
+    </div>
+  );
+}
+```
+
+In the example above, Modal component is rendered outside of parent div (before closing body tag),
+but still receives `opened` and `onClose` props. Modal will not be affected by parent z-index.
+
+## Specify target dom node
+
+You can specify dom node where portal will be rendered by passing `target` prop:
+
+```tsx
+const container = document.createElement('div');
+document.body.appendChild(container);
+
+<Portal target={container} />;
+```
+
+If you don't specify the target element, new one will be created and appended to the `document.body` for each Portal component.
+
+## Component props
+
+<PropsTable component="Portal" />
