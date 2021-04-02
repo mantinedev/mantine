@@ -16,9 +16,4 @@ storiesOf('@mantine/core/ThemeIcon', module)
   .add('Filled variant', () => <ElementsGroup style={{ padding: 20 }}>{getThemes()}</ElementsGroup>)
   .add('Light variant', () => (
     <ElementsGroup style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</ElementsGroup>
-  ))
-  .add('Gradient variant', () => (
-    <ElementsGroup style={{ padding: 20 }}>
-      {getThemes({ variant: 'gradient', radius: 'xl', size: 'xl' })}
-    </ElementsGroup>
   ));

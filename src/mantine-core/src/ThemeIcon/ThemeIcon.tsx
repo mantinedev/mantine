@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
-import useStyles, { ThemeIconVariant, sizes } from './ThemeIcon.styles';
+import useStyles, { sizes } from './ThemeIcon.styles';
 
 export const THEME_ICON_SIZES = sizes;
 
@@ -19,7 +19,7 @@ interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'> {
   color?: string;
 
   /** Controls appearance */
-  variant?: ThemeIconVariant;
+  variant?: 'filled' | 'light';
 }
 
 export function ThemeIcon({
