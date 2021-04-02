@@ -5,16 +5,47 @@ order: 1
 slug: /core/text/
 ---
 
+import { TextBaseDemo } from '../../demos/core/Text/text.demos';
+
 # Text
 
-This is a Text component description placeholder
+Render text and links with theme styles
 
 <PageHeader source="mantine-core/src/Text/Text.tsx" docs="core/Text.mdx" package="@mantine/core" />
-
-## Import
 
 ```tsx
 import { Text } from '@mantine/core';
 ```
+
+## Usage
+
+Use Text component to render text and links with theme styles. Control Text styles with props:
+
+- `size` – predefined font-size from `theme.fontSizes`
+- `color` – predefined colors from `theme.colors`
+- `weight` – font-weight property
+- `transform` – text-transform property
+- `align` – text-align property
+- `variant` – text or link predefined styles
+
+<TextBaseDemo />
+
+## Custom component
+
+By default text is rendered in div element, you can change it by setting `component` prop:
+
+```tsx
+import { Link } from 'react-router-dom';
+
+<Text variant="link" component={Link} to="/hello">
+  React router link
+</Text>
+
+<Text variant="link" component="a" href="https://mantine.dev">
+  Normal link
+</Text>
+```
+
+## Component props
 
 <PropsTable component="Text" />
