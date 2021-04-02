@@ -1,6 +1,13 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme } from '@mantine/theme';
 
+interface ModalStylesProps {
+  theme: MantineTheme;
+  overflow?: 'outside' | 'inside';
+}
+
+const HEADER_HEIGHT = 32;
+
 export default createUseStyles({
   wrapper: {
     position: 'fixed',
@@ -10,7 +17,7 @@ export default createUseStyles({
     bottom: 0,
   },
 
-  inner: ({ theme }: { theme: MantineTheme }) => ({
+  inner: ({ theme }: ModalStylesProps) => ({
     position: 'absolute',
     top: 0,
     left: 0,
@@ -21,25 +28,27 @@ export default createUseStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start',
-
-    '@media (max-width: 755px)': {
-      padding: theme.spacing.sm,
-    },
   }),
 
-  title: ({ theme }: { theme: MantineTheme }) => ({
+  title: ({ theme }: ModalStylesProps) => ({
     marginRight: theme.spacing.md,
   }),
 
-  modal: ({ theme }: { theme: MantineTheme }) => ({
+  modal: ({ theme }: ModalStylesProps) => ({
     padding: theme.spacing.lg,
     outline: 0,
   }),
 
-  header: ({ theme }: { theme: MantineTheme }) => ({
+  header: ({ theme }: ModalStylesProps) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    height: HEADER_HEIGHT,
     marginBottom: theme.spacing.md,
+  }),
+
+  body: ({ overflow }: ModalStylesProps) => ({
+    maxHeight: overflow === 'inside' && 'calc(100vh - 185px)',
+    overflowY: overflow === 'inside' && 'auto',
   }),
 });

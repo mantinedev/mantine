@@ -31,6 +31,15 @@ storiesOf('@mantine/core/Modal', module)
         ))}
     </WrappedModal>
   ))
+  .add('Inside overflow', () => (
+    <WrappedModal title="Authentication form" overflow="inside">
+      {Array(100)
+        .fill('REACT IS NOT A FRAMEWORK')
+        .map((c) => (
+          <Text weight={700}>{c}</Text>
+        ))}
+    </WrappedModal>
+  ))
   .add('Custom modal width', () => (
     <WrappedModal title="Authentication form" modalWidth="80%">
       <AuthenticationForm noPadding noShadow />

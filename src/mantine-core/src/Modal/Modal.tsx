@@ -24,6 +24,9 @@ interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   /** Modal z-index property */
   zIndex?: number;
 
+  /** Control vertical overflow behavior */
+  overflow?: 'outside' | 'inside';
+
   /** Hides close button, modal still can be closed with escape key and by clicking outside */
   hideCloseButton?: boolean;
 
@@ -74,6 +77,7 @@ export function Modal({
   closeButtonLabel,
   overlayColor,
   zIndex = 1000,
+  overflow = 'outside',
   ...others
 }: ModalProps) {
   const titleId = useId();
@@ -82,7 +86,7 @@ export function Modal({
   const bodyOverflow = useRef<React.CSSProperties['overflow']>(null);
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme });
+  const classes = useStyles({ overflow, theme });
   const clickOutsideRef = useClickOutside(onClose);
   const focusTrapRef = useFocusTrap();
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -150,7 +154,9 @@ export function Modal({
                 </header>
               )}
 
-              <div id={bodyId}>{children}</div>
+              <div id={bodyId} className={classes.body}>
+                {children}
+              </div>
             </Paper>
           </section>
 
