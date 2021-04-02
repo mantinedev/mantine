@@ -5,9 +5,11 @@ order: 1
 slug: /core/theme-icon/
 ---
 
-# ThemeIcon
+import { THEME_ICON_SIZES } from '@mantine/core';
+import { ThemeIconConfigurator } from '../../demos/core/ThemeIcon/theme-icon.configurator';
+import { ThemeIconBaseDemo } from '../../demos/core/ThemeIcon/theme-icon.demos';
 
-This is a ThemeIcon component description placeholder
+# ThemeIcon
 
 <PageHeader
   source="mantine-core/src/ThemeIcon/ThemeIcon.tsx"
@@ -15,10 +17,66 @@ This is a ThemeIcon component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { ThemeIcon } from '@mantine/core';
 ```
+
+## Usage
+
+Use ThemeIcon do display svg icon with theme color background and color. You can use icons from any react icons library, for example:
+
+- [radix icons](https://icons.modulz.app/) (used in mantine packages)
+- [feather](https://feathericons.com/)
+- [react-icons](https://react-icons.github.io/react-icons)
+
+<ThemeIconBaseDemo />
+
+## Change color, size and radius
+
+ThemeIcon has predefined sizes: xs, sm, md, lg, xl.
+You can pass size as number and it will be set as width and height in px:
+
+```tsx
+<ThemeIcon size="sm" /> // -> predefined small size
+<ThemeIcon size={50} /> // -> { width: 50, height: 50 }
+```
+
+Note that component **does not control icon size** and you need to specify it manually on icon component for better fit.
+
+### Default size values
+
+You can get default sizes for action icon by importing `THEME_ICON_SIZES`:
+
+```tsx
+import { THEME_ICON_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Width and height']}
+  data={Object.keys(THEME_ICON_SIZES).map((size) => [size, `${THEME_ICON_SIZES[size]}px`])}
+/>
+
+Same with radius – predefined values for xs, sm, md, lg, xl are defined in <GatsbyLink to="/theming">theme</GatsbyLink>,
+or pass in number to set border-radius in px:
+
+```tsx
+<ThemeIcon radius="lg" /> // -> theme predefined large radius
+<ThemeIcon radius={10} /> // -> { borderRadius: 10 }
+```
+
+Size and color are only visible when user interacts with hover, active and focus.
+
+You can choose any color defined in <GatsbyLink to="/theming">theme</GatsbyLink> for ThemeIcon.
+
+```tsx
+<ThemeIcon color="red" />
+<ThemeIcon color="blue" />
+```
+
+### Size, radius and color demo
+
+<ThemeIconConfigurator />
+
+## Component props
 
 <PropsTable component="ThemeIcon" />
