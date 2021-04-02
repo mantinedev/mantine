@@ -8,6 +8,7 @@ slug: /core/modal/
 import { ModalBaseDemo } from '../../demos/core/Modal/modal.base-demo';
 import { ModalNoHeaderDemo } from '../../demos/core/Modal/modal.no-header-demo';
 import { ModalOverlayDemo } from '../../demos/core/Modal/modal.overlay-demo';
+import { ModalOverflowDemo } from '../../demos/core/Modal/modal.overflow-demo';
 
 # Modal
 
@@ -27,7 +28,7 @@ import { Modal } from '@mantine/core';
 
 ## Usage with Portal
 
-Usually it is a good idea to render modal outside of current component to avoid styles collisions.
+Usually, it is a good idea to render modal outside of current component to avoid styles collisions.
 To implement this use <GatsbyLink to="/core/portal">Portal</GatsbyLink> component.
 
 ```tsx
@@ -53,8 +54,8 @@ function PortalDemo() {
 
 ## Remove title and close button
 
-You can remove modal title and close button,
-it will still be possible to close modal by clicking on overlay or pressing escape.
+You can remove modal title and close button.
+It will still be possible to close modal by clicking on overlay or pressing escape.
 
 <ModalNoHeaderDemo />
 
@@ -63,6 +64,12 @@ it will still be possible to close modal by clicking on overlay or pressing esca
 Modal uses <GatsbyLink to="/core/overlay">Overlay</GatsbyLink> component to render overlay, you can change overlay opacity and color:
 
 <ModalOverlayDemo />
+
+## Modal with overflow
+
+When modal has too much content it will have vertical scroll:
+
+<ModalOverflowDemo />
 
 ## Component props
 
