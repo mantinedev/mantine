@@ -6,6 +6,14 @@ interface ModalStylesProps {
   overflow?: 'outside' | 'inside';
 }
 
+export const sizes = {
+  xs: 320,
+  sm: 380,
+  md: 440,
+  lg: 620,
+  xl: 780,
+};
+
 export default createUseStyles({
   wrapper: {
     position: 'fixed',

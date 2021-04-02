@@ -1,13 +1,11 @@
-import { MantineNumberSize, MantineSizes, MantineSize } from '../../types';
-
 export function getSizeValue({
   size,
   sizes,
   defaultSize = 'md',
 }: {
-  size: MantineNumberSize;
-  sizes: MantineSizes;
-  defaultSize?: MantineSize;
+  size: string | number;
+  sizes: Record<string, any>;
+  defaultSize?: string;
 }) {
   if (typeof size === 'number') {
     return size;
