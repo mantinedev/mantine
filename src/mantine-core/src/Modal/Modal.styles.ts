@@ -1,10 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme } from '@mantine/theme';
-
-interface ModalStylesProps {
-  theme: MantineTheme;
-  overflow?: 'outside' | 'inside';
-}
+import { MantineTheme, getSizeValue } from '@mantine/theme';
 
 export const sizes = {
   xs: 320,
@@ -12,7 +7,14 @@ export const sizes = {
   md: 440,
   lg: 620,
   xl: 780,
+  full: '100%',
 };
+
+interface ModalStylesProps {
+  theme: MantineTheme;
+  overflow: 'outside' | 'inside';
+  size: string | number;
+}
 
 export default createUseStyles({
   wrapper: {
@@ -43,7 +45,8 @@ export default createUseStyles({
     wordBreak: 'break-word',
   }),
 
-  modal: ({ theme }: ModalStylesProps) => ({
+  modal: ({ theme, size }: ModalStylesProps) => ({
+    width: getSizeValue({ sizes, size }),
     padding: theme.spacing.lg,
     outline: 0,
   }),

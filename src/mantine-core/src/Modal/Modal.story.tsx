@@ -63,7 +63,7 @@ storiesOf('@mantine/core/Modal', module)
     </WrappedModal>
   ))
   .add('Custom modal width', () => (
-    <WrappedModal title="Authentication form" modalWidth="80%">
+    <WrappedModal title="Authentication form" size="xs">
       <AuthenticationForm noPadding noShadow />
     </WrappedModal>
   ));

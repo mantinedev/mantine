@@ -10,7 +10,9 @@ import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { getTransitionStyles } from './get-transition-styles';
-import useStyles from './Modal.styles';
+import useStyles, { sizes } from './Modal.styles';
+
+export const MODAL_SIZES = sizes;
 
 interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Mounts modal if true */
@@ -38,7 +40,7 @@ interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   overlayColor?: React.CSSProperties['color'];
 
   /** Modal body width */
-  modalWidth?: React.CSSProperties['width'];
+  size?: string | number;
 
   /** Duration in ms of modal mount and unmount animations */
   transitionDuration?: number;
@@ -56,7 +58,7 @@ export function Modal({
   children,
   hideCloseButton = false,
   overlayOpacity = 0.65,
-  modalWidth = 440,
+  size = 'md',
   transitionDuration = 350,
   closeButtonLabel,
   overlayColor,
@@ -70,7 +72,7 @@ export function Modal({
   const bodyOverflow = useRef<React.CSSProperties['overflow']>(null);
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ overflow, theme });
+  const classes = useStyles({ size, overflow, theme });
   const clickOutsideRef = useClickOutside(onClose);
   const focusTrapRef = useFocusTrap();
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -106,10 +108,7 @@ export function Modal({
             <Paper
               className={classes.modal}
               shadow="lg"
-              style={{
-                width: modalWidth,
-                ...getTransitionStyles({ duration, theme, state, part: 'modal' }),
-              }}
+              style={{ ...getTransitionStyles({ duration, theme, state, part: 'modal' }) }}
               ref={clickOutsideRef}
               tabIndex={-1}
             >
