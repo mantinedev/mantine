@@ -6,8 +6,6 @@ interface ModalStylesProps {
   overflow?: 'outside' | 'inside';
 }
 
-const HEADER_HEIGHT = 32;
-
 export default createUseStyles({
   wrapper: {
     position: 'fixed',
@@ -32,6 +30,9 @@ export default createUseStyles({
 
   title: ({ theme }: ModalStylesProps) => ({
     marginRight: theme.spacing.md,
+    textOverflow: 'ellipsis',
+    display: 'block',
+    wordBreak: 'break-word',
   }),
 
   modal: ({ theme }: ModalStylesProps) => ({
@@ -43,12 +44,12 @@ export default createUseStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: HEADER_HEIGHT,
     marginBottom: theme.spacing.md,
   }),
 
   body: ({ overflow }: ModalStylesProps) => ({
     maxHeight: overflow === 'inside' && 'calc(100vh - 185px)',
     overflowY: overflow === 'inside' && 'auto',
+    wordBreak: 'break-word',
   }),
 });

@@ -38,6 +38,11 @@ storiesOf('@mantine/core/Modal', module)
       <AuthenticationForm noPadding noShadow />
     </WrappedModal>
   ))
+  .add('Horizontal overflow', () => (
+    <WrappedModal title="This title is so large that there is no space to fit it all on single line and it will wrap on the second one or may be even on the third one">
+      IDecidedToPutSoMuchUnbreakableContentInsideModalSoThatItWillOverflow
+    </WrappedModal>
+  ))
   .add('Inside portal', () => <InPortal />)
   .add('Vertical scroll', () => (
     <WrappedModal title="Authentication form">
