@@ -7,45 +7,82 @@ import { Modal, Button, ElementsGroup } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
 
 export function ModalDemo() {
-  const [opened, setOpened] = useState(false);
-  const theme = useMantineTheme();
+  const [insideOpened, setInsideOpened] = useState(false);
+  const [outsideOpened, setOutsideOpened] = useState(false);
+  const content = Array(100)
+    .fill(0)
+    .map((_, index) => <p key={index}>React is not a framework</p>);
   
   return (
     <>
       <Modal
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title="Introduce yourself!"
-        overlayColor={theme.colors.gray[2]}
-        overlayOpacity={0.95}
+        opened={outsideOpened}
+        onClose={() => setOutsideOpened(false)}
+        title="Please consider this"
+        overflow="outside"
       >
-        <AuthenticationForm />
+        {content}
+      </Modal>
+      
+      <Modal
+        opened={insideOpened}
+        onClose={() => setInsideOpened(false)}
+        title="Please consider this"
+        overflow="inside"
+      >
+        {content}
       </Modal>
 
       <ElementsGroup position="center">
-        <Button onClick={() => setOpened(true)}>Open Modal</Button>
+        <Button onClick={() => setOutsideOpened(true)} color="pink">
+          Outside overflow
+        </Button>
+        <Button onClick={() => setInsideOpened(true)} color="cyan">
+          Inside overflow
+        </Button>
       </ElementsGroup>
     </>
   );
 }`;
 
 export function ModalOverflowDemo() {
-  const [opened, setOpened] = useState(false);
+  const [insideOpened, setInsideOpened] = useState(false);
+  const [outsideOpened, setOutsideOpened] = useState(false);
+  const content = Array(100)
+    .fill(0)
+    .map((_, index) => <p key={index}>React is not a framework</p>);
 
   return (
     <CodeDemo code={code} language="tsx">
       <Portal zIndex={10}>
-        <Modal opened={opened} onClose={() => setOpened(false)} title="Please consider this">
-          {Array(100)
-            .fill(0)
-            .map((_, index) => (
-              <p key={index}>React is not a framework</p>
-            ))}
+        <Modal
+          opened={outsideOpened}
+          onClose={() => setOutsideOpened(false)}
+          title="Please consider this"
+          overflow="outside"
+        >
+          {content}
+        </Modal>
+      </Portal>
+
+      <Portal zIndex={10}>
+        <Modal
+          opened={insideOpened}
+          onClose={() => setInsideOpened(false)}
+          title="Please consider this"
+          overflow="inside"
+        >
+          {content}
         </Modal>
       </Portal>
 
       <ElementsGroup position="center">
-        <Button onClick={() => setOpened(true)}>Open Modal</Button>
+        <Button onClick={() => setOutsideOpened(true)} color="pink">
+          Outside overflow
+        </Button>
+        <Button onClick={() => setInsideOpened(true)} color="cyan">
+          Inside overflow
+        </Button>
       </ElementsGroup>
     </CodeDemo>
   );

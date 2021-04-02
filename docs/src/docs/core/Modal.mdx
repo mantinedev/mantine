@@ -67,7 +67,10 @@ Modal uses <GatsbyLink to="/core/overlay">Overlay</GatsbyLink> component to rend
 
 ## Modal with overflow
 
-When modal has too much content it will have vertical scroll:
+You can control modal vertical overflow behavior by setting `overflow` prop:
+
+- `outside` (default) – overflow is handled by modal wrapper
+- `inside` – overflow is handled by modal body
 
 <ModalOverflowDemo />
 
