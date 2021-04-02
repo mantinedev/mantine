@@ -9,6 +9,7 @@ import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
+import { getTransitionStyles } from './get-transition-styles';
 import useStyles from './Modal.styles';
 
 interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
@@ -46,23 +47,6 @@ interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   closeButtonLabel?: string;
 }
 
-const inState = {
-  overlay: { opacity: 1 },
-  modal: { opacity: 1, transform: 'translateY(0) skew(0deg, 0deg)' },
-};
-
-const outState = {
-  overlay: { opacity: 0 },
-  modal: { opacity: 0, transform: 'translateY(-200px) skew(-10deg, -5deg)' },
-};
-
-const transitionStyles = {
-  entering: inState,
-  entered: inState,
-  exiting: outState,
-  exited: outState,
-};
-
 export function Modal({
   className,
   opened,
@@ -90,20 +74,6 @@ export function Modal({
   const clickOutsideRef = useClickOutside(onClose);
   const focusTrapRef = useFocusTrap();
   const duration = reduceMotion ? 1 : transitionDuration;
-
-  const defaultStyle = {
-    overlay: {
-      opacity: 0,
-      transition: `opacity ${duration / 2}ms linear`,
-    },
-
-    modal: {
-      transformOrigin: 'top',
-      transitionDuration: `${duration}ms`,
-      transitionTimingFunction: theme.transitionTimingFunction,
-      transitionProperty: 'transform, opacity',
-    },
-  };
 
   useEffect(() => {
     if (opened) {
@@ -136,7 +106,10 @@ export function Modal({
             <Paper
               className={classes.modal}
               shadow="lg"
-              style={{ width: modalWidth, ...defaultStyle.modal, ...transitionStyles[state].modal }}
+              style={{
+                width: modalWidth,
+                ...getTransitionStyles({ duration, theme, state, part: 'modal' }),
+              }}
               ref={clickOutsideRef}
               tabIndex={-1}
             >
@@ -160,12 +133,7 @@ export function Modal({
             </Paper>
           </section>
 
-          <div
-            style={{
-              ...defaultStyle.overlay,
-              ...transitionStyles[state].overlay,
-            }}
-          >
+          <div style={getTransitionStyles({ duration, theme, state, part: 'overlay' })}>
             <Overlay color={overlayColor || theme.black} opacity={overlayOpacity} zIndex={zIndex} />
           </div>
         </div>
