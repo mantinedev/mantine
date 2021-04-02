@@ -4,7 +4,7 @@ import { Transition } from 'react-transition-group';
 import { Cross1Icon } from '@modulz/radix-icons';
 import useFocusTrap from '@charlietango/use-focus-trap';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import { useClickOutside, useReducedMotion } from '@mantine/hooks';
+import { useClickOutside, useReducedMotion, useId } from '@mantine/hooks';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
@@ -76,6 +76,9 @@ export function Modal({
   zIndex = 1000,
   ...others
 }: ModalProps) {
+  const titleId = useId();
+  const bodyId = useId();
+
   const bodyOverflow = useRef<React.CSSProperties['overflow']>(null);
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
@@ -117,11 +120,13 @@ export function Modal({
     >
       {(state) => (
         <div className={cx(classes.wrapper, className)} {...others}>
-          <div
+          <section
             data-mantine-modal-inner
             className={classes.inner}
             onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}
             style={{ zIndex: zIndex + 1 }}
+            aria-labelledby={titleId}
+            aria-describedby={bodyId}
             ref={focusTrapRef}
           >
             <Paper
@@ -132,8 +137,8 @@ export function Modal({
               tabIndex={-1}
             >
               {(title || !hideCloseButton) && (
-                <div data-mantine-modal-header className={classes.header}>
-                  <Text data-mantine-modal-title className={classes.title}>
+                <header data-mantine-modal-header className={classes.header}>
+                  <Text id={titleId} data-mantine-modal-title className={classes.title}>
                     {title}
                   </Text>
 
@@ -142,12 +147,12 @@ export function Modal({
                       <Cross1Icon />
                     </ActionIcon>
                   )}
-                </div>
+                </header>
               )}
 
-              {children}
+              <div id={bodyId}>{children}</div>
             </Paper>
-          </div>
+          </section>
 
           <div
             style={{
