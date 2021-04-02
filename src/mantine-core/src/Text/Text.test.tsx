@@ -6,7 +6,7 @@ import {
   itSupportsClassName,
   itSupportsOthers,
 } from '@mantine/tests';
-import { Text, Anchor } from './Text';
+import { Text } from './Text';
 
 describe('@mantine/core/Text', () => {
   itRendersChildren(Text, {});
@@ -16,7 +16,6 @@ describe('@mantine/core/Text', () => {
 
   it('has correct displayName', () => {
     expect(Text.displayName).toEqual('@mantine/core/Text');
-    expect(Anchor.displayName).toEqual('@mantine/core/Anchor');
   });
 
   it('sets font-weight, test-transform and text-align based on props', () => {

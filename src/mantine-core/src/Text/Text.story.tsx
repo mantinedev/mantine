@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/theme';
-import { Text, Anchor } from './Text';
+import { Text } from './Text';
 
 const CustomComponent = ({
   emoji,
@@ -59,14 +59,10 @@ storiesOf('@mantine/core/Text', module)
   ))
   .add('Themes', () => <div style={{ padding: 20 }}>{themes}</div>)
   .add('Sizes', () => <div style={{ padding: 20 }}>{sizes}</div>)
-  .add('Links', () => (
-    <>
+  .add('Link', () => (
+    <div style={{ padding: 20 }}>
       <Text component="a" href="https://mantine.dev" variant="link">
         Link
       </Text>
-      <br />
-      <Anchor href="https://mantine.dev" target="_blank">
-        Anchor
-      </Anchor>
-    </>
+    </div>
   ));

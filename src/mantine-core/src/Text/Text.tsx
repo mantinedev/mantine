@@ -54,9 +54,4 @@ export function Text<T extends React.ElementType = 'div'>({
   );
 }
 
-export function Anchor(props: TextProps & React.ComponentPropsWithoutRef<'a'>) {
-  return <Text<'a'> component="a" variant="link" {...props} />;
-}
-
 Text.displayName = '@mantine/core/Text';
-Anchor.displayName = '@mantine/core/Anchor';
