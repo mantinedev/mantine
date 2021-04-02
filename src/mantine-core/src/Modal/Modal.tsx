@@ -96,24 +96,25 @@ export function Modal({
     >
       {(state) => (
         <div className={cx(classes.wrapper, className)} {...others}>
-          <section
+          <div
             data-mantine-modal-inner
             className={classes.inner}
             onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}
             style={{ zIndex: zIndex + 1 }}
-            aria-labelledby={titleId}
-            aria-describedby={bodyId}
             ref={focusTrapRef}
           >
             <Paper
               className={classes.modal}
               shadow="lg"
+              aria-labelledby={titleId}
+              aria-describedby={bodyId}
+              aria-modal
               style={{ ...getTransitionStyles({ duration, theme, state, part: 'modal' }) }}
               ref={clickOutsideRef}
               tabIndex={-1}
             >
               {(title || !hideCloseButton) && (
-                <header data-mantine-modal-header className={classes.header}>
+                <div data-mantine-modal-header className={classes.header}>
                   <Text id={titleId} data-mantine-modal-title className={classes.title}>
                     {title}
                   </Text>
@@ -123,14 +124,14 @@ export function Modal({
                       <Cross1Icon />
                     </ActionIcon>
                   )}
-                </header>
+                </div>
               )}
 
               <div id={bodyId} className={classes.body}>
                 {children}
               </div>
             </Paper>
-          </section>
+          </div>
 
           <div style={getTransitionStyles({ duration, theme, state, part: 'overlay' })}>
             <Overlay color={overlayColor || theme.black} opacity={overlayOpacity} zIndex={zIndex} />
