@@ -4,7 +4,6 @@ import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
 import { Modal, Button, ElementsGroup } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
 
 export function ModalDemo() {
   const [insideOpened, setInsideOpened] = useState(false);

@@ -5,10 +5,13 @@ order: 1
 slug: /core/modal/
 ---
 
+import { MODAL_SIZES } from '@mantine/core';
 import { ModalBaseDemo } from '../../demos/core/Modal/modal.base-demo';
 import { ModalNoHeaderDemo } from '../../demos/core/Modal/modal.no-header-demo';
 import { ModalOverlayDemo } from '../../demos/core/Modal/modal.overlay-demo';
 import { ModalOverflowDemo } from '../../demos/core/Modal/modal.overflow-demo';
+import { ModalSizesDemo } from '../../demos/core/Modal/modal.sizes-demo';
+import { ModalTransitionsDemo } from '../../demos/core/Modal/modal.transitions-demo';
 
 # Modal
 
@@ -59,6 +62,36 @@ It will still be possible to close modal by clicking on overlay or pressing esca
 
 <ModalNoHeaderDemo />
 
+## Change size
+
+You can change modal width by setting `size` prop to predefined size or any valid width, for example, 55% or 200px.
+Size controls modal width, max-width is set to 100% with spacing on left and right, no matter what `size` is passed 100% will not be exceed
+
+```tsx
+<Modal size="sm" /> // -> predefined small size
+<Modal size={378} /> // -> size in px
+<Modal size="55%" /> // -> size in %
+<Modal size="calc(100vw - 87px)" /> // -> size with calc
+<Modal size="255%" /> // -> max-width is set to 100%, won't work
+```
+
+Modal has 6 predefined sizes: xs, sm, md (default), lg, xl and full.
+You can get these values by importing `MODAL_SIZES`:
+
+```tsx
+import { MODAL_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Modal width']}
+  data={Object.keys(MODAL_SIZES).map((size) => [
+    size,
+    `${MODAL_SIZES[size]}${typeof size === 'number' ? 'px' : ''}`,
+  ])}
+/>
+
+<ModalSizesDemo />
+
 ## Customize overlay
 
 Modal uses <GatsbyLink to="/core/overlay">Overlay</GatsbyLink> component to render overlay, you can change overlay opacity and color:
@@ -73,6 +106,22 @@ You can control modal vertical overflow behavior by setting `overflow` prop:
 - `inside` – overflow is handled by modal body
 
 <ModalOverflowDemo />
+
+## Change transitions duration
+
+You can change transitions duration by setting `transitionDuration` property. If you set it to 0, then there will be no appear and disapper animations.
+Animations also disabled when user <GatsbyLink to="/hooks/use-reduced-motion/">prefers to reduce motion</GatsbyLink>.
+
+<ModalTransitionsDemo />
+
+## Accessibility
+
+- When modal is opened focus is trapped inside
+- When user clicks on overlay or presses escape `onClose` function is called
+- Render Modal component inside Portal to detatch it from current rendering tree
+- Use `closeButtonLabel` prop to set `title` and `aria-label` attributes of close button
+- `aria-modal` is set to true on modal wrapper
+- Modal wrapper has `aria-labelledby` and `aria-describedby` pointing to modal title and body
 
 ## Component props
 
