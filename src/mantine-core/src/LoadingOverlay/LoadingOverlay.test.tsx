@@ -30,4 +30,10 @@ describe('@mantine/core/LoadingOverlay', () => {
     expect(element.find(Overlay).prop('opacity')).toBe(0.99);
     expect(element.find(Overlay).prop('color')).toBe('#cecece');
   });
+
+  it('sets correct z-index based on zIndex prop', () => {
+    const element = mount(<LoadingOverlay visible zIndex={347} />);
+    expect(element.find(Loader).prop('style').zIndex).toBe(348);
+    expect(element.find(Overlay).prop('zIndex')).toBe(347);
+  });
 });

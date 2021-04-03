@@ -17,6 +17,9 @@ interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutR
   /** Sets overlay color */
   overlayColor?: string;
 
+  /** Loading overlay z-index */
+  zIndex?: number;
+
   /** If visible overlay will take 100% width and height of first parent with relative position and overlay all of its content */
   visible: boolean;
 
@@ -32,6 +35,7 @@ export function LoadingOverlay({
   overlayColor = '#fff',
   themeOverride,
   transitionDuration = 200,
+  zIndex = 1000,
   style,
   ...others
 }: LoadingOverlayProps) {
@@ -58,12 +62,8 @@ export function LoadingOverlay({
           }}
           {...others}
         >
-          <Loader
-            className={cx(classes.loader, loaderProps.className)}
-            themeOverride={themeOverride}
-            {...loaderProps}
-          />
-          <Overlay opacity={overlayOpacity} color={overlayColor} />
+          <Loader themeOverride={themeOverride} style={{ zIndex: zIndex + 1 }} {...loaderProps} />
+          <Overlay opacity={overlayOpacity} color={overlayColor} zIndex={zIndex} />
         </div>
       )}
     </Transition>
