@@ -14,7 +14,7 @@ import { Menu, MenuItem } from './Menu';
 function MenuWrapper(
   props: Omit<React.ComponentPropsWithoutRef<typeof Menu>, 'opened' | 'onClose'>
 ) {
-  const [opened, setOpened] = useState(true);
+  const [opened, setOpened] = useState(false);
   return (
     <div style={{ padding: 40 }}>
       <div style={{ position: 'relative' }}>

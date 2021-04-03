@@ -22,6 +22,7 @@ export function MenuButton({
   color,
   disabled,
   cmd,
+  className,
   ...others
 }: MenuButtonProps) {
   const classes = useStyles({ color, theme: useMantineTheme(themeOverride) });
@@ -29,18 +30,25 @@ export function MenuButton({
   return (
     <button
       type="button"
-      className={cx(classes.item, { [classes.hovered]: hovered })}
+      role="menuitem"
+      className={cx(classes.item, { [classes.hovered]: hovered }, className)}
       onMouseEnter={() => !disabled && onHover()}
       ref={elementRef}
       disabled={disabled}
       {...others}
     >
       <div className={classes.inner}>
-        {icon && <div className={classes.icon}>{icon}</div>}
+        {icon && (
+          <div data-mantine-icon className={classes.icon}>
+            {icon}
+          </div>
+        )}
+
         <div className={classes.body}>
           <div className={classes.label}>{children}</div>
+
           {cmd && (
-            <Text className={classes.cmd} color="gray" size="sm">
+            <Text data-mantine-cmd className={classes.cmd} color="gray" size="sm">
               {cmd}
             </Text>
           )}

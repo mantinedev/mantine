@@ -29,6 +29,9 @@ interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
 
   /** Predefined menu width or number for width in px */
   size?: MantineNumberSize;
+
+  /** Predefined shadow from theme or box-shadow value */
+  shadow?: string;
 }
 
 function getPreviousItem(active: number, items: MenuItemType[]) {
@@ -70,6 +73,7 @@ export function Menu({
   style,
   children,
   size = 'md',
+  shadow = 'md',
   ...others
 }: MenuProps) {
   const items = React.Children.toArray(children).filter(
@@ -83,12 +87,19 @@ export function Menu({
   const duration = reduceMotion ? 0 : transitionDuration;
   const [hovered, setHovered] = useState(findInitialItem(items));
   const focusTrapRef = useFocusTrap();
-  const menuRef = useClickOutside(onClose);
+
+  const handleClose = () => {
+    onClose();
+    setHovered(findInitialItem(items));
+  };
+
+  const menuRef = useClickOutside(handleClose);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { code } = event.nativeEvent;
+
     if (code === 'Escape') {
-      onClose();
+      handleClose();
     }
 
     if (code === 'Tab') {
@@ -130,7 +141,7 @@ export function Menu({
     }
 
     if (item.type === Hr) {
-      return <Hr variant="solid" className={classes.hr} />;
+      return <Hr key={index} variant="solid" className={classes.hr} />;
     }
 
     return null;
@@ -146,11 +157,12 @@ export function Menu({
     >
       {(state) => (
         <Paper
-          shadow="md"
+          shadow={shadow}
           className={cx(classes.menu, className)}
           style={{ ...style, ...getTransitionStyles({ duration, state, theme }) }}
           onKeyDownCapture={handleKeyDown}
           ref={menuRef}
+          role="menu"
           {...others}
         >
           <div ref={focusTrapRef}>{buttons}</div>
