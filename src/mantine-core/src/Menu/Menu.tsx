@@ -3,14 +3,16 @@ import cx from 'clsx';
 import { Transition } from 'react-transition-group';
 import useFocusTrap from '@charlietango/use-focus-trap';
 import { useReducedMotion, useClickOutside } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
 import { Paper } from '../Paper/Paper';
+import { Hr } from '../Hr/Hr';
 import { MenuItem, MenuItemType } from './MenuItem/MenuItem';
 import { MenuButton } from './MenuButton/MenuButton';
 import { getTransitionStyles } from './get-transition-styles';
-import useStyles from './Menu.styles';
+import useStyles, { sizes } from './Menu.styles';
 
 export { MenuItem };
+export const MENU_SIZES = sizes;
 
 interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** When true menu is mounted to the dom */
@@ -24,6 +26,39 @@ interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
 
   /** Transitions duration in ms  */
   transitionDuration?: number;
+
+  /** Predefined menu width or number for width in px */
+  size?: MantineNumberSize;
+}
+
+function getPreviousItem(active: number, items: MenuItemType[]) {
+  for (let i = active - 1; i >= 0; i -= 1) {
+    if (!items[i].props.disabled && items[i].type === MenuItem) {
+      return i;
+    }
+  }
+
+  return active;
+}
+
+function getNextItem(active: number, items: MenuItemType[]) {
+  for (let i = active + 1; i < items.length; i += 1) {
+    if (!items[i].props.disabled && items[i].type === MenuItem) {
+      return i;
+    }
+  }
+
+  return active;
+}
+
+function findInitialItem(items: MenuItemType[]) {
+  for (let i = 0; i < items.length; i += 1) {
+    if (!items[i].props.disabled && items[i].type === MenuItem) {
+      return i;
+    }
+  }
+
+  return -1;
 }
 
 export function Menu({
@@ -34,31 +69,26 @@ export function Menu({
   transitionDuration = 250,
   style,
   children,
+  size = 'md',
   ...others
 }: MenuProps) {
+  const items = React.Children.toArray(children).filter(
+    (item: MenuItemType) => item.type === MenuItem || item.type === Hr
+  ) as MenuItemType[];
+
   const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme });
+  const classes = useStyles({ size, theme });
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
-  const [hovered, setHovered] = useState(0);
+  const [hovered, setHovered] = useState(findInitialItem(items));
   const focusTrapRef = useFocusTrap();
-
-  const handleClose = () => {
-    setHovered(0);
-    onClose();
-  };
-
-  const menuRef = useClickOutside(handleClose);
-
-  const items = React.Children.toArray(children).filter(
-    (item: MenuItemType) => item.type === MenuItem
-  ) as MenuItemType[];
+  const menuRef = useClickOutside(onClose);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { code } = event.nativeEvent;
     if (code === 'Escape') {
-      handleClose();
+      onClose();
     }
 
     if (code === 'Tab') {
@@ -67,14 +97,14 @@ export function Menu({
 
     if (code === 'ArrowUp') {
       event.preventDefault();
-      const prevIndex = hovered > 0 ? hovered - 1 : hovered;
+      const prevIndex = getPreviousItem(hovered, items);
       setHovered(prevIndex);
       buttonsRefs.current[prevIndex].focus();
     }
 
     if (code === 'ArrowDown') {
       event.preventDefault();
-      const nextIndex = hovered < items.length - 1 ? hovered + 1 : hovered;
+      const nextIndex = getNextItem(hovered, items);
       setHovered(nextIndex);
       buttonsRefs.current[nextIndex].focus();
     }
@@ -84,19 +114,27 @@ export function Menu({
     return null;
   }
 
-  const buttons = items.map((item, index) => (
-    <MenuButton
-      key={index}
-      hovered={hovered === index}
-      onHover={() => setHovered(index)}
-      icon={item.props.icon}
-      elementRef={(node) => {
-        buttonsRefs.current[index] = node;
-      }}
-    >
-      {item.props.children}
-    </MenuButton>
-  ));
+  const buttons = items.map((item, index) => {
+    if (item.type === MenuItem) {
+      return (
+        <MenuButton
+          {...item.props}
+          key={index}
+          hovered={hovered === index}
+          onHover={() => setHovered(-1)}
+          elementRef={(node) => {
+            buttonsRefs.current[index] = node;
+          }}
+        />
+      );
+    }
+
+    if (item.type === Hr) {
+      return <Hr variant="solid" className={classes.hr} />;
+    }
+
+    return null;
+  });
 
   return (
     <Transition
@@ -108,6 +146,7 @@ export function Menu({
     >
       {(state) => (
         <Paper
+          shadow="md"
           className={cx(classes.menu, className)}
           style={{ ...style, ...getTransitionStyles({ duration, state, theme }) }}
           onKeyDownCapture={handleKeyDown}

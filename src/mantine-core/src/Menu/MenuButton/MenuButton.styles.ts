@@ -1,12 +1,16 @@
-import { MantineTheme, getFontStyles } from '@mantine/theme';
+import { MantineTheme, getFontStyles, getThemeColor } from '@mantine/theme';
 import { createUseStyles } from 'react-jss';
 
 interface MenuButtonStylesProps {
   theme: MantineTheme;
+  color: string;
 }
 
 export default createUseStyles({
-  item: ({ theme }: MenuButtonStylesProps) => ({
+  hovered: {},
+  cmd: {},
+
+  item: ({ theme, color }: MenuButtonStylesProps) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     fontSize: theme.fontSizes.sm,
@@ -17,21 +21,38 @@ export default createUseStyles({
     textAlign: 'left',
     height: 32,
     padding: [0, theme.spacing.sm],
-    color: theme.colors.gray[9],
     cursor: 'pointer',
-  }),
+    color: color ? getThemeColor({ theme, color, shade: 6 }) : theme.colors.gray[9],
 
-  hovered: ({ theme }: MenuButtonStylesProps) => ({
-    backgroundColor: theme.colors.gray[0],
+    '&:disabled': {
+      color: theme.colors.gray[5],
+      cursor: 'not-allowed',
+      pointerEvents: 'none',
 
-    '&:active': {
-      backgroundColor: theme.colors.gray[1],
+      '& $cmd': {
+        color: theme.colors.gray[5],
+      },
+    },
+
+    '&$hovered, &:hover': {
+      backgroundColor: theme.colors.gray[0],
+
+      '&:active': {
+        backgroundColor: theme.colors.gray[1],
+      },
     },
   }),
 
   inner: {
     display: 'flex',
     alignItems: 'center',
+  },
+
+  body: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flex: 1,
   },
 
   icon: ({ theme }: MenuButtonStylesProps) => ({

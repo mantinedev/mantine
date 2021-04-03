@@ -23,5 +23,6 @@ export default createUseStyles({
     borderTopWidth: getSizeValue({ size, sizes }),
     borderTopColor: getThemeColor({ theme, color, shade: 6 }),
     borderTopStyle: variant,
+    margin: 0,
   }),
 });
