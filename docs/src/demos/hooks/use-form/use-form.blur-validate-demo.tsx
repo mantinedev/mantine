@@ -22,6 +22,7 @@ export function UseFormDemo() {
       error={form.errors.email && 'Please specify valid email'}
       value={form.values.email}
       onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+      onBlur={() => form.validateField('email')}
     />
   );
 }
