@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { Transition } from 'react-transition-group';
 import useFocusTrap from '@charlietango/use-focus-trap';
@@ -36,33 +36,66 @@ export function Menu({
   children,
   ...others
 }: MenuProps) {
+  const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme });
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
-  const menuRef = useClickOutside(onClose);
+  const [hovered, setHovered] = useState(0);
   const focusTrapRef = useFocusTrap();
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.nativeEvent.code === 'Escape') {
-      onClose();
-    }
-
-    if (event.nativeEvent.code === 'Tab') {
-      event.preventDefault();
-    }
+  const handleClose = () => {
+    setHovered(0);
+    onClose();
   };
+
+  const menuRef = useClickOutside(handleClose);
 
   const items = React.Children.toArray(children).filter(
     (item: MenuItemType) => item.type === MenuItem
   ) as MenuItemType[];
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { code } = event.nativeEvent;
+    if (code === 'Escape') {
+      handleClose();
+    }
+
+    if (code === 'Tab') {
+      event.preventDefault();
+    }
+
+    if (code === 'ArrowUp') {
+      event.preventDefault();
+      const prevIndex = hovered > 0 ? hovered - 1 : hovered;
+      setHovered(prevIndex);
+      buttonsRefs.current[prevIndex].focus();
+    }
+
+    if (code === 'ArrowDown') {
+      event.preventDefault();
+      const nextIndex = hovered < items.length - 1 ? hovered + 1 : hovered;
+      setHovered(nextIndex);
+      buttonsRefs.current[nextIndex].focus();
+    }
+  };
 
   if (items.length === 0) {
     return null;
   }
 
   const buttons = items.map((item, index) => (
-    <MenuButton key={index}>{item.props.children}</MenuButton>
+    <MenuButton
+      key={index}
+      hovered={hovered === index}
+      onHover={() => setHovered(index)}
+      icon={item.props.icon}
+      elementRef={(node) => {
+        buttonsRefs.current[index] = node;
+      }}
+    >
+      {item.props.children}
+    </MenuButton>
   ));
 
   return (
@@ -75,7 +108,6 @@ export function Menu({
     >
       {(state) => (
         <Paper
-          shadow="xs"
           className={cx(classes.menu, className)}
           style={{ ...style, ...getTransitionStyles({ duration, state, theme }) }}
           onKeyDownCapture={handleKeyDown}

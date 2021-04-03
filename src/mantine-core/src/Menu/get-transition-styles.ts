@@ -8,7 +8,7 @@ const inState = {
 
 const outState = {
   opacity: 0,
-  transform: 'translateY(50px) skew(10deg, 5deg)',
+  transform: 'translateY(20px) skew(10deg, 5deg)',
 };
 
 const transitionStyles = {
