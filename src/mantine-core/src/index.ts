@@ -19,7 +19,7 @@ export { InputWrapper } from './InputWrapper/InputWrapper';
 export { Kbd } from './Kbd/Kbd';
 export { Loader, LOADER_SIZES } from './Loader/Loader';
 export { LoadingOverlay } from './LoadingOverlay/LoadingOverlay';
-export { Menu, MenuItem, ConnectedMenu, MENU_SIZES } from './Menu';
+export { Menu, MenuItem, MenuBody, MENU_SIZES } from './Menu/Menu';
 export { Modal, MODAL_SIZES } from './Modal/Modal';
 export { Month } from './Month/Month';
 export { Overlay } from './Overlay/Overlay';

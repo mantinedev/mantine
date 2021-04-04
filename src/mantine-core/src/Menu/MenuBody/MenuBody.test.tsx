@@ -7,10 +7,11 @@ import {
   itSupportsOthers,
   itSupportsStyle,
 } from '@mantine/tests';
-import { Hr } from '../Hr/Hr';
-import { Paper } from '../Paper/Paper';
-import { MenuButton } from './MenuButton/MenuButton';
-import { Menu, MenuItem } from './Menu';
+import { Hr } from '../../Hr/Hr';
+import { Paper } from '../../Paper/Paper';
+import { MenuButton } from '../MenuButton/MenuButton';
+import { MenuItem } from '../MenuItem/MenuItem';
+import { MenuBody } from './MenuBody';
 
 const defaultProps = {
   opened: true,
@@ -21,29 +22,33 @@ const defaultProps = {
 describe('@mantine/core/Menu', () => {
   checkAccessibility([
     mount(
-      <Menu {...defaultProps}>
+      <MenuBody {...defaultProps}>
         <MenuItem icon={<GearIcon style={{ width: 12, height: 12 }} />}>Settings</MenuItem>
         <MenuItem disabled>Disabled</MenuItem>
         <Hr />
         <MenuItem>Messages</MenuItem>
         <MenuItem color="red">Delete</MenuItem>
-      </Menu>
+      </MenuBody>
     ),
   ]);
 
-  itSupportsStyle(Menu, defaultProps);
-  itSupportsClassName(Menu, defaultProps);
-  itSupportsOthers(Menu, defaultProps);
+  itSupportsStyle(MenuBody, defaultProps);
+  itSupportsClassName(MenuBody, defaultProps);
+  itSupportsOthers(MenuBody, defaultProps);
+
+  it('has correct displayName', () => {
+    expect(MenuBody.displayName).toEqual('@mantine/core/MenuBody');
+  });
 
   it('renders correct children', () => {
     const element = mount(
-      <Menu {...defaultProps}>
+      <MenuBody {...defaultProps}>
         <MenuItem>test-1</MenuItem>
         <MenuItem>test-2</MenuItem>
         <Hr />
         <MenuItem>test-3</MenuItem>
         <Hr />
-      </Menu>
+      </MenuBody>
     );
 
     expect(element.find(MenuButton)).toHaveLength(3);
@@ -51,14 +56,14 @@ describe('@mantine/core/Menu', () => {
   });
 
   it('does not render if only incorrect or no children were passed', () => {
-    const noChildren = shallow(<Menu {...defaultProps}>{null}</Menu>);
+    const noChildren = shallow(<MenuBody {...defaultProps}>{null}</MenuBody>);
 
     const incorrectChildren = shallow(
-      <Menu {...defaultProps}>
+      <MenuBody {...defaultProps}>
         <div>incorrect-child-1</div>
         <div>incorrect-child-2</div>
         <div>incorrect-child-3</div>
-      </Menu>
+      </MenuBody>
     );
 
     expect(noChildren.type()).toBe(null);
@@ -67,11 +72,11 @@ describe('@mantine/core/Menu', () => {
 
   it('passes shadow to Paper component', () => {
     const element = mount(
-      <Menu {...defaultProps} shadow="xl">
+      <MenuBody {...defaultProps} shadow="xl">
         <MenuItem>test-1</MenuItem>
         <MenuItem>test-2</MenuItem>
         <MenuItem>test-3</MenuItem>
-      </Menu>
+      </MenuBody>
     );
     expect(element.find(Paper).prop('shadow')).toBe('xl');
   });
@@ -79,11 +84,11 @@ describe('@mantine/core/Menu', () => {
   it('calls onClose when escape key is pressed', () => {
     const spy = jest.fn();
     const element = mount(
-      <Menu {...defaultProps} onClose={spy}>
+      <MenuBody {...defaultProps} onClose={spy}>
         <MenuItem>test-1</MenuItem>
         <MenuItem>test-2</MenuItem>
         <MenuItem>test-3</MenuItem>
-      </Menu>
+      </MenuBody>
     );
 
     element.simulate('keydown', { nativeEvent: { code: 'Escape' } });

@@ -1,198 +1,98 @@
-import React, { useState, useRef, useEffect } from 'react';
-import cx from 'clsx';
-import { Transition } from 'react-transition-group';
-import useFocusTrap from '@charlietango/use-focus-trap';
-import { useReducedMotion, useClickOutside } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
-import { Paper } from '../Paper/Paper';
-import { Hr } from '../Hr/Hr';
-import { MenuItem, MenuItemType } from './MenuItem/MenuItem';
-import { MenuButton } from './MenuButton/MenuButton';
-import { getTransitionStyles } from './get-transition-styles';
-import useStyles, { sizes } from './Menu.styles';
+import React, { useState, cloneElement } from 'react';
+import { DotsHorizontalIcon } from '@modulz/radix-icons';
+import { DefaultProps } from '@mantine/theme';
+import { useId, useClickOutside } from '@mantine/hooks';
+import { ActionIcon } from '../ActionIcon/ActionIcon';
+import { MenuBody } from './MenuBody/MenuBody';
+import { sizes } from './MenuBody/MenuBody.styles';
+import { MenuItem } from './MenuItem/MenuItem';
 
-export { MenuItem };
+export { MenuBody, MenuItem };
 export const MENU_SIZES = sizes;
 
+type MenuBodyProps = Omit<
+  React.ComponentPropsWithoutRef<typeof MenuBody>,
+  'opened' | 'onClose' | 'children'
+>;
+
 interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
-  /** When true menu is mounted to the dom */
-  opened: boolean;
-
-  /** Triggers when menu is closed */
-  onClose(): void;
-
-  /** <MenuItem /> and <Hr /> components only */
   children: React.ReactNode;
-
-  /** Transitions duration in ms  */
-  transitionDuration?: number;
-
-  /** Predefined menu width or number for width in px */
-  size?: MantineNumberSize;
-
-  /** Predefined shadow from theme or box-shadow value */
-  shadow?: string;
-
-  /** Should menu close on outside click */
-  closeOnClickOutside?: boolean;
-
-  /** Should menu close on item click */
-  closeOnItemClick?: boolean;
-}
-
-function getPreviousItem(active: number, items: MenuItemType[]) {
-  for (let i = active - 1; i >= 0; i -= 1) {
-    if (!items[i].props.disabled && items[i].type === MenuItem) {
-      return i;
-    }
-  }
-
-  return active;
-}
-
-function getNextItem(active: number, items: MenuItemType[]) {
-  for (let i = active + 1; i < items.length; i += 1) {
-    if (!items[i].props.disabled && items[i].type === MenuItem) {
-      return i;
-    }
-  }
-
-  return active;
-}
-
-function findInitialItem(items: MenuItemType[]) {
-  for (let i = 0; i < items.length; i += 1) {
-    if (!items[i].props.disabled && items[i].type === MenuItem) {
-      return i;
-    }
-  }
-
-  return -1;
+  control?: React.ReactElement;
+  opened?: boolean;
+  onClose?(): void;
+  onOpen?(): void;
+  menuProps?: MenuBodyProps;
+  menuPosition?: {
+    top?: number | string;
+    bottom?: number | string;
+    left?: number | string;
+    right?: number | string;
+  };
 }
 
 export function Menu({
-  className,
-  themeOverride,
-  opened,
-  onClose,
-  transitionDuration = 250,
-  style,
+  control = (
+    <ActionIcon>
+      <DotsHorizontalIcon />
+    </ActionIcon>
+  ),
   children,
-  size = 'md',
-  shadow = 'md',
-  closeOnClickOutside = true,
-  closeOnItemClick = true,
+  onClose,
+  onOpen,
+  opened,
+  menuProps,
+  themeOverride,
+  menuPosition = { top: 0, left: 0 },
+  style,
   ...others
 }: MenuProps) {
-  const items = React.Children.toArray(children).filter(
-    (item: MenuItemType) => item.type === MenuItem || item.type === Hr
-  ) as MenuItemType[];
+  const _menuProps = menuProps || ({} as MenuProps);
+  const uuid = useId(_menuProps.id);
+  const controlled = typeof opened === 'boolean';
+  const [_opened, setOpened] = useState(false);
+  const menuOpened = controlled ? opened : _opened;
 
-  const hoveredTimeout = useRef<number>();
-  const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, theme });
-  const reduceMotion = useReducedMotion();
-  const duration = reduceMotion ? 0 : transitionDuration;
-  const [hovered, setHovered] = useState(findInitialItem(items));
-  const focusTrapRef = useFocusTrap();
-
-  useEffect(() => {
-    if (!opened) {
-      hoveredTimeout.current = window.setTimeout(() => {
-        setHovered(findInitialItem(items));
-      }, duration);
-    } else {
-      window.clearTimeout(hoveredTimeout.current);
-    }
-  }, [opened]);
-
-  const menuRef = useClickOutside(() => closeOnClickOutside && onClose());
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { code } = event.nativeEvent;
-
-    if (code === 'Escape') {
-      onClose();
-    }
-
-    if (code === 'Tab') {
-      event.preventDefault();
-    }
-
-    if (code === 'ArrowUp') {
-      event.preventDefault();
-      const prevIndex = getPreviousItem(hovered, items);
-      setHovered(prevIndex);
-      buttonsRefs.current[prevIndex].focus();
-    }
-
-    if (code === 'ArrowDown') {
-      event.preventDefault();
-      const nextIndex = getNextItem(hovered, items);
-      setHovered(nextIndex);
-      buttonsRefs.current[nextIndex].focus();
-    }
+  const handleClose = () => {
+    setOpened(false);
+    typeof onClose === 'function' && onClose();
   };
 
-  if (items.length === 0) {
-    return null;
-  }
+  const handleOpen = () => {
+    setOpened(true);
+    typeof onOpen === 'function' && onOpen();
+  };
 
-  const buttons = items.map((item, index) => {
-    if (item.type === MenuItem) {
-      return (
-        <MenuButton
-          {...item.props}
-          key={index}
-          hovered={hovered === index}
-          onHover={() => setHovered(-1)}
-          onClick={(event) => {
-            if (closeOnItemClick) {
-              onClose();
-            }
+  const wrapperRef = useClickOutside(handleClose);
 
-            if (typeof item.props.onClick === 'function') {
-              item.props.onClick(event);
-            }
-          }}
-          elementRef={(node) => {
-            buttonsRefs.current[index] = node;
-          }}
-        />
-      );
-    }
+  const toggleMenu = () => (opened || _opened ? handleClose() : handleOpen());
 
-    if (item.type === Hr) {
-      return <Hr key={index} variant="solid" className={classes.hr} />;
-    }
-
-    return null;
+  const menuControl = cloneElement(control, {
+    onClick: toggleMenu,
+    role: 'button',
+    'aria-haspopup': 'menu',
+    'aria-expanded': menuOpened,
+    'aria-controls': uuid,
   });
 
   return (
-    <Transition
-      unmountOnExit
-      mountOnEnter
-      in={opened}
-      timeout={duration}
-      onEnter={(node: any) => node.offsetHeight}
+    <div
+      ref={wrapperRef}
+      style={{ display: 'inline-block', position: 'relative', ...style }}
+      {...others}
     >
-      {(state) => (
-        <Paper
-          shadow={shadow}
-          className={cx(classes.menu, className)}
-          style={{ ...style, ...getTransitionStyles({ duration, state, theme }) }}
-          onKeyDownCapture={handleKeyDown}
-          ref={menuRef}
-          role="menu"
-          {...others}
-        >
-          <div ref={focusTrapRef}>{buttons}</div>
-        </Paper>
-      )}
-    </Transition>
+      {menuControl}
+
+      <MenuBody
+        {...menuProps}
+        opened={menuOpened}
+        onClose={handleClose}
+        id={uuid}
+        themeOverride={themeOverride}
+        closeOnClickOutside={false}
+        style={{ ..._menuProps.style, ...menuPosition }}
+      >
+        {children}
+      </MenuBody>
+    </div>
   );
 }
-
-Menu.displayName = '@mantine/core/Menu';
