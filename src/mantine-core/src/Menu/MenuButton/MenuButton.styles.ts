@@ -27,17 +27,16 @@ export default createUseStyles({
     '&:disabled': {
       color: theme.colors.gray[5],
       cursor: 'not-allowed',
-      pointerEvents: 'none',
 
       '& $cmd': {
         color: theme.colors.gray[5],
       },
     },
 
-    '&$hovered, &:hover': {
+    '&$hovered:not(:disabled), &:not(:disabled):hover': {
       backgroundColor: theme.colors.gray[0],
 
-      '&:active': {
+      '&:not(:disabled):active': {
         backgroundColor: theme.colors.gray[1],
       },
     },

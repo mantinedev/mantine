@@ -1,4 +1,4 @@
-import React, { useState, cloneElement } from 'react';
+import React, { useState, useRef, cloneElement } from 'react';
 import { DotsHorizontalIcon } from '@modulz/radix-icons';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { useId, useClickOutside } from '@mantine/hooks';
@@ -56,6 +56,9 @@ interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
 
   /** Menu dropdown position */
   menuPosition?: MenuPosition;
+
+  /** Control prop to get element ref */
+  controlRefProp?: string;
 }
 
 const defaultControl = (
@@ -80,8 +83,11 @@ export function Menu({
   size = 'md',
   shadow = 'md',
   menuButtonLabel,
+  controlRefProp = 'ref',
   ...others
 }: MenuProps) {
+  const controlRefFocusTimeout = useRef<number>();
+  const controlRef = useRef<HTMLButtonElement>(null);
   const uuid = useId(menuId);
   const controlled = typeof opened === 'boolean';
   const [_opened, setOpened] = useState(false);
@@ -90,14 +96,18 @@ export function Menu({
   const handleClose = () => {
     setOpened(false);
     typeof onClose === 'function' && onClose();
+    controlRefFocusTimeout.current = window.setTimeout(() => {
+      typeof controlRef.current?.focus === 'function' && controlRef.current.focus();
+    }, transitionDuration + 10);
   };
 
   const handleOpen = () => {
     setOpened(true);
+    window.clearTimeout(controlRefFocusTimeout.current);
     typeof onOpen === 'function' && onOpen();
   };
 
-  const wrapperRef = useClickOutside(handleClose);
+  const wrapperRef = useClickOutside(() => menuOpened && handleClose());
 
   const toggleMenu = () => (opened || _opened ? handleClose() : handleOpen());
 
@@ -110,6 +120,7 @@ export function Menu({
     'aria-label': menuButtonLabel,
     'data-mantine-menu': true,
     title: menuButtonLabel,
+    [controlRefProp]: controlRef,
   });
 
   return (
