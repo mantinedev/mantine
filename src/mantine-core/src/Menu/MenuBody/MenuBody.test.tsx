@@ -1,12 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { GearIcon } from '@modulz/radix-icons';
-import {
-  checkAccessibility,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-} from '@mantine/tests';
+import { itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
 import { Hr } from '../../Hr/Hr';
 import { Paper } from '../../Paper/Paper';
 import { MenuButton } from '../MenuButton/MenuButton';
@@ -19,19 +13,7 @@ const defaultProps = {
   children: <MenuItem>test-1</MenuItem>,
 };
 
-describe('@mantine/core/Menu', () => {
-  checkAccessibility([
-    mount(
-      <MenuBody {...defaultProps}>
-        <MenuItem icon={<GearIcon style={{ width: 12, height: 12 }} />}>Settings</MenuItem>
-        <MenuItem disabled>Disabled</MenuItem>
-        <Hr />
-        <MenuItem>Messages</MenuItem>
-        <MenuItem color="red">Delete</MenuItem>
-      </MenuBody>
-    ),
-  ]);
-
+describe('@mantine/core/MenuBody', () => {
   itSupportsStyle(MenuBody, defaultProps);
   itSupportsClassName(MenuBody, defaultProps);
   itSupportsOthers(MenuBody, defaultProps);

@@ -33,6 +33,9 @@ interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
   /** Called every time menu is opened */
   onOpen?(): void;
 
+  /** Menu button aria-label and title props */
+  menuButtonLabel?: string;
+
   /** MenuBody component props */
   menuBodyProps?: Record<string, any>;
 
@@ -76,6 +79,7 @@ export function Menu({
   transitionDuration = 250,
   size = 'md',
   shadow = 'md',
+  menuButtonLabel,
   ...others
 }: MenuProps) {
   const uuid = useId(menuId);
@@ -103,6 +107,9 @@ export function Menu({
     'aria-haspopup': 'menu',
     'aria-expanded': menuOpened,
     'aria-controls': uuid,
+    'aria-label': menuButtonLabel,
+    'data-mantine-menu': true,
+    title: menuButtonLabel,
   });
 
   return (
@@ -131,3 +138,5 @@ export function Menu({
     </div>
   );
 }
+
+Menu.displayName = '@mantine/core/Menu';
