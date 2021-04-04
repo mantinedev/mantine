@@ -73,7 +73,7 @@ export default function Search({ data }: SearchProps) {
       setHovered((current) => (current > 0 ? current - 1 : current));
     }
 
-    if (event.nativeEvent.code === 'Enter') {
+    if (event.nativeEvent.code === 'Enter' && filteredData[hovered]) {
       handleSubmit(filteredData[hovered].to);
     }
 
