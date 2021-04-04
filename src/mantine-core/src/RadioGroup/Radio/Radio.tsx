@@ -11,12 +11,12 @@ interface RadioProps extends DefaultProps, React.ComponentPropsWithoutRef<'input
   checked?: boolean;
 }
 
-export function Radio({ className, themeOverride, name, id, children, ...others }: RadioProps) {
+export function Radio({ className, themeOverride, id, children, ...others }: RadioProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const uuid = useId(id);
 
   return (
-    <div className={cx(classes.wrapper, className)}>
+    <div data-mantine-radio className={cx(classes.wrapper, className)}>
       <input className={classes.radio} type="radio" id={uuid} {...others} />
       <label className={classes.label} htmlFor={uuid}>
         {children}

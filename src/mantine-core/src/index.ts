@@ -27,6 +27,7 @@ export { Paper } from './Paper/Paper';
 export { PasswordInput } from './PasswordInput/PasswordInput';
 export { Portal } from './Portal/Portal';
 export { Progress, PROGRESS_SIZES } from './Progress/Progress';
+export { RadioGroup, Radio, RADIO_SIZES } from './RadioGroup/RadioGroup';
 export { Select } from './Select/Select';
 export { Spoiler } from './Spoiler/Spoiler';
 export { Switch } from './Switch/Switch';

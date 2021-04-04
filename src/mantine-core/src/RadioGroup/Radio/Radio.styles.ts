@@ -39,7 +39,6 @@ export default createUseStyles({
     marginRight: theme.spacing.sm,
     background: 'red',
     display: 'block',
-    cursor: 'pointer',
 
     '&:checked': {
       background: theme.colors[theme.primaryColor][5],
@@ -50,17 +49,21 @@ export default createUseStyles({
         display: 'block',
         position: 'absolute',
         backgroundColor: theme.white,
-        top: '20%',
-        left: '20%',
-        width: '60%',
-        height: '60%',
+        top: '25%',
+        left: '25%',
+        width: '50%',
+        height: '50%',
         borderRadius: 1000,
       },
     },
 
     '&:disabled': {
-      borderColor: theme.colors.gray[2],
+      borderColor: theme.colors.gray[4],
       backgroundColor: theme.colors.gray[1],
+
+      '&::before': {
+        backgroundColor: theme.colors.gray[4],
+      },
 
       '& + $label': {
         color: theme.colors.gray[5],
