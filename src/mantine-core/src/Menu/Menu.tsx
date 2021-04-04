@@ -16,12 +16,25 @@ type MenuBodyProps = Omit<
 >;
 
 interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  /** <MenuItem /> and <Hr /> components only, children are passed to MenuBody component  */
   children: React.ReactNode;
+
+  /** React element that will be used as menu control */
   control?: React.ReactElement;
+
+  /** Use opened and onClose props to setup controlled menu */
   opened?: boolean;
+
+  /** Called every time menu is closed */
   onClose?(): void;
+
+  /** Called every time menu is opened */
   onOpen?(): void;
+
+  /** MenuBody component props */
   menuProps?: MenuBodyProps;
+
+  /** Menu dropdown position */
   menuPosition?: {
     top?: number | string;
     bottom?: number | string;
