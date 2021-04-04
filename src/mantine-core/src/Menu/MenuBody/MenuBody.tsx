@@ -21,7 +21,7 @@ interface MenuBodyProps extends DefaultProps, React.ComponentPropsWithoutRef<'di
   /** <MenuItem /> and <Hr /> components only */
   children: React.ReactNode;
 
-  /** Transitions duration in ms  */
+  /** Transitions duration in ms */
   transitionDuration?: number;
 
   /** Predefined menu width or number for width in px */

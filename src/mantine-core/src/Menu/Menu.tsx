@@ -1,6 +1,6 @@
 import React, { useState, cloneElement } from 'react';
 import { DotsHorizontalIcon } from '@modulz/radix-icons';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { useId, useClickOutside } from '@mantine/hooks';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { MenuBody } from './MenuBody/MenuBody';
@@ -10,10 +10,12 @@ import { MenuItem } from './MenuItem/MenuItem';
 export { MenuBody, MenuItem };
 export const MENU_SIZES = sizes;
 
-type MenuBodyProps = Omit<
-  React.ComponentPropsWithoutRef<typeof MenuBody>,
-  'opened' | 'onClose' | 'children'
->;
+interface MenuPosition {
+  top?: React.CSSProperties['top'];
+  bottom?: React.CSSProperties['bottom'];
+  left?: React.CSSProperties['left'];
+  right?: React.CSSProperties['right'];
+}
 
 interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** <MenuItem /> and <Hr /> components only, children are passed to MenuBody component  */
@@ -32,35 +34,51 @@ interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
   onOpen?(): void;
 
   /** MenuBody component props */
-  menuProps?: MenuBodyProps;
+  menuBodyProps?: Record<string, any>;
+
+  /** Transitions duration in ms */
+  transitionDuration?: number;
+
+  /** Predefined menu width or number for width in px */
+  size?: MantineNumberSize;
+
+  /** Predefined shadow from theme or box-shadow value */
+  shadow?: string;
+
+  /** Should menu close on item click */
+  closeOnItemClick?: boolean;
+
+  /** Id attribute of menu */
+  menuId?: string;
 
   /** Menu dropdown position */
-  menuPosition?: {
-    top?: number | string;
-    bottom?: number | string;
-    left?: number | string;
-    right?: number | string;
-  };
+  menuPosition?: MenuPosition;
 }
 
+const defaultControl = (
+  <ActionIcon>
+    <DotsHorizontalIcon />
+  </ActionIcon>
+);
+
 export function Menu({
-  control = (
-    <ActionIcon>
-      <DotsHorizontalIcon />
-    </ActionIcon>
-  ),
+  control = defaultControl,
   children,
   onClose,
   onOpen,
   opened,
-  menuProps,
   themeOverride,
   menuPosition = { top: 0, left: 0 },
   style,
+  menuId,
+  menuBodyProps = {},
+  closeOnItemClick = true,
+  transitionDuration = 250,
+  size = 'md',
+  shadow = 'md',
   ...others
 }: MenuProps) {
-  const _menuProps = menuProps || ({} as MenuProps);
-  const uuid = useId(_menuProps.id);
+  const uuid = useId(menuId);
   const controlled = typeof opened === 'boolean';
   const [_opened, setOpened] = useState(false);
   const menuOpened = controlled ? opened : _opened;
@@ -96,13 +114,17 @@ export function Menu({
       {menuControl}
 
       <MenuBody
-        {...menuProps}
+        {...menuBodyProps}
         opened={menuOpened}
         onClose={handleClose}
         id={uuid}
         themeOverride={themeOverride}
         closeOnClickOutside={false}
-        style={{ ..._menuProps.style, ...menuPosition }}
+        closeOnItemClick={closeOnItemClick}
+        style={{ ...menuBodyProps.style, ...menuPosition }}
+        transitionDuration={transitionDuration}
+        size={size}
+        shadow={shadow}
       >
         {children}
       </MenuBody>

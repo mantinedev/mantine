@@ -52,6 +52,13 @@ function prepareDeclaration(declaration: ComponentDoc) {
     if (data.props[prop].type.name === 'MantineSize') {
       data.props[prop].type.name = 'xs" | "sm" | "md" | "lg" | "xl"';
     }
+
+    if (
+      data.props[prop].type.name ===
+      'ReactElement<any, string | ((props: any) => ReactElement<any, any>) | (new (props: any) => Component<any, any, any>)>'
+    ) {
+      data.props[prop].type.name = 'ReactElement';
+    }
   });
 
   return data;
