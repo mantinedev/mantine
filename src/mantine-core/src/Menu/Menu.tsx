@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import cx from 'clsx';
 import { Transition } from 'react-transition-group';
 import useFocusTrap from '@charlietango/use-focus-trap';
@@ -21,7 +21,7 @@ interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
   /** Triggers when menu is closed */
   onClose(): void;
 
-  /** <MenuItem /> components only */
+  /** <MenuItem /> and <Hr /> components only */
   children: React.ReactNode;
 
   /** Transitions duration in ms  */
@@ -32,6 +32,12 @@ interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
 
   /** Predefined shadow from theme or box-shadow value */
   shadow?: string;
+
+  /** Should menu close on outside click */
+  closeOnClickOutside?: boolean;
+
+  /** Should menu close on item click */
+  closeOnItemClick?: boolean;
 }
 
 function getPreviousItem(active: number, items: MenuItemType[]) {
@@ -74,12 +80,15 @@ export function Menu({
   children,
   size = 'md',
   shadow = 'md',
+  closeOnClickOutside = true,
+  closeOnItemClick = true,
   ...others
 }: MenuProps) {
   const items = React.Children.toArray(children).filter(
     (item: MenuItemType) => item.type === MenuItem || item.type === Hr
   ) as MenuItemType[];
 
+  const hoveredTimeout = useRef<number>();
   const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ size, theme });
@@ -88,18 +97,23 @@ export function Menu({
   const [hovered, setHovered] = useState(findInitialItem(items));
   const focusTrapRef = useFocusTrap();
 
-  const handleClose = () => {
-    onClose();
-    setHovered(findInitialItem(items));
-  };
+  useEffect(() => {
+    if (!opened) {
+      hoveredTimeout.current = window.setTimeout(() => {
+        setHovered(findInitialItem(items));
+      }, duration);
+    } else {
+      window.clearTimeout(hoveredTimeout.current);
+    }
+  }, [opened]);
 
-  const menuRef = useClickOutside(handleClose);
+  const menuRef = useClickOutside(() => closeOnClickOutside && onClose());
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { code } = event.nativeEvent;
 
     if (code === 'Escape') {
-      handleClose();
+      onClose();
     }
 
     if (code === 'Tab') {
@@ -133,6 +147,15 @@ export function Menu({
           key={index}
           hovered={hovered === index}
           onHover={() => setHovered(-1)}
+          onClick={(event) => {
+            if (closeOnItemClick) {
+              onClose();
+            }
+
+            if (typeof item.props.onClick === 'function') {
+              item.props.onClick(event);
+            }
+          }}
           elementRef={(node) => {
             buttonsRefs.current[index] = node;
           }}
