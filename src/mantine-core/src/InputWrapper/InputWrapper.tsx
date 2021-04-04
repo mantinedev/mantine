@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { Text } from '../Text/Text';
@@ -22,7 +22,8 @@ interface InputWrapperProps
   extends DefaultProps,
     InputWrapperBaseProps,
     React.ComponentPropsWithoutRef<'div'> {
-  id: string;
+  id?: string;
+  labelElement?: 'label' | 'div';
   children: React.ReactChild;
 }
 
@@ -35,23 +36,28 @@ export function InputWrapper({
   error,
   description,
   themeOverride,
+  labelElement = 'label',
   ...others
 }: InputWrapperProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const labelProps = labelElement === 'label' ? { htmlFor: id } : {};
+  const inputLabel = createElement(
+    labelElement,
+    { ...labelProps, className: classes.label },
+    <>
+      {label}
+      {required && (
+        <span data-mantine-required className={classes.required}>
+          {' '}
+          *
+        </span>
+      )}
+    </>
+  );
 
   return (
     <div className={cx(classes.inputWrapper, className)} {...others}>
-      {label && (
-        <label className={classes.label} htmlFor={id}>
-          {label}
-          {required && (
-            <span data-mantine-required className={classes.required}>
-              {' '}
-              *
-            </span>
-          )}
-        </label>
-      )}
+      {label && inputLabel}
 
       {description && (
         <Text data-mantine-description color="gray" size="xs" className={classes.description}>
