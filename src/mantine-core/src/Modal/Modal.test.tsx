@@ -14,7 +14,7 @@ import { Modal } from './Modal';
 describe('@mantine/core/Modal', () => {
   // Clean up dom as jest does not do this automatically
   afterEach(() => {
-    document.getElementsByTagName('html')[0].innerHTML = '';
+    document.getElementsByTagName('body')[0].innerHTML = '';
   });
 
   checkAccessibility([

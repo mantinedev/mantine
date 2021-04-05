@@ -5,7 +5,7 @@ import { Portal } from './Portal';
 describe('@mantine/core/Portal', () => {
   // Clean up dom as jest does not do this automatically
   afterEach(() => {
-    document.getElementsByTagName('html')[0].innerHTML = '';
+    document.getElementsByTagName('body')[0].innerHTML = '';
   });
 
   it('has correct displayName', () => {
