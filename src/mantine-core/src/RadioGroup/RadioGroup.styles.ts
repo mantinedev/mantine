@@ -10,6 +10,7 @@ interface RadioGroupStylesProps {
 export default createUseStyles({
   wrapper: ({ theme, spacing, variant }: RadioGroupStylesProps) => ({
     display: 'flex',
+    flexWrap: 'wrap',
     flexDirection: variant === 'vertical' ? 'column' : 'horizontal',
     marginTop:
       variant === 'vertical' ? 0 : (getSizeValue({ sizes: theme.spacing, size: spacing }) / 4) * -1,

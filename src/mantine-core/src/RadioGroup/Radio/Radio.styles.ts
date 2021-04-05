@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import {
   MantineTheme,
-  MantineNumberSize,
+  MantineSize,
   getSizeValue,
   getFontStyles,
   getFocusStyles,
@@ -9,13 +9,13 @@ import {
 
 interface RadioStylesProps {
   theme: MantineTheme;
-  size: MantineNumberSize;
+  size: MantineSize;
 }
 
 export const sizes = {
-  xs: 14,
+  xs: 12,
   sm: 16,
-  md: 18,
+  md: 20,
   lg: 28,
   xl: 32,
 };
@@ -38,7 +38,9 @@ export default createUseStyles({
     margin: 0,
     marginRight: theme.spacing.sm,
     background: 'red',
-    display: 'block',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
 
     '&:checked': {
       background: theme.colors[theme.primaryColor][5],
@@ -47,13 +49,10 @@ export default createUseStyles({
       '&::before': {
         content: '""',
         display: 'block',
-        position: 'absolute',
         backgroundColor: theme.white,
-        top: '25%',
-        left: '25%',
-        width: '50%',
-        height: '50%',
-        borderRadius: 1000,
+        width: getSizeValue({ sizes, size }) / 2,
+        height: getSizeValue({ sizes, size }) / 2,
+        borderRadius: getSizeValue({ sizes, size }) / 2,
       },
     },
 
@@ -71,9 +70,10 @@ export default createUseStyles({
     },
   }),
 
-  label: ({ theme }: RadioStylesProps) => ({
+  label: ({ theme, size }: RadioStylesProps) => ({
     ...getFontStyles(theme),
     display: 'block',
-    lineHeight: theme.lineHeight,
+    fontSize: theme.fontSizes[size] || theme.fontSizes.md,
+    lineHeight: `${getSizeValue({ sizes, size })}px`,
   }),
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, MantineSize } from '@mantine/theme';
 import useStyles from './Radio.styles';
 
 interface RadioProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
@@ -11,8 +11,8 @@ interface RadioProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   /** Radio value */
   value: string;
 
-  /** Radio width, height and border-radius */
-  size?: MantineNumberSize;
+  /** Predefined label fontSize, radio width, height and border-radius */
+  size?: MantineSize;
 }
 
 export function Radio({
