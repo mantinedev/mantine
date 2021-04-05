@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import cx from 'clsx';
 import { CheckIcon, DividerHorizontalIcon } from '@modulz/radix-icons';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, MantineSize } from '@mantine/theme';
 import useStyles from './Checkbox.styles';
 
 interface CheckboxProps
@@ -11,8 +11,8 @@ interface CheckboxProps
   /** Checkbox checked and intermediate state color from theme, defaults to theme.primaryColor */
   color?: string;
 
-  /** Predefined checkbox size or number to set width and height in px */
-  size?: MantineNumberSize;
+  /** Predefined label font-size and checkbox width and height in px */
+  size?: MantineSize;
 
   /** Checkbox label */
   label?: React.ReactNode;

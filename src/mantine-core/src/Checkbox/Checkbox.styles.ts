@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import {
   MantineTheme,
-  MantineNumberSize,
+  MantineSize,
   getFontStyles,
   getSizeValue,
   getThemeColor,
@@ -18,7 +18,7 @@ const sizes = {
 
 interface CheckboxStylesProps {
   theme: MantineTheme;
-  size: MantineNumberSize;
+  size: MantineSize;
   color: string;
 }
 
@@ -34,11 +34,11 @@ export default createUseStyles({
     height: getSizeValue({ size, sizes }),
   }),
 
-  label: ({ theme }: CheckboxStylesProps) => ({
+  label: ({ theme, size }: CheckboxStylesProps) => ({
     ...getFontStyles(theme),
     marginLeft: theme.spacing.sm,
-    fontSize: theme.fontSizes.sm,
-    lineHeight: theme.lineHeight,
+    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+    lineHeight: `${getSizeValue({ size, sizes })}px`,
   }),
 
   checkbox: ({ size, theme, color }: CheckboxStylesProps) => ({

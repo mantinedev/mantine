@@ -14,7 +14,7 @@ function CheckboxWrapper(props: Omit<React.ComponentProps<typeof Checkbox>, 'val
   );
 }
 
-const sizes = (['xs', 'sm', 'md', 'lg', 'xl', 50, 75] as any[]).map((size) => (
+const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
   <Checkbox
     color="blue"
     key={size}
