@@ -12,6 +12,11 @@ import { Overlay } from '../Overlay/Overlay';
 import { Modal } from './Modal';
 
 describe('@mantine/core/Modal', () => {
+  // Clean up dom as jest does not do this automatically
+  afterEach(() => {
+    document.getElementsByTagName('html')[0].innerHTML = '';
+  });
+
   checkAccessibility([
     mount(
       <Modal opened onClose={() => {}} closeButtonLabel="Close modal">
@@ -92,5 +97,10 @@ describe('@mantine/core/Modal', () => {
     const element = mount(<Modal opened onClose={() => {}} zIndex={87} />);
     expect(element.find(Overlay).prop('zIndex')).toBe(87);
     expect(element.render().find('[data-mantine-modal-inner]').css('z-index')).toBe('88');
+  });
+
+  it('locks scroll on mount', () => {
+    mount(<Modal opened onClose={() => {}} zIndex={87} />);
+    expect(document.body.style.overflow).toBe('hidden');
   });
 });

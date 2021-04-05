@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import cx from 'clsx';
 import { Transition } from 'react-transition-group';
 import { Cross1Icon } from '@modulz/radix-icons';
 import useFocusTrap from '@charlietango/use-focus-trap';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import { useClickOutside, useReducedMotion, useId } from '@mantine/hooks';
+import { useClickOutside, useReducedMotion, useId, useScrollLock } from '@mantine/hooks';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
@@ -69,7 +69,6 @@ export function Modal({
   const titleId = useId();
   const bodyId = useId();
 
-  const bodyOverflow = useRef<React.CSSProperties['overflow']>(null);
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ size, overflow, theme });
@@ -77,14 +76,7 @@ export function Modal({
   const focusTrapRef = useFocusTrap();
   const duration = reduceMotion ? 1 : transitionDuration;
 
-  useEffect(() => {
-    if (opened) {
-      bodyOverflow.current = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = bodyOverflow.current || '';
-    }
-  }, [opened]);
+  useScrollLock(opened);
 
   return (
     <Transition
