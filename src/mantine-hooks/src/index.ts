@@ -6,3 +6,4 @@ export { useId } from './hooks/use-id/use-id';
 export { useListState } from './hooks/use-list-state/use-list-state';
 export { useMediaQuery } from './hooks/use-media-query/use-media-query';
 export { useReducedMotion } from './hooks/use-reduced-motion/use-reduced-motion';
+export { useScrollLock } from './hooks/use-scroll-lock/use-scroll-lock';
