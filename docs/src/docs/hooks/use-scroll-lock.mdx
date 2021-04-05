@@ -1,0 +1,65 @@
+---
+package: mantine-hooks
+title: 'use-scroll-lock'
+order: 1
+slug: /hooks/use-scroll-lock/
+---
+
+import { UseScrollLockDemo } from '../../demos/hooks/use-scroll-lock.demos.tsx';
+import { ModalBaseDemo } from '../../demos/core/Modal/modal.base-demo';
+
+# use-scroll-lock
+
+<PageHeader
+  source="mantine-hooks/src/hooks/use-scroll-lock/use-scroll-lock.ts"
+  docs="hooks/use-scroll-lock.mdx"
+  package="@mantine/hooks"
+/>
+
+Lock document scroll at current position
+
+```tsx
+import { useScrollLock } from '@mantine/hooks';
+```
+
+## Definition
+
+Hook accepts one argument – boolean value that controlls if scroll is locked.
+
+```tsx
+useScrollLock(lock: boolean): void
+```
+
+## Usage
+
+Use this hook when you want to prevent user from scrolling on document level,
+for example, with modals and drawers.
+
+Example modal component, whenever modal is opened, scroll is locked at current scroll position:
+
+```tsx
+import React from 'react';
+import { useScrollLock } from '@mantine/hooks';
+
+function Modal({ opened }) {
+  useScrollLock(opened);
+
+  if (!opened) {
+    return null;
+  }
+
+  return <div>My modal</div>;
+}
+```
+
+## Examples
+
+When hooks is called with `true`, it sets `document.body.style.overflow` to `hidden`.
+When component is unmounted, scroll lock is automatically removed.
+
+<UseScrollLockDemo />
+
+use-scroll-lock is used in some components in <GatsbyLink to="/core/getting-started/">@mantine/core</GatsbyLink>,
+example with <GatsbyLink to="/core/modal/">Modal</GatsbyLink> component:
+
+<ModalBaseDemo />

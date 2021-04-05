@@ -16,7 +16,7 @@ export function UseDocumentTitleDemo() {
   return (
     <Button onClick={() => setTitle(nanoid())}>
       Set document title to random id
-    </Button>;
+    </Button>
   );
 }`;
 
