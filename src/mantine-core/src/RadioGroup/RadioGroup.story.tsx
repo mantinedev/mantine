@@ -27,7 +27,9 @@ storiesOf('@mantine/core/RadioGroup', module).add('General usage', () => (
       <Radio value="ng" disabled title="Unless you can't, haha">
         Angular
       </Radio>
-      <Radio value="vue">Vue</Radio>
+      <Radio value="vue" size="xl">
+        Vue
+      </Radio>
     </RadioGroup>
   </div>
 ));
