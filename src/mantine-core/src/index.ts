@@ -6,7 +6,7 @@ export { Blockquote } from './Blockquote/Blockquote';
 export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 export { Burger, BURGER_SIZES } from './Burger/Burger';
 export { Button, BUTTON_SIZES } from './Button/Button';
-export { Checkbox } from './Checkbox/Checkbox';
+export { Checkbox, CHECKBOX_SIZES } from './Checkbox/Checkbox';
 export { Code } from './Code/Code';
 export { ColorSwatch } from './ColorSwatch/ColorSwatch';
 export { Container, CONTAINER_SIZES } from './Container/Container';

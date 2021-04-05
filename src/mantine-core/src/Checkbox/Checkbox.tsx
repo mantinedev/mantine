@@ -3,7 +3,9 @@ import cx from 'clsx';
 import { CheckIcon, DividerHorizontalIcon } from '@modulz/radix-icons';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize } from '@mantine/theme';
-import useStyles from './Checkbox.styles';
+import useStyles, { sizes } from './Checkbox.styles';
+
+export const CHECKBOX_SIZES = sizes;
 
 interface CheckboxProps
   extends DefaultProps,
