@@ -38,3 +38,4 @@ export { Textarea } from './Textarea/Textarea';
 export { TextInput } from './TextInput/TextInput';
 export { ThemeIcon, THEME_ICON_SIZES } from './ThemeIcon/ThemeIcon';
 export { Title } from './Title/Title';
+export { Transition } from './Transition/Transition';
