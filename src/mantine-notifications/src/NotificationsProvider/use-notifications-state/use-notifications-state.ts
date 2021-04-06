@@ -1,43 +1,35 @@
-import { useState } from 'react';
 import { nanoid } from 'nanoid';
+import { useQueue } from '@mantine/hooks';
 import { NotificationProps } from '../../types';
 
 export default function useNotificationsState({ limit }: { limit: number }) {
-  const [notifications, setNotifications] = useState<NotificationProps[]>([]);
+  const { state, update } = useQueue<NotificationProps>({ initialValues: [], limit });
 
   const showNotification = (notification: NotificationProps) =>
-    setNotifications((currentNotifications) => {
-      if (currentNotifications.length >= limit) {
-        return currentNotifications;
+    update((notifications) => {
+      if (notification.id && notifications.some((n) => n.id === notification.id)) {
+        return notifications;
       }
 
-      const index = currentNotifications.findIndex((n) => n.id === notification.id);
-
-      if (index === -1) {
-        return [...currentNotifications, { ...notification, id: notification.id || nanoid() }];
-      }
-
-      return currentNotifications;
+      return [...notifications, { ...notification, id: notification.id || nanoid() }];
     });
 
   const updateNotification = (id: string, notification: NotificationProps) =>
-    setNotifications((currentNotifications) => {
-      const index = currentNotifications.findIndex((n) => n.id === id);
+    update((notifications) => {
+      const index = notifications.findIndex((n) => n.id === id);
 
       if (index === -1) {
-        return currentNotifications;
+        return notifications;
       }
 
-      const newNotifications = [...currentNotifications];
+      const newNotifications = [...notifications];
       newNotifications[index] = notification;
 
       return newNotifications;
     });
 
   const hideNotification = (id: string) =>
-    setNotifications((currentNotifications) =>
-      currentNotifications.filter((notification) => notification.id !== id)
-    );
+    update((notifications) => notifications.filter((notification) => notification.id !== id));
 
-  return { notifications, showNotification, updateNotification, hideNotification };
+  return { notifications: state, showNotification, updateNotification, hideNotification };
 }
