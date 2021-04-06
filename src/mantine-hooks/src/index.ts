@@ -6,5 +6,6 @@ export { useId } from './use-id/use-id';
 export { useListState } from './use-list-state/use-list-state';
 export { useMediaQuery } from './use-media-query/use-media-query';
 export { useMergedRef } from './use-merged-ref/use-merged-ref';
+export { useQueue } from './use-queue/use-queue';
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion';
 export { useScrollLock } from './use-scroll-lock/use-scroll-lock';
