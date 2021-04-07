@@ -1,12 +1,10 @@
 import OpenColor from 'open-color';
 import React from 'react';
-import { Transition } from 'react-transition-group';
 import { useClickOutside, useReducedMotion } from '@mantine/hooks';
-import { Paper } from '@mantine/core';
+import { Paper, Transition } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
 import TagsList, { TagsListProps } from '../TagsList/TagsList';
 import TagBadge from '../TagBadge/TagBadge';
-import getTransitionStyle from '../get-transition-styles';
 import useStyles from './TagPicker.styles';
 
 interface TagPickerProps extends TagsListProps {
@@ -42,19 +40,13 @@ export default function TagPicker({
         />
       </button>
 
-      <Transition
-        timeout={duration}
-        unmountOnExit
-        mountOnEnter
-        onEnter={(node: any) => node.offsetHeight}
-        in={dropdownOpened}
-      >
-        {(state) => (
+      <Transition duration={duration} mounted={dropdownOpened} transition="skew-up">
+        {(transitionStyles) => (
           <Paper
             shadow="xs"
             className={classes.dropdown}
             ref={dropdownRef}
-            style={getTransitionStyle({ state, duration })}
+            style={transitionStyles}
           >
             <TagsList value={value} transitionDuration={transitionDuration} {...others} />
           </Paper>

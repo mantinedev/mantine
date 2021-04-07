@@ -1,14 +1,12 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
-import { Transition } from 'react-transition-group';
 import { DotsHorizontalIcon } from '@modulz/radix-icons';
-import { ActionIcon } from '@mantine/core';
+import { ActionIcon, Transition } from '@mantine/core';
 import { useMantineTheme, MantineThemeOverride } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
 import { TagPickerColor, TagPickerTag } from '../types';
 import TagEdit from '../TagEdit/TagEdit';
 import TagBadge from '../TagBadge/TagBadge';
-import getTransitionStyle from '../get-transition-styles';
 import useStyles from './TagItem.styles';
 
 interface TagItemProps {
@@ -73,16 +71,10 @@ export default function TagItem({
       className={cx(classes.item, { [classes.hovered]: hovered === index })}
       onMouseEnter={() => onHover(index)}
     >
-      <Transition
-        timeout={duration}
-        unmountOnExit
-        mountOnEnter
-        onEnter={(node: any) => node.offsetHeight}
-        in={editDropdownOpened}
-      >
-        {(state) => (
+      <Transition duration={duration} mounted={editDropdownOpened} transition="skew-up">
+        {(transitionStyles) => (
           <TagEdit
-            style={getTransitionStyle({ state, duration })}
+            style={transitionStyles}
             onClose={closeEditDropdown}
             initialValues={data}
             deleteLabel={deleteLabel}
