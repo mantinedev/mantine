@@ -7,7 +7,7 @@ export interface MantineTransitionStyles {
   transitionProperty: React.CSSProperties['transitionProperty'];
 }
 
-export type MantineTransitionName = 'fade' | 'skew-up';
+export type MantineTransitionName = 'fade' | 'skew-up' | 'slide-down';
 
 export type MantineTransition = MantineTransitionName | MantineTransitionStyles;
 
@@ -21,6 +21,13 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
   'skew-up': {
     in: { opacity: 1, transform: 'translateY(0) skew(0deg, 0deg)' },
     out: { opacity: 0, transform: 'translateY(-20px) skew(-10deg, -5deg)' },
+    common: { transformOrigin: 'top' },
+    transitionProperty: 'transform, opacity',
+  },
+
+  'slide-down': {
+    in: { opacity: 1, transform: 'translateY(0)' },
+    out: { opacity: 0, transform: 'translateY(-200px)' },
     common: { transformOrigin: 'top' },
     transitionProperty: 'transform, opacity',
   },

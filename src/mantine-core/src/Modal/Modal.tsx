@@ -1,6 +1,5 @@
 import React from 'react';
 import cx from 'clsx';
-import { Transition } from 'react-transition-group';
 import { Cross1Icon } from '@modulz/radix-icons';
 import useFocusTrap from '@charlietango/use-focus-trap';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
@@ -9,7 +8,7 @@ import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
-import { getTransitionStyles } from './get-transition-styles';
+import { GroupedTransition } from '../Transition/Transition';
 import useStyles, { sizes } from './Modal.styles';
 
 export const MODAL_SIZES = sizes;
@@ -59,7 +58,7 @@ export function Modal({
   hideCloseButton = false,
   overlayOpacity = 0.65,
   size = 'md',
-  transitionDuration = 350,
+  transitionDuration = 300,
   closeButtonLabel,
   overlayColor,
   zIndex = 1000,
@@ -79,14 +78,14 @@ export function Modal({
   useScrollLock(opened);
 
   return (
-    <Transition
-      in={opened}
-      timeout={duration}
-      unmountOnExit
-      mountOnEnter
-      onEnter={(node: any) => node.offsetHeight}
+    <GroupedTransition
+      mounted={opened}
+      transitions={{
+        modal: { duration, transition: 'slide-down' },
+        overlay: { duration: duration / 2, transition: 'fade', timingFunction: 'ease' },
+      }}
     >
-      {(state) => (
+      {(styles) => (
         <div className={cx(classes.wrapper, className)} {...others}>
           <div
             data-mantine-modal-inner
@@ -101,7 +100,7 @@ export function Modal({
               aria-labelledby={titleId}
               aria-describedby={bodyId}
               aria-modal
-              style={{ ...getTransitionStyles({ duration, theme, state, part: 'modal' }) }}
+              style={styles.modal}
               ref={clickOutsideRef}
               tabIndex={-1}
             >
@@ -125,12 +124,12 @@ export function Modal({
             </Paper>
           </div>
 
-          <div style={getTransitionStyles({ duration, theme, state, part: 'overlay' })}>
+          <div style={styles.overlay}>
             <Overlay color={overlayColor || theme.black} opacity={overlayOpacity} zIndex={zIndex} />
           </div>
         </div>
       )}
-    </Transition>
+    </GroupedTransition>
   );
 }
 
