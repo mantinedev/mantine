@@ -16,7 +16,6 @@ export default createUseStyles({
     backgroundColor: getThemeColor({ theme, color, shade: 0 }),
     fontFamily: theme.fontFamilyMonospace,
     fontSize: theme.fontSizes.xs,
-    fontWeight: 700,
     border: `1px solid ${getThemeColor({ theme, color, shade: 3 })}`,
   }),
 
