@@ -1,9 +1,9 @@
 import React from 'react';
 import cx from 'clsx';
-import { Transition } from 'react-transition-group';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
 import { Overlay } from '../Overlay/Overlay';
+import { Transition } from '../Transition/Transition';
 import { Loader, LoaderProps } from '../Loader/Loader';
 import useStyles from './LoadingOverlay.styles';
 
@@ -39,27 +39,21 @@ export function LoadingOverlay({
   style,
   ...others
 }: LoadingOverlayProps) {
-  const theme = useMantineTheme(themeOverride);
   const classes = useStyles();
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 1 : transitionDuration;
 
   return (
     <Transition
-      timeout={duration}
-      unmountOnExit
-      mountOnEnter
-      onEnter={(node: any) => node.offsetHeight}
-      in={visible}
+      duration={duration}
+      mounted={visible}
+      transition="fade"
+      themeOverride={themeOverride}
     >
-      {(state) => (
+      {(transitionStyles) => (
         <div
           className={cx(classes.loadingOverlay, className)}
-          style={{
-            transition: `opacity ${duration}ms ${theme.transitionTimingFunction}`,
-            opacity: state === 'entering' || state === 'entered' ? 1 : 0,
-            ...style,
-          }}
+          style={{ ...transitionStyles, ...style }}
           {...others}
         >
           <Loader themeOverride={themeOverride} style={{ zIndex: zIndex + 1 }} {...loaderProps} />
