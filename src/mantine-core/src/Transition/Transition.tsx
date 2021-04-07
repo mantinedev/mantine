@@ -4,6 +4,8 @@ import { useMantineTheme, DefaultProps } from '@mantine/theme';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { MantineTransition } from './transitions';
 
+export { GroupedTransition } from './GroupedTransition';
+
 export type { MantineTransition };
 
 interface TransitionProps extends Omit<DefaultProps, 'className'> {
@@ -11,7 +13,7 @@ interface TransitionProps extends Omit<DefaultProps, 'className'> {
   duration?: number;
   timingFunction?: string;
   mounted: boolean;
-  children(animation: ReturnType<typeof getTransitionStyles>): React.ReactNode;
+  children(styles: React.CSSProperties): React.ReactNode;
 }
 
 export function Transition({
