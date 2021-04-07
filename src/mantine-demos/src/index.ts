@@ -1,2 +1,3 @@
-export { default as AuthenticationForm } from './AuthenticationForm/AuthenticationForm';
-export { default as TransactionsTable } from './TransactionsTable/TransactionsTable';
+export { AuthenticationForm } from './AuthenticationForm/AuthenticationForm';
+export { TodoList } from './TodoList/TodoList';
+export { TransactionsTable } from './TransactionsTable/TransactionsTable';

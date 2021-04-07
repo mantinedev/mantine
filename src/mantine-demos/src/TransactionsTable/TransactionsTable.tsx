@@ -11,7 +11,7 @@ const colors = Object.keys(OpenColor)
   .filter((key) => key !== 'white' && key !== 'black')
   .map((key) => ({ name: key, color: OpenColor[key][0] as string }));
 
-export default function TransactionsTable() {
+export function TransactionsTable() {
   const [transactionsState, transactionsHandlers] = useListState(mockdata.transactions);
   const [categoriesState, categoriesHandlers] = useListState(mockdata.categories);
 

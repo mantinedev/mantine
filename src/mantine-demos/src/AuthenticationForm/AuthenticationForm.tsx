@@ -18,11 +18,7 @@ interface AuthenticationFormProps {
   noSubmit?: boolean;
 }
 
-export default function AuthenticationForm({
-  noShadow,
-  noPadding,
-  noSubmit,
-}: AuthenticationFormProps) {
+export function AuthenticationForm({ noShadow, noPadding, noSubmit }: AuthenticationFormProps) {
   const [formType, setFormType] = useState<'register' | 'login'>('register');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>(null);
