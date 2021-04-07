@@ -5,6 +5,8 @@ order: 1
 slug: /hooks/use-list-state/
 ---
 
+import { UseListStateDemo } from '../../demos/hooks/use-list-state.demos';
+
 # use-list-state
 
 <PageHeader
@@ -90,3 +92,7 @@ useListState<T>(initialValue: T[] = []): [T[], {
   setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => void;
 }]
 ```
+
+## Todo list example
+
+<UseListStateDemo />

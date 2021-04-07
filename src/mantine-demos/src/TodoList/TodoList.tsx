@@ -14,7 +14,7 @@ const INITIAL_STATE: TodoItem[] = [
   { value: 'Mine Ethereum', completed: false },
   { value: 'Complain about miners on internet to prove innocence', completed: false },
   { value: 'Sell broken cards on ebay to gamers', completed: false },
-  { value: 'Spend received money on another video cards', completed: false },
+  { value: 'Spend received money on new video cards', completed: false },
   { value: 'Repeat the cycle', completed: false },
 ];
 
@@ -26,6 +26,7 @@ export function TodoList() {
   const items = state.map((item, index) => (
     <div style={{ display: 'flex', alignItems: 'center', marginTop: theme.spacing.xs }}>
       <Checkbox
+        size="xl"
         checked={item.completed}
         onChange={(event) => {
           handlers.setItemProp(index, 'completed', event.currentTarget.checked);
@@ -33,19 +34,20 @@ export function TodoList() {
             handlers.reorder({ from: index, to: state.length - 1 });
           }
         }}
-        size="xl"
       />
+
       <TextInput
         style={{ flex: 1, marginLeft: theme.spacing.md }}
         placeholder="Your evil plan part"
+        variant="filled"
+        value={item.value}
+        onChange={(event) => handlers.setItemProp(index, 'value', event.currentTarget.value)}
         inputStyle={{
           textDecoration: item.completed && 'line-through',
           color: item.completed && theme.colors.gray[5],
         }}
-        variant="filled"
-        value={item.value}
-        onChange={(event) => handlers.setItemProp(index, 'value', event.currentTarget.value)}
       />
+
       <ActionIcon
         size="lg"
         style={{ marginLeft: theme.spacing.xs }}
@@ -59,7 +61,9 @@ export function TodoList() {
   return (
     <div>
       <Title style={{ textAlign: 'center', marginBottom: theme.spacing.xl }}>Business Plan</Title>
+
       {items}
+
       <TextInput
         style={{ marginTop: theme.spacing.xl }}
         value={newItem}
