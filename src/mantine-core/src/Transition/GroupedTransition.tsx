@@ -11,8 +11,13 @@ interface GroupedTransitionItem {
 }
 
 interface GroupedTransitionProps extends Omit<DefaultProps, 'className'> {
+  /** Transitions group */
   transitions: Record<string, GroupedTransitionItem>;
+
+  /** When true, component will ne mounted */
   mounted: boolean;
+
+  /** Render function with transition group styles argument */
   children(styles: Record<string, React.CSSProperties>): React.ReactNode;
 }
 

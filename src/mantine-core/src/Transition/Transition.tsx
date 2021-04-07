@@ -9,10 +9,19 @@ export { GroupedTransition } from './GroupedTransition';
 export type { MantineTransition };
 
 interface TransitionProps extends Omit<DefaultProps, 'className'> {
+  /** Predefined transition name or transition styles */
   transition: MantineTransition;
+
+  /** Transition duration in ms */
   duration?: number;
+
+  /** Transition timing function, defaults to theme.transitionTimingFunction */
   timingFunction?: string;
+
+  /** When true, component will be mounted */
   mounted: boolean;
+
+  /** Render function with transition styles argument */
   children(styles: React.CSSProperties): React.ReactNode;
 }
 
