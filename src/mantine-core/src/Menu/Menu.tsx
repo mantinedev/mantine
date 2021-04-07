@@ -3,6 +3,7 @@ import { DotsHorizontalIcon } from '@modulz/radix-icons';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { useId, useClickOutside } from '@mantine/hooks';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
+import { MantineTransition } from '../Transition/Transition';
 import { MenuBody } from './MenuBody/MenuBody';
 import { sizes } from './MenuBody/MenuBody.styles';
 import { MenuItem } from './MenuItem/MenuItem';
@@ -39,8 +40,14 @@ interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
   /** MenuBody component props */
   menuBodyProps?: Record<string, any>;
 
+  /** Transition styles */
+  transition?: MantineTransition;
+
   /** Transitions duration in ms */
   transitionDuration?: number;
+
+  /** Transition timing function */
+  transitionTimingFunction?: string;
 
   /** Predefined menu width or number for width in px */
   size?: MantineNumberSize;
@@ -82,6 +89,8 @@ export function Menu({
   transitionDuration = 250,
   size = 'md',
   shadow = 'md',
+  transition = 'skew-up',
+  transitionTimingFunction,
   menuButtonLabel,
   controlRefProp = 'ref',
   ...others
@@ -141,6 +150,8 @@ export function Menu({
         closeOnItemClick={closeOnItemClick}
         style={{ ...menuBodyProps.style, ...menuPosition }}
         transitionDuration={transitionDuration}
+        transition={transition}
+        transitionTimingFunction={transitionTimingFunction}
         size={size}
         shadow={shadow}
       >

@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import cx from 'clsx';
-import { Transition } from 'react-transition-group';
 import useFocusTrap from '@charlietango/use-focus-trap';
 import { useReducedMotion, useClickOutside } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
+import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import { Hr } from '../../Hr/Hr';
 import { MenuItem, MenuItemType } from '../MenuItem/MenuItem';
 import { MenuButton } from '../MenuButton/MenuButton';
-import { getTransitionStyles } from './get-transition-styles';
 import useStyles from './MenuBody.styles';
 
 interface MenuBodyProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -21,8 +20,14 @@ interface MenuBodyProps extends DefaultProps, React.ComponentPropsWithoutRef<'di
   /** <MenuItem /> and <Hr /> components only */
   children: React.ReactNode;
 
+  /** Transition styles */
+  transition?: MantineTransition;
+
   /** Transitions duration in ms */
   transitionDuration?: number;
+
+  /** Transition timing function */
+  transitionTimingFunction?: string;
 
   /** Predefined menu width or number for width in px */
   size?: MantineNumberSize;
@@ -72,7 +77,9 @@ export function MenuBody({
   themeOverride,
   opened,
   onClose,
+  transition = 'skew-up',
   transitionDuration = 250,
+  transitionTimingFunction,
   style,
   children,
   size = 'md',
@@ -169,17 +176,17 @@ export function MenuBody({
 
   return (
     <Transition
-      unmountOnExit
-      mountOnEnter
-      in={opened}
-      timeout={duration}
-      onEnter={(node: any) => node.offsetHeight}
+      mounted={opened}
+      duration={duration}
+      transition={transition}
+      timingFunction={transitionTimingFunction}
+      themeOverride={themeOverride}
     >
-      {(state) => (
+      {(transitionStyles) => (
         <Paper
           shadow={shadow}
           className={cx(classes.menu, className)}
-          style={{ ...style, ...getTransitionStyles({ duration, state, theme }) }}
+          style={{ ...style, ...transitionStyles }}
           onKeyDownCapture={handleKeyDown}
           ref={menuRef}
           role="menu"

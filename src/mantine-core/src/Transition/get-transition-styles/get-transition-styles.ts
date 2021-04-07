@@ -1,5 +1,5 @@
 import { TransitionStatus } from 'react-transition-group';
-import { MantineTransition, MantineTransitionName, transitions } from '../transitions';
+import { MantineTransition, transitions } from '../transitions';
 
 const transitionStatuses = {
   entering: 'in',
@@ -14,7 +14,7 @@ export function getTransitionStyles({
   duration,
   timingFunction,
 }: {
-  transition: MantineTransitionName | MantineTransition;
+  transition: MantineTransition;
   state: TransitionStatus;
   duration: number;
   timingFunction: React.CSSProperties['transitionTimingFunction'];

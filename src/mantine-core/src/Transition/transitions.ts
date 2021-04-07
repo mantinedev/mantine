@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface MantineTransition {
+export interface MantineTransitionStyles {
   common?: React.CSSProperties;
   in: React.CSSProperties;
   out: React.CSSProperties;
@@ -9,7 +9,9 @@ export interface MantineTransition {
 
 export type MantineTransitionName = 'fade' | 'skew-up';
 
-export const transitions: Record<MantineTransitionName, MantineTransition> = {
+export type MantineTransition = MantineTransitionName | MantineTransitionStyles;
+
+export const transitions: Record<MantineTransitionName, MantineTransitionStyles> = {
   fade: {
     in: { opacity: 1 },
     out: { opacity: 0 },

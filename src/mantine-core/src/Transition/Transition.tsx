@@ -2,10 +2,12 @@ import React from 'react';
 import { Transition as RTGTransition } from 'react-transition-group';
 import { useMantineTheme, DefaultProps } from '@mantine/theme';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
-import { MantineTransitionName, MantineTransition } from './transitions';
+import { MantineTransition } from './transitions';
+
+export type { MantineTransition };
 
 interface TransitionProps extends Omit<DefaultProps, 'className'> {
-  transition: MantineTransitionName | MantineTransition;
+  transition: MantineTransition;
   duration?: number;
   timingFunction?: string;
   mounted: boolean;
