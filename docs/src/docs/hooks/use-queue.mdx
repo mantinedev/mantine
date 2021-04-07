@@ -34,40 +34,33 @@ const { state, queue, add, update, cleanQueue } = useQueue({
   limit: 3,
 });
 
-state; // -> [1]
-queue; // -> []
+// state -> [1], queue -> []
 
 // When state.length is less that limit, new items are added to state
 add(2);
-state; // -> [1,2]
-queue; // -> []
+// state -> [1,2], queue -> []
 
 // When state.length is equal to limit, new items are added to queue
 add(3, 4, 5, 6);
-state; // -> [1,2]
-queue; // -> [3,4,5,6]
+// state -> [1,2], queue -> [3,4,5,6]
 
 // Use update function to modify items
 update((values) => values.map((item) => item * 3));
-state; // -> [3,6]
-queue; // -> [9,12,15,18]
+// state -> [3,6], queue -> [9,12,15,18]
 
 // If you add or remove items in update function,
 // they will be divided between queue and state acoring to limit
 // order is always preserved
 update((values) => values.filter((item) => item % 2));
-state; // -> [3,9]
-queue; // -> [15]
+// state -> [3,9], queue -> [15]
 
 // Remove all items from queue
 cleanQueue();
-state; // -> [3,9]
-queue; // -> []
+// state -> [3,9], queue -> []
 
 // Remove all items from queue and state
 update(() => []);
-state; // -> []
-queue; // -> []
+// state -> [], queue -> []
 ```
 
 ## Definition
