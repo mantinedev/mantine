@@ -4,6 +4,7 @@ slug: /pages/theming/
 ---
 
 import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
+import { ThemeColorExtendDemo } from '../../demos/theme/theme-colors-extend.demo';
 
 # Theming
 
@@ -11,30 +12,113 @@ By default all Mantine components use the default theme.
 You can extend and customize theme on top level with MantineProvider
 or on individual component level with theme override.
 
+## Theme object
+
+Mantine theme is an object where your application's colors, fonts, spacing, border-radius and other design elements are defined.
+
+Theme shape:
+
+```tsx
+interface Theme {
+  white: string;
+  black: string;
+  colors: Record<string, Tuple<string, 10>>;
+  fontFamily: CSSProperties['fontFamily'];
+  lineHeight: CSSProperties['lineHeight'];
+  transitionTimingFunction: CSSProperties['transitionTimingFunction'];
+  fontFamilyMonospace: CSSProperties['fontFamily'];
+  primaryColor: string;
+
+  fontSizes: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+  radius: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+  spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+  shadows: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
+
+  headings: {
+    fontFamily: CSSProperties['fontFamily'];
+    fontWeight: CSSProperties['fontWeight'];
+    sizes: {
+      h1: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+      h2: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+      h3: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+      h4: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+      h5: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+      h6: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+    };
+  };
+}
+```
+
+## Extending theme object
+
+You can change theme for all components.
+To do so wrap your application with MantineProvider component.
+Theme is deeply merged, every property that is not specified will be taken from default theme.
+
+```tsx
+import React from 'react';
+import { MantineProvider } from '@mantine/theme';
+import { Button } from '@mantine/core';
+
+function YourApp() {
+  return (
+    <MantineProvider
+      theme={{
+        fontFamily: 'Open Sans, sans-serif',
+        lineHeight: 1.2,
+        primaryColor: 'indigo',
+      }}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+### Adding colors
+
+You can add any amount of extra colors by extending `theme.colors` with MantineProvider.
+This will allow you to use these colors with all components which support `color` prop,
+for example, <GatsbyLink to="/core/button/">Button</GatsbyLink>, <GatsbyLink to="/core/badge/">Badge</GatsbyLink> or <GatsbyLink to="/core/switch/">Switch</GatsbyLink>.
+
+Note that all colors that are added should **always include 10 shades**.
+You can use some of these tools to generate or copy ready color palettes:
+
+- [Themera](https://themera.vercel.app/)
+- [Material Design Colors](https://www.materialui.co/colors)
+- [Omatsuri](https://omatsuri.app/color-shades-generator)
+- [Smart Swatch](https://smart-swatch.netlify.app/)
+- [Palx](https://palx.jxnblk.com/)
+
+<ThemeColorExtendDemo />
+
 ## Default theme
 
+Default theme is stored in @mantine/theme package, you can import it:
+
+```tsx
+import { DEFAULT_THEME } from '@mantine/theme';
+```
+
 ### Colors
+
+Mantine uses [open-color](https://yeun.github.io/open-color/) in default theme.
+Each color has 10 shades.
+
+Colors are exposed on theme object as an array of strings,
+you can access color shade by color name and index (0-9):
+
+```tsx
+theme.colors.red[5];
+theme.colors.gray[9];
+theme.colors.blue[0];
+```
 
 <ThemeColors />
 
 ### Fonts
 
 ### Spacing and radius
-
-## Setting up global theme
-
-```tsx
-import React from 'react';
-import { MantineProvider } from '@mantine/theme';
-
-function YourApp() {
-  return (
-    <MantineProvider>
-      <div>Your app here</div>
-    </MantineProvider>
-  );
-}
-```
 
 ## Overriding theme on component level
 
