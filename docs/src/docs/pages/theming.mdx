@@ -3,4 +3,51 @@ title: Theming
 slug: /pages/theming/
 ---
 
+import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
+
 # Theming
+
+By default all Mantine components use the default theme.
+You can extend and customize theme on top level with MantineProvider
+or on individual component level with theme override.
+
+## Default theme
+
+### Colors
+
+<ThemeColors />
+
+### Fonts
+
+### Spacing and radius
+
+## Setting up global theme
+
+```tsx
+import React from 'react';
+import { MantineProvider } from '@mantine/theme';
+
+function YourApp() {
+  return (
+    <MantineProvider>
+      <div>Your app here</div>
+    </MantineProvider>
+  );
+}
+```
+
+## Overriding theme on component level
+
+## use-mantine-theme hook
+
+## Utility funcitons
+
+### get-focus-styles
+
+### get-font-styles
+
+### get-size-value
+
+### get-theme-color
+
+## TypeScript
