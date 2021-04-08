@@ -11,6 +11,7 @@
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "postinstall": "cd docs && yarn",
     "docgen:clean": "rimraf docs/.docgen",
     "docgen": "ts-node scripts/docgen",
     "docs": "npm run docgen && cd docs && npm start",
