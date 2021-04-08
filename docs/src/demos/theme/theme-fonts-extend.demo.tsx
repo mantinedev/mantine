@@ -6,7 +6,7 @@ import CodeDemo from '../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Button } from '@mantine/core';
 
-function ColorExtendDemo() {
+function FontsExtendDemo() {
   return (
     <MantineProvider theme={{
       fontFamily: 'Verdana, sans-serif',
