@@ -56,6 +56,17 @@ interface Theme {
 }
 ```
 
+## Default theme
+
+```tsx
+import { DEFAULT_THEME } from '@mantine/theme';
+```
+
+[View full default theme source on Github](https://github.com/mantinedev/mantine/blob/master/src/mantine-theme/src/default-theme.ts)
+
+You can use default theme object in tests or storybook for simplicity.
+Do not use DEFAULT_THEME for styling as it is not connected to MantineProvider.
+
 ## Extending theme
 
 You can change theme for all components.
@@ -195,9 +206,16 @@ Each Mantine component that uses theme supports theme override with `themeOverri
 
 <ThemeOverrideDemo />
 
-## use-mantine-theme hook
+## Use mantine theme with react-jss
 
-To use Mantine theme in your components use use-mantine-theme hook. Hook returns theme from MantineProvider context or default theme
+All Mantine components are built with [react-jss](https://cssinjs.org/react-jss/).
+We recommend to use react-jss to style the rest of your application
+as it provides you with the most convinient way to utilize Mantine theme, but it is not required
+– you can use any other styling tools and languages.
+
+### use-mantine-theme hook
+
+Hook returns theme from MantineProvider context or default theme
 if you did not wrap application with MantineProvider.
 
 ```tsx
@@ -209,31 +227,66 @@ function Component() {
 }
 ```
 
-## Default theme
+### Theming context
 
-[View full default theme source on Github](https://github.com/mantinedev/mantine/blob/master/src/mantine-theme/src/default-theme.ts)
-
-Default theme is stored in @mantine/theme package, you can import it:
+If your application is wrapped with MantineProvider you can utilize theming context in createUseStyles:
 
 ```tsx
-import { DEFAULT_THEME } from '@mantine/theme';
+import React from 'react';
+import { createUseStyles } from 'react-jss';
+import { theming } from '@mantine/theme';
+
+const useStyles = createUseStyles(
+  (theme) => ({
+    wrapper: {
+      background: theme.colors.gray[5],
+    },
+  }),
+  { theming }
+);
+
+function YourComponent() {
+  const classes = useStyles();
+  return <div className={classes.wrapper} />;
+}
 ```
 
-## Utility funcitons
+### Theme as function value
+
+This way will work in all cases no matter if you use MantineProvider or not.
+
+```tsx
+import React from 'react';
+import { createUseStyles } from 'react-jss';
+import { useMantineTheme } from '@mantine/theme';
+
+const useStyles = createUseStyles({
+  wrapper: ({ theme }) => ({
+    background: theme.colors.gray[5],
+  }),
+});
+
+function YourComponent() {
+  const classes = useStyles({ theme: useMantineTheme() });
+  return <div className={classes.wrapper} />;
+}
+```
+
+### Utility funcitons
 
 @mantine/theme package has several utility function that will help you work with Mantine theme in jss.
 
-### getFocusStyles
+#### getFocusStyles
 
 Returns mantine focus styles in jss format for interactive elements.
 Focus styles are visible only when user navigates with keyboard.
 
 ```tsx
 import { createUseStyles } from 'react-jss';
-import { getFocusStyles, theming, MantineTheme } from '@mantine/theme';
+import { getFocusStyles, theming } from '@mantine/theme';
 
 createUseStyles(
-  (theme: MantineTheme) => ({
+  (theme) => ({
     button: {
       ...getFocusStyles(theme),
       color: 'red',
@@ -243,16 +296,16 @@ createUseStyles(
 );
 ```
 
-### getFontStyles
+#### getFontStyles
 
 Returns font styles from theme with [font smoothing](https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth):
 
 ```tsx
 import { createUseStyles } from 'react-jss';
-import { getFontStyles, theming, MantineTheme } from '@mantine/theme';
+import { getFontStyles, theming } from '@mantine/theme';
 
 createUseStyles(
-  (theme: MantineTheme) => ({
+  (theme) => ({
     wrapper: {
       ...getFontStyles(theme),
       color: 'red',
