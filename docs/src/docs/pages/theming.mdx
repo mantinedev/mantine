@@ -5,6 +5,7 @@ slug: /pages/theming/
 
 import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
 import { ThemeColorExtendDemo } from '../../demos/theme/theme-colors-extend.demo';
+import { ThemeFontsExtendDemo } from '../../demos/theme/theme-fonts-extend.demo';
 
 # Theming
 
@@ -91,6 +92,17 @@ You can use some of these tools to generate or copy ready color palettes:
 - [Palx](https://palx.jxnblk.com/)
 
 <ThemeColorExtendDemo />
+
+### Change fonts
+
+By default Mantine uses system fonts. It brings fast and familiar experience to users.
+You can change fonts for headings, code and al other components:
+
+- `theme.fontFamilyMonospace` – controls components with monospace font family, for example, <GatsbyLink to="/core/code/">Code</GatsbyLink> and <GatsbyLink to="/core/kbd/">Kbd</GatsbyLink>
+- `theme.headings.fontFamily` – controls font family of h1-h6 tags in <GatsbyLink to="/core/title/">Title</GatsbyLink> and <GatsbyLink to="/core/inner-html/">InnerHtml</GatsbyLink> components
+- `theme.fontFamily` – controls font family in all other cases
+
+<ThemeFontsExtendDemo />
 
 ## Default theme
 
