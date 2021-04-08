@@ -7,7 +7,7 @@ import {
 } from '@modulz/radix-icons';
 
 export default [
-  { to: '/pages/getting-started/', label: 'Getting Started', theme: 'red', icon: RocketIcon },
+  { to: '/', label: 'Getting Started', theme: 'red', icon: RocketIcon },
   { to: '/pages/theming/', label: 'Theming', theme: 'indigo', icon: BlendingModeIcon },
   {
     to: '/pages/integrations/',
