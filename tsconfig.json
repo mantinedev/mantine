@@ -9,7 +9,7 @@
     "module": "commonjs",
     "target": "es5",
     "sourceMap": false,
-    "noEmitOnError": true,
+    "noEmitOnError": false,
     "allowJs": true,
     "resolveJsonModule": true,
     "types": ["node", "webpack", "jest"],
