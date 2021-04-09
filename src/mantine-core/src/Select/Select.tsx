@@ -8,6 +8,7 @@ import { Input, InputProps } from '../Input/Input';
 interface SelectItem {
   value: string;
   label: string;
+  disabled?: boolean;
 }
 
 interface SelectProps
@@ -54,7 +55,7 @@ export const Select = forwardRef(
     const uuid = useId(id);
 
     const options = data.map((item) => (
-      <option key={item.value} value={item.value}>
+      <option key={item.value} value={item.value} disabled={item.disabled}>
         {item.label}
       </option>
     ));

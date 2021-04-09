@@ -5,7 +5,7 @@ import { Select } from './Select';
 
 const data = [
   { label: 'React', value: 'react' },
-  { label: 'Angular', value: 'ng' },
+  { label: 'Angular', value: 'ng', disabled: true },
   { label: 'Vue', value: 'vue' },
   { label: 'Svelte', value: 'svelte' },
 ];
@@ -38,6 +38,16 @@ storiesOf('@mantine/core/Select', module)
   .add('Required', () => (
     <div style={{ maxWidth: 300, padding: 20 }}>
       <WrappedSelect required label="Your favorite library" placeholder="Your favorite library" />
+    </div>
+  ))
+  .add('Filled', () => (
+    <div style={{ maxWidth: 300, padding: 20 }}>
+      <WrappedSelect
+        required
+        label="Your favorite library"
+        placeholder="Your favorite library"
+        variant="filled"
+      />
     </div>
   ))
   .add('With description', () => (
