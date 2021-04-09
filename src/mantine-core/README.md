@@ -1,6 +1,6 @@
 # Mantine
 
-![Github banner](./github-banner.svg)
+![Github banner](https://github.com/mantinedev/mantine/raw/master/github-banner.svg)
 
 Build better React applications. Mantine is a customizable component library with focus on accessibility and developer experience.
 
