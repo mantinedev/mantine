@@ -1,8 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import { getMonthDays, isSameMonth, getWeekdaysNames } from '@mantine/dates';
-import { Text } from '../Text/Text';
+import { Text } from '@mantine/core';
+import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
 import Day from './Day/Day';
 import useStyles from './Month.styles';
 

@@ -2,7 +2,7 @@
   "name": "@mantine/theme",
   "version": "0.4.12",
   "main": "dist/lib.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/mantine-theme/src/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
