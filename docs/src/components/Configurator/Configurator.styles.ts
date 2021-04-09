@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { theming, MantineTheme } from '@mantine/theme';
 
-const BREAKPOINT = 760;
+const BREAKPOINT = 885;
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -21,7 +21,6 @@ export default createUseStyles(
     preview: {
       flex: 1,
       padding: theme.spacing.md,
-      borderRight: `1px solid ${theme.colors.gray[3]}`,
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
