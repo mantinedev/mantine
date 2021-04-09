@@ -1,2 +1,0 @@
-(self.webpackChunkmantine_docs=self.webpackChunkmantine_docs||[]).push([[218],{6040:function(n,e,t){"use strict";t.r(e),t.d(e,{default:function(){return a}});var u=t(7378);function a(){return u.createElement(u.Fragment,null,"404 page")}}}]);
-//# sourceMappingURL=component---src-pages-404-tsx-39495a2db7ac06c3b6d6.js.map
