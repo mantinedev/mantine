@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "main": "dist/lib.js",
   "license": "MIT",
-  "types": "dist/mantine-core/src/index.d.ts",
+  "types": "dist/src/mantine-core/src/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
   "peerDependencies": {
