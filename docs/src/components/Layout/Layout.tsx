@@ -6,6 +6,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import MdxProvider from '../MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
+import { Footer } from './Footer/Footer';
 import useStyles from './Layout.styles';
 import getDocsData from './get-docs-data';
 
@@ -43,7 +44,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <main className={classes.main}>
         <Container size="sm">
-          <MdxProvider>{children}</MdxProvider>
+          <div className={classes.content}>
+            <MdxProvider>{children}</MdxProvider>
+          </div>
+          <Footer />
         </Container>
       </main>
     </div>

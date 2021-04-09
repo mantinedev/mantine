@@ -48,6 +48,10 @@ export default createUseStyles(
         paddingRight: 0,
       },
     },
+
+    content: {
+      minHeight: 'calc(100vh - 280px)',
+    },
   }),
   { theming }
 );
