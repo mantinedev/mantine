@@ -27,4 +27,27 @@ describe('@mantine/theme/merge-theme', () => {
       },
     });
   });
+
+  it('merges headings correctly', () => {
+    expect(
+      mergeTheme(
+        { __mantine_theme: true, ...DEFAULT_THEME },
+        { headings: { fontFamily: 'sans-serif', sizes: { h3: { fontSize: 500 } } } }
+      )
+    ).toEqual({
+      __mantine_theme: true,
+      ...DEFAULT_THEME,
+      headings: {
+        ...DEFAULT_THEME.headings,
+        fontFamily: 'sans-serif',
+        sizes: {
+          ...DEFAULT_THEME.headings.sizes,
+          h3: {
+            ...DEFAULT_THEME.headings.sizes.h3,
+            fontSize: 500,
+          },
+        },
+      },
+    });
+  });
 });
