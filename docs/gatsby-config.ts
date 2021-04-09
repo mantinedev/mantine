@@ -9,15 +9,6 @@ export default {
     siteUrl: 'https://mantine.dev',
   },
   plugins: [
-    {
-      resolve: 'gatsby-plugin-google-analytics',
-      options: {
-        trackingId: 'G-LVZ08BVK0B',
-        head: true,
-        anonymize: true,
-        respectDNT: true,
-      },
-    },
     'gatsby-plugin-cname',
     'gatsby-plugin-tsconfig-paths',
     'gatsby-plugin-react-helmet',
