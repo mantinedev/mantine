@@ -38,7 +38,8 @@ export default createUseStyles(
     main: {
       scrollMarginTop: HEADER_HEIGHT,
       flex: 1,
-      paddingTop: HEADER_HEIGHT + theme.spacing.sm,
+      // aligns page top most heading with navigation and table of contents
+      paddingTop: HEADER_HEIGHT - theme.spacing.xl - 2,
       paddingBottom: theme.spacing.xl * 2,
       paddingLeft: theme.spacing.md,
       paddingRight: theme.spacing.md,
