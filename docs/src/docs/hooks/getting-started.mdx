@@ -9,18 +9,22 @@ import packageJson from '../../../../src/mantine-hooks/package.json';
 
 # Mantine hooks
 
-All other @mantine/ packages depend on @mantine/hooks.
-
 Package includes hooks that are used to build components in @mantine/ scoped packages.
 You can use these hooks in your applications with or without other @mantine/ packages.
 
+All other @mantine/ packages depend on @mantine/hooks.
+
 ## Installation
 
-```sh
-# With yarn
-yarn add @mantine/hooks
+With yarn:
 
-# With npm
+```sh
+yarn add @mantine/hooks
+```
+
+With npm:
+
+```sh
 npm install @mantine/hooks
 ```
 
@@ -45,10 +49,17 @@ npm install @mantine/hooks
 
 ## Dependencies
 
-To use @mantine/hooks you will need React version 16.8.0 or above.
-Package depends on nanoid for unique random id generation in <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook.
-
-<DependenciesTable packageJson={packageJson} />
+<Dependencies
+  packageName="@mantine/hooks"
+  dependencies={[
+    { name: 'react', type: 'peer' },
+    {
+      name: 'nanoid',
+      type: 'dependency',
+      why: 'Used or unique random id generation in use-id hook',
+    },
+  ]}
+/>
 
 ## Browser support
 
@@ -56,9 +67,9 @@ All hooks are tested to work in all major modern browsers.
 
 Some hooks depend on web APIs that may not be supported by old browsers:
 
-- use-media-query and use-reduced-motion hooks relay on [window.matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
+- use-media-query and use-reduced-motion hooks rely on [window.matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
   API
-- use-id hook relies on [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) via nanoid package
+- use-id hook relies on [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) via [nanoid](https://www.npmjs.com/package/nanoid) package
 - use-clipboard hook uses [Navigator.clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard)
 
 ## Licence
