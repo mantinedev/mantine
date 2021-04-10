@@ -1,11 +1,17 @@
 import { createUseStyles } from 'react-jss';
 import { theming, MantineTheme } from '@mantine/theme';
 
+const BREAKPOINT = 450;
+
 export default createUseStyles(
   (theme: MantineTheme) => ({
     wrapper: {
       display: 'flex',
       alignItems: 'flex-start',
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        flexDirection: 'column',
+      },
     },
 
     badge: {
@@ -17,6 +23,10 @@ export default createUseStyles(
       padding: [theme.spacing.xs, theme.spacing.md],
       borderRadius: theme.radius.sm,
       marginRight: theme.spacing.xl,
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        display: 'none',
+      },
     },
   }),
   { theming }

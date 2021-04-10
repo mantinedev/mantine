@@ -8,6 +8,7 @@ export default createUseStyles(
     dependencies: {
       display: 'flex',
       marginBottom: theme.spacing.md,
+      marginTop: theme.spacing.md,
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         flexDirection: 'column',

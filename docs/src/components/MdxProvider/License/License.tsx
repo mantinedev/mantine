@@ -19,6 +19,15 @@ export function License() {
           >
             Github
           </Text>
+          . All Mantine dependencies also have MIT licence, except{' '}
+          <Text
+            component="a"
+            variant="link"
+            href="https://www.npmjs.com/package/react-transition-group"
+          >
+            react-transition-group
+          </Text>{' '}
+          package which has BSD-3-Clause license.
         </Text>
       </div>
     </DocsSection>

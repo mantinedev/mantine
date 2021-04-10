@@ -15,16 +15,16 @@ that you may need to build an application.
 With yarn:
 
 ```sh
-yarn add react-jss @mantine/theme @mantine/hooks @mantine/core @modulz/radix-icons
+yarn add react-jss @mantine/theme @mantine/hooks @mantine/core
 ```
 
 With npm:
 
 ```sh
-npm install react-jss @mantine/theme @mantine/hooks @mantine/core @modulz/radix-icons
+npm install react-jss @mantine/theme @mantine/hooks @mantine/core
 ```
 
-With peerdeps:
+With [peerdeps](https://www.npmjs.com/package/install-peerdeps):
 
 ```sh
 npx install-peerdeps @mantine/core
@@ -41,14 +41,14 @@ npx install-peerdeps @mantine/core
     { name: 'react-dom', type: 'peer' },
     { name: 'react-jss', type: 'peer', why: 'CSS-in-JS library used to style all components' },
     {
-      name: '@modulz/radix-icons',
-      type: 'peer',
-      why: 'Icons library used in components',
-    },
-    {
       name: '@charlietango/use-focus-trap',
       type: 'dependency',
       why: 'Hook is used to trap focus inside modals, menus and other components',
+    },
+    {
+      name: '@modulz/radix-icons',
+      type: 'dependency',
+      why: 'Icons library used in components',
     },
     {
       name: 'clsx',
@@ -73,7 +73,7 @@ npx install-peerdeps @mantine/core
     {
       name: 'nanoid',
       type: 'dependency',
-      why: 'Used or unique random id generation in use-id hook',
+      why: 'Used for unique random id generation in use-id hook',
     },
   ]}
 />

@@ -12,7 +12,7 @@ export default function MdxTitle({
   return (
     <>
       <div id={id} />
-      <Title order={order} {...others}>
+      <Title order={order} className={classes.title} {...others}>
         <a className={classes.link} href={`#${id}`}>
           {children}
         </a>
