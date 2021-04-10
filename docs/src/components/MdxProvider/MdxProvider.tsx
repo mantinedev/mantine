@@ -27,8 +27,9 @@ const components = {
   a: (props: any) => <Text<'a'> component="a" variant="link" {...props} />,
   p: (props: any) => <p {...props} style={{ lineHeight: 1.6 }} />,
   ul: (props: any) => (
-    <ul {...props} style={{ lineHeight: 1.4, marginBottom: 15, marginTop: 15 }} />
+    <ul {...props} style={{ lineHeight: 1.4, marginBottom: 20, marginTop: 10 }} />
   ),
+  li: (props: any) => <li {...props} style={{ marginTop: 4 }} />,
   pre: (props: any) => {
     const matches = (props.children.props.className || '').match(/language-(?<lang>.*)/);
 
