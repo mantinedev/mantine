@@ -41,5 +41,6 @@ export default createUseStyles({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    cursor: 'default',
   }),
 });
