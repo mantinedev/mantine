@@ -19,7 +19,12 @@ export function Dependencies({ dependencies, packageName }: DependenciesProps) {
   const classes = useStyles();
 
   const items = dependencies.map((dependency) => [
-    <Text component="a" variant="link" href={`https://npmjs.com/package/${dependency.name}`}>
+    <Text
+      component="a"
+      variant="link"
+      href={`https://npmjs.com/package/${dependency.name}`}
+      size="sm"
+    >
       {dependency.name}
     </Text>,
     <Badge
@@ -28,7 +33,7 @@ export function Dependencies({ dependencies, packageName }: DependenciesProps) {
     >
       {dependency.type === 'peer' ? 'peer dependency' : 'dependency'}
     </Badge>,
-    dependency.why,
+    <Text size="sm">{dependency.why}</Text>,
   ]);
 
   const head = ['Dependency', 'Type'];

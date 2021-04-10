@@ -11,8 +11,7 @@ export function License() {
       <div className={classes.wrapper}>
         <div className={classes.badge}>MIT</div>
         <Text>
-          All Mantine packages, dependencies and peer dependencies have MIT licence. Reed full
-          license on{' '}
+          All Mantine packages have MIT licence. Reed full license on{' '}
           <Text
             component="a"
             variant="link"
