@@ -14,6 +14,7 @@ export default createUseStyles(
       borderRight: `1px solid ${theme.colors.gray[1]}`,
       backgroundColor: theme.colors.gray[0],
       position: 'fixed',
+      zIndex: 5,
       top: 0,
       bottom: 0,
       left: 0,
