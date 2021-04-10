@@ -6,6 +6,7 @@ import PropsTable from './PropsTable/PropsTable';
 import PageHeader from './PageHeader/PageHeader';
 import DataTable from './DataTable/DataTable';
 import { Dependencies } from './Dependencies/Dependencies';
+import { License } from './License/License';
 import MdxTitle from './MdxTitle/MdxTitle';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 
@@ -17,6 +18,7 @@ const components = {
   PageHeader,
   DataTable,
   Dependencies,
+  License,
   h1: h(1),
   h2: h(2),
   h3: h(3),
