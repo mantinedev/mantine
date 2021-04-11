@@ -69,6 +69,7 @@ const transitions: Record<Position, MantineTransition> = {
 
 export function Drawer({
   className,
+  style,
   themeOverride,
   position = 'left',
   size,
@@ -126,11 +127,11 @@ export function Drawer({
       }}
     >
       {(styles) => (
-        <div>
+        <>
           <Paper
             className={cx(classes.drawer, className)}
             ref={useMergedRef(focusTrapRef, clickOutsideRef)}
-            style={{ ...styles.drawer, zIndex: zIndex + 1 }}
+            style={{ ...styles.drawer, zIndex: zIndex + 1, ...style }}
             radius={0}
             tabIndex={-1}
             onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}
@@ -150,7 +151,7 @@ export function Drawer({
               />
             </div>
           )}
-        </div>
+        </>
       )}
     </GroupedTransition>
   );
