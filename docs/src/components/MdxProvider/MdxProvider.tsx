@@ -7,6 +7,7 @@ import PageHeader from './PageHeader/PageHeader';
 import DataTable from './DataTable/DataTable';
 import { Dependencies } from './Dependencies/Dependencies';
 import { License } from './License/License';
+import { BundleSize } from './BundleSize/BundleSize';
 import MdxTitle from './MdxTitle/MdxTitle';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 
@@ -19,6 +20,7 @@ const components = {
   DataTable,
   Dependencies,
   License,
+  BundleSize,
   h1: h(1),
   h2: h(2),
   h3: h(3),
