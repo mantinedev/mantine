@@ -19,6 +19,35 @@ or on individual component level with theme override.
 
 <PageHeader source="mantine-theme/src/" docs="pages/theming.mdx" package="@mantine/theme" />
 
+## MantineProvider
+
+MantineProvider component allows you to change theme globally.
+It is not required if you decide to stick with default theme:
+
+```tsx
+import React from 'react';
+import { MantineProvider } from '@mantine/theme';
+import { Button } from '@mantine/core';
+
+function App() {
+  return <Button>My app button</Button>;
+}
+
+// Custom theme is applied to all components in App
+function WithProvider() {
+  return (
+    <MantineProvider theme={{ fontFamily: 'Open Sans' }}>
+      <App />
+    </MantineProvider>
+  );
+}
+
+// Default theme is used in all components in App
+function NoProvider() {
+  return <App />;
+}
+```
+
 ## Theme object
 
 Mantine theme is an object where your application's colors, fonts, spacing, border-radius and other design elements are defined.
