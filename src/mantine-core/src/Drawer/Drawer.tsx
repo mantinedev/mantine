@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import cx from 'clsx';
 import useFocusTrap from '@charlietango/use-focus-trap';
 import { useClickOutside, useScrollLock, useMergedRef, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
@@ -10,22 +11,53 @@ import useStyles, { Position, sizes } from './Drawer.styles';
 export const DRAWER_SIZES = sizes;
 
 interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  /** If true drawer is mounted to the dom */
   opened: boolean;
+
+  /** Called when drawer is closed (Escape key and click outside, depending on options) */
   onClose(): void;
+
+  /** top, left, right or bottom */
   position?: Position;
+
+  /** Drawer body width (right | left position) or height (top | bottom position), cannot exceed 100vh for height and 100% for width */
   size?: string | number;
-  noFocusTrap?: boolean;
-  noScrollScroll?: boolean;
-  closeOnClickOutside?: boolean;
-  transition?: MantineTransition;
-  transitionDuration?: number;
-  transitionTimingFunction?: string;
-  zIndex?: number;
-  noOverlay?: boolean;
-  overlayOpacity?: number;
-  overlayColor?: string;
+
+  /** Drawer body shadow from theme or any css shadow value */
   shadow?: string;
+
+  /** Drawer body padding from theme or number for padding in px */
   padding?: MantineNumberSize;
+
+  /** Drawer z-index property */
+  zIndex?: number;
+
+  /** Disables focus trap */
+  noFocusTrap?: boolean;
+
+  /** Disables scroll lock */
+  noScrollScroll?: boolean;
+
+  /** Disable onClock trigger for outside events */
+  noCloseOnClickOutside?: boolean;
+
+  /** Drawer appear and disappear transition */
+  transition?: MantineTransition;
+
+  /** Transition duration in ms */
+  transitionDuration?: number;
+
+  /** Drawer transitionTimingFunction css property */
+  transitionTimingFunction?: string;
+
+  /** Removes overlay entirely */
+  noOverlay?: boolean;
+
+  /** Sets overlay opacity */
+  overlayOpacity?: number;
+
+  /** Sets overlay color */
+  overlayColor?: string;
 }
 
 const transitions: Record<Position, MantineTransition> = {
@@ -36,6 +68,7 @@ const transitions: Record<Position, MantineTransition> = {
 };
 
 export function Drawer({
+  className,
   themeOverride,
   position = 'left',
   size,
@@ -43,7 +76,7 @@ export function Drawer({
   onClose,
   noFocusTrap = false,
   noScrollScroll = false,
-  closeOnClickOutside = true,
+  noCloseOnClickOutside = false,
   transition,
   transitionDuration = 250,
   transitionTimingFunction = 'ease',
@@ -61,7 +94,7 @@ export function Drawer({
   const classes = useStyles({ theme, size, position });
   const focusTrapRef = useFocusTrap(!noFocusTrap);
   useScrollLock(opened && !noScrollScroll);
-  const clickOutsideRef = useClickOutside(() => opened && closeOnClickOutside && onClose());
+  const clickOutsideRef = useClickOutside(() => opened && !noCloseOnClickOutside && onClose());
 
   const drawerTransition = transition || transitions[position];
 
@@ -73,6 +106,7 @@ export function Drawer({
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
+    // onKeyDownCapture event will not fire when focus trap is not active
     if (noFocusTrap) {
       window.addEventListener('keydown', closeOnEscape);
       return () => window.removeEventListener('keydown', closeOnEscape);
@@ -92,9 +126,9 @@ export function Drawer({
       }}
     >
       {(styles) => (
-        <div {...others}>
+        <div>
           <Paper
-            className={classes.drawer}
+            className={cx(classes.drawer, className)}
             ref={useMergedRef(focusTrapRef, clickOutsideRef)}
             style={{ ...styles.drawer, zIndex: zIndex + 1 }}
             radius={0}
@@ -102,6 +136,7 @@ export function Drawer({
             onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}
             shadow={shadow}
             padding={padding}
+            {...others}
           >
             {children}
           </Paper>
