@@ -50,7 +50,11 @@ function prepareDeclaration(declaration: ComponentDoc) {
     }
 
     if (data.props[prop].type.name === 'MantineSize') {
-      data.props[prop].type.name = 'xs" | "sm" | "md" | "lg" | "xl"';
+      data.props[prop].type.name = '"xs" | "sm" | "md" | "lg" | "xl"';
+    }
+
+    if (data.props[prop].type.name === 'ReactText') {
+      data.props[prop].type.name = 'string | number';
     }
 
     if (
