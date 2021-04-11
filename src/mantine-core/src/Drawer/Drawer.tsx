@@ -17,8 +17,8 @@ interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'
   /** Called when drawer is closed (Escape key and click outside, depending on options) */
   onClose(): void;
 
-  /** top, left, right or bottom */
-  position?: Position;
+  /** Drawer body position */
+  position?: 'top' | 'left' | 'bottom' | 'right';
 
   /** Drawer body width (right | left position) or height (top | bottom position), cannot exceed 100vh for height and 100% for width */
   size?: string | number;
@@ -41,7 +41,7 @@ interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'
   /** Disable onClock trigger for outside events */
   noCloseOnClickOutside?: boolean;
 
-  /** Drawer appear and disappear transition */
+  /** Drawer appear and disappear transition, see Transition component for full documentation */
   transition?: MantineTransition;
 
   /** Transition duration in ms */
@@ -56,7 +56,7 @@ interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'
   /** Sets overlay opacity */
   overlayOpacity?: number;
 
-  /** Sets overlay color */
+  /** Sets overlay color, defaults to theme.black */
   overlayColor?: string;
 }
 
@@ -68,13 +68,13 @@ const transitions: Record<Position, MantineTransition> = {
 };
 
 export function Drawer({
+  opened,
+  onClose,
   className,
   style,
   themeOverride,
   position = 'left',
-  size,
-  opened,
-  onClose,
+  size = 'md',
   noFocusTrap = false,
   noScrollScroll = false,
   noCloseOnClickOutside = false,
