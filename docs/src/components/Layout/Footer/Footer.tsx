@@ -8,7 +8,6 @@ export function Footer() {
   const classes = useStyles();
 
   return (
-
     <footer className={classes.wrapper}>
       <Text size="sm" align="center" color="gray">
         Mantine respects your privacy. This website has no trackers, analytics or adds.
@@ -30,7 +29,7 @@ export function Footer() {
           <ChatBubbleIcon />
           <span className={classes.linkLabel}>Start a discussion on Github</span>
         </a>
-        <a href="https://github.com/mantinedev/mantine/discussions" className={classes.link}>
+        <a href="https://github.com/mantinedev/mantine/issues/new" className={classes.link}>
           <ExclamationTriangleIcon />
           <span className={classes.linkLabel}>Report an issue</span>
         </a>
