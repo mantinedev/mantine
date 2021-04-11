@@ -7,7 +7,13 @@ export interface MantineTransitionStyles {
   transitionProperty: React.CSSProperties['transitionProperty'];
 }
 
-export type MantineTransitionName = 'fade' | 'skew-up' | 'slide-down';
+export type MantineTransitionName =
+  | 'fade'
+  | 'skew-up'
+  | 'slide-down'
+  | 'slide-up'
+  | 'slide-right'
+  | 'slide-left';
 
 export type MantineTransition = MantineTransitionName | MantineTransitionStyles;
 
@@ -27,8 +33,29 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
 
   'slide-down': {
     in: { opacity: 1, transform: 'translateY(0)' },
-    out: { opacity: 0, transform: 'translateY(-200px)' },
+    out: { opacity: 0, transform: 'translateY(-100%)' },
     common: { transformOrigin: 'top' },
+    transitionProperty: 'transform, opacity',
+  },
+
+  'slide-up': {
+    in: { opacity: 1, transform: 'translateY(0)' },
+    out: { opacity: 0, transform: 'translateY(100%)' },
+    common: { transformOrigin: 'bottom' },
+    transitionProperty: 'transform, opacity',
+  },
+
+  'slide-left': {
+    in: { opacity: 1, transform: 'translateX(0)' },
+    out: { opacity: 0, transform: 'translateX(100%)' },
+    common: { transformOrigin: 'left' },
+    transitionProperty: 'transform, opacity',
+  },
+
+  'slide-right': {
+    in: { opacity: 1, transform: 'translateX(0)' },
+    out: { opacity: 0, transform: 'translateX(-100%)' },
+    common: { transformOrigin: 'right' },
     transitionProperty: 'transform, opacity',
   },
 };
