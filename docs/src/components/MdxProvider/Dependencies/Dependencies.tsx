@@ -86,10 +86,6 @@ export function Dependencies({ dependencies, packageName }: DependenciesProps) {
         </a>
       </div>
 
-      <Text>
-        Note that, Mantine packages do not include dependencies and peer dependencies in bundle.
-      </Text>
-
       <div style={{ overflowX: 'auto' }}>
         <div style={{ minWidth: 500 }}>
           <DataTable data={items} head={head} />

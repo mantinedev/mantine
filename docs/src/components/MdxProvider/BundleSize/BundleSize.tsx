@@ -37,7 +37,7 @@ export function BundleSize({ packageName }: BundleSizeProps) {
             {data.gzip}
             <span className={classes.unit}>kB</span>
           </div>
-          <div className={classes.title}>Minify + gzip</div>
+          <div className={classes.title}>Minified + gzip</div>
         </div>
 
         <div className={classes.item}>
