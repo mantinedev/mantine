@@ -1,21 +1,22 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
+import { MantineTheme, getSizeValue } from '@mantine/theme';
 import React from 'react';
 
 export const sizes = {
-  xs: 100,
-  sm: 120,
-  md: 500,
+  xs: 180,
+  sm: 240,
+  md: 320,
   lg: 360,
   xl: 500,
+  full: '100%',
 };
 
-type Position = 'top' | 'bottom' | 'left' | 'right';
+export type Position = 'top' | 'bottom' | 'left' | 'right';
 
 interface DrawerStylesProps {
   theme: MantineTheme;
   position: Position;
-  size: MantineNumberSize;
+  size: number | string;
 }
 
 function getPositionStyles({
@@ -23,7 +24,7 @@ function getPositionStyles({
   size,
 }: {
   position: Position;
-  size: MantineNumberSize;
+  size: number | string;
 }): Partial<Record<keyof React.CSSProperties, any>> {
   switch (position) {
     case 'top':
@@ -44,14 +45,11 @@ function getPositionStyles({
 }
 
 export default createUseStyles({
-  wrapper: {
-    // position: 'fixed',
-  },
-
-  overlay: {},
-
   drawer: ({ size, position }: DrawerStylesProps) => ({
     ...getPositionStyles({ position, size }),
+    maxWidth: '100%',
+    maxHeight: '100vh',
     position: 'fixed',
+    outline: 0,
   }),
 });

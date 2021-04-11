@@ -10,6 +10,7 @@ export { Checkbox, CHECKBOX_SIZES } from './Checkbox/Checkbox';
 export { Code } from './Code/Code';
 export { ColorSwatch } from './ColorSwatch/ColorSwatch';
 export { Container, CONTAINER_SIZES } from './Container/Container';
+export { Drawer, DRAWER_SIZES } from './Drawer/Drawer';
 export { ElementsGroup } from './ElementsGroup/ElementsGroup';
 export { Highlight } from './Highlight/Highlight';
 export { Hr, HR_SIZES } from './Hr/Hr';
