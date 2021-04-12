@@ -57,19 +57,36 @@ export function Notification({
       padding="sm"
       className={cx(classes.notification, { [classes.withIcon]: icon || loading }, className)}
       role="alert"
+      themeOverride={themeOverride}
       {...others}
     >
-      {icon && !loading && <div className={classes.icon}>{icon}</div>}
+      {icon && !loading && (
+        <div data-mantine-icon className={classes.icon}>
+          {icon}
+        </div>
+      )}
+
       {loading && <Loader size={28} color={color} className={classes.loader} />}
 
       <div className={classes.body}>
         {title && (
-          <Text className={classes.title} size="sm" weight={500} themeOverride={themeOverride}>
+          <Text
+            data-mantine-title
+            className={classes.title}
+            size="sm"
+            weight={500}
+            themeOverride={themeOverride}
+          >
             {title}
           </Text>
         )}
 
-        <Text className={classes.description} size="sm" themeOverride={themeOverride}>
+        <Text
+          data-mantine-body
+          className={classes.description}
+          size="sm"
+          themeOverride={themeOverride}
+        >
           {children}
         </Text>
       </div>
