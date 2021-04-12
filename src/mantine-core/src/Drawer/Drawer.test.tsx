@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import {
+  checkAccessibility,
   itSupportsClassName,
   itRendersChildren,
   itSupportsStyle,
@@ -17,6 +18,20 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Drawer', () => {
+  checkAccessibility([
+    mount(
+      <Drawer
+        opened
+        onClose={() => {}}
+        aria-labelledby="drawer-title"
+        aria-describedby="drawer-body"
+      >
+        <h1 id="drawer-title">Title</h1>
+        <div id="drawer-body">Body</div>
+      </Drawer>
+    ),
+  ]);
+
   itSupportsClassName(Drawer, defaultProps);
   itRendersChildren(Drawer, defaultProps);
   itSupportsOthers(Drawer, defaultProps);
