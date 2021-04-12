@@ -97,6 +97,7 @@ export function Modal({
             <Paper
               className={classes.modal}
               shadow="lg"
+              role="dialog"
               aria-labelledby={titleId}
               aria-describedby={bodyId}
               aria-modal

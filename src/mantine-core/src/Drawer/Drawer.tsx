@@ -128,6 +128,8 @@ export function Drawer({
       {(styles) => (
         <div
           className={cx(classes.wrapper, { [classes.noOverlay]: noOverlay }, className)}
+          role="dialog"
+          aria-modal
           {...others}
         >
           <Paper
