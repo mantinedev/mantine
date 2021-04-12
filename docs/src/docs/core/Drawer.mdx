@@ -10,6 +10,7 @@ import { DrawerBaseDemo } from '../../demos/core/Drawer/drawer-base.demo';
 import { DrawerPositionsDemo } from '../../demos/core/Drawer/drawer-positions.demo';
 import { DrawerSizesDemo } from '../../demos/core/Drawer/drawer-sizes.demo';
 import { DrawerInactiveDemo } from '../../demos/core/Drawer/drawer-inactive.demo';
+import { DrawerTransitionsDemo } from '../../demos/core/Drawer/drawer-transitions.demo';
 
 # Drawer
 
@@ -27,19 +28,98 @@ import { Drawer } from '@mantine/core';
 
 <DrawerBaseDemo />
 
+## Usage with Portal
+
+Usually, it is a good idea to render modal outside of current component to avoid styles collisions.
+To implement this use <GatsbyLink to="/core/portal">Portal</GatsbyLink> component.
+
+```tsx
+import React, { useState } from 'react';
+import { Drawer, Portal } from '@mantine/core';
+
+function PortalDemo() {
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <div style={{ position: 'relative', zIndex: 1 }}>
+      <Portal zIndex={5}>
+        <Drawer opened={opened} onClose={() => setOpened(false)}>
+          Drawer is rendered at the end of document.body
+        </Drawer>
+      </Portal>
+
+      <button onClick={() => setOpened(true)}>Open drawer</button>
+    </div>
+  );
+}
+```
+
 ## Position
+
+Drawer can be placed on left (default), top, right and bottom. Control drawer position with `position` prop:
+
+```tsx
+<Drawer position="right" />
+```
 
 <DrawerPositionsDemo />
 
 ## Sizes
 
+Control drawer size by setting `size` prop. You can use predefined values (xs, sm, md, lg, xl, full)
+or set drawer body size with any valid css value, for example, 200px, 25%, calc(100% - 100px).
+Size controls width for left and right positions and height for top and bottom.
+Size cannot exceed 100% of width and 100vh of height.
+
+```tsx
+<Drawer position="right" size="xl" /> // predefined xl width
+<Drawer position="top" size={200} /> // 200px height
+<Drawer position="left" size="75%" /> // 75% width
+<Drawer position="bottom" size="500vh" /> // 100vh height as max-height is 100vh
+```
+
 <DrawerSizesDemo />
 
 ## Control behavior
 
+You can change drawer behavior with props:
+
+- `noOverlay` – removes overlay
+- `noFocusTrap` – removes focus trap inside drawer body
+- `noScrollLock` – disables scroll lock
+- `noCloseOnClickOutside` – do not trigger onClose for outside clicks
+
 <DrawerInactiveDemo />
 
+Try combining these props to achieve desired behavior.
+Note that, disabling some parts will break accessibility and usability.
+
 <DrawerConfigurator />
+
+## Change transition
+
+Drawer is built with <GatsbyLink to="/core/transition">Transition</GatsbyLink> component.
+To learn more about transitions see <GatsbyLink to="/guides/transitions">transitions guide</GatsbyLink>.
+You can customize transition, timing function and duration:
+
+<DrawerTransitionsDemo />
+
+## Accessibility and usability
+
+By default:
+
+- When drawer is opened focus is trapped inside and document.body scroll is locked in current position
+- When user clicks on overlay or presses escape drawer is closed
+- Drawer body has `aria-modal` and `role="dialog"` attributes
+
+Add [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-labelledby_attribute) and [aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute) for better screen readers support:
+
+```tsx
+<Drawer aria-labelledby="drawer-title" aria-describedby="drawer-body">
+  <h1 id="drawer-title">Title</h1>
+  <div id="drawer-body">Body</div>
+</Drawer>
+```
 
 ## Component props
 
