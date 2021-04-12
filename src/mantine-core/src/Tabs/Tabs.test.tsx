@@ -34,7 +34,7 @@ describe('@mantine/core/Tabs', () => {
   itSupportsClassName(Tabs, defaultProps);
 
   it('has correct displayName', () => {
-    expect(Tab.displayName).toEqual('@mantine/core/Tab');
+    expect(Tabs.displayName).toEqual('@mantine/core/Tabs');
   });
 
   it('handles tabs change correctly', () => {
