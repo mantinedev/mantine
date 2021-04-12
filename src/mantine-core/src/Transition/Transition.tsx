@@ -1,6 +1,7 @@
 import React from 'react';
 import { Transition as RTGTransition } from 'react-transition-group';
 import { useMantineTheme, DefaultProps } from '@mantine/theme';
+import { useReducedMotion } from '@mantine/hooks';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { MantineTransition } from './transitions';
 
@@ -34,6 +35,7 @@ export function Transition({
   timingFunction,
 }: TransitionProps) {
   const theme = useMantineTheme(themeOverride);
+  const reduceMotion = useReducedMotion();
 
   return (
     <RTGTransition
@@ -47,7 +49,7 @@ export function Transition({
         children(
           getTransitionStyles({
             transition,
-            duration,
+            duration: reduceMotion ? 0 : duration,
             state: transitionState,
             timingFunction: timingFunction || theme.transitionTimingFunction,
           })
