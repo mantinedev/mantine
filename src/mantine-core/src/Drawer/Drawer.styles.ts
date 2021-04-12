@@ -45,12 +45,16 @@ function getPositionStyles({
 }
 
 export default createUseStyles({
+  noOverlay: {},
+
   wrapper: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    '&:not($noOverlay)': {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
   },
 
   drawer: ({ size, position }: DrawerStylesProps) => ({

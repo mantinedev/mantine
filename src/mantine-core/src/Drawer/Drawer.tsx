@@ -126,7 +126,10 @@ export function Drawer({
       }}
     >
       {(styles) => (
-        <div className={cx(classes.wrapper, className)} {...others}>
+        <div
+          className={cx(classes.wrapper, { [classes.noOverlay]: noOverlay }, className)}
+          {...others}
+        >
           <Paper
             className={cx(classes.drawer, className)}
             ref={useMergedRef(focusTrapRef, clickOutsideRef)}
