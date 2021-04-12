@@ -23,6 +23,9 @@ interface NotificationProps
   /** Notification title, displayed before body */
   title?: React.ReactNode;
 
+  /** Notification body, place main text here */
+  children?: React.ReactNode;
+
   /** Replaces colored line or icon with Loader component */
   loading?: boolean;
 
