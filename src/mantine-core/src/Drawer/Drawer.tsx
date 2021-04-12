@@ -71,7 +71,6 @@ export function Drawer({
   opened,
   onClose,
   className,
-  style,
   themeOverride,
   position = 'left',
   size = 'md',
@@ -127,17 +126,16 @@ export function Drawer({
       }}
     >
       {(styles) => (
-        <>
+        <div className={cx(classes.wrapper, className)} {...others}>
           <Paper
             className={cx(classes.drawer, className)}
             ref={useMergedRef(focusTrapRef, clickOutsideRef)}
-            style={{ ...styles.drawer, zIndex: zIndex + 1, ...style }}
+            style={{ ...styles.drawer, zIndex: zIndex + 1 }}
             radius={0}
             tabIndex={-1}
             onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}
             shadow={shadow}
             padding={padding}
-            {...others}
           >
             {children}
           </Paper>
@@ -151,7 +149,7 @@ export function Drawer({
               />
             </div>
           )}
-        </>
+        </div>
       )}
     </GroupedTransition>
   );

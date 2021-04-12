@@ -45,6 +45,14 @@ function getPositionStyles({
 }
 
 export default createUseStyles({
+  wrapper: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+
   drawer: ({ size, position }: DrawerStylesProps) => ({
     ...getPositionStyles({ position, size }),
     maxWidth: '100%',
