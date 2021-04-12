@@ -19,7 +19,7 @@ describe('@mantine/core/Modal', () => {
 
   checkAccessibility([
     mount(
-      <Modal opened onClose={() => {}} closeButtonLabel="Close modal">
+      <Modal opened onClose={() => {}} closeButtonLabel="Close modal" title="test-title">
         test-modal
       </Modal>
     ),
