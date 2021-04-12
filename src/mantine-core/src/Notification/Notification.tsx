@@ -2,19 +2,35 @@ import React from 'react';
 import cx from 'clsx';
 import { Cross2Icon } from '@modulz/radix-icons';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import { Paper, Text, Loader, ActionIcon } from '@mantine/core';
+import { Paper } from '../Paper/Paper';
+import { Text } from '../Text/Text';
+import { Loader } from '../Loader/Loader';
+import { ActionIcon } from '../ActionIcon/ActionIcon';
 import useStyles from './Notification.styles';
 
 interface NotificationProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
-  color?: string;
-  icon?: React.ReactNode;
-  title?: React.ReactNode;
-  loading?: boolean;
-  disallowClose?: boolean;
+  /** Called when close button is clicked */
   onClose(): void;
-  closeButtonProps?: Omit<React.ComponentPropsWithoutRef<typeof ActionIcon>, 'children'>;
+
+  /** Notification line or icon color */
+  color?: string;
+
+  /** Notification icon, replaces color line */
+  icon?: React.ReactNode;
+
+  /** Notification title, displayed before body */
+  title?: React.ReactNode;
+
+  /** Replaces colored line or icon with Loader component */
+  loading?: boolean;
+
+  /** Removes close button */
+  disallowClose?: boolean;
+
+  /** Props spread to close button */
+  closeButtonProps?: Record<string, any>;
 }
 
 export function Notification({
@@ -69,4 +85,4 @@ export function Notification({
   );
 }
 
-Notification.displayName = '@mantine/notifications/Notification';
+Notification.displayName = '@mantine/core/Notification';

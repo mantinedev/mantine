@@ -19,13 +19,13 @@ const defaultProps = {
   closeButtonProps: { title: 'Close notification' },
 };
 
-describe('@mantine/notifications/Notification', () => {
+describe('@mantine/core/Notification', () => {
   itSupportsOthers(Notification, defaultProps);
   itSupportsStyle(Notification, defaultProps);
   itSupportsClassName(Notification, defaultProps);
   checkAccessibility([mount(<Notification {...defaultProps} />)]);
 
   it('has correct displayName', () => {
-    expect(Notification.displayName).toEqual('@mantine/notifications/Notification');
+    expect(Notification.displayName).toEqual('@mantine/core/Notification');
   });
 });

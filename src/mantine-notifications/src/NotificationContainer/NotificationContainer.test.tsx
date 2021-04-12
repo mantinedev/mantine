@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { itSupportsClassName, itSupportsStyle } from '@mantine/tests';
-import { Notification } from '../Notification/Notification';
+import { Notification } from '@mantine/core';
 import NotificationContainer from './NotificationContainer';
 
 const defaultProps = {
