@@ -17,6 +17,107 @@ slug: /core/transition/
 import { Transition, GroupedTransition } from '@mantine/core';
 ```
 
+## Usage
+
+Both components are based on Transition component from [react-transtion-group](https://www.npmjs.com/package/react-transition-group) library.
+
+Transiton and GroupedTransition components allow you to work with enter/exit animations.
+Components come with premade animations and option to create your own based on CSS properties.
+
+### Premade transitions
+
+Mantine includes several premade transitions:
+
+- fade
+- skew-up
+- slide-down
+- slide-up
+- slide-right
+- slide-left
+
+To use one of them set `transition` property to one of these values:
+
+```tsx
+import React from 'react';
+import { Transition } from '@mantine/core';
+
+function YourModal({ opened }) {
+  return (
+    <Transition mounted={opened} transition="fade" duration={400} timingFunction="ease">
+      {(styles) => <div style={styles}>Your modal</div>}
+    </Transition>
+  );
+}
+```
+
+### Custom transitions
+
+You can create your own transition. Transition is an object with 4 properties:
+
+- `in` – styles for mounted state
+- `out` – styles for unmounted state
+- `common` (optional) – styles for both mounted and unmounted states
+- `transitionProperty` – properties which participate in transition
+
+```tsx
+import React from 'react';
+import { Transition } from '@mantine/core';
+
+const scaleY = {
+  in: { opacity: 1, transform: 'scaleY(1)' },
+  out: { opacity: 0, transform: 'scaleY(0)' },
+  common: { transformOrigin: 'top' },
+  transitionProperty: 'transform, opacity',
+};
+
+function YourModal({ opened }) {
+  return (
+    <Transition mounted={opened} transition={scaleY} duration={400} timingFunction="ease">
+      {(styles) => <div style={styles}>Your modal</div>}
+    </Transition>
+  );
+}
+```
+
+## GroupedTransition
+
+Use GroupedTransition if you need to animate presence of more that one element at the same time but with different transitions.
+For example, in <GatsbyLink to="/core/modal">Modal</GatsbyLink> component overlay and modal body animated differently:
+modal body slides from the top and overlay fades.
+
+```tsx
+import React from 'react';
+import { GroupedTransition } from '@mantine/core';
+
+const scaleY = {
+  in: { opacity: 1, transform: 'scaleY(1)' },
+  out: { opacity: 0, transform: 'scaleY(0)' },
+  common: { transformOrigin: 'top' },
+  transitionProperty: 'transform, opacity',
+};
+
+function YourModal({ opened }) {
+  const duration = 500;
+
+  return (
+    <GroupedTransition
+      mounted={opened}
+      transitions={{
+        modal: { duration, transition: 'slide-down' },
+        overlay: { duration: duration / 2, transition: 'fade', timingFunction: 'ease' },
+      }}
+    >
+      {(styles) => (
+        <div>
+          <div style={styles.modal}>Modal body</div>
+          <div style={styles.overlay}>Modal overlay</div>
+        </div>
+      )}
+    </GroupedTransition>
+  );
+}
+```
+
 ## Component props
 
 <PropsTable component="Transition" />
