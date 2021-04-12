@@ -57,4 +57,4 @@ export function Transition({
   );
 }
 
-Transition.displayName = '@mantine/theme/Transition';
+Transition.displayName = '@mantine/core/Transition';
