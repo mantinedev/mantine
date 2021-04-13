@@ -22,9 +22,14 @@ interface InputWrapperProps
   extends DefaultProps,
     InputWrapperBaseProps,
     React.ComponentPropsWithoutRef<'div'> {
+  /** Input that should be wrapped */
+  children: React.ReactNode;
+
+  /** htmlFor label prop */
   id?: string;
+
+  /** Render label as label with htmlFor or as div */
   labelElement?: 'label' | 'div';
-  children: React.ReactChild;
 }
 
 export function InputWrapper({
