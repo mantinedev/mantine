@@ -19,6 +19,7 @@ export default createUseStyles({
 
   defaultVariant: ({ theme, radius }: InputStylesProps) => ({
     '& $input': {
+      backgroundColor: theme.white,
       minHeight: 36,
       paddingLeft: 15,
       paddingRight: 15,
@@ -90,6 +91,7 @@ export default createUseStyles({
 
   unstyledVariant: {
     '& $input': {
+      backgroundColor: 'transparent',
       height: 28,
       border: 0,
       outline: 0,
@@ -120,6 +122,7 @@ export default createUseStyles({
     width: '100%',
     color: theme.black,
     display: 'block',
+    textAlign: 'left',
 
     '&:disabled': {
       backgroundColor: theme.colors.gray[1],

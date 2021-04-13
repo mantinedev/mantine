@@ -48,7 +48,22 @@ storiesOf('@mantine/core/Input', module)
   .add('Default variant', () => <>{getStates()}</>)
   .add('Filled variant', () => <>{getStates({ variant: 'filled' })}</>)
   .add('Unstyled variant', () => <>{getStates({ variant: 'unstyled' })}</>)
-  .add('Custom component', () => (
+  .add('Custom component: button', () => (
+    <>
+      {getStates({ component: 'button', children: 'Input button' })}
+      {getStates({
+        variant: 'filled',
+        component: 'button',
+        children: 'Input button',
+      })}
+      {getStates({
+        variant: 'unstyled',
+        component: 'button',
+        children: 'Input button',
+      })}
+    </>
+  ))
+  .add('Custom component: Textarea', () => (
     <>
       {getStates({ component: Textarea, inputStyle: { paddingTop: 9, paddingBottom: 9 } })}
       {getStates({
