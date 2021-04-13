@@ -7,7 +7,7 @@ import { TextInput } from './TextInput';
 
 describe('@mantine/core/Input', () => {
   itSupportsClassName(TextInput, {});
-  itSupportsRef(TextInput, {}, HTMLInputElement);
+  itSupportsRef(TextInput, {}, HTMLInputElement, 'elementRef');
   itSupportsStyle(TextInput, {});
 
   it('has correct displayName', () => {

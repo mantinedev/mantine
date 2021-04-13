@@ -16,7 +16,7 @@ interface SpoilerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div
   showLabel: React.ReactNode;
 
   /** Get ref of spoiler toggle button */
-  controlRef?: React.MutableRefObject<HTMLButtonElement> | React.RefCallback<HTMLButtonElement>;
+  controlRef?: React.ForwardedRef<HTMLButtonElement>;
 
   /** Spoiler reveal transition duration in ms, 0 or null to turn off animation */
   transitionDuration?: number;

@@ -11,7 +11,7 @@ describe('@mantine/core/Paper', () => {
   itRendersChildren(Paper, {});
   itSupportsClassName(Paper, {});
   itSupportsStyle(Paper, {});
-  itSupportsRef(Paper, {}, HTMLDivElement);
+  itSupportsRef(Paper, {}, HTMLDivElement, 'elementRef');
   itSupportsOthers(Paper, {});
 
   it('has correct displayName', () => {

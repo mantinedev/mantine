@@ -17,7 +17,7 @@ describe('@mantine/core/Switch', () => {
 
   itSupportsClassName(Switch, {});
   itSupportsStyle(Switch, {});
-  itSupportsRef(Switch, {}, HTMLInputElement);
+  itSupportsRef(Switch, {}, HTMLInputElement, 'elementRef');
 
   it('has correct displayName', () => {
     expect(Switch.displayName).toEqual('@mantine/core/Switch');

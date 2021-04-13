@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { useId } from '@mantine/hooks';
 import { DefaultProps } from '@mantine/theme';
 import { Input, InputProps } from '../Input/Input';
@@ -20,53 +20,52 @@ interface TextInputProps
 
   /** Props passed to root element (InputWrapper component) */
   wrapperProps?: Record<string, any>;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
-export const TextInput = forwardRef(
-  (
-    {
-      className,
-      id,
-      label,
-      error,
-      required,
-      type = 'text',
-      style,
-      icon,
-      description,
-      themeOverride,
-      wrapperProps,
-      ...others
-    }: TextInputProps,
-    ref: React.ForwardedRef<HTMLInputElement>
-  ) => {
-    const uuid = useId(id);
+export function TextInput({
+  className,
+  id,
+  label,
+  error,
+  required,
+  type = 'text',
+  style,
+  icon,
+  description,
+  themeOverride,
+  wrapperProps,
+  elementRef,
+  ...others
+}: TextInputProps) {
+  const uuid = useId(id);
 
-    return (
-      <InputWrapper
+  return (
+    <InputWrapper
+      required={required}
+      id={uuid}
+      label={label}
+      error={error}
+      description={description}
+      className={className}
+      style={style}
+      themeOverride={themeOverride}
+      {...wrapperProps}
+    >
+      <Input<'input', HTMLInputElement>
+        {...others}
         required={required}
+        elementRef={elementRef}
         id={uuid}
-        label={label}
-        error={error}
-        description={description}
-        className={className}
-        style={style}
+        type={type}
+        invalid={!!error}
+        icon={icon}
         themeOverride={themeOverride}
-        {...wrapperProps}
-      >
-        <Input<'input', HTMLInputElement>
-          {...others}
-          required={required}
-          elementRef={ref}
-          id={uuid}
-          type={type}
-          invalid={!!error}
-          icon={icon}
-          themeOverride={themeOverride}
-        />
-      </InputWrapper>
-    );
-  }
-);
+      />
+    </InputWrapper>
+  );
+}
 
 TextInput.displayName = '@mantine/core/TextInput';

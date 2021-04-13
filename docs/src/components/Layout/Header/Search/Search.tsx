@@ -119,7 +119,7 @@ export default function Search({ data }: SearchProps) {
     <div className={classes.wrapper}>
       <TextInput
         className={classes.input}
-        ref={inputRef}
+        elementRef={inputRef}
         value={query}
         onChange={handleQueryChange}
         placeholder="Search"
@@ -132,7 +132,7 @@ export default function Search({ data }: SearchProps) {
       />
 
       {dropdownOpened && (
-        <Paper className={classes.dropdown} shadow="md" ref={dropdownRef}>
+        <Paper className={classes.dropdown} shadow="md" elementRef={dropdownRef}>
           <div className={classes.dropdownBody}>
             {items}
             {filteredData.length === 0 && (

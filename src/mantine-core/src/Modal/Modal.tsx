@@ -102,7 +102,7 @@ export function Modal({
               aria-describedby={bodyId}
               aria-modal
               style={styles.modal}
-              ref={clickOutsideRef}
+              elementRef={clickOutsideRef}
               tabIndex={-1}
             >
               {(title || !hideCloseButton) && (

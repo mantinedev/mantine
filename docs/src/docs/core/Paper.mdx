@@ -53,15 +53,15 @@ or pass in number to set border-radius in px:
 
 ## Get element ref
 
-You can get button ref by passing `ref` prop to Button component:
+You can get button ref by passing `elementRef` prop to Paper component:
 
 ```tsx
 import React, { useRef } from 'react';
 import { Paper } from '@mantine/core';
 
 function PaperDemo() {
-  const paperRef = useRef<HTMLDivElement>(null);
-  return <Paper ref={buttonRef} />;
+  const paperRef = useRef();
+  return <Paper elementRef={paperRef} />;
 }
 ```
 

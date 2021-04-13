@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
@@ -18,44 +18,43 @@ interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'
 
   /** Predefined icon size or number to set width and height in px */
   size?: MantineNumberSize;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
 export const ACTION_ICON_SIZES = sizes;
 
-export const ActionIcon = forwardRef(
-  (
-    {
-      className,
-      color = 'gray',
-      children,
-      radius = 'sm',
-      size = 'md',
-      variant = 'hover',
-      themeOverride,
-      ...others
-    }: ActionIconProps,
-    ref: React.ForwardedRef<HTMLButtonElement>
-  ) => {
-    const classes = useStyles({
-      variant,
-      size,
-      radius,
-      color,
-      theme: useMantineTheme(themeOverride),
-    });
+export function ActionIcon({
+  className,
+  color = 'gray',
+  children,
+  radius = 'sm',
+  size = 'md',
+  variant = 'hover',
+  themeOverride,
+  elementRef,
+  ...others
+}: ActionIconProps) {
+  const classes = useStyles({
+    variant,
+    size,
+    radius,
+    color,
+    theme: useMantineTheme(themeOverride),
+  });
 
-    return (
-      <button
-        {...others}
-        data-mantine-composable
-        className={cx(classes.actionIcon, className)}
-        type="button"
-        ref={ref}
-      >
-        {children}
-      </button>
-    );
-  }
-);
+  return (
+    <button
+      {...others}
+      data-mantine-composable
+      className={cx(classes.actionIcon, className)}
+      type="button"
+      ref={elementRef}
+    >
+      {children}
+    </button>
+  );
+}
 
 ActionIcon.displayName = '@mantine/core/ActionIcon';

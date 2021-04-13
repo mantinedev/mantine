@@ -134,7 +134,7 @@ export function Drawer({
         >
           <Paper
             className={cx(classes.drawer, className)}
-            ref={useMergedRef(focusTrapRef, clickOutsideRef)}
+            elementRef={useMergedRef(focusTrapRef, clickOutsideRef)}
             style={{ ...styles.drawer, zIndex: zIndex + 1 }}
             radius={0}
             tabIndex={-1}

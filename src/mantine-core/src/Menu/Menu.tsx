@@ -92,7 +92,7 @@ export function Menu({
   transition = 'skew-up',
   transitionTimingFunction,
   menuButtonLabel,
-  controlRefProp = 'ref',
+  controlRefProp = 'elementRef',
   ...others
 }: MenuProps) {
   const controlRefFocusTimeout = useRef<number>();

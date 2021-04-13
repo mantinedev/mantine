@@ -24,7 +24,7 @@ describe('@mantine/core/PasswordInput', () => {
 
   itSupportsClassName(PasswordInput, {});
   itSupportsStyle(PasswordInput, {});
-  itSupportsRef(PasswordInput, {}, HTMLInputElement);
+  itSupportsRef(PasswordInput, {}, HTMLInputElement, 'elementRef');
 
   it('has correct displayName', () => {
     expect(PasswordInput.displayName).toEqual('@mantine/core/PasswordInput');

@@ -120,16 +120,15 @@ You can compose ActionIcon with any other components that support composition fe
 
 ## Get element ref
 
-You can get button ref by passing `ref` prop to ActionIcon component:
+You can get button ref by passing `elementRef` prop to ActionIcon component:
 
 ```tsx
 import React, { useRef } from 'react';
 import { ActionIcon } from '@mantine/core';
 
 function ActionIconDemo() {
-  // ref.current instanceof HTMLButtonElement
-  const ref = useRef<HTMLButtonElement>(null);
-  return <ActionIcon ref={ref} />;
+  const ref = useRef();
+  return <ActionIcon elementRef={ref} />;
 }
 ```
 

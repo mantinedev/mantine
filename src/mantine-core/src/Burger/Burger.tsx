@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
@@ -15,26 +15,32 @@ interface BurgerProps extends DefaultProps, React.ComponentPropsWithoutRef<'butt
 
   /** Predefined burger size or number to set width and height in px */
   size?: MantineNumberSize;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
-export const Burger = forwardRef(
-  (
-    { className, opened, color = 'gray', size = 'md', themeOverride, ...others }: BurgerProps,
-    ref: React.ForwardedRef<HTMLButtonElement>
-  ) => {
-    const classes = useStyles({
-      color,
-      size,
-      theme: useMantineTheme(themeOverride),
-      reduceMotion: useReducedMotion(),
-    });
+export function Burger({
+  className,
+  opened,
+  color = 'gray',
+  size = 'md',
+  themeOverride,
+  elementRef,
+  ...others
+}: BurgerProps) {
+  const classes = useStyles({
+    color,
+    size,
+    theme: useMantineTheme(themeOverride),
+    reduceMotion: useReducedMotion(),
+  });
 
-    return (
-      <button type="button" className={cx(classes.wrapper, className)} ref={ref} {...others}>
-        <div className={cx(classes.burger, { [classes.opened]: opened })} />
-      </button>
-    );
-  }
-);
+  return (
+    <button type="button" className={cx(classes.wrapper, className)} ref={elementRef} {...others}>
+      <div className={cx(classes.burger, { [classes.opened]: opened })} />
+    </button>
+  );
+}
 
 Burger.displayName = '@mantine/core/Burger';

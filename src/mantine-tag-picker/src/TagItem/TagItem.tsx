@@ -96,7 +96,7 @@ export default function TagItem({
         </button>
 
         {enableUpdate && (
-          <ActionIcon onClick={openEditDropdown} ref={controlRef}>
+          <ActionIcon onClick={openEditDropdown} elementRef={controlRef}>
             <DotsHorizontalIcon />
           </ActionIcon>
         )}

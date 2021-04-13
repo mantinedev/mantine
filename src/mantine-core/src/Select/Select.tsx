@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { ChevronDownIcon } from '@modulz/radix-icons';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
@@ -30,78 +30,77 @@ interface SelectProps
 
   /** Props passed to root element (InputWrapper component) */
   wrapperProps?: Record<string, any>;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<HTMLSelectElement>;
 }
 
-export const Select = forwardRef(
-  (
-    {
-      id,
-      className,
-      required,
-      label,
-      error,
-      style,
-      data,
-      placeholder,
-      themeOverride,
-      wrapperProps,
-      inputStyle,
-      description,
-      ...others
-    }: SelectProps,
-    ref: React.ForwardedRef<HTMLSelectElement>
-  ) => {
-    const theme = useMantineTheme(themeOverride);
-    const uuid = useId(id);
+export function Select({
+  id,
+  className,
+  required,
+  label,
+  error,
+  style,
+  data,
+  placeholder,
+  themeOverride,
+  wrapperProps,
+  inputStyle,
+  description,
+  elementRef,
+  ...others
+}: SelectProps) {
+  const theme = useMantineTheme(themeOverride);
+  const uuid = useId(id);
 
-    const options = data.map((item) => (
-      <option key={item.value} value={item.value} disabled={item.disabled}>
-        {item.label}
+  const options = data.map((item) => (
+    <option key={item.value} value={item.value} disabled={item.disabled}>
+      {item.label}
+    </option>
+  ));
+
+  if (placeholder) {
+    options.unshift(
+      <option key="placeholder" value="" selected disabled hidden>
+        {placeholder}
       </option>
-    ));
-
-    if (placeholder) {
-      options.unshift(
-        <option key="placeholder" value="" selected disabled hidden>
-          {placeholder}
-        </option>
-      );
-    }
-
-    const chevron = (
-      <ChevronDownIcon style={{ color: error ? theme.colors.red[6] : theme.colors.gray[6] }} />
-    );
-
-    return (
-      <InputWrapper
-        {...wrapperProps}
-        required={required}
-        id={uuid}
-        label={label}
-        error={error}
-        className={className}
-        style={style}
-        themeOverride={themeOverride}
-        description={description}
-      >
-        <Input<'select', HTMLSelectElement>
-          {...others}
-          component="select"
-          invalid={!!error}
-          style={inputStyle}
-          aria-required={required}
-          elementRef={ref}
-          id={uuid}
-          inputStyle={inputStyle}
-          rightSection={chevron}
-          rightSectionProps={{ style: { pointerEvents: 'none' } }}
-          required={required}
-        >
-          {options}
-        </Input>
-      </InputWrapper>
     );
   }
-);
+
+  const chevron = (
+    <ChevronDownIcon style={{ color: error ? theme.colors.red[6] : theme.colors.gray[6] }} />
+  );
+
+  return (
+    <InputWrapper
+      {...wrapperProps}
+      required={required}
+      id={uuid}
+      label={label}
+      error={error}
+      className={className}
+      style={style}
+      themeOverride={themeOverride}
+      description={description}
+    >
+      <Input<'select', HTMLSelectElement>
+        {...others}
+        component="select"
+        invalid={!!error}
+        style={inputStyle}
+        aria-required={required}
+        elementRef={elementRef}
+        id={uuid}
+        inputStyle={inputStyle}
+        rightSection={chevron}
+        rightSectionProps={{ style: { pointerEvents: 'none' } }}
+        required={required}
+      >
+        {options}
+      </Input>
+    </InputWrapper>
+  );
+}
 
 Select.displayName = '@mantine/core/Select';

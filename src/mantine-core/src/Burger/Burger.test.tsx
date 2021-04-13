@@ -14,7 +14,7 @@ describe('@mantine/core/Burger', () => {
   itSupportsOthers(Burger, { opened: true });
   itSupportsClassName(Burger, { opened: true });
   itSupportsStyle(Burger, { opened: true });
-  itSupportsRef(Burger, { opened: true }, HTMLButtonElement);
+  itSupportsRef(Burger, { opened: true }, HTMLButtonElement, 'elementRef');
 
   it('has correct displayName', () => {
     expect(Burger.displayName).toEqual('@mantine/core/Burger');

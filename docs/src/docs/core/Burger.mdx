@@ -59,16 +59,15 @@ Default Burger color is gray. You can choose any color defined in <GatsbyLink to
 
 ## Get element ref
 
-You can get button ref by passing `ref` prop to Burger component:
+You can get button ref by passing `elementRef` prop to Burger component:
 
 ```tsx
 import React, { useRef } from 'react';
 import { Burger } from '@mantine/core';
 
 function BurgerDemo() {
-  // ref.current instanceof HTMLButtonElement
-  const ref = useRef<HTMLButtonElement>(null);
-  return <Burger ref={ref} opened />;
+  const ref = useRef();
+  return <Burger elementRef={ref} opened />;
 }
 ```
 

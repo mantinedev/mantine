@@ -5,6 +5,7 @@ import {
   itSupportsClassName,
   itRendersChildren,
   itSupportsStyle,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Radio } from './Radio';
 
@@ -19,6 +20,7 @@ describe('@mantine/core/Radio', () => {
   itSupportsClassName(Radio, defaultProps);
   itSupportsStyle(Radio, defaultProps);
   itRendersChildren(Radio, defaultProps);
+  itSupportsRef(Radio, defaultProps, HTMLInputElement, 'elementRef');
 
   it('has correct displayName', () => {
     expect(Radio.displayName).toEqual('@mantine/core/Radio');

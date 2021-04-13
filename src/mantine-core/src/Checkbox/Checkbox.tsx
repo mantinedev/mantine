@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import cx from 'clsx';
 import { CheckIcon, DividerHorizontalIcon } from '@modulz/radix-icons';
 import { useId } from '@mantine/hooks';
@@ -33,61 +33,60 @@ interface CheckboxProps
 
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
-export const Checkbox = forwardRef(
-  (
-    {
-      className,
-      checked,
-      onChange,
-      color,
-      themeOverride,
-      label,
-      disabled,
-      intermediate,
-      id,
-      size,
-      wrapperProps,
-      style,
-      inputStyle,
-      inputClassName,
-      ...others
-    }: CheckboxProps,
-    ref: React.ForwardedRef<HTMLInputElement>
-  ) => {
-    const uuid = useId(id);
-    const classes = useStyles({ size, color, theme: useMantineTheme(themeOverride) });
+export function Checkbox({
+  className,
+  checked,
+  onChange,
+  color,
+  themeOverride,
+  label,
+  disabled,
+  intermediate,
+  id,
+  size,
+  wrapperProps,
+  style,
+  inputStyle,
+  inputClassName,
+  elementRef,
+  ...others
+}: CheckboxProps) {
+  const uuid = useId(id);
+  const classes = useStyles({ size, color, theme: useMantineTheme(themeOverride) });
 
-    return (
-      <div className={cx(classes.wrapper, className)} style={style} {...wrapperProps}>
-        <div className={classes.checkboxWrapper}>
-          <input
-            {...others}
-            id={uuid}
-            ref={ref}
-            type="checkbox"
-            className={cx(classes.checkbox, inputClassName)}
-            checked={intermediate || checked}
-            onChange={onChange}
-            disabled={disabled}
-            style={inputStyle}
-          />
-          {intermediate ? (
-            <DividerHorizontalIcon className={classes.icon} />
-          ) : (
-            <CheckIcon className={classes.icon} />
-          )}
-        </div>
-
-        {label && (
-          <label className={classes.label} htmlFor={uuid}>
-            {label}
-          </label>
+  return (
+    <div className={cx(classes.wrapper, className)} style={style} {...wrapperProps}>
+      <div className={classes.checkboxWrapper}>
+        <input
+          {...others}
+          id={uuid}
+          ref={elementRef}
+          type="checkbox"
+          className={cx(classes.checkbox, inputClassName)}
+          checked={intermediate || checked}
+          onChange={onChange}
+          disabled={disabled}
+          style={inputStyle}
+        />
+        {intermediate ? (
+          <DividerHorizontalIcon className={classes.icon} />
+        ) : (
+          <CheckIcon className={classes.icon} />
         )}
       </div>
-    );
-  }
-);
+
+      {label && (
+        <label className={classes.label} htmlFor={uuid}>
+          {label}
+        </label>
+      )}
+    </div>
+  );
+}
 
 Checkbox.displayName = '@mantine/core/Checkbox';

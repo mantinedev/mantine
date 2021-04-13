@@ -11,7 +11,7 @@ import { Checkbox } from './Checkbox';
 describe('@mantine/core/Checkbox', () => {
   itSupportsStyle(Checkbox, {});
   itSupportsClassName(Checkbox, {});
-  itSupportsRef(Checkbox, {}, HTMLInputElement);
+  itSupportsRef(Checkbox, {}, HTMLInputElement, 'elementRef');
   checkAccessibility([
     mount(<Checkbox aria-label="Checkbox without label" />),
     mount(<Checkbox label="With label" />),

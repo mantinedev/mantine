@@ -123,14 +123,6 @@ export function Tabs({
       color={color}
       elementRef={(node) => {
         controlRefs.current[index] = node;
-        if (tab.ref) {
-          if (typeof tab.ref === 'function') {
-            tab.ref(node);
-          } else {
-            // eslint-disable-next-line no-param-reassign
-            (tab.ref as any).current = node;
-          }
-        }
       }}
       onClick={() => activeTab !== index && setActiveTab(index)}
     />

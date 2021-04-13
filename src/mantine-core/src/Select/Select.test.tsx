@@ -19,7 +19,7 @@ describe('@mantine/core/Select', () => {
   checkAccessibility([mount(<Select data={TEST_DATA} label="test-label" />)]);
   itSupportsClassName(Select, { data: TEST_DATA });
   itSupportsStyle(Select, { data: TEST_DATA });
-  itSupportsRef(Select, { data: TEST_DATA }, HTMLSelectElement);
+  itSupportsRef(Select, { data: TEST_DATA }, HTMLSelectElement, 'elementRef');
 
   it('passes required, inputStyle, inputClassName and id props to select element', () => {
     const element = shallow(

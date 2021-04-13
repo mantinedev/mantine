@@ -188,7 +188,7 @@ export function MenuBody({
           className={cx(classes.menu, className)}
           style={{ ...style, ...transitionStyles }}
           onKeyDownCapture={handleKeyDown}
-          ref={menuRef}
+          elementRef={menuRef}
           role="menu"
           {...others}
         >

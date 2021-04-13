@@ -1,7 +1,12 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import TextareaAutosize from 'react-textarea-autosize';
-import { checkAccessibility, itSupportsStyle, itSupportsClassName } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsStyle,
+  itSupportsClassName,
+  itSupportsRef,
+} from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { Textarea } from './Textarea';
@@ -17,6 +22,7 @@ describe('@mantine/core/Textarea', () => {
 
   itSupportsStyle(Textarea, {});
   itSupportsClassName(Textarea, {});
+  itSupportsRef(Textarea, {}, HTMLTextAreaElement, 'elementRef');
 
   it('renders correct component based on autosize prop', () => {
     const autosize = shallow(<Textarea autosize />);

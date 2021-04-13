@@ -45,7 +45,7 @@ export default function TagPicker({
           <Paper
             shadow="xs"
             className={classes.dropdown}
-            ref={dropdownRef}
+            elementRef={dropdownRef}
             style={transitionStyles}
           >
             <TagsList value={value} transitionDuration={transitionDuration} {...others} />

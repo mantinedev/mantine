@@ -13,6 +13,9 @@ interface RadioProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
 
   /** Predefined label fontSize, radio width, height and border-radius */
   size?: MantineSize;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
 export function Radio({
@@ -22,6 +25,7 @@ export function Radio({
   children,
   style,
   size,
+  elementRef,
   ...others
 }: RadioProps) {
   const classes = useStyles({ size, theme: useMantineTheme(themeOverride) });
@@ -29,7 +33,7 @@ export function Radio({
 
   return (
     <div data-mantine-radio className={cx(classes.wrapper, className)} style={style}>
-      <input className={classes.radio} type="radio" id={uuid} {...others} />
+      <input ref={elementRef} className={classes.radio} type="radio" id={uuid} {...others} />
       <label className={classes.label} htmlFor={uuid}>
         {children}
       </label>

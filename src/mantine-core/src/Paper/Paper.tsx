@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
 import useStyles from './Paper.styles';
@@ -12,29 +12,28 @@ interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'>
 
   /** Predefined border-radius value from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
-export const Paper = forwardRef(
-  (
-    {
-      className,
-      children,
-      padding = 0,
-      radius = 'sm',
-      shadow,
-      themeOverride,
-      ...others
-    }: PaperProps,
-    ref: React.ForwardedRef<HTMLDivElement>
-  ) => {
-    const classes = useStyles({ radius, shadow, padding, theme: useMantineTheme(themeOverride) });
+export function Paper({
+  className,
+  children,
+  padding = 0,
+  radius = 'sm',
+  shadow,
+  themeOverride,
+  elementRef,
+  ...others
+}: PaperProps) {
+  const classes = useStyles({ radius, shadow, padding, theme: useMantineTheme(themeOverride) });
 
-    return (
-      <div className={cx(classes.paper, className)} ref={ref} {...others}>
-        {children}
-      </div>
-    );
-  }
-);
+  return (
+    <div className={cx(classes.paper, className)} ref={elementRef} {...others}>
+      {children}
+    </div>
+  );
+}
 
 Paper.displayName = '@mantine/core/Paper';

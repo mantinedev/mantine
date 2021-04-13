@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
+import { useMergedRef } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { TabProps } from '../Tab/Tab';
 import useStyles from './TabControl.styles';
@@ -19,7 +20,7 @@ export function TabControl({
   color,
   ...others
 }: TabControlProps) {
-  const { label, icon, color: overrideColor, ...props } = tabProps;
+  const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
   const classes = useStyles({
     color: overrideColor || color,
     theme: useMantineTheme(themeOverride),
@@ -36,7 +37,7 @@ export function TabControl({
       type="button"
       role="tab"
       aria-selected={active}
-      ref={elementRef}
+      ref={useMergedRef(elementRef, tabProps.elementRef)}
     >
       <div className={classes.tabInner}>
         {icon && (

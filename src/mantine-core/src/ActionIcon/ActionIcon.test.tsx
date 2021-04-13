@@ -16,7 +16,7 @@ describe('@mantine/core/ActionIcon', () => {
   itSupportsClassName(ActionIcon, {});
   itSupportsOthers(ActionIcon, {});
   itSupportsStyle(ActionIcon, {});
-  itSupportsRef(ActionIcon, {}, HTMLButtonElement);
+  itSupportsRef(ActionIcon, {}, HTMLButtonElement, 'elementRef');
   itRendersChildren(ActionIcon, {});
   isHasComposableAttribute(ActionIcon, {});
   checkAccessibility([

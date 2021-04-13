@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useId } from '@mantine/hooks';
 import { useMantineTheme, DefaultProps } from '@mantine/theme';
@@ -27,78 +27,77 @@ interface TextareaProps
 
   /** Props passed to root element (InputWrapper component) */
   wrapperProps?: Record<string, any>;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<HTMLTextAreaElement>;
 }
 
-export const Textarea = forwardRef(
-  (
-    {
-      autosize = false,
-      maxRows,
-      minRows,
-      label,
-      error,
-      description,
-      id,
-      className,
-      required,
-      themeOverride,
-      style,
-      wrapperProps,
-      inputStyle,
-      ...others
-    }: TextareaProps,
-    ref: React.ForwardedRef<HTMLTextAreaElement>
-  ) => {
-    const uuid = useId(id);
-    const theme = useMantineTheme(themeOverride);
+export function Textarea({
+  autosize = false,
+  maxRows,
+  minRows,
+  label,
+  error,
+  description,
+  id,
+  className,
+  required,
+  themeOverride,
+  style,
+  wrapperProps,
+  inputStyle,
+  elementRef,
+  ...others
+}: TextareaProps) {
+  const uuid = useId(id);
+  const theme = useMantineTheme(themeOverride);
 
-    return (
-      <InputWrapper
-        label={label}
-        error={error}
-        id={uuid}
-        description={description}
-        required={required}
-        style={style}
-        className={className}
-        {...wrapperProps}
-      >
-        {autosize ? (
-          <Input<typeof TextareaAutosize, HTMLTextAreaElement>
-            required={required}
-            component={TextareaAutosize}
-            invalid={!!error}
-            maxRows={maxRows}
-            minRows={minRows}
-            id={uuid}
-            elementRef={ref}
-            inputStyle={{
-              paddingTop: theme.spacing.xs,
-              paddingBottom: theme.spacing.xs,
-              ...inputStyle,
-              height: undefined,
-            }}
-            {...others}
-          />
-        ) : (
-          <Input<'textarea', HTMLTextAreaElement>
-            component="textarea"
-            required={required}
-            id={uuid}
-            invalid={!!error}
-            rows={minRows}
-            elementRef={ref}
-            inputStyle={{
-              paddingTop: theme.spacing.xs,
-              paddingBottom: theme.spacing.xs,
-              ...inputStyle,
-            }}
-            {...others}
-          />
-        )}
-      </InputWrapper>
-    );
-  }
-);
+  return (
+    <InputWrapper
+      label={label}
+      error={error}
+      id={uuid}
+      description={description}
+      required={required}
+      style={style}
+      className={className}
+      {...wrapperProps}
+    >
+      {autosize ? (
+        <Input<typeof TextareaAutosize, HTMLTextAreaElement>
+          required={required}
+          component={TextareaAutosize}
+          invalid={!!error}
+          maxRows={maxRows}
+          minRows={minRows}
+          id={uuid}
+          elementRef={elementRef}
+          inputStyle={{
+            paddingTop: theme.spacing.xs,
+            paddingBottom: theme.spacing.xs,
+            ...inputStyle,
+            height: undefined,
+          }}
+          {...others}
+        />
+      ) : (
+        <Input<'textarea', HTMLTextAreaElement>
+          component="textarea"
+          required={required}
+          id={uuid}
+          invalid={!!error}
+          rows={minRows}
+          elementRef={elementRef}
+          inputStyle={{
+            paddingTop: theme.spacing.xs,
+            paddingBottom: theme.spacing.xs,
+            ...inputStyle,
+          }}
+          {...others}
+        />
+      )}
+    </InputWrapper>
+  );
+}
 
 Textarea.displayName = '@mantine/core/Textarea';
