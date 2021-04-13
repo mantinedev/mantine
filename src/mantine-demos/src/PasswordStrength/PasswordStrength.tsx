@@ -53,7 +53,7 @@ export function PasswordStrength({ alwaysMounted }: { alwaysMounted?: true }) {
         onChange={(event) => setValue(event.currentTarget.value)}
       />
 
-      <div style={{ position: 'relative', height: 120 }}>
+      <div style={{ position: 'relative', height: 140 }}>
         <Transition transition="fade" mounted={showInfo || alwaysMounted}>
           {(styles) => (
             <div
