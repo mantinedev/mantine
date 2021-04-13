@@ -102,7 +102,7 @@ export function TransactionsTable() {
         <Table style={{ tableLayout: 'fixed' }}>
           <thead>
             <tr>
-              <th style={{ width: 80 }}>Amount</th>
+              <th style={{ width: 100 }}>Amount</th>
               <th style={{ width: 140 }}>Category</th>
               <th style={{ width: 60 }}>Date</th>
               <th>Description</th>
