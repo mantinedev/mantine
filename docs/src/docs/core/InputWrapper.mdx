@@ -5,6 +5,8 @@ order: 1
 slug: /core/input-wrapper/
 ---
 
+import { InputWrapperConfigurator } from '../demos/core/InputWrapper/input-wrapper.configurator';
+
 # InputWrapper
 
 <PageHeader
@@ -15,6 +17,48 @@ slug: /core/input-wrapper/
 
 ```tsx
 import { InputWrapper } from '@mantine/core';
+```
+
+## Usage
+
+InputWrapper is used to wrap for all Mantine inputs (<GatsbyLink to="/core/select">Select</GatsbyLink>, <GatsbyLink to="/core/select">TextInput</GatsbyLink>, <GatsbyLink to="/core/select">Textarea</GatsbyLink> and others).
+It includes label with optional required asterisk, description and error message.
+
+All Mantine inputs support the same props as InputWrapper.
+You can combine it with <GatsbyLink to="/core/input">Input</GatsbyLink> component
+to build your own custom inputs with the same style and behavior.
+
+<InputWrapperConfigurator />
+
+## Change label element
+
+Some inputs like <GatsbyLink to="/core/radio-group">RadioGroup</GatsbyLink>
+may require to detach label from certain element.
+To implement this, use `labelElement`:
+
+```tsx
+import React from 'react';
+import { InputWrapper } from '@mantine/core';
+
+// id is required to connect label and input
+function WithLabel() {
+  return (
+    <InputWrapper id="with-label">
+      <Input id="with-label" />
+    </InputWrapper>
+  );
+}
+
+// id is not required for div label as it is not connected to any element
+function WithoutLabel() {
+  return (
+    <InputWrapper labelElement="div">
+      <input type="radio" name="radio" value="1" />
+      <input type="radio" name="radio" value="2" />
+      <input type="radio" name="radio" value="3" />
+    </InputWrapper>
+  );
+}
 ```
 
 ## Component props
