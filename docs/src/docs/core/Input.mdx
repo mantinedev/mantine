@@ -5,9 +5,13 @@ order: 1
 slug: /core/input/
 ---
 
-# Input
+import { ActionIconUsageDemo } from '../demos/core/ActionIcon/action-icon.demos';
+import { InputVariantsDemo } from '../demos/core/Input/input-variants.demo';
+import { InputIconDemo } from '../demos/core/Input/input-icon.demo';
+import { InputConfigurator } from '../demos/core/Input/input.configurator';
+import { InputComponentDemo } from '../demos/core/Input/input-component.demo';
 
-This is a Input component description placeholder
+# Input
 
 <PageHeader
   source="mantine-core/src/Input/Input.tsx"
@@ -15,10 +19,86 @@ This is a Input component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Input } from '@mantine/core';
 ```
+
+## Usage
+
+Input component is used as base for all other inputs (<GatsbyLink to="/core/select">Select</GatsbyLink>, <GatsbyLink to="/core/select">TextInput</GatsbyLink>, <GatsbyLink to="/core/select">Textarea</GatsbyLink> and others).
+The single purpose of Input is to provide shared styles and features to other inputs.
+Use other components listed above to build forms (as they provide better accessibility)
+and Input as base for your own custom inputs with Mantine theme.
+
+<InputConfigurator />
+
+## Variants
+
+Input has 3 variants, all of which are available on all Mantine inputs.
+Note that, unstyled input variant may significantly impact usability, use it wisely.
+
+<InputVariantsDemo />
+
+## Icon and right section
+
+You can add icon on the left side of the input, for example:
+
+- [radix icons](https://icons.modulz.app/) (used in mantine packages)
+- [feather](https://feathericons.com/)
+- [react-icons](https://react-icons.github.io/react-icons)
+
+<InputIconDemo />
+
+Right section allows you to place anything on the right side of the input. For example, in <GatsbyLink to="/core/password-input">PasswordInput</GatsbyLink>
+component right section is used for show/hide password toggle:
+
+<ActionIconUsageDemo />
+
+## Custom component
+
+As Input component is intended to be a base for all other inputs,
+you can pass `component` prop which will define root element:
+
+<InputComponentDemo />
+
+## Get element ref
+
+You can get input ref by passing `elementRef` prop to Input component:
+
+```tsx
+import React, { useRef } from 'react';
+import { Input } from '@mantine/core';
+
+function InputDemo() {
+  const ref = useRef(null);
+  return <Input elementRef={ref} />;
+}
+```
+
+## TypeScript
+
+Usage of some props with custom component in TypeScript require type specification.
+Input component is a generic and you can pass 2 types to enhance type support:
+
+```tsx
+// Custom element button
+<Input<'button', HTMLButtonElement>
+  component="button"
+  onClick={(event) => {}} // -> event will now have correct types
+  elementRef={(node) => {}} // node type is set to HTMLButtonElement
+/>
+```
+
+Usually it is not necessary to pass types and you can avoid it by setting types directly on callbacks:
+
+```tsx
+<Button
+  component="button"
+  onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {}}
+  elementRef={(node: HTMLButtonElement) => {}}
+/>
+```
+
+## Component props
 
 <PropsTable component="Input" />
