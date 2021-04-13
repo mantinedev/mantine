@@ -5,6 +5,9 @@ order: 1
 slug: /core/notification/
 ---
 
+import { NotificationBaseDemo } from '../demos/core/Notification/notification-base.demo';
+import { NotificationConfigurator } from '../demos/core/Notification/notification.configurator';
+
 # Notification
 
 <PageHeader
@@ -16,6 +19,31 @@ slug: /core/notification/
 ```tsx
 import { Notification } from '@mantine/core';
 ```
+
+## Usage
+
+Notification is a base component for notification system.
+Build your own or use <GatsbyLink to="/notifications/getting-started/">@mantine/notifications</GatsbyLink> package.
+
+Notification component has 3 variants:
+
+- **default** – with colored line on the left
+- **icon** – line is replaced with icon
+- **loading** – icon or line are replaced with <GatsbyLink to="/core/loader/">Loader</GatsbyLink>
+
+You can use icons from any react icons library, for example:
+
+- [radix icons](https://icons.modulz.app/) (used in mantine packages)
+- [feather](https://feathericons.com/)
+- [react-icons](https://react-icons.github.io/react-icons)
+
+<NotificationBaseDemo />
+
+## Colors
+
+You can choose any color defined in <GatsbyLink to="/theming">theme</GatsbyLink>:
+
+<NotificationConfigurator />
 
 ## Component props
 
