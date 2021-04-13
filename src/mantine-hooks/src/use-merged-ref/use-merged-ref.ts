@@ -5,7 +5,7 @@ export function useMergedRef<T = any>(...refs: React.ForwardedRef<T>[]) {
     refs.forEach((ref) => {
       if (typeof ref === 'function') {
         ref(node);
-      } else {
+      } else if (ref != null) {
         // eslint-disable-next-line no-param-reassign
         ref.current = node;
       }
