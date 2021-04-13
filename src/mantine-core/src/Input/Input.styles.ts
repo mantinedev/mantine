@@ -58,7 +58,7 @@ export default createUseStyles({
 
       '&:focus': {
         outline: 'none',
-        borderColor: theme.colors[theme.primaryColor][6],
+        borderColor: `${theme.colors[theme.primaryColor][6]} !important`,
         boxShadow: `0 0 4px ${theme.colors.gray[3]}`,
       },
 
@@ -74,6 +74,7 @@ export default createUseStyles({
     },
 
     '&$invalid $input': {
+      borderColor: 'transparent',
       backgroundColor: theme.colors.red[0],
     },
 
