@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { nanoid } from 'nanoid';
 import { useListState } from '@mantine/hooks';
 import { Cross1Icon, PlusIcon } from '@modulz/radix-icons';
 import { Title, Checkbox, TextInput, ActionIcon } from '@mantine/core';
@@ -7,15 +8,20 @@ import { useMantineTheme } from '@mantine/theme';
 interface TodoItem {
   value: string;
   completed: boolean;
+  key: string;
 }
 
 const INITIAL_STATE: TodoItem[] = [
-  { value: 'Buy 23 RTX 3080 cards', completed: false },
-  { value: 'Mine Ethereum', completed: false },
-  { value: 'Complain about miners on internet to prove innocence', completed: false },
-  { value: 'Sell broken cards on ebay to gamers', completed: false },
-  { value: 'Spend received money on new video cards', completed: false },
-  { value: 'Repeat the cycle', completed: false },
+  { value: 'Buy 23 RTX 3080 cards', completed: false, key: nanoid() },
+  { value: 'Mine Ethereum', completed: false, key: nanoid() },
+  {
+    value: 'Complain about miners on internet to prove innocence',
+    completed: false,
+    key: nanoid(),
+  },
+  { value: 'Sell broken cards on ebay to gamers', completed: false, key: nanoid() },
+  { value: 'Spend received money on new video cards', completed: false, key: nanoid() },
+  { value: 'Repeat the cycle', completed: false, key: nanoid() },
 ];
 
 export function TodoList() {
@@ -24,7 +30,10 @@ export function TodoList() {
   const [state, handlers] = useListState(INITIAL_STATE);
 
   const items = state.map((item, index) => (
-    <div style={{ display: 'flex', alignItems: 'center', marginTop: theme.spacing.xs }}>
+    <div
+      style={{ display: 'flex', alignItems: 'center', marginTop: theme.spacing.xs }}
+      key={item.key}
+    >
       <Checkbox
         size="xl"
         checked={item.completed}
@@ -72,7 +81,7 @@ export function TodoList() {
         placeholder="Add evil task"
         onKeyDown={(event) => {
           if (event.nativeEvent.code === 'Enter') {
-            handlers.append({ value: event.currentTarget.value, completed: false });
+            handlers.append({ value: event.currentTarget.value, completed: false, key: nanoid() });
             setNewItem('');
           }
         }}
