@@ -33,7 +33,7 @@ function getStrength(password: string) {
   return Math.max(100 - (100 / (requirements.length + 1)) * multiplier, 10);
 }
 
-export function PasswordStrength() {
+export function PasswordStrength({ alwaysMounted }: { alwaysMounted?: true }) {
   const [value, setValue] = useState('');
   const [showInfo, setShowInfo] = useState(false);
   const checks = requirements.map((requirement, index) => (
@@ -44,19 +44,17 @@ export function PasswordStrength() {
   const color = strength === 100 ? 'teal' : strength > 50 ? 'yellow' : 'red';
 
   return (
-    <div>
+    <div onFocusCapture={() => setShowInfo(true)} onBlurCapture={() => setShowInfo(false)}>
       <PasswordInput
         label="Your password"
         placeholder="Your password"
         description="Strong password should include letters in lower and uppercase, at least 1 number, at least 1 special symbol"
         value={value}
         onChange={(event) => setValue(event.currentTarget.value)}
-        onFocus={() => setShowInfo(true)}
-        onBlur={() => setShowInfo(false)}
       />
 
       <div style={{ position: 'relative', height: 120 }}>
-        <Transition transition="fade" mounted={showInfo}>
+        <Transition transition="fade" mounted={showInfo || alwaysMounted}>
           {(styles) => (
             <div
               style={{
@@ -68,7 +66,7 @@ export function PasswordStrength() {
                 ...styles,
               }}
             >
-              <Progress color={color} value={getStrength(value)} size={3} />
+              <Progress color={color} value={strength} size={3} />
               <PasswordRequirement
                 label="Includes at least 6 characters"
                 meets={value.length > 5}
