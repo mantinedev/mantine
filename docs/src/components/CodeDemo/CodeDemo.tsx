@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Language } from 'prism-react-renderer';
-import { Paper } from '@mantine/core';
+import { GitHubLogoIcon } from '@modulz/radix-icons';
+import { Paper, Button, ElementsGroup } from '@mantine/core';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import DocsSection from '../DocsSection/DocsSection';
 import useStyles from './CodeDemo.styles';
@@ -11,6 +12,8 @@ interface CodeDemoProps {
   demoBackground?: string;
   demoBorder?: boolean;
   children: React.ReactNode;
+  toggle?: boolean;
+  githubLink?: string;
 }
 
 export default function CodeDemo({
@@ -19,8 +22,11 @@ export default function CodeDemo({
   children,
   demoBackground = '#fff',
   demoBorder = true,
+  toggle = false,
+  githubLink,
 }: CodeDemoProps) {
   const classes = useStyles();
+  const [visible, setVisible] = useState(!toggle);
 
   return (
     <DocsSection>
@@ -33,8 +39,28 @@ export default function CodeDemo({
         }}
       >
         {children}
+
+        {toggle && (
+          <ElementsGroup position="center" style={{ marginTop: 20 }}>
+            <Button variant="outline" onClick={() => setVisible((v) => !v)}>
+              {visible ? 'Hide' : 'Show'} code
+            </Button>
+            <Button
+              component="a"
+              href={githubLink}
+              variant="outline"
+              color="gray"
+              leftIcon={<GitHubLogoIcon />}
+            >
+              View source on Github
+            </Button>
+          </ElementsGroup>
+        )}
       </Paper>
-      {code && <CodeHighlight code={code} language={language} className={classes.code} />}
+
+      {code && visible && (
+        <CodeHighlight code={code} language={language} className={classes.code} />
+      )}
     </DocsSection>
   );
 }
