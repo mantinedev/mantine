@@ -14,6 +14,10 @@ export default createUseStyles(
         ...getFontStyles(theme),
       },
 
+      '#nprogress': {
+        zIndex: 100000,
+      },
+
       ':target': {
         display: 'block',
         position: 'relative',

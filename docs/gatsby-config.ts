@@ -46,5 +46,13 @@ export default {
         icon: 'src/images/favicon.svg',
       },
     },
+
+    {
+      resolve: 'gatsby-plugin-nprogress',
+      options: {
+        color: OpenColor.blue[6],
+        showSpinner: false,
+      },
+    },
   ],
 };
