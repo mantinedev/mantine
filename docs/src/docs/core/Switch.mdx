@@ -5,9 +5,10 @@ order: 1
 slug: /core/switch/
 ---
 
-# Switch
+import { SWITCH_SIZES } from '@mantine/core';
+import { SwitchConfigurator } from '../demos/core/Switch/switch.configurator';
 
-This is a Switch component description placeholder
+# Switch
 
 <PageHeader
   source="mantine-core/src/Switch/Switch.tsx"
@@ -15,10 +16,64 @@ This is a Switch component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Switch } from '@mantine/core';
 ```
+
+## Usage
+
+Switch is another variant of <GatsbyLink to="/core/Checkbox">Checkbox</GatsbyLink>
+component. Use it to capture boolean value input from user.
+For better accessibility set `label` prop, it will add associated label element.
+
+<SwitchConfigurator />
+
+## Sizes
+
+Switch has 5 predefined sizes: xs, sm, md, lg, xl.
+Size defines label font-size (from <GatsbyLink to="/theming">theme.fontSizes</GatsbyLink>) and input width and height.
+
+You can get switch sizes by importing `SWITCH_SIZES`:
+
+```tsx
+import { SWITCH_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Width', 'Height']}
+  data={Object.keys(SWITCH_SIZES).map((size) => [
+    size,
+    `${SWITCH_SIZES[size].width}px`,
+    `${SWITCH_SIZES[size].height}px`,
+  ])}
+/>
+
+## Controlled
+
+```tsx
+import React, { useState } from 'react';
+import { Switch } from '@mantine/core';
+
+function Demo() {
+  const [checked, setChecked] = useState(false);
+  return <Switch checked={checked} onChange={(event) => setChecked(event.currentTarget.checked)} />;
+}
+```
+
+## Get element ref
+
+You can get input ref by passing `elementRef` prop to Switch component:
+
+```tsx
+import React, { useRef } from 'react';
+import { Switch } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef();
+  return <Switch elementRef={ref} />;
+}
+```
+
+## Component props
 
 <PropsTable component="Switch" />
