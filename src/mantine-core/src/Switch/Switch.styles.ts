@@ -62,7 +62,6 @@ export default createUseStyles({
       width: getSizeValue({ size, sizes: switchWidth }),
       padding: [0, 2],
       margin: 0,
-      cursor: 'pointer',
       transitionProperty: 'background-color, border-color',
       transitionTimingFunction: theme.transitionTimingFunction,
       transitionDuration: reduceMotion ? '1ms' : '150ms',
@@ -113,7 +112,7 @@ export default createUseStyles({
   label: ({ theme }: SwitchStylesProps) => ({
     ...getFontStyles(theme),
     fontFamily: theme.fontFamily,
-    marginLeft: theme.spacing.sm,
+    paddingLeft: theme.spacing.sm,
     fontSize: theme.fontSizes.sm,
   }),
 });

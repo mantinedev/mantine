@@ -36,7 +36,7 @@ export default createUseStyles({
 
   label: ({ theme, size }: CheckboxStylesProps) => ({
     ...getFontStyles(theme),
-    marginLeft: theme.spacing.sm,
+    paddingLeft: theme.spacing.sm,
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     lineHeight: `${getSizeValue({ size, sizes })}px`,
   }),
@@ -51,7 +51,6 @@ export default createUseStyles({
     borderRadius: theme.radius.sm,
     padding: 0,
     outline: 0,
-    cursor: 'pointer',
     display: 'block',
     margin: 0,
 
