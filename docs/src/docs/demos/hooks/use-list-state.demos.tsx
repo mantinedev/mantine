@@ -8,7 +8,12 @@ import code from '!!raw-loader!../../../../../src/mantine-demos/src/TodoList/Tod
 
 export function UseListStateDemo() {
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo
+      code={code}
+      language="tsx"
+      toggle
+      githubLink="https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/TodoList/TodoList.tsx"
+    >
       <div style={{ maxWidth: 500, margin: 'auto' }}>
         <TodoList />
       </div>

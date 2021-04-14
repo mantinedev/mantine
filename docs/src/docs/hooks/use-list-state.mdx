@@ -5,6 +5,7 @@ order: 1
 slug: /hooks/use-list-state/
 ---
 
+import { CheckboxIntermediateDemo } from '../demos/core/Checkbox/checkbox-intermediate.demo';
 import { UseListStateDemo } from '../demos/hooks/use-list-state.demos';
 
 # use-list-state
@@ -93,8 +94,23 @@ useListState<T>(initialValue: T[] = []): [T[], {
 }]
 ```
 
-## Todo list example
+## Examples
 
-[Browse code on Github](https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/TodoList/TodoList.tsx)
+### Todo list example
 
 <UseListStateDemo />
+
+### Intermediate state checkbox example
+
+<CheckboxIntermediateDemo />
+
+## TypeScript
+
+By default use-list-state will use type from initialValues.
+If you init hook with empty array, you must specify item type:
+
+```tsx
+useListState(['hello']); // ok, item type is string
+useListState([]); // not ok, item type is any
+useListState<string>([]); // ok, item type is string
+```
