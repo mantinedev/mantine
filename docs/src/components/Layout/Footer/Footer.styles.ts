@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme, getFocusStyles } from '@mantine/theme';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -19,6 +19,7 @@ export default createUseStyles(
     },
 
     link: {
+      ...getFocusStyles(theme),
       display: 'flex',
       alignItems: 'center',
       textDecoration: 'none',

@@ -23,6 +23,7 @@ export default createUseStyles(
     },
 
     logo: {
+      ...getFocusStyles(theme),
       paddingRight: theme.spacing.md,
       paddingLeft: theme.spacing.md,
       height: HEADER_HEIGHT,
