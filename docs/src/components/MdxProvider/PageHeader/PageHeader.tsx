@@ -50,7 +50,7 @@ export default function PageHeader(props: PageHeaderProps) {
         title="Open package page on npm"
         style={{
           textTransform: 'lowercase',
-          fontFamily: 'IBM Plex Mono, monospace',
+          fontFamily: 'Menlo, Monaco, Courier, monospace',
           borderColor: theme.colors.gray[3],
           color: theme.colors.gray[7],
         }}

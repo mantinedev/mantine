@@ -9,13 +9,15 @@ export default createUseStyles(
     },
 
     code: {
-      overflowX: 'auto',
+      boxSizing: 'border-box',
       position: 'relative',
-      fontFamily: 'IBM Plex Mono, monospace',
-      fontSize: theme.fontSizes.sm,
-      lineHeight: 1.4,
-      padding: [theme.spacing.md, theme.spacing.lg],
+      fontFamily: 'Menlo, Monaco, Courier, monospace',
+      lineHeight: 1.7,
+      fontSize: 13,
+      paddingRight: 500,
+      overflowX: 'auto',
       borderRadius: theme.radius.sm,
+      padding: [theme.spacing.md, theme.spacing.lg],
     },
 
     copy: {

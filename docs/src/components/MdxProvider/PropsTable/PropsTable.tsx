@@ -37,7 +37,7 @@ export default function PropsTable({ component }: PropsTableProps) {
             color="indigo"
             size="xs"
             weight={500}
-            style={{ fontFamily: 'IBM Plex Mono, monospace' }}
+            style={{ fontFamily: 'Menlo, Monaco, Courier, monospace' }}
           >
             {prop.type.name}
           </Text>
