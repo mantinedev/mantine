@@ -5,9 +5,10 @@ order: 1
 slug: /core/textarea/
 ---
 
-# Textarea
+import { TextareaConfigurator } from '../demos/core/Textarea/textarea.configurator';
+import { TextareaAutosizeDemo } from '../demos/core/Textarea/textarea-autosize.demo';
 
-This is a Textarea component description placeholder
+# Textarea
 
 <PageHeader
   source="mantine-core/src/Textarea/Textarea.tsx"
@@ -15,10 +16,51 @@ This is a Textarea component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Textarea } from '@mantine/core';
 ```
+
+## Usage
+
+Use TextInput when you need to capture large amounts of text from user.
+Component supports all props from <GatsbyLink to="/core/input">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper">InputWrapper</GatsbyLink> components.
+See full information about shared inputs props in <GatsbyLink to="/guides/inputs">inputs guide</GatsbyLink>.
+
+<TextareaConfigurator />
+
+## Autosize
+
+Autosize textarea uses [react-textarea-autosize](https://www.npmjs.com/package/react-textarea-autosize) package.
+The height will grow until `maxRows` are reached or indefinitely if `maxRows` not set.
+
+<TextareaAutosizeDemo />
+
+## Controlled
+
+```tsx
+import React, { useState } from 'react';
+import { Textarea } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <Textarea value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+}
+```
+
+## Get element ref
+
+You can get input ref by passing `elementRef` prop to Textarea component:
+
+```tsx
+import React, { useRef } from 'react';
+import { Textarea } from '@mantine/core';
+
+function TextareaDemo() {
+  const ref = useRef(null);
+  return <Textarea elementRef={ref} />;
+}
+```
+
+## Component props
 
 <PropsTable component="Textarea" />
