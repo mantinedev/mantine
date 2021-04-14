@@ -9,7 +9,7 @@ const codeTemplate = (props: string) => `<Checkbox
 export function CheckboxConfigurator() {
   return (
     <Configurator
-      component={Checkbox}
+      component={(props: any) => <Checkbox {...props} defaultChecked />}
       codeTemplate={codeTemplate}
       multiline
       props={[
@@ -21,7 +21,6 @@ export function CheckboxConfigurator() {
         { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
         { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
         { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
-        { name: 'checked', type: 'boolean', initialValue: true, defaultValue: false },
         { name: 'intermediate', type: 'boolean', initialValue: false, defaultValue: false },
       ]}
     />

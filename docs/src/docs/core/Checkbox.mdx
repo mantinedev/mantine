@@ -5,6 +5,7 @@ order: 1
 slug: /core/checkbox/
 ---
 
+import { CHECKBOX_SIZES } from '@mantine/core';
 import { CheckboxIntermediateDemo } from '../demos/core/Checkbox/checkbox-intermediate.demo';
 import { CheckboxConfigurator } from '../demos/core/Checkbox/checkbox.configurator';
 
@@ -22,10 +23,62 @@ import { Checkbox } from '@mantine/core';
 
 ## Usage
 
+Use Checkbox to capture boolean value input from user.
+For better accessibility set `label` prop, it will add associated label element.
+
 <CheckboxConfigurator />
+
+## Sizes
+
+Checkbox has 5 predefined sizes: xs, sm, md, lg, xl.
+Size defines label font-size (from <GatsbyLink to="/theming">theme.fontSizes</GatsbyLink>) and input width and height.
+
+You can get checkbox sizes by importing `CHECKBOX_SIZES`:
+
+```tsx
+import { CHECKBOX_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Width and height']}
+  data={Object.keys(CHECKBOX_SIZES).map((size) => [size, `${CHECKBOX_SIZES[size]}px`])}
+/>
 
 ## Intermediate state
 
+Checkbox supports intermediate state. When `intermediate` prop is set to true,
+`checked` prop is ignored:
+
 <CheckboxIntermediateDemo />
+
+## Controlled
+
+```tsx
+import React, { useState } from 'react';
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Checkbox checked={checked} onChange={(event) => setChecked(event.currentTarget.checked)} />
+  );
+}
+```
+
+## Get element ref
+
+You can get input ref by passing `elementRef` prop to Checkbox component:
+
+```tsx
+import React, { useRef } from 'react';
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef();
+  return <Checkbox elementRef={ref} />;
+}
+```
+
+## Component props
 
 <PropsTable component="Checkbox" />
