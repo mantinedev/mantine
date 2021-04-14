@@ -14,7 +14,7 @@ interface SelectItem {
 interface SelectProps
   extends DefaultProps,
     InputWrapperBaseProps,
-    InputProps,
+    Omit<InputProps, 'rightSection' | 'rightSectionWidth' | 'rightSectionProps'>,
     React.ComponentPropsWithoutRef<'select'> {
   /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
