@@ -39,6 +39,7 @@ storiesOf('@mantine/core/RadioGroup', module)
       required
       description="Don't worry it's anonymous, you can safely pick Angular"
       variant="vertical"
+      spacing="xl"
     >
       <Radio value="react">React</Radio>
       <Radio value="ng" disabled title="Unless you can't, haha">

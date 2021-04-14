@@ -1,6 +1,6 @@
 import React, { Children, cloneElement, useState } from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme, MantineSize } from '@mantine/theme';
 import { InputWrapper, InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
 import { Radio } from './Radio/Radio';
 import { sizes } from './Radio/Radio.styles';
@@ -33,6 +33,12 @@ interface RadioGroupProps
 
   /** Spacing between radios in horizontal variant */
   spacing?: MantineNumberSize;
+
+  /** Active radio color */
+  color?: string;
+
+  /** Predefined label fontSize, radio width, height and border-radius */
+  size?: MantineSize;
 }
 
 export function RadioGroup({
@@ -45,6 +51,8 @@ export function RadioGroup({
   onChange,
   variant = 'horizontal',
   spacing = 'md',
+  color,
+  size,
   ...others
 }: RadioGroupProps) {
   const [_value, setValue] = useState(value || defaultValue || '');
@@ -64,6 +72,8 @@ export function RadioGroup({
         key: index,
         checked: finalValue === radio.props.value,
         name: uuid,
+        color,
+        size,
         onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
           handleChange(event.currentTarget.value),
       })

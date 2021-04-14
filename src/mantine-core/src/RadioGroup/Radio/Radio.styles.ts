@@ -5,11 +5,13 @@ import {
   getSizeValue,
   getFontStyles,
   getFocusStyles,
+  getThemeColor,
 } from '@mantine/theme';
 
 interface RadioStylesProps {
   theme: MantineTheme;
   size: MantineSize;
+  color: string;
 }
 
 export const sizes = {
@@ -21,12 +23,14 @@ export const sizes = {
 };
 
 export default createUseStyles({
+  labelDisabled: {},
+
   wrapper: {
     display: 'flex',
     alignItems: 'center',
   },
 
-  radio: ({ theme, size }: RadioStylesProps) => ({
+  radio: ({ theme, size, color }: RadioStylesProps) => ({
     ...getFocusStyles(theme),
     backgroundColor: theme.colors.gray[0],
     border: `1px solid ${theme.colors.gray[4]}`,
@@ -43,8 +47,8 @@ export default createUseStyles({
     justifyContent: 'center',
 
     '&:checked': {
-      background: theme.colors[theme.primaryColor][5],
-      borderColor: theme.colors[theme.primaryColor][5],
+      background: getThemeColor({ theme, color, shade: 5 }),
+      borderColor: getThemeColor({ theme, color, shade: 5 }),
 
       '&::before': {
         content: '""',
@@ -63,17 +67,18 @@ export default createUseStyles({
       '&::before': {
         backgroundColor: theme.colors.gray[4],
       },
-
-      '& + $label': {
-        color: theme.colors.gray[5],
-      },
     },
   }),
 
   label: ({ theme, size }: RadioStylesProps) => ({
     ...getFontStyles(theme),
-    display: 'block',
+    display: 'flex',
+    alignItems: 'center',
     fontSize: theme.fontSizes[size] || theme.fontSizes.md,
     lineHeight: `${getSizeValue({ sizes, size })}px`,
+
+    '&$labelDisabled': {
+      color: theme.colors.gray[5],
+    },
   }),
 });
