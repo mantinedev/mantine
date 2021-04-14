@@ -5,9 +5,9 @@ order: 1
 slug: /core/text-input/
 ---
 
-# TextInput
+import { TextInputConfigurator } from '../demos/core/TextInput/text-input.configurator';
 
-This is a TextInput component description placeholder
+# TextInput
 
 <PageHeader
   source="mantine-core/src/TextInput/TextInput.tsx"
@@ -15,10 +15,44 @@ This is a TextInput component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { TextInput } from '@mantine/core';
 ```
+
+## Usage
+
+Use TextInput when you need to capture text from user.
+Component supports all props from <GatsbyLink to="/core/input">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper">InputWrapper</GatsbyLink> components.
+See full information about shared inputs props in <GatsbyLink to="/guides/inputs">inputs guide</GatsbyLink>.
+
+<TextInputConfigurator />
+
+## Controlled
+
+```tsx
+import React, { useState } from 'react';
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <TextInput value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+}
+```
+
+## Get element ref
+
+You can get input ref by passing `elementRef` prop to TextInput component:
+
+```tsx
+import React, { useRef } from 'react';
+import { TextInput } from '@mantine/core';
+
+function TextInputDemo() {
+  const ref = useRef(null);
+  return <TextInput elementRef={ref} />;
+}
+```
+
+## Component props
 
 <PropsTable component="TextInput" />

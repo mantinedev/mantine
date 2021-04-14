@@ -10,6 +10,7 @@ interface ConfiguratorProps {
   component: any;
   codeTemplate(props: string, children?: string): string;
   previewBackground?: string;
+  multiline?: boolean;
   props: {
     type: PropType;
     name: string;
@@ -63,6 +64,7 @@ export default function Configurator({
   codeTemplate,
   previewBackground = '#fff',
   props: componentProps,
+  multiline = false,
 }: ConfiguratorProps) {
   const classes = useStyles();
   const initialState = componentProps.reduce((acc, prop) => {
@@ -99,7 +101,7 @@ export default function Configurator({
       })
     )
     .filter(Boolean)
-    .join(' ')
+    .join(multiline ? '\n  ' : ' ')
     .trim();
 
   const code = codeTemplate(
