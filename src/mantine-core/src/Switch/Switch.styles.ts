@@ -109,10 +109,10 @@ export default createUseStyles({
     };
   },
 
-  label: ({ theme }: SwitchStylesProps) => ({
+  label: ({ theme, size }: SwitchStylesProps) => ({
     ...getFontStyles(theme),
+    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     fontFamily: theme.fontFamily,
     paddingLeft: theme.spacing.sm,
-    fontSize: theme.fontSizes.sm,
   }),
 });
