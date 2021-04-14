@@ -5,9 +5,9 @@ order: 1
 slug: /core/select/
 ---
 
-# Select
+import { SelectConfigurator } from '../demos/core/Select/select.configurator';
 
-This is a Select component description placeholder
+# Select
 
 <PageHeader
   source="mantine-core/src/Select/Select.tsx"
@@ -15,10 +15,47 @@ This is a Select component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { Select } from '@mantine/core';
 ```
+
+## Usage
+
+Use Select when you need to capture user feedback limited to certain options.
+If you only have 2-5 options consider using <GatsbyLink to="/core/radio-group">RadioGroup</GatsbyLink> instead of Select,
+as it provides better UX for smaller data sets.
+
+Component supports all props from <GatsbyLink to="/core/input">Input</GatsbyLink> (except for `rightSection`) and <GatsbyLink to="/core/input-wrapper">InputWrapper</GatsbyLink> components.
+See full information about shared inputs props in <GatsbyLink to="/guides/inputs">inputs guide</GatsbyLink>.
+
+<SelectConfigurator />
+
+## Controlled
+
+```tsx
+import React, { useState } from 'react';
+import { Select } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <Select value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+}
+```
+
+## Get element ref
+
+You can get input ref by passing `elementRef` prop to Select component:
+
+```tsx
+import React, { useRef } from 'react';
+import { Select } from '@mantine/core';
+
+function SelectDemo() {
+  const ref = useRef(null);
+  return <Select elementRef={ref} />;
+}
+```
+
+## Component props
 
 <PropsTable component="Select" />
