@@ -31,7 +31,7 @@ export { Progress, PROGRESS_SIZES } from './Progress/Progress';
 export { RadioGroup, Radio, RADIO_SIZES } from './RadioGroup/RadioGroup';
 export { Select } from './Select/Select';
 export { Spoiler } from './Spoiler/Spoiler';
-export { Switch } from './Switch/Switch';
+export { Switch, SWITCH_SIZES } from './Switch/Switch';
 export { Table } from './Table/Table';
 export { Tabs, Tab } from './Tabs/Tabs';
 export { Text } from './Text/Text';

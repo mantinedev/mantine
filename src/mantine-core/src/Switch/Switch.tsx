@@ -2,7 +2,9 @@ import React from 'react';
 import cx from 'clsx';
 import { useId, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '@mantine/theme';
-import useStyles from './Switch.styles';
+import useStyles, { sizes } from './Switch.styles';
+
+export const SWITCH_SIZES = sizes;
 
 interface SwitchProps
   extends DefaultProps,
