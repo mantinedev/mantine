@@ -5,9 +5,9 @@ order: 1
 slug: /core/radio-group/
 ---
 
-# RadioGroup
+import { RadioGroupConfigurator } from '../demos/core/RadioGroup/radio-group.configurator';
 
-This is a RadioGroup component description placeholder
+# RadioGroup
 
 <PageHeader
   source="mantine-core/src/RadioGroup/RadioGroup.tsx"
@@ -15,10 +15,71 @@ This is a RadioGroup component description placeholder
   package="@mantine/core"
 />
 
-## Import
-
 ```tsx
 import { RadioGroup, Radio } from '@mantine/core';
 ```
+
+## Usage
+
+Use RadioGroup when you need to capture user feedback limited to certain options.
+If you more that 5 options consider using <GatsbyLink to="/core/select">Select</GatsbyLink> instead of RadioGroup,
+as it provides better UX for large data sets.
+
+Component supports all props from <GatsbyLink to="/core/input-wrapper">InputWrapper</GatsbyLink> component.
+See full information about shared inputs props in <GatsbyLink to="/guides/inputs">inputs guide</GatsbyLink>.
+
+<RadioGroupConfigurator />
+
+## Controlled
+
+```tsx
+import React, { useState } from 'react';
+import { RadioGroup, Radio } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('react');
+
+  return (
+    <RadioGroup
+      value={value}
+      onChange={setValue}
+      label="Select your favorite framework/library"
+      description="This is anonymous, you can safely pick Angular"
+      required
+    >
+      <Radio value="react">React</Radio>
+      <Radio value="svelte">Svelte</Radio>
+      <Radio value="ng" disabled title="Unless you can't, haha">
+        Angular
+      </Radio>
+      <Radio value="vue">Vue</Radio>
+    </RadioGroup>
+  );
+}
+```
+
+## Get element ref
+
+You can get input ref by passing `elementRef` prop to Radio component:
+
+```tsx
+import React, { useRef } from 'react';
+import { Select } from '@mantine/core';
+
+function SelectDemo() {
+  const ref = useRef();
+
+  return (
+    <RadioGroup>
+      <Radio value="react">React</Radio>
+      <Radio value="svelte" elementRef={ref}>
+        Svelte
+      </Radio>
+    </RadioGroup>
+  );
+}
+```
+
+## Component props
 
 <PropsTable component="RadioGroup" />
