@@ -66,6 +66,9 @@ interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
 
   /** Control prop to get element ref */
   controlRefProp?: string;
+
+  /** Menu body z-index */
+  zIndex?: number;
 }
 
 const defaultControl = (
@@ -93,6 +96,7 @@ export function Menu({
   transitionTimingFunction,
   menuButtonLabel,
   controlRefProp = 'elementRef',
+  zIndex = 1000,
   ...others
 }: MenuProps) {
   const controlRefFocusTimeout = useRef<number>();
@@ -154,6 +158,7 @@ export function Menu({
         transitionTimingFunction={transitionTimingFunction}
         size={size}
         shadow={shadow}
+        zIndex={zIndex}
       >
         {children}
       </MenuBody>

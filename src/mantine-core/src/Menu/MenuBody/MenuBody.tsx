@@ -40,6 +40,9 @@ interface MenuBodyProps extends DefaultProps, React.ComponentPropsWithoutRef<'di
 
   /** Should menu close on item click */
   closeOnItemClick?: boolean;
+
+  /** Menu body z-index */
+  zIndex?: number;
 }
 
 function getPreviousItem(active: number, items: MenuItemType[]) {
@@ -86,6 +89,7 @@ export function MenuBody({
   shadow = 'md',
   closeOnClickOutside = true,
   closeOnItemClick = true,
+  zIndex = 1000,
   ...others
 }: MenuBodyProps) {
   const items = React.Children.toArray(children).filter(
@@ -186,7 +190,7 @@ export function MenuBody({
         <Paper
           shadow={shadow}
           className={cx(classes.menu, className)}
-          style={{ ...style, ...transitionStyles }}
+          style={{ ...style, ...transitionStyles, zIndex }}
           onKeyDownCapture={handleKeyDown}
           elementRef={menuRef}
           role="menu"
