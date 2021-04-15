@@ -30,9 +30,7 @@ export function MenuComponentDemo() {
           <MenuItem icon={<GearIcon style={iconSize} />}>Settings</MenuItem>
           <MenuItem icon={<ChatBubbleIcon style={iconSize} />}>Messages</MenuItem>
           <MenuItem icon={<ImageIcon style={iconSize} />}>Gallery</MenuItem>
-          <MenuItem cmd="⌘K" icon={<MagnifyingGlassIcon style={iconSize} />}>
-            Search
-          </MenuItem>
+          <MenuItem icon={<MagnifyingGlassIcon style={iconSize} />}>Search</MenuItem>
           <Hr />
           <MenuItem disabled>Delete my data</MenuItem>
           <MenuItem color="red">Delete account</MenuItem>
@@ -42,9 +40,7 @@ export function MenuComponentDemo() {
           <MenuItem icon={<GearIcon style={iconSize} />}>Settings</MenuItem>
           <MenuItem icon={<ChatBubbleIcon style={iconSize} />}>Messages</MenuItem>
           <MenuItem icon={<ImageIcon style={iconSize} />}>Gallery</MenuItem>
-          <MenuItem cmd="⌘K" icon={<MagnifyingGlassIcon style={iconSize} />}>
-            Search
-          </MenuItem>
+          <MenuItem icon={<MagnifyingGlassIcon style={iconSize} />}>Search</MenuItem>
           <Hr />
           <MenuItem disabled>Delete my data</MenuItem>
           <MenuItem color="red">Delete account</MenuItem>

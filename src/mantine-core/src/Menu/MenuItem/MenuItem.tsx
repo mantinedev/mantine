@@ -4,7 +4,7 @@ export interface MenuItemProps extends React.ComponentPropsWithoutRef<'button'> 
   children: React.ReactNode;
   icon?: React.ReactNode;
   color?: string;
-  cmd?: React.ReactNode;
+  rightSection?: React.ReactNode;
 }
 
 export interface MenuItemType {

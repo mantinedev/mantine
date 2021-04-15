@@ -62,10 +62,10 @@ describe('@mantine/core/MenuButton', () => {
     expect(withIcon.render().find('[data-mantine-icon]').text()).toBe('$$$');
   });
 
-  it('renders right section based on cmd prop', () => {
+  it('renders given right section', () => {
     const withoutCmd = shallow(<MenuButton {...defaultProps}>test</MenuButton>);
     const withCmd = shallow(
-      <MenuButton {...defaultProps} cmd="$$$">
+      <MenuButton {...defaultProps} rightSection={<span data-mantine-cmd>$$$</span>}>
         test
       </MenuButton>
     );

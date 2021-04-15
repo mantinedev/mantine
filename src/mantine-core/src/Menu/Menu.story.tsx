@@ -50,12 +50,12 @@ storiesOf('@mantine/core/Menu', module)
   ))
   .add('With shortcuts', () => (
     <MenuWrapper>
-      <MenuItem icon={<PlusIcon />} cmd="⌘T">
+      <MenuItem icon={<PlusIcon />} rightSection="⌘T">
         New tab
       </MenuItem>
-      <MenuItem cmd="⌘O">Open new file</MenuItem>
-      <MenuItem cmd="⌘N">New window</MenuItem>
-      <MenuItem disabled cmd="⌘Q">
+      <MenuItem rightSection="⌘O">Open new file</MenuItem>
+      <MenuItem rightSection="⌘N">New window</MenuItem>
+      <MenuItem disabled rightSection="⌘Q">
         Close application
       </MenuItem>
     </MenuWrapper>

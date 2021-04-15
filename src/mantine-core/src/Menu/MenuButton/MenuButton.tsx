@@ -1,7 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import { Text } from '../../Text/Text';
 import { MenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 
@@ -21,7 +20,7 @@ export function MenuButton({
   icon,
   color,
   disabled,
-  cmd,
+  rightSection,
   className,
   ...others
 }: MenuButtonProps) {
@@ -46,12 +45,7 @@ export function MenuButton({
 
         <div className={classes.body}>
           <div className={classes.label}>{children}</div>
-
-          {cmd && (
-            <Text data-mantine-cmd className={classes.cmd} color="gray" size="sm">
-              {cmd}
-            </Text>
-          )}
+          {rightSection}
         </div>
       </div>
     </button>

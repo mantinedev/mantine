@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, MenuItem, Hr } from '@mantine/core';
+import { Menu, MenuItem, Hr, Text } from '@mantine/core';
 import { GearIcon, ChatBubbleIcon, ImageIcon, MagnifyingGlassIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -18,7 +18,16 @@ export function MenuDemo() {
       <MenuItem icon={<GearIcon />}>Settings</MenuItem>
       <MenuItem icon={<ChatBubbleIcon />}>Messages</MenuItem>
       <MenuItem icon={<ImageIcon />}>Gallery</MenuItem>
-      <MenuItem cmd="⌘K" icon={<MagnifyingGlassIcon />}>Search</MenuItem>
+      <MenuItem
+        icon={<MagnifyingGlassIcon />}
+        rightSection={
+          <Text size="sm" color="gray">
+            ⌘K
+          </Text>
+        }
+      >
+        Search
+      </MenuItem>
       <Hr />
       <MenuItem disabled>Delete my data</MenuItem>
       <MenuItem color="red">Delete account</MenuItem>
@@ -29,6 +38,12 @@ export function MenuDemo() {
 const iconSize = { width: 14, height: 14 };
 
 export function MenuBaseDemo() {
+  const rightSection = (
+    <Text size="sm" color="gray">
+      ⌘K
+    </Text>
+  );
+
   return (
     <CodeDemo code={code} language="tsx">
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -36,7 +51,7 @@ export function MenuBaseDemo() {
           <MenuItem icon={<GearIcon style={iconSize} />}>Settings</MenuItem>
           <MenuItem icon={<ChatBubbleIcon style={iconSize} />}>Messages</MenuItem>
           <MenuItem icon={<ImageIcon style={iconSize} />}>Gallery</MenuItem>
-          <MenuItem cmd="⌘K" icon={<MagnifyingGlassIcon style={iconSize} />}>
+          <MenuItem rightSection={rightSection} icon={<MagnifyingGlassIcon style={iconSize} />}>
             Search
           </MenuItem>
           <Hr />
