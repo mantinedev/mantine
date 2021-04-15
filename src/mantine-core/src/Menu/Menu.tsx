@@ -1,7 +1,7 @@
 import React, { useState, useRef, cloneElement } from 'react';
 import { DotsHorizontalIcon } from '@modulz/radix-icons';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
-import { useId, useClickOutside } from '@mantine/hooks';
+import { useId, useClickOutside, useMergedRef } from '@mantine/hooks';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { MantineTransition } from '../Transition/Transition';
 import { MenuBody } from './MenuBody/MenuBody';
@@ -69,6 +69,9 @@ interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
 
   /** Menu body z-index */
   zIndex?: number;
+
+  /** Get control ref */
+  elementRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
 const defaultControl = (
@@ -97,6 +100,7 @@ export function Menu({
   menuButtonLabel,
   controlRefProp = 'elementRef',
   zIndex = 1000,
+  elementRef,
   ...others
 }: MenuProps) {
   const controlRefFocusTimeout = useRef<number>();
@@ -133,7 +137,7 @@ export function Menu({
     'aria-label': menuButtonLabel,
     'data-mantine-menu': true,
     title: menuButtonLabel,
-    [controlRefProp]: controlRef,
+    [controlRefProp]: useMergedRef(controlRef, elementRef),
   });
 
   return (

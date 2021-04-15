@@ -5,6 +5,7 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsOthers,
+  itSupportsRef,
   isHasComposableAttribute,
 } from '@mantine/tests';
 import { Hr } from '../Hr/Hr';
@@ -32,6 +33,7 @@ describe('@mantine/core/Menu', () => {
   itSupportsStyle(Menu, defaultProps);
   itSupportsOthers(Menu, defaultProps);
   isHasComposableAttribute(Menu, defaultProps);
+  itSupportsRef(Menu, defaultProps, HTMLButtonElement, 'elementRef');
 
   it('has correct displayName', () => {
     expect(Menu.displayName).toEqual('@mantine/core/Menu');

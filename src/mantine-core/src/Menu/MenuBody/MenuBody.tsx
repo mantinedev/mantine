@@ -194,6 +194,7 @@ export function MenuBody({
           onKeyDownCapture={handleKeyDown}
           elementRef={menuRef}
           role="menu"
+          aria-orientation="vertical"
           {...others}
         >
           <div ref={focusTrapRef}>{buttons}</div>
