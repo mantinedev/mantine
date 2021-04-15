@@ -18,7 +18,7 @@ const codeTemplate = (props: string) => `<Menu${props}>
   <MenuItem>Discard changes</MenuItem>
   <MenuItem>Save draft</MenuItem>
   <MenuItem color="red">Delete</MenuItem>
-</Menu$>`;
+</Menu>`;
 
 export function MenuConfigurator() {
   return (

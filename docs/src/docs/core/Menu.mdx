@@ -23,17 +23,56 @@ import { Menu, MenuItem } from '@mantine/core';
 
 ## Usage
 
+Use Menu to combine a list of secondary actions into single interactive area.
+
 <MenuBaseDemo />
 
-## Custom component
+## MenuItem component
+
+You can use <GatsbyLink to="/core/Hr">Hr</GatsbyLink> (renders horizontal line) and MenuItem components inside Menu.
+MenuItem renders button and accepts props:
+
+- **icon** – icon on the left
+- **children** – item label
+- **rightSection** – any element, rendered on the right, for example, <GatsbyLink to="/core/badge">Badge</GatsbyLink> or keyboard shortcut
+- **...others** – all other button props, for example, onClick
+
+```tsx
+<MenuItem
+  icon={<GearIcon />}
+  onClick={() => console.log('Hello')}
+  rightSection={
+    <Text size="sm" color="gray">
+      ⌘K
+    </Text>
+  }
+>
+  Label
+</MenuItem>
+```
+
+## Custom control
+
+By default menu button uses <GatsbyLink to="/core/action-icon">ActionIcon</GatsbyLink> with horizontal dots.
+You can change it by setting `control` and `controlRefProp` props:
 
 <MenuComponentDemo />
 
+`controlRefProp` is the prop name with which element ref can be accessed.
+It defaults to `elementRef` as all interactive Mantine components use it to get ref.
+For regular html element it will be `controlRefProp="ref"`
+
 ## Change menu position
+
+Menu position defaults to `{ top: 0, left: 0 }` and is set with object which contains optional top, left, bottom and right properties:
 
 <MenuPositionDemo />
 
 ## Change transition
+
+Menu is built with <GatsbyLink to="/core/transition">Transition</GatsbyLink> component.
+To learn more about transitions see <GatsbyLink to="/guides/transitions">transitions guide</GatsbyLink>.
+You can customize transition, timing function and duration:
 
 <MenuTransitionsDemo />
 
@@ -41,9 +80,67 @@ import { Menu, MenuItem } from '@mantine/core';
 
 <MenuConfigurator />
 
+Menu has predefined sizes: xs, sm, md, lg, xl. Size prop controls menu width.
+You can also use number value to set width in px:
+
+```tsx
+<Menu size="sm" /> // -> predefined small width
+<Menu size={200} /> // -> 200px width
+```
+
+You can get predefined menu sizes by importing `BUTTON_SIZES`:
+
+```tsx
+import { MENU_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Menu width']}
+  data={Object.keys(MENU_SIZES).map((size) => [size, `${MENU_SIZES[size]}px`])}
+/>
+
+Same with shadow, you can use predefined shadows defined in <GatsbyLink to="/theming">theme</GatsbyLink> or your own:
+
+```tsx
+<Menu shadow="sm" /> // -> predefined small shadow
+<Menu shadow="1px 1px 3px rgba(0,0,0,.1)" /> // -> custom shadow
+```
+
 ## Compose with ElementsGroup
 
+You can compose Menu with any other components that support composition feature with <GatsbyLink to="/core/elements-group">ElementsGroup</GatsbyLink> component.
+
+## Get element ref
+
+You can get menu control ref by passing `elementRef` prop to Menu component:
+
+```tsx
+import React, { useRef } from 'react';
+import { Menu } from '@mantine/core';
+
+function Demo() {
+  const menuControlRef = useRef();
+  return <Menu elementRef={menuControlRef} />;
+}
+```
+
 <MenuComposeDemo />
+
+## Accessibility and usability
+
+To make component more accessible for users with screen readers set `menuButtonLabel` prop.
+Use it in case you chose control which does not include text, for example, default ActionIcon with horizontal dots icon.
+
+Component behavior and properties:
+
+- When menu is opened focus is trapped inside
+- When menu is closed focus is moved back to menu control
+- Focus inside menu is controlled with up and down arrows, tab key has no effect
+- By default when menu item is clicked, menu closes, change it with `closeOnItemClick` prop
+- Menu is closed when user clicks outside ot presses escape
+- Menu control has `aria-haspopup`, `aria-expanded`, `aria-controls` and `aria-label` attributes, `aria-label` is defined by `menuButtonLabel` prop
+- Menu body has `menu` role, `aria-orientation` is always set to `vertical`
+- Menu item has `menuitem` role
 
 ## Component props
 
