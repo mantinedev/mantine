@@ -10,6 +10,9 @@ export interface MantineTransitionStyles {
 export type MantineTransitionName =
   | 'fade'
   | 'skew-up'
+  | 'skew-down'
+  | 'rotate-up'
+  | 'rotate-down'
   | 'slide-down'
   | 'slide-up'
   | 'slide-right'
@@ -27,6 +30,27 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
   'skew-up': {
     in: { opacity: 1, transform: 'translateY(0) skew(0deg, 0deg)' },
     out: { opacity: 0, transform: 'translateY(-20px) skew(-10deg, -5deg)' },
+    common: { transformOrigin: 'top' },
+    transitionProperty: 'transform, opacity',
+  },
+
+  'skew-down': {
+    in: { opacity: 1, transform: 'translateY(0) skew(0deg, 0deg)' },
+    out: { opacity: 0, transform: 'translateY(20px) skew(-10deg, -5deg)' },
+    common: { transformOrigin: 'bottom' },
+    transitionProperty: 'transform, opacity',
+  },
+
+  'rotate-down': {
+    in: { opacity: 1, transform: 'translateY(0) rotate(0deg)' },
+    out: { opacity: 0, transform: 'translateY(20px) rotate(-5deg)' },
+    common: { transformOrigin: 'bottom' },
+    transitionProperty: 'transform, opacity',
+  },
+
+  'rotate-up': {
+    in: { opacity: 1, transform: 'translateY(0) rotate(0deg)' },
+    out: { opacity: 0, transform: 'translateY(20px) rotate(5deg)' },
     common: { transformOrigin: 'top' },
     transitionProperty: 'transform, opacity',
   },
