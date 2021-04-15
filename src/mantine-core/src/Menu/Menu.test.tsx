@@ -5,6 +5,7 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsOthers,
+  isHasComposableAttribute,
 } from '@mantine/tests';
 import { Hr } from '../Hr/Hr';
 import { Button } from '../Button/Button';
@@ -30,6 +31,7 @@ describe('@mantine/core/Menu', () => {
   itSupportsClassName(Menu, defaultProps);
   itSupportsStyle(Menu, defaultProps);
   itSupportsOthers(Menu, defaultProps);
+  isHasComposableAttribute(Menu, defaultProps);
 
   it('has correct displayName', () => {
     expect(Menu.displayName).toEqual('@mantine/core/Menu');
@@ -103,5 +105,17 @@ describe('@mantine/core/Menu', () => {
 
     expect(element.find('[data-mantine-menu]').prop('aria-controls')).toBe('test-id');
     expect(element.find(MenuBody).prop('id')).toBe('test-id');
+  });
+
+  it('passes zIndex to MenuBody', () => {
+    const element = shallow(
+      <Menu menuId="test-id" zIndex={785}>
+        <MenuItem>test-item</MenuItem>
+        <MenuItem>test-item</MenuItem>
+        <MenuItem>test-item</MenuItem>
+      </Menu>
+    );
+
+    expect(element.find(MenuBody).prop('zIndex')).toBe(785);
   });
 });
