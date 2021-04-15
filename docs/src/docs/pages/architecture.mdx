@@ -7,6 +7,34 @@ slug: /pages/architecture/
 
 This tutorial will help you learn how Mantine is built, published and deployed.
 
+## Dependencies
+
+Mantine is a monorepo, it contains all packages and docs in single repository.
+Dependencies are managed with [yarn v1 workspaces](https://classic.yarnpkg.com/en/docs/workspaces/).
+
+To manage dependencies more easily all of them are first added to [main package.json](https://github.com/mantinedev/mantine/blob/master/package.json)
+and only then added to individual packages based on needs.
+For the same reason packages do not have any dev dependencies, all these dependencies are listed in [main package.json](https://github.com/mantinedev/mantine/blob/master/package.json).
+
+To assure that all dependencies are in sync [syncpack](https://www.npmjs.com/package/syncpack)
+is used as part of testing script.
+
+## Tooling
+
+Mantine monorepo has shared [tooling configuration](https://github.com/mantinedev/mantine/tree/master/configuration) for all packages. It includes
+
+- Webpack config generator
+- Jest configuration
+- TypeScript configuration
+- ESLint and prettier configurations
+- Storybook
+- Syncpack
+- .gitignore
+
+Since all tooling is managed on larger scale, individual package always
+includes only readme, package.json, \_tsconfig.json and src folder.
+This approach keeps project simple and prevents duplication of dependencies and large chunks of configuration code.
+
 ## Mantine packages
 
 Mantine packages are located in [src folder](https://github.com/mantinedev/mantine/tree/master/src).
