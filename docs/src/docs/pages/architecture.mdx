@@ -5,9 +5,18 @@ slug: /pages/architecture/
 
 # Architecture
 
-This tutorial will help you learn how Mantine is built, published and deployed.
+This tutorial will help you get started with local Mantine development and learn how Mantine is built, published and deployed.
 
-## Dependencies
+## Local development
+
+To start Mantine on your machine:
+
+- Fork and clone the repository
+- Run `nvm use` to set node version (see [nvm repository](https://github.com/nvm-sh/nvm) for installation instructions)
+- Install dependencies with `yarn` (postinstall script will also install docs dependencies)
+- Run `npm run storybook` to start storybook and `npm run docs` to start documentation
+
+## Dependencies management
 
 Mantine is a monorepo, it contains all packages and docs in single repository.
 Dependencies are managed with [yarn v1 workspaces](https://classic.yarnpkg.com/en/docs/workspaces/).
@@ -19,7 +28,7 @@ For the same reason packages do not have any dev dependencies, all these depende
 To assure that all dependencies are in sync [syncpack](https://www.npmjs.com/package/syncpack)
 is used as part of testing script.
 
-## Tooling
+## Shared tooling
 
 Mantine monorepo has shared [tooling configuration](https://github.com/mantinedev/mantine/tree/master/configuration) for all packages. It includes
 
@@ -46,8 +55,50 @@ in [tsconfig](https://github.com/mantinedev/mantine/blob/master/tsconfig.json)
 and can be imported with regular syntax `import { Button } from '@mantine/core';`
 from anywhere in project, including tests, docs and other packages.
 
-## Mantine docs
+## Documentation
+
+Mantine documentation is built with [Gatsby](http://gatsbyjs.org/) and [mdx](https://mdxjs.com/).
+To start documentation locally run `npm run docs` script from main package.json.
 
 ### Docgen
 
+[react-docgen-typescript](https://github.com/styleguidist/react-docgen-typescript)
+is used to generate components props information.
+It has some caveats and requires some additional workarounds to achieve consistent typings,
+you can explore logic for types generation in [docgen script](https://github.com/mantinedev/mantine/blob/master/scripts/docgen.ts).
+
 ### Package size calculation
+
+## npm scripts
+
+All npm scripts are located at [main package.json](https://github.com/mantinedev/mantine/blob/master/package.json),
+individual packages do not have dedicated scripts.
+
+### Development scripts
+
+- `storybook` – starts storybook development server
+- `docs` – starts docs development server
+
+### Testing scripts
+
+- `syncpack` – runs [syncpack](https://www.npmjs.com/package/syncpack)
+- `typecheck` – runs TypeScript typechecking with `tsc --noEmit` on all packages and docs
+- `lint` – runs ESLint on src folder
+- `jest` – runs tests with jest
+- `test` – runs all above testing scripts
+
+### Docs scripts
+
+- `docs:docgen` – generates components types information with [docgen script](https://github.com/mantinedev/mantine/blob/master/scripts/docgen.ts)
+- `docs:sizes` – generates bundle size information for all packages
+- `docs:clean` – runs `gatsby clean`
+- `docs:build` – runs all above docs scripts and build production docs bundle
+- `docs:deploy` – runs all above docs scripts and deploys docs to Github Pages
+
+### Release scripts
+
+- `build` – builds given package, for example, `npm run build @mantine/core` to build single package or `npm run build all` to build all public packages
+- `clean` – removes dist folder from all packages
+- `release:patch` – releases 1.1.x patch version to npm
+- `release:minor` – releases 1.x.0 minor version to npm
+- `release:major` – releases x.0.0 major version to npm
