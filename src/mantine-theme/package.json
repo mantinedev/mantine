@@ -1,6 +1,6 @@
 {
   "name": "@mantine/theme",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "main": "dist/lib.js",
   "types": "dist/mantine-theme/src/index.d.ts",
   "license": "MIT",
