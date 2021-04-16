@@ -2,6 +2,8 @@ import path from 'path';
 import fs from 'fs-extra';
 import { withCustomConfig, PropItem, ComponentDoc } from 'react-docgen-typescript';
 
+const PATHS = [{ type: 'package', path: path.join(__dirname, '../src/mantine-core/src') }];
+
 const EXCLUDE_PROPS = ['className', 'key', 'ref', 'style', 'themeOverride'];
 
 const docgen = withCustomConfig(path.join(__dirname, '../tsconfig.json'), {
@@ -21,15 +23,17 @@ const docgen = withCustomConfig(path.join(__dirname, '../tsconfig.json'), {
   },
 });
 
-const paths = [{ package: 'mantine-core', path: path.join(__dirname, '../src/mantine-core/src') }];
+const declarations = PATHS.reduce((acc, info) => {
+  if (info.type === 'package') {
+    const paths = fs
+      .readdirSync(info.path)
+      .filter((p) => fs.pathExistsSync(path.join(info.path, p, `${p}.tsx`)))
+      .map((p) => path.join(info.path, p, `${p}.tsx`));
+    return [...acc, ...paths];
+  }
 
-const declarations = paths.reduce((acc, folder) => {
-  acc[folder.package] = fs
-    .readdirSync(folder.path)
-    .filter((p) => fs.pathExistsSync(path.join(folder.path, p, `${p}.tsx`)))
-    .map((p) => path.join(folder.path, p, `${p}.tsx`));
   return acc;
-}, {});
+}, []);
 
 function prepareDeclaration(declaration: ComponentDoc) {
   const data = { ...declaration };
@@ -68,15 +72,12 @@ function prepareDeclaration(declaration: ComponentDoc) {
   return data;
 }
 
-Object.keys(declarations).forEach((key) => {
-  fs.ensureDirSync(path.join(__dirname, '../docs/.docgen', key));
+fs.ensureDirSync(path.join(__dirname, '../docs/.docgen'));
 
-  const data = docgen.parse(declarations[key]).reduce((acc, declaration) => {
-    const packageName = `@mantine/${key.split('-')[1]}/`;
-    const componentName = declaration.displayName.replace(packageName, '');
-    acc[componentName] = prepareDeclaration(declaration);
-    return acc;
-  }, {});
+const data = docgen.parse(declarations).reduce((acc, declaration) => {
+  const componentName = declaration.displayName.replace(/@mantine\/([^\s]+)\//, '');
+  acc[componentName] = prepareDeclaration(declaration);
+  return acc;
+}, {});
 
-  fs.writeJSONSync(path.join(__dirname, '../docs/.docgen', key, 'props.json'), data, { spaces: 2 });
-});
+fs.writeJSONSync(path.join(__dirname, '../docs/.docgen/docgen.json'), data, { spaces: 2 });

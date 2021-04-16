@@ -2,13 +2,9 @@ import React from 'react';
 import { Table, Text, Paper } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
 import DocsSection from '../../DocsSection/DocsSection';
-import PROPS_DATA from '../../../../.docgen/mantine-core/props.json';
+import PROPS_DATA from '../../../../.docgen/docgen.json';
 
-interface PropsTableProps {
-  component: string;
-}
-
-export default function PropsTable({ component }: PropsTableProps) {
+export default function PropsTable({ component }: { component: string }) {
   const theme = useMantineTheme();
 
   const rows = Object.keys(PROPS_DATA[component].props).map((propKey) => {
