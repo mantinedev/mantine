@@ -15,7 +15,7 @@ export interface DocItem {
 
 export type DocsData = Record<string, DocItem[]>;
 
-const order = ['guides', 'mantine-hooks', 'mantine-core', 'mantine-notifications'];
+const order = ['guides', 'mantine-hooks', 'mantine-core'];
 
 export default function getDocsData(query: DocsQuery): DocsData {
   const results = query.allMdx.edges.reduce((acc: DocsData, item) => {
