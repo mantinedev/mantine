@@ -1,2 +1,0 @@
-(self.webpackChunkmantine_docs=self.webpackChunkmantine_docs||[]).push([[154],{9284:function(n,t,e){"use strict";e.r(t),e.d(t,{_frontmatter:function(){return a},default:function(){return u}});var o=e(9756),r=(e(7378),e(498)),a={title:"404",slug:"/404"},s={_frontmatter:a};function u(n){var t=n.components,e=(0,o.Z)(n,["components"]);return(0,r.mdx)("wrapper",Object.assign({},s,e,{components:t,mdxType:"MDXLayout"}),(0,r.mdx)("h1",{id:"404-page"},"404 page"))}u.isMDXComponent=!0}}]);
-//# sourceMappingURL=component---src-pages-404-mdx-0c679d785d7ed22afc6c.js.map
