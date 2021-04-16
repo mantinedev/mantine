@@ -1,15 +1,12 @@
-# Mantine
-
 ![Github banner](./github-banner.svg)
 
-Build better React applications. Mantine is a customizable component library with focus on accessibility and developer experience.
+Mantine is a customizable component library with focus on accessibility and developer experience.
 
 ## Links
 
-- [Documentation](https://mantine.dev/)
-- [Getting Started](https://mantine.dev/getting-started/)
-- [Examples](https://mantine.dev/examples/)
-- [Contributing](https://mantine.dev/source/)
+- [Getting Started](https://mantine.dev/)
+- [Examples](https://mantine.dev/pages/examples/)
+- [Contributing](https://mantine.dev/pages/contribute/)
 
 ## Installation
 
@@ -17,12 +14,12 @@ To start using Mantine you need to install [`@mantine/core`](https://www.npmjs.c
 
 ```sh
 # With yarn
-yarn add @mantine/core @mantine/hooks react-jss
+yarn add react-jss @mantine/theme @mantine/hooks @mantine/core
 
 # With npm
-yarn add @mantine/core @mantine/hooks react-jss
+npm install react-jss @mantine/theme @mantine/hooks @mantine/core
 
-# With install-peerdeps
+# With peerdeps
 npx install-peerdeps @mantine/core
 ```
 
