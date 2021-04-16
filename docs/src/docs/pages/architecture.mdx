@@ -55,10 +55,23 @@ in [tsconfig](https://github.com/mantinedev/mantine/blob/master/tsconfig.json)
 and can be imported with regular syntax `import { Button } from '@mantine/core';`
 from anywhere in project, including tests, docs and other packages.
 
+### Release process
+
+Release process consists of multiple steps:
+
+- Tests: typecheck, linting, jest and syncpack
+- Build: all packages are built with webpack with [shared configuration for all packages](https://github.com/mantinedev/mantine/blob/master/configuration/webpack/create-package-config.ts)
+- Deploy: docs are built and deployed to Github Pages
+
+### Versioning
+
+During release process version of each package is incremented according to release type.
+All packages have the same version and change it during release process even if no changes were made.
+
 ## Documentation
 
 Mantine documentation is built with [Gatsby](http://gatsbyjs.org/) and [mdx](https://mdxjs.com/).
-To start documentation locally run `npm run docs` script from main package.json.
+To start documentation locally run `docs` script from main package.json.
 
 ### Docgen
 
@@ -68,6 +81,10 @@ It has some caveats and requires some additional workarounds to achieve consiste
 you can explore logic for types generation in [docgen script](https://github.com/mantinedev/mantine/blob/master/scripts/docgen.ts).
 
 ### Package size calculation
+
+Docs include bundle size information. This data is captured during release process automatically
+with [sizes calculation script](https://github.com/mantinedev/mantine/blob/master/scripts/calculate-sizes.ts).
+Note that, produced bundles do not include neither direct dependencies nor peer dependencies.
 
 ## npm scripts
 
