@@ -5,7 +5,7 @@ import { NotificationProps } from '../../types';
 export default function useNotificationsState({ limit }: { limit: number }) {
   const { state, update } = useQueue<NotificationProps>({ initialValues: [], limit });
 
-  const showNotification = (notification: NotificationProps) =>
+  const showNotification = (notification: NotificationProps) => {
     update((notifications) => {
       if (notification.id && notifications.some((n) => n.id === notification.id)) {
         return notifications;
@@ -13,6 +13,9 @@ export default function useNotificationsState({ limit }: { limit: number }) {
 
       return [...notifications, { ...notification, id: notification.id || nanoid() }];
     });
+
+    return notification.id;
+  };
 
   const updateNotification = (id: string, notification: NotificationProps) =>
     update((notifications) => {

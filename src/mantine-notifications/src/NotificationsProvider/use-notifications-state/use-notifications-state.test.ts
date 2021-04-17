@@ -16,6 +16,13 @@ describe('@mantine/notifications/use-notifications-state', () => {
     expect(hook.result.current.notifications).toEqual([TEST_NOTIFICATION]);
   });
 
+  it('returns notification id with showNotification handler', () => {
+    const spy = jest.fn();
+    const hook = renderHook(() => useNotificationsState({ limit: 3 }));
+    act(() => spy(hook.result.current.showNotification(TEST_NOTIFICATION)));
+    expect(spy).toHaveBeenCalledWith(TEST_NOTIFICATION.id);
+  });
+
   it('does not allow to add multiple notifications with same id', () => {
     const hook = renderHook(() => useNotificationsState({ limit: 3 }));
     expect(hook.result.current.notifications).toHaveLength(0);
