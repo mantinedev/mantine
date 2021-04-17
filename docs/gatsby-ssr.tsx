@@ -11,14 +11,16 @@ export const wrapRootElement = ({ element, pathname }) => {
 
   return (
     <JssProvider registry={sheets}>
-      <MantineProvider>
-        <div>
-          <Layout>{element}</Layout>
-        </div>
-      </MantineProvider>
+      <MantineProvider>{element}</MantineProvider>
     </JssProvider>
   );
 };
+
+export const wrapPageElement = ({ element }) => (
+  <div>
+    <Layout>{element}</Layout>
+  </div>
+);
 
 export const onRenderBody = ({ setHeadComponents, pathname }) => {
   const sheets = sheetsRegistryManager.get(pathname);

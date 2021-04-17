@@ -9,7 +9,7 @@ export const onInitialClientRender = () => {
   }
 };
 
-export const wrapRootElement = ({ element }) => (
+export const wrapPageElement = ({ element }) => (
   <MantineProvider>
     <div>
       <Layout>{element}</Layout>
