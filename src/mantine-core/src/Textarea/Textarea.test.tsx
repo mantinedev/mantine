@@ -14,6 +14,12 @@ import { Textarea } from './Textarea';
 const getInput = (element: any, input: any) => element.find(Input).dive().find(input);
 
 describe('@mantine/core/Textarea', () => {
+  beforeAll(() => {
+    // JSDom does not implement this and an error was being
+    // thrown from jest-axe because of it.
+    window.getComputedStyle = jest.fn();
+  });
+
   checkAccessibility([
     mount(<Textarea label="test-label" />),
     mount(<Textarea aria-label="test-label" />),

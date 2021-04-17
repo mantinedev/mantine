@@ -10,6 +10,12 @@ import { DEFAULT_THEME } from '@mantine/theme';
 import { Input } from './Input';
 
 describe('@mantine/core/Input', () => {
+  beforeAll(() => {
+    // JSDom does not implement this and an error was being
+    // thrown from jest-axe because of it.
+    window.getComputedStyle = jest.fn();
+  });
+
   checkAccessibility([
     mount(<Input aria-label="test-input" />),
     mount(<Input placeholder="test-input" />),
