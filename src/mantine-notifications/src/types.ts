@@ -18,6 +18,8 @@ export interface NotificationsContextProps {
   showNotification(props: NotificationProps): string;
   updateNotification(id: string, props: NotificationProps): void;
   hideNotification(id: string): void;
+  clean(): void;
+  cleanQueue(): void;
 }
 
 export type NotificationsProviderPositioning = ['top' | 'bottom', 'left' | 'right' | 'center'];

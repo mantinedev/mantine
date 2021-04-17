@@ -69,6 +69,8 @@ export function NotificationsProvider({
     showNotification,
     updateNotification,
     hideNotification,
+    clean,
+    cleanQueue,
   } = useNotificationsState({ limit });
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -107,7 +109,14 @@ export function NotificationsProvider({
 
   return (
     <NotificationsContext.Provider
-      value={{ notifications, showNotification, hideNotification, updateNotification }}
+      value={{
+        notifications,
+        showNotification,
+        hideNotification,
+        updateNotification,
+        clean,
+        cleanQueue,
+      }}
     >
       <Portal zIndex={zIndex}>
         <div

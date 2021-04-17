@@ -3,7 +3,10 @@ import { useQueue } from '@mantine/hooks';
 import { NotificationProps } from '../../types';
 
 export default function useNotificationsState({ limit }: { limit: number }) {
-  const { state, update } = useQueue<NotificationProps>({ initialValues: [], limit });
+  const { state, queue, update, cleanQueue } = useQueue<NotificationProps>({
+    initialValues: [],
+    limit,
+  });
 
   const showNotification = (notification: NotificationProps) => {
     update((notifications) => {
@@ -34,5 +37,15 @@ export default function useNotificationsState({ limit }: { limit: number }) {
   const hideNotification = (id: string) =>
     update((notifications) => notifications.filter((notification) => notification.id !== id));
 
-  return { notifications: state, showNotification, updateNotification, hideNotification };
+  const clean = () => update(() => []);
+
+  return {
+    notifications: state,
+    queue,
+    showNotification,
+    updateNotification,
+    hideNotification,
+    cleanQueue,
+    clean,
+  };
 }
