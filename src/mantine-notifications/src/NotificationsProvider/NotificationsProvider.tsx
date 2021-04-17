@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { Transition, TransitionGroup } from 'react-transition-group';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { Portal } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 import { NotificationsContext } from '../Notifications.context';
 import { NotificationsProviderPositioning } from '../types';
@@ -27,6 +28,7 @@ interface NotificationProviderProps extends DefaultProps, React.ComponentPropsWi
   containerWidth?: number;
   notificationMaxHeight?: number;
   limit?: number;
+  zIndex?: number;
 }
 
 export function NotificationsProvider({
@@ -38,6 +40,7 @@ export function NotificationsProvider({
   containerWidth = 440,
   notificationMaxHeight = 200,
   limit = 5,
+  zIndex = 5000,
   style,
   children,
   ...others
@@ -87,17 +90,19 @@ export function NotificationsProvider({
     <NotificationsContext.Provider
       value={{ notifications, showNotification, hideNotification, updateNotification }}
     >
-      <div
-        className={cx(classes.notifications, className)}
-        style={{
-          maxWidth: containerWidth,
-          ...getPositionStyles(positioning, containerWidth, theme.spacing.md),
-          ...style,
-        }}
-        {...others}
-      >
-        <TransitionGroup>{items}</TransitionGroup>
-      </div>
+      <Portal zIndex={zIndex}>
+        <div
+          className={cx(classes.notifications, className)}
+          style={{
+            maxWidth: containerWidth,
+            ...getPositionStyles(positioning, containerWidth, theme.spacing.md),
+            ...style,
+          }}
+          {...others}
+        >
+          <TransitionGroup>{items}</TransitionGroup>
+        </div>
+      </Portal>
 
       {children}
     </NotificationsContext.Provider>
