@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import cx from 'clsx';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import DocsSection from '../DocsSection/DocsSection';
 import controls from './controls';
@@ -11,6 +12,7 @@ interface ConfiguratorProps {
   codeTemplate(props: string, children?: string): string;
   previewBackground?: string;
   multiline?: boolean;
+  includeCode?: boolean;
   props: {
     type: PropType;
     name: string;
@@ -65,6 +67,7 @@ export default function Configurator({
   previewBackground = '#fff',
   props: componentProps,
   multiline = false,
+  includeCode = true,
 }: ConfiguratorProps) {
   const classes = useStyles();
   const initialState = componentProps.reduce((acc, prop) => {
@@ -111,7 +114,7 @@ export default function Configurator({
 
   return (
     <DocsSection>
-      <div className={classes.configurator}>
+      <div className={cx(classes.configurator, { [classes.noCode]: !includeCode })}>
         <div className={classes.preview} style={{ background: previewBackground }}>
           <div>
             <Component {...state} />
@@ -119,7 +122,7 @@ export default function Configurator({
         </div>
         <div className={classes.controls}>{items}</div>
       </div>
-      <CodeHighlight code={code} language="tsx" className={classes.code} />
+      {includeCode && <CodeHighlight code={code} language="tsx" className={classes.code} />}
     </DocsSection>
   );
 }

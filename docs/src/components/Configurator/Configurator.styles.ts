@@ -18,6 +18,11 @@ export default createUseStyles(
       },
     },
 
+    noCode: {
+      borderRadius: theme.radius.sm,
+      borderBottom: `1px solid ${theme.colors.gray[3]}`,
+    },
+
     preview: {
       flex: 1,
       padding: theme.spacing.md,

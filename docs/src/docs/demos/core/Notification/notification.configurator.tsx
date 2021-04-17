@@ -28,12 +28,13 @@ const codeTemplate = (props: string, children: string) => `<>
   </Notification>
 </>`;
 
-export function NotificationConfigurator() {
+export function NotificationConfigurator({ noCode = false }: { noCode: boolean }) {
   return (
     <Configurator
       previewBackground={DEFAULT_THEME.colors.gray[0]}
       component={NotificationWrapper}
       codeTemplate={codeTemplate}
+      includeCode={!noCode}
       props={[
         { name: 'loading', type: 'boolean', initialValue: false, defaultValue: false },
         { name: 'disallowClose', type: 'boolean', initialValue: false, defaultValue: false },

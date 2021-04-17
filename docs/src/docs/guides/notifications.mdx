@@ -5,6 +5,7 @@ title: Notifications system
 slug: /guides/notifications/
 ---
 
+import { NotificationConfigurator } from '../demos/core/Notification/notification.configurator';
 import { NotificationsRootDemo } from '../demos/guides/notifications/notifications-root.demo';
 import { NotificationsBaseDemo } from '../demos/guides/notifications/notifications-base.demo';
 
@@ -52,6 +53,71 @@ function YourApp() {
 Use use-notifications hook at any place in your application:
 
 <NotificationsBaseDemo />
+
+## use-notifications hook
+
+Hook returns object with properties:
+
+- **notifications** – list of notifications that are currently displayed
+- **queue** – list of notifications in queue
+- **showNotification** – adds given notification to notifications list or queue depending on current state and limit, returns notification id
+- **updateNotification** – updates notification with given id
+- **hideNotification** – removes notification with given id from notifications list and queue
+- **clean** – removes all notifications from notifications list and queue
+- **cleanQueue** – removes all notifications from queue
+
+```tsx
+useNotifications(): {
+  notifications: NotificationProps[];
+  queue: NotificationProps[];
+  showNotification(props: NotificationProps): string;
+  updateNotification(id: string, props: NotificationProps): void;
+  hideNotification(id: string): void;
+  clean(): void;
+  cleanQueue(): void;
+}
+```
+
+## Notification props
+
+Notification state item can have these properties:
+
+- **id** – notification id, it is used to update adn remove notification, be default id generates with [nanoid](https://www.npmjs.com/package/nanoid)
+- **disallowClose** – removes close button, notification can be closed only programmatically
+- **onClose** – calls when notification is unmounted
+- **onOpen** – calls when notification is mounted
+- **autoClose** – defines timeout in ms on which notification will be automatically closed, use `false` to disable auto close
+- **message** – required notification body
+- **color, icon, title, className, style, loading** – props spread to <GatsbyLink to="/core/notification">Notification</GatsbyLink> component
+
+All properties except **message** are optional.
+
+```tsx
+const notifications = useNotifications();
+
+// Bare minimum – message is required for all notifications
+notifications.showNotification({ message: 'Hello' });
+
+// All possible notification props
+const id = notifications.showNotification({
+  id: 'hello-there',
+  disallowClose: true,
+  onClose: () => console.log('unmounted'),
+  onOpen: () => console.log('mounted'),
+  autoClose: 5000,
+  title: "You've been compromised",
+  message: 'Leave the building immediately',
+  color: 'red',
+  icon: <Cross1Icon />,
+  className: 'my-notification-class',
+  style: { backgroundColor: 'red' },
+  loading: false,
+});
+```
+
+Notifications preview (message prop used as children):
+
+<NotificationConfigurator noCode />
 
 ## Bundle size
 
