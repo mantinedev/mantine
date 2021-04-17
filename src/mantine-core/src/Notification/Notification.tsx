@@ -53,7 +53,7 @@ export function Notification({
 
   return (
     <Paper
-      shadow="sm"
+      shadow="lg"
       padding="sm"
       className={cx(classes.notification, { [classes.withIcon]: icon || loading }, className)}
       role="alert"

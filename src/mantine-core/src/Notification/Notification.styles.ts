@@ -20,6 +20,7 @@ export default createUseStyles({
     paddingTop: 10,
     paddingBottom: 10,
     borderRadius: 4,
+    border: `1px solid ${theme.colors.gray[2]}`,
 
     '&::before': {
       content: "''",
