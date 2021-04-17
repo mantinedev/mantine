@@ -1,10 +1,21 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { renderHook } from '@testing-library/react-hooks';
 import { MantineProvider } from '@mantine/theme';
 import { useNotifications } from './use-notifications';
 import { NotificationsProvider } from '../NotificationsProvider/NotificationsProvider';
 
 describe('@mantine/notifications/use-notifications', () => {
+  beforeAll(() => {
+    // @ts-ignore
+    ReactDOM.createPortal = jest.fn((element) => element);
+  });
+
+  afterEach(() => {
+    // @ts-ignore
+    ReactDOM.createPortal.mockClear();
+  });
+
   it('throws error if called outside of NotificationsProvider', () => {
     const hook = renderHook(() => useNotifications());
     expect(hook.result.error).toEqual(
