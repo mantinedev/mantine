@@ -33,6 +33,7 @@ export default function PageHeader(props: PageHeaderProps) {
         color="gray"
         leftIcon={<GitHubLogoIcon />}
         target="_blank"
+        rel="noopener noreferrer"
         href={`https://github.com/mantinedev/mantine/blob/master/src/${props.source}`}
         style={{ borderColor: theme.colors.gray[3], color: theme.colors.gray[7] }}
         title="Browse source page on Github"
@@ -46,6 +47,7 @@ export default function PageHeader(props: PageHeaderProps) {
         color="gray"
         leftIcon={<NpmIcon />}
         target="_blank"
+        rel="noopener noreferrer"
         href={`https://www.npmjs.com/package/${props.package}`}
         title="Open package page on npm"
         style={{

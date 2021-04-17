@@ -31,7 +31,7 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
         />
         <div className={classes.logoWrapper}>
           <Link to="/" className={classes.logo}>
-            <img className={classes.image} src={logo} alt="" />
+            <img className={classes.image} src={logo} alt="Mantine" />
           </Link>
           <a href="https://github.com/mantinedev/mantine/releases" className={classes.version}>
             <Code>v{corePackageJson.version}</Code>
