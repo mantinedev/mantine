@@ -31,7 +31,7 @@ interface NotificationProviderProps extends DefaultProps, React.ComponentPropsWi
     | 'bottom-right'
     | 'bottom-center';
 
-  /** Auto close timeout for all notifications, false to disable auto close */
+  /** Auto close timeout for all notifications, false to disable auto close, can be overwritten for individual notifications by showNotification function */
   autoClose?: number | false;
 
   /** Notification transitions duration, 0 to turn transitions off */
@@ -40,10 +40,10 @@ interface NotificationProviderProps extends DefaultProps, React.ComponentPropsWi
   /** Notification width in px, cannot exceed 100% */
   containerWidth?: number;
 
-  /** Notification max-height, used for transitions */
+  /** Notification max-height in px, used for transitions */
   notificationMaxHeight?: number;
 
-  /** Maximum amount of notifications displayed at a time, other new notifications are put in queue */
+  /** Maximum amount of notifications displayed at a time, other new notifications will be added to queue */
   limit?: number;
 
   /** Notifications container z-index */
