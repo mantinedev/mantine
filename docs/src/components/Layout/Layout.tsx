@@ -2,6 +2,7 @@ import 'normalize.css';
 
 import React, { useState } from 'react';
 import { Container } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 import { graphql, useStaticQuery } from 'gatsby';
 import MdxProvider from '../MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
@@ -34,22 +35,24 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const data = getDocsData(useStaticQuery(query));
 
   return (
-    <div className={classes.layout}>
-      <Header
-        data={data}
-        navbarOpened={navbarOpened}
-        toggleNavbar={() => setNavbarState((o) => !o)}
-      />
-      <Navbar data={data} opened={navbarOpened} onClose={() => setNavbarState(false)} />
+    <NotificationsProvider>
+      <div className={classes.layout}>
+        <Header
+          data={data}
+          navbarOpened={navbarOpened}
+          toggleNavbar={() => setNavbarState((o) => !o)}
+        />
+        <Navbar data={data} opened={navbarOpened} onClose={() => setNavbarState(false)} />
 
-      <main className={classes.main}>
-        <Container size="sm">
-          <div className={classes.content}>
-            <MdxProvider>{children}</MdxProvider>
-          </div>
-          <Footer />
-        </Container>
-      </main>
-    </div>
+        <main className={classes.main}>
+          <Container size="sm">
+            <div className={classes.content}>
+              <MdxProvider>{children}</MdxProvider>
+            </div>
+            <Footer />
+          </Container>
+        </main>
+      </div>
+    </NotificationsProvider>
   );
 }

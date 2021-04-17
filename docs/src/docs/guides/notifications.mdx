@@ -5,4 +5,83 @@ title: Notifications system
 slug: /guides/notifications/
 ---
 
+import { NotificationsRootDemo } from '../demos/guides/notifications/notifications-root.demo';
+import { NotificationsBaseDemo } from '../demos/guides/notifications/notifications-base.demo';
+
 # Notifications system
+
+<NotificationsRootDemo />
+
+## Installation
+
+With yarn:
+
+```sh
+yarn add react-jss @mantine/theme @mantine/hooks @mantine/core @mantine/notifications
+```
+
+With npm:
+
+```sh
+npm install react-jss @mantine/theme @mantine/hooks @mantine/core @mantine/notifications
+```
+
+With [peerdeps](https://www.npmjs.com/package/install-peerdeps):
+
+```sh
+npx install-peerdeps @mantine/notifications
+```
+
+## Usage
+
+Wrap your application with NotificationsProvider:
+
+```tsx
+import React from 'react';
+import { NotificationsProvider } from '@mantine/notifications';
+
+function YourApp() {
+  return (
+    <NotificationsProvider>
+      <App />
+    </NotificationsProvider>
+  );
+}
+```
+
+Use use-notifications hook at any place in your application:
+
+<NotificationsBaseDemo />
+
+## Bundle size
+
+<BundleSize packageName="@mantine/notifications" />
+
+## Dependencies
+
+<Dependencies
+  packageName="@mantine/core"
+  dependencies={[
+    { name: '@mantine/theme', type: 'peer' },
+    { name: '@mantine/hooks', type: 'peer' },
+    { name: '@mantine/core', type: 'peer' },
+    { name: 'react', type: 'peer' },
+    { name: 'react-dom', type: 'peer' },
+    { name: 'react-jss', type: 'peer', why: 'CSS-in-JS library used to style all components' },
+    {
+      name: 'clsx',
+      type: 'dependency',
+      why: 'Utility to construct className stings conditionally',
+    },
+    {
+      name: 'react-transition-group',
+      type: 'dependency',
+      why: 'Used to implement notifications appear/disappear transitions',
+    },
+    {
+      name: 'nanoid',
+      type: 'dependency',
+      why: 'Used for unique random id generation in use-id hook',
+    },
+  ]}
+/>
