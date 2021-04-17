@@ -22,12 +22,31 @@ const POSITIONS = [
 ] as const;
 
 interface NotificationProviderProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
-  position?: typeof POSITIONS[number];
+  /** Notifications position */
+  position?:
+    | 'top-left'
+    | 'top-right'
+    | 'top-center'
+    | 'bottom-left'
+    | 'bottom-right'
+    | 'bottom-center';
+
+  /** Auto close timeout for all notifications, false to disable auto close */
   autoClose?: number | false;
-  duration?: number;
+
+  /** Notification transitions duration, 0 to turn transitions off */
+  transitionDuration?: number;
+
+  /** Notification width in px, cannot exceed 100% */
   containerWidth?: number;
+
+  /** Notification max-height, used for transitions */
   notificationMaxHeight?: number;
+
+  /** Maximum amount of notifications displayed at a time, other new notifications are put in queue */
   limit?: number;
+
+  /** Notifications container z-index */
   zIndex?: number;
 }
 
@@ -36,7 +55,7 @@ export function NotificationsProvider({
   position = 'bottom-right',
   themeOverride,
   autoClose = 4000,
-  duration = 250,
+  transitionDuration = 250,
   containerWidth = 440,
   notificationMaxHeight = 200,
   limit = 5,
@@ -52,7 +71,7 @@ export function NotificationsProvider({
     hideNotification,
   } = useNotificationsState({ limit });
   const reduceMotion = useReducedMotion();
-  const transitionDuration = reduceMotion ? 1 : duration;
+  const duration = reduceMotion ? 1 : transitionDuration;
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme });
   const positioning = (POSITIONS.includes(position) ? position : 'bottom-right').split(
@@ -62,7 +81,7 @@ export function NotificationsProvider({
   const items = notifications.map((notification) => (
     <Transition
       key={notification.id}
-      timeout={transitionDuration}
+      timeout={duration}
       unmountOnExit
       mountOnEnter
       onEnter={(node: any) => node.offsetHeight}
@@ -77,7 +96,7 @@ export function NotificationsProvider({
             ...getNotificationStateStyles({
               state,
               positioning,
-              transitionDuration,
+              transitionDuration: duration,
               maxHeight: notificationMaxHeight,
             }),
           }}
