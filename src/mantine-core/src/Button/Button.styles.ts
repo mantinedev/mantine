@@ -108,8 +108,12 @@ export default createUseStyles({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    color: getThemeColor({ theme, color, shade: 8 }),
-    border: `1px solid ${getThemeColor({ theme, color, shade: 8 })}`,
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
+    border: `1px solid ${getThemeColor({
+      theme,
+      color,
+      shade: theme.colorScheme === 'dark' ? 4 : 8,
+    })}`,
 
     '&:not(:disabled):active': {
       transform: 'translateY(1px)',
@@ -117,8 +121,8 @@ export default createUseStyles({
 
     '&:disabled': {
       borderColor: 'transparent',
-      backgroundColor: theme.colors.gray[3],
-      color: theme.colors.gray[6],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4],
       cursor: 'not-allowed',
     },
   }),
@@ -143,8 +147,8 @@ export default createUseStyles({
 
     '&:disabled': {
       borderColor: 'transparent',
-      backgroundColor: theme.colors.gray[3],
-      color: theme.colors.gray[6],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4],
       textShadow: 'none',
       cursor: 'not-allowed',
     },
@@ -156,7 +160,7 @@ export default createUseStyles({
     backgroundColor: 'transparent',
     border: 0,
     display: 'inline-block',
-    color: getThemeColor({ theme, color, shade: 6 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
     cursor: 'pointer',
 
     '&:hover': {
