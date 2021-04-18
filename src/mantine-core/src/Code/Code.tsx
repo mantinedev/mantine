@@ -7,7 +7,7 @@ interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<'code'>
   /** Code content */
   children: React.ReactNode;
 
-  /** Code color and background from theme */
+  /** Code color and background from theme, defaults to gray in light theme and to dark in dark theme */
   color?: string;
 
   /** True for code block, false for inline code */
@@ -19,10 +19,12 @@ export function Code({
   themeOverride,
   block = false,
   className,
-  color = 'gray',
+  color,
   ...others
 }: CodeProps) {
-  const classes = useStyles({ color, theme: useMantineTheme() });
+  const theme = useMantineTheme(themeOverride);
+  const themeColor = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
+  const classes = useStyles({ color: themeColor, theme: useMantineTheme(themeOverride) });
 
   if (block) {
     return (

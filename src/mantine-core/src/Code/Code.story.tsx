@@ -24,4 +24,9 @@ storiesOf('@mantine/core/Code', module)
   .add('Themes', () => <div style={{ padding: 15 }}>{getThemes()}</div>)
   .add('Block', () => (
     <div style={{ padding: 15 }}>{getThemes({ block: true, children: block })}</div>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
+      {getThemes({ themeOverride: { colorScheme: 'dark' } })}
+    </div>
   ));
