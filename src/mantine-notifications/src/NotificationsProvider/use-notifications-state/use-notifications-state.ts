@@ -9,15 +9,17 @@ export default function useNotificationsState({ limit }: { limit: number }) {
   });
 
   const showNotification = (notification: NotificationProps) => {
+    const id = notification.id || nanoid(5);
+
     update((notifications) => {
       if (notification.id && notifications.some((n) => n.id === notification.id)) {
         return notifications;
       }
 
-      return [...notifications, { ...notification, id: notification.id || nanoid() }];
+      return [...notifications, { ...notification, id }];
     });
 
-    return notification.id;
+    return id;
   };
 
   const updateNotification = (id: string, notification: NotificationProps) =>
