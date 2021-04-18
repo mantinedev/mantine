@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles } from '@mantine/theme';
+import { MantineTheme, getFontStyles, getThemeColor, getFocusStyles } from '@mantine/theme';
 
 interface InnerHtmlStylesProps {
   theme: MantineTheme;
@@ -21,6 +21,7 @@ export default createUseStyles({
 
     return {
       ...getFontStyles(theme),
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       lineHeight: theme.lineHeight,
 
       ...headings,
@@ -41,11 +42,12 @@ export default createUseStyles({
         borderBottom: 0,
         borderLeft: 0,
         borderRight: 0,
-        borderTop: `1px dashed ${theme.colors.gray[6]}`,
+        borderTop: `1px dashed ${theme.colors.gray[theme.colorScheme === 'dark' ? 4 : 6]}`,
       },
 
       '& a': {
-        color: theme.colors[theme.primaryColor][6],
+        ...getFocusStyles(theme),
+        color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6],
         textDecoration: 'none',
 
         '&:hover': {
@@ -77,7 +79,7 @@ export default createUseStyles({
         '& th': {
           textAlign: 'left',
           fontWeight: 'bold',
-          color: theme.colors.gray[7],
+          color: theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[7],
           fontSize: 14,
           padding: [7, 10],
         },
@@ -87,12 +89,16 @@ export default createUseStyles({
         },
 
         '& tfoot th': {
-          borderTop: `1px solid ${theme.colors.gray[3]}`,
+          borderTop: `1px solid ${
+            theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+          }`,
         },
 
         '& td': {
           padding: [7, 10],
-          borderBottom: `1px solid ${theme.colors.gray[3]}`,
+          borderBottom: `1px solid ${
+            theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+          }`,
           fontSize: 14,
         },
 
@@ -104,18 +110,23 @@ export default createUseStyles({
       '& blockquote': {
         fontSize: theme.fontSizes.lg,
         lineHeight: theme.lineHeight,
-        backgroundColor: theme.colors.gray[0],
         margin: [theme.spacing.md, 0],
         borderTopRightRadius: theme.radius.sm,
         borderBottomRightRadius: theme.radius.sm,
-        borderLeft: `3px solid ${theme.colors[theme.primaryColor][6]}`,
         padding: [theme.spacing.md, theme.spacing.lg],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        borderLeft: `3px solid ${getThemeColor({
+          theme,
+          color: theme.primaryColor,
+          shade: theme.colorScheme === 'dark' ? 4 : 6,
+        })}`,
 
         '& cite': {
           display: 'block',
           fontSize: theme.fontSizes.sm,
           marginTop: theme.spacing.xs,
-          color: theme.colors.gray[6],
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
           overflow: 'hidden',
           textOverflow: 'ellipsis',
         },

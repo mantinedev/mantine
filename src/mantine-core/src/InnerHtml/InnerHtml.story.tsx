@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { InnerHtml } from './InnerHtml';
 
 const html = `
@@ -45,5 +46,20 @@ storiesOf('@mantine/core/InnerHtml', module)
   .add('Blockquote', () => (
     <div style={{ maxWidth: 600, padding: 20, margin: 'auto' }}>
       <InnerHtml dangerouslySetInnerHTML={{ __html: blockquote }} />
+    </div>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
+      <div style={{ maxWidth: 600, padding: 20, margin: 'auto' }}>
+        <InnerHtml
+          themeOverride={{ colorScheme: 'dark' }}
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+
+        <InnerHtml
+          themeOverride={{ colorScheme: 'dark' }}
+          dangerouslySetInnerHTML={{ __html: blockquote }}
+        />
+      </div>
     </div>
   ));
