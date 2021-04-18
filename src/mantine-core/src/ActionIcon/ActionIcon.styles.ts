@@ -26,47 +26,67 @@ export const sizes = {
   xl: 44,
 };
 
+function getColors({
+  theme,
+  color,
+  variant,
+}: Pick<ActionIconStylesProps, 'theme' | 'color' | 'variant'>) {
+  if (variant === 'transparent') {
+    return { hover: 'transparent', active: 'transparent' };
+  }
+
+  if (theme.colorScheme === 'dark') {
+    return { hover: theme.colors.dark[8], active: theme.colors.dark[9] };
+  }
+
+  return {
+    hover: getThemeColor({ theme, color, shade: variant === 'hover' ? 0 : 7 }),
+    active: getThemeColor({ theme, color, shade: variant === 'hover' ? 0 : 8 }),
+  };
+}
+
 export default createUseStyles({
-  actionIcon: ({ color, radius, theme, size, variant }: ActionIconStylesProps) => ({
-    ...getFocusStyles(theme),
-    ...getFontStyles(theme),
-    WebkitTapHighlightColor: 'transparent',
-    border: '1px solid transparent',
-    boxSizing: 'border-box',
-    backgroundColor:
-      variant === 'filled' ? getThemeColor({ theme, color, shade: 6 }) : 'transparent',
-    height: getSizeValue({ size, sizes }),
-    width: getSizeValue({ size, sizes }),
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-    padding: 0,
-    lineHeight: 1,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-    transition: 'color 100ms ease, background-color 100ms ease',
+  actionIcon: ({ color, radius, theme, size, variant }: ActionIconStylesProps) => {
+    const colors = getColors({ theme, color, variant });
 
-    '&:not(:disabled)': {
-      color: variant === 'filled' ? theme.white : getThemeColor({ theme, color, shade: 6 }),
+    return {
+      ...getFocusStyles(theme),
+      ...getFontStyles(theme),
+      WebkitTapHighlightColor: 'transparent',
+      border: '1px solid transparent',
+      boxSizing: 'border-box',
+      backgroundColor:
+        variant === 'filled' ? getThemeColor({ theme, color, shade: 7 }) : 'transparent',
+      height: getSizeValue({ size, sizes }),
+      width: getSizeValue({ size, sizes }),
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      padding: 0,
+      lineHeight: 1,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'pointer',
+      transition: 'color 100ms ease, background-color 100ms ease',
 
-      '&:hover': {
-        backgroundColor:
-          variant === 'transparent'
-            ? 'transparent'
-            : getThemeColor({ theme, color, shade: variant === 'hover' ? 0 : 7 }),
+      '&:not(:disabled)': {
+        color:
+          variant === 'filled'
+            ? theme.white
+            : getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 6 }),
+
+        '&:hover': {
+          backgroundColor: colors.hover,
+        },
+
+        '&:active': {
+          backgroundColor: colors.active,
+        },
       },
 
-      '&:active': {
-        backgroundColor:
-          variant === 'transparent'
-            ? 'transparent'
-            : getThemeColor({ theme, color, shade: variant === 'hover' ? 1 : 8 }),
+      '&:disabled': {
+        color: theme.colors.gray[5],
+        cursor: 'not-allowed',
       },
-    },
-
-    '&:disabled': {
-      color: theme.colors.gray[5],
-      cursor: 'not-allowed',
-    },
-  }),
+    };
+  },
 });

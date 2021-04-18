@@ -46,4 +46,17 @@ storiesOf('@mantine/core/ActionIcon', module)
     <ActionIcon autoFocus>
       <GearIcon />
     </ActionIcon>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 30 }}>
+      <ElementsGroup>
+        {getThemes({ variant: 'filled', themeOverride: { colorScheme: 'dark' } })}
+      </ElementsGroup>
+      <ElementsGroup style={{ marginTop: 20 }}>
+        {getThemes({ variant: 'transparent', themeOverride: { colorScheme: 'dark' } })}
+      </ElementsGroup>
+      <ElementsGroup style={{ marginTop: 20 }}>
+        {getThemes({ variant: 'hover', themeOverride: { colorScheme: 'dark' } })}
+      </ElementsGroup>
+    </div>
   ));

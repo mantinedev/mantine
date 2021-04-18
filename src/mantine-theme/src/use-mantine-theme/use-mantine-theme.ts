@@ -5,13 +5,15 @@ import { DEFAULT_THEME } from '../default-theme';
 
 export function useMantineTheme(themeOverride?: MantineThemeOverride): MantineTheme {
   const internalTheme = { ...useTheme<InternalMantineTheme>() };
+  let mergedTheme = null;
 
   if (!internalTheme.__mantine_theme) {
-    return DEFAULT_THEME;
+    mergedTheme = mergeTheme({ __mantine_theme: true, ...DEFAULT_THEME }, themeOverride);
+  } else {
+    mergedTheme = mergeTheme(internalTheme, themeOverride);
   }
 
-  const theme = mergeTheme(internalTheme, themeOverride);
-  delete theme.__mantine_theme;
+  delete mergedTheme.__mantine_theme;
 
-  return theme;
+  return mergedTheme;
 }
