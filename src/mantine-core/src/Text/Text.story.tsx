@@ -16,11 +16,12 @@ const CustomComponent = ({
   </div>
 );
 
-const themes = Object.keys(DEFAULT_THEME.colors).map((color) => (
-  <Text key={color} color={color} style={{ marginTop: 5 }}>
-    {color} text
-  </Text>
-));
+const getThemes = (props?: any) =>
+  Object.keys(DEFAULT_THEME.colors).map((color) => (
+    <Text key={color} color={color} style={{ marginTop: 5 }} {...props}>
+      {color} text
+    </Text>
+  ));
 
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
   <Text size={size} key={size}>
@@ -57,12 +58,25 @@ storiesOf('@mantine/core/Text', module)
       officia rem quisquam enim.
     </Text>
   ))
-  .add('Themes', () => <div style={{ padding: 20 }}>{themes}</div>)
+  .add('Themes', () => <div style={{ padding: 20 }}>{getThemes()}</div>)
   .add('Sizes', () => <div style={{ padding: 20 }}>{sizes}</div>)
   .add('Link', () => (
     <div style={{ padding: 20 }}>
       <Text component="a" href="https://mantine.dev" variant="link">
         Link
       </Text>
+    </div>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
+      <Text themeOverride={{ colorScheme: 'dark' }}>Default text</Text>
+      <Text themeOverride={{ colorScheme: 'dark' }} weight={500}>
+        Semibold text
+      </Text>
+      <Text themeOverride={{ colorScheme: 'dark' }} weight={700}>
+        Bold text
+      </Text>
+
+      {getThemes({ themeOverride: { colorScheme: 'dark' } })}
     </div>
   ));

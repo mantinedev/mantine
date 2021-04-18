@@ -21,7 +21,7 @@ export default createUseStyles({
   hr: ({ theme, size, variant, color }: HrStylesProps) => ({
     border: 0,
     borderTopWidth: getSizeValue({ size, sizes }),
-    borderTopColor: getThemeColor({ theme, color, shade: 6 }),
+    borderTopColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
     borderTopStyle: variant,
     margin: 0,
   }),

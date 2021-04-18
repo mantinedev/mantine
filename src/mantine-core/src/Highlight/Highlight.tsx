@@ -35,21 +35,32 @@ interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'> {
 export function Highlight<T extends React.ElementType = 'div'>({
   children,
   highlight,
-  className,
   component,
   themeOverride,
   highlightColor = 'yellow',
   ...others
 }: ComponentPassThrough<T, HighlightProps>) {
   const theme = useMantineTheme(themeOverride);
-  const color = getThemeColor({ theme, color: highlightColor, shade: 2 });
+  const color = getThemeColor({
+    theme,
+    color: highlightColor,
+    shade: 2,
+  });
+
   const { start, end, highlighted } = highlighter(children, highlight);
 
   return (
-    <Text component={component} className={className} {...others}>
+    <Text component={component} themeOverride={themeOverride} {...others}>
       {!!start && start}
       {!!highlighted && (
-        <mark style={{ color: 'inherit', backgroundColor: color }}>{highlighted}</mark>
+        <mark
+          style={{
+            backgroundColor: color,
+            color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
+          }}
+        >
+          {highlighted}
+        </mark>
       )}
       {!!end && end}
     </Text>

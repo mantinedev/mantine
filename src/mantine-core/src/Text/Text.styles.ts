@@ -19,6 +19,8 @@ export default createUseStyles({
         ? theme.colors[color][theme.colorScheme === 'dark' ? 4 : 6]
         : variant === 'link'
         ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]
+        : theme.colorScheme === 'dark'
+        ? theme.colors.dark[0]
         : theme.black,
     fontSize: theme.fontSizes[size],
     lineHeight: theme.lineHeight,
