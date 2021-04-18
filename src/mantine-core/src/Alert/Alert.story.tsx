@@ -15,6 +15,7 @@ storiesOf('@mantine/core/Alert', module)
   .add('Themes', () => (
     <div style={{ maxWidth: 400, padding: 50 }}>{getThemes({ title: 'Alert title' })}</div>
   ))
+  .add('Without title', () => <div style={{ maxWidth: 400, padding: 50 }}>{getThemes({})}</div>)
   .add('Content overflow', () => (
     <div style={{ maxWidth: 400, padding: 50 }}>
       <Alert title="Alert title that is too large and will definitely take more that one line to render">

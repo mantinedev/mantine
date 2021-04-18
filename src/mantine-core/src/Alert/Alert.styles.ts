@@ -6,30 +6,45 @@ interface AlertStylesProps {
   theme: MantineTheme;
 }
 
+const LINE_WIDTH = 4;
+
 export default createUseStyles({
+  alert: ({ color, theme }: AlertStylesProps) => ({
+    position: 'relative',
+    padding: [theme.spacing.xs, theme.spacing.md],
+    paddingLeft: theme.spacing.md + theme.spacing.xs / 2 + LINE_WIDTH,
+    border: `1px solid ${theme.colors.gray[2]}`,
+
+    '&::before': {
+      content: '""',
+      display: 'block',
+      position: 'absolute',
+      top: theme.spacing.xs,
+      bottom: theme.spacing.xs,
+      left: theme.spacing.xs,
+      width: LINE_WIDTH,
+      borderRadius: LINE_WIDTH,
+      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+    },
+  }),
+
   title: ({ color, theme }: AlertStylesProps) => ({
     boxSizing: 'border-box',
-    textAlign: 'center',
-    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
-    color: theme.white,
-    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
-    padding: [theme.spacing.xs, theme.spacing.md],
-    borderTopRightRadius: theme.radius.sm,
-    borderTopLeftRadius: theme.radius.sm,
+    color: getThemeColor({ theme, color, shade: 6 }),
     margin: 0,
+    marginBottom: theme.spacing.xs / 2,
     textOverflow: 'ellipsis',
     overflow: 'hidden',
   }),
 
-  body: ({ color, theme }: AlertStylesProps) => ({
+  body: ({ theme }: AlertStylesProps) => ({
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,
-    backgroundColor: getThemeColor({ theme, color, shade: 0 }),
-    padding: [theme.spacing.sm, theme.spacing.md],
     borderBottomLeftRadius: theme.radius.sm,
     borderBottomRightRadius: theme.radius.sm,
     textOverflow: 'ellipsis',
     overflow: 'hidden',
+    fontSize: theme.fontSizes.sm,
 
     '&:only-child': {
       borderTopRightRadius: theme.radius.sm,

@@ -1,6 +1,8 @@
 import React from 'react';
+import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { Text } from '../Text/Text';
+import { Paper } from '../Paper/Paper';
 import useStyles from './Alert.styles';
 
 interface AlertProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
@@ -12,13 +14,24 @@ interface AlertProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
 
   /** Alert body content */
   children: React.ReactNode;
+
+  /** Box-shadow */
+  shadow?: string;
 }
 
-export function Alert({ className, title, children, themeOverride, color, ...others }: AlertProps) {
+export function Alert({
+  className,
+  title,
+  children,
+  themeOverride,
+  color,
+  shadow = 'sm',
+  ...others
+}: AlertProps) {
   const classes = useStyles({ color, theme: useMantineTheme(themeOverride) });
 
   return (
-    <div className={className} {...others}>
+    <Paper shadow={shadow} className={cx(classes.alert, className)} {...others}>
       {title && (
         <Text data-mantine-alert-title weight={700} className={classes.title}>
           {title}
@@ -28,7 +41,7 @@ export function Alert({ className, title, children, themeOverride, color, ...oth
       <div data-mantine-alert-body className={classes.body}>
         {children}
       </div>
-    </div>
+    </Paper>
   );
 }
 
