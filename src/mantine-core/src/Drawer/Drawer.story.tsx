@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Button } from '../Button/Button';
 import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
 import { Text } from '../Text/Text';
@@ -39,4 +40,11 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl', 'full', 800] as const).map((size) 
 
 storiesOf('@mantine/core/Drawer', module)
   .add('General usage', () => <Wrapper>Drawer</Wrapper>)
-  .add('Sizes', () => <div style={{ padding: 20 }}>{sizes}</div>);
+  .add('Sizes', () => <div style={{ padding: 20 }}>{sizes}</div>)
+  .add('Dark theme', () => (
+    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
+      <Wrapper themeOverride={{ colorScheme: 'dark' }}>
+        <Button>Hello</Button>
+      </Wrapper>
+    </div>
+  ));
