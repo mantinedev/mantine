@@ -16,9 +16,9 @@ export default createUseStyles({
     ...getFocusStyles(theme),
     color:
       color in theme.colors
-        ? theme.colors[color][6]
+        ? theme.colors[color][theme.colorScheme === 'dark' ? 4 : 6]
         : variant === 'link'
-        ? theme.colors[theme.primaryColor][6]
+        ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]
         : theme.black,
     fontSize: theme.fontSizes[size],
     lineHeight: theme.lineHeight,

@@ -19,7 +19,7 @@ export function Breadcrumbs({
   separator = '/',
   ...others
 }: BreadcrumbsProps) {
-  const classes = useStyles({ theme: useMantineTheme() });
+  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
 
   const items = React.Children.toArray(children).reduce((acc: any[], child: any, index, array) => {
     acc.push(
@@ -37,6 +37,7 @@ export function Breadcrumbs({
           data-mantine-separator
           className={classes.separator}
           key={`separator-${index}`}
+          themeOverride={themeOverride}
         >
           {separator}
         </Text>
