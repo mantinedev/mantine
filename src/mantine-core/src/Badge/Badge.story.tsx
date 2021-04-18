@@ -32,6 +32,35 @@ storiesOf('@mantine/core/Badge', module)
       <ElementsGroup style={{ padding: 10 }}>{getThemes({ variant: 'filled' })}</ElementsGroup>
     </>
   ))
+  .add('Sizes', () => (
+    <>
+      <ElementsGroup style={{ padding: 10 }}>
+        {getThemes({ size: 'xs', variant: 'filled' })}
+        {getThemes({ size: 'xs', variant: 'outline' })}
+        {getThemes({ size: 'xs', variant: 'light' })}
+      </ElementsGroup>
+      <ElementsGroup style={{ padding: 10 }}>
+        {getThemes({ size: 'sm', variant: 'filled' })}
+        {getThemes({ size: 'sm', variant: 'outline' })}
+        {getThemes({ size: 'sm', variant: 'light' })}
+      </ElementsGroup>
+      <ElementsGroup style={{ padding: 10 }}>
+        {getThemes({ size: 'md', variant: 'filled' })}
+        {getThemes({ size: 'md', variant: 'outline' })}
+        {getThemes({ size: 'md', variant: 'light' })}
+      </ElementsGroup>
+      <ElementsGroup style={{ padding: 10 }}>
+        {getThemes({ size: 'lg', variant: 'filled' })}
+        {getThemes({ size: 'lg', variant: 'outline' })}
+        {getThemes({ size: 'lg', variant: 'light' })}
+      </ElementsGroup>
+      <ElementsGroup style={{ padding: 10 }}>
+        {getThemes({ size: 'xl', variant: 'filled' })}
+        {getThemes({ size: 'xl', variant: 'outline' })}
+        {getThemes({ size: 'xl', variant: 'light' })}
+      </ElementsGroup>
+    </>
+  ))
   .add('Full width', () => (
     <div style={{ width: 300, padding: 20, background: '#f9f9f9' }}>
       <Badge fullWidth>Full width badge</Badge>
@@ -66,4 +95,17 @@ storiesOf('@mantine/core/Badge', module)
         Custom component
       </Badge>
     </ElementsGroup>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh' }}>
+      <ElementsGroup style={{ padding: 10 }}>
+        {getThemes({ themeOverride: { colorScheme: 'dark' } })}
+      </ElementsGroup>
+      <ElementsGroup style={{ padding: 10 }}>
+        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'outline' })}
+      </ElementsGroup>
+      <ElementsGroup style={{ padding: 10 }}>
+        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'filled' })}
+      </ElementsGroup>
+    </div>
   ));
