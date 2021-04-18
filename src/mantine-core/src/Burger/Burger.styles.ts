@@ -10,6 +10,7 @@ import {
 interface BurgerStylesProps {
   size: MantineNumberSize;
   theme: MantineTheme;
+  color: string;
 }
 
 export const sizes = {
@@ -35,7 +36,7 @@ export default createUseStyles({
     cursor: 'pointer',
   }),
 
-  burger: ({ size, theme }: BurgerStylesProps) => {
+  burger: ({ size, theme, color }: BurgerStylesProps) => {
     const sizeValue = getSizeValue({ size, sizes });
 
     return {
@@ -47,8 +48,11 @@ export default createUseStyles({
         display: 'block',
         width: sizeValue,
         height: Math.ceil(sizeValue / 12),
-        backgroundColor: ({ color }: { color: string }) =>
-          getThemeColor({ theme, color, shade: 7 }),
+        backgroundColor: getThemeColor({
+          theme,
+          color,
+          shade: theme.colorScheme === 'dark' ? 4 : 7,
+        }),
         outline: '1px solid transparent',
         transitionProperty: 'background-color, transform',
         transitionDuration: ({ reduceMotion }: { reduceMotion: boolean }) =>
