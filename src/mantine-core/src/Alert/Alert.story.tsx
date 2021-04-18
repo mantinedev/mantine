@@ -29,4 +29,12 @@ storiesOf('@mantine/core/Alert', module)
         AlertBodyWithoutSpacesThatWillNotBreakToAnotherLineAndWillDamageTheLayout
       </Alert>
     </div>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh' }}>
+      <div style={{ maxWidth: 400, padding: 50 }}>
+        {getThemes({ title: 'Alert title', themeOverride: { colorScheme: 'dark' } })}
+        {getThemes({ themeOverride: { colorScheme: 'dark' } })}
+      </div>
+    </div>
   ));

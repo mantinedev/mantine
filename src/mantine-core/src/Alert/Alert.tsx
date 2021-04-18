@@ -31,9 +31,19 @@ export function Alert({
   const classes = useStyles({ color, theme: useMantineTheme(themeOverride) });
 
   return (
-    <Paper shadow={shadow} className={cx(classes.alert, className)} {...others}>
+    <Paper
+      shadow={shadow}
+      className={cx(classes.alert, className)}
+      themeOverride={themeOverride}
+      {...others}
+    >
       {title && (
-        <Text data-mantine-alert-title weight={700} className={classes.title}>
+        <Text
+          themeOverride={themeOverride}
+          data-mantine-alert-title
+          weight={700}
+          className={classes.title}
+        >
           {title}
         </Text>
       )}

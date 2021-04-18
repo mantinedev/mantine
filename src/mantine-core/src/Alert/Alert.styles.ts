@@ -13,7 +13,9 @@ export default createUseStyles({
     position: 'relative',
     padding: [theme.spacing.xs, theme.spacing.md],
     paddingLeft: theme.spacing.md + theme.spacing.xs / 2 + LINE_WIDTH,
-    border: `1px solid ${theme.colors.gray[2]}`,
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]
+    }`,
 
     '&::before': {
       content: '""',
@@ -30,7 +32,7 @@ export default createUseStyles({
 
   title: ({ color, theme }: AlertStylesProps) => ({
     boxSizing: 'border-box',
-    color: getThemeColor({ theme, color, shade: 6 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
     margin: 0,
     marginBottom: theme.spacing.xs / 2,
     textOverflow: 'ellipsis',
@@ -45,6 +47,7 @@ export default createUseStyles({
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     fontSize: theme.fontSizes.sm,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '&:only-child': {
       borderTopRightRadius: theme.radius.sm,
