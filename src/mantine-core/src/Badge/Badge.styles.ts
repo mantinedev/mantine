@@ -64,9 +64,15 @@ export default createUseStyles({
       color:
         variant === 'filled'
           ? theme.white
-          : getThemeColor({ theme, color, shade: variant === 'outline' ? 6 : 9 }),
+          : getThemeColor({
+              theme,
+              color,
+              shade: variant === 'outline' ? (theme.colorScheme === 'dark' ? 4 : 6) : 9,
+            }),
       border: `1px solid ${
-        variant === 'outline' ? getThemeColor({ theme, color, shade: 6 }) : 'transparent'
+        variant === 'outline'
+          ? getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 })
+          : 'transparent'
       }`,
       textDecoration: 'none',
       textAlign: 'center',
