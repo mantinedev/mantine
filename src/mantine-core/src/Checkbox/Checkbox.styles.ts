@@ -39,13 +39,16 @@ export default createUseStyles({
     paddingLeft: theme.spacing.sm,
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     lineHeight: `${getSizeValue({ size, sizes })}px`,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
   }),
 
   checkbox: ({ size, theme, color }: CheckboxStylesProps) => ({
     ...getFocusStyles(theme),
     appearance: 'none',
-    backgroundColor: theme.colors.gray[0],
-    border: `1px solid ${theme.colors.gray[4]}`,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[0],
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+    }`,
     width: getSizeValue({ size, sizes }),
     height: getSizeValue({ size, sizes }),
     borderRadius: theme.radius.sm,
@@ -66,13 +69,12 @@ export default createUseStyles({
     },
 
     '&:disabled': {
-      backgroundColor: theme.colors.gray[2],
-      borderColor: theme.colors.gray[2],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3],
       cursor: 'not-allowed',
 
       '& + $icon': {
-        color: theme.colors.gray[5],
-        filter: 'none',
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
       },
     },
   }),
