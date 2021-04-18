@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
+import { DEFAULT_THEME } from '@mantine/theme';
 import Textarea from 'react-textarea-autosize';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
@@ -77,4 +78,22 @@ storiesOf('@mantine/core/Input', module)
         inputStyle: { paddingTop: 9, paddingBottom: 9 },
       })}
     </>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
+      {getStates({
+        themeOverride: { colorScheme: 'dark' },
+        inputStyle: { paddingTop: 9, paddingBottom: 9 },
+      })}
+      {getStates({
+        variant: 'filled',
+        themeOverride: { colorScheme: 'dark' },
+        inputStyle: { paddingTop: 9, paddingBottom: 9 },
+      })}
+      {getStates({
+        variant: 'unstyled',
+        themeOverride: { colorScheme: 'dark' },
+        inputStyle: { paddingTop: 9, paddingBottom: 9 },
+      })}
+    </div>
   ));

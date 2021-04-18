@@ -19,13 +19,16 @@ export default createUseStyles({
 
   defaultVariant: ({ theme, radius }: InputStylesProps) => ({
     '& $input': {
-      backgroundColor: theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
       minHeight: 36,
       paddingLeft: 15,
       paddingRight: 15,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      border: `1px solid ${theme.colors.gray[4]}`,
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[4]
+      }`,
       transition: 'border-color 100ms ease, box-shadow 100ms ease',
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
       '&:focus': {
         outline: 'none',
@@ -35,7 +38,7 @@ export default createUseStyles({
     },
 
     '& $invalid': {
-      borderColor: theme.colors.red[6],
+      borderColor: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
     },
 
     '& $withIcon': {
@@ -54,12 +57,15 @@ export default createUseStyles({
       paddingRight: theme.spacing.md,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: '1px solid transparent',
-      backgroundColor: theme.colors.gray[1],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       transition: 'border-color 100ms ease, box-shadow 100ms ease',
 
       '&:focus': {
         outline: 'none',
-        borderColor: `${theme.colors[theme.primaryColor][6]} !important`,
+        borderColor: `${
+          theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]
+        } !important`,
         boxShadow: `0 0 4px ${theme.colors.gray[3]}`,
       },
 
@@ -75,8 +81,8 @@ export default createUseStyles({
     },
 
     '&$invalid $input': {
-      borderColor: 'transparent',
-      backgroundColor: theme.colors.red[0],
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.red[4] : 'transparent',
+      backgroundColor: theme.colorScheme !== 'dark' && theme.colors.red[0],
     },
 
     '& $withIcon': {
@@ -98,7 +104,6 @@ export default createUseStyles({
 
       '&:disabled': {
         backgroundColor: 'transparent',
-        opacity: 0.6,
       },
     },
 
@@ -125,12 +130,13 @@ export default createUseStyles({
     textAlign: 'left',
 
     '&:disabled': {
-      backgroundColor: theme.colors.gray[1],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
+      opacity: 0.6,
       cursor: 'not-allowed',
     },
 
     '&::placeholder': {
-      color: theme.colors.gray[5],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
     },
 
     '&::-webkit-inner-spin-button': {
@@ -152,16 +158,16 @@ export default createUseStyles({
 
   invalid: ({ theme }: InputStylesProps) => ({
     '& $input': {
-      color: theme.colors.red[6],
-      borderColor: theme.colors.red[6],
+      color: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
+      borderColor: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
 
       '&::placeholder': {
-        color: theme.colors.red[6],
+        color: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
       },
     },
 
     '& $icon': {
-      color: theme.colors.red[6],
+      color: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
     },
   }),
 
