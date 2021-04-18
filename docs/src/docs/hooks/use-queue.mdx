@@ -5,6 +5,8 @@ order: 1
 slug: /hooks/use-queue/
 ---
 
+import { NotificationsCleanDemo } from '../demos/guides/notifications/notifications-clean.demo';
+
 # use-queue
 
 <PageHeader
@@ -90,6 +92,13 @@ useQueue<T>(configuration: {
   cleanQueue: () => void;
 }
 ```
+
+## Example
+
+Example of use-queue hook usage in <GatsbyLink to="/guides/notifications">Mantine notifications system</GatsbyLink>. By default
+only 5 notifications can be displayed at a time, rest are added to queue.
+
+<NotificationsCleanDemo noCode />
 
 ## TypeScript
 
