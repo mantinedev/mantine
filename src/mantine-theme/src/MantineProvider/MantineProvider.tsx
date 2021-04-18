@@ -7,11 +7,14 @@ import { ThemeProvider } from './theme-context';
 interface MantineProviderProps {
   children: React.ReactNode;
   theme?: MantineThemeOverride;
+  colorScheme?: 'light' | 'dark';
 }
 
-export function MantineProvider({ children, theme }: MantineProviderProps) {
+export function MantineProvider({ children, colorScheme, theme }: MantineProviderProps) {
   return (
-    <ThemeProvider theme={mergeTheme({ __mantine_theme: true, ...DEFAULT_THEME }, theme)}>
+    <ThemeProvider
+      theme={mergeTheme({ __mantine_theme: true, colorScheme, ...DEFAULT_THEME }, theme)}
+    >
       {children}
     </ThemeProvider>
   );

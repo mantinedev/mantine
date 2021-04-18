@@ -18,10 +18,23 @@ const {
 } = OpenColor as any;
 
 export const DEFAULT_THEME: MantineTheme = {
+  colorScheme: 'light',
   white: '#fff',
   black: '#000',
   transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21)',
   colors: {
+    dark: [
+      '#dedfe3', // 0
+      '#cecfd9', // 1
+      '#b5b7c7', // 2
+      '#787b96', // 3
+      '#5e617a', // 4
+      '#47485e', // 5
+      '#36374a', // 6
+      '#2b2c3d', // 7
+      '#202133', // 8
+      '#141524', // 9
+    ],
     gray,
     red,
     pink,

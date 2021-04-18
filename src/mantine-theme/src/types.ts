@@ -12,6 +12,7 @@ type HeadingStyle = {
 export type MantineSizes = Record<MantineSize, number>;
 
 export interface MantineTheme {
+  readonly colorScheme: 'light' | 'dark';
   readonly white: string;
   readonly black: string;
   readonly colors: Record<string, Tuple<string, 10>>;
