@@ -11,6 +11,7 @@ import { NotificationsBaseDemo } from '../demos/guides/notifications/notificatio
 import { NotificationsLimitDemo } from '../demos/guides/notifications/notifications-limit.demo';
 import { NotificationsUpdateDemo } from '../demos/guides/notifications/notifications-update.demo';
 import { NotificationsAutoCloseDemo } from '../demos/guides/notifications/notifications-autoclose.demo';
+import { NotificationsCleanDemo } from '../demos/guides/notifications/notifications-clean.demo';
 
 # Notifications system
 
@@ -155,6 +156,22 @@ All notifications added after limit was reached will be added into queue
 and displayed when notification from current state is closed.
 
 <NotificationsLimitDemo />
+
+## Remove notifications from state and queue
+
+To remove specific notification from state or queue use `hideNotification` handler:
+
+```tsx
+const notifications = useNotifications();
+
+const id = notifications.show({ message: 'Hello!' });
+notifications.hideNotification(id);
+```
+
+Use `cleanQueue` handler to remove all notifications that are not currently displayed and
+`clean` handler to remove all notifications from state and queue:
+
+<NotificationsCleanDemo />
 
 ## Update notification
 
