@@ -26,4 +26,26 @@ storiesOf('@mantine/core/Avatar', module)
     <ElementsGroup style={{ padding: 15 }}>
       {getThemes({ children: 'VR', radius: 500 })}
     </ElementsGroup>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh' }}>
+      <ElementsGroup style={{ padding: 15 }}>
+        {getThemes({
+          themeOverride: { colorScheme: 'dark' },
+          children: <CrumpledPaperIcon style={{ width: 24, height: 24 }} />,
+        })}
+      </ElementsGroup>
+      <ElementsGroup style={{ padding: 15 }}>
+        {getThemes({
+          themeOverride: { colorScheme: 'dark' },
+          children: 'VR',
+        })}
+      </ElementsGroup>
+      <ElementsGroup style={{ padding: 15 }}>
+        {getSizes({ themeOverride: { colorScheme: 'dark' } })}
+      </ElementsGroup>
+      <ElementsGroup style={{ padding: 15 }}>
+        {getSizes({ src: image, themeOverride: { colorScheme: 'dark' } })}
+      </ElementsGroup>
+    </div>
   ));

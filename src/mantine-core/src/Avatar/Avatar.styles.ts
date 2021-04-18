@@ -42,9 +42,9 @@ export default createUseStyles({
   placeholder: ({ theme, size, color }: AvatarStylesProps) => ({
     ...getFontStyles(theme),
     fontSize: getSizeValue({ size, sizes }) / 2.5,
-    color: getThemeColor({ theme, color, shade: 5 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 0 : 6 }),
     fontWeight: 700,
-    backgroundColor: getThemeColor({ theme, color, shade: 1 }),
+    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 1 }),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -56,6 +56,6 @@ export default createUseStyles({
   placeholderIcon: ({ theme, color }: AvatarStylesProps) => ({
     width: '70%',
     height: '70%',
-    color: getThemeColor({ theme, color, shade: 6 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 0 : 6 }),
   }),
 });
