@@ -8,7 +8,7 @@ export function useLocalStorageValue<T extends string>({
 }: {
   key: string;
   defaultValue?: T;
-  updateOnMount: boolean;
+  updateOnMount?: boolean;
 }) {
   const [value, setValue] = useState<T>(
     typeof window !== 'undefined' && 'localStorage' in window
