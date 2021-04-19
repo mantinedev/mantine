@@ -9,6 +9,7 @@ import useStyles from './Search.styles';
 
 interface SearchProps {
   data: DocsData;
+  isMacOS: boolean;
 }
 
 function filterData(query: string, data: DocsData): DocItem[] {
@@ -25,16 +26,7 @@ function filterData(query: string, data: DocsData): DocItem[] {
     .slice(0, 10);
 }
 
-function isMac() {
-  if ('navigator' in window) {
-    return window.navigator.platform.includes('Mac');
-  }
-
-  return false;
-}
-
-export default function Search({ data }: SearchProps) {
-  const [isMacOS, setIsMacOS] = useState(true);
+export default function Search({ data, isMacOS }: SearchProps) {
   const classes = useStyles();
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(0);
@@ -84,7 +76,6 @@ export default function Search({ data }: SearchProps) {
   };
 
   useEffect(() => {
-    setIsMacOS(isMac());
     window.addEventListener('keydown', handleKeyboardEvents);
     return () => window.removeEventListener('keydown', handleKeyboardEvents);
   }, []);

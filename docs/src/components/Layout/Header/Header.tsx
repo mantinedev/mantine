@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'gatsby';
 import { Burger, Code, ActionIcon } from '@mantine/core';
 import {
@@ -21,11 +21,24 @@ interface HeaderProps {
   toggleNavbar(): void;
 }
 
+function isMac() {
+  if ('navigator' in window) {
+    return window.navigator.platform.includes('Mac');
+  }
+
+  return false;
+}
+
 export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps) {
   const classes = useStyles();
+  const [isMacOS, setIsMacOS] = useState(true);
   const colorSchemeContext = useContext(ColorSchemeContext);
   const dark = colorSchemeContext.colorScheme === 'dark';
   const burgerTitle = navbarOpened ? 'Open navigation' : 'Hide navigation';
+
+  useEffect(() => {
+    setIsMacOS(isMac());
+  }, []);
 
   return (
     <div className={classes.header}>
@@ -50,7 +63,7 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
       </div>
 
       <div className={classes.links}>
-        <Search data={data} />
+        <Search data={data} isMacOS={isMacOS} />
 
         <a className={classes.link} href="https://github.com/mantinedev/mantine">
           <GitHubLogoIcon />
@@ -72,7 +85,7 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
           variant="filled"
           color={dark ? 'blue' : 'dark'}
           onClick={() => colorSchemeContext.onChange(dark ? 'light' : 'dark')}
-          title={`${dark ? 'Light' : 'Dark'} theme`}
+          title={`${isMacOS ? '⌘' : 'Ctrl'} + J – toggle theme`}
         >
           {dark ? <SunIcon /> : <MoonIcon />}
         </ActionIcon>
