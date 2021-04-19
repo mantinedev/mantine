@@ -20,7 +20,10 @@ export default createUseStyles({
     paddingTop: 10,
     paddingBottom: 10,
     borderRadius: 4,
-    border: `1px solid ${theme.colors.gray[2]}`,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]
+    }`,
 
     '&::before': {
       content: "''",
@@ -31,11 +34,11 @@ export default createUseStyles({
       bottom: 4,
       left: 4,
       borderRadius: 4,
-      backgroundColor: getThemeColor({ theme, color, shade: 5 }),
+      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
     },
 
     '& $icon': {
-      backgroundColor: getThemeColor({ theme, color, shade: 5 }),
+      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
       color: theme.white,
     },
   }),
@@ -62,21 +65,22 @@ export default createUseStyles({
     color: theme.white,
   }),
 
-  title: {
+  title: ({ theme }: { theme: MantineTheme }) => ({
     lineHeight: 1.4,
     marginBottom: 2,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  },
+    color: theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[9],
+  }),
 
   description: ({ theme }: { theme: MantineTheme }) => ({
-    color: theme.colors.gray[6],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     lineHeight: 1.4,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
 
     '&:only-child': {
-      color: theme.colors.gray[9],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     },
   }),
 });
