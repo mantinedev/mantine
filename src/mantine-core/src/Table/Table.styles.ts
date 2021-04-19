@@ -15,33 +15,40 @@ export default createUseStyles({
     width: '100%',
     borderCollapse: 'collapse',
     captionSide,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '& > caption': {
       marginTop: captionSide === 'top' ? 0 : theme.spacing.xs,
       marginBottom: captionSide === 'bottom' ? 0 : theme.spacing.xs,
       fontSize: theme.fontSizes.sm,
-      color: theme.colors.gray[6],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     },
 
     '& > thead > tr > th, & > tfoot > tr > th': {
       textAlign: 'left',
       fontWeight: 'bold',
-      color: theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
       fontSize: 14,
       padding: [7, 10],
     },
 
     '& > thead > tr > th': {
-      borderBottom: `1px solid ${theme.colors.gray[3]}`,
+      borderBottom: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+      }`,
     },
 
     '& > tfoot > tr > th': {
-      borderTop: `1px solid ${theme.colors.gray[3]}`,
+      borderTop: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+      }`,
     },
 
     '& > tbody > tr > td': {
       padding: [7, 10],
-      borderBottom: `1px solid ${theme.colors.gray[3]}`,
+      borderBottom: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+      }`,
       fontSize: 14,
     },
 
@@ -50,11 +57,11 @@ export default createUseStyles({
     },
 
     '&$striped > tbody > tr:nth-of-type(odd)': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     },
 
     '&$hover > tbody > tr:hover': {
-      backgroundColor: theme.colors.gray[1],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
     },
   }),
 });
