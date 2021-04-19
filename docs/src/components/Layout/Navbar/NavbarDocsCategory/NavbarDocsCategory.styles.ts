@@ -13,7 +13,7 @@ export default createUseStyles(
 
     header: {
       ...getFocusStyles(theme),
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       outline: 0,
       display: 'flex',
       alignItems: 'center',

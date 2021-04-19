@@ -4,6 +4,7 @@ import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import { ClipboardIcon, CheckIcon } from '@modulz/radix-icons';
 import { ActionIcon } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
+import { useMantineTheme } from '@mantine/theme';
 import { theme } from './theme';
 import useStyles from './CodeHighlight.styles';
 
@@ -16,6 +17,7 @@ interface CodeHighlightProps {
 export default function CodeHighlight({ code, className, language }: CodeHighlightProps) {
   const classes = useStyles();
   const clipboard = useClipboard();
+  const _theme = useMantineTheme();
 
   return (
     <div className={classes.wrapper}>
@@ -27,7 +29,16 @@ export default function CodeHighlight({ code, className, language }: CodeHighlig
         {clipboard.copied ? <CheckIcon /> : <ClipboardIcon />}
       </ActionIcon>
 
-      <Highlight {...defaultProps} theme={theme} code={code} language={language}>
+      <Highlight
+        {...defaultProps}
+        theme={
+          _theme.colorScheme === 'dark'
+            ? { ...theme, plain: { ...theme.plain, backgroundColor: _theme.colors.dark[9] } }
+            : theme
+        }
+        code={code}
+        language={language}
+      >
         {({ className: inheritedClassName, style, tokens, getLineProps, getTokenProps }) => (
           <pre className={cx(classes.code, inheritedClassName, className)} style={style}>
             {tokens

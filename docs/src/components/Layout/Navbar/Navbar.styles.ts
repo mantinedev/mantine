@@ -12,8 +12,8 @@ export default createUseStyles(
       boxSizing: 'border-box',
       height: '100vh',
       borderRight:
-        theme.colorScheme === 'dark' ? theme.colors.dark[9] : `1px solid ${theme.colors.gray[1]}`,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : `1px solid ${theme.colors.gray[1]}`,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       position: 'fixed',
       zIndex: 5,
       top: 0,
