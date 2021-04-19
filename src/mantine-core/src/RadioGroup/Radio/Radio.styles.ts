@@ -32,8 +32,10 @@ export default createUseStyles({
 
   radio: ({ theme, size, color }: RadioStylesProps) => ({
     ...getFocusStyles(theme),
-    backgroundColor: theme.colors.gray[0],
-    border: `1px solid ${theme.colors.gray[4]}`,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[0],
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+    }`,
     position: 'relative',
     appearance: 'none',
     width: getSizeValue({ sizes, size }),
@@ -61,11 +63,11 @@ export default createUseStyles({
     },
 
     '&:disabled': {
-      borderColor: theme.colors.gray[4],
-      backgroundColor: theme.colors.gray[1],
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
 
       '&::before': {
-        backgroundColor: theme.colors.gray[4],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4],
       },
     },
   }),
@@ -76,9 +78,10 @@ export default createUseStyles({
     alignItems: 'center',
     fontSize: theme.fontSizes[size] || theme.fontSizes.md,
     lineHeight: `${getSizeValue({ sizes, size })}px`,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '&$labelDisabled': {
-      color: theme.colors.gray[5],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[5],
     },
   }),
 });

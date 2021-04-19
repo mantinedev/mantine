@@ -21,14 +21,14 @@ interface ProgressStylesProps {
 export default createUseStyles({
   progress: ({ radius, size, theme }: ProgressStylesProps) => ({
     height: getSizeValue({ size, sizes }),
-    backgroundColor: theme.colors.gray[2],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     overflow: 'hidden',
   }),
 
   bar: ({ theme, color, radius, reduceMotion, striped }: ProgressStylesProps) => ({
     height: '100%',
-    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     transition: reduceMotion ? 'none' : `width 200ms ${theme.transitionTimingFunction}`,
     backgroundSize: [theme.spacing.md, theme.spacing.md],

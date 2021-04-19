@@ -38,4 +38,9 @@ storiesOf('@mantine/core/Paper', module)
     <div style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], padding: 40 }}>
       {getShadows({ padding: 'lg' })}
     </div>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40 }}>
+      {getShadows({ themeOverride: { colorScheme: 'dark' } })}
+    </div>
   ));

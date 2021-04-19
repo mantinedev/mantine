@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { RocketIcon } from '@modulz/radix-icons';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Select } from './Select';
 
 const data = [
@@ -110,5 +111,17 @@ storiesOf('@mantine/core/Select', module)
         required
         placeholder="Your favorite library"
       />
+    </div>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40, minHeight: '100vh' }}>
+      <div style={{ width: 300, padding: 20 }}>
+        <Select
+          label="Your favorite library"
+          placeholder="Your favorite library"
+          data={data}
+          themeOverride={{ colorScheme: 'dark' }}
+        />
+      </div>
     </div>
   ));

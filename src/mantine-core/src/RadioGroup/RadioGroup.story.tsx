@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/theme';
 import { RadioGroup, Radio } from './RadioGroup';
 
 storiesOf('@mantine/core/RadioGroup', module)
@@ -106,4 +107,23 @@ storiesOf('@mantine/core/RadioGroup', module)
         </Radio>
       </RadioGroup>
     </>
+  ))
+  .add('Dark theme', () => (
+    <MantineProvider theme={{ colorScheme: 'dark' }}>
+      <div
+        style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40, minHeight: '100vh' }}
+      >
+        <RadioGroup
+          label="Your favorite library/framework"
+          required
+          description="Don't worry it's anonymous, you can safely pick Angular"
+        >
+          <Radio value="react">React</Radio>
+          <Radio value="ng" disabled title="Unless you can't, haha">
+            Angular
+          </Radio>
+          <Radio value="vue">Vue</Radio>
+        </RadioGroup>
+      </div>
+    </MantineProvider>
   ));

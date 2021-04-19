@@ -96,6 +96,7 @@ export function Select({
         rightSection={chevron}
         rightSectionProps={{ style: { pointerEvents: 'none' } }}
         required={required}
+        themeOverride={themeOverride}
       >
         {options}
       </Input>

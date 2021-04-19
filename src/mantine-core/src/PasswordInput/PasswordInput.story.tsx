@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { LockClosedIcon } from '@modulz/radix-icons';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { PasswordInput } from './PasswordInput';
 
 function WrappedPasswordInput(
@@ -70,5 +71,19 @@ storiesOf('@mantine/core/PasswordInput', module)
   .add('Autofocus', () => (
     <div style={{ width: 300, padding: 20 }}>
       <PasswordInput label="Autofocus" placeholder="Autofocus" autoFocus />
+    </div>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40, minHeight: '100vh' }}>
+      <div style={{ width: 300, padding: 20 }}>
+        <PasswordInput
+          label="Password"
+          placeholder="Password"
+          type="password"
+          required
+          description="Password must include numbers, letters, emojis, your favorite anime character name, year of first World War"
+          themeOverride={{ colorScheme: 'dark' }}
+        />
+      </div>
     </div>
   ));
