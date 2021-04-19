@@ -18,7 +18,7 @@ export function ModalDemo() {
         opened={opened}
         onClose={() => setOpened(false)}
         title="Introduce yourself!"
-        overlayColor={theme.colors.gray[2]}
+        overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
         overlayOpacity={0.95}
       >
         <AuthenticationForm />
@@ -42,7 +42,7 @@ export function ModalOverlayDemo() {
           opened={opened}
           onClose={() => setOpened(false)}
           title="Introduce yourself!"
-          overlayColor={theme.colors.gray[2]}
+          overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
           overlayOpacity={0.95}
         >
           <AuthenticationForm noShadow noPadding />

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ElementsGroup, Button, Text } from '@mantine/core';
 import { MantineProvider } from '@mantine/theme';
+import { ColorSchemeContext } from '../../../components/Layout/ColorScheme.context';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -19,12 +20,13 @@ function NestedProvidersDemo() {
 }`;
 
 export function NestedProvidersDemo() {
+  const { colorScheme } = useContext(ColorSchemeContext);
   return (
     <CodeDemo code={code} language="tsx">
-      <MantineProvider theme={{ fontFamily: 'Georgia, serif' }}>
+      <MantineProvider theme={{ fontFamily: 'Georgia, serif', colorScheme }}>
         <Text style={{ textAlign: 'center', marginBottom: 10 }}>Georgia or serif text</Text>
 
-        <MantineProvider theme={{ fontFamily: 'Verdana, sans-serif' }}>
+        <MantineProvider theme={{ fontFamily: 'Verdana, sans-serif', colorScheme }}>
           <ElementsGroup position="center">
             <Button>Verdana button</Button>
           </ElementsGroup>

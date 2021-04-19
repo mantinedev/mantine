@@ -1,19 +1,14 @@
 import React from 'react';
 import { CheckIcon } from '@modulz/radix-icons';
 import { Notification } from '@mantine/core';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { useMantineTheme } from '@mantine/theme';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function NotificationWrapper(props: React.ComponentPropsWithoutRef<typeof Notification>) {
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
       <Notification onClose={() => {}} {...props} />
-      <Notification
-        style={{ marginTop: DEFAULT_THEME.spacing.md }}
-        icon={<CheckIcon />}
-        onClose={() => {}}
-        {...props}
-      />
+      <Notification style={{ marginTop: 15 }} icon={<CheckIcon />} onClose={() => {}} {...props} />
     </div>
   );
 }
@@ -29,9 +24,11 @@ const codeTemplate = (props: string, children: string) => `<>
 </>`;
 
 export function NotificationConfigurator({ noCode = false }: { noCode: boolean }) {
+  const theme = useMantineTheme();
+
   return (
     <Configurator
-      previewBackground={DEFAULT_THEME.colors.gray[0]}
+      previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
       component={NotificationWrapper}
       codeTemplate={codeTemplate}
       includeCode={!noCode}

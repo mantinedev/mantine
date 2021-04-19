@@ -65,7 +65,7 @@ export function OverlayDemo() {
     <div style={{
       position: 'relative',
       padding: theme.spacing.xl,
-      backgroundColor: theme.colors.gray[0],
+      theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
     }}>
       <Overlay
         component="a"
@@ -88,6 +88,7 @@ export function OverlayDemo() {
 
 export function OverlayLinkDemo() {
   const theme = useMantineTheme();
+
   return (
     <CodeDemo code={linkCode} language="tsx">
       <div
@@ -96,7 +97,8 @@ export function OverlayLinkDemo() {
           padding: theme.spacing.xl,
           maxWidth: 400,
           margin: 'auto',
-          backgroundColor: theme.colors.gray[0],
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
         }}
       >
         <Overlay opacity={0} component="a" href="https://mantine.dev" target="_blank" />

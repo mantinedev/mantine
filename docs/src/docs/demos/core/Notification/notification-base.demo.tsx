@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
 import { Notification } from '@mantine/core';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -35,15 +35,20 @@ export function NotificationDemo() {
 }`;
 
 export function NotificationBaseDemo() {
+  const theme = useMantineTheme();
   return (
-    <CodeDemo code={code} language="tsx" demoBackground={DEFAULT_THEME.colors.gray[0]}>
+    <CodeDemo
+      code={code}
+      language="tsx"
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
+    >
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <Notification onClose={() => {}} title="Default notification">
           This is default notification with title and body
         </Notification>
 
         <Notification
-          style={{ marginTop: DEFAULT_THEME.spacing.md }}
+          style={{ marginTop: theme.spacing.md }}
           onClose={() => {}}
           icon={<CheckIcon />}
           color="teal"
@@ -53,7 +58,7 @@ export function NotificationBaseDemo() {
         </Notification>
 
         <Notification
-          style={{ marginTop: DEFAULT_THEME.spacing.md }}
+          style={{ marginTop: theme.spacing.md }}
           onClose={() => {}}
           icon={<Cross1Icon />}
           color="red"
@@ -62,7 +67,7 @@ export function NotificationBaseDemo() {
         </Notification>
 
         <Notification
-          style={{ marginTop: DEFAULT_THEME.spacing.md }}
+          style={{ marginTop: theme.spacing.md }}
           onClose={() => {}}
           loading
           title="Uploading data to the server"

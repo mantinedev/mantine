@@ -1,6 +1,6 @@
 import React from 'react';
 import { Paper, Text } from '@mantine/core';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { useMantineTheme } from '@mantine/theme';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function PaperWrapper(props: any) {
@@ -26,11 +26,12 @@ const codeTemplate = (props: string) => `<Paper${props}>
 </Paper>`;
 
 export function PaperConfigurator() {
+  const theme = useMantineTheme();
   return (
     <Configurator
       component={PaperWrapper}
       codeTemplate={codeTemplate}
-      previewBackground={DEFAULT_THEME.colors.gray[0]}
+      previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0]}
       props={[
         { name: 'padding', type: 'size', initialValue: 'md', defaultValue: 0 },
         { name: 'shadow', type: 'size', initialValue: 'xs', defaultValue: 'none' },

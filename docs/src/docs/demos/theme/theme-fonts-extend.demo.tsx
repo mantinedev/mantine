@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ElementsGroup, Button, Code, Title } from '@mantine/core';
 import { MantineProvider } from '@mantine/theme';
+import { ColorSchemeContext } from '../../../components/Layout/ColorScheme.context';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -21,10 +22,12 @@ function FontsExtendDemo() {
 }`;
 
 export function ThemeFontsExtendDemo() {
+  const { colorScheme } = useContext(ColorSchemeContext);
   return (
     <CodeDemo code={code} language="tsx">
       <MantineProvider
         theme={{
+          colorScheme,
           fontFamily: 'Verdana, sans-serif',
           fontFamilyMonospace: 'Courier, monospace',
           headings: { fontFamily: 'Georgia, serif' },

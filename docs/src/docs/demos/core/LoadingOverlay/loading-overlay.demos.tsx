@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LoadingOverlay, Button, ElementsGroup } from '@mantine/core';
 import { AuthenticationForm } from '@mantine/demos';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
@@ -26,8 +26,14 @@ export function LoadingOverlayDemo() {
 
 export function LoadingOverlayBaseDemo() {
   const [visible, setVisible] = useState(false);
+  const theme = useMantineTheme();
+
   return (
-    <CodeDemo code={code} language="tsx" demoBackground={DEFAULT_THEME.colors.gray[0]}>
+    <CodeDemo
+      code={code}
+      language="tsx"
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0]}
+    >
       <div
         style={{
           width: 400,
@@ -37,7 +43,7 @@ export function LoadingOverlayBaseDemo() {
           margin: 'auto',
         }}
       >
-        <LoadingOverlay visible={visible} />
+        <LoadingOverlay visible={visible} zIndex={1000} />
         <AuthenticationForm noSubmit />
       </div>
 

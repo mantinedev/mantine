@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ElementsGroup, Button, Badge, Switch } from '@mantine/core';
 import { MantineProvider } from '@mantine/theme';
+import { ColorSchemeContext } from '../../../components/Layout/ColorScheme.context';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -30,10 +31,12 @@ function ColorExtendDemo() {
 }`;
 
 export function ThemeColorExtendDemo() {
+  const { colorScheme } = useContext(ColorSchemeContext);
   return (
     <CodeDemo code={code} language="tsx">
       <MantineProvider
         theme={{
+          colorScheme,
           colors: {
             'deep-blue': [
               '#E9EDFC',

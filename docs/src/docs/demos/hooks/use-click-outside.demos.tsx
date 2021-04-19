@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Paper, Button, ElementsGroup } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const getCode = (events?: string) => `import React, { useState } from 'react';
@@ -26,14 +26,15 @@ export function UseClickOutsideDemo() {
 }`;
 
 export function UseClickOutsideDemo({ events }: { events?: string[] }) {
+  const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
-  const ref = useClickOutside(() => setOpened(false), events || ['mouseup', 'touchend']);
+  const ref = useClickOutside(() => setOpened(false), events || undefined);
 
   return (
     <CodeDemo
       code={getCode(events ? `, [${events.map((event) => `'${event}'`).join(', ')}]` : '')}
       language="tsx"
-      demoBackground={DEFAULT_THEME.colors.gray[0]}
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0]}
     >
       <div style={{ position: 'relative' }}>
         <ElementsGroup position="center">
