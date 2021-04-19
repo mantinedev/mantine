@@ -19,13 +19,15 @@ export default createUseStyles({
     position: 'absolute',
     width: getSizeValue({ size, sizes }),
     overflow: 'hidden',
-    border: `1px solid ${theme.colors.gray[2]}`,
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]
+    }`,
     paddingTop: theme.spacing.xs / 2,
     paddingBottom: theme.spacing.xs / 2,
   }),
 
   hr: ({ theme }: MenuStylesProps) => ({
-    borderTopColor: theme.colors.gray[2],
+    borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
     marginTop: theme.spacing.xs / 2,
     marginBottom: theme.spacing.xs / 2,
   }),

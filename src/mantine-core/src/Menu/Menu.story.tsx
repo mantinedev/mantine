@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { DEFAULT_THEME, MantineProvider } from '@mantine/theme';
 import {
   GearIcon,
   ChatBubbleIcon,
@@ -100,4 +101,21 @@ storiesOf('@mantine/core/Menu', module)
         </MenuItem>
       </Menu>
     </div>
+  ))
+  .add('Dark theme', () => (
+    <MantineProvider theme={{ colorScheme: 'dark' }}>
+      <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
+        <Menu menuPosition={{ top: 36, left: 0 }}>
+          <MenuItem icon={<GearIcon style={{ width: 12, height: 12 }} />}>Settings</MenuItem>
+          <MenuItem disabled icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
+            Disabled
+          </MenuItem>
+          <Hr />
+          <MenuItem icon={<ChatBubbleIcon style={{ width: 12, height: 12 }} />}>Messages</MenuItem>
+          <MenuItem color="red" icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
+            Delete
+          </MenuItem>
+        </Menu>
+      </div>
+    </MantineProvider>
   ));

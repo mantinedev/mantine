@@ -8,7 +8,6 @@ interface MenuButtonStylesProps {
 
 export default createUseStyles({
   hovered: {},
-  cmd: {},
 
   item: ({ theme, color }: MenuButtonStylesProps) => ({
     ...getFontStyles(theme),
@@ -22,22 +21,22 @@ export default createUseStyles({
     height: 32,
     padding: [0, theme.spacing.sm],
     cursor: 'pointer',
-    color: color ? getThemeColor({ theme, color, shade: 6 }) : theme.colors.gray[9],
+    color: color
+      ? getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 })
+      : theme.colorScheme === 'dark'
+      ? theme.colors.dark[0]
+      : theme.colors.gray[9],
 
     '&:disabled': {
-      color: theme.colors.gray[5],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[5],
       cursor: 'not-allowed',
-
-      '& $cmd': {
-        color: theme.colors.gray[5],
-      },
     },
 
     '&$hovered:not(:disabled), &:not(:disabled):hover': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
 
       '&:not(:disabled):active': {
-        backgroundColor: theme.colors.gray[1],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
       },
     },
   }),
