@@ -5,6 +5,7 @@ export { useDocumentTitle } from './use-document-title/use-document-title';
 export { useForm } from './use-form/use-form';
 export { useId } from './use-id/use-id';
 export { useListState } from './use-list-state/use-list-state';
+export { useLocalStorageValue } from './use-local-storage-value/use-local-storage-value';
 export { useMediaQuery } from './use-media-query/use-media-query';
 export { useMergedRef } from './use-merged-ref/use-merged-ref';
 export { useQueue } from './use-queue/use-queue';
