@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { DEFAULT_THEME, MantineProvider } from '@mantine/theme';
 import { AuthenticationForm } from '@mantine/demos';
 import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
@@ -66,4 +67,13 @@ storiesOf('@mantine/core/Modal', module)
     <WrappedModal title="Authentication form" size="xs">
       <AuthenticationForm noPadding noShadow />
     </WrappedModal>
+  ))
+  .add('Dark theme', () => (
+    <MantineProvider theme={{ colorScheme: 'dark' }}>
+      <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
+        <WrappedModal title="Authentication form">
+          <AuthenticationForm noPadding noShadow />
+        </WrappedModal>
+      </div>
+    </MantineProvider>
   ));

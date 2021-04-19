@@ -150,7 +150,7 @@ export default createUseStyles({
     left: 0,
     top: 0,
     bottom: 0,
-    color: theme.colors.gray[5],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

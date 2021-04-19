@@ -13,6 +13,7 @@ export default createUseStyles({
     position: 'relative',
     padding: [theme.spacing.xs, theme.spacing.md],
     paddingLeft: theme.spacing.md + theme.spacing.xs / 2 + LINE_WIDTH,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]
     }`,
