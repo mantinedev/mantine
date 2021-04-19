@@ -6,7 +6,9 @@ export default createUseStyles(
     wrapper: {
       marginTop: theme.spacing.xl * 2,
       paddingTop: theme.spacing.md,
-      borderTop: `1px dashed ${theme.colors.gray[3]}`,
+      borderTop: `1px dashed ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+      }`,
     },
 
     links: {
@@ -23,12 +25,12 @@ export default createUseStyles(
       display: 'flex',
       alignItems: 'center',
       textDecoration: 'none',
-      color: theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
       fontSize: theme.fontSizes.sm,
       margin: theme.spacing.xs,
 
       '&:hover': {
-        color: theme.colors[theme.primaryColor][6],
+        color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6],
       },
     },
 

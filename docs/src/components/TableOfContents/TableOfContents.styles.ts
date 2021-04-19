@@ -8,14 +8,16 @@ export const TABLE_OF_CONTENTS_BREAKPOINT = 1080;
 export default createUseStyles(
   (theme: MantineTheme) => ({
     wrapper: {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
       boxSizing: 'border-box',
       width: TABLE_OF_CONTENTS_WIDTH,
       position: 'fixed',
       top: 0,
       right: 0,
       height: '100vh',
-      borderLeft: `1px solid ${theme.colors.gray[1]}`,
+      borderLeft: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[1]
+      }`,
 
       [`@media (max-width: ${TABLE_OF_CONTENTS_BREAKPOINT}px)`]: {
         display: 'none',
@@ -30,12 +32,14 @@ export default createUseStyles(
     },
 
     items: {
-      borderLeft: `1px solid ${theme.colors.gray[3]}`,
+      borderLeft: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+      }`,
     },
 
     link: {
       display: 'block',
-      color: theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
       borderLeft: '1px solid transparent',
       padding: [8, theme.spacing.md],
       marginLeft: -1,
@@ -43,8 +47,8 @@ export default createUseStyles(
 
     linkActive: {
       borderLeftColor: theme.colors.blue[5],
-      backgroundColor: theme.colors.blue[0],
-      color: theme.colors.blue[8],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.blue[0],
+      color: theme.colorScheme === 'dark' ? theme.colors.blue[0] : theme.colors.blue[8],
     },
 
     header: {

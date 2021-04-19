@@ -8,7 +8,7 @@ export default createUseStyles(
       display: 'flex',
       alignItems: 'center',
       textDecoration: 'none',
-      color: theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
       fontWeight: 500,
       fontSize: theme.fontSizes.sm,
       padding: 5,

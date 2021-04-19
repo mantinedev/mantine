@@ -13,12 +13,12 @@ export default createUseStyles(
 
     header: {
       ...getFocusStyles(theme),
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
       outline: 0,
       display: 'flex',
       alignItems: 'center',
       width: `calc(100% + ${theme.spacing.md}px)`,
-      color: theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
       height: 32,
       border: 0,
       padding: [0, theme.spacing.md],
@@ -40,11 +40,13 @@ export default createUseStyles(
 
     link: {
       ...getFocusStyles(theme),
-      borderLeft: `1px solid ${theme.colors.gray[4]}`,
+      borderLeft: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+      }`,
       outline: 0,
       display: 'block',
       textDecoration: 'none',
-      color: theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
       paddingLeft: 23,
       paddingRight: theme.spacing.md,
       marginLeft: 7,
@@ -58,8 +60,8 @@ export default createUseStyles(
 
     linkActive: {
       borderLeftColor: theme.colors.blue[5],
-      backgroundColor: theme.colors.blue[0],
-      color: theme.colors.blue[8],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.blue[0],
+      color: theme.colorScheme === 'dark' ? theme.colors.blue[0] : theme.colors.blue[8],
       fontWeight: 500,
     },
 

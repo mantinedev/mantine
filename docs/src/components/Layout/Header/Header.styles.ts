@@ -15,8 +15,10 @@ export default createUseStyles(
       height: HEADER_HEIGHT,
       zIndex: 6,
       position: 'fixed',
-      backgroundColor: theme.white,
-      borderBottom: `1px solid ${theme.colors.gray[2]}`,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      borderBottom: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]
+      }`,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -31,6 +33,7 @@ export default createUseStyles(
       alignItems: 'center',
       textDecoration: 'none',
       userSelect: 'none',
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     },
 
     image: {
@@ -76,7 +79,7 @@ export default createUseStyles(
       outline: 0,
       display: 'flex',
       alignItems: 'center',
-      color: theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
       textDecoration: 'none',
       borderRadius: theme.radius.sm,
       padding: [6, theme.spacing.md],
@@ -84,7 +87,7 @@ export default createUseStyles(
       boxSizing: 'border-box',
 
       '&:hover': {
-        backgroundColor: theme.colors.gray[0],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
       },
     },
 

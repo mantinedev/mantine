@@ -9,10 +9,10 @@ import {
   MoonIcon,
 } from '@modulz/radix-icons';
 import corePackageJson from '../../../../package.json';
-import logo from '../../../images/logo.svg';
 import { DocsData } from '../get-docs-data';
 import { ColorSchemeContext } from '../ColorScheme.context';
 import Search from './Search/Search';
+import { Logo } from './Logo';
 import useStyles from './Header.styles';
 
 interface HeaderProps {
@@ -40,7 +40,7 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
         />
         <div className={classes.logoWrapper}>
           <Link to="/" className={classes.logo}>
-            <img className={classes.image} src={logo} alt="Mantine" />
+            <Logo className={classes.image} />
           </Link>
           <a href="https://github.com/mantinedev/mantine/releases" className={classes.version}>
             <Code>v{corePackageJson.version}</Code>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import cx from 'clsx';
 import { ThemeIcon } from '@mantine/core';
+import { useMantineTheme } from '@mantine/theme';
 import useStyles from './NavbarMainLink.styles';
 
 interface NavbarMainLinkProps {
@@ -22,6 +23,8 @@ export default function NavbarMainLink({
   onClick,
 }: NavbarMainLinkProps) {
   const classes = useStyles({ color });
+  const theme = useMantineTheme();
+
   return (
     <Link
       className={cx(classes.mainLink, className)}
@@ -29,7 +32,12 @@ export default function NavbarMainLink({
       to={to}
       onClick={onClick}
     >
-      <ThemeIcon size={30} color={color} variant="light" radius="lg">
+      <ThemeIcon
+        size={30}
+        color={color}
+        variant={theme.colorScheme === 'dark' ? 'filled' : 'light'}
+        radius="lg"
+      >
         {icon}
       </ThemeIcon>
       <div className={classes.body}>{children}</div>
