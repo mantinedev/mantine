@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Text } from '../Text/Text';
 import { Spoiler } from './Spoiler';
 
@@ -50,5 +51,26 @@ storiesOf('@mantine/core/Spoiler', module)
       <Spoiler maxHeight={100} showLabel="Show" hideLabel="Hide">
         <Text>No Spoiler here when content is not high enough for spoiler</Text>
       </Spoiler>
+    </div>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40, minHeight: '100vh' }}>
+      <div style={{ maxWidth: 400, padding: 50 }}>
+        <Spoiler
+          showLabel="Show more"
+          hideLabel="Hide"
+          maxHeight={100}
+          themeOverride={{ colorScheme: 'dark' }}
+        >
+          <Text themeOverride={{ colorScheme: 'dark' }}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam quasi officia harum!
+            Iure minima pariatur vero aperiam ea, magni itaque ut voluptate voluptates, in molestias
+            nesciunt sunt. Repellendus, aliquid id? Lorem ipsum dolor sit amet consectetur
+            adipisicing elit. Incidunt inventore cumque reprehenderit, illum corporis, quaerat
+            officia voluptatem dolores eius tenetur architecto, ratione labore quibusdam deserunt
+            delectus sequi modi officiis doloribus.
+          </Text>
+        </Spoiler>
+      </div>
     </div>
   ));

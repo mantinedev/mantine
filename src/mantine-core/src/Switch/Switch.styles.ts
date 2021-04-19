@@ -61,8 +61,10 @@ export default createUseStyles({
       WebkitTapHighlightColor: 'transparent',
       position: 'relative',
       borderRadius,
-      backgroundColor: theme.colors.gray[2],
-      border: `1px solid ${theme.colors.gray[3]}`,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[2],
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+      }`,
       height: getSizeValue({ size, sizes: switchHeight }),
       width: getSizeValue({ size, sizes: switchWidth }),
       padding: [0, 2],
@@ -83,13 +85,15 @@ export default createUseStyles({
         backgroundColor: theme.white,
         height: handleSize,
         width: handleSize,
-        border: `1px solid ${theme.colors.gray[3]}`,
+        border: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+        }`,
         transition: reduceMotion ? 'none' : `transform 150ms ${theme.transitionTimingFunction}`,
       },
 
       '&:checked': {
         backgroundColor: getThemeColor({ theme, color, shade: 6 }),
-        borderColor: getThemeColor({ theme, color, shade: 5 }),
+        borderColor: getThemeColor({ theme, color, shade: 6 }),
 
         '&::before': {
           transform: `translateX(${
@@ -102,13 +106,14 @@ export default createUseStyles({
       },
 
       '&:disabled': {
-        backgroundColor: theme.colors.gray[2],
-        borderColor: theme.colors.gray[2],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
         cursor: 'not-allowed',
 
         '&::before': {
-          borderColor: theme.colors.gray[2],
-          backgroundColor: theme.colors.gray[0],
+          borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[0],
         },
       },
     };
@@ -119,5 +124,6 @@ export default createUseStyles({
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     fontFamily: theme.fontFamily,
     paddingLeft: theme.spacing.sm,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
   }),
 });
