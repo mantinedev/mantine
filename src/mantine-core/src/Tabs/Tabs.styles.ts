@@ -7,7 +7,9 @@ interface TabsStylesProps {
 
 export default createUseStyles({
   tabs: ({ theme }: TabsStylesProps) => ({
-    borderBottom: `2px solid ${theme.colors.gray[3]}`,
+    borderBottom: `2px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+    }`,
   }),
 
   tabsInner: {

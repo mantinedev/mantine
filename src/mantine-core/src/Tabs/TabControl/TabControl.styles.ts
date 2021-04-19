@@ -22,16 +22,17 @@ export default createUseStyles({
     fontSize: theme.fontSizes.sm,
     cursor: 'pointer',
     transition: reduceMotion ? 'none' : 'border-color 150ms ease, color 150ms ease',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '&:disabled': {
       cursor: 'not-allowed',
-      color: theme.colors.gray[5],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
     },
   }),
 
   tabActive: ({ theme, color }: TabControlStylesProps) => ({
-    color: getThemeColor({ theme, color, shade: 6 }),
-    borderBottomColor: getThemeColor({ theme, color, shade: 6 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    borderBottomColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
   }),
 
   tabInner: {
