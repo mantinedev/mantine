@@ -7,7 +7,9 @@ export default createUseStyles(
   (theme: MantineTheme) => ({
     configurator: {
       display: 'flex',
-      border: `1px solid ${theme.colors.gray[3]}`,
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+      }`,
       overflow: 'hidden',
       borderTopLeftRadius: theme.radius.sm,
       borderTopRightRadius: theme.radius.sm,
@@ -35,7 +37,7 @@ export default createUseStyles(
       boxSizing: 'border-box',
       width: 250,
       padding: theme.spacing.md,
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         width: '100%',

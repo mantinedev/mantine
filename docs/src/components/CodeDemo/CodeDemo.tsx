@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Language } from 'prism-react-renderer';
+import { useMantineTheme } from '@mantine/theme';
 import { GitHubLogoIcon } from '@modulz/radix-icons';
 import { Paper, Button, ElementsGroup } from '@mantine/core';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
@@ -20,13 +21,14 @@ export default function CodeDemo({
   code,
   language,
   children,
-  demoBackground = '#fff',
+  demoBackground,
   demoBorder = true,
   toggle = false,
   githubLink,
 }: CodeDemoProps) {
   const classes = useStyles();
   const [visible, setVisible] = useState(!toggle);
+  const theme = useMantineTheme();
 
   return (
     <DocsSection>
@@ -34,7 +36,8 @@ export default function CodeDemo({
         padding="md"
         className={classes.demo}
         style={{
-          backgroundColor: demoBackground,
+          backgroundColor:
+            demoBackground || (theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white),
           borderColor: demoBorder ? undefined : 'transparent',
         }}
       >

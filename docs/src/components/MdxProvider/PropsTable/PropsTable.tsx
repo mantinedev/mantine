@@ -30,7 +30,7 @@ export default function PropsTable({ component }: { component: string }) {
         </td>
         <td style={{ verticalAlign: 'middle' }}>
           <Text
-            color="indigo"
+            color={theme.colorScheme === 'dark' ? 'red' : 'indigo'}
             size="xs"
             weight={500}
             style={{ fontFamily: 'Menlo, Monaco, Courier, monospace' }}
@@ -51,7 +51,13 @@ export default function PropsTable({ component }: { component: string }) {
     <DocsSection>
       <Paper
         padding="md"
-        style={{ width: '100%', border: `1px solid ${theme.colors.gray[3]}`, overflowX: 'auto' }}
+        style={{
+          width: '100%',
+          border: `1px solid ${
+            theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+          }`,
+          overflowX: 'auto',
+        }}
       >
         <div style={{ minWidth: 500 }}>
           <Table>

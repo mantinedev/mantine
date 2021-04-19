@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, Badge } from '@mantine/core';
+import { useMantineTheme } from '@mantine/theme';
 import { BarChartIcon } from '@modulz/radix-icons';
 import DataTable from '../DataTable/DataTable';
 import DocsSection from '../../DocsSection/DocsSection';
@@ -17,6 +18,7 @@ interface DependenciesProps {
 
 export function Dependencies({ dependencies, packageName }: DependenciesProps) {
   const classes = useStyles();
+  const theme = useMantineTheme();
 
   const items = dependencies.map((dependency) => [
     <Text
@@ -28,6 +30,7 @@ export function Dependencies({ dependencies, packageName }: DependenciesProps) {
       {dependency.name}
     </Text>,
     <Badge
+      variant={theme.colorScheme === 'dark' ? 'outline' : 'light'}
       title={dependency.type === 'peer' ? 'Requires installation' : 'Installed automatically'}
       color={dependency.type === 'peer' ? 'blue' : 'gray'}
     >

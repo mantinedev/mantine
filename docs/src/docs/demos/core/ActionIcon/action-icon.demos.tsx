@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ActionIcon, Button, ElementsGroup, PasswordInput } from '@mantine/core';
+import { useMantineTheme } from '@mantine/theme';
 import {
   GearIcon,
   ChatBubbleIcon,
@@ -155,15 +156,15 @@ function ActionIconDemo() {
 }`;
 
 export function ActionIconVariantToggleDemo() {
-  const [darkTheme, setDarkTheme] = useState(false);
+  const theme = useMantineTheme();
+  const [darkTheme, setDarkTheme] = useState(theme.colorScheme === 'dark');
   const title = darkTheme ? 'Light theme' : 'Dark theme';
 
   return (
     <CodeDemo
       code={variantsToggleCode}
       language="tsx"
-      demoBackground={darkTheme ? 'rgb(41, 45, 62)' : '#fff'}
-      demoBorder={!darkTheme}
+      demoBackground={darkTheme ? theme.colors.dark[7] : '#fff'}
     >
       <ElementsGroup position="center">
         <ActionIcon

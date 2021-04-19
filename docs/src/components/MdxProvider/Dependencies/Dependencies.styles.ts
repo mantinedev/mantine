@@ -17,14 +17,16 @@ export default createUseStyles(
 
     dependency: {
       boxSizing: 'border-box',
-      border: `1px solid ${theme.colors.gray[3]}`,
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+      }`,
       borderRight: 0,
       padding: [theme.spacing.xs, theme.spacing.md],
       textDecoration: 'none',
       flex: '0 0 33.3333333%',
 
       '&:hover': {
-        backgroundColor: theme.colors.gray[0],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
       },
 
       '&:first-of-type': {

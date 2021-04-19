@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
+import { useMantineTheme } from '@mantine/theme';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import DocsSection from '../DocsSection/DocsSection';
 import controls from './controls';
@@ -64,11 +65,12 @@ function transformPropToCode({
 export default function Configurator({
   component: Component,
   codeTemplate,
-  previewBackground = '#fff',
+  previewBackground,
   props: componentProps,
   multiline = false,
   includeCode = true,
 }: ConfiguratorProps) {
+  const theme = useMantineTheme();
   const classes = useStyles();
   const initialState = componentProps.reduce((acc, prop) => {
     acc[prop.name] = prop.initialValue || INITIAL_VALUES[prop.type];
@@ -115,7 +117,14 @@ export default function Configurator({
   return (
     <DocsSection>
       <div className={cx(classes.configurator, { [classes.noCode]: !includeCode })}>
-        <div className={classes.preview} style={{ background: previewBackground }}>
+        <div
+          className={classes.preview}
+          style={{
+            background:
+              previewBackground ||
+              (theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white),
+          }}
+        >
           <div>
             <Component {...state} />
           </div>

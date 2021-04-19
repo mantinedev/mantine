@@ -9,7 +9,9 @@ export default createUseStyles(
     },
 
     item: {
-      border: `1px solid ${theme.colors.gray[3]}`,
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+      }`,
       borderRadius: theme.radius.sm,
       flex: 1,
       padding: theme.spacing.md,
@@ -32,7 +34,7 @@ export default createUseStyles(
 
     unit: {
       marginLeft: 6,
-      color: theme.colors.gray[6],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[6],
     },
   }),
   { theming }

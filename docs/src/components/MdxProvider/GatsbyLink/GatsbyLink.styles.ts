@@ -5,7 +5,7 @@ export default createUseStyles(
   (theme: MantineTheme) => ({
     link: {
       ...getFocusStyles(theme),
-      color: theme.colors[theme.primaryColor][6],
+      color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6],
       textDecoration: 'none',
 
       '&:hover': {
