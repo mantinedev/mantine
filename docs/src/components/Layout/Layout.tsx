@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MantineProvider } from '@mantine/theme';
+import { useWindowEvent } from '@mantine/hooks';
 import { ColorSchemeContext, ColorScheme } from './ColorScheme.context';
 import LayoutInner from './LayoutInner';
 
@@ -15,20 +16,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       return newScheme;
     });
 
-  const toggleThemeHandler = (event: KeyboardEvent) => {
+  useWindowEvent('keydown', (event) => {
     if (event.code === 'KeyJ' && (event.ctrlKey || event.metaKey)) {
       toggleTheme();
     }
-  };
+  });
 
   useEffect(() => {
     const initialTheme = localStorage.getItem(THEME_KEY);
+
     if (initialTheme === 'dark') {
       setColorScheme('dark');
     }
-
-    window.addEventListener('keydown', toggleThemeHandler);
-    return () => window.removeEventListener('keydown', toggleThemeHandler);
   }, []);
 
   return (

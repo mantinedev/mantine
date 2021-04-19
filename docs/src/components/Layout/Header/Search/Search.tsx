@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { navigate } from 'gatsby';
 import { TextInput, Kbd, Text, Paper, Highlight } from '@mantine/core';
-import { useClickOutside } from '@mantine/hooks';
+import { useClickOutside, useWindowEvent } from '@mantine/hooks';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { DocItem, DocsData } from '../../get-docs-data';
 import useStyles from './Search.styles';
@@ -41,13 +41,6 @@ export default function Search({ data, isMacOS }: SearchProps) {
     setQuery('');
   };
 
-  const handleKeyboardEvents = (event: KeyboardEvent) => {
-    if (event.code === 'KeyK' && (event.ctrlKey || event.metaKey)) {
-      event.preventDefault();
-      inputRef.current.focus();
-    }
-  };
-
   const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDropdownOpened(true);
     setQuery(event.currentTarget.value);
@@ -75,10 +68,12 @@ export default function Search({ data, isMacOS }: SearchProps) {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyboardEvents);
-    return () => window.removeEventListener('keydown', handleKeyboardEvents);
-  }, []);
+  useWindowEvent('keydown', (event) => {
+    if (event.code === 'KeyK' && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault();
+      inputRef.current.focus();
+    }
+  });
 
   const items = filteredData.map((item, index) => (
     <button
