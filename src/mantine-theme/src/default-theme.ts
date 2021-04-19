@@ -24,16 +24,16 @@ export const DEFAULT_THEME: MantineTheme = {
   transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21)',
   colors: {
     dark: [
-      '#dedfe3', // 0
-      '#cecfd9', // 1
-      '#b5b7c7', // 2
-      '#787b96', // 3
-      '#5e617a', // 4
-      '#47485e', // 5
-      '#36374a', // 6
-      '#2b2c3d', // 7
-      '#202133', // 8
-      '#141524', // 9
+      '#d5d7e0', // 0
+      '#acaebf', // 1
+      '#8c8fa3', // 2
+      '#666980', // 3
+      '#4d4f66', // 4
+      '#34354a', // 5
+      '#2b2c3d', // 6
+      '#1d1e30', // 7
+      '#0c0d21', // 8
+      '#01010a', // 9
     ],
     gray,
     red,

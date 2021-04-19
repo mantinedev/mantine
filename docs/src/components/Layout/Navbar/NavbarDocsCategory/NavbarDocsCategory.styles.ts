@@ -41,12 +41,12 @@ export default createUseStyles(
     link: {
       ...getFocusStyles(theme),
       borderLeft: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+        theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[4]
       }`,
       outline: 0,
       display: 'block',
       textDecoration: 'none',
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
       paddingLeft: 23,
       paddingRight: theme.spacing.md,
       marginLeft: 7,

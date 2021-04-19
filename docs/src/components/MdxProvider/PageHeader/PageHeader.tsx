@@ -13,8 +13,9 @@ interface PageHeaderProps {
 export default function PageHeader(props: PageHeaderProps) {
   const theme = useMantineTheme();
   const styles = {
-    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3],
+    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3],
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
   };
 
   return (

@@ -5,7 +5,7 @@ export default createUseStyles(
   (theme: MantineTheme) => ({
     demo: {
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3]
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3]
       }`,
       position: 'relative',
       zIndex: 1,

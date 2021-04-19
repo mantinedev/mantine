@@ -35,7 +35,7 @@ interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   /** Overlay below modal opacity */
   overlayOpacity?: React.CSSProperties['opacity'];
 
-  /** Overlay below modal color, defaults to theme.black in light theme and to theme.colors.dark[5] in dark theme */
+  /** Overlay below modal color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
   overlayColor?: React.CSSProperties['color'];
 
   /** Modal body width */
@@ -56,7 +56,7 @@ export function Modal({
   onClose,
   children,
   hideCloseButton = false,
-  overlayOpacity = 0.65,
+  overlayOpacity = 0.85,
   size = 'md',
   transitionDuration = 300,
   closeButtonLabel,
@@ -128,7 +128,7 @@ export function Modal({
           <div style={styles.overlay}>
             <Overlay
               color={
-                overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.black)
+                overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
               }
               opacity={overlayOpacity}
               zIndex={zIndex}

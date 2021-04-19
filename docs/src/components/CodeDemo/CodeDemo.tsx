@@ -37,7 +37,7 @@ export default function CodeDemo({
         className={classes.demo}
         style={{
           backgroundColor:
-            demoBackground || (theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white),
+            demoBackground || (theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white),
           borderColor: demoBorder ? undefined : 'transparent',
         }}
       >

@@ -56,7 +56,7 @@ interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'
   /** Sets overlay opacity */
   overlayOpacity?: number;
 
-  /** Sets overlay color, defaults to theme.black in light theme and to theme.colors.dark[5] in dark theme */
+  /** Sets overlay color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
   overlayColor?: string;
 }
 
@@ -82,7 +82,7 @@ export function Drawer({
   transitionTimingFunction = 'ease',
   zIndex = 1000,
   overlayColor,
-  overlayOpacity = 0.65,
+  overlayOpacity = 0.85,
   children,
   noOverlay = false,
   shadow = 'md',
@@ -151,7 +151,7 @@ export function Drawer({
               <Overlay
                 color={
                   overlayColor ||
-                  (theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.black)
+                  (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
                 }
                 opacity={overlayOpacity}
                 zIndex={zIndex}

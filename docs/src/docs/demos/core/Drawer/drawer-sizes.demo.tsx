@@ -11,11 +11,9 @@ export function DrawerSizesDemo() {
   };
 
   const controls = (['xs', 'sm', 'md', 'lg', 'xl', 'full', 800, '25%'] as const).map((s) => (
-    <div key={s}>
-      <Button variant="outline" onClick={() => open(s)}>
-        {typeof s === 'string' ? s : `${s}px`}
-      </Button>
-    </div>
+    <Button variant="outline" onClick={() => open(s)} key={s}>
+      {typeof s === 'string' ? s : `${s}px`}
+    </Button>
   ));
 
   return (

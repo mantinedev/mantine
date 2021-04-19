@@ -67,6 +67,7 @@ export default createUseStyles({
       }`,
       height: getSizeValue({ size, sizes: switchHeight }),
       width: getSizeValue({ size, sizes: switchWidth }),
+      minWidth: getSizeValue({ size, sizes: switchWidth }),
       padding: [0, 2],
       margin: 0,
       transitionProperty: 'background-color, border-color',

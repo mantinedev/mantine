@@ -33,13 +33,13 @@ export default createUseStyles(
 
     items: {
       borderLeft: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+        theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[3]
       }`,
     },
 
     link: {
       display: 'block',
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
       borderLeft: '1px solid transparent',
       padding: [8, theme.spacing.md],
       marginLeft: -1,
