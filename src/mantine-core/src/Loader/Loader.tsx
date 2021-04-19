@@ -29,7 +29,7 @@ export function Loader({ size = 'md', color, themeOverride, ...others }: LoaderP
   return (
     <svg
       width={`${getSizeValue({ size, sizes: LOADER_SIZES })}px`}
-      fill={getThemeColor({ theme, color, shade: 5 })}
+      fill={getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 })}
       viewBox="0 0 135 140"
       xmlns="http://www.w3.org/2000/svg"
       role="presentation"

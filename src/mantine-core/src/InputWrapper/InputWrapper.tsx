@@ -65,7 +65,13 @@ export function InputWrapper({
       {label && inputLabel}
 
       {description && (
-        <Text data-mantine-description color="gray" size="xs" className={classes.description}>
+        <Text
+          themeOverride={themeOverride}
+          data-mantine-description
+          color="gray"
+          size="xs"
+          className={classes.description}
+        >
           {description}
         </Text>
       )}
@@ -73,7 +79,13 @@ export function InputWrapper({
       {children}
 
       {typeof error !== 'boolean' && error && (
-        <Text data-mantine-error color="red" size="sm" className={classes.error}>
+        <Text
+          themeOverride={themeOverride}
+          data-mantine-error
+          color="red"
+          size="sm"
+          className={classes.error}
+        >
           {error}
         </Text>
       )}

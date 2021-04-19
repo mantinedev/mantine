@@ -16,7 +16,7 @@ export default createUseStyles({
     marginBottom: 5,
     fontSize: 14,
     fontWeight: 500,
-    color: theme.colors.gray[9],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
     wordBreak: 'break-word',
   }),
 
@@ -32,6 +32,6 @@ export default createUseStyles({
   }),
 
   required: ({ theme }: InputWrapperStylesProps) => ({
-    color: theme.colors.red[7],
+    color: theme.colorScheme === 'dark' ? theme.colors.red[5] : theme.colors.red[7],
   }),
 });

@@ -1,6 +1,7 @@
 import oc from 'open-color';
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Button } from '../Button/Button';
 import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
 import { LoadingOverlay } from './LoadingOverlay';
@@ -26,6 +27,9 @@ storiesOf('@mantine/core/LoadingOverlay', module)
   .add('Custom Loader props', () => (
     <LoadingOverlayDemo loaderProps={{ size: 'lg', color: 'grape' }} />
   ))
-  .add('Custom Overlay props', () => (
-    <LoadingOverlayDemo overlayOpacity={0.6} overlayColor="red" />
+  .add('Custom Overlay props', () => <LoadingOverlayDemo overlayOpacity={0.6} overlayColor="red" />)
+  .add('Dark theme', () => (
+    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
+      <LoadingOverlayDemo themeOverride={{ colorScheme: 'dark' }} />
+    </div>
   ));
