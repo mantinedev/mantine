@@ -16,5 +16,6 @@ export default createUseStyles({
     fontSize: theme.headings.sizes[element].fontSize,
     lineHeight: theme.headings.sizes[element].lineHeight,
     margin: 0,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
   }),
 });
