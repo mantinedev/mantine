@@ -19,13 +19,13 @@ export default createUseStyles({
 
   defaultVariant: ({ theme, radius }: InputStylesProps) => ({
     '& $input': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
       minHeight: 36,
       paddingLeft: 15,
       paddingRight: 15,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[4]
+        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
       }`,
       transition: 'border-color 100ms ease, box-shadow 100ms ease',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
@@ -57,7 +57,7 @@ export default createUseStyles({
       paddingRight: theme.spacing.md,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: '1px solid transparent',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[1],
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       transition: 'border-color 100ms ease, box-shadow 100ms ease',
 

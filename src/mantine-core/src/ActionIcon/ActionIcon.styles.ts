@@ -35,13 +35,20 @@ function getColors({
     return { hover: 'transparent', active: 'transparent' };
   }
 
+  if (variant === 'filled') {
+    return {
+      hover: getThemeColor({ theme, color, shade: 8 }),
+      active: getThemeColor({ theme, color, shade: 9 }),
+    };
+  }
+
   if (theme.colorScheme === 'dark') {
     return { hover: theme.colors.dark[8], active: theme.colors.dark[9] };
   }
 
   return {
-    hover: getThemeColor({ theme, color, shade: variant === 'hover' ? 0 : 7 }),
-    active: getThemeColor({ theme, color, shade: variant === 'hover' ? 0 : 8 }),
+    hover: getThemeColor({ theme, color, shade: 0 }),
+    active: getThemeColor({ theme, color, shade: 0 }),
   };
 }
 

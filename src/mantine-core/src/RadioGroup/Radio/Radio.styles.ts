@@ -49,13 +49,13 @@ export default createUseStyles({
     justifyContent: 'center',
 
     '&:checked': {
-      background: getThemeColor({ theme, color, shade: 5 }),
-      borderColor: getThemeColor({ theme, color, shade: 5 }),
+      background: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      borderColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
 
       '&::before': {
         content: '""',
         display: 'block',
-        backgroundColor: theme.white,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
         width: getSizeValue({ sizes, size }) / 2,
         height: getSizeValue({ sizes, size }) / 2,
         borderRadius: getSizeValue({ sizes, size }) / 2,

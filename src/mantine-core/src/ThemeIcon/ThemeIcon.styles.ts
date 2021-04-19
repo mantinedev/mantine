@@ -26,8 +26,17 @@ export default createUseStyles({
       alignItems: 'center',
       justifyContent: 'center',
       boxSizing: 'border-box',
-      backgroundColor: getThemeColor({ theme, color, shade: variant === 'filled' ? 5 : 1 }),
-      color: variant === 'filled' ? theme.white : getThemeColor({ theme, color, shade: 7 }),
+      backgroundColor: getThemeColor({
+        theme,
+        color,
+        shade: variant === 'filled' ? (theme.colorScheme === 'dark' ? 4 : 6) : 1,
+      }),
+      color:
+        variant === 'filled'
+          ? theme.colorScheme === 'dark'
+            ? theme.colors.dark[9]
+            : theme.white
+          : getThemeColor({ theme, color, shade: 9 }),
       width: iconSize,
       height: iconSize,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
