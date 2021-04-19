@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'gatsby';
-import { Burger, Code } from '@mantine/core';
-import { GitHubLogoIcon, ChatBubbleIcon, ExclamationTriangleIcon } from '@modulz/radix-icons';
+import { Burger, Code, ActionIcon } from '@mantine/core';
+import {
+  GitHubLogoIcon,
+  ChatBubbleIcon,
+  ExclamationTriangleIcon,
+  SunIcon,
+  MoonIcon,
+} from '@modulz/radix-icons';
 import corePackageJson from '../../../../package.json';
 import logo from '../../../images/logo.svg';
 import { DocsData } from '../get-docs-data';
+import { ColorSchemeContext } from '../ColorScheme.context';
 import Search from './Search/Search';
 import useStyles from './Header.styles';
 
@@ -16,6 +23,8 @@ interface HeaderProps {
 
 export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps) {
   const classes = useStyles();
+  const colorSchemeContext = useContext(ColorSchemeContext);
+  const dark = colorSchemeContext.colorScheme === 'dark';
   const burgerTitle = navbarOpened ? 'Open navigation' : 'Hide navigation';
 
   return (
@@ -42,6 +51,7 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
 
       <div className={classes.links}>
         <Search data={data} />
+
         <a className={classes.link} href="https://github.com/mantinedev/mantine">
           <GitHubLogoIcon />
           <span className={classes.linkLabel}>Source code</span>
@@ -56,6 +66,16 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
           <ExclamationTriangleIcon />
           <span className={classes.linkLabel}>Report issue</span>
         </a>
+
+        <ActionIcon
+          className={classes.themeToggle}
+          variant="filled"
+          color={dark ? 'blue' : 'dark'}
+          onClick={() => colorSchemeContext.onChange(dark ? 'light' : 'dark')}
+          title={`${dark ? 'Light' : 'Dark'} theme`}
+        >
+          {dark ? <SunIcon /> : <MoonIcon />}
+        </ActionIcon>
       </div>
     </div>
   );

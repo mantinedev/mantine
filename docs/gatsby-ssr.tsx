@@ -1,6 +1,5 @@
 import React from 'react';
 import { JssProvider, SheetsRegistry } from 'react-jss';
-import { MantineProvider } from '@mantine/theme';
 import Layout from './src/components/Layout/Layout';
 
 const sheetsRegistryManager = new Map();
@@ -9,11 +8,7 @@ export const wrapRootElement = ({ element, pathname }) => {
   const sheets = new SheetsRegistry();
   sheetsRegistryManager.set(pathname, sheets);
 
-  return (
-    <JssProvider registry={sheets}>
-      <MantineProvider>{element}</MantineProvider>
-    </JssProvider>
-  );
+  return <JssProvider registry={sheets}>{element}</JssProvider>;
 };
 
 export const wrapPageElement = ({ element }) => (

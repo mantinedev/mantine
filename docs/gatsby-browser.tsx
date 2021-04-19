@@ -1,5 +1,4 @@
 import React from 'react';
-import { MantineProvider } from '@mantine/theme';
 import Layout from './src/components/Layout/Layout';
 
 export const onInitialClientRender = () => {
@@ -10,9 +9,7 @@ export const onInitialClientRender = () => {
 };
 
 export const wrapPageElement = ({ element }) => (
-  <MantineProvider>
-    <div>
-      <Layout>{element}</Layout>
-    </div>
-  </MantineProvider>
+  <div>
+    <Layout>{element}</Layout>
+  </div>
 );

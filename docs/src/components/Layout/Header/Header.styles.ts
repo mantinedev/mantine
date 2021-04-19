@@ -41,6 +41,7 @@ export default createUseStyles(
       flex: 1,
       marginLeft: theme.spacing.xl,
       display: 'flex',
+      alignItems: 'center',
       justifyContent: 'flex-end',
       paddingRight: theme.spacing.md,
 
@@ -100,6 +101,10 @@ export default createUseStyles(
       ...getFocusStyles(theme),
       fontWeight: 700,
       textDecoration: 'none',
+    },
+
+    themeToggle: {
+      marginLeft: theme.spacing.xs,
     },
   }),
   { theming }
