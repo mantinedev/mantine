@@ -54,7 +54,7 @@ export function LoadingOverlay({
       {(transitionStyles) => (
         <div
           className={cx(classes.loadingOverlay, className)}
-          style={{ ...transitionStyles, ...style }}
+          style={{ ...transitionStyles, ...style, zIndex }}
           {...others}
         >
           <Loader themeOverride={themeOverride} style={{ zIndex: zIndex + 1 }} {...loaderProps} />

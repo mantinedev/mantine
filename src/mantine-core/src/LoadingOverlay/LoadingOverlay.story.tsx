@@ -1,7 +1,7 @@
-import oc from 'open-color';
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/theme';
+import { AuthenticationForm } from '@mantine/demos';
 import { Button } from '../Button/Button';
 import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
 import { LoadingOverlay } from './LoadingOverlay';
@@ -11,8 +11,9 @@ function LoadingOverlayDemo(props?: any) {
 
   return (
     <div style={{ width: 400, padding: 20 }}>
-      <div style={{ width: 400, height: 500, backgroundColor: oc.blue[3], position: 'relative' }}>
+      <div style={{ width: 400, position: 'relative' }}>
         <LoadingOverlay visible={visible} {...props} />
+        <AuthenticationForm />
       </div>
 
       <ElementsGroup position="center" style={{ marginTop: 30 }}>
