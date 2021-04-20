@@ -15,33 +15,35 @@ export function ModalDemo() {
         opened={slowTransitionOpened}
         onClose={() => setSlowTransitionOpened(false)}
         title="Please consider this"
-        transitionDuration={0}
+        transition="rotate-up"
       >
-        No transition at all
+        rotate-up transition
       </Modal>
-      
+
       <Modal
         opened={noTransitionOpened}
         onClose={() => setNoTransitionOpened(false)}
         title="Please consider this"
+        transition="fade"
         transitionDuration={600}
+        transitionTimingFunction="ease"
       >
-        600ms second transition
+        fade transition 600ms ease transition 
       </Modal>
 
       <ElementsGroup position="center">
         <Button onClick={() => setSlowTransitionOpened(true)} color="pink">
-          600ms transition
+          rotate-up transition
         </Button>
         <Button onClick={() => setNoTransitionOpened(true)} color="cyan">
-          No transition
+          fade transition
         </Button>
       </ElementsGroup>
     </>
   );
 }`;
 
-export function ModalTransitionsDemo() {
+export function ModalCustomTransitionsDemo() {
   const [noTransitionOpened, setNoTransitionOpened] = useState(false);
   const [slowTransitionOpened, setSlowTransitionOpened] = useState(false);
 
@@ -52,9 +54,9 @@ export function ModalTransitionsDemo() {
           opened={slowTransitionOpened}
           onClose={() => setSlowTransitionOpened(false)}
           title="Please consider this"
-          transitionDuration={600}
+          transition="rotate-up"
         >
-          600ms second transition
+          rotate-up transition
         </Modal>
       </Portal>
 
@@ -63,18 +65,20 @@ export function ModalTransitionsDemo() {
           opened={noTransitionOpened}
           onClose={() => setNoTransitionOpened(false)}
           title="Please consider this"
-          transitionDuration={0}
+          transition="fade"
+          transitionDuration={600}
+          transitionTimingFunction="ease"
         >
-          No transition at all
+          fade transition
         </Modal>
       </Portal>
 
       <ElementsGroup position="center">
         <Button onClick={() => setSlowTransitionOpened(true)} color="pink">
-          600ms transition
+          rotate-up transition
         </Button>
         <Button onClick={() => setNoTransitionOpened(true)} color="cyan">
-          No transition
+          fade transition
         </Button>
       </ElementsGroup>
     </CodeDemo>

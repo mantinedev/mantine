@@ -12,6 +12,7 @@ import { ModalOverlayDemo } from '../demos/core/Modal/modal.overlay-demo';
 import { ModalOverflowDemo } from '../demos/core/Modal/modal.overflow-demo';
 import { ModalSizesDemo } from '../demos/core/Modal/modal.sizes-demo';
 import { ModalTransitionsDemo } from '../demos/core/Modal/modal.transitions-demo';
+import { ModalCustomTransitionsDemo } from '../demos/core/Modal/modal.custom-transition-demo';
 
 # Modal
 
@@ -107,12 +108,18 @@ You can control modal vertical overflow behavior by setting `overflow` prop:
 
 <ModalOverflowDemo />
 
-## Change transitions duration
+## Change transitions
 
-You can change transitions duration by setting `transitionDuration` property. If you set it to 0, then there will be no appear and disapper animations.
-Animations also disabled when user <GatsbyLink to="/hooks/use-reduced-motion/">prefers to reduce motion</GatsbyLink>.
+Modal is built with <GatsbyLink to="/core/transition">Transition</GatsbyLink> component.
+See <GatsbyLink to="/guides/transitions">transitions guide</GatsbyLink> to learn everything mantine transitions.
 
-<ModalTransitionsDemo />
+You can change transitions with props:
+
+- **transition** – predefined transition name or transition object
+- **transitionDuration** – transition duration in ms, defaults to 300ms. Note that, modal has two elements which are animated: overlay and modal body. Overlay changes opacity during transition and its animation is twice as fast as modal body.
+- **transitionTimingFunction** – timing function, defaults to `theme.transitionTimingFunction`
+
+<ModalCustomTransitionsDemo />
 
 ## Accessibility and usability
 
