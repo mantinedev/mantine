@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineSize } from '@mantine/theme';
 import { ComponentPassThrough } from '@mantine/types';
-import useStyles, { BadgeVariant, heights } from './Badge.styles';
+import useStyles, { heights } from './Badge.styles';
 
 export const BADGE_SIZES = heights;
 
@@ -11,7 +11,7 @@ interface BadgeProps extends DefaultProps {
   color?: string;
 
   /** Controls badge background, color and border styles */
-  variant?: BadgeVariant;
+  variant?: 'light' | 'filled' | 'outline';
 
   /** Defines badge height and font-size */
   size?: MantineSize;
@@ -40,7 +40,11 @@ export function Badge<T extends React.ElementType = 'div'>({
   });
 
   return (
-    <Component {...others} data-mantine-composable className={cx(classes.badge, className)}>
+    <Component
+      {...others}
+      data-mantine-composable
+      className={cx(classes.badge, classes[variant], className)}
+    >
       {children}
     </Component>
   );

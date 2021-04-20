@@ -8,10 +8,7 @@ import {
   getSizeValue,
 } from '@mantine/theme';
 
-export type BadgeVariant = 'light' | 'filled' | 'outline';
-
 interface BadgeStylesProps {
-  variant: BadgeVariant;
   color: string;
   theme: MantineTheme;
   size: MantineSize;
@@ -47,7 +44,7 @@ export const heights = Object.keys(sizes).reduce((acc, key) => {
 }, {} as Record<MantineSize, number>);
 
 export default createUseStyles({
-  badge: ({ theme, size, variant, fullWidth, color }: BadgeStylesProps) => {
+  badge: ({ theme, size, fullWidth }: BadgeStylesProps) => {
     const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
     return {
       ...getFocusStyles(theme),
@@ -55,25 +52,7 @@ export default createUseStyles({
       fontSize,
       height,
       lineHeight: `${height - 2}px`,
-      backgroundColor:
-        variant === 'outline'
-          ? 'transparent'
-          : getThemeColor({ theme, color, shade: variant === 'light' ? 0 : 6 }),
-      textShadow:
-        variant === 'filled' ? `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}` : 'none',
-      color:
-        variant === 'filled'
-          ? theme.white
-          : getThemeColor({
-              theme,
-              color,
-              shade: variant === 'outline' ? (theme.colorScheme === 'dark' ? 4 : 6) : 9,
-            }),
-      border: `1px solid ${
-        variant === 'outline'
-          ? getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 })
-          : 'transparent'
-      }`,
+      border: '1px solid transparent',
       textDecoration: 'none',
       textAlign: 'center',
       padding: [0, getSizeValue({ size, sizes: theme.spacing }) / 1.5],
@@ -90,4 +69,24 @@ export default createUseStyles({
       cursor: 'default',
     };
   },
+
+  light: ({ theme, color }: BadgeStylesProps) => ({
+    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 1 }),
+    color:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[9]
+        : getThemeColor({ theme, color, shade: 9 }),
+  }),
+
+  filled: ({ theme, color }: BadgeStylesProps) => ({
+    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
+    color: theme.white,
+    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
+  }),
+
+  outline: ({ theme, color }: BadgeStylesProps) => ({
+    backgroundColor: 'transparent',
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    borderColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+  }),
 });
