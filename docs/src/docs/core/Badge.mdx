@@ -5,6 +5,7 @@ order: 1
 slug: /core/badge/
 ---
 
+import { BADGE_SIZES } from '@mantine/core';
 import {
   BadgeBaseDemo,
   BadgeLightVariantDemo,
@@ -14,6 +15,7 @@ import {
   BadgeFullWidthDemo,
   BadgeCustomComponentDemo,
 } from '../demos/core/Badge/badge.demos';
+import { BadgeSizesDemo } from '../demos/core/Badge/badge-sizes.demo';
 
 # Badge
 
@@ -50,6 +52,31 @@ Default Badge color is `theme.primaryColor`. You can choose any color defined in
 ### Filled variant
 
 <BadgeFilledVariantDemo />
+
+## Size
+
+Badge has predefined sizes: xs, sm, md, lg, xl.
+Size prop controls badge height, padding and font-size.
+
+```tsx
+<Badge size="sm" /> // -> predefined small size
+<Badge size="xl" /> // -> predefined extra large size
+```
+
+Badge sizes from xl to xs:
+
+<BadgeSizesDemo />
+
+You can get predefined badge heights by importing `BADGE_SIZES`:
+
+```tsx
+import { BADGE_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Badge height']}
+  data={Object.keys(BADGE_SIZES).map((size) => [size, `${BADGE_SIZES[size]}px`])}
+/>
 
 ## Full width
 
