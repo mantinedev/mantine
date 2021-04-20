@@ -8,7 +8,7 @@ import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
-import { GroupedTransition } from '../Transition/Transition';
+import { GroupedTransition, MantineTransition } from '../Transition/Transition';
 import useStyles, { sizes } from './Modal.styles';
 
 export const MODAL_SIZES = sizes;
@@ -41,8 +41,14 @@ interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   /** Modal body width */
   size?: string | number;
 
-  /** Duration in ms of modal mount and unmount animations */
+  /** Modal body transition */
+  transition?: MantineTransition;
+
+  /** Duration in ms of modal transitions, set to 0 to disable all animations */
   transitionDuration?: number;
+
+  /** Modal body transitionTimingFunction, defaults to theme.transitionTimingFunction */
+  transitionTimingFunction?: React.CSSProperties['color'];
 
   /** Close button aria-label and title attributes */
   closeButtonLabel?: string;
@@ -63,6 +69,7 @@ export function Modal({
   overlayColor,
   zIndex = 1000,
   overflow = 'outside',
+  transition = 'slide-down',
   ...others
 }: ModalProps) {
   const titleId = useId();
@@ -81,7 +88,7 @@ export function Modal({
     <GroupedTransition
       mounted={opened}
       transitions={{
-        modal: { duration, transition: 'slide-down' },
+        modal: { duration, transition },
         overlay: { duration: duration / 2, transition: 'fade', timingFunction: 'ease' },
       }}
     >
