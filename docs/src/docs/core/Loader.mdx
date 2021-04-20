@@ -10,8 +10,6 @@ import { LoaderConfigurator } from '../demos/core/Loader/loader.configurator';
 
 # Loader
 
-Indicate loading state
-
 <PageHeader
   source="mantine-core/src/Loader/Loader.tsx"
   docs="core/Loader.mdx"
@@ -24,14 +22,16 @@ import { Loader } from '@mantine/core';
 
 ## Usage
 
-You can change loader color by passing `color` prop, by default `theme.primaryColor` will be used.
+Use Loader to indicate loading state.
+
+You can change loader color by setting `color` prop, by default `theme.primaryColor` will be used.
 
 <LoaderConfigurator />
 
 ## Size
 
-Loader has predefined sizes: xs, sm, md, lg, xl.
-You can pass size as number and it will be set as height in px.
+Loader has predefined sizes: xs, sm, md, lg, xl. Size controls loader height.
+Alternatively you can use number to set height in px:
 
 ```tsx
 <Loader size="sm" /> // -> predefined small size
