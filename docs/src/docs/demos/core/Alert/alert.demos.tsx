@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Alert } from '@mantine/core';
 
-export function AlertDemo() {
+function Demo() {
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
       <Alert color="red" title="Something went wrong">

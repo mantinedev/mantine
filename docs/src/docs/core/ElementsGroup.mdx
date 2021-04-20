@@ -10,8 +10,6 @@ import { ElementsGroupCustomDemo } from '../demos/core/ElementsGroup/elements-gr
 
 # ElementsGroup
 
-Group mantine composable elements in flexbox container
-
 <PageHeader
   source="mantine-core/src/ElementsGroup/ElementsGroup.tsx"
   docs="core/ElementsGroup.mdx"
@@ -22,9 +20,11 @@ Group mantine composable elements in flexbox container
 import { ElementsGroup } from '@mantine/core';
 ```
 
-ElementGroup allows you to compose elements with `data-mantine-composable` attribute in flexbox container.
+## Usage
 
-These components are composable by default:
+ElementGroup allows you to compose elements with `data-mantine-composable` attribute in flex container.
+
+These components can be used inside ElementGroup by default:
 
 - <GatsbyLink to="/core/action-icon">ActionIcon</GatsbyLink>
 - <GatsbyLink to="/core/avatar">Avatar</GatsbyLink>
@@ -33,20 +33,18 @@ These components are composable by default:
 - <GatsbyLink to="/core/menu">Menu</GatsbyLink>
 - <GatsbyLink to="/core/theme-icon">ThemeIcon</GatsbyLink>
 
-## Usage
-
 Use `position`, `spacing`, `grow` and `noWrap` props to define elements position inside ElementsGroup:
 
 - `position` controls `justify-content` property
 - `grow` if true sets `flex-grow` property to 1 for all child elements
-- `spacing` controls space berween elements – predefined values from `theme.spacing` or number value for spacing in px
+- `spacing` controls space between elements – predefined values from `theme.spacing` or number for spacing in px
 - `noWrap` controls `flex-wrap` property and if set to true prevents elements from wrapping on next line once space on current line was exceeded
 
 <ElementsGroupConfigurator />
 
-## Compose other components
+## Compose other components and elements
 
-You can use ElementsGroup with any other component or element by adding `data-mantine-composable` attribute to it.
+You can use ElementsGroup with any other component or element by adding `data-mantine-composable` attribute to it:
 
 <ElementsGroupCustomDemo />
 

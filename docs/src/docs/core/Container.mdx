@@ -10,8 +10,6 @@ import { ContainerBaseDemo } from '../demos/core/Container/container.demos.tsx';
 
 # Container
 
-Container is the basic layout element, it centers content horizontally and add horizontal padding from theme.
-
 <PageHeader
   source="mantine-core/src/Container/Container.tsx"
   docs="core/Container.mdx"
@@ -24,7 +22,8 @@ import { Container } from '@mantine/core';
 
 ## Usage
 
-Container accepts props:
+Container is the most basic layout element, it centers content horizontally and add horizontal padding from theme.
+Component accepts these props:
 
 - `size` – controls default max width
 - `padding` – controls horizontal padding of container, pass `xs | sm | md | lg | xl` for value defined in `theme.spacing` or number to set horizontal padding in px
@@ -34,7 +33,7 @@ Container accepts props:
 
 ## Default sizes
 
-You can get default sizes for Container by importing `CONTAINER_SIZES` variable:
+You can get default max-width values by importing `CONTAINER_SIZES`:
 
 ```tsx
 import { CONTAINER_SIZES } from '@mantine/core';

@@ -3,11 +3,19 @@ import { ActionIcon, ElementsGroup } from '@mantine/core';
 import { GearIcon } from '@modulz/radix-icons';
 import Configurator from '../../../../components/Configurator/Configurator';
 
+const iconSizes = {
+  xs: 12,
+  sm: 14,
+  md: 20,
+  lg: 26,
+  xl: 34,
+};
+
 function ActionIconWrapper(props: React.ComponentPropsWithoutRef<typeof ActionIcon>) {
   return (
     <ElementsGroup position="center">
       <ActionIcon {...props}>
-        <GearIcon />
+        <GearIcon style={{ width: iconSizes[props.size], height: iconSizes[props.size] }} />
       </ActionIcon>
     </ElementsGroup>
   );

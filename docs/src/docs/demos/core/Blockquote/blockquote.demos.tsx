@@ -6,7 +6,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Blockquote } from '@mantine/core';
 
-export function BlockquoteDemo() {
+function Demo() {
   return (
     <Blockquote cite="– Forrest Gump">
       Life is like an npm install – you never know what you are going to get.
@@ -30,7 +30,7 @@ const iconCode = `import React from 'react';
 import { Blockquote } from '@mantine/core';
 import { LightningBoltIcon } from '@modulz/radix-icons';
 
-export function BlockquoteDemo() {
+function Demo() {
   return (
     <Blockquote
       cite="– Your poor i3 from 2012 struggling its best"
@@ -60,7 +60,7 @@ const noIconCode = `import React from 'react';
 import { Blockquote } from '@mantine/core';
 import { LightningBoltIcon } from '@modulz/radix-icons';
 
-export function BlockquoteDemo() {
+function Demo() {
   return (
     <Blockquote cite="– Dan Abramov, 2016" icon={null}>
       I have a Sublime Text license on another laptop

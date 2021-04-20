@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Code } from '@mantine/core';
 
-export function CodeDemo() {
+function Demo() {
   return <Code>React.createElement()</Code>;
 }`;
 
@@ -22,7 +22,7 @@ import { Code } from '@mantine/core';
 
 const codeForPreviousDemo = \`${code}\`;
 
-export function CodeDemo() {
+function Demo() {
   return <Code block>{codeForPreviousDemo}</Code>;
 }`;
 
@@ -37,7 +37,7 @@ export function CodeBlockDemo() {
 const colorCode = `import React from 'react';
 import { Code } from '@mantine/core';
 
-export function CodeDemo() {
+function Demo() {
   return (
     <>
       <Code color="red">React.createElement()</Code>

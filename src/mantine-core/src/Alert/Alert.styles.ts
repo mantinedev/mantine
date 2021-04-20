@@ -33,7 +33,7 @@ export default createUseStyles({
 
   title: ({ color, theme }: AlertStylesProps) => ({
     boxSizing: 'border-box',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    color: getThemeColor({ theme, color, shade: 6 }),
     margin: 0,
     marginBottom: theme.spacing.xs / 2,
     textOverflow: 'ellipsis',

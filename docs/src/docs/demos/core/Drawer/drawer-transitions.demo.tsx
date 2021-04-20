@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React, { useState } from 'react';
 import { Drawer, Button, ElementsGroup } from '@mantine/core';
 
-export function DrawerDemo() {
+function Demo() {
   const [opened, setOpened] = useState(false);
   
   return (

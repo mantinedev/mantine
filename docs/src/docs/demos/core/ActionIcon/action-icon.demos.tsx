@@ -34,7 +34,7 @@ const code = `import React from 'react';
 import { ActionIcon } from '@mantine/core';
 import { GearIcon } from '@modulz/radix-icons';
 
-function ActionIconDemo() {
+function Demo() {
   return (
     <ActionIcon
       title="Settings"
@@ -62,7 +62,7 @@ const groupCode = `import React from 'react';
 import { ActionIcon, Button, ElementsGroup } from '@mantine/core';
 import { GearIcon, ChatBubbleIcon } from '@modulz/radix-icons';
 
-function ActionIconDemo() {
+function Demo() {
   return (
     <ElementsGroup position="center">
       <Button>Submit</Button>
@@ -100,7 +100,7 @@ const variantsCode = `import React from 'react';
 import { ActionIcon, ElementsGroup } from '@mantine/core';
 import { GearIcon, ChatBubbleIcon, ActivityLogIcon } from '@modulz/radix-icons';
 
-function ActionIconDemo() {
+function Demo() {
   return (
     <ElementsGroup position="center">
       <ActionIcon variant="transparent">
@@ -138,7 +138,7 @@ const variantsToggleCode = `import React, { useState } from 'react';
 import { ActionIcon } from '@mantine/core';
 import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 
-function ActionIconDemo() {
+function Demo() {
   const [darkTheme, setDarkTheme] = useState(false);
   const title = darkTheme ? 'Light theme' : 'Dark theme';
 
@@ -182,8 +182,10 @@ export function ActionIconVariantToggleDemo() {
 }
 
 export function ActionIconUsageDemo() {
+  const theme = useMantineTheme();
+
   return (
-    <CodeDemo>
+    <CodeDemo demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white}>
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <PasswordInput
           placeholder="Password"

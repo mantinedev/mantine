@@ -10,8 +10,6 @@ import { AlertBaseDemo } from '../demos/core/Alert/alert.demos';
 
 # Alert
 
-Attract user attention with important message
-
 <PageHeader
   source="mantine-core/src/Alert/Alert.tsx"
   docs="core/Alert.mdx"
@@ -22,13 +20,16 @@ Attract user attention with important message
 import { Alert } from '@mantine/core';
 ```
 
-## General usage
+## Usage
+
+Use Alert to attract user attention with important message.
+Alert is designed to be static, if you need more dynamic variant use <GatsbyLink to="/core/notification">Notification</GatsbyLink> component.
 
 <AlertBaseDemo />
 
 ## Color and title props
 
-You can choose any color defined in <GatsbyLink to="/theming">theme</GatsbyLink>. By default Alert will have `theme.primaryColor` color.
+You can choose any color defined in <GatsbyLink to="/page/theming">theme</GatsbyLink>. By default Alert will have `theme.primaryColor` color.
 
 ```tsx
 <Alert /> // -> theme.primaryColor (defaults to blue)

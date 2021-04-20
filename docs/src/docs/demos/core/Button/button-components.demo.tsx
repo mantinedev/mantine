@@ -6,7 +6,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Button, ElementsGroup } from '@mantine/core';
 
-function ButtonDemo() {
+function Demo() {
   return (
     <ElementsGroup position="center">
       <Button onClick={() => console.log('Hello')}>Regular button</Button>

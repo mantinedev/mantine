@@ -8,10 +8,12 @@ function capitalize(string: string) {
 
 const sizesData = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => ({ value: size, label: size }));
 
-const colorsData = Object.keys(DEFAULT_THEME.colors).map((color) => ({
-  label: capitalize(color),
-  value: color,
-}));
+const colorsData = Object.keys(DEFAULT_THEME.colors)
+  .filter((color) => color !== 'dark')
+  .map((color) => ({
+    label: capitalize(color),
+    value: color,
+  }));
 
 function BooleanControl({
   value,

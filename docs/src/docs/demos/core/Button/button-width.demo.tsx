@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const fullWidth = `import React from 'react';
 import { Button, ElementsGroup } from '@mantine/core';
 
-export function ButtonDemo() {
+function Demo() {
   return (
     <>
       <div style={{ width: 250 }}>

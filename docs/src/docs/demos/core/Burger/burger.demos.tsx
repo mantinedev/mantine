@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Burger } from '@mantine/core';
 
-export function BurgerDemo() {
+function Demo() {
   const [opened, setOpened] = useState(false);
   const title = opened ? 'Open navigation' : 'Close navigation';
 

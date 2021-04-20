@@ -45,9 +45,9 @@ export default createUseStyles({
   checkbox: ({ size, theme, color }: CheckboxStylesProps) => ({
     ...getFocusStyles(theme),
     appearance: 'none',
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
     border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
     }`,
     width: getSizeValue({ size, sizes }),
     height: getSizeValue({ size, sizes }),

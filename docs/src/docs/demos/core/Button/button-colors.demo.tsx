@@ -4,11 +4,13 @@ import { DEFAULT_THEME } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const getThemes = (props?: any) =>
-  Object.keys(DEFAULT_THEME.colors).map((color) => (
-    <Button key={color} color={color} {...props}>
-      {color}
-    </Button>
-  ));
+  Object.keys(DEFAULT_THEME.colors)
+    .filter((color) => color !== 'dark')
+    .map((color) => (
+      <Button key={color} color={color} {...props}>
+        {color}
+      </Button>
+    ));
 
 export function ButtonFilledVariantDemo() {
   return (

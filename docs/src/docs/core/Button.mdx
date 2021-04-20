@@ -6,10 +6,10 @@ slug: /core/button/
 ---
 
 import { BUTTON_SIZES } from '@mantine/core';
-import { ButtonGroupDemo } from '../demos/core/Button/button-group.demo';
-import { ButtonRootDemo } from '../demos/core/Button/button-root.demo';
+import { ElementsGroupConfigurator } from '../demos/core/ElementsGroup/elements-group.configurator';
 import { ButtonFullWidthDemo } from '../demos/core/Button/button-width.demo';
 import { ButtonComponentsDemo } from '../demos/core/Button/button-components.demo';
+import { ButtonSizesDemo } from '../demos/core/Button/button-sizes.demo';
 import {
   ButtonFilledVariantDemo,
   ButtonOutlineVariantDemo,
@@ -29,8 +29,6 @@ import { ButtonConfigurator } from '../demos/core/Button/button.configurator';
 import { Button } from '@mantine/core';
 ```
 
-<ButtonRootDemo />
-
 ## Usage
 
 You can use Button component both as `button` and `a` elements
@@ -39,7 +37,7 @@ You can use Button component both as `button` and `a` elements
 
 ## Variants and colors
 
-Button component supports all colors defined in <GatsbyLink to="/theming">theme</GatsbyLink> and has 3 variants:
+Button component supports all colors defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink> and has 3 variants:
 
 - `filled` (default) – high emphasis button with dark background
 - `outline` – lower emphasis button with border and transparent background
@@ -75,7 +73,9 @@ Size prop controls button height, padding and font-size.
 <Button size="xl" /> // -> predefined extra large size
 ```
 
-### Predefined size values
+Button sizes from xl to xs:
+
+<ButtonSizesDemo />
 
 You can get predefined button heights by importing `BUTTON_SIZES`:
 
@@ -90,19 +90,17 @@ import { BUTTON_SIZES } from '@mantine/core';
 
 ## Radius
 
-Radius has predefined values: xs, sm, md, lg, xl which are defined in <GatsbyLink to="/theming">theme</GatsbyLink>,
-or you can pass number to set border-radius in px:
+Radius has predefined values: xs, sm, md, lg, xl which are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
+Alternatively you can use number to set border-radius in px:
 
 ```tsx
 <Button radius="lg" /> // -> theme predefined large radius
 <Button radius={10} /> // -> { borderRadius: 10 }
 ```
 
-## Size, radius, color and variant demo
-
 <ButtonConfigurator />
 
-## Full width
+## Full width and overflow
 
 Button can take full width of container if you pass `fullWidth` prop.
 If button is too large for its container, overflow content will be hidden with ellipsis.
@@ -113,7 +111,7 @@ If button is too large for its container, overflow content will be hidden with e
 
 You can compose Button with any other components that support composition feature with <GatsbyLink to="/core/elements-group">ElementsGroup</GatsbyLink> component.
 
-<ButtonGroupDemo />
+<ElementsGroupConfigurator />
 
 ## Get element ref
 

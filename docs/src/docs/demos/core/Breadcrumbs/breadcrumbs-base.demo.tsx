@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Breadcrumbs, Text } from '@mantine/core';
 
-export function BreadcrumbsDemo() {
+function Demo() {
   const items = [
     { title: 'Mantine', href: 'https://mantine.dev' },
     { title: 'Mantine hooks', href: 'https://mantine.dev/hooks/getting-started' },

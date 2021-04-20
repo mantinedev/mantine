@@ -26,30 +26,28 @@ Customize hr style by setting `variant` prop:
 
 ## Colors
 
-You can choose any color defined in <GatsbyLink to="/theming">theme</GatsbyLink>
+You can choose any color defined in <GatsbyLink to="/pages/theming/">theme.colors</GatsbyLink>:
 
 <HrColorDemo />
 
 ## Sizes
 
 Hr has predefined sizes: xs, sm, md, lg, xl.
-You can pass size as number and it will be set as width and height in px.
+You can pass size as number and it will be set as height in px:
 
 ```tsx
 <Hr size="sm" /> // -> predefined small size
 <Hr size={50} /> // -> { width: 50, height: 50 }
 ```
 
-### Default size values
-
-You can get default sizes for action icon by importing `HR_SIZES`:
+You can get predefined sizes by importing `HR_SIZES`:
 
 ```tsx
 import { HR_SIZES } from '@mantine/core';
 ```
 
 <DataTable
-  head={['Prop value', 'Width and height']}
+  head={['Prop value', 'Height']}
   data={Object.keys(HR_SIZES).map((size) => [size, `${HR_SIZES[size]}px`])}
 />
 

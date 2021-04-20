@@ -1,5 +1,6 @@
 import React from 'react';
 import { Checkbox } from '@mantine/core';
+import { useMantineTheme } from '@mantine/theme';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 const codeTemplate = (props: string) => `<Checkbox
@@ -7,10 +8,13 @@ const codeTemplate = (props: string) => `<Checkbox
 />`;
 
 export function CheckboxConfigurator() {
+  const theme = useMantineTheme();
+
   return (
     <Configurator
       component={(props: any) => <Checkbox {...props} defaultChecked />}
       codeTemplate={codeTemplate}
+      previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
       multiline
       props={[
         {

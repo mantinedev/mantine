@@ -36,6 +36,13 @@ function getColors({
   }
 
   if (variant === 'filled') {
+    if (theme.colorScheme === 'dark') {
+      return {
+        hover: getThemeColor({ theme, color, shade: 5 }),
+        active: getThemeColor({ theme, color, shade: 6 }),
+      };
+    }
+
     return {
       hover: getThemeColor({ theme, color, shade: 8 }),
       active: getThemeColor({ theme, color, shade: 9 }),
@@ -63,7 +70,9 @@ export default createUseStyles({
       border: '1px solid transparent',
       boxSizing: 'border-box',
       backgroundColor:
-        variant === 'filled' ? getThemeColor({ theme, color, shade: 7 }) : 'transparent',
+        variant === 'filled'
+          ? getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 })
+          : 'transparent',
       height: getSizeValue({ size, sizes }),
       width: getSizeValue({ size, sizes }),
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
@@ -78,7 +87,9 @@ export default createUseStyles({
       '&:not(:disabled)': {
         color:
           variant === 'filled'
-            ? theme.white
+            ? theme.colorScheme === 'dark'
+              ? theme.colors.dark[9]
+              : theme.white
             : getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 6 }),
 
         '&:hover': {

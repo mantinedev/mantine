@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineSize } from '@mantine/theme';
 import { ComponentPassThrough } from '@mantine/types';
-import useStyles, { TextVariant } from './Text.styles';
+import useStyles from './Text.styles';
 
 export interface TextProps extends DefaultProps {
   /** Text itself */
@@ -24,7 +24,7 @@ export interface TextProps extends DefaultProps {
   align?: 'left' | 'center' | 'right';
 
   /** Link or text variant */
-  variant?: TextVariant;
+  variant?: 'text' | 'link';
 }
 
 export function Text<T extends React.ElementType = 'div'>({

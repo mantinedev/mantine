@@ -5,26 +5,22 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Button, ElementsGroup } from '@mantine/core';
 
-const YourComponent = () => <div data-mantine-composable>I am composed</div>;
-
-export function ElementsGroupDemo() {
+function Demo() {
   return (
     <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center">
-        <YourComponent />
+        <div data-mantine-composable>I am composed</div>
         <Button>Me too</Button>
       </ElementsGroup>
     </CodeDemo>
   );
 }`;
 
-const YourComponent = () => <div data-mantine-composable>I am composed</div>;
-
 export function ElementsGroupCustomDemo() {
   return (
     <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center">
-        <YourComponent />
+        <div data-mantine-composable>I am composed</div>
         <Button>Me too</Button>
       </ElementsGroup>
     </CodeDemo>

@@ -26,7 +26,7 @@ export function AlertConfigurator() {
           name: 'children',
           type: 'string',
           initialValue:
-            'Something terrible happened! You made a mistake and there is no going back, your data was lost forever! How would you rate the aggressiveness of this message on scale of 1 to 10?',
+            'Something terrible happened! You made a mistake and there is no going back, your data was lost forever!',
         },
       ]}
     />

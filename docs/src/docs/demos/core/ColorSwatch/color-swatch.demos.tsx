@@ -7,7 +7,7 @@ const code = `import React from 'react';
 import { ColorSwatch, ElementsGroup } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
 
-export function ColorSwatchDemo() {
+function Demo() {
   const theme = useMantineTheme();
   const swatches = Object.keys(theme.colors).map((color) => (
     <ColorSwatch key={color} color={theme.colors[color][6]} />

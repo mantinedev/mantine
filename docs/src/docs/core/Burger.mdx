@@ -11,8 +11,6 @@ import { BurgerConfigurator } from '../demos/core/Burger/burger.configurator';
 
 # Burger
 
-Renders open/close menu button
-
 <PageHeader
   source="mantine-core/src/Burger/Burger.tsx"
   docs="core/Burger.mdx"
@@ -25,12 +23,13 @@ import { Burger } from '@mantine/core';
 
 ## Usage
 
+Burger component renders open/close menu button.
 Pass `opened` and `onClick` props to control Burger state.
 If `opened` prop is set to true cross will be rendered, otherwise – burger.
 
 <BurgerBaseDemo />
 
-## Change color and size
+## Size
 
 Burger has predefined sizes: xs, sm, md, lg, xl.
 You can pass size as number and it will be set as width and height in px.
@@ -40,9 +39,7 @@ You can pass size as number and it will be set as width and height in px.
 <Burger size={50} /> // -> { width: 50, height: 50 }
 ```
 
-### Default size values
-
-You can get default sizes for burger by importing `BURGER_SIZES`:
+You can get default sizes by importing `BURGER_SIZES`:
 
 ```tsx
 import { BURGER_SIZES } from '@mantine/core';
@@ -53,13 +50,15 @@ import { BURGER_SIZES } from '@mantine/core';
   data={Object.keys(BURGER_SIZES).map((size) => [size, `${BURGER_SIZES[size]}px`])}
 />
 
-Default Burger color is gray. You can choose any color defined in <GatsbyLink to="/theming">theme</GatsbyLink> for Burger.
+## Color
+
+Default Burger color is gray. You can choose any color defined in <GatsbyLink to="/pages/theming/">theme.colors</GatsbyLink>:
 
 <BurgerConfigurator />
 
 ## Get element ref
 
-You can get button ref by passing `elementRef` prop to Burger component:
+You can get button ref by setting `elementRef` prop:
 
 ```tsx
 import React, { useRef } from 'react';

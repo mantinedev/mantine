@@ -10,8 +10,6 @@ import { HighlightComponentDemo } from '../demos/core/Highlight/highlight.demos'
 
 # Highlight
 
-Highlight part in given string with mark tag
-
 <PageHeader
   source="mantine-core/src/Highlight/Highlight.tsx"
   docs="core/Highlight.mdx"
@@ -24,17 +22,19 @@ import { Highlight } from '@mantine/core';
 
 ## Usage
 
+Use Highlight component to highlight part in given string with mark tag.
+
 Pass main string as children to Highlight component and string part that should be highlighted to `highlight` prop.
 If main string does not include `highlight` part, it will be ignored.
-Component ignores trailing whitespace and highlights only first matched charachters sequence.
+Component ignores trailing whitespace and highlights only first matched characters sequence.
 
-You can change color of mark by passing `highlightColor` prop with <GatsbyLink to="/theming">theme</GatsbyLink> color.
+You can change color of mark by passing `highlightColor` prop with <GatsbyLink to="/pages/theming/">theme</GatsbyLink> color.
 
 <HighlightConfigurator />
 
 ## Text props
 
-Highlight accepts the same props as <GatsbyLink to="/core/Text">Text</GatsbyLink> component:
+Highlight accepts the same props as <GatsbyLink to="/core/text/">Text</GatsbyLink> component:
 
 <HighlightComponentDemo />
 

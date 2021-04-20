@@ -83,11 +83,15 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
         <ActionIcon
           className={classes.themeToggle}
           variant="filled"
-          color={dark ? 'blue' : 'dark'}
+          color={dark ? 'yellow' : 'blue'}
           onClick={() => colorSchemeContext.onChange(dark ? 'light' : 'dark')}
           title={`${isMacOS ? '⌘' : 'Ctrl'} + J – toggle theme`}
         >
-          {dark ? <SunIcon /> : <MoonIcon />}
+          {dark ? (
+            <SunIcon style={{ width: 20, height: 20 }} />
+          ) : (
+            <MoonIcon style={{ width: 20, height: 20 }} />
+          )}
         </ActionIcon>
       </div>
     </div>

@@ -7,7 +7,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Badge, ElementsGroup } from '@mantine/core';
 
-export function BadgeDemo() {
+function Demo() {
   return (
     <ElementsGroup position="center">
       <Badge>Light</Badge>
@@ -32,15 +32,15 @@ export function BadgeBaseDemo() {
 const fullWidth = `import React from 'react';
 import { Badge, ElementsGroup } from '@mantine/core';
 
-export function BadgeDemo() {
+function Demo() {
   return (
     <>
       <div style={{ width: 200 }}>
-        <Badge fullWidth>Full width badge</Badge>
+        <Badge variant="filled" fullWidth>Full width badge</Badge>
       </div>
 
       <div style={{ width: 120 }}>
-        <Badge fullWidth>Badge with overflow</Badge>
+        <Badge variant="filled" fullWidth>Badge with overflow</Badge>
       </div>
     </>
   );
@@ -50,11 +50,15 @@ export function BadgeFullWidthDemo() {
   return (
     <CodeDemo code={fullWidth} language="tsx">
       <div style={{ width: 200 }}>
-        <Badge fullWidth>Full width badge</Badge>
+        <Badge variant="filled" fullWidth>
+          Full width badge
+        </Badge>
       </div>
 
       <div style={{ width: 130, marginTop: 20 }}>
-        <Badge fullWidth>Badge with overflow</Badge>
+        <Badge variant="filled" fullWidth>
+          Badge with overflow
+        </Badge>
       </div>
     </CodeDemo>
   );
@@ -63,24 +67,17 @@ export function BadgeFullWidthDemo() {
 const customComponentCode = `import React from 'react';
 import { Badge, ElementsGroup } from '@mantine/core';
 
-const CustomComponent = ({
-  pads,
-  children,
-  ...others
-}: {
-  pads: string;
-  children: React.ReactNode;
-}) => (
+const CustomComponent = ({ pads, children, ...others }) => (
   <div {...others}>
     {pads} {children} {pads}
   </div>
 );
 
 
-export function BadgeDemo() {
+function Demo() {
   return (
     <ElementsGroup position="center">
-      <Badge component="a" href="https://mantine.dev">
+      <Badge component="a" href="https://mantine.dev" variant="outline">
         Link badge
       </Badge>
       <Badge component={CustomComponent} pads="$$$" variant="filled">
@@ -107,7 +104,7 @@ export function BadgeCustomComponentDemo() {
   return (
     <CodeDemo code={customComponentCode} language="tsx">
       <ElementsGroup position="center">
-        <Badge component="a" href="https://mantine.dev">
+        <Badge variant="outline" component="a" href="https://mantine.dev">
           Link badge
         </Badge>
         <Badge component={CustomComponent} pads="$$$" variant="filled">
@@ -122,11 +119,11 @@ const composeCode = `import React from 'react';
 import { Badge, Button, ActionIcon, ElementsGroup } from '@mantine/core';
 import { GearIcon } from '@modulz/radix-icons';
 
-export function BadgeDemo() {
+function Demo() {
   return (
     <ElementsGroup position="center">
-      <Badge>badge 1</Badge>
-      <Badge>badge 2</Badge>
+      <Badge variant="filled">badge 1</Badge>
+      <Badge variant="filled">badge 2</Badge>
       <ActionIcon title="Setting">
         <GearIcon />
       </ActionIcon>
@@ -139,8 +136,8 @@ export function BadgeComposeDemo() {
   return (
     <CodeDemo code={composeCode} language="tsx">
       <ElementsGroup position="center">
-        <Badge>badge 1</Badge>
-        <Badge>badge 2</Badge>
+        <Badge variant="filled">badge 1</Badge>
+        <Badge variant="filled">badge 2</Badge>
         <ActionIcon title="Setting">
           <GearIcon />
         </ActionIcon>
@@ -151,11 +148,13 @@ export function BadgeComposeDemo() {
 }
 
 const getThemes = (props?: any) =>
-  Object.keys(DEFAULT_THEME.colors).map((color) => (
-    <Badge key={color} color={color} {...props}>
-      {color}
-    </Badge>
-  ));
+  Object.keys(DEFAULT_THEME.colors)
+    .filter((color) => color !== 'dark')
+    .map((color) => (
+      <Badge key={color} color={color} {...props}>
+        {color}
+      </Badge>
+    ));
 
 export function BadgeLightVariantDemo() {
   return (

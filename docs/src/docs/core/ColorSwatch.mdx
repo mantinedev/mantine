@@ -31,7 +31,7 @@ Example with default Mantine theme colors:
 
 <ColorSwatchBaseDemo />
 
-## Size and radius
+## Size
 
 ColorSwatch does not have predefined size values, pass number value to set width and height in px:
 
@@ -39,8 +39,10 @@ ColorSwatch does not have predefined size values, pass number value to set width
 <ColorSwatch size={50} /> // -> { width: 50, height: 50 }
 ```
 
-Radius has predefined values for xs, sm, md, lg, xl which are defined in <GatsbyLink to="/theming">theme</GatsbyLink>,
-or you can pass in number to set border-radius in px:
+## Radius
+
+xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
+Alternatively you can use number to set radius in px:
 
 ```tsx
 <ColorSwatch radius="lg" /> // -> theme predefined large radius
