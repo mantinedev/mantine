@@ -131,7 +131,7 @@ export default createUseStyles({
     textAlign: 'left',
 
     '&:disabled': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
       opacity: 0.6,
       cursor: 'not-allowed',
     },

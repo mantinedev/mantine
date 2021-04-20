@@ -5,7 +5,9 @@ order: 1
 slug: /core/radio-group/
 ---
 
+import { RADIO_SIZES } from '@mantine/core';
 import { RadioGroupConfigurator } from '../demos/core/RadioGroup/radio-group.configurator';
+import { RadioSizesDemo } from '../demos/core/RadioGroup/radio-sizes.demo';
 
 # RadioGroup
 
@@ -29,6 +31,24 @@ Component supports all props from <GatsbyLink to="/core/input-wrapper">InputWrap
 See full information about shared inputs props in <GatsbyLink to="/guides/inputs">inputs guide</GatsbyLink>.
 
 <RadioGroupConfigurator />
+
+## Size
+
+Checkbox has 5 predefined sizes: xs, sm, md, lg, xl.
+Size defines label font-size (from <GatsbyLink to="/pages/theming/">theme.fontSizes</GatsbyLink>), input width and height.
+
+<RadioSizesDemo />
+
+You can get checkbox sizes by importing `RADIO_SIZES`:
+
+```tsx
+import { RADIO_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Width and height']}
+  data={Object.keys(RADIO_SIZES).map((size) => [size, `${RADIO_SIZES[size]}px`])}
+/>
 
 ## Controlled
 

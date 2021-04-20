@@ -10,8 +10,6 @@ import { TableStrippedConfigurator } from '../demos/core/Table/table.configurato
 
 # Table
 
-Render tables with single component
-
 <PageHeader
   source="mantine-core/src/Table/Table.tsx"
   docs="core/Table.mdx"
@@ -21,6 +19,8 @@ Render tables with single component
 ```tsx
 import { Table } from '@mantine/core';
 ```
+
+## Usage
 
 Table data for all examples:
 
@@ -34,22 +34,20 @@ const elements = [
 ];
 ```
 
-## General usage
-
 Table component accepts the same children as table element and adds mantine theme styles.
 
 <TableBaseDemo />
 
-## Extra parts
+## Caption and tfoot
 
 Table support tfoot and caption elements.
 Pass `captionSide` prop (top or bottom) to change caption position.
 
 <TableFullDemo />
 
-## Stripped and rows hover
+## Striped and rows hover
 
-You can make table striped by passing `stiped` prop to `Table`.
+You can make table striped by passing `striped` prop to `Table`.
 If `highlightOnHover` prop is true rows will be highlighted with gray color on hover.
 
 <TableStrippedConfigurator />

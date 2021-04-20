@@ -28,14 +28,14 @@ import { Tabs, Tab } from '@mantine/core';
 - `Tab` – utility component to pass data to `Tabs` component, does not render anything on its own. Do not use outside of `Tabs` component.
 - `Tabs` – receives data from `Tab` content and renders component
 
-## General usage
+## Usage
 
 <TabsSimpleDemo />
 
 ## Controlled Tabs
 
 Tabs state can be controlled, to implement this pass `active` and `onTabChange` props.
-You can alse use `onTabChange` callback with uncontrolled Tabs.
+You can also use `onTabChange` callback with uncontrolled Tabs.
 
 <TabsControlledDemo />
 
@@ -54,7 +54,7 @@ If `icon` prop is set, it is not necessary to pass `label`. You can use icons fr
 
 You can change color of individual tab by passing `color` property to `Tab` component,
 or change color of all tabs by passing color to `Tabs` component.
-Color that you pass to these components should be defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink>.
+Color that you pass to these components should be defined in <GatsbyLink to="/pages/theming/">theme.colors</GatsbyLink>.
 
 Color calculation prioritizes deeper values: first `<Tab color="value" />` value will be used if defined, then `<Tabs color="value">`, after that value will be set to `theme.primaryColor`.
 
@@ -103,10 +103,6 @@ function TabsDemo() {
 }
 ```
 
-## Component props
-
-<PropsTable component="Tabs" />
-
 ## Accessibility
 
 Tabs component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html) on accessibility.
@@ -116,3 +112,7 @@ Component fully supports keyboard events handling and has correct aria-roles:
 - Only selected tab control can be focused
 - All elements have correct roles: tab, tablist and tabpanel
 - aria-orientation is always set to horizontal as component does not support vertical tabs
+
+## Component props
+
+<PropsTable component="Tabs" />

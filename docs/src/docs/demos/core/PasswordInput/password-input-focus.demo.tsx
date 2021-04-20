@@ -1,5 +1,6 @@
 import React from 'react';
 import { PasswordInput } from '@mantine/core';
+import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -23,8 +24,13 @@ export function PasswordDemo() {
 }`;
 
 export function PasswordFocusDemo() {
+  const theme = useMantineTheme();
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo
+      code={code}
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
+      language="tsx"
+    >
       <div style={{ width: 360, margin: 'auto' }}>
         <PasswordInput label="Focus will be on button" placeholder="Focus will be on button" />
 

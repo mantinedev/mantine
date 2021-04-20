@@ -1,5 +1,6 @@
 import React from 'react';
 import { Select } from '@mantine/core';
+import { useMantineTheme } from '@mantine/theme';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 const data = [
@@ -20,10 +21,13 @@ const codeTemplate = (props: string) => `<Select
 />`;
 
 export function SelectConfigurator() {
+  const theme = useMantineTheme();
+
   return (
     <Configurator
       component={(props: any) => <Select {...props} data={data} />}
       codeTemplate={codeTemplate}
+      previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
       multiline
       props={[
         { name: 'placeholder', type: 'string', initialValue: 'Pick one' },

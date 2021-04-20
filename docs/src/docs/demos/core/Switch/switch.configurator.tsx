@@ -19,6 +19,7 @@ export function SwitchConfigurator() {
           initialValue: 'I agree to sell my privacy',
         },
         { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
+        { name: 'radius', type: 'size', initialValue: 'xl', defaultValue: 'xl' },
         { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
         { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
       ]}

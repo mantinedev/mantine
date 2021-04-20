@@ -12,8 +12,8 @@ export const sizes = {
   xs: 12,
   sm: 16,
   md: 20,
-  lg: 28,
-  xl: 32,
+  lg: 26,
+  xl: 36,
 };
 
 interface CheckboxStylesProps {

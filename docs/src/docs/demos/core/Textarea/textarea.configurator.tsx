@@ -1,5 +1,6 @@
 import React from 'react';
 import { Textarea } from '@mantine/core';
+import { useMantineTheme } from '@mantine/theme';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 const codeTemplate = (props: string) => `<Textarea
@@ -7,11 +8,14 @@ const codeTemplate = (props: string) => `<Textarea
 />`;
 
 export function TextareaConfigurator() {
+  const theme = useMantineTheme();
+
   return (
     <Configurator
       component={Textarea}
       codeTemplate={codeTemplate}
       multiline
+      previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
       props={[
         { name: 'placeholder', type: 'string', initialValue: 'Product review' },
         {

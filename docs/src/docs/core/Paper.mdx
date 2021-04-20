@@ -11,8 +11,6 @@ import { UseClickOutsideDemo } from '../demos/hooks/use-click-outside.demos';
 
 # Paper
 
-Renders white background with shadow, border-radius and padding from theme
-
 <PageHeader
   source="mantine-core/src/Paper/Paper.tsx"
   docs="core/Paper.mdx"
@@ -23,33 +21,38 @@ Renders white background with shadow, border-radius and padding from theme
 import { Paper } from '@mantine/core';
 ```
 
+## Usage
+
+Paper component renders white (or `theme.colors.dark[7]` for dark theme)
+background with shadow, border-radius and padding from theme
+
+<PaperConfigurator />
+
 ## Shadow
 
 You can use predefined shadows defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink> or your own:
 
 <PaperShadowDemo />
 
-## Padding and radius
+## Padding
 
-Paper has predefined padding: xs, sm, md, lg, xl defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink>.
-You can pass padding as number and it will be set as padding on all sides in px.
+Paper has predefined padding: xs, sm, md, lg, xl defined in <GatsbyLink to="/pages/theming/">theme.spacing</GatsbyLink>.
+Alternatively you can use number to set padding in px:
 
 ```tsx
 <Paper size="sm" /> // -> theme predefined small spacing
 <Paper size={20} /> // -> { padding: 20 }
 ```
 
-Same with radius – predefined values for xs, sm, md, lg, xl are defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink>,
-or pass in number to set border-radius in px:
+## Radius
+
+xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
+Alternatively you can use number to set radius in px:
 
 ```tsx
 <Paper radius="lg" /> // -> theme predefined large radius
 <Paper radius={0} /> // -> { borderRadius: 0 }
 ```
-
-## Padding, radius and shadow example
-
-<PaperConfigurator />
 
 ## Get element ref
 

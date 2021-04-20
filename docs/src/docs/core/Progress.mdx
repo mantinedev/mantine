@@ -8,11 +8,10 @@ slug: /core/progress/
 import { PROGRESS_SIZES } from '@mantine/core';
 import { ProgressBaseDemo } from '../demos/core/Progress/progress.demos';
 import { ProgressConfigurator } from '../demos/core/Progress/progress.configurator';
+import { ProgressSizesDemo } from '../demos/core/Progress/progress-sizes.demo';
 import { PasswordInputStrengthDemo } from '../demos/core/PasswordInput/password-input-strength.demo';
 
 # Progress
-
-Display progress of action that takes long time or includes multiple steps
 
 <PageHeader
   source="mantine-core/src/Progress/Progress.tsx"
@@ -26,11 +25,15 @@ import { Progress } from '@mantine/core';
 
 ## Usage
 
+Use Progress to display progress of action that takes long time or includes multiple steps.
+
 Progress component has one required prop `value` – filled bar width in %.
 You can change bar color by passing `color` prop, by default `theme.primaryColor` will be used.
-If you set `stiped` prop to true bar will have stipes.
+If you set `striped` prop to true bar will have stipes.
 
 <ProgressBaseDemo />
+
+<ProgressConfigurator />
 
 ## Example
 
@@ -38,19 +41,21 @@ Password strength meter example with Progress component:
 
 <PasswordInputStrengthDemo />
 
-## Size and radius
+## Size
 
-Progress has predefined sizes: xs, sm, md, lg, xl.
-You can pass size as number and it will be set as height in px.
+Size controls progress bar height. Progress has predefined sizes: xs, sm, md, lg, xl.
+Alternatively you can use number to set height in px:
 
 ```tsx
 <Progress size="sm" /> // -> predefined small size
 <Progress size={50} /> // -> { height: 50 }
 ```
 
-### Default size values
+Predefined progress sizes from xs to xl:
 
-You can get default sizes for action icon by importing `PROGRESS_SIZES`:
+<ProgressSizesDemo />
+
+You can get default sizes by importing `PROGRESS_SIZES`:
 
 ```tsx
 import { PROGRESS_SIZES } from '@mantine/core';
@@ -61,17 +66,16 @@ import { PROGRESS_SIZES } from '@mantine/core';
   data={Object.keys(PROGRESS_SIZES).map((size) => [size, `${PROGRESS_SIZES[size]}px`])}
 />
 
-Same with radius – predefined values for xs, sm, md, lg, xl are defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink>,
-or pass in number to set border-radius in px:
+## Radius
+
+Radius controls border-radius of body and filled part.
+xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
+Alternatively you can use number to set radius in px:
 
 ```tsx
 <Progress radius="lg" /> // -> theme predefined large radius
 <Progress radius={10} /> // -> { borderRadius: 10 }
 ```
-
-## Size, radius, color and stiped example
-
-<ProgressConfigurator />
 
 ## Component props
 

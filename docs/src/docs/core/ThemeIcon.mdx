@@ -8,6 +8,7 @@ slug: /core/theme-icon/
 import { THEME_ICON_SIZES } from '@mantine/core';
 import { ThemeIconConfigurator } from '../demos/core/ThemeIcon/theme-icon.configurator';
 import { ThemeIconBaseDemo } from '../demos/core/ThemeIcon/theme-icon.demos';
+import { ThemeIconSizesDemo } from '../demos/core/ThemeIcon/theme-icon-sizes.demo';
 
 # ThemeIcon
 
@@ -29,21 +30,26 @@ Use ThemeIcon do display svg icon with theme color background and color. You can
 - [feather](https://feathericons.com/)
 - [react-icons](https://react-icons.github.io/react-icons)
 
+<ThemeIconConfigurator />
+
+## Color
+
 <ThemeIconBaseDemo />
 
-## Change color, size and radius
-
-ThemeIcon has predefined sizes: xs, sm, md, lg, xl.
-You can pass size as number and it will be set as width and height in px:
-
-```tsx
-<ThemeIcon size="sm" /> // -> predefined small size
-<ThemeIcon size={50} /> // -> { width: 50, height: 50 }
-```
+## Size
 
 Note that component **does not control icon size** and you need to specify it manually on icon component for better fit.
+ThemeIcon has 5 predefined sizes: xs, sm, md, lg, xl. Size defines background width and height.
+Alternatively you can use number to set width and height in px:
 
-### Default size values
+```tsx
+<ThemeIcon size="lg" /> // -> theme predefined large size
+<ThemeIcon size={10} /> // -> { width: 10, height: 10 }
+```
+
+Sizes from xs to xl:
+
+<ThemeIconSizesDemo />
 
 You can get default sizes for action icon by importing `THEME_ICON_SIZES`:
 
@@ -56,26 +62,15 @@ import { THEME_ICON_SIZES } from '@mantine/core';
   data={Object.keys(THEME_ICON_SIZES).map((size) => [size, `${THEME_ICON_SIZES[size]}px`])}
 />
 
-Same with radius – predefined values for xs, sm, md, lg, xl are defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink>,
-or pass in number to set border-radius in px:
+## Radius
+
+xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
+Alternatively you can use number to set radius in px:
 
 ```tsx
 <ThemeIcon radius="lg" /> // -> theme predefined large radius
 <ThemeIcon radius={10} /> // -> { borderRadius: 10 }
 ```
-
-Size and color are only visible when user interacts with hover, active and focus.
-
-You can choose any color defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink> for ThemeIcon.
-
-```tsx
-<ThemeIcon color="red" />
-<ThemeIcon color="blue" />
-```
-
-### Size, radius and color demo
-
-<ThemeIconConfigurator />
 
 ## Component props
 

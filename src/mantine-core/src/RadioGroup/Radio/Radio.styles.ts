@@ -18,8 +18,8 @@ export const sizes = {
   xs: 12,
   sm: 16,
   md: 20,
-  lg: 28,
-  xl: 32,
+  lg: 26,
+  xl: 36,
 };
 
 export default createUseStyles({
@@ -63,8 +63,8 @@ export default createUseStyles({
     },
 
     '&:disabled': {
-      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4],
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
 
       '&::before': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4],
@@ -81,7 +81,7 @@ export default createUseStyles({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '&$labelDisabled': {
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[5],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
     },
   }),
 });

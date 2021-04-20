@@ -1,5 +1,6 @@
 import React from 'react';
 import { Textarea } from '@mantine/core';
+import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -27,8 +28,14 @@ export function TextareaDemo() {
 }`;
 
 export function TextareaAutosizeDemo() {
+  const theme = useMantineTheme();
+
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo
+      code={code}
+      language="tsx"
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
+    >
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <Textarea
           placeholder="Autosize with no rows limit"

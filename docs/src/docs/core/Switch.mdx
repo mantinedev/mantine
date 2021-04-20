@@ -7,6 +7,7 @@ slug: /core/switch/
 
 import { SWITCH_SIZES } from '@mantine/core';
 import { SwitchConfigurator } from '../demos/core/Switch/switch.configurator';
+import { SwitchSizesDemo, SwitchRadiusDemo } from '../demos/core/Switch/switch.demos';
 
 # Switch
 
@@ -31,7 +32,9 @@ For better accessibility set `label` prop, it will add associated label element.
 ## Sizes
 
 Switch has 5 predefined sizes: xs, sm, md, lg, xl.
-Size defines label font-size (from <GatsbyLink to="/pages/theming/">theme.fontSizes</GatsbyLink>) and input width and height.
+Size defines label font-size (from <GatsbyLink to="/pages/theming/">theme.fontSizes</GatsbyLink>), input width and height.
+
+<SwitchSizesDemo />
 
 You can get switch sizes by importing `SWITCH_SIZES`:
 
@@ -47,6 +50,19 @@ import { SWITCH_SIZES } from '@mantine/core';
     `${SWITCH_SIZES[size].height}px`,
   ])}
 />
+
+## Radius
+
+Radius controls border-radius of body and handle.
+xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
+Alternatively you can use number to set radius in px:
+
+```tsx
+<Switch radius="lg" /> // -> theme predefined large radius
+<Switch radius={10} /> // -> { borderRadius: 10 }
+```
+
+<SwitchRadiusDemo />
 
 ## Controlled
 
