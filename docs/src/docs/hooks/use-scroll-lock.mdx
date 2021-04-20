@@ -16,18 +16,8 @@ import { ModalBaseDemo } from '../demos/core/Modal/modal.base-demo';
   package="@mantine/hooks"
 />
 
-Lock document scroll at current position
-
 ```tsx
 import { useScrollLock } from '@mantine/hooks';
-```
-
-## Definition
-
-Hook accepts one argument – boolean value that controlls if scroll is locked.
-
-```tsx
-useScrollLock(lock: boolean): void
 ```
 
 ## Usage
@@ -35,7 +25,8 @@ useScrollLock(lock: boolean): void
 Use this hook when you want to prevent user from scrolling on document level,
 for example, with modals and drawers.
 
-Example modal component, whenever modal is opened, scroll is locked at current scroll position:
+Example modal component, whenever modal is opened, scroll is locked at current scroll position.
+Hook accepts one argument – boolean value that controls if scroll is locked:
 
 ```tsx
 import React from 'react';

@@ -30,7 +30,7 @@ import { useForm } from '@mantine/hooks';
 
 <UseFormBaseDemo />
 
-## Definition
+## API
 
 use-form hook accepts `configuration` object as single argument:
 
@@ -50,31 +50,6 @@ Hook returns object with properties:
 - `setErrors` – React useState hook setState action to set `errors`
 - `reset` – function to reset all `values` and `errors` to initial state
 - `onSubmit` – wrapper function for form onSubmit event handler
-
-```tsx
-useForm<T extends { [key: string]: any }>(configuration: {
-  initialValues: T,
-  validationRules?: {
-    [P in keyof T]?: (value: T[P]) => boolean;
-  }
-}): {
-  values: T;
-  errors: Record<keyof T, boolean>;
-  validate: () => boolean;
-  reset: () => void;
-  resetErrors: () => void;
-  setValues: React.Dispatch<React.SetStateAction<T>>;
-  setErrors: React.Dispatch<React.SetStateAction<Record<keyof T, boolean>>>;
-  setFieldValue: <K extends keyof T, U extends T[K]>(field: K, value: U) => void;
-  setFieldError: (field: keyof T, error: boolean) => void;
-  validateField: (field: keyof T) => void;
-  onSubmit: (handleSubmit: (values: T) => any) => (event?: React.FormEvent) => void;
-}
-```
-
-## API
-
-<br />
 
 ### initialValues
 
@@ -298,31 +273,6 @@ const form = useForm({
 const authForm = <form onSubmit={form.onSubmit((values) => console.log(values))} />;
 ```
 
-### TypeScript: Set form type
-
-use-form will use values types from initialValues, but you can pass your own type:
-
-```tsx
-const form = useForm<{ name?: string; termsOfService?: boolean }>({
-  initialValues: {
-    name: '',
-    termsOfService: false,
-  },
-});
-```
-
-### TypeScript: Get form values type
-
-Use `typeof` to get form values type:
-
-```tsx
-const form = useForm({ initialValues: { email: '' } });
-
-const handleSubmit = (values: typeof form['values']) => {
-  // values – { email: string }
-};
-```
-
 ## Examples
 
 <br />
@@ -342,3 +292,53 @@ Submit form with `test@mantine.dev` email to see external validation error:
 [Browse code on Github](https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/AuthenticationForm/AuthenticationForm.tsx)
 
 <UseFormAuthDemo />
+
+## TypeScript
+
+### Definition
+
+```tsx
+useForm<T extends { [key: string]: any }>(configuration: {
+  initialValues: T,
+  validationRules?: {
+    [P in keyof T]?: (value: T[P]) => boolean;
+  }
+}): {
+  values: T;
+  errors: Record<keyof T, boolean>;
+  validate: () => boolean;
+  reset: () => void;
+  resetErrors: () => void;
+  setValues: React.Dispatch<React.SetStateAction<T>>;
+  setErrors: React.Dispatch<React.SetStateAction<Record<keyof T, boolean>>>;
+  setFieldValue: <K extends keyof T, U extends T[K]>(field: K, value: U) => void;
+  setFieldError: (field: keyof T, error: boolean) => void;
+  validateField: (field: keyof T) => void;
+  onSubmit: (handleSubmit: (values: T) => any) => (event?: React.FormEvent) => void;
+}
+```
+
+### Set values type
+
+use-form will use values types from initialValues, but you can pass your own type:
+
+```tsx
+const form = useForm<{ name?: string; termsOfService?: boolean }>({
+  initialValues: {
+    name: '',
+    termsOfService: false,
+  },
+});
+```
+
+### Get form values type
+
+Use `typeof` to get form values type:
+
+```tsx
+const form = useForm({ initialValues: { email: '' } });
+
+const handleSubmit = (values: typeof form['values']) => {
+  // values – { email: string }
+};
+```

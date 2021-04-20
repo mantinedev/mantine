@@ -15,25 +15,18 @@ import { UseReducedMotionDemo } from '../demos/hooks/use-reduced-motion.demos';
   package="@mantine/hooks"
 />
 
-use-reduced-motion detects if user [prefers to reduce motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion).
-It uses <GatsbyLink to="/hooks/use-media-query">use-media-query</GatsbyLink> hook under the hood.
-Hook relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) and will always return false if api is not available (e.g. during server side rendering).
-
 ```tsx
 import { useReducedMotion } from '@mantine/hooks';
 ```
 
-## Definition
-
-use-reduced-motion hook returns true if `(prefers-reduced-motion: reduce)` media query is satisfied:
-
-```tsx
-useReducedMotion(): boolean
-```
-
 ## Usage
 
-Use use-reduced-motion hook to detect if user prefers to reduce motion and set animations duration based on this value.
+use-reduced-motion detects if user [prefers to reduce motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion).
+It uses <GatsbyLink to="/hooks/use-media-query">use-media-query</GatsbyLink> hook under the hood.
+Hook relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
+and will always return false if api is not available (e.g. during server side rendering).
+
+Use hook to detect if user prefers to reduce motion (`(prefers-reduced-motion: reduce)` media query) and set animations duration based on this value.
 All Mantine components which use animations support it by default:
 
 <UseReducedMotionDemo />

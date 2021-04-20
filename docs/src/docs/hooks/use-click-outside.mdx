@@ -22,7 +22,7 @@ and dropdowns to close overlay when user clicks outside.
 import { useClickOutside } from '@mantine/hooks';
 ```
 
-## Definition
+## API
 
 use-click-outside hook accepts 2 arguments:
 
@@ -30,17 +30,6 @@ use-click-outside hook accepts 2 arguments:
 - `events` – optional list of events that indicate outside click
 
 Hook returns React ref object that should be passed to element on which outside clicks should be captured.
-
-```tsx
-useClickOutside<T extends HTMLElement = any>(
-  handler: () => void,
-  events: string[] = ['mousedown', 'touchstart']
-): React.MutableRefObject<T>
-```
-
-## Usage
-
-Hook calls `handleClickOutside` function once outside click was detected and returns a ref that is set to div element.
 
 ```tsx
 import { useClickOutside } from '@mantine/hooks';
@@ -52,7 +41,7 @@ function Example() {
 }
 ```
 
-### Usage example
+## Usage
 
 <UseClickOutsideDemo />
 
@@ -61,15 +50,20 @@ function Example() {
 By default use-click-outside listens to `mousedown` and `touchstart` events,
 you can change these events by passing an array of events as second argument:
 
-```tsx
-const ref = useClickOutside(onClickOutside, ['mouseup', 'touchend']);
-```
-
-### Custom events example
-
 <UseClickOutsideDemo events={['mouseup', 'touchend']} />
 
 ## TypeScript
+
+### Definition
+
+```tsx
+useClickOutside<T extends HTMLElement = any>(
+  handler: () => void,
+  events: string[] = ['mousedown', 'touchstart']
+): React.MutableRefObject<T>
+```
+
+### Ref type
 
 By default use-click-outside returns ref object with `React.MutableRefObject<any>` type
 as ref type does not matter in almost all cases. You can specify ref type by passing a type:

@@ -1,0 +1,72 @@
+---
+package: mantine-hooks
+title: 'use-window-event'
+order: 1
+slug: /hooks/use-window-event/
+---
+
+# use-window-event
+
+<PageHeader
+  source="mantine-hooks/src/hooks/use-window-event/use-window-event.ts"
+  docs="hooks/use-window-event.mdx"
+  package="@mantine/hooks"
+/>
+
+```tsx
+import { useWindowEvent } from '@mantine/hooks';
+```
+
+## Usage
+
+use-window-event adds event listener to window object on component mount and removes it on unmount:
+
+```tsx
+import { useEffect } from 'react';
+import { useWindowEvent } from '@mantine/hooks';
+
+const handler = (event) => console.log(event);
+
+// regular way
+useEffect(() => {
+  window.addEventListener('keydown', handler);
+  return () => window.removeEventListener('keydown');
+}, []);
+
+// with use-window-event hook
+useWindowEvent('keydown', handler);
+```
+
+## Example
+
+Search focus with `⌘ + K` on mac or `Ctrl + K` on windows and linux on Mantine docs website:
+
+```tsx
+import React, { useRef } from 'react';
+import { useWindowEvent } from '@mantine/hooks';
+
+function Search() {
+  const inputRef = useRef();
+
+  useWindowEvent('keydown', (event) => {
+    if (event.code === 'KeyK' && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault();
+      inputRef.current.focus();
+    }
+  });
+
+  return <input ref={inputRef} />;
+}
+```
+
+## Definition
+
+Hook has exact same definition as `window.addEventListener` function:
+
+```tsx
+useWindowEvent<K extends keyof WindowEventMap>(
+  type: K,
+  listener: (this: Window, ev: WindowEventMap[K]) => any,
+  options?: boolean | AddEventListenerOptions
+): void;
+```

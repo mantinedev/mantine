@@ -1,22 +1,23 @@
 import React from 'react';
-import { ElementsGroup, Button } from '@mantine/core';
+import { ElementsGroup, Badge } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Button } from '@mantine/core';
+import { Badge } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 
 export function UseReducedMotionDemo() {
   const reduceMotion = useReducedMotion();
   
   return (
-    <Button
+    <Badge
       color={reduceMotion ? 'red' : 'teal'}
-      style={{ transitionDuration: reduceMotion ? '1ms' : '200ms' }}
+      style={{ transitionDuration: reduceMotion ? '0ms' : '200ms' }}
+      variant="filled"
     >
       {reduceMotion ? 'You prefer to reduce motion' : 'You prefer not to reduce motion'}
-    </Button>
+    </Badge>
   );
 }`;
 
@@ -25,12 +26,13 @@ export function UseReducedMotionDemo() {
   return (
     <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center">
-        <Button
+        <Badge
           color={reduceMotion ? 'red' : 'teal'}
-          style={{ transitionDuration: reduceMotion ? '1ms' : '200ms' }}
+          style={{ transitionDuration: reduceMotion ? '0ms' : '200ms' }}
+          variant="filled"
         >
           {reduceMotion ? 'You prefer to reduce motion' : 'You prefer not to reduce motion'}
-        </Button>
+        </Badge>
       </ElementsGroup>
     </CodeDemo>
   );

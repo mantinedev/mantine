@@ -65,7 +65,7 @@ update(() => []);
 // state -> [], queue -> []
 ```
 
-## Definition
+## API
 
 Hook accepts single argument – configuration object with keys:
 
@@ -79,19 +79,6 @@ Return value:
 - `add` – add any amount of items to state or queue
 - `update` – apply given function to all items in state and queue, use it to filter, modify or add items
 - `cleanQueue` – remove all items from queue
-
-```tsx
-useQueue<T>(configuration: {
-  initialValues?: T[];
-  limit: number;
-}): {
-  state: T[];
-  queue: T[];
-  add: (...items: T[]) => void;
-  update: (fn: (state: T[]) => T[]) => void;
-  cleanQueue: () => void;
-}
-```
 
 ## Example
 
@@ -125,4 +112,34 @@ const q = useQueue<{ name: string; id: number }>({
 });
 
 q.add({ name: 'Bob', id: 1 });
+```
+
+## TypeScript
+
+### Definition
+
+```tsx
+useQueue<T>(configuration: {
+  initialValues?: T[];
+  limit: number;
+}): {
+  state: T[];
+  queue: T[];
+  add: (...items: T[]) => void;
+  update: (fn: (state: T[]) => T[]) => void;
+  cleanQueue: () => void;
+}
+```
+
+### Item type
+
+Item type is set automatically based on `initialValues`,
+if you do not have `initialValue` it is required to pass in item type:
+
+```tsx
+// ok -> typeof state[number] -> string
+const { state } = useQueue({ initialValues: ['1', '2', '3'], limit: 3 });
+
+// type cannot be assigned automatically, specify it
+const { state } = useQueue<string>({ limit: 3 });
 ```

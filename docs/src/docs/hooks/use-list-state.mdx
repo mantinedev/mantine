@@ -64,7 +64,7 @@ const setItemProp = () => handlers.setItemProp(1, 'a', 'new-prop');
 // values -> [{ a: 8 }, { a: 'new-prop' }]
 ```
 
-## Definition
+## API
 
 use-list-state takes array as single argument and returns list values and handlers to change them in tuple, similar to react use-state hook.
 
@@ -80,6 +80,20 @@ Hook provides handlers to work with array data:
 - `setItemProp` – set item property at given index
 - `setState` – set list state with react action
 
+## Examples
+
+### Todo list example
+
+<UseListStateDemo />
+
+### Intermediate state checkbox example
+
+<CheckboxIntermediateDemo />
+
+## TypeScript
+
+### Definition
+
 ```tsx
 useListState<T>(initialValue: T[] = []): [T[], {
   setState: Dispatch<SetStateAction<T[]>>;
@@ -94,17 +108,7 @@ useListState<T>(initialValue: T[] = []): [T[], {
 }]
 ```
 
-## Examples
-
-### Todo list example
-
-<UseListStateDemo />
-
-### Intermediate state checkbox example
-
-<CheckboxIntermediateDemo />
-
-## TypeScript
+### Set item type
 
 By default use-list-state will use type from initialValues.
 If you init hook with empty array, you must specify item type:

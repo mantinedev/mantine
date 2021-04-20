@@ -19,18 +19,9 @@ Use multiple refs for one dom node
 import { useMergedRef } from '@mantine/hooks';
 ```
 
-## Definition
-
-Hook accepts any amount of refs and returns function that should be passed to dom node:
-
-```tsx
-useMergedRef<T = any>(
-  ...refs: React.ForwardedRef<T>[]
-): (node: T) => void;
-```
-
 ## Usage
 
+Hook accepts any amount of refs and returns function that should be passed to dom node.
 Use hook when you need to use more than one ref on single dom node, for example,
 when you want to use <GatsbyLink to="/hooks/use-click-outside/">use-click-outside</GatsbyLink> and <a href="https://www.npmjs.com/package/@charlietango/use-focus-trap" target="_blank">use-focus-trap</a> hooks and also get a ref for yourself:
 
@@ -47,4 +38,20 @@ function Example() {
 
   return <div ref={mergedRef} />;
 }
+```
+
+## TypeScript
+
+### Definition
+
+```tsx
+useMergedRef<T = any>(
+  ...refs: React.ForwardedRef<T>[]
+): (node: T) => void;
+```
+
+### Set node type
+
+```tsx
+useMergedRef<HTMLDivElement>();
 ```

@@ -15,13 +15,17 @@ import { UseClipboardDemo } from '../demos/hooks/use-clipboard.demos';
   package="@mantine/hooks"
 />
 
-use-clipboard hook provides interface to work with `navigator.clipboard`
-
 ```tsx
 import { useClipboard } from '@mantine/hooks';
 ```
 
-## Definition
+## Usage
+
+use-clipboard hook provides interface to work with `navigator.clipboard`:
+
+<UseClipboardDemo />
+
+## API
 
 use-clipboard hook accepts one argument `options` in which copied status timeout duration is defined (defaults to 2000).
 Hook returns object with properties:
@@ -30,6 +34,8 @@ Hook returns object with properties:
 - `copied` – value that indicates that copy handler was called less than `options.timeout` ms ago
 - `reset` – function to clear timeout and reset `copied` to false
 - `error` – contains `Error` object if something goes wrong
+
+## Definition
 
 ```tsx
 useClipboard(
@@ -41,7 +47,3 @@ useClipboard(
   copied: boolean;
 }
 ```
-
-## Usage
-
-<UseClipboardDemo />

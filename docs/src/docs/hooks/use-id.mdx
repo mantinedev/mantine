@@ -13,33 +13,15 @@ slug: /hooks/use-id/
   package="@mantine/hooks"
 />
 
-use-id hook generates random id that persists across renders.
-Use it to bind input elements to labels.
-
 ```tsx
 import { useId } from '@mantine/hooks';
 ```
 
-## Definition
-
-use-id hook accepts two arguments:
-
-- `id` – string value that is returned by default
-- `generateId` – function that is used to generate random id, defaults to [nanoid](https://www.npmjs.com/package/nanoid)
-
-Hook returns string value that is either `id` (if first argument is passed) or random id generated with `generateId` function.
-
-```tsx
-useId(
-  id: string,
-  generateId: (size: number) => string = nanoid
-): string
-```
-
 ## Usage
 
-use-id is usually used to bind input elements to labels.
-Generated random id is saved to refand will not change unless component is unmounted.
+use-id generates random id that persists across renders.
+Hook is usually used to bind input elements to labels.
+Generated random id is saved to ref and will not change unless component is unmounted.
 
 ```tsx
 import React from 'react';
@@ -60,5 +42,23 @@ function Input({ id }) {
 const withId = <Input id="my-id" />;
 
 // input and label will have random id 'mantine-fZMoF'
-const wihtoutId = <Input />;
+const withoutId = <Input />;
+```
+
+## API
+
+use-id hook accepts two arguments:
+
+- `id` – string value that is returned by default
+- `generateId` – function that is used to generate random id, defaults to [nanoid](https://www.npmjs.com/package/nanoid)
+
+Hook returns string value that is either `id` (if first argument is passed) or random id generated with `generateId` function.
+
+## Definition
+
+```tsx
+useId(
+  id: string,
+  generateId: (size: number) => string = nanoid
+): string
 ```
