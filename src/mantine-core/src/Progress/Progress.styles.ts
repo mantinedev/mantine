@@ -21,7 +21,7 @@ interface ProgressStylesProps {
 export default createUseStyles({
   progress: ({ radius, size, theme }: ProgressStylesProps) => ({
     height: getSizeValue({ size, sizes }),
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[2],
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     overflow: 'hidden',
   }),
