@@ -1,6 +1,7 @@
 import React from 'react';
 import { TwitterLogoIcon } from '@modulz/radix-icons';
 import { Input, Badge } from '@mantine/core';
+import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -26,6 +27,8 @@ export function InputDemo() {
 }`;
 
 export function InputIconDemo() {
+  const theme = useMantineTheme();
+
   const rightSection = (
     <Badge color="blue" variant="filled">
       new
@@ -33,7 +36,11 @@ export function InputIconDemo() {
   );
 
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo
+      code={code}
+      language="tsx"
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
+    >
       <Input
         icon={<TwitterLogoIcon />}
         placeholder="Your twitter"

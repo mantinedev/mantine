@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChevronDownIcon } from '@modulz/radix-icons';
+import { useMantineTheme } from '@mantine/theme';
 import { Input } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -20,8 +21,14 @@ export function InputDemo() {
 }`;
 
 export function InputComponentDemo() {
+  const theme = useMantineTheme();
+
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo
+      code={code}
+      language="tsx"
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
+    >
       <Input component="button">Button input</Input>
       <Input component="select" style={{ marginTop: 15 }} rightSection={<ChevronDownIcon />}>
         <option value="1">1</option>

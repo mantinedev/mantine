@@ -1,5 +1,6 @@
 import React from 'react';
 import { InputWrapper, Input } from '@mantine/core';
+import { useMantineTheme } from '@mantine/theme';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function InputWrapperWrapper(props: React.ComponentPropsWithoutRef<typeof InputWrapper>) {
@@ -17,10 +18,12 @@ const codeTemplate = (props: string) => `<InputWrapper id="input-demo"${props}>
 </InputWrapper>`;
 
 export function InputWrapperConfigurator() {
+  const theme = useMantineTheme();
   return (
     <Configurator
       component={InputWrapperWrapper}
       codeTemplate={codeTemplate}
+      previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
       props={[
         {
           name: 'required',

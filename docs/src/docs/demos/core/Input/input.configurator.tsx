@@ -1,15 +1,23 @@
 import React from 'react';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';
+import { useMantineTheme } from '@mantine/theme';
 import { Input } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
-const codeTemplate = (props: string) => `<Input${props} />`;
+const codeTemplate = (props: string) => `<Input
+  icon={<MailIcon />}
+ ${props}
+/>`;
 
 export function InputConfigurator() {
+  const theme = useMantineTheme();
+
   return (
     <Configurator
       component={(props: any) => <Input icon={<EnvelopeClosedIcon />} {...props} />}
       codeTemplate={codeTemplate}
+      previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
+      multiline
       props={[
         {
           name: 'variant',
