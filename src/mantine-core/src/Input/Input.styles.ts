@@ -70,7 +70,7 @@ export default createUseStyles({
       },
 
       '&::placeholder': {
-        color: theme.colors.gray[6],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
       },
     },
 
@@ -95,8 +95,9 @@ export default createUseStyles({
     },
   }),
 
-  unstyledVariant: {
+  unstyledVariant: ({ theme }: InputStylesProps) => ({
     '& $input': {
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       backgroundColor: 'transparent',
       height: 28,
       border: 0,
@@ -114,7 +115,7 @@ export default createUseStyles({
     '& $withIcon': {
       paddingLeft: 34,
     },
-  },
+  }),
 
   input: ({ theme }: InputStylesProps) => ({
     ...getFontStyles(theme),
@@ -136,7 +137,7 @@ export default createUseStyles({
     },
 
     '&::placeholder': {
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
     },
 
     '&::-webkit-inner-spin-button': {
