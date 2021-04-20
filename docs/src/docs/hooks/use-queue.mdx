@@ -51,7 +51,7 @@ update((values) => values.map((item) => item * 3));
 // state -> [3,6], queue -> [9,12,15,18]
 
 // If you add or remove items in update function,
-// they will be divided between queue and state acoring to limit
+// they will be divided between queue and state according to limit
 // order is always preserved
 update((values) => values.filter((item) => item % 2));
 // state -> [3,9], queue -> [15]
