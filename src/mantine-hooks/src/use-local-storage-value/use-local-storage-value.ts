@@ -1,26 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 export function useLocalStorageValue<T extends string>({
   key,
   defaultValue = null,
-  updateOnMount = true,
 }: {
   key: string;
   defaultValue?: T;
-  updateOnMount?: boolean;
 }) {
   const [value, setValue] = useState<T>(
     typeof window !== 'undefined' && 'localStorage' in window
       ? (window.localStorage.getItem(key) as T)
       : defaultValue
   );
-
-  useEffect(() => {
-    if (updateOnMount) {
-      setValue(window.localStorage.getItem(key) as T);
-    }
-  }, []);
 
   const setLocalStorageValue = (val: T | ((prevState: T) => T)) => {
     if (typeof val === 'function') {
