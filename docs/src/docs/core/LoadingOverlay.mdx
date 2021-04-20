@@ -9,8 +9,6 @@ import { LoadingOverlayBaseDemo } from '../demos/core/LoadingOverlay/loading-ove
 
 # LoadingOverlay
 
-Overlay element to disable interactions and indicate loading state
-
 <PageHeader
   source="mantine-core/src/LoadingOverlay/LoadingOverlay.tsx"
   docs="core/LoadingOverlay.mdx"
@@ -22,6 +20,9 @@ import { LoadingOverlay } from '@mantine/core';
 ```
 
 ## Usage
+
+Use LoadingOverlay to overlay element to disable interactions and indicate loading state.
+Note that, elements under overlay are still focusable with keyboard remember to add additional logic to handle this case.
 
 Overlay had absolute position and will take 100% of width and height of parent container.
 Use it when you need to disable user interactions and indicate loading state, for example, while form is submitting.

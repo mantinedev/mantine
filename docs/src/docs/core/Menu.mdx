@@ -76,7 +76,16 @@ You can customize transition, timing function and duration:
 
 <MenuTransitionsDemo />
 
-## Size and shadow
+## Shadow
+
+You can use predefined shadows defined in <GatsbyLink to="/pages/theming/">theme.shadows</GatsbyLink> or your own:
+
+```tsx
+<Menu shadow="sm" /> // -> predefined small shadow
+<Menu shadow="1px 1px 3px rgba(0,0,0,.1)" /> // -> custom shadow
+```
+
+## Size
 
 <MenuConfigurator />
 
@@ -99,16 +108,11 @@ import { MENU_SIZES } from '@mantine/core';
   data={Object.keys(MENU_SIZES).map((size) => [size, `${MENU_SIZES[size]}px`])}
 />
 
-Same with shadow, you can use predefined shadows defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink> or your own:
-
-```tsx
-<Menu shadow="sm" /> // -> predefined small shadow
-<Menu shadow="1px 1px 3px rgba(0,0,0,.1)" /> // -> custom shadow
-```
-
 ## Compose with ElementsGroup
 
 You can compose Menu with any other components that support composition feature with <GatsbyLink to="/core/elements-group">ElementsGroup</GatsbyLink> component.
+
+<MenuComposeDemo />
 
 ## Get element ref
 
@@ -123,8 +127,6 @@ function Demo() {
   return <Menu elementRef={menuControlRef} />;
 }
 ```
-
-<MenuComposeDemo />
 
 ## Accessibility and usability
 

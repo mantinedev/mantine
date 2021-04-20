@@ -75,6 +75,8 @@ Size controls modal width, max-width is set to 100% with spacing on left and rig
 <Modal size="255%" /> // -> max-width is set to 100%, won't work
 ```
 
+<ModalSizesDemo />
+
 Modal has 6 predefined sizes: xs, sm, md (default), lg, xl and full.
 You can get these values by importing `MODAL_SIZES`:
 
@@ -89,8 +91,6 @@ import { MODAL_SIZES } from '@mantine/core';
     `${MODAL_SIZES[size]}${typeof size === 'number' ? 'px' : ''}`,
   ])}
 />
-
-<ModalSizesDemo />
 
 ## Customize overlay
 
@@ -114,12 +114,11 @@ Animations also disabled when user <GatsbyLink to="/hooks/use-reduced-motion/">p
 
 <ModalTransitionsDemo />
 
-## Accessibility
+## Accessibility and usability
 
-- When modal is opened focus is trapped inside
-- When user clicks on overlay or presses escape `onClose` function is called
-- Render Modal component inside Portal to detatch it from current rendering tree
-- Use `closeButtonLabel` prop to set `title` and `aria-label` attributes of close button
+- When modal is opened focus is trapped inside and document.body overflow is set to hidden
+- When user clicks on overlay or presses escape modal closes
+- Use `closeButtonLabel` prop to set `title` and `aria-label` attributes of close button for better screen reader support
 - `aria-modal` is set to true on modal wrapper
 - Modal wrapper has `aria-labelledby` and `aria-describedby` pointing to modal title and body
 
