@@ -22,7 +22,7 @@ export default createUseStyles({
     borderRadius: 4,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
     border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]
+      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
     }`,
 
     '&::before': {
