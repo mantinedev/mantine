@@ -9,7 +9,7 @@ import { ThemeIcon } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
 import { MixIcon, RocketIcon } from '@modulz/radix-icons';
 
-export function ThemeIconDemo() {
+function Demo() {
   const theme = useMantineTheme();
   
   const filledIcons = Object.keys(theme.colors).map((color) => (

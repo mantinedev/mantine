@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Highlight } from '@mantine/core';
 
-export function HighlightDemo() {
+function Demo() {
   return (
     <Highlight
       component="a"

@@ -8,7 +8,7 @@ const code = `import React, { useState } from 'react';
 import { Modal, Button, ElementsGroup } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
 
-export function ModalDemo() {
+function Demo() {
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
   

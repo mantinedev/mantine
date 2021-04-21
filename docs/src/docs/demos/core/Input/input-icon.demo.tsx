@@ -8,7 +8,7 @@ const code = `import React from 'react';
 import { Input, Badge } from '@mantine/core';
 import { TwitterLogoIcon } from '@modulz/radix-icons';
 
-export function InputDemo() {
+function Demo() {
   const rightSection = (
     <Badge color="blue" variant="filled">
       new

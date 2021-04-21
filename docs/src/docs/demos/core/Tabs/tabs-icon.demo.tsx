@@ -7,7 +7,7 @@ const code = `import React from 'react';
 import { Tabs, Tab } from '@mantine/core';
 import { MixerHorizontalIcon, ChatBubbleIcon } from '@modulz/radix-icons';
 
-function IconsTabsDemo() {
+function Demo() {
   return (
     <Tabs>
       <Tab label="Chat" icon={<ChatBubbleIcon />}>Chat here</Tab>

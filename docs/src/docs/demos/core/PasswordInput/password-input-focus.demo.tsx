@@ -6,7 +6,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Password } from '@mantine/core';
 
-export function PasswordDemo() {
+function Demo() {
   return (
     <>
       <PasswordInput

@@ -6,7 +6,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React, { useState } from 'react';
 import { Overlay } from '@mantine/core';
 
-export function OverlayDemo() {
+function Demo() {
   const [visible, setVisible] = useState(false);
 
   return (

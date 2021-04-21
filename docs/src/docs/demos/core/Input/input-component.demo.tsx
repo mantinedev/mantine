@@ -8,7 +8,7 @@ const code = `import React from 'react';
 import { Input } from '@mantine/core';
 import { ChevronDownIcon } from '@modulz/radix-icons';
 
-export function InputDemo() {
+function Demo() {
   return (
     <>
       <Input component="button">Button input</Input>

@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Title } from '@mantine/core';
 
-export function TitleDemo() {
+function Demo() {
   return (
     <>
       <Title order={1}>This is h1 title</Title>

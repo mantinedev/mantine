@@ -31,7 +31,7 @@ const content = (
 const code = `import React from 'react';
 import { Spoiler } from '@mantine/core';
 
-export function SpoilerDemo() {
+function Demo() {
   return (
     <Spoiler maxHeight={120} showLabel="Show more" hideLabel="Hide">
       {/* Content here */}
@@ -54,7 +54,7 @@ export function SpoilerBaseDemo() {
 const noAnimationCode = `import React from 'react';
 import { Spoiler } from '@mantine/core';
 
-export function SpoilerDemo() {
+function Demo() {
   return (
     <Spoiler
       maxHeight={120}

@@ -7,7 +7,7 @@ const code = `import React from 'react';
 import { useMantineTheme } from '@mantine/theme';
 import { Container } from '@mantine/core';
 
-export function ContainerDemo() {
+function Demo() {
   const theme = useMantineTheme();
   const color = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.blue[0];
   

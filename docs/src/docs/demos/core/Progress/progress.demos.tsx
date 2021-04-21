@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Progress } from '@mantine/core';
 
-export function ProgressDemo() {
+function Demo() {
   return (
     <>
       <Progress value={10} />

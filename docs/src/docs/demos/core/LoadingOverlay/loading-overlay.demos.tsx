@@ -7,7 +7,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React, { useState } from 'react';
 import { LoadingOverlay, Button, ElementsGroup } from '@mantine/core';
 
-export function LoadingOverlayDemo() {
+function Demo() {
   const [visible, setVisible] = useState(false);
 
   return (

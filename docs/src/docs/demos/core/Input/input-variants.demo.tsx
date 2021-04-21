@@ -6,7 +6,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Input } from '@mantine/core';
 
-export function InputDemo() {
+function Demo() {
   return (
     <>
       <Input placeholder="Default variant" />

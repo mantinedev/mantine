@@ -13,7 +13,7 @@ const elements = [
 const code = `import React from 'react';
 import { Table } from '@mantine/core';
 
-export function TableDemo() {
+function Demo() {
   const ths = (
     <tr>
       <th>Element position</th>
@@ -77,7 +77,7 @@ export function TableBaseDemo() {
 const fullCode = `import React from 'react';
 import { Table } from '@mantine/core';
 
-export function TableDemo() {
+function Demo() {
   const ths = (
     <tr>
       <th>Element position</th>

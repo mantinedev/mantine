@@ -6,7 +6,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Textarea } from '@mantine/core';
 
-export function TextareaDemo() {
+function Demo() {
   return (
     <>
       <Textarea

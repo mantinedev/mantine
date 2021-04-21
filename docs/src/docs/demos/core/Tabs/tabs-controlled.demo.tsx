@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Tabs, Tab } from '@mantine/core';
 
-function ControlledTabsDemo() {
+function Demo() {
   const [activeTab, setActiveTab] = useState(1);
   
   return (

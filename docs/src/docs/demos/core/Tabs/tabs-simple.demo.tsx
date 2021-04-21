@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Tabs, Tab } from '@mantine/core';
 
-function TabsDemo() {
+function Demo() {
   return (
     <Tabs>
       <Tab label="First">First tab content</Tab>

@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React, { useState } from 'react';
 import { Modal, Button, ElementsGroup } from '@mantine/core';
 
-export function ModalDemo() {
+function Demo() {
   const [noTransitionOpened, setNoTransitionOpened] = useState(false);
   const [slowTransitionOpened, setSlowTransitionOpened] = useState(false);
   

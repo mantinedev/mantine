@@ -6,7 +6,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Paper } from '@mantine/core';
 
-export function PaperDemo() {
+function Demo() {
   const theme = useMantineTheme();
   const gray = theme.colors.gray[3];
   const dark = theme.colors.dark[8];

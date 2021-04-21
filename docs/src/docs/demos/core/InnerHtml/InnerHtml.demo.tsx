@@ -23,7 +23,7 @@ const html = `
 const code = `import React from 'react';
 import { InnerHtml } from '@mantine/core';
 
-export function InnerHtmlDemo() {
+function Demo() {
   return <InnerHtml dangerouslySetInnerHTML={{ __html: html }} />;
 }`;
 

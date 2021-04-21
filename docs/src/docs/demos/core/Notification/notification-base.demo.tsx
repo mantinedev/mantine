@@ -8,7 +8,7 @@ const code = `import React from 'react';
 import { Notification } from '@mantine/core';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
 
-export function NotificationDemo() {
+function Demo() {
   return (
     <>
       <Notification title="Default notification">

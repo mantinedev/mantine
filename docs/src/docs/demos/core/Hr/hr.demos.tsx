@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Hr } from '@mantine/core';
 
-export function HrDemo() {
+function Demo() {
   return (
     <>
       <Hr />
@@ -28,7 +28,7 @@ export function HrBaseDemo() {
 const colorCode = `import React from 'react';
 import { Hr } from '@mantine/core';
 
-export function HrDemo() {
+function Demo() {
   return (
     <>
       <Hr color="blue" />
@@ -51,7 +51,7 @@ export function HrColorDemo() {
 const sizesCode = `import React from 'react';
 import { Hr } from '@mantine/core';
 
-export function HrDemo() {
+function Demo() {
   return (
     <>
       <Hr size="xs" />

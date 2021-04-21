@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Menu, MenuItem, ElementsGroup, Button  } from '@mantine/core';
 
-export function MenuDemo() {
+function Demo() {
   return (
     <ElementsGroup position="center" spacing="xs">
       <Button>Save</Button>

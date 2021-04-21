@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Menu, MenuItem, ElementsGroup, Button  } from '@mantine/core';
 
-export function MenuDemo() {
+function Demo() {
   return (
     <Menu menuPosition={{ bottom: 0, right: 0 }} transition="skew-down">
       <MenuItem>Discard changes</MenuItem>

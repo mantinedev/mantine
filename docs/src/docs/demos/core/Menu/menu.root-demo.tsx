@@ -12,7 +12,7 @@ import {
   MagnifyingGlassIcon,
 } from '@modulz/radix-icons';
 
-export function MenuDemo() {
+function Demo() {
   return (
     <Menu>
       <MenuItem icon={<GearIcon />}>Settings</MenuItem>

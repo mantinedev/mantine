@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Text } from '@mantine/core';
 
-export function TextDemo() {
+function Demo() {
   return (
     <>
       <Text size="xs">Extra small text</Text>
