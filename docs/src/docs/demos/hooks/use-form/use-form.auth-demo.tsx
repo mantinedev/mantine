@@ -7,13 +7,16 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import code from '!!raw-loader!../../../../../src/mantine-demos/src/AuthenticationForm/AuthenticationForm';
 
-export function UseFormAuthDemo() {
+export function UseFormAuthDemo({ toggle = false }: { toggle: boolean }) {
   const theme = useMantineTheme();
+
   return (
     <CodeDemo
       code={code}
       language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0]}
+      toggle={toggle}
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]}
+      githubLink="https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/AuthenticationForm/AuthenticationForm.tsx"
     >
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <AuthenticationForm />

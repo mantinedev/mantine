@@ -3,4 +3,34 @@ title: Examples
 slug: /pages/examples/
 ---
 
+import { CheckboxIntermediateDemo } from '../demos/core/Checkbox/checkbox-intermediate.demo';
+import { PasswordInputStrengthDemo } from '../demos/core/PasswordInput/password-input-strength.demo';
+import { UseListStateDemo } from '../demos/hooks/use-list-state.demos';
+import { UseFormAuthDemo } from '../demos/hooks/use-form/use-form.auth-demo';
+
 # Examples
+
+## Password strength meter
+
+Built with <GatsbyLink to="/core/progress">Progress</GatsbyLink>, <GatsbyLink to="/core/password-input">PasswordInput</GatsbyLink>
+and <GatsbyLink to="/core/text">Text</GatsbyLink> components.
+
+<PasswordInputStrengthDemo />
+
+## Todo list
+
+Built with <GatsbyLink to="/hooks/use-list-state">use-list-state</GatsbyLink> hook and <GatsbyLink to="/core/text-input">TextInput</GatsbyLink>, <GatsbyLink to="/core/checkbox">Checkbox</GatsbyLink>, <GatsbyLink to="/core/action-icon">ActionIcon</GatsbyLink> components.
+
+<UseListStateDemo />
+
+## Authentication form
+
+Built with <GatsbyLink to="/hooks/use-use-form">use-use-form</GatsbyLink> hook and <GatsbyLink to="/core/text-input">TextInput</GatsbyLink>, <GatsbyLink to="/core/password-input">PasswordInput</GatsbyLink>, <GatsbyLink to="/core/checkbox">Checkbox</GatsbyLink>, <GatsbyLink to="/core/button">Button</GatsbyLink>, <GatsbyLink to="/core/elements-group">ElementsGroup</GatsbyLink>, <GatsbyLink to="/core/paper">Paper</GatsbyLink>, <GatsbyLink to="/core/loading-overlay">LoadingOverlay</GatsbyLink> components.
+
+<UseFormAuthDemo toggle />
+
+## Intermediate checkbox
+
+Built with <GatsbyLink to="/hooks/use-list-state">use-list-state</GatsbyLink> hook and <GatsbyLink to="/core/checkbox">Checkbox</GatsbyLink> component.
+
+<CheckboxIntermediateDemo />

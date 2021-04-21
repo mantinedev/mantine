@@ -25,7 +25,7 @@ export default createUseStyles({
       paddingRight: 15,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,
       transition: 'border-color 100ms ease, box-shadow 100ms ease',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
-import { PasswordInput, Progress, Transition, Text } from '@mantine/core';
+import { PasswordInput, Progress, Text } from '@mantine/core';
 
 function PasswordRequirement({ meets, label }: { meets: boolean; label: string }) {
   return (
@@ -33,9 +33,8 @@ function getStrength(password: string) {
   return Math.max(100 - (100 / (requirements.length + 1)) * multiplier, 10);
 }
 
-export function PasswordStrength({ alwaysMounted }: { alwaysMounted?: true }) {
+export function PasswordStrength() {
   const [value, setValue] = useState('');
-  const [showInfo, setShowInfo] = useState(false);
   const checks = requirements.map((requirement, index) => (
     <PasswordRequirement key={index} label={requirement.label} meets={requirement.re.test(value)} />
   ));
@@ -44,7 +43,7 @@ export function PasswordStrength({ alwaysMounted }: { alwaysMounted?: true }) {
   const color = strength === 100 ? 'teal' : strength > 50 ? 'yellow' : 'red';
 
   return (
-    <div onFocusCapture={() => setShowInfo(true)} onBlurCapture={() => setShowInfo(false)}>
+    <>
       <PasswordInput
         label="Your password"
         placeholder="Your password"
@@ -53,29 +52,11 @@ export function PasswordStrength({ alwaysMounted }: { alwaysMounted?: true }) {
         onChange={(event) => setValue(event.currentTarget.value)}
       />
 
-      <div style={{ position: 'relative', height: 140 }}>
-        <Transition transition="fade" mounted={showInfo || alwaysMounted}>
-          {(styles) => (
-            <div
-              style={{
-                marginTop: 10,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                ...styles,
-              }}
-            >
-              <Progress color={color} value={strength} size={3} />
-              <PasswordRequirement
-                label="Includes at least 6 characters"
-                meets={value.length > 5}
-              />
-              {checks}
-            </div>
-          )}
-        </Transition>
+      <div style={{ marginTop: 10 }}>
+        <Progress color={color} value={strength} size={3} />
+        <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
+        {checks}
       </div>
-    </div>
+    </>
   );
 }

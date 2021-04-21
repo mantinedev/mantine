@@ -47,6 +47,7 @@ export function AuthenticationForm({ noShadow, noPadding, noSubmit }: Authentica
 
   const handleSubmit = () => {
     setLoading(true);
+    setError(null);
     setTimeout(() => {
       setLoading(false);
       setError(
@@ -58,8 +59,12 @@ export function AuthenticationForm({ noShadow, noPadding, noSubmit }: Authentica
   };
 
   return (
-    <Paper padding={noPadding ? 0 : 'lg'} shadow={noShadow ? null : 'sm'}>
-      <form onSubmit={form.onSubmit(handleSubmit)} style={{ position: 'relative' }}>
+    <Paper
+      padding={noPadding ? 0 : 'lg'}
+      shadow={noShadow ? null : 'sm'}
+      style={{ position: 'relative', overflow: 'hidden' }}
+    >
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <LoadingOverlay visible={loading} />
         {formType === 'register' && (
           <div style={{ display: 'flex', marginBottom: 15 }}>
