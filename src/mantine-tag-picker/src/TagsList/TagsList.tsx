@@ -2,11 +2,10 @@ import React from 'react';
 import cx from 'clsx';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import useFocusTrap from '@charlietango/use-focus-trap';
-import { Input, Text } from '@mantine/core';
+import { TextInput, Text, Badge } from '@mantine/core';
 import { MantineThemeOverride, useMantineTheme } from '@mantine/theme';
 import { TagPickerColor, TagPickerTag } from '../types';
 import TagItem from '../TagItem/TagItem';
-import TagBadge from '../TagBadge/TagBadge';
 import useStyles from './TagsList.styles';
 
 export interface TagsListProps {
@@ -88,7 +87,7 @@ export default function TagsList({
 
   return (
     <div className={classes.tagsList} ref={focusTrapRef}>
-      <Input
+      <TextInput
         className={classes.searchInput}
         placeholder={searchPlaceholder}
         value={searchQuery}
@@ -120,10 +119,14 @@ export default function TagsList({
             onMouseEnter={() => onHoveredChange(data.length)}
           >
             <span className={classes.createControlLabel}>{createLabel || '+'}</span>
-            <TagBadge
+            <Badge
+              variant="light"
               className={classes.createControlBadge}
-              data={{ id: 'create-placeholder', background: createColor, name: searchQuery }}
-            />
+              color={createColor}
+              style={{ cursor: 'pointer' }}
+            >
+              {searchQuery}
+            </Badge>
           </button>
         )}
       </div>

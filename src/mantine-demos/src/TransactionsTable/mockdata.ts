@@ -1,18 +1,16 @@
-import OpenColor from 'open-color';
-
 export const categories = [
-  { id: 'home', name: 'Home', background: OpenColor.teal[1] },
-  { id: 'pets', name: 'Pets', background: OpenColor.blue[1] },
-  { id: 'subscriptions', name: 'Subscriptions', background: OpenColor.red[1] },
+  { id: 'home', name: 'Home', color: 'teal' },
+  { id: 'pets', name: 'Pets', color: 'blue' },
+  { id: 'subscriptions', name: 'Subscriptions', color: 'red' },
   {
     id: 'personal-projects',
     name: 'Personal projects',
-    background: OpenColor.lime[1],
+    color: 'lime',
   },
-  { id: 'healthcare', name: 'Healthcare', background: OpenColor.orange[1] },
-  { id: 'entertainment', name: 'Entertainment', background: OpenColor.violet[1] },
-  { id: 'rent', name: 'Rent', background: OpenColor.gray[1] },
-  { id: 'gifts', name: 'Gifts', background: OpenColor.yellow[1] },
+  { id: 'healthcare', name: 'Healthcare', color: 'orange' },
+  { id: 'entertainment', name: 'Entertainment', color: 'violet' },
+  { id: 'rent', name: 'Rent', color: 'gray' },
+  { id: 'gifts', name: 'Gifts', color: 'yellow' },
 ];
 
 const category = (id: string) => categories.find((c) => c.id === id);

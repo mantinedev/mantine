@@ -5,7 +5,6 @@ export interface TagPickerColor {
 
 export interface TagPickerTag {
   id: string;
-  color?: string;
-  background: string;
+  color: string;
   name: string;
 }

@@ -1,9 +1,8 @@
 import React from 'react';
 import { useClickOutside, useReducedMotion } from '@mantine/hooks';
-import { Paper, Transition } from '@mantine/core';
+import { Paper, Transition, Badge } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
 import TagsList, { TagsListProps } from '../TagsList/TagsList';
-import TagBadge from '../TagBadge/TagBadge';
 import useStyles from './TagPicker.styles';
 
 interface TagPickerProps extends TagsListProps {
@@ -35,16 +34,9 @@ export default function TagPicker({
   return (
     <div className={classes.tagPicker}>
       <button className={classes.control} type="button" ref={controlRef} onClick={openDropdown}>
-        <TagBadge
-          data={
-            value || {
-              id: 'no-value',
-              background: theme.colors.gray[2],
-              color: theme.colors.gray[7],
-              name: noValueLabel,
-            }
-          }
-        />
+        <Badge color={(value && value.color) || 'gray'} style={{ cursor: 'pointer' }}>
+          {(value && value.name) || noValueLabel}
+        </Badge>
       </button>
 
       <Transition duration={duration} mounted={dropdownOpened} transition="skew-up">

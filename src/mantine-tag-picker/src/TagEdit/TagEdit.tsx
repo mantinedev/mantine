@@ -38,21 +38,13 @@ export default function TagEdit({
   const classes = useStyles({ theme });
   const dropdownRef = useClickOutside(onClose);
   const focusTrapRef = useFocusTrap();
-  const [values, setValues] = useState<Omit<TagPickerTag, 'id'>>({
-    name: '',
-    color: '',
-    background: '',
-  });
+  const [values, setValues] = useState<Omit<TagPickerTag, 'id'>>({ name: '', color: '' });
   const handleNameChange = (value: string) => setValues((current) => ({ ...current, name: value }));
   const handleColorChange = (value: string) =>
-    setValues((current) => ({ ...current, background: value }));
+    setValues((current) => ({ ...current, color: value }));
 
   const handleSubmit = () => {
-    onTagUpdate(id, {
-      name: values.name,
-      background: values.background,
-      color: initialValues.color,
-    });
+    onTagUpdate(id, { name: values.name, color: values.color });
     onClose();
   };
 
@@ -79,10 +71,10 @@ export default function TagEdit({
       onClick={() => handleColorChange(color.color)}
     >
       <div className={classes.colorControlBody}>
-        <ColorSwatch color={color.color} size={18} />
+        <ColorSwatch color={theme.colors[color.color][5]} size={18} />
         <span className={classes.colorLabel}>{color.name}</span>
       </div>
-      {color.color === values.background && <CheckIcon />}
+      {color.color === values.color && <CheckIcon />}
     </button>
   ));
 

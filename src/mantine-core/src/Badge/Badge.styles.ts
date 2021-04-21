@@ -79,11 +79,13 @@ export default createUseStyles({
       fontWeight: 700,
       letterSpacing: 0.25,
       cursor: 'default',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
     };
   },
 
   light: ({ theme, color }: BadgeStylesProps) => ({
-    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 1 }),
+    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 0 }),
     color:
       theme.colorScheme === 'dark'
         ? theme.colors.dark[9]

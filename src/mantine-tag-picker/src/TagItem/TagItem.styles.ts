@@ -23,7 +23,7 @@ export default createUseStyles({
     border: '1px solid transparent',
     cursor: 'pointer',
     paddingLeft: 10,
-    maxWidth: '80%',
+    maxWidth: 'calc(100% - 34px)',
   }),
 
   controlInner: {

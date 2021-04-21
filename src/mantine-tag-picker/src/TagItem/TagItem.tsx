@@ -1,12 +1,11 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { DotsHorizontalIcon } from '@modulz/radix-icons';
-import { ActionIcon, Transition } from '@mantine/core';
+import { ActionIcon, Transition, Badge } from '@mantine/core';
 import { useMantineTheme, MantineThemeOverride } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
 import { TagPickerColor, TagPickerTag } from '../types';
 import TagEdit from '../TagEdit/TagEdit';
-import TagBadge from '../TagBadge/TagBadge';
 import useStyles from './TagItem.styles';
 
 interface TagItemProps {
@@ -91,7 +90,15 @@ export default function TagItem({
       <div className={classes.body}>
         <button type="button" className={classes.control} onClick={() => onSelect(data)}>
           <div className={classes.controlInner}>
-            <TagBadge className={classes.badge} data={data} />
+            <Badge
+              variant="light"
+              className={classes.badge}
+              color={data.color}
+              fullWidth
+              style={{ cursor: 'pointer' }}
+            >
+              {data.name}
+            </Badge>
           </div>
         </button>
 

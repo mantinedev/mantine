@@ -1,15 +1,15 @@
 import React from 'react';
-import OpenColor from 'open-color';
 import { nanoid } from 'nanoid';
 import { TrashIcon } from '@modulz/radix-icons';
 import { TagPicker } from '@mantine/tag-picker';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Paper, Table, ActionIcon, Title, Text, TextInput, Button } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import * as mockdata from './mockdata';
 
-const colors = Object.keys(OpenColor)
-  .filter((key) => key !== 'white' && key !== 'black')
-  .map((key) => ({ name: key, color: OpenColor[key][0] as string }));
+const colors = Object.keys(DEFAULT_THEME.colors)
+  .filter((color) => color !== 'dark')
+  .map((color) => ({ name: color, color }));
 
 export function TransactionsTable() {
   const [transactionsState, transactionsHandlers] = useListState(mockdata.transactions);
