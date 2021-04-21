@@ -62,7 +62,7 @@ export default function TagItem({
     // since edit dropdown has focus trap, control cannot be focused until transition ended + 10ms for buffer
     setTimeout(() => {
       controlRef.current.focus();
-    }, transitionDuration + 10);
+    }, transitionDuration + 35);
   };
 
   return (
