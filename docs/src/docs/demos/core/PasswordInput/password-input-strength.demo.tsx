@@ -19,7 +19,7 @@ export function PasswordInputStrengthDemo() {
       demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
     >
       <div style={{ maxWidth: 340, margin: 'auto' }}>
-        <PasswordStrength alwaysMounted />
+        <PasswordStrength />
       </div>
     </CodeDemo>
   );

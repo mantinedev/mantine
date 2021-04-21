@@ -20,6 +20,6 @@ describe('@mantine/core/Loader', () => {
 
   it('sets svg fill based on color prop', () => {
     const element = shallow(<Loader color="yellow" />);
-    expect(element.render().attr('fill')).toBe(DEFAULT_THEME.colors.yellow[5]);
+    expect(element.render().attr('fill')).toBe(DEFAULT_THEME.colors.yellow[6]);
   });
 });

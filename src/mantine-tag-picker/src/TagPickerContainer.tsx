@@ -62,7 +62,7 @@ export default function TagPickerContainer({ transitionDuration = 250, ...props 
   };
 
   const handleCreate = () => {
-    props.onChange(props.onTagCreate({ background: createColor, name: query }));
+    props.onChange(props.onTagCreate({ color: createColor, name: query }));
     setCreateColor(getRandomColor(props.colors));
     closeDropdown();
   };
