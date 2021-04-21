@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextInput, ElementsGroup, Button, LoadingOverlay } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
+import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -51,6 +52,7 @@ export function UseFormDemo() {
 `;
 
 export function UseFormServerValidationDemo() {
+  const theme = useMantineTheme();
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string>(null);
 
@@ -73,7 +75,11 @@ export function UseFormServerValidationDemo() {
   };
 
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo
+      code={code}
+      language="tsx"
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
+    >
       <div style={{ maxWidth: 360, margin: 'auto' }}>
         <form onSubmit={form.onSubmit(handleSubmit)} style={{ position: 'relative' }}>
           <LoadingOverlay visible={loading} />

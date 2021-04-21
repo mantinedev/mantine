@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextInput, ElementsGroup, Button, Checkbox } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
+import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -42,6 +43,8 @@ export function UseFormDemo() {
 `;
 
 export function UseFormBaseDemo() {
+  const theme = useMantineTheme();
+
   const form = useForm({
     initialValues: {
       email: '',
@@ -54,9 +57,13 @@ export function UseFormBaseDemo() {
   });
 
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo
+      code={code}
+      language="tsx"
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
+    >
       <div style={{ maxWidth: 360, margin: 'auto' }}>
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit(() => {})}>
           <TextInput
             required
             label="Email"

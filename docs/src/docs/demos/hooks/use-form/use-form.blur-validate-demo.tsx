@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextInput } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
+import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -29,6 +30,7 @@ export function UseFormDemo() {
 `;
 
 export function UseFormBlurValidateDemo() {
+  const theme = useMantineTheme();
   const form = useForm({
     initialValues: { email: '' },
     validationRules: {
@@ -37,7 +39,11 @@ export function UseFormBlurValidateDemo() {
   });
 
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo
+      code={code}
+      language="tsx"
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
+    >
       <div style={{ maxWidth: 360, margin: 'auto' }}>
         <TextInput
           required
