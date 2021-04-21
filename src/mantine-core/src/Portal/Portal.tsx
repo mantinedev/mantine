@@ -20,15 +20,12 @@ export function Portal({ children, zIndex = 1, target, className }: PortalProps)
     return null;
   }
 
-  let element = target;
+  const elementRef = useRef<HTMLDivElement>(target);
 
-  if (!target) {
-    const container = document.createElement('div');
-    document.body.appendChild(container);
-    element = container;
+  if (!elementRef.current) {
+    elementRef.current = document.createElement('div');
+    document.body.appendChild(elementRef.current);
   }
-
-  const elementRef = useRef<HTMLDivElement>(element);
 
   return createPortal(
     <div className={className} style={{ position: 'relative', zIndex }} data-mantine-portal>
