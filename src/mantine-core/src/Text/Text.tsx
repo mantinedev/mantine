@@ -27,7 +27,7 @@ export interface TextProps extends DefaultProps {
   variant?: 'text' | 'link';
 }
 
-export function Text<T extends React.ElementType = 'div'>({
+export function Text<T extends React.ElementType = 'div', U = HTMLDivElement>({
   className,
   component = 'div',
   children,
@@ -39,8 +39,9 @@ export function Text<T extends React.ElementType = 'div'>({
   align,
   variant = 'text',
   themeOverride,
+  elementRef,
   ...others
-}: ComponentPassThrough<T, TextProps>) {
+}: ComponentPassThrough<T, TextProps> & { elementRef?: React.ForwardedRef<U> }) {
   const classes = useStyles({ variant, color, size, theme: useMantineTheme(themeOverride) });
 
   return React.createElement(
@@ -48,6 +49,7 @@ export function Text<T extends React.ElementType = 'div'>({
     {
       className: cx(classes.text, className),
       style: { fontWeight: weight, textTransform: transform, textAlign: align, ...style },
+      ref: elementRef,
       ...others,
     },
     children
