@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useListState } from '@mantine/hooks';
 import { Cross1Icon, PlusIcon } from '@modulz/radix-icons';
-import { Title, Checkbox, TextInput, ActionIcon } from '@mantine/core';
+import { Title, Text, Checkbox, TextInput, ActionIcon } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
 
 interface TodoItem {
@@ -29,58 +29,73 @@ export function TodoList() {
   const [newItem, setNewItem] = useState('');
   const [state, handlers] = useListState(INITIAL_STATE);
 
-  const items = state.map((item, index) => (
-    <div
-      style={{ display: 'flex', alignItems: 'center', marginTop: theme.spacing.xs }}
-      key={item.key}
-    >
-      <Checkbox
-        size="xl"
-        checked={item.completed}
-        onChange={(event) => {
-          handlers.setItemProp(index, 'completed', event.currentTarget.checked);
-          if (event.currentTarget.checked) {
-            handlers.reorder({ from: index, to: state.length - 1 });
-          }
-        }}
-      />
+  const items = state.reduce(
+    (acc, item, index) => {
+      acc[item.completed ? 'completed' : 'current'].push(
+        <div
+          style={{ display: 'flex', alignItems: 'center', marginTop: theme.spacing.xs }}
+          key={item.key}
+        >
+          <Checkbox
+            size="xl"
+            checked={item.completed}
+            color="gray"
+            onChange={(event) => {
+              handlers.setItemProp(index, 'completed', event.currentTarget.checked);
+              if (event.currentTarget.checked) {
+                handlers.reorder({ from: index, to: state.length - 1 });
+              }
+            }}
+          />
 
-      <TextInput
-        style={{ flex: 1, marginLeft: theme.spacing.md }}
-        placeholder="Your evil plan part"
-        variant="filled"
-        value={item.value}
-        onChange={(event) => handlers.setItemProp(index, 'value', event.currentTarget.value)}
-        inputStyle={{
-          textDecoration: item.completed && 'line-through',
-          color: item.completed && theme.colors.gray[5],
-        }}
-      />
+          <TextInput
+            style={{ flex: 1, marginLeft: theme.spacing.md }}
+            placeholder="Your evil plan part"
+            value={item.value}
+            onChange={(event) => handlers.setItemProp(index, 'value', event.currentTarget.value)}
+            inputStyle={{
+              textDecoration: item.completed && 'line-through',
+              color: item.completed && theme.colors.gray[5],
+            }}
+          />
 
-      <ActionIcon
-        size="lg"
-        style={{ marginLeft: theme.spacing.xs }}
-        onClick={() => handlers.remove(index)}
-      >
-        <Cross1Icon />
-      </ActionIcon>
-    </div>
-  ));
+          <ActionIcon
+            size="lg"
+            style={{ marginLeft: theme.spacing.xs }}
+            onClick={() => handlers.remove(index)}
+          >
+            <Cross1Icon />
+          </ActionIcon>
+        </div>
+      );
+
+      return acc;
+    },
+    { completed: [], current: [] }
+  );
 
   return (
     <div>
       <Title style={{ textAlign: 'center', marginBottom: theme.spacing.xl }}>Business Plan</Title>
 
-      {items}
+      {items.current}
+
+      {items.completed.length > 0 && (
+        <Text color="gray" size="sm" style={{ marginTop: theme.spacing.md }}>
+          Completed
+        </Text>
+      )}
+      {items.completed}
 
       <TextInput
         style={{ marginTop: theme.spacing.xl }}
         value={newItem}
+        variant="filled"
         onChange={(event) => setNewItem(event.currentTarget.value)}
         icon={<PlusIcon />}
-        placeholder="Add evil task"
+        placeholder="Add business plan task"
         onKeyDown={(event) => {
-          if (event.nativeEvent.code === 'Enter') {
+          if (event.nativeEvent.code === 'Enter' && event.currentTarget.value.trim().length > 0) {
             handlers.append({ value: event.currentTarget.value, completed: false, key: nanoid() });
             setNewItem('');
           }
