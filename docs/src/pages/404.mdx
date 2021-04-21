@@ -3,8 +3,11 @@ title: '404'
 slug: /404
 ---
 
-import { Button } from '@mantine/core';
-import { StarFilledIcon } from '@modulz/radix-icons';
+import Head from '../components/Head/Head';
+import { Button, ElementsGroup } from '@mantine/core';
+import { StarFilledIcon, TwitterLogoIcon } from '@modulz/radix-icons';
+
+<Head title="404" disableTitleTemplate />
 
 # Congratulations!
 
@@ -23,15 +26,25 @@ Otherwise, here are some learning materials that will help you get started with 
 - <GatsbyLink to="/hooks/use-merged-ref/">Learn how to merge react refs into single one</GatsbyLink>
 - [Watch 30 A11ycasts with Rob Dodson about accessibility](https://www.youtube.com/playlist?list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g)
 
-And since you are here, what about a star on Github 😉?
+And since you are here, what about following Mantine on Twitter and a star on Github 😉?
 
-<Button
-  component="a"
-  href="https://github.com/mantinedev/mantine"
-  leftIcon={<StarFilledIcon />}
-  rightIcon={<StarFilledIcon />}
-  color="gray"
-  variant="outline"
->
-  Star mantine on Github
-</Button>
+<ElementsGroup>
+  <Button
+    component="a"
+    href="https://github.com/mantinedev/mantine"
+    leftIcon={<StarFilledIcon />}
+    color="gray"
+    variant="outline"
+  >
+    Star mantine on Github
+  </Button>
+  <Button
+    component="a"
+    href="https://twitter.com/mantinedev"
+    leftIcon={<TwitterLogoIcon />}
+    color="blue"
+    variant="outline"
+  >
+    Follow Mantine on Twitter
+  </Button>
+</ElementsGroup>

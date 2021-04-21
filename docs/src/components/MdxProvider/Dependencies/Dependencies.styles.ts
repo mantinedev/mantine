@@ -37,16 +37,22 @@ export default createUseStyles(
       '&:last-of-type': {
         borderTopRightRadius: theme.radius.sm,
         borderBottomRightRadius: theme.radius.sm,
-        borderRight: `1px solid ${theme.colors.gray[3]}`,
+        borderRight: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+        }`,
       },
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         borderRadius: 0,
-        borderRight: `1px solid ${theme.colors.gray[3]}`,
+        borderRight: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+        }`,
         borderTop: 0,
 
         '&:first-of-type': {
-          borderTop: `1px solid ${theme.colors.gray[3]}`,
+          borderTop: `1px solid ${
+            theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+          }`,
           borderTopLeftRadius: theme.radius.sm,
           borderTopRightRadius: theme.radius.sm,
           borderBottomLeftRadius: 0,

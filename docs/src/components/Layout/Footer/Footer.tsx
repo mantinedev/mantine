@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { Text } from '@mantine/core';
-import { StarIcon, ChatBubbleIcon, ExclamationTriangleIcon } from '@modulz/radix-icons';
+import {
+  StarIcon,
+  ChatBubbleIcon,
+  ExclamationTriangleIcon,
+  TwitterLogoIcon,
+} from '@modulz/radix-icons';
 import useStyles from './Footer.styles';
 
 export function Footer() {
@@ -32,6 +37,10 @@ export function Footer() {
         <a href="https://github.com/mantinedev/mantine/issues/new" className={classes.link}>
           <ExclamationTriangleIcon />
           <span className={classes.linkLabel}>Report an issue</span>
+        </a>
+        <a href="https://twitter.com/mantinedev" className={classes.link}>
+          <TwitterLogoIcon />
+          <span className={classes.linkLabel}>Follow Mantine on Twitter</span>
         </a>
       </div>
     </footer>
