@@ -16,6 +16,7 @@ import {
   BadgeCustomComponentDemo,
 } from '../demos/core/Badge/badge.demos';
 import { BadgeSizesDemo } from '../demos/core/Badge/badge-sizes.demo';
+import { BadgeSectionsDemo } from '../demos/core/Badge/badge-sections.demo';
 
 # Badge
 
@@ -78,12 +79,19 @@ import { BADGE_SIZES } from '@mantine/core';
   data={Object.keys(BADGE_SIZES).map((size) => [size, `${BADGE_SIZES[size]}px`])}
 />
 
-## Full width
+## Full width and overflow
 
 Badge can take full width of container if you pass `fullWidth` prop.
 If badge is too large for its container, overflow content will be hidden with ellipsis.
 
 <BadgeFullWidthDemo />
+
+## Right and left sections
+
+You can add any react node as right and left section to badge.
+Use it to add interactive parts (for example, remove button) or additional information:
+
+<BadgeSectionsDemo />
 
 ## Custom component
 

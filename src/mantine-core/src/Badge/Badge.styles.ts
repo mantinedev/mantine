@@ -44,6 +44,20 @@ export const heights = Object.keys(sizes).reduce((acc, key) => {
 }, {} as Record<MantineSize, number>);
 
 export default createUseStyles({
+  leftSection: ({ theme }: BadgeStylesProps) => ({
+    marginRight: theme.spacing.xs / 2,
+  }),
+
+  rightSection: ({ theme }: BadgeStylesProps) => ({
+    marginLeft: theme.spacing.xs / 2,
+  }),
+
+  inner: {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+
   badge: ({ theme, size, fullWidth }: BadgeStylesProps) => {
     const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
     return {
@@ -54,18 +68,16 @@ export default createUseStyles({
       lineHeight: `${height - 2}px`,
       border: '1px solid transparent',
       textDecoration: 'none',
-      textAlign: 'center',
       padding: [0, getSizeValue({ size, sizes: theme.spacing }) / 1.5],
       boxSizing: 'border-box',
-      display: fullWidth ? 'block' : 'inline-block',
+      display: fullWidth ? 'flex' : 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       width: fullWidth ? '100%' : 'auto',
       textTransform: 'uppercase',
       borderRadius: 100,
       fontWeight: 700,
       letterSpacing: 0.25,
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
       cursor: 'default',
     };
   },

@@ -32,4 +32,14 @@ describe('@mantine/core/Badge', () => {
     expect(withComponent.type()).toBe(TestComponent);
     expect(withComponent.render().attr('data-test-prop')).toBe('true');
   });
+
+  it('renders given left and right section', () => {
+    const element = shallow(
+      <Badge rightSection="test-right" leftSection="test-left">
+        test
+      </Badge>
+    );
+    expect(element.render().find('[data-mantine-badge-right]').text()).toBe('test-right');
+    expect(element.render().find('[data-mantine-badge-left]').text()).toBe('test-left');
+  });
 });

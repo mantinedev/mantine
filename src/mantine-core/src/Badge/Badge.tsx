@@ -18,6 +18,12 @@ interface BadgeProps extends DefaultProps {
 
   /** Sets badge width to 100% of parent element, hides overflow text with text-overflow: ellipsis */
   fullWidth?: boolean;
+
+  /** Section rendered on the left side of label */
+  leftSection?: React.ReactNode;
+
+  /** Section rendered on the right side of label */
+  rightSection?: React.ReactNode;
 }
 
 export function Badge<T extends React.ElementType = 'div'>({
@@ -29,6 +35,8 @@ export function Badge<T extends React.ElementType = 'div'>({
   children,
   themeOverride,
   size = 'md',
+  leftSection,
+  rightSection,
   ...others
 }: ComponentPassThrough<T, BadgeProps>) {
   const classes = useStyles({
@@ -45,7 +53,19 @@ export function Badge<T extends React.ElementType = 'div'>({
       data-mantine-composable
       className={cx(classes.badge, classes[variant], className)}
     >
-      {children}
+      {leftSection && (
+        <span data-mantine-badge-left className={classes.leftSection}>
+          {leftSection}
+        </span>
+      )}
+
+      <span className={classes.inner}>{children}</span>
+
+      {rightSection && (
+        <span data-mantine-badge-right className={classes.rightSection}>
+          {rightSection}
+        </span>
+      )}
     </Component>
   );
 }
