@@ -29,6 +29,10 @@ export default createUseStyles(
       paddingBottom: theme.spacing.xl,
       paddingRight: theme.spacing.md,
       paddingLeft: theme.spacing.md,
+      minHeight: 'calc(100vh - 100px)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
     },
 
     items: {
@@ -59,6 +63,15 @@ export default createUseStyles(
 
     title: {
       marginLeft: theme.spacing.md,
+    },
+
+    shortcut: {
+      marginTop: theme.spacing.xs,
+    },
+
+    shortcutLabel: {
+      display: 'inline',
+      marginLeft: theme.spacing.xs,
     },
   }),
   { theming }

@@ -3,9 +3,9 @@ import cx from 'clsx';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Slugger from 'github-slugger';
 import debounce from 'lodash.debounce';
-import { Text } from '@mantine/core';
+import { Text, Kbd } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
-import { ActivityLogIcon } from '@modulz/radix-icons';
+import { ActivityLogIcon, MixIcon } from '@modulz/radix-icons';
 import { HEADER_HEIGHT } from '../Layout/Header/Header.styles';
 import useStyles from './TableOfContents.styles';
 
@@ -40,11 +40,21 @@ function getActiveElement(rects: DOMRect[]) {
   return closest.index;
 }
 
+function isMac() {
+  if ('navigator' in window) {
+    return window.navigator.platform.includes('Mac');
+  }
+
+  return false;
+}
+
 export default function TableOfContents({ headings }: TableOfContentsProps) {
+  const [isMacOS, setIsMacOS] = useState(true);
   const theme = useMantineTheme();
   const classes = useStyles();
   const slugger = new Slugger();
   const [active, setActive] = useState(0);
+  const control = isMacOS ? '⌘' : 'Ctrl';
 
   const slugs = useRef<HTMLDivElement[]>([]);
   const filteredHeadings = headings.filter((heading) => heading.depth > 1);
@@ -61,6 +71,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   }, 100);
 
   useEffect(() => {
+    setIsMacOS(isMac());
     setActive(getActiveElement(slugs.current.map((d) => d.getBoundingClientRect())));
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -73,7 +84,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   const items = filteredHeadings.map((heading, index) => {
     const slug = slugger.slug(heading.value);
     return (
-      <Text<'a'>
+      <Text<'a', HTMLAnchorElement>
         key={slug}
         component="a"
         size="sm"
@@ -98,11 +109,34 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
     <nav className={classes.wrapper}>
       <Scrollbars style={{ height: '100vh' }}>
         <div className={classes.inner}>
-          <header className={classes.header}>
-            <ActivityLogIcon />
-            <Text className={classes.title}>Table of contents</Text>
-          </header>
-          <div className={classes.items}>{items}</div>
+          <div>
+            <div className={classes.header}>
+              <ActivityLogIcon />
+              <Text className={classes.title}>Table of contents</Text>
+            </div>
+            <div className={classes.items}>{items}</div>
+          </div>
+
+          <div>
+            <div className={classes.header}>
+              <MixIcon />
+              <Text className={classes.title}>Keyboard shortcuts</Text>
+            </div>
+
+            <div className={classes.shortcut}>
+              <Kbd>{control}</Kbd> <span>+</span> <Kbd>K</Kbd>
+              <Text className={classes.shortcutLabel} size="sm">
+                search
+              </Text>
+            </div>
+
+            <div className={classes.shortcut}>
+              <Kbd>{control}</Kbd> <span>+</span> <Kbd>J</Kbd>
+              <Text className={classes.shortcutLabel} size="sm">
+                toggle color scheme
+              </Text>
+            </div>
+          </div>
         </div>
       </Scrollbars>
     </nav>
