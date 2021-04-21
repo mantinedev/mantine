@@ -3,7 +3,7 @@ import OpenColor from 'open-color';
 import { nanoid } from 'nanoid';
 import { TrashIcon } from '@modulz/radix-icons';
 import { TagPicker } from '@mantine/tag-picker';
-import { Paper, Table, ActionIcon, Title, Text, Input, Button } from '@mantine/core';
+import { Paper, Table, ActionIcon, Title, Text, TextInput, Button } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import * as mockdata from './mockdata';
 
@@ -18,7 +18,7 @@ export function TransactionsTable() {
   const transactions = transactionsState.map((transaction, index) => (
     <tr key={transaction.id}>
       <td>
-        <Input
+        <TextInput
           icon="$"
           inputStyle={{ textAlign: 'right' }}
           variant="unstyled"
@@ -68,10 +68,7 @@ export function TransactionsTable() {
         />
       </td>
       <td>
-        {transaction.date.getDate()} {transaction.date.toLocaleDateString('en', { month: 'short' })}
-      </td>
-      <td>
-        <Input
+        <TextInput
           placeholder="Transaction description"
           variant="unstyled"
           value={transaction.title}
@@ -99,13 +96,12 @@ export function TransactionsTable() {
       </Title>
 
       <Paper shadow="xs" padding="lg">
-        <Table style={{ tableLayout: 'fixed' }}>
+        <Table style={{ tableLayout: 'fixed', minWidth: 500, overflowX: 'auto' }}>
           <thead>
             <tr>
               <th style={{ width: 100 }}>Amount</th>
               <th style={{ width: 140 }}>Category</th>
-              <th style={{ width: 60 }}>Date</th>
-              <th>Description</th>
+              <th style={{ width: '100%' }}>Description</th>
               <th style={{ width: 40 }} />
             </tr>
           </thead>
@@ -122,7 +118,6 @@ export function TransactionsTable() {
                       id: nanoid(),
                       amount: 0,
                       category: null,
-                      date: new Date(2021, 1, 19),
                       title: '',
                     })
                   }
@@ -133,7 +128,7 @@ export function TransactionsTable() {
             </tr>
             <tr>
               <td>
-                <Input
+                <TextInput
                   readOnly
                   icon="$"
                   inputStyle={{ textAlign: 'right' }}
