@@ -44,6 +44,10 @@ export function TransactionsTable() {
           deleteLabel="Delete category"
           noValueLabel="Select category"
           searchPlaceholder="Search categories"
+          enableColorChange
+          enableCreate
+          enableUpdate
+          enableDelete
           onChange={(value) => transactionsHandlers.setItemProp(index, 'category', value)}
           onTagCreate={(value) => {
             const category = { ...value, id: value.name };

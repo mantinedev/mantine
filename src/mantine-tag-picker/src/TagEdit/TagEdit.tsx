@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useClickOutside } from '@mantine/hooks';
 import { TrashIcon, CheckIcon, Pencil1Icon } from '@modulz/radix-icons';
 import useFocusTrap from '@charlietango/use-focus-trap';
-import { Paper, Input, ActionIcon, ColorSwatch } from '@mantine/core';
+import { Paper, TextInput, ActionIcon, ColorSwatch } from '@mantine/core';
 import { useMantineTheme, MantineThemeOverride } from '@mantine/theme';
 import { TagPickerColor, TagPickerTag } from '../types';
 import useStyles from './TagEdit.styles';
@@ -34,7 +34,8 @@ export default function TagEdit({
   enableDelete,
   enableColorChange,
 }: TagEditProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme });
   const dropdownRef = useClickOutside(onClose);
   const focusTrapRef = useFocusTrap();
   const [values, setValues] = useState<Omit<TagPickerTag, 'id'>>({
@@ -95,7 +96,7 @@ export default function TagEdit({
     >
       <div ref={focusTrapRef}>
         <div className={classes.header}>
-          <Input
+          <TextInput
             className={classes.input}
             value={values.name}
             onChange={(event) => handleNameChange(event.currentTarget.value)}

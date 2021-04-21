@@ -2,7 +2,11 @@ import { createUseStyles } from 'react-jss';
 import { MantineTheme, getFontStyles, getFocusStyles } from '@mantine/theme';
 
 export default createUseStyles({
-  tagEdit: {
+  tagEdit: ({ theme }: { theme: MantineTheme }) => ({
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+    }`,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
     paddingTop: 10,
     paddingBottom: 10,
     position: 'absolute',
@@ -10,7 +14,7 @@ export default createUseStyles({
     width: 240,
     left: 240,
     zIndex: 5,
-  },
+  }),
 
   header: {
     display: 'flex',
@@ -28,6 +32,7 @@ export default createUseStyles({
   deleteControl: ({ theme }: { theme: MantineTheme }) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     border: 0,
     width: '100%',
     backgroundColor: 'transparent',
@@ -41,8 +46,8 @@ export default createUseStyles({
     marginTop: 10,
 
     '&:hover, &:focus': {
-      backgroundColor: theme.colors.red[0],
-      color: theme.colors.red[7],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.red[9] : theme.colors.red[0],
+      color: theme.colorScheme === 'dark' ? theme.colors.red[0] : theme.colors.red[7],
     },
   }),
 
@@ -52,13 +57,16 @@ export default createUseStyles({
 
   colorsList: ({ theme }: { theme: MantineTheme }) => ({
     marginTop: 5,
-    borderTop: `1px solid ${theme.colors.gray[2]}`,
+    borderTop: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+    }`,
     paddingTop: 10,
   }),
 
   colorControl: ({ theme }: { theme: MantineTheme }) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     textTransform: 'capitalize',
     width: '100%',
     display: 'flex',
@@ -72,7 +80,7 @@ export default createUseStyles({
     outline: 0,
 
     '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
     },
   }),
 

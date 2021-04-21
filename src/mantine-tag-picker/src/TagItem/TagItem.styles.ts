@@ -36,6 +36,6 @@ export default createUseStyles({
   },
 
   hovered: ({ theme }: { theme: MantineTheme }) => ({
-    backgroundColor: theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
   }),
 });

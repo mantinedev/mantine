@@ -1,4 +1,3 @@
-import OpenColor from 'open-color';
 import React from 'react';
 import { useClickOutside, useReducedMotion } from '@mantine/hooks';
 import { Paper, Transition } from '@mantine/core';
@@ -27,7 +26,8 @@ export default function TagPicker({
   transitionDuration,
   ...others
 }: TagPickerProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme });
   const dropdownRef = useClickOutside(closeDropdown);
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -36,7 +36,14 @@ export default function TagPicker({
     <div className={classes.tagPicker}>
       <button className={classes.control} type="button" ref={controlRef} onClick={openDropdown}>
         <TagBadge
-          data={value || { id: 'no-value', background: OpenColor.gray[2], name: noValueLabel }}
+          data={
+            value || {
+              id: 'no-value',
+              background: theme.colors.gray[2],
+              color: theme.colors.gray[7],
+              name: noValueLabel,
+            }
+          }
         />
       </button>
 
