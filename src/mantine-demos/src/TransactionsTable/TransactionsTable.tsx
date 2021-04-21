@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import { TrashIcon } from '@modulz/radix-icons';
 import { TagPicker } from '@mantine/tag-picker';
 import { DEFAULT_THEME } from '@mantine/theme';
-import { Paper, Table, ActionIcon, Title, Text, TextInput, Button } from '@mantine/core';
+import { Paper, Table, ActionIcon, Text, TextInput, Button } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import * as mockdata from './mockdata';
 
@@ -95,12 +95,8 @@ export function TransactionsTable() {
 
   return (
     <div>
-      <Title style={{ marginBottom: 15 }} order={3}>
-        February 2021 spendings
-      </Title>
-
-      <Paper shadow="xs" padding="lg">
-        <Table style={{ tableLayout: 'fixed', minWidth: 500, overflowX: 'auto' }}>
+      <Paper shadow="xs" padding="lg" style={{ overflowX: 'auto' }}>
+        <Table style={{ tableLayout: 'fixed', minWidth: 500 }}>
           <thead>
             <tr>
               <th style={{ width: 100 }}>Amount</th>
