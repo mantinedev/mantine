@@ -28,7 +28,7 @@ export default createUseStyles({
     width: '100%',
     textAlign: 'left',
     height: 32,
-    color: theme.colors.gray[7],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     cursor: 'pointer',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
@@ -45,6 +45,6 @@ export default createUseStyles({
   },
 
   createControlHovered: ({ theme }: { theme: MantineTheme }) => ({
-    backgroundColor: theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
   }),
 });
