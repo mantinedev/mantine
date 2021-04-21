@@ -36,24 +36,25 @@ export default function LayoutInner({ children }: { children: React.ReactNode })
   const data = getDocsData(useStaticQuery(query));
 
   return (
-    <NotificationsProvider>
-      <div className={classes.layout}>
-        <Header
-          data={data}
-          navbarOpened={navbarOpened}
-          toggleNavbar={() => setNavbarState((o) => !o)}
-        />
-        <Navbar data={data} opened={navbarOpened} onClose={() => setNavbarState(false)} />
+    <div className={classes.layout}>
+      <Header
+        data={data}
+        navbarOpened={navbarOpened}
+        toggleNavbar={() => setNavbarState((o) => !o)}
+      />
 
-        <main className={classes.main}>
-          <Container size="sm">
-            <div className={classes.content}>
+      <Navbar data={data} opened={navbarOpened} onClose={() => setNavbarState(false)} />
+
+      <main className={classes.main}>
+        <Container size="sm">
+          <div className={classes.content}>
+            <NotificationsProvider>
               <MdxProvider>{children}</MdxProvider>
-            </div>
-            <Footer />
-          </Container>
-        </main>
-      </div>
-    </NotificationsProvider>
+            </NotificationsProvider>
+          </div>
+          <Footer />
+        </Container>
+      </main>
+    </div>
   );
 }
