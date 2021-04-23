@@ -3,11 +3,34 @@ title: Getting started
 slug: /
 ---
 
+import { Link } from 'gatsby';
+import { Button, ElementsGroup } from '@mantine/core';
 import { Features } from '../home-page/Features/Features';
 import { PackagesTable } from '../home-page/PackagesTable/PackagesTable';
 import { License } from '../components/MdxProvider/License/License.tsx';
+import Head from '../components/Head/Head.tsx';
 
-# Getting started
+<Head title="Mantine" disableTitleTemplate />
+
+<br />
+<br />
+
+# Mantine
+
+Mantine is a MIT licensed open source react components and hooks library
+with focus on usability, accessibility and developer experience.
+
+<ElementsGroup>
+  <Button component={Link} to="/pages/examples/">
+    Explore examples
+  </Button>
+  <Button component={Link} to="/core/getting-started/" variant="outline">
+    Browse components
+  </Button>
+  <Button component={Link} to="/hooks/getting-started/" variant="outline" color="gray">
+    Browse hooks
+  </Button>
+</ElementsGroup>
 
 ## Features
 

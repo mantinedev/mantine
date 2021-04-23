@@ -40,7 +40,7 @@ export default [
     color: 'blue',
     title: 'TypeScript',
     description:
-      'All @mantine/ scoped packages are built with TypeScript and supports it by default',
+      'All @mantine/ scoped packages are built with TypeScript and support it by default',
   },
   {
     icon: RocketIcon,
