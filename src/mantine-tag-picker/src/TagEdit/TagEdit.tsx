@@ -71,7 +71,7 @@ export default function TagEdit({
       onClick={() => handleColorChange(color.color)}
     >
       <div className={classes.colorControlBody}>
-        <ColorSwatch color={theme.colors[color.color][5]} size={18} />
+        <ColorSwatch color={theme.colors[color.color][5]} size={18} themeOverride={themeOverride} />
         <span className={classes.colorLabel}>{color.name}</span>
       </div>
       {color.color === values.color && <CheckIcon />}
@@ -85,6 +85,7 @@ export default function TagEdit({
       elementRef={dropdownRef}
       onKeyDownCapture={handleKeyDownCapture}
       style={style}
+      themeOverride={themeOverride}
     >
       <div ref={focusTrapRef}>
         <div className={classes.header}>
@@ -95,9 +96,10 @@ export default function TagEdit({
             onKeyDown={(event) => event.nativeEvent.code === 'Enter' && handleSubmit()}
             icon={<Pencil1Icon />}
             autoFocus
+            themeOverride={themeOverride}
           />
 
-          <ActionIcon color="teal" onClick={handleSubmit}>
+          <ActionIcon color="teal" onClick={handleSubmit} themeOverride={themeOverride}>
             <CheckIcon />
           </ActionIcon>
         </div>

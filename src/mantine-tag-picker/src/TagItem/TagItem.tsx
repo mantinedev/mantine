@@ -70,7 +70,12 @@ export default function TagItem({
       className={cx(classes.item, { [classes.hovered]: hovered === index })}
       onMouseEnter={() => onHover(index)}
     >
-      <Transition duration={duration} mounted={editDropdownOpened} transition="skew-up">
+      <Transition
+        duration={duration}
+        mounted={editDropdownOpened}
+        transition="skew-up"
+        themeOverride={themeOverride}
+      >
         {(transitionStyles) => (
           <TagEdit
             style={transitionStyles}
@@ -83,6 +88,7 @@ export default function TagItem({
             id={data.id}
             enableDelete={enableDelete}
             enableColorChange={enableColorChange}
+            themeOverride={themeOverride}
           />
         )}
       </Transition>
@@ -96,6 +102,7 @@ export default function TagItem({
               color={data.color}
               fullWidth
               style={{ cursor: 'pointer' }}
+              themeOverride={themeOverride}
             >
               {data.name}
             </Badge>
@@ -103,7 +110,11 @@ export default function TagItem({
         </button>
 
         {enableUpdate && (
-          <ActionIcon onClick={openEditDropdown} elementRef={controlRef}>
+          <ActionIcon
+            onClick={openEditDropdown}
+            elementRef={controlRef}
+            themeOverride={themeOverride}
+          >
             <DotsHorizontalIcon />
           </ActionIcon>
         )}

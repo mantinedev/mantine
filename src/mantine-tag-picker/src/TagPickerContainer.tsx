@@ -159,6 +159,7 @@ export default function TagPickerContainer({ transitionDuration = 250, ...props 
         enableDelete={props.enableDelete}
         enableColorChange={props.enableColorChange}
         transitionDuration={transitionDuration}
+        themeOverride={props.themeOverride}
       />
     </div>
   );

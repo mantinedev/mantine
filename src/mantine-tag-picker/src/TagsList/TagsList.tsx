@@ -82,12 +82,14 @@ export default function TagsList({
       enableDelete={enableDelete}
       enableColorChange={enableColorChange}
       transitionDuration={transitionDuration}
+      themeOverride={themeOverride}
     />
   ));
 
   return (
     <div className={classes.tagsList} ref={focusTrapRef}>
       <TextInput
+        themeOverride={themeOverride}
         className={classes.searchInput}
         placeholder={searchPlaceholder}
         value={searchQuery}
@@ -101,7 +103,7 @@ export default function TagsList({
       />
 
       {description && (
-        <Text color="gray" size="sm" className={classes.description}>
+        <Text color="gray" size="sm" className={classes.description} themeOverride={themeOverride}>
           {description}
         </Text>
       )}
@@ -124,6 +126,7 @@ export default function TagsList({
               className={classes.createControlBadge}
               color={createColor}
               style={{ cursor: 'pointer' }}
+              themeOverride={themeOverride}
             >
               {searchQuery}
             </Badge>

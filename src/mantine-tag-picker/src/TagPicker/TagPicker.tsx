@@ -34,20 +34,35 @@ export default function TagPicker({
   return (
     <div className={classes.tagPicker}>
       <button className={classes.control} type="button" ref={controlRef} onClick={openDropdown}>
-        <Badge color={(value && value.color) || 'gray'} style={{ cursor: 'pointer' }}>
+        <Badge
+          color={(value && value.color) || 'gray'}
+          style={{ cursor: 'pointer' }}
+          themeOverride={themeOverride}
+        >
           {(value && value.name) || noValueLabel}
         </Badge>
       </button>
 
-      <Transition duration={duration} mounted={dropdownOpened} transition="skew-up">
+      <Transition
+        duration={duration}
+        mounted={dropdownOpened}
+        transition="skew-up"
+        themeOverride={themeOverride}
+      >
         {(transitionStyles) => (
           <Paper
             shadow="xs"
             className={classes.dropdown}
             elementRef={dropdownRef}
             style={transitionStyles}
+            themeOverride={themeOverride}
           >
-            <TagsList value={value} transitionDuration={transitionDuration} {...others} />
+            <TagsList
+              value={value}
+              transitionDuration={transitionDuration}
+              themeOverride={themeOverride}
+              {...others}
+            />
           </Paper>
         )}
       </Transition>
