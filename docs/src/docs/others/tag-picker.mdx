@@ -6,3 +6,64 @@ slug: /others/tag-picker/
 ---
 
 # Mantine tag picker
+
+[Notion](https://www.notion.so/) style tag picker with full keyboard support.
+
+## Installation
+
+With yarn:
+
+```sh
+yarn add react-jss @mantine/theme @mantine/hooks @mantine/core @mantine/tag-picker
+```
+
+With npm:
+
+```sh
+npm install react-jss @mantine/theme @mantine/hooks @mantine/core @mantine/tag-picker
+```
+
+With [peerdeps](https://www.npmjs.com/package/install-peerdeps):
+
+```sh
+npx install-peerdeps @mantine/tag-picker
+```
+
+## Multiple state
+
+Multiple state is not currently supported, feel free to add this feature and add <GatsbyLink to="/pages/contribute/">open pull request</GatsbyLink>.
+
+## Package information
+
+### Bundle size
+
+<BundleSize packageName="@mantine/tag-picker" />
+
+### Dependencies
+
+<Dependencies
+  packageName="@mantine/tag-picker"
+  dependencies={[
+    { name: '@mantine/theme', type: 'peer' },
+    { name: '@mantine/hooks', type: 'peer' },
+    { name: '@mantine/core', type: 'peer' },
+    { name: 'react', type: 'peer' },
+    { name: 'react-dom', type: 'peer' },
+    { name: 'react-jss', type: 'peer', why: 'CSS-in-JS library used to style all components' },
+    {
+      name: 'clsx',
+      type: 'dependency',
+      why: 'Utility to construct className stings conditionally',
+    },
+    {
+      name: '@charlietango/use-focus-trap',
+      type: 'dependency',
+      why: 'Hook is used to trap focus inside tag picker',
+    },
+    {
+      name: 'nanoid',
+      type: 'dependency',
+      why: 'Used for unique random id generation in use-id hook',
+    },
+  ]}
+/>
