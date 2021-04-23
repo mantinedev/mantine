@@ -30,8 +30,14 @@ const query = graphql`
   }
 `;
 
-export default function LayoutInner({ children }: { children: React.ReactNode }) {
-  const classes = useStyles();
+export default function LayoutInner({
+  children,
+  tableOfContents,
+}: {
+  children: React.ReactNode;
+  tableOfContents: boolean;
+}) {
+  const classes = useStyles({ tableOfContents });
   const [navbarOpened, setNavbarState] = useState(false);
   const data = getDocsData(useStaticQuery(query));
 

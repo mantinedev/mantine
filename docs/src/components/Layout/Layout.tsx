@@ -6,7 +6,7 @@ import LayoutInner from './LayoutInner';
 
 const THEME_KEY = 'mantine-color-scheme';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children, path }: { children: React.ReactNode; path: string }) {
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
     key: 'mantine-color-scheme',
     defaultValue: 'light',
@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
       <MantineProvider theme={{ colorScheme }}>
-        <LayoutInner>{children}</LayoutInner>
+        <LayoutInner tableOfContents={path !== '/'}>{children}</LayoutInner>
       </MantineProvider>
     </ColorSchemeContext.Provider>
   );

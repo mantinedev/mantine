@@ -28,9 +28,9 @@ export default createUseStyles(
       },
     },
 
-    layout: {
+    layout: ({ tableOfContents }) => ({
       paddingLeft: NAVBAR_WIDTH,
-      paddingRight: TABLE_OF_CONTENTS_WIDTH,
+      paddingRight: tableOfContents ? TABLE_OF_CONTENTS_WIDTH : 0,
 
       [`@media (max-width: ${TABLE_OF_CONTENTS_BREAKPOINT}px)`]: {
         paddingRight: 0,
@@ -39,7 +39,7 @@ export default createUseStyles(
       [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
         paddingLeft: 0,
       },
-    },
+    }),
 
     main: {
       scrollMarginTop: HEADER_HEIGHT,
