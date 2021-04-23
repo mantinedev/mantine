@@ -23,6 +23,7 @@ export default createUseStyles(
     },
 
     active: {
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
     },
 
