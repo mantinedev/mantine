@@ -16,6 +16,7 @@ export default createUseStyles({
     borderCollapse: 'collapse',
     captionSide,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    lineHeight: theme.lineHeight,
 
     '& > caption': {
       marginTop: captionSide === 'top' ? 0 : theme.spacing.xs,
