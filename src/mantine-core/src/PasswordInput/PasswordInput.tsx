@@ -4,7 +4,11 @@ import { EyeOpenIcon, EyeClosedIcon } from '@modulz/radix-icons';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { TextInput } from '../TextInput/TextInput';
 
-interface PasswordInputProps extends React.ComponentPropsWithoutRef<typeof TextInput> {
+interface PasswordInputProps
+  extends Omit<
+    React.ComponentPropsWithoutRef<typeof TextInput>,
+    'rightSection' | 'rightSectionProps' | 'rightSectionWidth'
+  > {
   /** Title for visibility toggle button in hidden state */
   showPasswordLabel?: string;
 
