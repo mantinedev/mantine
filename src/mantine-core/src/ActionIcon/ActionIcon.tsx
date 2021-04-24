@@ -8,7 +8,7 @@ interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   children: React.ReactNode;
 
   /** Controls appearance */
-  variant?: 'transparent' | 'hover' | 'filled';
+  variant?: 'transparent' | 'hover' | 'filled' | 'outline' | 'light';
 
   /** Button hover, active and icon colors from theme */
   color?: string;

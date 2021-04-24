@@ -13,12 +13,15 @@ const getThemes = (props?: any, iconProps?: any) =>
   ));
 
 storiesOf('@mantine/core/ActionIcon', module)
-  .add('Themes', () => <ElementsGroup>{getThemes()}</ElementsGroup>)
-  .add('Transparent variant', () => (
-    <ElementsGroup>{getThemes({ variant: 'transparent' })}</ElementsGroup>
+  .add('Variants', () => (
+    <>
+      <ElementsGroup style={{ padding: 20 }}>{getThemes()}</ElementsGroup>
+      <ElementsGroup style={{ padding: 20 }}>{getThemes({ variant: 'transparent' })}</ElementsGroup>
+      <ElementsGroup style={{ padding: 20 }}>{getThemes({ variant: 'filled' })}</ElementsGroup>
+      <ElementsGroup style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</ElementsGroup>
+      <ElementsGroup style={{ padding: 20 }}>{getThemes({ variant: 'outline' })}</ElementsGroup>
+    </>
   ))
-  .add('Filled variant', () => <ElementsGroup>{getThemes({ variant: 'filled' })}</ElementsGroup>)
-  .add('Hover variant', () => <ElementsGroup>{getThemes({ variant: 'hover' })}</ElementsGroup>)
   .add('Disabled', () => (
     <>
       <ElementsGroup>{getThemes({ disabled: true })}</ElementsGroup>
@@ -65,7 +68,16 @@ storiesOf('@mantine/core/ActionIcon', module)
         {getThemes({ variant: 'hover', themeOverride: { colorScheme: 'dark' } })}
       </ElementsGroup>
       <ElementsGroup style={{ marginTop: 20 }}>
+        {getThemes({ variant: 'outline', themeOverride: { colorScheme: 'dark' } })}
+      </ElementsGroup>
+      <ElementsGroup style={{ marginTop: 20 }}>
+        {getThemes({ variant: 'light', themeOverride: { colorScheme: 'dark' } })}
+      </ElementsGroup>
+      <ElementsGroup style={{ marginTop: 20 }}>
         {getThemes({ disabled: true, variant: 'filled', themeOverride: { colorScheme: 'dark' } })}
+      </ElementsGroup>
+      <ElementsGroup style={{ marginTop: 20 }}>
+        {getThemes({ disabled: true, variant: 'outline', themeOverride: { colorScheme: 'dark' } })}
       </ElementsGroup>
     </div>
   ));

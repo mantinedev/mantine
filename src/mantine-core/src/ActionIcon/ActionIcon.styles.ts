@@ -25,11 +25,31 @@ export const sizes = {
 
 export default createUseStyles({
   filled: ({ theme, color }: ActionIconStylesProps) => ({
-    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
+    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+    color: theme.white,
 
     '&:not(:disabled):hover': {
-      backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
+      backgroundColor: getThemeColor({ theme, color, shade: 7 }),
+    },
+
+    '&:disabled': {
+      backgroundColor: getThemeColor({
+        theme,
+        color: 'gray',
+        shade: theme.colorScheme === 'dark' ? 8 : 1,
+      }),
+    },
+  }),
+
+  light: ({ theme, color }: ActionIconStylesProps) => ({
+    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 0 }),
+    color:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[9]
+        : getThemeColor({ theme, color, shade: 9 }),
+
+    '&:not(:disabled):hover': {
+      backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 1 }),
     },
 
     '&:disabled': {
@@ -46,7 +66,10 @@ export default createUseStyles({
     backgroundColor: 'transparent',
 
     '&:not(:disabled):hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[8]
+          : getThemeColor({ theme, color, shade: 0 }),
     },
   }),
 
@@ -79,6 +102,27 @@ export default createUseStyles({
     '&:disabled': {
       color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
       cursor: 'not-allowed',
+    },
+  }),
+
+  outline: ({ theme, color }: ActionIconStylesProps) => ({
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    backgroundColor: 'transparent',
+    borderColor: getThemeColor({
+      theme,
+      color,
+      shade: theme.colorScheme === 'dark' ? 4 : 6,
+    }),
+
+    '&:not(:disabled):hover': {
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[8]
+          : getThemeColor({ theme, color, shade: 0 }),
+    },
+
+    '&:disabled': {
+      borderColor: theme.colors.gray[theme.colorScheme === 'dark' ? 7 : 3],
     },
   }),
 });

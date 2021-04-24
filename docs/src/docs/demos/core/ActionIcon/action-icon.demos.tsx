@@ -12,24 +12,6 @@ import {
 } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
-export function ActionIconRootDemo() {
-  return (
-    <CodeDemo>
-      <ElementsGroup position="center">
-        <ActionIcon title="Settings" aria-label="Settings">
-          <GearIcon />
-        </ActionIcon>
-        <ActionIcon title="Good" aria-label="Good" color="green">
-          <CheckIcon />
-        </ActionIcon>
-        <ActionIcon title="Upload image" aria-label="Upload image" color="indigo" variant="filled">
-          <ImageIcon />
-        </ActionIcon>
-      </ElementsGroup>
-    </CodeDemo>
-  );
-}
-
 const code = `import React from 'react';
 import { ActionIcon } from '@mantine/core';
 import { GearIcon } from '@modulz/radix-icons';
@@ -98,20 +80,16 @@ export function ActionIconGroupDemo() {
 
 const variantsCode = `import React from 'react';
 import { ActionIcon, ElementsGroup } from '@mantine/core';
-import { GearIcon, ChatBubbleIcon, ActivityLogIcon } from '@modulz/radix-icons';
+import { GearIcon, ChatBubbleIcon, ActivityLogIcon, CheckIcon, ImageIcon } from '@modulz/radix-icons';
 
 function Demo() {
   return (
     <ElementsGroup position="center">
-      <ActionIcon variant="transparent">
-        <GearIcon />
-      </ActionIcon>
-      <ActionIcon variant="hover">
-        <ChatBubbleIcon />
-      </ActionIcon>
-      <ActionIcon variant="filled" color="blue">
-        <ActivityLogIcon />
-      </ActionIcon>
+      <ActionIcon variant="transparent"><GearIcon /></ActionIcon>
+      <ActionIcon variant="hover"><ChatBubbleIcon /></ActionIcon>
+      <ActionIcon variant="filled" color="blue"><ActivityLogIcon /></ActionIcon>
+      <ActionIcon variant="light" color="pink"><ImageIcon /></ActionIcon>
+      <ActionIcon variant="outline" color="teal"><CheckIcon /></ActionIcon>
     </ElementsGroup>
   );
 }`;
@@ -128,6 +106,12 @@ export function ActionIconVariantDemo() {
         </ActionIcon>
         <ActionIcon variant="filled" color="blue">
           <ActivityLogIcon />
+        </ActionIcon>
+        <ActionIcon variant="light" color="pink">
+          <ImageIcon />
+        </ActionIcon>
+        <ActionIcon variant="outline" color="teal">
+          <CheckIcon />
         </ActionIcon>
       </ElementsGroup>
     </CodeDemo>

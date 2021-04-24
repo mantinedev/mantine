@@ -7,12 +7,10 @@ slug: /core/action-icon/
 
 import { ACTION_ICON_SIZES } from '@mantine/core';
 import {
-  ActionIconRootDemo,
   ActionIconBaseDemo,
   ActionIconGroupDemo,
   ActionIconUsageDemo,
   ActionIconVariantDemo,
-  ActionIconVariantToggleDemo,
 } from '../demos/core/ActionIcon/action-icon.demos';
 import { ActionIconConfigurator } from '../demos/core/ActionIcon/action-icon.configurator';
 import { ActionIconColorsDemo } from '../demos/core/ActionIcon/action-icon-colors.demo';
@@ -29,8 +27,6 @@ import { ActionIconSizesDemo } from '../demos/core/ActionIcon/action-icon-sizes.
 ```tsx
 import { ActionIcon } from '@mantine/core';
 ```
-
-<ActionIconRootDemo />
 
 ## Usage
 
@@ -55,19 +51,9 @@ Password input visibility toggle example:
 
 ## Variants
 
-ActionIcon has 3 variants:
-
-- `transparent` – icon without background, hover and active styles
-- `hover` (default) – icon without background, with hover and active styles
-- `filled` – icon with background, hove and active styles
+ActionIcon has 5 variants: hover (default), transparent, filled, light and outline:
 
 <ActionIconVariantDemo />
-
-By combining `variant` and `color` props you can create switch/checkbox with ActionIcon.
-Make sure to check if <GatsbyLink to="/core/switch">Switch</GatsbyLink> or <GatsbyLink to="/core/checkbox">Checkbox</GatsbyLink> components
-fit your needs first as ActionIcon will be less accessible in this case.
-
-<ActionIconVariantToggleDemo />
 
 ## Color
 
@@ -138,12 +124,12 @@ function ActionIconDemo() {
 }
 ```
 
-## Component props
-
-<PropsTable component="ActionIcon" />
-
 ## Accessibility
 
 ActionIcon renders a regular button element.
-As by design element does not have text content
-make sure to include `title` and `aria-label` props for better accessibility.
+Make sure to include `title` and `aria-label` props for screen reader support
+as by design element does not have text content.
+
+## Component props
+
+<PropsTable component="ActionIcon" />

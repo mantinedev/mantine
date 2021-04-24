@@ -6,7 +6,7 @@ import Configurator from '../../../../components/Configurator/Configurator';
 const iconSizes = {
   xs: 12,
   sm: 14,
-  md: 20,
+  md: 18,
   lg: 26,
   xl: 34,
 };
@@ -41,6 +41,8 @@ export function ActionIconConfigurator() {
             { label: 'transparent', value: 'transparent' },
             { label: 'hover', value: 'hover' },
             { label: 'filled', value: 'filled' },
+            { label: 'light', value: 'light' },
+            { label: 'outline', value: 'outline' },
           ],
           initialValue: 'hover',
           defaultValue: 'hover',
