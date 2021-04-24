@@ -5,6 +5,8 @@ import {
   MarginIcon,
   FaceIcon,
   Half2Icon,
+  LightningBoltIcon,
+  MagicWandIcon,
 } from '@modulz/radix-icons';
 
 export default [
@@ -20,13 +22,6 @@ export default [
     color: 'violet',
     title: 'Dark theme',
     description: 'Mantine supports dark theme by default in all components',
-  },
-  {
-    icon: MarginIcon,
-    color: 'cyan',
-    title: 'No annoying focus ring',
-    description:
-      'With new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard',
   },
   {
     icon: FaceIcon,
@@ -47,5 +42,26 @@ export default [
     color: 'pink',
     title: 'Ready for production',
     description: 'Mantine is well tested and works in all modern browsers',
+  },
+  {
+    icon: LightningBoltIcon,
+    color: 'yellow',
+    title: 'Developer experience',
+    description:
+      'Mantine comes with more than 50 components and 15 hooks to cover you in most cases',
+  },
+  {
+    icon: MarginIcon,
+    color: 'cyan',
+    title: 'No annoying focus ring',
+    description:
+      'With new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard',
+  },
+  {
+    icon: MagicWandIcon,
+    color: 'lime',
+    title: 'React JSS',
+    description:
+      'Take advantage of all react-jss features: automatic critical css extraction during ssr, lazy evaluation, dynamic theming and others',
   },
 ];
