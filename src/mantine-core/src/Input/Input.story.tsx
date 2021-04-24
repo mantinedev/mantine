@@ -14,7 +14,12 @@ const actionIcon = (
 
 const getStates = (props?: any) => (
   <div style={{ maxWidth: 300, padding: 50 }}>
-    <Input placeholder="Input" {...props} />
+    <Input placeholder="Text" {...props} />
+    <Input placeholder="Tel" type="tel" style={{ marginTop: 15 }} {...props} />
+    <Input placeholder="Number" type="number" {...props} style={{ marginTop: 15 }} />
+    <Input placeholder="Search" type="search" {...props} style={{ marginTop: 15 }} />
+    <Input placeholder="Email" type="email" {...props} style={{ marginTop: 15 }} />
+    <Input placeholder="Url" type="url" {...props} style={{ marginTop: 15 }} />
     <Input
       placeholder="Invalid"
       icon={<MagnifyingGlassIcon />}

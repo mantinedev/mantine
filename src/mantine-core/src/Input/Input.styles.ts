@@ -21,8 +21,7 @@ export default createUseStyles({
     '& $input': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
       minHeight: 36,
-      paddingLeft: 15,
-      paddingRight: 15,
+      padding: [7, theme.spacing.sm],
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
@@ -137,11 +136,16 @@ export default createUseStyles({
     },
 
     '&::placeholder': {
+      opacity: 1,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
     },
 
-    '&::-webkit-inner-spin-button': {
+    '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration': {
       appearance: 'none',
+    },
+
+    '&[type=number]': {
+      MozAppearance: 'textfield',
     },
   }),
 
