@@ -1,3 +1,6 @@
+export type { InputProps } from './Input/Input';
+export type { InputWrapperBaseProps } from './InputWrapper/InputWrapper';
+
 export { ActionIcon, ACTION_ICON_SIZES } from './ActionIcon/ActionIcon';
 export { Alert } from './Alert/Alert';
 export { Avatar, AVATAR_SIZES } from './Avatar/Avatar';
@@ -14,11 +17,8 @@ export { Drawer, DRAWER_SIZES } from './Drawer/Drawer';
 export { ElementsGroup } from './ElementsGroup/ElementsGroup';
 export { Highlight } from './Highlight/Highlight';
 export { Hr, HR_SIZES } from './Hr/Hr';
-export { InnerHtml } from './InnerHtml/InnerHtml';
 export { Input } from './Input/Input';
-export type { InputProps } from './Input/Input';
 export { InputWrapper } from './InputWrapper/InputWrapper';
-export type { InputWrapperBaseProps } from './InputWrapper/InputWrapper';
 export { Kbd } from './Kbd/Kbd';
 export { Loader, LOADER_SIZES } from './Loader/Loader';
 export { LoadingOverlay } from './LoadingOverlay/LoadingOverlay';
@@ -42,3 +42,4 @@ export { TextInput } from './TextInput/TextInput';
 export { ThemeIcon, THEME_ICON_SIZES } from './ThemeIcon/ThemeIcon';
 export { Title } from './Title/Title';
 export { Transition, GroupedTransition } from './Transition/Transition';
+export { TypographyStylesProvider } from './TypographyStylesProvider/TypographyStylesProvider';

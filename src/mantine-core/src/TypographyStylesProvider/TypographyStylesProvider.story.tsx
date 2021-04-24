@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/theme';
-import { InnerHtml } from './InnerHtml';
+import { TypographyStylesProvider } from './TypographyStylesProvider';
 
 const html = `
 <h1>We Butter the Bread with Butter</h1>
@@ -12,6 +12,11 @@ const html = `
 
 <h2>History</h2>
 <p>We Butter the Bread with Butter was founded in 2007 by Marcel Neumann, who was originally  guitarist for <a href="/wiki/Martin_Kesici" title="Martin Kesici">Martin Kesici</a>'s band,<sup id="cite_ref-smash-mag_4-0" class="reference"><a href="#cite_note-smash-mag-4">[4]</a></sup> and Tobias Schultka. The band was originally meant as a joke, but progressed into being a more serious musical duo. The name for the band has no particular meaning, although its origins were suggested from when the two original members were driving in a car operated by Marcel Neumann and an accident almost occurred. Neumann found Schultka "so funny that he briefly lost control of the vehicle."<sup id="cite_ref-smash-mag_4-1" class="reference"><a href="#cite_note-smash-mag-4">[4]</a></sup> Many of their songs from this point were <a href="/wiki/Cover_(music)" class="mw-redirect" title="Cover (music)">covers</a> of <a href="/wiki/German_folklore" title="German folklore">German folk tales</a> and <a href="/wiki/Nursery_rhyme" title="Nursery rhyme">nursery rhymes</a>.<sup id="cite_ref-5" class="reference"><a href="#cite_note-5">[5]</a></sup></p>
+
+<blockquote>
+Life is like an npm install – you never know what you are going to get.
+<cite>– Forrest Gump</cite>
+</blockquote>
 
 <h3>Dates</h3>
 <ul><li>On June 28, 2012, Kenneth Duncan announced his departure from the band via his personal Facebook page, citing creative and personal differences.</li><li>On October 28, 2012 the band posted a video on YouTube called We Butter the Bread with Butter - New EP and Album Trailer. The video says that the EP will come out in 2012 and new album will come out on April 12, 2013. The day after the band Posted a picture of the album art for Projekt Herz EP on Facebook.</li><li>On November 11, 2012 the band posted one of the new songs from their new EP on Facebook. The song name is USA. On December 19, 2012 the band released an EP titled Projekt Herz.</li><li>On February 17, 2013 the band posted a video on YouTube announcing the release date of their upcoming album - August 9, 2013 On April 21, 2013 the band revealed via Facebook the cover and the name of the third album, Goldkinder, which will be released on August 9, 2013.</li></ul>
@@ -29,47 +34,20 @@ export function AvatarDemo() {
 }</pre>
 `;
 
-const paragraphs = `<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum nisi nam qui iste accusantium a odit incidunt iure reprehenderit quod. Pariatur, ipsam! Ex eius accusamus praesentium facere provident quam cupiditate!</p>
-<p>Deleniti itaque veritatis enim dicta quidem excepturi consequatur minus velit sequi error? Molestias error ex, deleniti facilis, inventore voluptatem recusandae illo delectus non labore dolorem temporibus assumenda qui! Sit, laboriosam?</p>
-<p>Voluptas quo deserunt quis dignissimos, corporis illum dolorem ratione quae necessitatibus possimus quisquam accusamus porro adipisci quidem quasi esse voluptate sequi blanditiis architecto error, assumenda magni nemo. Ratione, esse debitis?</p>
-<p>Est sequi ducimus ad odio? Placeat error, quas itaque dolores natus quo amet labore ad tenetur quisquam, ut voluptas alias. Placeat suscipit, doloremque itaque quibusdam fugit impedit deserunt dolore enim.</p>
-<p>In impedit tempore dignissimos alias facere, dolor fugiat vero eveniet quo neque hic consequuntur quia. Corrupti, est ab, porro beatae culpa ex dolores, quos rerum non eos necessitatibus vitae accusamus.</p>`;
-
-const blockquote = `
-<blockquote>
-Life is like an npm install – you never know what you are going to get.
-<cite>– Forrest Gump</cite>
-</blockquote>
-`;
-
-storiesOf('@mantine/core/InnerHtml', module)
+storiesOf('@mantine/core/TypographyStylesProvider', module)
   .add('General usage', () => (
     <div style={{ maxWidth: 600, padding: 20, margin: 'auto' }}>
-      <InnerHtml dangerouslySetInnerHTML={{ __html: html }} />
-    </div>
-  ))
-  .add('Paragraphs', () => (
-    <div style={{ maxWidth: 600, padding: 20, margin: 'auto' }}>
-      <InnerHtml dangerouslySetInnerHTML={{ __html: paragraphs }} />
-    </div>
-  ))
-  .add('Blockquote', () => (
-    <div style={{ maxWidth: 600, padding: 20, margin: 'auto' }}>
-      <InnerHtml dangerouslySetInnerHTML={{ __html: blockquote }} />
+      <TypographyStylesProvider>
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </TypographyStylesProvider>
     </div>
   ))
   .add('Dark theme', () => (
     <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
       <div style={{ maxWidth: 600, padding: 20, margin: 'auto' }}>
-        <InnerHtml
-          themeOverride={{ colorScheme: 'dark' }}
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-
-        <InnerHtml
-          themeOverride={{ colorScheme: 'dark' }}
-          dangerouslySetInnerHTML={{ __html: blockquote }}
-        />
+        <TypographyStylesProvider themeOverride={{ colorScheme: 'dark' }}>
+          <div dangerouslySetInnerHTML={{ __html: html }} />
+        </TypographyStylesProvider>
       </div>
     </div>
   ));

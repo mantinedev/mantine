@@ -1,0 +1,67 @@
+---
+package: mantine-core
+title: TypographyStylesProvider
+order: 1
+slug: /core/typography-styles-provider/
+---
+
+import {
+  TypographyStylesProviderBaseDemo,
+  TypographyStylesProviderAllPartsDemo,
+} from '../demos/core/TypographyStylesProvider/TypographyStylesProvider.demo';
+
+# TypographyStylesProvider
+
+<PageHeader
+  source="mantine-core/src/TypographyStylesProvider/TypographyStylesProvider.tsx"
+  docs="core/TypographyStylesProvider.mdx"
+  package="@mantine/core"
+/>
+
+```tsx
+import { TypographyStylesProvider } from '@mantine/core';
+```
+
+## Usage
+
+Mantine does not expose global styles.
+Use TypographyStylesProvider to add Mantine typography styles to your html content:
+
+```tsx
+import React from 'react';
+import { TypographyStylesProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TypographyStylesProvider>
+      <div dangerouslySetInnerHTML={{ __html: '<p>Your html here' }} />
+    </TypographyStylesProvider>
+  );
+}
+```
+
+## Example
+
+Example with [Wikipedia page](https://en.wikipedia.org/wiki/We_Butter_the_Bread_with_Butter) part
+
+<TypographyStylesProviderBaseDemo />
+
+## All styles demo
+
+TypographyStylesProvider includes styles for:
+
+- paragraphs
+- headings
+- lists
+- blockquotes
+- tables
+- links
+- images
+- hr
+- code and pre
+
+<TypographyStylesProviderAllPartsDemo />
+
+## Component props
+
+<PropsTable component="TypographyStylesProvider" />
