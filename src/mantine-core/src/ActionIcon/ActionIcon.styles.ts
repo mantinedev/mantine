@@ -8,14 +8,11 @@ import {
   getThemeColor,
 } from '@mantine/theme';
 
-export type ActionIconVariant = 'transparent' | 'hover' | 'filled';
-
 interface ActionIconStylesProps {
   color: string;
   size: MantineNumberSize;
   radius: MantineNumberSize;
   theme: MantineTheme;
-  variant: ActionIconVariant;
 }
 
 export const sizes = {
@@ -26,85 +23,62 @@ export const sizes = {
   xl: 44,
 };
 
-function getColors({
-  theme,
-  color,
-  variant,
-}: Pick<ActionIconStylesProps, 'theme' | 'color' | 'variant'>) {
-  if (variant === 'transparent') {
-    return { hover: 'transparent', active: 'transparent' };
-  }
-
-  if (variant === 'filled') {
-    if (theme.colorScheme === 'dark') {
-      return {
-        hover: getThemeColor({ theme, color, shade: 5 }),
-        active: getThemeColor({ theme, color, shade: 6 }),
-      };
-    }
-
-    return {
-      hover: getThemeColor({ theme, color, shade: 8 }),
-      active: getThemeColor({ theme, color, shade: 9 }),
-    };
-  }
-
-  if (theme.colorScheme === 'dark') {
-    return { hover: theme.colors.dark[8], active: theme.colors.dark[9] };
-  }
-
-  return {
-    hover: getThemeColor({ theme, color, shade: 0 }),
-    active: getThemeColor({ theme, color, shade: 0 }),
-  };
-}
-
 export default createUseStyles({
-  actionIcon: ({ color, radius, theme, size, variant }: ActionIconStylesProps) => {
-    const colors = getColors({ theme, color, variant });
+  filled: ({ theme, color }: ActionIconStylesProps) => ({
+    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
 
-    return {
-      ...getFocusStyles(theme),
-      ...getFontStyles(theme),
-      WebkitTapHighlightColor: 'transparent',
-      border: '1px solid transparent',
-      boxSizing: 'border-box',
-      backgroundColor:
-        variant === 'filled'
-          ? getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 })
-          : 'transparent',
-      height: getSizeValue({ size, sizes }),
-      width: getSizeValue({ size, sizes }),
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      padding: 0,
-      lineHeight: 1,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      cursor: 'pointer',
-      transition: 'color 100ms ease, background-color 100ms ease',
+    '&:not(:disabled):hover': {
+      backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
+    },
 
-      '&:not(:disabled)': {
-        color:
-          variant === 'filled'
-            ? theme.colorScheme === 'dark'
-              ? theme.colors.dark[9]
-              : theme.white
-            : getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 6 }),
+    '&:disabled': {
+      backgroundColor: getThemeColor({
+        theme,
+        color: 'gray',
+        shade: theme.colorScheme === 'dark' ? 8 : 1,
+      }),
+    },
+  }),
 
-        '&:hover': {
-          backgroundColor: colors.hover,
-        },
+  hover: ({ theme, color }: ActionIconStylesProps) => ({
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    backgroundColor: 'transparent',
 
-        '&:active': {
-          backgroundColor: colors.active,
-        },
-      },
+    '&:not(:disabled):hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+    },
+  }),
 
-      '&:disabled': {
-        color: theme.colors.gray[5],
-        cursor: 'not-allowed',
-      },
-    };
-  },
+  transparent: ({ theme, color }: ActionIconStylesProps) => ({
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    backgroundColor: 'transparent',
+  }),
+
+  actionIcon: ({ radius, theme, size }: ActionIconStylesProps) => ({
+    ...getFocusStyles(theme),
+    ...getFontStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
+    border: '1px solid transparent',
+    boxSizing: 'border-box',
+    height: getSizeValue({ size, sizes }),
+    width: getSizeValue({ size, sizes }),
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    padding: 0,
+    lineHeight: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    transition: 'color 100ms ease, background-color 100ms ease',
+
+    '&:not(:disabled):active': {
+      transform: 'translateY(1px)',
+    },
+
+    '&:disabled': {
+      color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
+      cursor: 'not-allowed',
+    },
+  }),
 });

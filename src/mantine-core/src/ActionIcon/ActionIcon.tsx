@@ -1,14 +1,14 @@
 import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
-import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
+import useStyles, { sizes } from './ActionIcon.styles';
 
 interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   /** Icon rendered inside button */
   children: React.ReactNode;
 
   /** Controls appearance */
-  variant?: ActionIconVariant;
+  variant?: 'transparent' | 'hover' | 'filled';
 
   /** Button hover, active and icon colors from theme */
   color?: string;
@@ -48,7 +48,7 @@ export function ActionIcon({
     <button
       {...others}
       data-mantine-composable
-      className={cx(classes.actionIcon, className)}
+      className={cx(classes.actionIcon, classes[variant], className)}
       type="button"
       ref={elementRef}
     >

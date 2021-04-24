@@ -19,7 +19,13 @@ storiesOf('@mantine/core/ActionIcon', module)
   ))
   .add('Filled variant', () => <ElementsGroup>{getThemes({ variant: 'filled' })}</ElementsGroup>)
   .add('Hover variant', () => <ElementsGroup>{getThemes({ variant: 'hover' })}</ElementsGroup>)
-  .add('Disabled', () => <ElementsGroup>{getThemes({ disabled: true })}</ElementsGroup>)
+  .add('Disabled', () => (
+    <>
+      <ElementsGroup>{getThemes({ disabled: true })}</ElementsGroup>
+      <ElementsGroup>{getThemes({ disabled: true, variant: 'filled' })}</ElementsGroup>
+      <ElementsGroup>{getThemes({ disabled: true, variant: 'transparent' })}</ElementsGroup>
+    </>
+  ))
   .add('Sizes', () => (
     <>
       <ElementsGroup>
@@ -57,6 +63,9 @@ storiesOf('@mantine/core/ActionIcon', module)
       </ElementsGroup>
       <ElementsGroup style={{ marginTop: 20 }}>
         {getThemes({ variant: 'hover', themeOverride: { colorScheme: 'dark' } })}
+      </ElementsGroup>
+      <ElementsGroup style={{ marginTop: 20 }}>
+        {getThemes({ disabled: true, variant: 'filled', themeOverride: { colorScheme: 'dark' } })}
       </ElementsGroup>
     </div>
   ));
