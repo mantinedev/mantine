@@ -11,7 +11,7 @@ export default createUseStyles({
       acc[`& ${h}`] = {
         fontFamily: theme.headings.fontFamily,
         fontWeight: theme.headings.fontWeight,
-        marginTop: theme.spacing.md * theme.headings.sizes[h].lineHeight,
+        marginTop: theme.spacing.lg * theme.headings.sizes[h].lineHeight,
         marginBottom: theme.spacing.xs * theme.headings.sizes[h].lineHeight,
         ...theme.headings.sizes[h],
       };
@@ -53,6 +53,30 @@ export default createUseStyles({
         '&:hover': {
           textDecoration: 'underline',
         },
+      },
+
+      '& pre': {
+        padding: theme.spacing.xs,
+        lineHeight: theme.lineHeight,
+        margin: 0,
+        marginTop: theme.spacing.md,
+        marginBottom: theme.spacing.md,
+        overflowX: 'auto',
+        fontFamily: theme.fontFamilyMonospace,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
+      },
+
+      '& code': {
+        lineHeight: theme.lineHeight,
+        padding: [1, theme.spacing.xs / 2],
+        borderRadius: theme.radius.sm,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
+        fontFamily: theme.fontFamilyMonospace,
+        fontSize: theme.fontSizes.xs,
+        border: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[3]
+        }`,
       },
 
       '& ul, & ol': {
