@@ -6,6 +6,8 @@ slug: /core/color-swatch/
 ---
 
 import { ColorSwatchBaseDemo } from '../demos/core/ColorSwatch/color-swatch.demos';
+import { ColorSwatchComponentDemo } from '../demos/core/ColorSwatch/color-swatch-component.demo';
+import { ColorSwatchRadiusDemo } from '../demos/core/ColorSwatch/color-swatch-radius.demo';
 
 # ColorSwatch
 
@@ -33,7 +35,7 @@ Example with default Mantine theme colors:
 
 ## Size
 
-ColorSwatch does not have predefined size values, pass number value to set width and height in px:
+ColorSwatch does not have predefined size values, use number to set width and height in px:
 
 ```tsx
 <ColorSwatch size={50} /> // -> { width: 50, height: 50 }
@@ -47,6 +49,51 @@ Alternatively you can use number to set radius in px:
 ```tsx
 <ColorSwatch radius="lg" /> // -> theme predefined large radius
 <ColorSwatch radius={10} /> // -> { borderRadius: 10 }
+```
+
+<ColorSwatchRadiusDemo />
+
+## Custom component
+
+Use any component or element with ColorSwatch by setting `component` prop:
+
+<ColorSwatchComponentDemo />
+
+## Get element ref
+
+You can get root element ref with `elementRef` prop:
+
+```tsx
+import React, { useRef } from 'react';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef();
+  return <ColorSwatch elementRef={ref} />;
+}
+```
+
+## TypeScript
+
+You need to pass additional types to use custom component with TypeScript
+in case you need full type coverage for events and `elementRef`:
+
+```tsx
+<ColorSwatch<'button', HTMLButtonElement>
+  component="button"
+  onClick={(event) => console.log(event)}
+  elementRef={(node) => {
+    window.myRef = node;
+  }}
+/>
+
+<ColorSwatch<typeof Link, HTMLAnchorElement>
+  component={Link}
+  onClick={(event) => console.log(event)}
+  elementRef={(node) => {
+    window.myRef = node;
+  }}
+/>
 ```
 
 ## Component props

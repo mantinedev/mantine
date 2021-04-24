@@ -14,4 +14,10 @@ const radiuses = ([0, 'xs', 'sm', 'md', 'lg', 'xl', 1000] as any[]).map((radius)
 
 storiesOf('@mantine/core/ColorSwatch', module)
   .add('General Usage', () => <ElementsGroup style={{ padding: 15 }}>{swatches}</ElementsGroup>)
-  .add('Custom radius', () => <ElementsGroup style={{ padding: 15 }}>{radiuses}</ElementsGroup>);
+  .add('Custom radius', () => <ElementsGroup style={{ padding: 15 }}>{radiuses}</ElementsGroup>)
+  .add('Custom components', () => (
+    <ElementsGroup style={{ padding: 15 }}>
+      <ColorSwatch color="#000" component="button" />
+      <ColorSwatch color="#000" component="a" href="https://mantine.dev" />
+    </ElementsGroup>
+  ));

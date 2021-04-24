@@ -1,9 +1,10 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
+import { ComponentPassThrough } from '@mantine/types';
 import useStyles from './ColorSwatch.styles';
 
-interface ColorSwatchProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+interface ColorSwatchProps extends DefaultProps {
   /** Swatch color value in any css valid format (hex, rgb, etc.) */
   color: string;
 
@@ -14,18 +15,22 @@ interface ColorSwatchProps extends DefaultProps, React.ComponentPropsWithoutRef<
   radius?: MantineNumberSize;
 }
 
-export function ColorSwatch({
+export function ColorSwatch<T extends React.ElementType = 'div', U = HTMLDivElement>({
+  component: Element = 'div',
   color,
   size = 25,
   style,
   radius = 25,
   className,
   ...others
-}: ColorSwatchProps) {
+}: ComponentPassThrough<T, ColorSwatchProps> & {
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<U>;
+}) {
   const classes = useStyles({ radius, theme: useMantineTheme() });
 
   return (
-    <div
+    <Element
       className={cx(classes.colorSwatch, className)}
       style={{ width: size, height: size, backgroundColor: color, ...style }}
       data-mantine-composable

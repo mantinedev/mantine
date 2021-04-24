@@ -42,4 +42,19 @@ describe('@mantine/core/ColorSwatch', () => {
     expect(element.css('height')).toBe('41px');
     expect(element.css('background-color')).toBe('blue');
   });
+
+  it('accepts component from component prop', () => {
+    const TestComponent = (props: any) => <span data-test-prop {...props} />;
+    const withTag = shallow(
+      <ColorSwatch<'a'> color="#000" component="a" href="https://mantine.dev" />
+    );
+    const withComponent = shallow(
+      <ColorSwatch<typeof TestComponent> color="#000" component={TestComponent} />
+    );
+
+    expect(withTag.type()).toBe('a');
+    expect(withTag.render().attr('href')).toBe('https://mantine.dev');
+    expect(withComponent.type()).toBe(TestComponent);
+    expect(withComponent.render().attr('data-test-prop')).toBe('true');
+  });
 });

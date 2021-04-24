@@ -115,15 +115,15 @@ You can compose Button with any other components that support composition featur
 
 ## Get element ref
 
-You can get button ref by passing `elementRef` prop to Button component:
+You can get root element ref with `elementRef` prop:
 
 ```tsx
 import React, { useRef } from 'react';
 import { Button } from '@mantine/core';
 
-function ButtonDemo() {
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  return <Button elementRef={buttonRef} />;
+function Demo() {
+  const ref = useRef();
+  return <Button elementRef={ref} />;
 }
 ```
 
@@ -146,34 +146,26 @@ function ButtonDemo() {
 }
 ```
 
-## TypeScript support
+## TypeScript
 
-Usage of some props with custom component in TypeScript require type specification.
-Button component is a generic and you can pass 2 types to enhance type support:
+You need to pass additional types to use custom component with TypeScript
+in case you need full type coverage for events and `elementRef`:
 
 ```tsx
-// Custom element button
-<Button<'a', HTMLAnchorElement>
-  component="a"
-  onClick={(event) => {}} // -> event will now have correct types
-  elementRef={(node) => {}} // node type is set to HTMLAnchorElement
+<Button<'button', HTMLButtonElement>
+  component="button"
+  onClick={(event) => console.log(event)}
+  elementRef={(node) => {
+    window.myRef = node;
+  }}
 />
 
-// Custom component button – react-router-dom link
 <Button<typeof Link, HTMLAnchorElement>
   component={Link}
-  onClick={(event) => {}} // -> event will now have correct types
-  elementRef={(node) => {}} // node type is set to HTMLAnchorElement
-/>
-```
-
-Usually it is not necessary to pass types and you can avoid it by setting types directly on callbacks:
-
-```tsx
-<Button
-  component="a"
-  onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {}}
-  elementRef={(node: HTMLAnchorElement) => {}}
+  onClick={(event) => console.log(event)}
+  elementRef={(node) => {
+    window.myRef = node;
+  }}
 />
 ```
 
