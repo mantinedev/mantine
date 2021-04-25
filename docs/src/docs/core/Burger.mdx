@@ -7,6 +7,7 @@ slug: /core/burger/
 
 import { BURGER_SIZES } from '@mantine/core';
 import { BurgerBaseDemo } from '../demos/core/Burger/burger.demos';
+import { BurgerSizesDemo } from '../demos/core/Burger/burger-sizes.demo';
 import { BurgerConfigurator } from '../demos/core/Burger/burger.configurator';
 
 # Burger
@@ -39,6 +40,10 @@ You can pass size as number and it will be set as width and height in px.
 <Burger size={50} /> // -> { width: 50, height: 50 }
 ```
 
+Predefined sizes from xl to xs:
+
+<BurgerSizesDemo />
+
 You can get default sizes by importing `BURGER_SIZES`:
 
 ```tsx
@@ -64,10 +69,24 @@ You can get button ref by setting `elementRef` prop:
 import React, { useRef } from 'react';
 import { Burger } from '@mantine/core';
 
-function BurgerDemo() {
+function Demo() {
   const ref = useRef();
   return <Burger elementRef={ref} opened />;
 }
+```
+
+## Accessibility
+
+Burger renders a regular button element.
+Make sure to include `title` or `aria-label` props for screen reader support
+as by design element does not have text content.
+
+```tsx
+// Title will show message on hover and announce control with screen reader
+<Burger title="Open navigation" />
+
+// aria-label will only announce control with screen reader
+<Burger aria-label="Open navigation" />
 ```
 
 ## Component props

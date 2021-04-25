@@ -49,16 +49,26 @@ function Demo() {
 
 ## Get element ref
 
-You can get input ref by passing `elementRef` prop to Textarea component:
+You can get input ref with `elementRef` prop:
 
 ```tsx
 import React, { useRef } from 'react';
 import { Textarea } from '@mantine/core';
 
-function TextareaDemo() {
+function Demo() {
   const ref = useRef(null);
   return <Textarea elementRef={ref} />;
 }
+```
+
+## Accessibility
+
+Provide `aria-label` in case you use component without label for screen reader support:
+
+```tsx
+<Textarea label="My textarea" />; // -> ok, textarea and label is connected
+<Textarea />; // not ok, textarea is not labeled
+<Textarea aria-label="My textarea" />; // -> ok, label is not visible but will be announced by screen reader
 ```
 
 ## Component props

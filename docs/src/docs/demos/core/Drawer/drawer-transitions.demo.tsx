@@ -14,9 +14,9 @@ function Demo() {
         opened={opened}
         onClose={() => setOpened(false)}
         padding="md"
-        transition="fade"
-        transitionDuration={400}
-        transitionTimingFunction="linear"
+        transition="rotate-up"
+        transitionDuration={250}
+        transitionTimingFunction="ease"
       >
         Press escape to close drawer
       </Drawer>
@@ -38,9 +38,9 @@ export function DrawerTransitionsDemo() {
           opened={opened}
           onClose={() => setOpened(false)}
           padding="md"
-          transition="fade"
-          transitionDuration={400}
-          transitionTimingFunction="linear"
+          transition="rotate-up"
+          transitionDuration={250}
+          transitionTimingFunction="ease"
         >
           Press escape to close drawer
         </Drawer>

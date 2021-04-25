@@ -14,6 +14,7 @@ import {
   ButtonFilledVariantDemo,
   ButtonOutlineVariantDemo,
   ButtonLinkVariantDemo,
+  ButtonLightVariantDemo,
 } from '../demos/core/Button/button-colors.demo';
 import { ButtonConfigurator } from '../demos/core/Button/button.configurator';
 
@@ -54,6 +55,10 @@ Default Button color is `theme.primaryColor`, to change color and variant pass `
 ### Filled variant
 
 <ButtonFilledVariantDemo />
+
+### Light variant
+
+<ButtonLightVariantDemo />
 
 ### Outline variant
 
@@ -137,7 +142,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mantine/core';
 
-function ButtonDemo() {
+function Demo() {
   return (
     <Button component={Link} to="/react-router">
       React router link

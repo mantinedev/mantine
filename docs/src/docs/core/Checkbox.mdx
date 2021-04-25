@@ -34,6 +34,12 @@ For better accessibility set `label` prop, it will add associated label element.
 Checkbox has 5 predefined sizes: xs, sm, md, lg, xl.
 Size defines label font-size (from <GatsbyLink to="/pages/theming/">theme.fontSizes</GatsbyLink>), input width and height.
 
+```tsx
+<Checkbox size="xl" /> // -> predefined xl size
+```
+
+Checkbox sizes from xs to xl:
+
 <CheckboxSizesDemo />
 
 You can get checkbox sizes by importing `CHECKBOX_SIZES`:
@@ -80,6 +86,16 @@ function Demo() {
   const ref = useRef();
   return <Checkbox elementRef={ref} />;
 }
+```
+
+## Accessibility
+
+Provide `aria-label` in case you use checkbox without label for screen reader support:
+
+```tsx
+<Checkbox label="My checkbox" />; // -> ok, input and label is connected
+<Checkbox />; // not ok, input is not labeled
+<Checkbox aria-label="My checkbox" />; // -> ok, label is not visible but will be announced by screen reader
 ```
 
 ## Component props

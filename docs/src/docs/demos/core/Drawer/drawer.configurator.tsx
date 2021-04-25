@@ -74,6 +74,7 @@ export function DrawerConfigurator() {
         { name: 'noFocusTrap', type: 'boolean', defaultValue: false },
         { name: 'noScrollScroll', type: 'boolean', defaultValue: false },
         { name: 'noCloseOnClickOutside', type: 'boolean', defaultValue: false },
+        { name: 'noCloseOnEscape', type: 'boolean', defaultValue: false },
       ]}
     />
   );

@@ -41,7 +41,7 @@ function Demo() {
 
 ## Get element ref
 
-You can get input ref by passing `elementRef` prop to TextInput component:
+You can get input ref with `elementRef` prop:
 
 ```tsx
 import React, { useRef } from 'react';
@@ -51,6 +51,16 @@ function TextInputDemo() {
   const ref = useRef(null);
   return <TextInput elementRef={ref} />;
 }
+```
+
+## Accessibility
+
+Provide `aria-label` in case you use component without label for screen reader support:
+
+```tsx
+<TextInput label="My input" />; // -> ok, input and label is connected
+<TextInput />; // not ok, input is not labeled
+<TextInput aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
 ```
 
 ## Component props

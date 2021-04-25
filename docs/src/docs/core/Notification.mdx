@@ -41,9 +41,18 @@ You can use icons from any react icons library, for example:
 
 ## Colors
 
-You can choose any color defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink>:
+You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme</GatsbyLink>:
 
 <NotificationConfigurator />
+
+## Accessibility
+
+To support screen readers set close button aria-label or title with `closeButtonProps`:
+
+```tsx
+<Notification closeButtonProps={{ 'aria-label': 'Hide notification' }} />
+<Notification closeButtonProps={{ title: 'Hide notification' }} />
+```
 
 ## Component props
 

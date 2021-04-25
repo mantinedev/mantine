@@ -50,10 +50,20 @@ You can get input ref by passing `elementRef` prop to Select component:
 import React, { useRef } from 'react';
 import { Select } from '@mantine/core';
 
-function SelectDemo() {
+function Demo() {
   const ref = useRef(null);
   return <Select elementRef={ref} />;
 }
+```
+
+## Accessibility
+
+Provide `aria-label` in case you use component without label for screen reader support:
+
+```tsx
+<Select label="My select" />; // -> ok, select and label is connected
+<Select />; // not ok, select is not labeled
+<Select aria-label="My select" />; // -> ok, label is not visible but will be announced by screen reader
 ```
 
 ## Component props

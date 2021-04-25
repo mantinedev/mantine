@@ -16,7 +16,12 @@ function Demo() {
     </Text>
   ));
 
-  return <Breadcrumbs separator="→">{items}</Breadcrumbs>;
+  return (
+    <>
+      <Breadcrumbs>{items}</Breadcrumbs>
+      <Breadcrumbs separator="→">{items}</Breadcrumbs>
+    </>
+  );
 }`;
 
 export function BreadcrumbsBaseDemo() {
@@ -32,7 +37,10 @@ export function BreadcrumbsBaseDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <Breadcrumbs separator="→">{items}</Breadcrumbs>
+      <Breadcrumbs>{items}</Breadcrumbs>
+      <Breadcrumbs separator="→" style={{ marginTop: 15 }}>
+        {items}
+      </Breadcrumbs>
     </CodeDemo>
   );
 }

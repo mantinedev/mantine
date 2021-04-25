@@ -78,7 +78,7 @@ function Demo() {
 
 ## Get element ref
 
-You can get input ref by passing `elementRef` prop to Switch component:
+You can get input ref with `elementRef` prop to:
 
 ```tsx
 import React, { useRef } from 'react';
@@ -88,6 +88,16 @@ function Demo() {
   const ref = useRef();
   return <Switch elementRef={ref} />;
 }
+```
+
+## Accessibility
+
+Switch is a regular input with checkbox type. Provide `aria-label` in case you use switch without label for screen reader support:
+
+```tsx
+<Switch label="My switch" />; // -> ok, input and label is connected
+<Switch />; // not ok, input is not labeled
+<Switch aria-label="My switch" />; // -> ok, label is not visible but will be announced by screen reader
 ```
 
 ## Component props

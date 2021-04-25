@@ -10,8 +10,6 @@ import { HrBaseDemo, HrSizesDemo, HrColorDemo } from '../demos/core/Hr/hr.demos'
 
 # Hr
 
-Renders horizontal line
-
 <PageHeader source="mantine-core/src/Hr/Hr.tsx" docs="core/Hr.mdx" package="@mantine/core" />
 
 ```tsx
@@ -20,13 +18,14 @@ import { Hr } from '@mantine/core';
 
 ## Usage
 
-Customize hr style by setting `variant` prop:
+Hr component renders horizontal line.
+Customize hr border style by setting `variant` prop:
 
 <HrBaseDemo />
 
 ## Colors
 
-You can choose any color defined in <GatsbyLink to="/pages/theming/">theme.colors</GatsbyLink>:
+You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>:
 
 <HrColorDemo />
 
@@ -35,10 +34,7 @@ You can choose any color defined in <GatsbyLink to="/pages/theming/">theme.color
 Hr has predefined sizes: xs, sm, md, lg, xl.
 You can pass size as number and it will be set as height in px:
 
-```tsx
-<Hr size="sm" /> // -> predefined small size
-<Hr size={50} /> // -> { width: 50, height: 50 }
-```
+<HrSizesDemo />
 
 You can get predefined sizes by importing `HR_SIZES`:
 
@@ -50,8 +46,6 @@ import { HR_SIZES } from '@mantine/core';
   head={['Prop value', 'Height']}
   data={Object.keys(HR_SIZES).map((size) => [size, `${HR_SIZES[size]}px`])}
 />
-
-<HrSizesDemo />
 
 ## Component props
 

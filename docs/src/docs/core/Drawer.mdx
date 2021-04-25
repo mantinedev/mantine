@@ -103,6 +103,7 @@ You can change drawer behavior with props:
 - `noFocusTrap` – removes focus trap inside drawer body
 - `noScrollLock` – disables scroll lock
 - `noCloseOnClickOutside` – do not trigger onClose for outside clicks
+- `noCloseOnEscape` – do not trigger onClose for escape key press
 
 <DrawerInactiveDemo />
 
@@ -125,6 +126,7 @@ By default:
 
 - When drawer is opened focus is trapped inside and document.body scroll is locked in current position
 - When user clicks on overlay or presses escape drawer is closed
+- Drawer transitions use disabled when user prefers to reduce motion
 - Drawer body has `aria-modal` and `role="dialog"` attributes
 
 Add [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-labelledby_attribute) and [aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute) for better screen readers support:

@@ -56,13 +56,13 @@ Alternatively you can use number to set radius in px:
 
 ## Get element ref
 
-You can get button ref by passing `elementRef` prop to Paper component:
+You can get root element ref with `elementRef` prop:
 
 ```tsx
 import React, { useRef } from 'react';
 import { Paper } from '@mantine/core';
 
-function PaperDemo() {
+function Demo() {
   const paperRef = useRef();
   return <Paper elementRef={paperRef} />;
 }

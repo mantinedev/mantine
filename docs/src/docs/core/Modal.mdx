@@ -122,11 +122,18 @@ You can change transitions with props:
 
 ## Accessibility and usability
 
-- When modal is opened focus is trapped inside and document.body overflow is set to hidden
+- When modal is opened focus is trapped inside and vertical scroll is locked at current position
 - When user clicks on overlay or presses escape modal closes
-- Use `closeButtonLabel` prop to set `title` and `aria-label` attributes of close button for better screen reader support
-- `aria-modal` is set to true on modal wrapper
+- Modal transitions are disabled if user prefers to reduce motion
+- Modal wrapper has `aria-modal="true"` and `role="dialog"` attributes
 - Modal wrapper has `aria-labelledby` and `aria-describedby` pointing to modal title and body
+
+For better screen reader support set `closeButtonLabel` prop:
+
+```tsx
+// sets title attribute on close button
+<Modal closeButtonLabel="Close authentication modal" />
+```
 
 ## Component props
 

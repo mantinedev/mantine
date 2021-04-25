@@ -7,6 +7,7 @@ slug: /core/loader/
 
 import { LOADER_SIZES } from '@mantine/core';
 import { LoaderConfigurator } from '../demos/core/Loader/loader.configurator';
+import { LoaderSizesDemo } from '../demos/core/Loader/loader-sizes.demo';
 
 # Loader
 
@@ -24,7 +25,8 @@ import { Loader } from '@mantine/core';
 
 Use Loader to indicate loading state.
 
-You can change loader color by setting `color` prop, by default `theme.primaryColor` will be used.
+By default loader will be rendered with `theme.primaryColor`.
+You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>:
 
 <LoaderConfigurator />
 
@@ -38,7 +40,11 @@ Alternatively you can use number to set height in px:
 <Loader size={50} /> // -> { height: 50 }
 ```
 
-You can get default sizes for action icon by importing `LOADER_SIZES`:
+Predefined sizes from xl to xs:
+
+<LoaderSizesDemo />
+
+You can get predefined sizes by importing `LOADER_SIZES`:
 
 ```tsx
 import { LOADER_SIZES } from '@mantine/core';

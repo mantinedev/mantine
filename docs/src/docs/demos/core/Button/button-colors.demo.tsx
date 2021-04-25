@@ -35,3 +35,10 @@ export function ButtonLinkVariantDemo() {
     </CodeDemo>
   );
 }
+export function ButtonLightVariantDemo() {
+  return (
+    <CodeDemo>
+      <ElementsGroup position="center">{getThemes({ variant: 'light' })}</ElementsGroup>
+    </CodeDemo>
+  );
+}

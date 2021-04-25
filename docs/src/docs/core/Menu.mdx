@@ -29,7 +29,7 @@ Use Menu to combine a list of secondary actions into single interactive area.
 
 ## MenuItem component
 
-You can use <GatsbyLink to="/core/Hr">Hr</GatsbyLink> (renders horizontal line) and MenuItem components inside Menu.
+You can use <GatsbyLink to="/core/hr/">Hr</GatsbyLink> (renders horizontal line) and MenuItem components inside Menu.
 MenuItem renders button and accepts props:
 
 - **icon** – icon on the left
@@ -53,7 +53,7 @@ MenuItem renders button and accepts props:
 
 ## Custom control
 
-By default menu button uses <GatsbyLink to="/core/action-icon">ActionIcon</GatsbyLink> with horizontal dots.
+By default menu button uses <GatsbyLink to="/core/action-icon/">ActionIcon</GatsbyLink> with horizontal dots.
 You can change it by setting `control` and `controlRefProp` props:
 
 <MenuComponentDemo />
@@ -70,19 +70,19 @@ Menu position defaults to `{ top: 0, left: 0 }` and is set with object which con
 
 ## Change transition
 
-Menu is built with <GatsbyLink to="/core/transition">Transition</GatsbyLink> component.
-To learn more about transitions see <GatsbyLink to="/guides/transitions">transitions guide</GatsbyLink>.
+Menu is built with <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component.
+To learn more about transitions see <GatsbyLink to="/guides/transitions/">transitions guide</GatsbyLink>.
 You can customize transition, timing function and duration:
 
 <MenuTransitionsDemo />
 
 ## Shadow
 
-You can use predefined shadows defined in <GatsbyLink to="/pages/theming/">theme.shadows</GatsbyLink> or your own:
+You can use predefined shadows defined in <GatsbyLink to="/pages/theming/#spacing-radius-and-shadows">theme.shadows</GatsbyLink> or your own:
 
 ```tsx
 <Menu shadow="sm" /> // -> predefined small shadow
-<Menu shadow="1px 1px 3px rgba(0,0,0,.1)" /> // -> custom shadow
+<Menu shadow="1px 1px 3px rgba(0, 0, 0, .1)" /> // -> custom shadow
 ```
 
 ## Size
@@ -144,6 +144,10 @@ Component behavior and properties:
 - Menu body has `menu` role, `aria-orientation` is always set to `vertical`
 - Menu item has `menuitem` role
 
-## Component props
+## Menu component props
 
 <PropsTable component="Menu" />
+
+## MenuItem component props
+
+<PropsTable component="MenuItem" />
