@@ -5,7 +5,7 @@ import { ComponentPassThrough } from '@mantine/types';
 import useStyles from './Input.styles';
 
 export interface InputProps extends DefaultProps {
-  /** Sets border color to red */
+  /** Sets border color to red and aria-invalid=true on input element */
   invalid?: boolean;
 
   /** Adds icon on the left side of input */
@@ -60,7 +60,10 @@ export function Input<
   wrapperProps,
   elementRef,
   ...others
-}: ComponentPassThrough<T, InputProps> & { elementRef?: React.ForwardedRef<U> }) {
+}: ComponentPassThrough<T, InputProps> & {
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<U>;
+}) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ radius, theme });
 
@@ -86,6 +89,7 @@ export function Input<
         data-mantine-input
         ref={elementRef}
         aria-required={required}
+        aria-invalid={invalid}
         className={cx({ [classes.withIcon]: icon }, classes.input, inputClassName)}
         style={{
           paddingRight: rightSection ? rightSectionWidth : theme.spacing.md,

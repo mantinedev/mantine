@@ -19,6 +19,7 @@ describe('@mantine/core/Input', () => {
   checkAccessibility([
     mount(<Input aria-label="test-input" />),
     mount(<Input placeholder="test-input" />),
+    mount(<Input placeholder="test-input" invalid />),
   ]);
 
   itSupportsClassName(Input, {});
@@ -44,6 +45,14 @@ describe('@mantine/core/Input', () => {
 
     expect(required.render().find('input').attr('aria-required')).toBe('true');
     expect(notRequired.render().find('input').attr('aria-required')).toBe('false');
+  });
+
+  it('sets aria-invalid attribute on input if required prop is true', () => {
+    const invalid = shallow(<Input invalid />);
+    const valid = shallow(<Input />);
+
+    expect(invalid.render().find('input').attr('aria-invalid')).toBe('true');
+    expect(valid.render().find('input').attr('aria-invalid')).toBe('false');
   });
 
   it('sets disabled attribute on input based on disabled prop', () => {
