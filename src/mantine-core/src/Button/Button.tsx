@@ -54,7 +54,10 @@ export function Button<
   elementRef,
   themeOverride,
   ...others
-}: ComponentPassThrough<T, ButtonBaseProps> & { elementRef?: React.ForwardedRef<U> }) {
+}: ComponentPassThrough<T, ButtonBaseProps> & {
+  /** Get root element ref */
+  elementRef?: React.ForwardedRef<U>;
+}) {
   const classes = useStyles({
     variant,
     radius,

@@ -140,9 +140,12 @@ export default createUseStyles({
       height: sizes[size].height - 2,
     },
 
+    '&:hover': {
+      backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 1 }),
+    },
+
     '&:not(:disabled):active': {
       transform: 'translateY(1px)',
-      backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 1 }),
     },
 
     '&:disabled': {
@@ -167,9 +170,12 @@ export default createUseStyles({
       height: sizes[size].height - 2,
     },
 
+    '&:hover': {
+      backgroundColor: getThemeColor({ theme, color, shade: 7 }),
+    },
+
     '&:not(:disabled):active': {
       transform: 'translateY(1px)',
-      backgroundColor: getThemeColor({ theme, color, shade: 7 }),
     },
 
     '&:disabled': {

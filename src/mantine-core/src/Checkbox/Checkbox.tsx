@@ -34,7 +34,7 @@ interface CheckboxProps
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
 
-  /** Get element ref */
+  /** Get input ref */
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
