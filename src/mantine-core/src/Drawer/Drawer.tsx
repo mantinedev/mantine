@@ -41,6 +41,9 @@ interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'
   /** Disable onClock trigger for outside events */
   noCloseOnClickOutside?: boolean;
 
+  /** Disable onClock trigger for escape key press */
+  noCloseOnEscape?: boolean;
+
   /** Drawer appear and disappear transition, see Transition component for full documentation */
   transition?: MantineTransition;
 
@@ -77,6 +80,7 @@ export function Drawer({
   noFocusTrap = false,
   noScrollScroll = false,
   noCloseOnClickOutside = false,
+  noCloseOnEscape = false,
   transition,
   transitionDuration = 250,
   transitionTimingFunction = 'ease',
@@ -99,7 +103,7 @@ export function Drawer({
   const drawerTransition = transition || transitions[position];
 
   const closeOnEscape = (event: KeyboardEvent) => {
-    if (noFocusTrap && event.code === 'Escape') {
+    if (noFocusTrap && event.code === 'Escape' && !noCloseOnEscape) {
       onClose();
     }
   };
