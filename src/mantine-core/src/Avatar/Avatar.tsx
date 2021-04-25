@@ -7,19 +7,19 @@ import useStyles, { sizes } from './Avatar.styles';
 export const AVATAR_SIZES = sizes;
 
 interface AvatarProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
-  /** Image link */
+  /** Image url */
   src?: string;
 
-  /** Image alt text */
+  /** Image alt text or title for placeholder variant */
   alt?: string;
 
-  /** Image width and height */
+  /** Avatar width and height */
   size?: MantineNumberSize;
 
-  /** Image border-radius */
+  /** Predefined border-radius value from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;
 
-  /** Color from theme used for letter and icon variant */
+  /** Color from theme used for letter and icon placeholders */
   color?: string;
 }
 

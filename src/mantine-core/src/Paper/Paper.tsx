@@ -7,7 +7,7 @@ interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'>
   /** Predefined padding value from theme.spacing or number for padding in px */
   padding?: MantineNumberSize;
 
-  /** Predefined box-shadow from theme.shadows */
+  /** Predefined box-shadow from theme.shadows (xs, sm, md, lg, xl) or any valid css box-shadow property */
   shadow?: string;
 
   /** Predefined border-radius value from theme.radius or number for border-radius in px */

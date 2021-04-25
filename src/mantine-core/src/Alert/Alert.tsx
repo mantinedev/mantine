@@ -6,16 +6,16 @@ import { Paper } from '../Paper/Paper';
 import useStyles from './Alert.styles';
 
 interface AlertProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
-  /** Alert title */
+  /** Optional alert title */
   title?: React.ReactNode;
 
-  /** Alert title and body colors from theme */
-  color?: string;
-
-  /** Alert body content */
+  /** Alert message */
   children: React.ReactNode;
 
-  /** Box-shadow */
+  /** Alert title and line colors from theme */
+  color?: string;
+
+  /** Predefined box-shadow from theme.shadows (xs, sm, md, lg, xl) or any valid css box-shadow property */
   shadow?: string;
 }
 
