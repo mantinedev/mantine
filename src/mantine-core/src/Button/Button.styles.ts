@@ -10,8 +10,6 @@ import {
   MantineSizes,
 } from '@mantine/theme';
 
-export type ButtonVariant = 'link' | 'filled' | 'outline';
-
 interface ButtonStylesProps {
   color: string;
   size: MantineSize;
@@ -121,8 +119,37 @@ export default createUseStyles({
 
     '&:disabled': {
       borderColor: 'transparent',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
+      cursor: 'not-allowed',
+    },
+  }),
+
+  light: ({ color, size, radius, theme }: ButtonStylesProps) => ({
+    border: '1px solid transparent',
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 0 }),
+    color:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[9]
+        : getThemeColor({ theme, color, shade: 9 }),
+
+    '& $inner': {
+      height: sizes[size].height - 2,
+    },
+
+    '&:not(:disabled):active': {
+      transform: 'translateY(1px)',
+      backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 1 }),
+    },
+
+    '&:disabled': {
+      borderColor: 'transparent',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
+      textShadow: 'none',
       cursor: 'not-allowed',
     },
   }),
@@ -147,8 +174,8 @@ export default createUseStyles({
 
     '&:disabled': {
       borderColor: 'transparent',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
       textShadow: 'none',
       cursor: 'not-allowed',
     },

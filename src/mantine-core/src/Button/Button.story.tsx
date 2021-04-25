@@ -37,6 +37,7 @@ storiesOf('@mantine/core/Button', module)
   .add('Themes', () => (
     <>
       <ElementsGroup style={{ padding: 20 }}>{getThemes()}</ElementsGroup>
+      <ElementsGroup style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</ElementsGroup>
       <ElementsGroup style={{ padding: 20 }}>{getThemes({ variant: 'outline' })}</ElementsGroup>
       <ElementsGroup style={{ padding: 20 }}>{getThemes({ variant: 'link' })}</ElementsGroup>
     </>
@@ -83,6 +84,9 @@ storiesOf('@mantine/core/Button', module)
         {getThemes({ variant: 'outline', disabled: true })}
       </ElementsGroup>
       <ElementsGroup style={{ padding: 20 }}>
+        {getThemes({ variant: 'light', disabled: true })}
+      </ElementsGroup>
+      <ElementsGroup style={{ padding: 20 }}>
         {getThemes({ variant: 'link', disabled: true })}
       </ElementsGroup>
     </>
@@ -122,6 +126,9 @@ storiesOf('@mantine/core/Button', module)
     <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
       <ElementsGroup style={{ padding: 20 }}>
         {getThemes({ themeOverride: { colorScheme: 'dark' } })}
+      </ElementsGroup>
+      <ElementsGroup style={{ padding: 20 }}>
+        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'light' })}
       </ElementsGroup>
       <ElementsGroup style={{ padding: 20 }}>
         {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'outline' })}

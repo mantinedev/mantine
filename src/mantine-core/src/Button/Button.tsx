@@ -5,7 +5,7 @@ import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '@mantine/theme';
 import { ComponentPassThrough } from '@mantine/types';
-import useStyles, { ButtonVariant, heights } from './Button.styles';
+import useStyles, { heights } from './Button.styles';
 
 export const BUTTON_SIZES = heights;
 
@@ -32,7 +32,7 @@ interface ButtonBaseProps extends DefaultProps {
   radius?: MantineNumberSize;
 
   /** Controls button appearance */
-  variant?: ButtonVariant;
+  variant?: 'link' | 'filled' | 'outline' | 'light';
 }
 
 export function Button<
