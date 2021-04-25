@@ -17,6 +17,7 @@ import {
 } from '../demos/core/Badge/badge.demos';
 import { BadgeSizesDemo } from '../demos/core/Badge/badge-sizes.demo';
 import { BadgeSectionsDemo } from '../demos/core/Badge/badge-sections.demo';
+import { BadgeRadiusDemo } from '../demos/core/Badge/badge-radius.demo';
 
 # Badge
 
@@ -78,6 +79,18 @@ import { BADGE_SIZES } from '@mantine/core';
   head={['Prop value', 'Badge height']}
   data={Object.keys(BADGE_SIZES).map((size) => [size, `${BADGE_SIZES[size]}px`])}
 />
+
+## Radius
+
+xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
+Alternatively you can use number to set radius in px:
+
+```tsx
+<Badge radius="lg" /> // -> theme predefined large radius
+<Badge radius={1000} /> // -> { borderRadius: 1000 }
+```
+
+<BadgeRadiusDemo />
 
 ## Full width and overflow
 

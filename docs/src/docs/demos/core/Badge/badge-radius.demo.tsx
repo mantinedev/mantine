@@ -3,13 +3,13 @@ import { Badge, ElementsGroup } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const getSizes = (props?: any) =>
-  ['xs', 'sm', 'md', 'lg', 'xl'].reverse().map((size) => (
-    <Badge key={size} size={size} {...props}>
-      {size} size
+  ['xs', 'sm', 'md', 'lg', 'xl'].map((radius) => (
+    <Badge key={radius} radius={radius} {...props}>
+      {radius} radius
     </Badge>
   ));
 
-export function BadgeSizesDemo() {
+export function BadgeRadiusDemo() {
   return (
     <CodeDemo>
       <ElementsGroup>{getSizes()}</ElementsGroup>
