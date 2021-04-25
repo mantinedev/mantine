@@ -31,6 +31,7 @@ export function Progress({
   radius = 'sm',
   striped = false,
   themeOverride,
+  'aria-label': ariaLabel,
   ...others
 }: ProgressProps) {
   const classes = useStyles({
@@ -49,6 +50,7 @@ export function Progress({
         aria-valuemax={100}
         aria-valuemin={0}
         aria-valuenow={value}
+        aria-label={ariaLabel}
         className={classes.bar}
         style={{ width: `${value}%` }}
       />

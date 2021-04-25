@@ -83,6 +83,12 @@ Alternatively you can use number to set radius in px:
 - Progress bar element has `aria-valuenow` attribute with current value
 - `aria-valuemin` and `aria-valuemax` attributes are always set to 0 and 100 as component does not support other values
 
+Provide aria-label attribute to label progress:
+
+```tsx
+<Progress aria-label="Uploading progress" value={10} />
+```
+
 ## Component props
 
 <PropsTable component="Progress" />

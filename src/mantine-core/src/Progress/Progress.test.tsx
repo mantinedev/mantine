@@ -12,7 +12,7 @@ describe('@mantine/core/Progress', () => {
   itSupportsClassName(Progress, { value: 80 });
   itSupportsStyle(Progress, { value: 80 });
   itSupportsOthers(Progress, { value: 80 });
-  checkAccessibility([mount(<Progress value={80} />)]);
+  checkAccessibility([mount(<Progress value={80} aria-label="test-progress" />)]);
 
   it('has correct displayName', () => {
     expect(Progress.displayName).toEqual('@mantine/core/Progress');
