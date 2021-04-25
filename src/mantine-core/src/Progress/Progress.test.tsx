@@ -22,4 +22,11 @@ describe('@mantine/core/Progress', () => {
     const element = shallow(<Progress value={84} />);
     expect(element.render().find('[role=progressbar]').prop('style').width).toBe('84%');
   });
+
+  it('has correct aria attributes', () => {
+    const element = shallow(<Progress value={84} />);
+    expect(element.render().find('[role=progressbar]').attr('aria-valuenow')).toBe('84');
+    expect(element.render().find('[role=progressbar]').attr('aria-valuemin')).toBe('0');
+    expect(element.render().find('[role=progressbar]').attr('aria-valuemax')).toBe('100');
+  });
 });

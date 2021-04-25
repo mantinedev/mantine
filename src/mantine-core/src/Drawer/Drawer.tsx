@@ -142,7 +142,9 @@ export function Drawer({
             style={{ ...styles.drawer, zIndex: zIndex + 1 }}
             radius={0}
             tabIndex={-1}
-            onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}
+            onKeyDownCapture={(event) =>
+              event.nativeEvent.code === 'Escape' && !noCloseOnEscape && onClose()
+            }
             shadow={shadow}
             padding={padding}
             themeOverride={themeOverride}

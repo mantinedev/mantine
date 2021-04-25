@@ -1,11 +1,27 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { itSupportsClassName, itSupportsRef, itSupportsStyle } from '@mantine/tests';
+import { shallow, mount } from 'enzyme';
+import {
+  itSupportsClassName,
+  itSupportsRef,
+  itSupportsStyle,
+  checkAccessibility,
+} from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { TextInput } from './TextInput';
 
 describe('@mantine/core/Input', () => {
+  beforeAll(() => {
+    // JSDom does not implement this and an error was being
+    // thrown from jest-axe because of it.
+    window.getComputedStyle = jest.fn();
+  });
+
+  checkAccessibility([
+    mount(<TextInput label="test-input" />),
+    mount(<TextInput aria-label="test-input" />),
+  ]);
+
   itSupportsClassName(TextInput, {});
   itSupportsRef(TextInput, {}, HTMLInputElement, 'elementRef');
   itSupportsStyle(TextInput, {});

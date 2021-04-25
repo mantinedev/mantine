@@ -16,7 +16,17 @@ const TEST_DATA = [
 ];
 
 describe('@mantine/core/Select', () => {
-  checkAccessibility([mount(<Select data={TEST_DATA} label="test-label" />)]);
+  beforeAll(() => {
+    // JSDom does not implement this and an error was being
+    // thrown from jest-axe because of it.
+    window.getComputedStyle = jest.fn();
+  });
+
+  checkAccessibility([
+    mount(<Select data={TEST_DATA} label="test-label" />),
+    mount(<Select data={TEST_DATA} aria-label="test-label" />),
+  ]);
+
   itSupportsClassName(Select, { data: TEST_DATA });
   itSupportsStyle(Select, { data: TEST_DATA });
   itSupportsRef(Select, { data: TEST_DATA }, HTMLSelectElement, 'elementRef');

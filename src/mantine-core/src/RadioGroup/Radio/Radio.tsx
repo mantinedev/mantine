@@ -17,7 +17,7 @@ interface RadioProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   /** Predefined label fontSize, radio width, height and border-radius */
   size?: MantineSize;
 
-  /** Get element ref */
+  /** Get input ref */
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 

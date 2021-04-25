@@ -49,7 +49,6 @@ export function Progress({
         aria-valuemax={100}
         aria-valuemin={0}
         aria-valuenow={value}
-        aria-label={`${value}%`}
         className={classes.bar}
         style={{ width: `${value}%` }}
       />
