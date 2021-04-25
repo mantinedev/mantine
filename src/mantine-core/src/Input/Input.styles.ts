@@ -36,7 +36,7 @@ export default createUseStyles({
       },
     },
 
-    '& $invalid': {
+    '&$invalid $input': {
       borderColor: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
     },
 
@@ -58,7 +58,6 @@ export default createUseStyles({
       border: '1px solid transparent',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[1],
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      transition: 'border-color 100ms ease, box-shadow 100ms ease',
 
       '&:focus': {
         outline: 'none',

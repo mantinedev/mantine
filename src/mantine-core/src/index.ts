@@ -25,6 +25,7 @@ export { LoadingOverlay } from './LoadingOverlay/LoadingOverlay';
 export { Menu, MenuItem, MenuBody, MENU_SIZES } from './Menu/Menu';
 export { Modal, MODAL_SIZES } from './Modal/Modal';
 export { Notification } from './Notification/Notification';
+export { NumberInput } from './NumberInput/NumberInput';
 export { Overlay } from './Overlay/Overlay';
 export { Paper } from './Paper/Paper';
 export { PasswordInput } from './PasswordInput/PasswordInput';
