@@ -2,6 +2,7 @@ import { createUseStyles } from 'react-jss';
 import {
   MantineTheme,
   MantineSize,
+  MantineNumberSize,
   getFontStyles,
   getThemeColor,
   getFocusStyles,
@@ -12,6 +13,7 @@ interface BadgeStylesProps {
   color: string;
   theme: MantineTheme;
   size: MantineSize;
+  radius: MantineNumberSize;
   fullWidth: boolean;
 }
 
@@ -58,7 +60,7 @@ export default createUseStyles({
     textOverflow: 'ellipsis',
   },
 
-  badge: ({ theme, size, fullWidth }: BadgeStylesProps) => {
+  badge: ({ theme, size, fullWidth, radius }: BadgeStylesProps) => {
     const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
     return {
       ...getFocusStyles(theme),
@@ -75,7 +77,7 @@ export default createUseStyles({
       justifyContent: 'center',
       width: fullWidth ? '100%' : 'auto',
       textTransform: 'uppercase',
-      borderRadius: 100,
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       fontWeight: 700,
       letterSpacing: 0.25,
       cursor: 'default',

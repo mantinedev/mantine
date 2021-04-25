@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineSize } from '@mantine/theme';
+import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '@mantine/theme';
 import { ComponentPassThrough } from '@mantine/types';
 import useStyles, { heights } from './Badge.styles';
 
@@ -15,6 +15,9 @@ interface BadgeProps extends DefaultProps {
 
   /** Defines badge height and font-size */
   size?: MantineSize;
+
+  /** Predefined border-radius value from theme.radius or number for border-radius in px */
+  radius?: MantineNumberSize;
 
   /** Sets badge width to 100% of parent element, hides overflow text with text-overflow: ellipsis */
   fullWidth?: boolean;
@@ -37,6 +40,7 @@ export function Badge<T extends React.ElementType = 'div'>({
   size = 'md',
   leftSection,
   rightSection,
+  radius = 'xl',
   ...others
 }: ComponentPassThrough<T, BadgeProps>) {
   const classes = useStyles({
@@ -44,6 +48,7 @@ export function Badge<T extends React.ElementType = 'div'>({
     fullWidth,
     variant,
     color,
+    radius,
     theme: useMantineTheme(themeOverride),
   });
 
