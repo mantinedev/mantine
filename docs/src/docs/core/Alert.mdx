@@ -7,6 +7,7 @@ slug: /core/alert/
 
 import { AlertConfigurator } from '../demos/core/Alert/alert.configurator';
 import { AlertBaseDemo } from '../demos/core/Alert/alert.demos';
+import { AlertTitleDemo } from '../demos/core/Alert/alert-title.demo';
 
 # Alert
 
@@ -27,20 +28,19 @@ Alert is designed to be static, if you need more dynamic variant use <GatsbyLink
 
 <AlertBaseDemo />
 
-## Color and title props
+## Title
 
-You can choose any color defined in <GatsbyLink to="/page/theming">theme</GatsbyLink>. By default Alert will have `theme.primaryColor` color.
+Component has optional title, set it with `title` prop:
+
+<AlertTitleDemo />
+
+## Color
+
+You can choose any color defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink>. By default Alert will have `theme.primaryColor` color.
 
 ```tsx
 <Alert /> // -> theme.primaryColor (defaults to blue)
 <Alert color="red" /> // -> red color
-```
-
-If you pass `title` prop high contrast title will be rendered.
-
-```tsx
-<Alert title="Bummer!" /> // -> with title
-<Alert /> // -> no title, just body
 ```
 
 <AlertConfigurator />

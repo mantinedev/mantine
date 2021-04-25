@@ -9,7 +9,7 @@ import { Kbd } from '@mantine/core';
 
 function Demo() {
   const rightSection = (
-    <div style={{ pointerEvents: 'none', display: 'flex', alignItems: 'center' }}>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       <Kbd>Ctrl</Kbd>
       <span style={{ margin: '0 5px' }}>+</span>
       <Kbd>K</Kbd>
@@ -22,6 +22,7 @@ function Demo() {
       icon={<MagnifyingGlassIcon />}
       rightSectionWidth={90}
       rightSection={rightSection}
+      rightSectionProps={{ style: { pointerEvents: 'none' } }}
     />
   );
 }`;
@@ -30,7 +31,7 @@ export function KbdInputDemo() {
   const theme = useMantineTheme();
 
   const rightSection = (
-    <div style={{ pointerEvents: 'none', display: 'flex', alignItems: 'center' }}>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       <Kbd>Ctrl</Kbd>
       <span style={{ margin: '0 5px' }}>+</span>
       <Kbd>K</Kbd>
@@ -49,6 +50,7 @@ export function KbdInputDemo() {
           icon={<MagnifyingGlassIcon />}
           rightSectionWidth={90}
           rightSection={rightSection}
+          rightSectionProps={{ style: { pointerEvents: 'none' } }}
         />
       </div>
     </CodeDemo>

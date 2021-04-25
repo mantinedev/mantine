@@ -17,7 +17,9 @@ export function ActionIconColorsDemo() {
   return (
     <CodeDemo>
       <ElementsGroup position="center">{getColors({ variant: 'hover' })}</ElementsGroup>
+      <ElementsGroup position="center">{getColors({ variant: 'light' })}</ElementsGroup>
       <ElementsGroup position="center">{getColors({ variant: 'filled' })}</ElementsGroup>
+      <ElementsGroup position="center">{getColors({ variant: 'outline' })}</ElementsGroup>
     </CodeDemo>
   );
 }

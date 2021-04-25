@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Text } from '@mantine/core';
+import { Alert } from '@mantine/core';
 import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -8,21 +8,17 @@ import { Alert } from '@mantine/core';
 
 function Demo() {
   return (
-    <Alert color="red" title="Something went wrong">
-      Application crashed, try refreshing the page, 
-      if it does not help please contact our support
-      
-      <br /><br />
-      
-      Error message:
-      <Text color="red" size="sm">
-        undefined is not a function
-      </Text>
-    </Alert>
+    <>
+      <Alert color="red" title="Something went wrong">
+        Alert with title
+      </Alert>
+
+      <Alert color="red">Alert without title</Alert>
+    </>
   );
 }`;
 
-export function AlertBaseDemo() {
+export function AlertTitleDemo() {
   const theme = useMantineTheme();
 
   return (
@@ -35,12 +31,11 @@ export function AlertBaseDemo() {
         <Alert color="red" title="Something went wrong">
           Application crashed, try refreshing the page, if it does not help please contact our
           support
-          <br />
-          <br />
-          Error message:
-          <Text color="red" size="sm">
-            undefined is not a function
-          </Text>
+        </Alert>
+
+        <Alert color="red" style={{ marginTop: 15 }}>
+          Application crashed, try refreshing the page, if it does not help please contact our
+          support
         </Alert>
       </div>
     </CodeDemo>

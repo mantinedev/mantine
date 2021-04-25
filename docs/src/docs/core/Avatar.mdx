@@ -13,6 +13,8 @@ import {
   AvatarLettersPlaceholderDemo,
 } from '../demos/core/Avatar/avatar.demos';
 import { AvatarConfigurator } from '../demos/core/Avatar/avatar.configurator';
+import { AvatarRadiusDemo } from '../demos/core/Avatar/avatar-radius.demo';
+import { AvatarSizesDemo } from '../demos/core/Avatar/avatar-sizes.demo';
 
 # Avatar
 
@@ -28,7 +30,7 @@ import { Avatar } from '@mantine/core';
 
 ## Usage
 
-Use Avatar to display user profile image, initials or fallback icon
+Use Avatar to display user profile image, initials or fallback icon.
 
 <AvatarRootDemo />
 
@@ -42,6 +44,8 @@ Alternatively you can use number to set radius in px:
 <Avatar radius={1000} /> // -> { borderRadius: 1000 }
 ```
 
+<AvatarRadiusDemo />
+
 ## Size
 
 Avatar has predefined sizes: xs, sm, md, lg, xl.
@@ -52,7 +56,11 @@ You can pass size as number and it will be set as width and height in px.
 <Avatar size={50} /> // -> { width: 50, height: 50 }
 ```
 
-You can get default sizes for Avatar by importing `AVATAR_SIZES`:
+Predefined avatar sizes from xs to xl:
+
+<AvatarSizesDemo />
+
+You can get predefined Avatar sizes by importing `AVATAR_SIZES`:
 
 ```tsx
 import { AVATAR_SIZES } from '@mantine/core';
@@ -85,11 +93,19 @@ You can choose any color defined in <GatsbyLink to="/pages/theming/">theme</Gats
 
 <AvatarLettersPlaceholderDemo />
 
-## Component props
-
-<PropsTable component="Avatar" />
-
 ## Accessibility
 
 Avatar renders img html element. It is important to add alt text.
 In case of image load failing alt will be used as `title` for placeholder.
+
+```tsx
+// alt is used as alt img attribute
+<Avatar src={image} alt="Rob Johnson" />
+
+// alt is used as title attribute
+<Avatar alt="Rob Johnson">RJ</Avatar>
+```
+
+## Component props
+
+<PropsTable component="Avatar" />

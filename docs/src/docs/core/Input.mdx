@@ -29,7 +29,8 @@ import { Input } from '@mantine/core';
 Input component is used as base for all other inputs (<GatsbyLink to="/core/select">Select</GatsbyLink>, <GatsbyLink to="/core/select">TextInput</GatsbyLink>, <GatsbyLink to="/core/select">Textarea</GatsbyLink> and others).
 The single purpose of Input is to provide shared styles and features to other inputs.
 Use other components listed above to build forms (as they provide better accessibility)
-and Input as base for your own custom inputs with Mantine theme.
+and Input component as base for your own custom inputs with Mantine theme.
+See <GatsbyLink to="/guides/inputs/">guide on inputs</GatsbyLink> to learn how to build custom inputs with this component.
 
 <InputConfigurator />
 
@@ -74,7 +75,7 @@ You can get input ref by passing `elementRef` prop to Input component:
 import React, { useRef } from 'react';
 import { Input } from '@mantine/core';
 
-function InputDemo() {
+function Demo() {
   const ref = useRef(null);
   return <Input elementRef={ref} />;
 }
@@ -82,25 +83,24 @@ function InputDemo() {
 
 ## TypeScript
 
-Usage of some props with custom component in TypeScript require type specification.
-Input component is a generic and you can pass 2 types to enhance type support:
+You need to pass additional types to use custom component with TypeScript
+in case you need full type coverage for events and `elementRef`:
 
 ```tsx
-// Custom element button
 <Input<'button', HTMLButtonElement>
   component="button"
-  onClick={(event) => {}} // -> event will now have correct types
-  elementRef={(node) => {}} // node type is set to HTMLButtonElement
+  onClick={(event) => console.log(event)}
+  elementRef={(node) => {
+    window.myRef = node;
+  }}
 />
-```
 
-Usually it is not necessary to pass types and you can avoid it by setting types directly on callbacks:
-
-```tsx
-<Button
-  component="button"
-  onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {}}
-  elementRef={(node: HTMLButtonElement) => {}}
+<Input<typeof YourTextarea, HTMLTextareaElement>
+  component={YourTextarea}
+  onClick={(event) => console.log(event)}
+  elementRef={(node) => {
+    window.myRef = node;
+  }}
 />
 ```
 

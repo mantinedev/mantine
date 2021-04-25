@@ -31,7 +31,13 @@ import { ActionIcon } from '@mantine/core';
 ## Usage
 
 You can use any React node as icon by passing it as a child to ActionIcon component.
-Note that component **does not control icon size** and you need to specify it manually on icon component for better fit.
+Note that component **does not control icon size** and you need to specify it manually on icon component for better fit:
+
+```tsx
+<ActionIcon>
+  <YourIcon style={{ width: 16, height: 16 }} />
+</ActionIcon>
+```
 
 You can use icons from any react icons library, for example:
 
@@ -118,7 +124,7 @@ You can get button ref by passing `elementRef` prop to ActionIcon component:
 import React, { useRef } from 'react';
 import { ActionIcon } from '@mantine/core';
 
-function ActionIconDemo() {
+function Demo() {
   const ref = useRef();
   return <ActionIcon elementRef={ref} />;
 }
@@ -127,8 +133,20 @@ function ActionIconDemo() {
 ## Accessibility
 
 ActionIcon renders a regular button element.
-Make sure to include `title` and `aria-label` props for screen reader support
+Make sure to include `title` or `aria-label` props for screen reader support
 as by design element does not have text content.
+
+```tsx
+// Title will show message on hover and announce control with screen reader
+<ActionIcon title="Settings">
+  <GearIcon />
+</ActionIcon>
+
+// aria-label will only announce control with screen reader
+<ActionIcon aria-label="Settings">
+  <GearIcon />
+</ActionIcon>
+```
 
 ## Component props
 
