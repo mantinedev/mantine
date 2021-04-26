@@ -39,6 +39,9 @@ interface TooltipProps extends DefaultProps, React.ComponentPropsWithoutRef<'div
   /** Tooltip z-index */
   zIndex?: number;
 
+  /** Tooltip width in px or auto */
+  width?: number | 'auto';
+
   /** Customize mount/unmount transition */
   transition?: MantineTransition;
 
@@ -57,7 +60,7 @@ export function Tooltip({
   opened,
   delay = 0,
   gutter = 5,
-  color,
+  color = 'gray',
   disabled = false,
   noArrow = false,
   position = 'top',
@@ -66,8 +69,10 @@ export function Tooltip({
   transitionDuration = 100,
   zIndex = 1000,
   transitionTimingFunction,
+  width = 'auto',
 }: TooltipProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride), color, gutter });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme, color, gutter });
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
   const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
@@ -98,7 +103,7 @@ export function Tooltip({
       >
         {(transitionStyles) => (
           <div
-            style={{ zIndex }}
+            style={{ zIndex, width }}
             className={cx(classes.tooltip, classes[placement], classes[position], {
               [classes.withArrow]: !noArrow,
             })}
@@ -109,6 +114,7 @@ export function Tooltip({
           </div>
         )}
       </Transition>
+
       <div onMouseEnter={handleOpen} onMouseLeave={handleClose}>
         {children}
       </div>

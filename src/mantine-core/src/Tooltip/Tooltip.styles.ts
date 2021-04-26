@@ -10,7 +10,7 @@ interface TooltipStylesProps {
 const verticalPlacement = {
   '&$center': {
     left: '50%',
-    transform: 'translateX(-50%) !important',
+    transform: 'translateX(-50%)',
   },
 
   '&$end': {
@@ -45,22 +45,23 @@ export default createUseStyles({
 
   wrapper: {
     position: 'relative',
-    background: 'red',
     display: 'inline-block',
   },
 
   tooltipInner: ({ theme, color }: TooltipStylesProps) => ({
     ...getFontStyles(theme),
-    backgroundColor: getThemeColor({ theme, color, shade: 9 }),
+    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
     lineHeight: theme.lineHeight,
     fontSize: theme.fontSizes.sm,
     borderRadius: theme.radius.sm,
-    padding: [1, theme.spacing.xs],
-    color: theme.white,
+    padding: [theme.spacing.xs / 2, theme.spacing.xs],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
   }),
 
   tooltip: {
+    display: 'inline-block',
     position: 'absolute',
+    pointerEvents: 'none',
   },
 
   top: ({ gutter }: TooltipStylesProps) => ({
