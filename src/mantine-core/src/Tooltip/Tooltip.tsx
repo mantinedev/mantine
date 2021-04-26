@@ -98,12 +98,14 @@ export function Tooltip({
       >
         {(transitionStyles) => (
           <div
+            style={{ zIndex }}
             className={cx(classes.tooltip, classes[placement], classes[position], {
               [classes.withArrow]: !noArrow,
             })}
-            style={{ ...transitionStyles, zIndex }}
           >
-            {label}
+            <div className={classes.tooltipInner} style={{ ...transitionStyles }}>
+              {label}
+            </div>
           </div>
         )}
       </Transition>
