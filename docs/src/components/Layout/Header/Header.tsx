@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'gatsby';
-import { Burger, Code, ActionIcon } from '@mantine/core';
+import { Burger, Code, ActionIcon, Tooltip } from '@mantine/core';
 import {
   GitHubLogoIcon,
   ChatBubbleIcon,
@@ -80,19 +80,25 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
           <span className={classes.linkLabel}>Report issue</span>
         </a>
 
-        <ActionIcon
-          className={classes.themeToggle}
-          variant="outline"
-          color={dark ? 'yellow' : 'blue'}
-          onClick={() => colorSchemeContext.onChange(dark ? 'light' : 'dark')}
-          title={`${isMacOS ? '⌘' : 'Ctrl'} + J – toggle theme`}
+        <Tooltip
+          label={`${isMacOS ? '⌘' : 'Ctrl'} + J`}
+          position="left"
+          placement="start"
+          transition="fade"
         >
-          {dark ? (
-            <SunIcon style={{ width: 18, height: 18 }} />
-          ) : (
-            <MoonIcon style={{ width: 18, height: 18 }} />
-          )}
-        </ActionIcon>
+          <ActionIcon
+            className={classes.themeToggle}
+            variant="outline"
+            color={dark ? 'yellow' : 'blue'}
+            onClick={() => colorSchemeContext.onChange(dark ? 'light' : 'dark')}
+          >
+            {dark ? (
+              <SunIcon style={{ width: 18, height: 18 }} />
+            ) : (
+              <MoonIcon style={{ width: 18, height: 18 }} />
+            )}
+          </ActionIcon>
+        </Tooltip>
       </div>
     </div>
   );
