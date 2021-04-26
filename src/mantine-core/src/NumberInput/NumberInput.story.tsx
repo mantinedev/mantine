@@ -14,9 +14,18 @@ storiesOf('@mantine/core/NumberInput', module)
       <Wrapper max={10} step={0.2} precision={2} min={-10} placeholder="Number input" />
       <Wrapper
         style={{ marginTop: 15 }}
+        disabled
+        max={10}
+        step={0.2}
+        precision={2}
+        min={-10}
+        placeholder="Number input"
+      />
+      <Wrapper
+        style={{ marginTop: 15 }}
         variant="filled"
         max={10}
-        step={1}
+        step={3}
         min={-10}
         placeholder="Number input"
       />

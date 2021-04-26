@@ -30,7 +30,7 @@ export default createUseStyles({
     backgroundColor: 'transparent',
     marginRight: 1,
 
-    '&:hover': {
+    '&:not(:disabled):hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     },
 
@@ -58,6 +58,10 @@ export default createUseStyles({
         'transparent',
       ],
     },
+
+    '&:disabled::after': {
+      borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
+    },
   }),
 
   controlDown: ({ theme, radius }: NumberInputStylesProps) => ({
@@ -72,6 +76,10 @@ export default createUseStyles({
         'transparent',
         'transparent',
       ],
+    },
+
+    '&:disabled::after': {
+      borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
     },
   }),
 });

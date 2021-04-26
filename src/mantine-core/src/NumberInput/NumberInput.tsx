@@ -29,6 +29,7 @@ export function NumberInput({
   max,
   step = 1,
   onBlur,
+  onFocus,
   hideControls = false,
   radius = 'sm',
   variant,
@@ -37,14 +38,14 @@ export function NumberInput({
 }: NumberInputProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, radius });
+  const [focused, setFocused] = useState(false);
   const [tempValue, setTempValue] = useState(
     typeof value === 'number' ? value.toFixed(precision) : ''
   );
-  const [valid, setValid] = useState(true);
   const inputRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
-    if (typeof value === 'number') {
+    if (typeof value === 'number' && !focused) {
       setTempValue(value.toFixed(precision));
     }
   }, [value]);
@@ -55,24 +56,30 @@ export function NumberInput({
         type="button"
         tabIndex={-1}
         aria-hidden
+        data-mantine-increment
         onMouseDown={(event) => {
           event.preventDefault();
-          onChange(value + step);
+          const result = Math.min(value + step, max);
+          onChange(result);
+          setTempValue(result.toFixed(precision));
           inputRef.current.focus();
         }}
-        disabled={value + step > max}
+        disabled={value >= max}
         className={cx(classes.control, classes.controlUp)}
       />
       <button
         type="button"
         tabIndex={-1}
         aria-hidden
+        data-mantine-decrement
         onMouseDown={(event) => {
           event.preventDefault();
-          onChange(value - step);
+          const result = Math.max(value - step, min);
+          onChange(result);
+          setTempValue(result.toFixed(precision));
           inputRef.current.focus();
         }}
-        disabled={value - step < min}
+        disabled={value <= min}
         className={cx(classes.control, classes.controlDown)}
       />
     </div>
@@ -100,16 +107,19 @@ export function NumberInput({
     const { isValid, parsed } = validate(val);
 
     if (isValid) {
-      onChange(parsed);
-      setValid(true);
-    } else {
-      setValid(false);
+      val.trim() !== '' && onChange(parsed);
     }
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     setTempValue(value.toFixed(precision));
+    setFocused(false);
     typeof onBlur === 'function' && onBlur(event);
+  };
+
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    setFocused(true);
+    typeof onFocus === 'function' && onBlur(event);
   };
 
   return (
@@ -123,10 +133,10 @@ export function NumberInput({
       type="number"
       onChange={handleChange}
       onBlur={handleBlur}
+      onFocus={handleFocus}
       rightSection={disabled || hideControls || variant === 'unstyled' ? null : rightSection}
       rightSectionWidth={CONTROL_WIDTH + 1}
       radius={radius}
-      error={!valid}
       max={max}
       min={min}
       step={step}
