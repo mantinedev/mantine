@@ -5,13 +5,22 @@ import { NumberInput } from './NumberInput';
 
 function Wrapper(props: Omit<React.ComponentProps<typeof NumberInput>, 'value' | 'onChange'>) {
   const [value, setValue] = useState(0);
-  return <NumberInput value={value} onChange={setValue} {...props} />;
+  return <NumberInput value={value} onChange={(val) => setValue(val)} {...props} />;
 }
 
 storiesOf('@mantine/core/NumberInput', module)
   .add('General usage', () => (
     <div style={{ maxWidth: 400, padding: 20 }}>
       <Wrapper max={10} step={0.2} precision={2} min={-10} placeholder="Number input" />
+      <NumberInput
+        max={10}
+        step={0.2}
+        precision={2}
+        min={-10}
+        label="Uncontrolled"
+        placeholder="Uncontrolled"
+        style={{ marginTop: 15 }}
+      />
       <Wrapper
         style={{ marginTop: 15 }}
         disabled

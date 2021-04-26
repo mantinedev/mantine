@@ -10,13 +10,14 @@ interface NumberInputProps
     React.ComponentPropsWithoutRef<typeof TextInput>,
     'rightSection' | 'rightSectionProps' | 'rightSectionWidth' | 'onChange' | 'value'
   > {
-  onChange(value: number): void;
+  onChange?(value: number): void;
   value?: number;
   max?: number;
   min?: number;
   step?: number;
   hideControls?: boolean;
   precision?: number;
+  defaultValue?: number;
 }
 
 export function NumberInput({
@@ -34,18 +35,29 @@ export function NumberInput({
   radius = 'sm',
   variant,
   precision = 0,
+  defaultValue,
   ...others
 }: NumberInputProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, radius });
   const [focused, setFocused] = useState(false);
+  const [_value, setValue] = useState(
+    typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : null
+  );
+  const finalValue = typeof value === 'number' ? value : _value;
   const [tempValue, setTempValue] = useState(
-    typeof value === 'number' ? value.toFixed(precision) : ''
+    typeof finalValue === 'number' ? finalValue.toFixed(precision) : ''
   );
   const inputRef = useRef<HTMLInputElement>();
+  const handleValueChange = (val: number) => {
+    // console.log(val);
+    typeof onChange === 'function' && onChange(val);
+    setValue(val);
+  };
 
   useEffect(() => {
     if (typeof value === 'number' && !focused) {
+      setValue(value);
       setTempValue(value.toFixed(precision));
     }
   }, [value]);
@@ -59,12 +71,15 @@ export function NumberInput({
         data-mantine-increment
         onMouseDown={(event) => {
           event.preventDefault();
-          const result = Math.min(value + step, max);
-          onChange(result);
-          setTempValue(result.toFixed(precision));
+          const result = Math.min(
+            finalValue + step,
+            typeof max === 'number' ? max : Infinity
+          ).toFixed(precision);
+          handleValueChange(parseFloat(result));
+          setTempValue(result);
           inputRef.current.focus();
         }}
-        disabled={value >= max}
+        disabled={finalValue >= max}
         className={cx(classes.control, classes.controlUp)}
       />
       <button
@@ -74,12 +89,15 @@ export function NumberInput({
         data-mantine-decrement
         onMouseDown={(event) => {
           event.preventDefault();
-          const result = Math.max(value - step, min);
-          onChange(result);
-          setTempValue(result.toFixed(precision));
+          const result = Math.max(
+            finalValue - step,
+            typeof min === 'number' ? min : -Infinity
+          ).toFixed(precision);
+          handleValueChange(parseFloat(result));
+          setTempValue(result);
           inputRef.current.focus();
         }}
-        disabled={value <= min}
+        disabled={finalValue <= min}
         className={cx(classes.control, classes.controlDown)}
       />
     </div>
@@ -107,12 +125,12 @@ export function NumberInput({
     const { isValid, parsed } = validate(val);
 
     if (isValid) {
-      val.trim() !== '' && onChange(parsed);
+      val.trim() !== '' && handleValueChange(parsed);
     }
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    setTempValue(value.toFixed(precision));
+    setTempValue(finalValue.toFixed(precision));
     setFocused(false);
     typeof onBlur === 'function' && onBlur(event);
   };
