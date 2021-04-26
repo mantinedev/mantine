@@ -10,13 +10,28 @@ interface NumberInputProps
     React.ComponentPropsWithoutRef<typeof TextInput>,
     'rightSection' | 'rightSectionProps' | 'rightSectionWidth' | 'onChange' | 'value'
   > {
+  /** onChange input handler for controlled variant, note that input event is not exposed */
   onChange?(value: number): void;
+
+  /** Input value for controlled variant */
   value?: number;
+
+  /** Maximum possible value */
   max?: number;
+
+  /** Minimal possible value */
   min?: number;
+
+  /** Number by which value will be incremented/decremented with controls and up/down arrows */
   step?: number;
+
+  /** Removes increment/decrement controls */
   hideControls?: boolean;
+
+  /** Amount of digits after the decimal point  */
   precision?: number;
+
+  /** Default value for uncontrolled variant only */
   defaultValue?: number;
 }
 
