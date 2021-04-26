@@ -42,6 +42,9 @@ interface TooltipProps extends DefaultProps, React.ComponentPropsWithoutRef<'div
   /** Tooltip width in px or auto */
   width?: number | 'auto';
 
+  /** Allow multiline tooltip content */
+  wrapLines?: boolean;
+
   /** Customize mount/unmount transition */
   transition?: MantineTransition;
 
@@ -70,6 +73,8 @@ export function Tooltip({
   zIndex = 1000,
   transitionTimingFunction,
   width = 'auto',
+  wrapLines = false,
+  ...others
 }: TooltipProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, color, gutter });
@@ -94,7 +99,7 @@ export function Tooltip({
   };
 
   return (
-    <div className={cx(classes.wrapper, className)}>
+    <div className={cx(classes.wrapper, className)} {...others}>
       <Transition
         mounted={visible}
         transition={transition}
@@ -108,7 +113,10 @@ export function Tooltip({
               [classes.withArrow]: !noArrow,
             })}
           >
-            <div className={classes.tooltipInner} style={{ ...transitionStyles }}>
+            <div
+              className={classes.tooltipInner}
+              style={{ ...transitionStyles, whiteSpace: wrapLines ? 'normal' : 'nowrap' }}
+            >
               {label}
             </div>
           </div>
