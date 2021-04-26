@@ -1,0 +1,103 @@
+---
+package: mantine-core
+title: NumberInput
+order: 1
+slug: /core/number-input/
+---
+
+import { NumberInputConfigurator } from '../demos/core/NumberInput/number-input.configurator';
+import { NumberInputControls } from '../demos/core/NumberInput/number-input-controls.demo';
+import { NumberInputBoundariesDemo } from '../demos/core/NumberInput/number-input-boundaries.demo';
+
+# NumberInput
+
+<PageHeader
+  source="mantine-core/src/NumberInput/NumberInput.tsx"
+  docs="core/NumberInput.mdx"
+  package="@mantine/core"
+/>
+
+```tsx
+import { NumberInput } from '@mantine/core';
+```
+
+## Usage
+
+NumberInput is based on <GatsbyLink to="/core/text-input">TextInput</GatsbyLink>
+and supports the same props, except `rightSection`. See full information about shared inputs props in <GatsbyLink to="/guides/inputs/">inputs guide</GatsbyLink>.
+
+<NumberInputConfigurator />
+
+## Clamp on blur
+
+Component has internal state to manage user input, when blur event is triggered
+internal value is clamped with given min and max values and `onChange` handler is called with result.
+
+For example, if you put `123` or `-20` in age input in next example, values will be clamped on blur: `123 -> 120`, `-20 -> 0`.
+If you want to disable this behavior set `noClampOnBlur` prop:
+
+```tsx
+<NumberInput noClampOnBlur />
+```
+
+## Min, max and step
+
+Min and max values define upper and lower value which may be entered.
+When user clicks controls or presses up/down arrows value is incremented/decremented by step:
+
+<NumberInputBoundariesDemo />
+
+## Remove controls
+
+Controls are not rendered in these cases:
+
+- `hideControls` prop is set to true
+- Input is disabled
+- `variant` prop is set to unstyled
+
+<NumberInputControls />
+
+## Controlled
+
+Unlike other Mantine inputs NumberInput does not expose input event in onChange handler, it provides value instead.
+
+```tsx
+import React, { useState } from 'react';
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(0);
+  return <NumberInput value={value} onChange={(val) => setValue(val)} />;
+}
+```
+
+## Get element ref
+
+You can get input ref with `elementRef` prop:
+
+```tsx
+import React, { useRef } from 'react';
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef(null);
+  return <NumberInput elementRef={ref} />;
+}
+```
+
+## Accessibility
+
+NumberInput renders regular input with `type="number"`.
+Increment/decrement controls have `aria-hidden` attribute and cannot be focused.
+
+Provide `aria-label` in case you use component without label for screen reader support:
+
+```tsx
+<NumberInput label="My input" />; // -> ok, input and label is connected
+<NumberInput />; // not ok, input is not labeled
+<NumberInput aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
+```
+
+## Component props
+
+<PropsTable component="NumberInput" />
