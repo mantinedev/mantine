@@ -69,6 +69,12 @@ export function NumberInput({
     typeof onChange === 'function' && onChange(val);
     setValue(val);
   };
+  const _min = typeof min === 'number' ? min : -Infinity;
+  const _max = typeof max === 'number' ? max : Infinity;
+  const clamp = (v: string | number) => {
+    const val = typeof v === 'number' ? v : parseFloat(v);
+    return Math.min(Math.max(val, _min), _max);
+  };
 
   useEffect(() => {
     if (typeof value === 'number' && !focused) {
@@ -86,10 +92,7 @@ export function NumberInput({
         data-mantine-increment
         onMouseDown={(event) => {
           event.preventDefault();
-          const result = Math.min(
-            finalValue + step,
-            typeof max === 'number' ? max : Infinity
-          ).toFixed(precision);
+          const result = clamp(finalValue + step).toFixed(precision);
           handleValueChange(parseFloat(result));
           setTempValue(result);
           inputRef.current.focus();
@@ -104,10 +107,7 @@ export function NumberInput({
         data-mantine-decrement
         onMouseDown={(event) => {
           event.preventDefault();
-          const result = Math.max(
-            finalValue - step,
-            typeof min === 'number' ? min : -Infinity
-          ).toFixed(precision);
+          const result = clamp(finalValue - step).toFixed(precision);
           handleValueChange(parseFloat(result));
           setTempValue(result);
           inputRef.current.focus();
@@ -145,7 +145,9 @@ export function NumberInput({
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    setTempValue(finalValue.toFixed(precision));
+    const val = clamp(event.currentTarget.value);
+    setTempValue(val.toFixed(precision));
+    handleValueChange(val);
     setFocused(false);
     typeof onBlur === 'function' && onBlur(event);
   };
