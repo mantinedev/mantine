@@ -16,6 +16,7 @@ interface NumberInputProps
   min?: number;
   step?: number;
   hideControls?: boolean;
+  precision?: number;
 }
 
 export function NumberInput({
@@ -31,17 +32,20 @@ export function NumberInput({
   hideControls = false,
   radius = 'sm',
   variant,
+  precision = 0,
   ...others
 }: NumberInputProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, radius });
-  const [tempValue, setTempValue] = useState(typeof value === 'number' ? value.toString() : '');
+  const [tempValue, setTempValue] = useState(
+    typeof value === 'number' ? value.toFixed(precision) : ''
+  );
   const [valid, setValid] = useState(true);
   const inputRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
     if (typeof value === 'number') {
-      setTempValue(value.toString());
+      setTempValue(value.toFixed(precision));
     }
   }, [value]);
 
@@ -104,7 +108,7 @@ export function NumberInput({
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    setTempValue(value.toString());
+    setTempValue(value.toFixed(precision));
     typeof onBlur === 'function' && onBlur(event);
   };
 

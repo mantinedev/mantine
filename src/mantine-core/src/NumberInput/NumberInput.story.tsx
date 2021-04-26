@@ -11,7 +11,7 @@ function Wrapper(props: Omit<React.ComponentProps<typeof NumberInput>, 'value' |
 storiesOf('@mantine/core/NumberInput', module)
   .add('General usage', () => (
     <div style={{ maxWidth: 400, padding: 20 }}>
-      <Wrapper max={10} step={1} min={-10} placeholder="Number input" />
+      <Wrapper max={10} step={0.2} precision={2} min={-10} placeholder="Number input" />
       <Wrapper
         style={{ marginTop: 15 }}
         variant="filled"
