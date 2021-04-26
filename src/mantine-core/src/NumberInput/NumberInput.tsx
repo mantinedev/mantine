@@ -33,6 +33,9 @@ interface NumberInputProps
 
   /** Default value for uncontrolled variant only */
   defaultValue?: number;
+
+  /** Prevent value clamp on blur */
+  noClampOnBlur?: boolean;
 }
 
 export function NumberInput({
@@ -51,6 +54,7 @@ export function NumberInput({
   variant,
   precision = 0,
   defaultValue,
+  noClampOnBlur = false,
   ...others
 }: NumberInputProps) {
   const theme = useMantineTheme(themeOverride);
@@ -130,9 +134,11 @@ export function NumberInput({
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const val = clamp(event.currentTarget.value);
 
-    if (!Number.isNaN) {
-      setTempValue(val.toFixed(precision));
-      handleValueChange(val);
+    if (!Number.isNaN(val)) {
+      if (!noClampOnBlur) {
+        setTempValue(val.toFixed(precision));
+        handleValueChange(val);
+      }
     } else {
       setTempValue(finalValue.toFixed(precision));
     }
