@@ -69,6 +69,7 @@ export function NumberInput({
     typeof onChange === 'function' && onChange(val);
     setValue(val);
   };
+
   const _min = typeof min === 'number' ? min : -Infinity;
   const _max = typeof max === 'number' ? max : Infinity;
   const clamp = (v: string | number) => {
@@ -118,36 +119,24 @@ export function NumberInput({
     </div>
   );
 
-  const validate = (val: string) => {
-    const parsed = Number(val);
-    let isValid = !Number.isNaN(parsed);
-
-    if (typeof min === 'number' && parsed < min) {
-      isValid = false;
-    }
-
-    if (typeof max === 'number' && parsed > max) {
-      isValid = false;
-    }
-
-    return { isValid, parsed };
-  };
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.currentTarget.value;
     setTempValue(val);
 
-    const { isValid, parsed } = validate(val);
-
-    if (isValid) {
-      val.trim() !== '' && handleValueChange(parsed);
-    }
+    const parsed = Number(val);
+    val.trim() !== '' && !Number.isNaN(parsed) && handleValueChange(parsed);
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const val = clamp(event.currentTarget.value);
-    setTempValue(val.toFixed(precision));
-    handleValueChange(val);
+
+    if (!Number.isNaN) {
+      setTempValue(val.toFixed(precision));
+      handleValueChange(val);
+    } else {
+      setTempValue(finalValue.toFixed(precision));
+    }
+
     setFocused(false);
     typeof onBlur === 'function' && onBlur(event);
   };
