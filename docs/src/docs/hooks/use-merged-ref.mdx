@@ -23,14 +23,13 @@ import { useMergedRef } from '@mantine/hooks';
 
 Hook accepts any amount of refs and returns function that should be passed to dom node.
 Use hook when you need to use more than one ref on single dom node, for example,
-when you want to use <GatsbyLink to="/hooks/use-click-outside/">use-click-outside</GatsbyLink> and <a href="https://www.npmjs.com/package/@charlietango/use-focus-trap" target="_blank">use-focus-trap</a> hooks and also get a ref for yourself:
+when you want to use <GatsbyLink to="/hooks/use-click-outside/">use-click-outside</GatsbyLink> and <GatsbyLink to="/hooks/use-focus-trap/">use-focus-trap</GatsbyLink> hooks and also get a ref for yourself:
 
 ```tsx
 import React, { useRef } from 'react';
-import { useClickOutside, useMergedRef } from '@mantine/hooks';
-import useFocusTrap from '@charlietango/use-focus-trap';
+import { useClickOutside, useFocusTrap, useMergedRef } from '@mantine/hooks';
 
-function Example() {
+function Demo() {
   const myRef = useRef();
   const useClickOutsideRef = useClickOutside(() => {});
   const focusTrapRef = useFocusTrap();

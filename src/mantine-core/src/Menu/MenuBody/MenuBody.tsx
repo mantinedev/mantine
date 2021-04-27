@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import cx from 'clsx';
-import useFocusTrap from '@charlietango/use-focus-trap';
-import { useReducedMotion, useClickOutside } from '@mantine/hooks';
+import { useReducedMotion, useClickOutside, useFocusTrap } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';

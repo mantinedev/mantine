@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react';
 import cx from 'clsx';
-import useFocusTrap from '@charlietango/use-focus-trap';
-import { useClickOutside, useScrollLock, useMergedRef, useReducedMotion } from '@mantine/hooks';
+import {
+  useClickOutside,
+  useScrollLock,
+  useMergedRef,
+  useReducedMotion,
+  useFocusTrap,
+} from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';

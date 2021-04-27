@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
-import useFocusTrap from '@charlietango/use-focus-trap';
+import { useFocusTrap } from '@mantine/hooks';
 import { TextInput, Text, Badge } from '@mantine/core';
 import { MantineThemeOverride, useMantineTheme } from '@mantine/theme';
 import { TagPickerColor, TagPickerTag } from '../types';

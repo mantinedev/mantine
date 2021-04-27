@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { useId, useMergedRef, useClickOutside } from '@mantine/hooks';
+import { useId, useMergedRef, useClickOutside, useFocusTrap } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/theme';
-import useFocusTrap from '@charlietango/use-focus-trap';
 import {
   InputWrapper,
   Input,

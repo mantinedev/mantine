@@ -1,9 +1,14 @@
 import React from 'react';
 import cx from 'clsx';
 import { Cross1Icon } from '@modulz/radix-icons';
-import useFocusTrap from '@charlietango/use-focus-trap';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import { useClickOutside, useReducedMotion, useId, useScrollLock } from '@mantine/hooks';
+import {
+  useClickOutside,
+  useReducedMotion,
+  useId,
+  useScrollLock,
+  useFocusTrap,
+} from '@mantine/hooks';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
