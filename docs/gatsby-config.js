@@ -1,4 +1,3 @@
-const OpenColor = require('open-color');
 const remarkSlug = require('remark-slug');
 
 module.exports = {
@@ -48,8 +47,8 @@ module.exports = {
         name: 'Mantine Docs',
         short_name: 'mantine',
         start_url: '/',
-        background_color: OpenColor.blue[6],
-        theme_color: OpenColor.blue[6],
+        background_color: '#228be6',
+        theme_color: '#228be6',
         display: 'minimal-ui',
         icon: 'src/images/favicon.svg',
       },
@@ -58,7 +57,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-nprogress',
       options: {
-        color: OpenColor.blue[6],
+        color: '#228be6',
         showSpinner: false,
       },
     },

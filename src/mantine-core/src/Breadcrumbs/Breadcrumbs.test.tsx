@@ -6,7 +6,6 @@ import {
   itSupportsOthers,
   itSupportsStyle,
 } from '@mantine/tests';
-import { nanoid } from 'nanoid';
 import { Text } from '../Text/Text';
 import { Breadcrumbs } from './Breadcrumbs';
 
@@ -15,7 +14,7 @@ const items = [
   { title: 'Mantine hooks', href: 'https://mantine.dev/hooks/getting-started' },
   { title: 'use-id', href: 'https://mantine.dev/hooks/use-id' },
 ].map((item) => (
-  <Text<'a'> variant="link" component="a" href={item.href} key={nanoid()}>
+  <Text<'a'> variant="link" component="a" href={item.href} key={item.title}>
     {item.title}
   </Text>
 ));

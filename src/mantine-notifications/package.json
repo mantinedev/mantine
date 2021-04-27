@@ -17,7 +17,6 @@
   "dependencies": {
     "clsx": "^1.1.1",
     "nanoid": "^3.1.20",
-    "open-color": "^1.8.0",
     "react-transition-group": "^4.4.1"
   },
   "devDependencies": {}

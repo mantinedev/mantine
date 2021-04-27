@@ -1,54 +1,12 @@
-import OpenColor from 'open-color';
 import { MantineTheme } from './types';
-
-const {
-  gray,
-  red,
-  pink,
-  grape,
-  violet,
-  indigo,
-  blue,
-  cyan,
-  teal,
-  green,
-  lime,
-  yellow,
-  orange,
-} = OpenColor as any;
+import colors from './colors';
 
 export const DEFAULT_THEME: MantineTheme = {
   colorScheme: 'light',
   white: '#fff',
   black: '#000',
   transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21)',
-  colors: {
-    dark: [
-      '#d5d7e0',
-      '#acaebf',
-      '#8c8fa3',
-      '#666980',
-      '#4d4f66',
-      '#34354a',
-      '#2b2c3d',
-      '#1d1e30',
-      '#0c0d21',
-      '#01010a',
-    ],
-    gray,
-    red,
-    pink,
-    grape,
-    violet,
-    indigo,
-    blue,
-    cyan,
-    teal,
-    green,
-    lime,
-    yellow,
-    orange,
-  },
+  colors,
   lineHeight: 1.4,
   fontFamily:
     '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',

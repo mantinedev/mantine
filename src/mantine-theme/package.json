@@ -11,8 +11,6 @@
     "react-dom": ">=16.8.0",
     "react-jss": ">=10.1.1"
   },
-  "dependencies": {
-    "open-color": "^1.8.0"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }
