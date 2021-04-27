@@ -14,7 +14,6 @@ export default createUseStyles(
       fontFamily: 'Menlo, Monaco, Courier, monospace',
       lineHeight: 1.7,
       fontSize: 13,
-      paddingRight: 500,
       overflowX: 'auto',
       borderRadius: theme.radius.sm,
       padding: [theme.spacing.md, theme.spacing.lg],
