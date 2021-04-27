@@ -14,7 +14,6 @@
     "react-jss": ">=10.1.1"
   },
   "dependencies": {
-    "@modulz/radix-icons": "^4.0.0",
     "clsx": "^1.1.1",
     "open-color": "^1.8.0",
     "react-textarea-autosize": "^8.3.0",

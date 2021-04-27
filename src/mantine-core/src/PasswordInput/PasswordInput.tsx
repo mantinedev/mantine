@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
-import { EyeOpenIcon, EyeClosedIcon } from '@modulz/radix-icons';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { TextInput } from '../TextInput/TextInput';
+import { PasswordToggleIcon } from './PasswordToggleIcon';
 
 interface PasswordInputProps
   extends Omit<
@@ -47,7 +47,7 @@ export function PasswordInput({
       aria-label={reveal ? hidePasswordLabel : showPasswordLabel}
       radius={radius}
     >
-      {reveal ? <EyeClosedIcon /> : <EyeOpenIcon />}
+      <PasswordToggleIcon reveal={reveal} />
     </ActionIcon>
   );
 

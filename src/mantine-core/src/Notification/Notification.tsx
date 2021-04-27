@@ -1,11 +1,11 @@
 import React from 'react';
 import cx from 'clsx';
-import { Cross2Icon } from '@modulz/radix-icons';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { Paper } from '../Paper/Paper';
 import { Text } from '../Text/Text';
 import { Loader } from '../Loader/Loader';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
+import { CloseIcon } from '../Modal/CloseIcon';
 import useStyles from './Notification.styles';
 
 interface NotificationProps
@@ -98,7 +98,7 @@ export function Notification({
           onClick={onClose}
           themeOverride={themeOverride}
         >
-          <Cross2Icon />
+          <CloseIcon />
         </ActionIcon>
       )}
     </Paper>

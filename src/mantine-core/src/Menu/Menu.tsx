@@ -1,9 +1,9 @@
 import React, { useState, useRef, cloneElement } from 'react';
-import { DotsHorizontalIcon } from '@modulz/radix-icons';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { useId, useClickOutside, useMergedRef } from '@mantine/hooks';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { MantineTransition } from '../Transition/Transition';
+import { MenuIcon } from './MenuIcon';
 import { MenuBody } from './MenuBody/MenuBody';
 import { sizes } from './MenuBody/MenuBody.styles';
 import { MenuItem } from './MenuItem/MenuItem';
@@ -76,7 +76,7 @@ interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
 
 const defaultControl = (
   <ActionIcon>
-    <DotsHorizontalIcon />
+    <MenuIcon />
   </ActionIcon>
 );
 

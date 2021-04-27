@@ -1,8 +1,8 @@
 import React from 'react';
 import cx from 'clsx';
-import { CheckIcon, DividerHorizontalIcon } from '@modulz/radix-icons';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize } from '@mantine/theme';
+import { CheckboxIcon } from './CheckboxIcon';
 import useStyles, { sizes } from './Checkbox.styles';
 
 export const CHECKBOX_SIZES = sizes;
@@ -73,11 +73,7 @@ export function Checkbox({
           disabled={disabled}
           style={inputStyle}
         />
-        {intermediate ? (
-          <DividerHorizontalIcon className={classes.icon} />
-        ) : (
-          <CheckIcon className={classes.icon} />
-        )}
+        <CheckboxIcon intermediate={intermediate} className={classes.icon} />
       </div>
 
       {label && (

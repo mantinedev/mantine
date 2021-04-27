@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { QuoteIcon } from '@modulz/radix-icons';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
 interface BlockquoteProps
@@ -10,14 +10,14 @@ interface BlockquoteProps
   /** Border and icon color from theme */
   color?: string;
 
-  /** Icon, defaults to QuoteIcon from @modulz/radix-icons */
+  /** Icon, defaults to quote icon */
   icon?: React.ReactNode;
 
   /** Describe a reference to a cited quote */
   cite?: React.ReactNode;
 }
 
-const defaultIcon = <QuoteIcon style={{ width: 20, height: 20 }} />;
+const defaultIcon = <QuoteIcon />;
 
 export function Blockquote({
   className,

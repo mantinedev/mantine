@@ -1,9 +1,9 @@
 import React from 'react';
-import { ChevronDownIcon } from '@modulz/radix-icons';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input, InputProps } from '../Input/Input';
+import { ChevronIcon } from './ChevronIcon';
 
 interface SelectItem {
   value: string;
@@ -69,7 +69,7 @@ export function Select({
   }
 
   const chevron = (
-    <ChevronDownIcon style={{ color: error ? theme.colors.red[6] : theme.colors.gray[6] }} />
+    <ChevronIcon style={{ color: error ? theme.colors.red[6] : theme.colors.gray[6] }} />
   );
 
   return (

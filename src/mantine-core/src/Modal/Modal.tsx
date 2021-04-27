@@ -1,6 +1,5 @@
 import React from 'react';
 import cx from 'clsx';
-import { Cross1Icon } from '@modulz/radix-icons';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import {
   useClickOutside,
@@ -14,6 +13,7 @@ import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { GroupedTransition, MantineTransition } from '../Transition/Transition';
+import { CloseIcon } from './CloseIcon';
 import useStyles, { sizes } from './Modal.styles';
 
 export const MODAL_SIZES = sizes;
@@ -125,7 +125,7 @@ export function Modal({
 
                   {!hideCloseButton && (
                     <ActionIcon onClick={onClose} aria-label={closeButtonLabel}>
-                      <Cross1Icon />
+                      <CloseIcon />
                     </ActionIcon>
                   )}
                 </div>
