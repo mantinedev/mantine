@@ -45,6 +45,9 @@ interface TooltipProps extends DefaultProps, React.ComponentPropsWithoutRef<'div
   /** Allow multiline tooltip content */
   wrapLines?: boolean;
 
+  /** Allow pointer events on tooltip, warning: this may break some animations */
+  allowPointerEvents?: boolean;
+
   /** Customize mount/unmount transition */
   transition?: MantineTransition;
 
@@ -74,6 +77,7 @@ export function Tooltip({
   transitionTimingFunction,
   width = 'auto',
   wrapLines = false,
+  allowPointerEvents = false,
   ...others
 }: TooltipProps) {
   const theme = useMantineTheme(themeOverride);
@@ -108,12 +112,14 @@ export function Tooltip({
       >
         {(transitionStyles) => (
           <div
-            style={{ zIndex, width }}
+            style={{ zIndex, width, pointerEvents: allowPointerEvents ? 'all' : 'none' }}
+            data-mantine-tooltip
             className={cx(classes.tooltip, classes[placement], classes[position], {
               [classes.withArrow]: !noArrow,
             })}
           >
             <div
+              data-mantine-tooltip-inner
               className={classes.tooltipInner}
               style={{ ...transitionStyles, whiteSpace: wrapLines ? 'normal' : 'nowrap' }}
             >

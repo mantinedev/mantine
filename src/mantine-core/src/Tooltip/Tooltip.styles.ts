@@ -61,7 +61,6 @@ export default createUseStyles({
   tooltip: {
     display: 'inline-block',
     position: 'absolute',
-    pointerEvents: 'none',
   },
 
   top: ({ gutter }: TooltipStylesProps) => ({
