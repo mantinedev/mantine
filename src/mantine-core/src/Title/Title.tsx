@@ -9,7 +9,11 @@ interface TitleProps extends DefaultProps, React.ComponentPropsWithoutRef<'h1'> 
 }
 
 export function Title({ className, themeOverride, order = 1, children, ...others }: TitleProps) {
-  const element = `h${order}`;
+  if (![1, 2, 3, 4, 5, 6].includes(order)) {
+    return null;
+  }
+
+  const element = `h${order}` as const;
   const classes = useStyles({ theme: useMantineTheme(themeOverride), element });
 
   return React.createElement(

@@ -59,7 +59,6 @@ export function Button<
   elementRef?: React.ForwardedRef<U>;
 }) {
   const classes = useStyles({
-    variant,
     radius,
     color,
     size,

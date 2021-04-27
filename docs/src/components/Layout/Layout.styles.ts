@@ -7,6 +7,10 @@ import {
   TABLE_OF_CONTENTS_BREAKPOINT,
 } from '../TableOfContents/TableOfContents.styles';
 
+interface LayoutInnerStylesProps {
+  tableOfContents: boolean;
+}
+
 export default createUseStyles(
   (theme: MantineTheme) => ({
     '@global': {
@@ -28,7 +32,7 @@ export default createUseStyles(
       },
     },
 
-    layout: ({ tableOfContents }) => ({
+    layout: ({ tableOfContents }: LayoutInnerStylesProps) => ({
       paddingLeft: NAVBAR_WIDTH,
       paddingRight: tableOfContents ? TABLE_OF_CONTENTS_WIDTH : 0,
 

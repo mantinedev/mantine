@@ -11,6 +11,7 @@ interface BurgerStylesProps {
   size: MantineNumberSize;
   theme: MantineTheme;
   color: string;
+  reduceMotion: boolean;
 }
 
 export const sizes = {
@@ -36,7 +37,7 @@ export default createUseStyles({
     cursor: 'pointer',
   }),
 
-  burger: ({ size, theme, color }: BurgerStylesProps) => {
+  burger: ({ size, theme, color, reduceMotion }: BurgerStylesProps) => {
     const sizeValue = getSizeValue({ size, sizes });
 
     return {
@@ -55,8 +56,7 @@ export default createUseStyles({
         }),
         outline: '1px solid transparent',
         transitionProperty: 'background-color, transform',
-        transitionDuration: ({ reduceMotion }: { reduceMotion: boolean }) =>
-          reduceMotion ? '1ms' : '300ms',
+        transitionDuration: reduceMotion ? '0ms' : '300ms',
       },
 
       '&:before, &:after': {

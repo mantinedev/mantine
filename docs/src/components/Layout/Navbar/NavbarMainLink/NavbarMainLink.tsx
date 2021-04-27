@@ -22,7 +22,7 @@ export default function NavbarMainLink({
   color,
   onClick,
 }: NavbarMainLinkProps) {
-  const classes = useStyles({ color });
+  const classes = useStyles();
   const theme = useMantineTheme();
 
   return (

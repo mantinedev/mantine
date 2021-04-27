@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMergedRef } from '@mantine/hooks';
+import { useMergedRef, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { TabProps } from '../Tab/Tab';
 import useStyles from './TabControl.styles';
@@ -22,6 +22,7 @@ export function TabControl({
 }: TabControlProps) {
   const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
   const classes = useStyles({
+    reduceMotion: useReducedMotion(),
     color: overrideColor || color,
     theme: useMantineTheme(themeOverride),
   });

@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import { useReducedMotion } from '@mantine/hooks';
 import { ElementsGroup, ElementsGroupPosition } from '../ElementsGroup/ElementsGroup';
 import { Tab, TabType } from './Tab/Tab';
 import { TabControl } from './TabControl/TabControl';
@@ -76,11 +75,7 @@ export function Tabs({
   color,
   ...others
 }: TabsProps) {
-  const classes = useStyles({
-    position,
-    reduceMotion: useReducedMotion(),
-    theme: useMantineTheme(themeOverride),
-  });
+  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
 
   const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
 

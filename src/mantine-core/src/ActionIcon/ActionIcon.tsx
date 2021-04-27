@@ -37,7 +37,6 @@ export function ActionIcon({
   ...others
 }: ActionIconProps) {
   const classes = useStyles({
-    variant,
     size,
     radius,
     color,

@@ -46,7 +46,6 @@ export function Badge<T extends React.ElementType = 'div'>({
   const classes = useStyles({
     size,
     fullWidth,
-    variant,
     color,
     radius,
     theme: useMantineTheme(themeOverride),
