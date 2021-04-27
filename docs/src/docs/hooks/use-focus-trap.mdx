@@ -1,0 +1,101 @@
+---
+package: mantine-hooks
+title: 'use-focus-trap'
+order: 1
+slug: /hooks/use-focus-trap/
+---
+
+import { MenuBaseDemo } from '../demos/core/Menu/menu.root-demo';
+import { ModalBaseDemo } from '../demos/core/Modal/modal.base-demo';
+
+# use-focus-trap
+
+<PageHeader
+  source="mantine-hooks/src/use-focus-trap/use-focus-trap.ts"
+  docs="hooks/use-focus-trap.mdx"
+  package="@mantine/hooks"
+/>
+
+```tsx
+import { useFocusTrap } from '@mantine/hooks';
+```
+
+## Usage
+
+Use use-focus-trap hook to trap focus at given node, for example in modal, drawer or menu.
+Node must include at least one focusable element. When node unmounts, focus trap automatically disabled.
+
+```tsx
+import React from 'react';
+import { useFocusTrap } from '@mantine/hooks';
+
+function YourModal() {
+  const focusTrapRef = useFocusTrap();
+
+  return (
+    <div ref={focusTrapRef}>
+      <input />
+    </div>
+  );
+}
+```
+
+## API
+
+Hook accepts focus trap active state as single argument:
+
+```tsx
+useFocusTrap(); // -> focus trap inactive
+useFocusTrap(true); // -> focus trap active
+
+useFocusTrap(false); // -> focus trap disabled
+```
+
+Hook returns ref that should be passed to dom node:
+
+```tsx
+const focusTrapRef = useFocusTrap();
+
+// With regular element:
+<div ref={focusTrapRef} />
+
+// With Mantine component:
+<Paper elementRef={focusTrapRef} />
+```
+
+## Combine with other ref based hooks
+
+Usually focus trap is not used alone. To combine use-focus-trap hook with other ref based hooks use <GatsbyLink to="/hooks/use-merged-ref">use-merged-ref hook</GatsbyLink>:
+
+```tsx
+import React, { useRef } from 'react';
+import { useClickOutside, useFocusTrap, useMergedRef } from '@mantine/hooks';
+
+function Demo() {
+  const myRef = useRef();
+  const useClickOutsideRef = useClickOutside(() => {});
+  const focusTrapRef = useFocusTrap();
+  const mergedRef = useMergedRef(myRef, useClickOutsideRef, focusTrapRef);
+
+  return <div ref={mergedRef} />;
+}
+```
+
+## Examples
+
+use-focus-trap is used in some Mantine components: <GatsbyLink to="/core/modal/">Modal</GatsbyLink>, <GatsbyLink to="/core/drawer/">Drawer</GatsbyLink>, <GatsbyLink to="/core/menu/">Menu</GatsbyLink>, <GatsbyLink to="/others/tag-picker/">TagPicker</GatsbyLink> and others.
+
+<GatsbyLink to="/core/modal/">Modal</GatsbyLink> example – when modal is opened focus is trapped inside:
+
+<ModalBaseDemo hideCode />
+
+<GatsbyLink to="/core/menu/">Menu</GatsbyLink> example – when menu is opened focus is trapped inside
+and Tab key is disabled:
+
+<MenuBaseDemo hideCode />
+
+## Definition
+
+```tsx
+function useFocusTrap(active?: boolean): (instance: HTMLElement) => void;
+```

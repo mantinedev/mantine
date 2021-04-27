@@ -13,7 +13,7 @@ import { UseFormServerValidationDemo } from '../demos/hooks/use-form/use-form.se
 # use-form
 
 <PageHeader
-  source="mantine-hooks/src/hooks/use-form/use-form.ts"
+  source="mantine-hooks/src/use-form/use-form.ts"
   docs="hooks/use-id.mdx"
   package="@mantine/hooks"
 />
@@ -298,11 +298,11 @@ Submit form with `test@mantine.dev` email to see external validation error:
 ### Definition
 
 ```tsx
-useForm<T extends { [key: string]: any }>(configuration: {
-  initialValues: T,
+function useForm<T extends { [key: string]: any }>(configuration: {
+  initialValues: T;
   validationRules?: {
     [P in keyof T]?: (value: T[P]) => boolean;
-  }
+  };
 }): {
   values: T;
   errors: Record<keyof T, boolean>;
@@ -315,7 +315,7 @@ useForm<T extends { [key: string]: any }>(configuration: {
   setFieldError: (field: keyof T, error: boolean) => void;
   validateField: (field: keyof T) => void;
   onSubmit: (handleSubmit: (values: T) => any) => (event?: React.FormEvent) => void;
-}
+};
 ```
 
 ### Set values type

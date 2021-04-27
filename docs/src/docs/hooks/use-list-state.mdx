@@ -12,7 +12,7 @@ import { TransitionsTableDemo } from '../demos/examples/transactions-table.demo'
 # use-list-state
 
 <PageHeader
-  source="mantine-hooks/src/hooks/use-list-state/use-list-state.ts"
+  source="mantine-hooks/src/use-list-state/use-list-state.ts"
   docs="hooks/use-list-state.mdx"
   package="@mantine/hooks"
 />
@@ -100,17 +100,22 @@ Hook provides handlers to work with array data:
 ### Definition
 
 ```tsx
-useListState<T>(initialValue: T[] = []): [T[], {
-  setState: Dispatch<SetStateAction<T[]>>;
-  append: (...items: T[]) => void;
-  prepend: (...items: T[]) => void;
-  insert: (index: number, ...items: T[]) => void;
-  apply: (fn: (item: T, index?: number) => T) => void;
-  remove: (...indices: number[]) => void;
-  reorder: ({ from, to }: { from: number; to: number; }) => void;
-  setItem: (index: number, item: T) => void;
-  setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => void;
-}]
+function useListState<T>(
+  initialValue: T[] = []
+): [
+  T[],
+  {
+    setState: Dispatch<SetStateAction<T[]>>;
+    append: (...items: T[]) => void;
+    prepend: (...items: T[]) => void;
+    insert: (index: number, ...items: T[]) => void;
+    apply: (fn: (item: T, index?: number) => T) => void;
+    remove: (...indices: number[]) => void;
+    reorder: ({ from, to }: { from: number; to: number }) => void;
+    setItem: (index: number, item: T) => void;
+    setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => void;
+  }
+];
 ```
 
 ### Set item type

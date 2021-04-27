@@ -8,7 +8,7 @@ slug: /hooks/use-merged-ref/
 # use-merged-ref
 
 <PageHeader
-  source="mantine-hooks/src/hooks/use-merged-ref/use-merged-ref.ts"
+  source="mantine-hooks/src/use-merged-ref/use-merged-ref.ts"
   docs="hooks/use-merged-ref.mdx"
   package="@mantine/hooks"
 />
@@ -44,9 +44,7 @@ function Demo() {
 ### Definition
 
 ```tsx
-useMergedRef<T = any>(
-  ...refs: React.ForwardedRef<T>[]
-): (node: T) => void;
+function useMergedRef<T = any>(...refs: React.ForwardedRef<T>[]): (node: T) => void;
 ```
 
 ### Set node type

@@ -10,7 +10,7 @@ import { UseClickOutsideDemo } from '../demos/hooks/use-click-outside.demos';
 # use-click-outside
 
 <PageHeader
-  source="mantine-hooks/src/hooks/use-click-outside/use-click-outside.ts"
+  source="mantine-hooks/src/use-click-outside/use-click-outside.ts"
   docs="hooks/use-click-outside.mdx"
   package="@mantine/hooks"
 />
@@ -57,10 +57,10 @@ you can change these events by passing an array of events as second argument:
 ### Definition
 
 ```tsx
-useClickOutside<T extends HTMLElement = any>(
+function useClickOutside<T extends HTMLElement = any>(
   handler: () => void,
   events: string[] = ['mousedown', 'touchstart']
-): React.MutableRefObject<T>
+): React.MutableRefObject<T>;
 ```
 
 ### Ref type

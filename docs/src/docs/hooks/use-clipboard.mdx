@@ -10,7 +10,7 @@ import { UseClipboardDemo } from '../demos/hooks/use-clipboard.demos';
 # use-clipboard
 
 <PageHeader
-  source="mantine-hooks/src/hooks/use-clipboard/use-clipboard.ts"
+  source="mantine-hooks/src/use-clipboard/use-clipboard.ts"
   docs="hooks/use-clipboard.mdx"
   package="@mantine/hooks"
 />
@@ -38,12 +38,12 @@ Hook returns object with properties:
 ## Definition
 
 ```tsx
-useClipboard(
+function useClipboard(
   options: { timeout: number } = { timeout: 2000 }
 ): {
   copy: (valueToCopy: any) => void;
   reset: () => void;
   error: Error;
   copied: boolean;
-}
+};
 ```

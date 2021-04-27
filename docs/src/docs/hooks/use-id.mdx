@@ -8,7 +8,7 @@ slug: /hooks/use-id/
 # use-id
 
 <PageHeader
-  source="mantine-hooks/src/hooks/use-id/use-id.ts"
+  source="mantine-hooks/src/use-id/use-id.ts"
   docs="hooks/use-id.mdx"
   package="@mantine/hooks"
 />
@@ -57,8 +57,5 @@ Hook returns string value that is either `id` (if first argument is passed) or r
 ## Definition
 
 ```tsx
-useId(
-  id: string,
-  generateId: (size: number) => string = nanoid
-): string
+function useId(id: string, generateId: (size: number) => string = nanoid): string;
 ```

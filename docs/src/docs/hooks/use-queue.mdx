@@ -10,7 +10,7 @@ import { NotificationsCleanDemo } from '../demos/others/notifications/notificati
 # use-queue
 
 <PageHeader
-  source="mantine-hooks/src/hooks/use-queue/use-queue.ts"
+  source="mantine-hooks/src/use-queue/use-queue.ts"
   docs="hooks/use-queue.mdx"
   package="@mantine/hooks"
 />
@@ -119,7 +119,7 @@ q.add({ name: 'Bob', id: 1 });
 ### Definition
 
 ```tsx
-useQueue<T>(configuration: {
+function useQueue<T>(configuration: {
   initialValues?: T[];
   limit: number;
 }): {
@@ -128,7 +128,7 @@ useQueue<T>(configuration: {
   add: (...items: T[]) => void;
   update: (fn: (state: T[]) => T[]) => void;
   cleanQueue: () => void;
-}
+};
 ```
 
 ### Item type

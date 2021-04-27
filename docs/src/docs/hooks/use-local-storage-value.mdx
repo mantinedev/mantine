@@ -8,7 +8,7 @@ slug: /hooks/use-local-storage-value/
 # use-local-storage-value
 
 <PageHeader
-  source="mantine-hooks/src/hooks/use-local-storage-value/use-local-storage-value.ts"
+  source="mantine-hooks/src/use-local-storage-value/use-local-storage-value.ts"
   docs="hooks/use-local-storage-value.mdx"
   package="@mantine/hooks"
 />
@@ -76,10 +76,10 @@ You can test this feature by opening 2 tabs with Mantine docs side by side and c
 ### Definition
 
 ```tsx
-useLocalStorageValue<T extends string>(options: {
+function useLocalStorageValue<T extends string>(options: {
   key: string;
   defaultValue?: T;
-}): [T, (val: T | ((prevState: T) => T)) => void]
+}): [T, (val: T | ((prevState: T) => T)) => void];
 ```
 
 ### Set value type

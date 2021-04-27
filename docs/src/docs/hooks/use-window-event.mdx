@@ -8,7 +8,7 @@ slug: /hooks/use-window-event/
 # use-window-event
 
 <PageHeader
-  source="mantine-hooks/src/hooks/use-window-event/use-window-event.ts"
+  source="mantine-hooks/src/use-window-event/use-window-event.ts"
   docs="hooks/use-window-event.mdx"
   package="@mantine/hooks"
 />
@@ -64,7 +64,7 @@ function Search() {
 Hook has exact same definition as `window.addEventListener` function:
 
 ```tsx
-useWindowEvent<K extends keyof WindowEventMap>(
+function useWindowEvent<K extends keyof WindowEventMap>(
   type: K,
   listener: (this: Window, ev: WindowEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions

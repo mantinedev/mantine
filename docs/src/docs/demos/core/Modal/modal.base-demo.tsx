@@ -26,11 +26,11 @@ function Demo() {
   );
 }`;
 
-export function ModalBaseDemo() {
+export function ModalBaseDemo({ hideCode = false }: { hideCode: boolean }) {
   const [opened, setOpened] = useState(false);
 
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo code={!hideCode ? code : null} language="tsx">
       <Portal zIndex={10}>
         <Modal opened={opened} onClose={() => setOpened(false)} title="Introduce yourself!">
           <AuthenticationForm noShadow noPadding />

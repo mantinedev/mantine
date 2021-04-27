@@ -37,7 +37,7 @@ function Demo() {
 
 const iconSize = { width: 14, height: 14 };
 
-export function MenuBaseDemo() {
+export function MenuBaseDemo({ hideCode = false }: { hideCode: boolean }) {
   const rightSection = (
     <Text size="sm" color="gray">
       ⌘K
@@ -45,7 +45,7 @@ export function MenuBaseDemo() {
   );
 
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo code={hideCode ? null : code} language="tsx">
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Menu>
           <MenuItem icon={<GearIcon style={iconSize} />}>Settings</MenuItem>
