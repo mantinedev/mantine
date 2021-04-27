@@ -1,10 +1,9 @@
 import React from 'react';
-import { ElementsGroup, Button } from '@mantine/core';
-import { MantineProvider } from '@mantine/theme';
+import { ElementsGroup, Button, MantineProvider } from '@mantine/core';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Button } from '@mantine/core';
+import { Button, MantineProvider } from '@mantine/core';
 
 function PrimaryColorDemo() {
   return (

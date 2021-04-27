@@ -1,6 +1,5 @@
 import React from 'react';
-import { Input } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Input, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';

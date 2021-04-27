@@ -1,7 +1,6 @@
 import React from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
-import { Notification } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Notification, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';

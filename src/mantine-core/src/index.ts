@@ -1,3 +1,5 @@
+export * from '@mantine/theme';
+
 export type { InputProps } from './Input/Input';
 export type { InputWrapperBaseProps } from './InputWrapper/InputWrapper';
 

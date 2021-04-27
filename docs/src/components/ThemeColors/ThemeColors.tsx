@@ -1,6 +1,5 @@
 import React from 'react';
-import { ColorSwatch, Text, Title } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { ColorSwatch, Text, Title, useMantineTheme } from '@mantine/core';
 
 export function ThemeColors() {
   const theme = useMantineTheme();

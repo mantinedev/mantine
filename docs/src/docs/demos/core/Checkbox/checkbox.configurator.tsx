@@ -1,6 +1,5 @@
 import React from 'react';
-import { Checkbox } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Checkbox, useMantineTheme } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 const codeTemplate = (props: string) => `<Checkbox

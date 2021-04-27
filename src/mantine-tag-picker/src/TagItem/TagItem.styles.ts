@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFocusStyles } from '@mantine/theme';
+import { MantineTheme, getFocusStyles } from '@mantine/core';
 
 export default createUseStyles({
   item: {

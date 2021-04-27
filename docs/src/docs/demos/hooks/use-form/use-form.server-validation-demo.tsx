@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { TextInput, ElementsGroup, Button, LoadingOverlay } from '@mantine/core';
+import { TextInput, ElementsGroup, Button, LoadingOverlay, useMantineTheme } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
-import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';

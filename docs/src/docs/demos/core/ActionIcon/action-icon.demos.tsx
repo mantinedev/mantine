@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ActionIcon, Button, ElementsGroup, PasswordInput } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { ActionIcon, Button, ElementsGroup, PasswordInput, useMantineTheme } from '@mantine/core';
+
 import {
   GearIcon,
   ChatBubbleIcon,

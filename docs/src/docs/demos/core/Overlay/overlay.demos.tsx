@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ElementsGroup, Overlay, Text } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Button, ElementsGroup, Overlay, Text, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
@@ -55,8 +54,7 @@ export function OverlayBaseDemo() {
 }
 
 const linkCode = `import React from 'react';
-import { Overlay, ElementsGroup, Button } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Overlay, ElementsGroup, Button, useMantineTheme } from '@mantine/core';
 
 export function OverlayDemo() {
   const theme = useMantineTheme();

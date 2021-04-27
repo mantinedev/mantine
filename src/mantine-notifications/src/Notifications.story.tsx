@@ -1,8 +1,7 @@
 import React from 'react';
 import { CheckIcon } from '@modulz/radix-icons';
 import { storiesOf } from '@storybook/react';
-import { Button, ElementsGroup } from '@mantine/core';
-import { MantineProvider } from '@mantine/theme';
+import { Button, ElementsGroup, MantineProvider } from '@mantine/core';
 import { useNotifications } from './use-notifications/use-notifications';
 import { NotificationsProvider } from './NotificationsProvider/NotificationsProvider';
 

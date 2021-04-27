@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, ThemeIcon, Paper } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Text, ThemeIcon, Paper, useMantineTheme } from '@mantine/core';
 import data from './data';
 import useStyles from './Features.styles';
 

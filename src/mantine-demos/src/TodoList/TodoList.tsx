@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useListState } from '@mantine/hooks';
 import { Cross1Icon, PlusIcon } from '@modulz/radix-icons';
-import { Title, Text, Checkbox, TextInput, ActionIcon } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Title, Text, Checkbox, TextInput, ActionIcon, useMantineTheme } from '@mantine/core';
 
 interface TodoItem {
   value: string;

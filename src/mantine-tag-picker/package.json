@@ -9,7 +9,6 @@
   "peerDependencies": {
     "@mantine/core": "0.5.3",
     "@mantine/hooks": "0.5.3",
-    "@mantine/theme": "0.5.3",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "react-jss": ">=10.1.1"

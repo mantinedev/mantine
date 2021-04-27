@@ -1,6 +1,5 @@
 import React from 'react';
-import { InputWrapper, Input } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { InputWrapper, Input, useMantineTheme } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function InputWrapperWrapper(props: React.ComponentPropsWithoutRef<typeof InputWrapper>) {

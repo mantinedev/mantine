@@ -1,6 +1,5 @@
 import React from 'react';
-import { Alert } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Alert, useMantineTheme } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function AlertWrapper(props: React.ComponentPropsWithoutRef<typeof Alert>) {

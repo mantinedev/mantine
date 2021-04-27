@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps } from '@mantine/core';
 import { TagPickerTag, TagPickerColor } from './types';
 import TagPicker from './TagPicker/TagPicker';
 

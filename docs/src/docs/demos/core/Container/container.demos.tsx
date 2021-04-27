@@ -1,11 +1,9 @@
 import React from 'react';
-import { Container } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Container, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { useMantineTheme } from '@mantine/theme';
-import { Container } from '@mantine/core';
+import { Container, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();

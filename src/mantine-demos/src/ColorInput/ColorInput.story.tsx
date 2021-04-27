@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { useMantineTheme, MantineProvider, DEFAULT_THEME } from '@mantine/theme';
+import { useMantineTheme, MantineProvider, DEFAULT_THEME } from '@mantine/core';
 import { ColorInput } from './ColorInput';
 
 function Wrapper() {

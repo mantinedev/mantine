@@ -1,8 +1,13 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { DotsHorizontalIcon } from '@modulz/radix-icons';
-import { ActionIcon, Transition, Badge } from '@mantine/core';
-import { useMantineTheme, MantineThemeOverride } from '@mantine/theme';
+import {
+  ActionIcon,
+  Transition,
+  Badge,
+  useMantineTheme,
+  MantineThemeOverride,
+} from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 import { TagPickerColor, TagPickerTag } from '../types';
 import TagEdit from '../TagEdit/TagEdit';

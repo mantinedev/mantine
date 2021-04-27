@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles, getFocusStyles } from '@mantine/theme';
+import { MantineTheme, getFontStyles, getFocusStyles } from '@mantine/core';
 
 export default createUseStyles({
   disableOutsideEvents: {},

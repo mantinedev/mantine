@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Language } from 'prism-react-renderer';
-import { useMantineTheme } from '@mantine/theme';
+import { useMantineTheme, Paper, Button, ElementsGroup } from '@mantine/core';
 import { GitHubLogoIcon } from '@modulz/radix-icons';
-import { Paper, Button, ElementsGroup } from '@mantine/core';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import DocsSection from '../DocsSection/DocsSection';
 import useStyles from './CodeDemo.styles';

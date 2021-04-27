@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, theming } from '@mantine/theme';
+import { MantineTheme, theming } from '@mantine/core';
 
 const BREAKPOINT = 500;
 

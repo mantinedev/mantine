@@ -1,6 +1,5 @@
 import React from 'react';
-import { Kbd, TextInput } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Kbd, TextInput, useMantineTheme } from '@mantine/core';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 

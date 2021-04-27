@@ -1,6 +1,6 @@
 import React from 'react';
 import { TransactionsTable } from '@mantine/demos';
-import { useMantineTheme } from '@mantine/theme';
+import { useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 // @ts-ignore

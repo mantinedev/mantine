@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme } from '@mantine/core';
 import { HEADER_HEIGHT } from '../Layout/Header/Header.styles';
 
 export const TABLE_OF_CONTENTS_WIDTH = 260;

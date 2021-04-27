@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import cx from 'clsx';
-import { ThemeIcon } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { ThemeIcon, useMantineTheme } from '@mantine/core';
 import useStyles from './NavbarMainLink.styles';
 
 interface NavbarMainLinkProps {

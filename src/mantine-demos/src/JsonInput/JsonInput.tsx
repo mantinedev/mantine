@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Textarea } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Textarea, useMantineTheme } from '@mantine/core';
 
 interface JsonInputProps
   extends Omit<React.ComponentPropsWithoutRef<typeof Textarea>, 'error' | 'onChange'> {

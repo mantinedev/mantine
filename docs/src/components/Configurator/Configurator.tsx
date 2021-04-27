@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
-import { useMantineTheme } from '@mantine/theme';
+import { useMantineTheme } from '@mantine/core';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import DocsSection from '../DocsSection/DocsSection';
 import controls from './controls';

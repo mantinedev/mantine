@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme } from '@mantine/core';
 import { HEADER_HEIGHT } from '../Header/Header.styles';
 
 export const NAVBAR_WIDTH = 260;

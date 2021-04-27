@@ -1,6 +1,5 @@
 import React from 'react';
-import { PasswordInput } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { PasswordInput, useMantineTheme } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 const codeTemplate = (props: string) => `<PasswordInput

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Table, Text, Paper } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Table, Text, Paper, useMantineTheme } from '@mantine/core';
 import DocsSection from '../../DocsSection/DocsSection';
 import PROPS_DATA from '../../../../.docgen/docgen.json';
 

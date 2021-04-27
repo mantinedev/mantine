@@ -1,12 +1,10 @@
 import React from 'react';
-import { ThemeIcon, ElementsGroup } from '@mantine/core';
+import { ThemeIcon, ElementsGroup, useMantineTheme } from '@mantine/core';
 import { MixIcon, RocketIcon } from '@modulz/radix-icons';
-import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { ThemeIcon } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { ThemeIcon, useMantineTheme } from '@mantine/core';
 import { MixIcon, RocketIcon } from '@modulz/radix-icons';
 
 function Demo() {

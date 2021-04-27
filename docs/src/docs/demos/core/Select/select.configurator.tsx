@@ -1,6 +1,5 @@
 import React from 'react';
-import { Select } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Select, useMantineTheme } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 const data = [

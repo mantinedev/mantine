@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderHook } from '@testing-library/react-hooks';
-import { MantineProvider } from '@mantine/theme';
+import { MantineProvider } from '@mantine/core';
 import { useNotifications } from './use-notifications';
 import { NotificationsProvider } from '../NotificationsProvider/NotificationsProvider';
 

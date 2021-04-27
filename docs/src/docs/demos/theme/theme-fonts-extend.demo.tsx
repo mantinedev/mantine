@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import { ElementsGroup, Button, Code, Title } from '@mantine/core';
-import { MantineProvider } from '@mantine/theme';
+import { ElementsGroup, Button, Code, Title, MantineProvider } from '@mantine/core';
 import { ColorSchemeContext } from '../../../components/Layout/ColorScheme.context';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Button } from '@mantine/core';
+import { Button, MantineProvider } from '@mantine/core';
 
 function FontsExtendDemo() {
   return (

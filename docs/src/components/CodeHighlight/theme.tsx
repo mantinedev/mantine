@@ -1,5 +1,5 @@
 import { PrismTheme } from 'prism-react-renderer';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { DEFAULT_THEME } from '@mantine/core';
 
 export const theme: PrismTheme = {
   plain: {

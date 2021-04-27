@@ -1,7 +1,6 @@
 import React from 'react';
 import { CheckIcon } from '@modulz/radix-icons';
-import { Notification } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Notification, useMantineTheme } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function NotificationWrapper(props: React.ComponentPropsWithoutRef<typeof Notification>) {

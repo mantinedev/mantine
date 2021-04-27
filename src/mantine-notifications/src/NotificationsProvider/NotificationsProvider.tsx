@@ -1,8 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { Transition, TransitionGroup } from 'react-transition-group';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import { Portal } from '@mantine/core';
+import { DefaultProps, useMantineTheme, Portal } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 import { NotificationsContext } from '../Notifications.context';
 import { NotificationsProviderPositioning } from '../types';

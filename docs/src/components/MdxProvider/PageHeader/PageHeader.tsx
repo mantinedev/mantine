@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, ElementsGroup } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Button, ElementsGroup, useMantineTheme } from '@mantine/core';
 import { GitHubLogoIcon } from '@modulz/radix-icons';
 import NpmIcon from './NpmIcon';
 

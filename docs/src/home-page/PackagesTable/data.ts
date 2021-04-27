@@ -10,11 +10,6 @@ export default [
     link: '/hooks/getting-started/',
   },
   {
-    package: '@mantine/theme',
-    description: 'Customize and extends theme: colors, fonts, spacing and other properties',
-    link: '/pages/theming/',
-  },
-  {
     package: '@mantine/notifications',
     description: 'Notifications system',
     link: '/others/notifications/',

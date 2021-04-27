@@ -1,6 +1,5 @@
 import React from 'react';
-import { Select, TextInput, Switch } from '@mantine/core';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { Select, TextInput, Switch, DEFAULT_THEME } from '@mantine/core';
 
 function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);

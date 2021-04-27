@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { MantineProvider } from '@mantine/theme';
+import { MantineProvider } from '@mantine/core';
 import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
 import { ColorSchemeContext, ColorScheme } from './ColorScheme.context';
 import LayoutInner from './LayoutInner';

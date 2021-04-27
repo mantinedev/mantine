@@ -2,8 +2,7 @@ import React from 'react';
 import { nanoid } from 'nanoid';
 import { TrashIcon } from '@modulz/radix-icons';
 import { TagPicker } from '@mantine/tag-picker';
-import { DEFAULT_THEME } from '@mantine/theme';
-import { Paper, Table, ActionIcon, Text, TextInput, Button } from '@mantine/core';
+import { DEFAULT_THEME, Paper, Table, ActionIcon, Text, TextInput, Button } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import * as mockdata from './mockdata';
 

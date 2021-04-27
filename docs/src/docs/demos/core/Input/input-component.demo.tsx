@@ -1,7 +1,6 @@
 import React from 'react';
 import { ChevronDownIcon } from '@modulz/radix-icons';
-import { useMantineTheme } from '@mantine/theme';
-import { Input } from '@mantine/core';
+import { useMantineTheme, Input } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';

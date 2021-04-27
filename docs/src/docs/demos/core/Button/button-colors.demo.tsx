@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, ElementsGroup } from '@mantine/core';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { Button, ElementsGroup, DEFAULT_THEME } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const getThemes = (props?: any) =>

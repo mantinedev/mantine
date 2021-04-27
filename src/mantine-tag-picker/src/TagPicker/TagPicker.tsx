@@ -1,7 +1,6 @@
 import React from 'react';
 import { useClickOutside, useReducedMotion } from '@mantine/hooks';
-import { Paper, Transition, Badge } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Paper, Transition, Badge, useMantineTheme } from '@mantine/core';
 import TagsList, { TagsListProps } from '../TagsList/TagsList';
 import useStyles from './TagPicker.styles';
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
 import { useListState } from '@mantine/hooks';
-import { useMantineTheme } from '@mantine/theme';
-import { Checkbox } from '@mantine/core';
+import { useMantineTheme, Checkbox } from '@mantine/core';
 
 const initialValues = [
   { label: 'Receive email notifications', checked: false, key: nanoid() },

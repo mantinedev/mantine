@@ -2,9 +2,8 @@ import React from 'react';
 import cx from 'clsx';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import { ClipboardIcon, CheckIcon } from '@modulz/radix-icons';
-import { ActionIcon } from '@mantine/core';
+import { ActionIcon, useMantineTheme } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
-import { useMantineTheme } from '@mantine/theme';
 import { theme } from './theme';
 import useStyles from './CodeHighlight.styles';
 

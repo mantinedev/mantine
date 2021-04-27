@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, Badge } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Text, Badge, useMantineTheme } from '@mantine/core';
 import { BarChartIcon } from '@modulz/radix-icons';
 import DataTable from '../DataTable/DataTable';
 import DocsSection from '../../DocsSection/DocsSection';

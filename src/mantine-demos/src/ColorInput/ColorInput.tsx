@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useId, useMergedRef, useClickOutside, useFocusTrap } from '@mantine/hooks';
-import { useMantineTheme } from '@mantine/theme';
 import {
+  useMantineTheme,
   InputWrapper,
   Input,
   InputProps,

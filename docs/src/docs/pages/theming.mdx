@@ -17,7 +17,7 @@ By default all Mantine components use the default theme.
 You can extend and customize theme on top level with MantineProvider
 or on individual component level with theme override.
 
-<PageHeader source="mantine-theme/src/" docs="pages/theming.mdx" package="@mantine/theme" />
+<PageHeader source="mantine-theme/src/" docs="pages/theming.mdx" package="@mantine/core" />
 
 ## MantineProvider
 
@@ -26,8 +26,7 @@ It is not required if you decide to stick with default theme:
 
 ```tsx
 import React from 'react';
-import { MantineProvider } from '@mantine/theme';
-import { Button } from '@mantine/core';
+import { MantineProvider, Button } from '@mantine/core';
 
 function App() {
   return <Button>My app button</Button>;
@@ -55,7 +54,7 @@ Mantine theme is an object where your application's colors, fonts, spacing, bord
 Theme shape:
 
 ```tsx
-interface Theme {
+interface MantineTheme {
   colorScheme: 'light' | 'dark';
   white: string;
   black: string;
@@ -89,7 +88,7 @@ interface Theme {
 ## Default theme
 
 ```tsx
-import { DEFAULT_THEME } from '@mantine/theme';
+import { DEFAULT_THEME } from '@mantine/core';
 ```
 
 [View full default theme source on Github](https://github.com/mantinedev/mantine/blob/master/src/mantine-theme/src/default-theme.ts)
@@ -105,7 +104,7 @@ Theme is deeply merged, every property that is not specified will be taken from 
 
 ```tsx
 import React from 'react';
-import { MantineProvider } from '@mantine/theme';
+import { MantineProvider } from '@mantine/core';
 import { Button } from '@mantine/core';
 
 function YourApp() {
@@ -295,7 +294,7 @@ Hook returns theme from MantineProvider context or default theme
 if you did not wrap application with MantineProvider.
 
 ```tsx
-import { useMantineTheme } from '@mantine/theme';
+import { useMantineTheme } from '@mantine/core';
 
 function Component() {
   const theme = useMantineTheme();
@@ -310,7 +309,7 @@ If your application is wrapped with MantineProvider you can utilize theming cont
 ```tsx
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/theme';
+import { theming } from '@mantine/core';
 
 const useStyles = createUseStyles(
   (theme) => ({
@@ -334,7 +333,7 @@ This way will work in all cases no matter if you use MantineProvider or not.
 ```tsx
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { useMantineTheme } from '@mantine/theme';
+import { useMantineTheme } from '@mantine/core';
 
 const useStyles = createUseStyles({
   wrapper: ({ theme }) => ({
@@ -350,7 +349,7 @@ function YourComponent() {
 
 ### Utility functions
 
-@mantine/theme package has several utility function that will help you work with Mantine theme in jss.
+@mantine/core package has several utility function that will help you work with Mantine theme in jss.
 
 #### getFocusStyles
 
@@ -359,7 +358,7 @@ Focus styles are visible only when user navigates with keyboard.
 
 ```tsx
 import { createUseStyles } from 'react-jss';
-import { getFocusStyles, theming } from '@mantine/theme';
+import { getFocusStyles, theming } from '@mantine/core';
 
 createUseStyles(
   (theme) => ({
@@ -378,7 +377,7 @@ Returns font styles from theme with [font smoothing](https://developer.mozilla.o
 
 ```tsx
 import { createUseStyles } from 'react-jss';
-import { getFontStyles, theming } from '@mantine/theme';
+import { getFontStyles, theming } from '@mantine/core';
 
 createUseStyles(
   (theme) => ({
@@ -399,7 +398,7 @@ MantineTheme type in usually used in jss styles:
 
 ```tsx
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/theme';
+import { theming, MantineTheme } from '@mantine/core';
 
 createUseStyles(
   (theme: MantineTheme) => ({
@@ -413,7 +412,7 @@ createUseStyles(
 
 ### Other types
 
-@mantine/theme package exports these utility types for sizes:
+@mantine/core package exports these utility types for sizes:
 
 - **MantineSize** – `'xs' | 'sm' | 'md' | 'lg' | 'xl'`
 - **MantineNumberSize** – `MantineSize | number`

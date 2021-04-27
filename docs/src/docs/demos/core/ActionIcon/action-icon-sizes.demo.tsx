@@ -1,6 +1,5 @@
 import React from 'react';
-import { useMantineTheme } from '@mantine/theme';
-import { ActionIcon, ElementsGroup } from '@mantine/core';
+import { useMantineTheme, ActionIcon, ElementsGroup } from '@mantine/core';
 import { ImageIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 

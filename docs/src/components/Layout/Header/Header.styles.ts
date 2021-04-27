@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, getFocusStyles } from '@mantine/theme';
+import { theming, MantineTheme, getFocusStyles } from '@mantine/core';
 // eslint-disable-next-line import/no-cycle
 import { NAVBAR_BREAKPOINT } from '../Navbar/Navbar.styles';
 

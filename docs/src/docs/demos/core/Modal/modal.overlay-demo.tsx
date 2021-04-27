@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { Modal, Button, ElementsGroup, Portal } from '@mantine/core';
+import { Modal, Button, ElementsGroup, Portal, useMantineTheme } from '@mantine/core';
 import { AuthenticationForm } from '@mantine/demos';
-import { useMantineTheme } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
-import { Modal, Button, ElementsGroup } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Modal, Button, ElementsGroup, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);

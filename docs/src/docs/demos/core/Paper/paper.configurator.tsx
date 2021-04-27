@@ -1,6 +1,5 @@
 import React from 'react';
-import { Paper, Text } from '@mantine/core';
-import { useMantineTheme } from '@mantine/theme';
+import { Paper, Text, useMantineTheme } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function PaperWrapper(props: any) {

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Badge, Button, ActionIcon, ElementsGroup } from '@mantine/core';
+import { Badge, Button, ActionIcon, ElementsGroup, DEFAULT_THEME } from '@mantine/core';
 import { GearIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME } from '@mantine/theme';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
