@@ -61,7 +61,7 @@ interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'
   /** Removes overlay entirely */
   noOverlay?: boolean;
 
-  /** Sets overlay opacity */
+  /** Sets overlay opacity, defaults to 0.75 in light theme and to 0.85 in dark theme */
   overlayOpacity?: number;
 
   /** Sets overlay color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
@@ -91,7 +91,7 @@ export function Drawer({
   transitionTimingFunction = 'ease',
   zIndex = 1000,
   overlayColor,
-  overlayOpacity = 0.85,
+  overlayOpacity,
   children,
   noOverlay = false,
   shadow = 'md',
@@ -106,6 +106,12 @@ export function Drawer({
   const clickOutsideRef = useClickOutside(() => opened && !noCloseOnClickOutside && onClose());
 
   const drawerTransition = transition || transitions[position];
+  const _overlayOpacity =
+    typeof overlayOpacity === 'number'
+      ? overlayOpacity
+      : theme.colorScheme === 'dark'
+      ? 0.85
+      : 0.75;
 
   const closeOnEscape = (event: KeyboardEvent) => {
     if (noFocusTrap && event.code === 'Escape' && !noCloseOnEscape) {
@@ -160,12 +166,12 @@ export function Drawer({
           {!noOverlay && (
             <div style={styles.overlay}>
               <Overlay
+                opacity={_overlayOpacity}
+                zIndex={zIndex}
                 color={
                   overlayColor ||
                   (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
                 }
-                opacity={overlayOpacity}
-                zIndex={zIndex}
               />
             </div>
           )}

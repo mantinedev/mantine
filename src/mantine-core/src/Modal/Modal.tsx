@@ -37,11 +37,11 @@ interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   /** Hides close button, modal still can be closed with escape key and by clicking outside */
   hideCloseButton?: boolean;
 
-  /** Overlay below modal opacity */
-  overlayOpacity?: React.CSSProperties['opacity'];
+  /** Overlay below modal opacity, defaults to 0.75 in light theme and to 0.85 in dark theme */
+  overlayOpacity?: number;
 
   /** Overlay below modal color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
-  overlayColor?: React.CSSProperties['color'];
+  overlayColor?: string;
 
   /** Modal body width */
   size?: string | number;
@@ -53,7 +53,7 @@ interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
   transitionDuration?: number;
 
   /** Modal body transitionTimingFunction, defaults to theme.transitionTimingFunction */
-  transitionTimingFunction?: React.CSSProperties['color'];
+  transitionTimingFunction?: string;
 
   /** Close button aria-label and title attributes */
   closeButtonLabel?: string;
@@ -67,7 +67,7 @@ export function Modal({
   onClose,
   children,
   hideCloseButton = false,
-  overlayOpacity = 0.85,
+  overlayOpacity,
   size = 'md',
   transitionDuration = 300,
   closeButtonLabel,
@@ -79,13 +79,18 @@ export function Modal({
 }: ModalProps) {
   const titleId = useId();
   const bodyId = useId();
-
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ size, overflow, theme });
   const clickOutsideRef = useClickOutside(onClose);
   const focusTrapRef = useFocusTrap();
   const duration = reduceMotion ? 1 : transitionDuration;
+  const _overlayOpacity =
+    typeof overlayOpacity === 'number'
+      ? overlayOpacity
+      : theme.colorScheme === 'dark'
+      ? 0.85
+      : 0.75;
 
   useScrollLock(opened);
 
@@ -142,7 +147,7 @@ export function Modal({
               color={
                 overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
               }
-              opacity={overlayOpacity}
+              opacity={_overlayOpacity}
               zIndex={zIndex}
             />
           </div>
