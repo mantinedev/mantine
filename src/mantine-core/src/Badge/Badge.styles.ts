@@ -67,6 +67,7 @@ export default createUseStyles({
       ...getFontStyles(theme),
       fontSize,
       height,
+      WebkitTapHighlightColor: 'transparent',
       lineHeight: `${height - 2}px`,
       border: '1px solid transparent',
       textDecoration: 'none',

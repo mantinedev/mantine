@@ -36,6 +36,7 @@ export default createUseStyles({
 
   label: ({ theme, size }: CheckboxStylesProps) => ({
     ...getFontStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
     paddingLeft: theme.spacing.sm,
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     lineHeight: `${getSizeValue({ size, sizes })}px`,

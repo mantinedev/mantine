@@ -28,6 +28,7 @@ export default createUseStyles({
   wrapper: {
     display: 'flex',
     alignItems: 'center',
+    WebkitTapHighlightColor: 'transparent',
   },
 
   radio: ({ theme, size, color }: RadioStylesProps) => ({

@@ -122,6 +122,7 @@ export default createUseStyles({
 
   label: ({ theme, size }: SwitchStylesProps) => ({
     ...getFontStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     fontFamily: theme.fontFamily,
     paddingLeft: theme.spacing.sm,
