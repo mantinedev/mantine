@@ -25,6 +25,7 @@ npm install @mantine/hooks
 - [use-clipboard](https://mantine.dev/hooks/use-clipboard/) – provides convenient interface to work with clipboard api
 - [use-color-scheme](https://mantine.dev/hooks/use-color-scheme/) – detect system color scheme
 - [use-document-title](https://mantine.dev/hooks/use-document-title/) - set document.title property
+- [use-focus-tap](https://mantine.dev/hooks/use-focus-tap/) – trap focus at given node
 - [use-form](https://mantine.dev/hooks/use-form/) – bare minimum form state management
 - [use-id](https://mantine.dev/hooks/use-id/) – ensure id for form controls binding
 - [use-list-state](https://mantine.dev/hooks/use-list-state/) – hook for convenient array state management
