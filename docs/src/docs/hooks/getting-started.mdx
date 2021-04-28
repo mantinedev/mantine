@@ -58,17 +58,7 @@ npm install @mantine/hooks
 
 ## Dependencies
 
-<Dependencies
-  packageName="@mantine/hooks"
-  dependencies={[
-    { name: 'react', type: 'peer' },
-    {
-      name: 'nanoid',
-      type: 'dependency',
-      why: 'Used for unique random id generation in use-id hook',
-    },
-  ]}
-/>
+<Dependencies packageName="@mantine/hooks" dependencies={[{ name: 'react', type: 'peer' }]} />
 
 ## Browser support
 
@@ -76,7 +66,6 @@ All hooks are tested to work in all major modern browsers. Some hooks depend on 
 
 - use-media-query, use-color-scheme and use-reduced-motion hooks rely on [window.matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
   API
-- use-id hook relies on [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) via [nanoid](https://www.npmjs.com/package/nanoid) package
 - use-clipboard hook uses [Navigator.clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard)
 
 ## License

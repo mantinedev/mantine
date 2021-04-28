@@ -1,10 +1,13 @@
 import React from 'react';
-import { nanoid } from 'nanoid';
 import { TrashIcon } from '@modulz/radix-icons';
 import { TagPicker } from '@mantine/tag-picker';
 import { DEFAULT_THEME, Paper, Table, ActionIcon, Text, TextInput, Button } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
 import * as mockdata from './mockdata';
+
+function randomId() {
+  return Math.random().toString(36).substr(2, 9);
+}
 
 const colors = Object.keys(DEFAULT_THEME.colors)
   .filter((color) => color !== 'dark')
@@ -114,7 +117,7 @@ export function TransactionsTable() {
                   size="lg"
                   onClick={() =>
                     transactionsHandlers.append({
-                      id: nanoid(),
+                      id: randomId(),
                       amount: 0,
                       category: null,
                       title: '',

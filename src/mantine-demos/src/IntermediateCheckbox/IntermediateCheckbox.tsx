@@ -1,12 +1,15 @@
 import React from 'react';
-import { nanoid } from 'nanoid';
 import { useListState } from '@mantine/hooks';
 import { useMantineTheme, Checkbox } from '@mantine/core';
 
+function randomId() {
+  return Math.random().toString(36).substr(2, 9);
+}
+
 const initialValues = [
-  { label: 'Receive email notifications', checked: false, key: nanoid() },
-  { label: 'Receive sms notifications', checked: false, key: nanoid() },
-  { label: 'Receive push notifications', checked: false, key: nanoid() },
+  { label: 'Receive email notifications', checked: false, key: randomId() },
+  { label: 'Receive sms notifications', checked: false, key: randomId() },
+  { label: 'Receive push notifications', checked: false, key: randomId() },
 ];
 
 export function IntermediateCheckbox() {

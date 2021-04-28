@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { nanoid } from 'nanoid';
 import { useListState } from '@mantine/hooks';
 import { Cross1Icon, PlusIcon } from '@modulz/radix-icons';
 import { Title, Text, Checkbox, TextInput, ActionIcon, useMantineTheme } from '@mantine/core';
+
+function randomId() {
+  return Math.random().toString(36).substr(2, 9);
+}
 
 interface TodoItem {
   value: string;
@@ -11,16 +14,16 @@ interface TodoItem {
 }
 
 const INITIAL_STATE: TodoItem[] = [
-  { value: 'Buy 23 RTX 3080 cards', completed: false, key: nanoid() },
-  { value: 'Mine Ethereum', completed: false, key: nanoid() },
+  { value: 'Buy 23 RTX 3080 cards', completed: false, key: randomId() },
+  { value: 'Mine Ethereum', completed: false, key: randomId() },
   {
     value: 'Complain about miners on internet to prove innocence',
     completed: false,
-    key: nanoid(),
+    key: randomId(),
   },
-  { value: 'Sell broken cards on ebay to gamers', completed: false, key: nanoid() },
-  { value: 'Spend received money on new video cards', completed: false, key: nanoid() },
-  { value: 'Repeat the cycle', completed: false, key: nanoid() },
+  { value: 'Sell broken cards on ebay to gamers', completed: false, key: randomId() },
+  { value: 'Spend received money on new video cards', completed: false, key: randomId() },
+  { value: 'Repeat the cycle', completed: false, key: randomId() },
 ];
 
 export function TodoList() {
@@ -95,7 +98,11 @@ export function TodoList() {
         placeholder="Add business plan task"
         onKeyDown={(event) => {
           if (event.nativeEvent.code === 'Enter' && event.currentTarget.value.trim().length > 0) {
-            handlers.append({ value: event.currentTarget.value, completed: false, key: nanoid() });
+            handlers.append({
+              value: event.currentTarget.value,
+              completed: false,
+              key: randomId(),
+            });
             setNewItem('');
           }
         }}

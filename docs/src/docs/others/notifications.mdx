@@ -92,7 +92,7 @@ useNotifications(): {
 
 Notification state item can have these properties:
 
-- **id** – notification id, it is used to update adn remove notification, be default id generates with [nanoid](https://www.npmjs.com/package/nanoid)
+- **id** – notification id, it is used to update adn remove notification, be default id generates randomly
 - **disallowClose** – removes close button, notification can be closed only programmatically
 - **onClose** – calls when notification is unmounted
 - **onOpen** – calls when notification is mounted
@@ -234,11 +234,6 @@ showNotification and updateNotification have higher priority.
       name: 'react-transition-group',
       type: 'dependency',
       why: 'Used to implement notifications appear/disappear transitions',
-    },
-    {
-      name: 'nanoid',
-      type: 'dependency',
-      why: 'Used for unique random id generation in notifications state',
     },
   ]}
 />

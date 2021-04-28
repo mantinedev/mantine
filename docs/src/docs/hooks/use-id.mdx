@@ -50,12 +50,12 @@ const withoutId = <Input />;
 use-id hook accepts two arguments:
 
 - `id` – string value that is returned by default
-- `generateId` – function that is used to generate random id, defaults to [nanoid](https://www.npmjs.com/package/nanoid)
+- `generateId` – function that is used to generate random id
 
 Hook returns string value that is either `id` (if first argument is passed) or random id generated with `generateId` function.
 
 ## Definition
 
 ```tsx
-function useId(id: string, generateId: (size: number) => string = nanoid): string;
+function useId(id: string, generateId?: (size: number) => string): string;
 ```

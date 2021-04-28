@@ -1,6 +1,9 @@
-import { nanoid } from 'nanoid';
 import { useQueue } from '@mantine/hooks';
 import { NotificationProps } from '../../types';
+
+function randomId() {
+  return Math.random().toString(36).substr(2, 9);
+}
 
 export default function useNotificationsState({ limit }: { limit: number }) {
   const { state, queue, update, cleanQueue } = useQueue<NotificationProps>({
@@ -9,7 +12,7 @@ export default function useNotificationsState({ limit }: { limit: number }) {
   });
 
   const showNotification = (notification: NotificationProps) => {
-    const id = notification.id || nanoid(5);
+    const id = notification.id || randomId();
 
     update((notifications) => {
       if (notification.id && notifications.some((n) => n.id === notification.id)) {

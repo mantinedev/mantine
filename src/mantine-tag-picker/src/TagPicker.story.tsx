@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { nanoid } from 'nanoid';
 import { DEFAULT_THEME } from '@mantine/core';
 import TagPicker from './TagPickerContainer';
 import { TagPickerTag } from './types';
+
+function randomId() {
+  return Math.random().toString(36).substr(2, 9);
+}
 
 const colors = Object.keys(DEFAULT_THEME.colors)
   .filter((color) => color !== 'dark')
@@ -51,8 +54,8 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
         deleteLabel="Delete category"
         noValueLabel="Not selected"
         onTagCreate={(values) => {
-          const tag = { ...values, id: nanoid() };
-          setData((current) => [...current, { ...values, id: nanoid() }]);
+          const tag = { ...values, id: randomId() };
+          setData((current) => [...current, { ...values, id: randomId() }]);
           return tag;
         }}
         onTagDelete={(id) => setData((current) => current.filter((item) => item.id !== id))}
