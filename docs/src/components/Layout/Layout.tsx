@@ -14,7 +14,7 @@ export default function Layout({
   location: { pathname: string };
 }) {
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
-    key: 'mantine-color-scheme',
+    key: THEME_KEY,
     defaultValue: 'light',
   });
 
