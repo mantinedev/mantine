@@ -27,8 +27,11 @@ interface TooltipProps extends DefaultProps, React.ComponentPropsWithoutRef<'div
   /** True to disable tooltip */
   disabled?: boolean;
 
-  /** Remove arrow */
-  noArrow?: boolean;
+  /** Adds arrow, arrow position depends on position and placement props */
+  withArrow?: boolean;
+
+  /** Arrow size in px */
+  arrowSize?: number;
 
   /** Tooltip position relative to children */
   position?: 'top' | 'left' | 'right' | 'bottom';
@@ -68,7 +71,8 @@ export function Tooltip({
   gutter = 5,
   color = 'gray',
   disabled = false,
-  noArrow = false,
+  withArrow = false,
+  arrowSize = 3,
   position = 'top',
   placement = 'center',
   transition = 'slide-up',
@@ -81,7 +85,7 @@ export function Tooltip({
   ...others
 }: TooltipProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color, gutter });
+  const classes = useStyles({ theme, color, gutter, arrowSize });
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
   const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
@@ -114,13 +118,13 @@ export function Tooltip({
           <div
             style={{ zIndex, width, pointerEvents: allowPointerEvents ? 'all' : 'none' }}
             data-mantine-tooltip
-            className={cx(classes.tooltip, classes[placement], classes[position], {
-              [classes.withArrow]: !noArrow,
-            })}
+            className={cx(classes.tooltip, classes[placement], classes[position])}
           >
             <div
               data-mantine-tooltip-inner
-              className={classes.tooltipInner}
+              className={cx(classes.tooltipInner, {
+                [classes.withArrow]: withArrow,
+              })}
               style={{ ...transitionStyles, whiteSpace: wrapLines ? 'normal' : 'nowrap' }}
             >
               {label}
