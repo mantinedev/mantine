@@ -38,7 +38,7 @@ export default function Navbar({ data, opened, onClose }: NavbarProps) {
 
   return (
     <nav className={cx(classes.navbar, { [classes.opened]: opened })}>
-      <Scrollbars style={{ height: '100vh' }}>
+      <Scrollbars style={{ height: '100vh' }} universal>
         <div className={classes.body}>
           {main}
           <div className={classes.docs}>{docs}</div>
