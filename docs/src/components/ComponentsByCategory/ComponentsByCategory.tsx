@@ -1,5 +1,8 @@
 import React from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
+import { graphql, useStaticQuery, Link } from 'gatsby';
+import { ThemeIcon, Text, Paper, useMantineTheme } from '@mantine/core';
+import { getComponentsData } from './get-components-data';
+import useStyles from './ComponentsByCategory.styles';
 
 const query = graphql`
   {
@@ -13,6 +16,7 @@ const query = graphql`
             order
             slug
             category
+            description
           }
         }
       }
@@ -21,22 +25,35 @@ const query = graphql`
 `;
 
 export function ComponentsByCategory() {
-  const data = useStaticQuery(query).allMdx.edges.reduce((acc, item) => {
-    if (!item.node.frontmatter.category) {
-      return acc;
-    }
-    if (!Array.isArray(acc[item.node.frontmatter.category])) {
-      acc[item.node.frontmatter.category] = [];
-    }
+  const classes = useStyles();
+  const theme = useMantineTheme();
 
-    acc[item.node.frontmatter.category].push({
-      name: item.node.frontmatter.title,
-      to: item.node.frontmatter.slug,
-    });
-    return acc;
-  }, {});
+  const items = getComponentsData(useStaticQuery(query)).map((item) => {
+    const links = item.items.map((link) => (
+      <Link className={classes.link} key={link.to} to={link.to}>
+        <div className={classes.linkTitle}>{link.name}</div>
+        <Text size="xs" className={classes.linkDescription}>
+          {link.description}
+        </Text>
+      </Link>
+    ));
 
-  console.log(data);
+    return (
+      <Paper className={classes.item} key={item.title}>
+        <div className={classes.header}>
+          <ThemeIcon color={item.color} variant={theme.colorScheme === 'dark' ? 'filled' : 'light'}>
+            <item.icon />
+          </ThemeIcon>
 
-  return <div>ComponentsByCategory</div>;
+          <Text className={classes.title} size="lg" weight={500}>
+            {item.title}
+          </Text>
+        </div>
+
+        <div className={classes.links}>{links}</div>
+      </Paper>
+    );
+  });
+
+  return <div className={classes.wrapper}>{items}</div>;
 }
