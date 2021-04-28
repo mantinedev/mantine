@@ -99,6 +99,7 @@ export default createUseStyles({
     textDecoration: 'none',
     cursor: 'pointer',
     appearance: 'none',
+    WebkitAppearance: 'none',
   }),
 
   outline: ({ color, radius, theme }: ButtonStylesProps) => ({
