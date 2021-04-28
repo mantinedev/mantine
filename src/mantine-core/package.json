@@ -1,14 +1,14 @@
 {
   "name": "@mantine/core",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "main": "dist/lib.js",
   "license": "MIT",
   "types": "dist/mantine-core/src/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
   "peerDependencies": {
-    "@mantine/hooks": "0.6.0",
-    "@mantine/theme": "0.6.0",
+    "@mantine/hooks": "0.6.1",
+    "@mantine/theme": "0.6.1",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "react-jss": ">=10.1.1"
