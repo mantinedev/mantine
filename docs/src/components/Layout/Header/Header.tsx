@@ -83,8 +83,10 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
         <Tooltip
           label={`${isMacOS ? '⌘' : 'Ctrl'} + J`}
           position="left"
-          placement="start"
+          placement="center"
           transition="fade"
+          withArrow
+          arrowSize={4}
         >
           <ActionIcon
             className={classes.themeToggle}
