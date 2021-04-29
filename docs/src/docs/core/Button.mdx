@@ -12,6 +12,7 @@ import { ElementsGroupConfigurator } from '../demos/core/ElementsGroup/elements-
 import { ButtonFullWidthDemo } from '../demos/core/Button/button-width.demo';
 import { ButtonComponentsDemo } from '../demos/core/Button/button-components.demo';
 import { ButtonSizesDemo } from '../demos/core/Button/button-sizes.demo';
+import { ButtonRadiusDemo } from '../demos/core/Button/button-radius.demo';
 import {
   ButtonFilledVariantDemo,
   ButtonOutlineVariantDemo,
@@ -34,7 +35,7 @@ import { Button } from '@mantine/core';
 
 ## Usage
 
-You can use Button component both as `button` and `a` elements
+<ButtonConfigurator />
 
 <ButtonComponentsDemo />
 
@@ -70,6 +71,10 @@ Default Button color is `theme.primaryColor`, to change color and variant pass `
 
 <ButtonLinkVariantDemo />
 
+## Change root element
+
+You can use Button component both as `button` and `a` elements
+
 ## Size
 
 Button has predefined sizes: xs, sm, md, lg, xl.
@@ -103,9 +108,12 @@ Alternatively you can use number to set border-radius in px:
 ```tsx
 <Button radius="lg" /> // -> theme predefined large radius
 <Button radius={10} /> // -> { borderRadius: 10 }
+<Button radius={0} /> // -> remove border-radius
 ```
 
-<ButtonConfigurator />
+Predefined button radius from xs to xl for Button with lg size:
+
+<ButtonRadiusDemo />
 
 ## Full width and overflow
 
