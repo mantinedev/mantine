@@ -19,6 +19,7 @@ export { Drawer, DRAWER_SIZES } from './Drawer/Drawer';
 export { ElementsGroup } from './ElementsGroup/ElementsGroup';
 export { Highlight } from './Highlight/Highlight';
 export { Hr, HR_SIZES } from './Hr/Hr';
+export { Image } from './Image/Image';
 export { Input } from './Input/Input';
 export { InputWrapper } from './InputWrapper/InputWrapper';
 export { Kbd } from './Kbd/Kbd';
