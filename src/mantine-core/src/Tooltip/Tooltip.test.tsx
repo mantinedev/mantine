@@ -6,6 +6,7 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Transition } from '../Transition/Transition';
 import { Tooltip } from './Tooltip';
@@ -26,6 +27,7 @@ describe('@mantine/core/Tooltip', () => {
   itSupportsClassName(Tooltip, defaultProps);
   itSupportsOthers(Tooltip, defaultProps);
   itSupportsStyle(Tooltip, defaultProps);
+  itSupportsRef(Tooltip, defaultProps, HTMLDivElement, 'tooltipRef');
 
   it('renders given label on inner tooltip', () => {
     const element = shallow(<Tooltip {...defaultProps} label="test-label" />);

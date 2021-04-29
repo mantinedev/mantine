@@ -59,6 +59,12 @@ interface TooltipProps extends DefaultProps, React.ComponentPropsWithoutRef<'div
 
   /** Mount/unmount transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
+
+  /** Get wrapper ref */
+  elementRef?: React.ForwardedRef<HTMLDivElement>;
+
+  /** Get tooltip ref */
+  tooltipRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
 export function Tooltip({
@@ -82,6 +88,8 @@ export function Tooltip({
   width = 'auto',
   wrapLines = false,
   allowPointerEvents = false,
+  elementRef,
+  tooltipRef,
   ...others
 }: TooltipProps) {
   const theme = useMantineTheme(themeOverride);
@@ -107,7 +115,7 @@ export function Tooltip({
   };
 
   return (
-    <div className={cx(classes.wrapper, className)} {...others}>
+    <div className={cx(classes.wrapper, className)} ref={tooltipRef} {...others}>
       <Transition
         mounted={visible}
         transition={transition}
@@ -119,6 +127,7 @@ export function Tooltip({
             style={{ zIndex, width, pointerEvents: allowPointerEvents ? 'all' : 'none' }}
             data-mantine-tooltip
             className={cx(classes.tooltip, classes[placement], classes[position])}
+            ref={tooltipRef}
           >
             <div
               data-mantine-tooltip-inner
