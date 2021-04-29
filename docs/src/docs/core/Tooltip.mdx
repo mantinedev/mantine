@@ -7,6 +7,8 @@ category: 'overlay'
 description: 'Render tooltip on mouse over or click'
 ---
 
+import { TooltipComplexDemo } from '../demos/core/Tooltip/tooltip-complex.demo';
+
 # Tooltip
 
 <PageHeader
@@ -20,3 +22,16 @@ import { Tooltip } from '@mantine/core';
 ```
 
 ## Usage
+
+## Complex example
+
+Use all above props to crete experience that fits your needs.
+In this example tooltip acts more like popover – it is controlled,
+can be closed with control inside tooltip (set `allowPointerEvents` prop to enable this),
+has arrow and custom animation:
+
+<TooltipComplexDemo />
+
+## Component props
+
+<PropsTable component="Tooltip" />

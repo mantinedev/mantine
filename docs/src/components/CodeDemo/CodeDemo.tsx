@@ -47,15 +47,17 @@ export default function CodeDemo({
             <Button variant="outline" onClick={() => setVisible((v) => !v)}>
               {visible ? 'Hide' : 'Show'} code
             </Button>
-            <Button
-              component="a"
-              href={githubLink}
-              variant="outline"
-              color="gray"
-              leftIcon={<GitHubLogoIcon />}
-            >
-              View source on Github
-            </Button>
+            {githubLink && (
+              <Button
+                component="a"
+                href={githubLink}
+                variant="outline"
+                color="gray"
+                leftIcon={<GitHubLogoIcon />}
+              >
+                View source on Github
+              </Button>
+            )}
           </ElementsGroup>
         )}
       </Paper>
