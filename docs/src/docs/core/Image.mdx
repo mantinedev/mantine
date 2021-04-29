@@ -7,6 +7,10 @@ category: 'data-display'
 description: 'Display image with optional placeholder for loading and error state'
 ---
 
+import { ImageBaseDemo } from '../demos/core/Image/image-base.demo';
+import { ImagePlaceholderDemo } from '../demos/core/Image/image-placeholder.demo';
+import { ImageSizesDemo } from '../demos/core/Image/image-sizes.demo';
+
 # Image
 
 <PageHeader
@@ -21,6 +25,64 @@ import { Image } from '@mantine/core';
 
 ## Usage
 
+Image component is a wrapper around img element with option to change object fit, radius and placeholder:
+
+<ImageBaseDemo />
+
+## Width and height
+
+In example above image takes 100% of width of its container and height is calculated dynamically based on image proportion.
+To change this behavior set image width and height to define image size.
+
+Note that, if image proportions do not match given width and height some parts will be cut out.
+In case you want to show image in its original proportions but fitted in current width and height set `fit="contain"`:
+
+<ImageSizesDemo />
+
+## Placeholder
+
+By default placeholders image placeholders are disabled.
+Image placeholder is displayed in these cases:
+
+- `withPlaceholder` prop is set to true
+- Image is currently loading
+- Error ocurred during image loading (e.g. broken link)
+- Image did not receive `src` prop
+
+To customize image placeholder pass any react node to `placeholder` prop.
+Placeholder size is determined by width and height props.
+Placeholder is centered vertically and horizontally across provided width and height.
+
+<ImagePlaceholderDemo />
+
+## Radius
+
+Radius has predefined values: xs, sm, md, lg, xl which are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
+Alternatively you can use number to set border-radius in px:
+
+```tsx
+<Image radius={0} /> // -> default – image has no radius
+<Image radius="lg" /> // -> theme predefined large radius
+<Image radius={10} /> // -> { borderRadius: 10 }
+```
+
+Radius is applied both to image and placeholder.
+
+## Get element ref
+
+You can get both image and root element (div) refs with `elementRef` and `imageRef` props:
+
+```tsx
+import React, { useRef } from 'react';
+import { Image } from '@mantine/core';
+
+function Demo() {
+  const imageRef = useRef();
+  const rootElementRef = useRef();
+  return <Image elementRef={rootElementRef} imageRef={imageRef} />;
+}
+```
+
 ## Component props
 
-<PropsTable component="Hr" />
+<PropsTable component="Image" />
