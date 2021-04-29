@@ -15,9 +15,9 @@ function Demo() {
         opened={slowTransitionOpened}
         onClose={() => setSlowTransitionOpened(false)}
         title="Please consider this"
-        transition="rotate-up"
+        transition="rotate-left"
       >
-        rotate-up transition
+        rotate-left transition
       </Modal>
 
       <Modal
@@ -33,7 +33,7 @@ function Demo() {
 
       <ElementsGroup position="center">
         <Button onClick={() => setSlowTransitionOpened(true)} color="pink">
-          rotate-up transition
+          rotate-left transition
         </Button>
         <Button onClick={() => setNoTransitionOpened(true)} color="cyan">
           fade transition
@@ -54,9 +54,9 @@ export function ModalCustomTransitionsDemo() {
           opened={slowTransitionOpened}
           onClose={() => setSlowTransitionOpened(false)}
           title="Please consider this"
-          transition="rotate-up"
+          transition="rotate-left"
         >
-          rotate-up transition
+          rotate-left transition
         </Modal>
       </Portal>
 
@@ -75,7 +75,7 @@ export function ModalCustomTransitionsDemo() {
 
       <ElementsGroup position="center">
         <Button onClick={() => setSlowTransitionOpened(true)} color="pink">
-          rotate-up transition
+          rotate-left transition
         </Button>
         <Button onClick={() => setNoTransitionOpened(true)} color="cyan">
           fade transition

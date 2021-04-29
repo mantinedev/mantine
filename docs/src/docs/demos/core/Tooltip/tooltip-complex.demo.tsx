@@ -39,7 +39,7 @@ function Demo() {
         allowPointerEvents
         withArrow
         wrapLines
-        transition="rotate-down"
+        transition="rotate-left"
         transitionDuration={250}
         width={220}
         gutter={theme.spacing.xs}
@@ -102,7 +102,7 @@ export function TooltipComplexDemo() {
           allowPointerEvents
           withArrow
           wrapLines
-          transition="rotate-down"
+          transition="rotate-left"
           transitionDuration={250}
           width={220}
           gutter={theme.spacing.xs}

@@ -14,7 +14,7 @@ function Demo() {
         opened={opened}
         onClose={() => setOpened(false)}
         padding="md"
-        transition="rotate-up"
+        transition="rotate-left"
         transitionDuration={250}
         transitionTimingFunction="ease"
       >
@@ -38,7 +38,7 @@ export function DrawerTransitionsDemo() {
           opened={opened}
           onClose={() => setOpened(false)}
           padding="md"
-          transition="rotate-up"
+          transition="rotate-left"
           transitionDuration={250}
           transitionTimingFunction="ease"
         >

@@ -7,7 +7,7 @@ import { Menu, MenuItem, ElementsGroup, Button  } from '@mantine/core';
 
 function Demo() {
   return (
-    <Menu transition="rotate-up" transitionDuration={100} transitionTimingFunction="ease">
+    <Menu transition="rotate-right" transitionDuration={100} transitionTimingFunction="ease">
       <MenuItem>Discard changes</MenuItem>
       <MenuItem>Save draft</MenuItem>
       <MenuItem color="red">Delete</MenuItem>
@@ -19,7 +19,7 @@ export function MenuTransitionsDemo() {
   return (
     <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center" spacing="xs">
-        <Menu transition="rotate-up" transitionDuration={100} transitionTimingFunction="ease">
+        <Menu transition="rotate-right" transitionDuration={100} transitionTimingFunction="ease">
           <MenuItem>Discard changes</MenuItem>
           <MenuItem>Save draft</MenuItem>
           <MenuItem color="red">Delete</MenuItem>

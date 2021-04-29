@@ -8,6 +8,7 @@ description: 'Render tooltip on mouse over or click'
 ---
 
 import { TooltipComplexDemo } from '../demos/core/Tooltip/tooltip-complex.demo';
+import { TooltipTransitionsDemo } from '../demos/core/Tooltip/tooltip-transitions.demo';
 
 # Tooltip
 
@@ -22,6 +23,25 @@ import { Tooltip } from '@mantine/core';
 ```
 
 ## Usage
+
+## Change transition
+
+Tooltip is built with <GatsbyLink to="/core/transition">Transition</GatsbyLink> component.
+See <GatsbyLink to="/guides/transitions">transitions guide</GatsbyLink> to learn everything about mantine transitions.
+
+You can change transitions with props:
+
+- **transition** – predefined transition name or transition object
+- **transitionDuration** – transition duration in ms, defaults to 100ms
+- **transitionTimingFunction** – timing function, defaults to `theme.transitionTimingFunction`
+
+```tsx
+<Tooltip transition="skew-up" transitionDuration={300} transitionTimingFunction="ease" />
+```
+
+All available predefined transitions demo:
+
+<TooltipTransitionsDemo />
 
 ## Complex example
 
