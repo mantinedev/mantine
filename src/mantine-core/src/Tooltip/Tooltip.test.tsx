@@ -20,6 +20,13 @@ const defaultProps = {
 describe('@mantine/core/Tooltip', () => {
   checkAccessibility([
     mount(<Tooltip {...defaultProps} />),
+    mount(
+      <Tooltip opened label="tooltip" tooltipId="button-tooltip">
+        <button type="button" aria-describedby="button-tooltip">
+          button
+        </button>
+      </Tooltip>
+    ),
     mount(<Tooltip {...defaultProps} opened={false} />),
   ]);
 

@@ -65,6 +65,9 @@ interface TooltipProps extends DefaultProps, React.ComponentPropsWithoutRef<'div
 
   /** Get tooltip ref */
   tooltipRef?: React.ForwardedRef<HTMLDivElement>;
+
+  /** Tooltip id to bind aria-describedby */
+  tooltipId?: string;
 }
 
 export function Tooltip({
@@ -90,6 +93,7 @@ export function Tooltip({
   allowPointerEvents = false,
   elementRef,
   tooltipRef,
+  tooltipId,
   ...others
 }: TooltipProps) {
   const theme = useMantineTheme(themeOverride);
@@ -124,6 +128,8 @@ export function Tooltip({
       >
         {(transitionStyles) => (
           <div
+            id={tooltipId}
+            role="tooltip"
             style={{ zIndex, width, pointerEvents: allowPointerEvents ? 'all' : 'none' }}
             data-mantine-tooltip
             className={cx(classes.tooltip, classes[placement], classes[position])}

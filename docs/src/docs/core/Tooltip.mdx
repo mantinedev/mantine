@@ -11,6 +11,8 @@ import { TooltipComplexDemo } from '../demos/core/Tooltip/tooltip-complex.demo';
 import { TooltipTransitionsDemo } from '../demos/core/Tooltip/tooltip-transitions.demo';
 import { TooltipControlledDemo } from '../demos/core/Tooltip/tooltip-controlled.demo';
 import { TooltipPositionsDemo } from '../demos/core/Tooltip/tooltip-positions.demo';
+import { TooltipArrowDemo } from '../demos/core/Tooltip/tooltip-arrow.demo';
+import { TooltipMultilineDemo } from '../demos/core/Tooltip/tooltip-multiline.demo';
 
 # Tooltip
 
@@ -42,12 +44,33 @@ All available positions and placements:
 
 <TooltipPositionsDemo />
 
+## Arrow
+
+Tooltip arrow is controlled by:
+
+- **withArrow** – set to true if arrow should be rendered
+- **arrowSize** – arrow size in px, defaults to 4px
+- **position** and **placement** – define arrow position (see previous example)
+
+<TooltipArrowDemo />
+
 ## Controlled
 
 By default tooltip is displayed when mouse is over target element.
 You can change this logic by setting `opened` prop:
 
 <TooltipControlledDemo />
+
+## Multiline
+
+By default tooltip white-space property is set to nowrap. To change that use:
+
+- **wrapLines** – to enable line breaks
+- **width** – to define tooltip width in px
+
+Note that, multiline tooltips may require different transitions for better UX.
+
+<TooltipMultilineDemo />
 
 ## Change transition
 
@@ -68,14 +91,60 @@ All available predefined transitions demo:
 
 <TooltipTransitionsDemo />
 
-## Complex example
+## Allow pointer events
 
-Use all above props to crete experience that fits your needs.
-In this example tooltip acts more like popover – it is controlled,
-can be closed with control inside tooltip (set `allowPointerEvents` prop to enable this),
-has arrow and custom animation:
+By defaults pointer events on tooltip are disabled to prevent animations collisions.
+If you need to use interactive elements inside tooltip set `allowPointerEvents` prop.
+
+In this example tooltip acts more like popover –
+it is controlled and can be closed with control inside tooltip:
 
 <TooltipComplexDemo />
+
+## Get element ref
+
+You can get both tooltip and root element refs with `elementRef` and `tooltipRef` props.
+Use it to customize behavior, for example, with <GatsbyLink to="/hooks/use-click-outside/">use-click-outside</GatsbyLink> hook.
+
+```tsx
+import React, { useRef } from 'react';
+import { Tooltip } from '@mantine/core';
+
+function Demo() {
+  const tooltipRef = useRef();
+  const rootElementRef = useRef();
+  return <Tooltip elementRef={rootElementRef} tooltipRef={tooltipRef} />;
+}
+```
+
+## Accessibility
+
+Do not place any important information in tooltip.
+Component is unmounted from the dom and is not visible to screen readers in default configuration.
+
+If you want to make tooltip accessible use controlled variant, open tooltip on focus, provide `tooltipId` and `aria-describedby` props:
+
+```tsx
+import React, { useState } from 'react';
+import { Tooltip, Button } from '@mantine/core';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <Tooltip opened={opened} label="Hidden knowledge" tooltipId="tooltip-id">
+      <Button
+        aria-describedby="tooltip-id"
+        onFocus={() => setOpened(true)}
+        onMouseEnter={() => setOpened(true)}
+        onBlur={() => setOpened(false)}
+        onMouseLeave={() => setOpened(false)}
+      >
+        I have tooltip
+      </Button>
+    </Tooltip>
+  );
+}
+```
 
 ## Component props
 
