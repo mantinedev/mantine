@@ -45,5 +45,5 @@ export { TextInput } from './TextInput/TextInput';
 export { ThemeIcon, THEME_ICON_SIZES } from './ThemeIcon/ThemeIcon';
 export { Title } from './Title/Title';
 export { Tooltip } from './Tooltip/Tooltip';
-export { Transition, GroupedTransition } from './Transition/Transition';
+export { Transition, GroupedTransition, AVAILABLE_TRANSITIONS } from './Transition/Transition';
 export { TypographyStylesProvider } from './TypographyStylesProvider/TypographyStylesProvider';

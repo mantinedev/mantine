@@ -3,9 +3,11 @@ import { Transition as RTGTransition } from 'react-transition-group';
 import { useMantineTheme, DefaultProps } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
-import { MantineTransition } from './transitions';
+import { MantineTransition, transitions } from './transitions';
 
 export { GroupedTransition } from './GroupedTransition';
+
+export const AVAILABLE_TRANSITIONS = Object.keys(transitions) as Array<keyof typeof transitions>;
 
 export type { MantineTransition };
 
