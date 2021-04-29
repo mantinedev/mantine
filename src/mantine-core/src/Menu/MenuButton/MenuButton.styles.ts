@@ -28,7 +28,7 @@ export default createUseStyles({
       : theme.colors.gray[9],
 
     '&:disabled': {
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[5],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[5],
       cursor: 'not-allowed',
     },
 
