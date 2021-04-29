@@ -6,6 +6,7 @@ import {
   ChatBubbleIcon,
   ExclamationTriangleIcon,
   TwitterLogoIcon,
+  EnvelopeClosedIcon,
 } from '@modulz/radix-icons';
 import useStyles from './Footer.styles';
 
@@ -32,7 +33,7 @@ export function Footer() {
         </a>
         <a href="https://github.com/mantinedev/mantine/discussions" className={classes.link}>
           <ChatBubbleIcon />
-          <span className={classes.linkLabel}>Start a discussion on Github</span>
+          <span className={classes.linkLabel}>Ask a question</span>
         </a>
         <a href="https://github.com/mantinedev/mantine/issues/new" className={classes.link}>
           <ExclamationTriangleIcon />
@@ -41,6 +42,10 @@ export function Footer() {
         <a href="https://twitter.com/mantinedev" className={classes.link}>
           <TwitterLogoIcon />
           <span className={classes.linkLabel}>Follow Mantine on Twitter</span>
+        </a>
+        <a href="https://buttondown.email/mantine" className={classes.link}>
+          <EnvelopeClosedIcon />
+          <span className={classes.linkLabel}>Subscribe to monthly updates newsletter</span>
         </a>
       </div>
     </footer>
