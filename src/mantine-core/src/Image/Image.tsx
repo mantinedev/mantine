@@ -32,7 +32,7 @@ interface ImageProps
   placeholder?: React.ReactNode;
 
   /** Props spread to img element */
-  imageProps?: React.ComponentPropsWithoutRef<'img'>;
+  imageProps?: Record<string, any>;
 
   /** Get root element ref */
   elementRef?: React.ForwardedRef<HTMLDivElement>;
