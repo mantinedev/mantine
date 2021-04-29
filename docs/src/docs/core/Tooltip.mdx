@@ -9,6 +9,8 @@ description: 'Render tooltip on mouse over or click'
 
 import { TooltipComplexDemo } from '../demos/core/Tooltip/tooltip-complex.demo';
 import { TooltipTransitionsDemo } from '../demos/core/Tooltip/tooltip-transitions.demo';
+import { TooltipControlledDemo } from '../demos/core/Tooltip/tooltip-controlled.demo';
+import { TooltipPositionsDemo } from '../demos/core/Tooltip/tooltip-positions.demo';
 
 # Tooltip
 
@@ -23,6 +25,29 @@ import { Tooltip } from '@mantine/core';
 ```
 
 ## Usage
+
+## Position and placement
+
+Tooltip position relative to target element is defined by:
+
+- **position** – tooltip side – top, bottom, right or left, defaults to top
+- **placement** – tooltip placement relative to position – start, center or end, defaults to center
+- **gutter** – space between tooltip and target element in px, defaults to 5px
+
+```tsx
+<Tooltip position="bottom" placement="end" gutter={10} />
+```
+
+All available positions and placements:
+
+<TooltipPositionsDemo />
+
+## Controlled
+
+By default tooltip is displayed when mouse is over target element.
+You can change this logic by setting `opened` prop:
+
+<TooltipControlledDemo />
 
 ## Change transition
 
