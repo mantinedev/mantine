@@ -11,8 +11,8 @@ export type MantineTransitionName =
   | 'fade'
   | 'skew-up'
   | 'skew-down'
-  | 'rotate-up'
-  | 'rotate-down'
+  | 'rotate-right'
+  | 'rotate-left'
   | 'slide-down'
   | 'slide-up'
   | 'slide-right'
@@ -41,14 +41,14 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
     transitionProperty: 'transform, opacity',
   },
 
-  'rotate-down': {
+  'rotate-left': {
     in: { opacity: 1, transform: 'translateY(0) rotate(0deg)' },
     out: { opacity: 0, transform: 'translateY(20px) rotate(-5deg)' },
     common: { transformOrigin: 'bottom' },
     transitionProperty: 'transform, opacity',
   },
 
-  'rotate-up': {
+  'rotate-right': {
     in: { opacity: 1, transform: 'translateY(0) rotate(0deg)' },
     out: { opacity: 0, transform: 'translateY(20px) rotate(5deg)' },
     common: { transformOrigin: 'top' },
