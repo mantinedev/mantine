@@ -6,7 +6,7 @@ import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Button, MantineProvider } from '@mantine/core';
 
-function NestedProvidersDemo() {
+function Demo() {
   return (
     <MantineProvider theme={{ fontFamily: 'Georgia, serif' }}>
       <Text style={{ textAlign: 'center', marginBottom: 10 }}>Georgia or serif text</Text>

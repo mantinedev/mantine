@@ -5,7 +5,7 @@ import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Button } from '@mantine/core';
 
-function ThemeOverrideDemo() {
+function Demo() {
   return (
     <Button themeOverride={{ fontFamily: 'Verdana, sans-serif' }}>
       Verdana button

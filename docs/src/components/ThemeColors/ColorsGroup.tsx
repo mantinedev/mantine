@@ -4,9 +4,10 @@ import useStyles from './ColorsGroup.styles';
 
 interface ColorsGroupProps {
   group: string;
+  noTitle?: boolean;
 }
 
-export function ColorsGroup({ group }: ColorsGroupProps) {
+export function ColorsGroup({ group, noTitle }: ColorsGroupProps) {
   const theme = useMantineTheme();
   const classes = useStyles();
 
@@ -27,9 +28,11 @@ export function ColorsGroup({ group }: ColorsGroupProps) {
 
   return (
     <div className={classes.wrapper}>
-      <Title order={4} className={classes.title}>
-        {group}
-      </Title>
+      {!noTitle && (
+        <Title order={4} className={classes.title}>
+          {group}
+        </Title>
+      )}
 
       <div className={classes.group}>{colors}</div>
     </div>

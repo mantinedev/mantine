@@ -243,43 +243,7 @@ Mantine has native support for dark theme. Dark theme is available for all compo
 You can view default dark theme for each component by changing color scheme in upper right corner
 or with keyboard shortcut `⌘ + J` on MacOS and `Ctrl + J` on other systems.
 
-To use dark color scheme, set `colorScheme` property in MantineProvider:
-
-```tsx
-<MantineProvider theme={{ colorScheme: 'dark' }}>
-  <YourApp />
-</MantineProvider>
-```
-
-### Change dark theme colors
-
-Dark theme is based on special colors palette in `theme.colors`,
-you can change it with MantineProvider the same way as any other color:
-
-```tsx
-<MantineProvider
-  theme={{
-    colorScheme: 'dark',
-    colors: {
-      // default dark theme palette
-      dark: [
-        '#d5d7e0',
-        '#acaebf',
-        '#8c8fa3',
-        '#666980',
-        '#4d4f66',
-        '#34354a',
-        '#2b2c3d',
-        '#1d1e30',
-        '#0c0d21',
-        '#01010a',
-      ],
-    },
-  }}
->
-  <YourApp />
-</MantineProvider>
-```
+Read everything about dark theme in <GatsbyLink to="/guides/dark-theme">dark theme guide</GatsbyLink>.
 
 ## Use mantine theme with react-jss
 

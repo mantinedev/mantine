@@ -5,7 +5,7 @@ import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 const code = `import React from 'react';
 import { Button, MantineProvider } from '@mantine/core';
 
-function PrimaryColorDemo() {
+function Demo() {
   return (
     <MantineProvider theme={{ primaryColor: 'teal' }}>
       <Button>Primary button</Button>
