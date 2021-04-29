@@ -13,6 +13,8 @@ import { TooltipControlledDemo } from '../demos/core/Tooltip/tooltip-controlled.
 import { TooltipPositionsDemo } from '../demos/core/Tooltip/tooltip-positions.demo';
 import { TooltipArrowDemo } from '../demos/core/Tooltip/tooltip-arrow.demo';
 import { TooltipMultilineDemo } from '../demos/core/Tooltip/tooltip-multiline.demo';
+import { TooltipDelayDemo } from '../demos/core/Tooltip/tooltip-delay.demo';
+import { TooltipColorsDemo } from '../demos/core/Tooltip/tooltip-colors.demo';
 
 # Tooltip
 
@@ -90,6 +92,19 @@ You can change transitions with props:
 All available predefined transitions demo:
 
 <TooltipTransitionsDemo />
+
+## Change color
+
+You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>:
+
+<TooltipColorsDemo />
+
+## Close delay
+
+You can delay tooltip unmount on mouse leave with `delay` prop: set delay in ms.
+Delay defaults to 0 and reset if user hovers over target element before delay is expired:
+
+<TooltipDelayDemo />
 
 ## Allow pointer events
 
