@@ -4,6 +4,8 @@ import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { Paper } from '../Paper/Paper';
 import useStyles from './Card.styles';
 
+export { CardsGrid } from './CardsGrid/CardsGrid';
+
 interface CardProps extends DefaultProps, React.ComponentPropsWithoutRef<typeof Paper> {}
 
 export function Card({
@@ -15,7 +17,13 @@ export function Card({
 }: CardProps) {
   const classes = useStyles({ radius, padding, theme: useMantineTheme(themeOverride) });
   return (
-    <Paper className={cx(classes.card, className)} radius={radius} padding={padding} {...others} />
+    <Paper
+      data-mantine-card
+      className={cx(classes.card, className)}
+      radius={radius}
+      padding={padding}
+      {...others}
+    />
   );
 }
 

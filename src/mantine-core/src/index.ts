@@ -11,7 +11,7 @@ export { Blockquote } from './Blockquote/Blockquote';
 export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 export { Burger, BURGER_SIZES } from './Burger/Burger';
 export { Button, BUTTON_SIZES } from './Button/Button';
-export { Card } from './Card/Card';
+export { Card, CardsGrid } from './Card/Card';
 export { Checkbox, CHECKBOX_SIZES } from './Checkbox/Checkbox';
 export { Code } from './Code/Code';
 export { ColorSwatch } from './ColorSwatch/ColorSwatch';
