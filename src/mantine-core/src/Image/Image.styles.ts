@@ -9,10 +9,12 @@ interface ImageStylesProps {
 export default createUseStyles({
   wrapper: {
     position: 'relative',
+    overflow: 'hidden',
   },
 
   image: ({ theme, radius }: ImageStylesProps) => ({
     ...getFontStyles(theme),
+    display: 'block',
     width: '100%',
     height: '100%',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),

@@ -25,7 +25,7 @@ export function Hr({
   ...others
 }: HrProps) {
   const classes = useStyles({ color, variant, size, theme: useMantineTheme(themeOverride) });
-  return <hr className={cx(classes.hr, className)} {...others} />;
+  return <hr data-mantine-hr className={cx(classes.hr, className)} {...others} />;
 }
 
 Hr.displayName = '@mantine/core/Hr';
