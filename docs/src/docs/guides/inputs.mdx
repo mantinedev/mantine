@@ -66,6 +66,17 @@ This component is a base for
 - <GatsbyLink to="/core/select/">Select</GatsbyLink>
 - <GatsbyLink to="/core/textarea/">Textarea</GatsbyLink>
 
+Since all these inputs share the same parent <GatsbyLink to="/core/input/">Input</GatsbyLink> component
+they support props:
+
+- **icon** – renders icon on the left
+- **radius** – applies border-radius from theme
+- **disabled** – disables any interactions with input
+- **variant** – choose between default, filled and unstyled variant
+- **rightSection** related props (not supported by Select, NumberInput and PasswordInput) to add extra content on the right
+
+Go to <GatsbyLink to="/core/input/">Input component docs</GatsbyLink> to see examples of all above props usage.
+
 ## Accessibility
 
 Please follow accessibility guidelines for each input individually.
@@ -92,7 +103,7 @@ component, which accepts json, validates and formats it.
 
 <JsonInputDemo />
 
-Key moments:
+**Key moments:**
 
 - Use `inputStyle` or `inputClassName` to apply styles to input element (`style` and `className` props will go to InputWrapper)
 - `onChange`, `onFocus`, `onBlur` and all other input related props go directly to input element
