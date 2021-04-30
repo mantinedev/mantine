@@ -20,28 +20,15 @@ interface ColorInputProps
   value: string;
   onChange(color: string): void;
   data: string[];
-  transitionDuration?: number;
 }
 
-export function ColorInput({
-  id,
-  value,
-  placeholder,
-  transitionDuration = 250,
-  onChange,
-  data,
-}: ColorInputProps) {
+export function ColorInput({ id, value, placeholder, onChange, data }: ColorInputProps) {
   const theme = useMantineTheme();
   const uuid = useId(id);
   const controlRef = useRef<HTMLButtonElement>();
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const focusTrapRef = useFocusTrap();
-  const closeDropdown = () => {
-    setDropdownOpened(false);
-    setTimeout(() => {
-      controlRef.current.focus();
-    }, transitionDuration + 10);
-  };
+  const closeDropdown = () => setDropdownOpened(false);
   const clickOutsideRef = useClickOutside(closeDropdown);
   const dropdownRef = useMergedRef(focusTrapRef, clickOutsideRef);
 
@@ -84,7 +71,13 @@ export function ColorInput({
           )}
         </Input>
 
-        <Transition transition="skew-up" duration={250} mounted={dropdownOpened}>
+        <Transition
+          transition="skew-up"
+          duration={250}
+          mounted={dropdownOpened}
+          // Wait for focus trap to unmount and focus control
+          onExited={() => setTimeout(() => controlRef.current.focus(), 10)}
+        >
           {(transitionStyles) => (
             <Paper
               shadow="md"
