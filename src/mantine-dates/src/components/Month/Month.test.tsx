@@ -1,20 +1,9 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import {
-  checkAccessibility,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-} from '@mantine/tests';
+import { shallow } from 'enzyme';
+import { itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
 import { Month } from './Month';
 
 describe('@mantine/core/Month', () => {
-  checkAccessibility([
-    mount(<Month month={new Date()} />),
-    mount(<Month month={new Date()} disableOutsideEvents />),
-    mount(<Month month={new Date()} selected={new Date()} />),
-  ]);
-
   itSupportsStyle(Month, { month: new Date() });
   itSupportsClassName(Month, { month: new Date() });
   itSupportsOthers(Month, { month: new Date() });
