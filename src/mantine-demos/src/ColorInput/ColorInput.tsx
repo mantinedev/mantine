@@ -22,7 +22,18 @@ interface ColorInputProps
   data: string[];
 }
 
-export function ColorInput({ id, value, placeholder, onChange, data }: ColorInputProps) {
+export function ColorInput({
+  id,
+  value,
+  placeholder,
+  onChange,
+  data,
+  required,
+  description,
+  label,
+  error,
+  ...others
+}: ColorInputProps) {
   const theme = useMantineTheme();
   const uuid = useId(id);
   const controlRef = useRef<HTMLButtonElement>();
@@ -48,7 +59,13 @@ export function ColorInput({ id, value, placeholder, onChange, data }: ColorInpu
   ));
 
   return (
-    <InputWrapper id={uuid}>
+    <InputWrapper
+      required={required}
+      id={uuid}
+      label={label}
+      error={error}
+      description={description}
+    >
       <div style={{ position: 'relative' }}>
         <Input
           component="button"
@@ -56,6 +73,7 @@ export function ColorInput({ id, value, placeholder, onChange, data }: ColorInpu
           onClick={() => setDropdownOpened(true)}
           inputStyle={{ cursor: 'pointer' }}
           elementRef={controlRef}
+          {...others}
         >
           {value ? (
             <div style={{ display: 'flex', alignItems: 'center' }}>
