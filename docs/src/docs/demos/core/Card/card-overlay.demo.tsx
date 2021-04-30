@@ -12,7 +12,7 @@ function Demo() {
         <Image
           src="https://images.unsplash.com/long-image-url.jpg"
           height={160}
-          alt="Norway"
+          alt="Noway"
         />
 
         <Text weight={500} size="lg">

@@ -8,6 +8,7 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/Menu/MenuItem/MenuItem.tsx',
   '../src/mantine-core/src/RadioGroup/Radio/Radio.tsx',
   '../src/mantine-core/src/Tabs/Tab/Tab.tsx',
+  '../src/mantine-core/src/Card/CardsGrid/CardsGrid.tsx',
 ];
 
 const PATHS: DeclarationPath[] = [
