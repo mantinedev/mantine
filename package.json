@@ -24,7 +24,7 @@
     "docs:docgen": "ts-node scripts/docgen",
     "docs:sizes": "ts-node scripts/calculate-sizes",
     "docs:clean": "cd docs && npm run clean",
-    "docs:build": "npm run docs:clean && npm run docs:docgen && cd docs && npm run build",
+    "docs:build": "npm run docs:clean && npm run docs:docgen && npm run docs:sizes && cd docs && npm run build",
     "docs:deploy": "npm run docs:build && gh-pages -d docs/public",
     "_release": "npm run release:prepare && ts-node scripts/release",
     "release:prepare": "npm run clean && npm test",
