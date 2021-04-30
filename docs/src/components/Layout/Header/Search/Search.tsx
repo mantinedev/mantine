@@ -79,7 +79,7 @@ export default function Search({ data, isMacOS }: SearchProps) {
     <button
       type="button"
       key={item.to}
-      onClick={() => handleSubmit(item.to)}
+      onMouseDown={() => handleSubmit(item.to)}
       className={cx(classes.item, { [classes.itemHovered]: hovered === index })}
       tabIndex={-1}
     >
@@ -102,7 +102,7 @@ export default function Search({ data, isMacOS }: SearchProps) {
   );
 
   return (
-    <div className={classes.wrapper}>
+    <div className={classes.wrapper} onBlurCapture={closeDropdown}>
       <TextInput
         className={classes.input}
         elementRef={inputRef}
@@ -113,7 +113,6 @@ export default function Search({ data, isMacOS }: SearchProps) {
         rightSection={rightSection}
         rightSectionWidth={isMacOS ? 50 : 72}
         onFocus={() => setDropdownOpened(true)}
-        onBlur={closeDropdown}
         onKeyDown={handleInputKeydown}
       />
 
