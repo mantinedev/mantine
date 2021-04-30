@@ -16,12 +16,13 @@ const codeTemplate = (props: string) => `<InputWrapper id="input-demo"${props}>
   <Input id="input-demo" placeholder="Your email" />
 </InputWrapper>`;
 
-export function InputWrapperConfigurator() {
+export function InputWrapperConfigurator({ includeCode = true }: { includeCode: boolean }) {
   const theme = useMantineTheme();
   return (
     <Configurator
       component={InputWrapperWrapper}
       codeTemplate={codeTemplate}
+      includeCode={includeCode}
       previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
       props={[
         {

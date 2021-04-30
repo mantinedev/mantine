@@ -1,8 +1,89 @@
 ---
 order: 1
 package: guides
-title: Inputs
+title: Mantine inputs
 slug: /guides/inputs/
 ---
 
-# Inputs
+import { InputWrapperConfigurator } from '../demos/core/InputWrapper/input-wrapper.configurator';
+import { JsonInputDemo } from '../demos/inputs-guide/json-input.demo';
+import { ColorInputDemo } from '../demos/inputs-guide/color-input.demo';
+
+# Mantine inputs
+
+Mantine comes with essential set of inputs to help you build forms.
+Most of the inputs share the same props, this guide will help you
+learn about patters which should be used with inputs to ensure
+nest accessibility and usability.
+
+## Input types
+
+Mantine inputs can be divided into two categories: with and without <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink>.
+
+Inputs with <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink>:
+
+- <GatsbyLink to="/core/text-input/">TextInput</GatsbyLink>
+- <GatsbyLink to="/core/password-input/">PasswordInput</GatsbyLink>
+- <GatsbyLink to="/core/number-input/">NumberInput</GatsbyLink>
+- <GatsbyLink to="/core/radio-group/">RadioGroup</GatsbyLink>
+- <GatsbyLink to="/core/select/">Select</GatsbyLink>
+- <GatsbyLink to="/core/textarea/">Textarea</GatsbyLink>
+
+Inputs without <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink>:
+
+- <GatsbyLink to="/core/checkbox/">Checkbox</GatsbyLink>
+- <GatsbyLink to="/core/switch/">Switch</GatsbyLink>
+
+## InputWrapper component
+
+All inputs with <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink>
+support these optional props:
+
+- **label** – input label, bind to input element with `for`
+- **required** – displays required asterisk at the end of the label
+- **description** – displays description after label, put additional information here, for example, password requirements
+- **error** – any react node to displays error message after input and highlight input border with red color, or `true` just for input border highlight
+
+```tsx
+<TextInput
+  required
+  label="Input label"
+  description="Put additional information about input here"
+  error="Display validation error"
+/>
+```
+
+<InputWrapperConfigurator includeCode={false} />
+
+## Input component
+
+Mantine exports utility <GatsbyLink to="/core/input/">Input</GatsbyLink> component.
+This component is a base for
+
+- <GatsbyLink to="/core/text-input/">TextInput</GatsbyLink>
+- <GatsbyLink to="/core/password-input/">PasswordInput</GatsbyLink>
+- <GatsbyLink to="/core/number-input/">NumberInput</GatsbyLink>
+- <GatsbyLink to="/core/select/">Select</GatsbyLink>
+- <GatsbyLink to="/core/textarea/">Textarea</GatsbyLink>
+
+## Accessibility
+
+Please follow accessibility guidelines for each input individually.
+Most of the inputs have shared rule about label –
+provide `aria-label` in case you use component without label for screen reader support:
+
+```tsx
+<TextInput label="My input" />; // -> ok, input and label is connected
+<TextInput />; // not ok, input is not labeled
+<TextInput aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
+```
+
+## Building custom inputs
+
+### JsonInput
+
+<JsonInputDemo />
+
+### ColorInput
+
+<ColorInputDemo />
