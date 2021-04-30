@@ -5,17 +5,19 @@ slug: /404
 
 import Head from '../components/Head/Head';
 import { Button, ElementsGroup } from '@mantine/core';
-import { StarFilledIcon, TwitterLogoIcon } from '@modulz/radix-icons';
+import {
+  StarFilledIcon,
+  TwitterLogoIcon,
+  EnvelopeClosedIcon,
+  ExclamationTriangleIcon,
+} from '@modulz/radix-icons';
 
 <Head title="404" disableTitleTemplate />
 
 # Congratulations!
 
-You've found a completely secret place on Mantine website.
-This means you are eligible for getting 1,000,000$ in cash!
-To claim your reward please follow [this link](https://www.youtube.com/watch?v=dQw4w9WgXcQ).
-
-Jokes aside, this is 404 page and if you've landed on this page from link on Mantine website, please [create an issue](https://github.com/mantinedev/mantine/issues/new).
+You've found a completely secret place on Mantine website. Unfortunately, this is only a 404 page.
+If you've landed on this page from link on Mantine website, please [create an issue](https://github.com/mantinedev/mantine/issues/new).
 Otherwise, here are some learning materials that will help you get started with Mantine:
 
 - <GatsbyLink to="/pages/contribute/">Mantine contributions guideline</GatsbyLink>
@@ -28,7 +30,7 @@ Otherwise, here are some learning materials that will help you get started with 
 
 And since you are here, what about following Mantine on Twitter and a star on Github 😉?
 
-<ElementsGroup>
+<ElementsGroup grow>
   <Button
     component="a"
     href="https://github.com/mantinedev/mantine"
@@ -46,5 +48,14 @@ And since you are here, what about following Mantine on Twitter and a star on Gi
     variant="outline"
   >
     Follow Mantine on Twitter
+  </Button>
+  <Button
+    component="a"
+    href="https://buttondown.email/mantine"
+    leftIcon={<EnvelopeClosedIcon />}
+    color="blue"
+    variant="outline"
+  >
+    Subscribe to monthly newsletter
   </Button>
 </ElementsGroup>
