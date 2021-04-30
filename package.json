@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "0.6.2",
+  "version": "0.7.0",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/rtivital/mantine",
@@ -24,7 +24,7 @@
     "docs:docgen": "ts-node scripts/docgen",
     "docs:sizes": "ts-node scripts/calculate-sizes",
     "docs:clean": "cd docs && npm run clean",
-    "docs:build": "npm run docs:clean && npm run docs:docgen && cd docs && npm run build",
+    "docs:build": "npm run docs:clean && npm run docs:docgen && npm run docs:sizes && cd docs && npm run build",
     "docs:deploy": "npm run docs:build && gh-pages -d docs/public",
     "_release": "npm run release:prepare && ts-node scripts/release",
     "release:prepare": "npm run clean && npm test",

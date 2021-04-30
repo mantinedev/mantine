@@ -1,7 +1,6 @@
 # Mantine Hooks
 
-React hooks for [Mantine](https://mantine.dev/) components library. All other @mantine/ packages depend on @mantine/hooks.
-
+React hooks for [Mantine](https://mantine.dev/) components library.
 Package includes hooks that are used to build components in @mantine/ scoped packages.
 You can use these hooks in your applications with or without other @mantine/ packages.
 
@@ -38,4 +37,4 @@ npm install @mantine/hooks
 
 ## Licence
 
-All @mantine/ scoped packages, dependencies and peer dependencies have MIT licence.
+All Mantine packages have MIT licence. All Mantine dependencies also have MIT licence, except react-transition-group package which has BSD-3-Clause license.

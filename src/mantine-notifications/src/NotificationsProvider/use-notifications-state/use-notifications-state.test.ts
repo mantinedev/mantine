@@ -30,7 +30,7 @@ describe('@mantine/notifications/use-notifications-state', () => {
       id = hook.result.current.showNotification({ ...TEST_NOTIFICATION, id: null });
     });
 
-    expect(id).toHaveLength(5);
+    expect(id).toHaveLength(9);
   });
 
   it('does not allow to add multiple notifications with same id', () => {
