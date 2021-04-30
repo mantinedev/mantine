@@ -1,6 +1,10 @@
 # Mantine Tag Picker
 
+![Demo](./demo.gif)
+
 Notion like tag picker component built on top of [Mantine](https://mantine.dev/) components library.
+
+[Documentation](https://mantine.dev/others/tag-picker/)
 
 ## Installation
 
@@ -15,10 +19,6 @@ yarn add @mantine/tag-picker @mantine/core @mantine/hooks react-jss
 npx install-peerdeps @mantine/tag-picker
 ```
 
-## [Documentation and demos](https://mantine.dev/tag-picker/getting-started/)
-
-![Demo](./demo.gif)
-
 ## Licence
 
-All @mantine/ scoped packages, dependencies and peer dependencies have MIT licence.
+All Mantine packages have MIT licence. All Mantine dependencies also have MIT licence, except react-transition-group package which has BSD-3-Clause license.
