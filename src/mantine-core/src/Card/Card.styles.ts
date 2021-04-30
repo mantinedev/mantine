@@ -33,6 +33,11 @@ export default createUseStyles({
           marginTop: spacing,
           marginBottom: -spacing,
         },
+
+        '&:first-child:last-child': {
+          marginTop: -spacing,
+          marginBottom: -spacing,
+        },
       },
 
       '& [data-mantine-hr]': {
