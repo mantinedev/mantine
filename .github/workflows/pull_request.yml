@@ -1,0 +1,21 @@
+name: Pull request workflow
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.9.0'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Run syncpack, eslint, tsc and jest
+        run: npm test
+      - name: Build all packages
+        run: npm run build all
