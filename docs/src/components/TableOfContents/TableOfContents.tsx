@@ -106,7 +106,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
 
   return (
     <nav className={classes.wrapper}>
-      <Scrollbars style={{ height: '100vh' }}>
+      <Scrollbars style={{ height: '100vh' }} universal>
         <div className={classes.inner}>
           <div>
             <div className={classes.header}>

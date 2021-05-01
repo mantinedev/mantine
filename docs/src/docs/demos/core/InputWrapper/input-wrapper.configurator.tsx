@@ -12,7 +12,10 @@ function InputWrapperWrapper(props: React.ComponentPropsWithoutRef<typeof InputW
   );
 }
 
-const codeTemplate = (props: string) => `<InputWrapper id="input-demo"${props}>
+const codeTemplate = (props: string) => `<InputWrapper
+  id="input-demo"
+ ${props}
+>
   <Input id="input-demo" placeholder="Your email" />
 </InputWrapper>`;
 
@@ -23,6 +26,7 @@ export function InputWrapperConfigurator({ includeCode = true }: { includeCode: 
       component={InputWrapperWrapper}
       codeTemplate={codeTemplate}
       includeCode={includeCode}
+      multiline
       previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
       props={[
         {

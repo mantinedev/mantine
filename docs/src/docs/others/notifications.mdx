@@ -39,7 +39,8 @@ npx install-peerdeps @mantine/notifications
 
 ## Usage
 
-Wrap your application with NotificationsProvider:
+Wrap your application with NotificationsProvider.
+**Important:** if you use MantineProvider, NotificationsProvider must be placed inside:
 
 ```tsx
 import React from 'react';
@@ -47,9 +48,11 @@ import { NotificationsProvider } from '@mantine/notifications';
 
 function YourApp() {
   return (
-    <NotificationsProvider>
-      <App />
-    </NotificationsProvider>
+    <MantineProvider theme={yourTheme}>
+      <NotificationsProvider>
+        <App />
+      </NotificationsProvider>
+    </MantineProvider>
   );
 }
 ```
@@ -58,9 +61,7 @@ Use use-notifications hook at any place in your application:
 
 <NotificationsBaseDemo />
 
-## NotificationsProvider component
-
-NotificationsProvider accepts these props:
+## NotificationsProvider props
 
 <PropsTable component="NotificationsProvider" />
 
@@ -77,7 +78,7 @@ Hook returns object with properties:
 - **cleanQueue** – removes all notifications from queue
 
 ```tsx
-useNotifications(): {
+function useNotifications(): {
   notifications: NotificationProps[];
   queue: NotificationProps[];
   showNotification(props: NotificationProps): string;
@@ -85,6 +86,21 @@ useNotifications(): {
   hideNotification(id: string): void;
   clean(): void;
   cleanQueue(): void;
+};
+
+interface NotificationProps {
+  id?: string;
+  color?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  icon?: React.ReactNode;
+  title?: React.ReactNode;
+  loading?: boolean;
+  message: React.ReactNode;
+  autoClose?: boolean | number;
+  disallowClose?: boolean;
+  onClose?(props: NotificationProps): void;
+  onOpen?(props: NotificationProps): void;
 }
 ```
 

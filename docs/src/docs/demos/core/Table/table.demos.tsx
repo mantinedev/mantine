@@ -14,15 +14,6 @@ const code = `import React from 'react';
 import { Table } from '@mantine/core';
 
 function Demo() {
-  const ths = (
-    <tr>
-      <th>Element position</th>
-      <th>Element name</th>
-      <th>Symbol</th>
-      <th>Atomic mass</th>
-    </tr>
-  );
-
   const rows = elements.map((element) => (
     <tr key={element.name}>
       <td>{element.position}</td>
