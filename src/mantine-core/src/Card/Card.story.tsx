@@ -34,24 +34,4 @@ storiesOf('@mantine/core/Card', module)
         <Card>5</Card>
       </CardsGrid>
     </div>
-  ))
-  .add('CardsGrid breakpoints', () => (
-    <div style={{ padding: 50 }}>
-      <CardsGrid
-        cardsPerRow={4}
-        breakpoints={[
-          { maxWidth: 1000, cardsPerRow: 3 },
-          { maxWidth: 750, cardsPerRow: 2 },
-          { maxWidth: 540, cardsPerRow: 1 },
-        ]}
-        grow
-        style={{ background: 'blue' }}
-      >
-        <Card>1</Card>
-        <Card>2</Card>
-        <Card>3</Card>
-        <Card>4</Card>
-        <Card>5</Card>
-      </CardsGrid>
-    </div>
   ));
