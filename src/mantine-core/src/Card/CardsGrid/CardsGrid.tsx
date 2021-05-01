@@ -10,9 +10,6 @@ interface CardsGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'d
   /** Amount of cards that should be in each row */
   cardsPerRow?: number;
 
-  /** Amount of cards that should be in each row at given max-width, overrides cardsPerRow at given breakpoint */
-  breakpoints?: { maxWidth: number | string; cardsPerRow: number }[];
-
   /** Should last row items fill all available space */
   grow?: boolean;
 
@@ -23,7 +20,6 @@ interface CardsGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'d
 export function CardsGrid({
   gutter = 'md',
   cardsPerRow = 1,
-  breakpoints = [],
   grow = false,
   children,
   className,
@@ -31,7 +27,6 @@ export function CardsGrid({
   ...others
 }: CardsGridProps) {
   const classes = useStyles({
-    breakpoints,
     cardsPerRow,
     gutter,
     grow,
