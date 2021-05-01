@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { ActionIcon, Button, ElementsGroup, PasswordInput, useMantineTheme } from '@mantine/core';
-
 import {
   GearIcon,
   ChatBubbleIcon,
@@ -11,34 +10,6 @@ import {
   ImageIcon,
 } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
-
-const code = `import React from 'react';
-import { ActionIcon } from '@mantine/core';
-import { GearIcon } from '@modulz/radix-icons';
-
-function Demo() {
-  return (
-    <ActionIcon
-      title="Settings"
-      aria-label="Settings"
-      onClick={() => console.log('Do something')}
-    >
-      <GearIcon />
-    </ActionIcon>
-  );
-}`;
-
-export function ActionIconBaseDemo() {
-  return (
-    <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
-        <ActionIcon title="Settings" aria-label="Settings">
-          <GearIcon />
-        </ActionIcon>
-      </ElementsGroup>
-    </CodeDemo>
-  );
-}
 
 const groupCode = `import React from 'react';
 import { ActionIcon, Button, ElementsGroup } from '@mantine/core';

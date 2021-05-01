@@ -3,22 +3,14 @@ import { ThemeIcon, ElementsGroup, useMantineTheme } from '@mantine/core';
 import { RocketIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
-const iconSizes = {
-  xs: 10,
-  sm: 12,
-  md: 16,
-  lg: 20,
-  xl: 26,
-};
-
 const getSizes = (props?: any) =>
   ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
-    <ThemeIcon key={size} size={size} radius="xl" {...props}>
-      <RocketIcon style={{ width: iconSizes[size], height: iconSizes[size] }} />
+    <ThemeIcon key={size} size="xl" radius={size} {...props}>
+      <RocketIcon style={{ width: 24, height: 24 }} />
     </ThemeIcon>
   ));
 
-export function ThemeIconSizesDemo() {
+export function ThemeIconRadiusDemo() {
   const theme = useMantineTheme();
 
   return (

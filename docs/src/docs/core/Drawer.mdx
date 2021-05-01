@@ -83,14 +83,14 @@ Size cannot exceed 100% of width and 100vh of height.
 
 <DrawerSizesDemo />
 
-You can get predefined max-width values by importing `DRAWER_SIZES`:
+You can get predefined sizes by importing `DRAWER_SIZES`:
 
 ```tsx
 import { DRAWER_SIZES } from '@mantine/core';
 ```
 
 <DataTable
-  head={['Prop value', 'max-width']}
+  head={['Prop value', 'Drawer width']}
   data={Object.keys(DRAWER_SIZES).map((size) => [
     size,
     `${DRAWER_SIZES[size]}${typeof DRAWER_SIZES[size] === 'number' ? 'px' : ''}`,

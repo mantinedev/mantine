@@ -9,7 +9,6 @@ description: 'Indicate secondary action'
 
 import { ACTION_ICON_SIZES } from '@mantine/core';
 import {
-  ActionIconBaseDemo,
   ActionIconGroupDemo,
   ActionIconUsageDemo,
   ActionIconVariantDemo,
@@ -17,6 +16,7 @@ import {
 import { ActionIconConfigurator } from '../demos/core/ActionIcon/action-icon.configurator';
 import { ActionIconColorsDemo } from '../demos/core/ActionIcon/action-icon-colors.demo';
 import { ActionIconSizesDemo } from '../demos/core/ActionIcon/action-icon-sizes.demo';
+import { ActionIconRadiusDemo } from '../demos/core/ActionIcon/action-icon-radius.demo';
 
 # ActionIcon
 
@@ -47,7 +47,7 @@ You can use icons from any react icons library, for example:
 - [feather](https://feathericons.com/)
 - [react-icons](https://react-icons.github.io/react-icons)
 
-<ActionIconBaseDemo />
+<ActionIconConfigurator />
 
 ## Where to use
 
@@ -108,9 +108,12 @@ Alternatively you can use number to set border-radius in px:
 ```tsx
 <ActionIcon radius="lg" /> // -> theme predefined large radius
 <ActionIcon radius={10} /> // -> { borderRadius: 10 }
+<ActionIcon radius={0} /> // -> remove border-radius
 ```
 
-<ActionIconConfigurator />
+Default radius from xs to xl for xl size:
+
+<ActionIconRadiusDemo />
 
 ## Compose with ElementsGroup
 

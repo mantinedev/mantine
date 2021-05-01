@@ -11,6 +11,7 @@ import { THEME_ICON_SIZES } from '@mantine/core';
 import { ThemeIconConfigurator } from '../demos/core/ThemeIcon/theme-icon.configurator';
 import { ThemeIconBaseDemo } from '../demos/core/ThemeIcon/theme-icon.demos';
 import { ThemeIconSizesDemo } from '../demos/core/ThemeIcon/theme-icon-sizes.demo';
+import { ThemeIconRadiusDemo } from '../demos/core/ThemeIcon/theme-icon-radius.demo';
 
 # ThemeIcon
 
@@ -72,7 +73,12 @@ Alternatively you can use number to set radius in px:
 ```tsx
 <ThemeIcon radius="lg" /> // -> theme predefined large radius
 <ThemeIcon radius={10} /> // -> { borderRadius: 10 }
+<ThemeIcon radius={0} /> // -> remove border-radius
 ```
+
+Default radius from xs to xl for xl size:
+
+<ThemeIconRadiusDemo />
 
 ## Component props
 
