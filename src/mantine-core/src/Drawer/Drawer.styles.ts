@@ -44,24 +44,27 @@ function getPositionStyles({
   }
 }
 
-export default createUseStyles({
-  noOverlay: {},
+export default createUseStyles(
+  {
+    noOverlay: {},
 
-  wrapper: {
-    '&:not($noOverlay)': {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
+    wrapper: {
+      '&:not($noOverlay)': {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      },
     },
-  },
 
-  drawer: ({ size, position }: DrawerStylesProps) => ({
-    ...getPositionStyles({ position, size }),
-    maxWidth: '100%',
-    maxHeight: '100vh',
-    position: 'fixed',
-    outline: 0,
-  }),
-});
+    drawer: ({ size, position }: DrawerStylesProps) => ({
+      ...getPositionStyles({ position, size }),
+      maxWidth: '100%',
+      maxHeight: '100vh',
+      position: 'fixed',
+      outline: 0,
+    }),
+  },
+  { link: true }
+);

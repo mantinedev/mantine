@@ -16,12 +16,15 @@ export const sizes = {
   xl: 1370,
 };
 
-export default createUseStyles({
-  container: ({ fluid, size, padding, theme }: ContainerStylesProps) => ({
-    maxWidth: fluid ? '100%' : getSizeValue({ size, sizes }),
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    paddingLeft: getSizeValue({ size: padding, sizes: theme.spacing }),
-    paddingRight: getSizeValue({ size: padding, sizes: theme.spacing }),
-  }),
-});
+export default createUseStyles(
+  {
+    container: ({ fluid, size, padding, theme }: ContainerStylesProps) => ({
+      maxWidth: fluid ? '100%' : getSizeValue({ size, sizes }),
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      paddingLeft: getSizeValue({ size: padding, sizes: theme.spacing }),
+      paddingRight: getSizeValue({ size: padding, sizes: theme.spacing }),
+    }),
+  },
+  { link: true }
+);

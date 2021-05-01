@@ -5,18 +5,21 @@ interface TabsStylesProps {
   theme: MantineTheme;
 }
 
-export default createUseStyles({
-  tabs: ({ theme }: TabsStylesProps) => ({
-    borderBottom: `2px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
-    }`,
-  }),
+export default createUseStyles(
+  {
+    tabs: ({ theme }: TabsStylesProps) => ({
+      borderBottom: `2px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+      }`,
+    }),
 
-  tabsInner: {
-    marginBottom: -2,
+    tabsInner: {
+      marginBottom: -2,
+    },
+
+    body: ({ theme }: TabsStylesProps) => ({
+      paddingTop: theme.spacing.sm,
+    }),
   },
-
-  body: ({ theme }: TabsStylesProps) => ({
-    paddingTop: theme.spacing.sm,
-  }),
-});
+  { link: true }
+);

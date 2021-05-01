@@ -6,10 +6,13 @@ interface ColorSwatchStylesProps {
   radius: MantineNumberSize;
 }
 
-export default createUseStyles({
-  colorSwatch: ({ theme, radius }: ColorSwatchStylesProps) => ({
-    ...getFocusStyles(theme),
-    border: 0,
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-  }),
-});
+export default createUseStyles(
+  {
+    colorSwatch: ({ theme, radius }: ColorSwatchStylesProps) => ({
+      ...getFocusStyles(theme),
+      border: 0,
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    }),
+  },
+  { link: true }
+);

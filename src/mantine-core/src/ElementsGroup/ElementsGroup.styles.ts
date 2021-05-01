@@ -18,24 +18,27 @@ const JUSTIFY_CONTENT = {
   apart: 'space-between',
 };
 
-export default createUseStyles({
-  elementsGroup: (props: ElementsGroupStylesProps) => {
-    const spacing =
-      typeof props.spacing === 'number'
-        ? props.spacing / 2
-        : props.theme.spacing[props.spacing] / 2;
+export default createUseStyles(
+  {
+    elementsGroup: (props: ElementsGroupStylesProps) => {
+      const spacing =
+        typeof props.spacing === 'number'
+          ? props.spacing / 2
+          : props.theme.spacing[props.spacing] / 2;
 
-    return {
-      display: 'flex',
-      alignItems: 'center',
-      flexWrap: props.noWrap ? 'nowrap' : 'wrap',
-      justifyContent: JUSTIFY_CONTENT[props.position],
-      margin: -1 * spacing,
+      return {
+        display: 'flex',
+        alignItems: 'center',
+        flexWrap: props.noWrap ? 'nowrap' : 'wrap',
+        justifyContent: JUSTIFY_CONTENT[props.position],
+        margin: -1 * spacing,
 
-      '& > [data-mantine-composable]': {
-        margin: spacing,
-        flexGrow: props.grow ? 1 : 0,
-      },
-    };
+        '& > [data-mantine-composable]': {
+          margin: spacing,
+          flexGrow: props.grow ? 1 : 0,
+        },
+      };
+    },
   },
-});
+  { link: true }
+);

@@ -8,14 +8,17 @@ interface TitleStylesProps {
   element: HeadingElement;
 }
 
-export default createUseStyles({
-  title: ({ theme, element }: TitleStylesProps) => ({
-    ...getFontStyles(theme),
-    fontFamily: theme.headings.fontFamily,
-    fontWeight: theme.headings.fontWeight,
-    fontSize: theme.headings.sizes[element].fontSize,
-    lineHeight: theme.headings.sizes[element].lineHeight,
-    margin: 0,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-  }),
-});
+export default createUseStyles(
+  {
+    title: ({ theme, element }: TitleStylesProps) => ({
+      ...getFontStyles(theme),
+      fontFamily: theme.headings.fontFamily,
+      fontWeight: theme.headings.fontWeight,
+      fontSize: theme.headings.sizes[element].fontSize,
+      lineHeight: theme.headings.sizes[element].lineHeight,
+      margin: 0,
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    }),
+  },
+  { link: true }
+);
