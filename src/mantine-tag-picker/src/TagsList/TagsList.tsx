@@ -1,7 +1,14 @@
 import React from 'react';
 import cx from 'clsx';
 import { useFocusTrap } from '@mantine/hooks';
-import { TextInput, Text, Badge, MantineThemeOverride, useMantineTheme } from '@mantine/core';
+import {
+  TextInput,
+  Text,
+  Badge,
+  MantineThemeOverride,
+  useMantineTheme,
+  MantineTransition,
+} from '@mantine/core';
 import { TagPickerColor, TagPickerTag } from '../types';
 import TagItem from '../TagItem/TagItem';
 import useStyles from './TagsList.styles';
@@ -32,6 +39,8 @@ export interface TagsListProps {
   enableDelete?: boolean;
   enableColorChange?: boolean;
   transitionDuration?: number;
+  transition?: MantineTransition;
+  transitionTimingFunction?: string;
 }
 
 export default function TagsList({

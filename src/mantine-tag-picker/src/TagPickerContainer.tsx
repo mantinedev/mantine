@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { DefaultProps } from '@mantine/core';
+import { DefaultProps, MantineTransition } from '@mantine/core';
 import { TagPickerTag, TagPickerColor } from './types';
 import TagPicker from './TagPicker/TagPicker';
 
@@ -8,26 +8,76 @@ function getRandomColor(colors: TagPickerColor[]) {
 }
 
 interface TagPickerProps extends DefaultProps {
+  /** Options which should be rendered in the dropdown list */
   data: TagPickerTag[];
-  colors?: TagPickerColor[];
+
+  /** Currently selected tag */
   value?: TagPickerTag;
-  description?: string;
-  createLabel: string;
-  deleteLabel: string;
-  noValueLabel: string;
-  searchPlaceholder?: string;
-  enableCreate?: boolean;
-  enableUpdate?: boolean;
-  enableDelete?: boolean;
-  enableColorChange?: boolean;
-  transitionDuration?: number;
-  onDropdownOpen?(): void;
-  onDropdownClose?(): void;
-  onSearchChange?(query: string): void;
-  controlRef?: React.RefCallback<HTMLButtonElement>;
+
+  /** Called when user selects tag */
   onChange(value: TagPickerTag): void;
+
+  /** Possible colors which tag can have */
+  colors?: TagPickerColor[];
+
+  /** Description displayed after search input */
+  description?: string;
+
+  /** Label for create control */
+  createLabel?: string;
+
+  /** Label for delete control */
+  deleteLabel?: string;
+
+  /** aria-label for save control */
+  saveLabel?: string;
+
+  /** Tag with this value is displayed when value prop is null */
+  noValueLabel: string;
+
+  /** Search field placeholder */
+  searchPlaceholder?: string;
+
+  /** Enable user to create new tags */
+  enableCreate?: boolean;
+
+  /** Enable user to update existing tags */
+  enableUpdate?: boolean;
+
+  /** Enable user to delete existing tags */
+  enableDelete?: boolean;
+
+  /** Enable user to change tag colors */
+  enableColorChange?: boolean;
+
+  /** Mount/unmount transitions for all dropdowns */
+  transition?: MantineTransition;
+
+  /** Mount/unmount transitions transitionTimingFunction, defaults to theme.transitionTimingFunction */
+  transitionTimingFunction?: string;
+
+  /** Mount/unmount transition duration for all dropdowns */
+  transitionDuration?: number;
+
+  /** Called when dropdown opens */
+  onDropdownOpen?(): void;
+
+  /** Called when dropdown closes */
+  onDropdownClose?(): void;
+
+  /** Called when search changes */
+  onSearchChange?(query: string): void;
+
+  /** Get control ref */
+  controlRef?: React.RefCallback<HTMLButtonElement>;
+
+  /** Called when user creates new tag */
   onTagCreate?(values: Omit<TagPickerTag, 'id'>): TagPickerTag;
+
+  /** Called when user deletes tag */
   onTagDelete?(id: string): void;
+
+  /** Called when user updates tag */
   onTagUpdate?(id: string, values: Omit<TagPickerTag, 'id'>): void;
 }
 
@@ -125,7 +175,7 @@ export function TagPickerContainer({ transitionDuration = 250, ...props }: TagPi
   };
 
   return (
-    <div onKeyDownCapture={handleKeyboardEvents}>
+    <div onKeyDownCapture={handleKeyboardEvents} className={props.className} style={props.style}>
       <TagPicker
         createColor={createColor}
         searchQuery={query}
@@ -159,6 +209,8 @@ export function TagPickerContainer({ transitionDuration = 250, ...props }: TagPi
         enableDelete={props.enableDelete}
         enableColorChange={props.enableColorChange}
         transitionDuration={transitionDuration}
+        transition={props.transition}
+        transitionTimingFunction={props.transitionTimingFunction}
         themeOverride={props.themeOverride}
       />
     </div>
