@@ -2,6 +2,7 @@ export * from '@mantine/theme';
 
 export type { InputProps } from './Input/Input';
 export type { InputWrapperBaseProps } from './InputWrapper/InputWrapper';
+export type { MantineTransition } from './Transition/Transition';
 
 export { ActionIcon, ACTION_ICON_SIZES } from './ActionIcon/ActionIcon';
 export { Alert } from './Alert/Alert';
