@@ -33,17 +33,18 @@ export function LoadingOverlayBaseDemo() {
       language="tsx"
       demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0]}
     >
-      <div
-        style={{
-          width: 400,
-          borderRadius: 4,
-          overflow: 'hidden',
-          position: 'relative',
-          margin: 'auto',
-        }}
-      >
-        <LoadingOverlay visible={visible} zIndex={1000} />
-        <AuthenticationForm noSubmit />
+      <div style={{ maxWidth: 400 }}>
+        <div
+          style={{
+            borderRadius: 4,
+            overflow: 'hidden',
+            position: 'relative',
+            margin: 'auto',
+          }}
+        >
+          <LoadingOverlay visible={visible} zIndex={1000} />
+          <AuthenticationForm noSubmit />
+        </div>
       </div>
 
       <ElementsGroup position="center" style={{ marginTop: 20 }}>

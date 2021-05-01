@@ -43,7 +43,7 @@ export function CardOverlayDemo() {
       language="tsx"
       demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0]}
     >
-      <div style={{ width: 340, margin: 'auto' }}>
+      <div style={{ maxWidth: 340, margin: 'auto' }}>
         <Card shadow="sm">
           <Image
             src="https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80"

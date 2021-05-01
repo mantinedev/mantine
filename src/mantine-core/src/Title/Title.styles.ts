@@ -18,6 +18,12 @@ export default createUseStyles(
       lineHeight: theme.headings.sizes[element].lineHeight,
       margin: 0,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+
+      '@media (max-width: 755px)': {
+        fontSize:
+          typeof theme.headings.sizes[element].fontSize === 'number' &&
+          (theme.headings.sizes[element].fontSize as number) / 1.3,
+      },
     }),
   },
   { link: true }

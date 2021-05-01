@@ -4,7 +4,7 @@ import Configurator from '../../../../components/Configurator/Configurator';
 
 function ProgressWrapper(props: React.ComponentPropsWithoutRef<typeof Progress>) {
   return (
-    <div style={{ width: 400, margin: 'auto' }}>
+    <div style={{ width: '100%', margin: 'auto' }}>
       <Progress {...props} />
     </div>
   );

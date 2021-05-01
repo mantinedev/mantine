@@ -39,6 +39,10 @@ export default createUseStyles(
       paddingBottom: theme.spacing.xl * 2,
       paddingLeft: theme.spacing.md,
       paddingTop: HEADER_HEIGHT + theme.spacing.md,
+
+      [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
+        paddingBottom: 120,
+      },
     },
 
     docs: {

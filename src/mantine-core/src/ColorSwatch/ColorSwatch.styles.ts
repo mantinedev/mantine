@@ -12,6 +12,9 @@ export default createUseStyles(
       ...getFocusStyles(theme),
       border: 0,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      appearance: 'none',
+      WebkitAppearance: 'none',
+      padding: 0,
     }),
   },
   { link: true }

@@ -10,7 +10,7 @@ function Demo() {
 
   return (
     <>
-      <div style={{ width: 400, height: 100, position: 'relative' }}>
+      <div style={{ height: 100, position: 'relative' }}>
         {visible && <Overlay opacity={0.6} color="#000" zIndex={5} />}
         <Button color={visible ? 'red' : 'teal'}>
           {!visible ? 'Click as much as you like' : "Won't click, haha"}
@@ -31,7 +31,6 @@ export function OverlayBaseDemo() {
     <CodeDemo code={code} language="tsx">
       <div
         style={{
-          width: 400,
           margin: 'auto',
           position: 'relative',
           height: 100,

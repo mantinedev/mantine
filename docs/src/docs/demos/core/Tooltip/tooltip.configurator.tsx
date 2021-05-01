@@ -3,13 +3,15 @@ import { Button, Tooltip, ElementsGroup } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 const Wrapper = (props: any) => (
-  <ElementsGroup position="center">
-    <Tooltip data-mantine-composable {...props}>
-      <Button variant="outline" color="gray" size="xl">
-        With tooltip
-      </Button>
-    </Tooltip>
-  </ElementsGroup>
+  <div style={{ padding: 30 }}>
+    <ElementsGroup position="center">
+      <Tooltip data-mantine-composable {...props}>
+        <Button variant="outline" color="gray" size="xl">
+          With tooltip
+        </Button>
+      </Tooltip>
+    </ElementsGroup>
+  </div>
 );
 
 const codeTemplate = (props: string) => `<Tooltip

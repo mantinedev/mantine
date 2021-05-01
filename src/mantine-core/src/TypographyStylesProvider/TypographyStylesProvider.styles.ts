@@ -15,6 +15,12 @@ export default createUseStyles(
           marginTop: theme.spacing.lg * theme.headings.sizes[h].lineHeight,
           marginBottom: theme.spacing.xs * theme.headings.sizes[h].lineHeight,
           ...theme.headings.sizes[h],
+
+          '@media (max-width: 755px)': {
+            fontSize:
+              typeof theme.headings.sizes[h].fontSize === 'number' &&
+              (theme.headings.sizes[h].fontSize as number) / 1.3,
+          },
         };
 
         return acc;
@@ -24,6 +30,11 @@ export default createUseStyles(
         ...getFontStyles(theme),
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         lineHeight: theme.lineHeight,
+        fontSize: theme.fontSizes.md,
+
+        '@media (max-width: 755px)': {
+          fontSize: theme.fontSizes.sm,
+        },
 
         ...headings,
 

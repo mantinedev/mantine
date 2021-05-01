@@ -6,6 +6,7 @@ export default createUseStyles(
     title: {
       marginTop: theme.spacing.xl * 1.5,
       marginBottom: theme.spacing.md,
+      wordBreak: 'break-word',
     },
 
     link: {

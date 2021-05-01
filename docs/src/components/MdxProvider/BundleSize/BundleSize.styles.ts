@@ -1,11 +1,17 @@
 import { createUseStyles } from 'react-jss';
 import { theming, MantineTheme } from '@mantine/core';
 
+const BREAKPOINT = 500;
+
 export default createUseStyles(
   (theme: MantineTheme) => ({
     wrapper: {
       display: 'flex',
       marginTop: theme.spacing.md,
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        flexDirection: 'column',
+      },
     },
 
     item: {
@@ -18,6 +24,13 @@ export default createUseStyles(
 
       '& + &': {
         marginLeft: theme.spacing.xl,
+      },
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        '& + &': {
+          marginLeft: 0,
+          marginTop: theme.spacing.md,
+        },
       },
     },
 

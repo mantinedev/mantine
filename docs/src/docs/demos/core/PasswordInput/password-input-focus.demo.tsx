@@ -30,15 +30,17 @@ export function PasswordFocusDemo() {
       demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
       language="tsx"
     >
-      <div style={{ width: 360, margin: 'auto' }}>
-        <PasswordInput label="Focus will be on button" placeholder="Focus will be on button" />
+      <div style={{ maxWidth: 360, margin: 'auto' }}>
+        <div style={{ width: '100%' }}>
+          <PasswordInput label="Focus will be on button" placeholder="Focus will be on button" />
 
-        <PasswordInput
-          focusInputOnToggle
-          label="Focus will move to input"
-          placeholder="Focus will move to input"
-          style={{ marginTop: 15 }}
-        />
+          <PasswordInput
+            focusInputOnToggle
+            label="Focus will move to input"
+            placeholder="Focus will move to input"
+            style={{ marginTop: 15 }}
+          />
+        </div>
       </div>
     </CodeDemo>
   );

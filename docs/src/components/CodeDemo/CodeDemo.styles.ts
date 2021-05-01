@@ -8,7 +8,7 @@ export default createUseStyles(
         theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3]
       }`,
       position: 'relative',
-      zIndex: 1,
+      zIndex: 3,
 
       '&:not(:only-child)': {
         borderBottom: 0,
