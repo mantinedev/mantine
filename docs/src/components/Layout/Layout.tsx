@@ -20,6 +20,7 @@ export default function Layout({
 
   useWindowEvent('keydown', (event) => {
     if (event.code === 'KeyJ' && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault();
       setColorScheme((current) => (current === 'dark' ? 'light' : 'dark'));
     }
   });
