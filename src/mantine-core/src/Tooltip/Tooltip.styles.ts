@@ -152,7 +152,7 @@ export default createUseStyles(
       },
 
       '&$end $tooltipInner$withArrow::before': {
-        top: arrowSize,
+        bottom: arrowSize,
       },
     }),
 
@@ -179,7 +179,7 @@ export default createUseStyles(
       },
 
       '&$end $tooltipInner$withArrow::before': {
-        top: arrowSize,
+        bottom: arrowSize,
       },
     }),
   },

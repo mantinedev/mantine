@@ -8,7 +8,7 @@ storiesOf('@mantine/core/Tooltip', module)
   .add('General usage', () => (
     <div style={{ padding: 100 }}>
       <div>
-        <Tooltip label="tooltip" position="right" placement="center" withArrow opened>
+        <Tooltip label="tooltip" position="left" placement="end" withArrow opened>
           <div style={{ height: 50, width: 200, background: 'red' }}>top-center</div>
         </Tooltip>
       </div>
