@@ -104,6 +104,41 @@ export default function App(props) {
 }
 ```
 
+## Gatsby
+
+<Button variant="outline" component="a" href="https://github.com/mantinedev/mantine-gatsby-example">
+  Gatsby example source code
+</Button>
+
+Install [gatsby-plugin-jss](https://www.gatsbyjs.com/plugins/gatsby-plugin-jss/):
+
+```sh
+npm install gatsby-plugin-jss
+```
+
+Add gatsby-plugin-jss to your `gatsby-config.js`:
+
+```tsx
+plugins: [`gatsby-plugin-jss` /* other plugins */];
+```
+
+Wrap your [layout component](https://github.com/mantinedev/mantine-gatsby-example/blob/master/src/components/layout.js) with MantineProvider (skip this step if you stick with default theme):
+
+```tsx
+import React from 'react';
+import { MantineProvider } from '@mantine/core';
+
+const Layout = ({ children }) => {
+  return (
+    <MantineProvider theme={{ fontFamily: 'Verdana, sans-serif' }}>
+      <main>{children}</main>
+    </MantineProvider>
+  );
+};
+
+export default Layout;
+```
+
 ## Your own server
 
 Follow [instruction](https://cssinjs.org/react-jss/?v=v10.6.0#server-side-rendering) on react-jss site.
