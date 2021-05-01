@@ -40,6 +40,53 @@ with focus on usability, accessibility and developer experience.
 
 <PackagesTable />
 
+## Getting started
+
+Mantine works out of the box with [create-react-app](https://create-react-app.dev/) (including [TypeScript version](https://create-react-app.dev/docs/adding-typescript/)),
+[Preact cli](https://github.com/preactjs/preact-cli) (with compat), [Next.js](https://nextjs.org/), [Gatsby](https://www.gatsbyjs.com/) and any other environment.
+
+Install mantine dependencies with yarn:
+
+```sh
+yarn add react-jss @mantine/hooks @mantine/core
+```
+
+or npm
+
+```sh
+npm install react-jss @mantine/hooks @mantine/core
+```
+
+And you are ready:
+
+```tsx
+import React from 'react';
+import { Button } from '@mantine/core';
+
+function App() {
+  return <Button>My mantine button</Button>;
+}
+```
+
+To enable server side rendering in your application see <GatsbyLink to="/guides/ssr/">ssr guide</GatsbyLink>,
+it includes tutorials for Gatsby, Next.js and your own server.
+
+## Versioning
+
+All mantine packages are released at the same time with exact same version.
+After installation you can fix @mantine/scoped packages version in your package.json
+to prevent versions mismatch in future:
+
+```json
+{
+  // Fix version by using "1.0.1", not default "^1.0.1"
+  "dependencies": {
+    "@mantine/core": "1.0.1",
+    "@mantine/hooks": "1.0.1"
+  }
+}
+```
+
 ## License
 
 <License />
