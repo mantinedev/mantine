@@ -4,7 +4,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const getSizes = (props?: any) =>
   ['xs', 'sm', 'md', 'lg', 'xl'].reverse().map((size) => (
-    <Button size={size} {...props}>
+    <Button key={size} size={size} {...props}>
       {size} size
     </Button>
   ));

@@ -7,7 +7,7 @@ const getColors = (props: any) =>
   Object.keys(DEFAULT_THEME.colors)
     .filter((color) => color !== 'dark')
     .map((color) => (
-      <ActionIcon color={color} {...props}>
+      <ActionIcon key={color} color={color} {...props}>
         <ImageIcon />
       </ActionIcon>
     ));

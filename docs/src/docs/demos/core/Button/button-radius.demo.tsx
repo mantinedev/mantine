@@ -4,7 +4,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const getSizes = (props?: any) =>
   ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
-    <Button radius={size} size="lg" {...props}>
+    <Button key={size} radius={size} size="lg" {...props}>
       {size} radius
     </Button>
   ));

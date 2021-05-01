@@ -13,7 +13,7 @@ const iconSizes = {
 
 const getSizes = (props: any) =>
   ['xs', 'sm', 'md', 'lg', 'xl'].reverse().map((size) => (
-    <ActionIcon size={size} {...props}>
+    <ActionIcon key={size} size={size} {...props}>
       <ImageIcon style={{ width: iconSizes[size], height: iconSizes[size] }} />
     </ActionIcon>
   ));

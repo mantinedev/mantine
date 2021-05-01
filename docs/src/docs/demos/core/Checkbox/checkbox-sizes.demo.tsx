@@ -5,6 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 const getSizes = (props?: any) =>
   ['xs', 'sm', 'md', 'lg', 'xl'].map((size, index) => (
     <Checkbox
+      key={size}
       size={size}
       defaultChecked
       style={{ marginTop: index === 0 ? 0 : 15 }}
