@@ -7,6 +7,8 @@ category: 'misc'
 description: 'Animate presence of component with predefined animations'
 ---
 
+import { TransitionCustomDemo } from '../demos/core/Transition/transition-custom.demo';
+
 # Transition
 
 <PageHeader
@@ -64,25 +66,7 @@ You can create your own transition. Transition is an object with 4 properties:
 - `common` (optional) – styles for both mounted and unmounted states
 - `transitionProperty` – properties which participate in transition
 
-```tsx
-import React from 'react';
-import { Transition } from '@mantine/core';
-
-const scaleY = {
-  in: { opacity: 1, transform: 'scaleY(1)' },
-  out: { opacity: 0, transform: 'scaleY(0)' },
-  common: { transformOrigin: 'top' },
-  transitionProperty: 'transform, opacity',
-};
-
-function YourModal({ opened }) {
-  return (
-    <Transition mounted={opened} transition={scaleY} duration={400} timingFunction="ease">
-      {(styles) => <div style={styles}>Your modal</div>}
-    </Transition>
-  );
-}
-```
+<TransitionCustomDemo />
 
 ## GroupedTransition
 
@@ -94,7 +78,7 @@ modal body slides from the top and overlay fades.
 import React from 'react';
 import { GroupedTransition } from '@mantine/core';
 
-function YourModal({ opened }) {
+function Demo({ opened }) {
   const duration = 500;
 
   return (
@@ -113,6 +97,19 @@ function YourModal({ opened }) {
       )}
     </GroupedTransition>
   );
+}
+```
+
+## TypeScript
+
+You can import `MantineTransition` type to use in your components,
+it includes all premade transitions names and transition object:
+
+```tsx
+import { MantineTransition, Transition } from '@mantine/core';
+
+function Demo({ transition = 'skew-up' }: { transition: MantineTransition }) {
+  return <Transition transition={transition} /* other props */ />;
 }
 ```
 
