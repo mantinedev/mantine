@@ -61,7 +61,7 @@ export function NumberInput({
   const classes = useStyles({ theme, radius });
   const [focused, setFocused] = useState(false);
   const [_value, setValue] = useState(
-    typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : null
+    typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : 0
   );
   const finalValue = typeof value === 'number' ? value : _value;
   const [tempValue, setTempValue] = useState(
