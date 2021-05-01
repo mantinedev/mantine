@@ -21,7 +21,7 @@ function Demo() {
   return <ElementsGroup position="center">{transitions}</ElementsGroup>;
 }`;
 
-export function TooltipTransitionsDemo() {
+export function TooltipTransitionsDemo({ hideCode = false }: { hideCode: boolean }) {
   const transitions = AVAILABLE_TRANSITIONS.map((transition) => (
     <Tooltip
       key={transition}
@@ -35,7 +35,7 @@ export function TooltipTransitionsDemo() {
   ));
 
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo code={hideCode ? null : code} language="tsx">
       <ElementsGroup position="center">{transitions}</ElementsGroup>
     </CodeDemo>
   );
