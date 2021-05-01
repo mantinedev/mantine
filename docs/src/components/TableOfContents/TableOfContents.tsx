@@ -116,7 +116,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
             <div className={classes.items}>{items}</div>
           </div>
 
-          <div>
+          <div className={classes.shortcuts}>
             <div className={classes.header}>
               <MixIcon />
               <Text className={classes.title}>Keyboard shortcuts</Text>

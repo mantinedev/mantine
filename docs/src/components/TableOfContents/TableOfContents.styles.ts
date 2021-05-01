@@ -73,6 +73,10 @@ export default createUseStyles(
       display: 'inline',
       marginLeft: theme.spacing.xs,
     },
+
+    shortcuts: {
+      marginTop: theme.spacing.xl * 2,
+    },
   }),
   { theming }
 );
