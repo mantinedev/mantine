@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useClickOutside, useFocusTrap } from '@mantine/hooks';
-import { TrashIcon, CheckIcon, Pencil1Icon } from '@modulz/radix-icons';
 import {
   Paper,
   TextInput,
@@ -9,6 +8,7 @@ import {
   useMantineTheme,
   MantineThemeOverride,
 } from '@mantine/core';
+import { CheckIcon } from './CheckIcon';
 import { TagPickerColor, TagPickerTag } from '../types';
 import useStyles from './TagEdit.styles';
 
@@ -79,7 +79,7 @@ export default function TagEdit({
         <ColorSwatch color={theme.colors[color.color][5]} size={18} themeOverride={themeOverride} />
         <span className={classes.colorLabel}>{color.name}</span>
       </div>
-      {color.color === values.color && <CheckIcon />}
+      {color.color === values.color && <CheckIcon style={{ width: 14, height: 14 }} />}
     </button>
   ));
 
@@ -99,20 +99,23 @@ export default function TagEdit({
             value={values.name}
             onChange={(event) => handleNameChange(event.currentTarget.value)}
             onKeyDown={(event) => event.nativeEvent.code === 'Enter' && handleSubmit()}
-            icon={<Pencil1Icon />}
             autoFocus
             themeOverride={themeOverride}
           />
 
-          <ActionIcon color="teal" onClick={handleSubmit} themeOverride={themeOverride}>
-            <CheckIcon />
+          <ActionIcon
+            size={36}
+            variant="light"
+            onClick={handleSubmit}
+            themeOverride={themeOverride}
+          >
+            <CheckIcon style={{ width: 16, height: 16 }} />
           </ActionIcon>
         </div>
 
         {enableDelete && (
           <button className={classes.deleteControl} type="button" onClick={handleDelete}>
-            <TrashIcon className={classes.deleteIcon} />
-            <span>{deleteLabel}</span>
+            {deleteLabel}
           </button>
         )}
 

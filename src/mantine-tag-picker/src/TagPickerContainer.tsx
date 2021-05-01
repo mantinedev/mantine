@@ -31,7 +31,7 @@ interface TagPickerProps extends DefaultProps {
   onTagUpdate?(id: string, values: Omit<TagPickerTag, 'id'>): void;
 }
 
-export default function TagPickerContainer({ transitionDuration = 250, ...props }: TagPickerProps) {
+export function TagPickerContainer({ transitionDuration = 250, ...props }: TagPickerProps) {
   const controlRef = useRef<HTMLButtonElement>();
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const [hovered, setHovered] = useState(-1);

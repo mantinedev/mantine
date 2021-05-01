@@ -1,6 +1,5 @@
 import React from 'react';
 import cx from 'clsx';
-import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { useFocusTrap } from '@mantine/hooks';
 import { TextInput, Text, Badge, MantineThemeOverride, useMantineTheme } from '@mantine/core';
 import { TagPickerColor, TagPickerTag } from '../types';
@@ -98,7 +97,6 @@ export default function TagsList({
           onHoveredChange(-1);
           onArrowsCaptureChange(false);
         }}
-        icon={<MagnifyingGlassIcon />}
       />
 
       {description && (

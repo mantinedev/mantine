@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
-import { DotsHorizontalIcon } from '@modulz/radix-icons';
 import {
   ActionIcon,
   Transition,
@@ -10,6 +9,7 @@ import {
 } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 import { TagPickerColor, TagPickerTag } from '../types';
+import { MenuIcon } from './MenuIcon';
 import TagEdit from '../TagEdit/TagEdit';
 import useStyles from './TagItem.styles';
 
@@ -120,7 +120,7 @@ export default function TagItem({
             elementRef={controlRef}
             themeOverride={themeOverride}
           >
-            <DotsHorizontalIcon />
+            <MenuIcon />
           </ActionIcon>
         )}
       </div>
