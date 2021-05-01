@@ -5,8 +5,14 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
 import { Card, CardsGrid, Text } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 
 function Demo() {
+  const px1000 = useMediaQuery('(max-width: 1000px)');
+  const px750 = useMediaQuery('(max-width: 750px)');
+  const px540 = useMediaQuery('(max-width: 540px)');
+  const cardsPerRow = px540 ? 1 : px750 ? 2 : px1000 ? 3 : 4;
+
   const cards = Array(5)
     .fill(0)
     .map((_, index) => (
@@ -18,15 +24,7 @@ function Demo() {
     ));
 
   return (
-    <CardsGrid
-      grow
-      cardsPerRow={4}
-      breakpoints={[
-        { maxWidth: 1000, cardsPerRow: 3 },
-        { maxWidth: 750, cardsPerRow: 2 },
-        { maxWidth: 540, cardsPerRow: 1 },
-      ]}
-    >
+    <CardsGrid grow cardsPerRow={cardsPerRow}>
       {cards}
     </CardsGrid>
   );
@@ -35,10 +33,6 @@ function Demo() {
 export function CardsGridBreakpointsDemo() {
   const theme = useMantineTheme();
 
-  // dirty hack
-  // somehow gatsby does not generate media queries with breakpoints prop
-  // it works in storybook and everywhere else, I have no idea why it does not work here
-  // I wanted to do a demo, don't judge me, please, we all do these dirty hacks
   const px1000 = useMediaQuery('(max-width: 1000px)');
   const px750 = useMediaQuery('(max-width: 750px)');
   const px540 = useMediaQuery('(max-width: 540px)');
