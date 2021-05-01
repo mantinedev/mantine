@@ -41,7 +41,7 @@ export { Spoiler } from './Spoiler/Spoiler';
 export { Switch, SWITCH_SIZES } from './Switch/Switch';
 export { Table } from './Table/Table';
 export { Tabs, Tab } from './Tabs/Tabs';
-export { Text } from './Text/Text';
+export { Text, Anchor } from './Text/Text';
 export { Textarea } from './Textarea/Textarea';
 export { TextInput } from './TextInput/TextInput';
 export { ThemeIcon, THEME_ICON_SIZES } from './ThemeIcon/ThemeIcon';

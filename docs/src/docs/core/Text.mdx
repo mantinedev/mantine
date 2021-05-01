@@ -14,7 +14,7 @@ import { TextBaseDemo } from '../demos/core/Text/text.demos';
 <PageHeader source="mantine-core/src/Text/Text.tsx" docs="core/Text.mdx" package="@mantine/core" />
 
 ```tsx
-import { Text } from '@mantine/core';
+import { Text, Anchor } from '@mantine/core';
 ```
 
 ## Usage
@@ -26,7 +26,7 @@ Use Text component to render text and links with theme styles. Control Text styl
 - **weight** – font-weight property – 500, 700, bold, semibold, etc.
 - **transform** – text-transform property – uppercase, lowercase, capitalize
 - **align** – text-align property
-- **variant** – text or link predefined styles
+- **variant** – text or link predefined styles (Anchor component has `variant="link"` by default)
 
 <TextBaseDemo />
 
@@ -40,6 +40,11 @@ import { Link } from 'react-router-dom';
 <Text variant="link" component={Link} to="/hello">
   React router link
 </Text>
+
+// same as above example
+<Anchor component={Link} to="/hello">
+  React router link
+</Anchor>
 
 <Text variant="link" component="a" href="https://mantine.dev">
   Normal link
