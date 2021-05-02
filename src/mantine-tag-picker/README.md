@@ -1,6 +1,6 @@
 # Mantine Tag Picker
 
-![Demo](./demo.gif)
+![Demo](https://github.com/mantinedev/mantine/blob/master/.demo/tag-picker.gif)
 
 Notion like tag picker component built on top of [Mantine](https://mantine.dev/) components library.
 
