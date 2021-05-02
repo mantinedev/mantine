@@ -1,14 +1,14 @@
 {
   "name": "@mantine/tag-picker",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "main": "dist/lib.js",
   "license": "MIT",
   "types": "dist/mantine-tag-picker/src/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
   "peerDependencies": {
-    "@mantine/core": "0.8.0",
-    "@mantine/hooks": "0.8.0",
+    "@mantine/core": "0.9.0",
+    "@mantine/hooks": "0.9.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "react-jss": ">=10.1.1"
