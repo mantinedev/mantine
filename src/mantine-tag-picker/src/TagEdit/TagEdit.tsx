@@ -115,7 +115,7 @@ export function TagEdit({
           <ActionIcon
             data-mantine-tag-save
             size={36}
-            variant="light"
+            variant={theme.colorScheme === 'dark' ? 'transparent' : 'light'}
             onClick={handleSubmit}
             themeOverride={themeOverride}
             aria-label={saveLabel}

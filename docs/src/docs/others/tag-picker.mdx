@@ -5,6 +5,9 @@ order: 1
 slug: /others/tag-picker/
 ---
 
+import { TagPickerBaseDemo } from '../demos/others/tag-picker/tag-picker-base.demo';
+import { TagPickerMinimalDemo } from '../demos/others/tag-picker/tag-picker-minimal.demo';
+
 # Mantine tag picker
 
 <PageHeader
@@ -35,9 +38,74 @@ With [peerdeps](https://www.npmjs.com/package/install-peerdeps):
 npx install-peerdeps @mantine/tag-picker
 ```
 
+## Usage
+
+Mockdata used in all examples:
+
+```tsx
+const mockdata = [
+  { id: 'home', name: 'Home', color: 'teal' },
+  { id: 'pets', name: 'Pets', color: 'blue' },
+  { id: 'subscriptions', name: 'Subscriptions', color: 'red' },
+  { id: 'personal-projects', name: 'Personal projects', color: 'lime' },
+  { id: 'healthcare', name: 'Healthcare', color: 'orange' },
+  { id: 'entertainment', name: 'Entertainment', color: 'violet' },
+  { id: 'rent', name: 'Rent', color: 'indigo' },
+  { id: 'gifts', name: 'Gifts', color: 'yellow' },
+];
+```
+
+Bare minimum example with usage as custom select:
+
+<TagPickerMinimalDemo />
+
+## Create, update, delete tags
+
+Enhance tag picker with extra logic:
+
+- `enableCreate` and `onTagCreate` – to allow new tags creation
+- `enableUpdate` and `onTagUpdate` – to allow updates of existing tags
+- `enableColorChange` – to allow color change (won't work without `enableUpdate` option)
+- `enableDelete` and `onTagDelete` – to allow delete existing tags
+
+<TagPickerBaseDemo />
+
 ## Multiple state
 
 Multiple state is not currently supported, feel free to add this feature and add <GatsbyLink to="/pages/contribute/">open pull request</GatsbyLink>.
+
+## Keyboard support
+
+You can perform all actions within component with keyboard only:
+
+- When tags list is open use up and down arrows to select tag, then hit Enter to submit
+- With opened tags list use Tab key to focus tag edit control, hit Space or Enter to open it
+- When tag edit menu is opened hit Escape to close it or Enter to submit value
+
+## Accessibility
+
+To provide better screen readers support use these props:
+
+```tsx
+<TagPicker
+  saveLabel="Save changes" // -> aria-label for save control inside tag edit dropdown
+  tagNameEditLabel="Update tag name" // -> aria-label for tag name field
+  editTagLabel="Edit tag" // -> aria-label for tag edit dropdown control (horizontal dots)
+/>
+```
+
+To connect TagPicker to label use either: `labelledBy` prop to set `aria-labelledby` on control
+or `controlId` prop to connect with id:
+
+```tsx
+// with id: when label is clicked tag picker control is focused
+<label htmlFor="my-tag-picker">My tag picker</label>
+<TagPicker controlId="my-tag-picker" />
+
+// with labelledBy: still supports screen readers but does not focus on click
+<div id="my-tag-picker">My tag picker</div>
+<TagPicker labelledBy="my-tag-picker" />
+```
 
 ## Component props
 

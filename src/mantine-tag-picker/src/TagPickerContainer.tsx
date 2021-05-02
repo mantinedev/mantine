@@ -4,7 +4,11 @@ import { TagPickerTag, TagPickerColor } from './types';
 import { TagPicker } from './TagPicker/TagPicker';
 
 function getRandomColor(colors: TagPickerColor[]) {
-  return colors[Math.floor(Math.random() * colors.length)].color;
+  if (Array.isArray(colors)) {
+    return colors[Math.floor(Math.random() * colors.length)].color;
+  }
+
+  return null;
 }
 
 interface TagPickerProps extends DefaultProps {

@@ -25,6 +25,8 @@ export default createUseStyles(
       padding: [0, 0],
       borderRadius: 24,
       cursor: 'pointer',
+      appearance: 'none',
+      WebkitAppearance: 'none',
     }),
   },
   { link: true }

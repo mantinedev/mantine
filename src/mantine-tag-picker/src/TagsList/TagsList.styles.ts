@@ -1,31 +1,36 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getFontStyles } from '@mantine/core';
 
+interface TagPickerStyles {
+  theme: MantineTheme;
+}
+
 export default createUseStyles(
   {
-    tagsList: {
-      paddingTop: 10,
-      paddingBottom: 10,
-    },
+    tagsList: ({ theme }: TagPickerStyles) => ({
+      paddingTop: theme.spacing.xs,
+      paddingBottom: theme.spacing.xs,
+    }),
 
-    description: {
-      marginTop: 10,
-      marginBottom: 7,
-      padding: [0, 10],
-    },
+    description: ({ theme }: TagPickerStyles) => ({
+      marginTop: theme.spacing.xs,
+      marginBottom: theme.spacing.xs,
+      padding: [0, theme.spacing.xs],
+    }),
 
-    searchInput: {
-      marginLeft: 10,
-      marginRight: 10,
-    },
+    searchInput: ({ theme }: TagPickerStyles) => ({
+      marginLeft: theme.spacing.xs,
+      marginRight: theme.spacing.xs,
+      marginBottom: theme.spacing.xs,
+    }),
 
-    createControl: ({ theme }: { theme: MantineTheme }) => ({
+    createControl: ({ theme }: TagPickerStyles) => ({
       ...getFontStyles(theme),
       backgroundColor: 'transparent',
       border: 0,
       outline: 0,
-      paddingLeft: 10,
-      paddingRight: 10,
+      paddingLeft: theme.spacing.xs,
+      paddingRight: theme.spacing.xs,
       width: '100%',
       textAlign: 'left',
       height: 32,
@@ -41,11 +46,12 @@ export default createUseStyles(
       display: 'block !important',
     },
 
-    createControlLabel: {
+    createControlLabel: ({ theme }: TagPickerStyles) => ({
       marginRight: 10,
-    },
+      fontSize: theme.fontSizes.sm,
+    }),
 
-    createControlHovered: ({ theme }: { theme: MantineTheme }) => ({
+    createControlHovered: ({ theme }: TagPickerStyles) => ({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
     }),
   },

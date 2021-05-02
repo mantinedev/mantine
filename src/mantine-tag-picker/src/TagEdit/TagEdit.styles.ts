@@ -33,6 +33,7 @@ export default createUseStyles(
     deleteControl: ({ theme }: { theme: MantineTheme }) => ({
       ...getFontStyles(theme),
       ...getFocusStyles(theme),
+      fontSize: theme.fontSizes.sm,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       border: 0,
       width: '100%',
@@ -67,6 +68,7 @@ export default createUseStyles(
     colorControl: ({ theme }: { theme: MantineTheme }) => ({
       ...getFontStyles(theme),
       ...getFocusStyles(theme),
+      fontSize: theme.fontSizes.sm,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       textTransform: 'capitalize',
       width: '100%',

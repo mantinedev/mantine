@@ -48,7 +48,7 @@ export function TagPicker({
       >
         <Badge
           color={(value && value.color) || 'gray'}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', display: 'block' }}
           themeOverride={themeOverride}
         >
           {(value && value.name) || noValueLabel}
