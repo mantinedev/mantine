@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
-import { useDocumentTitle } from '@mantine/hooks';
+import { useDocumentTitle, randomId } from '@mantine/hooks';
 import { ElementsGroup, Button } from '@mantine/core';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
-import { useDocumentTitle } from '@mantine/hooks';
+import { useDocumentTitle, randomId } from '@mantine/hooks';
 import { Button } from '@mantine/core';
-
-function randomId() {
-  return Math.random().toString(36).substr(2, 9);
-}
 
 export function UseDocumentTitleDemo() {
   const [title, setTitle] = useState('');
@@ -21,10 +17,6 @@ export function UseDocumentTitleDemo() {
     </Button>
   );
 }`;
-
-function randomId() {
-  return Math.random().toString(36).substr(2, 9);
-}
 
 export function UseDocumentTitleDemo() {
   const [title, setTitle] = useState('');

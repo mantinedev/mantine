@@ -4,7 +4,7 @@ export { useColorScheme } from './use-color-scheme/use-color-scheme';
 export { useDocumentTitle } from './use-document-title/use-document-title';
 export { useFocusTrap } from './use-focus-trap/use-focus-trap';
 export { useForm } from './use-form/use-form';
-export { useId } from './use-id/use-id';
+export { useId, randomId } from './use-id/use-id';
 export { useListState } from './use-list-state/use-list-state';
 export { useLocalStorageValue } from './use-local-storage-value/use-local-storage-value';
 export { useMediaQuery } from './use-media-query/use-media-query';

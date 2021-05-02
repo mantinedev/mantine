@@ -1,9 +1,5 @@
-import { useQueue } from '@mantine/hooks';
+import { useQueue, randomId } from '@mantine/hooks';
 import { NotificationProps } from '../../types';
-
-function randomId() {
-  return Math.random().toString(36).substr(2, 9);
-}
 
 export default function useNotificationsState({ limit }: { limit: number }) {
   const { state, queue, update, cleanQueue } = useQueue<NotificationProps>({

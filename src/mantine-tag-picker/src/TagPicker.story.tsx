@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/core';
+import { randomId } from '@mantine/hooks';
 import { TagPickerContainer as TagPicker } from './TagPickerContainer';
 import { TagPickerTag } from './types';
-
-function randomId() {
-  return Math.random().toString(36).substr(2, 9);
-}
 
 const colors = Object.keys(DEFAULT_THEME.colors)
   .filter((color) => color !== 'dark')
