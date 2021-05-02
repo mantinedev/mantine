@@ -17,6 +17,7 @@ export interface TagEditProps {
   initialValues: TagPickerTag;
   colors: TagPickerColor[];
   deleteLabel: string;
+  tagNameEditLabel?: string;
   saveLabel: string;
   onTagUpdate(id: string, values: Omit<TagPickerTag, 'id'>): void;
   onTagDelete(id: string): void;
@@ -27,7 +28,7 @@ export interface TagEditProps {
   enableColorChange?: boolean;
 }
 
-export default function TagEdit({
+export function TagEdit({
   style,
   onClose,
   initialValues,
@@ -37,6 +38,7 @@ export default function TagEdit({
   onTagDelete,
   id,
   saveLabel,
+  tagNameEditLabel,
   themeOverride,
   enableDelete,
   enableColorChange,
@@ -72,6 +74,7 @@ export default function TagEdit({
 
   const colorsList = colors.map((color) => (
     <button
+      data-mantine-tag-color
       className={classes.colorControl}
       type="button"
       key={color.color}
@@ -79,7 +82,9 @@ export default function TagEdit({
     >
       <div className={classes.colorControlBody}>
         <ColorSwatch color={theme.colors[color.color][5]} size={18} themeOverride={themeOverride} />
-        <span className={classes.colorLabel}>{color.name}</span>
+        <span data-mantine-tag-color-label className={classes.colorLabel}>
+          {color.name}
+        </span>
       </div>
       {color.color === values.color && <CheckIcon style={{ width: 14, height: 14 }} />}
     </button>
@@ -97,15 +102,18 @@ export default function TagEdit({
       <div ref={focusTrapRef}>
         <div className={classes.header}>
           <TextInput
+            data-mantine-tag-input
             className={classes.input}
             value={values.name}
             onChange={(event) => handleNameChange(event.currentTarget.value)}
             onKeyDown={(event) => event.nativeEvent.code === 'Enter' && handleSubmit()}
             autoFocus
+            aria-label={tagNameEditLabel}
             themeOverride={themeOverride}
           />
 
           <ActionIcon
+            data-mantine-tag-save
             size={36}
             variant="light"
             onClick={handleSubmit}
@@ -117,12 +125,21 @@ export default function TagEdit({
         </div>
 
         {enableDelete && (
-          <button className={classes.deleteControl} type="button" onClick={handleDelete}>
+          <button
+            data-mantine-tag-delete
+            className={classes.deleteControl}
+            type="button"
+            onClick={handleDelete}
+          >
             {deleteLabel}
           </button>
         )}
 
-        {enableColorChange && <div className={classes.colorsList}>{colorsList}</div>}
+        {enableColorChange && (
+          <div data-mantine-tag-colors className={classes.colorsList}>
+            {colorsList}
+          </div>
+        )}
       </div>
     </Paper>
   );

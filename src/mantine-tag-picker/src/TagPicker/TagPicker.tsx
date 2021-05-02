@@ -1,7 +1,7 @@
 import React from 'react';
 import { useClickOutside, useReducedMotion } from '@mantine/hooks';
 import { Paper, Transition, Badge, useMantineTheme } from '@mantine/core';
-import TagsList, { TagsListProps } from '../TagsList/TagsList';
+import { TagsList, TagsListProps } from '../TagsList/TagsList';
 import useStyles from './TagPicker.styles';
 
 interface TagPickerProps extends TagsListProps {
@@ -15,7 +15,7 @@ interface TagPickerProps extends TagsListProps {
   controlId?: string;
 }
 
-export default function TagPicker({
+export function TagPicker({
   dropdownOpened,
   openDropdown,
   closeDropdown,

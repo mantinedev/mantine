@@ -10,7 +10,7 @@ import {
 import { useReducedMotion } from '@mantine/hooks';
 import { TagPickerColor, TagPickerTag } from '../types';
 import { MenuIcon } from './MenuIcon';
-import TagEdit from '../TagEdit/TagEdit';
+import { TagEdit } from '../TagEdit/TagEdit';
 import useStyles from './TagItem.styles';
 
 interface TagItemProps {
@@ -20,6 +20,7 @@ interface TagItemProps {
   selected?: TagPickerTag;
   colors: TagPickerColor[];
   deleteLabel: string;
+  tagNameEditLabel?: string;
   saveLabel: string;
   editTagLabel: string;
   onSelect(value: TagPickerTag): void;
@@ -34,7 +35,7 @@ interface TagItemProps {
   transitionDuration?: number;
 }
 
-export default function TagItem({
+export function TagItem({
   index,
   hovered,
   data,
@@ -44,6 +45,7 @@ export default function TagItem({
   deleteLabel,
   saveLabel,
   editTagLabel,
+  tagNameEditLabel,
   colors,
   selected,
   onTagDelete,
@@ -91,6 +93,7 @@ export default function TagItem({
           <TagEdit
             style={transitionStyles}
             saveLabel={saveLabel}
+            tagNameEditLabel={tagNameEditLabel}
             onClose={closeEditDropdown}
             initialValues={data}
             deleteLabel={deleteLabel}
@@ -108,8 +111,8 @@ export default function TagItem({
       <div className={classes.body}>
         <button
           role="option"
-          aria-selected={!!selected && data.id === selected.id}
           type="button"
+          aria-selected={!!selected && data.id === selected.id}
           className={classes.control}
           onClick={() => onSelect(data)}
         >

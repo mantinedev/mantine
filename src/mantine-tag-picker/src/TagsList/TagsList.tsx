@@ -10,7 +10,7 @@ import {
   MantineTransition,
 } from '@mantine/core';
 import { TagPickerColor, TagPickerTag } from '../types';
-import TagItem from '../TagItem/TagItem';
+import { TagItem } from '../TagItem/TagItem';
 import useStyles from './TagsList.styles';
 
 export interface TagsListProps {
@@ -22,6 +22,7 @@ export interface TagsListProps {
   data: TagPickerTag[];
   canCreate: boolean;
   createLabel?: string;
+  tagNameEditLabel?: string;
   saveLabel?: string;
   deleteLabel?: string;
   editTagLabel?: string;
@@ -45,7 +46,7 @@ export interface TagsListProps {
   transitionTimingFunction?: string;
 }
 
-export default function TagsList({
+export function TagsList({
   searchQuery,
   searchPlaceholder,
   description,
@@ -57,6 +58,7 @@ export default function TagsList({
   deleteLabel,
   saveLabel,
   editTagLabel,
+  tagNameEditLabel,
   colors,
   createColor,
   onSearchChange,
@@ -85,6 +87,7 @@ export default function TagsList({
       data={tag}
       selected={value}
       saveLabel={saveLabel}
+      tagNameEditLabel={tagNameEditLabel}
       editTagLabel={editTagLabel}
       onSelect={onChange}
       onTagUpdate={onTagUpdate}

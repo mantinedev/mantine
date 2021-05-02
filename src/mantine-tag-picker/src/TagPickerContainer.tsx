@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { DefaultProps, MantineTransition } from '@mantine/core';
 import { TagPickerTag, TagPickerColor } from './types';
-import TagPicker from './TagPicker/TagPicker';
+import { TagPicker } from './TagPicker/TagPicker';
 
 function getRandomColor(colors: TagPickerColor[]) {
   return colors[Math.floor(Math.random() * colors.length)].color;
@@ -31,6 +31,9 @@ interface TagPickerProps extends DefaultProps {
 
   /** aria-label for save control */
   saveLabel?: string;
+
+  /** aria-label for tag name edit field */
+  tagNameEditLabel?: string;
 
   /** aria-label for edit tag control */
   editTagLabel?: string;
@@ -207,6 +210,7 @@ export function TagPickerContainer({ transitionDuration = 250, ...props }: TagPi
         editTagLabel={props.editTagLabel}
         deleteLabel={props.deleteLabel}
         noValueLabel={props.noValueLabel}
+        tagNameEditLabel={props.tagNameEditLabel}
         onCreate={handleCreate}
         colors={props.colors}
         onTagUpdate={handleUpdate}
