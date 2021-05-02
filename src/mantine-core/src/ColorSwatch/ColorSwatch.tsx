@@ -22,12 +22,13 @@ export function ColorSwatch<T extends React.ElementType = 'div', U = HTMLDivElem
   style,
   radius = 25,
   className,
+  themeOverride,
   ...others
 }: ComponentPassThrough<T, ColorSwatchProps> & {
   /** Get element ref */
   elementRef?: React.ForwardedRef<U>;
 }) {
-  const classes = useStyles({ radius, theme: useMantineTheme() });
+  const classes = useStyles({ radius, theme: useMantineTheme(themeOverride) });
 
   return (
     <Element
