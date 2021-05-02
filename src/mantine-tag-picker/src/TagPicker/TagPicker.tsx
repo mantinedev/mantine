@@ -11,6 +11,8 @@ interface TagPickerProps extends TagsListProps {
   closeDropdown(): void;
   onEventsCaptureChange(shouldCaptureEvents: boolean): void;
   noValueLabel: string;
+  labelledBy?: string;
+  controlId?: string;
 }
 
 export default function TagPicker({
@@ -22,6 +24,8 @@ export default function TagPicker({
   noValueLabel,
   themeOverride,
   transitionDuration,
+  controlId,
+  labelledBy,
   ...others
 }: TagPickerProps) {
   const theme = useMantineTheme(themeOverride);
@@ -32,7 +36,16 @@ export default function TagPicker({
 
   return (
     <div className={classes.tagPicker}>
-      <button className={classes.control} type="button" ref={controlRef} onClick={openDropdown}>
+      <button
+        className={classes.control}
+        type="button"
+        ref={controlRef}
+        onClick={openDropdown}
+        id={controlId}
+        aria-labelledby={labelledBy}
+        aria-haspopup="listbox"
+        aria-expanded={dropdownOpened}
+      >
         <Badge
           color={(value && value.color) || 'gray'}
           style={{ cursor: 'pointer' }}
@@ -50,11 +63,12 @@ export default function TagPicker({
       >
         {(transitionStyles) => (
           <Paper
-            shadow="xs"
+            shadow="sm"
             className={classes.dropdown}
             elementRef={dropdownRef}
             style={transitionStyles}
             themeOverride={themeOverride}
+            tabIndex={-1}
           >
             <TagsList
               value={value}

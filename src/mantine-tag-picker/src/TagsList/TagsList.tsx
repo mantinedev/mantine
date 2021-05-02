@@ -24,6 +24,7 @@ export interface TagsListProps {
   createLabel?: string;
   saveLabel?: string;
   deleteLabel?: string;
+  editTagLabel?: string;
   colors: TagPickerColor[];
   createColor: string;
   onSearchChange(query: string): void;
@@ -50,10 +51,12 @@ export default function TagsList({
   description,
   hovered,
   data,
+  value,
   canCreate,
   createLabel,
   deleteLabel,
   saveLabel,
+  editTagLabel,
   colors,
   createColor,
   onSearchChange,
@@ -80,7 +83,9 @@ export default function TagsList({
       index={index}
       hovered={hovered}
       data={tag}
+      selected={value}
       saveLabel={saveLabel}
+      editTagLabel={editTagLabel}
       onSelect={onChange}
       onTagUpdate={onTagUpdate}
       onHover={onHoveredChange}
@@ -97,7 +102,7 @@ export default function TagsList({
   ));
 
   return (
-    <div className={classes.tagsList} ref={focusTrapRef}>
+    <div className={classes.tagsList} ref={focusTrapRef} role="listbox">
       <TextInput
         themeOverride={themeOverride}
         className={classes.searchInput}

@@ -87,7 +87,7 @@ export default function TagEdit({
 
   return (
     <Paper
-      shadow="xs"
+      shadow="sm"
       className={classes.tagEdit}
       elementRef={dropdownRef}
       onKeyDownCapture={handleKeyDownCapture}

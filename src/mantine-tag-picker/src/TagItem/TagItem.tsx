@@ -17,6 +17,7 @@ interface TagItemProps {
   index: number;
   hovered: number;
   data: TagPickerTag;
+  selected?: TagPickerTag;
   colors: TagPickerColor[];
   deleteLabel: string;
   saveLabel: string;
@@ -44,6 +45,7 @@ export default function TagItem({
   saveLabel,
   editTagLabel,
   colors,
+  selected,
   onTagDelete,
   onEventsCaptureChange,
   themeOverride,
@@ -104,7 +106,13 @@ export default function TagItem({
       </Transition>
 
       <div className={classes.body}>
-        <button type="button" className={classes.control} onClick={() => onSelect(data)}>
+        <button
+          role="option"
+          aria-selected={!!selected && data.id === selected.id}
+          type="button"
+          className={classes.control}
+          onClick={() => onSelect(data)}
+        >
           <div className={classes.controlInner}>
             <Badge
               variant="light"

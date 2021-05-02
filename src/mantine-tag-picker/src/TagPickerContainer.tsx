@@ -35,6 +35,12 @@ interface TagPickerProps extends DefaultProps {
   /** aria-label for edit tag control */
   editTagLabel?: string;
 
+  /** aria-labelledby attribute for button control */
+  labelledBy?: string;
+
+  /** Set id on control, use it to connect with label */
+  controlId?: string;
+
   /** Tag with this value is displayed when value prop is null */
   noValueLabel: string;
 
