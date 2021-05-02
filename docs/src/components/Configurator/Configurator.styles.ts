@@ -22,7 +22,9 @@ export default createUseStyles(
 
     noCode: {
       borderRadius: theme.radius.sm,
-      borderBottom: `1px solid ${theme.colors.gray[3]}`,
+      borderBottom: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[3]
+      }`,
     },
 
     preview: {
