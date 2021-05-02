@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import banner from '../../images/banner.svg';
+import ogImage from '../../images/og-image.png';
 
 interface HeadProps {
   title: string;
@@ -11,7 +11,7 @@ interface HeadProps {
 export default function Head({ title, description, disableTitleTemplate }: HeadProps) {
   const metaDescription =
     description ||
-    'Customizable component library with focus on accessibility and developer experience.';
+    'React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience';
 
   return (
     <Helmet
@@ -30,7 +30,7 @@ export default function Head({ title, description, disableTitleTemplate }: HeadP
         },
         {
           property: 'og:image',
-          content: banner,
+          content: ogImage,
         },
         {
           property: 'og:description',
