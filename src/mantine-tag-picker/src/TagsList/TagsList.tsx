@@ -22,6 +22,7 @@ export interface TagsListProps {
   data: TagPickerTag[];
   canCreate: boolean;
   createLabel?: string;
+  saveLabel?: string;
   deleteLabel?: string;
   colors: TagPickerColor[];
   createColor: string;
@@ -52,6 +53,7 @@ export default function TagsList({
   canCreate,
   createLabel,
   deleteLabel,
+  saveLabel,
   colors,
   createColor,
   onSearchChange,
@@ -78,6 +80,7 @@ export default function TagsList({
       index={index}
       hovered={hovered}
       data={tag}
+      saveLabel={saveLabel}
       onSelect={onChange}
       onTagUpdate={onTagUpdate}
       onHover={onHoveredChange}

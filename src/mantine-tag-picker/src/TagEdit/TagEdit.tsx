@@ -17,6 +17,7 @@ export interface TagEditProps {
   initialValues: TagPickerTag;
   colors: TagPickerColor[];
   deleteLabel: string;
+  saveLabel: string;
   onTagUpdate(id: string, values: Omit<TagPickerTag, 'id'>): void;
   onTagDelete(id: string): void;
   onClose(): void;
@@ -35,6 +36,7 @@ export default function TagEdit({
   onTagUpdate,
   onTagDelete,
   id,
+  saveLabel,
   themeOverride,
   enableDelete,
   enableColorChange,
@@ -108,6 +110,7 @@ export default function TagEdit({
             variant="light"
             onClick={handleSubmit}
             themeOverride={themeOverride}
+            aria-label={saveLabel}
           >
             <CheckIcon style={{ width: 16, height: 16 }} />
           </ActionIcon>

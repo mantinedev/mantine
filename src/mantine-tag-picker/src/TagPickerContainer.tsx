@@ -32,6 +32,9 @@ interface TagPickerProps extends DefaultProps {
   /** aria-label for save control */
   saveLabel?: string;
 
+  /** aria-label for edit tag control */
+  editTagLabel?: string;
+
   /** Tag with this value is displayed when value prop is null */
   noValueLabel: string;
 
@@ -194,6 +197,8 @@ export function TagPickerContainer({ transitionDuration = 250, ...props }: TagPi
         canCreate={canCreate}
         value={props.value}
         createLabel={props.createLabel}
+        saveLabel={props.saveLabel}
+        editTagLabel={props.editTagLabel}
         deleteLabel={props.deleteLabel}
         noValueLabel={props.noValueLabel}
         onCreate={handleCreate}

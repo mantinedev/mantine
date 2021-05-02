@@ -19,6 +19,8 @@ interface TagItemProps {
   data: TagPickerTag;
   colors: TagPickerColor[];
   deleteLabel: string;
+  saveLabel: string;
+  editTagLabel: string;
   onSelect(value: TagPickerTag): void;
   onTagUpdate(id: string, values: Omit<TagPickerTag, 'id'>): void;
   onTagDelete(id: string): void;
@@ -39,6 +41,8 @@ export default function TagItem({
   onTagUpdate,
   onHover,
   deleteLabel,
+  saveLabel,
+  editTagLabel,
   colors,
   onTagDelete,
   onEventsCaptureChange,
@@ -84,6 +88,7 @@ export default function TagItem({
         {(transitionStyles) => (
           <TagEdit
             style={transitionStyles}
+            saveLabel={saveLabel}
             onClose={closeEditDropdown}
             initialValues={data}
             deleteLabel={deleteLabel}
@@ -119,6 +124,7 @@ export default function TagItem({
             onClick={openEditDropdown}
             elementRef={controlRef}
             themeOverride={themeOverride}
+            aria-label={editTagLabel}
           >
             <MenuIcon />
           </ActionIcon>
