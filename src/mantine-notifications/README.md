@@ -1,6 +1,6 @@
 # Mantine Notifications
 
-![Demo](./demo.gif)
+![Demo](https://github.com/mantinedev/mantine/blob/master/src/mantine-notifications/demo.gif)
 
 Notifications system built on top of [Mantine](https://mantine.dev/) components library.
 
