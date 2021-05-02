@@ -49,6 +49,14 @@ export default function Head({ title, description, disableTitleTemplate }: HeadP
           content: 'website',
         },
         {
+          name: 'twitter:card',
+          content: 'summary_large_image',
+        },
+        {
+          name: 'twitter:creator',
+          content: '@mantinedev',
+        },
+        {
           name: 'twitter:title',
           content: title,
         },
