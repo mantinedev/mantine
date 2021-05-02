@@ -1,6 +1,5 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import ogImage from '../../images/og-image.png';
 
 interface HeadProps {
   title: string;
@@ -30,7 +29,16 @@ export default function Head({ title, description, disableTitleTemplate }: HeadP
         },
         {
           property: 'og:image',
-          content: ogImage,
+          content:
+            'https://raw.githubusercontent.com/mantinedev/mantine/master/docs/src/images/og-image.png',
+        },
+        {
+          property: 'og:image:width',
+          content: '1280',
+        },
+        {
+          property: 'og:image:height',
+          content: '640',
         },
         {
           property: 'og:description',
