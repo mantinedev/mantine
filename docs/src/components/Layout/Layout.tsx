@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { MantineProvider } from '@mantine/core';
 import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
 import { ColorSchemeContext, ColorScheme } from './ColorScheme.context';
@@ -18,6 +18,11 @@ export default function Layout({
     defaultValue: 'light',
   });
 
+  // updating key is required during layout effect
+  // if not done color scheme will not be updated after ssr
+  // and some parts inside mdx will show light version, that's a bummer
+  const [key, setKey] = useState('light');
+
   useWindowEvent('keydown', (event) => {
     if (event.code === 'KeyJ' && (event.ctrlKey || event.metaKey)) {
       event.preventDefault();
@@ -25,10 +30,11 @@ export default function Layout({
     }
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const initialTheme = localStorage.getItem(THEME_KEY);
 
     if (initialTheme === 'dark') {
+      setKey('dark');
       setColorScheme('dark');
     }
   }, []);
@@ -36,7 +42,9 @@ export default function Layout({
   return (
     <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
       <MantineProvider theme={{ colorScheme }}>
-        <LayoutInner tableOfContents={location.pathname !== '/'}>{children}</LayoutInner>
+        <LayoutInner tableOfContents={location.pathname !== '/'} key={key}>
+          {children}
+        </LayoutInner>
       </MantineProvider>
     </ColorSchemeContext.Provider>
   );
