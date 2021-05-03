@@ -7,6 +7,7 @@ slug: /others/tag-picker/
 
 import { TagPickerBaseDemo } from '../demos/others/tag-picker/tag-picker-base.demo';
 import { TagPickerMinimalDemo } from '../demos/others/tag-picker/tag-picker-minimal.demo';
+import { TagPickerTransitionsDemo } from '../demos/others/tag-picker/tag-picker-transitions.demo';
 
 # Mantine tag picker
 
@@ -69,6 +70,18 @@ Enhance tag picker with extra logic:
 - `enableDelete` and `onTagDelete` – to allow delete existing tags
 
 <TagPickerBaseDemo />
+
+## Change transitions
+
+TagPicker is built with <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component.
+
+You can change transitions with props:
+
+- **transition** – premade transition or transition object
+- **transitionDuration** – transition duration in ms, defaults to 200ms.
+- **transitionTimingFunction** – timing function, defaults to `theme.transitionTimingFunction`
+
+<TagPickerTransitionsDemo />
 
 ## Multiple state
 

@@ -75,6 +75,8 @@ export function TagsList({
   enableDelete,
   enableColorChange,
   transitionDuration,
+  transition,
+  transitionTimingFunction,
 }: TagsListProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const focusTrapRef = useFocusTrap();
@@ -99,6 +101,8 @@ export function TagsList({
       enableUpdate={enableUpdate}
       enableDelete={enableDelete}
       enableColorChange={enableColorChange}
+      transition={transition}
+      transitionTimingFunction={transitionTimingFunction}
       transitionDuration={transitionDuration}
       themeOverride={themeOverride}
     />

@@ -26,6 +26,8 @@ export function TagPicker({
   transitionDuration,
   controlId,
   labelledBy,
+  transition = 'skew-up',
+  transitionTimingFunction,
   ...others
 }: TagPickerProps) {
   const theme = useMantineTheme(themeOverride);
@@ -58,7 +60,8 @@ export function TagPicker({
       <Transition
         duration={duration}
         mounted={dropdownOpened}
-        transition="skew-up"
+        transition={transition}
+        timingFunction={transitionTimingFunction}
         themeOverride={themeOverride}
       >
         {(transitionStyles) => (
@@ -72,7 +75,9 @@ export function TagPicker({
           >
             <TagsList
               value={value}
+              transition={transition}
               transitionDuration={transitionDuration}
+              transitionTimingFunction={transitionTimingFunction}
               themeOverride={themeOverride}
               {...others}
             />

@@ -44,6 +44,7 @@ function TagPickerWrapper(props: TagPickerWrapperProps) {
         value={value}
         onChange={onChange}
         data={data}
+        transition="rotate-right"
         searchPlaceholder="Search categories"
         colors={colors}
         description="Select category or create new one"

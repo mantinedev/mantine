@@ -6,6 +6,7 @@ import {
   Badge,
   useMantineTheme,
   MantineThemeOverride,
+  MantineTransition,
 } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 import { TagPickerColor, TagPickerTag } from '../types';
@@ -33,6 +34,8 @@ interface TagItemProps {
   enableDelete?: boolean;
   enableColorChange?: boolean;
   transitionDuration?: number;
+  transition?: MantineTransition;
+  transitionTimingFunction: string;
 }
 
 export function TagItem({
@@ -55,6 +58,8 @@ export function TagItem({
   enableDelete,
   enableColorChange,
   transitionDuration,
+  transition = 'skew-up',
+  transitionTimingFunction,
 }: TagItemProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
   const controlRef = useRef<HTMLButtonElement>();
@@ -86,7 +91,8 @@ export function TagItem({
       <Transition
         duration={duration}
         mounted={editDropdownOpened}
-        transition="skew-up"
+        transition={transition}
+        timingFunction={transitionTimingFunction}
         themeOverride={themeOverride}
       >
         {(transitionStyles) => (
