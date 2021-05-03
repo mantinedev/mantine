@@ -5,7 +5,7 @@ import { ColorSchemeContext } from '../../../components/Layout/ColorScheme.conte
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Button } from '@mantine/core';
+import { ActionIcon } from '@mantine/core';
 import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 import ColorSchemeContext from './ColorSchemeContext';
 
