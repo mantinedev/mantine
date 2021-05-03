@@ -11,7 +11,7 @@ export default createUseStyles(
     code: {
       boxSizing: 'border-box',
       position: 'relative',
-      fontFamily: 'Menlo, Monaco, Courier, monospace',
+      fontFamily: 'Menlo, Monaco, Lucida Console, monospace',
       lineHeight: 1.7,
       fontSize: 13,
       overflowX: 'auto',

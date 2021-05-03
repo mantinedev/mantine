@@ -56,7 +56,7 @@ export default function PageHeader(props: PageHeaderProps) {
         title="Open package page on npm"
         style={{
           textTransform: 'lowercase',
-          fontFamily: 'Menlo, Monaco, Courier, monospace',
+          fontFamily: 'Menlo, Monaco, Lucida Console, monospace',
           ...styles,
         }}
       >

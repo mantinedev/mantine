@@ -32,7 +32,7 @@ export default function PropsTable({ component }: { component: string }) {
             color={theme.colorScheme === 'dark' ? 'red' : 'indigo'}
             size="xs"
             weight={500}
-            style={{ fontFamily: 'Menlo, Monaco, Courier, monospace' }}
+            style={{ fontFamily: 'Menlo, Monaco, Lucida Console, monospace' }}
           >
             {prop.type.name}
           </Text>
