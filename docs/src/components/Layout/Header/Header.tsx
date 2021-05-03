@@ -52,7 +52,7 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
           aria-label={burgerTitle}
         />
         <div className={classes.logoWrapper}>
-          <Link to="/" className={classes.logo}>
+          <Link to="/" className={classes.logo} aria-label="Getting started">
             <Logo className={classes.image} />
           </Link>
           <a href="https://github.com/mantinedev/mantine/releases" className={classes.version}>
@@ -89,6 +89,7 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
           arrowSize={4}
         >
           <ActionIcon
+            aria-label="Toggle theme"
             className={classes.themeToggle}
             variant="outline"
             color={dark ? 'yellow' : 'blue'}
