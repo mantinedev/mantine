@@ -86,6 +86,8 @@ export default createUseStyles(
     actionIcon: ({ radius, theme, size }: ActionIconStylesProps) => ({
       ...getFocusStyles(theme),
       ...getFontStyles(theme),
+      appearance: 'none',
+      WebkitAppearance: 'none',
       WebkitTapHighlightColor: 'transparent',
       border: '1px solid transparent',
       boxSizing: 'border-box',
