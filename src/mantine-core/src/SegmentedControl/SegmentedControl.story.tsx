@@ -24,7 +24,12 @@ storiesOf('@mantine/core/SegmentedControl', module)
   .add('General usage', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Wrapper />
-      <Wrapper fullWidth transitionDuration={500} style={{ marginTop: 20 }} />
+      <Wrapper
+        fullWidth
+        transitionDuration={500}
+        transitionTimingFunction="linear"
+        style={{ marginTop: 20 }}
+      />
       <Wrapper radius="xl" fullWidth style={{ marginTop: 20 }} />
       <Wrapper color="blue" fullWidth style={{ marginTop: 20 }} />
       <Wrapper color="teal" fullWidth style={{ marginTop: 20 }} />

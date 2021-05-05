@@ -8,6 +8,8 @@ import {
   getFocusStyles,
 } from '@mantine/theme';
 
+export const WRAPPER_PADDING = 4;
+
 interface SegmentedControlStyles {
   theme: MantineTheme;
   fullWidth: boolean;
@@ -15,6 +17,7 @@ interface SegmentedControlStyles {
   radius: MantineNumberSize;
   reduceMotion: boolean;
   transitionDuration: number;
+  transitionTimingFunction: string;
 }
 
 export default createUseStyles({
@@ -50,7 +53,7 @@ export default createUseStyles({
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     overflow: 'hidden',
-    padding: 4,
+    padding: WRAPPER_PADDING,
   }),
 
   controlActive: {
@@ -61,13 +64,18 @@ export default createUseStyles({
     },
   },
 
-  control: ({ theme, reduceMotion, transitionDuration }: SegmentedControlStyles) => ({
+  control: ({
+    theme,
+    reduceMotion,
+    transitionDuration,
+    transitionTimingFunction,
+  }: SegmentedControlStyles) => ({
     position: 'relative',
     boxSizing: 'border-box',
     flex: 1,
     zIndex: 2,
     transition: `border-left-color ${reduceMotion ? 0 : transitionDuration}ms ${
-      theme.transitionTimingFunction
+      transitionTimingFunction || theme.transitionTimingFunction
     }`,
 
     '&:not(:first-of-type)': {
@@ -77,7 +85,13 @@ export default createUseStyles({
     },
   }),
 
-  label: ({ theme, radius, reduceMotion, transitionDuration }: SegmentedControlStyles) => ({
+  label: ({
+    theme,
+    radius,
+    reduceMotion,
+    transitionDuration,
+    transitionTimingFunction,
+  }: SegmentedControlStyles) => ({
     ...getFocusStyles(theme),
     ...getFontStyles(theme),
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
@@ -92,7 +106,7 @@ export default createUseStyles({
     textOverflow: 'ellipsis',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
     transition: `color ${reduceMotion ? 0 : transitionDuration}ms ${
-      theme.transitionTimingFunction
+      transitionTimingFunction || theme.transitionTimingFunction
     }`,
 
     '&:hover': {
@@ -106,7 +120,14 @@ export default createUseStyles({
     },
   }),
 
-  active: ({ theme, color, radius, reduceMotion, transitionDuration }: SegmentedControlStyles) => ({
+  active: ({
+    theme,
+    color,
+    radius,
+    reduceMotion,
+    transitionDuration,
+    transitionTimingFunction,
+  }: SegmentedControlStyles) => ({
     boxSizing: 'border-box',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     position: 'absolute',
@@ -116,7 +137,9 @@ export default createUseStyles({
     boxShadow: color || theme.colorScheme === 'dark' ? 'none' : theme.shadows.xs,
     transition: `transform ${reduceMotion ? 0 : transitionDuration}ms ${
       theme.transitionTimingFunction
-    }, width ${reduceMotion ? 0 : transitionDuration}ms ${theme.transitionTimingFunction}`,
+    }, width ${reduceMotion ? 0 : transitionDuration / 2}ms ${
+      transitionTimingFunction || theme.transitionTimingFunction
+    }`,
     backgroundColor:
       color in theme.colors
         ? getThemeColor({ theme, color, shade: 6 })

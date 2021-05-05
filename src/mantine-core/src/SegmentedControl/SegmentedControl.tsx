@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import cx from 'clsx';
 import { useId, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
-import useStyles from './SegmentedControl.styles';
+import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
 interface SegmentedControlItem {
   value: string;
@@ -35,6 +35,9 @@ interface SegmentedControlProps
 
   /** Transition duration in ms, set to 0 to turn off transitions */
   transitionDuration?: number;
+
+  /** Transition timing function for all transitions, defaults to theme.transitionTimingFunction */
+  transitionTimingFunction?: string;
 }
 
 export function SegmentedControl({
@@ -48,11 +51,22 @@ export function SegmentedControl({
   fullWidth,
   radius = 'sm',
   transitionDuration = 200,
+  transitionTimingFunction,
   ...others
 }: SegmentedControlProps) {
+  // reduce motion should be implemented via js, there is a bug in jss with media queries
+  // https://github.com/cssinjs/jss/issues/1320
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, fullWidth, color, radius, reduceMotion, transitionDuration });
+  const classes = useStyles({
+    theme,
+    fullWidth,
+    color,
+    radius,
+    reduceMotion,
+    transitionDuration,
+    transitionTimingFunction,
+  });
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
@@ -64,7 +78,7 @@ export function SegmentedControl({
       const rect = element.getBoundingClientRect();
       setActivePosition({
         width: rect.width,
-        translate: rect.x - wrapperRef.current.getBoundingClientRect().x - 4,
+        translate: rect.x - wrapperRef.current.getBoundingClientRect().x - WRAPPER_PADDING,
       });
     }
   }, [value, refs]);
