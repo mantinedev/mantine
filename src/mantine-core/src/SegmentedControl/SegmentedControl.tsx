@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import cx from 'clsx';
 import { useId, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
@@ -58,7 +58,7 @@ export function SegmentedControl({
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (value in refs.current) {
       const element = refs.current[value];
       const rect = element.getBoundingClientRect();
