@@ -1,9 +1,10 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getThemeColor } from '@mantine/theme';
 
-interface NotificationStylesProps {
+interface NotificationStyles {
   color: string;
   theme: MantineTheme;
+  disallowClose: boolean;
 }
 
 export default createUseStyles(
@@ -16,7 +17,7 @@ export default createUseStyles(
       },
     },
 
-    notification: ({ color, theme }: NotificationStylesProps) => ({
+    notification: ({ color, theme }: NotificationStyles) => ({
       boxSizing: 'border-box',
       position: 'relative',
       display: 'flex',
@@ -49,17 +50,17 @@ export default createUseStyles(
       },
     }),
 
-    body: {
+    body: ({ disallowClose }: NotificationStyles) => ({
       flex: 1,
-      maxWidth: 'calc(100% - 40px)', // space for close button and margin
+      maxWidth: !disallowClose ? 'calc(100% - 40px)' : '100%', // space for close button and margin
       marginRight: 10,
-    },
+    }),
 
-    loader: ({ theme }: NotificationStylesProps) => ({
+    loader: ({ theme }: NotificationStyles) => ({
       marginRight: theme.spacing.md,
     }),
 
-    icon: ({ theme }: NotificationStylesProps) => ({
+    icon: ({ theme }: NotificationStyles) => ({
       boxSizing: 'border-box',
       marginRight: theme.spacing.md,
       width: 28,
@@ -71,7 +72,7 @@ export default createUseStyles(
       color: theme.white,
     }),
 
-    title: ({ theme }: NotificationStylesProps) => ({
+    title: ({ theme }: NotificationStyles) => ({
       lineHeight: 1.4,
       marginBottom: 2,
       overflow: 'hidden',
@@ -79,7 +80,7 @@ export default createUseStyles(
       color: theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[9],
     }),
 
-    description: ({ theme }: NotificationStylesProps) => ({
+    description: ({ theme }: NotificationStyles) => ({
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
       lineHeight: 1.4,
       overflow: 'hidden',

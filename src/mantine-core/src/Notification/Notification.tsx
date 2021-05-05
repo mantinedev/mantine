@@ -49,7 +49,7 @@ export function Notification({
   themeOverride,
   ...others
 }: NotificationProps) {
-  const classes = useStyles({ color, theme: useMantineTheme(themeOverride) });
+  const classes = useStyles({ color, disallowClose, theme: useMantineTheme(themeOverride) });
 
   return (
     <Paper
