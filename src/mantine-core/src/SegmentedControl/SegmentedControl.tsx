@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import cx from 'clsx';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
 import useStyles from './SegmentedControl.styles';
 
 interface SegmentedControlItem {
@@ -29,6 +29,9 @@ interface SegmentedControlProps
 
   /** Active control color from theme, defaults to white in light color scheme and theme.colors.dark[9] in dark */
   color?: string;
+
+  /** Border-radius from theme or number to set border-radius in px */
+  radius?: MantineNumberSize;
 }
 
 export function SegmentedControl({
@@ -40,14 +43,34 @@ export function SegmentedControl({
   onChange,
   color,
   fullWidth,
+  radius = 'sm',
   ...others
 }: SegmentedControlProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride), fullWidth, color });
+  const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme, fullWidth, color, radius });
   const uuid = useId(name);
+  const refs = useRef<Record<string, HTMLLabelElement>>({});
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (value in refs.current) {
+      const element = refs.current[value];
+      const rect = element.getBoundingClientRect();
+      setActivePosition({
+        width: rect.width,
+        translate: rect.x - wrapperRef.current.getBoundingClientRect().x - 4,
+      });
+    }
+  }, [value, refs]);
 
   const controls = data.map((item) => (
-    <div>
+    <div
+      className={cx(classes.control, { [classes.controlActive]: value === item.value })}
+      key={item.value}
+    >
       <input
+        className={classes.input}
         type="radio"
         name={uuid}
         value={item.value}
@@ -56,12 +79,28 @@ export function SegmentedControl({
         onChange={(event) => onChange(event.currentTarget.value)}
       />
 
-      <label htmlFor={`${uuid}-${item.value}`}>{item.label}</label>
+      <label
+        className={cx(classes.label, { [classes.controlActive]: value === item.value })}
+        htmlFor={`${uuid}-${item.value}`}
+        ref={(node) => {
+          refs.current[item.value] = node;
+        }}
+      >
+        {item.label}
+      </label>
     </div>
   ));
 
   return (
-    <div className={cx(classes.wrapper, className)} {...others}>
+    <div className={cx(classes.wrapper, className)} ref={wrapperRef} {...others}>
+      <div
+        className={classes.active}
+        style={{
+          display: value ? 'block' : 'none',
+          width: activePosition.width,
+          transform: `translateX(${activePosition.translate}px)`,
+        }}
+      />
       {controls}
     </div>
   );
