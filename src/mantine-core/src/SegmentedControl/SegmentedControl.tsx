@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cx from 'clsx';
-import { useId } from '@mantine/hooks';
+import { useId, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
 import useStyles from './SegmentedControl.styles';
 
@@ -46,9 +46,10 @@ export function SegmentedControl({
   radius = 'sm',
   ...others
 }: SegmentedControlProps) {
-  const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
+  const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, fullWidth, color, radius });
+  const classes = useStyles({ theme, fullWidth, color, radius, reduceMotion });
+  const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -80,7 +81,7 @@ export function SegmentedControl({
       />
 
       <label
-        className={cx(classes.label, { [classes.controlActive]: value === item.value })}
+        className={cx(classes.label, { [classes.labelActive]: value === item.value })}
         htmlFor={`${uuid}-${item.value}`}
         ref={(node) => {
           refs.current[item.value] = node;

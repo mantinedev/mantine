@@ -26,12 +26,14 @@ storiesOf('@mantine/core/SegmentedControl', module)
       <Wrapper />
       <Wrapper fullWidth style={{ marginTop: 20 }} />
       <Wrapper color="blue" fullWidth style={{ marginTop: 20 }} />
+      <Wrapper color="teal" fullWidth style={{ marginTop: 20 }} />
     </div>
   ))
   .add('Dark theme', () => (
     <MantineProvider theme={{ colorScheme: 'dark' }}>
       <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 40 }}>
         <Wrapper />
+        <Wrapper fullWidth color="blue" style={{ marginTop: 20 }} />
       </div>
     </MantineProvider>
   ));
