@@ -32,6 +32,9 @@ interface SegmentedControlProps
 
   /** Border-radius from theme or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Transition duration in ms, set to 0 to turn off transitions */
+  transitionDuration?: number;
 }
 
 export function SegmentedControl({
@@ -44,11 +47,12 @@ export function SegmentedControl({
   color,
   fullWidth,
   radius = 'sm',
+  transitionDuration = 200,
   ...others
 }: SegmentedControlProps) {
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, fullWidth, color, radius, reduceMotion });
+  const classes = useStyles({ theme, fullWidth, color, radius, reduceMotion, transitionDuration });
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
@@ -94,7 +98,7 @@ export function SegmentedControl({
 
   return (
     <div className={cx(classes.wrapper, className)} ref={wrapperRef} {...others}>
-      <div
+      <span
         className={classes.active}
         style={{
           display: value ? 'block' : 'none',

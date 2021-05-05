@@ -14,11 +14,10 @@ interface SegmentedControlStyles {
   color: string;
   radius: MantineNumberSize;
   reduceMotion: boolean;
+  transitionDuration: number;
 }
 
 export default createUseStyles({
-  controlActive: {},
-
   input: ({ theme }: SegmentedControlStyles) => ({
     height: 0,
     width: 0,
@@ -26,6 +25,7 @@ export default createUseStyles({
     overflow: 'hidden',
     whiteSpace: 'nowrap',
 
+    // input is hidden by default, these styles add focus to label when user navigates with keyboard
     '&:focus': {
       outline: 'none',
 
@@ -53,14 +53,31 @@ export default createUseStyles({
     padding: 4,
   }),
 
-  control: {
+  controlActive: {
+    borderLeftColor: 'transparent !important',
+
+    '& + $control': {
+      borderLeftColor: 'transparent !important',
+    },
+  },
+
+  control: ({ theme, reduceMotion, transitionDuration }: SegmentedControlStyles) => ({
     position: 'relative',
     boxSizing: 'border-box',
     flex: 1,
     zIndex: 2,
-  },
+    transition: `border-left-color ${reduceMotion ? 0 : transitionDuration}ms ${
+      theme.transitionTimingFunction
+    }`,
 
-  label: ({ theme, radius, reduceMotion }: SegmentedControlStyles) => ({
+    '&:not(:first-of-type)': {
+      borderLeft: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+      }`,
+    },
+  }),
+
+  label: ({ theme, radius, reduceMotion, transitionDuration }: SegmentedControlStyles) => ({
     ...getFocusStyles(theme),
     ...getFontStyles(theme),
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
@@ -74,7 +91,9 @@ export default createUseStyles({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
-    transition: `color ${reduceMotion ? 0 : 200}ms ${theme.transitionTimingFunction}`,
+    transition: `color ${reduceMotion ? 0 : transitionDuration}ms ${
+      theme.transitionTimingFunction
+    }`,
 
     '&:hover': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
@@ -87,7 +106,7 @@ export default createUseStyles({
     },
   }),
 
-  active: ({ theme, color, radius, reduceMotion }: SegmentedControlStyles) => ({
+  active: ({ theme, color, radius, reduceMotion, transitionDuration }: SegmentedControlStyles) => ({
     boxSizing: 'border-box',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     position: 'absolute',
@@ -95,9 +114,9 @@ export default createUseStyles({
     bottom: 4,
     zIndex: 1,
     boxShadow: color || theme.colorScheme === 'dark' ? 'none' : theme.shadows.xs,
-    transition: `transform ${reduceMotion ? 0 : 200}ms ${theme.transitionTimingFunction}, width ${
-      reduceMotion ? 0 : 200
-    }ms ${theme.transitionTimingFunction}`,
+    transition: `transform ${reduceMotion ? 0 : transitionDuration}ms ${
+      theme.transitionTimingFunction
+    }, width ${reduceMotion ? 0 : transitionDuration}ms ${theme.transitionTimingFunction}`,
     backgroundColor:
       color in theme.colors
         ? getThemeColor({ theme, color, shade: 6 })
