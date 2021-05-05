@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import cx from 'clsx';
 import { useId, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '@mantine/theme';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
 interface SegmentedControlItem {
@@ -38,6 +38,9 @@ interface SegmentedControlProps
 
   /** Transition timing function for all transitions, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
+
+  /** Controls font-size, paddings and height */
+  size?: MantineSize;
 }
 
 export function SegmentedControl({
@@ -50,6 +53,7 @@ export function SegmentedControl({
   color,
   fullWidth,
   radius = 'sm',
+  size = 'sm',
   transitionDuration = 200,
   transitionTimingFunction,
   ...others
@@ -60,6 +64,7 @@ export function SegmentedControl({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({
     theme,
+    size,
     fullWidth,
     color,
     radius,

@@ -1,8 +1,9 @@
 import { createUseStyles } from 'react-jss';
 import {
   MantineTheme,
-  getFontStyles,
   MantineNumberSize,
+  MantineSize,
+  getFontStyles,
   getSizeValue,
   getThemeColor,
   getFocusStyles,
@@ -18,7 +19,16 @@ interface SegmentedControlStyles {
   reduceMotion: boolean;
   transitionDuration: number;
   transitionTimingFunction: string;
+  size: MantineSize;
 }
+
+const sizes = {
+  xs: [3, 6],
+  sm: [5, 10],
+  md: [7, 14],
+  lg: [9, 16],
+  xl: [12, 20],
+};
 
 export default createUseStyles({
   input: ({ theme }: SegmentedControlStyles) => ({
@@ -91,16 +101,17 @@ export default createUseStyles({
     reduceMotion,
     transitionDuration,
     transitionTimingFunction,
+    size,
   }: SegmentedControlStyles) => ({
     ...getFocusStyles(theme),
     ...getFontStyles(theme),
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 500,
-    fontSize: theme.fontSizes.sm,
+    fontSize: size in theme.fontSizes ? theme.fontSizes[size] : theme.fontSizes.sm,
     cursor: 'pointer',
     display: 'block',
     textAlign: 'center',
-    padding: [5, theme.spacing.md],
+    padding: sizes[size in sizes ? size : 'sm'],
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
