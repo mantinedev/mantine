@@ -1,6 +1,6 @@
 import React from 'react';
-import { CheckIcon } from '@modulz/radix-icons';
-import { ElementsGroup, Button } from '@mantine/core';
+import { CheckIcon, EnvelopeClosedIcon } from '@modulz/radix-icons';
+import { ElementsGroup, Button, TextInput } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -78,7 +78,7 @@ export function NotificationsRootDemo() {
             })
           }
         >
-          Custom timeout: 10 seconds
+          10 seconds timeout
         </Button>
 
         <Button
@@ -109,6 +109,33 @@ export function NotificationsRootDemo() {
           }}
         >
           Loading state and update
+        </Button>
+
+        <Button
+          variant="outline"
+          onClick={() => {
+            const id = notifications.showNotification({
+              autoClose: false,
+              disallowClose: true,
+              title: 'Subscribe to email newsletter',
+              message: (
+                <>
+                  <div style={{ display: 'flex', paddingTop: 5 }}>
+                    <TextInput
+                      icon={<EnvelopeClosedIcon />}
+                      placeholder="Enter your email"
+                      style={{ flex: 1, marginRight: 15 }}
+                    />
+                    <Button onClick={() => notifications.hideNotification(id)} size="lg">
+                      Subscribe
+                    </Button>
+                  </div>
+                </>
+              ),
+            });
+          }}
+        >
+          With input and button
         </Button>
       </ElementsGroup>
     </CodeDemo>
