@@ -1,0 +1,101 @@
+---
+package: mantine-core
+title: SegmentedControl
+order: 1
+slug: /core/segmented-control/
+category: 'inputs'
+description: 'Horizontal control made of multiple segments'
+---
+
+import { SegmentedControlBaseDemo } from '../demos/core/SegmentedControl/segmented-control-base.demo';
+import { SegmentedControlSizesDemo } from '../demos/core/SegmentedControl/segmented-control-sizes.demo';
+import { SegmentedControlRadiusDemo } from '../demos/core/SegmentedControl/segmented-control-radius.demo';
+import { SegmentedControlBlockDemo } from '../demos/core/SegmentedControl/segmented-control-block.demo';
+import { SegmentedControlColorConfigurator } from '../demos/core/SegmentedControl/segmented-control-color.configurator';
+
+# SegmentedControl
+
+<PageHeader
+  source="mantine-core/src/SegmentedControl/SegmentedControl.tsx"
+  docs="core/SegmentedControl.mdx"
+  package="@mantine/core"
+/>
+
+```tsx
+import { SegmentedControl } from '@mantine/core';
+```
+
+## Usage
+
+SegmentedControl is usually used as an alternative to:
+
+- <GatsbyLink to="/core/tabs/">Tabs</GatsbyLink> to switch views
+- <GatsbyLink to="/core/radio-group/">RadioGroup</GatsbyLink> to capture user feedback limited to certain
+  options
+
+<SegmentedControlBaseDemo />
+
+## Full width
+
+By default SegmentedControl is inline and will take only the amount of space which is required to render elements.
+Set `fullWidth` prop to make it block and take 100% width of its container:
+
+<SegmentedControlBlockDemo />
+
+## Sizes
+
+Component supports 5 sizes: xs, sm, md, lg, xl.
+Size controls font-size and padding properties.
+
+```tsx
+<SegmentedControl size="sm" />
+```
+
+SegmentedControl sizes from xs to xl:
+
+<SegmentedControlSizesDemo />
+
+## Radius
+
+xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
+Alternatively you can use number to set radius in px:
+
+```tsx
+<SegmentedControl radius="lg" /> // -> theme predefined large radius
+<SegmentedControl radius={20} /> // -> { borderRadius: '20px' }
+<SegmentedControl radius={0} /> // -> { borderRadius: 0 }
+```
+
+Default theme radius values from xs to xl with lg size:
+
+<SegmentedControlRadiusDemo />
+
+## Color
+
+By default segmented control uses `theme.white` with shadow in light color scheme and `theme.colors.dark[6]` background color for active element.
+You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink> in case you need colored variant:
+
+<SegmentedControlColorConfigurator />
+
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id hook</GatsbyLink>
+to generate random id which is used to bind inputs to labels.
+If you want to avoid id mismatch during hydration provide static name value:
+
+```tsx
+// -> oh-oh, id on elements is mismatched, won't break anything, but shows nasty error
+<SegmentedControl />
+
+// -> ok, inputs ids are static and will match during hydration
+<SegmentedControl name="my-control" />
+```
+
+## Accessibility and usability
+
+SegmentedControl uses radio inputs under the hood, it is accessible by default with no extra steps required.
+Component support the same keyboard events as regular radio group.
+
+## Component props
+
+<PropsTable component="SegmentedControl" />
