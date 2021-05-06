@@ -4,7 +4,7 @@ import { ColorSchemeContext } from '../../../components/Layout/ColorScheme.conte
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Button, MantineProvider } from '@mantine/core';
+import { Button, Code, Title, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
