@@ -90,7 +90,6 @@ export function SegmentedControl({
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const wrapperRef = useRef<HTMLDivElement>(null);
-  // const observer = useRef<ResizeObserver>(null);
 
   const calculatePosition = (val: string) => {
     if (val in refs.current) {

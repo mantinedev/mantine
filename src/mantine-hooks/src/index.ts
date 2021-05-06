@@ -1,6 +1,7 @@
 export { useClickOutside } from './use-click-outside/use-click-outside';
 export { useClipboard } from './use-clipboard/use-clipboard';
 export { useColorScheme } from './use-color-scheme/use-color-scheme';
+export { useDebouncedValue } from './use-debounced-value/use-debounced-value';
 export { useDocumentTitle } from './use-document-title/use-document-title';
 export { useFocusTrap } from './use-focus-trap/use-focus-trap';
 export { useForm } from './use-form/use-form';
