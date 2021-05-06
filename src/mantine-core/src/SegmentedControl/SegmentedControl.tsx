@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import cx from 'clsx';
 import { useId, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '@mantine/theme';
+import debounce from 'lodash.debounce';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
 interface SegmentedControlItem {
@@ -43,6 +44,19 @@ interface SegmentedControlProps
   size?: MantineSize;
 }
 
+function useResizeObserver(active: boolean, callback: () => void, target: HTMLElement) {
+  const observer = useRef<ResizeObserver>(null);
+  useLayoutEffect(() => {
+    if (target && active) {
+      observer.current = new ResizeObserver(callback);
+      observer.current.observe(target);
+      return () => observer.current.disconnect();
+    }
+
+    return undefined;
+  }, [target, callback, active]);
+}
+
 export function SegmentedControl({
   className,
   themeOverride,
@@ -76,16 +90,27 @@ export function SegmentedControl({
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const wrapperRef = useRef<HTMLDivElement>(null);
+  // const observer = useRef<ResizeObserver>(null);
 
-  useLayoutEffect(() => {
-    if (value in refs.current) {
-      const element = refs.current[value];
+  const calculatePosition = (val: string) => {
+    if (val in refs.current) {
+      const element = refs.current[val];
       const rect = element.getBoundingClientRect();
       setActivePosition({
         width: rect.width,
         translate: rect.x - wrapperRef.current.getBoundingClientRect().x - WRAPPER_PADDING,
       });
     }
+  };
+
+  useResizeObserver(
+    fullWidth,
+    debounce(() => calculatePosition(value), 100),
+    wrapperRef.current
+  );
+
+  useLayoutEffect(() => {
+    calculatePosition(value);
   }, [value, refs]);
 
   const controls = data.map((item) => (
