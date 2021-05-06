@@ -37,7 +37,7 @@ MenuItem renders button and accepts props:
 - **icon** – icon on the left
 - **children** – item label
 - **rightSection** – any element, rendered on the right, for example, <GatsbyLink to="/core/badge/">Badge</GatsbyLink> or keyboard shortcut
-- **...others** – all other button props, for example, onClick
+- **...others** – MenuItem produces button element, all other props will be spread to it, for example, `onClick`, `style`, `className`
 
 ```tsx
 <MenuItem

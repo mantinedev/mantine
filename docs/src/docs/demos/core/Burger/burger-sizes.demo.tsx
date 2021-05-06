@@ -4,7 +4,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 function BurgerWrapper(props: React.ComponentPropsWithoutRef<typeof Burger>) {
   const [opened, setOpened] = useState(false);
-  const title = opened ? 'Open navigation' : 'Close navigation';
+  const title = opened ? 'Close navigation' : 'Open navigation';
 
   return (
     <Burger
