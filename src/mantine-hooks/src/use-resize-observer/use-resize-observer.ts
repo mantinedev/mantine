@@ -1,6 +1,10 @@
 import { useRef, useLayoutEffect } from 'react';
 
-export function useResizeObserver(active: boolean, callback: () => void, target: HTMLElement) {
+export function useResizeObserver(
+  active: boolean,
+  callback: ResizeObserverCallback,
+  target: HTMLElement
+) {
   const observer = useRef<ResizeObserver>(null);
 
   useLayoutEffect(() => {
