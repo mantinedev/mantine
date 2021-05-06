@@ -11,6 +11,7 @@ import {
   Switch,
   useMantineTheme,
 } from '@mantine/core';
+import { SegmentedControlWrapper } from '../core/SegmentedControl/segmented-control-wrapper';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const selectData = [
@@ -92,6 +93,7 @@ export function RegularInputsDemo() {
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <Checkbox label="Checkbox" />
         <Switch style={{ marginTop: 15 }} label="Switch" />
+        <SegmentedControlWrapper style={{ marginTop: 15 }} />
       </div>
     </CodeDemo>
   );
