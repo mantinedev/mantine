@@ -37,6 +37,7 @@ export { PasswordInput } from './PasswordInput/PasswordInput';
 export { Portal } from './Portal/Portal';
 export { Progress, PROGRESS_SIZES } from './Progress/Progress';
 export { RadioGroup, Radio, RADIO_SIZES } from './RadioGroup/RadioGroup';
+export { SegmentedControl } from './SegmentedControl/SegmentedControl';
 export { Select } from './Select/Select';
 export { Spoiler } from './Spoiler/Spoiler';
 export { Switch, SWITCH_SIZES } from './Switch/Switch';

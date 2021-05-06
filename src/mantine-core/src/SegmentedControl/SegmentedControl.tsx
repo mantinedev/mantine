@@ -94,16 +94,18 @@ export function SegmentedControl({
       key={item.value}
     >
       <input
+        data-mantine-radio
         className={classes.input}
         type="radio"
         name={uuid}
         value={item.value}
         id={`${uuid}-${item.value}`}
         checked={value === item.value}
-        onChange={(event) => onChange(event.currentTarget.value)}
+        onChange={() => onChange(item.value)}
       />
 
       <label
+        data-mantine-label
         className={cx(classes.label, { [classes.labelActive]: value === item.value })}
         htmlFor={`${uuid}-${item.value}`}
         ref={(node) => {
@@ -117,14 +119,17 @@ export function SegmentedControl({
 
   return (
     <div className={cx(classes.wrapper, className)} ref={wrapperRef} {...others}>
-      <span
-        className={classes.active}
-        style={{
-          display: value ? 'block' : 'none',
-          width: activePosition.width,
-          transform: `translateX(${activePosition.translate}px)`,
-        }}
-      />
+      {!!value && (
+        <span
+          data-mantine-active
+          className={classes.active}
+          style={{
+            width: activePosition.width,
+            transform: `translateX(${activePosition.translate}px)`,
+          }}
+        />
+      )}
+
       {controls}
     </div>
   );
