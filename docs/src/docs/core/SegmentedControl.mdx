@@ -11,6 +11,7 @@ import { SegmentedControlBaseDemo } from '../demos/core/SegmentedControl/segment
 import { SegmentedControlSizesDemo } from '../demos/core/SegmentedControl/segmented-control-sizes.demo';
 import { SegmentedControlRadiusDemo } from '../demos/core/SegmentedControl/segmented-control-radius.demo';
 import { SegmentedControlBlockDemo } from '../demos/core/SegmentedControl/segmented-control-block.demo';
+import { SegmentedControlTransitionsDemo } from '../demos/core/SegmentedControl/segmented-control-transitions.demo';
 import { SegmentedControlColorConfigurator } from '../demos/core/SegmentedControl/segmented-control-color.configurator';
 
 # SegmentedControl
@@ -76,6 +77,15 @@ By default segmented control uses `theme.white` with shadow in light color schem
 You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink> in case you need colored variant:
 
 <SegmentedControlColorConfigurator />
+
+## Transitions
+
+Change transition properties with:
+
+- **transitionDuration** – all transitions duration in ms (ignored if user prefers to reduce motion)
+- **transitionTimingFunction** – defaults to `theme.transitionTimingFunction`
+
+<SegmentedControlTransitionsDemo />
 
 ## Server side rendering
 
