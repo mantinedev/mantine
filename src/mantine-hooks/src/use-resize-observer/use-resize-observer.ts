@@ -9,9 +9,19 @@ export function useResizeObserver(
 
   useLayoutEffect(() => {
     if (target && active) {
-      observer.current = new _ResizeObserverClass(callback);
-      observer.current.observe(target);
-      return () => observer.current.disconnect();
+      try {
+        observer.current = new _ResizeObserverClass(callback);
+        observer.current.observe(target);
+        return () => observer.current.disconnect();
+      } catch (e) {
+        if (process.env.NODE_ENV === 'development') {
+          // eslint-disable-next-line no-console
+          console.warn(
+            '@mantine/hooks: use-resize-observer – could not initialize ResizeObserver instance, provide polyfill with useResizeObserver(callback, target, { ResizeObserver: polyfill })'
+          );
+        }
+        return undefined;
+      }
     }
 
     return undefined;
