@@ -12,6 +12,5 @@ export { useMediaQuery } from './use-media-query/use-media-query';
 export { useMergedRef } from './use-merged-ref/use-merged-ref';
 export { useQueue } from './use-queue/use-queue';
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion';
-export { useResizeObserver } from './use-resize-observer/use-resize-observer';
 export { useScrollLock } from './use-scroll-lock/use-scroll-lock';
 export { useWindowEvent } from './use-window-event/use-window-event';
