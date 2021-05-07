@@ -24,5 +24,15 @@ export function prepareDeclaration(declaration: ComponentDoc) {
     }
   });
 
+  // This sorts the props object in ascending order
+  const ordered = Object.keys(data.props)
+    .sort()
+    .reduce((obj, key) => {
+      obj[key] = data.props[key];
+      return obj;
+    }, {});
+
+  data.props = ordered;
+
   return data;
 }
