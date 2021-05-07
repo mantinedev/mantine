@@ -48,6 +48,30 @@ export function HrColorDemo() {
   );
 }
 
+const insetCode = `import React from 'react';
+import { Hr } from '@mantine/core';
+function Demo() {
+  return (
+    <>
+      <Hr inset={true} />
+      <Hr inset={true} insetType="left" />
+      <Hr inset={true} insetType="right" />
+      <Hr inset={true} insetType="middle" />
+    </>
+  );
+}`;
+
+export function HrInsetDemo() {
+  return (
+    <CodeDemo code={insetCode} language="tsx">
+      <Hr inset={true} />
+      <Hr inset={true} insetType="left" style={{ marginTop: 10 }} />
+      <Hr inset={true} insetType="right" style={{ marginTop: 10 }} />
+      <Hr inset={true} insetType="middle" style={{ marginTop: 10 }} />
+    </CodeDemo>
+  );
+}
+
 const sizesCode = `import React from 'react';
 import { Hr } from '@mantine/core';
 
@@ -73,6 +97,30 @@ export function HrSizesDemo() {
       <Hr size="lg" style={{ marginTop: 10 }} />
       <Hr size="xl" style={{ marginTop: 10 }} />
       <Hr size={10} style={{ marginTop: 10 }} />
+    </CodeDemo>
+  );
+}
+
+const subHeaderCode = `import React from 'react';
+import { Hr } from '@mantine/core';
+function Demo() {
+  return (
+    <>
+      <Hr subHeader="Test" />
+      <Hr inset={true} subHeader="Test" />
+      <Hr subHeader="Test" subHeaderStyle={{ color : "red" }} />
+      <Hr inset={true} insetType="right" subHeader="Test" />
+    </>
+  );
+}`;
+
+export function HrSubHeaderDemo() {
+  return (
+    <CodeDemo code={subHeaderCode} language="tsx">
+      <Hr subHeader="Test" />
+      <Hr inset={true} subHeader="Test" style={{ marginTop: 10 }} />
+      <Hr subHeader="Mantine" subHeaderStyle={{ color: 'red' }} style={{ marginTop: 10 }} />
+      <Hr inset={true} insetType="right" subHeader="Mantine" style={{ marginTop: 10 }} />
     </CodeDemo>
   );
 }

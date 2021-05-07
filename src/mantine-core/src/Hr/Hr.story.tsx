@@ -17,7 +17,7 @@ storiesOf('@mantine/core/Hr', module)
     <div style={{ padding: 20 }}>
       <Hr />
       <Hr variant="dotted" style={{ marginTop: 15 }} />
-      <Hr variant="solid" style={{ marginTop: 15 }} />
+      <Hr variant="dashed" style={{ marginTop: 15 }} />
     </div>
   ))
   .add('Sizes', () => <div style={{ padding: 20 }}>{sizes}</div>)
@@ -28,5 +28,34 @@ storiesOf('@mantine/core/Hr', module)
       <Hr themeOverride={{ colorScheme: 'dark' }} variant="dotted" style={{ marginTop: 15 }} />
       <Hr themeOverride={{ colorScheme: 'dark' }} variant="solid" style={{ marginTop: 15 }} />
       {getColors({ themeOverride: { colorScheme: 'dark' } })}
+    </div>
+  ))
+  .add('Inset', () => (
+    <div style={{ padding: 20 }}>
+      <Hr inset />
+      <Hr inset={false} style={{ marginTop: 15 }} />
+      <Hr inset insetType="middle" style={{ marginTop: 15 }} />
+      <Hr inset insetType="right" style={{ marginTop: 15 }} />
+    </div>
+  ))
+  .add('Vertical Hr', () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+      }}
+    >
+      <Hr orientation="vertical" variant="solid" />
+      <Hr orientation="vertical" variant="solid" />
+    </div>
+  ))
+  .add('Sub header', () => (
+    <div style={{ padding: 20 }}>
+      <Hr subHeader="Test" />
+      <Hr inset subHeader="Test" />
+      <Hr subHeader="Test" subHeaderStyle={{ color: 'green', textAlign: 'end' }} />
+      <Hr inset insetType="middle" subHeader="Test" color="blue" />
+      <Hr inset insetType="right" subHeader="Test" color="blue" />
     </div>
   ));
