@@ -1,15 +1,15 @@
 import { useRef, useLayoutEffect } from 'react';
 
 export function useResizeObserver(
-  active: boolean,
   callback: ResizeObserverCallback,
-  target: HTMLElement
+  target: HTMLElement,
+  { active = true, ResizeObserver: _ResizeObserverClass = ResizeObserver } = {}
 ) {
   const observer = useRef<ResizeObserver>(null);
 
   useLayoutEffect(() => {
     if (target && active) {
-      observer.current = new ResizeObserver(callback);
+      observer.current = new _ResizeObserverClass(callback);
       observer.current.observe(target);
       return () => observer.current.disconnect();
     }

@@ -90,9 +90,9 @@ export function SegmentedControl({
   };
 
   useResizeObserver(
-    fullWidth,
     debounce(() => calculatePosition(value), 50),
-    wrapperRef.current
+    wrapperRef.current,
+    { active: fullWidth }
   );
 
   useLayoutEffect(() => {
