@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
-import { TextInput, Text, Button } from '@mantine/core';
-import CodeDemo from '../../../components/CodeDemo/CodeDemo';
+import { TextInput, Text } from '@mantine/core';
+import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
-const code = `import React, { useState } from 'react';
+const code = (leading: boolean) => `import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
-import { TextInput, Text, Button } from '@mantine/core';
+import { TextInput, Text } from '@mantine/core';
 
 export function Demo() {
   const [value, setValue] = useState('');
-  const [debounced, cancel] = useDebouncedValue(value, 1000, { leading: false });
+  const [debounced] = useDebouncedValue(value, 200${leading ? ', { leading: true }' : ''});
   
   return (
     <>
@@ -19,19 +19,19 @@ export function Demo() {
         style={{ flex: 1 }}
         onChange={(event) => setValue(event.currentTarget.value)}
       />
-      <Button onClick={cancel} size="lg" style={{ marginLeft: 15 }}>
-        Cancel
-      </Button>
+
+      <Text>Value: {value}</Text>
+      <Text>Debounced value: {debounced}</Text>
     </>
   );
 }`;
 
-export function UseDebouncedValueCancelDemo() {
+export function UseDebouncedValueBaseDemo({ leading = false }: { leading: boolean }) {
   const [value, setValue] = useState('');
-  const [debounced, cancel] = useDebouncedValue(value, 1000, { leading: false });
+  const [debounced] = useDebouncedValue(value, 200, { leading });
 
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo code={code(leading)} language="tsx">
       <div
         style={{
           display: 'flex',
@@ -48,11 +48,8 @@ export function UseDebouncedValueCancelDemo() {
           style={{ flex: 1 }}
           onChange={(event) => setValue(event.currentTarget.value)}
         />
-        <Button onClick={cancel} size="lg" style={{ marginLeft: 15 }}>
-          Cancel
-        </Button>
       </div>
-      <div style={{ maxWidth: 400, margin: 'auto' }}>
+      <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15 }}>
         <Text>
           <Text component="span" color="gray" size="sm">
             Value:
