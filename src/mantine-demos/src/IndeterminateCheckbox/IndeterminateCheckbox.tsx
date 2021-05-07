@@ -8,12 +8,12 @@ const initialValues = [
   { label: 'Receive push notifications', checked: false, key: randomId() },
 ];
 
-export function IntermediateCheckbox() {
+export function IndeterminateCheckbox() {
   const theme = useMantineTheme();
   const [values, handlers] = useListState(initialValues);
 
   const allChecked = values.every((value) => value.checked);
-  const intermediate = values.some((value) => value.checked) && !allChecked;
+  const indeterminate = values.some((value) => value.checked) && !allChecked;
 
   const items = values.map((value, index) => (
     <Checkbox
@@ -29,7 +29,7 @@ export function IntermediateCheckbox() {
     <div>
       <Checkbox
         checked={allChecked}
-        intermediate={intermediate}
+        indeterminate={indeterminate}
         label="Receive all notifications"
         onChange={() =>
           handlers.setState((current) =>
