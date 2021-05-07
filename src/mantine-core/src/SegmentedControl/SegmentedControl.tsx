@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import cx from 'clsx';
-import { useId, useReducedMotion } from '@mantine/hooks';
+import { useId, useReducedMotion, useResizeObserver } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '@mantine/theme';
 import debounce from 'lodash.debounce';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
@@ -42,19 +42,6 @@ interface SegmentedControlProps
 
   /** Controls font-size, paddings and height */
   size?: MantineSize;
-}
-
-function useResizeObserver(active: boolean, callback: () => void, target: HTMLElement) {
-  const observer = useRef<ResizeObserver>(null);
-  useLayoutEffect(() => {
-    if (target && active) {
-      observer.current = new ResizeObserver(callback);
-      observer.current.observe(target);
-      return () => observer.current.disconnect();
-    }
-
-    return undefined;
-  }, [target, callback, active]);
 }
 
 export function SegmentedControl({
@@ -104,7 +91,7 @@ export function SegmentedControl({
 
   useResizeObserver(
     fullWidth,
-    debounce(() => calculatePosition(value), 100),
+    debounce(() => calculatePosition(value), 50),
     wrapperRef.current
   );
 
