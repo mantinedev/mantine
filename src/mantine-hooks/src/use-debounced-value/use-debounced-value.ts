@@ -25,7 +25,8 @@ export function useDebouncedValue<T = any>(value: T, wait: number, options = { l
 
   useEffect(() => {
     mountedRef.current = true;
+    return cancel;
   }, []);
 
-  return [_value, cancel];
+  return [_value, cancel] as const;
 }
