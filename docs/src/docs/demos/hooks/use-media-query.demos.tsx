@@ -7,7 +7,7 @@ const code = `import React from 'react';
 import { Button } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
-export function UseBreakpointDemo() {
+export function Demo() {
   const matches = useMediaQuery('(min-width: 900px)');
 
   return (

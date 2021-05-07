@@ -9,7 +9,7 @@ import { useScrollLock } from '@mantine/hooks';
 import { Button } from '@mantine/core';
 import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 
-export function UseDocumentTitleDemo() {
+export function Demo() {
   const [lockScroll, setLockScroll] = useState(false);
   useScrollLock(lockScroll);
   

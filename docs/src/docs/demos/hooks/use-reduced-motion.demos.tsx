@@ -7,7 +7,7 @@ const code = `import React from 'react';
 import { Badge } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 
-export function UseReducedMotionDemo() {
+export function Demo() {
   const reduceMotion = useReducedMotion();
   
   return (
