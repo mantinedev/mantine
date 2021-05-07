@@ -1,8 +1,8 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import cx from 'clsx';
-import { useId, useReducedMotion, useResizeObserver } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '@mantine/theme';
 import debounce from 'lodash.debounce';
+import { useId, useReducedMotion } from '@mantine/hooks';
+import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '@mantine/theme';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
 interface SegmentedControlItem {
@@ -77,26 +77,23 @@ export function SegmentedControl({
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const resizeObserver = useRef<ResizeObserver>();
 
-  const calculatePosition = (val: string) => {
-    if (val in refs.current && wrapperRef.current) {
-      const element = refs.current[val];
-      const rect = element.getBoundingClientRect();
-      setActivePosition({
-        width: rect.width,
-        translate: rect.x - wrapperRef.current.getBoundingClientRect().x - WRAPPER_PADDING,
-      });
-    }
-  };
-
-  useResizeObserver(
-    debounce(() => calculatePosition(value), 50),
-    wrapperRef.current,
-    { active: fullWidth }
-  );
-
-  useLayoutEffect(() => {
-    calculatePosition(value);
+  useEffect(() => {
+    resizeObserver.current = new ResizeObserver(
+      debounce(() => {
+        if (value in refs.current && wrapperRef.current) {
+          const element = refs.current[value];
+          const rect = element.getBoundingClientRect();
+          setActivePosition({
+            width: rect.width,
+            translate: rect.x - wrapperRef.current.getBoundingClientRect().x - WRAPPER_PADDING,
+          });
+        }
+      }, 50)
+    );
+    resizeObserver.current.observe(wrapperRef.current);
+    return () => resizeObserver.current.disconnect();
   }, [value, refs]);
 
   const controls = data.map((item) => (

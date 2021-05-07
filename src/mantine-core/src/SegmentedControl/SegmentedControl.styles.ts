@@ -37,6 +37,7 @@ export default createUseStyles({
     position: 'absolute',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
+    opacity: 0,
 
     // input is hidden by default, these styles add focus to label when user navigates with keyboard
     '&:focus': {
@@ -105,6 +106,7 @@ export default createUseStyles({
   }: SegmentedControlStyles) => ({
     ...getFocusStyles(theme),
     ...getFontStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 500,
     fontSize: size in theme.fontSizes ? theme.fontSizes[size] : theme.fontSizes.sm,
