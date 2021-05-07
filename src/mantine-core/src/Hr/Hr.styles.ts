@@ -7,9 +7,8 @@ interface HrStylesProps {
   size: MantineNumberSize;
   variant: React.CSSProperties['borderTopStyle'];
   color: string;
-  inset: boolean;
-  insetType: string;
   orientation: string;
+  subHeaderProps: Record<string, any>;
 }
 
 export const sizes = {
@@ -20,25 +19,16 @@ export const sizes = {
   xl: 5,
 };
 
-const getInsetStyles = (inset: boolean, insetType: string) => ({
-  marginLeft: inset && (insetType === 'left' || insetType === 'middle') && 70,
-  marginRight: inset && (insetType === 'right' || insetType === 'middle') && 70,
-});
-
 export default createUseStyles(
   {
-    hr: ({ theme, size, variant, color, inset, insetType }: HrStylesProps) => ({
+    hr: ({ theme, size, variant, color }: HrStylesProps) => ({
       border: 0,
       borderTopWidth: getSizeValue({ size, sizes }),
       borderTopColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
       borderTopStyle: variant,
       margin: 0,
-      ...getInsetStyles(inset, insetType),
     }),
     hrVertical: ({ theme, size, variant, color }: HrStylesProps) => ({
-      flexDirection: 'column',
-      height: '100%',
-      borderTop: 0,
       borderLeftWidth: getSizeValue({ size, sizes }),
       borderLeftColor: getThemeColor({
         theme,
@@ -47,10 +37,12 @@ export default createUseStyles(
       }),
       borderLeftStyle: variant,
     }),
-    subHeader: ({ theme, color, inset, insetType }: HrStylesProps) => ({
-      fontSize: '14px',
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
-      textAlign: inset && insetType === 'right' ? 'end' : 'initial',
+    subHeader: ({ theme, color, orientation, subHeaderProps }: HrStylesProps) => ({
+      fontSize: theme.fontSizes.xs,
+      color: subHeaderProps?.color
+        ? subHeaderProps.color
+        : getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      marginLeft: orientation === 'vertical' ? 5 : 0,
     }),
   },
   { link: true }

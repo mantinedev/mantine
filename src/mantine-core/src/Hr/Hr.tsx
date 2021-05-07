@@ -2,19 +2,13 @@ import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
 import useStyles, { sizes } from './Hr.styles';
-import { Text } from '../Text/Text';
+import { Text, TextProps } from '../Text/Text';
 
 export const HR_SIZES = sizes;
 
 interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
   /** Hr color */
   color?: string;
-
-  /** Hr inset */
-  inset?: boolean;
-
-  /** Hr insetType. It applies inset to `left, right, middle`*/
-  insetType?: 'left' | 'right' | 'middle';
 
   /** Applies orientation to the Hr */
   orientation?: 'horizontal' | 'vertical';
@@ -25,8 +19,8 @@ interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
   /** Applies SubHeader Text to the Hr */
   subHeader?: string;
 
-  /** Applies styles to the SubHeader Text */
-  subHeaderStyle?: React.CSSProperties;
+  /** SubHeader component Props */
+  subHeaderProps?: TextProps;
 
   /** Hr borderStyle */
   variant?: 'solid' | 'dashed' | 'dotted';
@@ -35,34 +29,34 @@ interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
 export function Hr({
   color = 'gray',
   className,
-  inset = false,
-  insetType = 'left',
   orientation = 'horizontal',
   size = 'xs',
   subHeader,
-  subHeaderStyle,
+  subHeaderProps,
   themeOverride,
   variant = 'solid',
   ...others
 }: HrProps) {
   const classes = useStyles({
     color,
-    inset,
-    insetType,
     size,
     theme: useMantineTheme(themeOverride),
     variant,
     orientation,
+    subHeaderProps,
   });
 
-  if (orientation === 'vertical') {
-    return <div data-mantine-hr className={cx(classes.hrVertical, className)} {...others} />;
-  }
   return (
-    <div data-mantine-hr className={cx(classes.hr, className)} {...others}>
-      <Text className={cx(classes.subHeader)} style={{ ...subHeaderStyle }}>
-        {subHeader}
-      </Text>
+    <div
+      data-mantine-hr
+      className={cx(orientation === 'vertical' ? classes.hrVertical : classes.hr, className)}
+      {...others}
+    >
+      {subHeader && (
+        <Text {...subHeaderProps} className={cx(classes.subHeader, subHeaderProps?.className)}>
+          {subHeader}
+        </Text>
+      )}
     </div>
   );
 }

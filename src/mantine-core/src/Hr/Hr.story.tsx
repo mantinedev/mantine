@@ -30,14 +30,6 @@ storiesOf('@mantine/core/Hr', module)
       {getColors({ themeOverride: { colorScheme: 'dark' } })}
     </div>
   ))
-  .add('Inset', () => (
-    <div style={{ padding: 20 }}>
-      <Hr inset />
-      <Hr inset={false} style={{ marginTop: 15 }} />
-      <Hr inset insetType="middle" style={{ marginTop: 15 }} />
-      <Hr inset insetType="right" style={{ marginTop: 15 }} />
-    </div>
-  ))
   .add('Vertical Hr', () => (
     <div
       style={{
@@ -46,6 +38,9 @@ storiesOf('@mantine/core/Hr', module)
         justifyContent: 'space-evenly',
       }}
     >
+      <Hr orientation="vertical" variant="solid" subHeader="Mantine" color="blue" />
+      <Hr orientation="vertical" variant="solid" subHeader="Mantine" />
+      <Hr orientation="vertical" variant="dashed" subHeader="Mantine" />
       <Hr orientation="vertical" variant="solid" />
       <Hr orientation="vertical" variant="solid" />
     </div>
@@ -53,9 +48,21 @@ storiesOf('@mantine/core/Hr', module)
   .add('Sub header', () => (
     <div style={{ padding: 20 }}>
       <Hr subHeader="Test" />
-      <Hr inset subHeader="Test" />
-      <Hr subHeader="Test" subHeaderStyle={{ color: 'green', textAlign: 'end' }} />
-      <Hr inset insetType="middle" subHeader="Test" color="blue" />
-      <Hr inset insetType="right" subHeader="Test" color="blue" />
+      <Hr
+        subHeader="Test"
+        subHeaderProps={{ style: { textAlign: 'center' } }}
+        style={{ marginTop: 15 }}
+      />
+      <Hr
+        subHeader="Test"
+        subHeaderProps={{ style: { textAlign: 'end', fontFamily: 'cursive' } }}
+        style={{ marginTop: 15 }}
+      />
+      <Hr subHeader="Test" subHeaderProps={{ style: { fontSize: 20 } }} style={{ marginTop: 15 }} />
+      <Hr
+        subHeader="Test"
+        subHeaderProps={{ style: { fontSize: 20 }, color: 'blue' }}
+        style={{ marginTop: 15 }}
+      />
     </div>
   ));
