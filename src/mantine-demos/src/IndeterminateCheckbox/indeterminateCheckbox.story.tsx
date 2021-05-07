@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { IntermediateCheckbox } from './IntermediateCheckbox';
+import { IndeterminateCheckbox } from './IndeterminateCheckbox';
 
-storiesOf('@mantine/demos/IntermediateCheckbox', module).add('General usage', () => (
+storiesOf('@mantine/demos/IndeterminateCheckbox', module).add('General usage', () => (
   <div
     style={{
       display: 'flex',
@@ -13,7 +13,7 @@ storiesOf('@mantine/demos/IntermediateCheckbox', module).add('General usage', ()
     }}
   >
     <div style={{ width: 380 }}>
-      <IntermediateCheckbox />
+      <IndeterminateCheckbox />
     </div>
   </div>
 ));

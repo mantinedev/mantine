@@ -8,7 +8,7 @@ description: 'Capture boolean input from user'
 ---
 
 import { CHECKBOX_SIZES } from '@mantine/core';
-import { CheckboxIntermediateDemo } from '../demos/core/Checkbox/checkbox-intermediate.demo';
+import { CheckboxIndeterminateDemo } from '../demos/core/Checkbox/checkbox-indeterminate.demo';
 import { CheckboxConfigurator } from '../demos/core/Checkbox/checkbox.configurator';
 import { CheckboxSizesDemo } from '../demos/core/Checkbox/checkbox-sizes.demo';
 
@@ -55,12 +55,12 @@ import { CHECKBOX_SIZES } from '@mantine/core';
   data={Object.keys(CHECKBOX_SIZES).map((size) => [size, `${CHECKBOX_SIZES[size]}px`])}
 />
 
-## Intermediate state
+## Indeterminate state
 
-Checkbox supports intermediate state. When `intermediate` prop is set to true,
+Checkbox supports indeterminate state. When `indeterminate` prop is set to true,
 `checked` prop is ignored:
 
-<CheckboxIntermediateDemo />
+<CheckboxIndeterminateDemo />
 
 ## Controlled
 
