@@ -101,6 +101,19 @@ If you want to avoid id mismatch during hydration provide static name value:
 <SegmentedControl name="my-control" />
 ```
 
+## Resize observer
+
+SegmentedControl uses [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)
+to calculate active control background position. Position changes on container width change with 50ms debounce to avoid performance issue.
+
+ResizeObserver is [supported by all modern browsers](https://caniuse.com/resizeobserver),
+if you encounter any errors with browser compatibility use [polyfill](https://www.npmjs.com/package/resize-observer-polyfill):
+
+```tsx
+import ResizeObserver from 'resize-observer-polyfill';
+window.ResizeObserver = ResizeObserver;
+```
+
 ## Accessibility and usability
 
 SegmentedControl uses radio inputs under the hood, it is accessible by default with no extra steps required.
