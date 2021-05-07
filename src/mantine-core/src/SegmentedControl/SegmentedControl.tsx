@@ -31,6 +31,9 @@ interface SegmentedControlProps
   /** Active control color from theme, defaults to white in light color scheme and theme.colors.dark[9] in dark */
   color?: string;
 
+  /** Controls font-size, paddings and height */
+  size?: MantineSize;
+
   /** Border-radius from theme or number to set border-radius in px */
   radius?: MantineNumberSize;
 
@@ -39,9 +42,6 @@ interface SegmentedControlProps
 
   /** Transition timing function for all transitions, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
-
-  /** Controls font-size, paddings and height */
-  size?: MantineSize;
 }
 
 export function SegmentedControl({
@@ -79,7 +79,7 @@ export function SegmentedControl({
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const calculatePosition = (val: string) => {
-    if (val in refs.current) {
+    if (val in refs.current && wrapperRef.current) {
       const element = refs.current[val];
       const rect = element.getBoundingClientRect();
       setActivePosition({
