@@ -1,6 +1,6 @@
 {
   "name": "@mantine/hooks",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/lib.js",
   "types": "dist/mantine-hooks/src/index.d.ts",
   "license": "MIT",
