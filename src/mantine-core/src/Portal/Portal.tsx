@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 interface PortalProps {
@@ -16,15 +16,22 @@ interface PortalProps {
 }
 
 export function Portal({ children, zIndex = 1, target, className }: PortalProps) {
-  if (typeof document === 'undefined') {
+  const [mounted, setMounted] = useState(false);
+  const elementRef = useRef<HTMLDivElement>();
+
+  useLayoutEffect(() => {
+    setMounted(true);
+    elementRef.current = target || document.createElement('div');
+    if (!target) {
+      document.body.appendChild(elementRef.current);
+    }
+    return () => {
+      !target && document.body.removeChild(elementRef.current);
+    };
+  }, [target]);
+
+  if (!mounted) {
     return null;
-  }
-
-  const elementRef = useRef<HTMLDivElement>(target);
-
-  if (!elementRef.current) {
-    elementRef.current = document.createElement('div');
-    document.body.appendChild(elementRef.current);
   }
 
   return createPortal(
