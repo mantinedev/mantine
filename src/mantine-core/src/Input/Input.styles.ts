@@ -12,7 +12,6 @@ export default createUseStyles(
 
     inputWrapper: ({ radius, theme }: InputStylesProps) => ({
       position: 'relative',
-      overflow: 'hidden',
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
 
       '&, & *': { boxSizing: 'border-box' },
