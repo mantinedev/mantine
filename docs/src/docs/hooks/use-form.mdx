@@ -86,7 +86,7 @@ const form = useForm({
 
 ### form.values
 
-`values` contains current values of form, it has the same shape as `initialValues`
+`values` contains current values of form, it has the same shape as `initialValues`:
 
 ```tsx
 const form = useForm({ initialValues: { name: '', age: 0 } });
@@ -184,7 +184,7 @@ form.errors; // -> { age: true, name: true }
 ### form.setFieldError
 
 `setFieldError` allows you to bypass validation and manipulate `errors` object as you wish.
-For example, you can remove error from field once it was focused or perform your own validation.
+For example, you can remove error from field once it was focused or perform your own validation:
 
 ```tsx
 const form = useForm({
@@ -206,7 +206,7 @@ form.errors; // -> { name: false, age: false }
 ### form.setErrors
 
 `setErrors` sets `errors` object.
-Use it when external fields validation occurs, e.g. on server.
+Use it when external fields validation occurs, e.g. on server:
 
 ```tsx
 const form = useForm({ initialValues: { name: '', age: 0 } });
@@ -256,9 +256,9 @@ form.errors; // -> { name: false, age: false }
 form.values; // -> { name: '', age: 0 }
 ```
 
-### form.onSubmit
+### form.onSubmit:
 
-`onSubmit` takes function as an argument and calls it with values if form has no validation errors.
+`onSubmit` takes function as an argument and calls it with values if form has no validation errors:
 
 ```tsx
 const form = useForm({
