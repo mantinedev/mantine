@@ -29,6 +29,7 @@ export default createUseStyles(
       margin: 0,
     }),
     hrVertical: ({ theme, size, variant, color }: HrStylesProps) => ({
+      border: 0,
       borderLeftWidth: getSizeValue({ size, sizes }),
       borderLeftColor: getThemeColor({
         theme,

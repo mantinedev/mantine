@@ -52,7 +52,7 @@ export function Hr({
       className={cx(orientation === 'vertical' ? classes.hrVertical : classes.hr, className)}
       {...others}
     >
-      {subHeader && (
+      {subHeader && orientation === 'horizontal' && (
         <Text {...subHeaderProps} className={cx(classes.subHeader, subHeaderProps?.className)}>
           {subHeader}
         </Text>

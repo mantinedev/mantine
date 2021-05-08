@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/theme';
 import { Hr } from './Hr';
+import { Badge } from '../Badge/Badge';
 
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl', 10] as const).map((size) => (
   <Hr style={{ marginTop: 15 }} size={size} key={size} />
@@ -31,19 +32,23 @@ storiesOf('@mantine/core/Hr', module)
     </div>
   ))
   .add('Vertical Hr', () => (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-      }}
-    >
-      <Hr orientation="vertical" variant="solid" subHeader="Mantine" color="blue" />
-      <Hr orientation="vertical" variant="solid" subHeader="Mantine" />
-      <Hr orientation="vertical" variant="dashed" subHeader="Mantine" />
-      <Hr orientation="vertical" variant="solid" />
-      <Hr orientation="vertical" variant="solid" />
-    </div>
+    <>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          width: '20%',
+          marginTop: 15,
+        }}
+      >
+        <Badge>Light</Badge>
+        <Hr orientation="vertical" color="blue" />
+        <Badge variant="outline">Outline</Badge>
+        <Hr orientation="vertical" color="blue" />
+        <Badge variant="filled">Filled</Badge>
+      </div>
+    </>
   ))
   .add('Sub header', () => (
     <div style={{ padding: 20 }}>

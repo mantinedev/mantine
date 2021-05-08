@@ -1,5 +1,5 @@
 import React from 'react';
-import { Hr } from '@mantine/core';
+import { Hr, Badge } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -117,6 +117,53 @@ export function HrSubHeaderDemo() {
         style={{ marginTop: 10 }}
       />
       <Hr subHeader="Test" subHeaderProps={{ style: { fontSize: 20 } }} style={{ marginTop: 15 }} />
+    </CodeDemo>
+  );
+}
+
+const orientationCode = `import React from 'react';
+import { Hr } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Hr orientation="horizontal" />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          marginTop: 15,
+        }}
+      >
+        <Badge>Light</Badge>
+        <Hr orientation="vertical" />
+        <Badge variant="outline">Outline</Badge>
+        <Hr orientation="vertical" />
+        <Badge variant="filled">Filled</Badge>
+      </div>
+    </>
+  );
+}`;
+
+export function HrOrientationDemo() {
+  return (
+    <CodeDemo code={orientationCode} language="tsx">
+      <Hr orientation="horizontal" />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          marginTop: 15,
+        }}
+      >
+        <Badge>Light</Badge>
+        <Hr orientation="vertical" />
+        <Badge variant="outline">Outline</Badge>
+        <Hr orientation="vertical" />
+        <Badge variant="filled">Filled</Badge>
+      </div>
     </CodeDemo>
   );
 }
