@@ -4,7 +4,7 @@ import { useForm } from '@mantine/hooks';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { TextInput, Button, Checkbox } from '@mantine/core';
+import { TextInput, Button } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 
 export function UseFormDemo() {
