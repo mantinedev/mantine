@@ -26,7 +26,7 @@ export function ColorSwatchComponentDemo() {
     <CodeDemo code={code} language="tsx">
       <ElementsGroup position="center" spacing="xs">
         <ColorSwatch component="a" href="https://mantine.dev" color={theme.colors.blue[6]} />
-        <ColorSwatch component="button" href="https://mantine.dev" color={theme.colors.lime[6]} />
+        <ColorSwatch component="button" color={theme.colors.lime[6]} />
         <ColorSwatch component={Link} to="/pages/theming" color={theme.colors.red[6]} />
       </ElementsGroup>
     </CodeDemo>

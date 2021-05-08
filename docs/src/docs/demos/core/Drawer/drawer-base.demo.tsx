@@ -15,7 +15,7 @@ function Demo() {
         onClose={() => setOpened(false)}
         padding="md"
       >
-        Press escape to close drawer
+        Press escape to close the drawer
       </Drawer>
 
       <ElementsGroup position="center">
@@ -32,7 +32,7 @@ export function DrawerBaseDemo() {
     <CodeDemo code={code} language="tsx">
       <Portal zIndex={10}>
         <Drawer opened={opened} onClose={() => setOpened(false)} padding="md">
-          Press escape to close drawer
+          Press escape to close the drawer
         </Drawer>
       </Portal>
 

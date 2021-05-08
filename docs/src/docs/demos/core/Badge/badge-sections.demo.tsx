@@ -4,7 +4,7 @@ import { Cross1Icon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Badge, ElementsGroup } from '@mantine/core';
+import { ActionIcon, Avatar, Badge, ElementsGroup } from '@mantine/core';
 
 function Demo() {
   const avatar = (

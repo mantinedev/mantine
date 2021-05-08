@@ -3,7 +3,7 @@ import { Alert, Text, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Alert } from '@mantine/core';
+import { Alert, Text } from '@mantine/core';
 
 function Demo() {
   return (

@@ -20,7 +20,7 @@ function Demo() {
         </Text>
         
         <Text style={{ marginTop: 10 }} size="sm">
-          Please click anywhere on this card to claim your reward, this is not fraud, trust us
+          Please click anywhere on this card to claim your reward, this is not a fraud, trust us
         </Text>
 
         <Overlay

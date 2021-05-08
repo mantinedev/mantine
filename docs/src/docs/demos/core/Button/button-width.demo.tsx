@@ -3,7 +3,7 @@ import { Button } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const fullWidth = `import React from 'react';
-import { Button, ElementsGroup } from '@mantine/core';
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
