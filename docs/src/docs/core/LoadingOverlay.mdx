@@ -26,7 +26,7 @@ import { LoadingOverlay } from '@mantine/core';
 Use LoadingOverlay to overlay element to disable interactions and indicate loading state.
 Note that, elements under overlay are still focusable with keyboard remember to add additional logic to handle this case.
 
-Overlay had absolute position and will take 100% of width and height of parent container.
+Overlay had absolute position and will take 100% of width and height of nearest parent container with relative position.
 Use it when you need to disable user interactions and indicate loading state, for example, while form is submitting.
 
 `visible` is the only required prop, if it set to false component will not render anything.
