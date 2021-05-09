@@ -1,9 +1,9 @@
 import React from 'react';
-import { Tooltip, Button, ElementsGroup } from '@mantine/core';
+import { Tooltip, Button, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Tooltip, Button, ElementsGroup } from '@mantine/core';
+import { Tooltip, Button, Group } from '@mantine/core';
 
 function Demo() {
   const tooltips = ['top', 'right', 'bottom', 'left'].map((position) => {
@@ -22,13 +22,13 @@ function Demo() {
     ));
 
     return (
-      <ElementsGroup key={position} position="center">
+      <Group key={position} position="center">
         {placements}
-      </ElementsGroup>
+      </Group>
     );
   });
 
-  return <ElementsGroup position="center">{transitions}</ElementsGroup>;
+  return <Group position="center">{transitions}</Group>;
 }`;
 
 export function TooltipPositionsDemo() {
@@ -48,9 +48,9 @@ export function TooltipPositionsDemo() {
     ));
 
     return (
-      <ElementsGroup key={position} position="center" style={{ marginTop: index !== 0 && 10 }}>
+      <Group key={position} position="center" style={{ marginTop: index !== 0 && 10 }}>
         {placements}
-      </ElementsGroup>
+      </Group>
     );
   });
 

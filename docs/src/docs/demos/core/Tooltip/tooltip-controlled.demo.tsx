@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tooltip, Button, ElementsGroup } from '@mantine/core';
+import { Tooltip, Button, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
@@ -22,13 +22,13 @@ export function TooltipControlledDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center" style={{ paddingTop: 30 }}>
+      <Group position="center" style={{ paddingTop: 30 }}>
         <Tooltip data-mantine-composable label="Ctrl + J" opened={opened}>
           <Button variant="outline" onClick={() => setOpened((o) => !o)}>
             Toggle color scheme
           </Button>
         </Tooltip>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

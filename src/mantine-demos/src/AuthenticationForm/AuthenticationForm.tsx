@@ -4,7 +4,7 @@ import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
 import {
   TextInput,
   PasswordInput,
-  ElementsGroup,
+  Group,
   Checkbox,
   Button,
   Paper,
@@ -136,7 +136,7 @@ export function AuthenticationForm({ noShadow, noPadding, noSubmit }: Authentica
         )}
 
         {!noSubmit && (
-          <ElementsGroup position="apart" style={{ marginTop: 25 }}>
+          <Group position="apart" style={{ marginTop: 25 }}>
             <Button variant="link" color="gray" onClick={toggleFormType}>
               {formType === 'register'
                 ? 'Have an account? Login'
@@ -146,7 +146,7 @@ export function AuthenticationForm({ noShadow, noPadding, noSubmit }: Authentica
             <Button color="blue" type="submit">
               {formType === 'register' ? 'Register' : 'Login'}
             </Button>
-          </ElementsGroup>
+          </Group>
         )}
       </form>
     </Paper>

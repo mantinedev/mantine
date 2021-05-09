@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionIcon, ElementsGroup, DEFAULT_THEME } from '@mantine/core';
+import { ActionIcon, Group, DEFAULT_THEME } from '@mantine/core';
 import { ImageIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -15,10 +15,10 @@ const getColors = (props: any) =>
 export function ActionIconColorsDemo() {
   return (
     <CodeDemo>
-      <ElementsGroup position="center">{getColors({ variant: 'hover' })}</ElementsGroup>
-      <ElementsGroup position="center">{getColors({ variant: 'light' })}</ElementsGroup>
-      <ElementsGroup position="center">{getColors({ variant: 'filled' })}</ElementsGroup>
-      <ElementsGroup position="center">{getColors({ variant: 'outline' })}</ElementsGroup>
+      <Group position="center">{getColors({ variant: 'hover' })}</Group>
+      <Group position="center">{getColors({ variant: 'light' })}</Group>
+      <Group position="center">{getColors({ variant: 'filled' })}</Group>
+      <Group position="center">{getColors({ variant: 'outline' })}</Group>
     </CodeDemo>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, ElementsGroup, Button, Checkbox, useMantineTheme } from '@mantine/core';
+import { TextInput, Group, Button, Checkbox, useMantineTheme } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -79,9 +79,9 @@ export function UseFormBaseDemo() {
             onChange={(event) => form.setFieldValue('termsOfService', event.currentTarget.checked)}
           />
 
-          <ElementsGroup position="right" style={{ marginTop: 15 }}>
+          <Group position="right" style={{ marginTop: 15 }}>
             <Button type="submit">Submit</Button>
-          </ElementsGroup>
+          </Group>
         </form>
       </div>
     </CodeDemo>

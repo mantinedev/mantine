@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/theme';
 import { AuthenticationForm } from '@mantine/demos';
 import { Button } from '../Button/Button';
-import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
+import { Group } from '../Group/Group';
 import { LoadingOverlay } from './LoadingOverlay';
 
 function LoadingOverlayDemo(props?: any) {
@@ -16,9 +16,9 @@ function LoadingOverlayDemo(props?: any) {
         <AuthenticationForm />
       </div>
 
-      <ElementsGroup position="center" style={{ marginTop: 30 }}>
+      <Group position="center" style={{ marginTop: 30 }}>
         <Button onClick={() => setVisible((v) => !v)}>Toggle overlay</Button>
-      </ElementsGroup>
+      </Group>
     </div>
   );
 }

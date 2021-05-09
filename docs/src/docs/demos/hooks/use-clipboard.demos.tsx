@@ -1,5 +1,5 @@
 import React from 'react';
-import { ElementsGroup, Button } from '@mantine/core';
+import { Group, Button } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
@@ -25,14 +25,14 @@ export function UseClipboardDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button
           color={clipboard.copied ? 'teal' : 'blue'}
           onClick={() => clipboard.copy('Hello, world!')}
         >
           {clipboard.copied ? 'Copied' : 'Copy'}
         </Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

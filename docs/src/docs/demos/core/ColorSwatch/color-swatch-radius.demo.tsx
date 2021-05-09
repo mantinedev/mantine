@@ -1,9 +1,9 @@
 import React from 'react';
-import { ColorSwatch, ElementsGroup, useMantineTheme } from '@mantine/core';
+import { ColorSwatch, Group, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { ColorSwatch, ElementsGroup, useMantineTheme } from '@mantine/core';
+import { ColorSwatch, Group, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
@@ -12,9 +12,9 @@ function Demo() {
   ));
 
   return (
-    <ElementsGroup position="center" spacing="xs">
+    <Group position="center" spacing="xs">
       {swatches}
-    </ElementsGroup>
+    </Group>
   );
 }`;
 
@@ -26,9 +26,9 @@ export function ColorSwatchRadiusDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center" spacing="xs">
+      <Group position="center" spacing="xs">
         {swatches}
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

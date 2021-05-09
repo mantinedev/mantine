@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActionIcon, Button, ElementsGroup, PasswordInput, useMantineTheme } from '@mantine/core';
+import { ActionIcon, Button, Group, PasswordInput, useMantineTheme } from '@mantine/core';
 import {
   GearIcon,
   ChatBubbleIcon,
@@ -12,12 +12,12 @@ import {
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const groupCode = `import React from 'react';
-import { ActionIcon, Button, ElementsGroup } from '@mantine/core';
+import { ActionIcon, Button, Group } from '@mantine/core';
 import { GearIcon, ChatBubbleIcon } from '@modulz/radix-icons';
 
 function Demo() {
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <Button>Submit</Button>
 
       <ActionIcon title="Settings" aria-label="Settings">
@@ -27,14 +27,14 @@ function Demo() {
       <ActionIcon title="Chat" aria-label="Chat">
         <ChatBubbleIcon />
       </ActionIcon>
-    </ElementsGroup>
+    </Group>
   );
 }`;
 
 export function ActionIconGroupDemo() {
   return (
     <CodeDemo code={groupCode} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button>Submit</Button>
 
         <ActionIcon title="Settings" aria-label="Settings">
@@ -44,31 +44,31 @@ export function ActionIconGroupDemo() {
         <ActionIcon title="Chat" aria-label="Chat">
           <ChatBubbleIcon />
         </ActionIcon>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }
 
 const variantsCode = `import React from 'react';
-import { ActionIcon, ElementsGroup } from '@mantine/core';
+import { ActionIcon, Group } from '@mantine/core';
 import { GearIcon, ChatBubbleIcon, ActivityLogIcon, CheckIcon, ImageIcon } from '@modulz/radix-icons';
 
 function Demo() {
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <ActionIcon variant="transparent"><GearIcon /></ActionIcon>
       <ActionIcon variant="hover"><ChatBubbleIcon /></ActionIcon>
       <ActionIcon variant="filled" color="blue"><ActivityLogIcon /></ActionIcon>
       <ActionIcon variant="light" color="pink"><ImageIcon /></ActionIcon>
       <ActionIcon variant="outline" color="teal"><CheckIcon /></ActionIcon>
-    </ElementsGroup>
+    </Group>
   );
 }`;
 
 export function ActionIconVariantDemo() {
   return (
     <CodeDemo code={variantsCode} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <ActionIcon variant="transparent">
           <GearIcon />
         </ActionIcon>
@@ -84,7 +84,7 @@ export function ActionIconVariantDemo() {
         <ActionIcon variant="outline" color="teal">
           <CheckIcon />
         </ActionIcon>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }
@@ -121,7 +121,7 @@ export function ActionIconVariantToggleDemo() {
       language="tsx"
       demoBackground={darkTheme ? theme.colors.dark[7] : '#fff'}
     >
-      <ElementsGroup position="center">
+      <Group position="center">
         <ActionIcon
           variant={darkTheme ? 'transparent' : 'filled'}
           onClick={() => setDarkTheme((a) => !a)}
@@ -131,7 +131,7 @@ export function ActionIconVariantToggleDemo() {
         >
           {darkTheme ? <SunIcon /> : <MoonIcon />}
         </ActionIcon>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

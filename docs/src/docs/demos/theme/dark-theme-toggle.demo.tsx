@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ElementsGroup, ActionIcon } from '@mantine/core';
+import { Group, ActionIcon } from '@mantine/core';
 import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 import { ColorSchemeContext } from '../../../components/Layout/ColorScheme.context';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
@@ -35,7 +35,7 @@ export function DarkThemeToggleDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <ActionIcon
           variant="outline"
           color={dark ? 'yellow' : 'blue'}
@@ -48,7 +48,7 @@ export function DarkThemeToggleDemo() {
             <MoonIcon style={{ width: 18, height: 18 }} />
           )}
         </ActionIcon>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

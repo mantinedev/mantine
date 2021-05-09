@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Modal, Button, ElementsGroup, Portal } from '@mantine/core';
+import { Modal, Button, Group, Portal } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
-import { Modal, Button, ElementsGroup } from '@mantine/core';
+import { Modal, Button, Group } from '@mantine/core';
 
 function Demo() {
   const [insideOpened, setInsideOpened] = useState(false);
@@ -11,7 +11,7 @@ function Demo() {
   const content = Array(100)
     .fill(0)
     .map((_, index) => <p key={index}>React is not a framework</p>);
-  
+
   return (
     <>
       <Modal
@@ -22,7 +22,7 @@ function Demo() {
       >
         {content}
       </Modal>
-      
+
       <Modal
         opened={insideOpened}
         onClose={() => setInsideOpened(false)}
@@ -32,14 +32,14 @@ function Demo() {
         {content}
       </Modal>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button onClick={() => setOutsideOpened(true)} color="pink">
           Outside overflow
         </Button>
         <Button onClick={() => setInsideOpened(true)} color="cyan">
           Inside overflow
         </Button>
-      </ElementsGroup>
+      </Group>
     </>
   );
 }`;
@@ -75,14 +75,14 @@ export function ModalOverflowDemo() {
         </Modal>
       </Portal>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button onClick={() => setOutsideOpened(true)} color="pink">
           Outside overflow
         </Button>
         <Button onClick={() => setInsideOpened(true)} color="cyan">
           Inside overflow
         </Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

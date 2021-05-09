@@ -1,16 +1,16 @@
 import React from 'react';
-import { Button, ElementsGroup } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import { ExternalLinkIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Button, ElementsGroup } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 
 function Demo() {
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <Button onClick={() => console.log('Hello')}>Regular button</Button>
-      
+
       <Button
         component="a"
         href="https://mantine.dev"
@@ -20,14 +20,14 @@ function Demo() {
       >
         Mantine docs
       </Button>
-    </ElementsGroup>
+    </Group>
   );
 }`;
 
 export function ButtonComponentsDemo() {
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button>Regular button</Button>
         <Button
           component="a"
@@ -38,7 +38,7 @@ export function ButtonComponentsDemo() {
         >
           Mantine docs
         </Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

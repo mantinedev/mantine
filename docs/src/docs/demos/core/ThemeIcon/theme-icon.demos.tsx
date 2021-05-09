@@ -1,15 +1,15 @@
 import React from 'react';
-import { ThemeIcon, ElementsGroup, useMantineTheme } from '@mantine/core';
+import { ThemeIcon, Group, useMantineTheme } from '@mantine/core';
 import { MixIcon, RocketIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { ElementsGroup, ThemeIcon, useMantineTheme } from '@mantine/core';
+import { Group, ThemeIcon, useMantineTheme } from '@mantine/core';
 import { MixIcon, RocketIcon } from '@modulz/radix-icons';
 
 function Demo() {
   const theme = useMantineTheme();
-  
+
   const filledIcons = Object.keys(theme.colors).map((color) => (
     <ThemeIcon color={color} key={color}>
       <MixIcon />
@@ -24,8 +24,8 @@ function Demo() {
 
   return (
     <>
-      <ElementsGroup position="center">{lightIcon}</ElementsGroup>
-      <ElementsGroup position="center">{filledIcons}</ElementsGroup>
+      <Group position="center">{lightIcon}</Group>
+      <Group position="center">{filledIcons}</Group>
     </>
   );
 }`;
@@ -47,8 +47,8 @@ export function ThemeIconBaseDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">{lightIcon}</ElementsGroup>
-      <ElementsGroup position="center">{filledIcons}</ElementsGroup>
+      <Group position="center">{lightIcon}</Group>
+      <Group position="center">{filledIcons}</Group>
     </CodeDemo>
   );
 }

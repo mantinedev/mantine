@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckIcon, EnvelopeClosedIcon } from '@modulz/radix-icons';
-import { ElementsGroup, Button, TextInput } from '@mantine/core';
+import { Group, Button, TextInput } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -9,7 +9,7 @@ export function NotificationsRootDemo() {
 
   return (
     <CodeDemo>
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button
           variant="outline"
           onClick={() =>
@@ -137,7 +137,7 @@ export function NotificationsRootDemo() {
         >
           With input and button
         </Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

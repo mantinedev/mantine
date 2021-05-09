@@ -4,7 +4,7 @@ import { DEFAULT_THEME } from '@mantine/theme';
 import { Cross1Icon } from '@modulz/radix-icons';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Avatar } from '../Avatar/Avatar';
-import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
+import { Group } from '../Group/Group';
 import { Badge } from './Badge';
 
 const section = (
@@ -36,38 +36,38 @@ const getThemes = (props?: any) =>
 storiesOf('@mantine/core/Badge', module)
   .add('Themes', () => (
     <>
-      <ElementsGroup style={{ padding: 10 }}>{getThemes()}</ElementsGroup>
-      <ElementsGroup style={{ padding: 10 }}>{getThemes({ variant: 'outline' })}</ElementsGroup>
-      <ElementsGroup style={{ padding: 10 }}>{getThemes({ variant: 'filled' })}</ElementsGroup>
+      <Group style={{ padding: 10 }}>{getThemes()}</Group>
+      <Group style={{ padding: 10 }}>{getThemes({ variant: 'outline' })}</Group>
+      <Group style={{ padding: 10 }}>{getThemes({ variant: 'filled' })}</Group>
     </>
   ))
   .add('Sizes', () => (
     <>
-      <ElementsGroup style={{ padding: 10 }}>
+      <Group style={{ padding: 10 }}>
         {getThemes({ size: 'xs', variant: 'filled' })}
         {getThemes({ size: 'xs', variant: 'outline' })}
         {getThemes({ size: 'xs', variant: 'light' })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 10 }}>
+      </Group>
+      <Group style={{ padding: 10 }}>
         {getThemes({ size: 'sm', variant: 'filled' })}
         {getThemes({ size: 'sm', variant: 'outline' })}
         {getThemes({ size: 'sm', variant: 'light' })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 10 }}>
+      </Group>
+      <Group style={{ padding: 10 }}>
         {getThemes({ size: 'md', variant: 'filled' })}
         {getThemes({ size: 'md', variant: 'outline' })}
         {getThemes({ size: 'md', variant: 'light' })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 10 }}>
+      </Group>
+      <Group style={{ padding: 10 }}>
         {getThemes({ size: 'lg', variant: 'filled' })}
         {getThemes({ size: 'lg', variant: 'outline' })}
         {getThemes({ size: 'lg', variant: 'light' })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 10 }}>
+      </Group>
+      <Group style={{ padding: 10 }}>
         {getThemes({ size: 'xl', variant: 'filled' })}
         {getThemes({ size: 'xl', variant: 'outline' })}
         {getThemes({ size: 'xl', variant: 'light' })}
-      </ElementsGroup>
+      </Group>
     </>
   ))
   .add('Full width', () => (
@@ -82,7 +82,7 @@ storiesOf('@mantine/core/Badge', module)
     </div>
   ))
   .add('Right and left section', () => (
-    <ElementsGroup style={{ padding: 40 }}>
+    <Group style={{ padding: 40 }}>
       <Badge style={{ paddingRight: 3 }} rightSection={section}>
         Badge with right section
       </Badge>
@@ -103,7 +103,7 @@ storiesOf('@mantine/core/Badge', module)
       <Badge variant="outline" style={{ paddingLeft: 3 }} leftSection={section}>
         Badge with left section
       </Badge>
-    </ElementsGroup>
+    </Group>
   ))
   .add('Overflow', () => (
     <div style={{ width: 140, padding: 20, background: '#f9f9f9' }}>
@@ -117,7 +117,7 @@ storiesOf('@mantine/core/Badge', module)
     </div>
   ))
   .add('Custom component', () => (
-    <ElementsGroup style={{ padding: 20 }}>
+    <Group style={{ padding: 20 }}>
       <Badge component="a" href="https://mantine.dev" target="_blank">
         Link badge
       </Badge>
@@ -127,18 +127,16 @@ storiesOf('@mantine/core/Badge', module)
       <Badge component={CustomComponent} pads="$$$">
         Custom component
       </Badge>
-    </ElementsGroup>
+    </Group>
   ))
   .add('Dark theme', () => (
     <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh' }}>
-      <ElementsGroup style={{ padding: 10 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' } })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 10 }}>
+      <Group style={{ padding: 10 }}>{getThemes({ themeOverride: { colorScheme: 'dark' } })}</Group>
+      <Group style={{ padding: 10 }}>
         {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'outline' })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 10 }}>
+      </Group>
+      <Group style={{ padding: 10 }}>
         {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'filled' })}
-      </ElementsGroup>
+      </Group>
     </div>
   ));

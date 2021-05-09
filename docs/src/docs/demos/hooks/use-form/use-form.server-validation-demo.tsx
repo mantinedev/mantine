@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, ElementsGroup, Button, LoadingOverlay, useMantineTheme } from '@mantine/core';
+import { TextInput, Group, Button, LoadingOverlay, useMantineTheme } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -95,9 +95,9 @@ export function UseFormServerValidationDemo() {
             }}
           />
 
-          <ElementsGroup position="right" style={{ marginTop: 15 }}>
+          <Group position="right" style={{ marginTop: 15 }}>
             <Button type="submit">Register</Button>
-          </ElementsGroup>
+          </Group>
         </form>
       </div>
     </CodeDemo>

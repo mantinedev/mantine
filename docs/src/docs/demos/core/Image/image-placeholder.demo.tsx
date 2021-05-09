@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, ElementsGroup } from '@mantine/core';
+import { Image, Text, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -38,7 +38,7 @@ function Demo() {
 export function ImagePlaceholderDemo() {
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Image
           data-mantine-composable
           width={200}
@@ -65,7 +65,7 @@ export function ImagePlaceholderDemo() {
           withPlaceholder
           placeholder={<Text align="center">This image contained the meaning of life</Text>}
         />
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

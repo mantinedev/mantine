@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ElementsGroup, useMantineTheme } from '@mantine/core';
+import { Button, Group, useMantineTheme } from '@mantine/core';
 import { GitHubLogoIcon } from '@modulz/radix-icons';
 import NpmIcon from './NpmIcon';
 
@@ -18,7 +18,7 @@ export default function PageHeader(props: PageHeaderProps) {
   };
 
   return (
-    <ElementsGroup style={{ marginTop: theme.spacing.xs, marginBottom: theme.spacing.md }}>
+    <Group style={{ marginTop: theme.spacing.xs, marginBottom: theme.spacing.md }}>
       <Button
         component="a"
         variant="outline"
@@ -62,6 +62,6 @@ export default function PageHeader(props: PageHeaderProps) {
       >
         {props.package}
       </Button>
-    </ElementsGroup>
+    </Group>
   );
 }

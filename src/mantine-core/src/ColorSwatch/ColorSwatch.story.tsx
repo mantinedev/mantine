@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/theme';
-import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
+import { Group } from '../Group/Group';
 import { ColorSwatch } from './ColorSwatch';
 
 const swatches = Object.keys(DEFAULT_THEME.colors).map((theme) => (
@@ -13,11 +13,11 @@ const radiuses = ([0, 'xs', 'sm', 'md', 'lg', 'xl', 1000] as any[]).map((radius)
 ));
 
 storiesOf('@mantine/core/ColorSwatch', module)
-  .add('General Usage', () => <ElementsGroup style={{ padding: 15 }}>{swatches}</ElementsGroup>)
-  .add('Custom radius', () => <ElementsGroup style={{ padding: 15 }}>{radiuses}</ElementsGroup>)
+  .add('General Usage', () => <Group style={{ padding: 15 }}>{swatches}</Group>)
+  .add('Custom radius', () => <Group style={{ padding: 15 }}>{radiuses}</Group>)
   .add('Custom components', () => (
-    <ElementsGroup style={{ padding: 15 }}>
+    <Group style={{ padding: 15 }}>
       <ColorSwatch color="#000" component="button" />
       <ColorSwatch color="#000" component="a" href="https://mantine.dev" />
-    </ElementsGroup>
+    </Group>
   ));

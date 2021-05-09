@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, Button, ElementsGroup, Portal } from '@mantine/core';
+import { Drawer, Button, Group, Portal } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 export function DrawerPositionsDemo() {
@@ -18,7 +18,7 @@ export function DrawerPositionsDemo() {
         </Drawer>
       </Portal>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button variant="outline" onClick={() => open('left')}>
           left
         </Button>
@@ -31,7 +31,7 @@ export function DrawerPositionsDemo() {
         <Button variant="outline" onClick={() => open('bottom')}>
           bottom
         </Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

@@ -1,19 +1,19 @@
 import React from 'react';
-import { ElementsGroup, Button, TextInput } from '@mantine/core';
+import { Group, Button, TextInput } from '@mantine/core';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';
 import { useNotifications } from '@mantine/notifications';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { ElementsGroup, Button, TextInput } from '@mantine/core';
+import { Group, Button, TextInput } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';
 
 function Demo() {
   const notifications = useNotifications();
-  
+
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <Button
         variant="outline"
         leftIcon={<EnvelopeClosedIcon />}
@@ -45,7 +45,7 @@ function Demo() {
       >
         Subscribe to email newsletter
       </Button>
-    </ElementsGroup>
+    </Group>
   );
 }`;
 
@@ -54,7 +54,7 @@ export function NotificationsInteractiveDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button
           variant="outline"
           leftIcon={<EnvelopeClosedIcon />}
@@ -82,7 +82,7 @@ export function NotificationsInteractiveDemo() {
         >
           Subscribe to email newsletter
         </Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

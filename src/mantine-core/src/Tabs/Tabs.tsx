@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import { ElementsGroup, ElementsGroupPosition } from '../ElementsGroup/ElementsGroup';
+import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType } from './Tab/Tab';
 import { TabControl } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
@@ -28,7 +28,7 @@ interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
   grow?: boolean;
 
   /** tab controls position */
-  position?: ElementsGroupPosition;
+  position?: GroupPosition;
 
   /** called when tab control is clicked with tab index */
   onTabChange?(tabIndex: number): void;
@@ -128,7 +128,7 @@ export function Tabs({
   return (
     <div {...others}>
       <div className={classes.tabs}>
-        <ElementsGroup
+        <Group
           className={classes.tabsInner}
           role="tablist"
           aria-orientation="horizontal"
@@ -137,7 +137,7 @@ export function Tabs({
           grow={grow}
         >
           {panes}
-        </ElementsGroup>
+        </Group>
       </div>
 
       {content && (

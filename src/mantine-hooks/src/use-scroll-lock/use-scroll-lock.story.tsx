@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { Container, Text, Button, ElementsGroup } from '@mantine/core';
+import { Container, Text, Button, Group } from '@mantine/core';
 import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 import { useScrollLock } from './use-scroll-lock';
 
@@ -22,7 +22,7 @@ function Example() {
   return (
     <Container size="xs" style={{ padding: 20 }}>
       {items}
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button
           onClick={() => setLockScroll((c) => !c)}
           variant="outline"
@@ -30,7 +30,7 @@ function Example() {
         >
           {lockScroll ? 'Unlock scroll' : 'Lock scroll'}
         </Button>
-      </ElementsGroup>
+      </Group>
       {items}
     </Container>
   );

@@ -1,10 +1,10 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
-export type ElementsGroupPosition = 'right' | 'center' | 'left' | 'apart';
+export type GroupPosition = 'right' | 'center' | 'left' | 'apart';
 
-interface ElementsGroupStylesProps {
-  position: ElementsGroupPosition;
+interface GroupStylesProps {
+  position: GroupPosition;
   noWrap: boolean;
   grow: boolean;
   spacing: MantineNumberSize;
@@ -20,7 +20,7 @@ const JUSTIFY_CONTENT = {
 
 export default createUseStyles(
   {
-    elementsGroup: ({ spacing, position, noWrap, theme }: ElementsGroupStylesProps) => ({
+    Group: ({ spacing, position, noWrap, theme }: GroupStylesProps) => ({
       display: 'flex',
       alignItems: 'center',
       flexWrap: noWrap ? 'nowrap' : 'wrap',
@@ -28,7 +28,7 @@ export default createUseStyles(
       margin: (-1 * getSizeValue({ size: spacing, sizes: theme.spacing })) / 2,
     }),
 
-    child: ({ grow, spacing, theme }: ElementsGroupStylesProps) => ({
+    child: ({ grow, spacing, theme }: GroupStylesProps) => ({
       flexGrow: grow ? 1 : 0,
       margin: getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
     }),

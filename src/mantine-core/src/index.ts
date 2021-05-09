@@ -18,7 +18,7 @@ export { Code } from './Code/Code';
 export { ColorSwatch } from './ColorSwatch/ColorSwatch';
 export { Container, CONTAINER_SIZES } from './Container/Container';
 export { Drawer, DRAWER_SIZES } from './Drawer/Drawer';
-export { ElementsGroup } from './ElementsGroup/ElementsGroup';
+export { Group, Group as ElementsGroup } from './Group/Group';
 export { Highlight } from './Highlight/Highlight';
 export { Hr, HR_SIZES } from './Hr/Hr';
 export { Image } from './Image/Image';

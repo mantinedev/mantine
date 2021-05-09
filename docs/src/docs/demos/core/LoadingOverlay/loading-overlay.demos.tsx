@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { LoadingOverlay, Button, ElementsGroup, useMantineTheme } from '@mantine/core';
+import { LoadingOverlay, Button, Group, useMantineTheme } from '@mantine/core';
 import { AuthenticationForm } from '@mantine/demos';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
-import { LoadingOverlay, Button, ElementsGroup } from '@mantine/core';
+import { LoadingOverlay, Button, Group } from '@mantine/core';
 
 function Demo() {
   const [visible, setVisible] = useState(false);
@@ -16,9 +16,9 @@ function Demo() {
         <AuthenticationForm />
       </div>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button onClick={() => setVisible((v) => !v)}>Toggle overlay</Button>
-      </ElementsGroup>
+      </Group>
     </>
   );
 }`;
@@ -47,9 +47,9 @@ export function LoadingOverlayBaseDemo() {
         </div>
       </div>
 
-      <ElementsGroup position="center" style={{ marginTop: 20 }}>
+      <Group position="center" style={{ marginTop: 20 }}>
         <Button onClick={() => setVisible((v) => !v)}>Toggle overlay</Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

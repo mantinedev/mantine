@@ -1,27 +1,27 @@
 import React from 'react';
-import { Button, ElementsGroup } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
-function ElementsGroupWrapper(props: React.ComponentPropsWithoutRef<typeof ElementsGroup>) {
+function GroupWrapper(props: React.ComponentPropsWithoutRef<typeof Group>) {
   return (
-    <ElementsGroup {...props}>
+    <Group {...props}>
       <Button variant="outline">1</Button>
       <Button variant="outline">2</Button>
       <Button variant="outline">3</Button>
-    </ElementsGroup>
+    </Group>
   );
 }
 
-const codeTemplate = (props: string) => `<ElementsGroup${props}>
+const codeTemplate = (props: string) => `<Group${props}>
   <Button variant="outline">1</Button>
   <Button variant="outline">2</Button>
   <Button variant="outline">3</Button>
-</ElementsGroup>`;
+</Group>`;
 
-export function ElementsGroupConfigurator() {
+export function GroupConfigurator() {
   return (
     <Configurator
-      component={ElementsGroupWrapper}
+      component={GroupWrapper}
       codeTemplate={codeTemplate}
       props={[
         { name: 'grow', type: 'boolean', initialValue: false, defaultValue: false },

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Drawer, Button, ElementsGroup, Portal } from '@mantine/core';
+import { Drawer, Button, Group, Portal } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
-import { Drawer, Button, ElementsGroup } from '@mantine/core';
+import { Drawer, Button, Group } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
-  
+
   return (
     <>
       <Drawer
@@ -18,9 +18,9 @@ function Demo() {
         Press escape to close the drawer
       </Drawer>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button onClick={() => setOpened(true)}>Open Drawer</Button>
-      </ElementsGroup>
+      </Group>
     </>
   );
 }`;
@@ -36,9 +36,9 @@ export function DrawerBaseDemo() {
         </Drawer>
       </Portal>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button onClick={() => setOpened(true)}>Open Drawer</Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

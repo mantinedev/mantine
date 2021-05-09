@@ -3,7 +3,7 @@ import { ComponentDoc } from 'react-docgen-typescript';
 const replace = {
   MantineNumberSize: 'number | "xs" | "sm" | "md" | "lg" | "xl"',
   MantineSize: '"xs" | "sm" | "md" | "lg" | "xl"',
-  ElementsGroupPosition: '"right" | "center" | "left" | "apart"',
+  GroupPosition: '"right" | "center" | "left" | "apart"',
   ReactText: 'string | number',
   'ReactElement<any, string | ((props: any) => ReactElement<any, any>) | (new (props: any) => Component<any, any, any>)>':
     'ReactElement',

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ElementsGroup, Button, Text, MantineProvider } from '@mantine/core';
+import { Group, Button, Text, MantineProvider } from '@mantine/core';
 import { ColorSchemeContext } from '../../../components/Layout/ColorScheme.context';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
@@ -26,9 +26,9 @@ export function NestedProvidersDemo() {
         <Text style={{ textAlign: 'center', marginBottom: 10 }}>Georgia or serif text</Text>
 
         <MantineProvider theme={{ fontFamily: 'Verdana, sans-serif', colorScheme }}>
-          <ElementsGroup position="center">
+          <Group position="center">
             <Button>Verdana button</Button>
-          </ElementsGroup>
+          </Group>
         </MantineProvider>
       </MantineProvider>
     </CodeDemo>

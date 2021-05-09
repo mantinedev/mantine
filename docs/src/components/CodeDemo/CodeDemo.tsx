@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Language } from 'prism-react-renderer';
-import { useMantineTheme, Paper, Button, ElementsGroup } from '@mantine/core';
+import { useMantineTheme, Paper, Button, Group } from '@mantine/core';
 import { GitHubLogoIcon } from '@modulz/radix-icons';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import DocsSection from '../DocsSection/DocsSection';
@@ -43,7 +43,7 @@ export default function CodeDemo({
         {children}
 
         {toggle && (
-          <ElementsGroup position="center" style={{ marginTop: 20 }}>
+          <Group position="center" style={{ marginTop: 20 }}>
             <Button variant="outline" onClick={() => setVisible((v) => !v)}>
               {visible ? 'Hide' : 'Show'} code
             </Button>
@@ -58,7 +58,7 @@ export default function CodeDemo({
                 View source on Github
               </Button>
             )}
-          </ElementsGroup>
+          </Group>
         )}
       </Paper>
 

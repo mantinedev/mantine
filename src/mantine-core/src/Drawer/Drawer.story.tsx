@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/theme';
 import { Button } from '../Button/Button';
-import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
+import { Group } from '../Group/Group';
 import { Text } from '../Text/Text';
 import { Drawer } from './Drawer';
 
@@ -19,12 +19,12 @@ function Wrapper(
   return (
     <div style={{ padding: 40 }}>
       <Drawer opened={opened} onClose={() => setOpened(false)} position={position} {...props} />
-      <ElementsGroup>
+      <Group>
         <Button onClick={() => open('top')}>top</Button>
         <Button onClick={() => open('bottom')}>bottom</Button>
         <Button onClick={() => open('left')}>left</Button>
         <Button onClick={() => open('right')}>right</Button>
-      </ElementsGroup>
+      </Group>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ElementsGroup, Button } from '@mantine/core';
+import { Group, Button } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
@@ -22,11 +22,11 @@ export function UseBreakpointDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button color={matches ? 'teal' : 'red'}>
           Breakpoint {matches ? 'matches' : 'does not match'}
         </Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

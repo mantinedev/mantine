@@ -1,11 +1,11 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
-import useStyles, { ElementsGroupPosition } from './ElementsGroup.styles';
+import useStyles, { GroupPosition } from './Group.styles';
 
-interface ElementsGroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Defines justify-content property */
-  position?: ElementsGroupPosition;
+  position?: GroupPosition;
 
   /** Defined flex-wrap property */
   noWrap?: boolean;
@@ -17,9 +17,9 @@ interface ElementsGroupProps extends DefaultProps, React.ComponentPropsWithoutRe
   spacing?: MantineNumberSize;
 }
 
-export type { ElementsGroupPosition };
+export type { GroupPosition };
 
-export function ElementsGroup({
+export function Group({
   className,
   position = 'left',
   children,
@@ -28,7 +28,7 @@ export function ElementsGroup({
   spacing = 'md',
   themeOverride,
   ...others
-}: ElementsGroupProps) {
+}: GroupProps) {
   const classes = useStyles({
     grow,
     noWrap,
@@ -43,9 +43,9 @@ export function ElementsGroup({
 
   return (
     <div className={className} {...others}>
-      <div className={classes.elementsGroup}>{items}</div>
+      <div className={classes.Group}>{items}</div>
     </div>
   );
 }
 
-ElementsGroup.displayName = '@mantine/core/ElementsGroup';
+Group.displayName = '@mantine/core/Group';

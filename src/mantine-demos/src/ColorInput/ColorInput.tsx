@@ -8,7 +8,7 @@ import {
   InputWrapperBaseProps,
   Transition,
   Paper,
-  ElementsGroup,
+  Group,
   ColorSwatch,
   Text,
 } from '@mantine/core';
@@ -117,7 +117,7 @@ export function ColorInput({
                 }
               }}
             >
-              <ElementsGroup position="center">{colors}</ElementsGroup>
+              <Group position="center">{colors}</Group>
             </Paper>
           )}
         </Transition>

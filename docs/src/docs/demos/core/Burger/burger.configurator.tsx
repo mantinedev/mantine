@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Burger, ElementsGroup } from '@mantine/core';
+import { Burger, Group } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function BurgerWrapper(props: React.ComponentPropsWithoutRef<typeof Burger>) {
@@ -7,7 +7,7 @@ function BurgerWrapper(props: React.ComponentPropsWithoutRef<typeof Burger>) {
   const title = opened ? 'Open navigation' : 'Close navigation';
 
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <Burger
         title={title}
         aria-label={title}
@@ -15,7 +15,7 @@ function BurgerWrapper(props: React.ComponentPropsWithoutRef<typeof Burger>) {
         onClick={() => setOpened((o) => !o)}
         {...props}
       />
-    </ElementsGroup>
+    </Group>
   );
 }
 

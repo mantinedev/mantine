@@ -1,5 +1,5 @@
 import React from 'react';
-import { ElementsGroup, Button, MantineProvider } from '@mantine/core';
+import { Group, Button, MantineProvider } from '@mantine/core';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -18,10 +18,10 @@ export function PrimaryColorDemo() {
   return (
     <CodeDemo code={code} language="tsx">
       <MantineProvider theme={{ primaryColor: 'teal' }}>
-        <ElementsGroup position="center">
+        <Group position="center">
           <Button>Primary button</Button>
           <Button color="red">Red button</Button>
-        </ElementsGroup>
+        </Group>
       </MantineProvider>
     </CodeDemo>
   );

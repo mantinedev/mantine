@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ElementsGroup, DEFAULT_THEME } from '@mantine/core';
+import { Button, Group, DEFAULT_THEME } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const getThemes = (props?: any) =>
@@ -14,7 +14,7 @@ const getThemes = (props?: any) =>
 export function ButtonFilledVariantDemo() {
   return (
     <CodeDemo>
-      <ElementsGroup position="center">{getThemes()}</ElementsGroup>
+      <Group position="center">{getThemes()}</Group>
     </CodeDemo>
   );
 }
@@ -22,7 +22,7 @@ export function ButtonFilledVariantDemo() {
 export function ButtonOutlineVariantDemo() {
   return (
     <CodeDemo>
-      <ElementsGroup position="center">{getThemes({ variant: 'outline' })}</ElementsGroup>
+      <Group position="center">{getThemes({ variant: 'outline' })}</Group>
     </CodeDemo>
   );
 }
@@ -30,14 +30,14 @@ export function ButtonOutlineVariantDemo() {
 export function ButtonLinkVariantDemo() {
   return (
     <CodeDemo>
-      <ElementsGroup position="center">{getThemes({ variant: 'link' })}</ElementsGroup>
+      <Group position="center">{getThemes({ variant: 'link' })}</Group>
     </CodeDemo>
   );
 }
 export function ButtonLightVariantDemo() {
   return (
     <CodeDemo>
-      <ElementsGroup position="center">{getThemes({ variant: 'light' })}</ElementsGroup>
+      <Group position="center">{getThemes({ variant: 'light' })}</Group>
     </CodeDemo>
   );
 }

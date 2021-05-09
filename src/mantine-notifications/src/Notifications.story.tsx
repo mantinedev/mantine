@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckIcon } from '@modulz/radix-icons';
 import { storiesOf } from '@storybook/react';
-import { Button, ElementsGroup, MantineProvider } from '@mantine/core';
+import { Button, Group, MantineProvider } from '@mantine/core';
 import { useNotifications } from './use-notifications/use-notifications';
 import { NotificationsProvider } from './NotificationsProvider/NotificationsProvider';
 
@@ -9,7 +9,7 @@ function NotificationsDemo() {
   const notifications = useNotifications();
 
   return (
-    <ElementsGroup style={{ padding: 50 }}>
+    <Group style={{ padding: 50 }}>
       <Button
         variant="outline"
         onClick={() =>
@@ -108,7 +108,7 @@ function NotificationsDemo() {
       >
         Update notification
       </Button>
-    </ElementsGroup>
+    </Group>
   );
 }
 

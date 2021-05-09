@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loader, ElementsGroup } from '@mantine/core';
+import { Loader, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const getSizes = (props?: any) =>
@@ -10,7 +10,7 @@ const getSizes = (props?: any) =>
 export function LoaderSizesDemo() {
   return (
     <CodeDemo>
-      <ElementsGroup>{getSizes()}</ElementsGroup>
+      <Group>{getSizes()}</Group>
     </CodeDemo>
   );
 }

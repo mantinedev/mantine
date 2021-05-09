@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, Button, ElementsGroup, Portal } from '@mantine/core';
+import { Drawer, Button, Group, Portal } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 export function DrawerSizesDemo() {
@@ -24,7 +24,7 @@ export function DrawerSizesDemo() {
         </Drawer>
       </Portal>
 
-      <ElementsGroup position="center">{controls}</ElementsGroup>
+      <Group position="center">{controls}</Group>
     </CodeDemo>
   );
 }

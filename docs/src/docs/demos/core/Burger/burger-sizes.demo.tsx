@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Burger, ElementsGroup } from '@mantine/core';
+import { Burger, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 function BurgerWrapper(props: React.ComponentPropsWithoutRef<typeof Burger>) {
@@ -27,7 +27,7 @@ const getSizes = (props?: any) =>
 export function BurgerSizesDemo() {
   return (
     <CodeDemo>
-      <ElementsGroup position="center">{getSizes()}</ElementsGroup>
+      <Group position="center">{getSizes()}</Group>
     </CodeDemo>
   );
 }
