@@ -72,7 +72,7 @@ export function DrawerConfigurator() {
         { name: 'shadow', type: 'size', initialValue: 'xs', defaultValue: 'md' },
         { name: 'noOverlay', type: 'boolean', defaultValue: false },
         { name: 'noFocusTrap', type: 'boolean', defaultValue: false },
-        { name: 'noScrollScroll', type: 'boolean', defaultValue: false },
+        { name: 'noScrollLock', type: 'boolean', defaultValue: false },
         { name: 'noCloseOnClickOutside', type: 'boolean', defaultValue: false },
         { name: 'noCloseOnEscape', type: 'boolean', defaultValue: false },
       ]}

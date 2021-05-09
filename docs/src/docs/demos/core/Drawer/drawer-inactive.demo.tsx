@@ -16,7 +16,7 @@ function Demo() {
         padding="md"
         noCloseOnClickOutside
         noFocusTrap
-        noScrollScroll
+        noScrollLock
         noOverlay
       >
         Press escape to close the drawer
@@ -41,7 +41,7 @@ export function DrawerInactiveDemo() {
           padding="md"
           noCloseOnClickOutside
           noFocusTrap
-          noScrollScroll
+          noScrollLock
           noOverlay
         >
           Press escape to close the drawer
