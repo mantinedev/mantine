@@ -1,5 +1,5 @@
 import React from 'react';
-import { ElementsGroup, Button } from '@mantine/core';
+import { ElementsGroup, Button, Portal } from '@mantine/core';
 
 export default function IndexPage() {
   return (
@@ -8,6 +8,7 @@ export default function IndexPage() {
         <Button>Hello</Button>
         <Button>Hello</Button>
       </ElementsGroup>
+      <Portal>Hello</Portal>
     </div>
   );
 }
