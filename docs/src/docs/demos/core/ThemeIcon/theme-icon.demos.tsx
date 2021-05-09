@@ -4,7 +4,7 @@ import { MixIcon, RocketIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { ThemeIcon, useMantineTheme } from '@mantine/core';
+import { ElementsGroup, ThemeIcon, useMantineTheme } from '@mantine/core';
 import { MixIcon, RocketIcon } from '@modulz/radix-icons';
 
 function Demo() {
