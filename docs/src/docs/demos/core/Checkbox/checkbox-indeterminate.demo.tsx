@@ -5,7 +5,7 @@ import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import code from 'src/mantine-demos/src/IndeterminateCheckbox/IndeterminateCheckbox';
+import code from '!!raw-loader!../../../../../src/mantine-demos/src/IndeterminateCheckbox/IndeterminateCheckbox';
 
 export function CheckboxIndeterminateDemo() {
   const theme = useMantineTheme();
