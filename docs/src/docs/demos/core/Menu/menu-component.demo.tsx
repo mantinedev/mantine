@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, MenuItem, Hr, Button, Group } from '@mantine/core';
+import { Menu, MenuItem, Divider, Button, Group } from '@mantine/core';
 import { GearIcon, ChatBubbleIcon, ImageIcon, MagnifyingGlassIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -31,7 +31,7 @@ export function MenuComponentDemo() {
           <MenuItem icon={<ChatBubbleIcon style={iconSize} />}>Messages</MenuItem>
           <MenuItem icon={<ImageIcon style={iconSize} />}>Gallery</MenuItem>
           <MenuItem icon={<MagnifyingGlassIcon style={iconSize} />}>Search</MenuItem>
-          <Hr />
+          <Divider />
           <MenuItem disabled>Delete my data</MenuItem>
           <MenuItem color="red">Delete account</MenuItem>
         </Menu>
@@ -41,7 +41,7 @@ export function MenuComponentDemo() {
           <MenuItem icon={<ChatBubbleIcon style={iconSize} />}>Messages</MenuItem>
           <MenuItem icon={<ImageIcon style={iconSize} />}>Gallery</MenuItem>
           <MenuItem icon={<MagnifyingGlassIcon style={iconSize} />}>Search</MenuItem>
-          <Hr />
+          <Divider />
           <MenuItem disabled>Delete my data</MenuItem>
           <MenuItem color="red">Delete account</MenuItem>
         </Menu>

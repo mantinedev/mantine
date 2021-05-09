@@ -1,10 +1,10 @@
 import React from 'react';
-import { Menu, MenuItem, Hr, Text } from '@mantine/core';
+import { Menu, MenuItem, Divider, Text } from '@mantine/core';
 import { GearIcon, ChatBubbleIcon, ImageIcon, MagnifyingGlassIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Menu, MenuItem, Hr } from '@mantine/core';
+import { Menu, MenuItem, Divider } from '@mantine/core';
 import {
   GearIcon,
   ChatBubbleIcon,
@@ -28,7 +28,7 @@ function Demo() {
       >
         Search
       </MenuItem>
-      <Hr />
+      <Divider />
       <MenuItem disabled>Delete my data</MenuItem>
       <MenuItem color="red">Delete account</MenuItem>
     </Menu>
@@ -54,7 +54,7 @@ export function MenuBaseDemo({ hideCode = false }: { hideCode: boolean }) {
           <MenuItem rightSection={rightSection} icon={<MagnifyingGlassIcon style={iconSize} />}>
             Search
           </MenuItem>
-          <Hr />
+          <Divider />
           <MenuItem disabled>Delete my data</MenuItem>
           <MenuItem color="red">Delete account</MenuItem>
         </Menu>

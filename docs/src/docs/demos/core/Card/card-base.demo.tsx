@@ -1,17 +1,17 @@
 import React from 'react';
-import { Card, Image, Text, Hr, Badge, Button, useMantineTheme } from '@mantine/core';
+import { Card, Image, Text, Divider, Badge, Button, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Card, Image, Text, Hr, Badge, Button, useMantineTheme } from '@mantine/core';
+import { Card, Image, Text, Divider, Badge, Button, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
-  
+
   const secondaryColor = theme.colorScheme === 'dark'
     ? theme.colors.dark[1]
     : theme.colors.gray[7];
-  
+
   return (
     <div style={{ width: 340, margin: 'auto' }}>
       <Card shadow="sm">
@@ -40,7 +40,7 @@ function Demo() {
           activities on and around the fjords of Norway
         </Text>
 
-        <Hr />
+        <Divider />
 
         <Text size="sm" style={{ color: secondaryColor }}>
           Book Norway tour today and get a 5% discount
@@ -91,7 +91,7 @@ export function CardBaseDemo() {
             activities on and around the fjords of Norway
           </Text>
 
-          <Hr />
+          <Divider />
 
           <Text size="sm" style={{ color: secondaryColor }}>
             Book Norway tour today and get a 5% discount

@@ -1,12 +1,12 @@
 import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
-import useStyles, { sizes } from './Hr.styles';
+import useStyles, { sizes } from './Divider.styles';
 import { Text, TextProps } from '../Text/Text';
 
-export const HR_SIZES = sizes;
+export const DIVIDER_SIZES = sizes;
 
-interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
+interface DividerProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
   /** Line color from theme */
   color?: string;
 
@@ -22,14 +22,14 @@ interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
   /** Props spread to Text component in subHeader */
   subHeaderProps?: TextProps;
 
-  /** Hr borderStyle */
+  /** Divider borderStyle */
   variant?: 'solid' | 'dashed' | 'dotted';
 
   /** Top and bottom margins for horizontal variant, left and right for vertical, xs, sm, md, lg, xl for value from theme.spacing, number for margins in px */
   margins?: MantineNumberSize;
 }
 
-export function Hr({
+export function Divider({
   color = 'gray',
   className,
   orientation = 'horizontal',
@@ -40,7 +40,7 @@ export function Hr({
   variant = 'solid',
   margins = 0,
   ...others
-}: HrProps) {
+}: DividerProps) {
   const classes = useStyles({
     theme: useMantineTheme(themeOverride),
     margins,
@@ -71,4 +71,4 @@ export function Hr({
   );
 }
 
-Hr.displayName = '@mantine/core/Hr';
+Divider.displayName = '@mantine/core/Divider';

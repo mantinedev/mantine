@@ -8,7 +8,7 @@ import {
   itSupportsRef,
   isHasComposableAttribute,
 } from '@mantine/tests';
-import { Hr } from '../Hr/Hr';
+import { Divider } from '../Divider/Divider';
 import { Button } from '../Button/Button';
 import { Menu, MenuBody, MenuItem } from './Menu';
 
@@ -22,9 +22,9 @@ describe('@mantine/core/Menu', () => {
       <Menu menuButtonLabel="test menu">
         <MenuItem>test-1</MenuItem>
         <MenuItem>test-2</MenuItem>
-        <Hr />
+        <Divider />
         <MenuItem>test-3</MenuItem>
-        <Hr />
+        <Divider />
       </Menu>
     ),
   ]);

@@ -28,6 +28,7 @@ export function prepareDeclaration(declaration: ComponentDoc) {
   const ordered = Object.keys(data.props)
     .sort()
     .reduce((obj, key) => {
+      // eslint-disable-next-line no-param-reassign
       obj[key] = data.props[key];
       return obj;
     }, {});

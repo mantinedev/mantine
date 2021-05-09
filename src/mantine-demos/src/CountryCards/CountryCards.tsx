@@ -5,7 +5,7 @@ import {
   Image,
   Text,
   Badge,
-  Hr,
+  Divider,
   Button,
   useMantineTheme,
   Container,
@@ -40,7 +40,7 @@ export function CountryCards() {
         {country.description}
       </Text>
 
-      <Hr />
+      <Divider />
 
       <Button size="sm" variant="light" color="cyan" fullWidth style={{ marginTop: 10 }}>
         Book tour
