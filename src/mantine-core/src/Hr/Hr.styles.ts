@@ -7,6 +7,7 @@ interface HrStylesProps {
   size: MantineNumberSize;
   variant: React.CSSProperties['borderTopStyle'];
   color: string;
+  orientation: string;
 }
 
 export const sizes = {
@@ -19,12 +20,22 @@ export const sizes = {
 
 export default createUseStyles(
   {
-    hr: ({ theme, size, variant, color }: HrStylesProps) => ({
+    horizontal: ({ theme, size, variant, color }: HrStylesProps) => ({
       border: 0,
       borderTopWidth: getSizeValue({ size, sizes }),
       borderTopColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
       borderTopStyle: variant,
       margin: 0,
+    }),
+    vertical: ({ theme, size, variant, color }: HrStylesProps) => ({
+      border: 0,
+      borderLeftWidth: getSizeValue({ size, sizes }),
+      borderLeftColor: getThemeColor({
+        theme,
+        color,
+        shade: theme.colorScheme === 'dark' ? 4 : 6,
+      }),
+      borderLeftStyle: variant,
     }),
   },
   { link: true }

@@ -8,7 +8,13 @@ description: 'Display horizontal line'
 ---
 
 import { HR_SIZES } from '@mantine/core';
-import { HrBaseDemo, HrSizesDemo, HrColorDemo } from '../demos/core/Hr/hr.demos';
+import {
+  HrBaseDemo,
+  HrSizesDemo,
+  HrColorDemo,
+  HrSubHeaderDemo,
+  HrOrientationDemo,
+} from '../demos/core/Hr/hr.demos';
 
 # Hr
 
@@ -31,6 +37,12 @@ You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">them
 
 <HrColorDemo />
 
+## Orientation
+
+You can set the Orientation of the Hr to vertical or horizontal
+
+<HrOrientationDemo />
+
 ## Sizes
 
 Hr has predefined sizes: xs, sm, md, lg, xl.
@@ -48,6 +60,12 @@ import { HR_SIZES } from '@mantine/core';
   head={['Prop value', 'Height']}
   data={Object.keys(HR_SIZES).map((size) => [size, `${HR_SIZES[size]}px`])}
 />
+
+## Sub-header
+
+You can add SubHeader to the Hr. It also allows applying custom styling to the Hr using `subHeaderStyle` prop.
+
+<HrSubHeaderDemo />
 
 ## Component props
 
