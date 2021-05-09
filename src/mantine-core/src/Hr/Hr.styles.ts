@@ -5,6 +5,7 @@ import { MantineNumberSize, MantineTheme, getSizeValue, getThemeColor } from '@m
 interface HrStylesProps {
   theme: MantineTheme;
   size: MantineNumberSize;
+  margins: MantineNumberSize;
   variant: React.CSSProperties['borderTopStyle'];
   color: string;
   orientation: string;
@@ -20,22 +21,23 @@ export const sizes = {
 
 export default createUseStyles(
   {
-    horizontal: ({ theme, size, variant, color }: HrStylesProps) => ({
+    horizontal: ({ theme, size, variant, color, margins }: HrStylesProps) => ({
       border: 0,
       borderTopWidth: getSizeValue({ size, sizes }),
-      borderTopColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      borderTopColor: getThemeColor({ theme, color, shade: 5 }),
       borderTopStyle: variant,
       margin: 0,
+      marginTop: getSizeValue({ size: margins, sizes: theme.spacing }),
+      marginBottom: getSizeValue({ size: margins, sizes: theme.spacing }),
     }),
-    vertical: ({ theme, size, variant, color }: HrStylesProps) => ({
+
+    vertical: ({ theme, size, variant, color, margins }: HrStylesProps) => ({
       border: 0,
       borderLeftWidth: getSizeValue({ size, sizes }),
-      borderLeftColor: getThemeColor({
-        theme,
-        color,
-        shade: theme.colorScheme === 'dark' ? 4 : 6,
-      }),
+      borderLeftColor: getThemeColor({ theme, color, shade: 5 }),
       borderLeftStyle: variant,
+      marginLeft: getSizeValue({ size: margins, sizes: theme.spacing }),
+      marginRight: getSizeValue({ size: margins, sizes: theme.spacing }),
     }),
   },
   { link: true }

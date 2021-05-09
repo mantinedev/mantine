@@ -7,10 +7,10 @@ import { Text, TextProps } from '../Text/Text';
 export const HR_SIZES = sizes;
 
 interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
-  /** Hr color */
+  /** Line color from theme */
   color?: string;
 
-  /** Set line orientation */
+  /** Line orientation */
   orientation?: 'horizontal' | 'vertical';
 
   /** Sets height in horizontal orientation and with in vertical */
@@ -19,11 +19,14 @@ interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
   /** Adds text after line in horizontal orientation */
   subHeader?: string;
 
-  /** SubHeader component Props */
+  /** Props spread to Text component in subHeader */
   subHeaderProps?: TextProps;
 
   /** Hr borderStyle */
   variant?: 'solid' | 'dashed' | 'dotted';
+
+  /** Top and bottom margins for horizontal variant, left and right for vertical, xs, sm, md, lg, xl for value from theme.spacing, number for margins in px */
+  margins?: MantineNumberSize;
 }
 
 export function Hr({
@@ -35,10 +38,12 @@ export function Hr({
   subHeaderProps,
   themeOverride,
   variant = 'solid',
+  margins = 0,
   ...others
 }: HrProps) {
   const classes = useStyles({
     theme: useMantineTheme(themeOverride),
+    margins,
     color,
     size,
     variant,
@@ -51,8 +56,14 @@ export function Hr({
       className={cx(orientation === 'vertical' ? classes.vertical : classes.horizontal, className)}
       {...others}
     >
-      {subHeader && orientation === 'horizontal' && (
-        <Text color={color} {...subHeaderProps} className={cx(subHeaderProps?.className)}>
+      {!!subHeader && orientation === 'horizontal' && (
+        <Text
+          data-mantine-subheader
+          color={color}
+          {...subHeaderProps}
+          size={subHeaderProps?.size || 'xs'}
+          style={{ marginTop: 2 }}
+        >
           {subHeader}
         </Text>
       )}

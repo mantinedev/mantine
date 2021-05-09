@@ -79,18 +79,13 @@ export function HrSizesDemo() {
 
 const subHeaderCode = `import React from 'react';
 import { Hr } from '@mantine/core';
+
 function Demo() {
   return (
     <>
       <Hr subHeader="Subheader" />
-      <Hr
-        subHeader="Subheader"
-        subHeaderProps={{ style: { textAlign: 'center' }, color: 'red' }}
-      />
-      <Hr
-        subHeader="Subheader"
-        subHeaderProps={{ style: { textAlign: 'right' } }}
-      />
+      <Hr subHeader="Subheader" subHeaderProps={{ align: 'center' }} />
+      <Hr subHeader="Subheader" subHeaderProps={{ align: 'right' }} />
     </>
   );
 }`;
@@ -99,16 +94,8 @@ export function HrSubHeaderDemo() {
   return (
     <CodeDemo code={subHeaderCode} language="tsx">
       <Hr subHeader="Subheader" />
-      <Hr
-        subHeader="Subheader"
-        subHeaderProps={{ style: { textAlign: 'center' }, color: 'red' }}
-        style={{ marginTop: 10 }}
-      />
-      <Hr
-        subHeader="Subheader"
-        subHeaderProps={{ style: { textAlign: 'right' } }}
-        style={{ marginTop: 10 }}
-      />
+      <Hr subHeader="Subheader" subHeaderProps={{ align: 'center' }} style={{ marginTop: 10 }} />
+      <Hr subHeader="Subheader" subHeaderProps={{ align: 'right' }} style={{ marginTop: 10 }} />
     </CodeDemo>
   );
 }
@@ -119,7 +106,6 @@ import { Hr, Badge } from '@mantine/core';
 function Demo() {
   return (
     <>
-      <Hr orientation="horizontal" />
       <div
         style={{
           display: 'flex',
@@ -127,11 +113,11 @@ function Demo() {
           justifyContent: 'space-evenly',
         }}
       >
-        <Badge>Light</Badge>
+        <Badge>Badge</Badge>
         <Hr orientation="vertical" />
-        <Badge>Outline</Badge>
+        <Badge>Badge</Badge>
         <Hr orientation="vertical" />
-        <Badge>Filled</Badge>
+        <Badge>Badge</Badge>
       </div>
     </>
   );
@@ -140,20 +126,12 @@ function Demo() {
 export function HrOrientationDemo() {
   return (
     <CodeDemo code={orientationCode} language="tsx">
-      <Hr orientation="horizontal" />
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          marginTop: 15,
-        }}
-      >
-        <Badge>Light</Badge>
-        <Hr orientation="vertical" />
-        <Badge>Outline</Badge>
-        <Hr orientation="vertical" />
-        <Badge>Filled</Badge>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Badge>Badge</Badge>
+        <Hr orientation="vertical" margins="md" />
+        <Badge>Badge</Badge>
+        <Hr orientation="vertical" margins="md" />
+        <Badge>Badge</Badge>
       </div>
     </CodeDemo>
   );

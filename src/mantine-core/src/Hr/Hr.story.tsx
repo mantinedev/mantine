@@ -33,20 +33,19 @@ storiesOf('@mantine/core/Hr', module)
     </div>
   ))
   .add('Vertical Hr', () => (
-    <>
+    <div>
       <div
         style={{
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-evenly',
-          width: '20%',
           marginTop: 15,
         }}
       >
         <Badge>Light</Badge>
-        <Hr orientation="vertical" color="blue" />
+        <Hr orientation="vertical" />
         <Badge>Outline</Badge>
-        <Hr orientation="vertical" color="blue" />
+        <Hr orientation="vertical" />
         <Badge>Filled</Badge>
       </div>
       <div
@@ -54,17 +53,16 @@ storiesOf('@mantine/core/Hr', module)
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-evenly',
-          width: '20%',
           marginTop: 15,
         }}
       >
         <Text>Light</Text>
-        <Hr orientation="vertical" color="blue" />
+        <Hr orientation="vertical" />
         <Text>Outline</Text>
-        <Hr orientation="vertical" color="blue" />
+        <Hr orientation="vertical" />
         <Text>Filled</Text>
       </div>
-    </>
+    </div>
   ))
   .add('Sub header', () => (
     <div style={{ padding: 20 }}>
