@@ -10,13 +10,13 @@ interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
   /** Hr color */
   color?: string;
 
-  /** Applies orientation to the Hr */
+  /** Set line orientation */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Hr height */
+  /** Sets height in horizontal orientation and with in vertical */
   size?: MantineNumberSize;
 
-  /** Applies SubHeader Text to the Hr */
+  /** Adds text after line in horizontal orientation */
   subHeader?: string;
 
   /** SubHeader component Props */
@@ -38,22 +38,21 @@ export function Hr({
   ...others
 }: HrProps) {
   const classes = useStyles({
+    theme: useMantineTheme(themeOverride),
     color,
     size,
-    theme: useMantineTheme(themeOverride),
     variant,
     orientation,
-    subHeaderProps,
   });
 
   return (
     <div
       data-mantine-hr
-      className={cx(orientation === 'vertical' ? classes.hrVertical : classes.hr, className)}
+      className={cx(orientation === 'vertical' ? classes.vertical : classes.horizontal, className)}
       {...others}
     >
       {subHeader && orientation === 'horizontal' && (
-        <Text {...subHeaderProps} className={cx(classes.subHeader, subHeaderProps?.className)}>
+        <Text color={color} {...subHeaderProps} className={cx(subHeaderProps?.className)}>
           {subHeader}
         </Text>
       )}

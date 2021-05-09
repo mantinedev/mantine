@@ -8,7 +8,6 @@ interface HrStylesProps {
   variant: React.CSSProperties['borderTopStyle'];
   color: string;
   orientation: string;
-  subHeaderProps: Record<string, any>;
 }
 
 export const sizes = {
@@ -21,14 +20,14 @@ export const sizes = {
 
 export default createUseStyles(
   {
-    hr: ({ theme, size, variant, color }: HrStylesProps) => ({
+    horizontal: ({ theme, size, variant, color }: HrStylesProps) => ({
       border: 0,
       borderTopWidth: getSizeValue({ size, sizes }),
       borderTopColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
       borderTopStyle: variant,
       margin: 0,
     }),
-    hrVertical: ({ theme, size, variant, color }: HrStylesProps) => ({
+    vertical: ({ theme, size, variant, color }: HrStylesProps) => ({
       border: 0,
       borderLeftWidth: getSizeValue({ size, sizes }),
       borderLeftColor: getThemeColor({
@@ -37,13 +36,6 @@ export default createUseStyles(
         shade: theme.colorScheme === 'dark' ? 4 : 6,
       }),
       borderLeftStyle: variant,
-    }),
-    subHeader: ({ theme, color, orientation, subHeaderProps }: HrStylesProps) => ({
-      fontSize: theme.fontSizes.xs,
-      color: subHeaderProps?.color
-        ? subHeaderProps.color
-        : getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
-      marginLeft: orientation === 'vertical' ? 5 : 0,
     }),
   },
   { link: true }

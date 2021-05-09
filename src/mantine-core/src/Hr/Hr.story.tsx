@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/theme';
 import { Hr } from './Hr';
 import { Badge } from '../Badge/Badge';
+import { Text } from '../Text/Text';
 
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl', 10] as const).map((size) => (
   <Hr style={{ marginTop: 15 }} size={size} key={size} />
@@ -44,28 +45,42 @@ storiesOf('@mantine/core/Hr', module)
       >
         <Badge>Light</Badge>
         <Hr orientation="vertical" color="blue" />
-        <Badge variant="outline">Outline</Badge>
+        <Badge>Outline</Badge>
         <Hr orientation="vertical" color="blue" />
-        <Badge variant="filled">Filled</Badge>
+        <Badge>Filled</Badge>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          width: '20%',
+          marginTop: 15,
+        }}
+      >
+        <Text>Light</Text>
+        <Hr orientation="vertical" color="blue" />
+        <Text>Outline</Text>
+        <Hr orientation="vertical" color="blue" />
+        <Text>Filled</Text>
       </div>
     </>
   ))
   .add('Sub header', () => (
     <div style={{ padding: 20 }}>
-      <Hr subHeader="Test" />
+      <Hr subHeader="Subheader" />
       <Hr
-        subHeader="Test"
+        subHeader="Subheader"
         subHeaderProps={{ style: { textAlign: 'center' } }}
         style={{ marginTop: 15 }}
       />
       <Hr
-        subHeader="Test"
-        subHeaderProps={{ style: { textAlign: 'end', fontFamily: 'cursive' } }}
+        subHeader="Subheader"
+        subHeaderProps={{ style: { textAlign: 'right' } }}
         style={{ marginTop: 15 }}
       />
-      <Hr subHeader="Test" subHeaderProps={{ style: { fontSize: 20 } }} style={{ marginTop: 15 }} />
       <Hr
-        subHeader="Test"
+        subHeader="Subheader"
         subHeaderProps={{ style: { fontSize: 20 }, color: 'blue' }}
         style={{ marginTop: 15 }}
       />

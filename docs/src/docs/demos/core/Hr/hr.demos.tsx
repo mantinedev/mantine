@@ -82,21 +82,14 @@ import { Hr } from '@mantine/core';
 function Demo() {
   return (
     <>
-      <Hr subHeader="Test" />
+      <Hr subHeader="Subheader" />
       <Hr
-        subHeader="Test"
+        subHeader="Subheader"
         subHeaderProps={{ style: { textAlign: 'center' }, color: 'red' }}
-        style={{ marginTop: 10 }}
       />
       <Hr
-        subHeader="Test"
-        subHeaderProps={{ style: { textAlign: 'end', fontFamily: 'cursive' } }}
-        style={{ marginTop: 10 }}
-      />
-      <Hr 
-        subHeader="Test" 
-        subHeaderProps={{ style: { fontSize: 20 } }} 
-        style={{ marginTop: 15 }} 
+        subHeader="Subheader"
+        subHeaderProps={{ style: { textAlign: 'right' } }}
       />
     </>
   );
@@ -105,24 +98,23 @@ function Demo() {
 export function HrSubHeaderDemo() {
   return (
     <CodeDemo code={subHeaderCode} language="tsx">
-      <Hr subHeader="Test" />
+      <Hr subHeader="Subheader" />
       <Hr
-        subHeader="Test"
+        subHeader="Subheader"
         subHeaderProps={{ style: { textAlign: 'center' }, color: 'red' }}
         style={{ marginTop: 10 }}
       />
       <Hr
-        subHeader="Test"
-        subHeaderProps={{ style: { textAlign: 'end', fontFamily: 'cursive' } }}
+        subHeader="Subheader"
+        subHeaderProps={{ style: { textAlign: 'right' } }}
         style={{ marginTop: 10 }}
       />
-      <Hr subHeader="Test" subHeaderProps={{ style: { fontSize: 20 } }} style={{ marginTop: 15 }} />
     </CodeDemo>
   );
 }
 
 const orientationCode = `import React from 'react';
-import { Hr } from '@mantine/core';
+import { Hr, Badge } from '@mantine/core';
 
 function Demo() {
   return (
@@ -133,14 +125,13 @@ function Demo() {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-evenly',
-          marginTop: 15,
         }}
       >
         <Badge>Light</Badge>
         <Hr orientation="vertical" />
-        <Badge variant="outline">Outline</Badge>
+        <Badge>Outline</Badge>
         <Hr orientation="vertical" />
-        <Badge variant="filled">Filled</Badge>
+        <Badge>Filled</Badge>
       </div>
     </>
   );
@@ -160,9 +151,9 @@ export function HrOrientationDemo() {
       >
         <Badge>Light</Badge>
         <Hr orientation="vertical" />
-        <Badge variant="outline">Outline</Badge>
+        <Badge>Outline</Badge>
         <Hr orientation="vertical" />
-        <Badge variant="filled">Filled</Badge>
+        <Badge>Filled</Badge>
       </div>
     </CodeDemo>
   );
