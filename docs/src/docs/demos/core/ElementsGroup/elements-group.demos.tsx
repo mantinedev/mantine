@@ -7,12 +7,10 @@ import { Button, ElementsGroup } from '@mantine/core';
 
 function Demo() {
   return (
-    <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
-        <div data-mantine-composable>I am composed</div>
-        <Button>Me too</Button>
-      </ElementsGroup>
-    </CodeDemo>
+    <ElementsGroup position="center">
+      <div data-mantine-composable>I am composed</div>
+      <Button>Me too</Button>
+    </ElementsGroup>
   );
 }`;
 

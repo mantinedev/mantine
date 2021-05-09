@@ -3,7 +3,7 @@ import { Menu, MenuItem, ElementsGroup } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Menu, MenuItem, ElementsGroup, Button  } from '@mantine/core';
+import { Menu, MenuItem } from '@mantine/core';
 
 function Demo() {
   return (

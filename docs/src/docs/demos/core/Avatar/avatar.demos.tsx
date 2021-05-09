@@ -65,7 +65,7 @@ export function AvatarPlaceholderDemo() {
 }
 
 const iconPlaceholderCode = `import React from 'react';
-import { Avatar } from '@mantine/core';
+import { Avatar, ElementsGroup } from '@mantine/core';
 import { StarIcon } from '@modulz/radix-icons';
 
 function Demo() {
@@ -103,8 +103,7 @@ export function AvatarIconPlaceholderDemo() {
 }
 
 const lettersPlaceholderCode = `import React from 'react';
-import { Avatar } from '@mantine/core';
-import { StarIcon } from '@modulz/radix-icons';
+import { Avatar, ElementsGroup } from '@mantine/core';
 
 function Demo() {
   return (

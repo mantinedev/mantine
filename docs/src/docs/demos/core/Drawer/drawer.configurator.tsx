@@ -9,7 +9,7 @@ function DrawerWrapper(props: React.ComponentPropsWithoutRef<typeof Drawer>) {
     <div>
       <Portal zIndex={100}>
         <Drawer opened={opened} onClose={() => setOpened(false)} {...props}>
-          Press escape to close drawer if you are trapped
+          Press escape to close the drawer if you are trapped
         </Drawer>
       </Portal>
       <ElementsGroup position="center">
@@ -25,7 +25,7 @@ const codeTemplate = (props: string) => `function Demo() {
   return (
     <>
       <Drawer opened={opened} onClose={() => setOpened(false)}${props}>
-        Press escape to close drawer if you are trapped
+        Press escape to close the  drawer if you are trapped
       </Drawer>
 
       <ElementsGroup position="center">

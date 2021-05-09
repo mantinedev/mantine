@@ -4,7 +4,7 @@ import { GearIcon, ChatBubbleIcon, ImageIcon, MagnifyingGlassIcon } from '@modul
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Menu } from '@mantine/core';
+import { ElementsGroup, Menu } from '@mantine/core';
 
 function Demo() {
   return (

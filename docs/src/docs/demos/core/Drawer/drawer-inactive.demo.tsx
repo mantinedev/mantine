@@ -19,7 +19,7 @@ function Demo() {
         noScrollScroll
         noOverlay
       >
-        Press escape to close drawer
+        Press escape to close the drawer
       </Drawer>
 
       <ElementsGroup position="center">
@@ -44,7 +44,7 @@ export function DrawerInactiveDemo() {
           noScrollScroll
           noOverlay
         >
-          Press escape to close drawer
+          Press escape to close the drawer
         </Drawer>
       </Portal>
 
