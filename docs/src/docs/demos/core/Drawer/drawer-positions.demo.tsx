@@ -14,7 +14,7 @@ export function DrawerPositionsDemo() {
     <CodeDemo>
       <Portal zIndex={10}>
         <Drawer opened={opened} onClose={() => setOpened(false)} padding="md" position={position}>
-          Press escape to close drawer
+          Press escape to close the drawer
         </Drawer>
       </Portal>
 

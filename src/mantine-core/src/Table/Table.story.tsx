@@ -29,14 +29,12 @@ const ths = (
   </tr>
 );
 
-const table = (
-  <>
-    <caption>Some elements from periodic table</caption>
-    <thead>{ths}</thead>
-    <tbody>{rows}</tbody>
-    <tfoot>{ths}</tfoot>
-  </>
-);
+const table = [
+  <caption>Some elements from periodic table</caption>,
+  <thead>{ths}</thead>,
+  <tbody>{rows}</tbody>,
+  <tfoot>{ths}</tfoot>,
+];
 
 storiesOf('@mantine/core/Table', module)
   .add('General usage', () => (

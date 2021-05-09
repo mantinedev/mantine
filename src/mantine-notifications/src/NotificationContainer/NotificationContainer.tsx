@@ -21,7 +21,6 @@ export default function NotificationContainer({
   const hideTimeout = useRef<number>();
 
   const handleHide = () => {
-    typeof notification.onClose === 'function' && notification.onClose(notification);
     onHide(notification.id);
     window.clearTimeout(hideTimeout.current);
   };

@@ -121,6 +121,16 @@ You can change transitions with props:
 
 <ModalCustomTransitionsDemo />
 
+## Server side rendering
+
+By default Modal uses random id to connect title and body via aria- attributes.
+This will result in hydration mismatch if you use **opened** modal (closed modal do not require this step) during ssr.
+To avoid that set static id:
+
+```tsx
+<Modal id="my-modal" opened />
+```
+
 ## Accessibility and usability
 
 - When modal is opened focus is trapped inside and vertical scroll is locked at current position

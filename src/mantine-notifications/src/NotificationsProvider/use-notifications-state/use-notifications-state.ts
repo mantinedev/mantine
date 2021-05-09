@@ -36,7 +36,16 @@ export default function useNotificationsState({ limit }: { limit: number }) {
     });
 
   const hideNotification = (id: string) =>
-    update((notifications) => notifications.filter((notification) => notification.id !== id));
+    update((notifications) =>
+      notifications.filter((notification) => {
+        if (notification.id === id) {
+          typeof notification.onClose === 'function' && notification.onClose(notification);
+          return false;
+        }
+
+        return true;
+      })
+    );
 
   const clean = () => update(() => []);
 

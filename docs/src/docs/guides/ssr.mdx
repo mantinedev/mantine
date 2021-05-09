@@ -104,6 +104,17 @@ export default function App(props) {
 }
 ```
 
+### Known issues with Next.js
+
+[react-jss](https://cssinjs.org/react-jss/?v=v10.6.0) during ssr shows warning:
+
+```
+Warning: [JSS] Rule is not linked. Missing sheet option "link: true".
+```
+
+This warning is a bug and described in [this issue](https://github.com/cssinjs/jss/issues/1277).
+It would not impact styles and Mantine components in any way.
+
 ## Gatsby
 
 <Button variant="outline" component="a" href="https://github.com/mantinedev/mantine-gatsby-example">

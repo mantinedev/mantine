@@ -37,8 +37,6 @@ import { Button } from '@mantine/core';
 
 <ButtonConfigurator />
 
-<ButtonComponentsDemo />
-
 ## Variants and colors
 
 Button component supports all colors defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink> and has 3 variants:
@@ -70,10 +68,6 @@ Default Button color is `theme.primaryColor`, to change color and variant pass `
 ### Link variant
 
 <ButtonLinkVariantDemo />
-
-## Change root element
-
-You can use Button component both as `button` and `a` elements
 
 ## Size
 
@@ -128,19 +122,11 @@ You can compose Button with any other components that support composition featur
 
 <ElementsGroupConfigurator />
 
-## Get element ref
+## Change root element
 
-You can get root element ref with `elementRef` prop:
+You can use Button component both as `button` and `a` elements:
 
-```tsx
-import React, { useRef } from 'react';
-import { Button } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef();
-  return <Button elementRef={ref} />;
-}
-```
+<ButtonComponentsDemo />
 
 ## Usage with react-router and other libraries
 
@@ -158,6 +144,20 @@ function Demo() {
       React router link
     </Button>
   );
+}
+```
+
+## Get element ref
+
+You can get root element ref with `elementRef` prop:
+
+```tsx
+import React, { useRef } from 'react';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef();
+  return <Button elementRef={ref} />;
 }
 ```
 

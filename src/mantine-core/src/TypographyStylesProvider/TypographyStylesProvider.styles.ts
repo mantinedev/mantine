@@ -108,7 +108,7 @@ export default createUseStyles(
           captionSide: 'bottom',
           marginBottom: theme.spacing.md,
 
-          '& > caption': {
+          '& caption': {
             marginTop: theme.spacing.xs,
             fontSize: theme.fontSizes.sm,
             color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],

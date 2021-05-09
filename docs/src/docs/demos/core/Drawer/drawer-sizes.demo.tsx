@@ -20,7 +20,7 @@ export function DrawerSizesDemo() {
     <CodeDemo>
       <Portal zIndex={10}>
         <Drawer opened={opened} onClose={() => setOpened(false)} padding="md" size={size}>
-          Press escape to close drawer
+          Press escape to close the drawer
         </Drawer>
       </Portal>
 

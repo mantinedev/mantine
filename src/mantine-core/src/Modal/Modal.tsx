@@ -57,6 +57,9 @@ interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'
 
   /** Close button aria-label and title attributes */
   closeButtonLabel?: string;
+
+  /** id base, used to generate ids to connect modal title and body with aria- attributes, defaults to random id */
+  id?: string;
 }
 
 export function Modal({
@@ -75,10 +78,12 @@ export function Modal({
   zIndex = 1000,
   overflow = 'outside',
   transition = 'slide-down',
+  id,
   ...others
 }: ModalProps) {
-  const titleId = useId();
-  const bodyId = useId();
+  const baseId = useId(id);
+  const titleId = `${baseId}-title`;
+  const bodyId = `${baseId}-body`;
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ size, overflow, theme });

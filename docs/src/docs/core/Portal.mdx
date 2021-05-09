@@ -66,6 +66,11 @@ document.body.appendChild(container);
 
 If you don't specify the target element, new one will be created and appended to the `document.body` for each Portal component.
 
+## Server side rendering
+
+`createPortal` is not supported during server side rendering.
+All components inside Portal are rendered only after application was mounted to the dom.
+
 ## Component props
 
 <PropsTable component="Portal" />

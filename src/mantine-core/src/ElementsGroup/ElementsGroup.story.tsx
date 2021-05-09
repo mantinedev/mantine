@@ -19,6 +19,7 @@ const spacings = ([0, 'xs', 'sm', 'md', 'lg', 'xl', 50] as const).map((spacing) 
       <Button>Button 1</Button>
       <Button>Button 2</Button>
       <Button>Button 3</Button>
+      <button type="button">Hello</button>
     </ElementsGroup>
   </div>
 ));
@@ -40,8 +41,7 @@ storiesOf('@mantine/core/ElementsGroup', module)
       <ElementsGroup grow>
         <Button>Button 1</Button>
         <Button>Button 2</Button>
-        <Button>Button 3</Button>
-        <Button>Button 4</Button>
+        <button type="button">Hello</button>
       </ElementsGroup>
     </div>
   ));

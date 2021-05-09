@@ -41,7 +41,7 @@ interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'
   noFocusTrap?: boolean;
 
   /** Disables scroll lock */
-  noScrollScroll?: boolean;
+  noScrollLock?: boolean;
 
   /** Disable onClock trigger for outside events */
   noCloseOnClickOutside?: boolean;
@@ -83,7 +83,7 @@ export function Drawer({
   position = 'left',
   size = 'md',
   noFocusTrap = false,
-  noScrollScroll = false,
+  noScrollLock = false,
   noCloseOnClickOutside = false,
   noCloseOnEscape = false,
   transition,
@@ -102,7 +102,7 @@ export function Drawer({
   const duration = useReducedMotion() ? 1 : transitionDuration;
   const classes = useStyles({ theme, size, position });
   const focusTrapRef = useFocusTrap(!noFocusTrap);
-  useScrollLock(opened && !noScrollScroll);
+  useScrollLock(opened && !noScrollLock);
   const clickOutsideRef = useClickOutside(() => opened && !noCloseOnClickOutside && onClose());
 
   const drawerTransition = transition || transitions[position];

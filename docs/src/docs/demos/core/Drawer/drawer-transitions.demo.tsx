@@ -18,7 +18,7 @@ function Demo() {
         transitionDuration={250}
         transitionTimingFunction="ease"
       >
-        Press escape to close drawer
+        Press escape to close the drawer
       </Drawer>
 
       <ElementsGroup position="center">
@@ -42,7 +42,7 @@ export function DrawerTransitionsDemo() {
           transitionDuration={250}
           transitionTimingFunction="ease"
         >
-          Press escape to close drawer
+          Press escape to close the drawer
         </Drawer>
       </Portal>
 

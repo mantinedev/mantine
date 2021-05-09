@@ -4,7 +4,8 @@ import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Kbd } from '@mantine/core';
+import { Kbd, TextInput } from '@mantine/core';
+import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 
 function Demo() {
   const rightSection = (
