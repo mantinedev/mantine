@@ -18,6 +18,7 @@ export function TabControl({
   elementRef,
   tabProps,
   color,
+  className,
   ...others
 }: TabControlProps) {
   const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
@@ -34,7 +35,7 @@ export function TabControl({
       data-mantine-tab
       data-mantine-composable
       tabIndex={active ? 0 : -1}
-      className={cx(classes.tab, { [classes.tabActive]: active })}
+      className={cx(classes.tab, { [classes.tabActive]: active }, className)}
       type="button"
       role="tab"
       aria-selected={active}

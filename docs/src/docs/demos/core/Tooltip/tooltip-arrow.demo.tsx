@@ -2,7 +2,7 @@ import React from 'react';
 import { Tooltip, Button, ElementsGroup } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
-const code = `import React, { useState } from 'react';
+const code = `import React from 'react';
 import { Tooltip, Button, ElementsGroup } from '@mantine/core';
 
 function Demo() {

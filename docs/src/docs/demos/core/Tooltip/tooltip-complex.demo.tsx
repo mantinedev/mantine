@@ -3,7 +3,7 @@ import { Cross1Icon } from '@modulz/radix-icons';
 import { Tooltip, Button, ActionIcon, Text, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
-const code = `import React from 'react';
+const code = `import React, { useState } from 'react';
 import { Cross1Icon } from '@modulz/radix-icons';
 import { Tooltip, Button, ActionIcon, Text, useMantineTheme } from '@mantine/core';
 
