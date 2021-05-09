@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, MantineNumberSize } from '@mantine/theme';
+import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 export type ElementsGroupPosition = 'right' | 'center' | 'left' | 'apart';
 
@@ -20,25 +20,18 @@ const JUSTIFY_CONTENT = {
 
 export default createUseStyles(
   {
-    elementsGroup: (props: ElementsGroupStylesProps) => {
-      const spacing =
-        typeof props.spacing === 'number'
-          ? props.spacing / 2
-          : props.theme.spacing[props.spacing] / 2;
+    elementsGroup: ({ spacing, position, noWrap, theme }: ElementsGroupStylesProps) => ({
+      display: 'flex',
+      alignItems: 'center',
+      flexWrap: noWrap ? 'nowrap' : 'wrap',
+      justifyContent: JUSTIFY_CONTENT[position],
+      margin: (-1 * getSizeValue({ size: spacing, sizes: theme.spacing })) / 2,
+    }),
 
-      return {
-        display: 'flex',
-        alignItems: 'center',
-        flexWrap: props.noWrap ? 'nowrap' : 'wrap',
-        justifyContent: JUSTIFY_CONTENT[props.position],
-        margin: -1 * spacing,
-
-        '& > [data-mantine-composable]': {
-          margin: spacing,
-          flexGrow: props.grow ? 1 : 0,
-        },
-      };
-    },
+    child: ({ grow, spacing, theme }: ElementsGroupStylesProps) => ({
+      flexGrow: grow ? 1 : 0,
+      margin: getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
+    }),
   },
   { link: true }
 );

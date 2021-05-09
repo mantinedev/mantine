@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Children } from 'react';
+import cx from 'clsx';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import useStyles, { ElementsGroupPosition } from './ElementsGroup.styles';
 
@@ -36,9 +37,13 @@ export function ElementsGroup({
     theme: useMantineTheme(themeOverride),
   });
 
+  const items = (Children.toArray(children) as React.ReactElement[]).map((child) =>
+    React.cloneElement(child, { className: cx(classes.child, child.props.className) })
+  );
+
   return (
     <div className={className} {...others}>
-      <div className={classes.elementsGroup}>{children}</div>
+      <div className={classes.elementsGroup}>{items}</div>
     </div>
   );
 }
