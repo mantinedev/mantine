@@ -72,7 +72,6 @@ export function Button<
       className={cx(classes.shared, classes[variant], className)}
       type={type}
       disabled={disabled}
-      data-mantine-composable
       ref={elementRef}
       onTouchStart={() => {}}
     >

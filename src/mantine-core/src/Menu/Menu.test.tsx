@@ -6,7 +6,6 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsRef,
-  isHasComposableAttribute,
 } from '@mantine/tests';
 import { Divider } from '../Divider/Divider';
 import { Button } from '../Button/Button';
@@ -32,7 +31,6 @@ describe('@mantine/core/Menu', () => {
   itSupportsClassName(Menu, defaultProps);
   itSupportsStyle(Menu, defaultProps);
   itSupportsOthers(Menu, defaultProps);
-  isHasComposableAttribute(Menu, defaultProps);
   itSupportsRef(Menu, defaultProps, HTMLButtonElement, 'elementRef');
 
   it('has correct displayName', () => {

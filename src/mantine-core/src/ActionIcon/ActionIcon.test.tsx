@@ -8,7 +8,6 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itRendersChildren,
-  isHasComposableAttribute,
 } from '@mantine/tests';
 import { ActionIcon } from './ActionIcon';
 
@@ -18,7 +17,6 @@ describe('@mantine/core/ActionIcon', () => {
   itSupportsStyle(ActionIcon, {});
   itSupportsRef(ActionIcon, {}, HTMLButtonElement, 'elementRef');
   itRendersChildren(ActionIcon, {});
-  isHasComposableAttribute(ActionIcon, {});
   checkAccessibility([
     mount(
       <ActionIcon title="Action icon">

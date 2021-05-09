@@ -46,7 +46,6 @@ export function ActionIcon({
   return (
     <button
       {...others}
-      data-mantine-composable
       className={cx(classes.actionIcon, classes[variant], className)}
       type="button"
       ref={elementRef}

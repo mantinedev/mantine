@@ -142,7 +142,6 @@ export function Menu({
 
   return (
     <div
-      data-mantine-composable
       ref={wrapperRef}
       style={{ display: 'inline-block', position: 'relative', ...style }}
       {...others}

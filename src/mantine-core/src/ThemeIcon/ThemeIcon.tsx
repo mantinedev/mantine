@@ -41,7 +41,7 @@ export function ThemeIcon({
   });
 
   return (
-    <div data-mantine-composable className={cx(classes.themeIcon, className)} {...others}>
+    <div className={cx(classes.themeIcon, className)} {...others}>
       {children}
     </div>
   );
