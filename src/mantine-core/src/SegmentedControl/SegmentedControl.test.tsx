@@ -5,6 +5,7 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
+  mockResizeObserver,
 } from '@mantine/tests';
 import { SegmentedControl } from './SegmentedControl';
 
@@ -17,6 +18,9 @@ const defaultProps = {
     { label: 'test-label-3', value: 'test-value-3' },
   ],
 };
+
+// jest does not support resize observer and will throw error otherwise
+mockResizeObserver();
 
 describe('@mantine/core/SegmentedControl', () => {
   checkAccessibility([mount(<SegmentedControl {...defaultProps} />)]);

@@ -110,3 +110,17 @@ describe('@mantine/core/Button', () => {
   itSupportsRef(Button, { children: 'test' }, HTMLButtonElement, 'elementRef');
 });
 ```
+
+## mockResizeObserver
+
+Mocks ResizeObserver:
+
+```tsx
+import { mockResizeObserver } from '@mantine/tests';
+
+mockResizeObserver();
+
+describe('@mantine/core/Button', () => {
+  // run tests which depend on resize observer
+});
+```
