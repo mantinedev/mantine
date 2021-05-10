@@ -6,11 +6,13 @@ import {
   Link2Icon,
   ExclamationTriangleIcon,
   LetterCaseCapitalizeIcon,
+  ContainerIcon,
 } from '@modulz/radix-icons';
 
 const order = [
   'typography',
   'inputs',
+  'layout',
   'data-display',
   'overlay',
   'feedback',
@@ -59,6 +61,12 @@ const categories = {
     title: 'Typography',
     icon: LetterCaseCapitalizeIcon,
     color: 'blue',
+  },
+
+  layout: {
+    title: 'Layout',
+    icon: ContainerIcon,
+    color: 'grape',
   },
 };
 
