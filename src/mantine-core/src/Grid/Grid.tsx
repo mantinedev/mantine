@@ -38,9 +38,9 @@ export function Grid({
   const theme = useMantineTheme(themeOverride);
   const spacing = getSizeValue({ size: gutter, sizes: theme.spacing });
 
-  const cols = (Children.toArray(children) as React.ReactElement[])
-    .filter((item) => item.type === Col)
-    .map((col) => React.cloneElement(col, { gutter, grow, columns }));
+  const cols = (Children.toArray(children) as React.ReactElement[]).map((col) =>
+    React.cloneElement(col, { gutter, grow, columns })
+  );
 
   return (
     <div
