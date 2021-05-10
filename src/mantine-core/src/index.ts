@@ -12,16 +12,16 @@ export { Blockquote } from './Blockquote/Blockquote';
 export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 export { Burger, BURGER_SIZES } from './Burger/Burger';
 export { Button, BUTTON_SIZES } from './Button/Button';
-export { Card, CardsGrid } from './Card/Card';
+export { Card } from './Card/Card';
 export { Checkbox, CHECKBOX_SIZES } from './Checkbox/Checkbox';
 export { Code } from './Code/Code';
 export { ColorSwatch } from './ColorSwatch/ColorSwatch';
 export { Container, CONTAINER_SIZES } from './Container/Container';
 export { Drawer, DRAWER_SIZES } from './Drawer/Drawer';
 export { Grid, Col } from './Grid/Grid';
-export { Group, Group as ElementsGroup } from './Group/Group';
+export { Group } from './Group/Group';
 export { Highlight } from './Highlight/Highlight';
-export { Divider, Divider as Hr, DIVIDER_SIZES } from './Divider/Divider';
+export { Divider, DIVIDER_SIZES } from './Divider/Divider';
 export { Image } from './Image/Image';
 export { Input } from './Input/Input';
 export { InputWrapper } from './InputWrapper/InputWrapper';
@@ -52,3 +52,14 @@ export { Title } from './Title/Title';
 export { Tooltip } from './Tooltip/Tooltip';
 export { Transition, GroupedTransition, AVAILABLE_TRANSITIONS } from './Transition/Transition';
 export { TypographyStylesProvider } from './TypographyStylesProvider/TypographyStylesProvider';
+
+/** Deprecated – these components will be removed in next major release */
+
+// Hr renamed to Divider to support vertical orientation
+export { Divider as Hr, DIVIDER_SIZES as HR_SIZES } from './Divider/Divider';
+
+// ElementsGroup renamed to Group for simplicity
+export { Group as ElementsGroup } from './Group/Group';
+
+// CardsGrid replaced with more generic Grid component
+export { CardsGrid } from './Card/Card';
