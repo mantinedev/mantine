@@ -8,14 +8,14 @@ describe('@mantine/core/Divider', () => {
   itSupportsStyle(Divider, {});
   itSupportsOthers(Divider, {});
 
-  it('renders subHeader based on subHeader prop', () => {
-    const withSubheader = shallow(<Divider subHeader="test-subheader" />);
-    expect(withSubheader.find('[data-mantine-subheader]').dive().text()).toBe('test-subheader');
+  it('renders given label in horizontal orientation', () => {
+    const withSubheader = shallow(<Divider label="test-label" />);
+    expect(withSubheader.find('[data-mantine-label]').dive().text()).toBe('test-label');
   });
 
-  it('does not render subHeader if subHeader prop is not set or orientation is set to vertical', () => {
+  it('does not render label if label prop is not set or orientation is set to vertical', () => {
     const notSubheader = shallow(<Divider />);
-    const vertical = shallow(<Divider subHeader="test-subheader" orientation="vertical" />);
+    const vertical = shallow(<Divider label="test-subheader" orientation="vertical" />);
     expect(notSubheader.find('[data-mantine-subheader]')).toHaveLength(0);
     expect(vertical.find('[data-mantine-subheader]')).toHaveLength(0);
   });

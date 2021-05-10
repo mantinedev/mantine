@@ -17,10 +17,13 @@ interface DividerProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'
   size?: MantineNumberSize;
 
   /** Adds text after line in horizontal orientation */
-  subHeader?: string;
+  label?: React.ReactNode;
 
-  /** Props spread to Text component in subHeader */
-  subHeaderProps?: TextProps;
+  /** Label position */
+  labelPosition?: 'left' | 'center' | 'right';
+
+  /** Props spread to Text component in label */
+  labelProps?: TextProps;
 
   /** Divider borderStyle */
   variant?: 'solid' | 'dashed' | 'dotted';
@@ -34,8 +37,9 @@ export function Divider({
   className,
   orientation = 'horizontal',
   size = 'xs',
-  subHeader,
-  subHeaderProps,
+  label,
+  labelPosition = 'left',
+  labelProps,
   themeOverride,
   variant = 'solid',
   margins = 0,
@@ -47,24 +51,31 @@ export function Divider({
     color,
     size,
     variant,
-    orientation,
   });
 
   return (
     <div
       data-mantine-hr
-      className={cx(orientation === 'vertical' ? classes.vertical : classes.horizontal, className)}
+      className={cx(
+        {
+          [classes.vertical]: orientation === 'vertical',
+          [classes.horizontal]: orientation === 'horizontal',
+          [classes.withLabel]: !!label && orientation === 'horizontal',
+        },
+        className
+      )}
       {...others}
     >
-      {!!subHeader && orientation === 'horizontal' && (
+      {!!label && orientation === 'horizontal' && (
         <Text
-          data-mantine-subheader
+          data-mantine-label
           color={color}
-          {...subHeaderProps}
-          size={subHeaderProps?.size || 'xs'}
+          {...labelProps}
+          size={labelProps?.size || 'xs'}
           style={{ marginTop: 2 }}
+          className={cx(classes.label, classes[labelPosition])}
         >
-          {subHeader}
+          {label}
         </Text>
       )}
     </div>

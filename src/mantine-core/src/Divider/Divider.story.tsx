@@ -64,23 +64,10 @@ storiesOf('@mantine/core/Divider', module)
       </div>
     </div>
   ))
-  .add('Sub header', () => (
+  .add('With label', () => (
     <div style={{ padding: 20 }}>
-      <Divider subHeader="Subheader" />
-      <Divider
-        subHeader="Subheader"
-        subHeaderProps={{ style: { textAlign: 'center' } }}
-        style={{ marginTop: 15 }}
-      />
-      <Divider
-        subHeader="Subheader"
-        subHeaderProps={{ style: { textAlign: 'right' } }}
-        style={{ marginTop: 15 }}
-      />
-      <Divider
-        subHeader="Subheader"
-        subHeaderProps={{ style: { fontSize: 20 }, color: 'blue' }}
-        style={{ marginTop: 15 }}
-      />
+      <Divider label="Label" />
+      <Divider label="Label center" labelPosition="center" />
+      <Divider label="Label right" labelPosition="right" />
     </div>
   ));

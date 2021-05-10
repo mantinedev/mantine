@@ -8,7 +8,6 @@ interface DividerStylesProps {
   margins: MantineNumberSize;
   variant: React.CSSProperties['borderTopStyle'];
   color: string;
-  orientation: string;
 }
 
 export const sizes = {
@@ -21,10 +20,46 @@ export const sizes = {
 
 export default createUseStyles(
   {
+    withLabel: {
+      borderTop: '0 !important',
+    },
+
+    left: {
+      '&::before': {
+        display: 'none',
+      },
+    },
+
+    right: {
+      '&::after': {
+        display: 'none',
+      },
+    },
+
+    label: ({ theme, color }: DividerStylesProps) => ({
+      display: 'flex',
+      alignItems: 'center',
+
+      '&::before': {
+        content: '""',
+        flex: 1,
+        height: 1,
+        background: getThemeColor({ theme, color, shade: 4 }),
+        marginRight: theme.spacing.xs,
+      },
+      '&::after': {
+        content: '""',
+        flex: 1,
+        height: 1,
+        background: getThemeColor({ theme, color, shade: 4 }),
+        marginLeft: theme.spacing.xs,
+      },
+    }),
+
     horizontal: ({ theme, size, variant, color, margins }: DividerStylesProps) => ({
       border: 0,
       borderTopWidth: getSizeValue({ size, sizes }),
-      borderTopColor: getThemeColor({ theme, color, shade: 5 }),
+      borderTopColor: getThemeColor({ theme, color, shade: 4 }),
       borderTopStyle: variant,
       margin: 0,
       marginTop: getSizeValue({ size: margins, sizes: theme.spacing }),
@@ -34,7 +69,7 @@ export default createUseStyles(
     vertical: ({ theme, size, variant, color, margins }: DividerStylesProps) => ({
       border: 0,
       borderLeftWidth: getSizeValue({ size, sizes }),
-      borderLeftColor: getThemeColor({ theme, color, shade: 5 }),
+      borderLeftColor: getThemeColor({ theme, color, shade: 4 }),
       borderLeftStyle: variant,
       marginLeft: getSizeValue({ size: margins, sizes: theme.spacing }),
       marginRight: getSizeValue({ size: margins, sizes: theme.spacing }),
