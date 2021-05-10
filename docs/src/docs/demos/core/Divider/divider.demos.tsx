@@ -1,5 +1,6 @@
 import React from 'react';
 import { Divider, Badge } from '@mantine/core';
+import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -79,30 +80,53 @@ export function DividerSizesDemo() {
 
 const subHeaderCode = `import React from 'react';
 import { Divider } from '@mantine/core';
+import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 
 function Demo() {
   return (
     <>
-      <Divider subHeader="Subheader" />
-      <Divider subHeader="Subheader" subHeaderProps={{ align: 'center' }} />
-      <Divider subHeader="Subheader" subHeaderProps={{ align: 'right' }} />
+      <Divider label="Label on the left" />
+      <Divider label="Label in the center" labelPosition="center" />
+      <Divider label="Label on the right" labelPosition="right" />
+      <Divider
+        variant="dashed"
+        labelPosition="center"
+        label={
+          <>
+            <MagnifyingGlassIcon style={{ width: 12, height: 12 }} />
+            <span style={{ marginLeft: 5 }}>Search results</span>
+          </>
+        }
+      />
+      <Divider
+        label="Link label"
+        labelProps={{ component: 'a', href: 'https://mantine.dev', variant: 'link', color: 'blue' }}
+      />
     </>
   );
 }`;
 
-export function DividerSubHeaderDemo() {
+export function DividerLabelDemo() {
   return (
     <CodeDemo code={subHeaderCode} language="tsx">
-      <Divider subHeader="Subheader" />
+      <Divider label="Label on the left" />
+      <Divider label="Label in the center" labelPosition="center" style={{ marginTop: 10 }} />
+      <Divider label="Label on the right" labelPosition="right" style={{ marginTop: 10 }} />
       <Divider
-        subHeader="Subheader"
-        subHeaderProps={{ align: 'center' }}
         style={{ marginTop: 10 }}
+        variant="dashed"
+        labelPosition="center"
+        label={
+          <>
+            <MagnifyingGlassIcon style={{ width: 12, height: 12 }} />
+            <span style={{ marginLeft: 5 }}>Search results</span>
+          </>
+        }
       />
       <Divider
-        subHeader="Subheader"
-        subHeaderProps={{ align: 'right' }}
         style={{ marginTop: 10 }}
+        label="Link label"
+        labelProps={{ component: 'a', href: 'https://mantine.dev', variant: 'link', color: 'blue' }}
       />
     </CodeDemo>
   );

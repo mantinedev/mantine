@@ -12,7 +12,7 @@ import {
   DividerBaseDemo,
   DividerSizesDemo,
   DividerColorDemo,
-  DividerSubHeaderDemo,
+  DividerLabelDemo,
   DividerOrientationDemo,
 } from '../demos/core/Divider/divider.demos';
 
@@ -34,6 +34,14 @@ Divider component renders horizontal or vertical line.
 Customize hr border style by setting `variant` prop:
 
 <DividerBaseDemo />
+
+## With label
+
+In horizontal orientation you can add label with any react node at left, right or center of Divider
+by setting `label` and control its appearance with `labelPosition` and `labelProps`
+(see <GatsbyLink to="/core/text/">Text</GatsbyLink> component for full props reference):
+
+<DividerLabelDemo />
 
 ## Vertical orientation and margins
 
@@ -64,13 +72,6 @@ import { DIVIDER_SIZES } from '@mantine/core';
   head={['Prop value', 'Height']}
   data={Object.keys(DIVIDER_SIZES).map((size) => [size, `${DIVIDER_SIZES[size]}px`])}
 />
-
-## Sub-header
-
-In horizontal orientation you can add text below Divider by setting `subHeader` and control its appearance with `subHeaderProps`
-(see <GatsbyLink to="/core/text/">Text</GatsbyLink> component for full props reference):
-
-<DividerSubHeaderDemo />
 
 ## Component props
 
