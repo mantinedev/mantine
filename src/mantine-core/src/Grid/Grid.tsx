@@ -19,6 +19,9 @@ interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> 
 
   /** Set grid align-content property */
   align?: React.CSSProperties['alignContent'];
+
+  /** Amount of columns in each row */
+  columns?: number;
 }
 
 export function Grid({
@@ -29,6 +32,7 @@ export function Grid({
   justify = 'flex-start',
   align = 'stretch',
   style,
+  columns = 12,
   ...others
 }: GridProps) {
   const theme = useMantineTheme(themeOverride);
@@ -36,7 +40,7 @@ export function Grid({
 
   const cols = (Children.toArray(children) as React.ReactElement[])
     .filter((item) => item.type === Col)
-    .map((col) => React.cloneElement(col, { gutter, grow }));
+    .map((col) => React.cloneElement(col, { gutter, grow, columns }));
 
   return (
     <div
