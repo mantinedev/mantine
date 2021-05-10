@@ -18,6 +18,7 @@ export { Code } from './Code/Code';
 export { ColorSwatch } from './ColorSwatch/ColorSwatch';
 export { Container, CONTAINER_SIZES } from './Container/Container';
 export { Drawer, DRAWER_SIZES } from './Drawer/Drawer';
+export { Grid, Col } from './Grid/Grid';
 export { Group, Group as ElementsGroup } from './Group/Group';
 export { Highlight } from './Highlight/Highlight';
 export { Divider, Divider as Hr, DIVIDER_SIZES } from './Divider/Divider';
