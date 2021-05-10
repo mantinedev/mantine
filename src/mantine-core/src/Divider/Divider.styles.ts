@@ -36,7 +36,7 @@ export default createUseStyles(
       },
     },
 
-    label: ({ theme, color }: DividerStylesProps) => ({
+    label: ({ theme, color, variant }: DividerStylesProps) => ({
       display: 'flex',
       alignItems: 'center',
 
@@ -44,14 +44,13 @@ export default createUseStyles(
         content: '""',
         flex: 1,
         height: 1,
-        background: getThemeColor({ theme, color, shade: 4 }),
+        borderTop: `1px ${variant} ${getThemeColor({ theme, color, shade: 4 })}`,
         marginRight: theme.spacing.xs,
       },
       '&::after': {
         content: '""',
         flex: 1,
-        height: 1,
-        background: getThemeColor({ theme, color, shade: 4 }),
+        borderTop: `1px ${variant} ${getThemeColor({ theme, color, shade: 4 })}`,
         marginLeft: theme.spacing.xs,
       },
     }),

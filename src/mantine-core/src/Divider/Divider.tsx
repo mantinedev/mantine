@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
 import useStyles, { sizes } from './Divider.styles';
-import { Text, TextProps } from '../Text/Text';
+import { Text } from '../Text/Text';
 
 export const DIVIDER_SIZES = sizes;
 
@@ -23,7 +23,7 @@ interface DividerProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'
   labelPosition?: 'left' | 'center' | 'right';
 
   /** Props spread to Text component in label */
-  labelProps?: TextProps;
+  labelProps?: Record<string, any>;
 
   /** Divider borderStyle */
   variant?: 'solid' | 'dashed' | 'dotted';
