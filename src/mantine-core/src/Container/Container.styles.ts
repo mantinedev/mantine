@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
-interface ContainerStylesProps {
+export interface ContainerStylesProps {
   fluid: boolean;
   size: MantineNumberSize;
   theme: MantineTheme;

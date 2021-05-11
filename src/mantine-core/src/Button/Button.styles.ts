@@ -10,7 +10,7 @@ import {
   MantineSizes,
 } from '@mantine/theme';
 
-interface ButtonStylesProps {
+export interface ButtonStylesProps {
   color: string;
   size: MantineSize;
   radius: MantineNumberSize;

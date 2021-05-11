@@ -3,7 +3,7 @@ import { MantineTheme, MantineSize, getFocusStyles, getFontStyles } from '@manti
 
 export type TextVariant = 'text' | 'link';
 
-interface TextStylesProps {
+export interface TextStylesProps {
   theme: MantineTheme;
   color: string;
   variant: TextVariant;

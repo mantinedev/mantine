@@ -9,7 +9,7 @@ import { MenuItem, MenuItemType } from '../MenuItem/MenuItem';
 import { MenuButton } from '../MenuButton/MenuButton';
 import useStyles from './MenuBody.styles';
 
-interface MenuBodyProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface MenuBodyProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** When true menu is mounted to the dom */
   opened: boolean;
 

@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
-interface NumberInputStylesProps {
+export interface NumberInputStylesProps {
   theme: MantineTheme;
   radius: MantineNumberSize;
 }

@@ -18,7 +18,7 @@ import useStyles, { sizes } from './Modal.styles';
 
 export const MODAL_SIZES = sizes;
 
-interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+export interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Mounts modal if true */
   opened: boolean;
 

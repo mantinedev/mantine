@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme } from '@mantine/theme';
 
-interface SpoilerStylesProps {
+export interface SpoilerStylesProps {
   theme: MantineTheme;
   transitionDuration: number;
 }

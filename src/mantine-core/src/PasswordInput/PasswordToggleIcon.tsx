@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface PasswordToggleIconProps extends React.ComponentPropsWithoutRef<'svg'> {
+export interface PasswordToggleIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   reveal: boolean;
 }
 

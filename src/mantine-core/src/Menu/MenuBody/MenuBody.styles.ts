@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { getSizeValue, MantineNumberSize, MantineTheme } from '@mantine/theme';
 
-interface MenuStylesProps {
+export interface MenuStylesProps {
   theme: MantineTheme;
   size: MantineNumberSize;
 }

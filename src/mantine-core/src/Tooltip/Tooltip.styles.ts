@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getThemeColor, getFontStyles } from '@mantine/theme';
 
-interface TooltipStylesProps {
+export interface TooltipStylesProps {
   theme: MantineTheme;
   color: string;
   gutter: number;

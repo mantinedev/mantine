@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getFontStyles } from '@mantine/theme';
 
-interface InputWrapperStylesProps {
+export interface InputWrapperStylesProps {
   theme: MantineTheme;
 }
 

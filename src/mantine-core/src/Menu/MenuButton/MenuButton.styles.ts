@@ -1,7 +1,7 @@
 import { MantineTheme, getFontStyles, getThemeColor } from '@mantine/theme';
 import { createUseStyles } from 'react-jss';
 
-interface MenuButtonStylesProps {
+export interface MenuButtonStylesProps {
   theme: MantineTheme;
   color: string;
 }

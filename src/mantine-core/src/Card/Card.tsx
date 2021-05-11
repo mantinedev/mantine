@@ -6,7 +6,7 @@ import useStyles from './Card.styles';
 
 export { CardsGrid } from './CardsGrid/CardsGrid';
 
-interface CardProps extends DefaultProps, React.ComponentPropsWithoutRef<typeof Paper> {}
+export interface CardProps extends DefaultProps, React.ComponentPropsWithoutRef<typeof Paper> {}
 
 export function Card({
   className,

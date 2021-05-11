@@ -10,7 +10,7 @@ export const sizes = {
   full: '100%',
 };
 
-interface ModalStylesProps {
+export interface ModalStylesProps {
   theme: MantineTheme;
   overflow: 'outside' | 'inside';
   size: string | number;

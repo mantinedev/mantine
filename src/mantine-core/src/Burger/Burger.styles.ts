@@ -7,7 +7,7 @@ import {
   getFocusStyles,
 } from '@mantine/theme';
 
-interface BurgerStylesProps {
+export interface BurgerStylesProps {
   size: MantineNumberSize;
   theme: MantineTheme;
   color: string;

@@ -13,7 +13,7 @@ export const sizes = {
 
 export type Position = 'top' | 'bottom' | 'left' | 'right';
 
-interface DrawerStylesProps {
+export interface DrawerStylesProps {
   theme: MantineTheme;
   position: Position;
   size: number | string;

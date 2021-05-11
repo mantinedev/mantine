@@ -9,7 +9,7 @@ import {
   MantineSize,
 } from '@mantine/theme';
 
-interface SwitchStylesProps {
+export interface SwitchStylesProps {
   reduceMotion: boolean;
   color: string;
   size: MantineSize;

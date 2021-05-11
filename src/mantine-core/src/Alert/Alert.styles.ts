@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getThemeColor, getFontStyles } from '@mantine/theme';
 
-interface AlertStylesProps {
+export interface AlertStylesProps {
   color: string;
   theme: MantineTheme;
 }

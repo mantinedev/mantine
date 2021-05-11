@@ -11,7 +11,7 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
-interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** <Tab /> components only */
   children: React.ReactNode;
 

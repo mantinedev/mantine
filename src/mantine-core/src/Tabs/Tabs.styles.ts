@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme } from '@mantine/theme';
 
-interface TabsStylesProps {
+export interface TabsStylesProps {
   theme: MantineTheme;
 }
 

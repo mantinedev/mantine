@@ -21,7 +21,7 @@ export function highlighter(value: string, highlightPart: string) {
   return { start, highlighted, end };
 }
 
-interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'> {
+export interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'> {
   /** String part to highligh in children */
   highlight: string;
 

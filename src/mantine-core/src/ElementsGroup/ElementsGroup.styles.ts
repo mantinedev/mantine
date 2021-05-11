@@ -3,7 +3,7 @@ import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 export type ElementsGroupPosition = 'right' | 'center' | 'left' | 'apart';
 
-interface ElementsGroupStylesProps {
+export interface ElementsGroupStylesProps {
   position: ElementsGroupPosition;
   noWrap: boolean;
   grow: boolean;

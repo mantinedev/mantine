@@ -10,7 +10,7 @@ interface GroupedTransitionItem {
   transition: MantineTransition;
 }
 
-interface GroupedTransitionProps extends Omit<DefaultProps, 'className'> {
+export interface GroupedTransitionProps extends Omit<DefaultProps, 'className'> {
   /** Transitions group */
   transitions: Record<string, GroupedTransitionItem>;
 

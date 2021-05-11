@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, getFontStyles, getSizeValue } from '@mantine/theme';
 
-interface InputStylesProps {
+export interface InputStylesProps {
   theme: MantineTheme;
   radius: MantineNumberSize;
 }

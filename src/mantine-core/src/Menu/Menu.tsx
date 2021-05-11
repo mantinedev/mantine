@@ -18,7 +18,7 @@ interface MenuPosition {
   right?: React.CSSProperties['right'];
 }
 
-interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** <MenuItem /> and <Hr /> components only, children are passed to MenuBody component  */
   children: React.ReactNode;
 

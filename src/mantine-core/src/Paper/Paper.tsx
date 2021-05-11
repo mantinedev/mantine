@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
 import useStyles from './Paper.styles';
 
-interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Predefined padding value from theme.spacing or number for padding in px */
   padding?: MantineNumberSize;
 

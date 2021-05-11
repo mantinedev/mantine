@@ -9,7 +9,7 @@ export const sizes = {
   xl: 16,
 };
 
-interface ProgressStylesProps {
+export interface ProgressStylesProps {
   theme: MantineTheme;
   color: string;
   radius: MantineNumberSize;

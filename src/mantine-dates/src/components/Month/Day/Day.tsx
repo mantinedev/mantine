@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/core';
 import useStyles from './Day.styles';
 
-interface DayProps extends DefaultProps {
+export interface DayProps extends DefaultProps {
   value: Date;
   selected: boolean;
   outside: boolean;

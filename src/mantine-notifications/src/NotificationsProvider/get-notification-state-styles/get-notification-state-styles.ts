@@ -1,7 +1,7 @@
 import { TransitionStatus } from 'react-transition-group';
 import { NotificationsProviderPositioning } from '../../types';
 
-interface NotificationStateStylesProps {
+export interface NotificationStateStylesProps {
   state: TransitionStatus;
   maxHeight: number;
   positioning: NotificationsProviderPositioning;

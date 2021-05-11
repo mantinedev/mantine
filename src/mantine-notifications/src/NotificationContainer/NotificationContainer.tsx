@@ -3,7 +3,7 @@ import { Notification, DefaultProps } from '@mantine/core';
 import getAutoClose from './get-auto-close/get-auto-close';
 import { NotificationProps } from '../types';
 
-interface NotificationContainerProps extends DefaultProps {
+export interface NotificationContainerProps extends DefaultProps {
   notification: NotificationProps;
   onHide(id: string): void;
   autoClose: false | number;

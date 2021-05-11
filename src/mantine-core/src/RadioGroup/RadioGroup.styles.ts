@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
-interface RadioGroupStylesProps {
+export interface RadioGroupStylesProps {
   theme: MantineTheme;
   spacing: MantineNumberSize;
   variant: 'vertical' | 'horizontal';

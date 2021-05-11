@@ -9,7 +9,7 @@ import {
   getSizeValue,
 } from '@mantine/theme';
 
-interface BadgeStylesProps {
+export interface BadgeStylesProps {
   color: string;
   theme: MantineTheme;
   size: MantineSize;

@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, getSizeValue, getThemeColor } from '@mantine/theme';
 
-interface ThemeIconStylesProps {
+export interface ThemeIconStylesProps {
   theme: MantineTheme;
   color: string;
   size: MantineNumberSize;

@@ -15,7 +15,7 @@ import useStyles, { Position, sizes } from './Drawer.styles';
 
 export const DRAWER_SIZES = sizes;
 
-interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** If true drawer is mounted to the dom */
   opened: boolean;
 

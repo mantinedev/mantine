@@ -11,7 +11,7 @@ export const AVAILABLE_TRANSITIONS = Object.keys(transitions) as Array<keyof typ
 
 export type { MantineTransition };
 
-interface TransitionProps extends Omit<DefaultProps, 'className'> {
+export interface TransitionProps extends Omit<DefaultProps, 'className'> {
   /** Predefined transition name or transition styles */
   transition: MantineTransition;
 
