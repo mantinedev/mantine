@@ -201,6 +201,7 @@ export default createUseStyles(
       display: 'inline-block',
       color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
       cursor: 'pointer',
+      lineHeight: theme.lineHeight,
 
       '&:hover': {
         textDecoration: 'underline',
