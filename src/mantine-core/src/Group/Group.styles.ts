@@ -8,10 +8,11 @@ interface GroupStylesProps {
   noWrap: boolean;
   grow: boolean;
   spacing: MantineNumberSize;
+  direction: 'row' | 'column';
   theme: MantineTheme;
 }
 
-const JUSTIFY_CONTENT = {
+const POSITIONS = {
   left: 'flex-start',
   center: 'center',
   right: 'flex-end',
@@ -20,11 +21,12 @@ const JUSTIFY_CONTENT = {
 
 export default createUseStyles(
   {
-    Group: ({ spacing, position, noWrap, theme }: GroupStylesProps) => ({
+    group: ({ spacing, position, noWrap, direction, theme, grow }: GroupStylesProps) => ({
       display: 'flex',
-      alignItems: 'center',
+      flexDirection: direction,
+      alignItems: direction === 'row' ? 'center' : grow ? 'stretch' : POSITIONS[position],
       flexWrap: noWrap ? 'nowrap' : 'wrap',
-      justifyContent: JUSTIFY_CONTENT[position],
+      justifyContent: direction === 'row' && POSITIONS[position],
       margin: (-1 * getSizeValue({ size: spacing, sizes: theme.spacing })) / 2,
     }),
 

@@ -37,6 +37,16 @@ export function GroupConfigurator() {
           initialValue: 'left',
           defaultValue: 'left',
         },
+        {
+          name: 'direction',
+          type: 'select',
+          data: [
+            { label: 'row', value: 'row' },
+            { label: 'column', value: 'column' },
+          ],
+          initialValue: 'row',
+          defaultValue: 'row',
+        },
         { name: 'spacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
       ]}
     />

@@ -15,6 +15,9 @@ interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'>
 
   /** Space between elements */
   spacing?: MantineNumberSize;
+
+  /** Defines flex-direction property, row for horizontal, column for vertical */
+  direction?: 'row' | 'column';
 }
 
 export type { GroupPosition };
@@ -26,15 +29,17 @@ export function Group({
   noWrap = false,
   grow = false,
   spacing = 'md',
+  direction = 'row',
   themeOverride,
   ...others
 }: GroupProps) {
   const classes = useStyles({
+    theme: useMantineTheme(themeOverride),
     grow,
     noWrap,
     spacing,
     position,
-    theme: useMantineTheme(themeOverride),
+    direction,
   });
 
   const items = (Children.toArray(children) as React.ReactElement[]).map((child) =>
@@ -43,7 +48,7 @@ export function Group({
 
   return (
     <div className={className} {...others}>
-      <div className={classes.Group}>{items}</div>
+      <div className={classes.group}>{items}</div>
     </div>
   );
 }
