@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import { MantineTransition } from '../Transition/Transition';
+import { MantineTransition, Transition } from '../Transition/Transition';
 import useStyles from './Popover.styles';
 
 interface PopoverProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
@@ -77,7 +77,7 @@ export function Popover({
   transition = 'fade',
   transitionDuration = 200,
   transitionTimingFunction,
-  gutter = 5,
+  gutter = 10,
   position = 'left',
   placement = 'center',
   disabled = false,
@@ -87,14 +87,27 @@ export function Popover({
   noCloseButton = false,
   ...others
 }: PopoverProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme, gutter, arrowSize });
   return (
     <div className={cx(classes.wrapper, className)} {...others}>
-      <div className={classes.popover}>
-        <div className={classes.arrow} />
-        <div className={classes.body}>{children}</div>
-      </div>
       <div className={classes.control}>{control}</div>
+      <Transition
+        mounted={opened}
+        transition={transition}
+        duration={transitionDuration}
+        timingFunction={theme.transitionTimingFunction}
+      >
+        {(transitionStyles) => (
+          <div
+            className={cx(classes.popover, classes[position], classes[placement])}
+            style={{ ...transitionStyles, zIndex }}
+          >
+            <div className={classes.arrow} />
+            <div className={classes.body}>{children}</div>
+          </div>
+        )}
+      </Transition>
     </div>
   );
 }
