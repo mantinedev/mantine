@@ -11,7 +11,7 @@ interface SelectItem {
   disabled?: boolean;
 }
 
-interface SelectProps
+export interface SelectProps
   extends DefaultProps,
     InputWrapperBaseProps,
     Omit<InputProps, 'rightSection' | 'rightSectionWidth' | 'rightSectionProps'>,

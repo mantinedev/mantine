@@ -5,7 +5,7 @@ import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
 import Day from './Day/Day';
 import useStyles from './Month.styles';
 
-interface MonthProps extends DefaultProps, React.ComponentPropsWithoutRef<'table'> {
+export interface MonthProps extends DefaultProps, React.ComponentPropsWithoutRef<'table'> {
   /** Date at which month should be shown */
   month: Date;
 

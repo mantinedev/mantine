@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './Table.styles';
 
-interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef<'table'> {
+export interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef<'table'> {
   /** If true every odd row of table will have gray background color */
   striped?: boolean;
 

@@ -4,7 +4,7 @@ import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { MenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 
-interface MenuButtonProps extends DefaultProps, MenuItemProps {
+export interface MenuButtonProps extends DefaultProps, MenuItemProps {
   children: React.ReactNode;
   hovered: boolean;
   onHover(): void;

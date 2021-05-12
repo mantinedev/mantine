@@ -4,7 +4,7 @@ import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { Text } from '../Text/Text';
 import useStyles from './Breadcrumbs.styles';
 
-interface BreadcrumbsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface BreadcrumbsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Separator between breadcrumbs */
   separator?: React.ReactNode;
 

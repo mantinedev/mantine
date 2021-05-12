@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './TypographyStylesProvider.styles';
 
-interface TypographyStylesProviderProps
+export interface TypographyStylesProviderProps
   extends DefaultProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** Render any content to add Mantine typography styles */

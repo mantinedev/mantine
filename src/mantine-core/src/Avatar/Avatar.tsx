@@ -6,7 +6,7 @@ import useStyles, { sizes } from './Avatar.styles';
 
 export const AVATAR_SIZES = sizes;
 
-interface AvatarProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface AvatarProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Image url */
   src?: string;
 

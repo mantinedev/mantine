@@ -5,7 +5,7 @@ import { useReducedMotion } from '@mantine/hooks';
 import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
 
-interface SpoilerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface SpoilerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Max height of visible content, when this point is reached spoiler appears */
   maxHeight: number;
 

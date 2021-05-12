@@ -5,7 +5,7 @@ import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import useStyles from './Alert.styles';
 
-interface AlertProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+export interface AlertProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Optional alert title */
   title?: React.ReactNode;
 

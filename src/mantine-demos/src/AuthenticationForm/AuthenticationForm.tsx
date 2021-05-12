@@ -12,7 +12,7 @@ import {
   LoadingOverlay,
 } from '@mantine/core';
 
-interface AuthenticationFormProps {
+export interface AuthenticationFormProps {
   noShadow?: boolean;
   noPadding?: boolean;
   noSubmit?: boolean;

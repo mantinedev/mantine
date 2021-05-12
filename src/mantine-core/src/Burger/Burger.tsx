@@ -6,7 +6,7 @@ import useStyles, { sizes } from './Burger.styles';
 
 export const BURGER_SIZES = sizes;
 
-interface BurgerProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
+export interface BurgerProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   /** Burger state: true for cross, false for burger */
   opened: boolean;
 

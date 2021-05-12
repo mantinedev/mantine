@@ -14,7 +14,7 @@ import { MenuIcon } from './MenuIcon';
 import { TagEdit } from '../TagEdit/TagEdit';
 import useStyles from './TagItem.styles';
 
-interface TagItemProps {
+export interface TagItemProps {
   index: number;
   hovered: number;
   data: TagPickerTag;

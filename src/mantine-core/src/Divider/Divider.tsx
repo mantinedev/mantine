@@ -6,7 +6,7 @@ import { Text } from '../Text/Text';
 
 export const DIVIDER_SIZES = sizes;
 
-interface DividerProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
+export interface DividerProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
   /** Line color from theme */
   color?: string;
 

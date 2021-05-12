@@ -11,7 +11,7 @@ function getRandomColor(colors: TagPickerColor[]) {
   return null;
 }
 
-interface TagPickerProps extends DefaultProps {
+export interface TagPickerProps extends DefaultProps {
   /** Options which should be rendered in the dropdown list */
   data: TagPickerTag[];
 

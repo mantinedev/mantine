@@ -5,7 +5,7 @@ import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { TabProps } from '../Tab/Tab';
 import useStyles from './TabControl.styles';
 
-interface TabControlProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
+export interface TabControlProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   active: boolean;
   elementRef(node: HTMLButtonElement): void;
   tabProps: TabProps;
