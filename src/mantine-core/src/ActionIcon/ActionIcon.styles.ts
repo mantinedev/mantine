@@ -8,7 +8,7 @@ import {
   getThemeColor,
 } from '@mantine/theme';
 
-export interface ActionIconStylesProps {
+interface ActionIconStylesProps {
   color: string;
   size: MantineNumberSize;
   radius: MantineNumberSize;

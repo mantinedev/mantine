@@ -8,7 +8,7 @@ import {
   getThemeColor,
 } from '@mantine/theme';
 
-export interface RadioStylesProps {
+interface RadioStylesProps {
   theme: MantineTheme;
   size: MantineSize;
   color: string;

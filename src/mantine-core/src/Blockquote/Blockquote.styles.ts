@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getFontStyles, getThemeColor } from '@mantine/theme';
 
-export interface BlockquoteStylesProps {
+interface BlockquoteStylesProps {
   theme: MantineTheme;
   color: string;
 }

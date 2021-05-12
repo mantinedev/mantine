@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getSizeValue, MantineNumberSize, getFocusStyles } from '@mantine/theme';
 
-export interface ColorSwatchStylesProps {
+interface ColorSwatchStylesProps {
   theme: MantineTheme;
   radius: MantineNumberSize;
 }

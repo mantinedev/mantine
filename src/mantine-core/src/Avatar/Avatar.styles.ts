@@ -15,7 +15,7 @@ export const sizes = {
   xl: 84,
 };
 
-export interface AvatarStylesProps {
+interface AvatarStylesProps {
   size: MantineNumberSize;
   radius: MantineNumberSize;
   theme: MantineTheme;

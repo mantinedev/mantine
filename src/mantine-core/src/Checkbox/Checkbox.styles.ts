@@ -16,7 +16,7 @@ export const sizes = {
   xl: 36,
 };
 
-export interface CheckboxStylesProps {
+interface CheckboxStylesProps {
   theme: MantineTheme;
   size: MantineSize;
   color: string;

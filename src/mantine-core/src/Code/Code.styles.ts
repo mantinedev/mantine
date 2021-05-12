@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getThemeColor, getFontStyles } from '@mantine/theme';
 
-export interface CodeStylesProps {
+interface CodeStylesProps {
   theme: MantineTheme;
   color: string;
 }

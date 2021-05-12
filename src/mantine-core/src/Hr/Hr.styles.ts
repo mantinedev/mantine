@@ -2,7 +2,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { MantineNumberSize, MantineTheme, getSizeValue, getThemeColor } from '@mantine/theme';
 
-export interface HrStylesProps {
+interface HrStylesProps {
   theme: MantineTheme;
   size: MantineNumberSize;
   variant: React.CSSProperties['borderTopStyle'];

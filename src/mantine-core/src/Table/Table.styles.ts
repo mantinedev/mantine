@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getFontStyles } from '@mantine/theme';
 
-export interface TableStylesProps {
+interface TableStylesProps {
   theme: MantineTheme;
   captionSide: 'top' | 'bottom';
 }

@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme } from '@mantine/theme';
 
-export interface BreadcrumbsStylesProps {
+interface BreadcrumbsStylesProps {
   theme: MantineTheme;
 }
 

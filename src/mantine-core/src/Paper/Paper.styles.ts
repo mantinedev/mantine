@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
-export interface PaperStylesProps {
+interface PaperStylesProps {
   theme: MantineTheme;
   radius: MantineNumberSize;
   shadow: string;

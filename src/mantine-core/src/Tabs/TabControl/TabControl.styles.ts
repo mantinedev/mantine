@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, getFontStyles, getFocusStyles, getThemeColor } from '@mantine/theme';
 
-export interface TabControlStylesProps {
+interface TabControlStylesProps {
   theme: MantineTheme;
   reduceMotion: boolean;
   color: string;

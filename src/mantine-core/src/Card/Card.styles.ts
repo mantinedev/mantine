@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
-export interface CardStylesProps {
+interface CardStylesProps {
   theme: MantineTheme;
   radius: MantineNumberSize;
   padding: MantineNumberSize;

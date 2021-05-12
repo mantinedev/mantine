@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { MantineTheme, MantineNumberSize, getSizeValue, getFontStyles } from '@mantine/theme';
 
-export interface ImageStylesProps {
+interface ImageStylesProps {
   theme: MantineTheme;
   radius: MantineNumberSize;
 }
