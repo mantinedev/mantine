@@ -1,10 +1,13 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme } from '@mantine/theme';
+import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 interface PopoverStyles {
   theme: MantineTheme;
   gutter: number;
   arrowSize: number;
+  shadow: string;
+  radius: MantineNumberSize;
+  spacing: MantineNumberSize;
 }
 
 const horizontalPlacement = (arrowSize: number) => ({
@@ -84,12 +87,22 @@ export default createUseStyles({
     zIndex: 1,
   }),
 
-  body: ({ theme }: PopoverStyles) => ({
-    position: 'relative',
+  body: ({ theme, radius, shadow }: PopoverStyles) => ({
     border: `1px solid ${theme.colors.gray[2]}`,
-    boxShadow: theme.shadows.md,
-    borderRadius: theme.radius.sm,
-    padding: 20,
+    boxShadow: shadow in theme.shadows ? theme.shadows[shadow] : shadow,
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+  }),
+
+  inner: ({ theme, spacing }: PopoverStyles) => ({
+    padding: getSizeValue({ size: spacing, sizes: theme.spacing }),
+  }),
+
+  header: ({ theme, spacing }: PopoverStyles) => ({
+    borderBottom: `1px solid ${theme.colors.gray[2]}`,
+    padding: [theme.spacing.xs, getSizeValue({ size: spacing, sizes: theme.spacing })],
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   }),
 
   control: {

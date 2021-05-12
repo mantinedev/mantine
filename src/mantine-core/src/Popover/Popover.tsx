@@ -1,7 +1,10 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import { MantineTransition, Transition } from '../Transition/Transition';
+import { Text } from '../Text/Text';
+import { ActionIcon } from '../ActionIcon/ActionIcon';
+import { CloseIcon } from '../Modal/CloseIcon';
 import useStyles from './Popover.styles';
 
 interface PopoverProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
@@ -61,6 +64,15 @@ interface PopoverProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef
 
   /** Optional popover title */
   title?: React.ReactNode;
+
+  /** Popover body padding, value from theme.spacing or number to set padding in px */
+  spacing?: MantineNumberSize;
+
+  /** Popover body radius, value from theme.radius or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
+  /** Popover shadow, value from theme.shadows or string to set box-shadow to any value */
+  shadow?: string;
 }
 
 export function Popover({
@@ -85,10 +97,13 @@ export function Popover({
   noFocusTrap = false,
   noEscape = false,
   noCloseButton = false,
+  radius = 'sm',
+  spacing = 'md',
+  shadow = 'sm',
   ...others
 }: PopoverProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, gutter, arrowSize });
+  const classes = useStyles({ theme, gutter, arrowSize, radius, spacing, shadow });
   return (
     <div className={cx(classes.wrapper, className)} {...others}>
       <div className={classes.control}>{control}</div>
@@ -101,10 +116,24 @@ export function Popover({
         {(transitionStyles) => (
           <div
             className={cx(classes.popover, classes[position], classes[placement])}
-            style={{ ...transitionStyles, zIndex }}
+            style={{ zIndex, ...transitionStyles }}
           >
             <div className={classes.arrow} />
-            <div className={classes.body}>{children}</div>
+
+            <div className={classes.body}>
+              {(!!title || !noCloseButton) && (
+                <div className={classes.header}>
+                  <Text>{title}</Text>
+                  {!noCloseButton && (
+                    // Align icon with the rest of the content
+                    <ActionIcon style={{ marginRight: -7 }} onClick={onClose}>
+                      <CloseIcon />
+                    </ActionIcon>
+                  )}
+                </div>
+              )}
+              <div className={classes.inner}>{children}</div>
+            </div>
           </div>
         )}
       </Transition>

@@ -11,7 +11,7 @@ function Wrapper(props: any) {
     <Popover
       {...props}
       opened={opened}
-      onClose={() => setOpened(true)}
+      onClose={() => setOpened(false)}
       control={<Button onClick={() => setOpened(true)}>Popover</Button>}
     >
       <TextInput label="Text input" placeholder="text input" style={{ minWidth: 300 }} />
@@ -27,6 +27,6 @@ function Wrapper(props: any) {
 
 storiesOf('@mantine/core/Popover', module).add('General usage', () => (
   <div style={{ padding: 400 }}>
-    <Wrapper position="bottom" placement="center" />
+    <Wrapper position="right" placement="center" title="Hello!" transition="fade" />
   </div>
 ));
