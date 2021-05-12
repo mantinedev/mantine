@@ -4,11 +4,11 @@ import { useId, useClickOutside, useMergedRef } from '@mantine/hooks';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { MantineTransition } from '../Transition/Transition';
 import { MenuIcon } from './MenuIcon';
-import { MenuBody } from './MenuBody/MenuBody';
+import { MenuBody, MenuBodyProps } from './MenuBody/MenuBody';
 import { sizes } from './MenuBody/MenuBody.styles';
-import { MenuItem } from './MenuItem/MenuItem';
+import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
 
-export { MenuBody, MenuItem };
+export { MenuBody, MenuBodyProps, MenuItem, MenuItemProps };
 export const MENU_SIZES = sizes;
 
 interface MenuPosition {

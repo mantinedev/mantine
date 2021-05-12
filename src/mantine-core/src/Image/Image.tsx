@@ -4,7 +4,7 @@ import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
 
-interface ImageProps
+export interface ImageProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'placeholder'> {
   /** Image src */

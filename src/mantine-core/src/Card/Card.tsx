@@ -4,7 +4,7 @@ import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { Paper } from '../Paper/Paper';
 import useStyles from './Card.styles';
 
-export { CardsGrid } from './CardsGrid/CardsGrid';
+export { CardsGrid, CardsGridProps } from './CardsGrid/CardsGrid';
 
 export interface CardProps extends DefaultProps, React.ComponentPropsWithoutRef<typeof Paper> {}
 

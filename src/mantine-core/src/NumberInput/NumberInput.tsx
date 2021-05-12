@@ -5,7 +5,7 @@ import { useMantineTheme } from '@mantine/theme';
 import { TextInput } from '../TextInput/TextInput';
 import useStyles, { CONTROL_WIDTH } from './NumberInput.styles';
 
-interface NumberInputProps
+export interface NumberInputProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof TextInput>,
     'rightSection' | 'rightSectionProps' | 'rightSectionWidth' | 'onChange' | 'value'

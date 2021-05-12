@@ -4,7 +4,7 @@ import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { TextInput } from '../TextInput/TextInput';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
 
-interface PasswordInputProps
+export interface PasswordInputProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof TextInput>,
     'rightSection' | 'rightSectionProps' | 'rightSectionWidth'

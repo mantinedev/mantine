@@ -4,7 +4,7 @@ import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
-interface BlockquoteProps
+export interface BlockquoteProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'blockquote'>, 'cite'> {
   /** Border and icon color from theme */

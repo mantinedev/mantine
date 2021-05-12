@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { ElementsGroup, ElementsGroupPosition } from '../ElementsGroup/ElementsGroup';
-import { Tab, TabType } from './Tab/Tab';
+import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
 
-export { Tab };
+export { Tab, TabProps };
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);

@@ -8,7 +8,7 @@ import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { CloseIcon } from '../Modal/CloseIcon';
 import useStyles from './Notification.styles';
 
-interface NotificationProps
+export interface NotificationProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Called when close button is clicked */

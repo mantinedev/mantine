@@ -18,7 +18,7 @@ export interface InputWrapperBaseProps {
   required?: boolean;
 }
 
-interface InputWrapperProps
+export interface InputWrapperProps
   extends DefaultProps,
     InputWrapperBaseProps,
     React.ComponentPropsWithoutRef<'div'> {

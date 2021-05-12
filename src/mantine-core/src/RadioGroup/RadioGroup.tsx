@@ -2,14 +2,14 @@ import React, { Children, cloneElement, useState } from 'react';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme, MantineSize } from '@mantine/theme';
 import { InputWrapper, InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
-import { Radio } from './Radio/Radio';
+import { Radio, RadioProps } from './Radio/Radio';
 import { sizes } from './Radio/Radio.styles';
 import useStyles from './RadioGroup.styles';
 
 export const RADIO_SIZES = sizes;
-export { Radio };
+export { Radio, RadioProps };
 
-interface RadioGroupProps
+export interface RadioGroupProps
   extends DefaultProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
