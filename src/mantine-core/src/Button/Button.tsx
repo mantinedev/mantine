@@ -9,7 +9,7 @@ import useStyles, { heights } from './Button.styles';
 
 export const BUTTON_SIZES = heights;
 
-interface ButtonBaseProps extends DefaultProps {
+export interface ButtonBaseProps extends DefaultProps {
   /** Predefined button size */
   size?: MantineSize;
 
@@ -98,3 +98,5 @@ export function Button<
 }
 
 Button.displayName = '@mantine/core/Button';
+
+export type ButtonProps = React.ComponentProps<typeof Button>;

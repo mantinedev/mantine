@@ -5,7 +5,7 @@ import useStyles, { sizes } from './Hr.styles';
 
 export const HR_SIZES = sizes;
 
-interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
+export interface HrProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
   /** Hr borderStyle */
   variant?: 'solid' | 'dashed' | 'dotted';
 

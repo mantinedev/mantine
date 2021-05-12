@@ -4,7 +4,7 @@ import { Paper, Transition, Badge, useMantineTheme } from '@mantine/core';
 import { TagsList, TagsListProps } from '../TagsList/TagsList';
 import useStyles from './TagPicker.styles';
 
-interface TagPickerProps extends TagsListProps {
+export interface TagPickerProps extends TagsListProps {
   dropdownOpened: boolean;
   controlRef: React.RefCallback<HTMLButtonElement>;
   openDropdown(): void;

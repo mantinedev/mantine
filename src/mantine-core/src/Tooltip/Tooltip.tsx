@@ -5,7 +5,7 @@ import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import useStyles from './Tooltip.styles';
 
-interface TooltipProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface TooltipProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Tooltip content */
   label: React.ReactNode;
 

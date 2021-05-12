@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface CheckboxIconProps extends React.ComponentPropsWithoutRef<'svg'> {
+export interface CheckboxIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   intermediate: boolean;
 }
 

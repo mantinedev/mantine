@@ -5,7 +5,7 @@ import { useMantineTheme, DefaultProps } from '@mantine/theme';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input, InputProps } from '../Input/Input';
 
-interface TextareaProps
+export interface TextareaProps
   extends DefaultProps,
     InputWrapperBaseProps,
     InputProps,

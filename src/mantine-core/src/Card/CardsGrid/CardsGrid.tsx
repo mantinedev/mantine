@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import useStyles from './CardsGrid.styles';
 
-interface CardsGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface CardsGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Space between cards, predefined value from theme.spacing or number for margins in px */
   gutter?: MantineNumberSize;
 

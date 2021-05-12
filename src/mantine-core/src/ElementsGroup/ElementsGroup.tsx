@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import useStyles, { ElementsGroupPosition } from './ElementsGroup.styles';
 
-interface ElementsGroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface ElementsGroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Defines justify-content property */
   position?: ElementsGroupPosition;
 

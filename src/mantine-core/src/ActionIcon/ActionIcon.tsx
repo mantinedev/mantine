@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
 import useStyles, { sizes } from './ActionIcon.styles';
 
-interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
+export interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   /** Icon rendered inside button */
   children: React.ReactNode;
 

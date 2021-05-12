@@ -4,7 +4,7 @@ import { useId } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize } from '@mantine/theme';
 import useStyles from './Radio.styles';
 
-interface RadioProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
+export interface RadioProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
   /** Radio label */
   children: React.ReactNode;
 
