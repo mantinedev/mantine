@@ -98,3 +98,5 @@ export function Button<
 }
 
 Button.displayName = '@mantine/core/Button';
+
+export type ButtonProps = React.ComponentProps<typeof Button>;

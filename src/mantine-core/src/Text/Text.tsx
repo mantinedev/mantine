@@ -66,3 +66,5 @@ export function Anchor<T extends React.ElementType = 'a', U = HTMLAnchorElement>
 }
 
 Anchor.displayName = '@mantine/core/Anchor';
+
+export type AnchorProps = React.ComponentProps<typeof Anchor>;
