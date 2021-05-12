@@ -1,10 +1,10 @@
 import React, { Children } from 'react';
 import { DefaultProps, MantineNumberSize, useMantineTheme, getSizeValue } from '@mantine/theme';
-import { Col } from './Col';
+import { Col, ColProps } from './Col';
 
-export { Col };
+export { Col, ColProps };
 
-interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** <Col /> components only */
   children: React.ReactNode;
 
