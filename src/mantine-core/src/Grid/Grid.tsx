@@ -2,7 +2,8 @@ import React, { Children } from 'react';
 import { DefaultProps, MantineNumberSize, useMantineTheme, getSizeValue } from '@mantine/theme';
 import { Col, ColProps } from './Col';
 
-export { Col, ColProps };
+export { Col };
+export type { ColProps };
 
 export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** <Col /> components only */

@@ -5,7 +5,8 @@ import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
 
-export { Tab, TabProps };
+export { Tab };
+export type { TabProps };
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);

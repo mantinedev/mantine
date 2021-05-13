@@ -58,7 +58,8 @@ export { Divider as Hr, DIVIDER_SIZES as HR_SIZES } from './Divider/Divider';
 export { Group as ElementsGroup } from './Group/Group';
 
 // CardsGrid replaced with more generic Grid component
-export { CardsGrid, CardsGridProps } from './Card/Card';
+export { CardsGrid } from './Card/Card';
+export type { CardsGridProps } from './Card/Card';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
 export type { ActionIconProps } from './ActionIcon/ActionIcon';
