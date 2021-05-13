@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './Kbd.styles';
 
-interface KbdProps extends DefaultProps, React.ComponentPropsWithoutRef<'kbd'> {
+export interface KbdProps extends DefaultProps, React.ComponentPropsWithoutRef<'kbd'> {
   /** Keyboard key */
   children: React.ReactNode;
 }

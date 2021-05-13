@@ -1,17 +1,17 @@
 import React, { useState, useRef } from 'react';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { Group, GroupPosition } from '../Group/Group';
-import { Tab, TabType } from './Tab/Tab';
+import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
 
-export { Tab };
+export { Tab, TabProps };
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
-interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** <Tab /> components only */
   children: React.ReactNode;
 

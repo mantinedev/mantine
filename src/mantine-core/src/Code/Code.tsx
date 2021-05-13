@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import useStyles from './Code.styles';
 
-interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<'code'> {
+export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<'code'> {
   /** Code content */
   children: React.ReactNode;
 

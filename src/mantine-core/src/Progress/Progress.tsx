@@ -6,7 +6,7 @@ import useStyles, { sizes } from './Progress.styles';
 
 export const PROGRESS_SIZES = sizes;
 
-interface ProgressProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface ProgressProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Percent of filled bar (0-100) */
   value: number;
 

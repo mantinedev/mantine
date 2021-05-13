@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentPassThrough } from '@mantine/types';
 
-interface OverlayProps {
+export interface OverlayProps {
   /** Overlay opacity */
   opacity?: React.CSSProperties['opacity'];
 

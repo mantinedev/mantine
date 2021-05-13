@@ -1,7 +1,7 @@
 import React, { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-interface PortalProps {
+export interface PortalProps {
   /** Portal children, for example, modal or popover */
   children: React.ReactNode;
 

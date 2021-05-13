@@ -5,7 +5,7 @@ import useStyles, { sizes } from './ThemeIcon.styles';
 
 export const THEME_ICON_SIZES = sizes;
 
-interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'> {
+export interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'> {
   /** Icon */
   children: React.ReactNode;
 

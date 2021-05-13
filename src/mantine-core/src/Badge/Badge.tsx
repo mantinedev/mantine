@@ -6,7 +6,7 @@ import useStyles, { heights } from './Badge.styles';
 
 export const BADGE_SIZES = heights;
 
-interface BadgeProps extends DefaultProps {
+export interface BadgeProps extends DefaultProps {
   /** Badge color from theme */
   color?: string;
 

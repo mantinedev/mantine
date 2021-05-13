@@ -7,7 +7,7 @@ import { Transition } from '../Transition/Transition';
 import { Loader, LoaderProps } from '../Loader/Loader';
 import useStyles from './LoadingOverlay.styles';
 
-interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Loader component props */
   loaderProps?: LoaderProps;
 

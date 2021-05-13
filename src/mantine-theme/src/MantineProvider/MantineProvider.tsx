@@ -4,7 +4,7 @@ import { DEFAULT_THEME } from '../default-theme';
 import { mergeTheme } from '../utils/merge-theme/merge-theme';
 import { ThemeProvider } from './theme-context';
 
-interface MantineProviderProps {
+export interface MantineProviderProps {
   children: React.ReactNode;
   theme?: MantineThemeOverride;
 }

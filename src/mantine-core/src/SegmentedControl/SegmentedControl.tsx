@@ -10,7 +10,7 @@ interface SegmentedControlItem {
   label: React.ReactNode;
 }
 
-interface SegmentedControlProps
+export interface SegmentedControlProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Data based on which controls are rendered */

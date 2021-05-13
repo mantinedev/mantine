@@ -4,7 +4,7 @@ import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme
 import { ComponentPassThrough } from '@mantine/types';
 import useStyles from './ColorSwatch.styles';
 
-interface ColorSwatchProps extends DefaultProps {
+export interface ColorSwatchProps extends DefaultProps {
   /** Swatch color value in any css valid format (hex, rgb, etc.) */
   color: string;
 
