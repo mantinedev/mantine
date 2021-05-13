@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/theme';
 import { TextInput } from '../TextInput/TextInput';
 import { Group } from '../Group/Group';
 import { Button } from '../Button/Button';
@@ -25,8 +26,25 @@ function Wrapper(props: any) {
   );
 }
 
-storiesOf('@mantine/core/Popover', module).add('General usage', () => (
-  <div style={{ padding: 400 }}>
-    <Wrapper withArrow position="top" placement="center" title="Hello!" transition="slide-up" />
-  </div>
-));
+storiesOf('@mantine/core/Popover', module)
+  .add('General usage', () => (
+    <div style={{ padding: 400 }}>
+      <Wrapper withArrow position="top" placement="center" title="Hello!" transition="slide-up" />
+    </div>
+  ))
+  .add('Dark theme', () => (
+    <MantineProvider theme={{ colorScheme: 'dark' }}>
+      <div
+        style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 400, minHeight: '100vh' }}
+      >
+        <Wrapper
+          withArrow
+          position="top"
+          placement="center"
+          title="Hello!"
+          transition="slide-up"
+          gutter={15}
+        />
+      </div>
+    </MantineProvider>
+  ));

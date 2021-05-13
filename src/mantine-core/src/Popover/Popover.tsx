@@ -76,6 +76,12 @@ export interface PopoverProps
 
   /** Popover shadow, value from theme.shadows or string to set box-shadow to any value */
   shadow?: string;
+
+  /** Popover body styles */
+  bodyStyle?: React.CSSProperties;
+
+  /** Popover body className */
+  bodyClassName?: string;
 }
 
 export function Popover({
@@ -103,6 +109,8 @@ export function Popover({
   radius = 'sm',
   spacing = 'md',
   shadow = 'sm',
+  bodyStyle,
+  bodyClassName,
   ...others
 }: PopoverProps) {
   const theme = useMantineTheme(themeOverride);
@@ -121,8 +129,8 @@ export function Popover({
         {(transitionStyles) => (
           <div style={transitionStyles} className={classes.popoverWrapper}>
             <div
-              className={cx(classes.popover, classes[position], classes[placement])}
-              style={{ zIndex }}
+              className={cx(classes.popover, classes[position], classes[placement], bodyClassName)}
+              style={{ zIndex, ...bodyStyle }}
               ref={focusTrapRef}
               onKeyDownCapture={(event) =>
                 event.nativeEvent.code === 'Escape' && !noEscape && onClose()

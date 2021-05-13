@@ -82,10 +82,11 @@ export default createUseStyles({
     pointerEvents: 'none',
   },
 
-  popover: ({ theme }: PopoverStyles) => ({
+  popover: ({ theme, radius }: PopoverStyles) => ({
     position: 'absolute',
-    background: theme.white,
+    background: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
     pointerEvents: 'all',
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   }),
 
   arrow: ({ theme, arrowSize }: PopoverStyles) => ({
@@ -93,13 +94,17 @@ export default createUseStyles({
     height: arrowSize * 2,
     position: 'absolute',
     transform: 'rotate(45deg)',
-    border: `1px solid ${theme.colors.gray[2]}`,
-    background: 'white',
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]
+    }`,
+    background: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
     zIndex: 1,
   }),
 
   body: ({ theme, radius, shadow }: PopoverStyles) => ({
-    border: `1px solid ${theme.colors.gray[2]}`,
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]
+    }`,
     boxShadow: shadow in theme.shadows ? theme.shadows[shadow] : shadow,
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   }),
@@ -109,7 +114,9 @@ export default createUseStyles({
   }),
 
   header: ({ theme, spacing }: PopoverStyles) => ({
-    borderBottom: `1px solid ${theme.colors.gray[2]}`,
+    borderBottom: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
+    }`,
     padding: [theme.spacing.xs, getSizeValue({ size: spacing, sizes: theme.spacing })],
     display: 'flex',
     alignItems: 'center',
