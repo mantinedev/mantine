@@ -110,8 +110,6 @@ export function Popover({
 
   return (
     <div className={cx(classes.wrapper, className)} ref={useClickOutsideRef} {...others}>
-      <div className={classes.control}>{control}</div>
-
       <Transition
         mounted={opened && !disabled}
         transition={transition}
@@ -119,33 +117,37 @@ export function Popover({
         timingFunction={theme.transitionTimingFunction}
       >
         {(transitionStyles) => (
-          <div
-            className={cx(classes.popover, classes[position], classes[placement])}
-            style={{ zIndex, ...transitionStyles }}
-            ref={focusTrapRef}
-            onKeyDownCapture={(event) =>
-              event.nativeEvent.code === 'Escape' && !noEscape && onClose()
-            }
-          >
-            {withArrow && <div className={classes.arrow} />}
+          <div style={transitionStyles} className={classes.popoverWrapper}>
+            <div
+              className={cx(classes.popover, classes[position], classes[placement])}
+              style={{ zIndex }}
+              ref={focusTrapRef}
+              onKeyDownCapture={(event) =>
+                event.nativeEvent.code === 'Escape' && !noEscape && onClose()
+              }
+            >
+              {withArrow && <div className={classes.arrow} />}
 
-            <div className={classes.body}>
-              {(!!title || !noCloseButton) && (
-                <div className={classes.header}>
-                  <Text>{title}</Text>
-                  {!noCloseButton && (
-                    // Align icon with the rest of the content
-                    <ActionIcon style={{ marginRight: -7 }} onClick={onClose}>
-                      <CloseIcon />
-                    </ActionIcon>
-                  )}
-                </div>
-              )}
-              <div className={classes.inner}>{children}</div>
+              <div className={classes.body}>
+                {(!!title || !noCloseButton) && (
+                  <div className={classes.header}>
+                    <Text>{title}</Text>
+                    {!noCloseButton && (
+                      // Align icon with the rest of the content
+                      <ActionIcon style={{ marginRight: -7 }} onClick={onClose}>
+                        <CloseIcon />
+                      </ActionIcon>
+                    )}
+                  </div>
+                )}
+                <div className={classes.inner}>{children}</div>
+              </div>
             </div>
           </div>
         )}
       </Transition>
+
+      <div className={classes.control}>{control}</div>
     </div>
   );
 }

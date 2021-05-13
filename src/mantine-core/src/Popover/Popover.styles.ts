@@ -70,12 +70,23 @@ export default createUseStyles({
   wrapper: {
     position: 'relative',
     display: 'inline-block',
-    background: 'red',
   },
 
-  popover: {
+  popoverWrapper: {
+    background: 'transparent',
     position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    pointerEvents: 'none',
   },
+
+  popover: ({ theme }: PopoverStyles) => ({
+    position: 'absolute',
+    background: theme.white,
+    pointerEvents: 'all',
+  }),
 
   arrow: ({ theme, arrowSize }: PopoverStyles) => ({
     width: arrowSize * 2,

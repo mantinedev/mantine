@@ -27,6 +27,6 @@ function Wrapper(props: any) {
 
 storiesOf('@mantine/core/Popover', module).add('General usage', () => (
   <div style={{ padding: 400 }}>
-    <Wrapper position="right" placement="center" title="Hello!" transition="fade" />
+    <Wrapper withArrow position="top" placement="center" title="Hello!" transition="slide-up" />
   </div>
 ));
