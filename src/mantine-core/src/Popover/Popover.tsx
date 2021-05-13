@@ -8,7 +8,9 @@ import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { CloseIcon } from '../Modal/CloseIcon';
 import useStyles from './Popover.styles';
 
-interface PopoverProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+export interface PopoverProps
+  extends DefaultProps,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Disable closing by click outside */
   noClickOutside?: boolean;
 
