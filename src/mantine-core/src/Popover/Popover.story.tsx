@@ -13,7 +13,7 @@ function Wrapper(props: any) {
       {...props}
       opened={opened}
       onClose={() => setOpened(false)}
-      control={<Button onClick={() => setOpened(true)}>Popover</Button>}
+      target={<Button onClick={() => setOpened(true)}>Popover</Button>}
     >
       <TextInput label="Text input" placeholder="text input" style={{ minWidth: 300 }} />
       <Group position="center" style={{ marginTop: 15 }}>

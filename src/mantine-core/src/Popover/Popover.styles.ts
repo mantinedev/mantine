@@ -123,7 +123,7 @@ export default createUseStyles({
     justifyContent: 'space-between',
   }),
 
-  control: {
+  target: {
     zIndex: 1,
   },
 

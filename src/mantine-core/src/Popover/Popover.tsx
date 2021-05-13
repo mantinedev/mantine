@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
-import { useClickOutside, useFocusTrap, useId } from '@mantine/hooks';
+import { useClickOutside, useFocusTrap, useId, useReducedMotion } from '@mantine/hooks';
 import { MantineTransition, Transition } from '../Transition/Transition';
 import { Text } from '../Text/Text';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
@@ -26,13 +26,13 @@ export interface PopoverProps
   /** True to disable popover */
   disabled?: boolean;
 
-  /** Popover placement relative to control */
+  /** Popover placement relative to target */
   placement?: 'center' | 'end' | 'start';
 
-  /** Popover position relative to control */
+  /** Popover position relative to target */
   position?: 'left' | 'right' | 'top' | 'bottom';
 
-  /** Space between popover and control in px */
+  /** Space between popover and target in px */
   gutter?: number;
 
   /** Customize mount/unmount transition */
@@ -60,7 +60,7 @@ export interface PopoverProps
   onClose(): void;
 
   /** Element which is used to position popover */
-  control: React.ReactNode;
+  target: React.ReactNode;
 
   /** Content inside popover */
   children: React.ReactNode;
@@ -91,7 +91,7 @@ export function Popover({
   className,
   themeOverride,
   children,
-  control,
+  target,
   title,
   onClose,
   opened,
@@ -122,6 +122,7 @@ export function Popover({
   const classes = useStyles({ theme, gutter, arrowSize, radius, spacing, shadow });
   const useClickOutsideRef = useClickOutside(() => !noClickOutside && onClose());
   const focusTrapRef = useFocusTrap(!noFocusTrap);
+  const reduceMotion = useReducedMotion();
 
   const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!noEscape && event.nativeEvent.code === 'Escape') {
@@ -138,14 +139,15 @@ export function Popover({
       <Transition
         mounted={opened && !disabled}
         transition={transition}
-        duration={transitionDuration}
-        timingFunction={theme.transitionTimingFunction}
+        duration={reduceMotion ? 0 : transitionDuration}
+        timingFunction={transitionTimingFunction || theme.transitionTimingFunction}
       >
         {(transitionStyles) => (
           <div
             style={transitionStyles}
             role="dialog"
             tabIndex={-1}
+            data-mantine-popover
             aria-labelledby={titleId}
             aria-describedby={bodyId}
             className={classes.popoverWrapper}
@@ -156,14 +158,18 @@ export function Popover({
               ref={focusTrapRef}
               onKeyDownCapture={handleKeydown}
             >
-              {withArrow && <div className={classes.arrow} />}
+              {withArrow && <div data-mantine-popover-arrow className={classes.arrow} />}
 
               <div className={classes.body}>
                 {(!!title || !noCloseButton) && (
                   <div className={classes.header}>
-                    <Text id={titleId}>{title}</Text>
+                    <Text id={titleId} data-mantine-popover-title>
+                      {title}
+                    </Text>
+
                     {!noCloseButton && (
                       <ActionIcon
+                        data-mantine-popover-close
                         style={{ marginRight: -7 }}
                         onClick={onClose}
                         aria-label={closeButtonLabel}
@@ -173,7 +179,7 @@ export function Popover({
                     )}
                   </div>
                 )}
-                <div className={classes.inner} id={bodyId}>
+                <div className={classes.inner} id={bodyId} data-mantine-popover-body>
                   {children}
                 </div>
               </div>
@@ -182,7 +188,9 @@ export function Popover({
         )}
       </Transition>
 
-      <div className={classes.control}>{control}</div>
+      <div data-mantine-popover-target className={classes.target}>
+        {target}
+      </div>
     </div>
   );
 }
