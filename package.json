@@ -11,7 +11,7 @@
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "cd docs && yarn && cd ../envs/next && yarn",
+    "postinstall": "cd docs && yarn",
     "syncpack": "syncpack list-mismatches",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
