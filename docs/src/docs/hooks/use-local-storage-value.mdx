@@ -27,7 +27,7 @@ import { useLocalStorageValue } from '@mantine/hooks';
 
 // hook will read value from localStorage.getItem('color-scheme')
 // if localStorage is not available or value at given key does not exist
-// 'mantine' will be assigned to value variable
+// 'dark' will be assigned to value variable
 const [value, setValue] = useLocalStorageValue({ key: 'color-scheme', defaultValue: 'dark' });
 
 // Value is set both to state and localStorage at 'color-scheme'
