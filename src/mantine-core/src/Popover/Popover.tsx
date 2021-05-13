@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
+import { useClickOutside, useFocusTrap } from '@mantine/hooks';
 import { MantineTransition, Transition } from '../Transition/Transition';
 import { Text } from '../Text/Text';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
@@ -104,11 +105,15 @@ export function Popover({
 }: PopoverProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, gutter, arrowSize, radius, spacing, shadow });
+  const useClickOutsideRef = useClickOutside(() => !noClickOutside && onClose());
+  const focusTrapRef = useFocusTrap(!noFocusTrap);
+
   return (
-    <div className={cx(classes.wrapper, className)} {...others}>
+    <div className={cx(classes.wrapper, className)} ref={useClickOutsideRef} {...others}>
       <div className={classes.control}>{control}</div>
+
       <Transition
-        mounted={opened}
+        mounted={opened && !disabled}
         transition={transition}
         duration={transitionDuration}
         timingFunction={theme.transitionTimingFunction}
@@ -117,8 +122,12 @@ export function Popover({
           <div
             className={cx(classes.popover, classes[position], classes[placement])}
             style={{ zIndex, ...transitionStyles }}
+            ref={focusTrapRef}
+            onKeyDownCapture={(event) =>
+              event.nativeEvent.code === 'Escape' && !noEscape && onClose()
+            }
           >
-            <div className={classes.arrow} />
+            {withArrow && <div className={classes.arrow} />}
 
             <div className={classes.body}>
               {(!!title || !noCloseButton) && (
