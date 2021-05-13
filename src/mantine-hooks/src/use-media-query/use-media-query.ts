@@ -18,7 +18,7 @@ function attachMediaListener(query: MediaQueryList, callback: MediaQueryCallback
 
 export function useMediaQuery(query: string) {
   const [matches, setMatches] = useState(() => {
-    if ('matchMedia' in window) {
+    if (typeof window !== 'undefined' && 'matchMedia' in window) {
       return window.matchMedia(query).matches;
     }
     return false;
