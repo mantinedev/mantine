@@ -88,6 +88,18 @@ describe('@mantine/core/Popover', () => {
     expect(element.find('[data-mantine-popover-target]').text()).toBe('test-target');
   });
 
+  it('does not render header if title is not passed and noCloseButton set to true', () => {
+    const withoutHeader = shallow(
+      <Popover {...defaultProps} title={null} noCloseButton />
+    ).render();
+    const withHeader = shallow(
+      <Popover {...defaultProps} title={null} noCloseButton={false} />
+    ).render();
+
+    expect(withoutHeader.find('[data-mantine-popover-header]')).toHaveLength(0);
+    expect(withHeader.find('[data-mantine-popover-header]')).toHaveLength(1);
+  });
+
   it('has correct displayName', () => {
     expect(Popover.displayName).toEqual('@mantine/core/Popover');
   });

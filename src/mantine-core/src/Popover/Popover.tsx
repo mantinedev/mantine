@@ -163,7 +163,7 @@ export function Popover({
 
               <div className={classes.body}>
                 {(!!title || !noCloseButton) && (
-                  <div className={classes.header}>
+                  <div className={classes.header} data-mantine-popover-header>
                     <Text size="sm" id={titleId} data-mantine-popover-title>
                       {title}
                     </Text>
