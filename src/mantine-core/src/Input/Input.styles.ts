@@ -32,7 +32,7 @@ export default createUseStyles(
         '&:focus': {
           outline: 'none',
           borderColor: theme.colors[theme.primaryColor][6],
-          boxShadow: `0 0 4px ${theme.colors.gray[3]}`,
+          boxShadow: theme.colorScheme !== 'dark' && `0 0 4px ${theme.colors.gray[3]}`,
         },
       },
 
@@ -64,7 +64,7 @@ export default createUseStyles(
           borderColor: `${
             theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]
           } !important`,
-          boxShadow: `0 0 4px ${theme.colors.gray[3]}`,
+          boxShadow: theme.colorScheme !== 'dark' && `0 0 4px ${theme.colors.gray[3]}`,
         },
 
         '&::placeholder': {
