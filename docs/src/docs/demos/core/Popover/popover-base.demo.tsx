@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Popover, Button, Group, Text, Image } from '@mantine/core';
+import { Popover, Button, Group, Text, Image, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
@@ -31,10 +31,15 @@ function Demo() {
 
 export function PopoverBaseDemo() {
   const [opened, setOpened] = useState(false);
+  const theme = useMantineTheme();
 
   return (
-    <CodeDemo code={code} language="tsx">
-      <Group position="center">
+    <CodeDemo
+      code={code}
+      language="tsx"
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
+    >
+      <Group position="center" style={{ paddingBottom: 95 }}>
         <Popover
           opened={opened}
           onClose={() => setOpened(false)}

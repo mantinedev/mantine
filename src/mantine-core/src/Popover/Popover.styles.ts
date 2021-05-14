@@ -84,7 +84,7 @@ export default createUseStyles({
 
   popover: ({ theme, radius }: PopoverStyles) => ({
     position: 'absolute',
-    background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    background: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
     pointerEvents: 'all',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   }),
@@ -97,7 +97,7 @@ export default createUseStyles({
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]
     }`,
-    background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    background: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
     zIndex: 1,
   }),
 

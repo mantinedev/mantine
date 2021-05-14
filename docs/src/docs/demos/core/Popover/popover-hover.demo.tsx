@@ -1,80 +1,75 @@
 import React, { useState } from 'react';
-import { Popover, ActionIcon, useMantineTheme } from '@mantine/core';
-import { GearIcon } from '@modulz/radix-icons';
+import { Popover, Badge, Image, Text } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
-import { Popover, ActionIcon, Group } from '@mantine/core';
-import { GearIcon } from '@modulz/radix-icons';
+import { Popover, Badge, Image, Text } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
-  const [values, setValues] = useState({
-    name: 'Bob Handsome',
-    email: 'bob@handsome.inc',
-  });
-
-  return (
-    <Group>
-      <User name={values.name} email={values.email} />
-
-      <Popover
-        opened={opened}
-        onClose={() => setOpened(false)}
-        position="bottom"
-        placement="end"
-        withArrow
-        title="Edit user"
-        target={
-          <ActionIcon variant="light" onClick={() => setOpened(true)}>
-            <GearIcon />
-          </ActionIcon>
-        }
-      >
-        <UserEditForm
-          initialValues={values}
-          onCancel={() => setOpened(false)}
-          onSubmit={(data) => {
-            setValues(data);
-            setOpened(false);
-          }}
-        />
-      </Popover>
-    </Group>
-  );
-}`;
-
-function Demo() {
-  const [opened, setOpened] = useState(false);
-  const theme = useMantineTheme();
 
   return (
     <Popover
       opened={opened}
       onClose={() => setOpened(false)}
-      position="bottom"
-      placement="end"
+      position="top"
+      placement="center"
       withArrow
-      title="Edit user"
+      noFocusTrap
+      noEscape
+      transition="slide-up"
+      bodyStyle={{ width: 260, pointerEvents: 'none' }}
       target={
-        <ActionIcon
-          variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
-          onClick={() => setOpened(true)}
-        >
-          <GearIcon />
-        </ActionIcon>
+        <Badge onMouseEnter={() => setOpened(true)} onMouseLeave={() => setOpened(false)}>
+          Hover badge to see popover
+        </Badge>
       }
     >
-      hover
+      <div style={{ display: 'flex' }}>
+        <Image
+          src="https://raw.githubusercontent.com/mantinedev/mantine/e630956424828b4103372d781cc64f0a54eebb33/docs/src/images/favicon.svg"
+          width={30}
+          height={30}
+          style={{ minWidth: 30, marginRight: 15 }}
+        />
+        <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>
+      </div>
     </Popover>
   );
-}
+}`;
 
 export function PopoverHoverDemo() {
+  const [opened, setOpened] = useState(false);
+
   return (
     <CodeDemo code={code} language="tsx">
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Demo />
+        <Popover
+          opened={opened}
+          onClose={() => setOpened(false)}
+          position="top"
+          placement="center"
+          withArrow
+          noFocusTrap
+          noEscape
+          bodyStyle={{ width: 260, pointerEvents: 'none' }}
+          transition="slide-up"
+          target={
+            <Badge onMouseEnter={() => setOpened(true)} onMouseLeave={() => setOpened(false)}>
+              Hover badge to see popover
+            </Badge>
+          }
+        >
+          <div style={{ display: 'flex' }}>
+            <Image
+              src="https://raw.githubusercontent.com/mantinedev/mantine/e630956424828b4103372d781cc64f0a54eebb33/docs/src/images/favicon.svg"
+              width={30}
+              height={30}
+              style={{ minWidth: 30, marginRight: 15 }}
+            />
+            <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>
+          </div>
+        </Popover>
       </div>
     </CodeDemo>
   );

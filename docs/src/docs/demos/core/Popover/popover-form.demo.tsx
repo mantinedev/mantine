@@ -98,15 +98,15 @@ function UserEditForm({
         <Button variant="link" color="gray" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Save</Button>
       </Group>
     </form>
   );
 }
 
-function User({ name, email }: { name: string; email: string }) {
+function User({ name, email, className }: { name: string; email: string; className?: string }) {
   return (
-    <>
+    <div className={className} style={{ display: 'flex' }}>
       <Avatar style={{ marginRight: 15 }} color="blue">
         {name
           .split(' ')
@@ -121,7 +121,7 @@ function User({ name, email }: { name: string; email: string }) {
           {email}
         </Text>
       </div>
-    </>
+    </div>
   );
 }
 
