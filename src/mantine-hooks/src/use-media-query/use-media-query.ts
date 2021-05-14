@@ -16,8 +16,15 @@ function attachMediaListener(query: MediaQueryList, callback: MediaQueryCallback
   }
 }
 
+function getInitialValue(query: string) {
+  if (typeof window !== 'undefined' && 'matchMedia' in window) {
+    return window.matchMedia(query).matches;
+  }
+  return false;
+}
+
 export function useMediaQuery(query: string) {
-  const [matches, setMatches] = useState(false);
+  const [matches, setMatches] = useState(getInitialValue(query));
   const queryRef = useRef<MediaQueryList>();
 
   // eslint-disable-next-line consistent-return
