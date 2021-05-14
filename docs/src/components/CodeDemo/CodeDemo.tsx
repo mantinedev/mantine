@@ -14,6 +14,7 @@ interface CodeDemoProps {
   children: React.ReactNode;
   toggle?: boolean;
   githubLink?: string;
+  zIndex?: number;
 }
 
 export default function CodeDemo({
@@ -24,6 +25,7 @@ export default function CodeDemo({
   demoBorder = true,
   toggle = false,
   githubLink,
+  zIndex = 3,
 }: CodeDemoProps) {
   const classes = useStyles();
   const [visible, setVisible] = useState(!toggle);
@@ -38,6 +40,7 @@ export default function CodeDemo({
           backgroundColor:
             demoBackground || (theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white),
           borderColor: demoBorder ? undefined : 'transparent',
+          zIndex,
         }}
       >
         {children}
