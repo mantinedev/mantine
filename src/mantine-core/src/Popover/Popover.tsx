@@ -57,7 +57,7 @@ export interface PopoverProps
   opened: boolean;
 
   /** Called when popover closes */
-  onClose(): void;
+  onClose?(): void;
 
   /** Element which is used to position popover */
   target: React.ReactNode;
@@ -120,13 +120,14 @@ export function Popover({
 }: PopoverProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, gutter, arrowSize, radius, spacing, shadow });
-  const useClickOutsideRef = useClickOutside(() => !noClickOutside && onClose());
+  const handleClose = () => typeof onClose === 'function' && onClose();
+  const useClickOutsideRef = useClickOutside(() => !noClickOutside && handleClose());
   const focusTrapRef = useFocusTrap(!noFocusTrap);
   const reduceMotion = useReducedMotion();
 
   const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!noEscape && event.nativeEvent.code === 'Escape') {
-      onClose();
+      handleClose();
     }
   };
 
@@ -172,7 +173,7 @@ export function Popover({
                         size="sm"
                         data-mantine-popover-close
                         style={{ marginRight: -7, zIndex: 2 }}
-                        onClick={onClose}
+                        onClick={handleClose}
                         aria-label={closeButtonLabel}
                       >
                         <CloseIcon style={{ width: 15, height: 15 }} />

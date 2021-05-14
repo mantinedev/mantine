@@ -131,35 +131,27 @@ function Demo() {
   const theme = useMantineTheme();
 
   return (
-    <Group>
-      <User name={values.name} email={values.email} />
-
-      <Popover
-        opened={opened}
-        onClose={() => setOpened(false)}
-        position="bottom"
-        placement="end"
-        withArrow
-        title="Edit user"
-        target={
-          <ActionIcon
-            variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
-            onClick={() => setOpened(true)}
-          >
-            <GearIcon />
-          </ActionIcon>
-        }
-      >
-        <UserEditForm
-          initialValues={values}
-          onCancel={() => setOpened(false)}
-          onSubmit={(data) => {
-            setValues(data);
-            setOpened(false);
-          }}
-        />
-      </Popover>
-    </Group>
+    <Popover
+      opened={opened}
+      onClose={() => {
+        console.log('close');
+        setOpened(false);
+      }}
+      position="bottom"
+      placement="end"
+      withArrow
+      title="Edit user"
+      target={
+        <ActionIcon
+          variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
+          onClick={() => setOpened(true)}
+        >
+          <GearIcon />
+        </ActionIcon>
+      }
+    >
+      hover
+    </Popover>
   );
 }
 
