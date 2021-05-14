@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
-import { PasswordInput, Progress, Text } from '@mantine/core';
+import { PasswordInput, Progress, Text, Popover } from '@mantine/core';
 
 function PasswordRequirement({ meets, label }: { meets: boolean; label: string }) {
   return (
@@ -34,6 +34,7 @@ function getStrength(password: string) {
 }
 
 export function PasswordStrength() {
+  const [popoverOpened, setPopoverOpened] = useState(false);
   const [value, setValue] = useState('');
   const checks = requirements.map((requirement, index) => (
     <PasswordRequirement key={index} label={requirement.label} meets={requirement.re.test(value)} />
@@ -44,19 +45,31 @@ export function PasswordStrength() {
 
   return (
     <>
-      <PasswordInput
-        label="Your password"
-        placeholder="Your password"
-        description="Strong password should include letters in lower and uppercase, at least 1 number, at least 1 special symbol"
-        value={value}
-        onChange={(event) => setValue(event.currentTarget.value)}
-      />
-
-      <div style={{ marginTop: 10 }}>
-        <Progress color={color} value={strength} size={3} />
+      <Popover
+        opened={popoverOpened}
+        position="bottom"
+        placement="start"
+        withArrow
+        bodyStyle={{ width: '100%' }}
+        noFocusTrap
+        transition="skew-up"
+        onFocusCapture={() => setPopoverOpened(true)}
+        onBlurCapture={() => setPopoverOpened(false)}
+        target={
+          <PasswordInput
+            required
+            label="Your password"
+            placeholder="Your password"
+            description="Strong password should include letters in lower and uppercase, at least 1 number, at least 1 special symbol"
+            value={value}
+            onChange={(event) => setValue(event.currentTarget.value)}
+          />
+        }
+      >
+        <Progress color={color} value={strength} size={5} style={{ marginBottom: 10 }} />
         <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
         {checks}
-      </div>
+      </Popover>
     </>
   );
 }
