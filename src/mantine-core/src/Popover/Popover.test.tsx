@@ -63,8 +63,10 @@ describe('@mantine/core/Popover', () => {
   });
 
   it('renders close button based on noCloseButton prop', () => {
-    const withCloseButton = shallow(<Popover {...defaultProps} noCloseButton={false} />).render();
-    const withoutCloseButton = shallow(<Popover {...defaultProps} noCloseButton />).render();
+    const withCloseButton = shallow(<Popover {...defaultProps} withCloseButton />).render();
+    const withoutCloseButton = shallow(
+      <Popover {...defaultProps} withCloseButton={false} />
+    ).render();
 
     expect(withCloseButton.find('[data-mantine-popover-close]')).toHaveLength(1);
     expect(withoutCloseButton.find('[data-mantine-popover-close]')).toHaveLength(0);
@@ -72,7 +74,7 @@ describe('@mantine/core/Popover', () => {
 
   it('sets correct close button label', () => {
     const element = shallow(
-      <Popover {...defaultProps} noCloseButton={false} closeButtonLabel="test-close" />
+      <Popover {...defaultProps} withCloseButton closeButtonLabel="test-close" />
     ).render();
 
     expect(element.find('[data-mantine-popover-close]').attr('aria-label')).toBe('test-close');
@@ -88,14 +90,9 @@ describe('@mantine/core/Popover', () => {
     expect(element.find('[data-mantine-popover-target]').text()).toBe('test-target');
   });
 
-  it('does not render header if title is not passed and noCloseButton set to true', () => {
-    const withoutHeader = shallow(
-      <Popover {...defaultProps} title={null} noCloseButton />
-    ).render();
-    const withHeader = shallow(
-      <Popover {...defaultProps} title={null} noCloseButton={false} />
-    ).render();
-
+  it('does not render header if title is not passed', () => {
+    const withoutHeader = shallow(<Popover {...defaultProps} title={null} />).render();
+    const withHeader = shallow(<Popover {...defaultProps} title="Hello" />).render();
     expect(withoutHeader.find('[data-mantine-popover-header]')).toHaveLength(0);
     expect(withHeader.find('[data-mantine-popover-header]')).toHaveLength(1);
   });

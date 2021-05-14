@@ -127,6 +127,13 @@ export default createUseStyles({
     zIndex: 1,
   },
 
+  closeButton: {
+    position: 'absolute',
+    top: 7,
+    zIndex: 2,
+    right: 10,
+  },
+
   left: ({ gutter, arrowSize }: PopoverStyles) => ({
     ...horizontalPlacement(arrowSize),
     right: `calc(100% + ${gutter}px)`,

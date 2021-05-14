@@ -20,8 +20,8 @@ export interface PopoverProps
   /** Disables close on escape */
   noEscape?: boolean;
 
-  /** Removes close button */
-  noCloseButton?: boolean;
+  /** Adds close button */
+  withCloseButton?: boolean;
 
   /** True to disable popover */
   disabled?: boolean;
@@ -108,7 +108,7 @@ export function Popover({
   noClickOutside = false,
   noFocusTrap = false,
   noEscape = false,
-  noCloseButton = false,
+  withCloseButton = false,
   radius = 'sm',
   spacing = 'md',
   shadow = 'sm',
@@ -162,24 +162,24 @@ export function Popover({
               {withArrow && <div data-mantine-popover-arrow className={classes.arrow} />}
 
               <div className={classes.body}>
-                {(!!title || !noCloseButton) && (
+                {!!title && (
                   <div className={classes.header} data-mantine-popover-header>
                     <Text size="sm" id={titleId} data-mantine-popover-title>
                       {title}
                     </Text>
-
-                    {!noCloseButton && (
-                      <ActionIcon
-                        size="sm"
-                        data-mantine-popover-close
-                        style={{ marginRight: -7, zIndex: 2 }}
-                        onClick={handleClose}
-                        aria-label={closeButtonLabel}
-                      >
-                        <CloseIcon style={{ width: 15, height: 15 }} />
-                      </ActionIcon>
-                    )}
                   </div>
+                )}
+
+                {withCloseButton && (
+                  <ActionIcon
+                    size="sm"
+                    data-mantine-popover-close
+                    onClick={handleClose}
+                    aria-label={closeButtonLabel}
+                    className={cx(classes.closeButton)}
+                  >
+                    <CloseIcon style={{ width: 14, height: 14 }} />
+                  </ActionIcon>
                 )}
                 <div className={classes.inner} id={bodyId} data-mantine-popover-body>
                   {children}

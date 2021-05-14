@@ -29,7 +29,14 @@ function Wrapper(props: any) {
 storiesOf('@mantine/core/Popover', module)
   .add('General usage', () => (
     <div style={{ padding: 400 }}>
-      <Wrapper withArrow position="top" placement="center" title="Hello!" transition="slide-up" />
+      <Wrapper
+        withArrow
+        position="top"
+        placement="center"
+        title="Hello!"
+        transition="slide-up"
+        withCloseButton
+      />
     </div>
   ))
   .add('Dark theme', () => (
@@ -43,6 +50,7 @@ storiesOf('@mantine/core/Popover', module)
           placement="center"
           title="Hello!"
           transition="slide-up"
+          withCloseButton
           gutter={15}
         />
       </div>
