@@ -32,7 +32,6 @@ export default createUseStyles(
         '&:focus': {
           outline: 'none',
           borderColor: theme.colors[theme.primaryColor][6],
-          boxShadow: theme.colorScheme !== 'dark' && `0 0 4px ${theme.colors.gray[3]}`,
         },
       },
 
@@ -64,7 +63,6 @@ export default createUseStyles(
           borderColor: `${
             theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]
           } !important`,
-          boxShadow: theme.colorScheme !== 'dark' && `0 0 4px ${theme.colors.gray[3]}`,
         },
 
         '&::placeholder': {
@@ -122,7 +120,7 @@ export default createUseStyles(
       appearance: 'none',
       resize: 'none',
       boxSizing: 'border-box',
-      fontSize: 14,
+      fontSize: theme.fontSizes.sm,
       width: '100%',
       color: theme.black,
       display: 'block',
