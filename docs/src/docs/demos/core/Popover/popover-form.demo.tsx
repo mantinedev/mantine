@@ -34,7 +34,7 @@ function Demo() {
         position="bottom"
         placement="end"
         withArrow
-        title="Edit user"
+        withCloseButton
         target={
           <ActionIcon variant="light" onClick={() => setOpened(true)}>
             <GearIcon />
@@ -140,7 +140,7 @@ function Demo() {
         position="bottom"
         placement="end"
         withArrow
-        title="Edit user"
+        withCloseButton
         target={
           <ActionIcon
             variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
@@ -163,7 +163,7 @@ function Demo() {
   );
 }
 
-export function PopoverBaseDemo() {
+export function PopoverFormDemo() {
   return (
     <CodeDemo code={code} language="tsx">
       <div style={{ display: 'flex', justifyContent: 'center' }}>

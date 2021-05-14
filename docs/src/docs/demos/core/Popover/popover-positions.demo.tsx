@@ -13,7 +13,6 @@ function Wrapper(
       placement={props.placement}
       position={props.position}
       transitionDuration={0}
-      noCloseButton
       bodyStyle={{ minWidth: 140, textAlign: 'center', pointerEvents: 'none' }}
       spacing="xs"
       target={
