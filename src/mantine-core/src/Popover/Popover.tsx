@@ -163,18 +163,19 @@ export function Popover({
               <div className={classes.body}>
                 {(!!title || !noCloseButton) && (
                   <div className={classes.header}>
-                    <Text id={titleId} data-mantine-popover-title>
+                    <Text size="sm" id={titleId} data-mantine-popover-title>
                       {title}
                     </Text>
 
                     {!noCloseButton && (
                       <ActionIcon
+                        size="sm"
                         data-mantine-popover-close
-                        style={{ marginRight: -7 }}
+                        style={{ marginRight: -7, zIndex: 2 }}
                         onClick={onClose}
                         aria-label={closeButtonLabel}
                       >
-                        <CloseIcon />
+                        <CloseIcon style={{ width: 15, height: 15 }} />
                       </ActionIcon>
                     )}
                   </div>
