@@ -152,12 +152,12 @@ export function Popover({
             aria-labelledby={titleId}
             aria-describedby={bodyId}
             className={classes.popoverWrapper}
+            ref={focusTrapRef}
+            onKeyDownCapture={handleKeydown}
           >
             <div
               className={cx(classes.popover, classes[position], classes[placement], bodyClassName)}
               style={{ zIndex, ...bodyStyle }}
-              ref={focusTrapRef}
-              onKeyDownCapture={handleKeydown}
             >
               {withArrow && <div data-mantine-popover-arrow className={classes.arrow} />}
 
