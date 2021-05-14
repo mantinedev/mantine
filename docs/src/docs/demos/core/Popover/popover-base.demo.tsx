@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { Popover, Button, Group, TextInput, Avatar, Text, ActionIcon } from '@mantine/core';
+import {
+  Popover,
+  Button,
+  Group,
+  TextInput,
+  Avatar,
+  Text,
+  ActionIcon,
+  useMantineTheme,
+} from '@mantine/core';
 import { useForm, useMediaQuery } from '@mantine/hooks';
 import { GearIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
@@ -119,6 +128,7 @@ function User({ name, email }: { name: string; email: string }) {
 function Demo() {
   const [values, setValues] = useState({ name: 'Bob Handsome', email: 'bob@handsome.inc' });
   const [opened, setOpened] = useState(true);
+  const theme = useMantineTheme();
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -132,7 +142,10 @@ function Demo() {
         withArrow
         title="Edit user"
         target={
-          <ActionIcon variant="light" onClick={() => setOpened(true)}>
+          <ActionIcon
+            variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
+            onClick={() => setOpened(true)}
+          >
             <GearIcon />
           </ActionIcon>
         }
