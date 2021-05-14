@@ -44,32 +44,30 @@ export function PasswordStrength() {
   const color = strength === 100 ? 'teal' : strength > 50 ? 'yellow' : 'red';
 
   return (
-    <>
-      <Popover
-        opened={popoverOpened}
-        position="bottom"
-        placement="start"
-        withArrow
-        bodyStyle={{ width: '100%' }}
-        noFocusTrap
-        transition="skew-up"
-        onFocusCapture={() => setPopoverOpened(true)}
-        onBlurCapture={() => setPopoverOpened(false)}
-        target={
-          <PasswordInput
-            required
-            label="Your password"
-            placeholder="Your password"
-            description="Strong password should include letters in lower and uppercase, at least 1 number, at least 1 special symbol"
-            value={value}
-            onChange={(event) => setValue(event.currentTarget.value)}
-          />
-        }
-      >
-        <Progress color={color} value={strength} size={5} style={{ marginBottom: 10 }} />
-        <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
-        {checks}
-      </Popover>
-    </>
+    <Popover
+      opened={popoverOpened}
+      position="bottom"
+      placement="start"
+      withArrow
+      bodyStyle={{ width: '100%' }}
+      noFocusTrap
+      transition="skew-up"
+      onFocusCapture={() => setPopoverOpened(true)}
+      onBlurCapture={() => setPopoverOpened(false)}
+      target={
+        <PasswordInput
+          required
+          label="Your password"
+          placeholder="Your password"
+          description="Strong password should include letters in lower and uppercase, at least 1 number, at least 1 special symbol"
+          value={value}
+          onChange={(event) => setValue(event.currentTarget.value)}
+        />
+      }
+    >
+      <Progress color={color} value={strength} size={5} style={{ marginBottom: 10 }} />
+      <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
+      {checks}
+    </Popover>
   );
 }
