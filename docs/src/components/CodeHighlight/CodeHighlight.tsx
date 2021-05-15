@@ -2,9 +2,9 @@ import React from 'react';
 import cx from 'clsx';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import { ClipboardIcon, CheckIcon } from '@modulz/radix-icons';
-import { ActionIcon, useMantineTheme } from '@mantine/core';
+import { ActionIcon, useMantineTheme, Tooltip } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
-import { theme } from './theme';
+import { darkTheme, lightTheme } from './theme';
 import useStyles from './CodeHighlight.styles';
 
 interface CodeHighlightProps {
@@ -20,21 +20,28 @@ export default function CodeHighlight({ code, className, language }: CodeHighlig
 
   return (
     <div className={classes.wrapper}>
-      <ActionIcon
+      <Tooltip
         className={classes.copy}
-        title={clipboard.copied ? 'Copied' : 'Copy code to clipboard'}
-        onClick={() => clipboard.copy(code)}
+        label={clipboard.copied ? 'Copied' : 'Copy code'}
+        position="left"
+        placement="center"
+        transition="fade"
+        withArrow
+        arrowSize={4}
+        gutter={8}
+        color={clipboard.copied ? 'teal' : undefined}
       >
-        {clipboard.copied ? <CheckIcon /> : <ClipboardIcon />}
-      </ActionIcon>
+        <ActionIcon
+          aria-label={clipboard.copied ? 'Copied' : 'Copy code to clipboard'}
+          onClick={() => clipboard.copy(code)}
+        >
+          {clipboard.copied ? <CheckIcon /> : <ClipboardIcon />}
+        </ActionIcon>
+      </Tooltip>
 
       <Highlight
         {...defaultProps}
-        theme={
-          _theme.colorScheme === 'dark'
-            ? { ...theme, plain: { ...theme.plain, backgroundColor: _theme.colors.dark[9] } }
-            : theme
-        }
+        theme={_theme.colorScheme === 'dark' ? darkTheme : lightTheme}
         code={code}
         language={language}
       >

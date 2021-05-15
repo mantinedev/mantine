@@ -20,13 +20,15 @@ export default createUseStyles(
       borderTopRightRadius: 0,
       borderTopLeftRadius: 0,
       marginTop: 0,
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3]
+      }`,
     },
 
     controls: {
       position: 'absolute',
       bottom: theme.spacing.xs,
       right: theme.spacing.xs,
-      // backgroundColor: theme.colors.red[5],
     },
   }),
   { theming }
