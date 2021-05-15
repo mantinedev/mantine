@@ -25,7 +25,7 @@ function Demo() {
 export function TooltipMultilineDemo() {
   return (
     <CodeDemo code={code} language="tsx">
-      <Group position="center" style={{ paddingTop: 100 }}>
+      <Group position="center">
         <Tooltip
           data-mantine-composable
           wrapLines

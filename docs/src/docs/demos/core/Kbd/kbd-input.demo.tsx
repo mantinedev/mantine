@@ -4,10 +4,12 @@ import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Kbd, TextInput } from '@mantine/core';
+import { Kbd, TextInput, useMantineTheme } from '@mantine/core';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 
 function Demo() {
+  const theme = useMantineTheme();
+
   const rightSection = (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <Kbd>Ctrl</Kbd>
@@ -23,6 +25,7 @@ function Demo() {
       rightSectionWidth={90}
       rightSection={rightSection}
       rightSectionProps={{ style: { pointerEvents: 'none' } }}
+      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
     />
   );
 }`;
@@ -39,11 +42,7 @@ export function KbdInputDemo() {
   );
 
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
-    >
+    <CodeDemo code={code} language="tsx">
       <div style={{ maxWidth: 440, margin: 'auto' }}>
         <TextInput
           placeholder="Search"
@@ -51,6 +50,7 @@ export function KbdInputDemo() {
           rightSectionWidth={90}
           rightSection={rightSection}
           rightSectionProps={{ style: { pointerEvents: 'none' } }}
+          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
         />
       </div>
     </CodeDemo>

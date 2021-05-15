@@ -137,10 +137,8 @@ export function ActionIconVariantToggleDemo() {
 }
 
 export function ActionIconUsageDemo() {
-  const theme = useMantineTheme();
-
   return (
-    <CodeDemo demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white}>
+    <CodeDemo>
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <PasswordInput
           placeholder="Password"

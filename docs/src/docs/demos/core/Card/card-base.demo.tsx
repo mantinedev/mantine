@@ -59,11 +59,7 @@ export function CardBaseDemo() {
   const secondaryColor = theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7];
 
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0]}
-    >
+    <CodeDemo code={code} language="tsx">
       <div style={{ maxWidth: 340, margin: 'auto' }}>
         <Card shadow="sm">
           <Image

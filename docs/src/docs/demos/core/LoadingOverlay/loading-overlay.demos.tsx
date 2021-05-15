@@ -9,6 +9,7 @@ import { LoadingOverlay, Button, Group } from '@mantine/core';
 function Demo() {
   const [visible, setVisible] = useState(false);
 
+  // Note that position: relative is required
   return (
     <>
       <div style={{ width: 400, position: 'relative' }}>
@@ -31,18 +32,17 @@ export function LoadingOverlayBaseDemo() {
     <CodeDemo
       code={code}
       language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0]}
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
     >
-      <div style={{ maxWidth: 400 }}>
+      <div style={{ maxWidth: 400, margin: 'auto', overflow: 'visible' }}>
         <div
           style={{
             borderRadius: 4,
-            overflow: 'hidden',
             position: 'relative',
             margin: 'auto',
           }}
         >
-          <LoadingOverlay visible={visible} zIndex={1000} />
+          <LoadingOverlay visible={visible} zIndex={1000} style={{ borderRadius: 4 }} />
           <AuthenticationForm noSubmit />
         </div>
       </div>

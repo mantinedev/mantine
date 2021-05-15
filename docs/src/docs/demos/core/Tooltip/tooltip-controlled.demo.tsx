@@ -22,7 +22,7 @@ export function TooltipControlledDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <Group position="center" style={{ paddingTop: 30 }}>
+      <Group position="center">
         <Tooltip data-mantine-composable label="Ctrl + J" opened={opened}>
           <Button variant="outline" onClick={() => setOpened((o) => !o)}>
             Toggle color scheme

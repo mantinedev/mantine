@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, useMantineTheme } from '@mantine/core';
+import { Alert } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function AlertWrapper(props: React.ComponentPropsWithoutRef<typeof Alert>) {
@@ -15,12 +15,10 @@ const codeTemplate = (props: string, children: string) => `<Alert${props}>
 </Alert>`;
 
 export function AlertConfigurator() {
-  const theme = useMantineTheme();
   return (
     <Configurator
       component={AlertWrapper}
       codeTemplate={codeTemplate}
-      previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]}
       props={[
         { name: 'title', type: 'string', initialValue: 'Bummer!' },
         {

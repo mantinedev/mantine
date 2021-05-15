@@ -20,8 +20,9 @@ function Wrapper(
       noEscape
       target={
         <Badge
-          variant="light"
+          variant="outline"
           color="blue"
+          size="lg"
           onMouseEnter={() => setOpened(true)}
           onMouseLeave={() => setOpened(false)}
         >

@@ -122,7 +122,7 @@ export default function Configurator({
           style={{
             background:
               previewBackground ||
-              (theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white),
+              (theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white),
           }}
         >
           <div>

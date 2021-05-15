@@ -33,7 +33,7 @@ export function UseClickOutsideDemo({ events }: { events?: string[] }) {
     <CodeDemo
       code={getCode(events ? `, [${events.map((event) => `'${event}'`).join(', ')}]` : '')}
       language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0]}
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
     >
       <div style={{ position: 'relative' }}>
         <Group position="center">

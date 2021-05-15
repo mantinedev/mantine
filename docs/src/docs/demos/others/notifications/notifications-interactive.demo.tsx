@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Button, TextInput } from '@mantine/core';
+import { Group, Button, TextInput, useMantineTheme } from '@mantine/core';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';
 import { useNotifications } from '@mantine/notifications';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
@@ -51,6 +51,7 @@ function Demo() {
 
 export function NotificationsInteractiveDemo() {
   const notifications = useNotifications();
+  const theme = useMantineTheme();
 
   return (
     <CodeDemo code={code} language="tsx">
@@ -70,6 +71,10 @@ export function NotificationsInteractiveDemo() {
                       icon={<EnvelopeClosedIcon />}
                       placeholder="Enter your email"
                       style={{ flex: 1, marginRight: 15 }}
+                      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
+                      inputStyle={{
+                        backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7],
+                      }}
                     />
                     <Button onClick={() => notifications.hideNotification(id)} size="lg">
                       Subscribe
