@@ -91,27 +91,30 @@ export default createUseStyles(
 
     light: ({ theme, color }: BadgeStylesProps) => ({
       backgroundColor: hexToRgba(
-        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
-        0.5
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+        theme.colorScheme === 'dark' ? 0.3 : 1
       ),
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 0 : 9 }),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
     }),
 
     filled: ({ theme, color }: BadgeStylesProps) => ({
       backgroundColor: hexToRgba(
-        getThemeColor({ theme, color, shade: 7 }),
-        theme.colorScheme === 'dark' ? 0.7 : 1
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 7 }),
+        theme.colorScheme === 'dark' ? 0.65 : 1
       ),
       color: theme.white,
-      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
+      textShadow:
+        theme.colorScheme === 'dark'
+          ? 'none'
+          : `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
     }),
 
     outline: ({ theme, color }: BadgeStylesProps) => ({
       backgroundColor: 'transparent',
       color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
       borderColor: hexToRgba(
-        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
-        theme.colorScheme === 'dark' ? 0.55 : 0.55
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
+        0.55
       ),
     }),
   },
