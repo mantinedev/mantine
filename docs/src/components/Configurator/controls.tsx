@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, TextInput, Switch, DEFAULT_THEME } from '@mantine/core';
+import { Select, TextInput, Switch, DEFAULT_THEME, useMantineTheme } from '@mantine/core';
 
 function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -65,6 +65,7 @@ function StringControl({
   label: string;
   onChange(value: string): void;
 }) {
+  const theme = useMantineTheme();
   return (
     <TextInput
       {...others}
@@ -72,6 +73,7 @@ function StringControl({
       placeholder={capitalize(label)}
       value={value.toString()}
       onChange={(event) => onChange(event.currentTarget.value)}
+      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
     />
   );
 }
@@ -86,6 +88,8 @@ function ColorControl({
   label: string;
   onChange(value: string): void;
 }) {
+  const theme = useMantineTheme();
+
   return (
     <Select
       {...others}
@@ -93,6 +97,7 @@ function ColorControl({
       value={value}
       label={capitalize(label)}
       onChange={(event) => onChange(event.currentTarget.value)}
+      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
     />
   );
 }
@@ -111,6 +116,7 @@ function SelectControl({
   onChange(value: string): void;
   data: { label: string; value: string }[];
 }) {
+  const theme = useMantineTheme();
   return (
     <Select
       data={data.map((item) => ({
@@ -120,6 +126,7 @@ function SelectControl({
       value={value}
       label={capitalize(label)}
       onChange={(event) => onChange(event.currentTarget.value)}
+      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
       {...others}
     />
   );
@@ -136,6 +143,7 @@ function SizeControl({
   capitalize: boolean;
   onChange(value: string): void;
 }) {
+  const theme = useMantineTheme();
   return (
     <Select
       {...others}
@@ -143,6 +151,7 @@ function SizeControl({
       value={value}
       label={capitalize(label)}
       onChange={(event) => onChange(event.currentTarget.value)}
+      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
     />
   );
 }

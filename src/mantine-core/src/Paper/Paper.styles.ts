@@ -11,7 +11,7 @@ interface PaperStylesProps {
 export default createUseStyles(
   {
     paper: ({ theme, radius, shadow, padding }: PaperStylesProps) => ({
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       boxSizing: 'border-box',
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       boxShadow: theme.shadows[shadow] || shadow || 'none',
