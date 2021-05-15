@@ -9,9 +9,9 @@ export default createUseStyles(
 
     dropdown: ({ theme }: { theme: MantineTheme }) => ({
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
       }`,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       width: 280,
       position: 'absolute',
       top: 0,
@@ -21,6 +21,7 @@ export default createUseStyles(
 
     control: ({ theme }: { theme: MantineTheme }) => ({
       ...getFocusStyles(theme),
+      backgroundColor: 'transparent',
       border: 0,
       padding: [0, 0],
       borderRadius: 24,

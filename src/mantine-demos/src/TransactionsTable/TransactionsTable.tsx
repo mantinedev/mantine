@@ -106,7 +106,10 @@ export function TransactionsTable() {
       <Paper
         shadow={theme.colorScheme === 'dark' ? null : 'xs'}
         padding="lg"
-        style={{ overflowX: 'auto' }}
+        style={{
+          overflowX: 'auto',
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        }}
       >
         <Table style={{ tableLayout: 'fixed', minWidth: 500 }}>
           <thead>

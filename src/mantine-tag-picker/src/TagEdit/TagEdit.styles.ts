@@ -1,13 +1,13 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles, getFocusStyles } from '@mantine/core';
+import { MantineTheme, getFontStyles, getFocusStyles, hexToRgba } from '@mantine/core';
 
 export default createUseStyles(
   {
     tagEdit: ({ theme }: { theme: MantineTheme }) => ({
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
       }`,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       paddingTop: 10,
       paddingBottom: 10,
       position: 'absolute',
@@ -48,7 +48,8 @@ export default createUseStyles(
       marginTop: 10,
 
       '&:hover, &:focus': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.red[9] : theme.colors.red[0],
+        backgroundColor:
+          theme.colorScheme === 'dark' ? hexToRgba(theme.colors.red[9], 0.4) : theme.colors.red[0],
         color: theme.colorScheme === 'dark' ? theme.colors.red[0] : theme.colors.red[7],
       },
     }),
