@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
+import { ComponentPassThrough } from '@mantine/types';
 import useStyles, { sizes } from './ActionIcon.styles';
 
 export interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
@@ -25,7 +26,7 @@ export interface ActionIconProps extends DefaultProps, React.ComponentPropsWitho
 
 export const ACTION_ICON_SIZES = sizes;
 
-export function ActionIcon({
+export function ActionIcon<T extends React.ElementType = 'button', U = HTMLButtonElement>({
   className,
   color = 'gray',
   children,
@@ -34,8 +35,9 @@ export function ActionIcon({
   variant = 'hover',
   themeOverride,
   elementRef,
+  component: Element = 'button',
   ...others
-}: ActionIconProps) {
+}: ComponentPassThrough<T, ActionIconProps> & { elementRef?: React.ForwardedRef<U> }) {
   const classes = useStyles({
     size,
     radius,
@@ -44,14 +46,14 @@ export function ActionIcon({
   });
 
   return (
-    <button
+    <Element
       {...others}
       className={cx(classes.actionIcon, classes[variant], className)}
       type="button"
       ref={elementRef}
     >
       {children}
-    </button>
+    </Element>
   );
 }
 
