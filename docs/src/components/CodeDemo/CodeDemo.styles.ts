@@ -27,8 +27,12 @@ export default createUseStyles(
 
     controls: {
       position: 'absolute',
-      bottom: theme.spacing.xs,
-      right: theme.spacing.xs,
+      bottom: theme.spacing.xs - 1,
+      right: theme.spacing.xs - 1,
+    },
+
+    withToggle: {
+      paddingRight: 50,
     },
   }),
   { theming }

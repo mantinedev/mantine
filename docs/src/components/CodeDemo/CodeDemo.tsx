@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import cx from 'clsx';
 import { Language } from 'prism-react-renderer';
 import { useMantineTheme, Paper, Group, ActionIcon, Tooltip } from '@mantine/core';
 import { CodeIcon, GitHubLogoIcon } from '@modulz/radix-icons';
@@ -35,7 +36,7 @@ export default function CodeDemo({
     <DocsSection>
       <Paper
         padding="md"
-        className={classes.demo}
+        className={cx(classes.demo, { [classes.withToggle]: toggle })}
         style={{
           backgroundColor:
             demoBackground || (theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white),
@@ -58,7 +59,6 @@ export default function CodeDemo({
                 gutter={8}
               >
                 <ActionIcon
-                  size="sm"
                   component="a"
                   href={githubLink}
                   variant={theme.colorScheme === 'dark' ? 'hover' : 'filled'}
@@ -77,11 +77,11 @@ export default function CodeDemo({
               withArrow
               arrowSize={4}
               gutter={8}
+              variant="filled"
             >
               <ActionIcon
                 variant={theme.colorScheme === 'dark' ? 'hover' : 'outline'}
                 onClick={() => setVisible((v) => !v)}
-                size="sm"
                 aria-label="Toggle code"
               >
                 <CodeIcon />

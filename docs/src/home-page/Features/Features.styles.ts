@@ -17,7 +17,7 @@ export default createUseStyles(
 
     item: {
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
       }`,
       margin: theme.spacing.md / 2,
       flex: `0 0 calc(50% - ${theme.spacing.md}px)`,

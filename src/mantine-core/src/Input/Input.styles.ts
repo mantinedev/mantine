@@ -62,7 +62,7 @@ export default createUseStyles(
         '&:focus': {
           outline: 'none',
           borderColor: `${
-            theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]
+            theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 6]
           } !important`,
         },
 

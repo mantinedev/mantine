@@ -10,14 +10,13 @@ import code from '!!raw-loader!../../../../../src/mantine-demos/src/ColorInput/C
 export function ColorInputDemo() {
   const theme = useMantineTheme();
   const [value, setValue] = useState('');
-  const colors = Object.keys(theme.colors).map((color) => theme.colors[color][6]);
+  const colors = Object.keys(theme.colors).map((color) => theme.colors[color][7]);
 
   return (
     <CodeDemo
       code={code}
       language="tsx"
       toggle
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]}
       githubLink="https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/ColorInput/ColorInput.tsx"
     >
       <div style={{ maxWidth: 359, margin: 'auto' }}>
@@ -27,6 +26,7 @@ export function ColorInputDemo() {
           placeholder="Pick color"
           value={value}
           onChange={setValue}
+          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
         />
       </div>
     </CodeDemo>
