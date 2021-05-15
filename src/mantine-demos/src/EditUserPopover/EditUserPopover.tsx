@@ -10,7 +10,7 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { useForm, useMediaQuery } from '@mantine/hooks';
-import { GearIcon } from '@modulz/radix-icons';
+import { Pencil2Icon } from '@modulz/radix-icons';
 
 interface UserEditFormProps {
   initialValues: { name: string; email: string };
@@ -78,7 +78,7 @@ function User({ name, email, className }: UserProps) {
           .join('')}
       </Avatar>
 
-      <div style={{ marginRight: 15 }}>
+      <div>
         <Text>{name}</Text>
         <Text size="xs" color="gray">
           {email}
@@ -109,7 +109,7 @@ export function EditUserPopover() {
             variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
             onClick={() => setOpened(true)}
           >
-            <GearIcon />
+            <Pencil2Icon />
           </ActionIcon>
         }
       >

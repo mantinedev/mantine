@@ -12,7 +12,7 @@ function Demo() {
     <Popover
       opened={opened}
       onClose={() => setOpened(false)}
-      position="top"
+      position="bottom"
       placement="center"
       withArrow
       noFocusTrap
@@ -27,7 +27,7 @@ function Demo() {
     >
       <div style={{ display: 'flex' }}>
         <Image
-          src="https://raw.githubusercontent.com/mantinedev/mantine/e630956424828b4103372d781cc64f0a54eebb33/docs/src/images/favicon.svg"
+          src="./logo.svg"
           width={30}
           height={30}
           style={{ minWidth: 30, marginRight: 15 }}
@@ -47,7 +47,7 @@ export function PopoverHoverDemo() {
         <Popover
           opened={opened}
           onClose={() => setOpened(false)}
-          position="top"
+          position="bottom"
           placement="center"
           withArrow
           noFocusTrap
