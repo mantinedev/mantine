@@ -21,6 +21,13 @@ export default createUseStyles(
       borderTopLeftRadius: 0,
       marginTop: 0,
     },
+
+    controls: {
+      position: 'absolute',
+      bottom: theme.spacing.xs,
+      right: theme.spacing.xs,
+      // backgroundColor: theme.colors.red[5],
+    },
   }),
   { theming }
 );

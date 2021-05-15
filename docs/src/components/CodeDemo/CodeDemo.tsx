@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Language } from 'prism-react-renderer';
-import { useMantineTheme, Paper, Button, Group } from '@mantine/core';
-import { GitHubLogoIcon } from '@modulz/radix-icons';
+import { useMantineTheme, Paper, Group, ActionIcon, Tooltip } from '@mantine/core';
+import { CodeIcon, GitHubLogoIcon } from '@modulz/radix-icons';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import DocsSection from '../DocsSection/DocsSection';
 import useStyles from './CodeDemo.styles';
@@ -46,21 +46,41 @@ export default function CodeDemo({
         {children}
 
         {toggle && (
-          <Group position="center" style={{ marginTop: 20 }}>
-            <Button variant="outline" onClick={() => setVisible((v) => !v)}>
-              {visible ? 'Hide' : 'Show'} code
-            </Button>
+          <Group position="center" direction="column" spacing={5} className={classes.controls}>
             {githubLink && (
-              <Button
-                component="a"
-                href={githubLink}
-                variant="outline"
-                color="gray"
-                leftIcon={<GitHubLogoIcon />}
+              <Tooltip
+                label="Source code"
+                position="left"
+                placement="center"
+                transition="fade"
+                withArrow
+                arrowSize={4}
+                gutter={8}
               >
-                View source on Github
-              </Button>
+                <ActionIcon size="sm" component="a" href={githubLink} variant="filled" color="dark">
+                  <GitHubLogoIcon />
+                </ActionIcon>
+              </Tooltip>
             )}
+
+            <Tooltip
+              label={`${visible ? 'Hide' : 'Show'} code`}
+              position="left"
+              placement="center"
+              transition="fade"
+              withArrow
+              arrowSize={4}
+              gutter={8}
+            >
+              <ActionIcon
+                variant="outline"
+                onClick={() => setVisible((v) => !v)}
+                size="sm"
+                aria-label="Toggle code"
+              >
+                <CodeIcon />
+              </ActionIcon>
+            </Tooltip>
           </Group>
         )}
       </Paper>
