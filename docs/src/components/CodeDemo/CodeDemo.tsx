@@ -38,7 +38,7 @@ export default function CodeDemo({
         className={classes.demo}
         style={{
           backgroundColor:
-            demoBackground || (theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white),
+            demoBackground || (theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white),
           borderColor: demoBorder ? undefined : 'transparent',
           zIndex,
         }}
@@ -57,7 +57,13 @@ export default function CodeDemo({
                 arrowSize={4}
                 gutter={8}
               >
-                <ActionIcon size="sm" component="a" href={githubLink} variant="filled" color="dark">
+                <ActionIcon
+                  size="sm"
+                  component="a"
+                  href={githubLink}
+                  variant={theme.colorScheme === 'dark' ? 'hover' : 'filled'}
+                  color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
+                >
                   <GitHubLogoIcon />
                 </ActionIcon>
               </Tooltip>
@@ -73,7 +79,7 @@ export default function CodeDemo({
               gutter={8}
             >
               <ActionIcon
-                variant="outline"
+                variant={theme.colorScheme === 'dark' ? 'hover' : 'outline'}
                 onClick={() => setVisible((v) => !v)}
                 size="sm"
                 aria-label="Toggle code"

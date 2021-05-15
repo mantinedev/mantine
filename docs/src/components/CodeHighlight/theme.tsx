@@ -4,7 +4,7 @@ import { DEFAULT_THEME } from '@mantine/core';
 export const darkTheme: PrismTheme = {
   plain: {
     color: DEFAULT_THEME.colors.gray[4],
-    backgroundColor: DEFAULT_THEME.colors.dark[9],
+    backgroundColor: DEFAULT_THEME.colors.dark[8],
   },
 
   styles: [
