@@ -109,12 +109,11 @@ export default createUseStyles(
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       textTransform: 'uppercase',
       fontWeight: 'bold',
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
-      border: `1px solid ${getThemeColor({
-        theme,
-        color,
-        shade: theme.colorScheme === 'dark' ? 4 : 8,
-      })}`,
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
+      border: `1px solid ${hexToRgba(
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
+        0.55
+      )}`,
 
       '&:not(:disabled):active': {
         transform: 'translateY(1px)',
@@ -135,9 +134,9 @@ export default createUseStyles(
       fontWeight: 'bold',
       backgroundColor: hexToRgba(
         getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
-        theme.colorScheme === 'dark' ? 0.45 : 1
+        theme.colorScheme === 'dark' ? 0.3 : 1
       ),
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 1 : 9 }),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
 
       '& $inner': {
         height: sizes[size].height - 2,
@@ -168,8 +167,14 @@ export default createUseStyles(
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       textTransform: 'uppercase',
       fontWeight: 'bold',
-      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
-      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}`,
+      backgroundColor: hexToRgba(
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 7 }),
+        theme.colorScheme === 'dark' ? 0.65 : 1
+      ),
+      textShadow:
+        theme.colorScheme === 'dark'
+          ? 'none'
+          : `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}`,
       color: theme.white,
 
       '& $inner': {
@@ -177,7 +182,10 @@ export default createUseStyles(
       },
 
       '&:hover': {
-        backgroundColor: getThemeColor({ theme, color, shade: 7 }),
+        backgroundColor: hexToRgba(
+          getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 7 }),
+          theme.colorScheme === 'dark' ? 0.95 : 1
+        ),
       },
 
       '&:not(:disabled):active': {
