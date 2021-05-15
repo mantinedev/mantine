@@ -62,9 +62,9 @@ export default createUseStyles(
         WebkitTapHighlightColor: 'transparent',
         position: 'relative',
         borderRadius,
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[2],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
         border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
         }`,
         height: getSizeValue({ size, sizes: switchHeight }),
         width: getSizeValue({ size, sizes: switchWidth }),

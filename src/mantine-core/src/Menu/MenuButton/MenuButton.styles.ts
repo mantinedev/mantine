@@ -34,11 +34,11 @@ export default createUseStyles(
       },
 
       '&$hovered:not(:disabled), &:not(:disabled):hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
 
         '&:not(:disabled):active': {
           backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
+            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
         },
       },
     }),
@@ -58,7 +58,7 @@ export default createUseStyles(
     icon: ({ theme }: MenuButtonStylesProps) => ({
       marginRight: theme.spacing.xs,
 
-      '& > *': {
+      '& *': {
         display: 'block',
       },
     }),

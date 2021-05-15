@@ -20,6 +20,8 @@ interface UserEditFormProps {
 
 function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) {
   const isMobile = useMediaQuery('(max-width: 755px');
+  const theme = useMantineTheme();
+  const inputVariant = theme.colorScheme === 'dark' ? 'filled' : 'default';
 
   const form = useForm({
     initialValues,
@@ -39,6 +41,8 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         value={form.values.name}
         onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
         error={form.errors.name}
+        variant={inputVariant}
+        inputStyle={{ backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }}
       />
 
       <TextInput
@@ -49,13 +53,17 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         value={form.values.email}
         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
         error={form.errors.email}
+        variant={inputVariant}
+        inputStyle={{ backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }}
       />
 
       <Group position="apart" style={{ marginTop: 15 }}>
         <Button variant="link" color="gray" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit">Save</Button>
+        <Button type="submit" size="sm" variant={theme.colorScheme === 'dark' ? 'light' : 'filled'}>
+          Save
+        </Button>
       </Group>
     </form>
   );

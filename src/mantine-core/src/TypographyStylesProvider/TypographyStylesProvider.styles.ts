@@ -75,8 +75,10 @@ export default createUseStyles(
           marginBottom: theme.spacing.md,
           overflowX: 'auto',
           fontFamily: theme.fontFamilyMonospace,
+          fontSize: theme.fontSizes.sm,
+          borderRadius: theme.radius.sm,
           backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
+            theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
         },
 
         '& code': {
@@ -155,7 +157,7 @@ export default createUseStyles(
           borderBottomRightRadius: theme.radius.sm,
           padding: [theme.spacing.md, theme.spacing.lg],
           backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
+            theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
           borderLeft: `3px solid ${getThemeColor({
             theme,

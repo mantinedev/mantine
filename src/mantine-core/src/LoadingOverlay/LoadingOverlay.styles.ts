@@ -11,6 +11,7 @@ export default createUseStyles(
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      overflow: 'hidden',
     },
   },
   { link: true }

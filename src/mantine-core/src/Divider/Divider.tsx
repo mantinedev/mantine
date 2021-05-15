@@ -7,7 +7,7 @@ import { Text } from '../Text/Text';
 export const DIVIDER_SIZES = sizes;
 
 export interface DividerProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
-  /** Line color from theme */
+  /** Line color from theme, defaults to gray in light color scheme and to dark in dark color scheme */
   color?: string;
 
   /** Line orientation */
@@ -33,7 +33,7 @@ export interface DividerProps extends DefaultProps, React.ComponentPropsWithoutR
 }
 
 export function Divider({
-  color = 'gray',
+  color,
   className,
   orientation = 'horizontal',
   size = 'xs',
@@ -45,10 +45,12 @@ export function Divider({
   margins = 0,
   ...others
 }: DividerProps) {
+  const theme = useMantineTheme(themeOverride);
+  const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
   const classes = useStyles({
-    theme: useMantineTheme(themeOverride),
+    color: _color,
+    theme,
     margins,
-    color,
     size,
     variant,
   });
@@ -69,8 +71,8 @@ export function Divider({
       {!!label && orientation === 'horizontal' && (
         <Text
           data-mantine-label
-          color={color}
           {...labelProps}
+          color={_color}
           size={labelProps?.size || 'xs'}
           style={{ marginTop: 2 }}
           className={cx(classes.label, classes[labelPosition])}

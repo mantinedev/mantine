@@ -39,18 +39,28 @@ export default createUseStyles(
     label: ({ theme, color, variant }: DividerStylesProps) => ({
       display: 'flex',
       alignItems: 'center',
+      color: color === 'dark' ? theme.colors.dark[1] : getThemeColor({ theme, color, shade: 6 }),
 
       '&::before': {
         content: '""',
         flex: 1,
         height: 1,
-        borderTop: `1px ${variant} ${getThemeColor({ theme, color, shade: 4 })}`,
+        borderTop: `1px ${variant} ${getThemeColor({
+          theme,
+          color,
+          shade: theme.colorScheme === 'dark' ? 3 : 4,
+        })}`,
         marginRight: theme.spacing.xs,
       },
+
       '&::after': {
         content: '""',
         flex: 1,
-        borderTop: `1px ${variant} ${getThemeColor({ theme, color, shade: 4 })}`,
+        borderTop: `1px ${variant} ${getThemeColor({
+          theme,
+          color,
+          shade: theme.colorScheme === 'dark' ? 3 : 4,
+        })}`,
         marginLeft: theme.spacing.xs,
       },
     }),
@@ -58,7 +68,7 @@ export default createUseStyles(
     horizontal: ({ theme, size, variant, color, margins }: DividerStylesProps) => ({
       border: 0,
       borderTopWidth: getSizeValue({ size, sizes }),
-      borderTopColor: getThemeColor({ theme, color, shade: 4 }),
+      borderTopColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 4 }),
       borderTopStyle: variant,
       margin: 0,
       marginTop: getSizeValue({ size: margins, sizes: theme.spacing }),

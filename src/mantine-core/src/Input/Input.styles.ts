@@ -21,7 +21,8 @@ export default createUseStyles(
       '& $input': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
         minHeight: 36,
-        padding: [7, theme.spacing.sm],
+        paddingLeft: theme.spacing.md,
+        paddingRight: theme.spacing.md,
         borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
         border: `1px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]

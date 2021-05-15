@@ -44,7 +44,7 @@ export function Highlight<T extends React.ElementType = 'div'>({
   const color = getThemeColor({
     theme,
     color: highlightColor,
-    shade: 2,
+    shade: theme.colorScheme === 'dark' ? 4 : 2,
   });
 
   const { start, end, highlighted } = highlighter(children, highlight);
