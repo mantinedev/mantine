@@ -37,7 +37,7 @@ export function TodoList() {
           <Checkbox
             size="xl"
             checked={item.completed}
-            color="gray"
+            color="blue"
             onChange={(event) => {
               handlers.setItemProp(index, 'completed', event.currentTarget.checked);
               if (event.currentTarget.checked) {
@@ -51,6 +51,7 @@ export function TodoList() {
             placeholder="Your evil plan part"
             value={item.value}
             onChange={(event) => handlers.setItemProp(index, 'value', event.currentTarget.value)}
+            variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
             inputStyle={{
               textDecoration: item.completed && 'line-through',
               color: item.completed && theme.colors.gray[5],

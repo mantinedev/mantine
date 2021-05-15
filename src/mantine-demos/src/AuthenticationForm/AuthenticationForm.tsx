@@ -17,9 +17,15 @@ export interface AuthenticationFormProps {
   noShadow?: boolean;
   noPadding?: boolean;
   noSubmit?: boolean;
+  style?: React.CSSProperties;
 }
 
-export function AuthenticationForm({ noShadow, noPadding, noSubmit }: AuthenticationFormProps) {
+export function AuthenticationForm({
+  noShadow,
+  noPadding,
+  noSubmit,
+  style,
+}: AuthenticationFormProps) {
   const [formType, setFormType] = useState<'register' | 'login'>('register');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>(null);
@@ -69,6 +75,7 @@ export function AuthenticationForm({ noShadow, noPadding, noSubmit }: Authentica
         position: 'relative',
         overflow: 'hidden',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        ...style,
       }}
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>

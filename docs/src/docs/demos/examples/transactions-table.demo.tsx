@@ -14,7 +14,7 @@ export function TransitionsTableDemo() {
       code={code}
       language="tsx"
       toggle
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]}
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
       githubLink="https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/TransactionsTable/TransactionsTable.tsx"
     >
       <div style={{ maxWidth: 700, margin: 'auto' }}>
