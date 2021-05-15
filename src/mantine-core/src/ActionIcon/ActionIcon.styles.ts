@@ -67,7 +67,7 @@ export default createUseStyles(
     }),
 
     hover: ({ theme, color }: ActionIconStylesProps) => ({
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
       backgroundColor: 'transparent',
 
       '&:not(:disabled):hover': {
@@ -79,7 +79,7 @@ export default createUseStyles(
     }),
 
     transparent: ({ theme, color }: ActionIconStylesProps) => ({
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
       backgroundColor: 'transparent',
     }),
 
