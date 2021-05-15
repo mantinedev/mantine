@@ -8,6 +8,7 @@ import {
   getFocusStyles,
   getThemeColor,
   MantineSizes,
+  hexToRgba,
 } from '@mantine/theme';
 
 interface ButtonStylesProps {
@@ -132,22 +133,21 @@ export default createUseStyles(
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       textTransform: 'uppercase',
       fontWeight: 'bold',
-      backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 0 }),
-      color:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[9]
-          : getThemeColor({ theme, color, shade: 9 }),
+      backgroundColor: hexToRgba(
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+        theme.colorScheme === 'dark' ? 0.45 : 1
+      ),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 1 : 9 }),
 
       '& $inner': {
         height: sizes[size].height - 2,
       },
 
       '&:hover': {
-        backgroundColor: getThemeColor({
-          theme,
-          color,
-          shade: theme.colorScheme === 'dark' ? 5 : 1,
-        }),
+        backgroundColor: hexToRgba(
+          getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
+          theme.colorScheme === 'dark' ? 0.65 : 1
+        ),
       },
 
       '&:not(:disabled):active': {
