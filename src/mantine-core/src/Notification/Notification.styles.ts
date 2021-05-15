@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { MantineTheme, getThemeColor } from '@mantine/theme';
+import { MantineTheme, getThemeColor, hexToRgba } from '@mantine/theme';
 
 interface NotificationStyles {
   color: string;
@@ -41,11 +41,18 @@ export default createUseStyles(
         bottom: 4,
         left: 4,
         borderRadius: 4,
-        backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+        backgroundColor: getThemeColor({
+          theme,
+          color,
+          shade: theme.colorScheme === 'dark' ? 7 : 6,
+        }),
       },
 
       '& $icon': {
-        backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+        backgroundColor: hexToRgba(
+          getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 7 : 6 }),
+          theme.colorScheme === 'dark' ? 0.7 : 1
+        ),
         color: theme.white,
       },
     }),
