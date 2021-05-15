@@ -15,11 +15,13 @@ function Wrapper(
       transitionDuration={0}
       bodyStyle={{ minWidth: 140, textAlign: 'center', pointerEvents: 'none' }}
       spacing="xs"
+      noFocusTrap
+      noClickOutside
+      noEscape
       target={
         <Badge
           variant="light"
           color="blue"
-          size="xl"
           onMouseEnter={() => setOpened(true)}
           onMouseLeave={() => setOpened(false)}
         >
@@ -42,7 +44,7 @@ export function PopoverPositionsDemo() {
     ));
 
     return (
-      <Group key={position} position="center" style={{ marginTop: index !== 0 && 10 }}>
+      <Group key={position} position="center" style={{ marginTop: index !== 0 && 5 }}>
         {placements}
       </Group>
     );
