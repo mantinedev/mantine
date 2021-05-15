@@ -27,11 +27,13 @@ const CustomComponent = ({
 );
 
 const getThemes = (props?: any) =>
-  Object.keys(DEFAULT_THEME.colors).map((color) => (
-    <Badge key={color} color={color} {...props}>
-      {color}
-    </Badge>
-  ));
+  Object.keys(DEFAULT_THEME.colors)
+    .filter((color) => color !== 'dark')
+    .map((color) => (
+      <Badge key={color} color={color} {...props}>
+        {color}
+      </Badge>
+    ));
 
 storiesOf('@mantine/core/Badge', module)
   .add('Themes', () => (

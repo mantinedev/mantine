@@ -7,6 +7,7 @@ import {
   getThemeColor,
   getFocusStyles,
   getSizeValue,
+  hexToRgba,
 } from '@mantine/theme';
 
 interface BadgeStylesProps {
@@ -89,23 +90,29 @@ export default createUseStyles(
     },
 
     light: ({ theme, color }: BadgeStylesProps) => ({
-      backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 0 }),
-      color:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[9]
-          : getThemeColor({ theme, color, shade: 9 }),
+      backgroundColor: hexToRgba(
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
+        0.5
+      ),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 0 : 9 }),
     }),
 
     filled: ({ theme, color }: BadgeStylesProps) => ({
-      backgroundColor: getThemeColor({ theme, color, shade: 7 }),
+      backgroundColor: hexToRgba(
+        getThemeColor({ theme, color, shade: 7 }),
+        theme.colorScheme === 'dark' ? 0.7 : 1
+      ),
       color: theme.white,
       textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
     }),
 
     outline: ({ theme, color }: BadgeStylesProps) => ({
       backgroundColor: 'transparent',
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
-      borderColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
+      borderColor: hexToRgba(
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
+        theme.colorScheme === 'dark' ? 0.55 : 0.55
+      ),
     }),
   },
   { link: true }
