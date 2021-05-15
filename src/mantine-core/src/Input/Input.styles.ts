@@ -19,7 +19,7 @@ export default createUseStyles(
 
     defaultVariant: ({ theme, radius }: InputStylesProps) => ({
       '& $input': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
         minHeight: 36,
         padding: [7, theme.spacing.sm],
         borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
@@ -31,7 +31,7 @@ export default createUseStyles(
 
         '&:focus': {
           outline: 'none',
-          borderColor: theme.colors[theme.primaryColor][6],
+          borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 6],
         },
       },
 
@@ -55,7 +55,7 @@ export default createUseStyles(
         paddingRight: theme.spacing.md,
         borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
         border: '1px solid transparent',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[1],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
         '&:focus': {
@@ -152,7 +152,7 @@ export default createUseStyles(
       left: 0,
       top: 0,
       bottom: 0,
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
