@@ -9,10 +9,18 @@ export default function MdxTitle({
   ...others
 }: React.ComponentPropsWithoutRef<typeof Title>) {
   const classes = useStyles();
+  if (order === 1) {
+    return (
+      <Title className={classes.title} style={{ fontWeight: 800, fontSize: 38, marginTop: 40 }}>
+        {children}
+      </Title>
+    );
+  }
+
   return (
     <>
       <div id={id} />
-      <Title order={order} className={classes.title} {...others}>
+      <Title order={order} className={classes.title} style={{ fontWeight: 600 }} {...others}>
         <a className={classes.link} href={`#${id}`}>
           {children}
         </a>
