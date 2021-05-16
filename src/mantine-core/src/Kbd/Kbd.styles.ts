@@ -19,7 +19,9 @@ export default createUseStyles(
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[3]
       }`,
-      borderBottomWidth: 3,
+      borderBottom: `3px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[3]
+      }`,
     }),
   },
   { link: true }
