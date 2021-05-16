@@ -19,6 +19,7 @@ export default createUseStyles(
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
       }`,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       margin: theme.spacing.md / 2,
       flex: `0 0 calc(50% - ${theme.spacing.md}px)`,
     },
