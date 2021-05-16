@@ -15,6 +15,7 @@ export default createUseStyles(
 
       return {
         position: 'relative',
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
 
         '& [data-mantine-image]': {
           width: `calc(100% + ${spacing * 2}px) !important`,
