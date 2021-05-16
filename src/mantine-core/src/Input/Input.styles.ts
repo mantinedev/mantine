@@ -79,7 +79,7 @@ export default createUseStyles(
 
       '&$invalid $input': {
         borderColor: theme.colorScheme === 'dark' ? theme.colors.red[4] : 'transparent',
-        backgroundColor: theme.colorScheme !== 'dark' && theme.colors.red[0],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.red[0],
       },
 
       '& $withIcon': {
