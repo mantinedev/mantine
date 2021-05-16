@@ -6,18 +6,15 @@ interface SpoilerStylesProps {
   transitionDuration: number;
 }
 
-export default createUseStyles(
-  {
-    spoiler: {
-      position: 'relative',
-    },
-
-    content: ({ transitionDuration }: SpoilerStylesProps) => ({
-      overflow: 'hidden',
-      transitionProperty: 'max-height',
-      transitionTimingFunction: 'ease',
-      transitionDuration: transitionDuration || 0,
-    }),
+export default createUseStyles({
+  spoiler: {
+    position: 'relative',
   },
-  { link: true }
-);
+
+  content: ({ transitionDuration }: SpoilerStylesProps) => ({
+    overflow: 'hidden',
+    transitionProperty: 'max-height',
+    transitionTimingFunction: 'ease',
+    transitionDuration: transitionDuration || 0,
+  }),
+});

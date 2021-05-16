@@ -8,82 +8,78 @@ interface NumberInputStylesProps {
 
 export const CONTROL_WIDTH = 24;
 
-export default createUseStyles(
-  {
-    rightSection: {
-      display: 'flex',
-      flexDirection: 'column',
-      height: 'calc(100% - 2px)',
-      margin: 1,
-      marginRight: 1,
+export default createUseStyles({
+  rightSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: 'calc(100% - 2px)',
+    margin: 1,
+    marginRight: 1,
+  },
+
+  control: ({ theme }: NumberInputStylesProps) => ({
+    position: 'relative',
+    flex: '0 0 50%',
+    boxSizing: 'border-box',
+    width: CONTROL_WIDTH,
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+    }`,
+    borderTop: 0,
+    borderRight: 0,
+    backgroundColor: 'transparent',
+    marginRight: 1,
+
+    '&:not(:disabled):hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     },
 
-    control: ({ theme }: NumberInputStylesProps) => ({
-      position: 'relative',
-      flex: '0 0 50%',
-      boxSizing: 'border-box',
-      width: CONTROL_WIDTH,
-      border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
-      }`,
-      borderTop: 0,
-      borderRight: 0,
-      backgroundColor: 'transparent',
-      marginRight: 1,
+    '&::after': {
+      position: 'absolute',
+      top: 'calc(50% - 2.5px)',
+      left: 'calc(50% - 4.5px)',
+      content: '""',
+      display: 'block',
+      width: 0,
+      height: 0,
+      borderStyle: 'solid',
+    },
+  }),
 
-      '&:not(:disabled):hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-      },
+  controlUp: ({ theme, radius }: NumberInputStylesProps) => ({
+    borderTopRightRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
 
-      '&::after': {
-        position: 'absolute',
-        top: 'calc(50% - 2.5px)',
-        left: 'calc(50% - 4.5px)',
-        content: '""',
-        display: 'block',
-        width: 0,
-        height: 0,
-        borderStyle: 'solid',
-      },
-    }),
+    '&::after': {
+      borderWidth: [0, 5, 5, 5],
+      borderColor: [
+        'transparent',
+        'transparent',
+        theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        'transparent',
+      ],
+    },
 
-    controlUp: ({ theme, radius }: NumberInputStylesProps) => ({
-      borderTopRightRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
+    '&:disabled::after': {
+      borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
+    },
+  }),
 
-      '&::after': {
-        borderWidth: [0, 5, 5, 5],
-        borderColor: [
-          'transparent',
-          'transparent',
-          theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-          'transparent',
-        ],
-      },
+  controlDown: ({ theme, radius }: NumberInputStylesProps) => ({
+    borderBottomRightRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
+    borderBottom: 0,
 
-      '&:disabled::after': {
-        borderBottomColor:
-          theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
-      },
-    }),
+    '&::after': {
+      borderWidth: [5, 5, 0, 5],
+      borderColor: [
+        theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        'transparent',
+        'transparent',
+        'transparent',
+      ],
+    },
 
-    controlDown: ({ theme, radius }: NumberInputStylesProps) => ({
-      borderBottomRightRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
-      borderBottom: 0,
-
-      '&::after': {
-        borderWidth: [5, 5, 0, 5],
-        borderColor: [
-          theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-          'transparent',
-          'transparent',
-          'transparent',
-        ],
-      },
-
-      '&:disabled::after': {
-        borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
-      },
-    }),
-  },
-  { link: true }
-);
+    '&:disabled::after': {
+      borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
+    },
+  }),
+});
