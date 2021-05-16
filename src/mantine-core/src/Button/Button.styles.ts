@@ -111,8 +111,8 @@ export default createUseStyles(
       fontWeight: 'bold',
       color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
       border: `1px solid ${hexToRgba(
-        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
-        0.55
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 4 }),
+        theme.colorScheme === 'dark' ? 0.45 : 1
       )}`,
 
       '&:not(:disabled):active': {

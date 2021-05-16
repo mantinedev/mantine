@@ -11,11 +11,6 @@ interface PageHeaderProps {
 
 export default function PageHeader(props: PageHeaderProps) {
   const theme = useMantineTheme();
-  const styles = {
-    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3],
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
-  };
 
   return (
     <Group style={{ marginTop: theme.spacing.xs, marginBottom: theme.spacing.md }}>
@@ -25,7 +20,6 @@ export default function PageHeader(props: PageHeaderProps) {
         color="gray"
         target="_blank"
         href={`https://github.com/mantinedev/mantine/blob/master/docs/src/docs/${props.docs}`}
-        style={styles}
         title="Edit this page on Github"
       >
         Edit this page
@@ -39,7 +33,6 @@ export default function PageHeader(props: PageHeaderProps) {
         target="_blank"
         rel="noopener noreferrer"
         href={`https://github.com/mantinedev/mantine/blob/master/src/${props.source}`}
-        style={styles}
         title="Browse source page on Github"
       >
         Source code
@@ -56,8 +49,7 @@ export default function PageHeader(props: PageHeaderProps) {
         title="Open package page on npm"
         style={{
           textTransform: 'lowercase',
-          fontFamily: 'Menlo, Monaco, Lucida Console, monospace',
-          ...styles,
+          fontFamily: theme.fontFamilyMonospace,
         }}
       >
         {props.package}
