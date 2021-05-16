@@ -109,7 +109,7 @@ export default createUseStyles(
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       textTransform: 'uppercase',
       fontWeight: 'bold',
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
       border: `1px solid ${hexToRgba(
         getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 4 }),
         theme.colorScheme === 'dark' ? 0.45 : 1

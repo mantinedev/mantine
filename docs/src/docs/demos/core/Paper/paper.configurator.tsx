@@ -30,7 +30,7 @@ export function PaperConfigurator() {
     <Configurator
       component={PaperWrapper}
       codeTemplate={codeTemplate}
-      previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
+      previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]}
       props={[
         { name: 'padding', type: 'size', initialValue: 'md', defaultValue: 0 },
         { name: 'shadow', type: 'size', initialValue: 'xs', defaultValue: 'none' },

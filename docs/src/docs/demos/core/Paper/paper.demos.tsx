@@ -39,7 +39,7 @@ export function PaperShadowDemo() {
     <CodeDemo
       code={code}
       language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]}
     >
       <div style={{ width: 260, margin: 'auto', padding: 40 }}>
         <Paper shadow="xs" padding="md">
