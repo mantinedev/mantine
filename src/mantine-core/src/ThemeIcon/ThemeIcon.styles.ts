@@ -1,5 +1,5 @@
-import { createUseStyles } from 'react-jss';
 import {
+  createMemoStyles,
   MantineTheme,
   MantineNumberSize,
   getSizeValue,
@@ -22,7 +22,7 @@ export const sizes = {
   xl: 40,
 };
 
-export default createUseStyles({
+export default createMemoStyles({
   light: ({ theme, color }: ThemeIconStylesProps) => ({
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
     backgroundColor: hexToRgba(

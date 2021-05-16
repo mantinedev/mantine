@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, getThemeColor, hexToRgba } from '@mantine/theme';
 
 interface NotificationStyles {
@@ -7,7 +7,7 @@ interface NotificationStyles {
   disallowClose: boolean;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   withIcon: {
     paddingLeft: '10px !important',
 

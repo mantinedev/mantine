@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import {
   MantineTheme,
   MantineSize,
@@ -61,7 +61,7 @@ const getWidthStyles = (fullWidth: boolean) => ({
   width: fullWidth ? '100%' : 'auto',
 });
 
-export default createUseStyles({
+export default createMemoStyles({
   icon: {
     display: 'flex',
     alignItems: 'center',

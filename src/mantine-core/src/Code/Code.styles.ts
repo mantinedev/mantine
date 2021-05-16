@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, getThemeColor, getFontStyles } from '@mantine/theme';
 
 interface CodeStylesProps {
@@ -6,7 +6,7 @@ interface CodeStylesProps {
   color: string;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   code: ({ theme, color }: CodeStylesProps) => ({
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,

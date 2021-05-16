@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import {
   MantineTheme,
   getSizeValue,
@@ -22,7 +22,7 @@ interface AvatarStylesProps {
   color: string;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   avatar: ({ size, radius, theme }: AvatarStylesProps) => ({
     boxSizing: 'border-box',
     position: 'relative',

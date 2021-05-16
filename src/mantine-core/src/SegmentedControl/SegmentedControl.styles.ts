@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import {
   MantineTheme,
   MantineNumberSize,
@@ -30,7 +30,7 @@ const sizes = {
   xl: [12, 20],
 };
 
-export default createUseStyles({
+export default createMemoStyles({
   input: ({ theme }: SegmentedControlStyles) => ({
     height: 0,
     width: 0,

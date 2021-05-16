@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 interface RadioGroupStylesProps {
@@ -7,7 +7,7 @@ interface RadioGroupStylesProps {
   variant: 'vertical' | 'horizontal';
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   wrapper: ({ theme, spacing, variant }: RadioGroupStylesProps) => ({
     display: 'flex',
     flexWrap: 'wrap',

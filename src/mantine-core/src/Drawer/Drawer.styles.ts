@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, getSizeValue } from '@mantine/theme';
 import React from 'react';
 
@@ -44,7 +44,7 @@ function getPositionStyles({
   }
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   noOverlay: {},
 
   wrapper: {

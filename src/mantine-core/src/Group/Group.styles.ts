@@ -1,5 +1,4 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 export type GroupPosition = 'right' | 'center' | 'left' | 'apart';
 
@@ -19,7 +18,7 @@ const POSITIONS = {
   apart: 'space-between',
 };
 
-export default createUseStyles({
+export default createMemoStyles({
   group: ({ spacing, position, noWrap, direction, theme, grow }: GroupStylesProps) => ({
     display: 'flex',
     flexDirection: direction,

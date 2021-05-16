@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, getThemeColor, getFontStyles } from '@mantine/theme';
 
 interface TooltipStylesProps {
@@ -38,7 +38,7 @@ const horizontalPlacement = {
   },
 };
 
-export default createUseStyles({
+export default createMemoStyles({
   withArrow: {},
   center: {},
   start: {},

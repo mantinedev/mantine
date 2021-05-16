@@ -1,12 +1,12 @@
 import { MantineTheme, getFontStyles, getThemeColor } from '@mantine/theme';
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 
 interface MenuButtonStylesProps {
   theme: MantineTheme;
   color: string;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   hovered: {},
 
   item: ({ theme, color }: MenuButtonStylesProps) => ({

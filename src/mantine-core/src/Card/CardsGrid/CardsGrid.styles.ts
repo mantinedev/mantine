@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineNumberSize, MantineTheme, getSizeValue } from '@mantine/theme';
 
 interface CardsGridStyles {
@@ -8,7 +8,7 @@ interface CardsGridStyles {
   grow: boolean;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   grid: ({ theme, gutter, cardsPerRow, grow }: CardsGridStyles) => {
     const gutterSize = getSizeValue({ size: gutter, sizes: theme.spacing });
 

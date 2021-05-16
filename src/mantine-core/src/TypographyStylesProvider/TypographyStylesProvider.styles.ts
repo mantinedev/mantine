@@ -1,11 +1,11 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, getFontStyles, getThemeColor, getFocusStyles } from '@mantine/theme';
 
 interface InnerHtmlStylesProps {
   theme: MantineTheme;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   innerHtml: ({ theme }: InnerHtmlStylesProps) => {
     const headings = Object.keys(theme.headings.sizes).reduce((acc, h) => {
       acc[`& ${h}`] = {

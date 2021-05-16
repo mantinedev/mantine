@@ -1,11 +1,11 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme } from '@mantine/theme';
 
 interface KbdStylesProps {
   theme: MantineTheme;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   kbd: ({ theme }: KbdStylesProps) => ({
     lineHeight: theme.lineHeight,
     fontFamily: theme.fontFamilyMonospace,

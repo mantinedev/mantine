@@ -7,6 +7,7 @@ export type {
   MantineSizes,
 } from './types';
 
+export { createMemoStyles } from './create-memo-styles';
 export { getThemeColor } from './utils/get-theme-color/get-theme-color';
 export { getFocusStyles } from './utils/get-focus-styles/get-focus-styles';
 export { getFontStyles } from './utils/get-font-styles/get-font-styles';

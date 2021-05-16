@@ -1,7 +1,6 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFocusStyles } from '@mantine/core';
+import { MantineTheme, getFocusStyles, createMemoStyles } from '@mantine/core';
 
-export default createUseStyles({
+export default createMemoStyles({
   item: {
     position: 'relative',
   },

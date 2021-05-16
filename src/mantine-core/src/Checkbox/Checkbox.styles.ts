@@ -1,5 +1,5 @@
-import { createUseStyles } from 'react-jss';
 import {
+  createMemoStyles,
   MantineTheme,
   MantineSize,
   getFontStyles,
@@ -22,7 +22,7 @@ interface CheckboxStylesProps {
   color: string;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   wrapper: {
     display: 'flex',
     alignItems: 'center',

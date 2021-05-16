@@ -1,5 +1,4 @@
-import { createUseStyles } from 'react-jss';
-import { getSizeValue, MantineNumberSize, MantineTheme } from '@mantine/theme';
+import { createMemoStyles, getSizeValue, MantineNumberSize, MantineTheme } from '@mantine/theme';
 
 interface MenuStylesProps {
   theme: MantineTheme;
@@ -14,7 +13,7 @@ export const sizes = {
   xl: 300,
 };
 
-export default createUseStyles({
+export default createMemoStyles({
   menu: ({ theme, size }: MenuStylesProps) => ({
     position: 'absolute',
     width: getSizeValue({ size, sizes }),

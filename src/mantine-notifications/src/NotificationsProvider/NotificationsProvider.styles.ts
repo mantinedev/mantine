@@ -1,11 +1,10 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme } from '@mantine/core';
+import { MantineTheme, createMemoStyles } from '@mantine/core';
 
 interface NotificationProviderStyles {
   theme: MantineTheme;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   notifications: ({ theme }: NotificationProviderStyles) => ({
     width: `calc(100% - ${theme.spacing.md * 2}px)`,
     boxSizing: 'border-box',

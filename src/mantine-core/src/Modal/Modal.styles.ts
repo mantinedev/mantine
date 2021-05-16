@@ -1,5 +1,4 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, getSizeValue } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, getSizeValue } from '@mantine/theme';
 
 export const sizes = {
   xs: 320,
@@ -16,7 +15,7 @@ interface ModalStylesProps {
   size: string | number;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   wrapper: {
     position: 'fixed',
     top: 0,

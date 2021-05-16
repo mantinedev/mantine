@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, getFontStyles, getThemeColor } from '@mantine/theme';
 
 interface BlockquoteStylesProps {
@@ -6,7 +6,7 @@ interface BlockquoteStylesProps {
   color: string;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   blockquote: ({ theme, color }: BlockquoteStylesProps) => ({
     ...getFontStyles(theme),
     fontSize: theme.fontSizes.lg,

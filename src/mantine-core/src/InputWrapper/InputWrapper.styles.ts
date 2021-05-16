@@ -1,11 +1,10 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, getFontStyles } from '@mantine/theme';
 
 interface InputWrapperStylesProps {
   theme: MantineTheme;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   inputWrapper: ({ theme }: InputWrapperStylesProps) => ({
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,

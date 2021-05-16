@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, getThemeColor, getFontStyles } from '@mantine/theme';
 
 interface AlertStylesProps {
@@ -8,7 +8,7 @@ interface AlertStylesProps {
 
 const LINE_WIDTH = 4;
 
-export default createUseStyles({
+export default createMemoStyles({
   alert: ({ color, theme }: AlertStylesProps) => ({
     position: 'relative',
     padding: [theme.spacing.xs, theme.spacing.md],

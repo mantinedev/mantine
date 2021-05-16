@@ -1,5 +1,5 @@
-import { createUseStyles } from 'react-jss';
 import {
+  createMemoStyles,
   MantineTheme,
   MantineNumberSize,
   getFontStyles,
@@ -46,7 +46,7 @@ export const sizes = Object.keys(switchHeight).reduce((acc, size) => {
   return acc;
 }, {} as Record<MantineSize, { width: number; height: number }>);
 
-export default createUseStyles({
+export default createMemoStyles({
   wrapper: {
     display: 'flex',
     alignItems: 'center',

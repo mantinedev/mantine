@@ -1,11 +1,10 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme } from '@mantine/theme';
+import { createMemoStyles, MantineTheme } from '@mantine/theme';
 
 interface BreadcrumbsStylesProps {
   theme: MantineTheme;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   breadcrumbs: {
     display: 'flex',
   },

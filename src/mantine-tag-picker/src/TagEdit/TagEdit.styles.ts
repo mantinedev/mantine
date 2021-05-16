@@ -1,7 +1,12 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles, getFocusStyles, hexToRgba } from '@mantine/core';
+import {
+  MantineTheme,
+  getFontStyles,
+  getFocusStyles,
+  hexToRgba,
+  createMemoStyles,
+} from '@mantine/core';
 
-export default createUseStyles({
+export default createMemoStyles({
   tagEdit: ({ theme }: { theme: MantineTheme }) => ({
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]

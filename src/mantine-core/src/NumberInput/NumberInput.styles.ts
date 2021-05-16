@@ -1,5 +1,4 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 interface NumberInputStylesProps {
   theme: MantineTheme;
@@ -8,7 +7,7 @@ interface NumberInputStylesProps {
 
 export const CONTROL_WIDTH = 24;
 
-export default createUseStyles({
+export default createMemoStyles({
   rightSection: {
     display: 'flex',
     flexDirection: 'column',

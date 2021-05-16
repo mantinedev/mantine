@@ -1,5 +1,10 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, MantineSize, getFocusStyles, getFontStyles } from '@mantine/theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  MantineSize,
+  getFocusStyles,
+  getFontStyles,
+} from '@mantine/theme';
 
 export type TextVariant = 'text' | 'link';
 
@@ -10,7 +15,7 @@ interface TextStylesProps {
   size: MantineSize;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   text: ({ theme, color, variant, size }: TextStylesProps) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),

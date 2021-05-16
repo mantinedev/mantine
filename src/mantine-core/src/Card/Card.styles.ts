@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 interface CardStylesProps {
@@ -7,7 +7,7 @@ interface CardStylesProps {
   padding: MantineNumberSize;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   card: ({ theme, radius, padding }: CardStylesProps) => {
     const spacing = getSizeValue({ size: padding, sizes: theme.spacing });
     const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });

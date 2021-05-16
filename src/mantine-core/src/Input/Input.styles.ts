@@ -1,12 +1,17 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, MantineNumberSize, getFontStyles, getSizeValue } from '@mantine/theme';
+import {
+  MantineTheme,
+  MantineNumberSize,
+  getFontStyles,
+  getSizeValue,
+  createMemoStyles,
+} from '@mantine/theme';
 
 interface InputStylesProps {
   theme: MantineTheme;
   radius: MantineNumberSize;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   withIcon: {},
 
   inputWrapper: ({ radius, theme }: InputStylesProps) => ({

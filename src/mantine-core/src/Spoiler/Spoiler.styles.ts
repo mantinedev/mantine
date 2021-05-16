@@ -1,12 +1,11 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme } from '@mantine/theme';
+import { createMemoStyles, MantineTheme } from '@mantine/theme';
 
 interface SpoilerStylesProps {
   theme: MantineTheme;
   transitionDuration: number;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   spoiler: {
     position: 'relative',
   },

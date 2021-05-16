@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, MantineNumberSize, getSizeValue, getFontStyles } from '@mantine/theme';
 
 interface ImageStylesProps {
@@ -6,7 +6,7 @@ interface ImageStylesProps {
   radius: MantineNumberSize;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   wrapper: {
     position: 'relative',
     overflow: 'hidden',

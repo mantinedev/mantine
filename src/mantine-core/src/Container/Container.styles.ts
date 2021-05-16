@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 interface ContainerStylesProps {
@@ -16,7 +16,7 @@ export const sizes = {
   xl: 1370,
 };
 
-export default createUseStyles({
+export default createMemoStyles({
   container: ({ fluid, size, padding, theme }: ContainerStylesProps) => ({
     maxWidth: fluid ? '100%' : getSizeValue({ size, sizes }),
     marginLeft: 'auto',

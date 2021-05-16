@@ -1,11 +1,10 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles } from '@mantine/core';
+import { MantineTheme, getFontStyles, createMemoStyles } from '@mantine/core';
 
 interface TagPickerStyles {
   theme: MantineTheme;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   tagsList: ({ theme }: TagPickerStyles) => ({
     paddingTop: theme.spacing.xs,
     paddingBottom: theme.spacing.xs,

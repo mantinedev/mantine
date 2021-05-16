@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+// import { createMemoStyles } from '@mantine/theme';
 import {
   MantineTheme,
   MantineNumberSize,
@@ -6,6 +6,7 @@ import {
   getFontStyles,
   getFocusStyles,
   getThemeColor,
+  createMemoStyles,
 } from '@mantine/theme';
 
 interface ActionIconStylesProps {
@@ -23,7 +24,7 @@ export const sizes = {
   xl: 44,
 };
 
-export default createUseStyles({
+export default createMemoStyles({
   filled: ({ theme, color }: ActionIconStylesProps) => ({
     backgroundColor: getThemeColor({ theme, color, shade: 6 }),
     color: theme.white,

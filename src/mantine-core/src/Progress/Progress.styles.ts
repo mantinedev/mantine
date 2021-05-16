@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, MantineNumberSize, getThemeColor, getSizeValue } from '@mantine/theme';
 
 export const sizes = {
@@ -18,7 +18,7 @@ interface ProgressStylesProps {
   striped: boolean;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   progress: ({ radius, size, theme }: ProgressStylesProps) => ({
     height: getSizeValue({ size, sizes }),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],

@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 interface PaperStylesProps {
@@ -8,7 +8,7 @@ interface PaperStylesProps {
   padding: MantineNumberSize;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   paper: ({ theme, radius, shadow, padding }: PaperStylesProps) => ({
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     boxSizing: 'border-box',

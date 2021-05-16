@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, getFontStyles } from '@mantine/theme';
 
 interface TableStylesProps {
@@ -6,7 +6,7 @@ interface TableStylesProps {
   captionSide: 'top' | 'bottom';
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   striped: {},
   hover: {},
 

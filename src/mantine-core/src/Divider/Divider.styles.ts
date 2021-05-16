@@ -1,5 +1,5 @@
 import React from 'react';
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineNumberSize, MantineTheme, getSizeValue, getThemeColor } from '@mantine/theme';
 
 interface DividerStylesProps {
@@ -18,7 +18,7 @@ export const sizes = {
   xl: 5,
 };
 
-export default createUseStyles({
+export default createMemoStyles({
   withLabel: {
     borderTop: '0 !important',
   },

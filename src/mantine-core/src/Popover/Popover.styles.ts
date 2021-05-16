@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 interface PopoverStyles {
@@ -62,7 +62,7 @@ const verticalPlacement = (arrowSize: number) => ({
   },
 });
 
-export default createUseStyles({
+export default createMemoStyles({
   center: {},
   start: {},
   end: {},

@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import { MantineTheme, getSizeValue, MantineNumberSize, getFocusStyles } from '@mantine/theme';
 
 interface ColorSwatchStylesProps {
@@ -6,7 +6,7 @@ interface ColorSwatchStylesProps {
   radius: MantineNumberSize;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   colorSwatch: ({ theme, radius }: ColorSwatchStylesProps) => ({
     ...getFocusStyles(theme),
     border: 0,

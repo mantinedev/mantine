@@ -1,5 +1,5 @@
-import { createUseStyles } from 'react-jss';
 import {
+  createMemoStyles,
   MantineTheme,
   MantineNumberSize,
   getThemeColor,
@@ -22,7 +22,7 @@ export const sizes = {
   xl: 42,
 };
 
-export default createUseStyles({
+export default createMemoStyles({
   opened: {},
 
   wrapper: ({ size, theme }: BurgerStylesProps) => ({

@@ -1,5 +1,5 @@
-import { createUseStyles } from 'react-jss';
 import {
+  createMemoStyles,
   MantineTheme,
   MantineSize,
   MantineNumberSize,
@@ -46,7 +46,7 @@ export const heights = Object.keys(sizes).reduce((acc, key) => {
   return acc;
 }, {} as Record<MantineSize, number>);
 
-export default createUseStyles({
+export default createMemoStyles({
   leftSection: ({ theme }: BadgeStylesProps) => ({
     marginRight: theme.spacing.xs / 2,
   }),

@@ -1,6 +1,6 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 
-export default createUseStyles({
+export default createMemoStyles({
   loadingOverlay: {
     position: 'absolute',
     top: 0,

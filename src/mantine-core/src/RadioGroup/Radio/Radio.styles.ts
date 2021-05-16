@@ -1,4 +1,4 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '@mantine/theme';
 import {
   MantineTheme,
   MantineSize,
@@ -22,7 +22,7 @@ export const sizes = {
   xl: 36,
 };
 
-export default createUseStyles({
+export default createMemoStyles({
   labelDisabled: {},
 
   wrapper: {
