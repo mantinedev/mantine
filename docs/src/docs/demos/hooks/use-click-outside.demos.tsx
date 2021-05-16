@@ -53,6 +53,7 @@ export function UseClickOutsideDemo({ events }: { events?: string[] }) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
             }}
           >
             <span>Click outside to close</span>
