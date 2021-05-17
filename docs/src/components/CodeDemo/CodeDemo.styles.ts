@@ -33,6 +33,7 @@ export default createUseStyles(
 
     withToggle: {
       paddingRight: 50,
+      minHeight: 80,
     },
   }),
   { theming }

@@ -77,7 +77,6 @@ export default function CodeDemo({
               withArrow
               arrowSize={4}
               gutter={8}
-              variant="filled"
             >
               <ActionIcon
                 variant={theme.colorScheme === 'dark' ? 'hover' : 'outline'}
