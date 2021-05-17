@@ -12,9 +12,9 @@ export default createMemoStyles({
     position: 'relative',
     padding: [theme.spacing.xs, theme.spacing.md],
     paddingLeft: theme.spacing.md + theme.spacing.xs / 2 + LINE_WIDTH,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
 
     '&::before': {
