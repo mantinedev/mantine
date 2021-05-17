@@ -112,6 +112,7 @@ export function EditUserPopover() {
         placement="end"
         withArrow
         withCloseButton
+        title="Edit user"
         target={
           <ActionIcon
             variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}

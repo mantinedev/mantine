@@ -44,7 +44,7 @@ export interface PopoverProps
   /** Mount/unmount transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
 
-  /* Adds arrow, arrow position depends on position and placement props */
+  /** Adds arrow, arrow position depends on position and placement props */
   withArrow?: boolean;
 
   /** Arrow size in px */
