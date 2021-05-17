@@ -1,11 +1,22 @@
 import React from 'react';
-import { Select, TextInput, Switch, DEFAULT_THEME, useMantineTheme } from '@mantine/core';
+import {
+  Select,
+  TextInput,
+  Switch,
+  SegmentedControl,
+  InputWrapper,
+  DEFAULT_THEME,
+  useMantineTheme,
+} from '@mantine/core';
 
 function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-const sizesData = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => ({ value: size, label: size }));
+const sizesData = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => ({
+  value: size,
+  label: size,
+}));
 
 const colorsData = Object.keys(DEFAULT_THEME.colors)
   .filter((color) => color !== 'dark')
@@ -144,15 +155,29 @@ function SizeControl({
   onChange(value: string): void;
 }) {
   const theme = useMantineTheme();
+
   return (
-    <Select
-      {...others}
-      data={sizesData}
-      value={value}
-      label={capitalize(label)}
-      onChange={(event) => onChange(event.currentTarget.value)}
-      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
-    />
+    <InputWrapper labelElement="div" label={capitalize(label)} {...others}>
+      <div
+        style={{
+          border: `1px solid ${
+            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]
+          }`,
+          borderRadius: theme.radius.sm,
+        }}
+      >
+        <SegmentedControl
+          data={sizesData}
+          value={value}
+          onChange={onChange}
+          fullWidth
+          color="blue"
+          style={{
+            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+          }}
+        />
+      </div>
+    </InputWrapper>
   );
 }
 
