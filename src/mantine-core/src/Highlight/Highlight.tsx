@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, useMantineTheme, getThemeColor } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, getThemeColor, hexToRgba } from '@mantine/theme';
 import { ComponentPassThrough } from '@mantine/types';
 import { Text, TextProps } from '../Text/Text';
 
@@ -41,11 +41,14 @@ export function Highlight<T extends React.ElementType = 'div'>({
   ...others
 }: ComponentPassThrough<T, HighlightProps>) {
   const theme = useMantineTheme(themeOverride);
-  const color = getThemeColor({
-    theme,
-    color: highlightColor,
-    shade: theme.colorScheme === 'dark' ? 4 : 2,
-  });
+  const color = hexToRgba(
+    getThemeColor({
+      theme,
+      color: highlightColor,
+      shade: theme.colorScheme === 'dark' ? 4 : 2,
+    }),
+    theme.colorScheme === 'dark' ? 0.7 : 1
+  );
 
   const { start, end, highlighted } = highlighter(children, highlight);
 
