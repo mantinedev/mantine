@@ -1,5 +1,10 @@
-import { createMemoStyles } from '@mantine/theme';
-import { MantineTheme, MantineNumberSize, getSizeValue, getFontStyles } from '@mantine/theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  MantineNumberSize,
+  getSizeValue,
+  getFontStyles,
+} from '@mantine/theme';
 
 interface ImageStylesProps {
   theme: MantineTheme;

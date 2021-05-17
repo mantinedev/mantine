@@ -7,7 +7,7 @@ export function createMemoStyles<C extends string = string, Props = unknown>(
 ) {
   const useStyles = createUseStyles<C, Props, MantineTheme>(styles);
 
-  return function useMemoStyles(args: Props) {
+  return function useMemoStyles(args?: Props) {
     const dependencies =
       typeof args === 'object' && args !== null
         ? Object.keys(args)

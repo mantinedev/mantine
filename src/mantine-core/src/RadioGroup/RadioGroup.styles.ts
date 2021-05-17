@@ -1,5 +1,4 @@
-import { createMemoStyles } from '@mantine/theme';
-import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 interface RadioGroupStylesProps {
   theme: MantineTheme;

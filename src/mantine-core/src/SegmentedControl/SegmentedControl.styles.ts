@@ -1,5 +1,5 @@
-import { createMemoStyles } from '@mantine/theme';
 import {
+  createMemoStyles,
   MantineTheme,
   MantineNumberSize,
   MantineSize,

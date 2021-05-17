@@ -1,5 +1,10 @@
-import { createMemoStyles } from '@mantine/theme';
-import { MantineTheme, MantineNumberSize, getThemeColor, getSizeValue } from '@mantine/theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  MantineNumberSize,
+  getThemeColor,
+  getSizeValue,
+} from '@mantine/theme';
 
 export const sizes = {
   xs: 3,

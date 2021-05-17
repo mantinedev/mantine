@@ -1,5 +1,4 @@
-import { MantineTheme, getFontStyles, getThemeColor } from '@mantine/theme';
-import { createMemoStyles } from '@mantine/theme';
+import { MantineTheme, getFontStyles, getThemeColor, createMemoStyles } from '@mantine/theme';
 
 interface MenuButtonStylesProps {
   theme: MantineTheme;

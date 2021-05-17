@@ -1,6 +1,11 @@
 import React from 'react';
-import { createMemoStyles } from '@mantine/theme';
-import { MantineNumberSize, MantineTheme, getSizeValue, getThemeColor } from '@mantine/theme';
+import {
+  createMemoStyles,
+  MantineNumberSize,
+  MantineTheme,
+  getSizeValue,
+  getThemeColor,
+} from '@mantine/theme';
 
 interface DividerStylesProps {
   theme: MantineTheme;

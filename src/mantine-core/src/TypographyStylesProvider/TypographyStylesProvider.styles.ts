@@ -1,5 +1,10 @@
-import { createMemoStyles } from '@mantine/theme';
-import { MantineTheme, getFontStyles, getThemeColor, getFocusStyles } from '@mantine/theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  getFontStyles,
+  getThemeColor,
+  getFocusStyles,
+} from '@mantine/theme';
 
 interface InnerHtmlStylesProps {
   theme: MantineTheme;

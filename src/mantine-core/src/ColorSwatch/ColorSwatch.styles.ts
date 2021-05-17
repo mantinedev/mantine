@@ -1,5 +1,10 @@
-import { createMemoStyles } from '@mantine/theme';
-import { MantineTheme, getSizeValue, MantineNumberSize, getFocusStyles } from '@mantine/theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  getSizeValue,
+  MantineNumberSize,
+  getFocusStyles,
+} from '@mantine/theme';
 
 interface ColorSwatchStylesProps {
   theme: MantineTheme;

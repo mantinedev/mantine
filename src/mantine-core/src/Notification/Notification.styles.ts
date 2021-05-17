@@ -1,5 +1,4 @@
-import { createMemoStyles } from '@mantine/theme';
-import { MantineTheme, getThemeColor, hexToRgba } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, getThemeColor, hexToRgba } from '@mantine/theme';
 
 interface NotificationStyles {
   color: string;

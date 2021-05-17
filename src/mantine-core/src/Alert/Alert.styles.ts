@@ -1,5 +1,4 @@
-import { createMemoStyles } from '@mantine/theme';
-import { MantineTheme, getThemeColor, getFontStyles } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, getThemeColor, getFontStyles } from '@mantine/theme';
 
 interface AlertStylesProps {
   color: string;

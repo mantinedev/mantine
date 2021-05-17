@@ -1,5 +1,10 @@
-import { createMemoStyles } from '@mantine/theme';
-import { MantineTheme, getFontStyles, getFocusStyles, getThemeColor } from '@mantine/theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  getFontStyles,
+  getFocusStyles,
+  getThemeColor,
+} from '@mantine/theme';
 
 interface TabControlStylesProps {
   theme: MantineTheme;

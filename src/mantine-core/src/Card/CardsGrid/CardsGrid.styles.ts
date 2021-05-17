@@ -1,5 +1,4 @@
-import { createMemoStyles } from '@mantine/theme';
-import { MantineNumberSize, MantineTheme, getSizeValue } from '@mantine/theme';
+import { createMemoStyles, MantineNumberSize, MantineTheme, getSizeValue } from '@mantine/theme';
 
 interface CardsGridStyles {
   theme: MantineTheme;

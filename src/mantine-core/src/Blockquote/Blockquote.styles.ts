@@ -1,5 +1,4 @@
-import { createMemoStyles } from '@mantine/theme';
-import { MantineTheme, getFontStyles, getThemeColor } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, getFontStyles, getThemeColor } from '@mantine/theme';
 
 interface BlockquoteStylesProps {
   theme: MantineTheme;
