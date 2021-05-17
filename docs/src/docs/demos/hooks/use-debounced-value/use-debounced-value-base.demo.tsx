@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
-import { TextInput, Text } from '@mantine/core';
+import { TextInput, Text, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = (leading: boolean) => `import React, { useState } from 'react';
@@ -10,7 +10,7 @@ import { TextInput, Text } from '@mantine/core';
 export function Demo() {
   const [value, setValue] = useState('');
   const [debounced] = useDebouncedValue(value, 200${leading ? ', { leading: true }' : ''});
-  
+
   return (
     <>
       <TextInput
@@ -29,6 +29,7 @@ export function Demo() {
 export function UseDebouncedValueBaseDemo({ leading = false }: { leading: boolean }) {
   const [value, setValue] = useState('');
   const [debounced] = useDebouncedValue(value, 200, { leading });
+  const theme = useMantineTheme();
 
   return (
     <CodeDemo code={code(leading)} language="tsx">
@@ -47,6 +48,7 @@ export function UseDebouncedValueBaseDemo({ leading = false }: { leading: boolea
           value={value}
           style={{ flex: 1 }}
           onChange={(event) => setValue(event.currentTarget.value)}
+          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
         />
       </div>
       <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15 }}>

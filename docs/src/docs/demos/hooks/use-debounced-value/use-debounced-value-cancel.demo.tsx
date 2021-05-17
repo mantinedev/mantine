@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
-import { TextInput, Text, Button } from '@mantine/core';
+import { TextInput, Text, Button, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
@@ -10,7 +10,7 @@ import { TextInput, Text, Button } from '@mantine/core';
 export function Demo() {
   const [value, setValue] = useState('');
   const [debounced, cancel] = useDebouncedValue(value, 1000);
-  
+
   return (
     <>
       <TextInput
@@ -32,6 +32,7 @@ export function Demo() {
 export function UseDebouncedValueCancelDemo() {
   const [value, setValue] = useState('');
   const [debounced, cancel] = useDebouncedValue(value, 1000);
+  const theme = useMantineTheme();
 
   return (
     <CodeDemo code={code} language="tsx">
@@ -50,6 +51,7 @@ export function UseDebouncedValueCancelDemo() {
           value={value}
           style={{ flex: 1 }}
           onChange={(event) => setValue(event.currentTarget.value)}
+          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
         />
         <Button onClick={cancel} size="lg" style={{ marginLeft: 15 }}>
           Cancel
