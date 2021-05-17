@@ -26,13 +26,19 @@ export function Demo() {
   );
 }`;
 
-export function UseDebouncedValueBaseDemo({ leading = false }: { leading: boolean }) {
+export function UseDebouncedValueBaseDemo({
+  leading = false,
+  toggle = false,
+}: {
+  leading: boolean;
+  toggle: boolean;
+}) {
   const [value, setValue] = useState('');
   const [debounced] = useDebouncedValue(value, 200, { leading });
   const theme = useMantineTheme();
 
   return (
-    <CodeDemo code={code(leading)} language="tsx">
+    <CodeDemo code={code(leading)} language="tsx" toggle={toggle}>
       <div
         style={{
           display: 'flex',

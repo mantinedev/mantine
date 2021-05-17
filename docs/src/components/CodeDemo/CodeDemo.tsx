@@ -61,8 +61,8 @@ export default function CodeDemo({
                 <ActionIcon
                   component="a"
                   href={githubLink}
-                  variant={theme.colorScheme === 'dark' ? 'hover' : 'filled'}
-                  color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
+                  variant={theme.colorScheme === 'dark' ? 'hover' : 'outline'}
+                  color="gray"
                 >
                   <GitHubLogoIcon />
                 </ActionIcon>

@@ -25,9 +25,9 @@ function Demo() {
   );
 }`;
 
-export function SegmentedControlBaseDemo() {
+export function SegmentedControlBaseDemo({ toggle = false }: { toggle: boolean }) {
   return (
-    <CodeDemo code={code} language="tsx">
+    <CodeDemo code={code} language="tsx" toggle={toggle}>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <SegmentedControlWrapper />
       </div>

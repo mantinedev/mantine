@@ -106,9 +106,9 @@ function Demo() {
   );
 }`;
 
-export function DividerLabelDemo() {
+export function DividerLabelDemo({ toggle = false }: { toggle: boolean }) {
   return (
-    <CodeDemo code={subHeaderCode} language="tsx">
+    <CodeDemo code={subHeaderCode} language="tsx" toggle={toggle}>
       <Divider label="Label on the left" />
       <Divider label="Label in the center" labelPosition="center" style={{ marginTop: 10 }} />
       <Divider label="Label on the right" labelPosition="right" style={{ marginTop: 10 }} />
