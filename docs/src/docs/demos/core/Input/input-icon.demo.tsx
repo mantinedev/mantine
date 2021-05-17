@@ -46,6 +46,7 @@ export function InputIconDemo() {
         rightSectionWidth={70}
         rightSectionProps={{ style: { pointerEvents: 'none' } }}
         rightSection={rightSection}
+        variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
       />
     </CodeDemo>
   );

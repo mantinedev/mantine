@@ -32,7 +32,7 @@ export function LoadingOverlayBaseDemo() {
     <CodeDemo
       code={code}
       language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]}
     >
       <div style={{ maxWidth: 400, margin: 'auto', overflow: 'visible' }}>
         <div
@@ -43,7 +43,7 @@ export function LoadingOverlayBaseDemo() {
           }}
         >
           <LoadingOverlay visible={visible} zIndex={1000} style={{ borderRadius: 4 }} />
-          <AuthenticationForm noSubmit />
+          <AuthenticationForm noSubmit noShadow={theme.colorScheme === 'dark'} />
         </div>
       </div>
 

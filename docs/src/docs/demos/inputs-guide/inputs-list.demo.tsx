@@ -93,10 +93,8 @@ export function WrappedInputsDemo() {
 }
 
 export function RegularInputsDemo() {
-  const theme = useMantineTheme();
-
   return (
-    <CodeDemo demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white}>
+    <CodeDemo>
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <Checkbox label="Checkbox" />
         <Switch style={{ marginTop: 15 }} label="Switch" />

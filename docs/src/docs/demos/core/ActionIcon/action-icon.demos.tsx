@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ActionIcon, Button, Group, PasswordInput, useMantineTheme } from '@mantine/core';
 import {
   GearIcon,
   ChatBubbleIcon,
   ActivityLogIcon,
-  SunIcon,
-  MoonIcon,
   CheckIcon,
   ImageIcon,
 } from '@modulz/radix-icons';
@@ -89,54 +87,8 @@ export function ActionIconVariantDemo() {
   );
 }
 
-const variantsToggleCode = `import React, { useState } from 'react';
-import { ActionIcon } from '@mantine/core';
-import { SunIcon, MoonIcon } from '@modulz/radix-icons';
-
-function Demo() {
-  const [darkTheme, setDarkTheme] = useState(false);
-  const title = darkTheme ? 'Light theme' : 'Dark theme';
-
-  return (
-    <ActionIcon
-      variant={darkTheme ? 'transparent' : 'filled'}
-      onClick={() => setDarkTheme((a) => !a)}
-      color={darkTheme ? 'yellow' : 'blue'}
-      title={title}
-      aria-label={title}
-    >
-      {darkTheme ? <SunIcon /> : <MoonIcon />}
-    </ActionIcon>
-  );
-}`;
-
-export function ActionIconVariantToggleDemo() {
-  const theme = useMantineTheme();
-  const [darkTheme, setDarkTheme] = useState(theme.colorScheme === 'dark');
-  const title = darkTheme ? 'Light theme' : 'Dark theme';
-
-  return (
-    <CodeDemo
-      code={variantsToggleCode}
-      language="tsx"
-      demoBackground={darkTheme ? theme.colors.dark[7] : '#fff'}
-    >
-      <Group position="center">
-        <ActionIcon
-          variant={darkTheme ? 'transparent' : 'filled'}
-          onClick={() => setDarkTheme((a) => !a)}
-          color={darkTheme ? 'yellow' : 'blue'}
-          title={title}
-          aria-label={title}
-        >
-          {darkTheme ? <SunIcon /> : <MoonIcon />}
-        </ActionIcon>
-      </Group>
-    </CodeDemo>
-  );
-}
-
 export function ActionIconUsageDemo() {
+  const theme = useMantineTheme();
   return (
     <CodeDemo>
       <div style={{ maxWidth: 400, margin: 'auto' }}>
@@ -144,6 +96,7 @@ export function ActionIconUsageDemo() {
           placeholder="Password"
           hidePasswordLabel="Hide password"
           showPasswordLabel="Show password"
+          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
         />
       </div>
     </CodeDemo>
