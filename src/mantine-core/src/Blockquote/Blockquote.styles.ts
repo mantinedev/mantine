@@ -10,7 +10,7 @@ export default createMemoStyles({
     ...getFontStyles(theme),
     fontSize: theme.fontSizes.lg,
     lineHeight: theme.lineHeight,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     margin: 0,
     borderTopRightRadius: theme.radius.sm,
