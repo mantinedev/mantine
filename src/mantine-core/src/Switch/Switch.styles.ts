@@ -86,9 +86,7 @@ export default createMemoStyles({
         backgroundColor: theme.white,
         height: handleSize,
         width: handleSize,
-        border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
-        }`,
+        border: `1px solid ${theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[3]}`,
         transition: reduceMotion ? 'none' : `transform 150ms ${theme.transitionTimingFunction}`,
       },
 
@@ -102,7 +100,7 @@ export default createMemoStyles({
             getSizeValue({ size, sizes: handleSizes }) -
             6 // borderWidth: 2 + padding: 2 * 2
           }px)`,
-          borderColor: getThemeColor({ theme, color, shade: 6 }),
+          borderColor: theme.white,
         },
       },
 
