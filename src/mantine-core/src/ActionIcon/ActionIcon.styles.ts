@@ -1,4 +1,3 @@
-// import { createMemoStyles } from '@mantine/theme';
 import {
   MantineTheme,
   MantineNumberSize,
@@ -7,6 +6,7 @@ import {
   getFocusStyles,
   getThemeColor,
   createMemoStyles,
+  hexToRgba,
 } from '@mantine/theme';
 
 interface ActionIconStylesProps {
@@ -26,11 +26,17 @@ export const sizes = {
 
 export default createMemoStyles({
   filled: ({ theme, color }: ActionIconStylesProps) => ({
-    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+    backgroundColor: hexToRgba(
+      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 7 }),
+      theme.colorScheme === 'dark' ? 0.65 : 1
+    ),
     color: theme.white,
 
     '&:not(:disabled):hover': {
-      backgroundColor: getThemeColor({ theme, color, shade: 7 }),
+      backgroundColor: hexToRgba(
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 7 }),
+        theme.colorScheme === 'dark' ? 0.95 : 1
+      ),
     },
 
     '&:disabled': {
@@ -43,18 +49,17 @@ export default createMemoStyles({
   }),
 
   light: ({ theme, color }: ActionIconStylesProps) => ({
-    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 0 }),
-    color:
-      theme.colorScheme === 'dark'
-        ? theme.colors.dark[9]
-        : getThemeColor({ theme, color, shade: 9 }),
+    backgroundColor: hexToRgba(
+      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+      theme.colorScheme === 'dark' ? 0.3 : 1
+    ),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
 
     '&:not(:disabled):hover': {
-      backgroundColor: getThemeColor({
-        theme,
-        color,
-        shade: theme.colorScheme === 'dark' ? 5 : 1,
-      }),
+      backgroundColor: hexToRgba(
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
+        theme.colorScheme === 'dark' ? 0.65 : 1
+      ),
     },
 
     '&:disabled': {
@@ -115,13 +120,12 @@ export default createMemoStyles({
   }),
 
   outline: ({ theme, color }: ActionIconStylesProps) => ({
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
     backgroundColor: 'transparent',
-    borderColor: getThemeColor({
-      theme,
-      color,
-      shade: theme.colorScheme === 'dark' ? 4 : 6,
-    }),
+    border: `1px solid ${hexToRgba(
+      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 4 }),
+      theme.colorScheme === 'dark' ? 0.45 : 1
+    )}`,
 
     '&:not(:disabled):hover': {
       backgroundColor:
