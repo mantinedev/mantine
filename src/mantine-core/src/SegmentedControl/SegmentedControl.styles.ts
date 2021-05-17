@@ -7,6 +7,7 @@ import {
   getSizeValue,
   getThemeColor,
   getFocusStyles,
+  hexToRgba,
 } from '@mantine/theme';
 
 export const WRAPPER_PADDING = 4;
@@ -155,7 +156,10 @@ export default createMemoStyles({
     }`,
     backgroundColor:
       color in theme.colors
-        ? getThemeColor({ theme, color, shade: 6 })
+        ? hexToRgba(
+            getThemeColor({ theme, color, shade: 6 }),
+            theme.colorScheme === 'dark' ? 0.55 : 1
+          )
         : theme.colorScheme === 'dark'
         ? theme.colors.dark[5]
         : theme.white,
