@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, Button, Group, Portal } from '@mantine/core';
+import { Drawer, Button, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
@@ -33,18 +33,16 @@ export function DrawerTransitionsDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <Portal zIndex={10}>
-        <Drawer
-          opened={opened}
-          onClose={() => setOpened(false)}
-          padding="md"
-          transition="rotate-left"
-          transitionDuration={250}
-          transitionTimingFunction="ease"
-        >
-          Press escape to close the drawer
-        </Drawer>
-      </Portal>
+      <Drawer
+        opened={opened}
+        onClose={() => setOpened(false)}
+        padding="md"
+        transition="rotate-left"
+        transitionDuration={250}
+        transitionTimingFunction="ease"
+      >
+        Press escape to close the drawer
+      </Drawer>
 
       <Group position="center">
         <Button onClick={() => setOpened(true)}>Open Drawer</Button>

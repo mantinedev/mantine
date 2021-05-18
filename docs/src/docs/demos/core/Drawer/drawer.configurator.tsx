@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, Button, Group, Portal } from '@mantine/core';
+import { Drawer, Button, Group } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function DrawerWrapper(props: React.ComponentPropsWithoutRef<typeof Drawer>) {
@@ -7,11 +7,9 @@ function DrawerWrapper(props: React.ComponentPropsWithoutRef<typeof Drawer>) {
 
   return (
     <div>
-      <Portal zIndex={100}>
-        <Drawer opened={opened} onClose={() => setOpened(false)} {...props}>
-          Press escape to close the drawer if you are trapped
-        </Drawer>
-      </Portal>
+      <Drawer opened={opened} onClose={() => setOpened(false)} {...props}>
+        Press escape to close the drawer if you are trapped
+      </Drawer>
       <Group position="center">
         <Button onClick={() => setOpened(true)}>Open drawer</Button>
       </Group>
