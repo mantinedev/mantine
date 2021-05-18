@@ -21,7 +21,10 @@ export default createMemoStyles({
     flex: '0 0 50%',
     boxSizing: 'border-box',
     width: CONTROL_WIDTH,
-    border: `1px solid ${
+    borderBottom: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+    }`,
+    borderLeft: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
     }`,
     borderTop: 0,
