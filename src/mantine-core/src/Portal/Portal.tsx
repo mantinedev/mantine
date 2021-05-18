@@ -1,5 +1,6 @@
-import React, { useRef, useState, useLayoutEffect, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useIsomorphicEffect } from '@mantine/hooks';
 
 export interface PortalProps {
   /** Portal children, for example, modal or popover */
@@ -14,11 +15,6 @@ export interface PortalProps {
   /** Root element className */
   className?: string;
 }
-
-// useLayoutEffect is required for Portal to appear after hydration
-// useLayoutEffect will show warning if used during ssr, e.g. with Next.js
-// useIsomorphicEffect removes it by replacing useLayoutEffect with useEffect during ssr
-const useIsomorphicEffect = typeof document !== 'undefined' ? useLayoutEffect : useEffect;
 
 export function Portal({ children, zIndex = 1, target, className }: PortalProps) {
   const [mounted, setMounted] = useState(false);
