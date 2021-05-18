@@ -1,5 +1,7 @@
 module.exports = {
-  preset: 'ts-jest',
+  transform: {
+    '^.+\\.tsx?$': 'esbuild-jest',
+  },
   setupFilesAfterEnv: [
     './configuration/jest/enzyme.setup.js',
     './configuration/jest/jsdom.mocks.js',

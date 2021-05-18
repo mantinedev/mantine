@@ -4,6 +4,6 @@
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,
-    "declarationDir": "dist"
+    "declarationDir": "types"
   }
 }
