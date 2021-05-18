@@ -54,6 +54,7 @@ export function Checkbox({
   inputStyle,
   inputClassName,
   elementRef,
+  children,
   ...others
 }: CheckboxProps) {
   const uuid = useId(id);
@@ -63,7 +64,6 @@ export function Checkbox({
     <div className={cx(classes.wrapper, className)} style={style} {...wrapperProps}>
       <div className={classes.checkboxWrapper}>
         <input
-          {...others}
           id={uuid}
           ref={elementRef}
           type="checkbox"
@@ -72,6 +72,7 @@ export function Checkbox({
           onChange={onChange}
           disabled={disabled}
           style={inputStyle}
+          {...others}
         />
         <CheckboxIcon indeterminate={indeterminate} className={classes.icon} />
       </div>
