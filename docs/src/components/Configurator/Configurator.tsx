@@ -3,10 +3,9 @@ import cx from 'clsx';
 import { useMantineTheme } from '@mantine/core';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import DocsSection from '../DocsSection/DocsSection';
-import controls from './controls';
+import controls, { ControlProps } from './controls';
+import { propsToString } from './props-to-string';
 import useStyles from './Configurator.styles';
-
-type PropType = 'boolean' | 'number' | 'color' | 'select' | 'string' | 'size';
 
 interface ConfiguratorProps {
   component: any;
@@ -14,52 +13,7 @@ interface ConfiguratorProps {
   previewBackground?: string;
   multiline?: boolean;
   includeCode?: boolean;
-  props: {
-    type: PropType;
-    name: string;
-    initialValue?: any;
-    defaultValue?: any;
-    capitalize?: boolean;
-    data?: { label: string; value: string }[];
-  }[];
-}
-
-const INITIAL_VALUES = {
-  boolean: false,
-  number: 0,
-  color: null,
-  select: null,
-  string: '',
-};
-
-function transformPropToCode({
-  type,
-  name,
-  value,
-  defaultValue,
-}: {
-  type: PropType;
-  name: string;
-  value: any;
-  defaultValue: any;
-}) {
-  if (value === defaultValue || name === 'children') {
-    return '';
-  }
-
-  if (type === 'string' && value.trim().length === 0) {
-    return '';
-  }
-
-  if (type === 'boolean') {
-    return value ? name : `${name}={false}`;
-  }
-
-  if (type === 'number') {
-    return `${name}={${value}}`;
-  }
-
-  return `${name}="${value}"`;
+  props: ControlProps[];
 }
 
 export default function Configurator({
@@ -73,7 +27,7 @@ export default function Configurator({
   const theme = useMantineTheme();
   const classes = useStyles();
   const initialState = componentProps.reduce((acc, prop) => {
-    acc[prop.name] = prop.initialValue || INITIAL_VALUES[prop.type];
+    acc[prop.name] = prop.initialValue || controls[prop.type].initialValue;
     return acc;
   }, {});
 
@@ -96,18 +50,7 @@ export default function Configurator({
     );
   });
 
-  const propsCode = componentProps
-    .map((prop) =>
-      transformPropToCode({
-        type: prop.type,
-        name: prop.name,
-        value: state[prop.name],
-        defaultValue: prop.defaultValue,
-      })
-    )
-    .filter(Boolean)
-    .join(multiline ? '\n  ' : ' ')
-    .trim();
+  const propsCode = propsToString({ props: componentProps, values: state, multiline });
 
   const code = codeTemplate(
     propsCode.length > 0 ? ` ${propsCode}` : propsCode,
@@ -131,6 +74,7 @@ export default function Configurator({
         </div>
         <div className={classes.controls}>{items}</div>
       </div>
+
       {includeCode && <CodeHighlight code={code} language="tsx" className={classes.code} />}
     </DocsSection>
   );

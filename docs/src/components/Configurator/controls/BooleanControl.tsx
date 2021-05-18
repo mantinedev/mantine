@@ -23,3 +23,5 @@ export function BooleanControl({ value, label, onChange, ...others }: BooleanCon
     />
   );
 }
+
+BooleanControl.initialValue = false;

@@ -21,3 +21,5 @@ export function StringControl({ value, label, onChange, ...others }: StringContr
     />
   );
 }
+
+StringControl.initialValue = '';

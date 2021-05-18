@@ -26,3 +26,5 @@ export function SizeControl({ value, label, onChange, ...others }: SizeControlPr
     </InputWrapper>
   );
 }
+
+SizeControl.initialValue = 'md';

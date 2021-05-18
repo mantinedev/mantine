@@ -28,3 +28,5 @@ export function ColorControl({ value, label, onChange, ...others }: ColorControl
     />
   );
 }
+
+ColorControl.initialValue = 'blue';
