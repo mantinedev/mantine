@@ -20,6 +20,10 @@ export function propToString({ type, name, value, defaultValue }: PropToString) 
     return value ? name : `${name}={false}`;
   }
 
+  if (type === 'number') {
+    return `${name}={${value}}`;
+  }
+
   return `${name}="${value}"`;
 }
 
