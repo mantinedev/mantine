@@ -36,15 +36,17 @@ export default function Configurator({
     setState((current) => ({ ...current, [field]: value }));
 
   const items = componentProps.map((prop, index) => {
-    const ControlComponent = controls[prop.type] as any;
+    const { name, data, type, capitalize, initialValue, ...others } = prop;
+    const ControlComponent = controls[type] as any;
     return (
       <ControlComponent
-        key={prop.name}
-        value={state[prop.name]}
-        label={prop.name}
-        onChange={(value: any) => setStateField(prop.name, value)}
-        data={prop.data}
-        capitalize={prop.capitalize}
+        {...others}
+        key={name}
+        value={state[name]}
+        label={name}
+        onChange={(value: any) => setStateField(name, value)}
+        data={data}
+        capitalize={capitalize}
         style={{ marginTop: index !== 0 ? 15 : 0 }}
       />
     );

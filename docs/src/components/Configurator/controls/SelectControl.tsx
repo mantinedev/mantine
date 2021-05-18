@@ -34,4 +34,4 @@ export function SelectControl({
   );
 }
 
-SelectControl.initialValue = null;
+SelectControl.initialValue = '';
