@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cx from 'clsx';
-import debounce from 'lodash.debounce';
 import { useId, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '@mantine/theme';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
@@ -63,38 +62,44 @@ export function SegmentedControl({
   // https://github.com/cssinjs/jss/issues/1320
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
   const classes = useStyles({
     theme,
     size,
     fullWidth,
     color,
     radius,
-    reduceMotion,
+    reduceMotion: reduceMotion || !shouldAnimate,
     transitionDuration,
     transitionTimingFunction,
   });
+
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const resizeObserver = useRef<ResizeObserver>();
 
   useEffect(() => {
-    resizeObserver.current = new ResizeObserver(
-      debounce(() => {
-        if (value in refs.current && wrapperRef.current) {
-          const element = refs.current[value];
-          const rect = element.getBoundingClientRect();
-          setActivePosition({
-            width: rect.width,
-            translate: rect.x - wrapperRef.current.getBoundingClientRect().x - WRAPPER_PADDING,
-          });
+    const observer = new ResizeObserver(() => {
+      if (value in refs.current && wrapperRef.current) {
+        const element = refs.current[value];
+        const rect = element.getBoundingClientRect();
+        setActivePosition({
+          width: rect.width,
+          translate: rect.x - wrapperRef.current.getBoundingClientRect().x - WRAPPER_PADDING,
+        });
+
+        if (!shouldAnimate) {
+          setTimeout(() => {
+            setShouldAnimate(true);
+          }, 4);
         }
-      }, 50)
-    );
-    resizeObserver.current.observe(wrapperRef.current);
-    return () => resizeObserver.current.disconnect();
-  }, [value, refs]);
+      }
+    });
+    observer.observe(wrapperRef.current);
+    return () => observer.disconnect();
+  }, [value]);
 
   const controls = data.map((item) => (
     <div

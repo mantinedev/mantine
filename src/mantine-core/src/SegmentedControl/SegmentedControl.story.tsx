@@ -16,7 +16,7 @@ function Wrapper(
     'value' | 'onChange' | 'data'
   >
 ) {
-  const [value, onChange] = useState<string>('react');
+  const [value, onChange] = useState<string>('ng');
   return <SegmentedControl {...props} data={data} value={value} onChange={onChange} />;
 }
 
