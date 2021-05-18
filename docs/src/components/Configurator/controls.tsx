@@ -1,22 +1,11 @@
 import React from 'react';
-import {
-  Select,
-  TextInput,
-  Switch,
-  SegmentedControl,
-  InputWrapper,
-  DEFAULT_THEME,
-  useMantineTheme,
-} from '@mantine/core';
+import { Select, TextInput, DEFAULT_THEME, useMantineTheme } from '@mantine/core';
+import { BooleanControl } from './controls/BooleanControl';
+import { SizeControl } from './controls/SizeControl';
 
 function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
-const sizesData = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => ({
-  value: size,
-  label: size,
-}));
 
 const colorsData = Object.keys(DEFAULT_THEME.colors)
   .filter((color) => color !== 'dark')
@@ -24,26 +13,6 @@ const colorsData = Object.keys(DEFAULT_THEME.colors)
     label: capitalize(color),
     value: color,
   }));
-
-function BooleanControl({
-  value,
-  label,
-  onChange,
-  ...others
-}: {
-  value: boolean;
-  label: string;
-  onChange(value: boolean): void;
-}) {
-  return (
-    <Switch
-      {...others}
-      label={label.replace(/([a-z0-9])([A-Z])/g, '$1 $2').toLowerCase()}
-      checked={value}
-      onChange={(event) => onChange(event.currentTarget.checked)}
-    />
-  );
-}
 
 function NumberControl({
   value,
@@ -140,31 +109,6 @@ function SelectControl({
       variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
       {...others}
     />
-  );
-}
-
-function SizeControl({
-  value,
-  label,
-  onChange,
-  ...others
-}: {
-  value: string;
-  label: string;
-  capitalize: boolean;
-  onChange(value: string): void;
-}) {
-  return (
-    <InputWrapper labelElement="div" label={capitalize(label)} {...others}>
-      <SegmentedControl
-        data={sizesData}
-        value={value}
-        onChange={onChange}
-        fullWidth
-        transitionDuration={100}
-        transitionTimingFunction="ease"
-      />
-    </InputWrapper>
   );
 }
 
