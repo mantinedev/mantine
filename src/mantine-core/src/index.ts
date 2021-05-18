@@ -1,4 +1,5 @@
 export * from '@mantine/theme';
+export * from '@mantine/utils';
 
 export { ActionIcon, ACTION_ICON_SIZES } from './ActionIcon/ActionIcon';
 export { Alert } from './Alert/Alert';
