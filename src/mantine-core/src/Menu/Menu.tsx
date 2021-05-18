@@ -8,7 +8,8 @@ import { MenuBody, MenuBodyProps } from './MenuBody/MenuBody';
 import { sizes } from './MenuBody/MenuBody.styles';
 import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
 
-export { MenuBody, MenuBodyProps, MenuItem, MenuItemProps };
+export { MenuBody, MenuItem };
+export type { MenuBodyProps, MenuItemProps };
 export const MENU_SIZES = sizes;
 
 interface MenuPosition {

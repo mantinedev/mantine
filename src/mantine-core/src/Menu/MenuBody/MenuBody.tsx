@@ -9,7 +9,7 @@ import { MenuItem, MenuItemType } from '../MenuItem/MenuItem';
 import { MenuButton } from '../MenuButton/MenuButton';
 import useStyles from './MenuBody.styles';
 
-export interface MenuBodyProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+interface MenuBodyProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** When true menu is mounted to the dom */
   opened: boolean;
 
@@ -74,7 +74,7 @@ function findInitialItem(items: MenuItemType[]) {
   return -1;
 }
 
-export function MenuBody({
+function MenuBody({
   className,
   themeOverride,
   opened,
@@ -204,3 +204,5 @@ export function MenuBody({
 }
 
 MenuBody.displayName = '@mantine/core/MenuBody';
+
+export { MenuBody, MenuBodyProps };

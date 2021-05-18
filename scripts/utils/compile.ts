@@ -1,19 +1,8 @@
-import webpack from 'webpack';
+import { OutputOptions, rollup, RollupOptions } from 'rollup';
 
-export default function compile(config: webpack.Configuration): Promise<webpack.Stats> {
-  const compiler = webpack(config);
+export default async function compile(config: RollupOptions) {
+  const build = await rollup(config);
+  const outputs: OutputOptions[] = Array.isArray(config.output) ? config.output : [config.output];
 
-  return new Promise((resolve, reject) => {
-    compiler.run((err: Error, stats: webpack.Stats) => {
-      if (err) {
-        throw err;
-      }
-
-      if (stats.hasErrors()) {
-        reject(stats);
-      }
-
-      resolve(stats);
-    });
-  });
+  return Promise.all(outputs.map((output) => build.write(output)));
 }

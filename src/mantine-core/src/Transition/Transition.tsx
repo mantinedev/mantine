@@ -5,7 +5,8 @@ import { useReducedMotion } from '@mantine/hooks';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { MantineTransition, transitions } from './transitions';
 
-export { GroupedTransition, GroupedTransitionProps } from './GroupedTransition';
+export { GroupedTransition } from './GroupedTransition';
+export type { GroupedTransitionProps } from './GroupedTransition';
 
 export const AVAILABLE_TRANSITIONS = Object.keys(transitions) as Array<keyof typeof transitions>;
 

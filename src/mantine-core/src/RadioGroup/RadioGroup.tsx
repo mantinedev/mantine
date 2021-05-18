@@ -7,7 +7,8 @@ import { sizes } from './Radio/Radio.styles';
 import useStyles from './RadioGroup.styles';
 
 export const RADIO_SIZES = sizes;
-export { Radio, RadioProps };
+export { Radio };
+export type { RadioProps };
 
 export interface RadioGroupProps
   extends DefaultProps,

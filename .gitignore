@@ -26,4 +26,5 @@ lerna-debug.log*
 
 # build
 dist/
+es/
 docs/.docgen/

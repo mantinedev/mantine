@@ -5,9 +5,11 @@ import commonjs from '@rollup/plugin-commonjs';
 import externals from 'rollup-plugin-node-externals';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import esbuild from 'rollup-plugin-esbuild';
+import typescript from '@rollup/plugin-typescript';
 import json from '@rollup/plugin-json';
-import alias from '@rollup/plugin-alias';
+import alias, { Alias } from '@rollup/plugin-alias';
 import replace from '@rollup/plugin-replace';
+import { getPackagesList } from '../../scripts/utils/get-packages-list';
 
 interface PkgConfigInput {
   entry?: string;
@@ -18,10 +20,14 @@ interface PkgConfigInput {
   analyze?: boolean;
 }
 
-export default function createPackageConfig(config: PkgConfigInput): RollupOptions {
+export default async function createPackageConfig(config: PkgConfigInput): Promise<RollupOptions> {
   const packageJson = JSON.parse(
     fs.readFileSync(path.join(config.basePath, './package.json')).toString('utf-8')
   );
+  const aliasEntries: Alias[] = (await getPackagesList()).map((pkg) => ({
+    find: new RegExp(`^${pkg.packageJson.name}`),
+    replacement: path.resolve(pkg.path, 'src'),
+  }));
 
   return {
     input: config.entry || path.resolve(config.basePath, 'src/index.ts'),
@@ -30,13 +36,13 @@ export default function createPackageConfig(config: PkgConfigInput): RollupOptio
         name: packageJson.name,
         dir: config.outputPath,
         format: 'umd',
-        sourcemap: true,
       },
       {
         name: packageJson.name,
         dir: path.resolve(config.outputPath, '../es'),
         format: 'es',
-        sourcemap: true,
+        preserveModules: true,
+        preserveModulesRoot: path.resolve(config.basePath, 'src'),
       },
     ],
     external: config.externals || [],
@@ -47,11 +53,14 @@ export default function createPackageConfig(config: PkgConfigInput): RollupOptio
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
       }),
       esbuild({
-        tsconfig: path.resolve(config.basePath, '_tsconfig.json'),
+        sourceMap: false,
       }),
+      // typescript({
+      //   tsconfig: path.resolve(config.basePath, '_tsconfig.json'),
+      // }),
       json(),
-      alias(),
-      replace(),
+      alias({ entries: aliasEntries }),
+      replace({ preventAssignment: true }),
     ],
   };
 }

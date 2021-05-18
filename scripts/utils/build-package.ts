@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import chalk from 'chalk';
-import createPackageConfig from '../../configuration/webpack/create-package-config';
+import createPackageConfig from '../../configuration/rollup/create-package-config';
 import locatePackage from './locate-package';
 import compile from './compile';
 import { Logger } from './Logger';
@@ -18,7 +18,7 @@ export async function buildPackage(packageName: string, analyze = false) {
 
   const packageJson = await fs.readJSON(path.join(packagePath, 'package.json'));
 
-  const config = createPackageConfig({
+  const config = await createPackageConfig({
     analyze,
     basePath: packagePath,
     outputPath: path.join(packagePath, 'dist'),
