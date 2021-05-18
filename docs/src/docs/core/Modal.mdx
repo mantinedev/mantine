@@ -29,33 +29,10 @@ import { Modal } from '@mantine/core';
 
 ## Usage
 
+Modal is wrapped in <GatsbyLink to="/core/portal/">Portal</GatsbyLink> component,
+it can be rendered only on client as createPortal is not available during server side rendering:
+
 <ModalBaseDemo />
-
-## Usage with Portal
-
-Usually, it is a good idea to render modal outside of current component to avoid styles collisions.
-To implement this use <GatsbyLink to="/core/portal/">Portal</GatsbyLink> component.
-
-```tsx
-import React, { useState } from 'react';
-import { Modal, Portal } from '@mantine/core';
-
-function PortalDemo() {
-  const [opened, setOpened] = useState(false);
-
-  return (
-    <div style={{ position: 'relative', zIndex: 1 }}>
-      <Portal zIndex={5}>
-        <Modal opened={opened} onClose={() => setOpened(false)}>
-          Modal is rendered at the end of document.body
-        </Modal>
-      </Portal>
-
-      <button onClick={() => setOpened(true)}>Open modal</button>
-    </div>
-  );
-}
-```
 
 ## Remove title and close button
 
@@ -120,16 +97,6 @@ You can change transitions with props:
 - **transitionTimingFunction** – timing function, defaults to `theme.transitionTimingFunction`
 
 <ModalCustomTransitionsDemo />
-
-## Server side rendering
-
-By default Modal uses random id to connect title and body via aria- attributes.
-This will result in hydration mismatch if you use **opened** modal (closed modal do not require this step) during ssr.
-To avoid that set static id:
-
-```tsx
-<Modal id="my-modal" opened />
-```
 
 ## Accessibility and usability
 

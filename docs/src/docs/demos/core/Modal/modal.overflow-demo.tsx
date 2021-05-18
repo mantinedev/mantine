@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, Group, Portal } from '@mantine/core';
+import { Modal, Button, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
@@ -53,27 +53,23 @@ export function ModalOverflowDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <Portal zIndex={10}>
-        <Modal
-          opened={outsideOpened}
-          onClose={() => setOutsideOpened(false)}
-          title="Please consider this"
-          overflow="outside"
-        >
-          {content}
-        </Modal>
-      </Portal>
+      <Modal
+        opened={outsideOpened}
+        onClose={() => setOutsideOpened(false)}
+        title="Please consider this"
+        overflow="outside"
+      >
+        {content}
+      </Modal>
 
-      <Portal zIndex={10}>
-        <Modal
-          opened={insideOpened}
-          onClose={() => setInsideOpened(false)}
-          title="Please consider this"
-          overflow="inside"
-        >
-          {content}
-        </Modal>
-      </Portal>
+      <Modal
+        opened={insideOpened}
+        onClose={() => setInsideOpened(false)}
+        title="Please consider this"
+        overflow="inside"
+      >
+        {content}
+      </Modal>
 
       <Group position="center">
         <Button onClick={() => setOutsideOpened(true)} color="pink">
