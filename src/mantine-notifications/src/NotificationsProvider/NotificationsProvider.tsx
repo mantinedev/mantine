@@ -20,7 +20,9 @@ const POSITIONS = [
   'bottom-center',
 ] as const;
 
-export interface NotificationProviderProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface NotificationProviderProps
+  extends DefaultProps,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Notifications position */
   position?:
     | 'top-left'
@@ -65,6 +67,7 @@ export function NotificationsProvider({
 }: NotificationProviderProps) {
   const {
     notifications,
+    queue,
     showNotification,
     updateNotification,
     hideNotification,
@@ -110,6 +113,7 @@ export function NotificationsProvider({
     <NotificationsContext.Provider
       value={{
         notifications,
+        queue,
         showNotification,
         hideNotification,
         updateNotification,
