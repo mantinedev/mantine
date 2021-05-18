@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useDocumentTitle, randomId } from '@mantine/hooks';
-import { Group, Button } from '@mantine/core';
+import { useDocumentTitle } from '@mantine/hooks';
+import { Group, Button, randomId } from '@mantine/core';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
-import { useDocumentTitle, randomId } from '@mantine/hooks';
-import { Button } from '@mantine/core';
+import { useDocumentTitle } from '@mantine/hooks';
+import { Button, randomId } from '@mantine/core';
 
 export function Demo() {
   const [title, setTitle] = useState('');
