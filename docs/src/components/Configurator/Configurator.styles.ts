@@ -39,13 +39,16 @@ export default createUseStyles(
       boxSizing: 'border-box',
       width: 250,
       padding: theme.spacing.md,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       borderLeft: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
       }`,
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         width: '100%',
+        borderLeft: 0,
+        borderTop: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+        }`,
       },
     },
 

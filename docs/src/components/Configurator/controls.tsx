@@ -154,29 +154,16 @@ function SizeControl({
   capitalize: boolean;
   onChange(value: string): void;
 }) {
-  const theme = useMantineTheme();
-
   return (
     <InputWrapper labelElement="div" label={capitalize(label)} {...others}>
-      <div
-        style={{
-          border: `1px solid ${
-            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]
-          }`,
-          borderRadius: theme.radius.sm,
-        }}
-      >
-        <SegmentedControl
-          data={sizesData}
-          value={value}
-          onChange={onChange}
-          fullWidth
-          color="blue"
-          style={{
-            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-          }}
-        />
-      </div>
+      <SegmentedControl
+        data={sizesData}
+        value={value}
+        onChange={onChange}
+        fullWidth
+        transitionDuration={100}
+        transitionTimingFunction="ease"
+      />
     </InputWrapper>
   );
 }
