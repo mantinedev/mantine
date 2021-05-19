@@ -1,5 +1,9 @@
 {
   "extends": "../../tsconfig.json",
   "include": ["./", "../../configuration/types"],
-  "compilerOptions": {}
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "dist"
+  }
 }

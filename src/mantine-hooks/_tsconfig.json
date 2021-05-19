@@ -4,7 +4,6 @@
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,
-    "declarationDir": "dist",
-    "paths": {}
+    "declarationDir": "dist"
   }
 }

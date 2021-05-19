@@ -1,4 +1,4 @@
-import React, { useRef, useState, useLayoutEffect, useEffect } from 'react';
+import React, { useRef, useState, useLayoutEffect, useEffect, ReactPortal } from 'react';
 import { createPortal } from 'react-dom';
 
 export interface PortalProps {
@@ -20,7 +20,7 @@ export interface PortalProps {
 // useIsomorphicEffect removes it by replacing useLayoutEffect with useEffect during ssr
 const useIsomorphicEffect = typeof document !== 'undefined' ? useLayoutEffect : useEffect;
 
-export function Portal({ children, zIndex = 1, target, className }: PortalProps) {
+export function Portal({ children, zIndex = 1, target, className }: PortalProps): ReactPortal {
   const [mounted, setMounted] = useState(false);
   const elementRef = useRef<HTMLDivElement>();
 

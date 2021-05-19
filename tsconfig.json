@@ -1,18 +1,17 @@
 {
   "include": ["./src", "./docs", "./scripts", "./configuration", "./envs"],
   "exclude": ["dist", "public"],
-
   "compilerOptions": {
+    "target": "ESNext",
     "jsx": "react",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "module": "commonjs",
-    "target": "ESNext",
     "sourceMap": false,
     "noEmitOnError": false,
     "allowJs": true,
-    "resolveJsonModule": true,
+    "module": "commonjs",
     "moduleResolution": "Node",
+    "resolveJsonModule": true,
     "types": ["node", "webpack", "jest"],
     "typeRoots": ["./node_modules/@types", "./configuration/types"],
     "baseUrl": ".",

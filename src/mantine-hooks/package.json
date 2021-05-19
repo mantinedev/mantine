@@ -1,7 +1,8 @@
 {
   "name": "@mantine/hooks",
   "version": "1.0.6",
-  "main": "dist/lib.js",
+  "main": "dist/index.js",
+  "module": "es/index.js",
   "types": "dist/mantine-hooks/src/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",

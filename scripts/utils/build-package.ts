@@ -4,6 +4,7 @@ import chalk from 'chalk';
 import createPackageConfig from '../../configuration/rollup/create-package-config';
 import locatePackage from './locate-package';
 import compile from './compile';
+import generateDts from './generate-dts';
 import { Logger } from './Logger';
 
 const logger = new Logger('build-package');
@@ -24,7 +25,7 @@ export async function buildPackage(packageName: string, analyze = false) {
     outputPath: path.join(packagePath, 'dist'),
     externals: [
       ...Object.keys(packageJson.peerDependencies || {}),
-      ...Object.keys(packageJson.dependencies || {}),
+      // ...Object.keys(packageJson.dependencies || {}),
     ],
   });
 
@@ -32,6 +33,7 @@ export async function buildPackage(packageName: string, analyze = false) {
 
   try {
     const startTime = Date.now();
+    await generateDts(packagePath);
     await compile(config);
     logger.info(
       `Package ${chalk.cyan(packageName)} was build in ${chalk.green(
