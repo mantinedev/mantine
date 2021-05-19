@@ -90,7 +90,14 @@ storiesOf('@mantine/core/Menu', module)
   .add('Button connected menu', () => (
     <div style={{ padding: 40 }}>
       <Menu menuPosition={{ top: 36, left: 0 }} control={button} controlRefProp="elementRef">
-        <MenuItem icon={<GearIcon style={{ width: 12, height: 12 }} />}>Settings</MenuItem>
+        <MenuItem
+          component="a"
+          href="https://mantine.dev"
+          target="_blank"
+          icon={<GearIcon style={{ width: 12, height: 12 }} />}
+        >
+          Settings
+        </MenuItem>
         <MenuItem disabled icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
           Disabled
         </MenuItem>

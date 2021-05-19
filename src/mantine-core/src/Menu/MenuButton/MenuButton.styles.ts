@@ -17,7 +17,10 @@ export default createMemoStyles({
     outline: 0,
     width: '100%',
     textAlign: 'left',
+    display: 'inline-block',
+    textDecoration: 'none',
     height: 32,
+    boxSizing: 'border-box',
     padding: [0, theme.spacing.sm],
     cursor: 'pointer',
     color: color
@@ -43,6 +46,7 @@ export default createMemoStyles({
   inner: {
     display: 'flex',
     alignItems: 'center',
+    height: '100%',
   },
 
   body: {

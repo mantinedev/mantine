@@ -13,6 +13,7 @@ import { MenuComponentDemo } from '../demos/core/Menu/menu-component.demo';
 import { MenuComposeDemo } from '../demos/core/Menu/menu-compose.demo';
 import { MenuTransitionsDemo } from '../demos/core/Menu/menu-transitions.demo';
 import { MenuPositionDemo } from '../demos/core/Menu/menu-position.demo';
+import { MenuLinkDemo } from '../demos/core/Menu/menu-link.demo';
 import { MenuConfigurator } from '../demos/core/Menu/menu.configurator';
 
 # Menu
@@ -114,6 +115,20 @@ import { MENU_SIZES } from '@mantine/core';
 You can compose Menu with any other components with <GatsbyLink to="/core/group/">Group</GatsbyLink> component:
 
 <MenuComposeDemo />
+
+## Custom component as MenuItem
+
+By default menu items render as button, to change that set `component` prop on MenuItem component:
+
+```tsx
+// Regular anchor as MenuItem root element
+<MenuItem component="a" href="https://mantine/dev" target="_blank" />
+
+// React router link as MenuItem root element
+<MenuItem component={Link} to="/hello" />
+```
+
+<MenuLinkDemo />
 
 ## Get element ref
 

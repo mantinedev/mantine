@@ -1,4 +1,5 @@
 import React from 'react';
+import { ComponentPassThrough } from '@mantine/types';
 
 export interface MenuItemProps extends React.ComponentPropsWithoutRef<'button'> {
   /** Item label */
@@ -20,9 +21,11 @@ export interface MenuItemType {
   ref?: React.RefObject<HTMLButtonElement> | ((instance: HTMLButtonElement) => void);
 }
 
-// Props should be kept for ts integration
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function MenuItem(props: MenuItemProps) {
+export function MenuItem<T extends React.ElementType = 'button'>(
+  // Props should be kept for ts integration
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  props: ComponentPassThrough<T, MenuItemProps>
+) {
   return null;
 }
 
