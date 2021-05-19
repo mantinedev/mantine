@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
-import { Hr } from '../../Hr/Hr';
+import { Divider } from '../../Divider/Divider';
 import { Paper } from '../../Paper/Paper';
 import { MenuButton } from '../MenuButton/MenuButton';
 import { MenuItem } from '../MenuItem/MenuItem';
@@ -27,14 +27,14 @@ describe('@mantine/core/MenuBody', () => {
       <MenuBody {...defaultProps}>
         <MenuItem>test-1</MenuItem>
         <MenuItem>test-2</MenuItem>
-        <Hr />
+        <Divider />
         <MenuItem>test-3</MenuItem>
-        <Hr />
+        <Divider />
       </MenuBody>
     );
 
     expect(element.find(MenuButton)).toHaveLength(3);
-    expect(element.find(Hr)).toHaveLength(2);
+    expect(element.find(Divider)).toHaveLength(2);
   });
 
   it('does not render if only incorrect or no children were passed', () => {

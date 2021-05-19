@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Modal, Button, ElementsGroup, Portal } from '@mantine/core';
+import { Modal, Button, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
-import { Modal, Button, ElementsGroup } from '@mantine/core';
+import { Modal, Button, Group } from '@mantine/core';
 
 function Demo() {
   const [noTransitionOpened, setNoTransitionOpened] = useState(false);
   const [slowTransitionOpened, setSlowTransitionOpened] = useState(false);
-  
+
   return (
     <>
       <Modal
@@ -28,17 +28,17 @@ function Demo() {
         transitionDuration={600}
         transitionTimingFunction="ease"
       >
-        fade transition 600ms ease transition 
+        fade transition 600ms ease transition
       </Modal>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button onClick={() => setSlowTransitionOpened(true)} color="pink">
           rotate-left transition
         </Button>
         <Button onClick={() => setNoTransitionOpened(true)} color="cyan">
           fade transition
         </Button>
-      </ElementsGroup>
+      </Group>
     </>
   );
 }`;
@@ -49,38 +49,34 @@ export function ModalCustomTransitionsDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <Portal zIndex={10}>
-        <Modal
-          opened={slowTransitionOpened}
-          onClose={() => setSlowTransitionOpened(false)}
-          title="Please consider this"
-          transition="rotate-left"
-        >
-          rotate-left transition
-        </Modal>
-      </Portal>
+      <Modal
+        opened={slowTransitionOpened}
+        onClose={() => setSlowTransitionOpened(false)}
+        title="Please consider this"
+        transition="rotate-left"
+      >
+        rotate-left transition
+      </Modal>
 
-      <Portal zIndex={10}>
-        <Modal
-          opened={noTransitionOpened}
-          onClose={() => setNoTransitionOpened(false)}
-          title="Please consider this"
-          transition="fade"
-          transitionDuration={600}
-          transitionTimingFunction="ease"
-        >
-          fade transition
-        </Modal>
-      </Portal>
+      <Modal
+        opened={noTransitionOpened}
+        onClose={() => setNoTransitionOpened(false)}
+        title="Please consider this"
+        transition="fade"
+        transitionDuration={600}
+        transitionTimingFunction="ease"
+      >
+        fade transition
+      </Modal>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button onClick={() => setSlowTransitionOpened(true)} color="pink">
           rotate-left transition
         </Button>
         <Button onClick={() => setNoTransitionOpened(true)} color="cyan">
           fade transition
         </Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

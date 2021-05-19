@@ -32,6 +32,7 @@ function Demo() {
 
 export function NumberInputControls() {
   const theme = useMantineTheme();
+  const variant = theme.colorScheme === 'dark' ? 'filled' : 'default';
 
   return (
     <CodeDemo
@@ -40,19 +41,25 @@ export function NumberInputControls() {
       demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
     >
       <div style={{ maxWidth: 420, margin: 'auto' }}>
-        <NumberInput label="With controls" placeholder="By default controls are visible" />
+        <NumberInput
+          label="With controls"
+          placeholder="By default controls are visible"
+          variant={variant}
+        />
 
         <NumberInput
           style={{ marginTop: 15 }}
           hideControls
           label="Without controls"
           placeholder="Disable them with hideControls prop"
+          variant={variant}
         />
         <NumberInput
           style={{ marginTop: 15 }}
           label="Disabled"
           disabled
           placeholder="Controls also not rendered when input is disabled"
+          variant={variant}
         />
       </div>
     </CodeDemo>

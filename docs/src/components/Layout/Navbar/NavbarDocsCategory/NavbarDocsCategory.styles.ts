@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, getFocusStyles } from '@mantine/core';
+import { theming, MantineTheme, getFocusStyles, hexToRgba } from '@mantine/core';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -60,8 +60,9 @@ export default createUseStyles(
 
     linkActive: {
       borderLeftColor: theme.colors.blue[5],
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.blue[0],
-      color: theme.colorScheme === 'dark' ? theme.colors.blue[0] : theme.colors.blue[8],
+      backgroundColor:
+        theme.colorScheme === 'dark' ? hexToRgba(theme.colors.blue[9], 0.45) : theme.colors.blue[0],
+      color: theme.colorScheme === 'dark' ? theme.colors.blue[1] : theme.colors.blue[8],
       fontWeight: 500,
     },
 

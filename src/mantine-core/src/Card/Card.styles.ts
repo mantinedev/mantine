@@ -1,5 +1,4 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 interface CardStylesProps {
   theme: MantineTheme;
@@ -7,50 +6,47 @@ interface CardStylesProps {
   padding: MantineNumberSize;
 }
 
-export default createUseStyles(
-  {
-    card: ({ theme, radius, padding }: CardStylesProps) => {
-      const spacing = getSizeValue({ size: padding, sizes: theme.spacing });
-      const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
+export default createMemoStyles({
+  card: ({ theme, radius, padding }: CardStylesProps) => {
+    const spacing = getSizeValue({ size: padding, sizes: theme.spacing });
+    const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
 
-      return {
-        position: 'relative',
+    return {
+      position: 'relative',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
 
-        '& [data-mantine-image]': {
-          width: `calc(100% + ${spacing * 2}px) !important`,
-          marginLeft: -spacing,
-          marginRight: -spacing,
+      '& [data-mantine-image]': {
+        width: `calc(100% + ${spacing * 2}px) !important`,
+        marginLeft: -spacing,
+        marginRight: -spacing,
 
-          '&:first-child': {
-            borderTopRightRadius: borderRadius,
-            borderTopLeftRadius: borderRadius,
-            marginBottom: spacing,
-            marginTop: -spacing,
-          },
-
-          '&:last-child': {
-            borderBottomRightRadius: borderRadius,
-            borderBottomLeftRadius: borderRadius,
-            marginTop: spacing,
-            marginBottom: -spacing,
-          },
-
-          '&:first-child:last-child': {
-            marginTop: -spacing,
-            marginBottom: -spacing,
-          },
+        '&:first-child': {
+          borderTopRightRadius: borderRadius,
+          borderTopLeftRadius: borderRadius,
+          marginBottom: spacing,
+          marginTop: -spacing,
         },
 
-        '& [data-mantine-hr]': {
-          borderTopColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
-          marginLeft: -spacing,
-          marginRight: -spacing,
-          marginBottom: spacing / 2,
-          marginTop: spacing / 2,
+        '&:last-child': {
+          borderBottomRightRadius: borderRadius,
+          borderBottomLeftRadius: borderRadius,
+          marginTop: spacing,
+          marginBottom: -spacing,
         },
-      };
-    },
+
+        '&:first-child:last-child': {
+          marginTop: -spacing,
+          marginBottom: -spacing,
+        },
+      },
+
+      '& [data-mantine-hr]': {
+        borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+        marginLeft: -spacing,
+        marginRight: -spacing,
+        marginBottom: spacing / 2,
+        marginTop: spacing / 2,
+      },
+    };
   },
-  { link: true }
-);
+});

@@ -29,33 +29,10 @@ import { Drawer } from '@mantine/core';
 
 ## Usage
 
+Drawer is wrapped in <GatsbyLink to="/core/portal/">Portal</GatsbyLink> component,
+it can be rendered only on client as createPortal is not available during server side rendering:
+
 <DrawerBaseDemo />
-
-## Usage with Portal
-
-Usually, it is a good idea to render drawer outside of current component to avoid z-index collisions.
-To implement this use <GatsbyLink to="/core/portal/">Portal</GatsbyLink> component.
-
-```tsx
-import React, { useState } from 'react';
-import { Drawer, Portal } from '@mantine/core';
-
-function PortalDemo() {
-  const [opened, setOpened] = useState(false);
-
-  return (
-    <div style={{ position: 'relative', zIndex: 1 }}>
-      <Portal zIndex={5}>
-        <Drawer opened={opened} onClose={() => setOpened(false)}>
-          Drawer is rendered at the end of document.body
-        </Drawer>
-      </Portal>
-
-      <button onClick={() => setOpened(true)}>Open drawer</button>
-    </div>
-  );
-}
-```
 
 ## Position
 

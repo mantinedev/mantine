@@ -18,9 +18,9 @@ export default createUseStyles(
       fontWeight: 700,
       fontSize: 30,
       lineHeight: 1,
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[9],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
       }`,
       padding: [theme.spacing.xs, theme.spacing.md],
       borderRadius: theme.radius.sm,

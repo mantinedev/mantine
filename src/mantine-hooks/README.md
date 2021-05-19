@@ -23,6 +23,7 @@ npm install @mantine/hooks
 - [use-click-outside](https://mantine.dev/hooks/use-click-outside/) – capture click and touch events from outside of given container
 - [use-clipboard](https://mantine.dev/hooks/use-clipboard/) – provides convenient interface to work with clipboard api
 - [use-color-scheme](https://mantine.dev/hooks/use-color-scheme/) – detect system color scheme
+- [use-debounced-value](https://mantine.dev/hooks/use-debounced-value/) – - debounce value with useEffect
 - [use-document-title](https://mantine.dev/hooks/use-document-title/) - set document.title property
 - [use-focus-tap](https://mantine.dev/hooks/use-focus-tap/) – trap focus at given node
 - [use-form](https://mantine.dev/hooks/use-form/) – bare minimum form state management

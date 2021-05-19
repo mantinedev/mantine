@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ElementsGroup } from '@mantine/core';
+import { Image, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -36,7 +36,7 @@ function Demo() {
 export function ImageSizesDemo() {
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Image
           data-mantine-composable
           width={200}
@@ -57,7 +57,7 @@ export function ImageSizesDemo() {
           height={80}
           src="https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
         />
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

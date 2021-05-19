@@ -1,5 +1,5 @@
-import { createUseStyles } from 'react-jss';
 import {
+  createMemoStyles,
   MantineTheme,
   MantineSize,
   MantineNumberSize,
@@ -8,6 +8,7 @@ import {
   getFocusStyles,
   getThemeColor,
   MantineSizes,
+  hexToRgba,
 } from '@mantine/theme';
 
 interface ButtonStylesProps {
@@ -60,161 +61,166 @@ const getWidthStyles = (fullWidth: boolean) => ({
   width: fullWidth ? '100%' : 'auto',
 });
 
-export default createUseStyles(
-  {
-    icon: {
-      display: 'flex',
-      alignItems: 'center',
-    },
-
-    leftIcon: {
-      marginRight: 10,
-    },
-
-    rightIcon: {
-      marginLeft: 10,
-    },
-
-    inner: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100%',
-    },
-
-    label: {
-      display: 'block',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-    },
-
-    shared: (props: ButtonStylesProps) => ({
-      ...sizes[props.size],
-      ...getFontStyles(props.theme),
-      ...getFocusStyles(props.theme),
-      ...getWidthStyles(props.fullWidth),
-      WebkitTapHighlightColor: 'transparent',
-      userSelect: 'none',
-      boxSizing: 'border-box',
-      textDecoration: 'none',
-      cursor: 'pointer',
-      appearance: 'none',
-      WebkitAppearance: 'none',
-    }),
-
-    outline: ({ color, radius, theme }: ButtonStylesProps) => ({
-      backgroundColor: 'transparent',
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      textTransform: 'uppercase',
-      fontWeight: 'bold',
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
-      border: `1px solid ${getThemeColor({
-        theme,
-        color,
-        shade: theme.colorScheme === 'dark' ? 4 : 8,
-      })}`,
-
-      '&:not(:disabled):active': {
-        transform: 'translateY(1px)',
-      },
-
-      '&:disabled': {
-        borderColor: 'transparent',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-        cursor: 'not-allowed',
-      },
-    }),
-
-    light: ({ color, size, radius, theme }: ButtonStylesProps) => ({
-      border: '1px solid transparent',
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      textTransform: 'uppercase',
-      fontWeight: 'bold',
-      backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 0 }),
-      color:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[9]
-          : getThemeColor({ theme, color, shade: 9 }),
-
-      '& $inner': {
-        height: sizes[size].height - 2,
-      },
-
-      '&:hover': {
-        backgroundColor: getThemeColor({
-          theme,
-          color,
-          shade: theme.colorScheme === 'dark' ? 5 : 1,
-        }),
-      },
-
-      '&:not(:disabled):active': {
-        transform: 'translateY(1px)',
-      },
-
-      '&:disabled': {
-        borderColor: 'transparent',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-        textShadow: 'none',
-        cursor: 'not-allowed',
-      },
-    }),
-
-    filled: ({ color, size, radius, theme }: ButtonStylesProps) => ({
-      border: '1px solid transparent',
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      textTransform: 'uppercase',
-      fontWeight: 'bold',
-      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
-      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}`,
-      color: theme.white,
-
-      '& $inner': {
-        height: sizes[size].height - 2,
-      },
-
-      '&:hover': {
-        backgroundColor: getThemeColor({ theme, color, shade: 7 }),
-      },
-
-      '&:not(:disabled):active': {
-        transform: 'translateY(1px)',
-      },
-
-      '&:disabled': {
-        borderColor: 'transparent',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-        textShadow: 'none',
-        cursor: 'not-allowed',
-      },
-    }),
-
-    link: ({ color, radius, theme }: ButtonStylesProps) => ({
-      padding: 0,
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      backgroundColor: 'transparent',
-      border: 0,
-      display: 'inline-block',
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
-      cursor: 'pointer',
-
-      '&:hover': {
-        textDecoration: 'underline',
-      },
-
-      '&:disabled': {
-        color: theme.colors.gray[5],
-        cursor: 'not-allowed',
-
-        '&:hover': {
-          textDecoration: 'none',
-        },
-      },
-    }),
+export default createMemoStyles({
+  icon: {
+    display: 'flex',
+    alignItems: 'center',
   },
-  { link: true }
-);
+
+  leftIcon: {
+    marginRight: 10,
+  },
+
+  rightIcon: {
+    marginLeft: 10,
+  },
+
+  inner: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
+
+  label: {
+    display: 'block',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+
+  shared: (props: ButtonStylesProps) => ({
+    ...sizes[props.size],
+    ...getFontStyles(props.theme),
+    ...getFocusStyles(props.theme),
+    ...getWidthStyles(props.fullWidth),
+    WebkitTapHighlightColor: 'transparent',
+    userSelect: 'none',
+    boxSizing: 'border-box',
+    textDecoration: 'none',
+    cursor: 'pointer',
+    appearance: 'none',
+    WebkitAppearance: 'none',
+  }),
+
+  outline: ({ color, radius, theme }: ButtonStylesProps) => ({
+    backgroundColor: 'transparent',
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
+    border: `1px solid ${hexToRgba(
+      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 4 }),
+      theme.colorScheme === 'dark' ? 0.45 : 1
+    )}`,
+
+    '&:not(:disabled):active': {
+      transform: 'translateY(1px)',
+    },
+
+    '&:disabled': {
+      borderColor: 'transparent',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
+      cursor: 'not-allowed',
+    },
+  }),
+
+  light: ({ color, size, radius, theme }: ButtonStylesProps) => ({
+    border: '1px solid transparent',
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    backgroundColor: hexToRgba(
+      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+      theme.colorScheme === 'dark' ? 0.3 : 1
+    ),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
+
+    '& $inner': {
+      height: sizes[size].height - 2,
+    },
+
+    '&:hover': {
+      backgroundColor: hexToRgba(
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
+        theme.colorScheme === 'dark' ? 0.65 : 1
+      ),
+    },
+
+    '&:not(:disabled):active': {
+      transform: 'translateY(1px)',
+    },
+
+    '&:disabled': {
+      borderColor: 'transparent',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
+      textShadow: 'none',
+      cursor: 'not-allowed',
+    },
+  }),
+
+  filled: ({ color, size, radius, theme }: ButtonStylesProps) => ({
+    border: '1px solid transparent',
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    backgroundColor: hexToRgba(
+      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 7 }),
+      theme.colorScheme === 'dark' ? 0.65 : 1
+    ),
+    textShadow:
+      theme.colorScheme === 'dark'
+        ? 'none'
+        : `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}`,
+    color: theme.white,
+
+    '& $inner': {
+      height: sizes[size].height - 2,
+    },
+
+    '&:hover': {
+      backgroundColor: hexToRgba(
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 7 }),
+        theme.colorScheme === 'dark' ? 0.95 : 1
+      ),
+    },
+
+    '&:not(:disabled):active': {
+      transform: 'translateY(1px)',
+    },
+
+    '&:disabled': {
+      borderColor: 'transparent',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
+      textShadow: 'none',
+      cursor: 'not-allowed',
+    },
+  }),
+
+  link: ({ color, radius, theme }: ButtonStylesProps) => ({
+    padding: 0,
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    backgroundColor: 'transparent',
+    border: 0,
+    display: 'inline-block',
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    cursor: 'pointer',
+    lineHeight: theme.lineHeight,
+
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+
+    '&:disabled': {
+      color: theme.colors.gray[5],
+      cursor: 'not-allowed',
+
+      '&:hover': {
+        textDecoration: 'none',
+      },
+    },
+  }),
+});

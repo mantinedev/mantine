@@ -1,6 +1,6 @@
 import React from 'react';
 import { RocketIcon } from '@modulz/radix-icons';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import {
   checkAccessibility,
   itSupportsStyle,
@@ -8,7 +8,6 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itRendersChildren,
-  isHasComposableAttribute,
 } from '@mantine/tests';
 import { ActionIcon } from './ActionIcon';
 
@@ -18,7 +17,6 @@ describe('@mantine/core/ActionIcon', () => {
   itSupportsStyle(ActionIcon, {});
   itSupportsRef(ActionIcon, {}, HTMLButtonElement, 'elementRef');
   itRendersChildren(ActionIcon, {});
-  isHasComposableAttribute(ActionIcon, {});
   checkAccessibility([
     mount(
       <ActionIcon title="Action icon">
@@ -26,6 +24,23 @@ describe('@mantine/core/ActionIcon', () => {
       </ActionIcon>
     ),
   ]);
+
+  it('accepts component from component prop', () => {
+    const TestComponent = (props: any) => <span data-test-prop {...props} />;
+    const withTag = shallow(
+      <ActionIcon<'a'> component="a" href="https://mantine.dev">
+        $
+      </ActionIcon>
+    );
+    const withComponent = shallow(
+      <ActionIcon<typeof TestComponent> component={TestComponent}>$</ActionIcon>
+    );
+
+    expect(withTag.type()).toBe('a');
+    expect(withTag.render().attr('href')).toBe('https://mantine.dev');
+    expect(withComponent.type()).toBe(TestComponent);
+    expect(withComponent.render().attr('data-test-prop')).toBe('true');
+  });
 
   it('has correct displayName', () => {
     expect(ActionIcon.displayName).toEqual('@mantine/core/ActionIcon');

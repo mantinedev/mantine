@@ -3,7 +3,7 @@ import { ComponentDoc } from 'react-docgen-typescript';
 const replace = {
   MantineNumberSize: 'number | "xs" | "sm" | "md" | "lg" | "xl"',
   MantineSize: '"xs" | "sm" | "md" | "lg" | "xl"',
-  ElementsGroupPosition: '"right" | "center" | "left" | "apart"',
+  GroupPosition: '"right" | "center" | "left" | "apart"',
   ReactText: 'string | number',
   'ReactElement<any, string | ((props: any) => ReactElement<any, any>) | (new (props: any) => Component<any, any, any>)>':
     'ReactElement',
@@ -28,6 +28,7 @@ export function prepareDeclaration(declaration: ComponentDoc) {
   const ordered = Object.keys(data.props)
     .sort()
     .reduce((obj, key) => {
+      // eslint-disable-next-line no-param-reassign
       obj[key] = data.props[key];
       return obj;
     }, {});

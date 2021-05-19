@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, ElementsGroup, Text, Portal } from '@mantine/core';
+import { Modal, Button, Group, Text } from '@mantine/core';
 import { AuthenticationForm } from '@mantine/demos';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -23,21 +23,19 @@ export function ModalSizesDemo() {
 
   return (
     <CodeDemo>
-      <Portal zIndex={10}>
-        <Modal
-          opened={opened}
-          onClose={() => setOpened(false)}
-          title="Introduce yourself!"
-          size={size}
-        >
-          <AuthenticationForm noShadow noPadding />
-        </Modal>
-      </Portal>
+      <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="Introduce yourself!"
+        size={size}
+      >
+        <AuthenticationForm noShadow noPadding />
+      </Modal>
 
       <Text align="center">Choose modal size:</Text>
-      <ElementsGroup position="center" style={{ marginTop: 15 }}>
+      <Group position="center" style={{ marginTop: 15 }}>
         {buttons}
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

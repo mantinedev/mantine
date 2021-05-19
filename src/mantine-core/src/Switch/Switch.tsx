@@ -50,6 +50,7 @@ export function Switch({
   inputStyle,
   inputClassName,
   elementRef,
+  children,
   ...others
 }: SwitchProps) {
   const classes = useStyles({
@@ -65,12 +66,12 @@ export function Switch({
   return (
     <div className={cx(classes.wrapper, className)} style={style} {...wrapperProps}>
       <input
+        {...others}
         id={uuid}
         ref={elementRef}
         type="checkbox"
         className={cx(classes.switch, inputClassName)}
         style={inputStyle}
-        {...others}
       />
 
       {label && (

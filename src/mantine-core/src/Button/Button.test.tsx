@@ -7,7 +7,6 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsOthers,
-  isHasComposableAttribute,
 } from '@mantine/tests';
 import { Button } from './Button';
 
@@ -18,7 +17,6 @@ describe('@mantine/core/Button', () => {
   itSupportsStyle(Button, {});
   itSupportsRef(Button, {}, HTMLButtonElement, 'elementRef');
   itSupportsClassName(Button, {});
-  isHasComposableAttribute(Button, {});
 
   it('has correct displayName', () => {
     expect(Button.displayName).toEqual('@mantine/core/Button');

@@ -1,8 +1,5 @@
 import { useRef } from 'react';
-
-export function randomId() {
-  return `mantine-${Math.random().toString(36).substr(2, 9)}`;
-}
+import { randomId } from '@mantine/utils';
 
 export function useId(id?: string, generateId: () => string = randomId) {
   const generatedId = useRef(generateId());

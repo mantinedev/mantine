@@ -1,5 +1,5 @@
 import React from 'react';
-import { ElementsGroup, Button } from '@mantine/core';
+import { Group, Button } from '@mantine/core';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -16,9 +16,9 @@ function Demo() {
 export function ThemeOverrideDemo() {
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button themeOverride={{ fontFamily: 'Verdana, sans-serif' }}>Verdana button</Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

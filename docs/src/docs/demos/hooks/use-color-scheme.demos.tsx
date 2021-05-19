@@ -1,5 +1,5 @@
 import React from 'react';
-import { ElementsGroup, Badge } from '@mantine/core';
+import { Group, Badge } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
@@ -7,9 +7,9 @@ const code = `import React from 'react';
 import { Badge } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
 
-export function UseColorSchemeDemo() {
+export function Demo() {
   const colorScheme = useColorScheme();
-  
+
   return (
     <Badge color={colorScheme === 'dark' ? 'blue' : 'teal'} variant="filled">
       Your system color scheme is {colorScheme}
@@ -22,11 +22,11 @@ export function UseColorSchemeDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Badge color={colorScheme === 'dark' ? 'blue' : 'teal'} variant="filled">
           Your system color scheme is {colorScheme}
         </Badge>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

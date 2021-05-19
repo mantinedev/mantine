@@ -79,8 +79,8 @@ describe('@mantine/core/Checkbox', () => {
     expect(notChecked.render().find('input').attr('checked')).toBe(undefined);
   });
 
-  it('sets checked state based on intermediate prop', () => {
-    const element = shallow(<Checkbox intermediate checked={false} onChange={() => {}} />);
+  it('sets checked state based on indeterminate prop', () => {
+    const element = shallow(<Checkbox indeterminate checked={false} onChange={() => {}} />);
     expect(element.render().find('input').attr('checked')).toBe('checked');
   });
 

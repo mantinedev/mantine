@@ -1,14 +1,14 @@
 import React from 'react';
-import { Menu, MenuItem, Hr, Button, ElementsGroup } from '@mantine/core';
+import { Menu, MenuItem, Divider, Button, Group } from '@mantine/core';
 import { GearIcon, ChatBubbleIcon, ImageIcon, MagnifyingGlassIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { ElementsGroup, Menu } from '@mantine/core';
+import { Group, Menu } from '@mantine/core';
 
 function Demo() {
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <Menu control={<button type="button">Button control</button>} controlRefProp="ref">
         {/* Menu items */}
       </Menu>
@@ -16,7 +16,7 @@ function Demo() {
       <Menu control={<Button>Mantine Button</Button>}>
         {/* Menu items */}
       </Menu>
-    </ElementsGroup>
+    </Group>
   );
 }`;
 
@@ -25,13 +25,13 @@ const iconSize = { width: 14, height: 14 };
 export function MenuComponentDemo() {
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Menu control={<button type="button">Button control</button>} controlRefProp="ref">
           <MenuItem icon={<GearIcon style={iconSize} />}>Settings</MenuItem>
           <MenuItem icon={<ChatBubbleIcon style={iconSize} />}>Messages</MenuItem>
           <MenuItem icon={<ImageIcon style={iconSize} />}>Gallery</MenuItem>
           <MenuItem icon={<MagnifyingGlassIcon style={iconSize} />}>Search</MenuItem>
-          <Hr />
+          <Divider />
           <MenuItem disabled>Delete my data</MenuItem>
           <MenuItem color="red">Delete account</MenuItem>
         </Menu>
@@ -41,11 +41,11 @@ export function MenuComponentDemo() {
           <MenuItem icon={<ChatBubbleIcon style={iconSize} />}>Messages</MenuItem>
           <MenuItem icon={<ImageIcon style={iconSize} />}>Gallery</MenuItem>
           <MenuItem icon={<MagnifyingGlassIcon style={iconSize} />}>Search</MenuItem>
-          <Hr />
+          <Divider />
           <MenuItem disabled>Delete my data</MenuItem>
           <MenuItem color="red">Delete account</MenuItem>
         </Menu>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

@@ -1,0 +1,78 @@
+---
+package: mantine-core
+title: Divider
+order: 1
+slug: /core/divider/
+category: 'misc'
+description: 'Display horizontal or vertical line'
+---
+
+import { DIVIDER_SIZES } from '@mantine/core';
+import {
+  DividerBaseDemo,
+  DividerSizesDemo,
+  DividerColorDemo,
+  DividerLabelDemo,
+  DividerOrientationDemo,
+} from '../demos/core/Divider/divider.demos';
+
+# Divider
+
+<PageHeader
+  source="mantine-core/src/Divider/Divider.tsx"
+  docs="core/Divider.mdx"
+  package="@mantine/core"
+/>
+
+```tsx
+import { Divider } from '@mantine/core';
+```
+
+## Usage
+
+Divider component renders horizontal or vertical line.
+Customize hr border style by setting `variant` prop:
+
+<DividerBaseDemo />
+
+## With label
+
+In horizontal orientation you can add label with any react node at left, right or center of Divider
+by setting `label` and control its appearance with `labelPosition` and `labelProps`
+(see <GatsbyLink to="/core/text/">Text</GatsbyLink> component for full props reference):
+
+<DividerLabelDemo />
+
+## Vertical orientation and margins
+
+Set margin prop to add margins on left and right sides in vertical orientation and top and bottom in horizontal:
+
+<DividerOrientationDemo />
+
+## Colors
+
+You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>:
+
+<DividerColorDemo />
+
+## Sizes
+
+Divider has predefined sizes: xs, sm, md, lg, xl.
+You can pass size as number and it will be set as height in px:
+
+<DividerSizesDemo />
+
+You can get predefined sizes by importing `DIVIDER_SIZES`:
+
+```tsx
+import { DIVIDER_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Prop value', 'Height or width']}
+  data={Object.keys(DIVIDER_SIZES).map((size) => [size, `${DIVIDER_SIZES[size]}px`])}
+/>
+
+## Component props
+
+<PropsTable component="Divider" />

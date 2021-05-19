@@ -11,6 +11,7 @@ import {
   Switch,
   useMantineTheme,
 } from '@mantine/core';
+import { SegmentedControlWrapper } from '../core/SegmentedControl/segmented-control-wrapper';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const selectData = [
@@ -22,9 +23,10 @@ const selectData = [
 
 export function WrappedInputsDemo() {
   const theme = useMantineTheme();
+  const inputVariant = theme.colorScheme === 'dark' ? 'filled' : 'default';
 
   return (
-    <CodeDemo demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white}>
+    <CodeDemo>
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <RadioGroup label="RadioGroup">
           <Radio value="react">React</Radio>
@@ -40,6 +42,7 @@ export function WrappedInputsDemo() {
           placeholder="This is text input"
           label="TextInput"
           required
+          variant={inputVariant}
         />
 
         <PasswordInput
@@ -47,6 +50,7 @@ export function WrappedInputsDemo() {
           placeholder="This is password input"
           label="PasswordInput"
           required
+          variant={inputVariant}
         />
 
         <NumberInput
@@ -54,6 +58,7 @@ export function WrappedInputsDemo() {
           placeholder="This is number input"
           label="NumberInput"
           required
+          variant={inputVariant}
         />
 
         <Textarea
@@ -61,6 +66,7 @@ export function WrappedInputsDemo() {
           placeholder="This is textarea"
           label="Textarea"
           required
+          variant={inputVariant}
         />
 
         <Textarea
@@ -70,6 +76,7 @@ export function WrappedInputsDemo() {
           placeholder="This is textarea with autosize option"
           label="Textarea autosize"
           required
+          variant={inputVariant}
         />
 
         <Select
@@ -78,6 +85,7 @@ export function WrappedInputsDemo() {
           placeholder="This is select"
           label="Select"
           required
+          variant={inputVariant}
         />
       </div>
     </CodeDemo>
@@ -85,13 +93,12 @@ export function WrappedInputsDemo() {
 }
 
 export function RegularInputsDemo() {
-  const theme = useMantineTheme();
-
   return (
-    <CodeDemo demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white}>
+    <CodeDemo>
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <Checkbox label="Checkbox" />
         <Switch style={{ marginTop: 15 }} label="Switch" />
+        <SegmentedControlWrapper style={{ marginTop: 15 }} />
       </div>
     </CodeDemo>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, ElementsGroup, Button } from '@mantine/core';
+import { Table, Group, Button } from '@mantine/core';
 import { GitHubLogoIcon } from '@modulz/radix-icons';
 import BUNDLE_SIZES from '../../../.docgen/sizes.json';
 import GatsbyLink from '../../components/MdxProvider/GatsbyLink/GatsbyLink';
@@ -17,7 +17,7 @@ export function PackagesTable() {
         <td>{item.description}</td>
         <td>{BUNDLE_SIZES[folder].gzip.toFixed(2)} kB</td>
         <td>
-          <ElementsGroup>
+          <Group>
             <Button
               component="a"
               href={`https://github.com/mantinedev/mantine/tree/master/src/${folder}`}
@@ -38,7 +38,7 @@ export function PackagesTable() {
             >
               npm
             </Button>
-          </ElementsGroup>
+          </Group>
         </td>
       </tr>
     );

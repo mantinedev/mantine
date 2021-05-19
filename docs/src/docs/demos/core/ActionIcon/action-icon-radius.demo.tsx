@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme, ActionIcon, ElementsGroup } from '@mantine/core';
+import { ActionIcon, Group } from '@mantine/core';
 import { ImageIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -11,12 +11,9 @@ const getSizes = (props: any) =>
   ));
 
 export function ActionIconRadiusDemo() {
-  const theme = useMantineTheme();
   return (
     <CodeDemo>
-      <ElementsGroup position="center">
-        {getSizes({ color: theme.colorScheme === 'dark' ? 'yellow' : 'blue' })}
-      </ElementsGroup>
+      <Group position="center">{getSizes({ color: 'blue' })}</Group>
     </CodeDemo>
   );
 }

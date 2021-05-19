@@ -1,9 +1,9 @@
 import React from 'react';
-import { Tooltip, Button, ElementsGroup, AVAILABLE_TRANSITIONS } from '@mantine/core';
+import { Tooltip, Button, Group, AVAILABLE_TRANSITIONS } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Tooltip, Button, AVAILABLE_TRANSITIONS, ElementsGroup } from '@mantine/core';
+import { Tooltip, Button, AVAILABLE_TRANSITIONS, Group } from '@mantine/core';
 
 function Demo() {
   const transitions = AVAILABLE_TRANSITIONS.map((transition) => (
@@ -18,7 +18,7 @@ function Demo() {
     </Tooltip>
   ));
 
-  return <ElementsGroup position="center">{transitions}</ElementsGroup>;
+  return <Group position="center">{transitions}</Group>;
 }`;
 
 export function TooltipTransitionsDemo({ hideCode = false }: { hideCode: boolean }) {
@@ -36,7 +36,7 @@ export function TooltipTransitionsDemo({ hideCode = false }: { hideCode: boolean
 
   return (
     <CodeDemo code={hideCode ? null : code} language="tsx">
-      <ElementsGroup position="center">{transitions}</ElementsGroup>
+      <Group position="center">{transitions}</Group>
     </CodeDemo>
   );
 }

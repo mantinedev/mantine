@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Image } from '../Image/Image';
-import { Hr } from '../Hr/Hr';
+import { Divider } from '../Divider/Divider';
 import { Text } from '../Text/Text';
 import { Card, CardsGrid } from './Card';
 
@@ -14,7 +14,7 @@ storiesOf('@mantine/core/Card', module)
           src="https://images.unsplash.com/photo-1485795959911-ea5ebf41b6ae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2560&q=80"
         />
         <Text>Card</Text>
-        <Hr variant="solid" />
+        <Divider variant="solid" />
         <Text>Card</Text>
 
         <Image

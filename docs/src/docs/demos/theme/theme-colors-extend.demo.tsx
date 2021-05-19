@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ElementsGroup, Button, Badge, Switch, MantineProvider } from '@mantine/core';
+import { Group, Button, Badge, Switch, MantineProvider } from '@mantine/core';
 import { ColorSchemeContext } from '../../../components/Layout/ColorScheme.context';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
@@ -15,11 +15,11 @@ function Demo() {
       },
     }}>
       <Button color="deep-blue">Deep blue button</Button>
-      
+
       <Badge color="asphalt" variant="filled">
         Asphalt badge
       </Badge>
-      
+
       <Switch
         color="deep-blue"
         label="Deep blue switch"
@@ -65,7 +65,7 @@ export function ThemeColorExtendDemo() {
           },
         }}
       >
-        <ElementsGroup position="center">
+        <Group position="center">
           <Button color="deep-blue">Deep blue button</Button>
           <Badge color="asphalt" variant="filled">
             Asphalt badge
@@ -76,7 +76,7 @@ export function ThemeColorExtendDemo() {
             defaultChecked
             wrapperProps={{ 'data-mantine-composable': true }}
           />
-        </ElementsGroup>
+        </Group>
       </MantineProvider>
     </CodeDemo>
   );

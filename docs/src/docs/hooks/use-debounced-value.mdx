@@ -1,0 +1,56 @@
+---
+package: mantine-hooks
+title: 'use-debounced-value'
+order: 1
+slug: /hooks/use-debounced-value/
+---
+
+import { UseDebouncedValueCancelDemo } from '../demos/hooks/use-debounced-value/use-debounced-value-cancel.demo';
+import { UseDebouncedValueBaseDemo } from '../demos/hooks/use-debounced-value/use-debounced-value-base.demo';
+
+# use-debounced-value
+
+<PageHeader
+  source="mantine-hooks/src/use-debounced-value/use-debounced-value.ts"
+  docs="hooks/use-debounced-value.mdx"
+  package="@mantine/hooks"
+/>
+
+```tsx
+import { useDebouncedValue } from '@mantine/hooks';
+```
+
+## Usage
+
+Use hook to debounce value change.
+This can be useful in case you want to perform a heavy operation based on react state,
+for example, send search request.
+
+<UseDebouncedValueBaseDemo />
+
+## Leading update
+
+You can remove immediately update value with first call with `{ leading: true }` options:
+
+<UseDebouncedValueBaseDemo leading />
+
+## Cancel update
+
+Hook provides cancel callback, you can use it to cancel update.
+Update cancels automatically on component unmount.
+
+In this example, type in some text and click cancel button within a minute to cancel debounced value change:
+
+<UseDebouncedValueCancelDemo />
+
+## Definition
+
+```tsx
+function useDebouncedValue<T = any>(
+  value: T,
+  wait: number,
+  options?: {
+    leading: boolean;
+  }
+): readonly [T, () => void];
+```

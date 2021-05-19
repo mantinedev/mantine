@@ -2,7 +2,6 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import {
   checkAccessibility,
-  isHasComposableAttribute,
   itSupportsClassName,
   itRendersChildren,
   itSupportsStyle,
@@ -16,7 +15,6 @@ describe('@mantine/core/Badge', () => {
   itSupportsClassName(Badge, {});
   itRendersChildren(Badge, {});
   itSupportsStyle(Badge, {});
-  isHasComposableAttribute(Badge, {});
 
   it('has correct displayName', () => {
     expect(Badge.displayName).toEqual('@mantine/core/Badge');

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ElementsGroup, useMantineTheme } from '@mantine/core';
+import { Button, Group, useMantineTheme } from '@mantine/core';
 import { GitHubLogoIcon } from '@modulz/radix-icons';
 import NpmIcon from './NpmIcon';
 
@@ -11,57 +11,55 @@ interface PageHeaderProps {
 
 export default function PageHeader(props: PageHeaderProps) {
   const theme = useMantineTheme();
-  const styles = {
-    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3],
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
-  };
+  const buttonProps = {
+    style: {
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : undefined,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+    },
+    color: theme.colorScheme === 'dark' ? 'dark' : 'gray',
+    variant: theme.colorScheme === 'dark' ? 'light' : 'outline',
+  } as const;
 
   return (
-    <ElementsGroup style={{ marginTop: theme.spacing.xs, marginBottom: theme.spacing.md }}>
+    <Group style={{ marginTop: theme.spacing.xs, marginBottom: theme.spacing.md }}>
       <Button
         component="a"
-        variant="outline"
-        color="gray"
         target="_blank"
         href={`https://github.com/mantinedev/mantine/blob/master/docs/src/docs/${props.docs}`}
-        style={styles}
         title="Edit this page on Github"
+        {...buttonProps}
       >
         Edit this page
       </Button>
 
       <Button
         component="a"
-        variant="outline"
-        color="gray"
         leftIcon={<GitHubLogoIcon />}
         target="_blank"
         rel="noopener noreferrer"
         href={`https://github.com/mantinedev/mantine/blob/master/src/${props.source}`}
-        style={styles}
         title="Browse source page on Github"
+        {...buttonProps}
       >
         Source code
       </Button>
 
       <Button
         component="a"
-        variant="outline"
-        color="gray"
         leftIcon={<NpmIcon />}
         target="_blank"
         rel="noopener noreferrer"
         href={`https://www.npmjs.com/package/${props.package}`}
         title="Open package page on npm"
+        {...buttonProps}
         style={{
           textTransform: 'lowercase',
-          fontFamily: 'Menlo, Monaco, Lucida Console, monospace',
-          ...styles,
+          fontFamily: theme.fontFamilyMonospace,
+          ...buttonProps.style,
         }}
       >
         {props.package}
       </Button>
-    </ElementsGroup>
+    </Group>
   );
 }

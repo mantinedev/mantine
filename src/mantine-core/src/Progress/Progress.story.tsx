@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME, MantineProvider } from '@mantine/theme';
 import { Button } from '../Button/Button';
-import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
+import { Group } from '../Group/Group';
 import { Progress } from './Progress';
 
 function SetDemo() {
@@ -12,9 +12,9 @@ function SetDemo() {
   return (
     <div style={{ maxWidth: 500, padding: 50 }}>
       <Progress value={value} />
-      <ElementsGroup style={{ marginTop: 20 }} position="center">
+      <Group style={{ marginTop: 20 }} position="center">
         <Button onClick={setValueToRandom}>Set random value</Button>
-      </ElementsGroup>
+      </Group>
     </div>
   );
 }

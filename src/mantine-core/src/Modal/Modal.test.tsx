@@ -9,7 +9,7 @@ import {
 } from '@mantine/tests';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Overlay } from '../Overlay/Overlay';
-import { Modal } from './Modal';
+import { MantineModal, Modal } from './Modal';
 
 describe('@mantine/core/Modal', () => {
   // Clean up dom as jest does not do this automatically
@@ -19,16 +19,16 @@ describe('@mantine/core/Modal', () => {
 
   checkAccessibility([
     mount(
-      <Modal opened onClose={() => {}} closeButtonLabel="Close modal" title="test-title">
+      <MantineModal opened onClose={() => {}} closeButtonLabel="Close modal" title="test-title">
         test-modal
-      </Modal>
+      </MantineModal>
     ),
   ]);
 
-  itSupportsOthers(Modal, { opened: true, onClose: () => {} });
-  itSupportsClassName(Modal, { opened: true, onClose: () => {} });
-  itRendersChildren(Modal, { opened: true, onClose: () => {} });
-  itSupportsStyle(Modal, { opened: true, onClose: () => {} });
+  itSupportsOthers(MantineModal, { opened: true, onClose: () => {} });
+  itSupportsClassName(MantineModal, { opened: true, onClose: () => {} });
+  itRendersChildren(MantineModal, { opened: true, onClose: () => {} });
+  itSupportsStyle(MantineModal, { opened: true, onClose: () => {} });
 
   it('has correct displayName', () => {
     expect(Modal.displayName).toEqual('@mantine/core/Modal');
@@ -40,9 +40,9 @@ describe('@mantine/core/Modal', () => {
     expect(document.body.style.overflow).toBe('auto');
 
     mount(
-      <Modal opened onClose={() => {}}>
+      <MantineModal opened onClose={() => {}}>
         test-modal
-      </Modal>
+      </MantineModal>
     );
 
     expect(document.body.style.overflow).toBe('hidden');
@@ -51,9 +51,9 @@ describe('@mantine/core/Modal', () => {
   it('closes modal on close button click', () => {
     const spy = jest.fn();
     const element = mount(
-      <Modal opened onClose={spy}>
+      <MantineModal opened onClose={spy}>
         test-modal
-      </Modal>
+      </MantineModal>
     );
     element.find(ActionIcon).simulate('click');
     expect(spy).toHaveBeenCalled();
@@ -61,25 +61,25 @@ describe('@mantine/core/Modal', () => {
 
   it('renders correct title', () => {
     const element = mount(
-      <Modal opened onClose={() => {}} title="test-title">
+      <MantineModal opened onClose={() => {}} title="test-title">
         test-modal
-      </Modal>
+      </MantineModal>
     );
 
     expect(element.render().find('[data-mantine-modal-title]').text()).toBe('test-title');
   });
 
   it('allows to hide close button with hideCloseButton prop', () => {
-    const withButton = mount(<Modal opened onClose={() => {}} />);
-    const withoutButton = mount(<Modal opened onClose={() => {}} hideCloseButton />);
+    const withButton = mount(<MantineModal opened onClose={() => {}} />);
+    const withoutButton = mount(<MantineModal opened onClose={() => {}} hideCloseButton />);
 
     expect(withButton.find(ActionIcon)).toHaveLength(1);
     expect(withoutButton.find(ActionIcon)).toHaveLength(0);
   });
 
   it('does not render modal header if close button is hidden and title is not passed', () => {
-    const withHeader = mount(<Modal opened onClose={() => {}} title="With header" />);
-    const withoutHeader = mount(<Modal opened onClose={() => {}} hideCloseButton />);
+    const withHeader = mount(<MantineModal opened onClose={() => {}} title="With header" />);
+    const withoutHeader = mount(<MantineModal opened onClose={() => {}} hideCloseButton />);
 
     expect(withHeader.render().find('[data-mantine-modal-header]')).toHaveLength(1);
     expect(withoutHeader.render().find('[data-mantine-modal-header]')).toHaveLength(0);
@@ -87,20 +87,20 @@ describe('@mantine/core/Modal', () => {
 
   it('passes overlayOpacity and overlayColor to Overlay component', () => {
     const element = mount(
-      <Modal opened onClose={() => {}} overlayColor="#fff" overlayOpacity={0.99} />
+      <MantineModal opened onClose={() => {}} overlayColor="#fff" overlayOpacity={0.99} />
     );
     expect(element.find(Overlay).prop('opacity')).toBe(0.99);
     expect(element.find(Overlay).prop('color')).toBe('#fff');
   });
 
   it('sets correct z-index based on zIndex prop', () => {
-    const element = mount(<Modal opened onClose={() => {}} zIndex={87} />);
+    const element = mount(<MantineModal opened onClose={() => {}} zIndex={87} />);
     expect(element.find(Overlay).prop('zIndex')).toBe(87);
     expect(element.render().find('[data-mantine-modal-inner]').css('z-index')).toBe('88');
   });
 
   it('locks scroll on mount', () => {
-    mount(<Modal opened onClose={() => {}} zIndex={87} />);
+    mount(<MantineModal opened onClose={() => {}} zIndex={87} />);
     expect(document.body.style.overflow).toBe('hidden');
   });
 });

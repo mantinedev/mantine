@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, Button, ElementsGroup, Portal } from '@mantine/core';
+import { Drawer, Button, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 export function DrawerSizesDemo() {
@@ -18,13 +18,11 @@ export function DrawerSizesDemo() {
 
   return (
     <CodeDemo>
-      <Portal zIndex={10}>
-        <Drawer opened={opened} onClose={() => setOpened(false)} padding="md" size={size}>
-          Press escape to close the drawer
-        </Drawer>
-      </Portal>
+      <Drawer opened={opened} onClose={() => setOpened(false)} padding="md" size={size}>
+        Press escape to close the drawer
+      </Drawer>
 
-      <ElementsGroup position="center">{controls}</ElementsGroup>
+      <Group position="center">{controls}</Group>
     </CodeDemo>
   );
 }

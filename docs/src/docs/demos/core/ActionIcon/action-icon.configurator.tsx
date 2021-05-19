@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionIcon, ElementsGroup } from '@mantine/core';
+import { ActionIcon, Group } from '@mantine/core';
 import { GearIcon } from '@modulz/radix-icons';
 import Configurator from '../../../../components/Configurator/Configurator';
 
@@ -13,11 +13,11 @@ const iconSizes = {
 
 function ActionIconWrapper(props: React.ComponentPropsWithoutRef<typeof ActionIcon>) {
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <ActionIcon {...props}>
         <GearIcon style={{ width: iconSizes[props.size], height: iconSizes[props.size] }} />
       </ActionIcon>
-    </ElementsGroup>
+    </Group>
   );
 }
 

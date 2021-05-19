@@ -1,9 +1,9 @@
 import React from 'react';
-import { Tooltip, Button, ElementsGroup, useMantineTheme } from '@mantine/core';
+import { Tooltip, Button, Group, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { Tooltip, Button, ElementsGroup, useMantineTheme } from '@mantine/core';
+import { Tooltip, Button, Group, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const colors = Object.keys(useMantineTheme().colors)
@@ -15,8 +15,8 @@ function Demo() {
       </Button>
     </Tooltip>
   ));
-  
-  return <ElementsGroup position="center">{colors}</ElementsGroup>;
+
+  return <Group position="center">{colors}</Group>;
 }`;
 
 export function TooltipColorsDemo() {
@@ -32,7 +32,7 @@ export function TooltipColorsDemo() {
 
   return (
     <CodeDemo code={code} toggle language="tsx">
-      <ElementsGroup position="center">{colors}</ElementsGroup>
+      <Group position="center">{colors}</Group>
     </CodeDemo>
   );
 }

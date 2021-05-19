@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '@mantine/core';
-import { randomId } from '@mantine/hooks';
+import { DEFAULT_THEME, randomId } from '@mantine/core';
 import { TagPickerContainer as TagPicker } from './TagPickerContainer';
 import { TagPickerTag } from './types';
 

@@ -10,7 +10,7 @@ import {
 import { GroupedTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
-import { Drawer } from './Drawer';
+import { MantineDrawer, Drawer } from './Drawer';
 
 const defaultProps = {
   opened: true,
@@ -20,7 +20,7 @@ const defaultProps = {
 describe('@mantine/core/Drawer', () => {
   checkAccessibility([
     mount(
-      <Drawer
+      <MantineDrawer
         opened
         onClose={() => {}}
         aria-labelledby="drawer-title"
@@ -28,14 +28,14 @@ describe('@mantine/core/Drawer', () => {
       >
         <h1 id="drawer-title">Title</h1>
         <div id="drawer-body">Body</div>
-      </Drawer>
+      </MantineDrawer>
     ),
   ]);
 
-  itSupportsClassName(Drawer, defaultProps);
-  itRendersChildren(Drawer, defaultProps);
-  itSupportsOthers(Drawer, defaultProps);
-  itSupportsStyle(Drawer, defaultProps);
+  itSupportsClassName(MantineDrawer, defaultProps);
+  itRendersChildren(MantineDrawer, defaultProps);
+  itSupportsOthers(MantineDrawer, defaultProps);
+  itSupportsStyle(MantineDrawer, defaultProps);
 
   it('has correct displayName', () => {
     expect(Drawer.displayName).toEqual('@mantine/core/Drawer');
@@ -43,7 +43,7 @@ describe('@mantine/core/Drawer', () => {
 
   it('passes transition, transitionDuration and transitionTimingFunction to GropedTransition component', () => {
     const element = shallow(
-      <Drawer
+      <MantineDrawer
         {...defaultProps}
         transition="fade"
         transitionTimingFunction="linear"
@@ -58,25 +58,27 @@ describe('@mantine/core/Drawer', () => {
   });
 
   it('passes shadow and padding to Paper component', () => {
-    const element = mount(<Drawer {...defaultProps} padding="xs" shadow="xl" />);
+    const element = mount(<MantineDrawer {...defaultProps} padding="xs" shadow="xl" />);
     expect(element.find(Paper).prop('shadow')).toBe('xl');
     expect(element.find(Paper).prop('padding')).toBe('xs');
   });
 
   it('passes color and opacity to Overlay component', () => {
-    const element = mount(<Drawer {...defaultProps} overlayColor="red" overlayOpacity={0.99} />);
+    const element = mount(
+      <MantineDrawer {...defaultProps} overlayColor="red" overlayOpacity={0.99} />
+    );
     expect(element.find(Overlay).prop('color')).toBe('red');
     expect(element.find(Overlay).prop('opacity')).toBe(0.99);
   });
 
   it('sets correct z-index on drawer and overlay', () => {
-    const element = mount(<Drawer {...defaultProps} zIndex={547} />);
+    const element = mount(<MantineDrawer {...defaultProps} zIndex={547} />);
     expect(element.find(Paper).prop('style').zIndex).toBe(548);
     expect(element.find(Overlay).prop('zIndex')).toBe(547);
   });
 
   it('does not render overlay if noOverlay prop is set to true', () => {
-    const element = mount(<Drawer {...defaultProps} noOverlay />);
+    const element = mount(<MantineDrawer {...defaultProps} noOverlay />);
     expect(element.find(Overlay)).toHaveLength(0);
   });
 });

@@ -1,18 +1,18 @@
 import React from 'react';
-import { ElementsGroup, Button } from '@mantine/core';
+import { Group, Button } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { ElementsGroup, Button } from '@mantine/core';
+import { Group, Button } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 import { CheckIcon } from '@modulz/radix-icons';
 
 function Demo() {
   const notifications = useNotifications();
-  
+
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <Button variant="outline" onClick={() =>
         notifications.showNotification({ message: 'I will close in 4 seconds' })
       }>
@@ -35,7 +35,7 @@ function Demo() {
       }>
         Never closes automatically
       </Button>
-    </ElementsGroup>
+    </Group>
   );
 }`;
 
@@ -44,7 +44,7 @@ export function NotificationsAutoCloseDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button
           variant="outline"
           onClick={() => notifications.showNotification({ message: 'I will close in 4 seconds' })}
@@ -77,7 +77,7 @@ export function NotificationsAutoCloseDemo() {
         >
           Never closes automatically
         </Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

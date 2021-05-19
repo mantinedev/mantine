@@ -7,8 +7,8 @@ import { Container, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
-  const color = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.blue[0];
-  
+  const color = theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[0];
+
   return (
     <>
       <Container style={{ backgroundColor: color, height: 50 }}>Default container</Container>
@@ -34,7 +34,7 @@ function Demo() {
 
 export function ContainerBaseDemo() {
   const theme = useMantineTheme();
-  const color = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.blue[0];
+  const color = theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[0];
 
   return (
     <CodeDemo code={code} language="tsx">
