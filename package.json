@@ -41,6 +41,7 @@
     "@rollup/plugin-typescript": "^8.2.1",
     "@storybook/addon-essentials": "^6.1.11",
     "@storybook/react": "^6.1.11",
+    "@sucrase/jest-plugin": "^2.1.0",
     "@testing-library/react-hooks": "^5.0.3",
     "@types/enzyme": "^3.10.8",
     "@types/fs-extra": "^9.0.6",

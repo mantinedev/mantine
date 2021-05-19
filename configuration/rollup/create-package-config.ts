@@ -67,7 +67,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       }),
       esbuild({
         sourceMap: true,
-        tsconfig: path.resolve(config.basePath, '_tsconfig.json'),
+        tsconfig: path.resolve(process.cwd(), 'tsconfig.json'),
       }),
       json(),
       alias({ entries: aliasEntries }),

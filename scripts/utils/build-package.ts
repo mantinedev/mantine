@@ -25,7 +25,7 @@ export async function buildPackage(packageName: string, analyze = false) {
     outputPath: path.join(packagePath, 'dist'),
     externals: [
       ...Object.keys(packageJson.peerDependencies || {}),
-      // ...Object.keys(packageJson.dependencies || {}),
+      ...Object.keys(packageJson.dependencies || {}),
     ],
   });
 
