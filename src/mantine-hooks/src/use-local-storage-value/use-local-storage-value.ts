@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 export function useLocalStorageValue<T extends string>({
@@ -17,7 +17,7 @@ export function useLocalStorageValue<T extends string>({
   const setLocalStorageValue = useCallback(
     (val: T | ((prevState: T) => T)) => {
       if (typeof val === 'function') {
-        setValue(current => {
+        setValue((current) => {
           const result = val(current);
           window.localStorage.setItem(key, result);
           return result;
@@ -29,13 +29,13 @@ export function useLocalStorageValue<T extends string>({
     },
     [key]
   );
-  
+
   useWindowEvent('storage', (event) => {
     if (event.storageArea === window.localStorage && event.key === key) {
       setValue(event.newValue as T);
     }
   });
-  
+
   useEffect(() => {
     if (defaultValue && !value) {
       setLocalStorageValue(defaultValue);
