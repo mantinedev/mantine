@@ -14,9 +14,9 @@ function Demo() {
 
   return (
     <Grid>
-      <Col span={4}>1</Col>
-      <Col span={4}>2</Col>
-      <Col span={4}>3</Col>
+      <Col span={span}>1</Col>
+      <Col span={span}>2</Col>
+      <Col span={span}>3</Col>
     </Grid>
   );
 }`;
