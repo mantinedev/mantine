@@ -1,5 +1,14 @@
 {
-  "exclude": ["node_modules", "lib", "esm", "cjs", "**/*.story.ts?", "**/*.test.ts?"],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "esm",
+    "cjs",
+    "**/*.story.ts",
+    "**/*.story.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ],
   "compilerOptions": {
     "target": "ES2015",
     "lib": ["DOM", "ESNext"],
@@ -11,9 +20,6 @@
     "skipLibCheck": true,
     "noEmitOnError": true,
     "allowJs": true,
-    "baseUrl": ".",
-    "paths": {
-      "@mantine/*": ["./src/mantine-*/src"]
-    }
+    "baseUrl": "."
   }
 }

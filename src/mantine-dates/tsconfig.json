@@ -3,6 +3,7 @@
   "include": ["./src", "./types", "../../configuration/types"],
   "compilerOptions": {
     "rootDir": "src",
+    "baseUrl": ".",
     "outDir": "lib",
     "declaration": true,
     "declarationMap": true,
