@@ -14,7 +14,7 @@
     "postinstall": "cd docs && yarn",
     "syncpack": "syncpack list-mismatches",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src --ext .ts,.tsx --ignore-pattern *.d.ts",
+    "lint": "eslint src --ext .ts,.tsx",
     "build": "esno scripts/build",
     "jest": "jest",
     "clean": "rimraf src/*/{esm,cjs,lib,dist} src/**/*.tsbuildinfo",

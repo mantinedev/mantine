@@ -1,3 +1,4 @@
 dist
 public
 .eslintrc.js
+*.d.ts
