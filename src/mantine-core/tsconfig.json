@@ -2,10 +2,12 @@
   "extends": "../../tsconfig.base.json",
   "include": ["./src", "./types", "../../configuration/types"],
   "compilerOptions": {
+    "rootDir": "src",
     "outDir": "lib",
     "declaration": true,
     "declarationMap": true,
-    "declarationDir": "lib"
+    "declarationDir": "lib",
+    "composite": true
   },
   "references": [{ "path": "../mantine-theme" }, { "path": "../mantine-hooks" }]
 }

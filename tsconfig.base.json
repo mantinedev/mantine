@@ -1,7 +1,7 @@
 {
   "exclude": ["node_modules", "lib", "esm", "cjs", "**/*.story.ts?", "**/*.test.ts?"],
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2015",
     "lib": ["DOM", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "Node",
@@ -13,7 +13,7 @@
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "@mantine/*": ["src/mantine-*/src"]
+      "@mantine/*": ["./src/mantine-*/src"]
     }
   }
 }

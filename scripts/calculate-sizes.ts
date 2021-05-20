@@ -11,7 +11,7 @@ function truncateNumber(number: number) {
 }
 
 function getPackageSize(packageName: string) {
-  const libPath = path.join(REPO_ROOT, 'src', packageName, 'dist/index.js');
+  const libPath = path.join(REPO_ROOT, 'src', packageName, 'lib/index.umd.js');
 
   if (!fs.existsSync(libPath)) {
     return { size: 0, gzip: 0 };

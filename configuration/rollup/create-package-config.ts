@@ -53,6 +53,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
         name: packageJson.name,
         dir: path.resolve(config.basePath, 'cjs'),
         format: 'cjs',
+        exports: 'named',
         preserveModules: true,
         // preserveModulesRoot: path.resolve(config.basePath, 'src'),
         sourcemap: true,

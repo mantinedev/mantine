@@ -29,3 +29,6 @@ lib/
 cjs/
 esm/
 docs/.docgen/
+
+# typescript
+*.tsbuildinfo
