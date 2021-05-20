@@ -73,6 +73,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "esno": "^0.5.0",
     "execa": "^5.0.0",
+    "fast-glob": "^3.2.5",
     "fs-extra": "^9.0.1",
     "gh-pages": "^3.1.0",
     "gzip-size": "^6.0.0",
