@@ -27,14 +27,14 @@ export const sizes = {
 export default createMemoStyles({
   filled: ({ theme, color }: ActionIconStylesProps) => ({
     backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 7 }),
+      getThemeColor({ theme, color, shade: 7 }),
       theme.colorScheme === 'dark' ? 0.65 : 1
     ),
     color: theme.white,
 
     '&:not(:disabled):hover': {
       backgroundColor: hexToRgba(
-        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 7 }),
+        getThemeColor({ theme, color, shade: 8 }),
         theme.colorScheme === 'dark' ? 0.95 : 1
       ),
     },

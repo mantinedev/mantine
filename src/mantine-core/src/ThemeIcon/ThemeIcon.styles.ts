@@ -35,7 +35,7 @@ export default createMemoStyles({
     color: theme.colorScheme === 'dark' ? getThemeColor({ theme, color, shade: 0 }) : theme.white,
     backgroundColor: hexToRgba(
       getThemeColor({ theme, color, shade: 7 }),
-      theme.colorScheme === 'dark' ? 0.45 : 1
+      theme.colorScheme === 'dark' ? 0.65 : 1
     ),
   }),
 

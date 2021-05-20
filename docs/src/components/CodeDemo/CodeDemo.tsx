@@ -46,7 +46,7 @@ export default function CodeDemo({
       >
         {children}
 
-        {toggle && (
+        {!!code && toggle && (
           <Group position="center" direction="column" spacing={5} className={classes.controls}>
             {githubLink && (
               <Tooltip

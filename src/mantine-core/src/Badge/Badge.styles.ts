@@ -98,7 +98,7 @@ export default createMemoStyles({
 
   filled: ({ theme, color }: BadgeStylesProps) => ({
     backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 7 }),
+      getThemeColor({ theme, color, shade: 7 }),
       theme.colorScheme === 'dark' ? 0.65 : 1
     ),
     color: theme.white,

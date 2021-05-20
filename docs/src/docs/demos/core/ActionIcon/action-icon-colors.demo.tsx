@@ -8,7 +8,7 @@ const getColors = (props: any) =>
     .filter((color) => color !== 'dark')
     .map((color) => (
       <ActionIcon key={color} color={color} {...props}>
-        <ImageIcon />
+        <ImageIcon style={{ width: 16, height: 16 }} />
       </ActionIcon>
     ));
 

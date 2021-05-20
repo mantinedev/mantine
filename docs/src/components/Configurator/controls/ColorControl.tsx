@@ -22,7 +22,7 @@ export function ColorControl({ value, label, onChange, ...others }: ColorControl
     <ColorSwatch
       color={
         theme.colorScheme === 'dark'
-          ? hexToRgba(theme.colors[color][8], 0.65)
+          ? hexToRgba(theme.colors[color][7], 0.75)
           : theme.colors[color][5]
       }
       component="button"

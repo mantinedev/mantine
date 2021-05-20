@@ -144,7 +144,7 @@ export default createMemoStyles({
     '&:hover': {
       backgroundColor: hexToRgba(
         getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
-        theme.colorScheme === 'dark' ? 0.65 : 1
+        theme.colorScheme === 'dark' ? 0.35 : 1
       ),
     },
 
@@ -167,7 +167,7 @@ export default createMemoStyles({
     textTransform: 'uppercase',
     fontWeight: 'bold',
     backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 7 }),
+      getThemeColor({ theme, color, shade: 7 }),
       theme.colorScheme === 'dark' ? 0.65 : 1
     ),
     textShadow:
@@ -182,7 +182,7 @@ export default createMemoStyles({
 
     '&:hover': {
       backgroundColor: hexToRgba(
-        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 7 }),
+        getThemeColor({ theme, color, shade: 8 }),
         theme.colorScheme === 'dark' ? 0.95 : 1
       ),
     },

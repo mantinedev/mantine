@@ -35,7 +35,7 @@ export function TooltipTransitionsDemo({ hideCode = false }: { hideCode: boolean
   ));
 
   return (
-    <CodeDemo code={hideCode ? null : code} language="tsx">
+    <CodeDemo code={hideCode ? null : code} language="tsx" toggle>
       <Group position="center">{transitions}</Group>
     </CodeDemo>
   );
