@@ -13,7 +13,6 @@ import { getPackagesList } from '../../scripts/utils/get-packages-list';
 interface PkgConfigInput {
   entry?: string;
   basePath: string;
-  outputPath: string;
   externals?: string[];
   publicPath?: string;
   analyze?: boolean;
@@ -39,8 +38,9 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     output: [
       {
         name: packageJson.name,
-        dir: config.outputPath,
+        file: path.resolve(config.basePath, 'lib/index.umd.js'),
         format: 'umd',
+        externalLiveBindings: false,
         globals: {
           ...globalsPkgList,
           react: 'React',
@@ -51,10 +51,18 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       },
       {
         name: packageJson.name,
-        dir: path.resolve(config.outputPath, '../es'),
+        dir: path.resolve(config.basePath, 'cjs'),
+        format: 'cjs',
+        preserveModules: true,
+        // preserveModulesRoot: path.resolve(config.basePath, 'src'),
+        sourcemap: true,
+      },
+      {
+        name: packageJson.name,
+        dir: path.resolve(config.basePath, 'esm'),
         format: 'es',
         preserveModules: true,
-        preserveModulesRoot: path.resolve(config.basePath, 'src'),
+        // preserveModulesRoot: path.resolve(config.basePath, 'src'),
         sourcemap: true,
       },
     ],
@@ -66,7 +74,6 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
       }),
       esbuild({
-        sourceMap: true,
         tsconfig: path.resolve(process.cwd(), 'tsconfig.json'),
       }),
       json(),

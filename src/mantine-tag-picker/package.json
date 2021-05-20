@@ -1,9 +1,10 @@
 {
   "name": "@mantine/tag-picker",
   "version": "1.0.6",
-  "main": "dist/index.js",
-  "module": "es/index.js",
-  "types": "dist/mantine-tag-picker/src/index.d.ts",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "browser": "lib/index.umd.js",
+  "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,

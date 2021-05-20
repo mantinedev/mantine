@@ -1,8 +1,18 @@
 {
   "name": "@mantine/theme",
-  "private": true,
   "version": "1.0.6",
-  "main": "dist/lib.js",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "browser": "lib/index.umd.js",
+  "types": "lib/index.d.ts",
   "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>"
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-jss": ">=10.1.1"
+  },
+  "dependencies": {
+    "@mantine/types": "1.0.6"
+  },
+  "devDependencies": {}
 }

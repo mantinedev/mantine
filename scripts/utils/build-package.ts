@@ -22,7 +22,6 @@ export async function buildPackage(packageName: string, analyze = false) {
   const config = await createPackageConfig({
     analyze,
     basePath: packagePath,
-    outputPath: path.join(packagePath, 'dist'),
     externals: [
       ...Object.keys(packageJson.peerDependencies || {}),
       ...Object.keys(packageJson.dependencies || {}),

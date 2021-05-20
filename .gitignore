@@ -25,6 +25,7 @@ lerna-debug.log*
 .env*.local
 
 # build
-dist/
-es/
+lib/
+cjs/
+esm/
 docs/.docgen/
