@@ -9,7 +9,13 @@ import { Logger } from './Logger';
 
 const logger = new Logger('build-package');
 
-export async function buildPackage(packageName: string, analyze = false) {
+export interface BuildOptions {
+  analyze?: boolean;
+  sourcemap?: boolean;
+  minify?: boolean;
+}
+
+export async function buildPackage(packageName: string, options?: BuildOptions) {
   const packagePath = await locatePackage(packageName || '');
 
   if (!packagePath) {
@@ -20,7 +26,7 @@ export async function buildPackage(packageName: string, analyze = false) {
   const packageJson = await fs.readJSON(path.join(packagePath, 'package.json'));
 
   const config = await createPackageConfig({
-    analyze,
+    analyze: options.analyze || false,
     basePath: packagePath,
     externals: [
       ...Object.keys(packageJson.peerDependencies || {}),
