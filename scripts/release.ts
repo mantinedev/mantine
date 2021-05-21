@@ -65,7 +65,7 @@ const { argv } = yargs(hideBin(process.argv))
 
   logger.info('Releasing all packages');
 
-  let incrementedVersion = packageJson.name;
+  let incrementedVersion = packageJson.version;
   if (!argv.skipVersionCheck) {
     incrementedVersion = getIncrementedVersion(incrementedVersion, {
       type: argv._[0] as string,
