@@ -28,19 +28,6 @@ describe('@mantine/core/Tabs', () => {
 });
 ```
 
-## isHasComposableAttribute
-
-Checks if root element of given component has data-mantine-composable attribute. This attribute is used to position elements with ElementsGroup component from @mantine/core package. isHasComposableAttribute accepts 2 arguments: component and required component props.
-
-```tsx
-import { isHasComposableAttribute } from '@mantine/tests';
-import { Button } from '@mantine/core';
-
-describe('@mantine/core/Button', () => {
-  isHasComposableAttribute(Button, { children: 'test' });
-});
-```
-
 ## itRendersChildren
 
 Checks if component renders React node at any position. itRendersChildren accepts 2 arguments: component and required component props.
@@ -108,5 +95,19 @@ import { Button } from '@mantine/core';
 
 describe('@mantine/core/Button', () => {
   itSupportsRef(Button, { children: 'test' }, HTMLButtonElement, 'elementRef');
+});
+```
+
+## mockResizeObserver
+
+Mocks ResizeObserver:
+
+```tsx
+import { mockResizeObserver } from '@mantine/tests';
+
+mockResizeObserver();
+
+describe('@mantine/core/Button', () => {
+  // run tests which depend on resize observer
 });
 ```

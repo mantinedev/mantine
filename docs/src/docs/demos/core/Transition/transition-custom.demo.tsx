@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Transition, Paper, Button } from '@mantine/core';
+import { Transition, Paper, Button, useMantineTheme } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -54,6 +54,7 @@ const scaleY = {
 export function TransitionCustomDemo() {
   const [opened, setOpened] = useState(false);
   const clickOutsideRef = useClickOutside(() => setOpened(false));
+  const theme = useMantineTheme();
 
   return (
     <CodeDemo code={code} language="tsx">
@@ -71,7 +72,15 @@ export function TransitionCustomDemo() {
           {(styles) => (
             <Paper
               shadow="md"
-              style={{ ...styles, position: 'absolute', top: 0, left: 0, right: 0, height: 120 }}
+              style={{
+                ...styles,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 120,
+                backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+              }}
               elementRef={clickOutsideRef}
             >
               Dropdown

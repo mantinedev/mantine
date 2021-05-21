@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "1.0.6",
+  "version": "1.1.1",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/rtivital/mantine",
@@ -47,6 +47,7 @@
     "@types/fs-extra": "^9.0.6",
     "@types/jest": "^26.0.20",
     "@types/jest-axe": "^3.5.1",
+    "@types/lodash.debounce": "^4.0.6",
     "@types/react": "^17.0.0",
     "@types/react-custom-scrollbars": "^4.0.7",
     "@types/react-dom": "^16.9.10",
@@ -105,6 +106,7 @@
   "dependencies": {
     "@modulz/radix-icons": "^4.0.0",
     "clsx": "^1.1.1",
+    "lodash.debounce": "^4.0.8",
     "react": "^16.14.0",
     "react-custom-scrollbars": "^4.2.1",
     "react-feather": "^2.0.9",

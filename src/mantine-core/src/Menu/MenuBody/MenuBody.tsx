@@ -4,7 +4,7 @@ import { useReducedMotion, useClickOutside, useFocusTrap } from '@mantine/hooks'
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
-import { Hr } from '../../Hr/Hr';
+import { Divider } from '../../Divider/Divider';
 import { MenuItem, MenuItemType } from '../MenuItem/MenuItem';
 import { MenuButton } from '../MenuButton/MenuButton';
 import useStyles from './MenuBody.styles';
@@ -16,7 +16,7 @@ interface MenuBodyProps extends DefaultProps, React.ComponentPropsWithoutRef<'di
   /** Triggers when menu is closed */
   onClose(): void;
 
-  /** <MenuItem /> and <Hr /> components only */
+  /** <MenuItem /> and <Divider /> components only */
   children: React.ReactNode;
 
   /** Transition styles */
@@ -92,7 +92,7 @@ function MenuBody({
   ...others
 }: MenuBodyProps) {
   const items = React.Children.toArray(children).filter(
-    (item: MenuItemType) => item.type === MenuItem || item.type === Hr
+    (item: MenuItemType) => item.type === MenuItem || item.type === Divider
   ) as MenuItemType[];
 
   const hoveredTimeout = useRef<number>();
@@ -170,8 +170,8 @@ function MenuBody({
       );
     }
 
-    if (item.type === Hr) {
-      return <Hr key={index} variant="solid" className={classes.hr} />;
+    if (item.type === Divider) {
+      return <Divider key={index} variant="solid" className={classes.hr} />;
     }
 
     return null;

@@ -1,12 +1,17 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, MantineNumberSize, getSizeValue, getThemeColor } from '@mantine/theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  MantineNumberSize,
+  getSizeValue,
+  getThemeColor,
+  hexToRgba,
+} from '@mantine/theme';
 
 interface ThemeIconStylesProps {
   theme: MantineTheme;
   color: string;
   size: MantineNumberSize;
   radius: MantineNumberSize;
-  variant: 'filled' | 'light';
 }
 
 export const sizes = {
@@ -17,32 +22,34 @@ export const sizes = {
   xl: 40,
 };
 
-export default createUseStyles(
-  {
-    themeIcon: ({ theme, color, size, radius, variant }: ThemeIconStylesProps) => {
-      const iconSize = getSizeValue({ size, sizes });
+export default createMemoStyles({
+  light: ({ theme, color }: ThemeIconStylesProps) => ({
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
+    backgroundColor: hexToRgba(
+      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 1 }),
+      theme.colorScheme === 'dark' ? 0.3 : 1
+    ),
+  }),
 
-      return {
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        boxSizing: 'border-box',
-        backgroundColor: getThemeColor({
-          theme,
-          color,
-          shade: variant === 'filled' ? (theme.colorScheme === 'dark' ? 4 : 6) : 1,
-        }),
-        color:
-          variant === 'filled'
-            ? theme.colorScheme === 'dark'
-              ? theme.colors.dark[9]
-              : theme.white
-            : getThemeColor({ theme, color, shade: 9 }),
-        width: iconSize,
-        height: iconSize,
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      };
-    },
+  filled: ({ theme, color }: ThemeIconStylesProps) => ({
+    color: theme.colorScheme === 'dark' ? getThemeColor({ theme, color, shade: 0 }) : theme.white,
+    backgroundColor: hexToRgba(
+      getThemeColor({ theme, color, shade: 7 }),
+      theme.colorScheme === 'dark' ? 0.65 : 1
+    ),
+  }),
+
+  themeIcon: ({ theme, size, radius }: ThemeIconStylesProps) => {
+    const iconSize = getSizeValue({ size, sizes });
+
+    return {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      boxSizing: 'border-box',
+      width: iconSize,
+      height: iconSize,
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    };
   },
-  { link: true }
-);
+});

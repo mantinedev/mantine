@@ -8,5 +8,10 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "lib"
-  }
+  },
+  "references": [
+    { "path": "../mantine-core" },
+    { "path": "../mantine-hooks" },
+    { "path": "../mantine-tag-picker" }
+  ]
 }

@@ -7,7 +7,7 @@ const preventDefault = (event: TouchEvent) => {
   event.preventDefault();
 };
 
-export function useScrollLock(lock: boolean) {
+export function useScrollLock(lock: boolean, options = { disableTouchEvents: false }) {
   // value is stored to prevent body overflow styles override with initial useScrollLock(false)
   const locked = useRef(false);
 
@@ -18,7 +18,10 @@ export function useScrollLock(lock: boolean) {
     if (locked.current) {
       locked.current = false;
       document.body.style.overflow = bodyOverflow.current || '';
-      document.body.removeEventListener('touchmove', preventDefault);
+
+      if (options.disableTouchEvents) {
+        document.body.removeEventListener('touchmove', preventDefault);
+      }
     }
   };
 
@@ -26,7 +29,10 @@ export function useScrollLock(lock: boolean) {
     locked.current = true;
     bodyOverflow.current = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    document.body.addEventListener('touchmove', preventDefault, { passive: false });
+
+    if (options.disableTouchEvents) {
+      document.body.addEventListener('touchmove', preventDefault, { passive: false });
+    }
   };
 
   useEffect(() => {

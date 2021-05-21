@@ -1,6 +1,6 @@
 {
   "name": "@mantine/core",
-  "version": "1.0.6",
+  "version": "1.1.1",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "browser": "lib/index.umd.js",
@@ -9,13 +9,14 @@
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
   "peerDependencies": {
-    "@mantine/hooks": "1.0.6",
+    "@mantine/hooks": "1.1.1",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "react-jss": ">=10.1.1"
   },
   "dependencies": {
-    "@mantine/theme": "1.0.6",
+    "@mantine/theme": "1.1.1",
+    "@mantine/utils": "1.1.1",
     "clsx": "^1.1.1",
     "react-textarea-autosize": "^8.3.0",
     "react-transition-group": "^4.4.1"

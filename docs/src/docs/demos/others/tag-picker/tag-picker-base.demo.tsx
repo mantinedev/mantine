@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useMantineTheme } from '@mantine/core';
-import { useListState, randomId } from '@mantine/hooks';
+import { useMantineTheme, randomId } from '@mantine/core';
+import { useListState } from '@mantine/hooks';
 import { TagPicker, TagPickerTag } from '@mantine/tag-picker';
 import mockdata from './mockdata';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { useMantineTheme } from '@mantine/core';
-import { useListState, randomId } from '@mantine/hooks';
+import { useMantineTheme, randomId } from '@mantine/core';
+import { useListState } from '@mantine/hooks';
 import { TagPicker } from '@mantine/tag-picker';
 
 function Demo() {
@@ -62,11 +62,7 @@ export function TagPickerBaseDemo() {
     .map((color) => ({ name: color, color }));
 
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white}
-    >
+    <CodeDemo code={code} language="tsx">
       <div>
         <TagPicker
           data={categoriesState}

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Drawer, Button, ElementsGroup, Portal } from '@mantine/core';
+import { Drawer, Button, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
-import { Drawer, Button, ElementsGroup } from '@mantine/core';
+import { Drawer, Button, Group } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
-  
+
   return (
     <>
       <Drawer
@@ -21,9 +21,9 @@ function Demo() {
         Press escape to close the drawer
       </Drawer>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button onClick={() => setOpened(true)}>Open Drawer</Button>
-      </ElementsGroup>
+      </Group>
     </>
   );
 }`;
@@ -33,22 +33,20 @@ export function DrawerTransitionsDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <Portal zIndex={10}>
-        <Drawer
-          opened={opened}
-          onClose={() => setOpened(false)}
-          padding="md"
-          transition="rotate-left"
-          transitionDuration={250}
-          transitionTimingFunction="ease"
-        >
-          Press escape to close the drawer
-        </Drawer>
-      </Portal>
+      <Drawer
+        opened={opened}
+        onClose={() => setOpened(false)}
+        padding="md"
+        transition="rotate-left"
+        transitionDuration={250}
+        transitionTimingFunction="ease"
+      >
+        Press escape to close the drawer
+      </Drawer>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button onClick={() => setOpened(true)}>Open Drawer</Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

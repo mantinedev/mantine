@@ -1,5 +1,10 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles, getFocusStyles, getThemeColor } from '@mantine/theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  getFontStyles,
+  getFocusStyles,
+  getThemeColor,
+} from '@mantine/theme';
 
 interface TabControlStylesProps {
   theme: MantineTheme;
@@ -7,7 +12,7 @@ interface TabControlStylesProps {
   color: string;
 }
 
-export default createUseStyles({
+export default createMemoStyles({
   tab: ({ theme, reduceMotion }: TabControlStylesProps) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),

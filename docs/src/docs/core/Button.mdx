@@ -8,7 +8,7 @@ description: 'Render button or link with button styles from mantine theme'
 ---
 
 import { BUTTON_SIZES } from '@mantine/core';
-import { ElementsGroupConfigurator } from '../demos/core/ElementsGroup/elements-group.configurator';
+import { GroupConfigurator } from '../demos/core/Group/group.configurator';
 import { ButtonFullWidthDemo } from '../demos/core/Button/button-width.demo';
 import { ButtonComponentsDemo } from '../demos/core/Button/button-components.demo';
 import { ButtonSizesDemo } from '../demos/core/Button/button-sizes.demo';
@@ -116,11 +116,11 @@ If button is too large for its container, overflow content will be hidden with e
 
 <ButtonFullWidthDemo />
 
-## Compose with ElementsGroup
+## Compose with Group
 
-You can compose Button with any other components that support composition feature with <GatsbyLink to="/core/elements-group/">ElementsGroup</GatsbyLink> component.
+You can compose Button with itself any other components with <GatsbyLink to="/core/group/">Group</GatsbyLink> component:
 
-<ElementsGroupConfigurator />
+<GroupConfigurator />
 
 ## Change root element
 

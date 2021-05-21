@@ -8,6 +8,9 @@ import { Loader, LoaderProps } from '../Loader/Loader';
 import useStyles from './LoadingOverlay.styles';
 
 export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+  /** Provide custom loader */
+  loader?: React.ReactNode;
+
   /** Loader component props */
   loaderProps?: LoaderProps;
 
@@ -37,6 +40,7 @@ export function LoadingOverlay({
   transitionDuration = 200,
   zIndex = 1000,
   style,
+  loader,
   ...others
 }: LoadingOverlayProps) {
   const theme = useMantineTheme(themeOverride);
@@ -57,13 +61,18 @@ export function LoadingOverlay({
           style={{ ...transitionStyles, ...style, zIndex }}
           {...others}
         >
-          <Loader themeOverride={themeOverride} style={{ zIndex: zIndex + 1 }} {...loaderProps} />
+          {loader ? (
+            <div style={{ zIndex: zIndex + 1 }}>{loader}</div>
+          ) : (
+            <Loader themeOverride={themeOverride} style={{ zIndex: zIndex + 1 }} {...loaderProps} />
+          )}
+
           <Overlay
             opacity={overlayOpacity}
+            zIndex={zIndex}
             color={
               overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white)
             }
-            zIndex={zIndex}
           />
         </div>
       )}

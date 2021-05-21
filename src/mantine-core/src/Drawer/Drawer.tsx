@@ -10,6 +10,7 @@ import {
 import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
+import { Portal } from '../Portal/Portal';
 import { GroupedTransition, MantineTransition } from '../Transition/Transition';
 import useStyles, { Position, sizes } from './Drawer.styles';
 
@@ -75,7 +76,7 @@ const transitions: Record<Position, MantineTransition> = {
   right: 'slide-left',
 };
 
-export function Drawer({
+export function MantineDrawer({
   opened,
   onClose,
   className,
@@ -178,6 +179,14 @@ export function Drawer({
         </div>
       )}
     </GroupedTransition>
+  );
+}
+
+export function Drawer(props: React.ComponentPropsWithoutRef<typeof MantineDrawer>) {
+  return (
+    <Portal zIndex={props.zIndex || 1000}>
+      <MantineDrawer {...props} />
+    </Portal>
   );
 }
 

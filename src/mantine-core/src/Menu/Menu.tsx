@@ -10,6 +10,7 @@ import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
 
 export { MenuBody, MenuItem };
 export type { MenuBodyProps, MenuItemProps };
+
 export const MENU_SIZES = sizes;
 
 interface MenuPosition {
@@ -20,7 +21,7 @@ interface MenuPosition {
 }
 
 export interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
-  /** <MenuItem /> and <Hr /> components only, children are passed to MenuBody component  */
+  /** <MenuItem /> and <Divider /> components only, children are passed to MenuBody component  */
   children: React.ReactNode;
 
   /** React element that will be used as menu control */
@@ -143,7 +144,6 @@ export function Menu({
 
   return (
     <div
-      data-mantine-composable
       ref={wrapperRef}
       style={{ display: 'inline-block', position: 'relative', ...style }}
       {...others}

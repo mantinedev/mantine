@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, ElementsGroup, Button, LoadingOverlay, useMantineTheme } from '@mantine/core';
+import { TextInput, Group, Button, LoadingOverlay, useMantineTheme } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -7,7 +7,7 @@ const code = `import React, { useState } from 'react';
 import { TextInput, Button } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 
-export function UseFormDemo() {
+export function Demo() {
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string>(null);
   const form = useForm({
@@ -88,6 +88,7 @@ export function UseFormServerValidationDemo() {
             placeholder="your@email.com"
             error={form.errors.email && (serverError || 'Please specify valid email')}
             value={form.values.email}
+            variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
             onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
             onFocus={() => {
               setServerError(null);
@@ -95,9 +96,9 @@ export function UseFormServerValidationDemo() {
             }}
           />
 
-          <ElementsGroup position="right" style={{ marginTop: 15 }}>
+          <Group position="right" style={{ marginTop: 15 }}>
             <Button type="submit">Register</Button>
-          </ElementsGroup>
+          </Group>
         </form>
       </div>
     </CodeDemo>

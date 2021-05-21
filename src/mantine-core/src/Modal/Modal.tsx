@@ -12,13 +12,16 @@ import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
+import { Portal } from '../Portal/Portal';
 import { GroupedTransition, MantineTransition } from '../Transition/Transition';
 import { CloseIcon } from './CloseIcon';
 import useStyles, { sizes } from './Modal.styles';
 
 export const MODAL_SIZES = sizes;
 
-export interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+export interface ModalProps
+  extends DefaultProps,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Mounts modal if true */
   opened: boolean;
 
@@ -62,7 +65,7 @@ export interface ModalProps extends DefaultProps, Omit<React.ComponentPropsWitho
   id?: string;
 }
 
-export function Modal({
+export function MantineModal({
   className,
   opened,
   themeOverride,
@@ -159,6 +162,14 @@ export function Modal({
         </div>
       )}
     </GroupedTransition>
+  );
+}
+
+export function Modal(props: React.ComponentPropsWithoutRef<typeof MantineModal>) {
+  return (
+    <Portal zIndex={props.zIndex || 1000}>
+      <MantineModal {...props} />
+    </Portal>
   );
 }
 

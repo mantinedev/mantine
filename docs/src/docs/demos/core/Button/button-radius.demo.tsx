@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ElementsGroup } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const getSizes = (props?: any) =>
@@ -12,7 +12,7 @@ const getSizes = (props?: any) =>
 export function ButtonRadiusDemo() {
   return (
     <CodeDemo>
-      <ElementsGroup>{getSizes()}</ElementsGroup>
+      <Group>{getSizes()}</Group>
     </CodeDemo>
   );
 }

@@ -3,10 +3,15 @@ import { InputWrapper, Input, useMantineTheme } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function InputWrapperWrapper(props: React.ComponentPropsWithoutRef<typeof InputWrapper>) {
+  const theme = useMantineTheme();
   return (
     <div style={{ maxWidth: 300, margin: 'auto' }}>
       <InputWrapper id="input-demo" {...props}>
-        <Input id="input-demo" placeholder="Your email" />
+        <Input
+          id="input-demo"
+          placeholder="Your email"
+          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
+        />
       </InputWrapper>
     </div>
   );
@@ -20,14 +25,12 @@ const codeTemplate = (props: string) => `<InputWrapper
 </InputWrapper>`;
 
 export function InputWrapperConfigurator({ includeCode = true }: { includeCode: boolean }) {
-  const theme = useMantineTheme();
   return (
     <Configurator
       component={InputWrapperWrapper}
       codeTemplate={codeTemplate}
       includeCode={includeCode}
       multiline
-      previewBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
       props={[
         {
           name: 'required',

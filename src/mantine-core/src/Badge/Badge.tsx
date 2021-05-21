@@ -52,11 +52,7 @@ export function Badge<T extends React.ElementType = 'div'>({
   });
 
   return (
-    <Component
-      {...others}
-      data-mantine-composable
-      className={cx(classes.badge, classes[variant], className)}
-    >
+    <Component {...others} className={cx(classes.badge, classes[variant], className)}>
       {leftSection && (
         <span data-mantine-badge-left className={classes.leftSection}>
           {leftSection}

@@ -10,7 +10,7 @@ export const CHECKBOX_SIZES = sizes;
 export interface CheckboxProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
-  /** Checkbox checked and intermediate state color from theme, defaults to theme.primaryColor */
+  /** Checkbox checked and indeterminate state color from theme, defaults to theme.primaryColor */
   color?: string;
 
   /** Predefined label font-size and checkbox width and height in px */
@@ -19,8 +19,8 @@ export interface CheckboxProps
   /** Checkbox label */
   label?: React.ReactNode;
 
-  /** Intermediate state of checkbox, overwrites checked */
-  intermediate?: boolean;
+  /** Indeterminate state of checkbox, overwrites checked */
+  indeterminate?: boolean;
 
   /** Style properties added to input element */
   inputStyle?: React.CSSProperties;
@@ -46,7 +46,7 @@ export function Checkbox({
   themeOverride,
   label,
   disabled,
-  intermediate,
+  indeterminate,
   id,
   size,
   wrapperProps,
@@ -54,6 +54,7 @@ export function Checkbox({
   inputStyle,
   inputClassName,
   elementRef,
+  children,
   ...others
 }: CheckboxProps) {
   const uuid = useId(id);
@@ -63,17 +64,17 @@ export function Checkbox({
     <div className={cx(classes.wrapper, className)} style={style} {...wrapperProps}>
       <div className={classes.checkboxWrapper}>
         <input
-          {...others}
           id={uuid}
           ref={elementRef}
           type="checkbox"
           className={cx(classes.checkbox, inputClassName)}
-          checked={intermediate || checked}
+          checked={indeterminate || checked}
           onChange={onChange}
           disabled={disabled}
           style={inputStyle}
+          {...others}
         />
-        <CheckboxIcon intermediate={intermediate} className={classes.icon} />
+        <CheckboxIcon indeterminate={indeterminate} className={classes.icon} />
       </div>
 
       {label && (

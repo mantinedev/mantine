@@ -1,6 +1,5 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, getSizeValue } from '@mantine/theme';
 import React from 'react';
+import { createMemoStyles, MantineTheme, getSizeValue } from '@mantine/theme';
 
 export const sizes = {
   xs: 180,
@@ -44,27 +43,24 @@ function getPositionStyles({
   }
 }
 
-export default createUseStyles(
-  {
-    noOverlay: {},
+export default createMemoStyles({
+  noOverlay: {},
 
-    wrapper: {
-      '&:not($noOverlay)': {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-      },
-    },
-
-    drawer: ({ size, position }: DrawerStylesProps) => ({
-      ...getPositionStyles({ position, size }),
-      maxWidth: '100%',
-      maxHeight: '100vh',
+  wrapper: {
+    '&:not($noOverlay)': {
       position: 'fixed',
-      outline: 0,
-    }),
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
   },
-  { link: true }
-);
+
+  drawer: ({ size, position }: DrawerStylesProps) => ({
+    ...getPositionStyles({ position, size }),
+    maxWidth: '100%',
+    maxHeight: '100vh',
+    position: 'fixed',
+    outline: 0,
+  }),
+});

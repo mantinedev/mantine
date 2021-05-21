@@ -8,7 +8,7 @@ import {
   InputWrapperBaseProps,
   Transition,
   Paper,
-  ElementsGroup,
+  Group,
   ColorSwatch,
   Text,
 } from '@mantine/core';
@@ -77,8 +77,8 @@ export function ColorInput({
         >
           {value ? (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <ColorSwatch color={value} size={20} style={{ marginRight: 10 }} />
-              <Text size="sm" transform="uppercase">
+              <ColorSwatch color={value} size={16} style={{ marginRight: 10 }} />
+              <Text size="sm" transform="uppercase" style={{ lineHeight: 1 }}>
                 {value}
               </Text>
             </div>
@@ -108,7 +108,7 @@ export function ColorInput({
                 left: 0,
                 right: 0,
                 border: `1px solid ${
-                  theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+                  theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
                 }`,
               }}
               onKeyDownCapture={(event) => {
@@ -117,7 +117,7 @@ export function ColorInput({
                 }
               }}
             >
-              <ElementsGroup position="center">{colors}</ElementsGroup>
+              <Group position="center">{colors}</Group>
             </Paper>
           )}
         </Transition>

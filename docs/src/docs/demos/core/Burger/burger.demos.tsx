@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Burger, ElementsGroup } from '@mantine/core';
+import { Burger, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
@@ -25,14 +25,14 @@ export function BurgerBaseDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Burger
           opened={navigationOpened}
           onClick={() => setNavigationOpened((o) => !o)}
           title={title}
           aria-label={title}
         />
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

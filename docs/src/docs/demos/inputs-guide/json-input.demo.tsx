@@ -16,15 +16,15 @@ export function JsonInputDemo() {
       code={code}
       language="tsx"
       toggle
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]}
       githubLink="https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/JsonInput/JsonInput.tsx"
     >
-      <div style={{ maxWidth: 700, margin: 'auto' }}>
+      <div style={{ maxWidth: 359, margin: 'auto' }}>
         <JsonInput
           label="Your package.json"
           placeholder="Your package.json"
           value={value}
           onChange={setValue}
+          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
         />
       </div>
     </CodeDemo>

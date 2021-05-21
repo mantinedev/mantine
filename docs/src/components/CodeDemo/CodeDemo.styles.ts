@@ -5,10 +5,9 @@ export default createUseStyles(
   (theme: MantineTheme) => ({
     demo: {
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3]
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[3]
       }`,
       position: 'relative',
-      zIndex: 3,
 
       '&:not(:only-child)': {
         borderBottom: 0,
@@ -21,6 +20,20 @@ export default createUseStyles(
       borderTopRightRadius: 0,
       borderTopLeftRadius: 0,
       marginTop: 0,
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[3]
+      }`,
+    },
+
+    controls: {
+      position: 'absolute',
+      bottom: theme.spacing.xs - 1,
+      right: theme.spacing.xs - 1,
+    },
+
+    withToggle: {
+      paddingRight: 50,
+      minHeight: 80,
     },
   }),
   { theming }

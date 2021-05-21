@@ -9,7 +9,7 @@ export const categories = [
   },
   { id: 'healthcare', name: 'Healthcare', color: 'orange' },
   { id: 'entertainment', name: 'Entertainment', color: 'violet' },
-  { id: 'rent', name: 'Rent', color: 'gray' },
+  { id: 'rent', name: 'Rent', color: 'cyan' },
   { id: 'gifts', name: 'Gifts', color: 'yellow' },
 ];
 

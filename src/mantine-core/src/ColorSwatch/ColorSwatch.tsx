@@ -34,7 +34,6 @@ export function ColorSwatch<T extends React.ElementType = 'div', U = HTMLDivElem
     <Element
       className={cx(classes.colorSwatch, className)}
       style={{ width: size, height: size, backgroundColor: color, ...style }}
-      data-mantine-composable
       {...others}
     />
   );

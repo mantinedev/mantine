@@ -1,5 +1,4 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 interface ContainerStylesProps {
   fluid: boolean;
@@ -16,15 +15,12 @@ export const sizes = {
   xl: 1370,
 };
 
-export default createUseStyles(
-  {
-    container: ({ fluid, size, padding, theme }: ContainerStylesProps) => ({
-      maxWidth: fluid ? '100%' : getSizeValue({ size, sizes }),
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      paddingLeft: getSizeValue({ size: padding, sizes: theme.spacing }),
-      paddingRight: getSizeValue({ size: padding, sizes: theme.spacing }),
-    }),
-  },
-  { link: true }
-);
+export default createMemoStyles({
+  container: ({ fluid, size, padding, theme }: ContainerStylesProps) => ({
+    maxWidth: fluid ? '100%' : getSizeValue({ size, sizes }),
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    paddingLeft: getSizeValue({ size: padding, sizes: theme.spacing }),
+    paddingRight: getSizeValue({ size: padding, sizes: theme.spacing }),
+  }),
+});

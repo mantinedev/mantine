@@ -46,7 +46,7 @@ function Demo() {
       >
         <Button onClick={() => setOpened(false)}>Save to profile</Button>
       </Tooltip>
-      
+
       {!opened && (
         <Button
           variant="link"
@@ -92,7 +92,6 @@ export function TooltipComplexDemo() {
           display: 'flex',
           alignItems: 'center',
           flexDirection: 'column',
-          paddingTop: 100,
           paddingBottom: opened ? 40 : 0,
         }}
       >

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ElementsGroup, Button, Code, Title, MantineProvider } from '@mantine/core';
+import { Group, Button, Code, Title, MantineProvider } from '@mantine/core';
 import { ColorSchemeContext } from '../../../components/Layout/ColorScheme.context';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
@@ -36,10 +36,10 @@ export function ThemeFontsExtendDemo() {
           Georgia or serif title
         </Title>
 
-        <ElementsGroup position="center">
+        <Group position="center">
           <Button>Verdana button</Button>
           <Code data-mantine-composable>Courier Code</Code>
-        </ElementsGroup>
+        </Group>
       </MantineProvider>
     </CodeDemo>
   );

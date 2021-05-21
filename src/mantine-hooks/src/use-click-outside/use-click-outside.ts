@@ -9,7 +9,6 @@ export function useClickOutside<T extends HTMLElement = any>(
   useEffect(() => {
     const listener = (event: any) => {
       if (ref.current && !ref.current.contains(event.target)) {
-        event.preventDefault();
         handler();
       }
     };

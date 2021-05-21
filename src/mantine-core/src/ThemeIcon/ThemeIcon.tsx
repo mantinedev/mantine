@@ -33,15 +33,14 @@ export function ThemeIcon({
   ...others
 }: ThemeIconProps) {
   const classes = useStyles({
-    variant,
+    theme: useMantineTheme(themeOverride),
     radius,
     color,
     size,
-    theme: useMantineTheme(themeOverride),
   });
 
   return (
-    <div data-mantine-composable className={cx(classes.themeIcon, className)} {...others}>
+    <div className={cx(classes.themeIcon, classes[variant], className)} {...others}>
       {children}
     </div>
   );

@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/core';
+import { theming, MantineTheme, hexToRgba } from '@mantine/core';
 import { HEADER_HEIGHT } from '../Layout/Header/Header.styles';
 
 export const TABLE_OF_CONTENTS_WIDTH = 260;
@@ -51,8 +51,9 @@ export default createUseStyles(
 
     linkActive: {
       borderLeftColor: theme.colors.blue[5],
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.blue[0],
-      color: theme.colorScheme === 'dark' ? theme.colors.blue[0] : theme.colors.blue[8],
+      backgroundColor:
+        theme.colorScheme === 'dark' ? hexToRgba(theme.colors.blue[9], 0.45) : theme.colors.blue[0],
+      color: theme.colorScheme === 'dark' ? theme.colors.blue[1] : theme.colors.blue[8],
     },
 
     header: {

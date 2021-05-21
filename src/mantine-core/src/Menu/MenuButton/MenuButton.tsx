@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { ComponentPassThrough } from '@mantine/types';
 import { MenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 
@@ -9,9 +10,10 @@ export interface MenuButtonProps extends DefaultProps, MenuItemProps {
   hovered: boolean;
   onHover(): void;
   elementRef(node: HTMLButtonElement): void;
+  component?: any;
 }
 
-export function MenuButton({
+export function MenuButton<T extends React.ElementType = 'button'>({
   children,
   onHover,
   hovered,
@@ -22,12 +24,13 @@ export function MenuButton({
   disabled,
   rightSection,
   className,
+  component: Element = 'button',
   ...others
-}: MenuButtonProps) {
+}: ComponentPassThrough<T, MenuButtonProps>) {
   const classes = useStyles({ color, theme: useMantineTheme(themeOverride) });
 
   return (
-    <button
+    <Element
       type="button"
       role="menuitem"
       className={cx(classes.item, { [classes.hovered]: hovered }, className)}
@@ -48,7 +51,7 @@ export function MenuButton({
           {rightSection}
         </div>
       </div>
-    </button>
+    </Element>
   );
 }
 

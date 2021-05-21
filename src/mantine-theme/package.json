@@ -1,6 +1,6 @@
 {
   "name": "@mantine/theme",
-  "version": "1.0.6",
+  "version": "1.1.1",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "browser": "lib/index.umd.js",
@@ -12,7 +12,7 @@
     "react-jss": ">=10.1.1"
   },
   "dependencies": {
-    "@mantine/types": "1.0.6"
+    "@mantine/types": "1.1.1"
   },
   "devDependencies": {}
 }

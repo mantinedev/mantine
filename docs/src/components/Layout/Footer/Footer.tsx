@@ -16,7 +16,7 @@ export function Footer() {
   return (
     <footer className={classes.wrapper}>
       <Text size="sm" align="center" color="gray">
-        Mantine respects your privacy. This website has no trackers, analytics or adds.
+        Mantine respects your privacy. This website has no trackers, analytics or ads.
       </Text>
       <Text size="sm" align="center" color="gray">
         This project is open source and relies on contributors, please consider{' '}

@@ -21,6 +21,7 @@ function Demo() {
 
 export function InputComponentDemo() {
   const theme = useMantineTheme();
+  const variant = theme.colorScheme === 'dark' ? 'filled' : 'default';
 
   return (
     <CodeDemo
@@ -28,8 +29,15 @@ export function InputComponentDemo() {
       language="tsx"
       demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
     >
-      <Input component="button">Button input</Input>
-      <Input component="select" style={{ marginTop: 15 }} rightSection={<ChevronDownIcon />}>
+      <Input component="button" variant={variant}>
+        Button input
+      </Input>
+      <Input
+        variant={variant}
+        component="select"
+        style={{ marginTop: 15 }}
+        rightSection={<ChevronDownIcon />}
+      >
         <option value="1">1</option>
         <option value="2">2</option>
       </Input>

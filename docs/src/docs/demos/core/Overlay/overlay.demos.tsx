@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Button, ElementsGroup, Overlay, Text, useMantineTheme } from '@mantine/core';
+import { Button, Group, Overlay, Text, useMantineTheme } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
-import { Button, ElementsGroup, Overlay } from '@mantine/core';
+import { Button, Group, Overlay } from '@mantine/core';
 
 function Demo() {
   const [visible, setVisible] = useState(false);
@@ -17,9 +17,9 @@ function Demo() {
         </Button>
       </div>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button onClick={() => setVisible((v) => !v)}>Toggle overlay</Button>
-      </ElementsGroup>
+      </Group>
     </>
   );
 }`;
@@ -45,19 +45,19 @@ export function OverlayBaseDemo() {
         </Button>
       </div>
 
-      <ElementsGroup position="center" style={{ marginTop: 20 }}>
+      <Group position="center" style={{ marginTop: 20 }}>
         <Button onClick={() => setVisible((v) => !v)}>Toggle overlay</Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }
 
 const linkCode = `import React from 'react';
-import { Overlay, ElementsGroup, Button, Text, useMantineTheme } from '@mantine/core';
+import { Overlay, Group, Button, Text, useMantineTheme } from '@mantine/core';
 
 function OverlayDemo() {
   const theme = useMantineTheme();
-  
+
   return (
     <div style={{
       position: 'relative',
@@ -76,9 +76,9 @@ function OverlayDemo() {
         If you click something new tab will be opened
       </Text>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button>You will not click me, sorry</Button>
-      </ElementsGroup>
+      </Group>
     </div>
   );
 }`;
@@ -105,9 +105,9 @@ export function OverlayLinkDemo() {
           If you click something new tab will be opened
         </Text>
 
-        <ElementsGroup position="center" style={{ marginTop: 15 }}>
+        <Group position="center" style={{ marginTop: 15 }}>
           <Button>You will not click me, sorry</Button>
-        </ElementsGroup>
+        </Group>
       </div>
     </CodeDemo>
   );

@@ -3,7 +3,7 @@ import { Link, MemoryRouter } from 'react-router-dom';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { MantineSize, DEFAULT_THEME } from '@mantine/theme';
-import { ElementsGroup } from '../ElementsGroup/ElementsGroup';
+import { Group } from '../Group/Group';
 import { Button } from './Button';
 
 const getThemes = (props?: any) =>
@@ -36,59 +36,53 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
 storiesOf('@mantine/core/Button', module)
   .add('Themes', () => (
     <>
-      <ElementsGroup style={{ padding: 20 }}>{getThemes()}</ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>{getThemes({ variant: 'outline' })}</ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>{getThemes({ variant: 'link' })}</ElementsGroup>
+      <Group style={{ padding: 20 }}>{getThemes()}</Group>
+      <Group style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</Group>
+      <Group style={{ padding: 20 }}>{getThemes({ variant: 'outline' })}</Group>
+      <Group style={{ padding: 20 }}>{getThemes({ variant: 'link' })}</Group>
     </>
   ))
   .add('Link button themes', () => (
     <>
-      <ElementsGroup style={{ padding: 20 }}>{getLinkThemes()}</ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>{getLinkThemes({ variant: 'outline' })}</ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>{getLinkThemes({ variant: 'link' })}</ElementsGroup>
+      <Group style={{ padding: 20 }}>{getLinkThemes()}</Group>
+      <Group style={{ padding: 20 }}>{getLinkThemes({ variant: 'outline' })}</Group>
+      <Group style={{ padding: 20 }}>{getLinkThemes({ variant: 'link' })}</Group>
     </>
   ))
-  .add('Sizes', () => <ElementsGroup style={{ padding: 20 }}>{sizes}</ElementsGroup>)
+  .add('Sizes', () => <Group style={{ padding: 20 }}>{sizes}</Group>)
   .add('Icons', () => (
     <>
-      <ElementsGroup style={{ padding: 20 }}>
+      <Group style={{ padding: 20 }}>
         {getThemes({ leftIcon: <CalendarIcon style={{ width: 14 }} /> })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>
+      </Group>
+      <Group style={{ padding: 20 }}>
         {getLinkThemes({
           rightIcon: <ExternalLinkIcon style={{ width: 14 }} />,
           variant: 'outline',
         })}
-      </ElementsGroup>
+      </Group>
 
-      <ElementsGroup style={{ padding: 20 }}>
+      <Group style={{ padding: 20 }}>
         {getLinkThemes({
           rightIcon: <ExternalLinkIcon style={{ width: 12 }} />,
           variant: 'link',
         })}
-      </ElementsGroup>
+      </Group>
 
-      <ElementsGroup style={{ padding: 20 }}>
+      <Group style={{ padding: 20 }}>
         {getThemes({
           leftIcon: <CalendarIcon style={{ width: 14 }} />,
           rightIcon: <ExternalLinkIcon style={{ width: 14 }} />,
         })}
-      </ElementsGroup>
+      </Group>
     </>
   ))
   .add('Disabled', () => (
     <>
-      <ElementsGroup style={{ padding: 20 }}>{getThemes({ disabled: true })}</ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>
-        {getThemes({ variant: 'outline', disabled: true })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>
-        {getThemes({ variant: 'light', disabled: true })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>
-        {getThemes({ variant: 'link', disabled: true })}
-      </ElementsGroup>
+      <Group style={{ padding: 20 }}>{getThemes({ disabled: true })}</Group>
+      <Group style={{ padding: 20 }}>{getThemes({ variant: 'outline', disabled: true })}</Group>
+      <Group style={{ padding: 20 }}>{getThemes({ variant: 'light', disabled: true })}</Group>
+      <Group style={{ padding: 20 }}>{getThemes({ variant: 'link', disabled: true })}</Group>
     </>
   ))
   .add('Full width', () => (
@@ -115,35 +109,33 @@ storiesOf('@mantine/core/Button', module)
   ))
   .add('React router', () => (
     <MemoryRouter>
-      <ElementsGroup style={{ padding: 20 }}>
+      <Group style={{ padding: 20 }}>
         <Button<typeof Link, HTMLAnchorElement> component={Link} to="/hello">
           Mantine button
         </Button>
-      </ElementsGroup>
+      </Group>
     </MemoryRouter>
   ))
   .add('Dark theme', () => (
     <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <ElementsGroup style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' } })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>
+      <Group style={{ padding: 20 }}>{getThemes({ themeOverride: { colorScheme: 'dark' } })}</Group>
+      <Group style={{ padding: 20 }}>
         {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'light' })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>
+      </Group>
+      <Group style={{ padding: 20 }}>
         {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'outline' })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>
+      </Group>
+      <Group style={{ padding: 20 }}>
         {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'link' })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>
+      </Group>
+      <Group style={{ padding: 20 }}>
         {getThemes({ themeOverride: { colorScheme: 'dark' }, disabled: true })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>
+      </Group>
+      <Group style={{ padding: 20 }}>
         {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'outline', disabled: true })}
-      </ElementsGroup>
-      <ElementsGroup style={{ padding: 20 }}>
+      </Group>
+      <Group style={{ padding: 20 }}>
         {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'link', disabled: true })}
-      </ElementsGroup>
+      </Group>
     </div>
   ));

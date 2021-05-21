@@ -54,3 +54,24 @@ use-scroll-lock is used in some components in <GatsbyLink to="/core/getting-star
 example with <GatsbyLink to="/core/modal/">Modal</GatsbyLink> component:
 
 <ModalBaseDemo />
+
+## Disable touch events
+
+To prevent scroll on mobile devices use `disableTouchEvents` option.
+**Warning** that this will prevent scroll in all all elements,
+e.g. user will not be able to scroll modal content with overflow.
+
+```tsx
+useScrollLock(true, { disableTouchEvents: true });
+```
+
+## Definition
+
+```tsx
+function useScrollLock(
+  lock: boolean,
+  options?: {
+    disableTouchEvents: boolean;
+  }
+): void;
+```

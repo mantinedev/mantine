@@ -7,7 +7,7 @@ const code = `import React from 'react';
 import { TextInput } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 
-export function UseFormDemo() {
+export function Demo() {
   const form = useForm({
     initialValues: { email: '' },
     validationRules: {
@@ -52,6 +52,7 @@ export function UseFormBlurValidateDemo() {
           value={form.values.email}
           onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
           onBlur={() => form.validateField('email')}
+          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
         />
       </div>
     </CodeDemo>

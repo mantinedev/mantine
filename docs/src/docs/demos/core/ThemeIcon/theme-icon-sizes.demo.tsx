@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeIcon, ElementsGroup, useMantineTheme } from '@mantine/core';
+import { ThemeIcon, Group, useMantineTheme } from '@mantine/core';
 import { RocketIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -23,9 +23,9 @@ export function ThemeIconSizesDemo() {
 
   return (
     <CodeDemo>
-      <ElementsGroup position="center">
+      <Group position="center">
         {getSizes({ color: theme.colorScheme === 'dark' ? 'yellow' : 'blue' })}
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

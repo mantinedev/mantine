@@ -67,6 +67,7 @@ export function NotificationsProvider({
 }: NotificationProviderProps) {
   const {
     notifications,
+    queue,
     showNotification,
     updateNotification,
     hideNotification,
@@ -112,6 +113,7 @@ export function NotificationsProvider({
     <NotificationsContext.Provider
       value={{
         notifications,
+        queue,
         showNotification,
         hideNotification,
         updateNotification,
