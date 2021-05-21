@@ -7,7 +7,6 @@
   "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "sideEffects": false,
   "peerDependencies": {
     "@mantine/core": "1.1.1",
     "@mantine/hooks": "1.1.1",
