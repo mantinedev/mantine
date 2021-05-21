@@ -11,6 +11,7 @@ const logger = new Logger('build-package');
 export interface BuildOptions {
   analyze: boolean;
   sourcemap: boolean;
+  minify: boolean;
   formats: string[];
 }
 

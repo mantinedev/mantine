@@ -18,8 +18,8 @@ interface PkgConfigInput {
   publicPath?: string;
   externals?: string[];
   sourcemap: boolean;
+  minify: boolean;
   analyze: boolean;
-  analyzeAutoOpen?: boolean;
 }
 
 export default async function createPackageConfig(config: PkgConfigInput): Promise<RollupOptions> {
@@ -38,6 +38,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       extensions: ['.ts', '.tsx', '.js', '.jsx'],
     }),
     esbuild({
+      minify: config.minify && config.format === 'umd',
       sourceMap: config.sourcemap,
       tsconfig: path.resolve(process.cwd(), 'tsconfig.json'),
     }),

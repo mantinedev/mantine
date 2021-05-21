@@ -24,6 +24,11 @@ const { argv } = yargs(hideBin(process.argv))
     default: true,
     description: 'Generate sourcemap.',
   })
+  .option('minify', {
+    type: 'boolean',
+    default: false,
+    description: 'Minify umd files.',
+  })
   .option('formats', {
     type: 'string',
     array: true,
