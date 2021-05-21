@@ -68,6 +68,8 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
   const output: OutputOptions = {
     name: packageJson.name,
     format: config.format as ModuleFormat,
+    externalLiveBindings: false,
+    sourcemap: config.sourcemap,
   };
 
   if (config.format === 'es') {
@@ -93,10 +95,6 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       'react-dom': 'ReactDOM',
       'react-jss': 'reactJss',
     };
-  }
-
-  if (config.sourcemap) {
-    output.sourcemap = true;
   }
 
   if (config.analyze && config.format === 'umd') {
