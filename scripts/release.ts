@@ -16,7 +16,7 @@ const git = simpleGit();
 (async () => {
   const status = await git.status();
 
-  if (status.current !== 'master') {
+  if (status.current === 'master') {
     logger.error(
       `It is allowed to release changes from master branch, current branch is ${chalk.red(
         status.current
