@@ -8,7 +8,7 @@ const { argv } = yargs(hideBin(process.argv))
   .option('all', {
     type: 'boolean',
     default: false,
-    description: 'Build all packages',
+    description: 'Build all packages.',
   })
   .option('project', {
     type: 'string',
@@ -32,9 +32,14 @@ const { argv } = yargs(hideBin(process.argv))
   .option('formats', {
     type: 'string',
     array: true,
+    choices: ['es', 'cjs', 'umd'],
     default: ['es', 'cjs', 'umd'],
-    description: "Specify module code generation: 'es', 'cjs', 'umd'",
-  });
+    description: "Specify module code generation: 'es', 'cjs', 'umd'.",
+  })
+  .example([
+    ['$0 all --formats umd cjs', 'Building only umd and cjs packages.'],
+    ['$0 mantine-core --analyze', 'Building mantine-core package and generating analyzing file.'],
+  ]);
 
 (async () => {
   if (argv._[0] === 'all' || argv.all) {
