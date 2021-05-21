@@ -24,16 +24,17 @@ const { argv } = yargs(hideBin(process.argv))
     default: true,
     description: 'Generate sourcemap.',
   })
-  .option('minify', {
-    type: 'boolean',
-    default: true,
-    description: 'Minify umd files.',
+  .option('formats', {
+    type: 'string',
+    array: true,
+    default: ['es', 'cjs', 'umd'],
+    description: "Specify module code generation: 'es', 'cjs', 'umd'",
   });
 
 (async () => {
-  if (argv.all) {
+  if (argv._[0] === 'all' || argv.all) {
     await buildAllPackages(argv as BuildOptions);
-  } else if (argv.project) {
-    await buildPackage(argv.project, argv as BuildOptions);
+  } else if (argv._[0] || argv.project) {
+    await buildPackage((argv._[0] || argv.project) as string, argv as BuildOptions);
   }
 })();
