@@ -17,7 +17,7 @@
     "@mantine/theme": "1.1.1",
     "@mantine/utils": "1.1.1",
     "clsx": "^1.1.1",
-    "react-textarea-autosize": "^8.3.0",
+    "react-textarea-autosize": "^8.3.2",
     "react-transition-group": "^4.4.1"
   },
   "devDependencies": {}
