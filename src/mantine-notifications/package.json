@@ -1,11 +1,12 @@
 {
   "name": "@mantine/notifications",
   "version": "1.2.1",
-  "main": "dist/lib.js",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "browser": "lib/index.umd.js",
+  "types": "lib/index.d.ts",
   "license": "MIT",
-  "types": "dist/mantine-notifications/src/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "sideEffects": false,
   "peerDependencies": {
     "@mantine/core": "1.2.1",
     "@mantine/hooks": "1.2.1",

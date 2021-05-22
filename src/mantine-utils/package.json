@@ -1,8 +1,13 @@
 {
   "name": "@mantine/utils",
-  "private": true,
   "version": "1.2.1",
-  "main": "dist/lib.js",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "browser": "lib/index.umd.js",
+  "types": "lib/index.d.ts",
   "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>"
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "peerDependencies": {},
+  "dependencies": {},
+  "devDependencies": {}
 }

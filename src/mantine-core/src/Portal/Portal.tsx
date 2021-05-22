@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { ReactPortal, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useIsomorphicEffect } from '@mantine/hooks';
 
@@ -16,7 +16,7 @@ export interface PortalProps {
   className?: string;
 }
 
-export function Portal({ children, zIndex = 1, target, className }: PortalProps) {
+export function Portal({ children, zIndex = 1, target, className }: PortalProps): ReactPortal {
   const [mounted, setMounted] = useState(false);
   const elementRef = useRef<HTMLDivElement>();
 
