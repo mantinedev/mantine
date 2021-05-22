@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider, DEFAULT_THEME } from '@mantine/theme';
+import { MantineProvider, DEFAULT_THEME } from '../theme';
 import { SegmentedControl } from './SegmentedControl';
 
 const data = [

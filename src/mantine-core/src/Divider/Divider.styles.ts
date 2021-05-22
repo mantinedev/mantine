@@ -5,7 +5,7 @@ import {
   MantineTheme,
   getSizeValue,
   getThemeColor,
-} from '@mantine/theme';
+} from '../theme';
 
 interface DividerStylesProps {
   theme: MantineTheme;

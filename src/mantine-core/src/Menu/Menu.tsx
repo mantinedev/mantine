@@ -1,6 +1,6 @@
 import React, { useState, useRef, cloneElement } from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { useId, useClickOutside, useMergedRef } from '@mantine/hooks';
+import { DefaultProps, MantineNumberSize } from '../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { MantineTransition } from '../Transition/Transition';
 import { MenuIcon } from './MenuIcon';

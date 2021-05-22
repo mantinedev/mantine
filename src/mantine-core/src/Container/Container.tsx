@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme } from '../theme';
 import useStyles, { sizes } from './Container.styles';
 
 export const CONTAINER_SIZES = sizes;

@@ -7,7 +7,7 @@ import {
   useReducedMotion,
   useFocusTrap,
 } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize } from '../theme';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { Portal } from '../Portal/Portal';

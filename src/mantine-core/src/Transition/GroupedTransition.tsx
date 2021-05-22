@@ -1,6 +1,6 @@
 import React from 'react';
 import { Transition } from 'react-transition-group';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '../theme';
 import { MantineTransition } from './transitions';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 

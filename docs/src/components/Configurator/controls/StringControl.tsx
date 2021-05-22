@@ -1,5 +1,6 @@
 import React from 'react';
-import { TextInput, useMantineTheme, upperFirst } from '@mantine/core';
+import { TextInput, useMantineTheme } from '@mantine/core';
+import { upperFirst } from '@mantine/hooks';
 
 interface StringControlProps {
   value: string;

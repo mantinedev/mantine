@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { DEFAULT_THEME } from '../theme';
 import { Text } from '../Text/Text';
 import { Paper } from './Paper';
 

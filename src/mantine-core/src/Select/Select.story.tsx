@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { RocketIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { DEFAULT_THEME } from '../theme';
 import { Select } from './Select';
 
 const data = [

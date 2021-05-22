@@ -1,6 +1,6 @@
 import React from 'react';
-import { useListState } from '@mantine/hooks';
-import { useMantineTheme, Checkbox, randomId } from '@mantine/core';
+import { useListState, randomId } from '@mantine/hooks';
+import { useMantineTheme, Checkbox } from '@mantine/core';
 
 const initialValues = [
   { label: 'Receive email notifications', checked: false, key: randomId() },

@@ -1,10 +1,4 @@
-import {
-  createMemoStyles,
-  MantineTheme,
-  getThemeColor,
-  getFontStyles,
-  hexToRgba,
-} from '@mantine/theme';
+import { createMemoStyles, MantineTheme, getThemeColor, getFontStyles, hexToRgba } from '../theme';
 
 interface CodeStylesProps {
   theme: MantineTheme;

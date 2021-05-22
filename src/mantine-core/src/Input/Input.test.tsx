@@ -6,7 +6,7 @@ import {
   itSupportsRef,
   itSupportsStyle,
 } from '@mantine/tests';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { DEFAULT_THEME } from '../theme';
 import { Input } from './Input';
 
 describe('@mantine/core/Input', () => {

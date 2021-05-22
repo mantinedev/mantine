@@ -1,5 +1,6 @@
 import React from 'react';
-import { NumberInput, upperFirst, useMantineTheme } from '@mantine/core';
+import { NumberInput, useMantineTheme } from '@mantine/core';
+import { upperFirst } from '@mantine/hooks';
 
 interface NumberControlProps {
   value: number;

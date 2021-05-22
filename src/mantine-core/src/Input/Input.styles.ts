@@ -4,7 +4,7 @@ import {
   getFontStyles,
   getSizeValue,
   createMemoStyles,
-} from '@mantine/theme';
+} from '../theme';
 
 interface InputStylesProps {
   theme: MantineTheme;

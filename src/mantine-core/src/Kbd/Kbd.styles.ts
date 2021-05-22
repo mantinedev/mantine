@@ -1,4 +1,4 @@
-import { createMemoStyles, MantineTheme } from '@mantine/theme';
+import { createMemoStyles, MantineTheme } from '../theme';
 
 interface KbdStylesProps {
   theme: MantineTheme;

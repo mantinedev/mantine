@@ -1,4 +1,4 @@
-import { createMemoStyles, getFontStyles, MantineTheme } from '@mantine/theme';
+import { createMemoStyles, getFontStyles, MantineTheme } from '../theme';
 
 type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 

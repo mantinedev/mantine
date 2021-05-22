@@ -1,5 +1,4 @@
-import { useQueue } from '@mantine/hooks';
-import { randomId } from '@mantine/core';
+import { useQueue, randomId } from '@mantine/hooks';
 import { NotificationProps } from '../../types';
 
 export default function useNotificationsState({ limit }: { limit: number }) {

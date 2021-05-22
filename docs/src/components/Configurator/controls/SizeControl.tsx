@@ -1,5 +1,6 @@
 import React from 'react';
-import { InputWrapper, SegmentedControl, upperFirst } from '@mantine/core';
+import { InputWrapper, SegmentedControl } from '@mantine/core';
+import { upperFirst } from '@mantine/hooks';
 
 const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => ({
   value: size,

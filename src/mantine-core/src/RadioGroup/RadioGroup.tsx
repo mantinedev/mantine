@@ -1,6 +1,6 @@
 import React, { Children, cloneElement, useState } from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, useMantineTheme, MantineSize } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme, MantineSize } from '../theme';
 import { InputWrapper, InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
 import { Radio, RadioProps } from './Radio/Radio';
 import { sizes } from './Radio/Radio.styles';

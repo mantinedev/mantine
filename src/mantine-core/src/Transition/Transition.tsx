@@ -1,7 +1,7 @@
 import React from 'react';
 import { Transition as RTGTransition } from 'react-transition-group';
-import { useMantineTheme, DefaultProps } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
+import { useMantineTheme, DefaultProps } from '../theme';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { MantineTransition, transitions } from './transitions';
 

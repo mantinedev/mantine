@@ -4,7 +4,7 @@ import {
   getFontStyles,
   getFocusStyles,
   getThemeColor,
-} from '@mantine/theme';
+} from '../../theme';
 
 interface TabControlStylesProps {
   theme: MantineTheme;

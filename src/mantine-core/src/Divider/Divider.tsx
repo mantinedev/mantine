@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
+import { useMantineTheme, DefaultProps, MantineNumberSize } from '../theme';
 import useStyles, { sizes } from './Divider.styles';
 import { Text } from '../Text/Text';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
+import { useMantineTheme, DefaultProps, MantineNumberSize } from '../theme';
 import { PlaceholderIcon } from './PlaceholderIcon';
 import useStyles, { sizes } from './Avatar.styles';
 

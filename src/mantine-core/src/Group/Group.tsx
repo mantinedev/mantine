@@ -1,6 +1,6 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize } from '../theme';
 import useStyles, { GroupPosition } from './Group.styles';
 
 export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { itSupportsClassName, itSupportsStyle, itSupportsOthers } from '@mantine/tests';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { DEFAULT_THEME } from '../theme';
 import { Loader } from './Loader';
 
 describe('@mantine/core/Loader', () => {

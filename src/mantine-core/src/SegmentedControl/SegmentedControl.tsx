@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cx from 'clsx';
 import { useId, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '../theme';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
 interface SegmentedControlItem {

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
+import { DefaultProps, useMantineTheme } from '../theme';
 import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
 

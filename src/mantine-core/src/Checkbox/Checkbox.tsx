@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineSize } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, MantineSize } from '../theme';
 import { CheckboxIcon } from './CheckboxIcon';
 import useStyles, { sizes } from './Checkbox.styles';
 

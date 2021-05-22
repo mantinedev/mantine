@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme } from '../theme';
 import useStyles, { sizes } from './Burger.styles';
 
 export const BURGER_SIZES = sizes;

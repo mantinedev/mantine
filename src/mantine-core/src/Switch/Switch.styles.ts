@@ -7,7 +7,7 @@ import {
   getFocusStyles,
   getSizeValue,
   MantineSize,
-} from '@mantine/theme';
+} from '../theme';
 
 interface SwitchStylesProps {
   reduceMotion: boolean;

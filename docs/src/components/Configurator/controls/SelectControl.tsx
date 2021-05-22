@@ -1,5 +1,6 @@
 import React from 'react';
-import { Select, useMantineTheme, upperFirst } from '@mantine/core';
+import { Select, useMantineTheme } from '@mantine/core';
+import { upperFirst } from '@mantine/hooks';
 
 interface SelectControlProps {
   value: string;

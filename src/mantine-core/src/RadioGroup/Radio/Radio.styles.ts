@@ -6,7 +6,7 @@ import {
   getFontStyles,
   getFocusStyles,
   getThemeColor,
-} from '@mantine/theme';
+} from '../../theme';
 
 interface RadioStylesProps {
   theme: MantineTheme;

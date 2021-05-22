@@ -4,7 +4,7 @@ import {
   MantineNumberSize,
   getThemeColor,
   getSizeValue,
-} from '@mantine/theme';
+} from '../theme';
 
 export const sizes = {
   xs: 3,

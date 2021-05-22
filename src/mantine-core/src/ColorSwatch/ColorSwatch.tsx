@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
-import { ComponentPassThrough } from '@mantine/types';
+import { DefaultProps, MantineNumberSize, useMantineTheme } from '../theme';
+import { ComponentPassThrough } from '../types';
 import useStyles from './ColorSwatch.styles';
 
 export interface ColorSwatchProps extends DefaultProps {

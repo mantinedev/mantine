@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '@mantine/theme';
 import { Cross1Icon } from '@modulz/radix-icons';
+import { DEFAULT_THEME } from '../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';

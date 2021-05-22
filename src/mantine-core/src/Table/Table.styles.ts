@@ -1,4 +1,4 @@
-import { createMemoStyles, MantineTheme, getFontStyles } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, getFontStyles } from '../theme';
 
 interface TableStylesProps {
   theme: MantineTheme;

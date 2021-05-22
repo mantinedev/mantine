@@ -1,4 +1,4 @@
-import { createMemoStyles, MantineTheme, getThemeColor, getFontStyles } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, getThemeColor, getFontStyles } from '../theme';
 
 interface TooltipStylesProps {
   theme: MantineTheme;

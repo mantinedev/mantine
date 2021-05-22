@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { LockClosedIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { DEFAULT_THEME } from '../theme';
 import { PasswordInput } from './PasswordInput';
 
 function WrappedPasswordInput(

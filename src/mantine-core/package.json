@@ -14,8 +14,6 @@
     "react-jss": ">=10.1.1"
   },
   "dependencies": {
-    "@mantine/theme": "1.2.1",
-    "@mantine/utils": "1.2.1",
     "clsx": "^1.1.1",
     "react-textarea-autosize": "^8.3.2",
     "react-transition-group": "^4.4.1"

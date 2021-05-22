@@ -8,7 +8,7 @@ import {
   getFocusStyles,
   getSizeValue,
   hexToRgba,
-} from '@mantine/theme';
+} from '../theme';
 
 interface BadgeStylesProps {
   color: string;

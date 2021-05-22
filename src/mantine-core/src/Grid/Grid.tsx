@@ -1,5 +1,5 @@
 import React, { Children } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineTheme, getSizeValue } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme, getSizeValue } from '../theme';
 import { Col, ColProps } from './Col';
 
 export { Col };

@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME } from '@mantine/theme';
 import Textarea from 'react-textarea-autosize';
+import { DEFAULT_THEME } from '../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
 

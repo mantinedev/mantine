@@ -4,7 +4,7 @@ import {
   MantineSize,
   getFocusStyles,
   getFontStyles,
-} from '@mantine/theme';
+} from '../theme';
 
 export type TextVariant = 'text' | 'link';
 

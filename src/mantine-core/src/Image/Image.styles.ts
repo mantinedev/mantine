@@ -4,7 +4,7 @@ import {
   MantineNumberSize,
   getSizeValue,
   getFontStyles,
-} from '@mantine/theme';
+} from '../theme';
 
 interface ImageStylesProps {
   theme: MantineTheme;

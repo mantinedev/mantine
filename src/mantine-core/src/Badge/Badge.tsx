@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '@mantine/theme';
-import { ComponentPassThrough } from '@mantine/types';
+import { ComponentPassThrough } from '../types';
+import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '../theme';
 import useStyles, { heights } from './Badge.styles';
 
 export const BADGE_SIZES = heights;

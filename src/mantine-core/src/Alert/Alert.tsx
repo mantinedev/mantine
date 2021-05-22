@@ -1,11 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '../theme';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import useStyles from './Alert.styles';
 
-export interface AlertProps extends DefaultProps, Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+export interface AlertProps
+  extends DefaultProps,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Optional alert title */
   title?: React.ReactNode;
 

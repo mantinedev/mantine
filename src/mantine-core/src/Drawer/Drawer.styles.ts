@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoStyles, MantineTheme, getSizeValue } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, getSizeValue } from '../theme';
 
 export const sizes = {
   xs: 180,

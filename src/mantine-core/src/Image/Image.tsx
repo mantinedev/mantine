@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize } from '../theme';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
 

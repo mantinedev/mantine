@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
-import { ComponentPassThrough } from '@mantine/types';
+import { DefaultProps, useMantineTheme, MantineNumberSize } from '../theme';
+import { ComponentPassThrough } from '../types';
 import useStyles from './Input.styles';
 
 export interface InputProps extends DefaultProps {

@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import { useReducedMotion } from '@mantine/hooks';
+import { DefaultProps, useMantineTheme } from '../theme';
 import { Overlay } from '../Overlay/Overlay';
 import { Transition } from '../Transition/Transition';
 import { Loader, LoaderProps } from '../Loader/Loader';

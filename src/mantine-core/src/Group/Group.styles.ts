@@ -1,4 +1,4 @@
-import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
+import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../theme';
 
 export type GroupPosition = 'right' | 'center' | 'left' | 'apart';
 

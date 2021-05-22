@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '../theme';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl } from './TabControl/TabControl';

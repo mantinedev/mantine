@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
-import { useMantineTheme } from '@mantine/theme';
+import { useMantineTheme } from '../theme';
 import { TextInput } from '../TextInput/TextInput';
 import useStyles, { CONTROL_WIDTH } from './NumberInput.styles';
 

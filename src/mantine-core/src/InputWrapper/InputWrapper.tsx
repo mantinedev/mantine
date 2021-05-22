@@ -1,6 +1,6 @@
 import React, { createElement } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '../theme';
 import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 

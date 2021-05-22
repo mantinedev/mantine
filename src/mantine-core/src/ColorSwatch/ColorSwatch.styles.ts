@@ -4,7 +4,7 @@ import {
   getSizeValue,
   MantineNumberSize,
   getFocusStyles,
-} from '@mantine/theme';
+} from '../theme';
 
 interface ColorSwatchStylesProps {
   theme: MantineTheme;

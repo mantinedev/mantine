@@ -7,7 +7,7 @@ import {
   getThemeColor,
   createMemoStyles,
   hexToRgba,
-} from '@mantine/theme';
+} from '../theme';
 
 interface ActionIconStylesProps {
   color: string;

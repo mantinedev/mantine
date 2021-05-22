@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
-import { useListState } from '@mantine/hooks';
+import { useListState, randomId } from '@mantine/hooks';
 import { Cross1Icon, PlusIcon } from '@modulz/radix-icons';
-import {
-  Title,
-  Text,
-  Checkbox,
-  TextInput,
-  ActionIcon,
-  useMantineTheme,
-  randomId,
-} from '@mantine/core';
+import { Title, Text, Checkbox, TextInput, ActionIcon, useMantineTheme } from '@mantine/core';
 
 interface TodoItem {
   value: string;

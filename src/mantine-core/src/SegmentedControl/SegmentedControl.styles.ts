@@ -8,7 +8,7 @@ import {
   getThemeColor,
   getFocusStyles,
   hexToRgba,
-} from '@mantine/theme';
+} from '../theme';
 
 export const WRAPPER_PADDING = 4;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps } from '../theme';
 import { Input, InputProps } from '../Input/Input';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 

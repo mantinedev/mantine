@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import cx from 'clsx';
 import { useReducedMotion, useClickOutside, useFocusTrap } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../theme';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import { Divider } from '../../Divider/Divider';

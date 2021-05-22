@@ -1,4 +1,4 @@
-import { createMemoStyles, getSizeValue, MantineNumberSize, MantineTheme } from '@mantine/theme';
+import { createMemoStyles, getSizeValue, MantineNumberSize, MantineTheme } from '../../theme';
 
 interface MenuStylesProps {
   theme: MantineTheme;

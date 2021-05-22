@@ -5,7 +5,7 @@ import {
   useMantineTheme,
   getThemeColor,
   getSizeValue,
-} from '@mantine/theme';
+} from '../theme';
 
 export const LOADER_SIZES = {
   xs: 18,

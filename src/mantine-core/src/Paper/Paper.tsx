@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme } from '../theme';
 import useStyles from './Paper.styles';
 
 export interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {

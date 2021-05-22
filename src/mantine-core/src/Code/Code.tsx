@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '../theme';
 import useStyles from './Code.styles';
 
 export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<'code'> {

@@ -10,8 +10,6 @@
   "peerDependencies": {
     "react": ">=16.8.0"
   },
-  "dependencies": {
-    "@mantine/utils": "1.2.1"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }

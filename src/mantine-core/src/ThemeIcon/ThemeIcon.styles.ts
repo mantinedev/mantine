@@ -5,7 +5,7 @@ import {
   getSizeValue,
   getThemeColor,
   hexToRgba,
-} from '@mantine/theme';
+} from '../theme';
 
 interface ThemeIconStylesProps {
   theme: MantineTheme;

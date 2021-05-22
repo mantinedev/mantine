@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, useMantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize, getSizeValue } from '../theme';
 
 export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   span: number;

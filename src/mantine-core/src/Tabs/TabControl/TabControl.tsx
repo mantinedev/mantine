@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { useMergedRef, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '../../theme';
 import { TabProps } from '../Tab/Tab';
 import useStyles from './TabControl.styles';
 

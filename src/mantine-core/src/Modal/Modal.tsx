@@ -1,6 +1,5 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
 import {
   useClickOutside,
   useReducedMotion,
@@ -8,6 +7,7 @@ import {
   useScrollLock,
   useFocusTrap,
 } from '@mantine/hooks';
+import { DefaultProps, useMantineTheme } from '../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';

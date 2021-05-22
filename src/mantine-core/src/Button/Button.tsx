@@ -3,8 +3,8 @@
 
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '@mantine/theme';
-import { ComponentPassThrough } from '@mantine/types';
+import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '../theme';
+import { ComponentPassThrough } from '../types';
 import useStyles, { heights } from './Button.styles';
 
 export const BUTTON_SIZES = heights;

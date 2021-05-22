@@ -10,9 +10,8 @@ import {
   TextInput,
   Button,
   useMantineTheme,
-  randomId,
 } from '@mantine/core';
-import { useListState } from '@mantine/hooks';
+import { useListState, randomId } from '@mantine/hooks';
 import * as mockdata from './mockdata';
 
 const colors = Object.keys(DEFAULT_THEME.colors)

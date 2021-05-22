@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
-import { ComponentPassThrough } from '@mantine/types';
+import { ComponentPassThrough } from '../../types';
+import { DefaultProps, useMantineTheme } from '../../theme';
 import { MenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 

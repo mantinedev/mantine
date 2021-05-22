@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '@mantine/theme';
 import { useClickOutside, useFocusTrap, useId, useReducedMotion } from '@mantine/hooks';
+import { DefaultProps, useMantineTheme, MantineNumberSize } from '../theme';
 import { MantineTransition, Transition } from '../Transition/Transition';
 import { Text } from '../Text/Text';
 import { ActionIcon } from '../ActionIcon/ActionIcon';

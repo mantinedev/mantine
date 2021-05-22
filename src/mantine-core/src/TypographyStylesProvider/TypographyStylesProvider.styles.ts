@@ -4,7 +4,7 @@ import {
   getFontStyles,
   getThemeColor,
   getFocusStyles,
-} from '@mantine/theme';
+} from '../theme';
 
 interface InnerHtmlStylesProps {
   theme: MantineTheme;

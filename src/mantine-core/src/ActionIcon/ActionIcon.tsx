@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/theme';
-import { ComponentPassThrough } from '@mantine/types';
+import { ComponentPassThrough } from '../types';
+import { useMantineTheme, DefaultProps, MantineNumberSize } from '../theme';
 import useStyles, { sizes } from './ActionIcon.styles';
 
 export interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {

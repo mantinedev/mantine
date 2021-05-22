@@ -1,6 +1,6 @@
 import React from 'react';
-import { DefaultProps, useMantineTheme, getThemeColor, hexToRgba } from '@mantine/theme';
-import { ComponentPassThrough } from '@mantine/types';
+import { DefaultProps, useMantineTheme, getThemeColor, hexToRgba } from '../theme';
+import { ComponentPassThrough } from '../types';
 import { Text, TextProps } from '../Text/Text';
 
 export function highlighter(value: string, highlightPart: string) {

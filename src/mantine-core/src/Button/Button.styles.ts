@@ -9,7 +9,7 @@ import {
   getThemeColor,
   MantineSizes,
   hexToRgba,
-} from '@mantine/theme';
+} from '../theme';
 
 interface ButtonStylesProps {
   color: string;

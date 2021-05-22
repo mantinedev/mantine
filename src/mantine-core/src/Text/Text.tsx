@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineSize } from '@mantine/theme';
-import { ComponentPassThrough } from '@mantine/types';
+import { useMantineTheme, DefaultProps, MantineSize } from '../theme';
+import { ComponentPassThrough } from '../types';
 import useStyles from './Text.styles';
 
 export interface TextProps extends DefaultProps {

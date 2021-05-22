@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  Group,
-  InputWrapper,
-  useMantineTheme,
-  upperFirst,
-  ColorSwatch,
-  hexToRgba,
-} from '@mantine/core';
+import { Group, InputWrapper, useMantineTheme, ColorSwatch, hexToRgba } from '@mantine/core';
+import { upperFirst } from '@mantine/hooks';
 import { CheckIcon } from '@modulz/radix-icons';
 
 interface ColorControlProps {

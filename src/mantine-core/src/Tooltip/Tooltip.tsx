@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme } from '@mantine/theme';
+import { DefaultProps, useMantineTheme } from '../theme';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import useStyles from './Tooltip.styles';
 

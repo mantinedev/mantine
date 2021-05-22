@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MantineProvider } from '@mantine/theme';
+import { DEFAULT_THEME, MantineProvider } from '../theme';
 import { NumberInput } from './NumberInput';
 
 function Wrapper(props: Omit<React.ComponentProps<typeof NumberInput>, 'value' | 'onChange'>) {
