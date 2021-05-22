@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { GearIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME } from '@mantine/core';
+import { DEFAULT_THEME } from '../theme';
 import { Group } from '../Group/Group';
 import { ActionIcon } from './ActionIcon';
 
