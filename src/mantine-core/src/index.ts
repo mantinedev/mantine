@@ -27,7 +27,15 @@ export { InputWrapper, InputWrapperProps } from './InputWrapper/InputWrapper';
 export { Kbd, KbdProps } from './Kbd/Kbd';
 export { Loader, LoaderProps, LOADER_SIZES } from './Loader/Loader';
 export { LoadingOverlay, LoadingOverlayProps } from './LoadingOverlay/LoadingOverlay';
-export { Menu, MenuProps, MenuItem, MenuItemProps, MenuBody, MenuBodyProps, MENU_SIZES } from './Menu/Menu';
+export {
+  Menu,
+  MenuProps,
+  MenuItem,
+  MenuItemProps,
+  MenuBody,
+  MenuBodyProps,
+  MENU_SIZES,
+} from './Menu/Menu';
 export { Modal, ModalProps, MODAL_SIZES } from './Modal/Modal';
 export { Notification, NotificationProps } from './Notification/Notification';
 export { NumberInput, NumberInputProps } from './NumberInput/NumberInput';
@@ -36,7 +44,14 @@ export { Paper, PaperProps } from './Paper/Paper';
 export { PasswordInput, PasswordInputProps } from './PasswordInput/PasswordInput';
 export { Portal, PortalProps } from './Portal/Portal';
 export { Progress, ProgressProps, PROGRESS_SIZES } from './Progress/Progress';
-export { RadioGroup, RadioGroupProps, Radio, RadioProps, RADIO_SIZES } from './RadioGroup/RadioGroup';
+export {
+  RadioGroup,
+  RadioGroupProps,
+  Radio,
+  RadioProps,
+  RADIO_SIZES,
+} from './RadioGroup/RadioGroup';
+export { RingProgress, RingProgressProps } from './RingProgress/RingProgress';
 export { Select, SelectProps } from './Select/Select';
 export { Spoiler, SpoilerProps } from './Spoiler/Spoiler';
 export { Switch, SwitchProps, SWITCH_SIZES } from './Switch/Switch';
@@ -48,5 +63,14 @@ export { TextInput, TextInputProps } from './TextInput/TextInput';
 export { ThemeIcon, ThemeIconProps, THEME_ICON_SIZES } from './ThemeIcon/ThemeIcon';
 export { Title, TitleProps } from './Title/Title';
 export { Tooltip, TooltipProps } from './Tooltip/Tooltip';
-export { Transition, TransitionProps, GroupedTransition, GroupedTransitionProps, AVAILABLE_TRANSITIONS } from './Transition/Transition';
-export { TypographyStylesProvider, TypographyStylesProviderProps } from './TypographyStylesProvider/TypographyStylesProvider';
+export {
+  Transition,
+  TransitionProps,
+  GroupedTransition,
+  GroupedTransitionProps,
+  AVAILABLE_TRANSITIONS,
+} from './Transition/Transition';
+export {
+  TypographyStylesProvider,
+  TypographyStylesProviderProps,
+} from './TypographyStylesProvider/TypographyStylesProvider';

@@ -1,0 +1,66 @@
+---
+package: mantine-core
+title: RingProgress
+order: 1
+slug: /core/ring-progress/
+category: 'feedback'
+description: 'Show the progress of an activity or a task'
+---
+
+import { RING_PROGRESS_SIZES } from '@mantine/core';
+import {
+  RingProgressDemo,
+  RingProgressThicknessDemo,
+  RingProgressLabelDemo,
+  RingProgressSectionsDemo,
+} from '../demos/core/RingProgress/ring-progress.demos';
+import { RingProgressSizesDemo } from '../demos/core/RingProgress/ring-progress-sizes.demo';
+
+# RingProgress
+
+<PageHeader
+  source="mantine-core/src/RingProgress/RingProgress.tsx"
+  docs="core/RingProgress.mdx"
+  package="@mantine/core"
+/>
+
+```tsx
+import { RingProgress } from '@mantine/core';
+```
+
+## Usage
+
+Use RingProgress when you need to show the progress of an activity or a task.
+
+Customize the RingProgress by using multiple sections with different values and colors with the `sections` prop.
+
+<RingProgressDemo />
+
+## Label
+
+Display label in the center of the ring progress.
+
+<RingProgressLabelDemo />
+
+## Thickness
+
+Thickness control the thickness of the circular track of the ring progress.
+
+<RingProgressThicknessDemo />
+
+## Size
+
+Applies the radius/size to the circular track in the ring progress. This defaults to `md`.
+
+<RingProgressSizesDemo />
+
+## Sections
+
+Apply multiple values using different values in the circlar track to show the progress of the activity in the ring progress.
+Users get the flexibilty to define different color to different section.
+
+<RingProgressSectionsDemo />
+
+## Component props
+
+<PropsTable component="Progress" />
