@@ -1,6 +1,6 @@
 {
   "name": "@mantine/types",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "browser": "lib/index.umd.js",

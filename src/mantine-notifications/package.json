@@ -1,6 +1,6 @@
 {
   "name": "@mantine/notifications",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "browser": "lib/index.umd.js",
@@ -8,8 +8,8 @@
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "peerDependencies": {
-    "@mantine/core": "1.1.1",
-    "@mantine/hooks": "1.1.1",
+    "@mantine/core": "1.2.1",
+    "@mantine/hooks": "1.2.1",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "react-jss": ">=10.1.1"
