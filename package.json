@@ -7,7 +7,7 @@
   "version": "1.2.1",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
-  "repository": "https://github.com/rtivital/mantine",
+  "repository": "https://github.com/mantinedev/mantine.git",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {

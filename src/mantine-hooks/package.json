@@ -6,6 +6,11 @@
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-hooks"
+  },
   "peerDependencies": {
     "react": ">=16.8.0"
   },
