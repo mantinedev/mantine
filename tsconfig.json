@@ -4,7 +4,8 @@
   "exclude": ["public", ".cache"],
   "compilerOptions": {
     "paths": {
-      "@mantine/*": ["src/mantine-*/src"]
+      "@mantine/*": ["src/mantine-*/src"],
+      "@demos/*": ["src/mantine-*/src/demos"]
     }
   }
 }
