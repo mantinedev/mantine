@@ -3,8 +3,11 @@ const path = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin').default;
 
 module.exports = {
-  stories: [path.resolve(__dirname, '../../src/**/*.story.@(ts|tsx)').replace(/\\/g, '/')],
-  addons: ['@storybook/addon-essentials', 'storybook-addon-turbo-build'],
+  stories: [
+    path.resolve(__dirname, '../../src/**/*.story.@(ts|tsx)').replace(/\\/g, '/'),
+    path.resolve(__dirname, './stories.tsx'),
+  ],
+  addons: ['storybook-addon-turbo-build'],
   webpackFinal: async (config) => {
     config.resolve = {
       ...config.resolve,

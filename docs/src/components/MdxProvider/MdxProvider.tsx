@@ -1,6 +1,7 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { Code, Text } from '@mantine/core';
+import Demo from '../Demo/Demo';
 import GatsbyLink from './GatsbyLink/GatsbyLink';
 import PropsTable from './PropsTable/PropsTable';
 import PageHeader from './PageHeader/PageHeader';
@@ -21,6 +22,7 @@ const components = {
   Dependencies,
   License,
   BundleSize,
+  Demo,
   h1: h(1),
   h2: h(2),
   h3: h(3),
