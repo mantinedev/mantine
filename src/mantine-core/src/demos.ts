@@ -1,1 +1,1 @@
-export * as Alert from './components/Alert/demos';
+export * as AlertDemos from './components/Alert/demos';

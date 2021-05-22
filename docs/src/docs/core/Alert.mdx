@@ -7,9 +7,7 @@ category: 'feedback'
 description: 'Display static message to attract user attention'
 ---
 
-import { AlertConfigurator } from '../demos/core/Alert/alert.configurator';
-import { AlertBaseDemo } from '../demos/core/Alert/alert.demos';
-import { AlertTitleDemo } from '../demos/core/Alert/alert-title.demo';
+import { AlertDemos } from '@demos/core';
 
 # Alert
 
@@ -28,13 +26,13 @@ import { Alert } from '@mantine/core';
 Use Alert to attract user attention with important message.
 Alert is designed to be static, if you need more dynamic variant use <GatsbyLink to="/core/notification/">Notification</GatsbyLink> component.
 
-<AlertBaseDemo />
+<Demo data={AlertDemos.usage} />
 
 ## Title
 
 Component has optional title, set it with `title` prop:
 
-<AlertTitleDemo />
+<Demo data={AlertDemos.title} />
 
 ## Color
 
@@ -45,7 +43,7 @@ You can choose any color defined in <GatsbyLink to="/pages/theming/">theme</Gats
 <Alert color="red" /> // -> red color
 ```
 
-<AlertConfigurator />
+<Demo data={AlertDemos.configurator} />
 
 ## Component props
 
