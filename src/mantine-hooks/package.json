@@ -1,11 +1,12 @@
 {
   "name": "@mantine/hooks",
-  "version": "1.0.6",
-  "main": "dist/lib.js",
-  "types": "dist/mantine-hooks/src/index.d.ts",
+  "version": "1.2.1",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "browser": "lib/index.umd.js",
+  "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "sideEffects": false,
   "peerDependencies": {
     "react": ">=16.8.0"
   },

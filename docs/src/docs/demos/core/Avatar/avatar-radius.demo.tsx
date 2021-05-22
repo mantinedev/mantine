@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, ElementsGroup } from '@mantine/core';
+import { Avatar, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const image =
@@ -12,7 +12,7 @@ export function AvatarRadiusDemo() {
 
   return (
     <CodeDemo>
-      <ElementsGroup position="center">{images}</ElementsGroup>
+      <Group position="center">{images}</Group>
     </CodeDemo>
   );
 }

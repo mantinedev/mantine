@@ -1,7 +1,16 @@
 import React from 'react';
 import { TrashIcon } from '@modulz/radix-icons';
 import { TagPicker } from '@mantine/tag-picker';
-import { DEFAULT_THEME, Paper, Table, ActionIcon, Text, TextInput, Button } from '@mantine/core';
+import {
+  DEFAULT_THEME,
+  Paper,
+  Table,
+  ActionIcon,
+  Text,
+  TextInput,
+  Button,
+  useMantineTheme,
+} from '@mantine/core';
 import { useListState, randomId } from '@mantine/hooks';
 import * as mockdata from './mockdata';
 
@@ -10,6 +19,7 @@ const colors = Object.keys(DEFAULT_THEME.colors)
   .map((color) => ({ name: color, color }));
 
 export function TransactionsTable() {
+  const theme = useMantineTheme();
   const [transactionsState, transactionsHandlers] = useListState(mockdata.transactions);
   const [categoriesState, categoriesHandlers] = useListState(mockdata.categories);
 
@@ -93,7 +103,14 @@ export function TransactionsTable() {
 
   return (
     <div>
-      <Paper shadow="xs" padding="lg" style={{ overflowX: 'auto' }}>
+      <Paper
+        shadow={theme.colorScheme === 'dark' ? null : 'xs'}
+        padding="lg"
+        style={{
+          overflowX: 'auto',
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        }}
+      >
         <Table style={{ tableLayout: 'fixed', minWidth: 500 }}>
           <thead>
             <tr>

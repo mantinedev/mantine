@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, ElementsGroup } from '@mantine/core';
+import { Badge, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const getSizes = (props?: any) =>
@@ -12,7 +12,7 @@ const getSizes = (props?: any) =>
 export function BadgeRadiusDemo() {
   return (
     <CodeDemo>
-      <ElementsGroup>{getSizes()}</ElementsGroup>
+      <Group>{getSizes()}</Group>
     </CodeDemo>
   );
 }

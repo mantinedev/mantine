@@ -1,7 +1,19 @@
 {
   "name": "@mantine/demos",
   "private": true,
-  "version": "1.0.6",
-  "main": "dist/lib.js",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>"
+  "version": "1.2.1",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "browser": "lib/index.umd.js",
+  "types": "lib/index.d.ts",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "peerDependencies": {
+    "@mantine/core": "1.2.1",
+    "@mantine/hooks": "1.2.1",
+    "@mantine/tag-picker": "1.2.1",
+    "@modulz/radix-icons": ">=4.0.0",
+    "react": ">=16.8.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
 }

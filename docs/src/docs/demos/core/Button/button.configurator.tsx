@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button, ElementsGroup } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function ButtonWrapper(props: React.ComponentPropsWithoutRef<typeof Button>) {
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <Button {...props} />
-    </ElementsGroup>
+    </Group>
   );
 }
 

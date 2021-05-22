@@ -1,11 +1,11 @@
 import React from 'react';
-import { Card, Image, Text, Overlay, useMantineTheme } from '@mantine/core';
+import { Card, Image, Text, Overlay } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
 import { Card, Image, Text, Overlay } from '@mantine/core';
 
-function Demo() {  
+function Demo() {
   return (
     <div style={{ width: 340, margin: 'auto' }}>
       <Card shadow="sm">
@@ -18,7 +18,7 @@ function Demo() {
         <Text weight={500} size="lg">
           You&apos;ve won million dollars in cash
         </Text>
-        
+
         <Text style={{ marginTop: 10 }} size="sm">
           Please click anywhere on this card to claim your reward, this is not a fraud, trust us
         </Text>
@@ -35,14 +35,8 @@ function Demo() {
 }`;
 
 export function CardOverlayDemo() {
-  const theme = useMantineTheme();
-
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0]}
-    >
+    <CodeDemo code={code} language="tsx">
       <div style={{ maxWidth: 340, margin: 'auto' }}>
         <Card shadow="sm">
           <Image

@@ -1,15 +1,16 @@
 import React from 'react';
-import { CheckIcon } from '@modulz/radix-icons';
-import { ElementsGroup, Button } from '@mantine/core';
+import { CheckIcon, EnvelopeClosedIcon } from '@modulz/radix-icons';
+import { Group, Button, TextInput, useMantineTheme } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 export function NotificationsRootDemo() {
   const notifications = useNotifications();
+  const theme = useMantineTheme();
 
   return (
     <CodeDemo>
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button
           variant="outline"
           onClick={() =>
@@ -78,7 +79,7 @@ export function NotificationsRootDemo() {
             })
           }
         >
-          Custom timeout: 10 seconds
+          10 seconds timeout
         </Button>
 
         <Button
@@ -110,7 +111,38 @@ export function NotificationsRootDemo() {
         >
           Loading state and update
         </Button>
-      </ElementsGroup>
+
+        <Button
+          variant="outline"
+          onClick={() => {
+            const id = notifications.showNotification({
+              autoClose: false,
+              disallowClose: true,
+              title: 'Subscribe to email newsletter',
+              message: (
+                <>
+                  <div style={{ display: 'flex', paddingTop: 5 }}>
+                    <TextInput
+                      icon={<EnvelopeClosedIcon />}
+                      placeholder="Enter your email"
+                      style={{ flex: 1, marginRight: 15 }}
+                      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
+                      inputStyle={{
+                        backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7],
+                      }}
+                    />
+                    <Button onClick={() => notifications.hideNotification(id)} size="lg">
+                      Subscribe
+                    </Button>
+                  </div>
+                </>
+              ),
+            });
+          }}
+        >
+          With input and button
+        </Button>
+      </Group>
     </CodeDemo>
   );
 }

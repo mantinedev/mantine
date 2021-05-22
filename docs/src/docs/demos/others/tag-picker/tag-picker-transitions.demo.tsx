@@ -21,11 +21,7 @@ export function TagPickerTransitionsDemo() {
     .map((color) => ({ name: color, color }));
 
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white}
-    >
+    <CodeDemo code={code} language="tsx">
       <div>
         <TagPicker
           transition="rotate-right"

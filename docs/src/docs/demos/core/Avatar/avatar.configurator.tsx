@@ -1,12 +1,12 @@
 import React from 'react';
-import { Avatar, ElementsGroup } from '@mantine/core';
+import { Avatar, Group } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function AvatarWrapper(props: React.ComponentPropsWithoutRef<typeof Avatar>) {
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <Avatar {...props} />
-    </ElementsGroup>
+    </Group>
   );
 }
 

@@ -1,16 +1,16 @@
 import React from 'react';
-import { Button, Tooltip, ElementsGroup } from '@mantine/core';
+import { Button, Tooltip, Group } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 const Wrapper = (props: any) => (
   <div style={{ padding: 30 }}>
-    <ElementsGroup position="center">
+    <Group position="center">
       <Tooltip data-mantine-composable {...props}>
         <Button variant="outline" color="gray" size="xl">
           With tooltip
         </Button>
       </Tooltip>
-    </ElementsGroup>
+    </Group>
   </div>
 );
 

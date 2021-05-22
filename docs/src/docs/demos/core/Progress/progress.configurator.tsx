@@ -22,7 +22,7 @@ export function ProgressConfigurator() {
         { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
         { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
         { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-        { name: 'value', type: 'number', initialValue: 50 },
+        { name: 'value', type: 'number', initialValue: 50, max: 100, min: 0, step: 10 },
       ]}
     />
   );

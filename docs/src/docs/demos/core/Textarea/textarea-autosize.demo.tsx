@@ -14,7 +14,7 @@ function Demo() {
         autosize
         minRows={2}
       />
-      
+
       <Textarea
         label="Autosize with 4 rows max"
         placeholder="Autosize with 4 rows max"
@@ -28,19 +28,17 @@ function Demo() {
 
 export function TextareaAutosizeDemo() {
   const theme = useMantineTheme();
+  const inputVariant = theme.colorScheme === 'dark' ? 'filled' : 'default';
 
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
-    >
+    <CodeDemo code={code} language="tsx">
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <Textarea
           placeholder="Autosize with no rows limit"
           label="Autosize with no rows limit"
           autosize
           minRows={2}
+          variant={inputVariant}
         />
 
         <Textarea
@@ -50,6 +48,7 @@ export function TextareaAutosizeDemo() {
           minRows={2}
           maxRows={4}
           style={{ marginTop: 15 }}
+          variant={inputVariant}
         />
       </div>
     </CodeDemo>

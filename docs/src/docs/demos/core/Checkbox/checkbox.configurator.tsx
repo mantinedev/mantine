@@ -24,7 +24,7 @@ export function CheckboxConfigurator() {
         { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
         { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
         { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
-        { name: 'intermediate', type: 'boolean', initialValue: false, defaultValue: false },
+        { name: 'indeterminate', type: 'boolean', initialValue: false, defaultValue: false },
       ]}
     />
   );

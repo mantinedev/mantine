@@ -4,20 +4,14 @@ import gzipSize from 'gzip-size';
 
 const REPO_ROOT = path.join(__dirname, '../');
 
-const PACKAGES = [
-  'mantine-theme',
-  'mantine-hooks',
-  'mantine-core',
-  'mantine-notifications',
-  'mantine-tag-picker',
-];
+const PACKAGES = ['mantine-hooks', 'mantine-core', 'mantine-notifications', 'mantine-tag-picker'];
 
 function truncateNumber(number: number) {
   return parseFloat(number.toFixed(2));
 }
 
 function getPackageSize(packageName: string) {
-  const libPath = path.join(REPO_ROOT, 'src', packageName, 'dist/lib.js');
+  const libPath = path.join(REPO_ROOT, 'src', packageName, 'lib/index.umd.js');
 
   if (!fs.existsSync(libPath)) {
     return { size: 0, gzip: 0 };

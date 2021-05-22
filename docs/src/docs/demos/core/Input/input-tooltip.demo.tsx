@@ -37,7 +37,11 @@ export function InputTooltipDemo() {
       language="tsx"
       demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
     >
-      <Input placeholder="Your email" rightSection={rightSection} />
+      <Input
+        placeholder="Your email"
+        rightSection={rightSection}
+        variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
+      />
     </CodeDemo>
   );
 }

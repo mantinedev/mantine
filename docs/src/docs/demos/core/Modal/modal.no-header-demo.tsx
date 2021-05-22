@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Modal, Button, ElementsGroup, Portal } from '@mantine/core';
+import { Modal, Button, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
-import { Modal, Button, ElementsGroup } from '@mantine/core';
+import { Modal, Button, Group } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
-  
+
   return (
     <>
       <Modal
@@ -18,9 +18,9 @@ function Demo() {
         Modal without header, press escape or click on overlay to close
       </Modal>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button onClick={() => setOpened(true)}>Open Modal</Button>
-      </ElementsGroup>
+      </Group>
     </>
   );
 }`;
@@ -30,15 +30,13 @@ export function ModalNoHeaderDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <Portal zIndex={10}>
-        <Modal opened={opened} onClose={() => setOpened(false)} hideCloseButton>
-          Modal without header, press escape or click on overlay to close
-        </Modal>
-      </Portal>
+      <Modal opened={opened} onClose={() => setOpened(false)} hideCloseButton>
+        Modal without header, press escape or click on overlay to close
+      </Modal>
 
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button onClick={() => setOpened(true)}>Open Modal</Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

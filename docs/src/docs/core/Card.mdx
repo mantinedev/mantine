@@ -4,27 +4,24 @@ title: Card
 order: 1
 slug: /core/card/
 category: 'data-display'
-description: 'Display card with context styles for Image and Hr components'
+description: 'Display card with context styles for Image and Divider components'
 ---
 
 import { CardBaseDemo } from '../demos/core/Card/card-base.demo';
 import { CardOverlayDemo } from '../demos/core/Card/card-overlay.demo';
-import { CardsGridDemo } from '../demos/core/Card/cards-grid.demo';
-import { CardsGridGrowDemo } from '../demos/core/Card/cards-grid-grow.demo';
-import { CardsGridBreakpointsDemo } from '../demos/core/Card/cards-grid-breakpoints.demo';
 
 # Card
 
 <PageHeader source="mantine-core/src/Card/Card.tsx" docs="core/Card.mdx" package="@mantine/core" />
 
 ```tsx
-import { Card, CardsGrid } from '@mantine/core';
+import { Card } from '@mantine/core';
 ```
 
 ## Usage
 
 Card component is a wrapper around <GatsbyLink to="/core/paper/">Paper</GatsbyLink> component
-with context styles for <GatsbyLink to="/core/image/">Image</GatsbyLink> and <GatsbyLink to="/core/hr/">Hr</GatsbyLink>
+with context styles for <GatsbyLink to="/core/image/">Image</GatsbyLink> and <GatsbyLink to="/core/divider/">Divider</GatsbyLink>
 components. Combine Card component with other Mantine components to create product cards:
 
 <CardBaseDemo />
@@ -51,35 +48,6 @@ function Demo() {
 }
 ```
 
-## CardsGrid
-
-Use CardsGrid component to display grid of cards:
-
-- Control amount of cards per row with `cardsPerRow` prop
-- Set `gutter` with xs, sm, md (default), lg or xl value to set spacing between cards with `theme.spacing` value or set `gutter` as number to set spacing in px
-
-<CardsGridDemo />
-
-Set `grow` prop to make items at the last row take all space:
-
-<CardsGridGrowDemo />
-
-Combine CardsGrid with <GatsbyLink to="/hooks/use-media-query">use-media-query</GatsbyLink> hook to make amount of cards responsive.
-In this example:
-
-- viewport >= 1000px -> 4 cards per row
-- 1000px > viewport >= 750px -> 3 cards per row
-- 750px > viewport >= 540px -> 2 cards per row
-- 540px > viewport -> 1 card per row
-
-Try resizing browser to see cards per row change:
-
-<CardsGridBreakpointsDemo />
-
-## Card component props
+## Component props
 
 <PropsTable component="Card" />
-
-## CardsGrid component props
-
-<PropsTable component="CardsGrid" />

@@ -1,0 +1,138 @@
+---
+package: mantine-core
+title: Popover
+order: 1
+slug: /core/popover/
+category: 'overlay'
+description: 'Display popover section relative to given target element'
+---
+
+import { PopoverBaseDemo } from '../demos/core/Popover/popover-base.demo';
+import { PopoverFormDemo } from '../demos/core/Popover/popover-form.demo';
+import { PopoverPositionsDemo } from '../demos/core/Popover/popover-positions.demo';
+import { PopoverHoverDemo } from '../demos/core/Popover/popover-hover.demo';
+import { PopoverConfigurator } from '../demos/core/Popover/popover.configurator';
+import { PasswordInputStrengthDemo } from '../demos/core/PasswordInput/password-input-strength.demo';
+
+# Popover
+
+<PageHeader
+  source="mantine-core/src/Popover/Popover.tsx"
+  docs="core/Popover.mdx"
+  package="@mantine/core"
+/>
+
+```tsx
+import { Popover } from '@mantine/core';
+```
+
+## Usage
+
+Popover is more complex and customizable alternative to <GatsbyLink to="/core/tooltip/">Tooltip</GatsbyLink>
+component.
+
+<PopoverBaseDemo />
+
+## Examples
+
+### Show on focus
+
+This example uses `onFocusCapture` and `onBlurCapture` events on Popover component
+to determine if any element inside has focus:
+
+<PasswordInputStrengthDemo />
+
+### With form
+
+By default focus trap inside popover is active,
+you can place forms inside and focus will be kept inside popover:
+
+<PopoverFormDemo />
+
+### Show on hover
+
+To show popover on hover add `onMouseEnter` and `onMouseLeave` handlers to
+element that should trigger popover. Note that in this case you have to disable
+focus trap with `noFocusTrap` prop:
+
+<PopoverHoverDemo />
+
+## Position and placement
+
+Popover position relative to target element is defined by:
+
+- **position** – popover side – top, bottom, right or left, defaults to top
+- **placement** – popover placement relative to position – start, center or end, defaults to center
+- **gutter** – space between popover and target element in px, defaults to 10px
+
+```tsx
+<Popover position="bottom" placement="end" gutter={10} />
+```
+
+All positions and placement:
+
+<PopoverPositionsDemo />
+
+## Control behavior
+
+By default popover:
+
+- has focus trap
+- closes when escape key is pressed
+- closes when outside click is registered
+
+Usually it is a good idea to turn these settings of if you show popover on
+focus or hover:
+
+```tsx
+<Popover
+  noFocusTrap // -> disable focus trap
+  noEscape // -> disable escape key press handling
+  noClickOutside // -> disable outside click handling
+/>
+```
+
+## Close button and title
+
+Popover includes optional close button and title:
+
+- set `withCloseButton` prop to show close button, add `closeButtonLabel` to set aria-label attribute on close button
+- set `title` prop to add title at the top of popover
+
+```tsx
+<Popover title="Popover title" withCloseButton closeButtonLabel="Close popover" />
+```
+
+## Control appearance
+
+To change popover appearance use:
+
+- `radius` – applies border-radius from `theme.radius`
+- `spacing` – adds padding to all sides of popover from `theme.spacing`
+- `shadow` – add box-shadow from `theme.shadows`
+
+<PopoverConfigurator />
+
+For additional modifications of popover body styles use `bodyClassName` or `bodyStyle` props:
+
+```tsx
+// Add inline styles to popover body
+<Popover bodyStyle={{ width: 200, pointerEvents: 'none' }} />
+
+// Or with className
+<Popover bodyClassName="my-class-name" />
+```
+
+## Server side rendering
+
+By default Popover uses random id to connect title and body via aria- attributes.
+This will result in hydration mismatch if you use **opened** popover (closed popover do not require this step) during ssr.
+To avoid that set static id:
+
+```tsx
+<Popover id="my-popover" opened />
+```
+
+## Component props
+
+<PropsTable component="Popover" />

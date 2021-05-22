@@ -1,12 +1,12 @@
 import React from 'react';
-import { Loader, ElementsGroup } from '@mantine/core';
+import { Loader, Group } from '@mantine/core';
 import Configurator from '../../../../components/Configurator/Configurator';
 
 function LoaderWrapper(props: React.ComponentPropsWithoutRef<typeof Loader>) {
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <Loader data-mantine-composable {...props} />
-    </ElementsGroup>
+    </Group>
   );
 }
 

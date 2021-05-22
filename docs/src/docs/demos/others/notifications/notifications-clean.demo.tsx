@@ -1,17 +1,17 @@
 import React from 'react';
-import { ElementsGroup, Button } from '@mantine/core';
+import { Group, Button } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { ElementsGroup, Button } from '@mantine/core';
+import { Group, Button } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 
 function Demo() {
   const notifications = useNotifications();
-  
+
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <Button
         variant="outline"
         onClick={() => {
@@ -36,7 +36,7 @@ function Demo() {
       <Button variant="outline" color="red" onClick={() => notifications.clean()}>
         Clean all
       </Button>
-    </ElementsGroup>
+    </Group>
   );
 }`;
 
@@ -45,7 +45,7 @@ export function NotificationsCleanDemo({ noCode = false }: { noCode: boolean }) 
 
   return (
     <CodeDemo code={!noCode ? code : null} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button
           variant="outline"
           onClick={() => {
@@ -70,7 +70,7 @@ export function NotificationsCleanDemo({ noCode = false }: { noCode: boolean }) 
         <Button variant="outline" color="red" onClick={() => notifications.clean()}>
           Clean all
         </Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

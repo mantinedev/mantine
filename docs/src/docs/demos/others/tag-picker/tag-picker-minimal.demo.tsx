@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useMantineTheme } from '@mantine/core';
 import { TagPicker, TagPickerTag } from '@mantine/tag-picker';
 import mockdata from './mockdata';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
@@ -23,15 +22,10 @@ function Demo() {
 }`;
 
 export function TagPickerMinimalDemo() {
-  const theme = useMantineTheme();
   const [value, onChange] = useState<TagPickerTag>(null);
 
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white}
-    >
+    <CodeDemo code={code} language="tsx">
       <div>
         <TagPicker
           data={mockdata}

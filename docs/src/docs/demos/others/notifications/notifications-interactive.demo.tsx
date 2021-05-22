@@ -1,19 +1,19 @@
 import React from 'react';
-import { ElementsGroup, Button, TextInput } from '@mantine/core';
+import { Group, Button, TextInput, useMantineTheme } from '@mantine/core';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';
 import { useNotifications } from '@mantine/notifications';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { ElementsGroup, Button, TextInput } from '@mantine/core';
+import { Group, Button, TextInput } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';
 
 function Demo() {
   const notifications = useNotifications();
-  
+
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <Button
         variant="outline"
         leftIcon={<EnvelopeClosedIcon />}
@@ -45,16 +45,17 @@ function Demo() {
       >
         Subscribe to email newsletter
       </Button>
-    </ElementsGroup>
+    </Group>
   );
 }`;
 
 export function NotificationsInteractiveDemo() {
   const notifications = useNotifications();
+  const theme = useMantineTheme();
 
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button
           variant="outline"
           leftIcon={<EnvelopeClosedIcon />}
@@ -70,6 +71,10 @@ export function NotificationsInteractiveDemo() {
                       icon={<EnvelopeClosedIcon />}
                       placeholder="Enter your email"
                       style={{ flex: 1, marginRight: 15 }}
+                      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
+                      inputStyle={{
+                        backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7],
+                      }}
                     />
                     <Button onClick={() => notifications.hideNotification(id)} size="lg">
                       Subscribe
@@ -82,7 +87,7 @@ export function NotificationsInteractiveDemo() {
         >
           Subscribe to email newsletter
         </Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

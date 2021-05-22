@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Text, Paper, useMantineTheme } from '@mantine/core';
+import { Table, Text, useMantineTheme } from '@mantine/core';
 import DocsSection from '../../DocsSection/DocsSection';
 import PROPS_DATA from '../../../../.docgen/docgen.json';
 
@@ -48,16 +48,7 @@ export default function PropsTable({ component }: { component: string }) {
 
   return (
     <DocsSection>
-      <Paper
-        padding="md"
-        style={{
-          width: '100%',
-          border: `1px solid ${
-            theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
-          }`,
-          overflowX: 'auto',
-        }}
-      >
+      <div style={{ overflowX: 'auto' }}>
         <div style={{ minWidth: 500 }}>
           <Table>
             <thead>
@@ -71,7 +62,7 @@ export default function PropsTable({ component }: { component: string }) {
             <tbody>{rows}</tbody>
           </Table>
         </div>
-      </Paper>
+      </div>
     </DocsSection>
   );
 }

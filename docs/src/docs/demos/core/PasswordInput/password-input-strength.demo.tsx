@@ -17,6 +17,7 @@ export function PasswordInputStrengthDemo() {
       toggle
       githubLink="https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/PasswordStrength/PasswordStrength.tsx"
       demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
+      zIndex={5}
     >
       <div style={{ maxWidth: 340, margin: 'auto' }}>
         <PasswordStrength />

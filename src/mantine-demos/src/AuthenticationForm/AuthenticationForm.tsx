@@ -4,24 +4,33 @@ import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
 import {
   TextInput,
   PasswordInput,
-  ElementsGroup,
+  Group,
   Checkbox,
   Button,
   Paper,
   Text,
   LoadingOverlay,
+  useMantineTheme,
 } from '@mantine/core';
 
 export interface AuthenticationFormProps {
   noShadow?: boolean;
   noPadding?: boolean;
   noSubmit?: boolean;
+  style?: React.CSSProperties;
 }
 
-export function AuthenticationForm({ noShadow, noPadding, noSubmit }: AuthenticationFormProps) {
+export function AuthenticationForm({
+  noShadow,
+  noPadding,
+  noSubmit,
+  style,
+}: AuthenticationFormProps) {
   const [formType, setFormType] = useState<'register' | 'login'>('register');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>(null);
+  const theme = useMantineTheme();
+  const inputVariant = theme.colorScheme === 'dark' ? 'filled' : 'default';
 
   const toggleFormType = () => {
     setFormType((current) => (current === 'register' ? 'login' : 'register'));
@@ -62,7 +71,12 @@ export function AuthenticationForm({ noShadow, noPadding, noSubmit }: Authentica
     <Paper
       padding={noPadding ? 0 : 'lg'}
       shadow={noShadow ? null : 'sm'}
-      style={{ position: 'relative', overflow: 'hidden' }}
+      style={{
+        position: 'relative',
+        overflow: 'hidden',
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        ...style,
+      }}
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <LoadingOverlay visible={loading} />
@@ -77,6 +91,7 @@ export function AuthenticationForm({ noShadow, noPadding, noSubmit }: Authentica
               onChange={(event) => form.setFieldValue('firstName', event.currentTarget.value)}
               onFocus={() => form.setFieldError('firstName', false)}
               error={form.errors.firstName && 'First name should include at least 2 characters'}
+              variant={inputVariant}
             />
 
             <TextInput
@@ -88,6 +103,7 @@ export function AuthenticationForm({ noShadow, noPadding, noSubmit }: Authentica
               onChange={(event) => form.setFieldValue('lastName', event.currentTarget.value)}
               onFocus={() => form.setFieldError('lastName', false)}
               error={form.errors.lastName && 'Last name should include at least 2 characters'}
+              variant={inputVariant}
             />
           </div>
         )}
@@ -101,6 +117,7 @@ export function AuthenticationForm({ noShadow, noPadding, noSubmit }: Authentica
           onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
           onFocus={() => form.setFieldError('email', false)}
           error={form.errors.email && 'Field should contain a valid email'}
+          variant={inputVariant}
         />
 
         <PasswordInput
@@ -114,6 +131,7 @@ export function AuthenticationForm({ noShadow, noPadding, noSubmit }: Authentica
           value={form.values.password}
           onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
           onFocus={() => form.setFieldError('password', false)}
+          variant={inputVariant}
           error={
             form.errors.password &&
             'Password should contain 1 number, 1 letter and at least 6 characters'
@@ -136,7 +154,7 @@ export function AuthenticationForm({ noShadow, noPadding, noSubmit }: Authentica
         )}
 
         {!noSubmit && (
-          <ElementsGroup position="apart" style={{ marginTop: 25 }}>
+          <Group position="apart" style={{ marginTop: 25 }}>
             <Button variant="link" color="gray" onClick={toggleFormType}>
               {formType === 'register'
                 ? 'Have an account? Login'
@@ -146,7 +164,7 @@ export function AuthenticationForm({ noShadow, noPadding, noSubmit }: Authentica
             <Button color="blue" type="submit">
               {formType === 'register' ? 'Register' : 'Login'}
             </Button>
-          </ElementsGroup>
+          </Group>
         )}
       </form>
     </Paper>

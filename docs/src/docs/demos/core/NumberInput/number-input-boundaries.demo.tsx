@@ -14,7 +14,7 @@ function Demo() {
         max={120}
         min={0}
       />
-      
+
       <NumberInput
         label="Your weight in kg"
         description="From 0 to Infinity, step is 5"
@@ -28,6 +28,7 @@ function Demo() {
 
 export function NumberInputBoundariesDemo() {
   const theme = useMantineTheme();
+  const variant = theme.colorScheme === 'dark' ? 'filled' : 'default';
 
   return (
     <CodeDemo
@@ -42,6 +43,7 @@ export function NumberInputBoundariesDemo() {
           placeholder="Your age"
           max={120}
           min={0}
+          variant={variant}
         />
         <NumberInput
           style={{ marginTop: 15 }}
@@ -50,6 +52,7 @@ export function NumberInputBoundariesDemo() {
           defaultValue={80}
           step={5}
           min={0}
+          variant={variant}
         />
       </div>
     </CodeDemo>

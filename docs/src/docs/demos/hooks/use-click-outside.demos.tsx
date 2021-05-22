@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Button, ElementsGroup, useMantineTheme } from '@mantine/core';
+import { Paper, Button, Group, useMantineTheme } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
@@ -7,7 +7,7 @@ const getCode = (events?: string) => `import React, { useState } from 'react';
 import { Paper, Button } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 
-export function UseClickOutsideDemo() {
+export function Demo() {
   const [opened, setOpened] = useState(false);
   const ref = useClickOutside(() => setOpened(false)${events});
 
@@ -33,12 +33,12 @@ export function UseClickOutsideDemo({ events }: { events?: string[] }) {
     <CodeDemo
       code={getCode(events ? `, [${events.map((event) => `'${event}'`).join(', ')}]` : '')}
       language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0]}
+      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
     >
       <div style={{ position: 'relative' }}>
-        <ElementsGroup position="center">
+        <Group position="center">
           <Button onClick={() => setOpened(true)}>Open dropdown</Button>
-        </ElementsGroup>
+        </Group>
 
         {opened && (
           <Paper
@@ -53,6 +53,7 @@ export function UseClickOutsideDemo({ events }: { events?: string[] }) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
             }}
           >
             <span>Click outside to close</span>

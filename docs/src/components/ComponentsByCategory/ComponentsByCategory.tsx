@@ -1,6 +1,6 @@
 import React from 'react';
 import { graphql, useStaticQuery, Link } from 'gatsby';
-import { ThemeIcon, Text, Paper, useMantineTheme } from '@mantine/core';
+import { ThemeIcon, Text, useMantineTheme } from '@mantine/core';
 import { getComponentsData } from './get-components-data';
 import useStyles from './ComponentsByCategory.styles';
 
@@ -39,7 +39,7 @@ export function ComponentsByCategory() {
     ));
 
     return (
-      <Paper className={classes.item} key={item.title}>
+      <div className={classes.item} key={item.title}>
         <div className={classes.header}>
           <ThemeIcon color={item.color} variant={theme.colorScheme === 'dark' ? 'filled' : 'light'}>
             <item.icon />
@@ -51,7 +51,7 @@ export function ComponentsByCategory() {
         </div>
 
         <div className={classes.links}>{links}</div>
-      </Paper>
+      </div>
     );
   });
 

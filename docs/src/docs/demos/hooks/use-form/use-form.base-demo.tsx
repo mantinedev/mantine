@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, ElementsGroup, Button, Checkbox, useMantineTheme } from '@mantine/core';
+import { TextInput, Group, Button, Checkbox, useMantineTheme } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
@@ -7,7 +7,7 @@ const code = `import React from 'react';
 import { TextInput, Button } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 
-export function UseFormDemo() {
+export function Demo() {
   const form = useForm({
     initialValues: {
       email: '',
@@ -70,6 +70,7 @@ export function UseFormBaseDemo() {
             error={form.errors.email && 'Please specify valid email'}
             value={form.values.email}
             onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+            variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
           />
 
           <Checkbox
@@ -79,9 +80,9 @@ export function UseFormBaseDemo() {
             onChange={(event) => form.setFieldValue('termsOfService', event.currentTarget.checked)}
           />
 
-          <ElementsGroup position="right" style={{ marginTop: 15 }}>
+          <Group position="right" style={{ marginTop: 15 }}>
             <Button type="submit">Submit</Button>
-          </ElementsGroup>
+          </Group>
         </form>
       </div>
     </CodeDemo>

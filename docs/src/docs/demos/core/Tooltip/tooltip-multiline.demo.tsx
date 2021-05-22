@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip, Button, ElementsGroup } from '@mantine/core';
+import { Tooltip, Button, Group } from '@mantine/core';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
@@ -25,7 +25,7 @@ function Demo() {
 export function TooltipMultilineDemo() {
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center" style={{ paddingTop: 100 }}>
+      <Group position="center">
         <Tooltip
           data-mantine-composable
           wrapLines
@@ -37,7 +37,7 @@ export function TooltipMultilineDemo() {
         >
           <Button variant="outline">Multiline tooltip</Button>
         </Tooltip>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

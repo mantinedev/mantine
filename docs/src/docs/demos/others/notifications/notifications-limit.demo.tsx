@@ -1,17 +1,17 @@
 import React from 'react';
-import { ElementsGroup, Button } from '@mantine/core';
+import { Group, Button } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { ElementsGroup, Button } from '@mantine/core';
+import { Group, Button } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 
 function Demo() {
   const notifications = useNotifications();
-  
+
   return (
-    <ElementsGroup position="center">
+    <Group position="center">
       <Button
         variant="outline"
         onClick={() => {
@@ -27,7 +27,7 @@ function Demo() {
       >
         Show 10 notifications
       </Button>
-    </ElementsGroup>
+    </Group>
   );
 }`;
 
@@ -36,7 +36,7 @@ export function NotificationsLimitDemo() {
 
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup position="center">
+      <Group position="center">
         <Button
           variant="outline"
           onClick={() => {
@@ -54,7 +54,7 @@ export function NotificationsLimitDemo() {
         >
           Show 10 notifications
         </Button>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }

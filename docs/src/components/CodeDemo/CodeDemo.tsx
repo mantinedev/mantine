@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import cx from 'clsx';
 import { Language } from 'prism-react-renderer';
-import { useMantineTheme, Paper, Button, ElementsGroup } from '@mantine/core';
-import { GitHubLogoIcon } from '@modulz/radix-icons';
+import { useMantineTheme, Paper, Group, ActionIcon, Tooltip } from '@mantine/core';
+import { CodeIcon, GitHubLogoIcon } from '@modulz/radix-icons';
 import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import DocsSection from '../DocsSection/DocsSection';
 import useStyles from './CodeDemo.styles';
@@ -14,6 +15,7 @@ interface CodeDemoProps {
   children: React.ReactNode;
   toggle?: boolean;
   githubLink?: string;
+  zIndex?: number;
 }
 
 export default function CodeDemo({
@@ -24,6 +26,7 @@ export default function CodeDemo({
   demoBorder = true,
   toggle = false,
   githubLink,
+  zIndex = 3,
 }: CodeDemoProps) {
   const classes = useStyles();
   const [visible, setVisible] = useState(!toggle);
@@ -33,32 +36,57 @@ export default function CodeDemo({
     <DocsSection>
       <Paper
         padding="md"
-        className={classes.demo}
+        className={cx(classes.demo, { [classes.withToggle]: toggle })}
         style={{
           backgroundColor:
-            demoBackground || (theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white),
+            demoBackground || (theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white),
           borderColor: demoBorder ? undefined : 'transparent',
+          zIndex,
         }}
       >
         {children}
 
-        {toggle && (
-          <ElementsGroup position="center" style={{ marginTop: 20 }}>
-            <Button variant="outline" onClick={() => setVisible((v) => !v)}>
-              {visible ? 'Hide' : 'Show'} code
-            </Button>
+        {!!code && toggle && (
+          <Group position="center" direction="column" spacing={5} className={classes.controls}>
             {githubLink && (
-              <Button
-                component="a"
-                href={githubLink}
-                variant="outline"
-                color="gray"
-                leftIcon={<GitHubLogoIcon />}
+              <Tooltip
+                label="Source code"
+                position="left"
+                placement="center"
+                transition="fade"
+                withArrow
+                arrowSize={4}
+                gutter={8}
               >
-                View source on Github
-              </Button>
+                <ActionIcon
+                  component="a"
+                  href={githubLink}
+                  variant={theme.colorScheme === 'dark' ? 'hover' : 'outline'}
+                  color="gray"
+                >
+                  <GitHubLogoIcon />
+                </ActionIcon>
+              </Tooltip>
             )}
-          </ElementsGroup>
+
+            <Tooltip
+              label={`${visible ? 'Hide' : 'Show'} code`}
+              position="left"
+              placement="center"
+              transition="fade"
+              withArrow
+              arrowSize={4}
+              gutter={8}
+            >
+              <ActionIcon
+                variant={theme.colorScheme === 'dark' ? 'hover' : 'outline'}
+                onClick={() => setVisible((v) => !v)}
+                aria-label="Toggle code"
+              >
+                <CodeIcon />
+              </ActionIcon>
+            </Tooltip>
+          </Group>
         )}
       </Paper>
 

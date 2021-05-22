@@ -1,10 +1,10 @@
 import React from 'react';
-import { Badge, ElementsGroup, Avatar, ActionIcon } from '@mantine/core';
+import { Badge, Group, Avatar, ActionIcon } from '@mantine/core';
 import { Cross1Icon } from '@modulz/radix-icons';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
-import { ActionIcon, Avatar, Badge, ElementsGroup } from '@mantine/core';
+import { ActionIcon, Avatar, Badge, Group } from '@mantine/core';
 
 function Demo() {
   const avatar = (
@@ -23,19 +23,19 @@ function Demo() {
   );
 
   return (
-    <ElementsGroup>
+    <Group>
       <Badge style={{ paddingLeft: 0 }} size="lg" color="teal" leftSection={avatar}>
         Badge with Avatar
       </Badge>
-      
+
       <Badge variant="outline" style={{ paddingRight: 3 }} rightSection={removeButton}>
         Badge with right section
       </Badge>
-      
+
       <Badge variant="outline" style={{ paddingLeft: 3 }} leftSection={removeButton}>
         Badge with left section
       </Badge>
-    </ElementsGroup>
+    </Group>
   );
 }`;
 
@@ -57,7 +57,7 @@ const removeButton = (
 export function BadgeSectionsDemo() {
   return (
     <CodeDemo code={code} language="tsx">
-      <ElementsGroup>
+      <Group>
         <Badge style={{ paddingLeft: 0 }} size="lg" color="teal" leftSection={avatar}>
           Badge with Avatar
         </Badge>
@@ -67,7 +67,7 @@ export function BadgeSectionsDemo() {
         <Badge variant="outline" style={{ paddingLeft: 3 }} leftSection={removeButton}>
           Badge with left section
         </Badge>
-      </ElementsGroup>
+      </Group>
     </CodeDemo>
   );
 }
