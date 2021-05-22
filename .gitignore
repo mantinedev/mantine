@@ -9,9 +9,6 @@
 # node
 node_modules/
 
-# nvm
-.nvmrc
-
 # Logs
 logs
 *.log

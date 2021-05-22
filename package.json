@@ -39,8 +39,9 @@
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-replace": "^2.4.2",
     "@rollup/plugin-typescript": "^8.2.1",
-    "@storybook/addon-essentials": "^6.1.11",
-    "@storybook/react": "^6.1.11",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/react": "^6.2.9",
     "@sucrase/jest-plugin": "^2.1.0",
     "@testing-library/react-hooks": "^6.0.0",
     "@types/enzyme": "^3.10.8",
@@ -56,6 +57,7 @@
     "@types/yargs": "^16.0.2",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@typescript-eslint/parser": "^4.24.0",
+    "autoprefixer": "^10.2.5",
     "chalk": "^4.1.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
@@ -78,6 +80,7 @@
     "jest-axe": "^4.1.0",
     "new-github-release-url": "^1.0.0",
     "open": "^8.0.9",
+    "postcss-flexbugs-fixes": "^5.0.2",
     "react-docgen-typescript": "^1.22.0",
     "react-dom": "^16.14.0",
     "rimraf": "^3.0.2",
@@ -102,5 +105,8 @@
     "react-router-dom": "^5.2.0",
     "react-textarea-autosize": "^8.3.2",
     "react-transition-group": "^4.4.1"
+  },
+  "resolutions": {
+    "**/@babel/preset-env": "~7.12.0"
   }
 }
