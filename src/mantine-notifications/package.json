@@ -6,6 +6,11 @@
   "types": "dist/mantine-notifications/src/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-notifications"
+  },
   "peerDependencies": {
     "@mantine/core": "1.2.1",
     "@mantine/hooks": "1.2.1",
