@@ -39,7 +39,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     }),
     esbuild({
       minify: config.minify && config.format === 'umd',
-      sourceMap: config.sourcemap,
+      sourceMap: false,
       tsconfig: path.resolve(process.cwd(), 'tsconfig.json'),
     }),
     json(),
