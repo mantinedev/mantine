@@ -7,6 +7,7 @@ category: 'data-display'
 description: 'Display user profile image, initials or fallback icon'
 ---
 
+import { AvatarDemos } from '@demos/core';
 import { AVATAR_SIZES } from '@mantine/core';
 import {
   AvatarRootDemo,
@@ -34,33 +35,33 @@ import { Avatar } from '@mantine/core';
 
 Use Avatar to display user profile image, initials or fallback icon.
 
-<AvatarRootDemo />
+<Demo data={AvatarDemos.usage} />
 
-## Radius
+## Placeholder
 
-xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
-Alternatively you can use number to set radius in px:
+If `src` prop is not set, equals to null or image cannot be loaded, placeholder icon will be rendered instead.
+You can use any React node instead of placeholder icon by passing it as `children`.
+Usually icon or initials are used in this case:
+
+<Demo data={AvatarDemos.placeholders} />
+
+## Size and radius
+
+<Demo data={AvatarDemos.configurator} />
+
+Control avatar width and height with `size` and border-radius with `radius`.
+Both props have predefined values: xs, sm, md, lg, xl.
+Alternatively you can use number to set radius or size in px:
 
 ```tsx
 <Avatar radius="lg" /> // -> theme predefined large radius
-<Avatar radius={1000} /> // -> { borderRadius: 1000 }
-```
+<Avatar radius={10} /> // -> { borderRadius: '10px' }
 
-<AvatarRadiusDemo />
-
-## Size
-
-Avatar has predefined sizes: xs, sm, md, lg, xl.
-You can pass size as number and it will be set as width and height in px:
-
-```tsx
 <Avatar size="sm" /> // -> predefined small size
-<Avatar size={50} /> // -> { width: 50, height: 50 }
+<Avatar size={50} /> // -> { width: '50px', height: '50px' }
 ```
 
-Predefined avatar sizes from xs to xl:
-
-<AvatarSizesDemo />
+<Demo data={AvatarDemos.sizes} />
 
 You can get predefined Avatar sizes by importing `AVATAR_SIZES`:
 
@@ -72,28 +73,6 @@ import { AVATAR_SIZES } from '@mantine/core';
   head={['Prop value', 'Width and height']}
   data={Object.keys(AVATAR_SIZES).map((size) => [size, `${AVATAR_SIZES[size]}px`])}
 />
-
-<AvatarConfigurator />
-
-## Placeholder
-
-If `src` prop is not set, equals to null or image cannot be loaded, placeholder icon will be rendered instead.
-
-<AvatarPlaceholderDemo />
-
-## Custom placeholders
-
-You can rendered any React node instead of placeholder icon by passing it as `children`. Usually icon or initials are used in this case.
-
-You can choose any color defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink> for Avatar placeholder.
-
-### Placeholder icon
-
-<AvatarIconPlaceholderDemo />
-
-### Placeholder letters
-
-<AvatarLettersPlaceholderDemo />
 
 ## Accessibility
 
