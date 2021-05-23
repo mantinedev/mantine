@@ -30,14 +30,8 @@ const query = graphql`
   }
 `;
 
-export default function LayoutInner({
-  children,
-  tableOfContents,
-}: {
-  children: React.ReactNode;
-  tableOfContents: boolean;
-}) {
-  const classes = useStyles({ tableOfContents });
+export default function LayoutInner({ children }: { children: React.ReactNode }) {
+  const classes = useStyles();
   const [navbarOpened, setNavbarState] = useState(false);
   const data = getDocsData(useStaticQuery(query));
 
@@ -52,7 +46,7 @@ export default function LayoutInner({
       <Navbar data={data} opened={navbarOpened} onClose={() => setNavbarState(false)} />
 
       <main className={classes.main}>
-        <Container size="sm">
+        <Container size="xl">
           <div className={classes.content}>
             <NotificationsProvider>
               <MdxProvider>{children}</MdxProvider>

@@ -8,16 +8,13 @@ export const TABLE_OF_CONTENTS_BREAKPOINT = 1080;
 export default createUseStyles(
   (theme: MantineTheme) => ({
     wrapper: {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       boxSizing: 'border-box',
       width: TABLE_OF_CONTENTS_WIDTH,
-      position: 'fixed',
+      paddingLeft: theme.spacing.md,
+      position: 'sticky',
       top: 0,
       right: 0,
-      height: '100vh',
-      borderLeft: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
-      }`,
+      flex: 1,
 
       [`@media (max-width: ${TABLE_OF_CONTENTS_BREAKPOINT}px)`]: {
         display: 'none',

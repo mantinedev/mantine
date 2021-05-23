@@ -28,8 +28,14 @@ export default function DocPage({ data }: DocPageProps) {
   return (
     <article>
       <Head title={post.frontmatter.title} description={post.frontmatter.description} />
-      <TableOfContents headings={post.headings} />
-      <MDXRenderer>{post.body}</MDXRenderer>
+      <div style={{ display: 'flex' }}>
+        <div>
+          <MDXRenderer>{post.body}</MDXRenderer>
+        </div>
+        <div style={{ flex: 1 }}>
+          <TableOfContents headings={post.headings} />
+        </div>
+      </div>
     </article>
   );
 }
