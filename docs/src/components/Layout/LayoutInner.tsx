@@ -1,14 +1,11 @@
 import 'normalize.css';
 
 import React, { useState } from 'react';
-import { Container } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
-
 import { graphql, useStaticQuery } from 'gatsby';
 import MdxProvider from '../MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
-import { Footer } from './Footer/Footer';
 import useStyles from './Layout.styles';
 import getDocsData from './get-docs-data';
 
@@ -46,14 +43,11 @@ export default function LayoutInner({ children }: { children: React.ReactNode })
       <Navbar data={data} opened={navbarOpened} onClose={() => setNavbarState(false)} />
 
       <main className={classes.main}>
-        <Container size="xl">
-          <div className={classes.content}>
-            <NotificationsProvider>
-              <MdxProvider>{children}</MdxProvider>
-            </NotificationsProvider>
-          </div>
-          <Footer />
-        </Container>
+        <div className={classes.content}>
+          <NotificationsProvider>
+            <MdxProvider>{children}</MdxProvider>
+          </NotificationsProvider>
+        </div>
       </main>
     </div>
   );

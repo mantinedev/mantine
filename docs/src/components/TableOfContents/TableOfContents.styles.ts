@@ -1,20 +1,18 @@
 import { createUseStyles } from 'react-jss';
 import { theming, MantineTheme, hexToRgba } from '@mantine/core';
-import { HEADER_HEIGHT } from '../Layout/Header/Header.styles';
 
-export const TABLE_OF_CONTENTS_WIDTH = 260;
+export const TABLE_OF_CONTENTS_WIDTH = 240;
 export const TABLE_OF_CONTENTS_BREAKPOINT = 1080;
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
     wrapper: {
       boxSizing: 'border-box',
-      width: TABLE_OF_CONTENTS_WIDTH,
       paddingLeft: theme.spacing.md,
       position: 'sticky',
-      top: 0,
+      top: theme.spacing.xl,
       right: 0,
-      flex: 1,
+      flex: `0 0 ${TABLE_OF_CONTENTS_WIDTH}px`,
 
       [`@media (max-width: ${TABLE_OF_CONTENTS_BREAKPOINT}px)`]: {
         display: 'none',
@@ -22,9 +20,8 @@ export default createUseStyles(
     },
 
     inner: {
-      paddingTop: HEADER_HEIGHT + theme.spacing.md,
+      paddingTop: 49,
       paddingBottom: theme.spacing.xl,
-      paddingRight: theme.spacing.md,
       paddingLeft: theme.spacing.md,
       minHeight: 'calc(100vh - 100px)',
       display: 'flex',
@@ -34,7 +31,7 @@ export default createUseStyles(
 
     items: {
       borderLeft: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[3]
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
       }`,
     },
 

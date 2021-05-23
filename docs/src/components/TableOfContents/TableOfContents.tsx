@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import cx from 'clsx';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Slugger from 'github-slugger';
-import debounce from 'lodash.debounce';
 import { Text, useMantineTheme } from '@mantine/core';
 import { ActivityLogIcon } from '@modulz/radix-icons';
 import { HEADER_HEIGHT } from '../Layout/Header/Header.styles';
@@ -55,9 +54,9 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
     );
   }, [headings]);
 
-  const handleScroll = debounce(() => {
+  const handleScroll = () => {
     setActive(getActiveElement(slugs.current.map((d) => d.getBoundingClientRect())));
-  }, 100);
+  };
 
   useEffect(() => {
     setActive(getActiveElement(slugs.current.map((d) => d.getBoundingClientRect())));
