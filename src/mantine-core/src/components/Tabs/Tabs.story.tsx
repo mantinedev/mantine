@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { ImageIcon } from '@modulz/radix-icons';
 import { DEFAULT_THEME, MantineProvider } from '../../theme';
 import { Text } from '../Text/Text';
 import { Tabs, Tab } from './Tabs';
@@ -149,12 +150,28 @@ storiesOf('@mantine/core/Tabs', module)
       </Tabs>
     </div>
   ))
+  .add('Outline', () => (
+    <div style={{ padding: 50 }}>
+      <Tabs variant="outline">
+        <Tab label="First" icon={<ImageIcon />} />
+        <Tab label="Only tabs" />
+        <Tab label="Nothing here" />
+        <Tab label="Outline" />
+      </Tabs>
+    </div>
+  ))
   .add('Dark theme', () => (
     <MantineProvider theme={{ colorScheme: 'dark' }}>
       <div
         style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40, minHeight: '100vh' }}
       >
         <div style={{ padding: 50 }}>
+          <Tabs variant="outline">
+            <Tab label="First" icon={<ImageIcon />} />
+            <Tab label="Only tabs" />
+            <Tab label="Nothing here" />
+            <Tab label="Outline" />
+          </Tabs>
           <Tabs>
             <Tab label="Disabled" disabled />
             <Tab label="React" color="cyan">

@@ -10,6 +10,7 @@ export interface TabControlProps extends DefaultProps, React.ComponentPropsWitho
   elementRef(node: HTMLButtonElement): void;
   tabProps: TabProps;
   color?: string;
+  variant?: 'default' | 'outline';
 }
 
 export function TabControl({
@@ -19,6 +20,7 @@ export function TabControl({
   tabProps,
   color,
   className,
+  variant = 'default',
   ...others
 }: TabControlProps) {
   const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
@@ -34,7 +36,12 @@ export function TabControl({
       {...props}
       data-mantine-tab
       tabIndex={active ? 0 : -1}
-      className={cx(classes.tab, { [classes.tabActive]: active }, className)}
+      className={cx(
+        classes.tab,
+        classes[`${variant}Variant`],
+        { [classes.tabActive]: active },
+        className
+      )}
       type="button"
       role="tab"
       aria-selected={active}

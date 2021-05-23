@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '../../theme';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
@@ -16,23 +17,26 @@ export interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<
   /** <Tab /> components only */
   children: React.ReactNode;
 
-  /** index of initial tab */
+  /** Index of initial tab */
   initialTab?: number;
 
-  /** index of active tab, overrides internal state */
+  /** Index of active tab, overrides internal state */
   active?: number;
 
-  /** active tab color from theme */
+  /** Active tab color from theme */
   color?: string;
 
-  /** true if tabs should take all available space */
+  /** True if tabs should take all available space */
   grow?: boolean;
 
-  /** tab controls position */
+  /** Tab controls position */
   position?: GroupPosition;
 
-  /** called when tab control is clicked with tab index */
+  /** Called when tab control is clicked with tab index */
   onTabChange?(tabIndex: number): void;
+
+  /** Controls appearance */
+  variant?: 'default' | 'outline';
 }
 
 function getPreviousTab(active: number, tabs: TabType[]) {
@@ -74,6 +78,7 @@ export function Tabs({
   grow = false,
   onTabChange,
   color,
+  variant = 'default',
   ...others
 }: TabsProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
@@ -117,6 +122,7 @@ export function Tabs({
       tabProps={tab.props}
       onKeyDown={handleKeyDown}
       color={color}
+      variant={variant}
       elementRef={(node) => {
         controlRefs.current[index] = node;
       }}
@@ -128,7 +134,7 @@ export function Tabs({
 
   return (
     <div {...others}>
-      <div className={classes.tabs}>
+      <div className={cx(classes[variant])}>
         <Group
           className={classes.tabsInner}
           role="tablist"

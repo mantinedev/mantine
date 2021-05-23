@@ -13,7 +13,9 @@ interface TabControlStylesProps {
 }
 
 export default createMemoStyles({
-  tab: ({ theme, reduceMotion }: TabControlStylesProps) => ({
+  tabActive: {},
+
+  tab: ({ theme }: TabControlStylesProps) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
@@ -22,12 +24,9 @@ export default createMemoStyles({
     height: 40,
     backgroundColor: 'transparent',
     border: 0,
-    borderBottom: '2px solid transparent',
     padding: [0, theme.spacing.md],
     fontSize: theme.fontSizes.sm,
     cursor: 'pointer',
-    transition: reduceMotion ? 'none' : 'border-color 150ms ease, color 150ms ease',
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '&:disabled': {
       cursor: 'not-allowed',
@@ -35,9 +34,33 @@ export default createMemoStyles({
     },
   }),
 
-  tabActive: ({ theme, color }: TabControlStylesProps) => ({
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
-    borderBottomColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+  defaultVariant: ({ theme, reduceMotion, color }: TabControlStylesProps) => ({
+    transition: reduceMotion ? 'none' : 'border-color 150ms ease, color 150ms ease',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    borderBottom: '2px solid transparent',
+
+    '&$tabActive': {
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      borderBottomColor: getThemeColor({
+        theme,
+        color,
+        shade: theme.colorScheme === 'dark' ? 4 : 6,
+      }),
+    },
+  }),
+
+  outlineVariant: ({ theme }: TabControlStylesProps) => ({
+    borderTopRightRadius: theme.radius.sm,
+    borderTopLeftRadius: theme.radius.sm,
+    border: '1px solid transparent',
+    borderBottom: 0,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
+
+    '&$tabActive': {
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
+      background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    },
   }),
 
   tabInner: {
