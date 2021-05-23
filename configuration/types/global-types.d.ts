@@ -15,7 +15,9 @@ interface MantineDemoControlProps {
 interface MantineDemo {
   type: 'configurator' | 'demo';
   component: React.FC;
+  wrapper?: React.FC;
   code?: string;
+  background?: (colorScheme: 'light' | 'dark') => string;
   demoProps?: {
     demoBackground?: string;
     toggle?: boolean;

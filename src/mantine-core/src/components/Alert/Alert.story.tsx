@@ -1,23 +1,26 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../theme';
+import { MANTINE_COLORS } from '../../theme';
 import { Alert } from './Alert';
 
 const getThemes = (props?: any) =>
-  Object.keys(DEFAULT_THEME.colors).map((color) => (
+  MANTINE_COLORS.map((color) => (
     <Alert key={color} color={color} {...props} style={{ marginTop: 20 }}>
-      Alert body with {color} color, Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      Voluptatem, reiciendis?
+      Alert body with {color} color, Sign fly semantics, soon as and was alphabet while in big had
+      free a he a to of into the on slight them. To the had dreams, drunk.
     </Alert>
   ));
 
 storiesOf('@mantine/core/Alert', module)
-  .add('Themes', () => (
-    <div style={{ maxWidth: 400, padding: 50 }}>{getThemes({ title: 'Alert title' })}</div>
+  .addDecorator((Story, props) => (
+    <div style={{ maxWidth: 400, margin: 'auto', padding: 50 }}>
+      <Story {...props} />
+    </div>
   ))
-  .add('Without title', () => <div style={{ maxWidth: 400, padding: 50 }}>{getThemes({})}</div>)
+  .add('Colors', () => <>{getThemes({ title: 'Alert title' })}</>)
+  .add('Without title', () => <>{getThemes({})}</>)
   .add('Content overflow', () => (
-    <div style={{ maxWidth: 400, padding: 50 }}>
+    <>
       <Alert title="Alert title that is too large and will definitely take more that one line to render">
         Alert body
       </Alert>
@@ -28,13 +31,5 @@ storiesOf('@mantine/core/Alert', module)
       >
         AlertBodyWithoutSpacesThatWillNotBreakToAnotherLineAndWillDamageTheLayout
       </Alert>
-    </div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh' }}>
-      <div style={{ maxWidth: 400, padding: 50 }}>
-        {getThemes({ title: 'Alert title', themeOverride: { colorScheme: 'dark' } })}
-        {getThemes({ themeOverride: { colorScheme: 'dark' } })}
-      </div>
-    </div>
+    </>
   ));

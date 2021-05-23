@@ -4,13 +4,13 @@ export type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;
 };
 
-type _TupleOf<T, N extends number, R extends unknown[]> = R['length'] extends N
+type _TupleOf<T, N extends number, R extends readonly unknown[]> = R['length'] extends N
   ? R
-  : _TupleOf<T, N, [T, ...R]>;
+  : _TupleOf<T, N, readonly [T, ...R]>;
 
 export type Tuple<T, N extends number> = N extends N
   ? number extends N
-    ? T[]
+    ? readonly T[]
     : _TupleOf<T, N, []>
   : never;
 

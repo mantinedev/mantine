@@ -1,6 +1,4 @@
-import type { MantineTheme } from './types';
-
-const colors: MantineTheme['colors'] = {
+const colors = {
   dark: [
     '#d5d7e0',
     '#acaebf',
@@ -182,6 +180,6 @@ const colors: MantineTheme['colors'] = {
     '#e8590c',
     '#d9480f',
   ],
-};
+} as const;
 
 export default colors;

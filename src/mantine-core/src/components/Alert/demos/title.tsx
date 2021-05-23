@@ -1,4 +1,5 @@
 import React from 'react';
+import { demoBase } from './_demo-base';
 import { Alert } from '../Alert';
 
 export const code = `
@@ -13,7 +14,7 @@ export const code = `
 
 export function Demo() {
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <>
       <Alert color="red" title="Something went wrong">
         Application crashed, please contact out support via email
       </Alert>
@@ -21,11 +22,12 @@ export function Demo() {
       <Alert color="red" style={{ marginTop: 15 }}>
         Application crashed, please contact out support via email
       </Alert>
-    </div>
+    </>
   );
 }
 
 export const title: MantineDemo = {
+  ...demoBase,
   type: 'demo',
   component: Demo,
   code,

@@ -10,4 +10,4 @@ export { hexToRgba } from './utils/hex-to-rgba/hex-to-rgba';
 export { MantineProvider } from './MantineProvider/MantineProvider';
 export { useMantineTheme } from './use-mantine-theme/use-mantine-theme';
 export { theming } from './MantineProvider/theme-context';
-export { DEFAULT_THEME } from './default-theme';
+export { DEFAULT_THEME, MANTINE_COLORS, MANTINE_SIZES } from './default-theme';

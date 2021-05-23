@@ -1,4 +1,5 @@
 import React from 'react';
+import { demoBase } from './_demo-base';
 import { Alert } from '../Alert';
 
 function Wrapper(props: React.ComponentPropsWithoutRef<typeof Alert>) {
@@ -14,6 +15,7 @@ const codeTemplate = (props: string, children: string) => `<Alert${props}>
 </Alert>`;
 
 export const configurator: MantineDemo = {
+  ...demoBase,
   type: 'configurator',
   component: Wrapper,
   codeTemplate,

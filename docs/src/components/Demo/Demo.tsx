@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMantineTheme } from '@mantine/core';
 import CodeDemo from '../CodeDemo/CodeDemo';
 import Configurator from '../Configurator/Configurator';
 
@@ -9,23 +10,30 @@ interface DemoProps {
   toggle?: boolean;
   demoProps?: CodeDemoProps;
   configuratorProps?: Omit<ConfiguratorProps, 'props' | 'codeTemplate' | 'component'>;
-
-  data: {
-    type: 'configurator' | 'demo';
-    component: React.FC;
-    code?: string;
-    demoProps?: CodeDemoProps;
-    configurator?: ConfiguratorProps['props'];
-    configuratorProps?: Omit<ConfiguratorProps, 'props' | 'codeTemplate' | 'component'>;
-    codeTemplate?: ConfiguratorProps['codeTemplate'];
-  };
+  data: MantineDemo;
 }
 
 export default function Demo({ data, demoProps, configuratorProps }: DemoProps) {
+  const theme = useMantineTheme();
+  const background =
+    typeof data.background === 'function' ? data.background(theme.colorScheme) : undefined;
+
   if (data.type === 'demo') {
     return (
-      <CodeDemo language="tsx" code={data.code?.trim()} {...data.demoProps} {...demoProps}>
-        <data.component />
+      <CodeDemo
+        language="tsx"
+        code={data.code?.trim()}
+        demoBackground={background}
+        {...data.demoProps}
+        {...demoProps}
+      >
+        {data.wrapper ? (
+          <data.wrapper>
+            <data.component />
+          </data.wrapper>
+        ) : (
+          <data.component />
+        )}
       </CodeDemo>
     );
   }
@@ -33,9 +41,18 @@ export default function Demo({ data, demoProps, configuratorProps }: DemoProps) 
   if (data.type === 'configurator') {
     return (
       <Configurator
-        component={data.component}
+        component={(props: any) =>
+          data.wrapper ? (
+            <data.wrapper>
+              <data.component {...props} />
+            </data.wrapper>
+          ) : (
+            <data.component {...props} />
+          )
+        }
         codeTemplate={data.codeTemplate}
         props={data.configurator}
+        previewBackground={background}
         {...data.configuratorProps}
         {...configuratorProps}
       />

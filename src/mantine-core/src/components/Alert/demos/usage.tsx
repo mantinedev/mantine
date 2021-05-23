@@ -1,4 +1,5 @@
 import React from 'react';
+import { demoBase } from './_demo-base';
 import { Alert } from '../Alert';
 import { Text } from '../../Text/Text';
 
@@ -23,22 +24,21 @@ function Demo() {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
-      <Alert color="red" title="Something went wrong">
-        Application crashed, try refreshing the page, if it does not help please contact our support
-        <br />
-        <br />
-        Error message:
-        <Text color="red" size="sm">
-          undefined is not a function
-        </Text>
-      </Alert>
-    </div>
+    <Alert color="red" title="Something went wrong">
+      Application crashed, try refreshing the page, if it does not help please contact our support
+      <br />
+      <br />
+      Error message:
+      <Text color="red" size="sm">
+        undefined is not a function
+      </Text>
+    </Alert>
   );
 }
 
 export const usage: MantineDemo = {
+  ...demoBase,
   type: 'demo',
-  component: Demo,
   code,
+  component: Demo,
 };

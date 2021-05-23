@@ -1,6 +1,9 @@
 import { MantineTheme } from './types';
 import colors from './colors';
 
+export const MANTINE_COLORS = Object.keys(colors);
+export const MANTINE_SIZES = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+
 export const DEFAULT_THEME: MantineTheme = {
   colorScheme: 'light',
   white: '#fff',
