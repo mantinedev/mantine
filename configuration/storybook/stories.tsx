@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { useWindowEvent } from '@mantine/hooks';
-import { MantineProvider, Container, ActionIcon, DEFAULT_THEME } from '@mantine/core';
+import { upperFirst, useWindowEvent } from '@mantine/hooks';
+import { MantineProvider, Container, ActionIcon, Title, DEFAULT_THEME } from '@mantine/core';
 import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 
 import * as demos from '@mantine/core/src/demos';
@@ -54,7 +54,10 @@ stories.addDecorator(decorator);
 Object.keys(demos).forEach((key) => {
   stories.add(key.replace('Demos', ''), () => {
     const docs = Object.keys(demos[key]).map((story) => (
-      <Demo data={demos[key][story]} key={story} />
+      <div key={story}>
+        <Title order={2}>{upperFirst(story)}</Title>
+        <Demo data={demos[key][story]} />
+      </div>
     ));
     return <div>{docs}</div>;
   });

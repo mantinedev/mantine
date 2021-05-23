@@ -7,16 +7,8 @@ category: 'inputs'
 description: 'Indicate secondary action'
 ---
 
+import { ActionIconDemos } from '@demos/core';
 import { ACTION_ICON_SIZES } from '@mantine/core';
-import {
-  ActionIconGroupDemo,
-  ActionIconUsageDemo,
-  ActionIconVariantDemo,
-} from '../demos/core/ActionIcon/action-icon.demos';
-import { ActionIconConfigurator } from '../demos/core/ActionIcon/action-icon.configurator';
-import { ActionIconColorsDemo } from '../demos/core/ActionIcon/action-icon-colors.demo';
-import { ActionIconSizesDemo } from '../demos/core/ActionIcon/action-icon-sizes.demo';
-import { ActionIconRadiusDemo } from '../demos/core/ActionIcon/action-icon-radius.demo';
 
 # ActionIcon
 
@@ -47,7 +39,7 @@ You can use icons from any react icons library, for example:
 - [feather](https://feathericons.com/)
 - [react-icons](https://react-icons.github.io/react-icons)
 
-<ActionIconConfigurator />
+<Demo data={ActionIconDemos.configurator} />
 
 ## Where to use
 
@@ -55,13 +47,13 @@ Use action icon to indicate secondary action, for example to close modal or togg
 
 Password input visibility toggle example:
 
-<ActionIconUsageDemo />
+<Demo data={ActionIconDemos.usage} />
 
 ## Variants
 
 ActionIcon has 5 variants: hover (default), transparent, filled, light and outline:
 
-<ActionIconVariantDemo />
+<Demo data={ActionIconDemos.variants} />
 
 ## Color
 
@@ -72,7 +64,7 @@ You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">them
 <ActionIcon color="blue" />
 ```
 
-<ActionIconColorsDemo />
+<Demo data={ActionIconDemos.colors} />
 
 ## Size
 
@@ -85,9 +77,9 @@ You can pass size as number and it will be set as width and height in px:
 <ActionIcon size={50} /> // -> { width: 50, height: 50 }
 ```
 
-Sizes from xl to xs:
+Sizes from xs to xl:
 
-<ActionIconSizesDemo />
+<Demo data={ActionIconDemos.sizes} />
 
 You can get default sizes values by importing `ACTION_ICON_SIZES`:
 
@@ -111,15 +103,9 @@ Alternatively you can use number to set border-radius in px:
 <ActionIcon radius={0} /> // -> remove border-radius
 ```
 
-Default radius from xs to xl for xl size:
+Default radius from xs to xl:
 
-<ActionIconRadiusDemo />
-
-## Compose with Group
-
-You can compose ActionIcon and any other components with <GatsbyLink to="/core/group/">Group</GatsbyLink> component.
-
-<ActionIconGroupDemo />
+<Demo data={ActionIconDemos.radius} />
 
 ## Get element ref
 
