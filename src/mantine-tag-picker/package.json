@@ -7,6 +7,12 @@
   "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-tag-picker"
+  },
   "peerDependencies": {
     "@mantine/core": "1.2.1",
     "@mantine/hooks": "1.2.1",
