@@ -39,6 +39,25 @@ export default createUseStyles(
       },
     },
 
+    rawContentWrapper: {
+      display: 'flex',
+      position: 'relative',
+      justifyContent: 'space-between',
+      paddingLeft: theme.spacing.xl * 2,
+      paddingRight: theme.spacing.xl * 2,
+    },
+
+    rawContent: {
+      width: `calc(100% - ${260}px)`,
+      maxWidth: 820,
+      margin: 'auto',
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        width: '100%',
+        paddingRight: 0,
+      },
+    },
+
     tableOfContents: {
       flex: '0 0 260px',
 
