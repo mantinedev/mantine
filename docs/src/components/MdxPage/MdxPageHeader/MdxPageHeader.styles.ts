@@ -39,27 +39,7 @@ export default createUseStyles(
     description: {
       maxWidth: 450,
       color: theme.colors.gray[6],
-    },
-
-    item: {
-      marginTop: theme.spacing.xl,
-      display: 'flex',
-      alignItems: 'center',
-    },
-
-    label: {
-      color: theme.colors.gray[6],
-      width: 100,
-      lineHeight: 1,
-      marginBottom: 2,
-    },
-
-    code: {
-      marginBottom: 0,
-    },
-
-    copy: {
-      marginLeft: theme.spacing.xl,
+      marginBottom: theme.spacing.xl,
     },
   }),
   { theming }
