@@ -14,7 +14,7 @@ export default createUseStyles(
     },
 
     label: {
-      color: theme.colors.gray[6],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
       width: 100,
       lineHeight: 1,
       marginBottom: 2,
