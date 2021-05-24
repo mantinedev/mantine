@@ -12,6 +12,8 @@ interface CodeHighlightProps {
   language: Language;
   className?: string;
   style?: React.CSSProperties;
+  noCopy?: boolean;
+  rootClassName?: string;
 }
 
 export default function CodeHighlight({
@@ -19,31 +21,35 @@ export default function CodeHighlight({
   className,
   language,
   style: styleProp,
+  noCopy = false,
+  rootClassName,
 }: CodeHighlightProps) {
   const classes = useStyles();
   const clipboard = useClipboard();
   const _theme = useMantineTheme();
 
   return (
-    <div className={classes.wrapper}>
-      <Tooltip
-        className={classes.copy}
-        label={clipboard.copied ? 'Copied' : 'Copy code'}
-        position="left"
-        placement="center"
-        transition="fade"
-        withArrow
-        arrowSize={4}
-        gutter={8}
-        color={clipboard.copied ? 'teal' : undefined}
-      >
-        <ActionIcon
-          aria-label={clipboard.copied ? 'Copied' : 'Copy code to clipboard'}
-          onClick={() => clipboard.copy(code)}
+    <div className={cx(classes.wrapper, rootClassName)}>
+      {!noCopy && (
+        <Tooltip
+          className={classes.copy}
+          label={clipboard.copied ? 'Copied' : 'Copy code'}
+          position="left"
+          placement="center"
+          transition="fade"
+          withArrow
+          arrowSize={4}
+          gutter={8}
+          color={clipboard.copied ? 'teal' : undefined}
         >
-          {clipboard.copied ? <CheckIcon /> : <ClipboardIcon />}
-        </ActionIcon>
-      </Tooltip>
+          <ActionIcon
+            aria-label={clipboard.copied ? 'Copied' : 'Copy code to clipboard'}
+            onClick={() => clipboard.copy(code)}
+          >
+            {clipboard.copied ? <CheckIcon /> : <ClipboardIcon />}
+          </ActionIcon>
+        </Tooltip>
+      )}
 
       <Highlight
         {...defaultProps}

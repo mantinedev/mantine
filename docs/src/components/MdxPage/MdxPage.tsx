@@ -1,39 +1,21 @@
 import React from 'react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
-import { Tabs, Tab, Text, Title } from '@mantine/core';
+import { Tabs, Tab, Title } from '@mantine/core';
 import { Footer } from '../Footer/Footer';
-import CodeHighlight from '../CodeHighlight/CodeHighlight';
 import TableOfContents from '../TableOfContents/TableOfContents';
-import PageHeader from '../MdxProvider/PageHeader/PageHeader';
 import PropsTable from '../MdxProvider/PropsTable/PropsTable';
+import { MdxPageHeader } from './MdxPageHeader/MdxPageHeader';
+import { MdxPageProps } from './types';
 import useStyles from './MdxPage.styles';
 
-interface MdxPageProps {
-  headings: {
-    depth: number;
-    value: string;
-  }[];
-
-  body: string;
-
-  data: {
-    title: string;
-    description?: string;
-    props: string[];
-    import: string;
-    docs: string;
-    source: string;
-    package: string;
-  };
-}
-
-export function MdxPage({ headings, body, data }: MdxPageProps) {
+export function MdxPage(props: MdxPageProps) {
   const classes = useStyles();
+  const { data, headings, body } = props;
   const shouldRenderTabs = Array.isArray(data.props);
-  const props = shouldRenderTabs
-    ? data.props.map((component) => (
+  const propsTables = shouldRenderTabs
+    ? props.data.props.map((component) => (
         <div>
-          {data.props.length > 1 && (
+          {props.data.props.length > 1 && (
             <Title order={2} style={{ fontWeight: 600, marginBottom: 20 }}>
               {component} component props
             </Title>
@@ -45,29 +27,7 @@ export function MdxPage({ headings, body, data }: MdxPageProps) {
 
   return (
     <div className={classes.wrapper}>
-      {shouldRenderTabs && (
-        <div className={classes.headerWrapper}>
-          <div className={classes.header}>
-            <Title className={classes.title}>{data.title}</Title>
-
-            <Text size="lg" className={classes.description}>
-              {data.description}
-            </Text>
-
-            {data.import && (
-              <div className={classes.importCode}>
-                <CodeHighlight language="tsx" code={data.import} style={{ paddingLeft: 0 }} />
-              </div>
-            )}
-
-            <PageHeader
-              source={data.source}
-              docs={data.docs}
-              package={data.package.replace('mantine-', '@mantine/')}
-            />
-          </div>
-        </div>
-      )}
+      <MdxPageHeader {...props} />
 
       {shouldRenderTabs ? (
         <Tabs
@@ -100,7 +60,7 @@ export function MdxPage({ headings, body, data }: MdxPageProps) {
               style={{ maxWidth: 1080, margin: 'auto', marginTop: 24 }}
               className={classes.tabContent}
             >
-              {props}
+              {propsTables}
             </div>
           </Tab>
         </Tabs>
