@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'clsx';
 import { Title, Text } from '@mantine/core';
 import { Pencil2Icon, GitHubLogoIcon } from '@modulz/radix-icons';
 import { MdxPageProps } from '../types';
@@ -15,9 +16,16 @@ const SOURCE_BASE = `${REPO_BASE}/src`;
 export function MdxPageHeader({ data }: MdxPageProps) {
   const classes = useStyles();
 
+  const hasTabs = Array.isArray(data.props);
+  const hasLinks = !!(data.import || data.source);
+
+  if (!hasLinks && !hasTabs) {
+    return null;
+  }
+
   return (
-    <div className={classes.headerWrapper}>
-      <div className={classes.header}>
+    <div className={classes.wrapper}>
+      <div className={cx(classes.header, { [classes.withTabs]: hasTabs })}>
         <Title className={classes.title}>{data.title}</Title>
 
         <Text size="lg" className={classes.description}>

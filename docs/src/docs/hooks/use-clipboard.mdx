@@ -3,21 +3,13 @@ package: mantine-hooks
 title: 'use-clipboard'
 order: 1
 slug: /hooks/use-clipboard/
+description: 'Wrapper around navigator.clipboard with feedback timeout'
+import: "import { useClipboard } from '@mantine/hooks';"
+docs: 'hooks/use-clipboard.mdx'
+source: 'mantine-hooks/src/use-clipboard/use-clipboard.ts'
 ---
 
 import { UseClipboardDemo } from '../demos/hooks/use-clipboard.demos';
-
-# use-clipboard
-
-<PageHeader
-  source="mantine-hooks/src/use-clipboard/use-clipboard.ts"
-  docs="hooks/use-clipboard.mdx"
-  package="@mantine/hooks"
-/>
-
-```tsx
-import { useClipboard } from '@mantine/hooks';
-```
 
 ## Usage
 
@@ -38,9 +30,7 @@ Hook returns object with properties:
 ## Definition
 
 ```tsx
-function useClipboard(
-  options: { timeout: number } = { timeout: 2000 }
-): {
+function useClipboard(options: { timeout: number } = { timeout: 2000 }): {
   copy: (valueToCopy: any) => void;
   reset: () => void;
   error: Error;

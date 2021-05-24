@@ -2,7 +2,6 @@ import { createUseStyles } from 'react-jss';
 import { theming, MantineTheme, getFontStyles } from '@mantine/core';
 import { HEADER_HEIGHT } from './Header/Header.styles';
 import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from './Navbar/Navbar.styles';
-import { TABLE_OF_CONTENTS_BREAKPOINT } from '../TableOfContents/TableOfContents.styles';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -28,10 +27,6 @@ export default createUseStyles(
 
     layout: {
       paddingLeft: NAVBAR_WIDTH,
-
-      [`@media (max-width: ${TABLE_OF_CONTENTS_BREAKPOINT}px)`]: {
-        paddingRight: 0,
-      },
 
       [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
         paddingLeft: 0,

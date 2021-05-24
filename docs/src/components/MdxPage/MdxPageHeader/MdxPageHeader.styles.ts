@@ -5,7 +5,7 @@ const BREAKPOINT = 1080;
 
 export default createUseStyles(
   (theme) => ({
-    headerWrapper: {
+    wrapper: {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       paddingLeft: theme.spacing.xl * 2,
       paddingRight: theme.spacing.xl * 2,
@@ -21,13 +21,17 @@ export default createUseStyles(
       maxWidth: 822,
       margin: 'auto',
       paddingRight: 260,
-      paddingBottom: 46 + theme.spacing.xl * 1.5,
+      paddingBottom: theme.spacing.xl * 1.5,
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         maxWidth: '100%',
         paddingRight: 0,
         paddingBottom: 46 + theme.spacing.xl,
       },
+    },
+
+    withTabs: {
+      paddingBottom: 46 + theme.spacing.xl * 1.5,
     },
 
     title: {

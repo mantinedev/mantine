@@ -1,10 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import cx from 'clsx';
-import { Scrollbars } from 'react-custom-scrollbars';
 import Slugger from 'github-slugger';
 import { Text, useMantineTheme } from '@mantine/core';
 import { ActivityLogIcon } from '@modulz/radix-icons';
-import { HEADER_HEIGHT } from '../Layout/Header/Header.styles';
+import { HEADER_HEIGHT } from '../../Layout/Header/Header.styles';
 import useStyles from './TableOfContents.styles';
 
 interface Heading {
@@ -14,6 +13,7 @@ interface Heading {
 
 interface TableOfContentsProps {
   headings: Heading[];
+  withTabs: boolean;
 }
 
 function getActiveElement(rects: DOMRect[]) {
@@ -38,7 +38,7 @@ function getActiveElement(rects: DOMRect[]) {
   return closest.index;
 }
 
-export default function TableOfContents({ headings }: TableOfContentsProps) {
+export default function TableOfContents({ headings, withTabs }: TableOfContentsProps) {
   const theme = useMantineTheme();
   const classes = useStyles();
   const slugger = new Slugger();
@@ -93,18 +93,16 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   });
 
   return (
-    <nav className={classes.wrapper}>
-      <Scrollbars style={{ height: '100vh' }} universal>
-        <div className={classes.inner}>
-          <div>
-            <div className={classes.header}>
-              <ActivityLogIcon />
-              <Text className={classes.title}>Table of contents</Text>
-            </div>
-            <div className={classes.items}>{items}</div>
+    <nav className={cx(classes.wrapper, { [classes.withTabs]: withTabs })}>
+      <div className={classes.inner}>
+        <div>
+          <div className={classes.header}>
+            <ActivityLogIcon />
+            <Text className={classes.title}>Table of contents</Text>
           </div>
+          <div className={classes.items}>{items}</div>
         </div>
-      </Scrollbars>
+      </div>
     </nav>
   );
 }

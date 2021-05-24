@@ -10,8 +10,9 @@ export default createUseStyles(
       boxSizing: 'border-box',
       paddingLeft: theme.spacing.md,
       position: 'sticky',
-      top: 60 + theme.spacing.xl,
+      top: theme.spacing.xl,
       right: 0,
+      paddingTop: 55,
       flex: `0 0 ${TABLE_OF_CONTENTS_WIDTH}px`,
 
       [`@media (max-width: ${TABLE_OF_CONTENTS_BREAKPOINT}px)`]: {
@@ -19,11 +20,15 @@ export default createUseStyles(
       },
     },
 
+    withTabs: {
+      paddingTop: 0,
+      top: 60 + theme.spacing.xl,
+    },
+
     inner: {
       paddingTop: 0,
       paddingBottom: theme.spacing.xl,
       paddingLeft: theme.spacing.md,
-      minHeight: 'calc(100vh - 100px)',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
