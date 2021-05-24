@@ -137,8 +137,6 @@ export function Tabs({
 
   const content = tabs[activeTab].props.children;
 
-  console.log(groupProps?.className);
-
   return (
     <div {...others}>
       <div className={cx(classes[variant])}>

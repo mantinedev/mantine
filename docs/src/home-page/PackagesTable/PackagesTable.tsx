@@ -45,7 +45,7 @@ export function PackagesTable() {
   });
 
   return (
-    <div style={{ overflowX: 'auto', overflowY: 'hidden' }}>
+    <div style={{ overflowX: 'auto', overflowY: 'hidden', marginBottom: 30 }}>
       <Table highlightOnHover style={{ minWidth: 760, tableLayout: 'fixed' }}>
         <thead>
           <tr>
