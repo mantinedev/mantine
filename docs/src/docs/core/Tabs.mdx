@@ -4,9 +4,11 @@ title: Tabs
 order: 1
 slug: /core/tabs/
 category: 'data-display'
-description: 'Hide content under tabs'
-props: 'Tabs'
+description: 'Tabs are used to navigate between related pages or views while keeping current context'
+props: ['Tabs', 'Tab']
 import: "import { Tabs, Tab } from '@mantine/core';"
+source: 'mantine-core/src/components/Tabs/Tabs.tsx'
+docs: 'core/Tabs.mdx'
 ---
 
 import { TabsSimpleDemo } from '../demos/core/Tabs/tabs-simple.demo';
@@ -18,14 +20,6 @@ import {
   TabsPositionConfigurator,
   TabsColorConfigurator,
 } from '../demos/core/Tabs/tabs.configurator';
-
-# Tabs
-
-<PageHeader source="mantine-core/src/Tabs/Tabs.tsx" docs="core/Tabs.mdx" package="@mantine/core" />
-
-```tsx
-import { Tabs, Tab } from '@mantine/core';
-```
 
 ## Components
 
@@ -116,11 +110,3 @@ Component fully supports keyboard events handling and has correct aria-roles:
 - Only selected tab control can be focused
 - All elements have correct roles: tab, tablist and tabpanel
 - aria-orientation is always set to horizontal as component does not support vertical tabs
-
-## Tabs component props
-
-<PropsTable component="Tabs" />
-
-## Tab component props
-
-<PropsTable component="Tab" />

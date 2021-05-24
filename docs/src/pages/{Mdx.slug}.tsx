@@ -1,9 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Head from '../components/Head/Head';
-import { Footer } from '../components/Footer/Footer';
-import TableOfContents from '../components/TableOfContents/TableOfContents';
+import { MdxPage } from '../components/MdxPage/MdxPage';
 
 interface DocPageProps {
   data: {
@@ -18,6 +16,11 @@ interface DocPageProps {
       frontmatter: {
         title: string;
         description?: string;
+        props: string[];
+        import: string;
+        docs: string;
+        source: string;
+        package: string;
       };
     };
   };
@@ -29,21 +32,7 @@ export default function DocPage({ data }: DocPageProps) {
   return (
     <article>
       <Head title={post.frontmatter.title} description={post.frontmatter.description} />
-      <div
-        style={{
-          display: 'flex',
-          position: 'relative',
-          justifyContent: 'space-between',
-        }}
-      >
-        <div style={{ width: 'calc(100% - 280px)', maxWidth: 800, margin: 'auto' }}>
-          <MDXRenderer>{post.body}</MDXRenderer>
-          <Footer />
-        </div>
-        <div style={{ flex: '0 0 260px' }}>
-          <TableOfContents headings={post.headings} />
-        </div>
-      </div>
+      <MdxPage body={post.body} headings={post.headings} data={post.frontmatter} />
     </article>
   );
 }
@@ -59,6 +48,11 @@ export const query = graphql`
         title
         package
         slug
+        props
+        import
+        docs
+        source
+        description
       }
       body
     }

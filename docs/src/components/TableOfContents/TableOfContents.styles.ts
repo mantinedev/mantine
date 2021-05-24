@@ -10,7 +10,7 @@ export default createUseStyles(
       boxSizing: 'border-box',
       paddingLeft: theme.spacing.md,
       position: 'sticky',
-      top: theme.spacing.xl,
+      top: 60 + theme.spacing.xl,
       right: 0,
       flex: `0 0 ${TABLE_OF_CONTENTS_WIDTH}px`,
 
@@ -20,7 +20,7 @@ export default createUseStyles(
     },
 
     inner: {
-      paddingTop: 49,
+      paddingTop: 0,
       paddingBottom: theme.spacing.xl,
       paddingLeft: theme.spacing.md,
       minHeight: 'calc(100vh - 100px)',

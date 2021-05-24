@@ -47,8 +47,8 @@ export function Group({
   );
 
   return (
-    <div className={className} {...others}>
-      <div className={classes.group}>{items}</div>
+    <div className={cx(classes.group, className)} {...others}>
+      {items}
     </div>
   );
 }

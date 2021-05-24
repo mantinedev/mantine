@@ -58,7 +58,7 @@ export default createMemoStyles({
 
     '&$tabActive': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
       background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     },
   }),

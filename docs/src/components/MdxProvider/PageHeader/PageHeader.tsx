@@ -13,6 +13,7 @@ export default function PageHeader(props: PageHeaderProps) {
   const theme = useMantineTheme();
   const buttonProps = {
     style: {
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[2],
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : undefined,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
     },
@@ -27,6 +28,7 @@ export default function PageHeader(props: PageHeaderProps) {
         target="_blank"
         href={`https://github.com/mantinedev/mantine/blob/master/docs/src/docs/${props.docs}`}
         title="Edit this page on Github"
+        size="lg"
         {...buttonProps}
       >
         Edit this page
@@ -39,6 +41,7 @@ export default function PageHeader(props: PageHeaderProps) {
         rel="noopener noreferrer"
         href={`https://github.com/mantinedev/mantine/blob/master/src/${props.source}`}
         title="Browse source page on Github"
+        size="lg"
         {...buttonProps}
       >
         Source code
@@ -51,6 +54,7 @@ export default function PageHeader(props: PageHeaderProps) {
         rel="noopener noreferrer"
         href={`https://www.npmjs.com/package/${props.package}`}
         title="Open package page on npm"
+        size="lg"
         {...buttonProps}
         style={{
           textTransform: 'lowercase',

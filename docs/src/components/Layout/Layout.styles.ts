@@ -44,8 +44,6 @@ export default createUseStyles(
       // aligns page top most heading with navigation and table of contents
       paddingTop: HEADER_HEIGHT - theme.spacing.xl - 2,
       paddingBottom: theme.spacing.xl * 2,
-      paddingLeft: theme.spacing.md,
-      paddingRight: theme.spacing.md,
 
       [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
         paddingLeft: 0,

@@ -5,8 +5,10 @@ order: 1
 slug: /core/grid/
 category: 'layout'
 description: 'Flexbox grid system with variable amount of columns'
-props: 'Grid'
+props: ['Grid']
 import: "import { Grid, Col } from '@mantine/core';"
+source: 'mantine-core/src/components/Grid/Grid.tsx'
+docs: 'core/Grid.mdx'
 ---
 
 import { GridRootDemo } from '../demos/core/Grid/grid-root.demo';
@@ -19,7 +21,11 @@ import { GridOffsetDemo } from '../demos/core/Grid/grid-offset.demo';
 
 # Group
 
-<PageHeader source="mantine-core/src/Grid/Grid.tsx" docs="core/Grid.mdx" package="@mantine/core" />
+<PageHeader
+  source="mantine-core/src/components/Grid/Grid.tsx"
+  docs="core/Grid.mdx"
+  package="@mantine/core"
+/>
 
 ```tsx
 import { Grid, Col } from '@mantine/core';

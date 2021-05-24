@@ -5,8 +5,10 @@ order: 1
 slug: /core/menu/
 category: 'overlay'
 description: 'Combine a list of secondary actions into single interactive area'
-props: 'Menu'
-import: "import { Menu } from '@mantine/core';"
+props: ['Menu', 'MenuItem']
+import: "import { Menu, MenuItem } from '@mantine/core';"
+source: 'mantine-core/src/components/Menu/Menu.tsx'
+docs: 'core/Menu.mdx'
 ---
 
 import { MENU_SIZES } from '@mantine/core';
@@ -20,7 +22,11 @@ import { MenuConfigurator } from '../demos/core/Menu/menu.configurator';
 
 # Menu
 
-<PageHeader source="mantine-core/src/Menu/Menu.tsx" docs="core/Menu.mdx" package="@mantine/core" />
+<PageHeader
+  source="mantine-core/src/components/Menu/Menu.tsx"
+  docs="core/Menu.mdx"
+  package="@mantine/core"
+/>
 
 ```tsx
 import { Menu, MenuItem } from '@mantine/core';
