@@ -11,7 +11,6 @@ import useStyles from './MdxPageHeader.styles';
 const REPO_BASE = 'https://github.com/mantinedev/mantine/blob/master/';
 const DOCS_BASE = `${REPO_BASE}/docs/src/docs`;
 const SOURCE_BASE = `${REPO_BASE}/src`;
-// https://github.com/mantinedev/mantine/blob/master/src/${props.source}
 
 export function MdxPageHeader({ data }: MdxPageProps) {
   const classes = useStyles();
@@ -58,7 +57,7 @@ export function MdxPageHeader({ data }: MdxPageProps) {
           <LinkItem
             label="Package"
             icon={<NpmIcon style={{ width: 14, height: 14 }} />}
-            link={`${DOCS_BASE}/${data.docs}`}
+            link={`https://www.npmjs.com/package/${data.package.replace('mantine-', '@mantine/')}`}
           >
             {data.package.replace('mantine-', '@mantine/')}
           </LinkItem>
