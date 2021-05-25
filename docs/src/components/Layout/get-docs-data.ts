@@ -1,7 +1,7 @@
 interface DocsQuery {
   allMdx: {
     edges: {
-      node: { frontmatter: { package: string; title?: string; order?: number; slug: string } };
+      node: { frontmatter: { group: string; title?: string; order?: number; slug: string } };
     }[];
   };
 }
@@ -19,15 +19,15 @@ const order = ['guides', 'mantine-hooks', 'mantine-core', 'Other packages'];
 
 export default function getDocsData(query: DocsQuery): DocsData {
   const results = query.allMdx.edges.reduce((acc: DocsData, item) => {
-    if (!(item.node.frontmatter.package in acc)) {
-      acc[item.node.frontmatter.package] = [];
+    if (!(item.node.frontmatter.group in acc)) {
+      acc[item.node.frontmatter.group] = [];
     }
 
-    acc[item.node.frontmatter.package].push({
+    acc[item.node.frontmatter.group].push({
       title: item.node.frontmatter.title,
       order: item.node.frontmatter.order || 0,
       to: item.node.frontmatter.slug,
-      package: item.node.frontmatter.package,
+      package: item.node.frontmatter.group,
     });
     return acc;
   }, {});

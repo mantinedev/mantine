@@ -1,8 +1,12 @@
 ---
 order: 1
-package: 'Other packages'
+group: 'Other packages'
+package: '@mantine/notifications'
 title: Notifications system
 slug: /others/notifications/
+props: ['NotificationsProvider']
+source: 'mantine-notifications/src'
+docs: 'others/notifications.mdx'
 ---
 
 import { NotificationConfigurator } from '../demos/core/Notification/notification.configurator';
@@ -14,13 +18,7 @@ import { NotificationsAutoCloseDemo } from '../demos/others/notifications/notifi
 import { NotificationsCleanDemo } from '../demos/others/notifications/notifications-clean.demo';
 import { NotificationsInteractiveDemo } from '../demos/others/notifications/notifications-interactive.demo';
 
-# Mantine notifications system
-
-<PageHeader
-  source="mantine-notifications/src"
-  docs="others/notifications.mdx"
-  package="@mantine/notifications"
-/>
+## Demo
 
 <NotificationsRootDemo />
 
@@ -67,10 +65,6 @@ function YourApp() {
 Use use-notifications hook at any place in your application:
 
 <NotificationsBaseDemo />
-
-## NotificationsProvider props
-
-<PropsTable component="NotificationsProvider" />
 
 ## use-notifications hook
 

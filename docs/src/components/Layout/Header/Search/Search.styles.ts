@@ -39,7 +39,7 @@ export default createUseStyles(
       left: theme.spacing.md * -1,
       zIndex: 1,
       paddingTop: 36 + theme.spacing.md,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     },
 
     dropdownBody: {
@@ -53,13 +53,13 @@ export default createUseStyles(
       alignItems: 'center',
       justifyContent: 'space-between',
       height: 44,
-      background: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
+      background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       padding: [0, theme.spacing.md],
       border: 0,
     },
 
     itemHovered: {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.blue[0],
     },
 
     package: {

@@ -1,6 +1,6 @@
 ---
 order: 0
-package: guides
+group: guides
 title: 'Server side rendering'
 slug: /guides/ssr/
 ---
@@ -31,11 +31,12 @@ export default class _Document extends Document {
 
     ctx.renderPage = () =>
       originalRenderPage({
-        enhanceApp: (App) => (props) => (
-          <JssProvider registry={registry} generateId={generateId}>
-            <App {...props} />
-          </JssProvider>
-        ),
+        enhanceApp: (App) => (props) =>
+          (
+            <JssProvider registry={registry} generateId={generateId}>
+              <App {...props} />
+            </JssProvider>
+          ),
       });
 
     const initialProps = await Document.getInitialProps(ctx);

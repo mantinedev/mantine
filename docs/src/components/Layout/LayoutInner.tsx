@@ -16,7 +16,7 @@ const query = graphql`
         node {
           id
           frontmatter {
-            package
+            group
             title
             order
             slug

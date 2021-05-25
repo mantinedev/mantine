@@ -17,11 +17,9 @@ export function MdxPageTabs({ body, data, headings }: MdxPageProps) {
   const propsTables = Array.isArray(data.props)
     ? data.props.map((component) => (
         <div>
-          {data.props.length > 1 && (
-            <Title order={2} style={{ fontWeight: 600, marginBottom: 20 }}>
-              {component} component props
-            </Title>
-          )}
+          <Title order={2} style={{ fontWeight: 600, marginBottom: 20 }}>
+            {component} component props
+          </Title>
           <PropsTable key={component} component={component} />
         </div>
       ))
