@@ -97,7 +97,7 @@ export function Select({
         rightSectionProps={{ style: { pointerEvents: 'none' } }}
         required={required}
         themeOverride={themeOverride}
-        defaultValue={placeholder ? 'xx-placeholder-xx' : null }
+        defaultValue={placeholder ? 'xx-placeholder-xx' : null}
       >
         {options}
       </Input>
