@@ -3,23 +3,13 @@ package: mantine-hooks
 title: 'use-queue'
 order: 1
 slug: /hooks/use-queue/
+description: 'Add data to queue if current limit is exceeded'
+import: "import { useQueue } from '@mantine/hooks';"
+docs: 'hooks/use-queue.mdx'
+source: 'mantine-hooks/src/use-queue/use-queue.ts'
 ---
 
 import { NotificationsCleanDemo } from '../demos/others/notifications/notifications-clean.demo';
-
-# use-queue
-
-<PageHeader
-  source="mantine-hooks/src/use-queue/use-queue.ts"
-  docs="hooks/use-queue.mdx"
-  package="@mantine/hooks"
-/>
-
-Add data to queue if current limit is exceeded
-
-```tsx
-import { useQueue } from '@mantine/hooks';
-```
 
 ## Usage
 
@@ -119,10 +109,7 @@ q.add({ name: 'Bob', id: 1 });
 ### Definition
 
 ```tsx
-function useQueue<T>(configuration: {
-  initialValues?: T[];
-  limit: number;
-}): {
+function useQueue<T>(configuration: { initialValues?: T[]; limit: number }): {
   state: T[];
   queue: T[];
   add: (...items: T[]) => void;

@@ -8,7 +8,7 @@ import { NpmIcon } from './NpmIcon';
 import { LinkItem } from './LinkItem/LinkItem';
 import useStyles from './MdxPageHeader.styles';
 
-const REPO_BASE = 'https://github.com/mantinedev/mantine/blob/master/';
+const REPO_BASE = 'https://github.com/mantinedev/mantine/blob/master';
 const DOCS_BASE = `${REPO_BASE}/docs/src/docs`;
 const SOURCE_BASE = `${REPO_BASE}/src`;
 

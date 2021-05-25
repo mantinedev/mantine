@@ -3,6 +3,10 @@ package: mantine-hooks
 title: 'use-form'
 order: 1
 slug: /hooks/use-form/
+description: 'Manage forms state, handles values and validation'
+import: "import { useForm } from '@mantine/hooks';"
+docs: 'hooks/use-form.mdx'
+source: 'mantine-hooks/src/use-form/use-form.ts'
 ---
 
 import { UseFormAuthDemo } from '../demos/hooks/use-form/use-form.auth-demo';
@@ -10,23 +14,11 @@ import { UseFormBaseDemo } from '../demos/hooks/use-form/use-form.base-demo';
 import { UseFormBlurValidateDemo } from '../demos/hooks/use-form/use-form.blur-validate-demo';
 import { UseFormServerValidationDemo } from '../demos/hooks/use-form/use-form.server-validation-demo';
 
-# use-form
-
-<PageHeader
-  source="mantine-hooks/src/use-form/use-form.ts"
-  docs="hooks/use-id.mdx"
-  package="@mantine/hooks"
-/>
+## Usage
 
 use-form provides bare minimum api to manage simple forms.
 It includes handlers to set and validate values.
 Hook does not depend on `@mantine/core` inputs and does not work with dom.
-
-```tsx
-import { useForm } from '@mantine/hooks';
-```
-
-## Usage
 
 <UseFormBaseDemo />
 
