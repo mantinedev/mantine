@@ -4,7 +4,11 @@ title: RingProgress
 order: 1
 slug: /core/ring-progress/
 category: 'feedback'
-description: 'Show the progress of an activity or a task'
+description: 'Give user feedback for status of the task with circle diagram'
+props: ['RingProgress']
+import: "import { RingProgress } from '@mantine/core';"
+source: 'mantine-core/src/components/RingProgress/RingProgress.tsx'
+docs: 'core/RingProgress.mdx'
 ---
 
 import { RING_PROGRESS_SIZES } from '@mantine/core';
@@ -15,18 +19,6 @@ import {
   RingProgressSectionsDemo,
 } from '../demos/core/RingProgress/ring-progress.demos';
 import { RingProgressSizesDemo } from '../demos/core/RingProgress/ring-progress-sizes.demo';
-
-# RingProgress
-
-<PageHeader
-  source="mantine-core/src/RingProgress/RingProgress.tsx"
-  docs="core/RingProgress.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { RingProgress } from '@mantine/core';
-```
 
 ## Usage
 
@@ -60,7 +52,3 @@ Apply multiple values using different values in the circlar track to show the pr
 Users get the flexibilty to define different color to different section.
 
 <RingProgressSectionsDemo />
-
-## Component props
-
-<PropsTable component="Progress" />
