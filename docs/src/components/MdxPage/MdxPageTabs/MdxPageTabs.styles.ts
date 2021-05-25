@@ -1,9 +1,6 @@
 import { createUseStyles } from 'react-jss';
 import { theming } from '@mantine/core';
-
-const BREAKPOINT = 1080;
-const TAB_HEIGHT = 46;
-const TABLE_OF_CONTENTS_OFFSET = 260;
+import { BREAKPOINT, TABLE_OF_CONTENTS_WIDTH, CONTENT_WIDTH, TAB_HEIGHT } from '../settings';
 
 export default createUseStyles(
   (theme) => ({
@@ -13,7 +10,7 @@ export default createUseStyles(
 
     tabsList: {
       paddingRight: 378, // I do not know how this value is calculated
-      maxWidth: 800,
+      maxWidth: CONTENT_WIDTH - 20,
       marginLeft: 'auto !important',
       marginRight: 'auto !important',
       borderBottom: `1px solid ${
@@ -55,8 +52,8 @@ export default createUseStyles(
     },
 
     main: {
-      width: `calc(100% - ${TABLE_OF_CONTENTS_OFFSET}px)`,
-      maxWidth: 820,
+      width: `calc(100% - ${TABLE_OF_CONTENTS_WIDTH}px)`,
+      maxWidth: CONTENT_WIDTH,
       margin: 'auto',
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
@@ -66,7 +63,7 @@ export default createUseStyles(
     },
 
     tableOfContents: {
-      flex: `0 0 ${TABLE_OF_CONTENTS_OFFSET}px`,
+      flex: `0 0 ${TABLE_OF_CONTENTS_WIDTH}px`,
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         display: 'none',

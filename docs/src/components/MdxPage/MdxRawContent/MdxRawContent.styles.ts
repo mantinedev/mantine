@@ -1,8 +1,6 @@
 import { createUseStyles } from 'react-jss';
 import { theming } from '@mantine/core';
-
-const BREAKPOINT = 1080;
-const TABLE_OF_CONTENTS_OFFSET = 260;
+import { BREAKPOINT, TABLE_OF_CONTENTS_WIDTH, CONTENT_WIDTH } from '../settings';
 
 export default createUseStyles(
   (theme) => ({
@@ -16,8 +14,8 @@ export default createUseStyles(
 
     container: {
       marginTop: theme.spacing.xl,
-      width: `calc(100% - ${TABLE_OF_CONTENTS_OFFSET}px)`,
-      maxWidth: 820,
+      width: `calc(100% - ${TABLE_OF_CONTENTS_WIDTH}px)`,
+      maxWidth: CONTENT_WIDTH,
       marginLeft: 'auto',
       marginRight: 'auto',
 
@@ -28,7 +26,7 @@ export default createUseStyles(
     },
 
     tableOfContents: {
-      flex: `0 0 ${TABLE_OF_CONTENTS_OFFSET}px`,
+      flex: `0 0 ${TABLE_OF_CONTENTS_WIDTH}px`,
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         display: 'none',
