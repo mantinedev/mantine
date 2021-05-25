@@ -1,13 +1,14 @@
 import React from 'react';
 import { Button, Group, DEFAULT_THEME } from '@mantine/core';
+import { upperFirst } from '@mantine/hooks';
 import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const getThemes = (props?: any) =>
   Object.keys(DEFAULT_THEME.colors)
     .filter((color) => color !== 'dark')
     .map((color) => (
-      <Button key={color} color={color} {...props}>
-        {color}
+      <Button key={color} color={color} radius="xl" {...props}>
+        {upperFirst(color)}
       </Button>
     ));
 

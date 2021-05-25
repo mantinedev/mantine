@@ -161,7 +161,7 @@ export function AuthenticationForm({
                 : "Don't have an account? Register"}
             </Button>
 
-            <Button color="blue" type="submit">
+            <Button color="blue" type="submit" radius="xl">
               {formType === 'register' ? 'Register' : 'Login'}
             </Button>
           </Group>

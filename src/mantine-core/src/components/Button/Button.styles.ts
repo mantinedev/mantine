@@ -27,25 +27,25 @@ const sizes = {
   },
 
   sm: {
-    fontSize: 11,
+    fontSize: 12,
     height: 26,
     padding: [0, 13],
   },
 
   md: {
-    fontSize: 13,
-    height: 30,
+    fontSize: 15,
+    height: 32,
     padding: [0, 15],
   },
 
   lg: {
-    fontSize: 14,
+    fontSize: 18,
     height: 36,
     padding: [0, 18],
   },
 
   xl: {
-    fontSize: 16,
+    fontSize: 22,
     height: 44,
     padding: [0, 22],
   },
@@ -106,12 +106,11 @@ export default createMemoStyles({
   outline: ({ color, radius, theme }: ButtonStylesProps) => ({
     backgroundColor: 'transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-    textTransform: 'uppercase',
-    fontWeight: 'bold',
+    fontWeight: 600,
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
     border: `1px solid ${hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 4 }),
-      theme.colorScheme === 'dark' ? 0.45 : 1
+      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 9 }),
+      theme.colorScheme === 'dark' ? 0.65 : 0.45
     )}`,
 
     '&:not(:disabled):active': {
@@ -127,25 +126,17 @@ export default createMemoStyles({
   }),
 
   light: ({ color, size, radius, theme }: ButtonStylesProps) => ({
-    border: '1px solid transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-    textTransform: 'uppercase',
-    fontWeight: 'bold',
+    fontWeight: 600,
+    border: '1px solid transparent',
     backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
-      theme.colorScheme === 'dark' ? 0.3 : 1
+      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 5 }),
+      theme.colorScheme === 'dark' ? 0.3 : 0.1
     ),
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 2 : 7 }),
 
     '& $inner': {
       height: sizes[size].height - 2,
-    },
-
-    '&:hover': {
-      backgroundColor: hexToRgba(
-        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
-        theme.colorScheme === 'dark' ? 0.35 : 1
-      ),
     },
 
     '&:not(:disabled):active': {
@@ -164,27 +155,15 @@ export default createMemoStyles({
   filled: ({ color, size, radius, theme }: ButtonStylesProps) => ({
     border: '1px solid transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-    textTransform: 'uppercase',
-    fontWeight: 'bold',
+    fontWeight: 600,
     backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: 7 }),
+      getThemeColor({ theme, color, shade: 6 }),
       theme.colorScheme === 'dark' ? 0.65 : 1
     ),
-    textShadow:
-      theme.colorScheme === 'dark'
-        ? 'none'
-        : `1px 1px 0 ${getThemeColor({ theme, color, shade: 8 })}`,
     color: theme.white,
 
     '& $inner': {
       height: sizes[size].height - 2,
-    },
-
-    '&:hover': {
-      backgroundColor: hexToRgba(
-        getThemeColor({ theme, color, shade: 8 }),
-        theme.colorScheme === 'dark' ? 0.95 : 1
-      ),
     },
 
     '&:not(:disabled):active': {
