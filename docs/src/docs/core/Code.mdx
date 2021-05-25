@@ -13,18 +13,6 @@ docs: 'core/Code.mdx'
 
 import { CodeInlineDemo, CodeBlockDemo, CodeColorDemo } from '../demos/core/Code/code.demos';
 
-# Code
-
-<PageHeader
-  source="mantine-core/src/components/Code/Code.tsx"
-  docs="core/Code.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Code } from '@mantine/core';
-```
-
 ## Inline code
 
 By default Code component renders inline `code` html element:
@@ -42,7 +30,3 @@ To render code in `pre` element pass `block` prop to Code component:
 By default code has gray color, you can change it to any color from <GatsbyLink to="/pages/theming/">theme</GatsbyLink>:
 
 <CodeColorDemo />
-
-## Component props
-
-<PropsTable component="Code" />

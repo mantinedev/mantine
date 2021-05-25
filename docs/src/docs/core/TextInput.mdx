@@ -13,18 +13,6 @@ docs: 'core/TextInput.mdx'
 
 import { TextInputConfigurator } from '../demos/core/TextInput/text-input.configurator';
 
-# TextInput
-
-<PageHeader
-  source="mantine-core/src/components/TextInput/TextInput.tsx"
-  docs="core/TextInput.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { TextInput } from '@mantine/core';
-```
-
 ## Usage
 
 Use TextInput when you need to capture text from user.
@@ -68,7 +56,3 @@ Provide `aria-label` in case you use component without label for screen reader s
 <TextInput />; // not ok, input is not labeled
 <TextInput aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
 ```
-
-## Component props
-
-<PropsTable component="TextInput" />

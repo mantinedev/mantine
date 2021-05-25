@@ -14,18 +14,6 @@ docs: 'core/Transition.mdx'
 import { TooltipTransitionsDemo } from '../demos/core/Tooltip/tooltip-transitions.demo';
 import { TransitionCustomDemo } from '../demos/core/Transition/transition-custom.demo';
 
-# Transition
-
-<PageHeader
-  source="mantine-core/src/components/Transition/Transition.tsx"
-  docs="core/Transition.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Transition, GroupedTransition } from '@mantine/core';
-```
-
 ## Usage
 
 Both components are based on Transition component from [react-transition-group](https://www.npmjs.com/package/react-transition-group) library.
@@ -109,7 +97,3 @@ function Demo({ transition = 'skew-up' }: { transition: MantineTransition }) {
   return <Transition transition={transition} /* other props */ />;
 }
 ```
-
-## Component props
-
-<PropsTable component="Transition" />

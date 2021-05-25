@@ -13,18 +13,6 @@ docs: 'core/Spoiler.mdx'
 
 import { SpoilerBaseDemo, SpoilerNoAnimationDemo } from '../demos/core/Spoiler/spoiler.demos';
 
-# Spoiler
-
-<PageHeader
-  source="mantine-core/src/components/Spoiler/Spoiler.tsx"
-  docs="core/Spoiler.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Spoiler } from '@mantine/core';
-```
-
 ## Usage
 
 Use Spoiler to hide long section of content.
@@ -47,15 +35,6 @@ To disable animations set prop to 0:
 You can get control button ref with `controlRef` prop:
 
 ```tsx
-import React, { useRef } from 'react';
-import { Spoiler } from '@mantine/core';
-
-function ButtonDemo() {
-  const spoilerControlRef = useRef<HTMLButtonElement>(null);
-  return <Spoiler controlRef={buttonRef} />;
-}
+const spoilerControlRef = useRef();
+<Spoiler controlRef={spoilerControlRef} />;
 ```
-
-## Component props
-
-<PropsTable component="Spoiler" />
