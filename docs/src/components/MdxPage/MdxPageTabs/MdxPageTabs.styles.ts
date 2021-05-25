@@ -14,7 +14,7 @@ export default createUseStyles(
       marginLeft: 'auto !important',
       marginRight: 'auto !important',
       borderBottom: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
       }`,
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
@@ -30,6 +30,7 @@ export default createUseStyles(
       paddingLeft: theme.spacing.lg,
       paddingRight: theme.spacing.lg,
       marginBottom: -1,
+      borderColor: theme.colorScheme === 'dark' ? `${theme.colors.dark[8]} !important` : undefined,
 
       '&:first-of-type': {
         marginLeft: theme.spacing.xl * 2,
@@ -41,7 +42,6 @@ export default createUseStyles(
     },
 
     tabContent: {
-      marginTop: theme.spacing.xl,
       paddingLeft: theme.spacing.xl * 2,
       paddingRight: theme.spacing.xl * 2,
 
@@ -64,6 +64,7 @@ export default createUseStyles(
 
     tableOfContents: {
       flex: `0 0 ${TABLE_OF_CONTENTS_WIDTH}px`,
+      marginTop: theme.spacing.xl,
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         display: 'none',
