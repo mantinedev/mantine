@@ -12,31 +12,23 @@ source: 'mantine-core/src/components/Blockquote/Blockquote.tsx'
 docs: 'core/Blockquote.mdx'
 ---
 
-import {
-  BlockquoteIconDemo,
-  BlockquoteNoIconDemo,
-} from '../demos/core/Blockquote/blockquote.demos';
-import { BlockquoteConfigurator } from '../demos/core/Blockquote/blockquote.configurator';
+import { BlockquoteDemos } from '@demos/core';
 
 ## Usage
 
-You can choose any color defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink>. By default Blockquote will use `theme.primaryColor` value.
-
-<BlockquoteConfigurator />
+<Demo data={BlockquoteDemos.configurator} />
 
 ## Configure icon
 
 You can use any React node as icon by passing it to `icon` prop.
 Note that component **does not control icon size** and you need to specify it manually on icon component for better fit.
 
-You can use icons from any react icons library, for example:
+You can use icons from any react icons library, for example,
+[radix icons](https://icons.modulz.app/), [feather icons](https://feathericons.com/)
+or [react-icons](https://react-icons.github.io/react-icons):
 
-- [radix icons](https://icons.modulz.app/) (used in mantine packages)
-- [feather](https://feathericons.com/)
-- [react-icons](https://react-icons.github.io/react-icons)
-
-<BlockquoteIconDemo />
+<Demo data={BlockquoteDemos.icon} />
 
 By default blockquote uses quote icon, to disable it, set `icon` prop to null:
 
-<BlockquoteNoIconDemo />
+<Demo data={BlockquoteDemos.noIcon} />
