@@ -5,7 +5,7 @@ title: Alert
 order: 1
 slug: /core/alert/
 category: 'feedback'
-description: 'Display static message to attract user attention'
+description: 'Attract user attention with important static message'
 props: ['Alert']
 import: "import { Alert } from '@mantine/core';"
 source: 'mantine-core/src/components/Alert/Alert.tsx'
@@ -23,13 +23,12 @@ Alert is designed to be static, if you need more dynamic variant use <GatsbyLink
 
 ## Title
 
-Component has optional title, set it with `title` prop:
-
 <Demo data={AlertDemos.title} />
 
 ## Color
 
-You can choose any color defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink>. By default Alert will have `theme.primaryColor` color.
+You can use any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>.
+By default Alert will have `theme.primaryColor` color:
 
 ```tsx
 <Alert /> // -> theme.primaryColor (defaults to blue)

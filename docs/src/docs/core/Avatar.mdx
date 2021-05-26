@@ -17,14 +17,13 @@ import { AVATAR_SIZES } from '@mantine/core';
 
 ## Usage
 
-Use Avatar to display user profile image, initials or fallback icon.
-
 <Demo data={AvatarDemos.usage} />
 
 ## Placeholder
 
-If `src` prop is not set, equals to null or image cannot be loaded, placeholder icon will be rendered instead.
-You can use any React node instead of placeholder icon by passing it as `children`.
+If `src` prop is not set, equals to null or image cannot be loaded,
+placeholder icon will be rendered instead.
+You can use any React node instead of placeholder icon.
 Usually icon or initials are used in this case:
 
 <Demo data={AvatarDemos.placeholders} />
@@ -47,14 +46,14 @@ Alternatively you can use number to set radius or size in px:
 
 <Demo data={AvatarDemos.sizes} />
 
-You can get predefined Avatar sizes by importing `AVATAR_SIZES`:
+You can get predefined avatar sizes by importing `AVATAR_SIZES`:
 
 ```tsx
 import { AVATAR_SIZES } from '@mantine/core';
 ```
 
 <DataTable
-  head={['Prop value', 'Width and height']}
+  head={['Size', 'Width and height']}
   data={Object.keys(AVATAR_SIZES).map((size) => [size, `${AVATAR_SIZES[size]}px`])}
 />
 

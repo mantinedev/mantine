@@ -27,7 +27,7 @@ Note that not all colors in some variants are compatible with dark theme:
 
 <Demo data={BadgeDemos.colors} />
 
-## Size
+## Size and radius
 
 Control badge font-size, height and padding with `size` and border-radius with `radius`.
 Both props have predefined values: xs, sm, md, lg, xl.
@@ -48,14 +48,14 @@ import { BADGE_SIZES } from '@mantine/core';
 ```
 
 <DataTable
-  head={['Prop value', 'Badge height']}
+  head={['Size', 'Badge height']}
   data={Object.keys(BADGE_SIZES).map((size) => [size, `${BADGE_SIZES[size]}px`])}
 />
 
 ## Full width and overflow
 
-Badge can take full width of container if you set `fullWidth` prop.
-If badge is too large for its container, overflow content will be hidden with ellipsis.
+Badge will take full width of container if you set `fullWidth` prop.
+If badge cannot fit in its container, overflow content will be hidden with ellipsis:
 
 <Demo data={BadgeDemos.overflow} />
 
