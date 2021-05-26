@@ -12,30 +12,27 @@ source: 'mantine-core/src/components/Checkbox/Checkbox.tsx'
 docs: 'core/Checkbox.mdx'
 ---
 
+import { CheckboxDemos } from '@demos/core';
 import { CHECKBOX_SIZES } from '@mantine/core';
 import { CheckboxIndeterminateDemo } from '../demos/core/Checkbox/checkbox-indeterminate.demo';
-import { CheckboxConfigurator } from '../demos/core/Checkbox/checkbox.configurator';
-import { CheckboxSizesDemo } from '../demos/core/Checkbox/checkbox-sizes.demo';
 
 ## Usage
 
 Use Checkbox to capture boolean value input from user.
 For better accessibility set `label` prop, it will add associated label element.
 
-<CheckboxConfigurator />
+<Demo data={CheckboxDemos.configurator} />
 
 ## Sizes
 
 Checkbox has 5 predefined sizes: xs, sm, md, lg, xl.
-Size defines label font-size (from <GatsbyLink to="/pages/theming/">theme.fontSizes</GatsbyLink>), input width and height.
+Size defines label font-size (from <GatsbyLink to="/pages/theming/">theme.fontSizes</GatsbyLink>), input width and height:
 
 ```tsx
 <Checkbox size="xl" /> // -> predefined xl size
 ```
 
-Checkbox sizes from xs to xl:
-
-<CheckboxSizesDemo />
+<Demo data={CheckboxDemos.sizes} />
 
 You can get checkbox sizes by importing `CHECKBOX_SIZES`:
 
