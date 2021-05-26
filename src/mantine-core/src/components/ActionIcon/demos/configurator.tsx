@@ -1,6 +1,7 @@
 import React from 'react';
-import { ActionIcon, ActionIconProps, Group } from '@mantine/core';
 import { GearIcon } from '@modulz/radix-icons';
+import { ActionIcon, ActionIconProps } from '../ActionIcon';
+import { Group } from '../../Group/Group';
 
 const iconSizes = {
   xs: 12,
