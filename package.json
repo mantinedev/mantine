@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "1.2.1",
+  "version": "1.3.0-alpha.0",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
@@ -26,6 +26,7 @@
     "docs:clean": "cd docs && npm run clean",
     "docs:build": "npm run docs:clean && npm run docs:docgen && npm run docs:sizes && cd docs && npm run build",
     "docs:deploy": "npm run docs:build && gh-pages -d docs/public",
+    "_release:no-test": "esno scripts/release",
     "_release": "npm run release:prepare && esno scripts/release",
     "release:prepare": "npm run clean && npm test",
     "release:patch": "npm run _release patch && npm run docs:deploy",
