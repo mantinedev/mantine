@@ -47,21 +47,12 @@ const { argv } = yargs(hideBin(process.argv))
   ]);
 
 (async () => {
-  // const status = await git.status();
+  const status = await git.status();
 
-  // if (status.current !== 'master') {
-  //   logger.error(
-  //     `It is allowed to release changes from master branch, current branch is ${chalk.red(
-  //       status.current
-  //     )}`
-  //   );
-  //   process.exit(1);
-  // }
-
-  // if (status.files.length !== 0) {
-  //   logger.error('Working tree is not clean');
-  //   process.exit(1);
-  // }
+  if (status.files.length !== 0) {
+    logger.error('Working tree is not clean');
+    process.exit(1);
+  }
 
   logger.info('Releasing all packages');
 
@@ -98,16 +89,16 @@ const { argv } = yargs(hideBin(process.argv))
     logger.success('All packages were published successfully');
   }
 
-  // await git.add([path.join(__dirname, '../src'), path.join(__dirname, '../package.json')]);
-  // await git.commit(`[release] Version: ${incrementedVersion}`);
-  // await git.push();
+  await git.add([path.join(__dirname, '../src'), path.join(__dirname, '../package.json')]);
+  await git.commit(`[release] Version: ${incrementedVersion}`);
+  await git.push();
 
-  // open(
-  //   githubRelease({
-  //     user: 'mantinedev',
-  //     repo: 'mantine',
-  //     tag: incrementedVersion,
-  //     title: incrementedVersion,
-  //   })
-  // );
+  open(
+    githubRelease({
+      user: 'mantinedev',
+      repo: 'mantine',
+      tag: incrementedVersion,
+      title: incrementedVersion,
+    })
+  );
 })();
