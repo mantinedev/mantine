@@ -83,6 +83,7 @@ export function AuthenticationForm({
         {formType === 'register' && (
           <div style={{ display: 'flex', marginBottom: 15 }}>
             <TextInput
+              data-autofocus
               required
               placeholder="Your first name"
               label="First name"
