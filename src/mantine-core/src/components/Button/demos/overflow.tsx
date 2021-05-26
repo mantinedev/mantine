@@ -1,17 +1,17 @@
 import React from 'react';
-import { Badge } from '../Badge';
+import { Button } from '../Button';
 
 const code = `
 <div style={{ width: 200 }}>
-  <Badge variant="filled" fullWidth>
-    Full width badge
-  </Badge>
+  <Button variant="filled" fullWidth>
+    Full width button
+  </Button>
 </div>
 
 <div style={{ width: 120 }}>
-  <Badge variant="filled" fullWidth>
-    Badge with overflow
-  </Badge>
+  <Button variant="filled" fullWidth>
+    Button with overflow
+  </Button>
 </div>
 `;
 
@@ -19,15 +19,15 @@ function Demo() {
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ width: 200 }}>
-        <Badge variant="filled" fullWidth>
-          Full width badge
-        </Badge>
+        <Button fullWidth variant="outline">
+          Full width button
+        </Button>
       </div>
 
       <div style={{ width: 120, marginLeft: 15 }}>
-        <Badge variant="filled" fullWidth>
-          Badge with overflow
-        </Badge>
+        <Button fullWidth variant="outline">
+          Button with overflow
+        </Button>
       </div>
     </div>
   );

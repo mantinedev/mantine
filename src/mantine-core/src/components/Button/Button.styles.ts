@@ -86,7 +86,7 @@ export default createMemoStyles({
   label: {
     display: 'block',
     whiteSpace: 'nowrap',
-    // overflow: 'hidden',
+    overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
 

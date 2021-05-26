@@ -12,31 +12,18 @@ source: 'mantine-core/src/components/Button/Button.tsx'
 docs: 'core/Button.mdx'
 ---
 
+import { ButtonDemos } from '@demos/core';
 import { BUTTON_SIZES } from '@mantine/core';
-import { GroupConfigurator } from '../demos/core/Group/group.configurator';
-import { ButtonFullWidthDemo } from '../demos/core/Button/button-width.demo';
-import { ButtonComponentsDemo } from '../demos/core/Button/button-components.demo';
-import { ButtonSizesDemo } from '../demos/core/Button/button-sizes.demo';
-import { ButtonRadiusDemo } from '../demos/core/Button/button-radius.demo';
-import {
-  ButtonFilledVariantDemo,
-  ButtonOutlineVariantDemo,
-  ButtonLinkVariantDemo,
-  ButtonLightVariantDemo,
-} from '../demos/core/Button/button-colors.demo';
-import { ButtonConfigurator } from '../demos/core/Button/button.configurator';
 
 ## Usage
 
-<ButtonConfigurator />
+<Demo data={ButtonDemos.configurator} />
 
-## Variants and colors
+## Variants
 
-Button component supports all colors defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink> and has 3 variants:
+Button has 4 variants: filled, light, outline and link:
 
-- `filled` (default) – high emphasis button with dark background
-- `outline` – lower emphasis button with border and transparent background
-- `link` – lowest emphasis button that looks like regular text
+<Demo data={ButtonDemos.variants} />
 
 Default Button color is `theme.primaryColor`, to change color and variant pass `color` and `variant` props:
 
@@ -46,80 +33,43 @@ Default Button color is `theme.primaryColor`, to change color and variant pass `
 <Button variant="link" color="indigo" /> // indigo link button
 ```
 
-### Filled variant
+## Size and radius
 
-<ButtonFilledVariantDemo />
-
-### Light variant
-
-<ButtonLightVariantDemo />
-
-### Outline variant
-
-<ButtonOutlineVariantDemo />
-
-### Link variant
-
-<ButtonLinkVariantDemo />
-
-## Size
-
-Button has predefined sizes: xs, sm, md, lg, xl.
-Size prop controls button height, padding and font-size.
+Control button font-size, height and padding with `size` and border-radius with `radius` props.
+Both props have predefined values: xs, sm, md, lg, xl.
+Alternatively you can use number to set radius in px:
 
 ```tsx
+<Button radius="lg" /> // -> theme predefined large radius
+<Button radius={10} /> // -> { borderRadius: '10px' }
 <Button size="sm" /> // -> predefined small size
-<Button size="xl" /> // -> predefined extra large size
 ```
 
-Button sizes from xl to xs:
+<Demo data={ButtonDemos.sizes} />
 
-<ButtonSizesDemo />
-
-You can get predefined button heights by importing `BUTTON_SIZES`:
+You can get predefined badge heights by importing `BUTTON_SIZES`:
 
 ```tsx
 import { BUTTON_SIZES } from '@mantine/core';
 ```
 
 <DataTable
-  head={['Prop value', 'Button height']}
+  head={['Size', 'Button height']}
   data={Object.keys(BUTTON_SIZES).map((size) => [size, `${BUTTON_SIZES[size]}px`])}
 />
-
-## Radius
-
-Radius has predefined values: xs, sm, md, lg, xl which are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
-Alternatively you can use number to set border-radius in px:
-
-```tsx
-<Button radius="lg" /> // -> theme predefined large radius
-<Button radius={10} /> // -> { borderRadius: 10 }
-<Button radius={0} /> // -> remove border-radius
-```
-
-Predefined button radius from xs to xl for Button with lg size:
-
-<ButtonRadiusDemo />
 
 ## Full width and overflow
 
 Button can take full width of container if you pass `fullWidth` prop.
 If button is too large for its container, overflow content will be hidden with ellipsis.
 
-<ButtonFullWidthDemo />
-
-## Compose with Group
-
-You can compose Button with itself any other components with <GatsbyLink to="/core/group/">Group</GatsbyLink> component:
-
-<GroupConfigurator />
+<Demo data={ButtonDemos.overflow} />
 
 ## Change root element
 
 You can use Button component both as `button` and `a` elements:
 
-<ButtonComponentsDemo />
+<Demo data={ButtonDemos.component} />
 
 ## Usage with react-router and other libraries
 

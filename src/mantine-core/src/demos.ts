@@ -5,3 +5,4 @@ export * as BadgeDemos from './components/Badge/demos';
 export * as BlockquoteDemos from './components/Blockquote/demos';
 export * as BreadcrumbsDemos from './components/Breadcrumbs/demos';
 export * as BurgerDemos from './components/Burger/demos';
+export * as ButtonDemos from './components/Button/demos';

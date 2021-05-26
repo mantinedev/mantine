@@ -33,6 +33,9 @@ export interface ButtonBaseProps extends DefaultProps {
 
   /** Controls button appearance */
   variant?: 'link' | 'filled' | 'outline' | 'light';
+
+  /** Set text-transform to uppercase */
+  uppercase?: boolean;
 }
 
 export function Button<
@@ -53,6 +56,7 @@ export function Button<
   component: Element = 'button',
   elementRef,
   themeOverride,
+  uppercase = false,
   ...others
 }: ComponentPassThrough<T, ButtonBaseProps> & {
   /** Get root element ref */
@@ -82,7 +86,11 @@ export function Button<
           </span>
         )}
 
-        <span className={classes.label} data-mantine-label>
+        <span
+          className={classes.label}
+          data-mantine-label
+          style={{ textTransform: uppercase ? 'uppercase' : undefined }}
+        >
           {children}
         </span>
 
