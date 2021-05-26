@@ -1,6 +1,6 @@
 import React from 'react';
-import { DefaultProps, useMantineTheme } from '../../theme';
 import cx from 'clsx';
+import { DefaultProps, useMantineTheme } from '../../theme';
 import useStyles from './RingProgress.styles';
 
 interface RingProgressLabelProps extends DefaultProps, React.ComponentProps<'div'> {}
