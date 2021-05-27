@@ -32,3 +32,4 @@ export * as PasswordInputDemos from './components/PasswordInput/demos';
 export * as PopoverDemos from './components/Popover/demos';
 export * as ProgressDemos from './components/Progress/demos';
 export * as RadioGroupDemos from './components/RadioGroup/demos';
+export * as SegmentedControlDemos from './components/SegmentedControl/demos';
