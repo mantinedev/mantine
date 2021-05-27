@@ -12,7 +12,7 @@ source: 'mantine-core/src/components/Group/Group.tsx'
 docs: 'core/Group.mdx'
 ---
 
-import { GroupConfigurator } from '../demos/core/Group/group.configurator';
+import { GroupDemos } from '@demos/core';
 
 ## Usage
 
@@ -25,4 +25,4 @@ Use these props to change elements position inside Group:
 - **noWrap** controls `flex-wrap` property and if set to true prevents elements from wrapping on next line once space on current line was exceeded
 - **direction** controls `flex-direction`: row (default) for horizontal orientation, column for vertical
 
-<GroupConfigurator />
+<Demo data={GroupDemos.configurator} />
