@@ -1,8 +1,8 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["./src", "./types", "../../configuration/types"],
+  "include": ["./src", "./demos", "./types", "../../configuration/types"],
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": ".",
     "baseUrl": ".",
     "outDir": "lib",
     "declaration": true,

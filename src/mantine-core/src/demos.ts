@@ -22,3 +22,4 @@ export * as InputWrapperDemos from './components/InputWrapper/demos';
 export * as KbdDemos from './components/Kbd/demos';
 export * as LoaderDemos from './components/Loader/demos';
 export * as MenuDemos from './components/Menu/demos';
+export * as ModalDemos from './components/Modal/demos';
