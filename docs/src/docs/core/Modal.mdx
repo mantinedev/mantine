@@ -12,27 +12,22 @@ source: 'mantine-core/src/components/Modal/Modal.tsx'
 docs: 'core/Modal.mdx'
 ---
 
+import { ModalDemos } from '@demos/core';
 import { MODAL_SIZES } from '@mantine/core';
-import { ModalBaseDemo } from '../demos/core/Modal/modal.base-demo';
-import { ModalNoHeaderDemo } from '../demos/core/Modal/modal.no-header-demo';
-import { ModalOverlayDemo } from '../demos/core/Modal/modal.overlay-demo';
-import { ModalOverflowDemo } from '../demos/core/Modal/modal.overflow-demo';
-import { ModalSizesDemo } from '../demos/core/Modal/modal.sizes-demo';
-import { ModalCustomTransitionsDemo } from '../demos/core/Modal/modal.custom-transition-demo';
 
 ## Usage
 
 Modal is wrapped in <GatsbyLink to="/core/portal/">Portal</GatsbyLink> component,
 it can be rendered only on client as createPortal is not available during server side rendering:
 
-<ModalBaseDemo />
+<Demo data={ModalDemos.usage} />
 
 ## Remove title and close button
 
 You can remove modal title and close button.
 It will still be possible to close modal by clicking on overlay or pressing escape.
 
-<ModalNoHeaderDemo />
+<Demo data={ModalDemos.header} />
 
 ## Change size
 
@@ -47,7 +42,7 @@ Size controls modal width, max-width is set to 100% with spacing on left and rig
 <Modal size="255%" /> // -> max-width is set to 100%, won't work
 ```
 
-<ModalSizesDemo />
+<Demo data={ModalDemos.sizes} />
 
 Modal has 6 predefined sizes: xs, sm, md (default), lg, xl and full.
 You can get these values by importing `MODAL_SIZES`:
@@ -68,16 +63,13 @@ import { MODAL_SIZES } from '@mantine/core';
 
 Modal uses <GatsbyLink to="/core/overlay/">Overlay</GatsbyLink> component to render overlay, you can change overlay opacity and color:
 
-<ModalOverlayDemo />
+<Demo data={ModalDemos.overlay} />
 
 ## Modal with overflow
 
 You can control modal vertical overflow behavior by setting `overflow` prop:
 
-- `outside` (default) – overflow is handled by modal wrapper
-- `inside` – overflow is handled by modal body
-
-<ModalOverflowDemo />
+<Demo data={ModalDemos.overflow} />
 
 ## Change transitions
 
@@ -89,7 +81,7 @@ You can change transitions with props:
 - **transitionDuration** – transition duration in ms, defaults to 300ms. Note that, modal has two elements which are animated: overlay and modal body. Overlay changes opacity during transition and its animation is twice as fast as modal body.
 - **transitionTimingFunction** – timing function, defaults to `theme.transitionTimingFunction`
 
-<ModalCustomTransitionsDemo />
+<Demo data={ModalDemos.transitions} />
 
 ## Accessibility and usability
 

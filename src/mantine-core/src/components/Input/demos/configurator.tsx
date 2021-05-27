@@ -1,6 +1,6 @@
 import React from 'react';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';
-import { Input } from '@mantine/core';
+import { Input } from '../Input';
 
 const codeTemplate = (props: string) => `<Input
   icon={<MailIcon />}
