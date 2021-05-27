@@ -12,6 +12,7 @@ source: 'mantine-core/src/components/Container/Container.tsx'
 docs: 'core/Container.mdx'
 ---
 
+import { ContainerDemos } from '@demos/core';
 import { CONTAINER_SIZES } from '@mantine/core';
 import { ContainerBaseDemo } from '../demos/core/Container/container.demos.tsx';
 
@@ -20,11 +21,11 @@ import { ContainerBaseDemo } from '../demos/core/Container/container.demos.tsx';
 Container is the most basic layout element, it centers content horizontally and add horizontal padding from theme.
 Component accepts these props:
 
-- `size` – controls default max width
-- `padding` – controls horizontal padding of container, pass `xs | sm | md | lg | xl` for value defined in `theme.spacing` or number to set horizontal padding in px
-- `fluid` – overwrites `size` and sets max width to 100%
+- **size** – controls default max width
+- **padding** – controls horizontal padding of container, use xs, sm, md, lg, xl for value defined in theme.spacing or number to set horizontal padding in px
+- **fluid** – overwrites size prop and sets max width to 100%
 
-<ContainerBaseDemo />
+<Demo data={ContainerDemos.usage} />
 
 ## Default sizes
 
@@ -35,6 +36,6 @@ import { CONTAINER_SIZES } from '@mantine/core';
 ```
 
 <DataTable
-  head={['Prop value', 'max-width']}
+  head={['Size', 'max-width']}
   data={Object.keys(CONTAINER_SIZES).map((size) => [size, `${CONTAINER_SIZES[size]}px`])}
 />
