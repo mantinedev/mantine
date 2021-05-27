@@ -27,3 +27,4 @@ export * as ModalDemos from './components/Modal/demos';
 export * as NotificationDemos from './components/Notification/demos';
 export * as NumberInputDemos from './components/NumberInput/demos';
 export * as OverlayDemos from './components/Overlay/demos';
+export * as PaperDemos from './components/Paper/demos';

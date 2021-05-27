@@ -12,22 +12,28 @@ source: 'mantine-core/src/components/Paper/Paper.tsx'
 docs: 'core/Paper.mdx'
 ---
 
-import { PaperConfigurator } from '../demos/core/Paper/paper.configurator';
-import { PaperShadowDemo } from '../demos/core/Paper/paper.demos';
-import { UseClickOutsideDemo } from '../demos/hooks/use-click-outside.demos';
+import { PaperDemos } from '@demos/core';
 
 ## Usage
 
 Paper component renders white (or `theme.colors.dark[7]` for dark theme)
 background with shadow, border-radius and padding from theme.
 
-<PaperConfigurator />
+<Demo data={PaperDemos.configurator} />
 
 ## Shadow
 
 You can use predefined shadows defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink> or your own:
 
-<PaperShadowDemo />
+```tsx
+<Paper shadow="xs">
+  Paper with predefined shadow from theme
+</Paper>
+
+<Paper shadow="13px 18px 25px #e5e5e5, 1px 3px 3px #e5e5e5, -1px 3px 3px #e5e5e5">
+  Paper with custom shadow
+</Paper>
+```
 
 ## Padding
 
@@ -35,8 +41,8 @@ Paper has predefined padding: xs, sm, md, lg, xl defined in <GatsbyLink to="/pag
 Alternatively you can use number to set padding in px:
 
 ```tsx
-<Paper size="sm" /> // -> theme predefined small spacing
-<Paper size={20} /> // -> { padding: 20 }
+<Paper padding="sm" /> // -> theme predefined small spacing
+<Paper padding={20} /> // -> { padding: '20px' }
 ```
 
 ## Radius
@@ -58,11 +64,7 @@ import React, { useRef } from 'react';
 import { Paper } from '@mantine/core';
 
 function Demo() {
-  const paperRef = useRef();
-  return <Paper elementRef={paperRef} />;
+  const ref = useRef();
+  return <Paper elementRef={ref} />;
 }
 ```
-
-The most common usage of ref is with <GatsbyLink to="/hooks/use-click-outside/">use-click-outside</GatsbyLink> hook:
-
-<UseClickOutsideDemo />
