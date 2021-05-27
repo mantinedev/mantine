@@ -12,11 +12,8 @@ source: 'mantine-core/src/components/Progress/Progress.tsx'
 docs: 'core/Progress.mdx'
 ---
 
+import { ProgressDemos, PasswordInputDemos } from '@demos/core';
 import { PROGRESS_SIZES } from '@mantine/core';
-import { ProgressBaseDemo } from '../demos/core/Progress/progress.demos';
-import { ProgressConfigurator } from '../demos/core/Progress/progress.configurator';
-import { ProgressSizesDemo } from '../demos/core/Progress/progress-sizes.demo';
-import { PasswordInputStrengthDemo } from '../demos/core/PasswordInput/password-input-strength.demo';
 
 ## Usage
 
@@ -26,15 +23,13 @@ Progress component has one required prop `value` – filled bar width in %.
 You can change bar color by passing `color` prop, by default `theme.primaryColor` will be used.
 If you set `striped` prop to true bar will have stipes.
 
-<ProgressBaseDemo />
-
-<ProgressConfigurator />
+<Demo data={ProgressDemos.configurator} />
 
 ## Example
 
 Password strength meter example with Progress component:
 
-<PasswordInputStrengthDemo />
+<Demo data={PasswordInputDemos.strengthMeter} />
 
 ## Size
 
@@ -46,10 +41,6 @@ Alternatively you can use number to set height in px:
 <Progress size={50} /> // -> { height: 50 }
 ```
 
-Predefined progress sizes from xs to xl:
-
-<ProgressSizesDemo />
-
 You can get default sizes by importing `PROGRESS_SIZES`:
 
 ```tsx
@@ -57,7 +48,7 @@ import { PROGRESS_SIZES } from '@mantine/core';
 ```
 
 <DataTable
-  head={['Prop value', 'Height']}
+  head={['Size', 'Height']}
   data={Object.keys(PROGRESS_SIZES).map((size) => [size, `${PROGRESS_SIZES[size]}px`])}
 />
 
