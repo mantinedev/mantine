@@ -12,15 +12,13 @@ source: 'mantine-core/src/components/Image/Image.tsx'
 docs: 'core/Image.mdx'
 ---
 
-import { ImageBaseDemo } from '../demos/core/Image/image-base.demo';
-import { ImagePlaceholderDemo } from '../demos/core/Image/image-placeholder.demo';
-import { ImageSizesDemo } from '../demos/core/Image/image-sizes.demo';
+import { ImageDemos } from '@demos/core';
 
 ## Usage
 
 Image component is a wrapper around img element with option to change object fit, radius and placeholder:
 
-<ImageBaseDemo />
+<Demo data={ImageDemos.usage} />
 
 ## Width and height
 
@@ -30,7 +28,7 @@ To change this behavior set image width and height to define image size.
 Note that, if image proportions do not match given width and height some parts will be cut out.
 In case you want to show image in its original proportions but fitted in current width and height set `fit="contain"`:
 
-<ImageSizesDemo />
+<Demo data={ImageDemos.sizes} />
 
 ## Placeholder
 
@@ -46,7 +44,7 @@ To customize image placeholder pass any react node to `placeholder` prop.
 Placeholder size is determined by width and height props.
 Placeholder is centered vertically and horizontally across provided width and height.
 
-<ImagePlaceholderDemo />
+<Demo data={ImageDemos.placeholders} />
 
 ## Radius
 
