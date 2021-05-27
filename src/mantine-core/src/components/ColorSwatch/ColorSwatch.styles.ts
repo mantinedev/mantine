@@ -19,5 +19,8 @@ export default createMemoStyles({
     appearance: 'none',
     WebkitAppearance: 'none',
     padding: 0,
+    display: 'inline-flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }),
 });
