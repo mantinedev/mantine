@@ -77,7 +77,7 @@ export default function Configurator({
         <div className={classes.controls}>{items}</div>
       </div>
 
-      {includeCode && <CodeHighlight code={code} language="tsx" className={classes.code} />}
+      {includeCode && <CodeHighlight code={code.trim()} language="tsx" className={classes.code} />}
     </DocsSection>
   );
 }

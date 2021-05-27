@@ -12,6 +12,7 @@ source: 'mantine-core/src/components/Notification/Notification.tsx'
 docs: 'core/Notification.mdx'
 ---
 
+import { NotificationDemos } from '@demos/core';
 import { NotificationBaseDemo } from '../demos/core/Notification/notification-base.demo';
 import { NotificationConfigurator } from '../demos/core/Notification/notification.configurator';
 
@@ -32,13 +33,13 @@ You can use icons from any react icons library, for example:
 - [feather](https://feathericons.com/)
 - [react-icons](https://react-icons.github.io/react-icons)
 
-<NotificationBaseDemo />
+<Demo data={NotificationDemos.usage} />
 
 ## Colors
 
 You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme</GatsbyLink>:
 
-<NotificationConfigurator />
+<Demo data={NotificationDemos.configurator} />
 
 ## Accessibility
 
