@@ -12,6 +12,7 @@ source: 'mantine-core/src/components/NumberInput/NumberInput.tsx'
 docs: 'core/NumberInput.mdx'
 ---
 
+import { NumberInputDemos } from '@demos/core';
 import { NumberInputConfigurator } from '../demos/core/NumberInput/number-input.configurator';
 import { NumberInputControls } from '../demos/core/NumberInput/number-input-controls.demo';
 import { NumberInputBoundariesDemo } from '../demos/core/NumberInput/number-input-boundaries.demo';
@@ -21,7 +22,7 @@ import { NumberInputBoundariesDemo } from '../demos/core/NumberInput/number-inpu
 NumberInput is based on <GatsbyLink to="/core/text-input/">TextInput</GatsbyLink>
 and supports the same props, except `rightSection`. See full information about shared inputs props in <GatsbyLink to="/guides/inputs/">inputs guide</GatsbyLink>.
 
-<NumberInputConfigurator />
+<Demo data={NumberInputDemos.configurator} />
 
 ## Clamp on blur
 
@@ -40,7 +41,7 @@ If you want to disable this behavior set `noClampOnBlur` prop:
 Min and max values define upper and lower value which may be entered.
 When user clicks controls or presses up/down arrows value is incremented/decremented by step:
 
-<NumberInputBoundariesDemo />
+<Demo data={NumberInputDemos.step} />
 
 ## Remove controls
 
@@ -50,7 +51,7 @@ Controls are not rendered in these cases:
 - Input is disabled
 - `variant` prop is set to unstyled
 
-<NumberInputControls />
+<Demo data={NumberInputDemos.controls} />
 
 ## Controlled
 

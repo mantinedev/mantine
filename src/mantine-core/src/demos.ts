@@ -25,3 +25,4 @@ export * as LoadingOverlayDemos from './components/LoadingOverlay/demos';
 export * as MenuDemos from './components/Menu/demos';
 export * as ModalDemos from './components/Modal/demos';
 export * as NotificationDemos from './components/Notification/demos';
+export * as NumberInputDemos from './components/NumberInput/demos';
