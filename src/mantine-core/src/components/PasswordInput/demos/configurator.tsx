@@ -1,27 +1,26 @@
-import React from 'react';
-import { NumberInput, NumberInputProps } from '../NumberInput';
+import { PasswordInput } from '../PasswordInput';
 
-const codeTemplate = (props: string) => `<NumberInput
+const codeTemplate = (props: string) => `<PasswordInput
   defaultValue={18}
  ${props}
 />`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: (props: NumberInputProps) => <NumberInput {...props} defaultValue={18} />,
+  component: PasswordInput,
   codeTemplate,
   configuratorProps: { multiline: true },
   configurator: [
-    { name: 'placeholder', type: 'string', initialValue: 'Your age' },
+    { name: 'placeholder', type: 'string', initialValue: 'Password' },
     {
       name: 'label',
       type: 'string',
-      initialValue: 'Your age',
+      initialValue: 'Password',
     },
     {
       name: 'description',
       type: 'string',
-      initialValue: '',
+      initialValue: 'Password must include at least one letter, number and special character',
     },
     {
       name: 'error',
@@ -45,12 +44,6 @@ export const configurator: MantineDemo = {
       name: 'required',
       type: 'boolean',
       initialValue: true,
-      defaultValue: false,
-    },
-    {
-      name: 'hideControls',
-      type: 'boolean',
-      initialValue: false,
       defaultValue: false,
     },
   ],
