@@ -5,29 +5,30 @@ title: Code
 order: 1
 slug: /core/code/
 category: 'typography'
-description: 'Display inline or block code'
+description: 'Display inline or block code without syntax highlight'
 props: ['Code']
 import: "import { Code } from '@mantine/core';"
 source: 'mantine-core/src/components/Code/Code.tsx'
 docs: 'core/Code.mdx'
 ---
 
-import { CodeInlineDemo, CodeBlockDemo, CodeColorDemo } from '../demos/core/Code/code.demos';
+import { CodeDemos } from '@demos/core';
 
 ## Inline code
 
 By default Code component renders inline `code` html element:
 
-<CodeInlineDemo />
+<Demo data={CodeDemos.inline} />
 
 ## Block code
 
 To render code in `pre` element pass `block` prop to Code component:
 
-<CodeBlockDemo />
+<Demo data={CodeDemos.block} />
 
 ## Custom color
 
-By default code has gray color, you can change it to any color from <GatsbyLink to="/pages/theming/">theme</GatsbyLink>:
+By default code has gray color,
+you can change it to any color from <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>:
 
-<CodeColorDemo />
+<Demo data={CodeDemos.colors} />
