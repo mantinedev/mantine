@@ -17,5 +17,6 @@ export * as GridDemos from './components/Grid/demos';
 export * as GroupDemos from './components/Group/demos';
 export * as HighlightDemos from './components/Highlight/demos';
 export * as ImageDemos from './components/Image/demos';
+export * as InputDemos from './components/Input/demos';
 
 export * as KbdDemos from './components/Kbd/demos';
