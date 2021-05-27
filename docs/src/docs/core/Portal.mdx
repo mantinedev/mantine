@@ -15,7 +15,7 @@ docs: 'core/Portal.mdx'
 ## Usage
 
 Portal is wrapper component for [ReactDOM.createPortal](https://reactjs.org/docs/portals.html) API.
-Render any component or element at the end of `document.body` or at given element.
+Render any component or element at the end of `document.body` or at given element. <GatsbyLink to="/core/modal/">Modal</GatsbyLink> and <GatsbyLink to="/core/drawer/">Drawer</GatsbyLink> components are wrapped in Portal by default.
 
 Use Portal to render component or element at different place (defaults to the end of `document.body`).
 Portal is useful when you want to prevent parent styles from interfering with child,
@@ -24,27 +24,27 @@ and portals are used for components with fixed position, for example, modals.
 
 ```tsx
 import React, { useState } from 'react';
-import { Modal, Portal } from '@mantine/core';
+import { Portal } from '@mantine/core';
 
 function PortalDemo() {
   const [opened, setOpened] = useState(false);
 
   return (
-    <div style={{ position: 'relative', zIndex: 1 }}>
+    <main style={{ position: 'relative', zIndex: 1 }}>
       <Portal zIndex={5}>
-        <Modal opened={opened} onClose={() => setOpened(false)}>
-          Modal content
-        </Modal>
+        <div opened={opened} onClose={() => setOpened(false)}>
+          Your modal content
+        </div>
       </Portal>
 
       <button onClick={() => setOpened(true)}>Open modal</button>
-    </div>
+    </main>
   );
 }
 ```
 
-In the example above, Modal component is rendered outside of parent div (before closing body tag),
-but still receives `opened` and `onClose` props. Modal will not be affected by parent z-index.
+In the example above, div element is rendered outside of parent main (before closing body tag),
+but still receives `opened` and `onClose` props. Element will not be affected by parent z-index.
 
 ## Specify target dom node
 
