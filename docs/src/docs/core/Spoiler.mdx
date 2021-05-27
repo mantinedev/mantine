@@ -12,7 +12,7 @@ source: 'mantine-core/src/components/Spoiler/Spoiler.tsx'
 docs: 'core/Spoiler.mdx'
 ---
 
-import { SpoilerBaseDemo, SpoilerNoAnimationDemo } from '../demos/core/Spoiler/spoiler.demos';
+import { SpoilerDemos } from '@demos/core';
 
 ## Usage
 
@@ -22,14 +22,14 @@ If content height is less than `maxHeight` spoiler will just render children.
 
 Props `hideLabel` and `showLabel` are required – they are used as spoiler toggle button label in corresponding state.
 
-<SpoilerBaseDemo />
+<Demo data={SpoilerDemos.usage} />
 
 ## Transition duration
 
 Control transition duration by setting `transitionDuration` prop (transition-duration css property in ms).
 To disable animations set prop to 0:
 
-<SpoilerNoAnimationDemo />
+<Demo data={SpoilerDemos.transitions} />
 
 ## Get control ref
 
