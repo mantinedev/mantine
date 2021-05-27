@@ -29,3 +29,4 @@ export * as NumberInputDemos from './components/NumberInput/demos';
 export * as OverlayDemos from './components/Overlay/demos';
 export * as PaperDemos from './components/Paper/demos';
 export * as PasswordInputDemos from './components/PasswordInput/demos';
+export * as PopoverDemos from './components/Popover/demos';

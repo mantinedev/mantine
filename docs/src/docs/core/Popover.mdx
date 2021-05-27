@@ -12,19 +12,14 @@ source: 'mantine-core/src/components/Popover/Popover.tsx'
 docs: 'core/Popover.mdx'
 ---
 
-import { PopoverBaseDemo } from '../demos/core/Popover/popover-base.demo';
-import { PopoverFormDemo } from '../demos/core/Popover/popover-form.demo';
-import { PopoverPositionsDemo } from '../demos/core/Popover/popover-positions.demo';
-import { PopoverHoverDemo } from '../demos/core/Popover/popover-hover.demo';
-import { PopoverConfigurator } from '../demos/core/Popover/popover.configurator';
-import { PasswordInputStrengthDemo } from '../demos/core/PasswordInput/password-input-strength.demo';
+import { PopoverDemos, PasswordInputDemos } from '@demos/core';
 
 ## Usage
 
 Popover is more complex and customizable alternative to <GatsbyLink to="/core/tooltip/">Tooltip</GatsbyLink>
 component.
 
-<PopoverBaseDemo />
+<Demo data={PopoverDemos.usage} />
 
 ## Examples
 
@@ -33,14 +28,14 @@ component.
 This example uses `onFocusCapture` and `onBlurCapture` events on Popover component
 to determine if any element inside has focus:
 
-<PasswordInputStrengthDemo />
+<Demo data={PasswordInputDemos.strengthMeter} demoProps={{ zIndex: 5 }} />
 
 ### With form
 
 By default focus trap inside popover is active,
 you can place forms inside and focus will be kept inside popover:
 
-<PopoverFormDemo />
+<Demo data={PopoverDemos.form} demoProps={{ zIndex: 4 }} />
 
 ### Show on hover
 
@@ -48,7 +43,7 @@ To show popover on hover add `onMouseEnter` and `onMouseLeave` handlers to
 element that should trigger popover. Note that in this case you have to disable
 focus trap with `noFocusTrap` prop:
 
-<PopoverHoverDemo />
+<Demo data={PopoverDemos.hover} />
 
 ## Position and placement
 
@@ -64,7 +59,7 @@ Popover position relative to target element is defined by:
 
 All positions and placement:
 
-<PopoverPositionsDemo />
+<Demo data={PopoverDemos.positions} />
 
 ## Control behavior
 
@@ -104,7 +99,7 @@ To change popover appearance use:
 - `spacing` – adds padding to all sides of popover from `theme.spacing`
 - `shadow` – add box-shadow from `theme.shadows`
 
-<PopoverConfigurator />
+<Demo data={PopoverDemos.configurator} />
 
 For additional modifications of popover body styles use `bodyClassName` or `bodyStyle` props:
 
