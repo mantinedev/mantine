@@ -12,9 +12,8 @@ source: 'mantine-core/src/components/Switch/Switch.tsx'
 docs: 'core/Switch.mdx'
 ---
 
+import { SwitchDemos } from '@demos/core';
 import { SWITCH_SIZES } from '@mantine/core';
-import { SwitchConfigurator } from '../demos/core/Switch/switch.configurator';
-import { SwitchSizesDemo, SwitchRadiusDemo } from '../demos/core/Switch/switch.demos';
 
 ## Usage
 
@@ -22,14 +21,14 @@ Switch is another variant of <GatsbyLink to="/core/checkbox/">Checkbox</GatsbyLi
 component. Use it to capture boolean value input from user.
 For better accessibility set `label` prop, it will add associated label element.
 
-<SwitchConfigurator />
+<Demo data={SwitchDemos.configurator} />
 
 ## Sizes
 
 Switch has 5 predefined sizes: xs, sm, md, lg, xl.
 Size defines label font-size (from <GatsbyLink to="/pages/theming/">theme.fontSizes</GatsbyLink>), input width and height.
 
-<SwitchSizesDemo />
+<Demo data={SwitchDemos.sizes} />
 
 You can get switch sizes by importing `SWITCH_SIZES`:
 
@@ -57,7 +56,7 @@ Alternatively you can use number to set radius in px:
 <Switch radius={10} /> // -> { borderRadius: 10 }
 ```
 
-<SwitchRadiusDemo />
+<Demo data={SwitchDemos.radius} />
 
 ## Controlled
 
