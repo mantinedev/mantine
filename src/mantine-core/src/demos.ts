@@ -11,3 +11,4 @@ export * as CheckboxDemos from './components/Checkbox/demos';
 export * as CodeDemos from './components/Code/demos';
 export * as ColorSwatchDemos from './components/ColorSwatch/demos';
 export * as ContainerDemos from './components/Container/demos';
+export * as DividerDemos from './components/Divider/demos';
