@@ -13,3 +13,4 @@ export * as ColorSwatchDemos from './components/ColorSwatch/demos';
 export * as ContainerDemos from './components/Container/demos';
 export * as DividerDemos from './components/Divider/demos';
 export * as DrawerDemos from './components/Drawer/demos';
+export * as GridDemos from './components/Grid/demos';
