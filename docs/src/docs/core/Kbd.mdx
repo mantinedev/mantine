@@ -12,6 +12,7 @@ source: 'mantine-core/src/components/Kbd/Kbd.tsx'
 docs: 'core/Kbd.mdx'
 ---
 
+import { KbdDemos } from '@demos/core';
 import { KbdBaseDemo } from '../demos/core/Kbd/kbd.demos';
 import { KbdInputDemo } from '../demos/core/Kbd/kbd-input.demo';
 
@@ -19,11 +20,11 @@ import { KbdInputDemo } from '../demos/core/Kbd/kbd-input.demo';
 
 Use kbd html element to describe keyboard actions and shortcuts:
 
-<KbdBaseDemo />
+<Demo data={KbdDemos.usage} />
 
 ## Example
 
 Usage example with <GatsbyLink to="/core/text-input/">TextInput</GatsbyLink> component
 – Kbd is used to describe keyboard shortcut to focus input:
 
-<KbdInputDemo />
+<Demo data={KbdDemos.input} />
