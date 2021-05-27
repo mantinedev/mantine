@@ -12,8 +12,7 @@ source: 'mantine-core/src/components/Highlight/Highlight.tsx'
 docs: 'core/Highlight.mdx'
 ---
 
-import { HighlightConfigurator } from '../demos/core/Highlight/highlight.configurator';
-import { HighlightComponentDemo } from '../demos/core/Highlight/highlight.demos';
+import { HighlightDemos } from '@demos/core';
 
 ## Usage
 
@@ -25,10 +24,10 @@ Component ignores trailing whitespace and highlights only first matched characte
 
 You can change color of mark by passing `highlightColor` prop with <GatsbyLink to="/pages/theming/">theme</GatsbyLink> color.
 
-<HighlightConfigurator />
+<Demo data={HighlightDemos.configurator} />
 
 ## Text props
 
 Highlight accepts the same props as <GatsbyLink to="/core/text/">Text</GatsbyLink> component:
 
-<HighlightComponentDemo />
+<Demo data={HighlightDemos.props} />
