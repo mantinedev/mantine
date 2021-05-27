@@ -12,20 +12,15 @@ source: 'mantine-core/src/components/Drawer/Drawer.tsx'
 docs: 'core/Drawer.mdx'
 ---
 
+import { DrawerDemos } from '@demos/core';
 import { DRAWER_SIZES } from '@mantine/core';
-import { DrawerConfigurator } from '../demos/core/Drawer/drawer.configurator';
-import { DrawerBaseDemo } from '../demos/core/Drawer/drawer-base.demo';
-import { DrawerPositionsDemo } from '../demos/core/Drawer/drawer-positions.demo';
-import { DrawerSizesDemo } from '../demos/core/Drawer/drawer-sizes.demo';
-import { DrawerInactiveDemo } from '../demos/core/Drawer/drawer-inactive.demo';
-import { DrawerTransitionsDemo } from '../demos/core/Drawer/drawer-transitions.demo';
 
 ## Usage
 
 Drawer is wrapped in <GatsbyLink to="/core/portal/">Portal</GatsbyLink> component,
 it can be rendered only on client as createPortal is not available during server side rendering:
 
-<DrawerBaseDemo />
+<Demo data={DrawerDemos.usage} />
 
 ## Position
 
@@ -35,7 +30,7 @@ Drawer can be placed on left (default), top, right and bottom. Control drawer po
 <Drawer position="right" />
 ```
 
-<DrawerPositionsDemo />
+<Demo data={DrawerDemos.positions} />
 
 ## Sizes
 
@@ -51,7 +46,7 @@ Size cannot exceed 100% of width and 100vh of height.
 <Drawer position="bottom" size="500vh" /> // 100vh height as max-height is 100vh
 ```
 
-<DrawerSizesDemo />
+<Demo data={DrawerDemos.sizes} />
 
 You can get predefined sizes by importing `DRAWER_SIZES`:
 
@@ -77,19 +72,19 @@ You can change drawer behavior with props:
 - `noCloseOnClickOutside` – do not trigger onClose for outside clicks
 - `noCloseOnEscape` – do not trigger onClose for escape key press
 
-<DrawerInactiveDemo />
+<Demo data={DrawerDemos.behavior} />
 
 Try combining these props to achieve desired behavior.
 Note that disabling some parts will break accessibility and usability.
 
-<DrawerConfigurator />
+<Demo data={DrawerDemos.configurator} />
 
 ## Change transition
 
 Drawer is built with <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component.
 You can customize transition, timing function and duration:
 
-<DrawerTransitionsDemo />
+<Demo data={DrawerDemos.transitions} />
 
 ## Accessibility and usability
 
