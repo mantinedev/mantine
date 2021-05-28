@@ -34,9 +34,10 @@ export default createUseStyles(
     },
 
     title: {
-      fontWeight: 800,
       fontSize: 44,
       marginBottom: theme.spacing.xs,
+      fontFamily: `Dosis, ${theme.headings.fontFamily}`,
+      fontWeight: 800,
     },
 
     description: {
