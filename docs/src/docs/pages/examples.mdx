@@ -3,8 +3,7 @@ title: Examples
 slug: /pages/examples/
 ---
 
-import { CheckboxIndeterminateDemo } from '../demos/core/Checkbox/checkbox-indeterminate.demo';
-import { PasswordInputStrengthDemo } from '../demos/core/PasswordInput/password-input-strength.demo';
+import { CheckboxDemos, PasswordInputDemos } from '@demos/core';
 import { UseListStateDemo } from '../demos/hooks/use-list-state.demos';
 import { UseFormAuthDemo } from '../demos/hooks/use-form/use-form.auth-demo';
 import { TransitionsTableDemo } from '../demos/examples/transactions-table.demo';
@@ -32,7 +31,7 @@ Built with <GatsbyLink to="/hooks/use-list-state/">use-list-state</GatsbyLink> h
 Built with <GatsbyLink to="/core/progress/">Progress</GatsbyLink>, <GatsbyLink to="/core/password-input/">PasswordInput</GatsbyLink>
 and <GatsbyLink to="/core/text/">Text</GatsbyLink> components.
 
-<PasswordInputStrengthDemo />
+<Demo data={PasswordInputDemos.strengthMeter} demoProps={{ toggle: true }} />
 
 ## Todo list
 
@@ -50,4 +49,4 @@ Built with <GatsbyLink to="/hooks/use-form/">use-form</GatsbyLink> hook and <Gat
 
 Built with <GatsbyLink to="/hooks/use-list-state/">use-list-state</GatsbyLink> hook and <GatsbyLink to="/core/checkbox/">Checkbox</GatsbyLink> component.
 
-<CheckboxIndeterminateDemo />
+<Demo data={CheckboxDemos.indeterminate} demoProps={{ toggle: true }} />

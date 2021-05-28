@@ -3,13 +3,13 @@ title: Theming
 slug: /pages/theming/
 ---
 
+import { PaperDemos } from '@demos/core';
 import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
 import { ThemeColorExtendDemo } from '../demos/theme/theme-colors-extend.demo';
 import { ThemeFontsExtendDemo } from '../demos/theme/theme-fonts-extend.demo';
 import { NestedProvidersDemo } from '../demos/theme/nested-providers.demo';
 import { PrimaryColorDemo } from '../demos/theme/primary-color.demo';
 import { ThemeOverrideDemo } from '../demos/theme/theme-override.demo';
-import { PaperConfigurator } from '../demos/core/Paper/paper.configurator';
 
 # Theming
 
@@ -191,7 +191,7 @@ These values are exposed on theme:
 
 Example with <GatsbyLink to="/core/paper/">Paper</GatsbyLink> component (padding is set with `theme.spacing`):
 
-<PaperConfigurator />
+<Demo data={PaperDemos.configurator} />
 
 You can change size values by setting corresponding properties.
 In this example:

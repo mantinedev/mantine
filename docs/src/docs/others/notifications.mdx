@@ -9,7 +9,7 @@ source: 'mantine-notifications/src'
 docs: 'others/notifications.mdx'
 ---
 
-import { NotificationConfigurator } from '../demos/core/Notification/notification.configurator';
+import { NotificationDemos } from '@demos/core';
 import { NotificationsRootDemo } from '../demos/others/notifications/notifications-root.demo';
 import { NotificationsBaseDemo } from '../demos/others/notifications/notifications-base.demo';
 import { NotificationsLimitDemo } from '../demos/others/notifications/notifications-limit.demo';
@@ -144,7 +144,7 @@ const id = notifications.showNotification({
 
 Notifications preview (message prop used as children):
 
-<NotificationConfigurator noCode />
+<Demo data={NotificationDemos.configurator} configuratorProps={{ includeCode: false }} />
 
 ## Notifications container position
 

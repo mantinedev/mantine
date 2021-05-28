@@ -10,7 +10,7 @@ docs: 'hooks/use-list-state.mdx'
 source: 'mantine-hooks/src/use-list-state/use-list-state.ts'
 ---
 
-import { CheckboxIndeterminateDemo } from '../demos/core/Checkbox/checkbox-indeterminate.demo';
+import { CheckboxDemos } from '@demos/core';
 import { UseListStateDemo } from '../demos/hooks/use-list-state.demos';
 import { TransitionsTableDemo } from '../demos/examples/transactions-table.demo';
 
@@ -82,7 +82,7 @@ Hook provides handlers to work with array data:
 
 ### Indeterminate state checkbox example
 
-<CheckboxIndeterminateDemo />
+<Demo data={CheckboxDemos.indeterminate} demoProps={{ toggle: true }} />
 
 ### Month spendings table
 

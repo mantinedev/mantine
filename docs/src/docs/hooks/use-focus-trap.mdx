@@ -10,8 +10,7 @@ docs: 'hooks/use-focus-trap.mdx'
 source: 'mantine-hooks/src/use-focus-trap/use-focus-trap.ts'
 ---
 
-import { MenuBaseDemo } from '../demos/core/Menu/menu.root-demo';
-import { ModalBaseDemo } from '../demos/core/Modal/modal.base-demo';
+import { ModalDemos, MenuDemos } from '@demos/core';
 
 ## Usage
 
@@ -80,12 +79,12 @@ use-focus-trap is used in some Mantine components: <GatsbyLink to="/core/modal/"
 
 <GatsbyLink to="/core/modal/">Modal</GatsbyLink> example – when modal is opened focus is trapped inside:
 
-<ModalBaseDemo hideCode />
+<Demo data={ModalDemos.usage} demoProps={{ toggle: true }} />
 
 <GatsbyLink to="/core/menu/">Menu</GatsbyLink> example – when menu is opened focus is trapped inside
 and Tab key is disabled:
 
-<MenuBaseDemo hideCode />
+<Demo data={MenuDemos.usage} demoProps={{ toggle: true }} />
 
 ## Definition
 
