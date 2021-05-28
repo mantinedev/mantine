@@ -3,12 +3,15 @@ title: Changelog
 slug: /pages/changelog/
 ---
 
-import { SegmentedControlBaseDemo } from '../demos/core/SegmentedControl/segmented-control-base.demo';
-import { PopoverFormDemo } from '../demos/core/Popover/popover-form.demo';
+import {
+  SegmentedControlDemos,
+  PopoverDemos,
+  DividerDemos,
+  GroupDemos,
+  GridDemos,
+} from '@demos/core';
+
 import { UseDebouncedValueBaseDemo } from '../demos/hooks/use-debounced-value/use-debounced-value-base.demo';
-import { DividerLabelDemo } from '../demos/core/Divider/divider.demos';
-import { GroupConfigurator } from '../demos/core/Group/group.configurator';
-import { GridGrowConfigurator } from '../demos/core/Grid/grid-grow.configurator';
 
 # Changelog
 
@@ -20,26 +23,26 @@ import { GridGrowConfigurator } from '../demos/core/Grid/grid-grow.configurator'
   Tabs
 </GatsbyLink> and <GatsbyLink to="/core/radio-group/">RadioGroup</GatsbyLink>:
 
-<SegmentedControlBaseDemo toggle />
+<Demo data={SegmentedControlDemos.usage} demoProps={{ toggle: true }} />
 
 <GatsbyLink to="/core/popover/">Popover</GatsbyLink> component allows you to display popover section
 relative to given target element. Use it to render forms, complex tooltips, etc.
 
-<PopoverFormDemo />
+<Demo data={PopoverDemos.form} demoProps={{ toggle: true }} />
 
 <GatsbyLink to="/core/divider/">Divider</GatsbyLink> component now supports labels, vertical orientation
 and margins:
 
-<DividerLabelDemo toggle />
+<Demo data={DividerDemos.labels} demoProps={{ toggle: true }} />
 
 <GatsbyLink to="/core/group/">Group</GatsbyLink> component now supports vertical orientation:
 
-<GroupConfigurator />
+<Demo data={GroupDemos.configurator} demoProps={{ toggle: true }} />
 
 <GatsbyLink to="/core/grid/">Grid</GatsbyLink> component allows you to use flexbox grid with any columns
 count:
 
-<GridGrowConfigurator />
+<Demo data={GridDemos.growConfigurator} demoProps={{ toggle: true }} />
 
 <GatsbyLink to="/hooks/use-debounced-value/">use-debounced-value</GatsbyLink> - hook to debounce value
 with useEffect:
