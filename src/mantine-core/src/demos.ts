@@ -41,3 +41,4 @@ export * as TabsDemos from './components/Tabs/demos';
 export * as TextDemos from './components/Text/demos';
 export * as TextareaDemos from './components/Textarea/demos';
 export * as TextInputDemos from './components/TextInput/demos';
+export * as ThemeIconDemos from './components/ThemeIcon/demos';

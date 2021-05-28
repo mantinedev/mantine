@@ -12,11 +12,8 @@ source: 'mantine-core/src/components/ThemeIcon/ThemeIcon.tsx'
 docs: 'core/ThemeIcon.mdx'
 ---
 
+import { ThemeIconDemos } from '@demos/core';
 import { THEME_ICON_SIZES } from '@mantine/core';
-import { ThemeIconConfigurator } from '../demos/core/ThemeIcon/theme-icon.configurator';
-import { ThemeIconBaseDemo } from '../demos/core/ThemeIcon/theme-icon.demos';
-import { ThemeIconSizesDemo } from '../demos/core/ThemeIcon/theme-icon-sizes.demo';
-import { ThemeIconRadiusDemo } from '../demos/core/ThemeIcon/theme-icon-radius.demo';
 
 ## Usage
 
@@ -26,14 +23,14 @@ Use ThemeIcon do display svg icon with theme color background and color. You can
 - [feather](https://feathericons.com/)
 - [react-icons](https://react-icons.github.io/react-icons)
 
-<ThemeIconConfigurator />
+<Demo data={ThemeIconDemos.configurator} />
 
 ## Color
 
 You can use any color from <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>,
 default color is <GatsbyLink to="/pages/theming/#primary-color">theme.primaryColor</GatsbyLink>:
 
-<ThemeIconBaseDemo />
+<Demo data={ThemeIconDemos.colors} />
 
 ## Size
 
@@ -48,7 +45,7 @@ Alternatively you can use number to set width and height in px:
 
 Sizes from xs to xl:
 
-<ThemeIconSizesDemo />
+<Demo data={ThemeIconDemos.sizes} />
 
 You can get default sizes for action icon by importing `THEME_ICON_SIZES`:
 
@@ -74,4 +71,4 @@ Alternatively you can use number to set radius in px:
 
 Default radius from xs to xl for xl size:
 
-<ThemeIconRadiusDemo />
+<Demo data={ThemeIconDemos.radius} />
