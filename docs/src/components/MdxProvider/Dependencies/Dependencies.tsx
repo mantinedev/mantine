@@ -3,7 +3,7 @@ import { Text, Badge, useMantineTheme } from '@mantine/core';
 import { BarChartIcon } from '@modulz/radix-icons';
 import DataTable from '../DataTable/DataTable';
 import DocsSection from '../../DocsSection/DocsSection';
-import NpmIcon from '../PageHeader/NpmIcon';
+import { NpmIcon } from '../../MdxPage/MdxPageHeader/NpmIcon';
 import useStyles from './Dependencies.styles';
 
 interface DependenciesProps {

@@ -4,7 +4,6 @@ import { Code, Text } from '@mantine/core';
 import Demo from '../Demo/Demo';
 import GatsbyLink from './GatsbyLink/GatsbyLink';
 import PropsTable from './PropsTable/PropsTable';
-import PageHeader from './PageHeader/PageHeader';
 import DataTable from './DataTable/DataTable';
 import { Dependencies } from './Dependencies/Dependencies';
 import { License } from './License/License';
@@ -17,7 +16,6 @@ const h = (order: 1 | 2 | 3 | 4 | 5 | 6) => (props: any) => <MdxTitle order={ord
 const components = {
   GatsbyLink,
   PropsTable,
-  PageHeader,
   DataTable,
   Dependencies,
   License,

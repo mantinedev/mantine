@@ -3,7 +3,7 @@ import { Table, Group, Button } from '@mantine/core';
 import { GitHubLogoIcon } from '@modulz/radix-icons';
 import BUNDLE_SIZES from '../../../.docgen/sizes.json';
 import GatsbyLink from '../../components/MdxProvider/GatsbyLink/GatsbyLink';
-import NpmIcon from '../../components/MdxProvider/PageHeader/NpmIcon';
+import { NpmIcon } from '../../components/MdxPage/MdxPageHeader/NpmIcon';
 import data from './data';
 
 export function PackagesTable() {
