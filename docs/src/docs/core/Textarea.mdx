@@ -12,8 +12,7 @@ source: 'mantine-core/src/components/Textarea/Textarea.tsx'
 docs: 'core/Textarea.mdx'
 ---
 
-import { TextareaConfigurator } from '../demos/core/Textarea/textarea.configurator';
-import { TextareaAutosizeDemo } from '../demos/core/Textarea/textarea-autosize.demo';
+import { TextareaDemos } from '@demos/core';
 
 ## Usage
 
@@ -21,14 +20,14 @@ Use TextInput when you need to capture large amounts of text from user.
 Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper">InputWrapper</GatsbyLink> components.
 See full information about shared inputs props in <GatsbyLink to="/guides/inputs/">inputs guide</GatsbyLink>.
 
-<TextareaConfigurator />
+<Demo data={TextareaDemos.configurator} />
 
 ## Autosize
 
 Autosize textarea uses [react-textarea-autosize](https://www.npmjs.com/package/react-textarea-autosize) package.
 The height will grow until `maxRows` are reached or indefinitely if `maxRows` not set.
 
-<TextareaAutosizeDemo />
+<Demo data={TextareaDemos.autosize} />
 
 ## Controlled
 

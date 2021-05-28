@@ -1,12 +1,12 @@
-import { PasswordInput } from '../PasswordInput';
+import { Textarea } from '../Textarea';
 
-const codeTemplate = (props: string) => `<PasswordInput
+const codeTemplate = (props: string) => `<Textarea
  ${props}
 />`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: PasswordInput,
+  component: Textarea,
   codeTemplate,
   configuratorProps: { multiline: true },
   configurator: [

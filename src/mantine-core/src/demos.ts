@@ -39,3 +39,4 @@ export * as SwitchDemos from './components/Switch/demos';
 export * as TableDemos from './components/Table/demos';
 export * as TabsDemos from './components/Tabs/demos';
 export * as TextDemos from './components/Text/demos';
+export * as TextareaDemos from './components/Textarea/demos';
