@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
-import { TextInput, Text, useMantineTheme } from '@mantine/core';
-import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
+import { TextInput, Text, Button, useMantineTheme } from '@mantine/core';
+import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
-const code = (leading: boolean) => `import React, { useState } from 'react';
+const code = `import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
-import { TextInput, Text } from '@mantine/core';
+import { TextInput, Text, Button } from '@mantine/core';
 
 export function Demo() {
   const [value, setValue] = useState('');
-  const [debounced] = useDebouncedValue(value, 200${leading ? ', { leading: true }' : ''});
+  const [debounced, cancel] = useDebouncedValue(value, 1000);
 
   return (
     <>
@@ -19,6 +19,9 @@ export function Demo() {
         style={{ flex: 1 }}
         onChange={(event) => setValue(event.currentTarget.value)}
       />
+      <Button onClick={cancel} size="lg" style={{ marginLeft: 15 }}>
+        Cancel
+      </Button>
 
       <Text>Value: {value}</Text>
       <Text>Debounced value: {debounced}</Text>
@@ -26,19 +29,13 @@ export function Demo() {
   );
 }`;
 
-export function UseDebouncedValueBaseDemo({
-  leading = false,
-  toggle = false,
-}: {
-  leading: boolean;
-  toggle: boolean;
-}) {
+export function UseDebouncedValueCancelDemo() {
   const [value, setValue] = useState('');
-  const [debounced] = useDebouncedValue(value, 200, { leading });
+  const [debounced, cancel] = useDebouncedValue(value, 1000);
   const theme = useMantineTheme();
 
   return (
-    <CodeDemo code={code(leading)} language="tsx" toggle={toggle}>
+    <CodeDemo code={code} language="tsx">
       <div
         style={{
           display: 'flex',
@@ -56,6 +53,9 @@ export function UseDebouncedValueBaseDemo({
           onChange={(event) => setValue(event.currentTarget.value)}
           variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
         />
+        <Button onClick={cancel} size="lg" style={{ marginLeft: 15 }}>
+          Cancel
+        </Button>
       </div>
       <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15 }}>
         <Text>

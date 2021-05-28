@@ -1,11 +1,11 @@
 import React from 'react';
 import { TodoList } from '@mantine/demos';
 import { useMantineTheme } from '@mantine/core';
-import CodeDemo from '../../../components/CodeDemo/CodeDemo';
+import CodeDemo from '../../components/CodeDemo/CodeDemo';
 
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import code from '!!raw-loader!../../../../../src/mantine-demos/src/TodoList/TodoList';
+import code from '!!raw-loader!../../../../src/mantine-demos/src/TodoList/TodoList';
 
 export function UseListStateDemo() {
   const theme = useMantineTheme();

@@ -1,11 +1,11 @@
 import React from 'react';
-import { AuthenticationForm } from '@mantine/demos';
+import { AuthenticationForm } from '@mantine/core/demos';
 import { useMantineTheme } from '@mantine/core';
-import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
+import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import code from '!!raw-loader!../../../../../src/mantine-demos/src/AuthenticationForm/AuthenticationForm';
+import code from '!!raw-loader!../../../../src/mantine-core/demos/AuthenticationForm/AuthenticationForm';
 
 export function UseFormAuthDemo({ toggle = false }: { toggle: boolean }) {
   const theme = useMantineTheme();

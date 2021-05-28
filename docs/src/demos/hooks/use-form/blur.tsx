@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, useMantineTheme } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
-import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
+import CodeDemo from '../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
 import { TextInput } from '@mantine/core';

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useScrollLock } from '@mantine/hooks';
 import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 import { Group, Button } from '@mantine/core';
-import CodeDemo from '../../../components/CodeDemo/CodeDemo';
+import CodeDemo from '../../components/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
 import { useScrollLock } from '@mantine/hooks';
