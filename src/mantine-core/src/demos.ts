@@ -43,3 +43,4 @@ export * as TextareaDemos from './components/Textarea/demos';
 export * as TextInputDemos from './components/TextInput/demos';
 export * as ThemeIconDemos from './components/ThemeIcon/demos';
 export * as TitleDemos from './components/Title/demos';
+export * as TooltipDemos from './components/Tooltip/demos';

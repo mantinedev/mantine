@@ -12,21 +12,13 @@ source: 'mantine-core/src/components/Tooltip/Tooltip.tsx'
 docs: 'core/Tooltip.mdx'
 ---
 
-import { TooltipComplexDemo } from '../demos/core/Tooltip/tooltip-complex.demo';
-import { TooltipTransitionsDemo } from '../demos/core/Tooltip/tooltip-transitions.demo';
-import { TooltipControlledDemo } from '../demos/core/Tooltip/tooltip-controlled.demo';
-import { TooltipPositionsDemo } from '../demos/core/Tooltip/tooltip-positions.demo';
-import { TooltipArrowDemo } from '../demos/core/Tooltip/tooltip-arrow.demo';
-import { TooltipMultilineDemo } from '../demos/core/Tooltip/tooltip-multiline.demo';
-import { TooltipDelayDemo } from '../demos/core/Tooltip/tooltip-delay.demo';
-import { TooltipColorsDemo } from '../demos/core/Tooltip/tooltip-colors.demo';
-import { TooltipConfigurator } from '../demos/core/Tooltip/tooltip.configurator';
+import { TooltipDemos } from '@demos/core';
 
 ## Usage
 
 Use tooltip to provide additional information for target element or component:
 
-<TooltipConfigurator />
+<Demo data={TooltipDemos.configurator} />
 
 ## Position and placement
 
@@ -42,7 +34,7 @@ Tooltip position relative to target element is defined by:
 
 All available positions and placements:
 
-<TooltipPositionsDemo />
+<Demo data={TooltipDemos.positions} />
 
 ## Arrow
 
@@ -52,14 +44,14 @@ Tooltip arrow is controlled by:
 - **arrowSize** – arrow size in px, defaults to 4px
 - **position** and **placement** – define arrow position (see previous example)
 
-<TooltipArrowDemo />
+<Demo data={TooltipDemos.arrow} />
 
 ## Controlled
 
 By default tooltip is displayed when mouse is over target element.
 You can change this logic by setting `opened` prop:
 
-<TooltipControlledDemo />
+<Demo data={TooltipDemos.controlled} />
 
 ## Multiline
 
@@ -70,7 +62,7 @@ By default tooltip white-space property is set to nowrap. To change that use:
 
 Note that, multiline tooltips may require different transitions for better UX.
 
-<TooltipMultilineDemo />
+<Demo data={TooltipDemos.multiline} />
 
 ## Change transition
 
@@ -88,20 +80,20 @@ You can change transitions with props:
 
 All available predefined transitions demo:
 
-<TooltipTransitionsDemo />
+<Demo data={TooltipDemos.transitions} />
 
 ## Change color
 
 You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>:
 
-<TooltipColorsDemo />
+<Demo data={TooltipDemos.colors} />
 
 ## Close delay
 
 You can delay tooltip unmount on mouse leave with `delay` prop: set delay in ms.
 Delay defaults to 0 and reset if user hovers over target element before delay is expired:
 
-<TooltipDelayDemo />
+<Demo data={TooltipDemos.delay} />
 
 ## Allow pointer events
 
@@ -111,7 +103,7 @@ If you need to use interactive elements inside tooltip set `allowPointerEvents` 
 In this example tooltip acts more like popover –
 it is controlled and can be closed with control inside tooltip:
 
-<TooltipComplexDemo />
+<Demo data={TooltipDemos.pointerEvents} />
 
 ## Get element ref
 
