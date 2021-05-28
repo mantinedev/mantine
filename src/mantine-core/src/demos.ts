@@ -37,3 +37,4 @@ export * as SelectDemos from './components/Select/demos';
 export * as SpoilerDemos from './components/Spoiler/demos';
 export * as SwitchDemos from './components/Switch/demos';
 export * as TableDemos from './components/Table/demos';
+export * as TabsDemos from './components/Tabs/demos';
