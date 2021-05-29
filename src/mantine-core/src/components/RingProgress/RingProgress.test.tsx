@@ -1,7 +1,7 @@
 import React from 'react';
 import { itSupportsStyle, itSupportsOthers, itSupportsClassName } from '@mantine/tests';
 import { shallow } from 'enzyme';
-import { Curve } from './Curve';
+import { Curve } from './Curve/Curve';
 import { RingProgress } from './RingProgress';
 
 const defaultProps = {

@@ -40,6 +40,7 @@ storiesOf('@mantine/core/RingProgress', module)
   .add('Sections', () => (
     <div style={{ padding: 20 }}>
       <RingProgress
+        label={<Text>Hello</Text>}
         sections={[
           { color: 'cyan', value: 20 },
           { color: 'yellow', value: 20 },

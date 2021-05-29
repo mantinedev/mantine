@@ -1,8 +1,8 @@
 import React from 'react';
 import cx from 'clsx';
-import { Curve } from './Curve';
+import { Curve } from './Curve/Curve';
 import { DefaultProps } from '../../theme';
-import { getCurves } from './get-curves';
+import { getCurves } from './get-curves/get-curves';
 import useStyles from './RingProgress.styles';
 
 export interface RingProgressProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
