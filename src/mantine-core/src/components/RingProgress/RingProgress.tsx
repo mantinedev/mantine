@@ -5,7 +5,7 @@ import { DefaultProps } from '../../theme';
 import { getCurves } from './get-curves';
 import useStyles from './RingProgress.styles';
 
-export interface RingProgressProps extends DefaultProps, React.ComponentProps<'div'> {
+export interface RingProgressProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Label displayed in the center of the ring */
   label?: React.ReactNode;
 
@@ -16,7 +16,7 @@ export interface RingProgressProps extends DefaultProps, React.ComponentProps<'d
   size?: number;
 
   /** Ring sections */
-  sections?: { value: number; color: string }[];
+  sections: { value: number; color: string }[];
 }
 
 export function RingProgress({
@@ -41,6 +41,7 @@ export function RingProgress({
       offset={curve.offset}
       color={curve.data?.color}
       empty={curve.root}
+      themeOverride={themeOverride}
     />
   ));
 

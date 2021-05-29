@@ -1,5 +1,5 @@
 import React from 'react';
-import { getThemeColor, useMantineTheme } from '../../theme';
+import { getThemeColor, useMantineTheme, MantineThemeOverride } from '../../theme';
 
 interface CurveProps {
   value?: number;
@@ -9,10 +9,20 @@ interface CurveProps {
   thickness: number;
   empty?: boolean;
   color?: string;
+  themeOverride?: MantineThemeOverride;
 }
 
-export function Curve({ size, value, offset, sum, thickness, empty, color }: CurveProps) {
-  const theme = useMantineTheme();
+export function Curve({
+  size,
+  value,
+  offset,
+  sum,
+  thickness,
+  empty,
+  color,
+  themeOverride,
+}: CurveProps) {
+  const theme = useMantineTheme(themeOverride);
   const radius = (size * 0.9 - thickness * 2) / 2;
   const deg = (Math.PI * radius * 2) / 100;
 
