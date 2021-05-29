@@ -3,12 +3,12 @@ import { storiesOf } from '@storybook/react';
 import { RingProgress } from './RingProgress';
 import { Text } from '../Text/Text';
 
-const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+const sizes = [20, 40, 60, 90, 120, 250].map((size) => (
   <RingProgress
+    thickness={size / 10}
     size={size}
     key={size}
     sections={[{ color: 'red', value: 40 }]}
-    style={{ marginTop: 10 }}
   />
 ));
 
@@ -41,9 +41,9 @@ storiesOf('@mantine/core/RingProgress', module)
     <div style={{ padding: 20 }}>
       <RingProgress
         sections={[
-          { color: 'red', value: 50 },
-          { color: 'blue', value: 10 },
-          { color: 'green', value: 10 },
+          { color: 'cyan', value: 20 },
+          { color: 'yellow', value: 20 },
+          { color: 'grape', value: 30 },
         ]}
       />
     </div>

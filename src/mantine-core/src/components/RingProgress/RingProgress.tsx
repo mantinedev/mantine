@@ -1,75 +1,60 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '../../theme';
-import { RingProgressCircle } from './RingProgressCircle';
-import { RingProgressSVG } from './RingProgressSvg';
-import useStyles, { sizes } from './RingProgress.styles';
-import { RingProgressLabel } from './RingProgressLabel';
-
-export const RING_PROGRESS_SIZES = sizes;
+import { Curve } from './Curve';
+import { DefaultProps } from '../../theme';
+import { getCurves } from './get-curves';
+import useStyles from './RingProgress.styles';
 
 export interface RingProgressProps extends DefaultProps, React.ComponentProps<'div'> {
-  /** Defines the text to be displayed on the center of the progress ring */
-  label?: ReactNode;
+  /** Label displayed in the center of the ring */
+  label?: React.ReactNode;
 
-  /** Defines the thickness of the progress ring */
+  /** Ring thickness */
   thickness?: number;
 
-  /** Size of the progress ring */
-  size?: MantineNumberSize;
+  /** Width and height of the progress ring in px */
+  size?: number;
 
-  /** Defines the values in the form of section in the progress ring */
+  /** Ring sections */
   sections?: { value: number; color: string }[];
 }
-
-const offsetCalculation = (thickness, value) => {
-  const radius = 50 - thickness / 2;
-  const circumference = radius * 2 * Math.PI;
-  const offset = circumference - (value / 100) * circumference;
-  return offset;
-};
 
 export function RingProgress({
   label,
   sections,
-  size = 'md',
-  thickness = 4,
+  size = 120,
+  thickness = size / 10,
   themeOverride,
   className,
+  style,
   ...others
 }: RingProgressProps) {
-  const classes = useStyles({ size, theme: useMantineTheme(themeOverride) });
+  const classes = useStyles();
 
-  let value: number = 0;
-  let offset: number = 0;
-  const sectionsData =
-    sections &&
-    sections.map((item) => {
-      value += item.value;
-      offset = offsetCalculation(thickness, value);
-
-      return {
-        value: item.value,
-        color: item.color,
-        offset,
-      };
-    });
+  const curves = getCurves({ size, thickness, sections }).map((curve, index) => (
+    <Curve
+      key={index}
+      value={curve.data?.value}
+      size={size}
+      thickness={thickness}
+      sum={curve.sum}
+      offset={curve.offset}
+      color={curve.data?.color}
+      empty={curve.root}
+    />
+  ));
 
   return (
-    <div {...others} className={cx(classes.wrapperDiv, className)}>
-      <RingProgressSVG size={size}>
-        <RingProgressCircle thickness={thickness} stroke="silver" />
-        {sectionsData &&
-          sectionsData.map((section) => (
-            <RingProgressCircle
-              thickness={thickness}
-              stroke={section.color}
-              value={section.value}
-              offset={section.offset}
-            />
-          ))}
-      </RingProgressSVG>
-      {label && <RingProgressLabel>{label}</RingProgressLabel>}
+    <div
+      style={{ ...style, width: size, height: size }}
+      className={cx(classes.wrapper, className)}
+      {...others}
+    >
+      <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
+        {curves}
+      </svg>
+
+      {label && <div className={classes.label}>{label}</div>}
     </div>
   );
 }
