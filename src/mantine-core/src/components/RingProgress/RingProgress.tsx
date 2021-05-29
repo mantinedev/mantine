@@ -55,7 +55,17 @@ export function RingProgress({
         {curves}
       </svg>
 
-      {label && <div className={classes.label}>{label}</div>}
+      {label && (
+        <div
+          className={classes.label}
+          style={{
+            right: thickness * 2,
+            left: thickness * 2,
+          }}
+        >
+          {label}
+        </div>
+      )}
     </div>
   );
 }

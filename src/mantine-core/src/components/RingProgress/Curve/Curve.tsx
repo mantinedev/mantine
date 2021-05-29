@@ -31,7 +31,13 @@ export function Curve({
       stroke={getThemeColor({
         theme,
         color: color || (theme.colorScheme === 'dark' ? 'dark' : 'gray'),
-        shade: color ? 6 : 3,
+        shade: color
+          ? theme.colorScheme === 'dark'
+            ? 7
+            : 5
+          : theme.colorScheme === 'dark'
+          ? 4
+          : 2,
       })}
       {...getCurveProps({
         sum,
