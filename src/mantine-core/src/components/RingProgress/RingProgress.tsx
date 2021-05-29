@@ -40,14 +40,14 @@ export function RingProgress({
       sum={curve.sum}
       offset={curve.offset}
       color={curve.data?.color}
-      empty={curve.root}
+      root={curve.root}
       themeOverride={themeOverride}
     />
   ));
 
   return (
     <div
-      style={{ ...style, width: size, height: size }}
+      style={{ width: size, height: size, ...style }}
       className={cx(classes.wrapper, className)}
       {...others}
     >

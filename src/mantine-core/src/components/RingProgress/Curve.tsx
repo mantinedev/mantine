@@ -7,7 +7,7 @@ interface CurveProps {
   offset: number;
   sum: number;
   thickness: number;
-  empty?: boolean;
+  root?: boolean;
   color?: string;
   themeOverride?: MantineThemeOverride;
 }
@@ -18,7 +18,7 @@ export function Curve({
   offset,
   sum,
   thickness,
-  empty,
+  root,
   color,
   themeOverride,
 }: CurveProps) {
@@ -26,7 +26,7 @@ export function Curve({
   const radius = (size * 0.9 - thickness * 2) / 2;
   const deg = (Math.PI * radius * 2) / 100;
 
-  const strokeDasharray = empty
+  const strokeDasharray = root
     ? `${(100 - sum) * deg}, ${sum * deg}`
     : `${value * deg}, ${(100 - value) * deg}`;
 
@@ -37,9 +37,9 @@ export function Curve({
       cx={size / 2}
       cy={size / 2}
       r={radius}
-      transform={empty ? `scale(1, -1) translate(0, -${size})` : null}
+      transform={root ? `scale(1, -1) translate(0, -${size})` : null}
       strokeDasharray={strokeDasharray}
-      strokeDashoffset={empty ? 0 : offset}
+      strokeDashoffset={root ? 0 : offset}
       stroke={getThemeColor({
         theme,
         color: color || (theme.colorScheme === 'dark' ? 'dark' : 'gray'),
