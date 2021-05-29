@@ -7,6 +7,7 @@ export * as BreadcrumbsDemos from './components/Breadcrumbs/demos';
 export * as BurgerDemos from './components/Burger/demos';
 export * as ButtonDemos from './components/Button/demos';
 export * as CardDemos from './components/Card/demos';
+export * as CenterDemos from './components/Center/demos';
 export * as CheckboxDemos from './components/Checkbox/demos';
 export * as CodeDemos from './components/Code/demos';
 export * as ColorSwatchDemos from './components/ColorSwatch/demos';

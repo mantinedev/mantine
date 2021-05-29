@@ -3,6 +3,7 @@ import { CheckIcon } from '@modulz/radix-icons';
 import { RingProgress } from '../RingProgress';
 import { Group } from '../../Group/Group';
 import { Text } from '../../Text/Text';
+import { Center } from '../../Center/Center';
 import { ThemeIcon } from '../../ThemeIcon/ThemeIcon';
 
 const code = `
@@ -18,11 +19,11 @@ const code = `
 <RingProgress
   sections={[{ value: 100, color: 'teal' }]}
   label={
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <Center>
       <ThemeIcon color="teal" variant="light" radius="xl size="xl">
         <CheckIcon style={{ height: 22, width: 22 }} />
       </ThemeIcon>
-    </div>
+    </Center>
   }
 />
 `;
@@ -42,11 +43,11 @@ function Demo() {
       <RingProgress
         sections={[{ value: 100, color: 'teal' }]}
         label={
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Center>
             <ThemeIcon color="teal" variant="light" radius="xl" size="xl">
               <CheckIcon style={{ height: 22, width: 22 }} />
             </ThemeIcon>
-          </div>
+          </Center>
         }
       />
     </Group>
