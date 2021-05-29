@@ -35,7 +35,7 @@ export { Popover } from './components/Popover/Popover';
 export { Portal } from './components/Portal/Portal';
 export { Progress, PROGRESS_SIZES } from './components/Progress/Progress';
 export { RadioGroup, Radio, RADIO_SIZES } from './components/RadioGroup/RadioGroup';
-export { RingProgress, RING_PROGRESS_SIZES } from './components/RingProgress/RingProgress';
+export { RingProgress } from './components/RingProgress/RingProgress';
 export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
 export { Select } from './components/Select/Select';
 export { Spoiler } from './components/Spoiler/Spoiler';
