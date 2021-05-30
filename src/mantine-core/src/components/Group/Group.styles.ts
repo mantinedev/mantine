@@ -1,3 +1,4 @@
+import React from 'react';
 import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
 
 export type GroupPosition = 'right' | 'center' | 'left' | 'apart';
@@ -9,6 +10,7 @@ interface GroupStylesProps {
   spacing: MantineNumberSize;
   direction: 'row' | 'column';
   theme: MantineTheme;
+  align: React.CSSProperties['alignItems'];
 }
 
 const POSITIONS = {
@@ -19,10 +21,10 @@ const POSITIONS = {
 };
 
 export default createMemoStyles({
-  group: ({ spacing, position, noWrap, direction, theme, grow }: GroupStylesProps) => ({
+  group: ({ spacing, position, noWrap, direction, theme, grow, align }: GroupStylesProps) => ({
     display: 'flex',
     flexDirection: direction,
-    alignItems: direction === 'row' ? 'center' : grow ? 'stretch' : POSITIONS[position],
+    alignItems: align || (direction === 'row' ? 'center' : grow ? 'stretch' : POSITIONS[position]),
     flexWrap: noWrap ? 'nowrap' : 'wrap',
     justifyContent: direction === 'row' && POSITIONS[position],
     margin: (-1 * getSizeValue({ size: spacing, sizes: theme.spacing })) / 2,

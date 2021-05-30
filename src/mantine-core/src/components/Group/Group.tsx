@@ -18,6 +18,9 @@ export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef
 
   /** Defines flex-direction property, row for horizontal, column for vertical */
   direction?: 'row' | 'column';
+
+  /** Defines align-items css property */
+  align?: React.CSSProperties['alignItems'];
 }
 
 export type { GroupPosition };
@@ -25,6 +28,7 @@ export type { GroupPosition };
 export function Group({
   className,
   position = 'left',
+  align,
   children,
   noWrap = false,
   grow = false,
@@ -35,6 +39,7 @@ export function Group({
 }: GroupProps) {
   const classes = useStyles({
     theme: useMantineTheme(themeOverride),
+    align,
     grow,
     noWrap,
     spacing,

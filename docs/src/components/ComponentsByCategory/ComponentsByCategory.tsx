@@ -6,7 +6,7 @@ import useStyles from './ComponentsByCategory.styles';
 
 const query = graphql`
   {
-    allMdx {
+    allMdx(filter: { frontmatter: { package: { eq: "@mantine/core" } } }) {
       edges {
         node {
           id
