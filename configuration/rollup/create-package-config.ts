@@ -38,7 +38,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       extensions: ['.ts', '.tsx', '.js', '.jsx'],
     }),
     esbuild({
-      minify: config.minify && config.format === 'umd',
+      minify: config.format === 'umd',
       sourceMap: false,
       tsconfig: path.resolve(process.cwd(), 'tsconfig.json'),
     }),
