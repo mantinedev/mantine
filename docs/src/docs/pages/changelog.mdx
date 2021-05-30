@@ -33,6 +33,15 @@ import {
 
 <Demo data={CenterDemos.usage} demoProps={{ toggle: true }} />
 
+## Other changes
+
+- Mantine packages are now published with commonjs and es modules – this enables better tree shaking
+- All components props types are now exported from @mantine/core package, you can import it by adding `Props` to component name:
+
+```tsx
+import { ButtonProps } from '@mantine/core';
+```
+
 ## 1.1.0 – June 2021
 
 ### New components and features
