@@ -1,8 +1,7 @@
 import React from 'react';
 import { Group, Button, TextInput, useMantineTheme } from '@mantine/core';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';
-import { useNotifications } from '@mantine/notifications';
-import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
+import { useNotifications } from '../index';
 
 const code = `import React from 'react';
 import { Group, Button, TextInput } from '@mantine/core';
@@ -49,45 +48,49 @@ function Demo() {
   );
 }`;
 
-export function NotificationsInteractiveDemo() {
+function Demo() {
   const notifications = useNotifications();
   const theme = useMantineTheme();
 
   return (
-    <CodeDemo code={code} language="tsx">
-      <Group position="center">
-        <Button
-          variant="outline"
-          leftIcon={<EnvelopeClosedIcon />}
-          onClick={() => {
-            const id = notifications.showNotification({
-              autoClose: false,
-              disallowClose: true,
-              title: 'Subscribe to email newsletter',
-              message: (
-                <>
-                  <div style={{ display: 'flex', paddingTop: 5 }}>
-                    <TextInput
-                      icon={<EnvelopeClosedIcon />}
-                      placeholder="Enter your email"
-                      style={{ flex: 1, marginRight: 15 }}
-                      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
-                      inputStyle={{
-                        backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7],
-                      }}
-                    />
-                    <Button onClick={() => notifications.hideNotification(id)} size="lg">
-                      Subscribe
-                    </Button>
-                  </div>
-                </>
-              ),
-            });
-          }}
-        >
-          Subscribe to email newsletter
-        </Button>
-      </Group>
-    </CodeDemo>
+    <Group position="center">
+      <Button
+        variant="outline"
+        leftIcon={<EnvelopeClosedIcon />}
+        onClick={() => {
+          const id = notifications.showNotification({
+            autoClose: false,
+            disallowClose: true,
+            title: 'Subscribe to email newsletter',
+            message: (
+              <>
+                <div style={{ display: 'flex', paddingTop: 5 }}>
+                  <TextInput
+                    icon={<EnvelopeClosedIcon />}
+                    placeholder="Enter your email"
+                    style={{ flex: 1, marginRight: 15 }}
+                    variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
+                    inputStyle={{
+                      backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7],
+                    }}
+                  />
+                  <Button onClick={() => notifications.hideNotification(id)} size="lg">
+                    Subscribe
+                  </Button>
+                </div>
+              </>
+            ),
+          });
+        }}
+      >
+        Subscribe to email newsletter
+      </Button>
+    </Group>
   );
 }
+
+export const interactive: MantineDemo = {
+  type: 'demo',
+  code,
+  component: Demo,
+};

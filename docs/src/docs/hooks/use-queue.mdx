@@ -10,7 +10,7 @@ docs: 'hooks/use-queue.mdx'
 source: 'mantine-hooks/src/use-queue/use-queue.ts'
 ---
 
-import { NotificationsCleanDemo } from '../demos/others/notifications/notifications-clean.demo';
+import * as NotificationsDemos from '@demos/notifications';
 
 ## Usage
 
@@ -76,7 +76,7 @@ Return value:
 Example of use-queue hook usage in <GatsbyLink to="/others/notifications/">Mantine notifications system</GatsbyLink>. By default
 only 5 notifications can be displayed at a time, rest are added to queue.
 
-<NotificationsCleanDemo noCode />
+<Demo data={NotificationsDemos.clean} demoProps={{ toggle: true }} />
 
 ## TypeScript
 

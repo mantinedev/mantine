@@ -1,7 +1,6 @@
 import React from 'react';
 import { Group, Button } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
-import CodeDemo from '../../../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
 import { Group, Button } from '@mantine/core';
@@ -31,30 +30,34 @@ function Demo() {
   );
 }`;
 
-export function NotificationsLimitDemo() {
+function Demo() {
   const notifications = useNotifications();
 
   return (
-    <CodeDemo code={code} language="tsx">
-      <Group position="center">
-        <Button
-          variant="outline"
-          onClick={() => {
-            Array(10)
-              .fill(0)
-              .forEach((_, index) => {
-                setTimeout(() => {
-                  notifications.showNotification({
-                    title: `Notification ${index + 1}`,
-                    message: 'Most notifications are added to queue',
-                  });
-                }, 200 * index);
-              });
-          }}
-        >
-          Show 10 notifications
-        </Button>
-      </Group>
-    </CodeDemo>
+    <Group position="center">
+      <Button
+        variant="outline"
+        onClick={() => {
+          Array(10)
+            .fill(0)
+            .forEach((_, index) => {
+              setTimeout(() => {
+                notifications.showNotification({
+                  title: `Notification ${index + 1}`,
+                  message: 'Most notifications are added to queue',
+                });
+              }, 200 * index);
+            });
+        }}
+      >
+        Show 10 notifications
+      </Button>
+    </Group>
   );
 }
+
+export const limit: MantineDemo = {
+  type: 'demo',
+  code,
+  component: Demo,
+};

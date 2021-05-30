@@ -9,18 +9,12 @@ source: 'mantine-notifications/src'
 docs: 'others/notifications.mdx'
 ---
 
+import * as MantineNotificationsDemos from '@demos/notifications';
 import { NotificationDemos } from '@demos/core';
-import { NotificationsRootDemo } from '../demos/others/notifications/notifications-root.demo';
-import { NotificationsBaseDemo } from '../demos/others/notifications/notifications-base.demo';
-import { NotificationsLimitDemo } from '../demos/others/notifications/notifications-limit.demo';
-import { NotificationsUpdateDemo } from '../demos/others/notifications/notifications-update.demo';
-import { NotificationsAutoCloseDemo } from '../demos/others/notifications/notifications-autoclose.demo';
-import { NotificationsCleanDemo } from '../demos/others/notifications/notifications-clean.demo';
-import { NotificationsInteractiveDemo } from '../demos/others/notifications/notifications-interactive.demo';
 
 ## Demo
 
-<NotificationsRootDemo />
+<Demo data={MantineNotificationsDemos.root} />
 
 ## Installation
 
@@ -64,7 +58,7 @@ function YourApp() {
 
 Use use-notifications hook at any place in your application:
 
-<NotificationsBaseDemo />
+<Demo data={MantineNotificationsDemos.base} />
 
 ## use-notifications hook
 
@@ -172,7 +166,7 @@ You can limit maximum amount of notifications that can be displayed by setting
 All notifications added after limit was reached will be added into queue
 and displayed when notification from current state is closed.
 
-<NotificationsLimitDemo />
+<Demo data={MantineNotificationsDemos.limit} />
 
 ## Remove notifications from state and queue
 
@@ -188,13 +182,13 @@ notifications.hideNotification(id);
 Use `cleanQueue` handler to remove all notifications that are not currently displayed and
 `clean` handler to remove all notifications from state and queue:
 
-<NotificationsCleanDemo />
+<Demo data={MantineNotificationsDemos.clean} />
 
 ## Update notification
 
 showNotification handler returns notification id, you can use it to update notification:
 
-<NotificationsUpdateDemo />
+<Demo data={MantineNotificationsDemos.update} />
 
 ## Auto close
 
@@ -224,14 +218,14 @@ notifications.updateNotification('hello', {
 
 showNotification and updateNotification have higher priority.
 
-<NotificationsAutoCloseDemo />
+<Demo data={MantineNotificationsDemos.autoclose} />
 
 ## React node in notification message
 
 You can render any react node in notification message, for example, input or button.
 Combine this option with other settings to achieve the desired behavior:
 
-<NotificationsInteractiveDemo />
+<Demo data={MantineNotificationsDemos.interactive} />
 
 ## Package information
 
