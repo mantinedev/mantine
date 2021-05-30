@@ -35,6 +35,15 @@ const getThemes = (props?: any) =>
       </Badge>
     ));
 
+const getDots = (props?: any) =>
+  Object.keys(DEFAULT_THEME.colors)
+    .filter((color) => color !== 'dark')
+    .map((color) => (
+      <Badge key={color} color={color} variant="dot" {...props}>
+        {color}
+      </Badge>
+    ));
+
 storiesOf('@mantine/core/Badge', module)
   .add('Themes', () => (
     <>
@@ -141,4 +150,13 @@ storiesOf('@mantine/core/Badge', module)
         {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'filled' })}
       </Group>
     </div>
+  ))
+  .add('Dot Variant', () => (
+    <>
+      <Group style={{ padding: 10 }}>{getDots({ size: 'xs' })}</Group>
+      <Group style={{ padding: 10 }}>{getDots({ size: 'sm' })}</Group>
+      <Group style={{ padding: 10 }}>{getDots({ size: 'md' })}</Group>
+      <Group style={{ padding: 10 }}>{getDots({ size: 'lg' })}</Group>
+      <Group style={{ padding: 10 }}>{getDots({ size: 'xl' })}</Group>
+    </>
   ));
