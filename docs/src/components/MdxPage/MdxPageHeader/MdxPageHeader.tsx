@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { Title, Text } from '@mantine/core';
-import { Pencil2Icon, GitHubLogoIcon } from '@modulz/radix-icons';
+import { MarkGithubIcon, PencilIcon, LawIcon } from '@primer/octicons-react';
 import { ImportStatement } from './ImportStatement/ImportStatement';
 import { Installation } from './Installation/Installation';
 import { BundleSize } from './BundleSize/BundleSize';
@@ -39,7 +39,7 @@ export function MdxPageHeader({ frontmatter }: MdxPage) {
         {frontmatter.source && (
           <LinkItem
             label="Source"
-            icon={<GitHubLogoIcon style={{ width: 14, height: 14 }} />}
+            icon={<MarkGithubIcon size={14} />}
             link={`${SOURCE_BASE}/${frontmatter.source}`}
           >
             View source code
@@ -49,7 +49,7 @@ export function MdxPageHeader({ frontmatter }: MdxPage) {
         {frontmatter.docs && (
           <LinkItem
             label="Docs"
-            icon={<Pencil2Icon style={{ width: 14, height: 14 }} />}
+            icon={<PencilIcon size={14} />}
             link={`${DOCS_BASE}/${frontmatter.docs}`}
           >
             Edit this page
@@ -59,7 +59,7 @@ export function MdxPageHeader({ frontmatter }: MdxPage) {
         {frontmatter.package && (
           <LinkItem
             label="Package"
-            icon={<NpmIcon style={{ width: 14, height: 14 }} />}
+            icon={<NpmIcon />}
             link={`https://www.npmjs.com/package/${frontmatter.package.replace(
               'mantine-',
               '@mantine/'
@@ -70,6 +70,15 @@ export function MdxPageHeader({ frontmatter }: MdxPage) {
         )}
 
         {frontmatter.bundleSize && <BundleSize package={frontmatter.bundleSize} />}
+        {frontmatter.license && (
+          <LinkItem
+            label="License"
+            icon={<LawIcon size={14} />}
+            link="https://github.com/mantinedev/mantine/blob/master/LICENSE"
+          >
+            MIT
+          </LinkItem>
+        )}
       </div>
     </div>
   );

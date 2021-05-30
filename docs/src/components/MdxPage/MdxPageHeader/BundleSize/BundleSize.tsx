@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChartIcon } from '@modulz/radix-icons';
+import { FileZipIcon } from '@primer/octicons-react';
 import { LinkItem } from '../LinkItem/LinkItem';
 import BUNDLE_SIZES from '../../../../../.docgen/sizes.json';
 
@@ -15,7 +15,7 @@ export function BundleSize(props: ImportStatementProps) {
       <LinkItem
         label="Bundle size"
         link={`https://bundlephobia.com/result?p=${props.package}`}
-        icon={<BarChartIcon style={{ width: 14, height: 14 }} />}
+        icon={<FileZipIcon size={14} />}
       >
         {data.gzip} kB (umd gzipped)
       </LinkItem>
