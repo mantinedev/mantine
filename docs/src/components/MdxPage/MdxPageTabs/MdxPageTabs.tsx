@@ -3,7 +3,7 @@ import { Tabs, Tab, Title } from '@mantine/core';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import TableOfContents from '../TableOfContents/TableOfContents';
 import { Footer } from '../../Footer/Footer';
-import PropsTable from '../../MdxProvider/PropsTable/PropsTable';
+import PropsTable from './PropsTable/PropsTable';
 import useStyles from './MdxPageTabs.styles';
 
 export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Text, useMantineTheme } from '@mantine/core';
-import DocsSection from '../../DocsSection/DocsSection';
-import PROPS_DATA from '../../../../.docgen/docgen.json';
+import DocsSection from '../../../DocsSection/DocsSection';
+import PROPS_DATA from '../../../../../.docgen/docgen.json';
 
 export default function PropsTable({ component }: { component: string }) {
   const theme = useMantineTheme();

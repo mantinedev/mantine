@@ -3,7 +3,7 @@ import 'normalize.css';
 import React, { useState } from 'react';
 import { NotificationsProvider } from '@mantine/notifications';
 import { graphql, useStaticQuery } from 'gatsby';
-import MdxProvider from '../MdxProvider/MdxProvider';
+import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
 import useStyles from './Layout.styles';

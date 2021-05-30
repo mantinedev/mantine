@@ -14,26 +14,6 @@ license: MIT
 
 import packageJson from '../../../../src/mantine-hooks/package.json';
 
-# Mantine hooks
-
-Package includes hooks that are used to build components in @mantine/ scoped packages.
-You can use these hooks in your applications with or without other @mantine/ packages.
-All other @mantine/ packages depend on @mantine/hooks.
-
-## Installation
-
-With yarn:
-
-```sh
-yarn add @mantine/hooks
-```
-
-With npm:
-
-```sh
-npm install @mantine/hooks
-```
-
 ## Included hooks
 
 - <GatsbyLink to="/hooks/use-click-outside/">use-click-outside</GatsbyLink> – capture click and touch
@@ -61,14 +41,6 @@ npm install @mantine/hooks
 - <GatsbyLink to="/hooks/use-window-event/">use-window-event</GatsbyLink> – adds event listener to window
   object on component mount and removes it on unmount
 
-## Bundle size
-
-<BundleSize packageName="@mantine/hooks" />
-
-## Dependencies
-
-<Dependencies packageName="@mantine/hooks" dependencies={[{ name: 'react', type: 'peer' }]} />
-
 ## Browser support
 
 All hooks are tested to work in all major modern browsers. Some hooks depend on web APIs that may not be supported by old browsers:
@@ -76,7 +48,3 @@ All hooks are tested to work in all major modern browsers. Some hooks depend on 
 - use-media-query, use-color-scheme and use-reduced-motion hooks rely on [window.matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
   API
 - use-clipboard hook uses [Navigator.clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard)
-
-## License
-
-<License />

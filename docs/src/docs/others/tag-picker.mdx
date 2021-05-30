@@ -9,29 +9,12 @@ props: ['TagPickerContainer']
 import: "import { TagPicker } from '@mantine/tag-picker';"
 source: 'mantine-tag-picker/src'
 docs: 'others/tag-picker.mdx'
+installation: '@mantine/notifications'
+bundleSize: '@mantine/notifications'
+license: MIT
 ---
 
 import * as TagPickerDemos from '@demos/tag-picker';
-
-## Installation
-
-With yarn:
-
-```sh
-yarn add react-jss @mantine/hooks @mantine/core @mantine/tag-picker
-```
-
-With npm:
-
-```sh
-npm install react-jss @mantine/hooks @mantine/core @mantine/tag-picker
-```
-
-With [peerdeps](https://www.npmjs.com/package/install-peerdeps):
-
-```sh
-npx install-peerdeps @mantine/tag-picker
-```
 
 ## Usage
 
@@ -113,31 +96,3 @@ or `controlId` prop to connect with id:
 <div id="my-tag-picker">My tag picker</div>
 <TagPicker labelledBy="my-tag-picker" />
 ```
-
-## Component props
-
-<PropsTable component="TagPickerContainer" />
-
-## Package information
-
-### Bundle size
-
-<BundleSize packageName="@mantine/tag-picker" />
-
-### Dependencies
-
-<Dependencies
-  packageName="@mantine/tag-picker"
-  dependencies={[
-    { name: '@mantine/hooks', type: 'peer' },
-    { name: '@mantine/core', type: 'peer' },
-    { name: 'react', type: 'peer' },
-    { name: 'react-dom', type: 'peer' },
-    { name: 'react-jss', type: 'peer', why: 'CSS-in-JS library used to style all components' },
-    {
-      name: 'clsx',
-      type: 'dependency',
-      why: 'Utility to construct className stings conditionally',
-    },
-  ]}
-/>

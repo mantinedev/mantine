@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from '@mantine/core';
-import DocsSection from '../../DocsSection/DocsSection';
+import DocsSection from '../../../DocsSection/DocsSection';
 
 interface DataTableProps {
   data: React.ReactNode[][];

@@ -7,6 +7,11 @@ slug: /others/notifications/
 props: ['NotificationsProvider']
 source: 'mantine-notifications/src'
 docs: 'others/notifications.mdx'
+pageTitle: 'Mantine Notifications'
+description: 'Mantine notifications system'
+installation: '@mantine/notifications'
+bundleSize: '@mantine/notifications'
+license: MIT
 ---
 
 import * as MantineNotificationsDemos from '@demos/notifications';
@@ -15,26 +20,6 @@ import { NotificationDemos } from '@demos/core';
 ## Demo
 
 <Demo data={MantineNotificationsDemos.root} />
-
-## Installation
-
-With yarn:
-
-```sh
-yarn add react-jss @mantine/hooks @mantine/core @mantine/notifications
-```
-
-With npm:
-
-```sh
-npm install react-jss @mantine/hooks @mantine/core @mantine/notifications
-```
-
-With [peerdeps](https://www.npmjs.com/package/install-peerdeps):
-
-```sh
-npx install-peerdeps @mantine/notifications
-```
 
 ## Usage
 
@@ -226,36 +211,3 @@ You can render any react node in notification message, for example, input or but
 Combine this option with other settings to achieve the desired behavior:
 
 <Demo data={MantineNotificationsDemos.interactive} />
-
-## Package information
-
-### Bundle size
-
-<BundleSize packageName="@mantine/notifications" />
-
-### Dependencies
-
-<Dependencies
-  packageName="@mantine/notifications"
-  dependencies={[
-    { name: '@mantine/hooks', type: 'peer' },
-    { name: '@mantine/core', type: 'peer' },
-    { name: 'react', type: 'peer' },
-    { name: 'react-dom', type: 'peer' },
-    { name: 'react-jss', type: 'peer', why: 'CSS-in-JS library used to style all components' },
-    {
-      name: 'clsx',
-      type: 'dependency',
-      why: 'Utility to construct className stings conditionally',
-    },
-    {
-      name: 'react-transition-group',
-      type: 'dependency',
-      why: 'Used to implement notifications appear/disappear transitions',
-    },
-  ]}
-/>
-
-### License
-
-<License />

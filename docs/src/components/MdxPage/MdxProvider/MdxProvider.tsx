@@ -1,25 +1,17 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { Code, Text } from '@mantine/core';
-import Demo from '../Demo/Demo';
+import Demo from '../../Demo/Demo';
 import GatsbyLink from './GatsbyLink/GatsbyLink';
-import PropsTable from './PropsTable/PropsTable';
 import DataTable from './DataTable/DataTable';
-import { Dependencies } from './Dependencies/Dependencies';
-import { License } from './License/License';
-import { BundleSize } from './BundleSize/BundleSize';
 import MdxTitle from './MdxTitle/MdxTitle';
-import CodeHighlight from '../CodeHighlight/CodeHighlight';
+import CodeHighlight from '../../CodeHighlight/CodeHighlight';
 
 const h = (order: 1 | 2 | 3 | 4 | 5 | 6) => (props: any) => <MdxTitle order={order} {...props} />;
 
 const components = {
   GatsbyLink,
-  PropsTable,
   DataTable,
-  Dependencies,
-  License,
-  BundleSize,
   Demo,
   h1: h(1),
   h2: h(2),
