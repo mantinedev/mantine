@@ -116,4 +116,20 @@ export default createMemoStyles({
       0.55
     ),
   }),
+
+  dot: ({ theme, color = 'grey' }: BadgeStylesProps) => ({
+    backgroundColor: 'transparent',
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
+    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
+  }),
+
+  dotStyle: ({ theme, color, size }: BadgeStylesProps) => {
+    const { height } = size in sizes ? sizes[size] : sizes.md;
+    return {
+      backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
+      height: height / 2.5,
+      width: height / 2.5,
+      borderRadius: '50%',
+    };
+  },
 });

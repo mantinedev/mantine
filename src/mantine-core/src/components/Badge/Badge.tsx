@@ -11,7 +11,7 @@ export interface BadgeProps extends DefaultProps {
   color?: string;
 
   /** Controls badge background, color and border styles */
-  variant?: 'light' | 'filled' | 'outline';
+  variant?: 'light' | 'filled' | 'outline' | 'dot';
 
   /** Defines badge height and font-size */
   size?: MantineSize;
@@ -56,6 +56,12 @@ export function Badge<T extends React.ElementType = 'div'>({
       {leftSection && (
         <span data-mantine-badge-left className={classes.leftSection}>
           {leftSection}
+        </span>
+      )}
+
+      {variant === 'dot' && (
+        <span data-mantine-badge-left className={classes.leftSection}>
+          <div className={classes.dotStyle} />
         </span>
       )}
 
