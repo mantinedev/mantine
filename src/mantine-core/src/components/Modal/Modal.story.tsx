@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { AuthenticationForm } from '@mantine/demos';
+import { AuthenticationForm } from '../../../demos';
 import { DEFAULT_THEME, MantineProvider } from '../../theme';
 import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';

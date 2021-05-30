@@ -13,12 +13,7 @@ export function ColorInputDemo() {
   const colors = Object.keys(theme.colors).map((color) => theme.colors[color][7]);
 
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      toggle
-      githubLink="https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/ColorInput/ColorInput.tsx"
-    >
+    <CodeDemo code={code} language="tsx" toggle>
       <div style={{ maxWidth: 359, margin: 'auto' }}>
         <ColorInput
           data={colors}

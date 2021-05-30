@@ -16,7 +16,6 @@ export function UseFormAuthDemo({ toggle = false }: { toggle: boolean }) {
       language="tsx"
       toggle={toggle}
       demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
-      githubLink="https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/AuthenticationForm/AuthenticationForm.tsx"
     >
       <div style={{ maxWidth: 400, margin: 'auto' }}>
         <AuthenticationForm

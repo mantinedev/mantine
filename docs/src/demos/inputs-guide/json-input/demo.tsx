@@ -12,12 +12,7 @@ export function JsonInputDemo() {
   const [value, setValue] = useState('');
 
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      toggle
-      githubLink="https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/JsonInput/JsonInput.tsx"
-    >
+    <CodeDemo code={code} language="tsx" toggle>
       <div style={{ maxWidth: 359, margin: 'auto' }}>
         <JsonInput
           label="Your package.json"
