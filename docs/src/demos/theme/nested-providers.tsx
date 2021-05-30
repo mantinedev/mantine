@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Group, Button, Text, MantineProvider } from '@mantine/core';
-import { ColorSchemeContext } from '../../../components/Layout/ColorScheme.context';
-import CodeDemo from '../../../components/CodeDemo/CodeDemo';
+import { ColorSchemeContext } from '../../components/Layout/ColorScheme.context';
+import CodeDemo from '../../components/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
 import { Button, MantineProvider, Text } from '@mantine/core';

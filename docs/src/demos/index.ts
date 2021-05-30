@@ -11,3 +11,5 @@ export * from './hooks/use-scroll-lock';
 export * from './inputs-guide/inputs-list';
 export * from './inputs-guide/color-input';
 export * from './inputs-guide/json-input';
+
+export * from './theme';
