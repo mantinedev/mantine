@@ -6,7 +6,7 @@ export default createUseStyles(
     item: {
       display: 'flex',
       alignItems: 'center',
-      height: 20,
+      minHeight: 20,
 
       '& + &': {
         marginTop: theme.spacing.xs,
@@ -16,8 +16,8 @@ export default createUseStyles(
     label: {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
       width: 100,
-      lineHeight: 1,
-      marginBottom: 2,
+      height: 20,
+      lineHeight: '20px',
 
       '@media (max-width: 500px)': {
         display: 'none',

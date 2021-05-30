@@ -21,6 +21,9 @@ interface DocPageProps {
         docs: string;
         source: string;
         package: string;
+        bundleSize: string;
+        installation: string;
+        pageTitle: string;
       };
     };
   };
@@ -53,6 +56,9 @@ export const query = graphql`
         docs
         source
         description
+        bundleSize
+        installation
+        pageTitle
       }
       body
     }

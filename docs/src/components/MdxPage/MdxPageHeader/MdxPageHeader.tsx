@@ -4,6 +4,7 @@ import { Title, Text } from '@mantine/core';
 import { Pencil2Icon, GitHubLogoIcon } from '@modulz/radix-icons';
 import { MdxPageProps } from '../types';
 import { ImportStatement } from './ImportStatement/ImportStatement';
+import { Installation } from './Installation/Installation';
 import { NpmIcon } from './NpmIcon';
 import { LinkItem } from './LinkItem/LinkItem';
 import useStyles from './MdxPageHeader.styles';
@@ -16,7 +17,7 @@ export function MdxPageHeader({ data }: MdxPageProps) {
   const classes = useStyles();
 
   const hasTabs = Array.isArray(data.props);
-  const hasLinks = !!(data.import || data.source);
+  const hasLinks = !!(data.import || data.source || data.installation);
 
   if (!hasLinks && !hasTabs) {
     return null;
@@ -25,13 +26,15 @@ export function MdxPageHeader({ data }: MdxPageProps) {
   return (
     <div className={classes.wrapper}>
       <div className={cx(classes.header, { [classes.withTabs]: hasTabs })}>
-        <Title className={classes.title}>{data.title}</Title>
+        <Title className={classes.title}>{data.pageTitle || data.title}</Title>
 
         <Text size="lg" className={classes.description}>
           {data.description}
         </Text>
 
         {data.import && <ImportStatement code={data.import} />}
+
+        {data.installation && <Installation packages={data.installation} />}
 
         {data.source && (
           <LinkItem

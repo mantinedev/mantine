@@ -14,5 +14,8 @@ export interface MdxPageProps {
     docs: string;
     source: string;
     package: string;
+    bundleSize: string;
+    installation: string;
+    pageTitle: string;
   };
 }
