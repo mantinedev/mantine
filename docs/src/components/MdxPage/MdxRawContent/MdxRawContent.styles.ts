@@ -10,6 +10,11 @@ export default createUseStyles(
       justifyContent: 'space-between',
       paddingLeft: theme.spacing.xl * 2,
       paddingRight: theme.spacing.xl * 2,
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        paddingLeft: theme.spacing.xl,
+        paddingRight: theme.spacing.xl,
+      },
     },
 
     container: {
