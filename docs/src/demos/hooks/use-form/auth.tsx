@@ -1,7 +1,7 @@
 import React from 'react';
 import { AuthenticationForm } from '@mantine/core/demos';
 import { useMantineTheme } from '@mantine/core';
-import CodeDemo from '../../../components/CodeDemo/CodeDemo';
+import CodeDemo from '../../../components/Demo/CodeDemo/CodeDemo';
 
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax

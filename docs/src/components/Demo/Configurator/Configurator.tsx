@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { useMantineTheme } from '@mantine/core';
-import CodeHighlight from '../CodeHighlight/CodeHighlight';
-import DocsSection from '../DocsSection/DocsSection';
+import CodeHighlight from '../../CodeHighlight/CodeHighlight';
+import DocsSection from '../../DocsSection/DocsSection';
 import controls, { ControlProps } from './controls';
 import { propsToString } from './props-to-string';
 import useStyles from './Configurator.styles';

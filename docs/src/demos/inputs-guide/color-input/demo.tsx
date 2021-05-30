@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMantineTheme } from '@mantine/core';
 import { ColorInput } from './ColorInput';
-import CodeDemo from '../../../components/CodeDemo/CodeDemo';
+import CodeDemo from '../../../components/Demo/CodeDemo/CodeDemo';
 
 // @ts-ignore
 // eslint-disable-next-line

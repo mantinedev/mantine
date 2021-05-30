@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMantineTheme } from '@mantine/core';
-import CodeDemo from '../CodeDemo/CodeDemo';
-import Configurator from '../Configurator/Configurator';
+import CodeDemo from './CodeDemo/CodeDemo';
+import Configurator from './Configurator/Configurator';
 
 type ConfiguratorProps = React.ComponentProps<typeof Configurator>;
 type CodeDemoProps = React.ComponentProps<typeof CodeDemo>;

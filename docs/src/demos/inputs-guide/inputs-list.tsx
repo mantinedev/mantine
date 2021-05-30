@@ -13,7 +13,7 @@ import {
   SegmentedControlProps,
   useMantineTheme,
 } from '@mantine/core';
-import CodeDemo from '../../components/CodeDemo/CodeDemo';
+import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
 const data = [
   { label: 'React', value: 'react' },

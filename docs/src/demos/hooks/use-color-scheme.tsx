@@ -1,7 +1,7 @@
 import React from 'react';
 import { Group, Badge } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
-import CodeDemo from '../../components/CodeDemo/CodeDemo';
+import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
 import { Badge } from '@mantine/core';

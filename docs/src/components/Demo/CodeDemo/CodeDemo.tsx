@@ -3,8 +3,8 @@ import cx from 'clsx';
 import { Language } from 'prism-react-renderer';
 import { useMantineTheme, Paper, Group, ActionIcon, Tooltip } from '@mantine/core';
 import { CodeIcon } from '@modulz/radix-icons';
-import CodeHighlight from '../CodeHighlight/CodeHighlight';
-import DocsSection from '../DocsSection/DocsSection';
+import CodeHighlight from '../../CodeHighlight/CodeHighlight';
+import DocsSection from '../../DocsSection/DocsSection';
 import useStyles from './CodeDemo.styles';
 
 interface CodeDemoProps {

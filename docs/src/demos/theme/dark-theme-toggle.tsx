@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Group, ActionIcon } from '@mantine/core';
 import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 import { ColorSchemeContext } from '../../components/Layout/ColorScheme.context';
-import CodeDemo from '../../components/CodeDemo/CodeDemo';
+import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
 import { ActionIcon } from '@mantine/core';
