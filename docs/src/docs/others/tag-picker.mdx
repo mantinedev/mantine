@@ -1,7 +1,7 @@
 ---
 group: 'Other packages'
 package: '@mantine/tag-picker'
-title: 'Tag Picker'
+title: 'TagPicker'
 order: 1
 slug: /others/tag-picker/
 description: 'Notion style tag picker with full keyboard support'
@@ -11,9 +11,7 @@ source: 'mantine-tag-picker/src'
 docs: 'others/tag-picker.mdx'
 ---
 
-import { TagPickerBaseDemo } from '../demos/others/tag-picker/tag-picker-base.demo';
-import { TagPickerMinimalDemo } from '../demos/others/tag-picker/tag-picker-minimal.demo';
-import { TagPickerTransitionsDemo } from '../demos/others/tag-picker/tag-picker-transitions.demo';
+import * as TagPickerDemos from '@demos/tag-picker';
 
 ## Installation
 
@@ -54,7 +52,7 @@ const mockdata = [
 
 Bare minimum example with usage as custom select:
 
-<TagPickerMinimalDemo />
+<Demo data={TagPickerDemos.minimal} />
 
 ## Create, update, delete tags
 
@@ -65,7 +63,7 @@ Enhance tag picker with extra logic:
 - `enableColorChange` – to allow color change (won't work without `enableUpdate` option)
 - `enableDelete` and `onTagDelete` – to allow delete existing tags
 
-<TagPickerBaseDemo />
+<Demo data={TagPickerDemos.base} />
 
 ## Change transitions
 
@@ -77,7 +75,7 @@ You can change transitions with props:
 - **transitionDuration** – transition duration in ms, defaults to 200ms.
 - **transitionTimingFunction** – timing function, defaults to `theme.transitionTimingFunction`
 
-<TagPickerTransitionsDemo />
+<Demo data={TagPickerDemos.transitions} />
 
 ## Multiple state
 
