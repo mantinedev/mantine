@@ -3,7 +3,7 @@ name: Pull request workflow
 on:
   pull_request:
     branches:
-      - master
+      - *
 
 jobs:
   test_pull_request:
