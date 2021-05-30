@@ -2,10 +2,9 @@ import React from 'react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import TableOfContents from '../TableOfContents/TableOfContents';
 import { Footer } from '../../Footer/Footer';
-import { MdxPageProps } from '../types';
 import useStyles from './MdxRawContent.styles';
 
-export function MdxRawContent({ body, headings }: MdxPageProps) {
+export function MdxRawContent({ body, headings }: MdxPage) {
   const classes = useStyles();
   return (
     <div

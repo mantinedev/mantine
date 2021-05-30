@@ -5,37 +5,17 @@ import { MdxPage } from '../components/MdxPage/MdxPage';
 
 interface DocPageProps {
   data: {
-    mdx: {
-      headings: {
-        depth: number;
-        value: string;
-      }[];
-
-      body: string;
-
-      frontmatter: {
-        title: string;
-        description?: string;
-        props: string[];
-        import: string;
-        docs: string;
-        source: string;
-        package: string;
-        bundleSize: string;
-        installation: string;
-        pageTitle: string;
-      };
-    };
+    mdx: MdxPage;
   };
 }
 
 export default function DocPage({ data }: DocPageProps) {
-  const post = data.mdx;
+  const { mdx } = data;
 
   return (
     <article>
-      <Head title={post.frontmatter.title} description={post.frontmatter.description} />
-      <MdxPage body={post.body} headings={post.headings} data={post.frontmatter} />
+      <Head title={mdx.frontmatter.title} description={mdx.frontmatter.description} />
+      <MdxPage {...mdx} />
     </article>
   );
 }
@@ -59,6 +39,7 @@ export const query = graphql`
         bundleSize
         installation
         pageTitle
+        license
       }
       body
     }

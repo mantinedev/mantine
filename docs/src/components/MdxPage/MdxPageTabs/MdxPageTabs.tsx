@@ -4,18 +4,17 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import TableOfContents from '../TableOfContents/TableOfContents';
 import { Footer } from '../../Footer/Footer';
 import PropsTable from '../../MdxProvider/PropsTable/PropsTable';
-import { MdxPageProps } from '../types';
 import useStyles from './MdxPageTabs.styles';
 
-export function MdxPageTabs({ body, data, headings }: MdxPageProps) {
+export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
   const classes = useStyles();
 
-  if (!Array.isArray(data.props)) {
+  if (!Array.isArray(frontmatter.props)) {
     return null;
   }
 
-  const propsTables = Array.isArray(data.props)
-    ? data.props.map((component) => (
+  const propsTables = Array.isArray(frontmatter.props)
+    ? frontmatter.props.map((component) => (
         <div key={component}>
           <Title order={2} style={{ fontWeight: 600, marginBottom: 20 }}>
             {component} component props
