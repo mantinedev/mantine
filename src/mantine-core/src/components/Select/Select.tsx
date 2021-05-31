@@ -49,6 +49,7 @@ export function Select({
   inputStyle,
   description,
   elementRef,
+  defaultValue,
   ...others
 }: SelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -62,7 +63,7 @@ export function Select({
 
   if (placeholder) {
     options.unshift(
-      <option key="placeholder" value="" selected disabled hidden>
+      <option key="placeholder" value="xx-placeholder-xx" disabled hidden>
         {placeholder}
       </option>
     );
@@ -97,6 +98,7 @@ export function Select({
         rightSectionProps={{ style: { pointerEvents: 'none' } }}
         required={required}
         themeOverride={themeOverride}
+        defaultValue={defaultValue || (placeholder ? 'xx-placeholder-xx' : null)}
       >
         {options}
       </Input>
