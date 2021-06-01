@@ -74,6 +74,30 @@ function Demo() {
 }
 ```
 
+## Initial focus
+
+By default focus trap will move focus to first interactive element.
+To specify element that should receive initial focus add `data-autofocus` attribute,
+note that focus trap works with dom and this attribute should be added to element:
+
+```tsx
+import React from 'react';
+import { useFocusTrap } from '@mantine/hooks';
+
+function YourModal() {
+  const focusTrapRef = useFocusTrap();
+
+  return (
+    <div ref={focusTrapRef}>
+      <input />
+      {/* Second input in modal will have initial focus */}
+      <input data-autofocus />
+      <input />
+    </div>
+  );
+}
+```
+
 ## Examples
 
 use-focus-trap is used in some Mantine components: <GatsbyLink to="/core/modal/">Modal</GatsbyLink>, <GatsbyLink to="/core/drawer/">Drawer</GatsbyLink>, <GatsbyLink to="/core/menu/">Menu</GatsbyLink>, <GatsbyLink to="/others/tag-picker/">TagPicker</GatsbyLink> and others.

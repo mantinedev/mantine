@@ -83,6 +83,20 @@ You can change transitions with props:
 
 <Demo data={ModalDemos.transitions} />
 
+## Initial focus
+
+Modal uses <GatsbyLink to='/hooks/use-focus-trap/'>use-focus-trap</GatsbyLink> to manage focus.
+To specify initial focus element add `data-autofocus` attribute:
+
+```tsx
+<Modal>
+  <input />
+  {/* Second input in modal will have initial focus */}
+  <input data-autofocus />
+  <input />
+</Modal>
+```
+
 ## Accessibility and usability
 
 - When modal is opened focus is trapped inside and vertical scroll is locked at current position

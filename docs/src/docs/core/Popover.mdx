@@ -111,6 +111,20 @@ For additional modifications of popover body styles use `bodyClassName` or `body
 <Popover bodyClassName="my-class-name" />
 ```
 
+## Initial focus
+
+Popover uses <GatsbyLink to='/hooks/use-focus-trap/'>use-focus-trap</GatsbyLink> to manage focus.
+To specify initial focus element add `data-autofocus` attribute:
+
+```tsx
+<Popover>
+  <input />
+  {/* Second input in modal will have initial focus */}
+  <input data-autofocus />
+  <input />
+</Popover>
+```
+
 ## Server side rendering
 
 By default Popover uses random id to connect title and body via aria- attributes.

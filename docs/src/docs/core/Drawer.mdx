@@ -103,3 +103,17 @@ Add [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility
   <div id="drawer-body">Body</div>
 </Drawer>
 ```
+
+## Initial focus
+
+Drawer uses <GatsbyLink to='/hooks/use-focus-trap/'>use-focus-trap</GatsbyLink> to manage focus.
+To specify initial focus element add `data-autofocus` attribute:
+
+```tsx
+<Drawer>
+  <input />
+  {/* Second input in modal will have initial focus */}
+  <input data-autofocus />
+  <input />
+</Drawer>
+```
