@@ -16,6 +16,15 @@ export interface InputWrapperBaseProps {
 
   /** Adds red asterisk on the right side of label */
   required?: boolean;
+
+  /** Props spread to label element */
+  labelProps?: Record<string, any>;
+
+  /** Props spread to description element */
+  descriptionProps?: Record<string, any>;
+
+  /** Props spread to error element */
+  errorProps?: Record<string, any>;
 }
 
 export interface InputWrapperProps
@@ -42,13 +51,16 @@ export function InputWrapper({
   description,
   themeOverride,
   labelElement = 'label',
+  labelProps,
+  descriptionProps,
+  errorProps,
   ...others
 }: InputWrapperProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
-  const labelProps = labelElement === 'label' ? { htmlFor: id } : {};
+  const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
   const inputLabel = createElement(
     labelElement,
-    { ...labelProps, className: classes.label },
+    { ..._labelProps, ...labelProps, className: cx(classes.label, labelProps?.className) },
     <>
       {label}
       {required && (
@@ -70,7 +82,8 @@ export function InputWrapper({
           data-mantine-description
           color="gray"
           size="xs"
-          className={classes.description}
+          {...descriptionProps}
+          className={cx(classes.description, descriptionProps?.className)}
         >
           {description}
         </Text>
@@ -84,7 +97,8 @@ export function InputWrapper({
           data-mantine-error
           color="red"
           size="sm"
-          className={classes.error}
+          {...errorProps}
+          className={cx(classes.error, errorProps?.className)}
         >
           {error}
         </Text>
