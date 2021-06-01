@@ -20,6 +20,9 @@ function Demo() {
       <Group position="center" style={{ marginTop: 25 }}>
         {getThemes({ variant: 'filled' })}
       </Group>
+      <Group position="center" style={{ marginTop: 25 }}>
+        {getThemes({ variant: 'dot' })}
+      </Group>
     </>
   );
 }

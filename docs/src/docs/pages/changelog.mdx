@@ -13,6 +13,7 @@ import {
   CenterDemos,
   TabsDemos,
   RingProgressDemos,
+  BadgeDemos,
 } from '@demos/core';
 
 # Changelog
@@ -21,19 +22,19 @@ import {
 
 ### New components and features
 
-<GatsbyLink to="/core/tabs/">Tabs</GatsbyLink> component now supports outline variant:
-
-<Demo data={TabsDemos.outline} demoProps={{ toggle: true }} />
-
 <GatsbyLink to="/core/ring-progress/">RingProgress</GatsbyLink> component displays simple circle diagrams:
-
 <Demo data={RingProgressDemos.usage} demoProps={{ toggle: true }} />
 
-<GatsbyLink to="/core/center/">Center</GatsbyLink> centers content vertically and horizontally:
+<GatsbyLink to="/core/tabs/">Tabs</GatsbyLink> component now supports outline variant:
+<Demo data={TabsDemos.outline} demoProps={{ toggle: true }} />
 
+<GatsbyLink to="/core/badge/">Badge</GatsbyLink> component now supports dot variant:
+<Demo data={BadgeDemos.dots} />
+
+<GatsbyLink to="/core/center/">Center</GatsbyLink> centers content vertically and horizontally:
 <Demo data={CenterDemos.usage} demoProps={{ toggle: true }} />
 
-## Other changes
+### Other changes
 
 - Mantine packages are now published with commonjs and es modules – this enables better tree shaking
 - All components props types are now exported from @mantine/core package, you can import it by adding `Props` to component name:

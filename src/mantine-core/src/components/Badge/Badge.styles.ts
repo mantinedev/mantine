@@ -41,6 +41,14 @@ const sizes = {
   },
 } as const;
 
+const dotSizes = {
+  xs: 4,
+  sm: 4,
+  md: 6,
+  lg: 8,
+  xl: 10,
+};
+
 export const heights = Object.keys(sizes).reduce((acc, key) => {
   acc[key] = sizes[key].height;
   return acc;
@@ -105,7 +113,7 @@ export default createMemoStyles({
     textShadow:
       theme.colorScheme === 'dark'
         ? 'none'
-        : `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
+        : '1px 1px 1px rgba(0, 0, 0, .3)',
   }),
 
   outline: ({ theme, color }: BadgeStylesProps) => ({
@@ -117,19 +125,24 @@ export default createMemoStyles({
     ),
   }),
 
-  dot: ({ theme, color = 'grey' }: BadgeStylesProps) => ({
-    backgroundColor: 'transparent',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
-    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
-  }),
+  dot: ({ theme, color, size }: BadgeStylesProps) => {
+    const dotSize = getSizeValue({ size, sizes: dotSizes });
 
-  dotStyle: ({ theme, color, size }: BadgeStylesProps) => {
-    const { height } = size in sizes ? sizes[size] : sizes.md;
     return {
-      backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
-      height: height / 2.5,
-      width: height / 2.5,
-      borderRadius: '50%',
+      backgroundColor: 'transparent',
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3],
+      paddingLeft: getSizeValue({ size, sizes: theme.spacing }) / 1.5 - dotSize / 2,
+
+      '&::before': {
+        content: '""',
+        display: 'block',
+        width: dotSize,
+        height: dotSize,
+        borderRadius: dotSize,
+        backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+        marginRight: dotSize,
+      },
     };
   },
 });

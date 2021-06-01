@@ -50,6 +50,7 @@ storiesOf('@mantine/core/Badge', module)
       <Group style={{ padding: 10 }}>{getThemes()}</Group>
       <Group style={{ padding: 10 }}>{getThemes({ variant: 'outline' })}</Group>
       <Group style={{ padding: 10 }}>{getThemes({ variant: 'filled' })}</Group>
+      <Group style={{ padding: 10 }}>{getThemes({ variant: 'dot' })}</Group>
     </>
   ))
   .add('Sizes', () => (

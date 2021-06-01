@@ -59,12 +59,6 @@ export function Badge<T extends React.ElementType = 'div'>({
         </span>
       )}
 
-      {variant === 'dot' && (
-        <span data-mantine-badge-left className={classes.leftSection}>
-          <div className={classes.dotStyle} />
-        </span>
-      )}
-
       <span className={classes.inner}>{children}</span>
 
       {rightSection && (
