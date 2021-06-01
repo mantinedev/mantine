@@ -23,7 +23,7 @@ export function PackagesTable() {
               href={`https://github.com/mantinedev/mantine/tree/master/src/${folder}`}
               color="gray"
               variant="outline"
-              size="xs"
+              size="sm"
               leftIcon={<GitHubLogoIcon style={{ width: 12, height: 12 }} />}
             >
               Source code
@@ -33,7 +33,7 @@ export function PackagesTable() {
               href={`https://www.npmjs.com/package/${item.package}`}
               color="gray"
               variant="outline"
-              size="xs"
+              size="sm"
               leftIcon={<NpmIcon style={{ width: 12, height: 12 }} />}
             >
               npm
