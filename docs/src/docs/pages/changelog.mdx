@@ -55,31 +55,25 @@ import { ButtonProps } from '@mantine/core';
 <GatsbyLink to="/core/segmented-control/">SegmentedControl</GatsbyLink> component is an alternative to <GatsbyLink to="/core/tabs/">
   Tabs
 </GatsbyLink> and <GatsbyLink to="/core/radio-group/">RadioGroup</GatsbyLink>:
-
 <Demo data={SegmentedControlDemos.usage} demoProps={{ toggle: true }} />
 
 <GatsbyLink to="/core/popover/">Popover</GatsbyLink> component allows you to display popover section
 relative to given target element. Use it to render forms, complex tooltips, etc.
-
-<Demo data={PopoverDemos.form} demoProps={{ toggle: true }} />
+<Demo data={PopoverDemos.form} demoProps={{ toggle: true, zIndex: 4 }} />
 
 <GatsbyLink to="/core/divider/">Divider</GatsbyLink> component now supports labels, vertical orientation
 and margins:
-
 <Demo data={DividerDemos.labels} demoProps={{ toggle: true }} />
 
 <GatsbyLink to="/core/group/">Group</GatsbyLink> component now supports vertical orientation:
-
 <Demo data={GroupDemos.configurator} demoProps={{ toggle: true }} />
 
 <GatsbyLink to="/core/grid/">Grid</GatsbyLink> component allows you to use flexbox grid with any columns
 count:
-
 <Demo data={GridDemos.growConfigurator} demoProps={{ toggle: true }} />
 
 <GatsbyLink to="/hooks/use-debounced-value/">use-debounced-value</GatsbyLink> - hook to debounce value
 with useEffect:
-
 <UseDebouncedValueBaseDemo toggle />
 
 ### API Changes
