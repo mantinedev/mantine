@@ -82,7 +82,7 @@ export default createUseStyles(
       color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
       textDecoration: 'none',
       borderRadius: theme.radius.sm,
-      padding: [6, theme.spacing.md],
+      padding: [4, theme.spacing.md],
       height: 36,
       boxSizing: 'border-box',
 
@@ -92,6 +92,8 @@ export default createUseStyles(
     },
 
     linkLabel: {
+      fontSize: theme.fontSizes.sm,
+      lineHeight: 1,
       marginLeft: theme.spacing.xs,
     },
 
