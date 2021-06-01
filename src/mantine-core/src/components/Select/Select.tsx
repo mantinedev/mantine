@@ -63,7 +63,7 @@ export function Select({
 
   if (placeholder) {
     options.unshift(
-      <option key="placeholder" value="xx-placeholder-xx" disabled hidden>
+      <option key="placeholder" value="" disabled hidden>
         {placeholder}
       </option>
     );
@@ -98,7 +98,7 @@ export function Select({
         rightSectionProps={{ style: { pointerEvents: 'none' } }}
         required={required}
         themeOverride={themeOverride}
-        defaultValue={defaultValue || (placeholder ? 'xx-placeholder-xx' : null)}
+        defaultValue={defaultValue || (placeholder ? '' : null)}
       >
         {options}
       </Input>
