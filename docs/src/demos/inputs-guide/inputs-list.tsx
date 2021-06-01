@@ -32,7 +32,7 @@ export function SegmentedControlWrapper(
 const selectData = [
   { value: 'react', label: 'React' },
   { value: 'vue', label: 'Vue' },
-  { value: 'ng', label: 'Angular', disabled: true },
+  { value: 'ng', label: 'Angular' },
   { value: 'svelte', label: 'Svelte' },
 ];
 
@@ -46,9 +46,7 @@ export function WrappedInputsDemo() {
         <RadioGroup label="RadioGroup">
           <Radio value="react">React</Radio>
           <Radio value="svelte">Svelte</Radio>
-          <Radio value="ng" disabled title="Unless you can't, haha">
-            Angular
-          </Radio>
+          <Radio value="ng">Angular</Radio>
           <Radio value="vue">Vue</Radio>
         </RadioGroup>
 

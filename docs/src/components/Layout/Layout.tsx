@@ -34,10 +34,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
-      <MantineProvider theme={{ colorScheme }}>
-        <LayoutInner key={key}>{children}</LayoutInner>
-      </MantineProvider>
-    </ColorSchemeContext.Provider>
+    <React.StrictMode>
+      <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
+        <MantineProvider theme={{ colorScheme }}>
+          <LayoutInner key={key}>{children}</LayoutInner>
+        </MantineProvider>
+      </ColorSchemeContext.Provider>
+    </React.StrictMode>
   );
 }

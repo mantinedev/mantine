@@ -6,7 +6,7 @@ const codeTemplate = (props: string) => `<RadioGroup
 >
   <Radio value="react">React</Radio>
   <Radio value="svelte">Svelte</Radio>
-  <Radio value="ng" disabled title="Unless you can't, haha">Angular</Radio>
+  <Radio value="ng">Angular</Radio>
   <Radio value="vue">Vue</Radio>
 </RadioGroup>`;
 
@@ -15,9 +15,7 @@ function Wrapper(props: RadioGroupProps) {
     <RadioGroup {...props}>
       <Radio value="react">React</Radio>
       <Radio value="svelte">Svelte</Radio>
-      <Radio value="ng" disabled title="Unless you can't, haha">
-        Angular
-      </Radio>
+      <Radio value="ng">Angular</Radio>
       <Radio value="vue">Vue</Radio>
     </RadioGroup>
   );
@@ -37,7 +35,7 @@ export const configurator: MantineDemo = {
     {
       name: 'description',
       type: 'string',
-      initialValue: 'This is anonymous, you can safely pick Angular',
+      initialValue: 'This is anonymous',
     },
     {
       name: 'error',

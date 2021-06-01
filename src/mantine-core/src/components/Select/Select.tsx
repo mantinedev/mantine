@@ -50,6 +50,8 @@ export function Select({
   description,
   elementRef,
   defaultValue,
+  onChange,
+  value,
   ...others
 }: SelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -87,6 +89,7 @@ export function Select({
     >
       <Input<'select', HTMLSelectElement>
         {...others}
+        onChange={onChange}
         component="select"
         invalid={!!error}
         style={inputStyle}
@@ -98,7 +101,7 @@ export function Select({
         rightSectionProps={{ style: { pointerEvents: 'none' } }}
         required={required}
         themeOverride={themeOverride}
-        defaultValue={defaultValue || (placeholder ? '' : null)}
+        value={value === null ? '' : value}
       >
         {options}
       </Input>

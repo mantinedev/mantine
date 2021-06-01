@@ -4,7 +4,7 @@ import { Select, SelectProps } from '../Select';
 const data = [
   { value: 'react', label: 'React' },
   { value: 'vue', label: 'Vue' },
-  { value: 'ng', label: 'Angular', disabled: true },
+  { value: 'ng', label: 'Angular' },
   { value: 'svelte', label: 'Svelte' },
 ];
 
@@ -12,7 +12,7 @@ const codeTemplate = (props: string) => `<Select
   data={[
     { value: 'react', label: 'React' },
     { value: 'vue', label: 'Vue' },
-    { value: 'ng', label: 'Angular', disabled: true },
+    { value: 'ng', label: 'Angular' },
     { value: 'svelte', label: 'Svelte' },
   ]}
  ${props}
@@ -33,7 +33,7 @@ export const configurator: MantineDemo = {
     {
       name: 'description',
       type: 'string',
-      initialValue: 'This is anonymous, you can safely pick Angular',
+      initialValue: 'This is anonymous',
     },
     {
       name: 'error',

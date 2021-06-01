@@ -6,7 +6,7 @@ import { Select } from './Select';
 
 const data = [
   { label: 'React', value: 'react' },
-  { label: 'Angular', value: 'ng', disabled: true },
+  { label: 'Angular', value: 'ng' },
   { label: 'Vue', value: 'vue' },
   { label: 'Svelte', value: 'svelte' },
 ];
@@ -14,7 +14,7 @@ const data = [
 function WrappedSelect(
   props: Omit<React.ComponentProps<typeof Select>, 'value' | 'onChange' | 'data'>
 ) {
-  const [value, onChange] = useState('');
+  const [value, onChange] = useState(null);
   return (
     <Select
       value={value}
