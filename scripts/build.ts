@@ -4,7 +4,7 @@ import { hideBin } from 'yargs/helpers';
 import { buildPackage, BuildOptions } from './utils/build-package';
 import { buildAllPackages } from './utils/build-all-packages';
 
-const { argv } = yargs(hideBin(process.argv))
+const { argv }: { argv: any } = yargs(hideBin(process.argv))
   .option('all', {
     type: 'boolean',
     default: false,

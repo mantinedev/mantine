@@ -15,7 +15,7 @@ import packageJson from '../package.json';
 
 const logger = new Logger('release');
 const git = simpleGit();
-const { argv } = yargs(hideBin(process.argv))
+const { argv }: { argv: any } = yargs(hideBin(process.argv))
   .option('stage', {
     type: 'string',
     choices: ['alpha', 'beta', 'rc'],
@@ -57,9 +57,11 @@ const { argv } = yargs(hideBin(process.argv))
   logger.info('Releasing all packages');
 
   let incrementedVersion = packageJson.version;
+
   if (!argv.skipVersionCheck) {
     incrementedVersion = getIncrementedVersion(incrementedVersion, {
       type: argv._[0] as string,
+
       stage: argv.stage,
     });
     logger.info(`New version: ${chalk.cyan(incrementedVersion)}`);
@@ -68,6 +70,7 @@ const { argv } = yargs(hideBin(process.argv))
   }
 
   let packages;
+
   if (!argv.skipBuild) {
     packages = await buildAllPackages();
     logger.success('All packages were built successfully');
