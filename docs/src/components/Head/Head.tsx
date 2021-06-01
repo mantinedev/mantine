@@ -29,8 +29,7 @@ export default function Head({ title, description, disableTitleTemplate }: HeadP
         },
         {
           property: 'og:image',
-          content:
-            'https://raw.githubusercontent.com/mantinedev/mantine/master/docs/src/images/og-image.png',
+          content: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png',
         },
         {
           property: 'og:image:width',
