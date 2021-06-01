@@ -40,6 +40,9 @@ export interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<
 
   /** Props spread to Group component (parent of all controls) */
   groupProps?: Record<string, any>;
+
+  /** Props spread to tabs list wrapper */
+  tabsListProps?: Record<string, any>;
 }
 
 function getPreviousTab(active: number, tabs: TabType[]) {
@@ -83,6 +86,7 @@ export function Tabs({
   color,
   variant = 'default',
   groupProps,
+  tabsListProps,
   ...others
 }: TabsProps) {
   const classes = useStyles({ theme: useMantineTheme(themeOverride) });
@@ -139,7 +143,7 @@ export function Tabs({
 
   return (
     <div {...others}>
-      <div className={cx(classes[variant])}>
+      <div {...tabsListProps} className={cx(classes[variant], tabsListProps?.className)}>
         <Group
           {...groupProps}
           className={cx(classes.tabsInner, groupProps?.className)}

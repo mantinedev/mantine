@@ -8,6 +8,10 @@ export default createUseStyles(
       marginTop: -TAB_HEIGHT,
     },
 
+    tabsWrapper: {
+      borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2],
+    },
+
     tabsList: {
       paddingRight: 378, // I do not know how this value is calculated
       maxWidth: CONTENT_WIDTH - 20,

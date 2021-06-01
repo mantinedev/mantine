@@ -25,7 +25,12 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
     : null;
 
   return (
-    <Tabs variant="outline" className={classes.tabs} groupProps={{ className: classes.tabsList }}>
+    <Tabs
+      variant="outline"
+      className={classes.tabs}
+      groupProps={{ className: classes.tabsList }}
+      tabsListProps={{ className: classes.tabsWrapper }}
+    >
       <Tab label="Documentation" className={classes.tab}>
         <div
           className={classes.tabContent}
