@@ -355,28 +355,10 @@ createUseStyles(
 
 ## TypeScript
 
-### MantineTheme
+@mantine/core package exports types:
 
-MantineTheme type in usually used in jss styles:
-
-```tsx
-import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/core';
-
-createUseStyles(
-  (theme: MantineTheme) => ({
-    wrapper: {
-      fontFamily: theme.fontFamily,
-    },
-  }),
-  { theming }
-);
-```
-
-### Other types
-
-@mantine/core package exports these utility types for sizes:
-
-- **MantineSize** – `'xs' | 'sm' | 'md' | 'lg' | 'xl'`
-- **MantineNumberSize** – `MantineSize | number`
-- **MantineSizes** – `Record<MantineSize, number>`
+- `MantineSize` – `'xs' | 'sm' | 'md' | 'lg' | 'xl'`
+- `MantineNumberSize` – `MantineSize | number`
+- `MantineSizes` – `Record<MantineSize, number>`
+- `MantineTheme` – theme object interface
+- `MantineThemeOverride` – theme override options
