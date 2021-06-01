@@ -71,24 +71,22 @@ const categories = {
 };
 
 export function getComponentsData(query: any) {
-  const data: Record<
-    typeof order[number],
-    { name: string; description: string; to: string }[]
-  > = query.allMdx.edges.reduce((acc, item) => {
-    if (!item.node.frontmatter.category) {
-      return acc;
-    }
-    if (!Array.isArray(acc[item.node.frontmatter.category])) {
-      acc[item.node.frontmatter.category] = [];
-    }
+  const data: Record<typeof order[number], { name: string; description: string; to: string }[]> =
+    query.allMdx.edges.reduce((acc, item) => {
+      if (!item.node.frontmatter.category) {
+        return acc;
+      }
+      if (!Array.isArray(acc[item.node.frontmatter.category])) {
+        acc[item.node.frontmatter.category] = [];
+      }
 
-    acc[item.node.frontmatter.category].push({
-      name: item.node.frontmatter.title,
-      description: item.node.frontmatter.description,
-      to: item.node.frontmatter.slug,
-    });
-    return acc;
-  }, {});
+      acc[item.node.frontmatter.category].push({
+        name: item.node.frontmatter.title,
+        description: item.node.frontmatter.description,
+        to: item.node.frontmatter.slug,
+      });
+      return acc;
+    }, {});
 
   return order.map((item) => ({
     ...categories[item],

@@ -1,75 +1,45 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Badge
 order: 1
 slug: /core/badge/
 category: 'data-display'
 description: 'Display badge, pill or tag'
+props: ['Badge']
+import: "import { Badge } from '@mantine/core';"
+source: 'mantine-core/src/components/Badge/Badge.tsx'
+docs: 'core/Badge.mdx'
 ---
 
+import { BadgeDemos } from '@demos/core';
 import { BADGE_SIZES } from '@mantine/core';
-import {
-  BadgeBaseDemo,
-  BadgeLightVariantDemo,
-  BadgeOutlineVariantDemo,
-  BadgeFilledVariantDemo,
-  BadgeComposeDemo,
-  BadgeFullWidthDemo,
-  BadgeCustomComponentDemo,
-} from '../demos/core/Badge/badge.demos';
-import { BadgeSizesDemo } from '../demos/core/Badge/badge-sizes.demo';
-import { BadgeSectionsDemo } from '../demos/core/Badge/badge-sections.demo';
-import { BadgeRadiusDemo } from '../demos/core/Badge/badge-radius.demo';
-
-# Badge
-
-<PageHeader
-  source="mantine-core/src/Badge/Badge.tsx"
-  docs="core/Badge.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Badge } from '@mantine/core';
-```
 
 ## Usage
 
-Badge has 3 variants:
+<Demo data={BadgeDemos.usage} />
 
-- `light` (default) – light background, dark color, no border
-- `outline` – transparent background, dark color and border
-- `filled` – dark background, white color, no border
+## Colors
 
-Default Badge color is `theme.primaryColor`. You can choose any color defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink>.
+Default Badge color is `theme.primaryColor`.
+You can use any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>.
+Note that not all colors in some variants are compatible with dark theme:
 
-<BadgeBaseDemo />
+<Demo data={BadgeDemos.colors} />
 
-### Light variant
+## Size and radius
 
-<BadgeLightVariantDemo />
-
-### Outline variant
-
-<BadgeOutlineVariantDemo />
-
-### Filled variant
-
-<BadgeFilledVariantDemo />
-
-## Size
-
-Badge has predefined sizes: xs, sm, md, lg, xl.
-Size prop controls badge height, padding and font-size.
+Control badge font-size, height and padding with `size` and border-radius with `radius`.
+Both props have predefined values: xs, sm, md, lg, xl.
+Alternatively you can use number to set radius in px:
 
 ```tsx
+<Badge radius="lg" /> // -> theme predefined large radius
+<Badge radius={10} /> // -> { borderRadius: '10px' }
 <Badge size="sm" /> // -> predefined small size
-<Badge size="xl" /> // -> predefined extra large size
 ```
 
-Badge sizes from xl to xs:
-
-<BadgeSizesDemo />
+<Demo data={BadgeDemos.sizes} />
 
 You can get predefined badge heights by importing `BADGE_SIZES`:
 
@@ -78,48 +48,26 @@ import { BADGE_SIZES } from '@mantine/core';
 ```
 
 <DataTable
-  head={['Prop value', 'Badge height']}
+  head={['Size', 'Badge height']}
   data={Object.keys(BADGE_SIZES).map((size) => [size, `${BADGE_SIZES[size]}px`])}
 />
 
-## Radius
-
-xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
-Alternatively you can use number to set radius in px:
-
-```tsx
-<Badge radius="lg" /> // -> theme predefined large radius
-<Badge radius={1000} /> // -> { borderRadius: 1000 }
-```
-
-<BadgeRadiusDemo />
-
 ## Full width and overflow
 
-Badge can take full width of container if you pass `fullWidth` prop.
-If badge is too large for its container, overflow content will be hidden with ellipsis.
+Badge will take full width of container if you set `fullWidth` prop.
+If badge cannot fit in its container, overflow content will be hidden with ellipsis:
 
-<BadgeFullWidthDemo />
+<Demo data={BadgeDemos.overflow} />
 
 ## Right and left sections
 
 You can add any react node as right and left section to badge.
 Use it to add interactive parts (for example, remove button) or additional information:
 
-<BadgeSectionsDemo />
+<Demo data={BadgeDemos.sections} />
 
 ## Custom component
 
 You can change badge root element by passing React element to `component` prop.
 
-<BadgeCustomComponentDemo />
-
-## Compose with Group
-
-You can compose Badge with itself and any other components with <GatsbyLink to="/core/group/">Group</GatsbyLink> component.
-
-<BadgeComposeDemo />
-
-## Component props
-
-<PropsTable component="Badge" />
+<Demo data={BadgeDemos.component} />

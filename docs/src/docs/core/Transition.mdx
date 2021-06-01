@@ -1,26 +1,18 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Transition
 order: 1
 slug: /core/transition/
 category: 'misc'
 description: 'Animate presence of component with predefined animations'
+props: ['Transition']
+import: "import { Transition, GroupedTransition } from '@mantine/core';"
+source: 'mantine-core/src/components/Transition/Transition.tsx'
+docs: 'core/Transition.mdx'
 ---
 
-import { TooltipTransitionsDemo } from '../demos/core/Tooltip/tooltip-transitions.demo';
-import { TransitionCustomDemo } from '../demos/core/Transition/transition-custom.demo';
-
-# Transition
-
-<PageHeader
-  source="mantine-core/src/Transition/Transition.tsx"
-  docs="core/Transition.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Transition, GroupedTransition } from '@mantine/core';
-```
+import { TooltipDemos, TransitionDemos } from '@demos/core';
 
 ## Usage
 
@@ -33,7 +25,7 @@ Components come with premade animations and option to create your own based on C
 
 Mantine includes several premade transitions:
 
-<TooltipTransitionsDemo hideCode />
+<Demo data={TooltipDemos.transitions} />
 
 To use one of them set `transition` property to one of these values:
 
@@ -59,7 +51,7 @@ You can create your own transition. Transition is an object with 4 properties:
 - `common` (optional) – styles for both mounted and unmounted states
 - `transitionProperty` – properties which participate in transition
 
-<TransitionCustomDemo />
+<Demo data={TransitionDemos.custom} />
 
 ## GroupedTransition
 
@@ -105,7 +97,3 @@ function Demo({ transition = 'skew-up' }: { transition: MantineTransition }) {
   return <Transition transition={transition} /* other props */ />;
 }
 ```
-
-## Component props
-
-<PropsTable component="Transition" />

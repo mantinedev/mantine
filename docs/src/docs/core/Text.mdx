@@ -1,21 +1,18 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Text
 order: 1
 slug: /core/text/
 category: 'typography'
 description: 'Render text and links with theme styles'
+props: ['Text']
+import: "import { Text, Anchor } from '@mantine/core';"
+source: 'mantine-core/src/components/Text/Text.tsx'
+docs: 'core/Text.mdx'
 ---
 
-import { TextBaseDemo } from '../demos/core/Text/text.demos';
-
-# Text
-
-<PageHeader source="mantine-core/src/Text/Text.tsx" docs="core/Text.mdx" package="@mantine/core" />
-
-```tsx
-import { Text, Anchor } from '@mantine/core';
-```
+import { TextDemos } from '@demos/core';
 
 ## Usage
 
@@ -28,7 +25,7 @@ Use Text component to render text and links with theme styles. Control Text styl
 - **align** – text-align property
 - **variant** – text or link predefined styles (Anchor component has `variant="link"` by default)
 
-<TextBaseDemo />
+<Demo data={TextDemos.usage} />
 
 ## Custom component
 
@@ -50,7 +47,3 @@ import { Link } from 'react-router-dom';
   Normal link
 </Text>
 ```
-
-## Component props
-
-<PropsTable component="Text" />

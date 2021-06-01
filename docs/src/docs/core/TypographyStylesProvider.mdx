@@ -1,28 +1,18 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: TypographyStylesProvider
 order: 1
 slug: /core/typography-styles-provider/
 category: 'typography'
 description: 'Add Mantine typography styles to your html content'
+props: ['TypographyStylesProvider']
+import: "import { TypographyStylesProvider } from '@mantine/core';"
+source: 'mantine-core/src/components/TypographyStylesProvider/TypographyStylesProvider.tsx'
+docs: 'core/TypographyStylesProvider.mdx'
 ---
 
-import {
-  TypographyStylesProviderBaseDemo,
-  TypographyStylesProviderAllPartsDemo,
-} from '../demos/core/TypographyStylesProvider/TypographyStylesProvider.demo';
-
-# TypographyStylesProvider
-
-<PageHeader
-  source="mantine-core/src/TypographyStylesProvider/TypographyStylesProvider.tsx"
-  docs="core/TypographyStylesProvider.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { TypographyStylesProvider } from '@mantine/core';
-```
+import { TypographyStylesProviderDemos } from '@demos/core';
 
 ## Usage
 
@@ -46,7 +36,7 @@ function Demo() {
 
 Example with [Wikipedia page](https://en.wikipedia.org/wiki/We_Butter_the_Bread_with_Butter) part
 
-<TypographyStylesProviderBaseDemo />
+<Demo data={TypographyStylesProviderDemos.usage} />
 
 ## All styles demo
 
@@ -62,8 +52,4 @@ TypographyStylesProvider includes styles for:
 - hr
 - code and pre
 
-<TypographyStylesProviderAllPartsDemo />
-
-## Component props
-
-<PropsTable component="TypographyStylesProvider" />
+<Demo data={TypographyStylesProviderDemos.all} />

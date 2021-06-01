@@ -1,33 +1,24 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Grid
 order: 1
 slug: /core/grid/
 category: 'layout'
 description: 'Flexbox grid system with variable amount of columns'
+props: ['Grid']
+import: "import { Grid, Col } from '@mantine/core';"
+source: 'mantine-core/src/components/Grid/Grid.tsx'
+docs: 'core/Grid.mdx'
 ---
 
-import { GridRootDemo } from '../demos/core/Grid/grid-root.demo';
-import { GridOverflowDemo } from '../demos/core/Grid/grid-overflow.demo';
-import { GridResponsiveDemo } from '../demos/core/Grid/grid-responsive.demo';
-import { GridColumnsDemo } from '../demos/core/Grid/grid-columns.demo';
-import { GridGrowConfigurator } from '../demos/core/Grid/grid-grow.configurator';
-import { GridFlexConfigurator } from '../demos/core/Grid/grid-flex.configurator';
-import { GridOffsetDemo } from '../demos/core/Grid/grid-offset.demo';
-
-# Group
-
-<PageHeader source="mantine-core/src/Grid/Grid.tsx" docs="core/Grid.mdx" package="@mantine/core" />
-
-```tsx
-import { Grid, Col } from '@mantine/core';
-```
+import { GridDemos } from '@demos/core';
 
 ## Usage
 
 Grid component provides simple grid system based on flexbox container:
 
-<GridRootDemo />
+<Demo data={GridDemos.usage} />
 
 ## Gutter
 
@@ -44,27 +35,27 @@ or number to set spacing in px:
 
 Set `grow` prop on Grid component to force last row take 100% of container width:
 
-<GridGrowConfigurator />
+<Demo data={GridDemos.growConfigurator} />
 
 ## Column offset
 
 Set `offset` prop on Col component to create gaps in grid.
 `offset` adds left margin to target column and has the same units as `span`:
 
-<GridOffsetDemo />
+<Demo data={GridDemos.offset} />
 
 ## Multiple rows
 
 Once children columns span and offset sum exceeds `columns` prop (defaults to 12),
 columns are placed on next row:
 
-<GridOverflowDemo />
+<Demo data={GridDemos.rows} />
 
 ## Justify and align
 
 Since grid is a flex container, you can control `justify-content` and `align-items` properties:
 
-<GridFlexConfigurator />
+<Demo data={GridDemos.flexConfigurator} />
 
 ## Responsive columns
 
@@ -72,7 +63,7 @@ Use <GatsbyLink to="/hooks/use-media-query/">use-media-query</GatsbyLink> hook
 to make columns respond to viewport changes.
 In this example for screens larger that 755px 3 columns will be shown and 1 column for everything less:
 
-<GridResponsiveDemo />
+<Demo data={GridDemos.responsive} />
 
 ## Change columns count
 
@@ -81,7 +72,7 @@ Note that in this case columns span and offset will be calculated relative to th
 
 In this example first column takes 50% with 12 span (12/24), second and third take 25% (6/24):
 
-<GridColumnsDemo />
+<Demo data={GridDemos.columns} />
 
 ## Wrap Col component
 
@@ -118,7 +109,3 @@ function ColWrapper(props: React.ComponentProps<typeof Col>) {
   <ColWrapper span={4}>3</ColWrapper>
 </Grid>;
 ```
-
-## Grid component props
-
-<PropsTable component="Grid" />

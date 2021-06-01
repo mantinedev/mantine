@@ -1,26 +1,18 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Table
 order: 1
 slug: /core/table/
 category: 'typography'
 description: 'Render table with theme styles'
+props: ['Table']
+import: "import { Table } from '@mantine/core';"
+source: 'mantine-core/src/components/Table/Table.tsx'
+docs: 'core/Table.mdx'
 ---
 
-import { TableBaseDemo, TableFullDemo } from '../demos/core/Table/table.demos';
-import { TableStrippedConfigurator } from '../demos/core/Table/table.configurator';
-
-# Table
-
-<PageHeader
-  source="mantine-core/src/Table/Table.tsx"
-  docs="core/Table.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Table } from '@mantine/core';
-```
+import { TableDemos } from '@demos/core';
 
 ## Usage
 
@@ -38,22 +30,18 @@ const elements = [
 
 Table component accepts the same children as table element and adds mantine theme styles.
 
-<TableBaseDemo />
+<Demo data={TableDemos.usage} />
 
 ## Caption and tfoot
 
 Table support tfoot and caption elements.
 Pass `captionSide` prop (top or bottom) to change caption position.
 
-<TableFullDemo />
+<Demo data={TableDemos.captions} />
 
 ## Striped and rows hover
 
 You can make table striped by passing `striped` prop to `Table`.
 If `highlightOnHover` prop is true rows will be highlighted with gray color on hover.
 
-<TableStrippedConfigurator />
-
-## Component props
-
-<PropsTable component="Table" />
+<Demo data={TableDemos.configurator} />

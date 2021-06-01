@@ -3,21 +3,21 @@ title: Theming
 slug: /pages/theming/
 ---
 
+import { PaperDemos } from '@demos/core';
 import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
-import { ThemeColorExtendDemo } from '../demos/theme/theme-colors-extend.demo';
-import { ThemeFontsExtendDemo } from '../demos/theme/theme-fonts-extend.demo';
-import { NestedProvidersDemo } from '../demos/theme/nested-providers.demo';
-import { PrimaryColorDemo } from '../demos/theme/primary-color.demo';
-import { ThemeOverrideDemo } from '../demos/theme/theme-override.demo';
-import { PaperConfigurator } from '../demos/core/Paper/paper.configurator';
+import {
+  ThemeColorExtendDemo,
+  ThemeFontsExtendDemo,
+  NestedProvidersDemo,
+  PrimaryColorDemo,
+  ThemeOverrideDemo,
+} from '@docs/demos';
 
 # Theming
 
 By default all Mantine components use the default theme.
 You can extend and customize theme on top level with MantineProvider
 or on individual component level with theme override.
-
-<PageHeader source="mantine-theme/src/" docs="pages/theming.mdx" package="@mantine/core" />
 
 ## MantineProvider
 
@@ -191,7 +191,7 @@ These values are exposed on theme:
 
 Example with <GatsbyLink to="/core/paper/">Paper</GatsbyLink> component (padding is set with `theme.spacing`):
 
-<PaperConfigurator />
+<Demo data={PaperDemos.configurator} />
 
 You can change size values by setting corresponding properties.
 In this example:
@@ -355,28 +355,10 @@ createUseStyles(
 
 ## TypeScript
 
-### MantineTheme
+@mantine/core package exports types:
 
-MantineTheme type in usually used in jss styles:
-
-```tsx
-import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme } from '@mantine/core';
-
-createUseStyles(
-  (theme: MantineTheme) => ({
-    wrapper: {
-      fontFamily: theme.fontFamily,
-    },
-  }),
-  { theming }
-);
-```
-
-### Other types
-
-@mantine/core package exports these utility types for sizes:
-
-- **MantineSize** – `'xs' | 'sm' | 'md' | 'lg' | 'xl'`
-- **MantineNumberSize** – `MantineSize | number`
-- **MantineSizes** – `Record<MantineSize, number>`
+- `MantineSize` – `'xs' | 'sm' | 'md' | 'lg' | 'xl'`
+- `MantineNumberSize` – `MantineSize | number`
+- `MantineSizes` – `Record<MantineSize, number>`
+- `MantineTheme` – theme object interface
+- `MantineThemeOverride` – theme override options

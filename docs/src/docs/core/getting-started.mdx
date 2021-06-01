@@ -1,74 +1,25 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: 'Getting started'
+pageTitle: 'Mantine Core'
+description: 'Core components library'
 order: 0
 slug: /core/getting-started/
+installation: '@mantine/core'
+bundleSize: '@mantine/core'
+source: 'mantine-core/'
+license: MIT
 ---
 
 import { ComponentsByCategory } from '../../components/ComponentsByCategory/ComponentsByCategory';
-
-# Mantine core
-
-@mantine/core is the main package that includes all essential components
-that you may need to build an application.
-
-## Installation
-
-With yarn:
-
-```sh
-yarn add react-jss @mantine/hooks @mantine/core
-```
-
-With npm:
-
-```sh
-npm install react-jss @mantine/hooks @mantine/core
-```
-
-With [peerdeps](https://www.npmjs.com/package/install-peerdeps):
-
-```sh
-npx install-peerdeps @mantine/core
-```
 
 ## Components by category
 
 <ComponentsByCategory />
 
-## Package information
+## Browser support
 
-### Bundle size
-
-<BundleSize packageName="@mantine/core" />
-
-### Dependencies
-
-<Dependencies
-  packageName="@mantine/core"
-  dependencies={[
-    { name: '@mantine/hooks', type: 'peer' },
-    { name: 'react', type: 'peer' },
-    { name: 'react-dom', type: 'peer' },
-    { name: 'react-jss', type: 'peer', why: 'CSS-in-JS library used to style all components' },
-    {
-      name: 'clsx',
-      type: 'dependency',
-      why: 'Utility to construct className stings conditionally',
-    },
-    {
-      name: 'react-textarea-autosize',
-      type: 'dependency',
-      why: 'Utility component used to implement autosize in Textarea',
-    },
-    {
-      name: 'react-transition-group',
-      type: 'dependency',
-      why: 'Used to implement transitions in Transition component',
-    },
-  ]}
-/>
-
-## License
-
-<License />
+All components are tested to work in all major modern browsers.
+Some components depend on wep APIs that may not be supported by old browsers,
+if you encounter any issues with browsers compatibility [open an issue](https://github.com/mantinedev/mantine/issues/new).

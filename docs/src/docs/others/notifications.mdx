@@ -1,48 +1,25 @@
 ---
 order: 1
-package: 'Other packages'
+group: 'Other packages'
+package: '@mantine/notifications'
 title: Notifications system
 slug: /others/notifications/
+props: ['NotificationsProvider']
+source: 'mantine-notifications/src'
+docs: 'others/notifications.mdx'
+pageTitle: 'Mantine Notifications'
+description: 'Mantine notifications system'
+installation: '@mantine/notifications'
+bundleSize: '@mantine/notifications'
+license: MIT
 ---
 
-import { NotificationConfigurator } from '../demos/core/Notification/notification.configurator';
-import { NotificationsRootDemo } from '../demos/others/notifications/notifications-root.demo';
-import { NotificationsBaseDemo } from '../demos/others/notifications/notifications-base.demo';
-import { NotificationsLimitDemo } from '../demos/others/notifications/notifications-limit.demo';
-import { NotificationsUpdateDemo } from '../demos/others/notifications/notifications-update.demo';
-import { NotificationsAutoCloseDemo } from '../demos/others/notifications/notifications-autoclose.demo';
-import { NotificationsCleanDemo } from '../demos/others/notifications/notifications-clean.demo';
-import { NotificationsInteractiveDemo } from '../demos/others/notifications/notifications-interactive.demo';
+import * as MantineNotificationsDemos from '@demos/notifications';
+import { NotificationDemos } from '@demos/core';
 
-# Mantine notifications system
+## Demo
 
-<PageHeader
-  source="mantine-notifications/src"
-  docs="others/notifications.mdx"
-  package="@mantine/notifications"
-/>
-
-<NotificationsRootDemo />
-
-## Installation
-
-With yarn:
-
-```sh
-yarn add react-jss @mantine/hooks @mantine/core @mantine/notifications
-```
-
-With npm:
-
-```sh
-npm install react-jss @mantine/hooks @mantine/core @mantine/notifications
-```
-
-With [peerdeps](https://www.npmjs.com/package/install-peerdeps):
-
-```sh
-npx install-peerdeps @mantine/notifications
-```
+<Demo data={MantineNotificationsDemos.root} />
 
 ## Usage
 
@@ -66,11 +43,7 @@ function YourApp() {
 
 Use use-notifications hook at any place in your application:
 
-<NotificationsBaseDemo />
-
-## NotificationsProvider props
-
-<PropsTable component="NotificationsProvider" />
+<Demo data={MantineNotificationsDemos.base} />
 
 ## use-notifications hook
 
@@ -150,7 +123,7 @@ const id = notifications.showNotification({
 
 Notifications preview (message prop used as children):
 
-<NotificationConfigurator noCode />
+<Demo data={NotificationDemos.configurator} configuratorProps={{ includeCode: false }} />
 
 ## Notifications container position
 
@@ -178,7 +151,7 @@ You can limit maximum amount of notifications that can be displayed by setting
 All notifications added after limit was reached will be added into queue
 and displayed when notification from current state is closed.
 
-<NotificationsLimitDemo />
+<Demo data={MantineNotificationsDemos.limit} />
 
 ## Remove notifications from state and queue
 
@@ -194,13 +167,13 @@ notifications.hideNotification(id);
 Use `cleanQueue` handler to remove all notifications that are not currently displayed and
 `clean` handler to remove all notifications from state and queue:
 
-<NotificationsCleanDemo />
+<Demo data={MantineNotificationsDemos.clean} />
 
 ## Update notification
 
 showNotification handler returns notification id, you can use it to update notification:
 
-<NotificationsUpdateDemo />
+<Demo data={MantineNotificationsDemos.update} />
 
 ## Auto close
 
@@ -230,44 +203,11 @@ notifications.updateNotification('hello', {
 
 showNotification and updateNotification have higher priority.
 
-<NotificationsAutoCloseDemo />
+<Demo data={MantineNotificationsDemos.autoclose} />
 
 ## React node in notification message
 
 You can render any react node in notification message, for example, input or button.
 Combine this option with other settings to achieve the desired behavior:
 
-<NotificationsInteractiveDemo />
-
-## Package information
-
-### Bundle size
-
-<BundleSize packageName="@mantine/notifications" />
-
-### Dependencies
-
-<Dependencies
-  packageName="@mantine/notifications"
-  dependencies={[
-    { name: '@mantine/hooks', type: 'peer' },
-    { name: '@mantine/core', type: 'peer' },
-    { name: 'react', type: 'peer' },
-    { name: 'react-dom', type: 'peer' },
-    { name: 'react-jss', type: 'peer', why: 'CSS-in-JS library used to style all components' },
-    {
-      name: 'clsx',
-      type: 'dependency',
-      why: 'Utility to construct className stings conditionally',
-    },
-    {
-      name: 'react-transition-group',
-      type: 'dependency',
-      why: 'Used to implement notifications appear/disappear transitions',
-    },
-  ]}
-/>
-
-### License
-
-<License />
+<Demo data={MantineNotificationsDemos.interactive} />

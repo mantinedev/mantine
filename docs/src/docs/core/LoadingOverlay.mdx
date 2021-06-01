@@ -1,26 +1,18 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: LoadingOverlay
 order: 1
 slug: /core/loading-overlay/
 category: 'overlay'
 description: 'Display loader with overlay over current container'
+props: ['LoadingOverlay']
+import: "import { LoadingOverlay } from '@mantine/core';"
+source: 'mantine-core/src/components/LoadingOverlay/LoadingOverlay.tsx'
+docs: 'core/LoadingOverlay.mdx'
 ---
 
-import { LoadingOverlayBaseDemo } from '../demos/core/LoadingOverlay/loading-overlay.demos';
-import { LoadingOverlayLoaderDemo } from '../demos/core/LoadingOverlay/loading-overlay-loader.demo';
-
-# LoadingOverlay
-
-<PageHeader
-  source="mantine-core/src/LoadingOverlay/LoadingOverlay.tsx"
-  docs="core/LoadingOverlay.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { LoadingOverlay } from '@mantine/core';
-```
+import { LoadingOverlayDemos } from '@demos/core';
 
 ## Usage
 
@@ -32,7 +24,7 @@ Use it when you need to disable user interactions and indicate loading state, fo
 
 `visible` is the only required prop, if it set to false component will not render anything.
 
-<LoadingOverlayBaseDemo />
+<Demo data={LoadingOverlayDemos.usage} />
 
 ## Transition duration
 
@@ -63,8 +55,4 @@ You can change all props of Loader component, opacity and color of Overlay:
 
 You can use any other loader with LoadingOverlay by setting `loader` prop:
 
-<LoadingOverlayLoaderDemo />
-
-## Component props
-
-<PropsTable component="LoadingOverlay" />
+<Demo data={LoadingOverlayDemos.loader} />

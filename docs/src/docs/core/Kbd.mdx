@@ -1,36 +1,28 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Kbd
 order: 1
 slug: /core/kbd/
 category: 'data-display'
 description: 'Display keyboard button'
+props: ['Kbd']
+import: "import { Kbd } from '@mantine/core';"
+source: 'mantine-core/src/components/Kbd/Kbd.tsx'
+docs: 'core/Kbd.mdx'
 ---
 
-import { KbdBaseDemo } from '../demos/core/Kbd/kbd.demos';
-import { KbdInputDemo } from '../demos/core/Kbd/kbd-input.demo';
-
-# Kbd
-
-<PageHeader source="mantine-core/src/Kbd/Kbd.tsx" docs="core/Kbd.mdx" package="@mantine/core" />
-
-```tsx
-import { Kbd } from '@mantine/core';
-```
+import { KbdDemos } from '@demos/core';
 
 ## Usage
 
 Use kbd html element to describe keyboard actions and shortcuts:
 
-<KbdBaseDemo />
+<Demo data={KbdDemos.usage} />
 
 ## Example
 
 Usage example with <GatsbyLink to="/core/text-input/">TextInput</GatsbyLink> component
 – Kbd is used to describe keyboard shortcut to focus input:
 
-<KbdInputDemo />
-
-## Component props
-
-<PropsTable component="Kbd" />
+<Demo data={KbdDemos.input} />

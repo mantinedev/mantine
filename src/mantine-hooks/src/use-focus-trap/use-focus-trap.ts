@@ -29,7 +29,7 @@ export function useFocusTrap(active = true): (instance: HTMLElement) => void {
         const processNode = (_node: HTMLElement) => {
           restoreAria.current = createAriaHider(_node);
 
-          let focusElement: HTMLElement | null = null;
+          let focusElement: HTMLElement = node.querySelector('[data-autofocus]');
 
           if (!focusElement) {
             const children = Array.from<HTMLElement>(node.querySelectorAll(FOCUS_SELECTOR));

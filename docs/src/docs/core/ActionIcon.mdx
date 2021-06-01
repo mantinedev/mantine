@@ -1,38 +1,27 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: ActionIcon
 order: 1
 slug: /core/action-icon/
 category: 'inputs'
-description: 'Indicate secondary action'
+description: 'Display icon button to indicate secondary action'
+props: ['ActionIcon']
+import: "import { ActionIcon } from '@mantine/core';"
+source: 'mantine-core/src/components/ActionIcon/ActionIcon.tsx'
+docs: 'core/ActionIcon.mdx'
 ---
 
+import { ActionIconDemos } from '@demos/core';
 import { ACTION_ICON_SIZES } from '@mantine/core';
-import {
-  ActionIconGroupDemo,
-  ActionIconUsageDemo,
-  ActionIconVariantDemo,
-} from '../demos/core/ActionIcon/action-icon.demos';
-import { ActionIconConfigurator } from '../demos/core/ActionIcon/action-icon.configurator';
-import { ActionIconColorsDemo } from '../demos/core/ActionIcon/action-icon-colors.demo';
-import { ActionIconSizesDemo } from '../demos/core/ActionIcon/action-icon-sizes.demo';
-import { ActionIconRadiusDemo } from '../demos/core/ActionIcon/action-icon-radius.demo';
-
-# ActionIcon
-
-<PageHeader
-  source="mantine-core/src/ActionIcon/ActionIcon.tsx"
-  docs="core/ActionIcon.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { ActionIcon } from '@mantine/core';
-```
 
 ## Usage
 
-You can use any React node as icon by passing it as a child to ActionIcon component.
+<Demo data={ActionIconDemos.configurator} />
+
+## Icons
+
+You can use icons from any react icons library, for example, [radix icons](https://icons.modulz.app/), [feather icons](https://feathericons.com/) or [react-icons](https://react-icons.github.io/react-icons).
 Note that component **does not control icon size** and you need to specify it manually on icon component for better fit:
 
 ```tsx
@@ -41,27 +30,17 @@ Note that component **does not control icon size** and you need to specify it ma
 </ActionIcon>
 ```
 
-You can use icons from any react icons library, for example:
-
-- [radix icons](https://icons.modulz.app/) (used in mantine packages)
-- [feather](https://feathericons.com/)
-- [react-icons](https://react-icons.github.io/react-icons)
-
-<ActionIconConfigurator />
-
 ## Where to use
-
-Use action icon to indicate secondary action, for example to close modal or toggle password visibility. Keep in mind that component has low emphasis.
 
 Password input visibility toggle example:
 
-<ActionIconUsageDemo />
+<Demo data={ActionIconDemos.usage} />
 
 ## Variants
 
 ActionIcon has 5 variants: hover (default), transparent, filled, light and outline:
 
-<ActionIconVariantDemo />
+<Demo data={ActionIconDemos.variants} />
 
 ## Color
 
@@ -72,22 +51,23 @@ You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">them
 <ActionIcon color="blue" />
 ```
 
-<ActionIconColorsDemo />
+<Demo data={ActionIconDemos.colors} />
 
-## Size
+## Size and radius
 
-Note that component **does not control icon size** and you need to specify it manually on icon component for better fit.
-ActionIcon has predefined sizes: xs, sm, md, lg, xl.
-You can pass size as number and it will be set as width and height in px:
+Control button width and height with `size` and border-radius with `radius`.
+Both props have predefined values: xs, sm, md, lg, xl.
+Alternatively you can use number to set radius or size in px:
 
 ```tsx
+<ActionIcon radius="lg" /> // -> theme predefined large radius
+<ActionIcon radius={10} /> // -> { borderRadius: '10px' }
+
 <ActionIcon size="sm" /> // -> predefined small size
-<ActionIcon size={50} /> // -> { width: 50, height: 50 }
+<ActionIcon size={50} /> // -> { width: '50px', height: '50px' }
 ```
 
-Sizes from xl to xs:
-
-<ActionIconSizesDemo />
+<Demo data={ActionIconDemos.sizes} />
 
 You can get default sizes values by importing `ACTION_ICON_SIZES`:
 
@@ -99,27 +79,6 @@ import { ACTION_ICON_SIZES } from '@mantine/core';
   head={['Prop value', 'Width and height']}
   data={Object.keys(ACTION_ICON_SIZES).map((size) => [size, `${ACTION_ICON_SIZES[size]}px`])}
 />
-
-## Radius
-
-Radius has predefined values: xs, sm, md, lg, xl which are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
-Alternatively you can use number to set border-radius in px:
-
-```tsx
-<ActionIcon radius="lg" /> // -> theme predefined large radius
-<ActionIcon radius={10} /> // -> { borderRadius: 10 }
-<ActionIcon radius={0} /> // -> remove border-radius
-```
-
-Default radius from xs to xl for xl size:
-
-<ActionIconRadiusDemo />
-
-## Compose with Group
-
-You can compose ActionIcon and any other components with <GatsbyLink to="/core/group/">Group</GatsbyLink> component.
-
-<ActionIconGroupDemo />
 
 ## Get element ref
 
@@ -138,21 +97,17 @@ function Demo() {
 ## Accessibility
 
 ActionIcon renders a regular button element.
-Make sure to include `title` or `aria-label` props for screen reader support
-as by design element does not have text content.
+Include `title` or `aria-label` props for screen reader support
+as by design element does not associated label.
 
 ```tsx
-// Title will show message on hover and announce control with screen reader
+// Set title to show message on hover
 <ActionIcon title="Settings">
   <GearIcon />
 </ActionIcon>
 
-// aria-label will only announce control with screen reader
+// Set aria-label to announce control with screen reader
 <ActionIcon aria-label="Settings">
   <GearIcon />
 </ActionIcon>
 ```
-
-## Component props
-
-<PropsTable component="ActionIcon" />

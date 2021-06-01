@@ -1,24 +1,18 @@
 ---
-package: mantine-hooks
+group: 'mantine-hooks'
+package: '@mantine/hooks'
 title: 'use-scroll-lock'
+category: 'dom'
 order: 1
 slug: /hooks/use-scroll-lock/
+description: 'Lock scroll at current position'
+import: "import { useScrollLock } from '@mantine/hooks';"
+docs: 'hooks/use-scroll-lock.mdx'
+source: 'mantine-hooks/src/use-scroll-lock/use-scroll-lock.ts'
 ---
 
-import { UseScrollLockDemo } from '../demos/hooks/use-scroll-lock.demos.tsx';
-import { ModalBaseDemo } from '../demos/core/Modal/modal.base-demo';
-
-# use-scroll-lock
-
-<PageHeader
-  source="mantine-hooks/src/use-scroll-lock/use-scroll-lock.ts"
-  docs="hooks/use-scroll-lock.mdx"
-  package="@mantine/hooks"
-/>
-
-```tsx
-import { useScrollLock } from '@mantine/hooks';
-```
+import { ModalDemos } from '@demos/core';
+import { useScrollLockHook } from '@docs/demos';
 
 ## Usage
 
@@ -48,12 +42,12 @@ function Modal({ opened }) {
 When hooks is called with `true`, it sets `document.body.style.overflow` to `hidden`.
 When component is unmounted, scroll lock is automatically removed:
 
-<UseScrollLockDemo />
+<Demo data={useScrollLockHook} />
 
 use-scroll-lock is used in some components in <GatsbyLink to="/core/getting-started/">@mantine/core</GatsbyLink>,
 example with <GatsbyLink to="/core/modal/">Modal</GatsbyLink> component:
 
-<ModalBaseDemo />
+<Demo data={ModalDemos.usage} />
 
 ## Disable touch events
 

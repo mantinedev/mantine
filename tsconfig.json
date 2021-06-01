@@ -1,22 +1,11 @@
 {
-  "include": ["./src", "./docs", "./scripts", "./configuration", "./envs"],
-  "exclude": ["dist", "public"],
-
+  "extends": "./tsconfig.base.json",
+  "include": ["./src", "./types", "./docs", "./scripts", "./configuration", "./envs"],
+  "exclude": ["public", ".cache"],
   "compilerOptions": {
-    "jsx": "react",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "module": "commonjs",
-    "target": "es5",
-    "sourceMap": false,
-    "noEmitOnError": false,
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "types": ["node", "webpack", "jest"],
-    "typeRoots": ["./node_modules/@types", "./configuration/types"],
-    "baseUrl": ".",
     "paths": {
-      "@mantine/*": ["src/mantine-*/src"]
+      "@mantine/*": ["src/mantine-*/src"],
+      "@demos/*": ["src/mantine-*/src/demos"]
     }
   }
 }

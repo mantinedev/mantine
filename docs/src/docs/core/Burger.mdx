@@ -1,50 +1,42 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Burger
 order: 1
 slug: /core/burger/
 category: 'navigation'
 description: 'Display open/close navigation button'
+props: ['Burger']
+import: "import { Burger } from '@mantine/core';"
+source: 'mantine-core/src/components/Burger/Burger.tsx'
+docs: 'core/Burger.mdx'
 ---
 
+import { BurgerDemos } from '@demos/core';
 import { BURGER_SIZES } from '@mantine/core';
-import { BurgerBaseDemo } from '../demos/core/Burger/burger.demos';
-import { BurgerSizesDemo } from '../demos/core/Burger/burger-sizes.demo';
-import { BurgerConfigurator } from '../demos/core/Burger/burger.configurator';
-
-# Burger
-
-<PageHeader
-  source="mantine-core/src/Burger/Burger.tsx"
-  docs="core/Burger.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Burger } from '@mantine/core';
-```
 
 ## Usage
 
 Burger component renders open/close menu button.
-Pass `opened` and `onClick` props to control Burger state.
-If `opened` prop is set to true cross will be rendered, otherwise – burger.
+Set `opened` and `onClick` props to control Burger state.
+If `opened` prop is set cross will be rendered, otherwise – burger:
 
-<BurgerBaseDemo />
+<Demo data={BurgerDemos.usage} />
 
-## Size
+## Size and color
+
+Default Burger color is gray.
+You can use any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>:
+
+<Demo data={BurgerDemos.configurator} />
 
 Burger has predefined sizes: xs, sm, md, lg, xl.
-You can pass size as number and it will be set as width and height in px.
+Alternatively you can use number to set width and height in px:
 
 ```tsx
 <Burger size="sm" /> // -> predefined small size
 <Burger size={50} /> // -> { width: 50, height: 50 }
 ```
-
-Predefined sizes from xl to xs:
-
-<BurgerSizesDemo />
 
 You can get default sizes by importing `BURGER_SIZES`:
 
@@ -53,19 +45,13 @@ import { BURGER_SIZES } from '@mantine/core';
 ```
 
 <DataTable
-  head={['Prop value', 'Width and height']}
+  head={['Size', 'Width and height']}
   data={Object.keys(BURGER_SIZES).map((size) => [size, `${BURGER_SIZES[size]}px`])}
 />
 
-## Color
-
-Default Burger color is gray. You can choose any color defined in <GatsbyLink to="/pages/theming/">theme.colors</GatsbyLink>:
-
-<BurgerConfigurator />
-
 ## Get element ref
 
-You can get button ref by setting `elementRef` prop:
+You can get burger button ref by setting `elementRef` prop:
 
 ```tsx
 import React, { useRef } from 'react';
@@ -73,24 +59,20 @@ import { Burger } from '@mantine/core';
 
 function Demo() {
   const ref = useRef();
-  return <Burger elementRef={ref} opened />;
+  return <Burger elementRef={ref} />;
 }
 ```
 
 ## Accessibility
 
 Burger renders a regular button element.
-Make sure to include `title` or `aria-label` props for screen reader support
-as by design element does not have text content.
+Include `title` or `aria-label` props for screen reader support
+as by design element does not associated label.
 
 ```tsx
-// Title will show message on hover and announce control with screen reader
+// Set title to show message on hover
 <Burger title="Open navigation" />
 
-// aria-label will only announce control with screen reader
+// Set aria-label to announce control with screen reader
 <Burger aria-label="Open navigation" />
 ```
-
-## Component props
-
-<PropsTable component="Burger" />

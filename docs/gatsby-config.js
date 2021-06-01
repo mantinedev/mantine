@@ -14,6 +14,14 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-jss',
     {
+      resolve: 'gatsby-plugin-web-font-loader',
+      options: {
+        google: {
+          families: ['Dosis:800'],
+        },
+      },
+    },
+    {
       resolve: 'gatsby-plugin-layout',
       options: {
         component: `${__dirname}/src/components/Layout/Layout`,

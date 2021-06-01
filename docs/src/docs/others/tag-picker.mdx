@@ -1,43 +1,20 @@
 ---
-package: 'Other packages'
-title: 'Tag Picker'
+group: 'Other packages'
+package: '@mantine/tag-picker'
+title: 'TagPicker'
 order: 1
 slug: /others/tag-picker/
+description: 'Notion style tag picker with full keyboard support'
+props: ['TagPickerContainer']
+import: "import { TagPicker } from '@mantine/tag-picker';"
+source: 'mantine-tag-picker/src'
+docs: 'others/tag-picker.mdx'
+installation: '@mantine/notifications'
+bundleSize: '@mantine/notifications'
+license: MIT
 ---
 
-import { TagPickerBaseDemo } from '../demos/others/tag-picker/tag-picker-base.demo';
-import { TagPickerMinimalDemo } from '../demos/others/tag-picker/tag-picker-minimal.demo';
-import { TagPickerTransitionsDemo } from '../demos/others/tag-picker/tag-picker-transitions.demo';
-
-# Mantine tag picker
-
-<PageHeader
-  source="mantine-tag-picker/src"
-  docs="others/tag-picker.mdx"
-  package="@mantine/tag-picker"
-/>
-
-[Notion](https://www.notion.so/) style tag picker with full keyboard support.
-
-## Installation
-
-With yarn:
-
-```sh
-yarn add react-jss @mantine/hooks @mantine/core @mantine/tag-picker
-```
-
-With npm:
-
-```sh
-npm install react-jss @mantine/hooks @mantine/core @mantine/tag-picker
-```
-
-With [peerdeps](https://www.npmjs.com/package/install-peerdeps):
-
-```sh
-npx install-peerdeps @mantine/tag-picker
-```
+import * as TagPickerDemos from '@demos/tag-picker';
 
 ## Usage
 
@@ -58,7 +35,7 @@ const mockdata = [
 
 Bare minimum example with usage as custom select:
 
-<TagPickerMinimalDemo />
+<Demo data={TagPickerDemos.minimal} />
 
 ## Create, update, delete tags
 
@@ -69,7 +46,7 @@ Enhance tag picker with extra logic:
 - `enableColorChange` – to allow color change (won't work without `enableUpdate` option)
 - `enableDelete` and `onTagDelete` – to allow delete existing tags
 
-<TagPickerBaseDemo />
+<Demo data={TagPickerDemos.base} />
 
 ## Change transitions
 
@@ -81,7 +58,7 @@ You can change transitions with props:
 - **transitionDuration** – transition duration in ms, defaults to 200ms.
 - **transitionTimingFunction** – timing function, defaults to `theme.transitionTimingFunction`
 
-<TagPickerTransitionsDemo />
+<Demo data={TagPickerDemos.transitions} />
 
 ## Multiple state
 
@@ -119,31 +96,3 @@ or `controlId` prop to connect with id:
 <div id="my-tag-picker">My tag picker</div>
 <TagPicker labelledBy="my-tag-picker" />
 ```
-
-## Component props
-
-<PropsTable component="TagPickerContainer" />
-
-## Package information
-
-### Bundle size
-
-<BundleSize packageName="@mantine/tag-picker" />
-
-### Dependencies
-
-<Dependencies
-  packageName="@mantine/tag-picker"
-  dependencies={[
-    { name: '@mantine/hooks', type: 'peer' },
-    { name: '@mantine/core', type: 'peer' },
-    { name: 'react', type: 'peer' },
-    { name: 'react-dom', type: 'peer' },
-    { name: 'react-jss', type: 'peer', why: 'CSS-in-JS library used to style all components' },
-    {
-      name: 'clsx',
-      type: 'dependency',
-      why: 'Utility to construct className stings conditionally',
-    },
-  ]}
-/>

@@ -3,27 +3,51 @@ import chalk from 'chalk';
 import simpleGit from 'simple-git';
 import githubRelease from 'new-github-release-url';
 import open from 'open';
-import { argv } from 'yargs';
+import yargs from 'yargs/yargs';
+import { hideBin } from 'yargs/helpers';
 import { Logger } from './utils/Logger';
 import { publishPackage } from './utils/publish-package';
-import { VersionIncrement, getIncrementedVersion } from './release/get-incremented-version';
+import { getIncrementedVersion } from './release/get-incremented-version';
 import { setPackagesVersion } from './release/set-packages-version';
 import { buildAllPackages } from './utils/build-all-packages';
+import { getPackagesBuildOrder } from './utils/get-packages-build-order';
+import packageJson from '../package.json';
 
 const logger = new Logger('release');
 const git = simpleGit();
+const { argv }: { argv: any } = yargs(hideBin(process.argv))
+  .option('stage', {
+    type: 'string',
+    choices: ['alpha', 'beta', 'rc'],
+    description: "Prerelease stage: 'alpha', 'beta' or 'rc'",
+  })
+  .option('tag', {
+    type: 'string',
+    default: 'latest',
+    description: 'Tag',
+  })
+  .option('skip-version-check', {
+    type: 'boolean',
+    default: false,
+    description: 'Skip checking version.',
+  })
+  .option('skip-build', {
+    type: 'boolean',
+    default: false,
+    description: 'Skip building step.',
+  })
+  .option('skip-publish', {
+    type: 'boolean',
+    default: false,
+    description: 'Skip publishing step.',
+  })
+  .example([
+    ['$0 minor --skip-build', 'Release but skip building packages.'],
+    ['$0 minor --alpha', 'Prerelease to alpha stage.'],
+  ]);
 
 (async () => {
   const status = await git.status();
-
-  if (status.current !== 'master') {
-    logger.error(
-      `It is allowed to release changes from master branch, current branch is ${chalk.red(
-        status.current
-      )}`
-    );
-    process.exit(1);
-  }
 
   if (status.files.length !== 0) {
     logger.error('Working tree is not clean');
@@ -32,20 +56,41 @@ const git = simpleGit();
 
   logger.info('Releasing all packages');
 
-  const incrementedVersion = await getIncrementedVersion(argv._[0] as VersionIncrement);
-  logger.info(`New version: ${chalk.cyan(incrementedVersion)}`);
+  let incrementedVersion = packageJson.version;
 
-  await setPackagesVersion(incrementedVersion);
-  const packages = await buildAllPackages();
-  logger.success('All packages were built successfully');
+  if (!argv.skipVersionCheck) {
+    incrementedVersion = getIncrementedVersion(incrementedVersion, {
+      type: argv._[0] as string,
 
-  logger.info('Publishing packages to npm');
+      stage: argv.stage,
+    });
+    logger.info(`New version: ${chalk.cyan(incrementedVersion)}`);
 
-  await Promise.all(
-    packages.map((p) => publishPackage({ path: p.path, name: p.packageJson.name }))
-  );
+    await setPackagesVersion(incrementedVersion);
+  }
 
-  logger.success('All packages were published successfully');
+  let packages;
+
+  if (!argv.skipBuild) {
+    packages = await buildAllPackages();
+    logger.success('All packages were built successfully');
+  } else {
+    packages = await getPackagesBuildOrder();
+  }
+
+  if (!argv.skipPublish) {
+    logger.info('Publishing packages to npm');
+
+    if (argv.stage && argv.tag === 'latest') {
+      argv.tag = 'next';
+    }
+
+    await Promise.all(
+      packages.map((p) => publishPackage({ path: p.path, name: p.packageJson.name, tag: argv.tag }))
+    );
+
+    logger.success('All packages were published successfully');
+  }
 
   await git.add([path.join(__dirname, '../src'), path.join(__dirname, '../package.json')]);
   await git.commit(`[release] Version: ${incrementedVersion}`);

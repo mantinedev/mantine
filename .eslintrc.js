@@ -53,6 +53,7 @@ module.exports = {
     camelcase: 'off',
 
     // just the formatting issues, prettier does all the job
+    'react/jsx-indent': 'off',
     'react/jsx-wrap-multilines': 'off',
     'no-confusing-arrow': 'off',
     'operator-linebreak': 'off',

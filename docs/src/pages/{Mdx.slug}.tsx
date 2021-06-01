@@ -1,35 +1,21 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Head from '../components/Head/Head';
-import TableOfContents from '../components/TableOfContents/TableOfContents';
+import { MdxPage } from '../components/MdxPage/MdxPage';
 
 interface DocPageProps {
   data: {
-    mdx: {
-      headings: {
-        depth: number;
-        value: string;
-      }[];
-
-      body: string;
-
-      frontmatter: {
-        title: string;
-        description?: string;
-      };
-    };
+    mdx: MdxPage;
   };
 }
 
 export default function DocPage({ data }: DocPageProps) {
-  const post = data.mdx;
+  const { mdx } = data;
 
   return (
     <article>
-      <Head title={post.frontmatter.title} description={post.frontmatter.description} />
-      <TableOfContents headings={post.headings} />
-      <MDXRenderer>{post.body}</MDXRenderer>
+      <Head title={mdx.frontmatter.title} description={mdx.frontmatter.description} />
+      <MdxPage {...mdx} />
     </article>
   );
 }
@@ -45,6 +31,15 @@ export const query = graphql`
         title
         package
         slug
+        props
+        import
+        docs
+        source
+        description
+        bundleSize
+        installation
+        pageTitle
+        license
       }
       body
     }

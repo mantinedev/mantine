@@ -1,31 +1,24 @@
 ---
-package: mantine-hooks
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'dom'
 title: 'use-color-scheme'
 order: 1
 slug: /hooks/use-color-scheme/
+description: 'Detect user system color scheme with window.matchMedia API'
+import: "import { useColorScheme } from '@mantine/hooks';"
+docs: 'hooks/use-color-scheme.mdx'
+source: 'mantine-hooks/src/use-color-scheme/use-color-scheme.ts'
 ---
 
-import { UseColorSchemeDemo } from '../demos/hooks/use-color-scheme.demos';
-
-# use-color-scheme
-
-<PageHeader
-  source="mantine-hooks/src/use-color-scheme/use-color-scheme.ts"
-  docs="hooks/use-color-scheme.mdx"
-  package="@mantine/hooks"
-/>
-
-```tsx
-import { useColorScheme } from '@mantine/hooks';
-```
+import { useColorSchemeHooks } from '@docs/demos';
 
 ## Usage
 
-use-color-scheme detects user system color scheme.
-It uses <GatsbyLink to="/hooks/use-media-query/">use-media-query</GatsbyLink> hook under the hood.
+Hook uses <GatsbyLink to="/hooks/use-media-query/">use-media-query</GatsbyLink> hook under the hood.
 Hook relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
 and will always return `light` if api is not available (e.g. during server side rendering).
 
 Hook returns either `dark` or `light` value:
 
-<UseColorSchemeDemo />
+<Demo data={useColorSchemeHooks} />

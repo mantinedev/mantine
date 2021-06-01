@@ -2,14 +2,6 @@ import { createUseStyles } from 'react-jss';
 import { theming, MantineTheme, getFontStyles } from '@mantine/core';
 import { HEADER_HEIGHT } from './Header/Header.styles';
 import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from './Navbar/Navbar.styles';
-import {
-  TABLE_OF_CONTENTS_WIDTH,
-  TABLE_OF_CONTENTS_BREAKPOINT,
-} from '../TableOfContents/TableOfContents.styles';
-
-interface LayoutInnerStylesProps {
-  tableOfContents: boolean;
-}
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -33,18 +25,13 @@ export default createUseStyles(
       },
     },
 
-    layout: ({ tableOfContents }: LayoutInnerStylesProps) => ({
+    layout: {
       paddingLeft: NAVBAR_WIDTH,
-      paddingRight: tableOfContents ? TABLE_OF_CONTENTS_WIDTH : 0,
-
-      [`@media (max-width: ${TABLE_OF_CONTENTS_BREAKPOINT}px)`]: {
-        paddingRight: 0,
-      },
 
       [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
         paddingLeft: 0,
       },
-    }),
+    },
 
     main: {
       scrollMarginTop: HEADER_HEIGHT,
@@ -52,8 +39,6 @@ export default createUseStyles(
       // aligns page top most heading with navigation and table of contents
       paddingTop: HEADER_HEIGHT - theme.spacing.xl - 2,
       paddingBottom: theme.spacing.xl * 2,
-      paddingLeft: theme.spacing.md,
-      paddingRight: theme.spacing.md,
 
       [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
         paddingLeft: 0,

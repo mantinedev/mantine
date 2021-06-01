@@ -1,14 +1,12 @@
 ---
 order: 1
-package: guides
+group: guides
 title: Mantine inputs
 slug: /guides/inputs/
 ---
 
-import { InputWrapperConfigurator } from '../demos/core/InputWrapper/input-wrapper.configurator';
-import { JsonInputDemo } from '../demos/inputs-guide/json-input.demo';
-import { ColorInputDemo } from '../demos/inputs-guide/color-input.demo';
-import { WrappedInputsDemo, RegularInputsDemo } from '../demos/inputs-guide/inputs-list.demo';
+import { JsonInputDemo, ColorInputDemo, WrappedInputsDemo, RegularInputsDemo } from '@docs/demos';
+import { InputWrapperDemos } from '@demos/core';
 
 # Mantine inputs
 
@@ -59,7 +57,7 @@ support these optional props:
 />
 ```
 
-<InputWrapperConfigurator includeCode={false} />
+<Demo data={InputWrapperDemos.configurator} demoProps={{ toggle: true }} />
 
 ## Input component
 

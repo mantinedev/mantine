@@ -1,30 +1,25 @@
 ---
-package: mantine-hooks
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'dom'
 title: 'use-click-outside'
 order: 1
 slug: /hooks/use-click-outside/
+description: 'Detect click and touch events outside of specified element'
+import: "import { useClickOutside } from '@mantine/hooks';"
+docs: 'hooks/use-click-outside.mdx'
+source: 'mantine-hooks/src/use-click-outside/use-click-outside.ts'
 ---
 
-import { UseClickOutsideDemo } from '../demos/hooks/use-click-outside.demos';
+import { UseClickOutsideDemo } from '@docs/demos';
 
-# use-click-outside
+## Usage
 
-<PageHeader
-  source="mantine-hooks/src/use-click-outside/use-click-outside.ts"
-  docs="hooks/use-click-outside.mdx"
-  package="@mantine/hooks"
-/>
-
-use-click-outside allows detection of clicks outside of specified element. It is usually used with modals
-and dropdowns to close overlay when user clicks outside:
-
-```tsx
-import { useClickOutside } from '@mantine/hooks';
-```
+<UseClickOutsideDemo />
 
 ## API
 
-use-click-outside hook accepts 2 arguments:
+Hook accepts 2 arguments:
 
 - `handler` – function that will be called on outside click
 - `events` – optional list of events that indicate outside click
@@ -40,10 +35,6 @@ function Example() {
   return <div ref={ref} />;
 }
 ```
-
-## Usage
-
-<UseClickOutsideDemo />
 
 ## Change events
 

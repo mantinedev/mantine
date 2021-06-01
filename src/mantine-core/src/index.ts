@@ -1,119 +1,129 @@
-export * from '@mantine/theme';
-export * from '@mantine/utils';
+export * from './theme';
 
-export { ActionIcon, ACTION_ICON_SIZES } from './ActionIcon/ActionIcon';
-export { Alert } from './Alert/Alert';
-export { Avatar, AVATAR_SIZES } from './Avatar/Avatar';
-export { Badge, BADGE_SIZES } from './Badge/Badge';
-export { Blockquote } from './Blockquote/Blockquote';
-export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
-export { Burger, BURGER_SIZES } from './Burger/Burger';
-export { Button, BUTTON_SIZES } from './Button/Button';
-export { Card } from './Card/Card';
-export { Checkbox, CHECKBOX_SIZES } from './Checkbox/Checkbox';
-export { Code } from './Code/Code';
-export { ColorSwatch } from './ColorSwatch/ColorSwatch';
-export { Container, CONTAINER_SIZES } from './Container/Container';
-export { Drawer, DRAWER_SIZES } from './Drawer/Drawer';
-export { Divider, DIVIDER_SIZES } from './Divider/Divider';
-export { Grid, Col } from './Grid/Grid';
-export { Group } from './Group/Group';
-export { Highlight } from './Highlight/Highlight';
-export { Image } from './Image/Image';
-export { Input } from './Input/Input';
-export { InputWrapper } from './InputWrapper/InputWrapper';
-export { Kbd } from './Kbd/Kbd';
-export { Loader, LOADER_SIZES } from './Loader/Loader';
-export { LoadingOverlay } from './LoadingOverlay/LoadingOverlay';
-export { Menu, MenuItem, MenuBody, MENU_SIZES } from './Menu/Menu';
-export { Modal, MODAL_SIZES } from './Modal/Modal';
-export { Notification } from './Notification/Notification';
-export { NumberInput } from './NumberInput/NumberInput';
-export { Overlay } from './Overlay/Overlay';
-export { Paper } from './Paper/Paper';
-export { PasswordInput } from './PasswordInput/PasswordInput';
-export { Popover } from './Popover/Popover';
-export { Portal } from './Portal/Portal';
-export { Progress, PROGRESS_SIZES } from './Progress/Progress';
-export { RadioGroup, Radio, RADIO_SIZES } from './RadioGroup/RadioGroup';
-export { SegmentedControl } from './SegmentedControl/SegmentedControl';
-export { Select } from './Select/Select';
-export { Spoiler } from './Spoiler/Spoiler';
-export { Switch, SWITCH_SIZES } from './Switch/Switch';
-export { Table } from './Table/Table';
-export { Tabs, Tab } from './Tabs/Tabs';
-export { Text, Anchor } from './Text/Text';
-export { Textarea } from './Textarea/Textarea';
-export { TextInput } from './TextInput/TextInput';
-export { ThemeIcon, THEME_ICON_SIZES } from './ThemeIcon/ThemeIcon';
-export { Title } from './Title/Title';
-export { Tooltip } from './Tooltip/Tooltip';
-export { Transition, GroupedTransition, AVAILABLE_TRANSITIONS } from './Transition/Transition';
-export { TypographyStylesProvider } from './TypographyStylesProvider/TypographyStylesProvider';
+export { ActionIcon, ACTION_ICON_SIZES } from './components/ActionIcon/ActionIcon';
+export { Alert } from './components/Alert/Alert';
+export { Avatar, AVATAR_SIZES } from './components/Avatar/Avatar';
+export { Badge, BADGE_SIZES } from './components/Badge/Badge';
+export { Blockquote } from './components/Blockquote/Blockquote';
+export { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
+export { Burger, BURGER_SIZES } from './components/Burger/Burger';
+export { Button, BUTTON_SIZES } from './components/Button/Button';
+export { Card } from './components/Card/Card';
+export { Center } from './components/Center/Center';
+export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
+export { Code } from './components/Code/Code';
+export { ColorSwatch } from './components/ColorSwatch/ColorSwatch';
+export { Container, CONTAINER_SIZES } from './components/Container/Container';
+export { Drawer, DRAWER_SIZES } from './components/Drawer/Drawer';
+export { Divider, DIVIDER_SIZES } from './components/Divider/Divider';
+export { Grid, Col } from './components/Grid/Grid';
+export { Group } from './components/Group/Group';
+export { Highlight } from './components/Highlight/Highlight';
+export { Image } from './components/Image/Image';
+export { Input } from './components/Input/Input';
+export { InputWrapper } from './components/InputWrapper/InputWrapper';
+export { Kbd } from './components/Kbd/Kbd';
+export { Loader, LOADER_SIZES } from './components/Loader/Loader';
+export { LoadingOverlay } from './components/LoadingOverlay/LoadingOverlay';
+export { Menu, MenuItem, MenuBody, MENU_SIZES } from './components/Menu/Menu';
+export { Modal, MODAL_SIZES } from './components/Modal/Modal';
+export { Notification } from './components/Notification/Notification';
+export { NumberInput } from './components/NumberInput/NumberInput';
+export { Overlay } from './components/Overlay/Overlay';
+export { Paper } from './components/Paper/Paper';
+export { PasswordInput } from './components/PasswordInput/PasswordInput';
+export { Popover } from './components/Popover/Popover';
+export { Portal } from './components/Portal/Portal';
+export { Progress, PROGRESS_SIZES } from './components/Progress/Progress';
+export { RadioGroup, Radio, RADIO_SIZES } from './components/RadioGroup/RadioGroup';
+export { RingProgress } from './components/RingProgress/RingProgress';
+export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
+export { Select } from './components/Select/Select';
+export { Spoiler } from './components/Spoiler/Spoiler';
+export { Switch, SWITCH_SIZES } from './components/Switch/Switch';
+export { Table } from './components/Table/Table';
+export { Tabs, Tab } from './components/Tabs/Tabs';
+export { Text, Anchor } from './components/Text/Text';
+export { Textarea } from './components/Textarea/Textarea';
+export { TextInput } from './components/TextInput/TextInput';
+export { ThemeIcon, THEME_ICON_SIZES } from './components/ThemeIcon/ThemeIcon';
+export { Title } from './components/Title/Title';
+export { Tooltip } from './components/Tooltip/Tooltip';
+export {
+  Transition,
+  GroupedTransition,
+  AVAILABLE_TRANSITIONS,
+} from './components/Transition/Transition';
+export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 /** Deprecated – these components will be removed in next major release */
 
 // Hr renamed to Divider to support vertical orientation
-export { Divider as Hr, DIVIDER_SIZES as HR_SIZES } from './Divider/Divider';
+export { Divider as Hr, DIVIDER_SIZES as HR_SIZES } from './components/Divider/Divider';
 
 // ElementsGroup renamed to Group for simplicity
-export { Group as ElementsGroup } from './Group/Group';
+export { Group as ElementsGroup } from './components/Group/Group';
 
 // CardsGrid replaced with more generic Grid component
-export { CardsGrid } from './Card/Card';
-export type { CardsGridProps } from './Card/Card';
+export { CardsGrid } from './components/Card/Card';
+export type { CardsGridProps } from './components/Card/Card';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { ActionIconProps } from './ActionIcon/ActionIcon';
-export type { AlertProps } from './Alert/Alert';
-export type { AvatarProps } from './Avatar/Avatar';
-export type { BadgeProps } from './Badge/Badge';
-export type { BlockquoteProps } from './Blockquote/Blockquote';
-export type { BreadcrumbsProps } from './Breadcrumbs/Breadcrumbs';
-export type { BurgerProps } from './Burger/Burger';
-export type { ButtonProps } from './Button/Button';
-export type { CardProps } from './Card/Card';
-export type { CheckboxProps } from './Checkbox/Checkbox';
-export type { CodeProps } from './Code/Code';
-export type { ColorSwatchProps } from './ColorSwatch/ColorSwatch';
-export type { ContainerProps } from './Container/Container';
-export type { DrawerProps } from './Drawer/Drawer';
-export type { DividerProps } from './Divider/Divider';
-export type { GridProps, ColProps } from './Grid/Grid';
-export type { GroupProps } from './Group/Group';
-export type { HighlightProps } from './Highlight/Highlight';
-export type { ImageProps } from './Image/Image';
-export type { InputProps } from './Input/Input';
-export type { InputWrapperBaseProps, InputWrapperProps } from './InputWrapper/InputWrapper';
-export type { KbdProps } from './Kbd/Kbd';
-export type { LoaderProps } from './Loader/Loader';
-export type { LoadingOverlayProps } from './LoadingOverlay/LoadingOverlay';
-export type { MenuProps, MenuItemProps, MenuBodyProps } from './Menu/Menu';
-export type { ModalProps } from './Modal/Modal';
-export type { NotificationProps } from './Notification/Notification';
-export type { NumberInputProps } from './NumberInput/NumberInput';
-export type { OverlayProps } from './Overlay/Overlay';
-export type { PaperProps } from './Paper/Paper';
-export type { PasswordInputProps } from './PasswordInput/PasswordInput';
-export type { PopoverProps } from './Popover/Popover';
-export type { PortalProps } from './Portal/Portal';
-export type { ProgressProps } from './Progress/Progress';
-export type { RadioGroupProps, RadioProps } from './RadioGroup/RadioGroup';
-export type { SegmentedControlProps } from './SegmentedControl/SegmentedControl';
-export type { SelectProps } from './Select/Select';
-export type { SpoilerProps } from './Spoiler/Spoiler';
-export type { SwitchProps } from './Switch/Switch';
-export type { TableProps } from './Table/Table';
-export type { TabsProps, TabProps } from './Tabs/Tabs';
-export type { TextProps, AnchorProps } from './Text/Text';
-export type { TextareaProps } from './Textarea/Textarea';
-export type { TextInputProps } from './TextInput/TextInput';
-export type { ThemeIconProps } from './ThemeIcon/ThemeIcon';
-export type { TitleProps } from './Title/Title';
-export type { TooltipProps } from './Tooltip/Tooltip';
+export type { ActionIconProps } from './components/ActionIcon/ActionIcon';
+export type { AlertProps } from './components/Alert/Alert';
+export type { AvatarProps } from './components/Avatar/Avatar';
+export type { BadgeProps } from './components/Badge/Badge';
+export type { BlockquoteProps } from './components/Blockquote/Blockquote';
+export type { BreadcrumbsProps } from './components/Breadcrumbs/Breadcrumbs';
+export type { BurgerProps } from './components/Burger/Burger';
+export type { ButtonProps } from './components/Button/Button';
+export type { CardProps } from './components/Card/Card';
+export type { CenterProps } from './components/Center/Center';
+export type { CheckboxProps } from './components/Checkbox/Checkbox';
+export type { CodeProps } from './components/Code/Code';
+export type { ColorSwatchProps } from './components/ColorSwatch/ColorSwatch';
+export type { ContainerProps } from './components/Container/Container';
+export type { DrawerProps } from './components/Drawer/Drawer';
+export type { DividerProps } from './components/Divider/Divider';
+export type { GridProps, ColProps } from './components/Grid/Grid';
+export type { GroupProps } from './components/Group/Group';
+export type { HighlightProps } from './components/Highlight/Highlight';
+export type { ImageProps } from './components/Image/Image';
+export type { InputProps } from './components/Input/Input';
+export type {
+  InputWrapperBaseProps,
+  InputWrapperProps,
+} from './components/InputWrapper/InputWrapper';
+export type { KbdProps } from './components/Kbd/Kbd';
+export type { LoaderProps } from './components/Loader/Loader';
+export type { LoadingOverlayProps } from './components/LoadingOverlay/LoadingOverlay';
+export type { MenuProps, MenuItemProps, MenuBodyProps } from './components/Menu/Menu';
+export type { ModalProps } from './components/Modal/Modal';
+export type { NotificationProps } from './components/Notification/Notification';
+export type { NumberInputProps, NumberInputHandlers } from './components/NumberInput/NumberInput';
+export type { OverlayProps } from './components/Overlay/Overlay';
+export type { PaperProps } from './components/Paper/Paper';
+export type { PasswordInputProps } from './components/PasswordInput/PasswordInput';
+export type { PopoverProps } from './components/Popover/Popover';
+export type { PortalProps } from './components/Portal/Portal';
+export type { ProgressProps } from './components/Progress/Progress';
+export type { RadioGroupProps, RadioProps } from './components/RadioGroup/RadioGroup';
+export type { RingProgressProps } from './components/RingProgress/RingProgress';
+export type { SegmentedControlProps } from './components/SegmentedControl/SegmentedControl';
+export type { SelectProps } from './components/Select/Select';
+export type { SpoilerProps } from './components/Spoiler/Spoiler';
+export type { SwitchProps } from './components/Switch/Switch';
+export type { TableProps } from './components/Table/Table';
+export type { TabsProps, TabProps } from './components/Tabs/Tabs';
+export type { TextProps, AnchorProps } from './components/Text/Text';
+export type { TextareaProps } from './components/Textarea/Textarea';
+export type { TextInputProps } from './components/TextInput/TextInput';
+export type { ThemeIconProps } from './components/ThemeIcon/ThemeIcon';
+export type { TitleProps } from './components/Title/Title';
+export type { TooltipProps } from './components/Tooltip/Tooltip';
 export type {
   MantineTransition,
   TransitionProps,
   GroupedTransitionProps,
-} from './Transition/Transition';
-export type { TypographyStylesProviderProps } from './TypographyStylesProvider/TypographyStylesProvider';
+} from './components/Transition/Transition';
+export type { TypographyStylesProviderProps } from './components/TypographyStylesProvider/TypographyStylesProvider';

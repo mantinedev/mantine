@@ -4,10 +4,10 @@ slug: /
 ---
 
 import { Link } from 'gatsby';
-import { Button, Group } from '@mantine/core';
+import { Button, Group, Container } from '@mantine/core';
+import { Footer } from '../components/Footer/Footer';
 import { Features } from '../home-page/Features/Features';
 import { PackagesTable } from '../home-page/PackagesTable/PackagesTable';
-import { License } from '../components/MdxProvider/License/License.tsx';
 import Head from '../components/Head/Head.tsx';
 
 <Head title="Mantine" disableTitleTemplate />
@@ -15,16 +15,15 @@ import Head from '../components/Head/Head.tsx';
 <br />
 <br />
 
+<Container size="sm">
+
 # Mantine
 
 Mantine is a MIT licensed open source react components and hooks library
 with focus on usability, accessibility and developer experience.
 
-<Group grow>
-  <Button component={Link} to="/pages/examples/">
-    Explore examples
-  </Button>
-  <Button component={Link} to="/core/getting-started/" variant="outline">
+<Group>
+  <Button component={Link} to="/core/getting-started/">
     Browse components
   </Button>
   <Button component={Link} to="/hooks/getting-started/" variant="outline" color="gray">
@@ -87,6 +86,6 @@ to prevent versions mismatch in future:
 }
 ```
 
-## License
+<Footer />
 
-<License />
+</Container>

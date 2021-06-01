@@ -1,25 +1,18 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Spoiler
 order: 1
 slug: /core/spoiler/
 category: 'data-display'
 description: 'Hide long sections of content under spoiler'
+props: ['Spoiler']
+import: "import { Spoiler } from '@mantine/core';"
+source: 'mantine-core/src/components/Spoiler/Spoiler.tsx'
+docs: 'core/Spoiler.mdx'
 ---
 
-import { SpoilerBaseDemo, SpoilerNoAnimationDemo } from '../demos/core/Spoiler/spoiler.demos';
-
-# Spoiler
-
-<PageHeader
-  source="mantine-core/src/Spoiler/Spoiler.tsx"
-  docs="core/Spoiler.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Spoiler } from '@mantine/core';
-```
+import { SpoilerDemos } from '@demos/core';
 
 ## Usage
 
@@ -29,29 +22,20 @@ If content height is less than `maxHeight` spoiler will just render children.
 
 Props `hideLabel` and `showLabel` are required – they are used as spoiler toggle button label in corresponding state.
 
-<SpoilerBaseDemo />
+<Demo data={SpoilerDemos.usage} />
 
 ## Transition duration
 
 Control transition duration by setting `transitionDuration` prop (transition-duration css property in ms).
 To disable animations set prop to 0:
 
-<SpoilerNoAnimationDemo />
+<Demo data={SpoilerDemos.transitions} />
 
 ## Get control ref
 
 You can get control button ref with `controlRef` prop:
 
 ```tsx
-import React, { useRef } from 'react';
-import { Spoiler } from '@mantine/core';
-
-function ButtonDemo() {
-  const spoilerControlRef = useRef<HTMLButtonElement>(null);
-  return <Spoiler controlRef={buttonRef} />;
-}
+const spoilerControlRef = useRef();
+<Spoiler controlRef={spoilerControlRef} />;
 ```
-
-## Component props
-
-<PropsTable component="Spoiler" />

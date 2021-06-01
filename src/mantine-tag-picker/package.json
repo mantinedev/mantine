@@ -1,9 +1,11 @@
 {
   "name": "@mantine/tag-picker",
-  "version": "1.2.1",
-  "main": "dist/lib.js",
+  "version": "1.3.0-alpha.2",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "browser": "lib/index.umd.js",
+  "types": "lib/index.d.ts",
   "license": "MIT",
-  "types": "dist/mantine-tag-picker/src/index.d.ts",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
   "repository": {
@@ -12,8 +14,8 @@
     "directory": "src/mantine-tag-picker"
   },
   "peerDependencies": {
-    "@mantine/core": "1.2.1",
-    "@mantine/hooks": "1.2.1",
+    "@mantine/core": "1.3.0-alpha.2",
+    "@mantine/hooks": "1.3.0-alpha.2",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "react-jss": ">=10.1.1"
