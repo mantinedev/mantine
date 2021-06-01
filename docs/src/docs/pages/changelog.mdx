@@ -14,6 +14,7 @@ import {
   TabsDemos,
   RingProgressDemos,
   BadgeDemos,
+  NumberInputDemos,
 } from '@demos/core';
 
 # Changelog
@@ -30,6 +31,10 @@ import {
 
 <GatsbyLink to="/core/badge/">Badge</GatsbyLink> component now supports dot variant:
 <Demo data={BadgeDemos.dots} />
+
+<GatsbyLink to="/core/number-input/">NumberInput</GatsbyLink> component now exposes increment/decrement
+handlers and supports custom controls:
+<Demo data={NumberInputDemos.handlers} demoProps={{ toggle: true }} />
 
 <GatsbyLink to="/core/center/">Center</GatsbyLink> centers content vertically and horizontally:
 <Demo data={CenterDemos.usage} demoProps={{ toggle: true }} />

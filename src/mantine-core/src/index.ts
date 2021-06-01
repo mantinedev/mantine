@@ -100,7 +100,7 @@ export type { LoadingOverlayProps } from './components/LoadingOverlay/LoadingOve
 export type { MenuProps, MenuItemProps, MenuBodyProps } from './components/Menu/Menu';
 export type { ModalProps } from './components/Modal/Modal';
 export type { NotificationProps } from './components/Notification/Notification';
-export type { NumberInputProps } from './components/NumberInput/NumberInput';
+export type { NumberInputProps, NumberInputHandlers } from './components/NumberInput/NumberInput';
 export type { OverlayProps } from './components/Overlay/Overlay';
 export type { PaperProps } from './components/Paper/Paper';
 export type { PasswordInputProps } from './components/PasswordInput/PasswordInput';

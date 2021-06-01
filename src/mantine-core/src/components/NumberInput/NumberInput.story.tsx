@@ -1,11 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME, MantineProvider } from '../../theme';
-import { NumberInput } from './NumberInput';
+import { ActionIcon } from '../ActionIcon/ActionIcon';
+import { Group } from '../Group/Group';
+import { NumberInput, NumberInputHandlers } from './NumberInput';
 
 function Wrapper(props: Omit<React.ComponentProps<typeof NumberInput>, 'value' | 'onChange'>) {
   const [value, setValue] = useState(0);
   return <NumberInput value={value} onChange={(val) => setValue(val)} {...props} />;
+}
+function HandlersWrapper() {
+  const [value, setValue] = useState(0);
+  const handlers = useRef<NumberInputHandlers>();
+
+  return (
+    <Group spacing={5}>
+      <ActionIcon size={36} variant="outline" onClick={() => handlers.current.decrement()}>
+        –
+      </ActionIcon>
+      <NumberInput
+        hideControls
+        value={value}
+        onChange={(val) => setValue(val)}
+        handlersRef={handlers}
+        max={10}
+        min={0}
+        step={2}
+        inputStyle={{ width: 54, textAlign: 'center' }}
+      />
+      <ActionIcon size={36} variant="outline" onClick={() => handlers.current.increment()}>
+        +
+      </ActionIcon>
+    </Group>
+  );
 }
 
 storiesOf('@mantine/core/NumberInput', module)
@@ -55,6 +82,7 @@ storiesOf('@mantine/core/NumberInput', module)
       />
     </div>
   ))
+  .add('Handlers', () => <HandlersWrapper />)
   .add('Dark theme', () => (
     <MantineProvider theme={{ colorScheme: 'dark' }}>
       <div

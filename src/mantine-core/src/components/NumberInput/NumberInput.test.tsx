@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -7,7 +8,7 @@ import {
   itSupportsRef,
 } from '@mantine/tests';
 import { TextInput } from '../TextInput/TextInput';
-import { NumberInput } from './NumberInput';
+import { NumberInput, NumberInputHandlers } from './NumberInput';
 
 const defaultProps = {
   value: 0,
@@ -77,5 +78,26 @@ describe('@mantine/core/NumberInput', () => {
     expect(element.find(TextInput).prop('step')).toBe(5);
     expect(element.find(TextInput).prop('disabled')).toBe(true);
     expect(element.find(TextInput).prop('variant')).toBe('filled');
+  });
+
+  it('exposes increment/decrement handlers with handlersRef prop', () => {
+    const ref = React.createRef<NumberInputHandlers>();
+    const spy = jest.fn();
+    mount(<NumberInput {...defaultProps} value={10} step={2} onChange={spy} handlersRef={ref} />);
+
+    expect(typeof ref.current.decrement).toBe('function');
+    expect(typeof ref.current.increment).toBe('function');
+
+    act(() => {
+      ref.current.decrement();
+    });
+
+    expect(spy).toHaveBeenLastCalledWith(8);
+
+    act(() => {
+      ref.current.increment();
+    });
+
+    expect(spy).toHaveBeenLastCalledWith(12);
   });
 });

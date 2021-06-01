@@ -5,6 +5,11 @@ import { useMantineTheme } from '../../theme';
 import { TextInput } from '../TextInput/TextInput';
 import useStyles, { CONTROL_WIDTH } from './NumberInput.styles';
 
+export interface NumberInputHandlers {
+  increment(): void;
+  decrement(): void;
+}
+
 export interface NumberInputProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof TextInput>,
@@ -36,6 +41,9 @@ export interface NumberInputProps
 
   /** Prevent value clamp on blur */
   noClampOnBlur?: boolean;
+
+  /** Get increment/decrement handlers */
+  handlersRef?: React.ForwardedRef<NumberInputHandlers>;
 }
 
 export function NumberInput({
@@ -55,6 +63,7 @@ export function NumberInput({
   precision = 0,
   defaultValue,
   noClampOnBlur = false,
+  handlersRef,
   ...others
 }: NumberInputProps) {
   const theme = useMantineTheme(themeOverride);
@@ -69,7 +78,6 @@ export function NumberInput({
   );
   const inputRef = useRef<HTMLInputElement>();
   const handleValueChange = (val: number) => {
-    // console.log(val);
     typeof onChange === 'function' && onChange(val);
     setValue(val);
   };
@@ -80,6 +88,25 @@ export function NumberInput({
     const val = typeof v === 'number' ? v : parseFloat(v);
     return Math.min(Math.max(val, _min), _max);
   };
+
+  const increment = () => {
+    const result = clamp(finalValue + step).toFixed(precision);
+    handleValueChange(parseFloat(result));
+    setTempValue(result);
+  };
+
+  const decrement = () => {
+    const result = clamp(finalValue - step).toFixed(precision);
+    handleValueChange(parseFloat(result));
+    setTempValue(result);
+  };
+
+  if (typeof handlersRef === 'function') {
+    handlersRef({ increment, decrement });
+  } else if (typeof handlersRef === 'object' && handlersRef !== null && 'current' in handlersRef) {
+    // eslint-disable-next-line no-param-reassign
+    handlersRef.current = { increment, decrement };
+  }
 
   useEffect(() => {
     if (typeof value === 'number' && !focused) {
@@ -95,30 +122,26 @@ export function NumberInput({
         tabIndex={-1}
         aria-hidden
         data-mantine-increment
-        onMouseDown={(event) => {
-          event.preventDefault();
-          const result = clamp(finalValue + step).toFixed(precision);
-          handleValueChange(parseFloat(result));
-          setTempValue(result);
-          inputRef.current.focus();
-        }}
         disabled={finalValue >= max}
         className={cx(classes.control, classes.controlUp)}
+        onMouseDown={(event) => {
+          event.preventDefault();
+          increment();
+          inputRef.current.focus();
+        }}
       />
       <button
         type="button"
         tabIndex={-1}
         aria-hidden
         data-mantine-decrement
-        onMouseDown={(event) => {
-          event.preventDefault();
-          const result = clamp(finalValue - step).toFixed(precision);
-          handleValueChange(parseFloat(result));
-          setTempValue(result);
-          inputRef.current.focus();
-        }}
         disabled={finalValue <= min}
         className={cx(classes.control, classes.controlDown)}
+        onMouseDown={(event) => {
+          event.preventDefault();
+          decrement();
+          inputRef.current.focus();
+        }}
       />
     </div>
   );

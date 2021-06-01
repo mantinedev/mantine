@@ -50,6 +50,13 @@ Controls are not rendered in these cases:
 
 <Demo data={NumberInputDemos.controls} />
 
+## Custom increment/decrement controls
+
+NumberInput exposes increment/decrement functions with `handlersRef` prop.
+You can use it to create custom controls:
+
+<Demo data={NumberInputDemos.handlers} />
+
 ## Controlled
 
 Unlike other Mantine inputs NumberInput does not expose input event in onChange handler, it provides value instead.
