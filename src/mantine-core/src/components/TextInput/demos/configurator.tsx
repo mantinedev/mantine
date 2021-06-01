@@ -10,16 +10,16 @@ export const configurator: MantineDemo = {
   codeTemplate,
   configuratorProps: { multiline: true },
   configurator: [
-    { name: 'placeholder', type: 'string', initialValue: 'Password' },
+    { name: 'placeholder', type: 'string', initialValue: 'Your name' },
     {
       name: 'label',
       type: 'string',
-      initialValue: 'Password',
+      initialValue: 'Full name',
     },
     {
       name: 'description',
       type: 'string',
-      initialValue: 'Password must include at least one letter, number and special character',
+      initialValue: '',
     },
     {
       name: 'error',
