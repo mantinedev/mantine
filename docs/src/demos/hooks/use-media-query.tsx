@@ -1,7 +1,6 @@
 import React from 'react';
 import { Group, Badge } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
 const code = `import React from 'react';
 import { Badge } from '@mantine/core';
@@ -17,16 +16,20 @@ export function Demo() {
   );
 }`;
 
-export function UseBreakpointDemo() {
+function Demo() {
   const matches = useMediaQuery('(min-width: 900px)');
 
   return (
-    <CodeDemo code={code} language="tsx">
-      <Group position="center">
-        <Badge color={matches ? 'teal' : 'red'} variant="filled">
-          Breakpoint {matches ? 'matches' : 'does not match'}
-        </Badge>
-      </Group>
-    </CodeDemo>
+    <Group position="center">
+      <Badge color={matches ? 'teal' : 'red'} variant="filled">
+        Breakpoint {matches ? 'matches' : 'does not match'}
+      </Badge>
+    </Group>
   );
 }
+
+export const useMediaQueryHook: MantineDemo = {
+  type: 'demo',
+  code,
+  component: Demo,
+};

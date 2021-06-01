@@ -11,7 +11,7 @@ docs: 'hooks/use-reduced-motion.mdx'
 source: 'mantine-hooks/src/use-reduced-motion/use-reduced-motion.ts'
 ---
 
-import { UseReducedMotionDemo } from '@docs/demos';
+import { useReducedMotionHook } from '@docs/demos';
 
 ## Usage
 
@@ -23,4 +23,4 @@ and will always return false if api is not available (e.g. during server side re
 Use hook to detect if user prefers to reduce motion (`(prefers-reduced-motion: reduce)` media query) and set animations duration based on this value.
 All Mantine components which use animations support it by default:
 
-<UseReducedMotionDemo />
+<Demo data={useReducedMotionHook} />

@@ -11,7 +11,7 @@ docs: 'hooks/use-color-scheme.mdx'
 source: 'mantine-hooks/src/use-color-scheme/use-color-scheme.ts'
 ---
 
-import { UseColorSchemeDemo } from '@docs/demos';
+import { useColorSchemeHooks } from '@docs/demos';
 
 ## Usage
 
@@ -21,4 +21,4 @@ and will always return `light` if api is not available (e.g. during server side 
 
 Hook returns either `dark` or `light` value:
 
-<UseColorSchemeDemo />
+<Demo data={useColorSchemeHooks} />

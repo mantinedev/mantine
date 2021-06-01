@@ -12,7 +12,7 @@ source: 'mantine-hooks/src/use-scroll-lock/use-scroll-lock.ts'
 ---
 
 import { ModalDemos } from '@demos/core';
-import { UseScrollLockDemo } from '@docs/demos';
+import { useScrollLockHook } from '@docs/demos';
 
 ## Usage
 
@@ -42,7 +42,7 @@ function Modal({ opened }) {
 When hooks is called with `true`, it sets `document.body.style.overflow` to `hidden`.
 When component is unmounted, scroll lock is automatically removed:
 
-<UseScrollLockDemo />
+<Demo data={useScrollLockHook} />
 
 use-scroll-lock is used in some components in <GatsbyLink to="/core/getting-started/">@mantine/core</GatsbyLink>,
 example with <GatsbyLink to="/core/modal/">Modal</GatsbyLink> component:

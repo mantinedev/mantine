@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDocumentTitle, randomId } from '@mantine/hooks';
 import { Group, Button } from '@mantine/core';
-import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
 const code = `import React, { useState } from 'react';
 import { useDocumentTitle, randomId } from '@mantine/hooks';
@@ -18,15 +17,19 @@ export function Demo() {
   );
 }`;
 
-export function UseDocumentTitleDemo() {
+function Demo() {
   const [title, setTitle] = useState('');
   useDocumentTitle(title);
 
   return (
-    <CodeDemo code={code} language="tsx">
-      <Group position="center">
-        <Button onClick={() => setTitle(randomId())}>Set document title to random id</Button>
-      </Group>
-    </CodeDemo>
+    <Group position="center">
+      <Button onClick={() => setTitle(randomId())}>Set document title to random id</Button>
+    </Group>
   );
 }
+
+export const useDocumentTitleHook: MantineDemo = {
+  type: 'demo',
+  code,
+  component: Demo,
+};

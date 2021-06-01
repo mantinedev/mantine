@@ -11,7 +11,7 @@ docs: 'hooks/use-document-title.mdx'
 source: 'mantine-hooks/src/use-document-title/use-document-title.ts'
 ---
 
-import { UseDocumentTitleDemo } from '@docs/demos';
+import { useDocumentTitleHook } from '@docs/demos';
 
 ## Usage
 
@@ -21,4 +21,4 @@ Use this hook with client only applications, for isomorphic use more advanced op
 Call hook with string that should be set as document title inside any component.
 Hook is triggered every time value changes and value is not empty string (trailing whitespace is trimmed) or null.
 
-<UseDocumentTitleDemo />
+<Demo data={useDocumentTitleHook} />

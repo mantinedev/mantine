@@ -11,7 +11,7 @@ docs: 'hooks/use-media-query.mdx'
 source: 'mantine-hooks/src/use-media-query/use-media-query.ts'
 ---
 
-import { UseBreakpointDemo } from '@docs/demos';
+import { useMediaQueryHook } from '@docs/demos';
 
 ## Usage
 
@@ -24,4 +24,4 @@ and will always return false if api is not available (e.g. during server side re
 Hook takes media query as first argument and returns true if query is satisfied.
 Resize browser window to trigger `window.matchMedia` event:
 
-<UseBreakpointDemo />
+<Demo data={useMediaQueryHook} />
