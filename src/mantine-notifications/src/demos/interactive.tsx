@@ -1,11 +1,11 @@
 import React from 'react';
-import { Group, Button, TextInput, useMantineTheme } from '@mantine/core';
-import { EnvelopeClosedIcon } from '@modulz/radix-icons';
+import { Group, Button, TextInput, ActionIcon, useMantineTheme } from '@mantine/core';
+import { EnvelopeClosedIcon, PaperPlaneIcon } from '@modulz/radix-icons';
 import { useNotifications } from '../index';
 
 const code = `import React from 'react';
-import { Group, Button, TextInput } from '@mantine/core';
-import { useNotifications } from '@mantine/notifications';
+import { Group, Button, ActionIcon, TextInput } from '@mantine/core';
+import { EnvelopeClosedIcon, PaperPlaneIcon } from '@modulz/radix-icons';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';
 
 function Demo() {
@@ -29,13 +29,14 @@ function Demo() {
                     placeholder="Enter your email"
                     style={{ flex: 1, marginRight: 15 }}
                   />
-                  <Button
+                  <ActionIcon
                     onClick={() => notifications.hideNotification(id)}
-                    size="lg"
-                    variant="outline"
+                    size={36}
+                    color="blue"
+                    variant="filled"
                   >
-                    Subscribe
-                  </Button>
+                    <PaperPlaneIcon />
+                  </ActionIcon>
                 </div>
               </>
             ),
@@ -74,9 +75,14 @@ function Demo() {
                       backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7],
                     }}
                   />
-                  <Button onClick={() => notifications.hideNotification(id)} size="lg">
-                    Subscribe
-                  </Button>
+                  <ActionIcon
+                    onClick={() => notifications.hideNotification(id)}
+                    size={36}
+                    color="blue"
+                    variant="filled"
+                  >
+                    <PaperPlaneIcon />
+                  </ActionIcon>
                 </div>
               </>
             ),

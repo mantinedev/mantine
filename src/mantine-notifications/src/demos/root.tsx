@@ -1,6 +1,6 @@
 import React from 'react';
-import { CheckIcon, EnvelopeClosedIcon } from '@modulz/radix-icons';
-import { Group, Button, TextInput, useMantineTheme } from '@mantine/core';
+import { CheckIcon, EnvelopeClosedIcon, PaperPlaneIcon } from '@modulz/radix-icons';
+import { Group, Button, TextInput, ActionIcon, useMantineTheme } from '@mantine/core';
 import { useNotifications } from '../index';
 
 function Demo() {
@@ -128,9 +128,14 @@ function Demo() {
                       backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7],
                     }}
                   />
-                  <Button onClick={() => notifications.hideNotification(id)} size="lg">
-                    Subscribe
-                  </Button>
+                  <ActionIcon
+                    onClick={() => notifications.hideNotification(id)}
+                    size={36}
+                    color="blue"
+                    variant="filled"
+                  >
+                    <PaperPlaneIcon />
+                  </ActionIcon>
                 </div>
               </>
             ),
