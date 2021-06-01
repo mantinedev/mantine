@@ -67,4 +67,50 @@ describe('@mantine/core/InputWrapper', () => {
 
     expect(element.render().find('label').attr('for')).toBe('test-id');
   });
+
+  it('spreads props to label, description and error', () => {
+    const element = shallow(
+      <InputWrapper
+        id="test-id"
+        label="test-label"
+        description="test-description"
+        error="test-error"
+        labelProps={{ 'data-test-label': true, className: 'test-label' }}
+        descriptionProps={{ 'data-test-description': true, className: 'test-description' }}
+        errorProps={{ 'data-test-error': true, className: 'test-error' }}
+      >
+        test-children
+      </InputWrapper>
+    );
+
+    expect(element.find('[data-mantine-label]').hasClass('test-label')).toBe(true);
+    expect(element.render().find('[data-mantine-label]').attr('data-test-label')).toBe('true');
+
+    expect(element.find('[data-mantine-description]').hasClass('test-description')).toBe(true);
+    expect(element.render().find('[data-mantine-description]').attr('data-test-description')).toBe(
+      'true'
+    );
+
+    expect(element.find('[data-mantine-error]').hasClass('test-error')).toBe(true);
+    expect(element.render().find('[data-mantine-error]').attr('data-test-error')).toBe('true');
+  });
+
+  it('sets label element based on labelElement prop', () => {
+    const label = shallow(
+      <InputWrapper id="test-id" label="test-label" labelElement="label">
+        test-children
+      </InputWrapper>
+    );
+
+    const div = shallow(
+      <InputWrapper id="test-id" label="test-label" labelElement="div">
+        test-children
+      </InputWrapper>
+    );
+
+    expect(label.find('[data-mantine-label]').type()).toBe('label');
+    expect(label.find('[data-mantine-label]').prop('htmlFor')).toBe('test-id');
+    expect(div.find('[data-mantine-label]').type()).toBe('div');
+    expect(div.find('[data-mantine-label]').prop('htmlFor')).toBe(undefined);
+  });
 });

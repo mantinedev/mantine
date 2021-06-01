@@ -60,7 +60,7 @@ export function InputWrapper({
   const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
   const inputLabel = createElement(
     labelElement,
-    { ..._labelProps, ...labelProps, className: cx(classes.label, labelProps?.className) },
+    { ..._labelProps, ...labelProps, 'data-mantine-label': true, className: cx(classes.label, labelProps?.className) },
     <>
       {label}
       {required && (
