@@ -5,6 +5,7 @@ export { useClipboard } from './use-clipboard/use-clipboard';
 export { useColorScheme } from './use-color-scheme/use-color-scheme';
 export { useDebouncedValue } from './use-debounced-value/use-debounced-value';
 export { useDocumentTitle } from './use-document-title/use-document-title';
+export { useDidUpdate } from './use-did-update/use-did-update';
 export { useFocusTrap } from './use-focus-trap/use-focus-trap';
 export { useForm } from './use-form/use-form';
 export { useId } from './use-id/use-id';

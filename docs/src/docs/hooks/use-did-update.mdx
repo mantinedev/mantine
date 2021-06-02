@@ -1,0 +1,40 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'state'
+title: 'use-did-update'
+order: 1
+slug: /hooks/use-did-update/
+description: 'Set document.title to given string'
+import: "import { useDidUpdate } from '@mantine/hooks';"
+docs: 'hooks/use-did-update.mdx'
+source: 'mantine-hooks/src/use-did-update/use-did-update.ts'
+---
+
+## Usage
+
+use-did-update is a wrapper for common updates tracking pattern:
+
+```tsx
+const mounted = useRef(false);
+
+useEffect(() => {
+  if (mounted.current) {
+    fn();
+  } else {
+    mounted.current = true;
+  }
+}, dependencies);
+```
+
+This prevents fn function call in useEffect on initial mount:
+
+```tsx
+useDidUpdate(() => console.log("Won't be called when mounted"), [value]);
+```
+
+## Definition
+
+```tsx
+function useDidUpdate(fn: () => void, dependencies?: any[]): void;
+```
