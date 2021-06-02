@@ -6,7 +6,9 @@ import useStyles, { sizes } from './Avatar.styles';
 
 export const AVATAR_SIZES = sizes;
 
-export interface AvatarProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface AvatarProps
+  extends DefaultProps<typeof useStyles>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Image url */
   src?: string;
 
@@ -32,10 +34,11 @@ export function Avatar({
   children,
   color = 'gray',
   themeOverride,
+  classNames,
   ...others
 }: AvatarProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, radius, size, theme });
+  const classes = useStyles({ color, radius, size, theme }, classNames);
   const [error, setError] = useState(!src);
 
   useEffect(() => {
@@ -43,7 +46,7 @@ export function Avatar({
   }, [src]);
 
   return (
-    <div {...others} className={cx(classes.avatar, className)}>
+    <div {...others} className={cx(classes.wrapper, className)}>
       {error ? (
         <div data-mantine-placeholder className={classes.placeholder} title={alt}>
           {children || <PlaceholderIcon className={classes.placeholderIcon} />}

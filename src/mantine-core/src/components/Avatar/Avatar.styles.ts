@@ -24,7 +24,7 @@ interface AvatarStylesProps {
 }
 
 export default createMemoStyles({
-  avatar: ({ size, radius, theme }: AvatarStylesProps) => ({
+  wrapper: ({ size, radius, theme }: AvatarStylesProps) => ({
     boxSizing: 'border-box',
     position: 'relative',
     userSelect: 'none',

@@ -6,6 +6,8 @@ export { getFocusStyles } from './utils/get-focus-styles/get-focus-styles';
 export { getFontStyles } from './utils/get-font-styles/get-font-styles';
 export { getSizeValue } from './utils/get-size-value/get-size-value';
 export { hexToRgba } from './utils/hex-to-rgba/hex-to-rgba';
+export { mergeClassNames } from './utils/merge-class-names/merge-class-names';
+export { mergeStyles } from './utils/merge-styles/merge-styles';
 
 export { MantineProvider } from './MantineProvider/MantineProvider';
 export { useMantineTheme } from './use-mantine-theme/use-mantine-theme';

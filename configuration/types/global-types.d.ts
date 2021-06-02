@@ -12,25 +12,36 @@ interface MantineDemoControlProps {
   step?: number;
 }
 
-interface MantineDemo {
-  type: 'configurator' | 'demo';
-  component: React.FC;
+interface MantineDemoBase {
+  component?: React.FC;
   wrapper?: React.FC;
   code?: string;
   background?: (colorScheme: 'light' | 'dark') => string;
+}
+
+interface MantineCodeDemo extends MantineDemoBase {
+  type: 'demo';
   demoProps?: {
     demoBackground?: string;
     toggle?: boolean;
     githubLink?: string;
   };
+}
+
+interface MantineConfiguratorDemo extends MantineDemoBase {
+  type: 'configurator';
+  codeTemplate(props: string, children?: string): string;
   configurator?: MantineDemoControlProps[];
   configuratorProps?: {
     previewBackground?: string;
     multiline?: boolean;
     includeCode?: boolean;
   };
-  codeTemplate?(props: string, children?: string): string;
 }
+
+type MantineDemo = MantineCodeDemo | MantineConfiguratorDemo;
+
+type MantineClasses<T extends (...args: any) => any> = Record<keyof ReturnType<T>, string>;
 
 interface Frontmatter {
   title: string;
@@ -44,6 +55,7 @@ interface Frontmatter {
   installation: string;
   pageTitle: string;
   license: string;
+  styles: string[];
 }
 
 interface MdxPage {

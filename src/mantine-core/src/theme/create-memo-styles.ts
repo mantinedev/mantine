@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { createUseStyles, Styles } from 'react-jss';
+import { mergeClassNames } from './utils/merge-class-names/merge-class-names';
 import { MantineTheme } from './types';
 
 export function createMemoStyles<C extends string = string, Props = unknown>(
@@ -7,7 +8,7 @@ export function createMemoStyles<C extends string = string, Props = unknown>(
 ) {
   const useStyles = createUseStyles<C, Props, MantineTheme>(styles);
 
-  return function useMemoStyles(args?: Props) {
+  return function useMemoStyles(args?: Props, classNames?: Partial<Record<C, string>>) {
     const dependencies =
       typeof args === 'object' && args !== null
         ? Object.keys(args)
@@ -20,6 +21,6 @@ export function createMemoStyles<C extends string = string, Props = unknown>(
     }
 
     const stylesProps = useMemo(() => args, dependencies);
-    return useStyles(stylesProps);
+    return mergeClassNames(useStyles(stylesProps), classNames);
   };
 }

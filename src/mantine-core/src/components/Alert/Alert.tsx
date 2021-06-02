@@ -1,12 +1,12 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import useStyles from './Alert.styles';
 
 export interface AlertProps
-  extends DefaultProps,
+  extends DefaultProps<typeof useStyles>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Optional alert title */
   title?: React.ReactNode;
@@ -28,15 +28,21 @@ export function Alert({
   themeOverride,
   color,
   shadow = 'sm',
+  style,
+  classNames,
+  styles,
   ...others
 }: AlertProps) {
-  const classes = useStyles({ color, theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ color, theme }, classNames);
+  const _styles = mergeStyles(classes, styles);
 
   return (
     <Paper
       shadow={shadow}
-      className={cx(classes.alert, className)}
+      className={cx(classes.root, className)}
       themeOverride={themeOverride}
+      style={{ ...style, ..._styles.root }}
       {...others}
     >
       {title && (
@@ -45,12 +51,13 @@ export function Alert({
           data-mantine-alert-title
           weight={700}
           className={classes.title}
+          style={_styles.title}
         >
           {title}
         </Text>
       )}
 
-      <div data-mantine-alert-body className={classes.body}>
+      <div data-mantine-alert-body className={classes.body} style={_styles.body}>
         {children}
       </div>
     </Paper>

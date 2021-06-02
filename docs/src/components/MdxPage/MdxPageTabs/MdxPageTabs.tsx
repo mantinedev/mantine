@@ -4,16 +4,19 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import TableOfContents from '../TableOfContents/TableOfContents';
 import { Footer } from '../../Footer/Footer';
 import PropsTable from './PropsTable/PropsTable';
+import { StylesApi } from './StylesApi/StylesApi';
 import useStyles from './MdxPageTabs.styles';
 
 export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
   const classes = useStyles();
+  const hasProps = Array.isArray(frontmatter.props);
+  const hasStyles = Array.isArray(frontmatter.styles);
 
-  if (!Array.isArray(frontmatter.props)) {
+  if (!hasProps && !hasStyles) {
     return null;
   }
 
-  const propsTables = Array.isArray(frontmatter.props)
+  const propsTables = hasProps
     ? frontmatter.props.map((component) => (
         <div key={component}>
           <Title order={2} style={{ fontWeight: 600, marginBottom: 20 }}>
@@ -51,14 +54,27 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
         </div>
       </Tab>
 
-      <Tab label="Component props" className={classes.tab}>
-        <div
-          style={{ maxWidth: 1080, margin: 'auto', marginTop: 24 }}
-          className={classes.tabContent}
-        >
-          {propsTables}
-        </div>
-      </Tab>
+      {hasProps && (
+        <Tab label="Component props" className={classes.tab}>
+          <div
+            style={{ maxWidth: 1080, margin: 'auto', marginTop: 24 }}
+            className={classes.tabContent}
+          >
+            {propsTables}
+          </div>
+        </Tab>
+      )}
+
+      {hasStyles && (
+        <Tab label="Styles API" className={classes.tab}>
+          <div
+            style={{ maxWidth: 1080, margin: 'auto', marginTop: 24 }}
+            className={classes.tabContent}
+          >
+            <StylesApi component={frontmatter.styles[0]} />
+          </div>
+        </Tab>
+      )}
     </Tabs>
   );
 }

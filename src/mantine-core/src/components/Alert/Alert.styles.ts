@@ -8,7 +8,7 @@ interface AlertStylesProps {
 const LINE_WIDTH = 4;
 
 export default createMemoStyles({
-  alert: ({ color, theme }: AlertStylesProps) => ({
+  root: ({ color, theme }: AlertStylesProps) => ({
     position: 'relative',
     padding: [theme.spacing.xs, theme.spacing.md],
     paddingLeft: theme.spacing.md + theme.spacing.xs / 2 + LINE_WIDTH,
