@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
-import { useMergedRef } from '@mantine/hooks';
+import { useMergedRef, assignRef } from '@mantine/hooks';
 import { useMantineTheme } from '../../theme';
 import { TextInput } from '../TextInput/TextInput';
 import useStyles, { CONTROL_WIDTH } from './NumberInput.styles';
@@ -101,12 +101,7 @@ export function NumberInput({
     setTempValue(result);
   };
 
-  if (typeof handlersRef === 'function') {
-    handlersRef({ increment, decrement });
-  } else if (typeof handlersRef === 'object' && handlersRef !== null && 'current' in handlersRef) {
-    // eslint-disable-next-line no-param-reassign
-    handlersRef.current = { increment, decrement };
-  }
+  assignRef(handlersRef, { increment, decrement });
 
   useEffect(() => {
     if (typeof value === 'number' && !focused) {
