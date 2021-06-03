@@ -13,3 +13,7 @@ export function generateClassNamesCode(names: string[], component: string) {
   }}
 />`;
 }
+
+export function generateRootCode(component: string) {
+  return `<${component} className="your-class-name" style={{ color: 'red' }} />`;
+}

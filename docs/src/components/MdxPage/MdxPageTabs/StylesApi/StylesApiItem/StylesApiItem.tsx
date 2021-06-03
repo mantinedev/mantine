@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Title } from '@mantine/core';
+import { Table, Title, Text } from '@mantine/core';
 import * as STYLES_API from '@mantine/core/src/styles.api';
 import CodeHighlight from '../../../../CodeHighlight/CodeHighlight';
 import { generateStylesCode, generateClassNamesCode } from '../generate-styles-code';
@@ -27,8 +27,8 @@ export function StylesApiItem({ component }: StylesApiItemProps) {
 
   return (
     <>
-      <Title order={2} className={classes.title}>
-        {component} component styles API
+      <Title order={3} className={classes.title} style={{ marginTop: 45 }}>
+        {component} styles API
       </Title>
 
       <Table>
@@ -43,17 +43,17 @@ export function StylesApiItem({ component }: StylesApiItemProps) {
 
       <div className={classes.codeSections}>
         <div className={classes.codeSection}>
-          <Title order={3} className={classes.title}>
-            Inline {component} styles
-          </Title>
+          <Text weight={500} className={classes.title}>
+            Inline styles
+          </Text>
 
           <CodeHighlight language="tsx" code={generateStylesCode(CLASS_NAMES, component)} />
         </div>
 
         <div className={classes.codeSection}>
-          <Title order={3} className={classes.title}>
-            {component} classNames
-          </Title>
+          <Text weight={500} className={classes.title}>
+            classNames
+          </Text>
 
           <CodeHighlight language="tsx" code={generateClassNamesCode(CLASS_NAMES, component)} />
         </div>
