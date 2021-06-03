@@ -153,7 +153,7 @@ storiesOf('@mantine/core/Tabs', module)
   .add('Outline', () => (
     <div style={{ padding: 50 }}>
       <Tabs variant="outline">
-        <Tab label="First" icon={<ImageIcon />} />
+        <Tab label="First" icon={<ImageIcon />} styles={{ label: { color: 'red' } }} />
         <Tab label="Only tabs" />
         <Tab label="Nothing here" />
         <Tab label="Outline" />

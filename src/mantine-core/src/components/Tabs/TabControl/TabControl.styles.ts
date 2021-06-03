@@ -13,9 +13,10 @@ interface TabControlStylesProps {
 }
 
 export default createMemoStyles({
-  tabActive: {},
+  active: {},
+  label: {},
 
-  tab: ({ theme }: TabControlStylesProps) => ({
+  root: ({ theme }: TabControlStylesProps) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
@@ -34,12 +35,12 @@ export default createMemoStyles({
     },
   }),
 
-  defaultVariant: ({ theme, reduceMotion, color }: TabControlStylesProps) => ({
+  default: ({ theme, reduceMotion, color }: TabControlStylesProps) => ({
     transition: reduceMotion ? 'none' : 'border-color 150ms ease, color 150ms ease',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     borderBottom: '2px solid transparent',
 
-    '&$tabActive': {
+    '&$active': {
       color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
       borderBottomColor: getThemeColor({
         theme,
@@ -49,21 +50,21 @@ export default createMemoStyles({
     },
   }),
 
-  outlineVariant: ({ theme }: TabControlStylesProps) => ({
+  outline: ({ theme }: TabControlStylesProps) => ({
     borderTopRightRadius: theme.radius.sm,
     borderTopLeftRadius: theme.radius.sm,
     border: '1px solid transparent',
     borderBottom: 0,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
 
-    '&$tabActive': {
+    '&$active': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
       background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     },
   }),
 
-  tabInner: {
+  inner: {
     boxSizing: 'border-box',
     display: 'flex',
     alignItems: 'center',
@@ -72,7 +73,7 @@ export default createMemoStyles({
     height: 40,
   },
 
-  tabIcon: ({ theme }: TabControlStylesProps) => ({
+  icon: ({ theme }: TabControlStylesProps) => ({
     '&:not(:only-child)': {
       marginRight: theme.spacing.xs,
     },

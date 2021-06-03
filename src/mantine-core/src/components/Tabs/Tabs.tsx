@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl } from './TabControl/TabControl';
@@ -13,7 +13,9 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
-export interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface TabsProps
+  extends DefaultProps<typeof useStyles>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** <Tab /> components only */
   children: React.ReactNode;
 
@@ -37,12 +39,6 @@ export interface TabsProps extends DefaultProps, React.ComponentPropsWithoutRef<
 
   /** Controls appearance */
   variant?: 'default' | 'outline';
-
-  /** Props spread to Group component (parent of all controls) */
-  groupProps?: Record<string, any>;
-
-  /** Props spread to tabs list wrapper */
-  tabsListProps?: Record<string, any>;
 }
 
 function getPreviousTab(active: number, tabs: TabType[]) {
@@ -76,7 +72,9 @@ function findInitialTab(tabs: TabType[]) {
 }
 
 export function Tabs({
+  className,
   children,
+  style,
   initialTab,
   themeOverride,
   active,
@@ -85,11 +83,13 @@ export function Tabs({
   onTabChange,
   color,
   variant = 'default',
-  groupProps,
-  tabsListProps,
+  classNames,
+  styles,
   ...others
 }: TabsProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme }, classNames);
+  const _styles = mergeStyles(classes, styles);
 
   const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
 
@@ -142,11 +142,14 @@ export function Tabs({
   const content = tabs[activeTab].props.children;
 
   return (
-    <div {...others}>
-      <div {...tabsListProps} className={cx(classes[variant], tabsListProps?.className)}>
+    <div {...others} className={cx(classes.root, className)} style={{ ...style, ..._styles.root }}>
+      <div
+        className={cx(classes.tabsListWrapper, classes[variant])}
+        style={{ ..._styles.tabsListWrapper, ..._styles[variant] }}
+      >
         <Group
-          {...groupProps}
-          className={cx(classes.tabsInner, groupProps?.className)}
+          className={classes.tabsList}
+          style={_styles.tabsList}
           role="tablist"
           aria-orientation="horizontal"
           spacing={0}
@@ -158,7 +161,7 @@ export function Tabs({
       </div>
 
       {content && (
-        <div data-mantine-tab-content className={classes.body} role="tabpanel">
+        <div data-mantine-tab-content role="tabpanel" className={classes.body} style={_styles.body}>
           {content}
         </div>
       )}

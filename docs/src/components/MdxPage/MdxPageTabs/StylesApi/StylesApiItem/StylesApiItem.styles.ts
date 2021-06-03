@@ -6,7 +6,7 @@ const BREAKPOINT = 765;
 export default createUseStyles(
   (theme) => ({
     title: {
-      fontWeight: 500,
+      fontWeight: 600,
       marginBottom: 15,
     },
 

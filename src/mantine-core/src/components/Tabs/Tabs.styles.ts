@@ -5,14 +5,16 @@ interface TabsStylesProps {
 }
 
 export default createMemoStyles({
-  tabsInner: {},
+  root: {},
+  tabsListWrapper: {},
+  tabsList: {},
 
   default: ({ theme }: TabsStylesProps) => ({
     borderBottom: `2px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
 
-    '& $tabsInner': {
+    '& $tabsList': {
       marginBottom: -2,
     },
   }),
@@ -22,7 +24,7 @@ export default createMemoStyles({
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
 
-    '& $tabsInner': {
+    '& $tabsList': {
       marginBottom: -1,
     },
   }),
