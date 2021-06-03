@@ -69,7 +69,7 @@ export default createMemoStyles({
     textOverflow: 'ellipsis',
   },
 
-  badge: ({ theme, size, fullWidth, radius }: BadgeStylesProps) => {
+  root: ({ theme, size, fullWidth, radius }: BadgeStylesProps) => {
     const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
     return {
       ...getFocusStyles(theme),
@@ -110,10 +110,7 @@ export default createMemoStyles({
       theme.colorScheme === 'dark' ? 0.65 : 1
     ),
     color: theme.white,
-    textShadow:
-      theme.colorScheme === 'dark'
-        ? 'none'
-        : '1px 1px 1px rgba(0, 0, 0, .3)',
+    textShadow: theme.colorScheme === 'dark' ? 'none' : '1px 1px 1px rgba(0, 0, 0, .3)',
   }),
 
   outline: ({ theme, color }: BadgeStylesProps) => ({
@@ -140,7 +137,11 @@ export default createMemoStyles({
         width: dotSize,
         height: dotSize,
         borderRadius: dotSize,
-        backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+        backgroundColor: getThemeColor({
+          theme,
+          color,
+          shade: theme.colorScheme === 'dark' ? 4 : 6,
+        }),
         marginRight: dotSize,
       },
     };
