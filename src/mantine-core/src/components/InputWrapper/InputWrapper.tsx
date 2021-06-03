@@ -1,6 +1,6 @@
 import React, { createElement } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
@@ -28,7 +28,7 @@ export interface InputWrapperBaseProps {
 }
 
 export interface InputWrapperProps
-  extends DefaultProps,
+  extends DefaultProps<typeof useStyles>,
     InputWrapperBaseProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** Input that should be wrapped */
@@ -43,6 +43,7 @@ export interface InputWrapperProps
 
 export function InputWrapper({
   className,
+  style,
   label,
   children,
   required,
@@ -54,13 +55,23 @@ export function InputWrapper({
   labelProps,
   descriptionProps,
   errorProps,
+  classNames,
+  styles,
   ...others
 }: InputWrapperProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme();
+  const classes = useStyles({ theme });
+  const _styles = mergeStyles(classes, styles);
   const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
   const inputLabel = createElement(
     labelElement,
-    { ..._labelProps, ...labelProps, 'data-mantine-label': true, className: cx(classes.label, labelProps?.className) },
+    {
+      ..._labelProps,
+      ...labelProps,
+      'data-mantine-label': true,
+      className: classes.label,
+      style: _styles.label,
+    },
     <>
       {label}
       {required && (
@@ -73,17 +84,18 @@ export function InputWrapper({
   );
 
   return (
-    <div className={cx(classes.inputWrapper, className)} {...others}>
+    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       {label && inputLabel}
 
       {description && (
         <Text
+          {...descriptionProps}
           themeOverride={themeOverride}
           data-mantine-description
           color="gray"
           size="xs"
-          {...descriptionProps}
-          className={cx(classes.description, descriptionProps?.className)}
+          className={classes.description}
+          style={_styles.description}
         >
           {description}
         </Text>
@@ -93,12 +105,13 @@ export function InputWrapper({
 
       {typeof error !== 'boolean' && error && (
         <Text
+          {...errorProps}
           themeOverride={themeOverride}
           data-mantine-error
           color="red"
           size="sm"
-          {...errorProps}
-          className={cx(classes.error, errorProps?.className)}
+          className={classes.error}
+          style={_styles.error}
         >
           {error}
         </Text>

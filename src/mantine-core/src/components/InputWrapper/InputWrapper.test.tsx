@@ -75,23 +75,18 @@ describe('@mantine/core/InputWrapper', () => {
         label="test-label"
         description="test-description"
         error="test-error"
-        labelProps={{ 'data-test-label': true, className: 'test-label' }}
-        descriptionProps={{ 'data-test-description': true, className: 'test-description' }}
-        errorProps={{ 'data-test-error': true, className: 'test-error' }}
+        labelProps={{ 'data-test-label': true }}
+        descriptionProps={{ 'data-test-description': true }}
+        errorProps={{ 'data-test-error': true }}
       >
         test-children
       </InputWrapper>
     );
 
-    expect(element.find('[data-mantine-label]').hasClass('test-label')).toBe(true);
     expect(element.render().find('[data-mantine-label]').attr('data-test-label')).toBe('true');
-
-    expect(element.find('[data-mantine-description]').hasClass('test-description')).toBe(true);
     expect(element.render().find('[data-mantine-description]').attr('data-test-description')).toBe(
       'true'
     );
-
-    expect(element.find('[data-mantine-error]').hasClass('test-error')).toBe(true);
     expect(element.render().find('[data-mantine-error]').attr('data-test-error')).toBe('true');
   });
 

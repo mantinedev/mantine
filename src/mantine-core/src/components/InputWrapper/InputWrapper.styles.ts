@@ -5,7 +5,7 @@ interface InputWrapperStylesProps {
 }
 
 export default createMemoStyles({
-  inputWrapper: ({ theme }: InputWrapperStylesProps) => ({
+  root: ({ theme }: InputWrapperStylesProps) => ({
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,
   }),
