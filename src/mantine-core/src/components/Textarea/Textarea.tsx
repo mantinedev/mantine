@@ -2,13 +2,17 @@ import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useId } from '@mantine/hooks';
 import { useMantineTheme, DefaultProps } from '../../theme';
-import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
-import { Input, InputProps } from '../Input/Input';
+import {
+  InputWrapperBaseProps,
+  InputWrapper,
+  InputWrapperStylesNames,
+} from '../InputWrapper/InputWrapper';
+import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 
 export interface TextareaProps
-  extends DefaultProps,
+  extends DefaultProps<InputStylesNames | InputWrapperStylesNames>,
     InputWrapperBaseProps,
-    InputProps,
+    InputBaseProps,
     React.ComponentPropsWithoutRef<'textarea'> {
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
@@ -43,10 +47,21 @@ export function Textarea({
   style,
   wrapperProps,
   elementRef,
+  classNames,
+  styles,
   ...others
 }: TextareaProps) {
   const uuid = useId(id);
   const theme = useMantineTheme(themeOverride);
+  const _styles = styles as any;
+  const inputStyles = {
+    ..._styles,
+    input: {
+      paddingTop: theme.spacing.xs,
+      paddingBottom: theme.spacing.xs,
+      ..._styles?.input,
+    },
+  } as any;
 
   return (
     <InputWrapper
@@ -57,6 +72,8 @@ export function Textarea({
       required={required}
       style={style}
       className={className}
+      classNames={classNames as any}
+      styles={styles as any}
       {...wrapperProps}
     >
       {autosize ? (
@@ -68,13 +85,8 @@ export function Textarea({
           minRows={minRows}
           id={uuid}
           elementRef={elementRef}
-          styles={{
-            input: {
-              paddingTop: theme.spacing.xs,
-              paddingBottom: theme.spacing.xs,
-              height: undefined,
-            },
-          }}
+          classNames={classNames as any}
+          styles={inputStyles}
           {...others}
         />
       ) : (
@@ -85,12 +97,8 @@ export function Textarea({
           invalid={!!error}
           rows={minRows}
           elementRef={elementRef}
-          styles={{
-            input: {
-              paddingTop: theme.spacing.xs,
-              paddingBottom: theme.spacing.xs,
-            },
-          }}
+          classNames={classNames as any}
+          styles={inputStyles}
           {...others}
         />
       )}

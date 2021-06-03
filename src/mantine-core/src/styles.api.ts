@@ -7,4 +7,5 @@ export * from './components/Input/styles.api';
 
 export * from './components/Tabs/styles.api';
 
+export * from './components/Textarea/styles.api';
 export * from './components/TextInput/styles.api';
