@@ -63,19 +63,6 @@ describe('@mantine/core/Input', () => {
     expect(notDisabled.render().find('input').attr('disabled')).toBe(undefined);
   });
 
-  it('sets input className with inputClassName prop', () => {
-    const element = shallow(<Input inputClassName="test-class-name" />);
-    expect(element.render().find('input').hasClass('test-class-name')).toBe(true);
-  });
-
-  it('sets input style with inputStyle prop', () => {
-    const element = shallow(<Input inputStyle={{ border: '1px solid red', lineHeight: 1 }} />)
-      .render()
-      .find('input');
-    expect(element.css('border')).toBe('1px solid red');
-    expect(element.css('line-height')).toBe('1');
-  });
-
   it('renders given right section', () => {
     const withRightSection = shallow(<Input rightSection="test-right-section" />);
     const withoutRightSection = shallow(<Input />);

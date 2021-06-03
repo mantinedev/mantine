@@ -1,10 +1,10 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
 import { ComponentPassThrough } from '../../types';
 import useStyles from './Input.styles';
 
-export interface InputProps extends DefaultProps {
+export interface InputProps extends DefaultProps<typeof useStyles> {
   /** Sets border color to red and aria-invalid=true on input element */
   invalid?: boolean;
 
@@ -19,9 +19,6 @@ export interface InputProps extends DefaultProps {
 
   /** Props spread to rightSection div element */
   rightSectionProps?: Record<string, any>;
-
-  /** Add className to input element */
-  inputClassName?: string;
 
   /** Properties spread to root element */
   wrapperProps?: Record<string, any>;
@@ -54,32 +51,33 @@ export function Input<
   rightSection,
   rightSectionProps = {},
   radius = 'sm',
-  inputClassName,
-  inputStyle,
   themeOverride,
   wrapperProps,
   elementRef,
+  classNames,
+  styles,
   ...others
 }: ComponentPassThrough<T, InputProps> & {
   /** Get element ref */
   elementRef?: React.ForwardedRef<U>;
 }) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, theme });
+  const classes = useStyles({ radius, theme }, classNames);
+  const _styles = mergeStyles(classes, styles);
 
   return (
     <div
-      className={cx(
-        classes.inputWrapper,
-        { [classes.invalid]: invalid },
-        classes[`${variant}Variant`],
-        className
-      )}
-      style={style}
+      className={cx(classes.root, { [classes.invalid]: invalid }, classes[variant], className)}
+      style={{
+        ...style,
+        ..._styles.root,
+        ...(invalid ? _styles.invalid : null),
+        ..._styles[variant],
+      }}
       {...wrapperProps}
     >
       {icon && (
-        <div data-mantine-icon className={classes.icon}>
+        <div data-mantine-icon className={classes.icon} style={_styles.icon}>
           {icon}
         </div>
       )}
@@ -90,10 +88,11 @@ export function Input<
         ref={elementRef}
         aria-required={required}
         aria-invalid={invalid}
-        className={cx({ [classes.withIcon]: icon }, classes.input, inputClassName)}
+        className={cx({ [classes.withIcon]: icon }, classes.input)}
         style={{
           paddingRight: rightSection ? rightSectionWidth : theme.spacing.md,
-          ...inputStyle,
+          ..._styles.input,
+          ...(icon ? _styles.withIcon : null),
         }}
       />
 
@@ -101,8 +100,8 @@ export function Input<
         <div
           {...rightSectionProps}
           data-mantine-input-section
-          style={{ ...rightSectionProps.style, width: rightSectionWidth }}
-          className={cx(classes.rightSection, rightSectionProps.className)}
+          style={{ ..._styles.rightSection, width: rightSectionWidth }}
+          className={classes.rightSection}
         >
           {rightSection}
         </div>

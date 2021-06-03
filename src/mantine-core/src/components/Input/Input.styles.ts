@@ -14,14 +14,14 @@ interface InputStylesProps {
 export default createMemoStyles({
   withIcon: {},
 
-  inputWrapper: ({ radius, theme }: InputStylesProps) => ({
+  root: ({ radius, theme }: InputStylesProps) => ({
     position: 'relative',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
 
     '&, & *': { boxSizing: 'border-box' },
   }),
 
-  defaultVariant: ({ theme, radius }: InputStylesProps) => ({
+  default: ({ theme, radius }: InputStylesProps) => ({
     '& $input': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       minHeight: 36,
@@ -53,7 +53,7 @@ export default createMemoStyles({
     },
   }),
 
-  filledVariant: ({ theme, radius }: InputStylesProps) => ({
+  filled: ({ theme, radius }: InputStylesProps) => ({
     '& $input': {
       minHeight: 36,
       paddingLeft: theme.spacing.md,
@@ -96,7 +96,7 @@ export default createMemoStyles({
     },
   }),
 
-  unstyledVariant: ({ theme }: InputStylesProps) => ({
+  unstyled: ({ theme }: InputStylesProps) => ({
     '& $input': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       backgroundColor: 'transparent',
@@ -142,9 +142,10 @@ export default createMemoStyles({
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
     },
 
-    '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration': {
-      appearance: 'none',
-    },
+    '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration':
+      {
+        appearance: 'none',
+      },
 
     '&[type=number]': {
       MozAppearance: 'textfield',
