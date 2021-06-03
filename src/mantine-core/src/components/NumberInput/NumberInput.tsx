@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { useMergedRef, assignRef } from '@mantine/hooks';
-import { useMantineTheme } from '../../theme';
+import { useMantineTheme, DefaultProps, mergeStyles } from '../../theme';
 import { TextInput } from '../TextInput/TextInput';
+import { InputStylesNames } from '../Input/Input';
+import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
 import useStyles, { CONTROL_WIDTH } from './NumberInput.styles';
+
+export type NumberInputStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface NumberInputHandlers {
   increment(): void;
@@ -11,10 +15,17 @@ export interface NumberInputHandlers {
 }
 
 export interface NumberInputProps
-  extends Omit<
-    React.ComponentPropsWithoutRef<typeof TextInput>,
-    'rightSection' | 'rightSectionProps' | 'rightSectionWidth' | 'onChange' | 'value'
-  > {
+  extends DefaultProps<InputStylesNames | InputWrapperStylesNames | NumberInputStylesNames>,
+    Omit<
+      React.ComponentPropsWithoutRef<typeof TextInput>,
+      | 'rightSection'
+      | 'rightSectionProps'
+      | 'rightSectionWidth'
+      | 'onChange'
+      | 'value'
+      | 'classNames'
+      | 'styles'
+    > {
   /** onChange input handler for controlled variant, note that input event is not exposed */
   onChange?(value: number): void;
 
@@ -64,10 +75,13 @@ export function NumberInput({
   defaultValue,
   noClampOnBlur = false,
   handlersRef,
+  classNames,
+  styles,
   ...others
 }: NumberInputProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, radius });
+  const classes = useStyles({ theme, radius }, classNames as any);
+  const _styles = mergeStyles(classes, styles as any);
   const [focused, setFocused] = useState(false);
   const [_value, setValue] = useState(
     typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : 0
@@ -111,7 +125,7 @@ export function NumberInput({
   }, [value]);
 
   const rightSection = (
-    <div className={classes.rightSection}>
+    <div className={classes.rightSection} style={_styles.rightSection}>
       <button
         type="button"
         tabIndex={-1}
@@ -119,6 +133,7 @@ export function NumberInput({
         data-mantine-increment
         disabled={finalValue >= max}
         className={cx(classes.control, classes.controlUp)}
+        style={{ ..._styles.control, ..._styles.controlUp }}
         onMouseDown={(event) => {
           event.preventDefault();
           increment();
@@ -132,6 +147,7 @@ export function NumberInput({
         data-mantine-decrement
         disabled={finalValue <= min}
         className={cx(classes.control, classes.controlDown)}
+        style={{ ..._styles.control, ..._styles.controlDown }}
         onMouseDown={(event) => {
           event.preventDefault();
           decrement();
@@ -188,6 +204,8 @@ export function NumberInput({
       max={max}
       min={min}
       step={step}
+      styles={styles as any}
+      classNames={classNames as any}
     />
   );
 }
