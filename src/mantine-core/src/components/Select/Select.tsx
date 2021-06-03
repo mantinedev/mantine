@@ -1,8 +1,12 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme } from '../../theme';
-import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
-import { Input, InputProps } from '../Input/Input';
+import {
+  InputWrapperBaseProps,
+  InputWrapper,
+  InputWrapperStylesNames,
+} from '../InputWrapper/InputWrapper';
+import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { ChevronIcon } from './ChevronIcon';
 
 interface SelectItem {
@@ -12,9 +16,9 @@ interface SelectItem {
 }
 
 export interface SelectProps
-  extends DefaultProps,
+  extends DefaultProps<InputStylesNames | InputWrapperStylesNames>,
     InputWrapperBaseProps,
-    Omit<InputProps, 'rightSection' | 'rightSectionWidth' | 'rightSectionProps'>,
+    Omit<InputBaseProps, 'rightSection' | 'rightSectionWidth' | 'rightSectionProps'>,
     React.ComponentPropsWithoutRef<'select'> {
   /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
@@ -52,6 +56,8 @@ export function Select({
   defaultValue,
   onChange,
   value,
+  classNames,
+  styles,
   ...others
 }: SelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -86,6 +92,8 @@ export function Select({
       style={style}
       themeOverride={themeOverride}
       description={description}
+      styles={styles as any}
+      classNames={classNames as any}
     >
       <Input<'select', HTMLSelectElement>
         {...others}
@@ -96,12 +104,13 @@ export function Select({
         aria-required={required}
         elementRef={elementRef}
         id={uuid}
-        inputStyle={inputStyle}
         rightSection={chevron}
         rightSectionProps={{ style: { pointerEvents: 'none' } }}
         required={required}
         themeOverride={themeOverride}
         value={value === null ? '' : value}
+        styles={styles as any}
+        classNames={classNames as any}
       >
         {options}
       </Input>
