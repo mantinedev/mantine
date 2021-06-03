@@ -71,7 +71,7 @@ export function ColorInput({
           component="button"
           id={uuid}
           onClick={() => setDropdownOpened(true)}
-          inputStyle={{ cursor: 'pointer' }}
+          styles={{ input: { cursor: 'pointer' } }}
           elementRef={controlRef}
           {...others}
         >

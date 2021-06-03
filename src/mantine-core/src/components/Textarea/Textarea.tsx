@@ -22,9 +22,6 @@ export interface TextareaProps
   /** Defined minRows in autosize variant and rows in regular variant */
   minRows?: number;
 
-  /** Style properties added to input element */
-  inputStyle?: React.CSSProperties;
-
   /** Props passed to root element (InputWrapper component) */
   wrapperProps?: Record<string, any>;
 
@@ -45,7 +42,6 @@ export function Textarea({
   themeOverride,
   style,
   wrapperProps,
-  inputStyle,
   elementRef,
   ...others
 }: TextareaProps) {
@@ -72,11 +68,12 @@ export function Textarea({
           minRows={minRows}
           id={uuid}
           elementRef={elementRef}
-          inputStyle={{
-            paddingTop: theme.spacing.xs,
-            paddingBottom: theme.spacing.xs,
-            ...inputStyle,
-            height: undefined,
+          styles={{
+            input: {
+              paddingTop: theme.spacing.xs,
+              paddingBottom: theme.spacing.xs,
+              height: undefined,
+            },
           }}
           {...others}
         />
@@ -88,10 +85,11 @@ export function Textarea({
           invalid={!!error}
           rows={minRows}
           elementRef={elementRef}
-          inputStyle={{
-            paddingTop: theme.spacing.xs,
-            paddingBottom: theme.spacing.xs,
-            ...inputStyle,
+          styles={{
+            input: {
+              paddingTop: theme.spacing.xs,
+              paddingBottom: theme.spacing.xs,
+            },
           }}
           {...others}
         />

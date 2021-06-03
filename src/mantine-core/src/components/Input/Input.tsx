@@ -35,7 +35,7 @@ export interface InputBaseProps {
   variant?: 'default' | 'filled' | 'unstyled';
 }
 
-interface InputProps extends InputBaseProps, DefaultProps<typeof useStyles> {}
+export interface InputProps extends InputBaseProps, DefaultProps<typeof useStyles> {}
 
 export function Input<
   T extends React.ElementType = 'input',

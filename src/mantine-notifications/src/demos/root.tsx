@@ -124,8 +124,10 @@ function Demo() {
                     placeholder="Enter your email"
                     style={{ flex: 1, marginRight: 15 }}
                     variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
-                    inputStyle={{
-                      backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7],
+                    styles={{
+                      input: {
+                        backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7],
+                      },
                     }}
                   />
                   <ActionIcon
