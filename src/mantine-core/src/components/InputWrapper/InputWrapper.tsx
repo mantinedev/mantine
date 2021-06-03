@@ -4,6 +4,8 @@ import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
+export type InputWrapperStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface InputWrapperBaseProps {
   /** Input label, displayed before input */
   label?: React.ReactNode;

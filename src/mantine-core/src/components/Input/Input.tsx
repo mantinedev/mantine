@@ -4,7 +4,9 @@ import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '.
 import { ComponentPassThrough } from '../../types';
 import useStyles from './Input.styles';
 
-export interface InputProps extends DefaultProps<typeof useStyles> {
+export type InputStylesNames = keyof ReturnType<typeof useStyles>;
+
+export interface InputBaseProps {
   /** Sets border color to red and aria-invalid=true on input element */
   invalid?: boolean;
 
@@ -23,9 +25,6 @@ export interface InputProps extends DefaultProps<typeof useStyles> {
   /** Properties spread to root element */
   wrapperProps?: Record<string, any>;
 
-  /** Adds style to input element */
-  inputStyle?: React.CSSProperties;
-
   /** Sets aria-required=true on input element */
   required?: boolean;
 
@@ -35,6 +34,8 @@ export interface InputProps extends DefaultProps<typeof useStyles> {
   /** Defines input appearance */
   variant?: 'default' | 'filled' | 'unstyled';
 }
+
+interface InputProps extends InputBaseProps, DefaultProps<typeof useStyles> {}
 
 export function Input<
   T extends React.ElementType = 'input',

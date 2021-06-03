@@ -1,12 +1,16 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
 import { DefaultProps } from '../../theme';
-import { Input, InputProps } from '../Input/Input';
-import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
+import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
+import {
+  InputWrapperBaseProps,
+  InputWrapper,
+  InputWrapperStylesNames,
+} from '../InputWrapper/InputWrapper';
 
 export interface TextInputProps
-  extends DefaultProps,
-    InputProps,
+  extends DefaultProps<InputStylesNames | InputWrapperStylesNames>,
+    InputBaseProps,
     InputWrapperBaseProps,
     React.ComponentPropsWithoutRef<'input'> {
   /** id is used to bind input and label, if not passed unique id will be generated for each input */
@@ -38,6 +42,8 @@ export function TextInput({
   themeOverride,
   wrapperProps,
   elementRef,
+  classNames,
+  styles,
   ...others
 }: TextInputProps) {
   const uuid = useId(id);
@@ -52,6 +58,8 @@ export function TextInput({
       className={className}
       style={style}
       themeOverride={themeOverride}
+      classNames={classNames as any}
+      styles={styles as any}
       {...wrapperProps}
     >
       <Input<'input', HTMLInputElement>
@@ -63,6 +71,8 @@ export function TextInput({
         invalid={!!error}
         icon={icon}
         themeOverride={themeOverride}
+        classNames={classNames as any}
+        styles={styles as any}
       />
     </InputWrapper>
   );
