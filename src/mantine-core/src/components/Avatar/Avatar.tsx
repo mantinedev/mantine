@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineNumberSize } from '../../theme';
+import { useMantineTheme, DefaultProps, MantineNumberSize, mergeStyles } from '../../theme';
 import { PlaceholderIcon } from './PlaceholderIcon';
 import useStyles, { sizes } from './Avatar.styles';
 
@@ -27,6 +27,7 @@ export interface AvatarProps
 
 export function Avatar({
   className,
+  style,
   size = 'md',
   src,
   alt,
@@ -35,10 +36,12 @@ export function Avatar({
   color = 'gray',
   themeOverride,
   classNames,
+  styles,
   ...others
 }: AvatarProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ color, radius, size, theme }, classNames);
+  const _styles = mergeStyles(classes, styles);
   const [error, setError] = useState(!src);
 
   useEffect(() => {
@@ -46,13 +49,26 @@ export function Avatar({
   }, [src]);
 
   return (
-    <div {...others} className={cx(classes.wrapper, className)}>
+    <div {...others} className={cx(classes.root, className)} style={{ ..._styles.root, ...style }}>
       {error ? (
-        <div data-mantine-placeholder className={classes.placeholder} title={alt}>
-          {children || <PlaceholderIcon className={classes.placeholderIcon} />}
+        <div
+          data-mantine-placeholder
+          className={classes.placeholder}
+          title={alt}
+          style={_styles.placeholder}
+        >
+          {children || (
+            <PlaceholderIcon className={classes.placeholderIcon} style={_styles.placeholderIcon} />
+          )}
         </div>
       ) : (
-        <img className={classes.image} src={src} alt={alt} onError={() => setError(true)} />
+        <img
+          className={classes.image}
+          src={src}
+          alt={alt}
+          onError={() => setError(true)}
+          style={_styles.image}
+        />
       )}
     </div>
   );
