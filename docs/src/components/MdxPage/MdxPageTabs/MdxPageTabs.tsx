@@ -71,7 +71,7 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
             style={{ maxWidth: 1080, margin: 'auto', marginTop: 24 }}
             className={classes.tabContent}
           >
-            <StylesApi component={frontmatter.styles[0]} />
+            <StylesApi components={frontmatter.styles} />
           </div>
         </Tab>
       )}
