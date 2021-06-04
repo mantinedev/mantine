@@ -66,12 +66,12 @@ export default createMemoStyles({
   start: {},
   end: {},
 
-  wrapper: {
+  root: {
     position: 'relative',
     display: 'inline-block',
   },
 
-  popoverWrapper: {
+  wrapper: {
     background: 'transparent',
     position: 'absolute',
     top: 0,
@@ -126,7 +126,7 @@ export default createMemoStyles({
     zIndex: 1,
   },
 
-  closeButton: {
+  close: {
     position: 'absolute',
     top: 7,
     zIndex: 2,

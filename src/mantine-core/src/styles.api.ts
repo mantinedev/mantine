@@ -18,7 +18,7 @@ export * from './components/Modal/styles.api';
 export * from './components/Notification/styles.api';
 export * from './components/NumberInput/styles.api';
 export * from './components/PasswordInput/styles.api';
-
+export * from './components/Popover/styles.api';
 export * from './components/Select/styles.api';
 
 export * from './components/Tabs/styles.api';

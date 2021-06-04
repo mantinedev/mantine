@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { useClickOutside, useFocusTrap, useId, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
 import { MantineTransition, Transition } from '../Transition/Transition';
 import { Text } from '../Text/Text';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
@@ -9,7 +9,7 @@ import { CloseIcon } from '../Modal/CloseIcon';
 import useStyles from './Popover.styles';
 
 export interface PopoverProps
-  extends DefaultProps,
+  extends DefaultProps<typeof useStyles>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Disable closing by click outside */
   noClickOutside?: boolean;
@@ -77,18 +77,13 @@ export interface PopoverProps
   /** Popover shadow, value from theme.shadows or string to set box-shadow to any value */
   shadow?: string;
 
-  /** Popover body styles */
-  bodyStyle?: React.CSSProperties;
-
-  /** Popover body className */
-  bodyClassName?: string;
-
   /** aria-label for close button */
   closeButtonLabel?: string;
 }
 
 export function Popover({
   className,
+  style,
   themeOverride,
   children,
   target,
@@ -112,14 +107,15 @@ export function Popover({
   radius = 'sm',
   spacing = 'md',
   shadow = 'sm',
-  bodyStyle,
-  bodyClassName,
   closeButtonLabel,
   id,
+  classNames,
+  styles,
   ...others
 }: PopoverProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, gutter, arrowSize, radius, spacing, shadow });
+  const classes = useStyles({ theme, gutter, arrowSize, radius, spacing, shadow }, classNames);
+  const _styles = mergeStyles(classes, styles);
   const handleClose = () => typeof onClose === 'function' && onClose();
   const useClickOutsideRef = useClickOutside(() => !noClickOutside && handleClose());
   const focusTrapRef = useFocusTrap(!noFocusTrap);
@@ -136,7 +132,13 @@ export function Popover({
   const bodyId = `${uuid}-body`;
 
   return (
-    <div className={cx(classes.wrapper, className)} ref={useClickOutsideRef} id={id} {...others}>
+    <div
+      className={cx(classes.root, className)}
+      ref={useClickOutsideRef}
+      id={id}
+      style={{ ...style, ..._styles.root }}
+      {...others}
+    >
       <Transition
         mounted={opened && !disabled}
         transition={transition}
@@ -145,25 +147,31 @@ export function Popover({
       >
         {(transitionStyles) => (
           <div
-            style={transitionStyles}
             role="dialog"
             tabIndex={-1}
             data-mantine-popover
             aria-labelledby={titleId}
             aria-describedby={bodyId}
-            className={classes.popoverWrapper}
+            className={classes.wrapper}
+            style={{ ...transitionStyles, ..._styles.wrapper }}
             ref={focusTrapRef}
             onKeyDownCapture={handleKeydown}
           >
             <div
-              className={cx(classes.popover, classes[position], classes[placement], bodyClassName)}
-              style={{ zIndex, ...bodyStyle }}
+              className={cx(classes.popover, classes[position], classes[placement])}
+              style={{ zIndex, ..._styles.popover, ..._styles[position], ..._styles[placement] }}
             >
-              {withArrow && <div data-mantine-popover-arrow className={classes.arrow} />}
+              {withArrow && (
+                <div data-mantine-popover-arrow className={classes.arrow} style={_styles.arrow} />
+              )}
 
-              <div className={classes.body}>
+              <div className={classes.body} style={_styles.body}>
                 {!!title && (
-                  <div className={classes.header} data-mantine-popover-header>
+                  <div
+                    className={classes.header}
+                    style={_styles.header}
+                    data-mantine-popover-header
+                  >
                     <Text size="sm" id={titleId} data-mantine-popover-title>
                       {title}
                     </Text>
@@ -176,12 +184,18 @@ export function Popover({
                     data-mantine-popover-close
                     onClick={handleClose}
                     aria-label={closeButtonLabel}
-                    className={cx(classes.closeButton)}
+                    className={cx(classes.close)}
+                    style={_styles.close}
                   >
                     <CloseIcon style={{ width: 14, height: 14 }} />
                   </ActionIcon>
                 )}
-                <div className={classes.inner} id={bodyId} data-mantine-popover-body>
+                <div
+                  className={classes.inner}
+                  id={bodyId}
+                  data-mantine-popover-body
+                  style={_styles.inner}
+                >
                   {children}
                 </div>
               </div>
@@ -190,7 +204,7 @@ export function Popover({
         )}
       </Transition>
 
-      <div data-mantine-popover-target className={classes.target}>
+      <div data-mantine-popover-target className={classes.target} style={_styles.target}>
         {target}
       </div>
     </div>
