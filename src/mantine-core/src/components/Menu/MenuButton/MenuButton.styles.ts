@@ -8,7 +8,7 @@ interface MenuButtonStylesProps {
 export default createMemoStyles({
   hovered: {},
 
-  item: ({ theme, color }: MenuButtonStylesProps) => ({
+  root: ({ theme, color }: MenuButtonStylesProps) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     fontSize: theme.fontSizes.sm,

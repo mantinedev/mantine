@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import cx from 'clsx';
 import { useReducedMotion, useClickOutside, useFocusTrap } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../../theme';
+import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../../theme';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import { Divider } from '../../Divider/Divider';
@@ -9,7 +9,11 @@ import { MenuItem, MenuItemType } from '../MenuItem/MenuItem';
 import { MenuButton } from '../MenuButton/MenuButton';
 import useStyles from './MenuBody.styles';
 
-interface MenuBodyProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export type MenuBodyStylesNames = keyof ReturnType<typeof useStyles>;
+
+interface MenuBodyProps
+  extends DefaultProps<MenuBodyStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** When true menu is mounted to the dom */
   opened: boolean;
 
@@ -76,19 +80,21 @@ function findInitialItem(items: MenuItemType[]) {
 
 function MenuBody({
   className,
+  style,
   themeOverride,
   opened,
   onClose,
   transition = 'skew-up',
   transitionDuration = 250,
   transitionTimingFunction,
-  style,
   children,
   size = 'md',
   shadow = 'md',
   closeOnClickOutside = true,
   closeOnItemClick = true,
   zIndex = 1000,
+  classNames,
+  styles,
   ...others
 }: MenuBodyProps) {
   const items = React.Children.toArray(children).filter(
@@ -98,7 +104,8 @@ function MenuBody({
   const hoveredTimeout = useRef<number>();
   const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, theme });
+  const classes = useStyles({ size, theme }, classNames);
+  const _styles = mergeStyles(classes, styles);
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
   const [hovered, setHovered] = useState(findInitialItem(items));
@@ -171,7 +178,15 @@ function MenuBody({
     }
 
     if (item.type === Divider) {
-      return <Divider key={index} variant="solid" className={classes.hr} />;
+      return (
+        <Divider
+          key={index}
+          variant="solid"
+          className={classes.hr}
+          margins={theme.spacing.xs / 2}
+          style={_styles.hr}
+        />
+      );
     }
 
     return null;
@@ -189,7 +204,7 @@ function MenuBody({
         <Paper
           shadow={shadow}
           className={cx(classes.menu, className)}
-          style={{ ...style, ...transitionStyles, zIndex }}
+          style={{ ...style, ..._styles.menu, ...transitionStyles, zIndex }}
           onKeyDownCapture={handleKeyDown}
           elementRef={menuRef}
           role="menu"

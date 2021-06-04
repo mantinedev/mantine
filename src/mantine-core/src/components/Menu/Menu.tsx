@@ -4,7 +4,7 @@ import { DefaultProps, MantineNumberSize } from '../../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { MantineTransition } from '../Transition/Transition';
 import { MenuIcon } from './MenuIcon';
-import { MenuBody, MenuBodyProps } from './MenuBody/MenuBody';
+import { MenuBody, MenuBodyProps, MenuBodyStylesNames } from './MenuBody/MenuBody';
 import { sizes } from './MenuBody/MenuBody.styles';
 import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
 
@@ -20,7 +20,9 @@ interface MenuPosition {
   right?: React.CSSProperties['right'];
 }
 
-export interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface MenuProps
+  extends DefaultProps<MenuBodyStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** <MenuItem /> and <Divider /> components only, children are passed to MenuBody component  */
   children: React.ReactNode;
 
@@ -103,6 +105,8 @@ export function Menu({
   controlRefProp = 'elementRef',
   zIndex = 1000,
   elementRef,
+  classNames,
+  styles,
   ...others
 }: MenuProps) {
   const controlRefFocusTimeout = useRef<number>();
@@ -165,6 +169,8 @@ export function Menu({
         size={size}
         shadow={shadow}
         zIndex={zIndex}
+        classNames={classNames}
+        styles={styles}
       >
         {children}
       </MenuBody>
