@@ -64,7 +64,7 @@ function Demo() {
         max={10}
         min={0}
         step={2}
-        inputStyle={{ width: 54, textAlign: 'center' }}
+        styles={{ input: { width: 54, textAlign: 'center' } }}
         variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
       />
       <ActionIcon

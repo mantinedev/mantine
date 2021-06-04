@@ -67,13 +67,11 @@ describe('@mantine/core/TabControl', () => {
           label: 'test',
           disabled: true,
           title: 'test-title',
-          style: { border: '1px solid red' },
         }}
       />
     ).render();
 
     expect(element.attr('disabled')).toBe('disabled');
     expect(element.attr('title')).toBe('test-title');
-    expect(element.css('border')).toBe('1px solid red');
   });
 });

@@ -37,6 +37,9 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
   const isMobile = useMediaQuery('(max-width: 755px');
   const theme = useMantineTheme();
   const inputVariant = theme.colorScheme === 'dark' ? 'filled' : 'default';
+  const inputStyles = {
+    input: { backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }
+  };
 
   const form = useForm({
     initialValues,
@@ -57,7 +60,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
         error={form.errors.name}
         variant={inputVariant}
-        inputStyle={{ backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }}
+        styles={inputStyles}
       />
 
       <TextInput
@@ -69,7 +72,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
         error={form.errors.email}
         variant={inputVariant}
-        inputStyle={{ backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }}
+        styles={inputStyles}
       />
 
       <Group position="apart" style={{ marginTop: 15 }}>
@@ -161,6 +164,9 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
   const isMobile = useMediaQuery('(max-width: 755px');
   const theme = useMantineTheme();
   const inputVariant = theme.colorScheme === 'dark' ? 'filled' : 'default';
+  const inputStyles = {
+    input: { backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] },
+  };
 
   const form = useForm({
     initialValues,
@@ -182,7 +188,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
         error={form.errors.name}
         variant={inputVariant}
-        inputStyle={{ backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }}
+        styles={inputStyles}
       />
 
       <TextInput
@@ -194,7 +200,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
         error={form.errors.email}
         variant={inputVariant}
-        inputStyle={{ backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }}
+        styles={inputStyles}
       />
 
       <Group position="apart" style={{ marginTop: 15 }}>

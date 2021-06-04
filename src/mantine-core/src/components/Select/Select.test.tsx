@@ -31,21 +31,11 @@ describe('@mantine/core/Select', () => {
   itSupportsStyle(Select, { data: TEST_DATA });
   itSupportsRef(Select, { data: TEST_DATA }, HTMLSelectElement, 'elementRef');
 
-  it('passes required, inputStyle, inputClassName and id props to select element', () => {
-    const element = shallow(
-      <Select
-        data={TEST_DATA}
-        required
-        id="test-id"
-        inputStyle={{ border: '1px solid red' }}
-        inputClassName="test-input-class"
-      />
-    );
+  it('passes required and id props to select element', () => {
+    const element = shallow(<Select data={TEST_DATA} required id="test-id" />);
 
     expect(element.render().find('select').attr('id')).toBe('test-id');
     expect(element.render().find('select').attr('aria-required')).toBe('true');
-    expect(element.render().find('select').css('border')).toBe('1px solid red');
-    expect(element.render().find('select').hasClass('test-input-class')).toBe(true);
   });
 
   it('passes required, id, label, error and description props to InputWrapper component', () => {
