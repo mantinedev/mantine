@@ -21,7 +21,7 @@ const POSITIONS = {
 };
 
 export default createMemoStyles({
-  group: ({ spacing, position, noWrap, direction, theme, grow, align }: GroupStylesProps) => ({
+  root: ({ spacing, position, noWrap, direction, theme, grow, align }: GroupStylesProps) => ({
     display: 'flex',
     flexDirection: direction,
     alignItems: align || (direction === 'row' ? 'center' : grow ? 'stretch' : POSITIONS[position]),
