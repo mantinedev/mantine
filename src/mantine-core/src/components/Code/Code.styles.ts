@@ -12,7 +12,7 @@ interface CodeStylesProps {
 }
 
 export default createMemoStyles({
-  code: ({ theme, color }: CodeStylesProps) => ({
+  root: ({ theme, color }: CodeStylesProps) => ({
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,
     padding: [1, theme.spacing.xs / 2],
@@ -35,7 +35,7 @@ export default createMemoStyles({
     }`,
   }),
 
-  pre: ({ theme }: CodeStylesProps) => ({
+  block: ({ theme }: CodeStylesProps) => ({
     padding: theme.spacing.xs,
     margin: 0,
     overflowX: 'auto',
