@@ -24,7 +24,7 @@ interface ProgressStylesProps {
 }
 
 export default createMemoStyles({
-  progress: ({ radius, size, theme }: ProgressStylesProps) => ({
+  root: ({ radius, size, theme }: ProgressStylesProps) => ({
     height: getSizeValue({ size, sizes }),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),

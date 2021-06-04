@@ -1,12 +1,14 @@
 import React from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
 import useStyles, { sizes } from './Progress.styles';
 
 export const PROGRESS_SIZES = sizes;
 
-export interface ProgressProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface ProgressProps
+  extends DefaultProps<typeof useStyles>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Percent of filled bar (0-100) */
   value: number;
 
@@ -25,6 +27,7 @@ export interface ProgressProps extends DefaultProps, React.ComponentPropsWithout
 
 export function Progress({
   className,
+  style,
   value,
   color,
   size = 'md',
@@ -32,19 +35,17 @@ export function Progress({
   striped = false,
   themeOverride,
   'aria-label': ariaLabel,
+  classNames,
+  styles,
   ...others
 }: ProgressProps) {
-  const classes = useStyles({
-    color,
-    size,
-    radius,
-    striped,
-    reduceMotion: useReducedMotion(),
-    theme: useMantineTheme(themeOverride),
-  });
+  const theme = useMantineTheme(themeOverride);
+  const reduceMotion = useReducedMotion();
+  const classes = useStyles({ color, size, radius, striped, reduceMotion, theme }, classNames);
+  const _styles = mergeStyles(classes, styles);
 
   return (
-    <div className={cx(classes.progress, className)} {...others}>
+    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       <div
         role="progressbar"
         aria-valuemax={100}
@@ -52,7 +53,7 @@ export function Progress({
         aria-valuenow={value}
         aria-label={ariaLabel}
         className={classes.bar}
-        style={{ width: `${value}%` }}
+        style={{ ..._styles.bar, width: `${value}%` }}
       />
     </div>
   );
