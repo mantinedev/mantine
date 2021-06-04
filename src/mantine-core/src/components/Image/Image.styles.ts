@@ -12,7 +12,7 @@ interface ImageStylesProps {
 }
 
 export default createMemoStyles({
-  wrapper: {
+  root: {
     position: 'relative',
     overflow: 'hidden',
   },
