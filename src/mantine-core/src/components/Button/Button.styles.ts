@@ -90,7 +90,7 @@ export default createMemoStyles({
     textOverflow: 'ellipsis',
   },
 
-  shared: (props: ButtonStylesProps) => ({
+  root: (props: ButtonStylesProps) => ({
     ...sizes[props.size],
     ...getFontStyles(props.theme),
     ...getFocusStyles(props.theme),
