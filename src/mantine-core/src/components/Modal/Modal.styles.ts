@@ -16,7 +16,7 @@ interface ModalStylesProps {
 }
 
 export default createMemoStyles({
-  wrapper: {
+  root: {
     position: 'fixed',
     top: 0,
     left: 0,
