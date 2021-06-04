@@ -20,6 +20,7 @@ export * from './components/NumberInput/styles.api';
 export * from './components/PasswordInput/styles.api';
 export * from './components/Popover/styles.api';
 export * from './components/Progress/styles.api';
+export * from './components/RadioGroup/styles.api';
 
 export * from './components/Select/styles.api';
 

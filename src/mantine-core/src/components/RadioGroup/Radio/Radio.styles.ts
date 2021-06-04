@@ -25,7 +25,7 @@ export const sizes = {
 export default createMemoStyles({
   labelDisabled: {},
 
-  wrapper: {
+  root: {
     display: 'flex',
     alignItems: 'center',
     WebkitTapHighlightColor: 'transparent',
