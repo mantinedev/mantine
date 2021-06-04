@@ -1,11 +1,13 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import useStyles from './Tooltip.styles';
 
-export interface TooltipProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface TooltipProps
+  extends DefaultProps<typeof useStyles>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Tooltip content */
   label: React.ReactNode;
 
@@ -72,6 +74,7 @@ export interface TooltipProps extends DefaultProps, React.ComponentPropsWithoutR
 
 export function Tooltip({
   className,
+  style,
   themeOverride,
   label,
   children,
@@ -94,10 +97,13 @@ export function Tooltip({
   elementRef,
   tooltipRef,
   tooltipId,
+  classNames,
+  styles,
   ...others
 }: TooltipProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color, gutter, arrowSize });
+  const classes = useStyles({ theme, color, gutter, arrowSize }, classNames);
+  const _styles = mergeStyles(classes, styles);
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
   const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
@@ -119,7 +125,12 @@ export function Tooltip({
   };
 
   return (
-    <div className={cx(classes.wrapper, className)} ref={tooltipRef} {...others}>
+    <div
+      className={cx(classes.root, className)}
+      ref={tooltipRef}
+      style={{ ...style, ..._styles.root }}
+      {...others}
+    >
       <Transition
         mounted={visible}
         transition={transition}
@@ -130,17 +141,29 @@ export function Tooltip({
           <div
             id={tooltipId}
             role="tooltip"
-            style={{ zIndex, width, pointerEvents: allowPointerEvents ? 'all' : 'none' }}
+            style={{
+              ..._styles.tooltip,
+              ..._styles[placement],
+              ..._styles[position],
+              zIndex,
+              width,
+              pointerEvents: allowPointerEvents ? 'all' : 'none',
+            }}
             data-mantine-tooltip
             className={cx(classes.tooltip, classes[placement], classes[position])}
             ref={tooltipRef}
           >
             <div
               data-mantine-tooltip-inner
-              className={cx(classes.tooltipInner, {
+              className={cx(classes.body, {
                 [classes.withArrow]: withArrow,
               })}
-              style={{ ...transitionStyles, whiteSpace: wrapLines ? 'normal' : 'nowrap' }}
+              style={{
+                ...transitionStyles,
+                ..._styles.body,
+                ...(withArrow ? _styles.withArrow : null),
+                whiteSpace: wrapLines ? 'normal' : 'nowrap',
+              }}
             >
               {label}
             </div>

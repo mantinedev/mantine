@@ -27,6 +27,6 @@ export * from './components/Select/styles.api';
 export * from './components/Spoiler/styles.api';
 export * from './components/Switch/styles.api';
 export * from './components/Tabs/styles.api';
-
+export * from './components/Tooltip/styles.api';
 export * from './components/Textarea/styles.api';
 export * from './components/TextInput/styles.api';

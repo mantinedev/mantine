@@ -43,12 +43,12 @@ export default createMemoStyles({
   start: {},
   end: {},
 
-  wrapper: {
+  root: {
     position: 'relative',
     display: 'inline-block',
   },
 
-  tooltipInner: ({ theme, color }: TooltipStylesProps) => ({
+  body: ({ theme, color }: TooltipStylesProps) => ({
     ...getFontStyles(theme),
     backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
     lineHeight: theme.lineHeight,
@@ -77,7 +77,7 @@ export default createMemoStyles({
     ...verticalPlacement,
     bottom: `calc(100% + ${gutter}px)`,
 
-    '& $tooltipInner$withArrow::before': {
+    '& $body$withArrow::before': {
       top: '100%',
       borderWidth: `${arrowSize}px ${arrowSize}px 0 ${arrowSize}px`,
       borderColor: `${getThemeColor({
@@ -87,15 +87,15 @@ export default createMemoStyles({
       })} transparent transparent transparent`,
     },
 
-    '&$center $tooltipInner$withArrow::before': {
+    '&$center $body$withArrow::before': {
       left: `calc(50% - ${arrowSize}px)`,
     },
 
-    '&$start $tooltipInner$withArrow::before': {
+    '&$start $body$withArrow::before': {
       left: arrowSize,
     },
 
-    '&$end $tooltipInner$withArrow::before': {
+    '&$end $body$withArrow::before': {
       right: arrowSize,
     },
   }),
@@ -104,7 +104,7 @@ export default createMemoStyles({
     ...verticalPlacement,
     top: `calc(100% + ${gutter}px)`,
 
-    '& $tooltipInner$withArrow::before': {
+    '& $body$withArrow::before': {
       bottom: '100%',
       borderWidth: `0 ${arrowSize}px ${arrowSize}px ${arrowSize}px`,
       borderColor: `transparent transparent ${getThemeColor({
@@ -114,15 +114,15 @@ export default createMemoStyles({
       })} transparent`,
     },
 
-    '&$center $tooltipInner$withArrow::before': {
+    '&$center $body$withArrow::before': {
       left: `calc(50% - ${arrowSize}px)`,
     },
 
-    '&$start $tooltipInner$withArrow::before': {
+    '&$start $body$withArrow::before': {
       left: arrowSize,
     },
 
-    '&$end $tooltipInner$withArrow::before': {
+    '&$end $body$withArrow::before': {
       right: arrowSize,
     },
   }),
@@ -131,7 +131,7 @@ export default createMemoStyles({
     ...horizontalPlacement,
     left: `calc(100% + ${gutter}px)`,
 
-    '& $tooltipInner$withArrow::before': {
+    '& $body$withArrow::before': {
       right: '100%',
       borderWidth: `${arrowSize}px ${arrowSize}px ${arrowSize}px 0`,
       borderColor: `transparent ${getThemeColor({
@@ -141,15 +141,15 @@ export default createMemoStyles({
       })} transparent transparent`,
     },
 
-    '&$center $tooltipInner$withArrow::before': {
+    '&$center $body$withArrow::before': {
       top: `calc(50% - ${arrowSize}px)`,
     },
 
-    '&$start $tooltipInner$withArrow::before': {
+    '&$start $body$withArrow::before': {
       top: arrowSize,
     },
 
-    '&$end $tooltipInner$withArrow::before': {
+    '&$end $body$withArrow::before': {
       bottom: arrowSize,
     },
   }),
@@ -158,7 +158,7 @@ export default createMemoStyles({
     ...horizontalPlacement,
     right: `calc(100% + ${gutter}px)`,
 
-    '& $tooltipInner$withArrow::before': {
+    '& $body$withArrow::before': {
       left: '100%',
       borderWidth: `${arrowSize}px 0 ${arrowSize}px ${arrowSize}px`,
       borderColor: `transparent transparent transparent ${getThemeColor({
@@ -168,15 +168,15 @@ export default createMemoStyles({
       })}`,
     },
 
-    '&$center $tooltipInner$withArrow::before': {
+    '&$center $body$withArrow::before': {
       top: `calc(50% - ${arrowSize}px)`,
     },
 
-    '&$start $tooltipInner$withArrow::before': {
+    '&$start $body$withArrow::before': {
       top: arrowSize,
     },
 
-    '&$end $tooltipInner$withArrow::before': {
+    '&$end $body$withArrow::before': {
       bottom: arrowSize,
     },
   }),
