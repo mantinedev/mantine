@@ -47,12 +47,12 @@ export const sizes = Object.keys(switchHeight).reduce((acc, size) => {
 }, {} as Record<MantineSize, { width: number; height: number }>);
 
 export default createMemoStyles({
-  wrapper: {
+  root: {
     display: 'flex',
     alignItems: 'center',
   },
 
-  switch: ({ size, radius, theme, reduceMotion, color }: SwitchStylesProps) => {
+  input: ({ size, radius, theme, reduceMotion, color }: SwitchStylesProps) => {
     const handleSize = getSizeValue({ size, sizes: handleSizes });
     const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
 
