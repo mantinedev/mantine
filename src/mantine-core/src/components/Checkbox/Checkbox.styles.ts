@@ -23,12 +23,12 @@ interface CheckboxStylesProps {
 }
 
 export default createMemoStyles({
-  wrapper: {
+  root: {
     display: 'flex',
     alignItems: 'center',
   },
 
-  checkboxWrapper: ({ size }: CheckboxStylesProps) => ({
+  inner: ({ size }: CheckboxStylesProps) => ({
     position: 'relative',
     width: getSizeValue({ size, sizes }),
     height: getSizeValue({ size, sizes }),
