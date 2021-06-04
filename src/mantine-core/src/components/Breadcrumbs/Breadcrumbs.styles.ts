@@ -5,7 +5,7 @@ interface BreadcrumbsStylesProps {
 }
 
 export default createMemoStyles({
-  breadcrumbs: {
+  root: {
     display: 'flex',
   },
 
