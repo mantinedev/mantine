@@ -1,11 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
 
-export interface SpoilerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface SpoilerProps
+  extends DefaultProps<typeof useStyles>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Max height of visible content, when this point is reached spoiler appears */
   maxHeight: number;
 
@@ -24,6 +26,7 @@ export interface SpoilerProps extends DefaultProps, React.ComponentPropsWithoutR
 
 export function Spoiler({
   className,
+  style,
   children,
   maxHeight = 100,
   hideLabel,
@@ -31,12 +34,18 @@ export function Spoiler({
   themeOverride,
   transitionDuration = 200,
   controlRef,
+  classNames,
+  styles,
   ...others
 }: SpoilerProps) {
-  const classes = useStyles({
-    transitionDuration: !useReducedMotion() && transitionDuration,
-    theme: useMantineTheme(themeOverride),
-  });
+  const classes = useStyles(
+    {
+      transitionDuration: !useReducedMotion() && transitionDuration,
+      theme: useMantineTheme(themeOverride),
+    },
+    classNames
+  );
+  const _styles = mergeStyles(classes, styles);
   const [show, setShowState] = useState(false);
   const [spoiler, setSpoilerState] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -48,10 +57,11 @@ export function Spoiler({
   }, [maxHeight, children]);
 
   return (
-    <div className={cx(classes.spoiler, className)} {...others}>
+    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       <div
         className={classes.content}
         style={{
+          ..._styles.content,
           maxHeight: !show ? maxHeight : contentRef.current && contentRef.current.clientHeight,
         }}
       >

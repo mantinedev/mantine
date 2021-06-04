@@ -6,7 +6,7 @@ interface SpoilerStylesProps {
 }
 
 export default createMemoStyles({
-  spoiler: {
+  root: {
     position: 'relative',
   },
 
