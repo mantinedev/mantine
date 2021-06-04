@@ -3,6 +3,7 @@ export * from './components/Avatar/styles.api';
 export * from './components/Badge/styles.api';
 export * from './components/Blockquote/styles.api';
 export * from './components/Breadcrumbs/styles.api';
+export * from './components/Burger/styles.api';
 
 export * from './components/InputWrapper/styles.api';
 export * from './components/Input/styles.api';

@@ -25,7 +25,7 @@ export const sizes = {
 export default createMemoStyles({
   opened: {},
 
-  wrapper: ({ size, theme }: BurgerStylesProps) => ({
+  root: ({ size, theme }: BurgerStylesProps) => ({
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     borderRadius: theme.radius.sm,
