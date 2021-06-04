@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cx from 'clsx';
 import { useId, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '../../theme';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  mergeStyles,
+  useMantineTheme,
+} from '../../theme';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
 interface SegmentedControlItem {
@@ -10,7 +16,7 @@ interface SegmentedControlItem {
 }
 
 export interface SegmentedControlProps
-  extends DefaultProps,
+  extends DefaultProps<typeof useStyles>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Data based on which controls are rendered */
   data: SegmentedControlItem[];
@@ -45,6 +51,7 @@ export interface SegmentedControlProps
 
 export function SegmentedControl({
   className,
+  style,
   themeOverride,
   data,
   name,
@@ -56,6 +63,8 @@ export function SegmentedControl({
   size = 'sm',
   transitionDuration = 200,
   transitionTimingFunction,
+  classNames,
+  styles,
   ...others
 }: SegmentedControlProps) {
   // reduce motion should be implemented via js, there is a bug in jss with media queries
@@ -64,17 +73,21 @@ export function SegmentedControl({
   const theme = useMantineTheme(themeOverride);
   const [shouldAnimate, setShouldAnimate] = useState(false);
 
-  const classes = useStyles({
-    theme,
-    size,
-    fullWidth,
-    color,
-    radius,
-    reduceMotion: reduceMotion || !shouldAnimate,
-    transitionDuration,
-    transitionTimingFunction,
-  });
+  const classes = useStyles(
+    {
+      theme,
+      size,
+      fullWidth,
+      color,
+      radius,
+      reduceMotion: reduceMotion || !shouldAnimate,
+      transitionDuration,
+      transitionTimingFunction,
+    },
+    classNames
+  );
 
+  const _styles = mergeStyles(classes, styles);
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
@@ -104,11 +117,13 @@ export function SegmentedControl({
   const controls = data.map((item) => (
     <div
       className={cx(classes.control, { [classes.controlActive]: value === item.value })}
+      style={{ ..._styles.control, ...(value === item.value ? _styles.controlActive : null) }}
       key={item.value}
     >
       <input
         data-mantine-radio
         className={classes.input}
+        style={_styles.input}
         type="radio"
         name={uuid}
         value={item.value}
@@ -120,6 +135,7 @@ export function SegmentedControl({
       <label
         data-mantine-label
         className={cx(classes.label, { [classes.labelActive]: value === item.value })}
+        style={{ ..._styles.label, ...(value === item.value ? _styles.labelActive : null) }}
         htmlFor={`${uuid}-${item.value}`}
         ref={(node) => {
           refs.current[item.value] = node;
@@ -131,12 +147,18 @@ export function SegmentedControl({
   ));
 
   return (
-    <div className={cx(classes.wrapper, className)} ref={wrapperRef} {...others}>
+    <div
+      className={cx(classes.root, className)}
+      ref={wrapperRef}
+      style={{ ...style, ..._styles.root }}
+      {...others}
+    >
       {!!value && (
         <span
           data-mantine-active
           className={classes.active}
           style={{
+            ..._styles.active,
             width: activePosition.width,
             transform: `translateX(${activePosition.translate}px)`,
           }}

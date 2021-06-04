@@ -59,7 +59,7 @@ export default createMemoStyles({
     },
   }),
 
-  wrapper: ({ theme, fullWidth, radius }: SegmentedControlStyles) => ({
+  root: ({ theme, fullWidth, radius }: SegmentedControlStyles) => ({
     position: 'relative',
     display: fullWidth ? 'flex' : 'inline-flex',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
