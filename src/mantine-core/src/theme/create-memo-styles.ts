@@ -9,14 +9,15 @@ export function createMemoStyles<C extends string = string, Props = unknown>(
   const useStyles = createUseStyles<C, Props, MantineTheme>(styles);
 
   return function useMemoStyles(args?: Props, classNames?: Partial<Record<C, string>>) {
-    const dependencies =
-      typeof args === 'object' && args !== null
-        ? Object.keys(args)
-            .filter((key) => key !== 'theme')
-            .map((key) => args[key])
-        : [];
+    const validArgs = typeof args === 'object' && args !== null;
 
-    if (typeof args === 'object' && 'theme' in args) {
+    const dependencies = validArgs
+      ? Object.keys(args)
+          .filter((key) => key !== 'theme')
+          .map((key) => args[key])
+      : [];
+
+    if (validArgs && 'theme' in args) {
       dependencies.push((args as any).theme.colorScheme);
     }
 

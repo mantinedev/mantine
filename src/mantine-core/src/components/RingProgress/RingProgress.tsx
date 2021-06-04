@@ -1,11 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
 import { Curve } from './Curve/Curve';
-import { DefaultProps } from '../../theme';
+import { DefaultProps, mergeStyles } from '../../theme';
 import { getCurves } from './get-curves/get-curves';
 import useStyles from './RingProgress.styles';
 
-export interface RingProgressProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface RingProgressProps
+  extends DefaultProps<typeof useStyles>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Label displayed in the center of the ring */
   label?: React.ReactNode;
 
@@ -20,16 +22,19 @@ export interface RingProgressProps extends DefaultProps, React.ComponentPropsWit
 }
 
 export function RingProgress({
+  className,
+  style,
   label,
   sections,
   size = 120,
   thickness = size / 10,
   themeOverride,
-  className,
-  style,
+  classNames,
+  styles,
   ...others
 }: RingProgressProps) {
-  const classes = useStyles();
+  const classes = useStyles(null, classNames);
+  const _styles = mergeStyles(classes, styles);
 
   const curves = getCurves({ size, thickness, sections }).map((curve, index) => (
     <Curve
@@ -47,8 +52,8 @@ export function RingProgress({
 
   return (
     <div
-      style={{ width: size, height: size, ...style }}
-      className={cx(classes.wrapper, className)}
+      style={{ width: size, height: size, ...style, ..._styles.root }}
+      className={cx(classes.root, className)}
       {...others}
     >
       <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
@@ -61,6 +66,7 @@ export function RingProgress({
           style={{
             right: thickness * 2,
             left: thickness * 2,
+            ..._styles.label,
           }}
         >
           {label}

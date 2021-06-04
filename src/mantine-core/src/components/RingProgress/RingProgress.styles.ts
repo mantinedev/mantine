@@ -1,7 +1,7 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '../../theme';
 
-export default createUseStyles({
-  wrapper: {
+export default createMemoStyles({
+  root: {
     position: 'relative',
   },
 
