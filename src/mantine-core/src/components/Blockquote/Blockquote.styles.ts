@@ -6,7 +6,7 @@ interface BlockquoteStylesProps {
 }
 
 export default createMemoStyles({
-  blockquote: ({ theme, color }: BlockquoteStylesProps) => ({
+  root: ({ theme, color }: BlockquoteStylesProps) => ({
     ...getFontStyles(theme),
     fontSize: theme.fontSizes.lg,
     lineHeight: theme.lineHeight,

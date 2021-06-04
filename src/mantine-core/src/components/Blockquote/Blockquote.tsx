@@ -1,11 +1,11 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
 export interface BlockquoteProps
-  extends DefaultProps,
+  extends DefaultProps<typeof useStyles>,
     Omit<React.ComponentPropsWithoutRef<'blockquote'>, 'cite'> {
   /** Border and icon color from theme */
   color?: string;
@@ -21,26 +21,40 @@ const defaultIcon = <QuoteIcon />;
 
 export function Blockquote({
   className,
+  style,
   color,
   icon = defaultIcon,
   cite,
   children,
   themeOverride,
+  classNames,
+  styles,
   ...others
 }: BlockquoteProps) {
-  const classes = useStyles({ color, theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ color, theme }, classNames);
+  const _styles = mergeStyles(classes, styles);
+
   return (
-    <blockquote className={cx(classes.blockquote, className)} {...others}>
-      <div className={classes.inner}>
+    <blockquote
+      className={cx(classes.root, className)}
+      style={{ ...style, ..._styles.root }}
+      {...others}
+    >
+      <div className={classes.inner} style={_styles.inner}>
         {icon && (
-          <div data-mantine-icon className={classes.icon}>
+          <div data-mantine-icon className={classes.icon} style={_styles.icon}>
             {icon}
           </div>
         )}
 
-        <div className={classes.body}>
+        <div className={classes.body} style={_styles.body}>
           {children}
-          {cite && <cite className={classes.cite}>{cite}</cite>}
+          {cite && (
+            <cite className={classes.cite} style={_styles.cite}>
+              {cite}
+            </cite>
+          )}
         </div>
       </div>
     </blockquote>
