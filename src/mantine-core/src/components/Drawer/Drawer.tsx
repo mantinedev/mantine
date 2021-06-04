@@ -7,7 +7,7 @@ import {
   useReducedMotion,
   useFocusTrap,
 } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { Portal } from '../Portal/Portal';
@@ -16,7 +16,9 @@ import useStyles, { Position, sizes } from './Drawer.styles';
 
 export const DRAWER_SIZES = sizes;
 
-export interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface DrawerProps
+  extends DefaultProps<typeof useStyles>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** If true drawer is mounted to the dom */
   opened: boolean;
 
@@ -77,9 +79,10 @@ const transitions: Record<Position, MantineTransition> = {
 };
 
 export function MantineDrawer({
+  className,
+  style,
   opened,
   onClose,
-  className,
   themeOverride,
   position = 'left',
   size = 'md',
@@ -97,11 +100,14 @@ export function MantineDrawer({
   noOverlay = false,
   shadow = 'md',
   padding = 0,
+  classNames,
+  styles,
   ...others
 }: DrawerProps) {
   const theme = useMantineTheme(themeOverride);
   const duration = useReducedMotion() ? 1 : transitionDuration;
-  const classes = useStyles({ theme, size, position });
+  const classes = useStyles({ theme, size, position }, classNames);
+  const _styles = mergeStyles(classes, styles);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
   useScrollLock(opened && !noScrollLock);
   const clickOutsideRef = useClickOutside(() => opened && !noCloseOnClickOutside && onClose());
@@ -141,17 +147,18 @@ export function MantineDrawer({
         },
       }}
     >
-      {(styles) => (
+      {(transitionStyles) => (
         <div
-          className={cx(classes.wrapper, { [classes.noOverlay]: noOverlay }, className)}
+          className={cx(classes.root, { [classes.noOverlay]: noOverlay }, className)}
           role="dialog"
           aria-modal
+          style={{ ...style, ..._styles.root, ...(noOverlay ? _styles.noOverlay : null) }}
           {...others}
         >
           <Paper
             className={cx(classes.drawer, className)}
             elementRef={useMergedRef(focusTrapRef, clickOutsideRef)}
-            style={{ ...styles.drawer, zIndex: zIndex + 1 }}
+            style={{ ...transitionStyles.drawer, ..._styles.drawer, zIndex: zIndex + 1 }}
             radius={0}
             tabIndex={-1}
             onKeyDownCapture={(event) =>
@@ -165,7 +172,7 @@ export function MantineDrawer({
           </Paper>
 
           {!noOverlay && (
-            <div style={styles.overlay}>
+            <div style={transitionStyles.overlay}>
               <Overlay
                 opacity={_overlayOpacity}
                 zIndex={zIndex}

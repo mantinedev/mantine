@@ -46,7 +46,7 @@ function getPositionStyles({
 export default createMemoStyles({
   noOverlay: {},
 
-  wrapper: {
+  root: {
     '&:not($noOverlay)': {
       position: 'fixed',
       top: 0,
