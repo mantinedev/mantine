@@ -15,7 +15,7 @@ export default createMemoStyles({
     },
   },
 
-  notification: ({ color, theme }: NotificationStyles) => ({
+  root: ({ color, theme }: NotificationStyles) => ({
     boxSizing: 'border-box',
     position: 'relative',
     display: 'flex',
