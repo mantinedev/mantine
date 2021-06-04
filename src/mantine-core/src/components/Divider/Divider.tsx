@@ -1,12 +1,14 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineNumberSize } from '../../theme';
+import { useMantineTheme, DefaultProps, MantineNumberSize, mergeStyles } from '../../theme';
 import useStyles, { sizes } from './Divider.styles';
 import { Text } from '../Text/Text';
 
 export const DIVIDER_SIZES = sizes;
 
-export interface DividerProps extends DefaultProps, React.ComponentPropsWithoutRef<'hr'> {
+export interface DividerProps
+  extends DefaultProps<typeof useStyles>,
+    React.ComponentPropsWithoutRef<'hr'> {
   /** Line color from theme, defaults to gray in light color scheme and to dark in dark color scheme */
   color?: string;
 
@@ -33,8 +35,9 @@ export interface DividerProps extends DefaultProps, React.ComponentPropsWithoutR
 }
 
 export function Divider({
-  color,
   className,
+  style,
+  color,
   orientation = 'horizontal',
   size = 'xs',
   label,
@@ -43,38 +46,53 @@ export function Divider({
   themeOverride,
   variant = 'solid',
   margins = 0,
+  styles,
+  classNames,
   ...others
 }: DividerProps) {
   const theme = useMantineTheme(themeOverride);
   const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
-  const classes = useStyles({
-    color: _color,
-    theme,
-    margins,
-    size,
-    variant,
-  });
+  const classes = useStyles(
+    {
+      color: _color,
+      theme,
+      margins,
+      size,
+      variant,
+    },
+    classNames
+  );
+  const _styles = mergeStyles(classes, styles);
+
+  const vertical = orientation === 'vertical';
+  const horizontal = !vertical;
+  const withLabel = !!label && horizontal;
 
   return (
     <div
       data-mantine-hr
       className={cx(
         {
-          [classes.vertical]: orientation === 'vertical',
-          [classes.horizontal]: orientation === 'horizontal',
-          [classes.withLabel]: !!label && orientation === 'horizontal',
+          [classes.vertical]: vertical,
+          [classes.horizontal]: horizontal,
+          [classes.withLabel]: withLabel,
         },
         className
       )}
+      style={{
+        ...style,
+        ...(horizontal ? _styles.horizontal : _styles.vertical),
+        ...(withLabel ? _styles.withLabel : null),
+      }}
       {...others}
     >
-      {!!label && orientation === 'horizontal' && (
+      {!!label && horizontal && (
         <Text
-          data-mantine-label
           {...labelProps}
+          data-mantine-label
           color={_color}
           size={labelProps?.size || 'xs'}
-          style={{ marginTop: 2 }}
+          style={{ marginTop: 2, ..._styles.label, ..._styles[labelPosition] }}
           className={cx(classes.label, classes[labelPosition])}
         >
           {label}

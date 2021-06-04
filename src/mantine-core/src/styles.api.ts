@@ -7,6 +7,7 @@ export * from './components/Burger/styles.api';
 export * from './components/Button/styles.api';
 export * from './components/Checkbox/styles.api';
 export * from './components/Code/styles.api';
+export * from './components/Divider/styles.api';
 
 export * from './components/InputWrapper/styles.api';
 export * from './components/Input/styles.api';
