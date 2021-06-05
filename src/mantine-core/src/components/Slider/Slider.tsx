@@ -56,7 +56,6 @@ export function Slider({
   function handleDrag(e: ClientPositionEvent) {
     container.current.focus();
     handleChange(getClientPosition(e).x + start.current - offset.current);
-    document.body.classList.add(classes.grabbing);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -64,7 +63,6 @@ export function Slider({
 
   function handleDragEnd() {
     events.remove();
-    document.body.classList.remove(classes.grabbing);
   }
 
   function handleMouseDown(

@@ -18,18 +18,12 @@ export default createMemoStyles({
     outline: 0,
   },
 
-  grabbing: {
-    '@global *': {
-      cursor: 'grabbing !important',
-    },
-  },
-
   track: ({ theme, radius }: SliderStyles) => ({
     position: 'relative',
     height: 6,
     width: '100%',
     backgroundColor: theme.colors.gray[2],
-    cursor: 'grab',
+    cursor: 'pointer',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   }),
 
@@ -53,7 +47,7 @@ export default createMemoStyles({
     border: `1px solid ${theme.colors.gray[4]}`,
     transform: 'translate(-50%, -50%)',
     top: '50%',
-    cursor: 'grab',
+    cursor: 'pointer',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     display: 'flex',
     alignItems: 'center',
