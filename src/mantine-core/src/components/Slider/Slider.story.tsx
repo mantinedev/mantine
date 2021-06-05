@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { Slider } from './Slider';
 
 function Wrapper(props: Omit<React.ComponentPropsWithoutRef<typeof Slider>, 'value' | 'onChange'>) {
-  const [value, setValue] = useState(40);
+  const [value, setValue] = useState(50);
   return <Slider value={value} onChange={setValue} {...props} />;
 }
 
@@ -19,7 +19,17 @@ storiesOf('@mantine/core/Slider', module)
     </div>
   ))
   .add('Controlled', () => (
-    <div style={{ padding: 100, minHeight: '100vh' }}>
-      <Wrapper />
+    <div style={{ width: 280, padding: 40 }}>
+      <Wrapper
+        step={25}
+        radius={0}
+        marks={[
+          { value: 0, label: 'xs' },
+          { value: 25, label: 'sm' },
+          { value: 50, label: 'md' },
+          { value: 75, label: 'lg' },
+          { value: 100, label: 'xl' },
+        ]}
+      />
     </div>
   ));

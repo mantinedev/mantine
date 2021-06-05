@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
 import { getClientPosition, ClientPositionEvent } from './get-client-position';
-import { getFilledPosition } from './get-filled-position';
+import { getPosition } from './get-position';
 import { getChangeValue } from './get-change-value';
 import { getDragEventsAssigner } from './get-drag-events-assigner';
 import useStyles from './Slider.styles';
@@ -20,6 +20,7 @@ interface SliderProps
   defaultValue?: number;
   onChange?(value: number): void;
   name?: string;
+  marks?: { value: number; label?: React.ReactNode }[];
 }
 
 export function Slider({
@@ -38,6 +39,7 @@ export function Slider({
   step = 1,
   defaultValue,
   name,
+  marks = [],
 }: SliderProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, color, radius, size }, classNames);
@@ -50,7 +52,17 @@ export function Slider({
   const thumb = useRef<HTMLDivElement>();
   const start = useRef<number>();
   const offset = useRef<number>();
-  const position = getFilledPosition({ value: _value, min, max });
+  const position = getPosition({ value: _value, min, max });
+  const markItems = marks.map((mark, index) => (
+    <div
+      className={classes.markWrapper}
+      style={{ left: `${getPosition({ value: mark.value, min, max })}%` }}
+      key={index}
+    >
+      <div className={cx(classes.mark, { [classes.markFilled]: mark.value <= _value })} />
+      {mark.label && <div className={classes.markLabel}>{mark.label}</div>}
+    </div>
+  ));
 
   useEffect(() => {
     if (typeof value === 'number') {
@@ -156,6 +168,7 @@ export function Slider({
             e.stopPropagation();
           }}
         />
+        {markItems}
       </div>
 
       <input type="hidden" name={name} value={_value} />

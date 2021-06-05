@@ -1,6 +1,7 @@
 import {
   createMemoStyles,
   getFocusStyles,
+  getFontStyles,
   getSizeValue,
   getThemeColor,
   MantineNumberSize,
@@ -23,7 +24,8 @@ const sizes = {
 };
 
 export default createMemoStyles({
-  root: ({ size }: SliderStyles) => ({
+  root: ({ theme, size }: SliderStyles) => ({
+    ...getFontStyles(theme),
     outline: 0,
     height: getSizeValue({ sizes, size }) * 2,
     display: 'flex',
@@ -48,7 +50,7 @@ export default createMemoStyles({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   }),
 
-  thumb: ({ theme, radius, color, size }: SliderStyles) => ({
+  thumb: ({ theme, color, size }: SliderStyles) => ({
     ...getFocusStyles(theme),
     boxSizing: 'border-box',
     position: 'absolute',
@@ -59,17 +61,48 @@ export default createMemoStyles({
     transform: 'translate(-50%, -50%)',
     top: '50%',
     cursor: 'pointer',
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    borderRadius: 1000,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     transitionDuration: '100ms',
     transitionProperty: 'box-shadow, transform',
     transitionTimingFunction: theme.transitionTimingFunction,
+    zIndex: 2,
   }),
 
   dragging: ({ theme }: SliderStyles) => ({
     transform: 'translate(-50%, -50%) scale(1.1)',
     boxShadow: theme.shadows.md,
+  }),
+
+  markWrapper: {
+    position: 'absolute',
+    top: 0,
+  },
+
+  mark: ({ theme, size }: SliderStyles) => {
+    const MARK_SIZE = getSizeValue({ sizes, size });
+    return {
+      boxSizing: 'border-box',
+      border: `2px solid ${theme.colors.gray[2]}`,
+      zIndex: 1,
+      height: MARK_SIZE,
+      width: MARK_SIZE,
+      borderRadius: 1000,
+      transform: `translateX(-${MARK_SIZE / 2}px)`,
+      backgroundColor: theme.white,
+    };
+  },
+
+  markFilled: ({ theme, color }: SliderStyles) => ({
+    borderColor: getThemeColor({ theme, color, shade: 6 }),
+  }),
+
+  markLabel: ({ theme }: SliderStyles) => ({
+    transform: 'translate(-50%, 0)',
+    fontSize: theme.fontSizes.sm,
+    color: theme.colors.gray[6],
+    marginTop: theme.spacing.xs / 2,
   }),
 });
