@@ -58,7 +58,7 @@ export function Slider({
 
   function handleDrag(e: ClientPositionEvent) {
     container.current.focus();
-    handleChange(getClientPosition(e).x + start.current - offset.current);
+    handleChange(getClientPosition(e) + start.current - offset.current);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -76,7 +76,7 @@ export function Slider({
     event.stopPropagation();
 
     start.current = thumb.current.offsetLeft;
-    offset.current = getClientPosition(event as any).x;
+    offset.current = getClientPosition(event as any);
 
     events.add();
   }
@@ -88,11 +88,11 @@ export function Slider({
     const changePosition = getClientPosition(event as any);
     const rect = container.current.getBoundingClientRect();
 
-    start.current = changePosition.x - rect.left;
-    offset.current = changePosition.x;
+    start.current = changePosition - rect.left;
+    offset.current = changePosition;
 
     events.add();
-    handleChange(changePosition.x - rect.left);
+    handleChange(changePosition - rect.left);
   };
 
   const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
