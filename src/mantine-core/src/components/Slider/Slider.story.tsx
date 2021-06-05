@@ -9,6 +9,11 @@ function Wrapper(props: Omit<React.ComponentPropsWithoutRef<typeof Slider>, 'val
 
 storiesOf('@mantine/core/Slider', module).add('General usage', () => (
   <div style={{ padding: 100, minHeight: '100vh' }}>
-    <Wrapper radius={2} />
+    <Wrapper size="xs" styles={{ root: { marginTop: 25 } }} />
+    <Wrapper size="sm" styles={{ root: { marginTop: 25 } }} />
+    <Wrapper size="md" styles={{ root: { marginTop: 25 } }} />
+    <Wrapper size="lg" styles={{ root: { marginTop: 25 } }} />
+    <Wrapper size="xl" styles={{ root: { marginTop: 25 } }} />
+    <Wrapper size={20} styles={{ root: { marginTop: 25 } }} />
   </div>
 ));

@@ -12,6 +12,7 @@ interface SliderProps
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   color?: string;
   radius?: MantineNumberSize;
+  size?: MantineNumberSize;
   min?: number;
   max?: number;
   step?: number;
@@ -28,13 +29,14 @@ export function Slider({
   color,
   value,
   onChange,
-  radius = 'sm',
+  size = 'md',
+  radius = 'xl',
   min = 0,
   max = 100,
   step = 1,
 }: SliderProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color, radius }, classNames);
+  const classes = useStyles({ theme, color, radius, size }, classNames);
   const _styles = mergeStyles(classes, styles);
   const [dragging, setDragging] = useState(false);
   const container = useRef<HTMLDivElement>();

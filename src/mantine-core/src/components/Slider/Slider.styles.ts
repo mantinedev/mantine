@@ -11,19 +11,31 @@ interface SliderStyles {
   theme: MantineTheme;
   color: string;
   radius: MantineNumberSize;
+  size: MantineNumberSize;
 }
 
-export default createMemoStyles({
-  root: {
-    outline: 0,
-  },
+const sizes = {
+  xs: 4,
+  sm: 6,
+  md: 8,
+  lg: 10,
+  xl: 12,
+};
 
-  track: ({ theme, radius }: SliderStyles) => ({
+export default createMemoStyles({
+  root: ({ size }: SliderStyles) => ({
+    outline: 0,
+    height: getSizeValue({ sizes, size }) * 2,
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+  }),
+
+  track: ({ theme, radius, size }: SliderStyles) => ({
     position: 'relative',
-    height: 6,
+    height: getSizeValue({ sizes, size }),
     width: '100%',
     backgroundColor: theme.colors.gray[2],
-    cursor: 'pointer',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   }),
 
@@ -36,15 +48,14 @@ export default createMemoStyles({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   }),
 
-  thumb: ({ theme, radius }: SliderStyles) => ({
+  thumb: ({ theme, radius, color, size }: SliderStyles) => ({
     ...getFocusStyles(theme),
     boxSizing: 'border-box',
     position: 'absolute',
-    height: 16,
-    minWidth: 16,
+    height: getSizeValue({ sizes, size }) * 2,
+    width: getSizeValue({ sizes, size }) * 2,
     backgroundColor: theme.white,
-    padding: 5,
-    border: `1px solid ${theme.colors.gray[4]}`,
+    border: `2px solid ${getThemeColor({ theme, color, shade: 6 })}`,
     transform: 'translate(-50%, -50%)',
     top: '50%',
     cursor: 'pointer',
