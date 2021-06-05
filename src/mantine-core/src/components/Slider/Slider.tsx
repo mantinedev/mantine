@@ -50,7 +50,7 @@ export function Slider({
   const classes = useStyles({ theme, color, radius }, classNames);
   const _styles = mergeStyles(classes, styles);
   const container = useRef(null);
-  const handle = useRef(null);
+  const thumb = useRef<HTMLDivElement>(null);
   const start = useRef<{ x: number; y: number }>(null);
   const offset = useRef<{ x: number; y: number }>(null);
 
@@ -77,6 +77,7 @@ export function Slider({
 
   function handleDrag(e) {
     e.preventDefault();
+    container.current.focus();
     change(getPos(e));
     document.body.classList.add(classes.grabbing);
   }
@@ -96,7 +97,7 @@ export function Slider({
     e.preventDefault();
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-    const dom = handle.current;
+    const dom = thumb.current;
     const clientPos = getClientPosition(e);
 
     start.current = {
@@ -140,6 +141,30 @@ export function Slider({
     change(clientPos.x - rect.left);
   }
 
+  const handleThumbKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    switch (event.nativeEvent.code) {
+      case 'ArrowUp':
+      case 'ArrowRight': {
+        thumb.current.focus();
+        event.preventDefault();
+        onChange(Math.min(Math.max(value + step, min), max));
+        break;
+      }
+
+      case 'ArrowDown':
+      case 'ArrowLeft': {
+        thumb.current.focus();
+        event.preventDefault();
+        onChange(Math.min(Math.max(value - step, min), max));
+        break;
+      }
+
+      default: {
+        break;
+      }
+    }
+  };
+
   const position = getPosition();
 
   return (
@@ -150,10 +175,12 @@ export function Slider({
       ref={container}
       onTouchStart={handleTrackMouseDown}
       onMouseDown={handleTrackMouseDown}
+      onKeyDownCapture={handleThumbKeydown}
       style={{ ...style, ..._styles.root }}
     >
       <div className={classes.track}>
         <div className={classes.bar} style={{ width: `${position}%` }} />
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
         <div
           tabIndex={0}
           role="slider"
@@ -161,8 +188,7 @@ export function Slider({
           aria-valuemin={min}
           aria-valuenow={value}
           className={classes.thumb}
-          onKeyDown={() => {}}
-          ref={handle}
+          ref={thumb}
           onTouchStart={handleMouseDown}
           onMouseDown={handleMouseDown}
           style={{ left: `${position}%` }}

@@ -1,5 +1,6 @@
 import {
   createMemoStyles,
+  getFocusStyles,
   getSizeValue,
   getThemeColor,
   MantineNumberSize,
@@ -13,7 +14,9 @@ interface SliderStyles {
 }
 
 export default createMemoStyles({
-  root: {},
+  root: {
+    outline: 0,
+  },
 
   grabbing: {
     '@global *': {
@@ -40,6 +43,7 @@ export default createMemoStyles({
   }),
 
   thumb: ({ theme, radius }: SliderStyles) => ({
+    ...getFocusStyles(theme),
     boxSizing: 'border-box',
     position: 'absolute',
     height: 16,
