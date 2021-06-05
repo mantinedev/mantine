@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
 import { getClientPosition, ClientPositionEvent } from './get-client-position';
@@ -36,6 +36,7 @@ export function Slider({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, color, radius }, classNames);
   const _styles = mergeStyles(classes, styles);
+  const [dragging, setDragging] = useState(false);
   const container = useRef<HTMLDivElement>();
   const thumb = useRef<HTMLDivElement>();
   const start = useRef<number>();
@@ -63,9 +64,10 @@ export function Slider({
 
   function handleDragEnd() {
     events.remove();
+    setDragging(false);
   }
 
-  function handleMouseDown(
+  function handleThumbMouseDown(
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) {
     event.preventDefault();
@@ -91,7 +93,7 @@ export function Slider({
     handleChange(changePosition.x - rect.left);
   };
 
-  const handleThumbKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
     switch (event.nativeEvent.code) {
       case 'ArrowUp':
       case 'ArrowRight': {
@@ -123,7 +125,9 @@ export function Slider({
       ref={container}
       onTouchStart={handleTrackMouseDown}
       onMouseDown={handleTrackMouseDown}
-      onKeyDownCapture={handleThumbKeydown}
+      onMouseDownCapture={() => setDragging(true)}
+      onMouseUpCapture={() => setDragging(false)}
+      onKeyDownCapture={handleTrackKeydownCapture}
       style={{ ...style, ..._styles.root }}
     >
       <div className={classes.track}>
@@ -135,14 +139,13 @@ export function Slider({
           aria-valuemax={max}
           aria-valuemin={min}
           aria-valuenow={value}
-          className={classes.thumb}
+          className={cx(classes.thumb, { [classes.dragging]: dragging })}
           ref={thumb}
-          onTouchStart={handleMouseDown}
-          onMouseDown={handleMouseDown}
+          onTouchStart={handleThumbMouseDown}
+          onMouseDown={handleThumbMouseDown}
           style={{ left: `${position}%` }}
           onClick={(e) => {
             e.stopPropagation();
-            e.nativeEvent.stopImmediatePropagation();
           }}
         />
       </div>

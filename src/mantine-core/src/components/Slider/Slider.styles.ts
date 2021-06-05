@@ -52,5 +52,13 @@ export default createMemoStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    transitionDuration: '100ms',
+    transitionProperty: 'box-shadow, transform',
+    transitionTimingFunction: theme.transitionTimingFunction,
+  }),
+
+  dragging: ({ theme }: SliderStyles) => ({
+    transform: 'translate(-50%, -50%) scale(1.1)',
+    boxShadow: theme.shadows.md,
   }),
 });
