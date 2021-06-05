@@ -1,12 +1,13 @@
 import React, { useRef } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
 import useStyles from './Slider.styles';
 
 interface SliderProps
   extends DefaultProps<typeof useStyles>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   color?: string;
+  radius?: MantineNumberSize;
   min?: number;
   max?: number;
   step?: number;
@@ -40,17 +41,18 @@ export function Slider({
   color,
   value,
   onChange,
+  radius = 'sm',
   min = 0,
   max = 100,
   step = 1,
 }: SliderProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color }, classNames);
+  const classes = useStyles({ theme, color, radius }, classNames);
   const _styles = mergeStyles(classes, styles);
   const container = useRef(null);
   const handle = useRef(null);
-  const start = useRef({});
-  const offset = useRef({});
+  const start = useRef<{ x: number; y: number }>(null);
+  const offset = useRef<{ x: number; y: number }>(null);
 
   function getPosition() {
     let left = ((value - min) / (max - min)) * 100;
@@ -66,7 +68,7 @@ export function Slider({
     if (left < 0) left = 0;
     if (left > width) left = width;
     dx = (left / width) * (max - min);
-    onChange((dx !== 0 ? parseInt(dx / step, 10) * step : 0) + min);
+    onChange((dx !== 0 ? Math.floor(dx / step) * step : 0) + min);
   }
 
   function getPos(e) {
@@ -76,6 +78,7 @@ export function Slider({
   function handleDrag(e) {
     e.preventDefault();
     change(getPos(e));
+    document.body.classList.add(classes.grabbing);
   }
 
   function handleDragEnd(e) {
@@ -86,6 +89,7 @@ export function Slider({
     document.removeEventListener('touchmove', handleDrag);
     document.removeEventListener('touchend', handleDragEnd);
     document.removeEventListener('touchcancel', handleDragEnd);
+    document.body.classList.remove(classes.grabbing);
   }
 
   function handleMouseDown(e) {
@@ -139,16 +143,25 @@ export function Slider({
   const position = getPosition();
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }}>
-      <div
-        className={classes.track}
-        ref={container}
-        onTouchStart={handleTrackMouseDown}
-        onMouseDown={handleTrackMouseDown}
-      >
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div
+      tabIndex={-1}
+      className={cx(classes.root, className)}
+      ref={container}
+      onTouchStart={handleTrackMouseDown}
+      onMouseDown={handleTrackMouseDown}
+      style={{ ...style, ..._styles.root }}
+    >
+      <div className={classes.track}>
         <div className={classes.bar} style={{ width: `${position}%` }} />
         <div
+          tabIndex={0}
+          role="slider"
+          aria-valuemax={max}
+          aria-valuemin={min}
+          aria-valuenow={value}
           className={classes.thumb}
+          onKeyDown={() => {}}
           ref={handle}
           onTouchStart={handleMouseDown}
           onMouseDown={handleMouseDown}
@@ -159,6 +172,8 @@ export function Slider({
           }}
         />
       </div>
+
+      <input type="hidden" value={value} />
     </div>
   );
 }
