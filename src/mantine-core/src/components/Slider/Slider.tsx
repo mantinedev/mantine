@@ -4,7 +4,7 @@ import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '.
 import { getClientPosition, ClientPositionEvent } from './get-client-position';
 import { getFilledPosition } from './get-filled-position';
 import { getChangeValue } from './get-change-value';
-import { getEventsManager } from './get-events-manager';
+import { getDragEventsAssigner } from './get-drag-events-assigner';
 import useStyles from './Slider.styles';
 
 interface SliderProps
@@ -65,18 +65,15 @@ export function Slider({
     typeof onChange === 'function' && onChange(nextValue);
   };
 
-  const handleDrag = (event: ClientPositionEvent) => {
-    container.current.focus();
-    handleChange(getClientPosition(event) + start.current - offset.current);
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
-  const events = getEventsManager({ onDrag: handleDrag, onDragEnd: handleDragEnd });
-
-  function handleDragEnd() {
-    events.remove();
-    setDragging(false);
-  }
+  const assignEvents = getDragEventsAssigner({
+    onDrag: (event: ClientPositionEvent) => {
+      container.current.focus();
+      handleChange(getClientPosition(event) + start.current - offset.current);
+    },
+    onDragEnd: () => {
+      setDragging(false);
+    },
+  });
 
   function handleThumbMouseDown(
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
@@ -87,7 +84,7 @@ export function Slider({
     start.current = thumb.current.offsetLeft;
     offset.current = getClientPosition(event as any);
 
-    events.add();
+    assignEvents();
   }
 
   const handleTrackMouseDown = (
@@ -100,7 +97,7 @@ export function Slider({
     start.current = changePosition - rect.left;
     offset.current = changePosition;
 
-    events.add();
+    assignEvents();
     handleChange(changePosition - rect.left);
   };
 
