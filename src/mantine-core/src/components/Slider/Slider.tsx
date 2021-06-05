@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
+import { Transition } from '../Transition/Transition';
 import { getClientPosition, ClientPositionEvent } from './get-client-position';
 import { getPosition } from './get-position';
 import { getChangeValue } from './get-change-value';
@@ -21,6 +22,7 @@ interface SliderProps
   onChange?(value: number): void;
   name?: string;
   marks?: { value: number; label?: React.ReactNode }[];
+  label?: React.ReactNode | ((value: number) => React.ReactNode);
 }
 
 export function Slider({
@@ -40,6 +42,7 @@ export function Slider({
   defaultValue,
   name,
   marks = [],
+  label = (f) => f,
 }: SliderProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, color, radius, size }, classNames);
@@ -53,6 +56,7 @@ export function Slider({
   const start = useRef<number>();
   const offset = useRef<number>();
   const position = getPosition({ value: _value, min, max });
+  const _label = typeof label === 'function' ? label(_value) : label;
   const markItems = marks.map((mark, index) => (
     <div
       className={classes.markWrapper}
@@ -167,7 +171,15 @@ export function Slider({
           onClick={(e) => {
             e.stopPropagation();
           }}
-        />
+        >
+          <Transition mounted={_label != null && dragging} duration={150} transition="skew-down">
+            {(transitionStyles) => (
+              <div style={{ ...transitionStyles }} className={classes.label}>
+                {_label}
+              </div>
+            )}
+          </Transition>
+        </div>
         {markItems}
       </div>
 
