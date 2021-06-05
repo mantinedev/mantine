@@ -7,13 +7,19 @@ function Wrapper(props: Omit<React.ComponentPropsWithoutRef<typeof Slider>, 'val
   return <Slider value={value} onChange={setValue} {...props} />;
 }
 
-storiesOf('@mantine/core/Slider', module).add('General usage', () => (
-  <div style={{ padding: 100, minHeight: '100vh' }}>
-    <Wrapper size="xs" styles={{ root: { marginTop: 25 } }} />
-    <Wrapper size="sm" styles={{ root: { marginTop: 25 } }} />
-    <Wrapper size="md" styles={{ root: { marginTop: 25 } }} />
-    <Wrapper size="lg" styles={{ root: { marginTop: 25 } }} />
-    <Wrapper size="xl" styles={{ root: { marginTop: 25 } }} />
-    <Wrapper size={20} styles={{ root: { marginTop: 25 } }} />
-  </div>
-));
+storiesOf('@mantine/core/Slider', module)
+  .add('General usage', () => (
+    <div style={{ padding: 100, minHeight: '100vh' }}>
+      <Slider size="xs" styles={{ root: { marginTop: 25 } }} />
+      <Slider size="sm" styles={{ root: { marginTop: 25 } }} />
+      <Slider defaultValue={60} size="md" styles={{ root: { marginTop: 25 } }} />
+      <Slider size="lg" styles={{ root: { marginTop: 25 } }} />
+      <Slider size="xl" styles={{ root: { marginTop: 25 } }} />
+      <Slider size={20} styles={{ root: { marginTop: 25 } }} />
+    </div>
+  ))
+  .add('Controlled', () => (
+    <div style={{ padding: 100, minHeight: '100vh' }}>
+      <Wrapper />
+    </div>
+  ));

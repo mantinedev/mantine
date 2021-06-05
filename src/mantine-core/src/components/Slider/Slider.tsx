@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
 import { getClientPosition, ClientPositionEvent } from './get-client-position';
@@ -16,8 +16,9 @@ interface SliderProps
   min?: number;
   max?: number;
   step?: number;
-  value: number;
-  onChange(value: number): void;
+  value?: number;
+  defaultValue?: number;
+  onChange?(value: number): void;
 }
 
 export function Slider({
@@ -34,27 +35,41 @@ export function Slider({
   min = 0,
   max = 100,
   step = 1,
+  defaultValue,
 }: SliderProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, color, radius, size }, classNames);
   const _styles = mergeStyles(classes, styles);
   const [dragging, setDragging] = useState(false);
+  const [_value, setValue] = useState(
+    typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : 0
+  );
   const container = useRef<HTMLDivElement>();
   const thumb = useRef<HTMLDivElement>();
   const start = useRef<number>();
   const offset = useRef<number>();
-  const position = getFilledPosition({ value, min, max });
+  const position = getFilledPosition({ value: _value, min, max });
 
-  const handleChange = (val: number) =>
-    onChange(
-      getChangeValue({
-        value: val,
-        containerWidth: container.current.getBoundingClientRect().width,
-        min,
-        max,
-        step,
-      })
-    );
+  useEffect(() => {
+    typeof onChange === 'function' && onChange(_value);
+  }, [_value]);
+
+  useEffect(() => {
+    if (typeof value === 'number') {
+      setValue(value);
+    }
+  }, [value]);
+
+  const handleChange = (val: number) => {
+    const nextValue = getChangeValue({
+      value: val,
+      containerWidth: container.current.getBoundingClientRect().width,
+      min,
+      max,
+      step,
+    });
+    setValue(nextValue);
+  };
 
   function handleDrag(e: ClientPositionEvent) {
     container.current.focus();
@@ -101,7 +116,7 @@ export function Slider({
       case 'ArrowRight': {
         event.preventDefault();
         thumb.current.focus();
-        onChange(Math.min(Math.max(value + step, min), max));
+        onChange(Math.min(Math.max(_value + step, min), max));
         break;
       }
 
@@ -109,7 +124,7 @@ export function Slider({
       case 'ArrowLeft': {
         event.preventDefault();
         thumb.current.focus();
-        onChange(Math.min(Math.max(value - step, min), max));
+        onChange(Math.min(Math.max(_value - step, min), max));
         break;
       }
 
@@ -140,7 +155,7 @@ export function Slider({
           role="slider"
           aria-valuemax={max}
           aria-valuemin={min}
-          aria-valuenow={value}
+          aria-valuenow={_value}
           className={cx(classes.thumb, { [classes.dragging]: dragging })}
           ref={thumb}
           onTouchStart={handleThumbMouseDown}
@@ -152,7 +167,7 @@ export function Slider({
         />
       </div>
 
-      <input type="hidden" value={value} />
+      <input type="hidden" value={_value} />
     </div>
   );
 }
