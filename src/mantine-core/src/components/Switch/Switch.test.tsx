@@ -63,18 +63,6 @@ describe('@mantine/core/Switch', () => {
     expect(element.css('line-height')).toBe('1px');
   });
 
-  it('adds input styles with inputStyle prop', () => {
-    const element = shallow(<Switch inputStyle={{ border: '1px solid red', lineHeight: '1px' }} />);
-
-    expect(element.render().find('input').css('border')).toBe('1px solid red');
-    expect(element.render().find('input').css('line-height')).toBe('1px');
-  });
-
-  it('adds className to input with inputClassName prop', () => {
-    const element = shallow(<Switch inputClassName="test-input" />);
-    expect(element.render().find('input').hasClass('test-input')).toBe(true);
-  });
-
   it('sets checked state based on checked prop', () => {
     const checked = shallow(<Switch checked onChange={() => {}} />);
     const notChecked = shallow(<Switch checked={false} onChange={() => {}} />);

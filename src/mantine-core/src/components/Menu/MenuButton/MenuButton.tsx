@@ -44,7 +44,7 @@ export function MenuButton<T extends React.ElementType = 'button'>({
       onMouseEnter={() => !disabled && onHover()}
       ref={elementRef}
       disabled={disabled}
-      style={{ ...styles, ..._styles.root, ...(hovered ? _styles.hovered : null) }}
+      style={{ ...style, ..._styles.root, ...(hovered ? _styles.hovered : null) }}
       {...others}
     >
       <div className={classes.inner} style={_styles.inner}>
