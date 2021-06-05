@@ -19,6 +19,7 @@ interface SliderProps
   value?: number;
   defaultValue?: number;
   onChange?(value: number): void;
+  name?: string;
 }
 
 export function Slider({
@@ -36,6 +37,7 @@ export function Slider({
   max = 100,
   step = 1,
   defaultValue,
+  name,
 }: SliderProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, color, radius, size }, classNames);
@@ -51,30 +53,22 @@ export function Slider({
   const position = getFilledPosition({ value: _value, min, max });
 
   useEffect(() => {
-    typeof onChange === 'function' && onChange(_value);
-  }, [_value]);
-
-  useEffect(() => {
     if (typeof value === 'number') {
       setValue(value);
     }
   }, [value]);
 
   const handleChange = (val: number) => {
-    const nextValue = getChangeValue({
-      value: val,
-      containerWidth: container.current.getBoundingClientRect().width,
-      min,
-      max,
-      step,
-    });
+    const containerWidth = container.current.getBoundingClientRect().width;
+    const nextValue = getChangeValue({ value: val, containerWidth, min, max, step });
     setValue(nextValue);
+    typeof onChange === 'function' && onChange(nextValue);
   };
 
-  function handleDrag(e: ClientPositionEvent) {
+  const handleDrag = (event: ClientPositionEvent) => {
     container.current.focus();
-    handleChange(getClientPosition(e) + start.current - offset.current);
-  }
+    handleChange(getClientPosition(event) + start.current - offset.current);
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
   const events = getEventsManager({ onDrag: handleDrag, onDragEnd: handleDragEnd });
@@ -167,7 +161,7 @@ export function Slider({
         />
       </div>
 
-      <input type="hidden" value={_value} />
+      <input type="hidden" name={name} value={_value} />
     </div>
   );
 }
