@@ -75,11 +75,15 @@ export function Slider({
     }
   }, [value]);
 
+  const _setValue = (val: number) => {
+    setValue(val);
+    typeof onChange === 'function' && onChange(val);
+  };
+
   const handleChange = (val: number) => {
     const containerWidth = container.current.getBoundingClientRect().width;
     const nextValue = getChangeValue({ value: val, containerWidth, min, max, step });
-    setValue(nextValue);
-    typeof onChange === 'function' && onChange(nextValue);
+    _setValue(nextValue);
   };
 
   const assignEvents = getDragEventsAssigner({
@@ -124,7 +128,7 @@ export function Slider({
       case 'ArrowRight': {
         event.preventDefault();
         thumb.current.focus();
-        onChange(Math.min(Math.max(_value + step, min), max));
+        _setValue(Math.min(Math.max(_value + step, min), max));
         break;
       }
 
@@ -132,7 +136,7 @@ export function Slider({
       case 'ArrowLeft': {
         event.preventDefault();
         thumb.current.focus();
-        onChange(Math.min(Math.max(_value - step, min), max));
+        _setValue(Math.min(Math.max(_value - step, min), max));
         break;
       }
 
