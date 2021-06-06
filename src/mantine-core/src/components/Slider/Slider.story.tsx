@@ -23,6 +23,7 @@ storiesOf('@mantine/core/Slider', module)
       <Wrapper
         step={25}
         radius={0}
+        size="xl"
         marks={[
           { value: 0, label: 'xs' },
           { value: 25, label: 'sm' },

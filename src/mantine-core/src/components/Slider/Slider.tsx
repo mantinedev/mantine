@@ -48,6 +48,7 @@ export function Slider({
   const classes = useStyles({ theme, color, radius, size }, classNames);
   const _styles = mergeStyles(classes, styles);
   const [dragging, setDragging] = useState(false);
+  const [thumbFocused, setThumbFocused] = useState(false);
   const [_value, setValue] = useState(
     typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : 0
   );
@@ -165,6 +166,8 @@ export function Slider({
           aria-valuenow={_value}
           className={cx(classes.thumb, { [classes.dragging]: dragging })}
           ref={thumb}
+          onFocus={() => setThumbFocused(true)}
+          onBlur={() => setThumbFocused(false)}
           onTouchStart={handleThumbMouseDown}
           onMouseDown={handleThumbMouseDown}
           style={{ left: `${position}%` }}
@@ -172,7 +175,11 @@ export function Slider({
             e.stopPropagation();
           }}
         >
-          <Transition mounted={_label != null && dragging} duration={150} transition="skew-down">
+          <Transition
+            mounted={_label != null && (dragging || thumbFocused)}
+            duration={150}
+            transition="skew-down"
+          >
             {(transitionStyles) => (
               <div style={{ ...transitionStyles }} className={classes.label}>
                 {_label}
