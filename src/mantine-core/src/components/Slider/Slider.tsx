@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
-import { Transition } from '../Transition/Transition';
 import { getClientPosition, ClientPositionEvent } from './get-client-position';
 import { getPosition } from './get-position';
 import { getChangeValue } from './get-change-value';
 import { getDragEventsAssigner } from './get-drag-events-assigner';
+import { Thumb } from './Thumb/Thumb';
 import useStyles from './Slider.styles';
 
 interface SliderProps
@@ -48,7 +48,6 @@ export function Slider({
   const classes = useStyles({ theme, color, radius, size }, classNames);
   const _styles = mergeStyles(classes, styles);
   const [dragging, setDragging] = useState(false);
-  const [thumbFocused, setThumbFocused] = useState(false);
   const [_value, setValue] = useState(
     typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : 0
   );
@@ -161,36 +160,21 @@ export function Slider({
     >
       <div className={classes.track}>
         <div className={classes.bar} style={{ width: `${position}%` }} />
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-        <div
-          tabIndex={0}
-          role="slider"
-          aria-valuemax={max}
-          aria-valuemin={min}
-          aria-valuenow={_value}
-          className={cx(classes.thumb, { [classes.dragging]: dragging })}
-          ref={thumb}
-          onFocus={() => setThumbFocused(true)}
-          onBlur={() => setThumbFocused(false)}
-          onTouchStart={handleThumbMouseDown}
+        <Thumb
+          max={max}
+          min={min}
+          value={_value}
+          position={position}
+          dragging={dragging}
+          color={color}
+          size={size}
+          label={_label}
+          elementRef={thumb}
           onMouseDown={handleThumbMouseDown}
-          style={{ left: `${position}%` }}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <Transition
-            mounted={_label != null && (dragging || thumbFocused)}
-            duration={150}
-            transition="skew-down"
-          >
-            {(transitionStyles) => (
-              <div style={{ ...transitionStyles }} className={classes.label}>
-                {_label}
-              </div>
-            )}
-          </Transition>
-        </div>
+          classNames={classNames as any}
+          styles={styles as any}
+        />
+
         {markItems}
       </div>
 
