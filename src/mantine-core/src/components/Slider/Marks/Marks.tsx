@@ -40,7 +40,11 @@ export function Marks({
         className={cx(classes.mark, { [classes.markFilled]: mark.value <= value })}
         style={{ ..._styles.mark, ...(mark.value <= value ? _styles.markFilled : null) }}
       />
-      {mark.label && <div className={classes.markLabel}>{mark.label}</div>}
+      {mark.label && (
+        <div className={classes.markLabel} style={_styles.markLabel}>
+          {mark.label}
+        </div>
+      )}
     </div>
   ));
 

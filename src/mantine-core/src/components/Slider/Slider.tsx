@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
+import { MantineTransition } from '../Transition/Transition';
 import { getClientPosition, ClientPositionEvent } from './get-client-position';
 import { getPosition } from './get-position';
 import { getChangeValue } from './get-change-value';
@@ -31,6 +32,9 @@ export interface SliderProps
   name?: string;
   marks?: { value: number; label?: React.ReactNode }[];
   label?: React.ReactNode | ((value: number) => React.ReactNode);
+  labelTransition?: MantineTransition;
+  labelTransitionDuration?: number;
+  labelTransitionTimingFunction?: string;
 }
 
 export function Slider({
@@ -51,6 +55,9 @@ export function Slider({
   name,
   marks = [],
   label = (f) => f,
+  labelTransition = 'skew-down',
+  labelTransitionDuration = 150,
+  labelTransitionTimingFunction,
   ...others
 }: SliderProps) {
   const theme = useMantineTheme(themeOverride);
@@ -182,6 +189,9 @@ export function Slider({
           label={_label}
           elementRef={thumb}
           onMouseDown={handleThumbMouseDown}
+          labelTransition={labelTransition}
+          labelTransitionDuration={labelTransitionDuration}
+          labelTransitionTimingFunction={labelTransitionTimingFunction}
           themeOverride={themeOverride}
           classNames={classNames as any}
           styles={styles as any}

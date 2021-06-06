@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../../theme';
-import { Transition } from '../../Transition/Transition';
+import { Transition, MantineTransition } from '../../Transition/Transition';
 import useStyles from './Thumb.styles';
 
 export type ThumbStylesNames = keyof ReturnType<typeof useStyles>;
@@ -17,6 +17,9 @@ interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   label: React.ReactNode;
   elementRef: React.ForwardedRef<HTMLDivElement>;
   onMouseDown(event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>): void;
+  labelTransition?: MantineTransition;
+  labelTransitionDuration?: number;
+  labelTransitionTimingFunction?: string;
 }
 
 export function Thumb({
@@ -33,6 +36,9 @@ export function Thumb({
   classNames,
   styles,
   size,
+  labelTransition,
+  labelTransitionDuration,
+  labelTransitionTimingFunction,
 }: ThumbProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ color, theme, size }, classNames);
@@ -60,8 +66,9 @@ export function Thumb({
     >
       <Transition
         mounted={label != null && (dragging || focused)}
-        duration={150}
-        transition="skew-down"
+        duration={labelTransitionDuration}
+        transition={labelTransition}
+        timingFunction={labelTransitionTimingFunction || theme.transitionTimingFunction}
       >
         {(transitionStyles) => (
           <div style={{ ..._styles.label, ...transitionStyles }} className={classes.label}>

@@ -40,20 +40,39 @@ storiesOf('@mantine/core/Slider', module)
       <Slider
         defaultValue={40}
         marks={[
-          { value: 20, label: '20' },
-          { value: 50, label: '50' },
-          { value: 80, label: '80' },
+          { value: 20, label: '20%' },
+          { value: 50, label: '50%' },
+          { value: 80, label: '80%' },
         ]}
+        labelTransition="fade"
         styles={{
           track: { backgroundColor: DEFAULT_THEME.colors.indigo[1] },
           bar: { backgroundColor: DEFAULT_THEME.colors.indigo[6] },
-          label: { backgroundColor: DEFAULT_THEME.colors.indigo[6], fontSize: 16 },
+          label: {
+            backgroundColor: DEFAULT_THEME.colors.indigo[6],
+            fontSize: 16,
+            top: 'unset',
+          },
           mark: {
             width: 2,
             borderColor: DEFAULT_THEME.colors.indigo[3],
             borderRadius: 0,
             transform: 'translateX(-2px)',
           },
+
+          markWrapper: {
+            display: 'flex',
+            flexDirection: 'column-reverse',
+            top: 'unset',
+            bottom: 0,
+          },
+
+          markLabel: {
+            fontSize: DEFAULT_THEME.fontSizes.xs,
+            marginBottom: 5,
+            marginTop: 0,
+          },
+
           thumb: {
             backgroundColor: DEFAULT_THEME.colors.indigo[6],
             borderRadius: 0,
