@@ -108,11 +108,28 @@ export default createMemoStyles({
 
   label: ({ theme, color }: SliderStyles) => ({
     position: 'absolute',
-    top: -32,
+    top: -33,
     backgroundColor: getThemeColor({ theme, color, shade: 6 }),
     fontSize: theme.fontSizes.xs,
     color: theme.white,
     padding: theme.spacing.xs / 2,
     borderRadius: theme.radius.sm,
+
+    '&::after': {
+      position: 'absolute',
+      bottom: -2,
+      left: 'calc(50% - 4px)',
+      content: "''",
+      display: 'block',
+      width: 0,
+      height: 0,
+      borderStyle: 'solid',
+      borderWidth: '3px 4px 0 4px',
+      borderColor: `${getThemeColor({
+        theme,
+        color,
+        shade: 6,
+      })} transparent transparent transparent`,
+    },
   }),
 });
