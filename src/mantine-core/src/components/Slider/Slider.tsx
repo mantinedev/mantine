@@ -5,12 +5,19 @@ import { getClientPosition, ClientPositionEvent } from './get-client-position';
 import { getPosition } from './get-position';
 import { getChangeValue } from './get-change-value';
 import { getDragEventsAssigner } from './get-drag-events-assigner';
-import { Thumb } from './Thumb/Thumb';
-import { Track } from './Track/Track';
+import { Thumb, ThumbStylesNames } from './Thumb/Thumb';
+import { Track, TrackStylesNames } from './Track/Track';
+import { MarksStylesNames } from './Marks/Marks';
 import useStyles from './Slider.styles';
 
-interface SliderProps
-  extends DefaultProps<typeof useStyles>,
+export type SliderStylesNames =
+  | keyof ReturnType<typeof useStyles>
+  | ThumbStylesNames
+  | TrackStylesNames
+  | MarksStylesNames;
+
+export interface SliderProps
+  extends DefaultProps<SliderStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   color?: string;
   radius?: MantineNumberSize;
@@ -44,10 +51,11 @@ export function Slider({
   name,
   marks = [],
   label = (f) => f,
+  ...others
 }: SliderProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames);
-  const _styles = mergeStyles(classes, styles);
+  const classes = useStyles({ theme, size }, classNames as any);
+  const _styles = mergeStyles(classes, styles as any);
   const [dragging, setDragging] = useState(false);
   const [_value, setValue] = useState(
     typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : 0
@@ -139,6 +147,7 @@ export function Slider({
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
+      {...others}
       tabIndex={-1}
       className={cx(classes.root, className)}
       ref={container}
@@ -158,6 +167,9 @@ export function Slider({
         min={min}
         max={max}
         value={_value}
+        themeOverride={themeOverride}
+        styles={styles as any}
+        classNames={classNames as any}
       >
         <Thumb
           max={max}
@@ -170,9 +182,9 @@ export function Slider({
           label={_label}
           elementRef={thumb}
           onMouseDown={handleThumbMouseDown}
+          themeOverride={themeOverride}
           classNames={classNames as any}
           styles={styles as any}
-          themeOverride={themeOverride}
         />
       </Track>
 

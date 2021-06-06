@@ -36,7 +36,10 @@ export function Marks({
       style={{ ..._styles.markWrapper, left: `${getPosition({ value: mark.value, min, max })}%` }}
       key={index}
     >
-      <div className={cx(classes.mark, { [classes.markFilled]: mark.value <= value })} />
+      <div
+        className={cx(classes.mark, { [classes.markFilled]: mark.value <= value })}
+        style={{ ..._styles.mark, ...(mark.value <= value ? _styles.markFilled : null) }}
+      />
       {mark.label && <div className={classes.markLabel}>{mark.label}</div>}
     </div>
   ));
