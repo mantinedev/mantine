@@ -36,6 +36,7 @@ describe('scripts/release/get-incremented-version', () => {
   it('returns right version with major update', () => {
     expect(getIncrementedVersion('1.1.1', { type: 'major' })).toBe('2.0.0');
     expect(getIncrementedVersion('1.1.1', { type: 'major', stage: 'alpha' })).toBe('2.0.0-alpha.0');
+    expect(getIncrementedVersion('2.0.0-alpha.0', { type: 'major' })).toBe('2.0.0');
     expect(getIncrementedVersion('2.0.0-alpha.0', { type: 'major', stage: 'alpha' })).toBe(
       '2.0.0-alpha.1'
     );
