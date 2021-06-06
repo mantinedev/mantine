@@ -6,7 +6,7 @@ import { getPosition } from './get-position';
 import { getChangeValue } from './get-change-value';
 import { getDragEventsAssigner } from './get-drag-events-assigner';
 import { Thumb } from './Thumb/Thumb';
-import { Marks } from './Marks/Marks';
+import { Track } from './Track/Track';
 import useStyles from './Slider.styles';
 
 interface SliderProps
@@ -46,7 +46,7 @@ export function Slider({
   label = (f) => f,
 }: SliderProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color, radius, size }, classNames);
+  const classes = useStyles({ theme, size }, classNames);
   const _styles = mergeStyles(classes, styles);
   const [dragging, setDragging] = useState(false);
   const [_value, setValue] = useState(
@@ -149,9 +149,16 @@ export function Slider({
       onKeyDownCapture={handleTrackKeydownCapture}
       style={{ ...style, ..._styles.root }}
     >
-      <div className={classes.track}>
-        <div className={classes.bar} style={{ width: `${position}%` }} />
-
+      <Track
+        position={position}
+        marks={marks}
+        size={size}
+        radius={radius}
+        color={color}
+        min={min}
+        max={max}
+        value={_value}
+      >
         <Thumb
           max={max}
           min={min}
@@ -167,18 +174,7 @@ export function Slider({
           styles={styles as any}
           themeOverride={themeOverride}
         />
-
-        <Marks
-          marks={marks}
-          size={size}
-          color={color}
-          min={min}
-          max={max}
-          value={_value}
-          classNames={classNames as any}
-          styles={styles as any}
-        />
-      </div>
+      </Track>
 
       <input type="hidden" name={name} value={_value} />
     </div>
