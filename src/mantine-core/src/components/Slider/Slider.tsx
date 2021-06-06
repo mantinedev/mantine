@@ -6,6 +6,7 @@ import { getPosition } from './get-position';
 import { getChangeValue } from './get-change-value';
 import { getDragEventsAssigner } from './get-drag-events-assigner';
 import { Thumb } from './Thumb/Thumb';
+import { Marks } from './Marks/Marks';
 import useStyles from './Slider.styles';
 
 interface SliderProps
@@ -57,16 +58,6 @@ export function Slider({
   const offset = useRef<number>();
   const position = getPosition({ value: _value, min, max });
   const _label = typeof label === 'function' ? label(_value) : label;
-  const markItems = marks.map((mark, index) => (
-    <div
-      className={classes.markWrapper}
-      style={{ left: `${getPosition({ value: mark.value, min, max })}%` }}
-      key={index}
-    >
-      <div className={cx(classes.mark, { [classes.markFilled]: mark.value <= _value })} />
-      {mark.label && <div className={classes.markLabel}>{mark.label}</div>}
-    </div>
-  ));
 
   useEffect(() => {
     if (typeof value === 'number') {
@@ -160,6 +151,7 @@ export function Slider({
     >
       <div className={classes.track}>
         <div className={classes.bar} style={{ width: `${position}%` }} />
+
         <Thumb
           max={max}
           min={min}
@@ -173,9 +165,19 @@ export function Slider({
           onMouseDown={handleThumbMouseDown}
           classNames={classNames as any}
           styles={styles as any}
+          themeOverride={themeOverride}
         />
 
-        {markItems}
+        <Marks
+          marks={marks}
+          size={size}
+          color={color}
+          min={min}
+          max={max}
+          value={_value}
+          classNames={classNames as any}
+          styles={styles as any}
+        />
       </div>
 
       <input type="hidden" name={name} value={_value} />

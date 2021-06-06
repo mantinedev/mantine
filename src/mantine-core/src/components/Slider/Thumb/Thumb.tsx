@@ -72,3 +72,5 @@ export function Thumb({
     </div>
   );
 }
+
+Thumb.displayName = '@mantine/core/SliderThumb';
