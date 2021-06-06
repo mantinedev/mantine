@@ -23,7 +23,7 @@ export default createMemoStyles({
     const MARK_SIZE = getSizeValue({ sizes, size });
     return {
       boxSizing: 'border-box',
-      border: `2px solid ${
+      border: `${getSizeValue({ size, sizes }) >= 8 ? '2px' : '1px'} solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
       }`,
       zIndex: 1,

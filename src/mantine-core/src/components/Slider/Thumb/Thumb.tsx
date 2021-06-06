@@ -20,6 +20,7 @@ interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   labelTransition?: MantineTransition;
   labelTransitionDuration?: number;
   labelTransitionTimingFunction?: string;
+  labelAlwaysOn: boolean;
 }
 
 export function Thumb({
@@ -39,6 +40,7 @@ export function Thumb({
   labelTransition,
   labelTransitionDuration,
   labelTransitionTimingFunction,
+  labelAlwaysOn,
 }: ThumbProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ color, theme, size }, classNames);
@@ -65,7 +67,7 @@ export function Thumb({
       }}
     >
       <Transition
-        mounted={label != null && (dragging || focused)}
+        mounted={label != null && (labelAlwaysOn || dragging || focused)}
         duration={labelTransitionDuration}
         transition={labelTransition}
         timingFunction={labelTransitionTimingFunction || theme.transitionTimingFunction}

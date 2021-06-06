@@ -35,6 +35,7 @@ export interface SliderProps
   labelTransition?: MantineTransition;
   labelTransitionDuration?: number;
   labelTransitionTimingFunction?: string;
+  labelAlwaysOn?: boolean;
 }
 
 export function Slider({
@@ -58,6 +59,7 @@ export function Slider({
   labelTransition = 'skew-down',
   labelTransitionDuration = 150,
   labelTransitionTimingFunction,
+  labelAlwaysOn = false,
   ...others
 }: SliderProps) {
   const theme = useMantineTheme(themeOverride);
@@ -192,6 +194,7 @@ export function Slider({
           labelTransition={labelTransition}
           labelTransitionDuration={labelTransitionDuration}
           labelTransitionTimingFunction={labelTransitionTimingFunction}
+          labelAlwaysOn={labelAlwaysOn}
           themeOverride={themeOverride}
           classNames={classNames as any}
           styles={styles as any}
