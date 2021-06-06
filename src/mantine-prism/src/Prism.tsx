@@ -10,13 +10,19 @@ import useStyles from './Prism.styles';
 export interface PrismProps
   extends DefaultProps<typeof useStyles>,
     React.ComponentPropsWithoutRef<'div'> {
+  /** Code which will be highlighted */
   children: string;
+
+  /** Programming language that should be highlighted */
   language: Language;
-  className?: string;
-  style?: React.CSSProperties;
+
+  /** True to remove copy to clipboard button */
   noCopy?: boolean;
-  rootClassName?: string;
+
+  /** Copy button tooltip */
   copyLabel?: string;
+
+  /** Copy button tooltip in copied state */
   copiedLabel?: string;
 }
 

@@ -10,6 +10,7 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/Tabs/Tab/Tab.tsx',
   '../src/mantine-core/src/Card/CardsGrid/CardsGrid.tsx',
   '../src/mantine-tag-picker/src/TagPickerContainer.tsx',
+  '../src/mantine-prism/src/Prism.tsx',
 ];
 
 const PATHS: DeclarationPath[] = [

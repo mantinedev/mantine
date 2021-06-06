@@ -13,7 +13,7 @@ export default createMemoStyles({
   code: ({ theme }: PrismStyles) => ({
     boxSizing: 'border-box',
     position: 'relative',
-    fontFamily: 'Menlo, Monaco, Lucida Console, monospace',
+    fontFamily: theme.fontFamilyMonospace,
     lineHeight: 1.7,
     fontSize: 13,
     overflowX: 'auto',

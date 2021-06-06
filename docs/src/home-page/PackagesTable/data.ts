@@ -19,4 +19,9 @@ export default [
     description: 'Notion like tag picker component',
     link: '/others/tag-picker/',
   },
+  {
+    package: '@mantine/prism',
+    description: 'Code highlight made with prism and theme styles',
+    link: '/others/prism/',
+  },
 ];
