@@ -1,9 +1,15 @@
 import React from 'react';
 import { Table, Title, Text } from '@mantine/core';
 import { Prism } from '@mantine/prism';
-import * as STYLES_API from '@mantine/core/src/styles.api';
+import * as CORE_STYLES_API from '@mantine/core/src/styles.api';
+import * as PRISM_STYLES_API from '@mantine/prism/src/styles.api';
 import { generateStylesCode, generateClassNamesCode } from '../generate-styles-code';
 import useStyles from './StylesApiItem.styles';
+
+const STYLES_API = {
+  ...CORE_STYLES_API,
+  ...PRISM_STYLES_API,
+};
 
 interface StylesApiItemProps {
   component: string;
