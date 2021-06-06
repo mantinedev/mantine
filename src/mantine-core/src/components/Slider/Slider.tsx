@@ -20,21 +20,52 @@ export type SliderStylesNames =
 export interface SliderProps
   extends DefaultProps<SliderStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
+  /** Color from theme.colors */
   color?: string;
+
+  /** Track border-radius from theme or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Predefined track and thumb size, number to set sizes in px */
   size?: MantineNumberSize;
+
+  /** Minimal possible value */
   min?: number;
+
+  /** Maximum possible value */
   max?: number;
+
+  /** Number by which value will be incremented/decremented with thumb drag and arrows */
   step?: number;
+
+  /** Current value for controlled slider */
   value?: number;
+
+  /** Default value for uncontrolled slider */
   defaultValue?: number;
+
+  /** Called each time value changes */
   onChange?(value: number): void;
+
+  /** Hidden input name, use with uncontrolled variant */
   name?: string;
+
+  /** Marks which will be placed on the track */
   marks?: { value: number; label?: React.ReactNode }[];
+
+  /** Function to generate label or any react node to render instead, set to null to disable label */
   label?: React.ReactNode | ((value: number) => React.ReactNode);
+
+  /** Label appear/disappear transition */
   labelTransition?: MantineTransition;
+
+  /** Label appear/disappear transition duration in ms */
   labelTransitionDuration?: number;
+
+  /** Label appear/disappear transition timing function, defaults to theme.transitionRimingFunction */
   labelTransitionTimingFunction?: string;
+
+  /** If true label will be not be hidden when user stops dragging */
   labelAlwaysOn?: boolean;
 }
 
