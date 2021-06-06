@@ -13,6 +13,7 @@ interface MarksProps extends DefaultProps<MarksStylesNames> {
   min: number;
   max: number;
   value: number;
+  onChange(value: number): void;
 }
 
 export function Marks({
@@ -25,6 +26,7 @@ export function Marks({
   themeOverride,
   classNames,
   styles,
+  onChange,
 }: MarksProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, size, color }, classNames);
@@ -41,7 +43,15 @@ export function Marks({
         style={{ ..._styles.mark, ...(mark.value <= value ? _styles.markFilled : null) }}
       />
       {mark.label && (
-        <div className={classes.markLabel} style={_styles.markLabel}>
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+        <div
+          className={classes.markLabel}
+          style={_styles.markLabel}
+          onMouseDown={(event) => {
+            event.stopPropagation();
+            onChange(mark.value);
+          }}
+        >
           {mark.label}
         </div>
       )}

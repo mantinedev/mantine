@@ -15,6 +15,7 @@ interface TrackProps extends DefaultProps<TrackStylesNames> {
   max: number;
   value: number;
   children: React.ReactNode;
+  onChange(value: number): void;
 }
 
 export function Track({
@@ -30,6 +31,7 @@ export function Track({
   radius,
   themeOverride,
   children,
+  onChange,
 }: TrackProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, color, size, radius }, classNames);
@@ -51,6 +53,7 @@ export function Track({
         classNames={classNames as any}
         styles={styles as any}
         themeOverride={themeOverride}
+        onChange={onChange}
       />
     </div>
   );

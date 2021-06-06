@@ -210,6 +210,7 @@ export function Slider({
         themeOverride={themeOverride}
         styles={styles as any}
         classNames={classNames as any}
+        onChange={setValue}
       >
         <Thumb
           max={max}
