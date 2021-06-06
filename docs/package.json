@@ -10,7 +10,7 @@
     "@primer/octicons-react": "^14.2.1",
     "@types/mdx-js__react": "^1.5.3",
     "@types/react-helmet": "^6.1.1",
-    "gatsby": "^3.6.1",
+    "gatsby": "^3.6.2",
     "gatsby-plugin-cname": "^1.0.0",
     "gatsby-plugin-jss": "^3.6.0",
     "gatsby-plugin-layout": "^2.6.0",
