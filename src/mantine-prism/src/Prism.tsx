@@ -1,9 +1,9 @@
 import React from 'react';
 import cx from 'clsx';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
-import { ClipboardIcon, CheckIcon } from '@modulz/radix-icons';
 import { ActionIcon, useMantineTheme, Tooltip, DefaultProps, mergeStyles } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
+import { CopyIcon } from './CopyIcon';
 import { getPrismTheme } from './prism-theme';
 import useStyles from './Prism.styles';
 
@@ -57,7 +57,7 @@ export function Prism({
             aria-label={clipboard.copied ? copiedLabel : copyLabel}
             onClick={() => clipboard.copy(children)}
           >
-            {clipboard.copied ? <CheckIcon /> : <ClipboardIcon />}
+            <CopyIcon copied={clipboard.copied} />
           </ActionIcon>
         </Tooltip>
       )}
