@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Title, Text } from '@mantine/core';
+import { Prism } from '@mantine/prism';
 import * as STYLES_API from '@mantine/core/src/styles.api';
-import CodeHighlight from '../../../../CodeHighlight/CodeHighlight';
 import { generateStylesCode, generateClassNamesCode } from '../generate-styles-code';
 import useStyles from './StylesApiItem.styles';
 
@@ -47,7 +47,7 @@ export function StylesApiItem({ component }: StylesApiItemProps) {
             Inline styles
           </Text>
 
-          <CodeHighlight language="tsx" code={generateStylesCode(CLASS_NAMES, component)} />
+          <Prism language="tsx">{generateStylesCode(CLASS_NAMES, component)}</Prism>
         </div>
 
         <div className={classes.codeSection}>
@@ -55,7 +55,7 @@ export function StylesApiItem({ component }: StylesApiItemProps) {
             classNames
           </Text>
 
-          <CodeHighlight language="tsx" code={generateClassNamesCode(CLASS_NAMES, component)} />
+          <Prism language="tsx">{generateClassNamesCode(CLASS_NAMES, component)}</Prism>
         </div>
       </div>
     </>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { Code, Text } from '@mantine/core';
+import { Prism } from '@mantine/prism';
 import Demo from '../../Demo/Demo';
 import GatsbyLink from './GatsbyLink/GatsbyLink';
 import DataTable from './DataTable/DataTable';
 import MdxTitle from './MdxTitle/MdxTitle';
-import CodeHighlight from '../../CodeHighlight/CodeHighlight';
 
 const h = (order: 1 | 2 | 3 | 4 | 5 | 6) => (props: any) => <MdxTitle order={order} {...props} />;
 
@@ -30,10 +30,9 @@ const components = {
     const matches = (props.children.props.className || '').match(/language-(?<lang>.*)/);
 
     return (
-      <CodeHighlight
-        code={props.children.props.children}
-        language={matches && matches.groups && matches.groups.lang ? matches.groups.lang : ''}
-      />
+      <Prism language={matches && matches.groups && matches.groups.lang ? matches.groups.lang : ''}>
+        {props.children.props.children}
+      </Prism>
     );
   },
 };

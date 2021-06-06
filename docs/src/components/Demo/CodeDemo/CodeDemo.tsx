@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { Language } from 'prism-react-renderer';
-import { useMantineTheme, Paper, Group, ActionIcon, Tooltip } from '@mantine/core';
 import { CodeIcon } from '@modulz/radix-icons';
-import CodeHighlight from '../../CodeHighlight/CodeHighlight';
+import { useMantineTheme, Paper, Group, ActionIcon, Tooltip } from '@mantine/core';
+import { Prism } from '@mantine/prism';
 import DocsSection from '../../DocsSection/DocsSection';
 import useStyles from './CodeDemo.styles';
 
@@ -68,7 +68,9 @@ export default function CodeDemo({
       </Paper>
 
       {code && visible && (
-        <CodeHighlight code={code} language={language} className={classes.code} />
+        <Prism language={language} classNames={{ code: classes.code }}>
+          {code}
+        </Prism>
       )}
     </DocsSection>
   );

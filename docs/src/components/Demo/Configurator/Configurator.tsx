@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { useMantineTheme } from '@mantine/core';
-import CodeHighlight from '../../CodeHighlight/CodeHighlight';
+import { Prism } from '@mantine/prism';
 import DocsSection from '../../DocsSection/DocsSection';
 import controls, { ControlProps } from './controls';
 import { propsToString } from './props-to-string';
@@ -77,7 +77,11 @@ export default function Configurator({
         <div className={classes.controls}>{items}</div>
       </div>
 
-      {includeCode && <CodeHighlight code={code.trim()} language="tsx" className={classes.code} />}
+      {includeCode && (
+        <Prism language="tsx" classNames={{ code: classes.code }}>
+          {code.trim()}
+        </Prism>
+      )}
     </DocsSection>
   );
 }

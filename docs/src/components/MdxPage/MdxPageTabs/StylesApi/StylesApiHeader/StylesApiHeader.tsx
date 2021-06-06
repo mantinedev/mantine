@@ -1,6 +1,6 @@
 import React from 'react';
 import { Title, Text } from '@mantine/core';
-import CodeHighlight from '../../../../CodeHighlight/CodeHighlight';
+import { Prism } from '@mantine/prism';
 import { generateRootCode } from '../generate-styles-code';
 import GatsbyLink from '../../../MdxProvider/GatsbyLink/GatsbyLink';
 
@@ -34,7 +34,7 @@ export function StylesApiHeader({ component, singleNode }: StylesApiHeaderProps)
         </Text>
       )}
 
-      <CodeHighlight language="tsx" code={generateRootCode(component)} />
+      <Prism language="tsx">{generateRootCode(component)}</Prism>
     </>
   );
 }
