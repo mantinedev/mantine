@@ -1,7 +1,15 @@
 import React from 'react';
 import cx from 'clsx';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
-import { ActionIcon, useMantineTheme, Tooltip, DefaultProps, mergeStyles } from '@mantine/core';
+import {
+  ActionIcon,
+  useMantineTheme,
+  Tooltip,
+  DefaultProps,
+  mergeStyles,
+  getThemeColor,
+  hexToRgba,
+} from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
 import { getPrismTheme } from './prism-theme';
@@ -27,6 +35,9 @@ export interface PrismProps
 
   /** Display line numbers */
   withLineNumbers?: boolean;
+
+  /** Highlight line at given line number with color from theme.colors */
+  highlightLines?: Record<string, { color: string; label?: string }>;
 }
 
 export function Prism({
@@ -41,6 +52,7 @@ export function Prism({
   copyLabel = 'Copy code',
   copiedLabel = 'Copied',
   withLineNumbers = false,
+  highlightLines = {},
   ...others
 }: PrismProps) {
   const theme = useMantineTheme(themeOverride);
@@ -85,20 +97,72 @@ export function Prism({
             style={{ ...inheritedStyle, ..._styles.code }}
           >
             {tokens
-              .map((line, i) => {
-                if (i === tokens.length - 1 && line.length === 1 && line[0].content === '\n') {
+              .map((line, index) => {
+                if (index === tokens.length - 1 && line.length === 1 && line[0].content === '\n') {
                   return null;
                 }
 
-                const lineProps = getLineProps({ line, key: i });
+                const lineNumber = index + 1;
+                const lineProps = getLineProps({ line, key: index });
+                const shouldHighlight = lineNumber in highlightLines;
+                const lineColor =
+                  theme.colorScheme === 'dark'
+                    ? hexToRgba(
+                        getThemeColor({
+                          theme,
+                          color: highlightLines[lineNumber]?.color,
+                          shade: 9,
+                        }),
+                        0.25
+                      )
+                    : getThemeColor({
+                        theme,
+                        color: highlightLines[lineNumber]?.color,
+                        shade: 0,
+                      });
 
                 return (
-                  <div {...lineProps} className={cx(classes.line, lineProps.className)}>
-                    {withLineNumbers && <div className={classes.lineNumber}>{i + 1}</div>}
+                  <div
+                    {...lineProps}
+                    className={cx(classes.line, lineProps.className)}
+                    style={{ ...(shouldHighlight ? { backgroundColor: lineColor } : null) }}
+                  >
+                    {withLineNumbers && (
+                      <div
+                        className={classes.lineNumber}
+                        style={{
+                          color: shouldHighlight
+                            ? getThemeColor({
+                                theme,
+                                color: highlightLines[lineNumber]?.color,
+                                shade: theme.colorScheme === 'dark' ? 5 : 8,
+                              })
+                            : undefined,
+                        }}
+                      >
+                        {highlightLines[lineNumber]?.label || lineNumber}
+                      </div>
+                    )}
+
                     <div className={classes.lineContent}>
-                      {line.map((token, key) => (
-                        <span {...getTokenProps({ token, key })} />
-                      ))}
+                      {line.map((token, key) => {
+                        const tokenProps = getTokenProps({ token, key });
+                        return (
+                          <span
+                            {...tokenProps}
+                            style={{
+                              ...tokenProps.style,
+                              color: shouldHighlight
+                                ? getThemeColor({
+                                    theme,
+                                    color: highlightLines[lineNumber]?.color,
+                                    shade: theme.colorScheme === 'dark' ? 5 : 8,
+                                  })
+                                : (tokenProps?.style?.color as string),
+                            }}
+                          />
+                        );
+                      })}
                     </div>
                   </div>
                 );

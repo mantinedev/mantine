@@ -15,7 +15,7 @@ export default createMemoStyles({
     fontSize: 13,
     overflowX: 'auto',
     borderRadius: theme.radius.sm,
-    padding: [theme.spacing.md, theme.spacing.lg],
+    padding: [theme.spacing.sm, 0],
     marginTop: 0,
     marginBottom: 0,
   }),
@@ -27,12 +27,13 @@ export default createMemoStyles({
     zIndex: 2,
   }),
 
-  line: {
-    display: 'table-row',
-  },
+  line: ({ theme }: PrismStyles) => ({
+    display: 'flex',
+    width: '100%',
+    padding: [0, theme.spacing.md],
+  }),
 
   lineNumber: ({ theme }: PrismStyles) => ({
-    display: 'table-cell',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
     textAlign: 'right',
     paddingRight: theme.spacing.xl,
@@ -40,6 +41,6 @@ export default createMemoStyles({
   }),
 
   lineContent: {
-    display: 'table-cell',
+    width: '100%',
   },
 });

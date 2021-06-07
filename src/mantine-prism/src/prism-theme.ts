@@ -1,5 +1,5 @@
 import { PrismTheme } from 'prism-react-renderer';
-import { MantineTheme } from '@mantine/core';
+import { MantineTheme, hexToRgba } from '@mantine/core';
 
 export const dark = (theme: MantineTheme): PrismTheme => ({
   plain: {
@@ -92,7 +92,7 @@ export const dark = (theme: MantineTheme): PrismTheme => ({
 export const light = (theme: MantineTheme): PrismTheme => ({
   plain: {
     color: theme.colors.gray[9],
-    backgroundColor: theme.colors.gray[0],
+    backgroundColor: hexToRgba(theme.colors.gray[0], 0.75),
   },
 
   styles: [
