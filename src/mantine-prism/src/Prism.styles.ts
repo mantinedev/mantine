@@ -26,4 +26,20 @@ export default createMemoStyles({
     right: theme.spacing.xs,
     zIndex: 2,
   }),
+
+  line: {
+    display: 'table-row',
+  },
+
+  lineNumber: ({ theme }: PrismStyles) => ({
+    display: 'table-cell',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
+    textAlign: 'right',
+    paddingRight: theme.spacing.xl,
+    userSelect: 'none',
+  }),
+
+  lineContent: {
+    display: 'table-cell',
+  },
 });

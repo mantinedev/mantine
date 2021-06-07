@@ -184,7 +184,7 @@ const scss = `.accordion-button {
 }`;
 
 storiesOf('@mantine/prism', module).add('Languages', () => (
-  <div style={{ maxWidth: 800, margin: 'auto' }}>
+  <div style={{ maxWidth: 800, margin: 'auto', padding: 20 }}>
     <Prism language="tsx">{tsx}</Prism>
     <Prism language="python">{py}</Prism>
     <Prism language="scss">{scss}</Prism>

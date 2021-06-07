@@ -24,6 +24,9 @@ export interface PrismProps
 
   /** Copy button tooltip in copied state */
   copiedLabel?: string;
+
+  /** Display line numbers */
+  withLineNumbers?: boolean;
 }
 
 export function Prism({
@@ -37,6 +40,7 @@ export function Prism({
   styles,
   copyLabel = 'Copy code',
   copiedLabel = 'Copied',
+  withLineNumbers = false,
   ...others
 }: PrismProps) {
   const theme = useMantineTheme(themeOverride);
@@ -86,11 +90,16 @@ export function Prism({
                   return null;
                 }
 
+                const lineProps = getLineProps({ line, key: i });
+
                 return (
-                  <div {...getLineProps({ line, key: i })}>
-                    {line.map((token, key) => (
-                      <span {...getTokenProps({ token, key })} />
-                    ))}
+                  <div {...lineProps} className={cx(classes.line, lineProps.className)}>
+                    {withLineNumbers && <div className={classes.lineNumber}>{i + 1}</div>}
+                    <div className={classes.lineContent}>
+                      {line.map((token, key) => (
+                        <span {...getTokenProps({ token, key })} />
+                      ))}
+                    </div>
                   </div>
                 );
               })
