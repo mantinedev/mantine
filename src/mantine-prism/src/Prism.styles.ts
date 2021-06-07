@@ -5,10 +5,7 @@ interface PrismStyles {
 }
 
 export default createMemoStyles({
-  root: ({ theme }: PrismStyles) => ({
-    position: 'relative',
-    marginBottom: theme.spacing.xl,
-  }),
+  root: { position: 'relative' },
 
   code: ({ theme }: PrismStyles) => ({
     boxSizing: 'border-box',

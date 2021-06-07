@@ -15,7 +15,7 @@ export const dark = (theme: MantineTheme): PrismTheme => ({
       },
     },
     {
-      types: ['string', 'inserted'],
+      types: ['string', 'inserted', 'selector'],
       style: {
         color: theme.colors.teal[4],
       },
@@ -33,7 +33,7 @@ export const dark = (theme: MantineTheme): PrismTheme => ({
       },
     },
     {
-      types: ['punctuation', 'selector'],
+      types: ['punctuation'],
       style: {
         color: theme.colors.gray[5],
       },
@@ -115,13 +115,13 @@ export const light = (theme: MantineTheme): PrismTheme => ({
       },
     },
     {
-      types: ['builtin', 'char', 'constant', 'function'],
+      types: ['builtin', 'char', 'constant', 'function', 'selector'],
       style: {
         color: theme.colors.lime[9],
       },
     },
     {
-      types: ['punctuation', 'selector'],
+      types: ['punctuation'],
       style: {
         color: theme.colors.gray[7],
       },
@@ -183,4 +183,5 @@ export const light = (theme: MantineTheme): PrismTheme => ({
   ],
 });
 
-export const getPrismTheme = (theme: MantineTheme) => theme.colorScheme === 'dark' ? dark(theme) : light(theme);
+export const getPrismTheme = (theme: MantineTheme) =>
+  theme.colorScheme === 'dark' ? dark(theme) : light(theme);
