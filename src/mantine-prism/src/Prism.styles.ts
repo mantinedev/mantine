@@ -16,6 +16,8 @@ export default createMemoStyles({
     overflowX: 'auto',
     borderRadius: theme.radius.sm,
     padding: [theme.spacing.md, theme.spacing.lg],
+    marginTop: 0,
+    marginBottom: 0,
   }),
 
   copy: ({ theme }: PrismStyles) => ({

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Tabs, Tab } from '@mantine/core';
-import { Prism } from '../Prism';
+import { Tabs, Tab, useMantineTheme, TabProps } from '@mantine/core';
+import { Prism, PrismProps } from '../Prism';
 
 const tsx = `import React from 'react';
 import cx from 'clsx';
@@ -184,16 +184,41 @@ const scss = `.accordion-button {
 }`;
 
 function Demo() {
+  const theme = useMantineTheme();
+  const tabStyles: TabProps['styles'] = {
+    active: {
+      borderColor: theme.colorScheme === 'dark' && 'transparent',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+    },
+  };
+
+  const prismStyles: PrismProps['styles'] = {
+    code: { borderRadius: 0 },
+    root: {
+      border: `1px solid ${theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[2]}`,
+      borderTop: 0,
+    },
+  };
+
   return (
-    <Tabs variant="outline">
-      <Tab label="TypeScript">
-        <Prism language="tsx">{tsx}</Prism>
+    <Tabs
+      variant="outline"
+      styles={{ outline: { borderBottomColor: theme.colorScheme === 'dark' && 'transparent' } }}
+    >
+      <Tab label="TypeScript" styles={tabStyles}>
+        <Prism language="tsx" styles={prismStyles}>
+          {tsx}
+        </Prism>
       </Tab>
-      <Tab label="Python">
-        <Prism language="python">{py}</Prism>
+      <Tab label="Python" styles={tabStyles}>
+        <Prism language="python" styles={prismStyles}>
+          {py}
+        </Prism>
       </Tab>
-      <Tab label="Scss">
-        <Prism language="scss">{scss}</Prism>
+      <Tab label="Scss" styles={tabStyles}>
+        <Prism language="scss" styles={prismStyles}>
+          {scss}
+        </Prism>
       </Tab>
     </Tabs>
   );
