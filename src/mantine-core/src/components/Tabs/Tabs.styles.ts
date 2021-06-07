@@ -29,7 +29,5 @@ export default createMemoStyles({
     },
   }),
 
-  body: ({ theme }: TabsStylesProps) => ({
-    paddingTop: theme.spacing.sm,
-  }),
+  body: {},
 });
