@@ -7,21 +7,16 @@ const classes = {
 
 describe('@mantine/core/merge-class-names', () => {
   it('merges classNames correctly', () => {
-    expect(mergeClassNames(classes, { root: 'root-test', title: 'title-test' })).toEqual({
-      root: 'root-1 root-test',
-      title: 'title-1 title-test',
+    expect(mergeClassNames(classes, { root: 'root-test', title: 'title-test' }, 'alert')).toEqual({
+      root: 'root-1 root-test mantine-alert-root',
+      title: 'title-1 title-test mantine-alert-title',
     });
   });
 
   it('merges classNames partial correctly', () => {
-    expect(mergeClassNames(classes, { root: 'root-test' })).toEqual({
-      root: 'root-1 root-test',
-      title: 'title-1',
+    expect(mergeClassNames(classes, { root: 'root-test' }, 'alert')).toEqual({
+      root: 'root-1 root-test mantine-alert-root',
+      title: 'title-1 mantine-alert-title',
     });
-  });
-
-  it('returns initial classes if classNames were not specified or classNames object is empty', () => {
-    expect(mergeClassNames(classes, null)).toBe(classes);
-    expect(mergeClassNames(classes, {})).toBe(classes);
   });
 });

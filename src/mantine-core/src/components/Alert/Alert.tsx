@@ -34,7 +34,7 @@ export function Alert({
   ...others
 }: AlertProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, theme }, classNames);
+  const classes = useStyles({ color, theme }, classNames, 'alert');
   const _styles = mergeStyles(classes, styles);
 
   return (
@@ -48,7 +48,6 @@ export function Alert({
       {title && (
         <Text
           themeOverride={themeOverride}
-          data-mantine-alert-title
           weight={700}
           className={classes.title}
           style={_styles.title}
@@ -57,7 +56,7 @@ export function Alert({
         </Text>
       )}
 
-      <div data-mantine-alert-body className={classes.body} style={_styles.body}>
+      <div className={classes.body} style={_styles.body}>
         {children}
       </div>
     </Paper>
