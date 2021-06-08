@@ -64,6 +64,7 @@ export function Prism({
     <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       {!noCopy && (
         <Tooltip
+          data-mantine-copy
           className={classes.copy}
           style={_styles.copy}
           label={clipboard.copied ? copiedLabel : copyLabel}
@@ -130,6 +131,7 @@ export function Prism({
                     {withLineNumbers && (
                       <div
                         className={classes.lineNumber}
+                        data-mantine-line-number
                         style={{
                           color: shouldHighlight
                             ? getThemeColor({
@@ -174,3 +176,5 @@ export function Prism({
     </div>
   );
 }
+
+Prism.displayName = '@mantine/prism/Prism';
