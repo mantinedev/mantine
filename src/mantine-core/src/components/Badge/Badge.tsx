@@ -11,6 +11,7 @@ import {
 import useStyles, { heights } from './Badge.styles';
 
 export const BADGE_SIZES = heights;
+export const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot'];
 
 export interface BadgeProps extends DefaultProps<typeof useStyles> {
   /** Badge color from theme */
@@ -52,16 +53,8 @@ export function Badge<T extends React.ElementType = 'div'>({
   styles,
   ...others
 }: ComponentPassThrough<T, BadgeProps>) {
-  const classes = useStyles(
-    {
-      size,
-      fullWidth,
-      color,
-      radius,
-      theme: useMantineTheme(themeOverride),
-    },
-    classNames
-  );
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ size, fullWidth, color, radius, theme }, classNames, 'badge');
   const _styles = mergeStyles(classes, styles);
 
   return (
