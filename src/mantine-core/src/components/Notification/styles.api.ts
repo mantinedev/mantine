@@ -1,8 +1,7 @@
 import useStyles from './Notification.styles';
 
-export const Notification: MantineClasses<typeof useStyles> = {
+export const Notification: Omit<MantineClasses<typeof useStyles>, 'withIcon'> = {
   root: 'Root element',
-  withIcon: 'Notification loading or icon modifier',
   body: 'Notification body wrapper, contains title and description',
   loader: 'Notification loader, controlled by loading prop',
   icon: 'Notification icon on the left, controlled by icon prop',

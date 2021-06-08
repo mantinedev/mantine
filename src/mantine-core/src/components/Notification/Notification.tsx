@@ -53,7 +53,7 @@ export function Notification({
   ...others
 }: NotificationProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, disallowClose, theme }, classNames);
+  const classes = useStyles({ color, disallowClose, theme }, classNames, 'notification');
   const _styles = mergeStyles(classes, styles);
   const withIcon = icon || loading;
 
@@ -68,7 +68,7 @@ export function Notification({
       {...others}
     >
       {icon && !loading && (
-        <div data-mantine-icon className={classes.icon} style={_styles.icon}>
+        <div className={classes.icon} style={_styles.icon}>
           {icon}
         </div>
       )}
@@ -80,7 +80,6 @@ export function Notification({
       <div className={classes.body} style={_styles.body}>
         {title && (
           <Text
-            data-mantine-title
             className={classes.title}
             size="sm"
             weight={500}
@@ -92,7 +91,6 @@ export function Notification({
         )}
 
         <Text
-          data-mantine-body
           className={classes.description}
           size="sm"
           themeOverride={themeOverride}

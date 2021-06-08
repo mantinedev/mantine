@@ -7,10 +7,12 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itRendersChildren,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Loader } from '../Loader/Loader';
 import { Notification } from './Notification';
+import { Notification as NotificationStylesApi } from './styles.api';
 
 const defaultProps = {
   color: 'blue',
@@ -29,6 +31,22 @@ describe('@mantine/core/Notification', () => {
   itRendersChildren(Notification, defaultProps);
   checkAccessibility([mount(<Notification {...defaultProps} />)]);
 
+  itSupportsStylesApi(
+    Notification,
+    defaultProps,
+    Object.keys(NotificationStylesApi).filter((item) => item !== 'loader'),
+    'notification',
+    'with-icon'
+  );
+
+  itSupportsStylesApi(
+    Notification,
+    { ...defaultProps, loading: true },
+    Object.keys(NotificationStylesApi).filter((item) => item !== 'icon'),
+    'notification',
+    'with-loader'
+  );
+
   it('has correct displayName', () => {
     expect(Notification.displayName).toEqual('@mantine/core/Notification');
   });
@@ -45,8 +63,8 @@ describe('@mantine/core/Notification', () => {
     const withIcon = shallow(<Notification {...defaultProps} icon="$$$" />);
     const withoutIcon = shallow(<Notification {...defaultProps} icon={null} />);
 
-    expect(withIcon.find('[data-mantine-icon]').text()).toBe('$$$');
-    expect(withoutIcon.find('[data-mantine-icon]')).toHaveLength(0);
+    expect(withIcon.find('.mantine-notification-icon').text()).toBe('$$$');
+    expect(withoutIcon.find('.mantine-notification-icon')).toHaveLength(0);
   });
 
   it('displays loader when loading prop is true', () => {
@@ -54,19 +72,19 @@ describe('@mantine/core/Notification', () => {
     const notLoading = shallow(<Notification {...defaultProps} loading={false} icon="$$$" />);
 
     expect(loading.find(Loader)).toHaveLength(1);
-    expect(loading.find('[data-mantine-icon]')).toHaveLength(0);
+    expect(loading.find('.mantine-notification-icon')).toHaveLength(0);
 
     expect(notLoading.find(Loader)).toHaveLength(0);
-    expect(notLoading.find('[data-mantine-icon]')).toHaveLength(1);
-    expect(notLoading.find('[data-mantine-icon]').text()).toBe('$$$');
+    expect(notLoading.find('.mantine-notification-icon')).toHaveLength(1);
+    expect(notLoading.find('.mantine-notification-icon').text()).toBe('$$$');
   });
 
   it('renders given title', () => {
     const withTitle = shallow(<Notification {...defaultProps} title="test-title" />);
     const withoutTitle = shallow(<Notification {...defaultProps} title={null} />);
 
-    expect(withTitle.find('[data-mantine-title]').prop('children')).toBe('test-title');
-    expect(withoutTitle.find('[data-mantine-title]')).toHaveLength(0);
+    expect(withTitle.find('.mantine-notification-title').prop('children')).toBe('test-title');
+    expect(withoutTitle.find('.mantine-notification-title')).toHaveLength(0);
   });
 
   it('spreads closeButtonProps to close button', () => {
