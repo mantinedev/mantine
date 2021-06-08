@@ -1,10 +1,10 @@
 import useStyles from './Modal.styles';
 
 export const Modal: MantineClasses<typeof useStyles> = {
-  root: 'Root element',
-  modal: 'Modal element',
-  inner: 'Modal inner',
-  title: 'Modal title',
+  root: 'Root element, contains modal and overlay',
+  inner: 'Modal wrapper, centers modal',
+  modal: 'Modal root',
   header: 'Modal header, contains close button and title',
-  body: 'Modal body, rendered after header',
+  title: 'Modal title',
+  body: 'Modal body, displayed after header',
 };

@@ -92,7 +92,7 @@ export function MantineModal({
   const bodyId = `${baseId}-body`;
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, overflow, theme }, classNames);
+  const classes = useStyles({ size, overflow, theme }, classNames, 'modal');
   const _styles = mergeStyles(classes, styles);
   const clickOutsideRef = useClickOutside(onClose);
   const focusTrapRef = useFocusTrap();
@@ -121,7 +121,6 @@ export function MantineModal({
           {...others}
         >
           <div
-            data-mantine-modal-inner
             className={classes.inner}
             onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}
             style={{ zIndex: zIndex + 1, ..._styles.inner }}
@@ -139,13 +138,8 @@ export function MantineModal({
               tabIndex={-1}
             >
               {(title || !hideCloseButton) && (
-                <div data-mantine-modal-header className={classes.header} style={_styles.header}>
-                  <Text
-                    id={titleId}
-                    data-mantine-modal-title
-                    className={classes.title}
-                    style={_styles.title}
-                  >
+                <div className={classes.header} style={_styles.header}>
+                  <Text id={titleId} className={classes.title} style={_styles.title}>
                     {title}
                   </Text>
 
