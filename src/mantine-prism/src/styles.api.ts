@@ -5,6 +5,6 @@ export const Prism: MantineClasses<typeof useStyles> = {
   code: 'Pre element which contains code',
   copy: 'Copy button wrapper',
   line: 'Line wrapper, contains line number and content',
-  lineNumber: 'Line number cell',
-  lineContent: 'Line content cell',
+  lineNumber: 'Line number',
+  lineContent: 'Line content',
 };

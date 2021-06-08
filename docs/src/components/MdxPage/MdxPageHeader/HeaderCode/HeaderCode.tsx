@@ -33,7 +33,7 @@ export function HeaderCode({ code, icon, language }: ImportStatementProps) {
           <Prism
             className={classes.code}
             language={language || 'tsx'}
-            styles={{ code: { padding: 0, margin: 0 } }}
+            styles={{ code: { padding: 0, margin: 0 }, line: { padding: 0 } }}
             noCopy
           >
             {code}

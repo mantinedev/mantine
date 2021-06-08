@@ -126,13 +126,17 @@ export function Prism({
                   <div
                     {...lineProps}
                     className={cx(classes.line, lineProps.className)}
-                    style={{ ...(shouldHighlight ? { backgroundColor: lineColor } : null) }}
+                    style={{
+                      ..._styles.line,
+                      ...(shouldHighlight ? { backgroundColor: lineColor } : null),
+                    }}
                   >
                     {withLineNumbers && (
                       <div
                         className={classes.lineNumber}
                         data-mantine-line-number
                         style={{
+                          ..._styles.lineNumber,
                           color: shouldHighlight
                             ? getThemeColor({
                                 theme,
@@ -146,7 +150,7 @@ export function Prism({
                       </div>
                     )}
 
-                    <div className={classes.lineContent}>
+                    <div className={classes.lineContent} style={_styles.lineContent}>
                       {line.map((token, key) => {
                         const tokenProps = getTokenProps({ token, key });
                         return (
