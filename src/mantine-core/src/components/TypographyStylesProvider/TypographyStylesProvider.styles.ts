@@ -6,12 +6,12 @@ import {
   getFocusStyles,
 } from '../../theme';
 
-interface InnerHtmlStylesProps {
+interface TypographyStylesProviderStyles {
   theme: MantineTheme;
 }
 
 export default createMemoStyles({
-  innerHtml: ({ theme }: InnerHtmlStylesProps) => {
+  innerHtml: ({ theme }: TypographyStylesProviderStyles) => {
     const headings = Object.keys(theme.headings.sizes).reduce((acc, h) => {
       acc[`& ${h}`] = {
         fontFamily: theme.headings.fontFamily,

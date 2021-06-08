@@ -1,6 +1,6 @@
 import { createMemoStyles, MantineTheme } from '../../theme';
 
-interface SpoilerStylesProps {
+interface SpoilerStyles {
   theme: MantineTheme;
   transitionDuration: number;
 }
@@ -10,7 +10,7 @@ export default createMemoStyles({
     position: 'relative',
   },
 
-  content: ({ transitionDuration }: SpoilerStylesProps) => ({
+  content: ({ transitionDuration }: SpoilerStyles) => ({
     overflow: 'hidden',
     transitionProperty: 'max-height',
     transitionTimingFunction: 'ease',

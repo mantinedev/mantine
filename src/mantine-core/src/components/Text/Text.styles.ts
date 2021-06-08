@@ -6,17 +6,15 @@ import {
   getFontStyles,
 } from '../../theme';
 
-export type TextVariant = 'text' | 'link';
-
-interface TextStylesProps {
+interface TextStyles {
   theme: MantineTheme;
   color: string;
-  variant: TextVariant;
+  variant: 'text' | 'link';
   size: MantineSize;
 }
 
 export default createMemoStyles({
-  text: ({ theme, color, variant, size }: TextStylesProps) => ({
+  text: ({ theme, color, variant, size }: TextStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     color:

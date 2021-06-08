@@ -1,6 +1,6 @@
 import { createMemoStyles, MantineTheme, getThemeColor, getFontStyles } from '../../theme';
 
-interface TooltipStylesProps {
+interface TooltipStyles {
   theme: MantineTheme;
   color: string;
   gutter: number;
@@ -48,7 +48,7 @@ export default createMemoStyles({
     display: 'inline-block',
   },
 
-  body: ({ theme, color }: TooltipStylesProps) => ({
+  body: ({ theme, color }: TooltipStyles) => ({
     ...getFontStyles(theme),
     backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
     lineHeight: theme.lineHeight,
@@ -73,7 +73,7 @@ export default createMemoStyles({
     position: 'absolute',
   },
 
-  top: ({ gutter, theme, color, arrowSize }: TooltipStylesProps) => ({
+  top: ({ gutter, theme, color, arrowSize }: TooltipStyles) => ({
     ...verticalPlacement,
     bottom: `calc(100% + ${gutter}px)`,
 
@@ -100,7 +100,7 @@ export default createMemoStyles({
     },
   }),
 
-  bottom: ({ gutter, theme, color, arrowSize }: TooltipStylesProps) => ({
+  bottom: ({ gutter, theme, color, arrowSize }: TooltipStyles) => ({
     ...verticalPlacement,
     top: `calc(100% + ${gutter}px)`,
 
@@ -127,7 +127,7 @@ export default createMemoStyles({
     },
   }),
 
-  right: ({ gutter, theme, color, arrowSize }: TooltipStylesProps) => ({
+  right: ({ gutter, theme, color, arrowSize }: TooltipStyles) => ({
     ...horizontalPlacement,
     left: `calc(100% + ${gutter}px)`,
 
@@ -154,7 +154,7 @@ export default createMemoStyles({
     },
   }),
 
-  left: ({ gutter, theme, color, arrowSize }: TooltipStylesProps) => ({
+  left: ({ gutter, theme, color, arrowSize }: TooltipStyles) => ({
     ...horizontalPlacement,
     right: `calc(100% + ${gutter}px)`,
 

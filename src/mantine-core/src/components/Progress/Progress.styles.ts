@@ -14,7 +14,7 @@ export const sizes = {
   xl: 16,
 };
 
-interface ProgressStylesProps {
+interface ProgressStyles {
   theme: MantineTheme;
   color: string;
   radius: MantineNumberSize;
@@ -24,14 +24,14 @@ interface ProgressStylesProps {
 }
 
 export default createMemoStyles({
-  root: ({ radius, size, theme }: ProgressStylesProps) => ({
+  root: ({ radius, size, theme }: ProgressStyles) => ({
     height: getSizeValue({ size, sizes }),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     overflow: 'hidden',
   }),
 
-  bar: ({ theme, color, radius, reduceMotion, striped }: ProgressStylesProps) => ({
+  bar: ({ theme, color, radius, reduceMotion, striped }: ProgressStyles) => ({
     height: '100%',
     backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),

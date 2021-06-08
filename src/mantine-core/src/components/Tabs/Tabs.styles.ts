@@ -1,6 +1,6 @@
 import { createMemoStyles, MantineTheme } from '../../theme';
 
-interface TabsStylesProps {
+interface TabsStyles {
   theme: MantineTheme;
 }
 
@@ -9,7 +9,7 @@ export default createMemoStyles({
   tabsListWrapper: {},
   tabsList: {},
 
-  default: ({ theme }: TabsStylesProps) => ({
+  default: ({ theme }: TabsStyles) => ({
     borderBottom: `2px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
@@ -19,7 +19,7 @@ export default createMemoStyles({
     },
   }),
 
-  outline: ({ theme }: TabsStylesProps) => ({
+  outline: ({ theme }: TabsStyles) => ({
     borderBottom: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,

@@ -7,7 +7,7 @@ import {
   hexToRgba,
 } from '../../theme';
 
-interface ThemeIconStylesProps {
+interface ThemeIconStyles {
   theme: MantineTheme;
   color: string;
   size: MantineNumberSize;
@@ -23,7 +23,7 @@ export const sizes = {
 };
 
 export default createMemoStyles({
-  light: ({ theme, color }: ThemeIconStylesProps) => ({
+  light: ({ theme, color }: ThemeIconStyles) => ({
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
     backgroundColor: hexToRgba(
       getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 1 }),
@@ -31,7 +31,7 @@ export default createMemoStyles({
     ),
   }),
 
-  filled: ({ theme, color }: ThemeIconStylesProps) => ({
+  filled: ({ theme, color }: ThemeIconStyles) => ({
     color: theme.colorScheme === 'dark' ? getThemeColor({ theme, color, shade: 0 }) : theme.white,
     backgroundColor: hexToRgba(
       getThemeColor({ theme, color, shade: 7 }),
@@ -39,7 +39,7 @@ export default createMemoStyles({
     ),
   }),
 
-  themeIcon: ({ theme, size, radius }: ThemeIconStylesProps) => {
+  themeIcon: ({ theme, size, radius }: ThemeIconStyles) => {
     const iconSize = getSizeValue({ size, sizes });
 
     return {

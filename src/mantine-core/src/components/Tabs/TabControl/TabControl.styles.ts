@@ -6,7 +6,7 @@ import {
   getThemeColor,
 } from '../../../theme';
 
-interface TabControlStylesProps {
+interface TabControlStyles {
   theme: MantineTheme;
   reduceMotion: boolean;
   color: string;
@@ -16,7 +16,7 @@ export default createMemoStyles({
   active: {},
   label: {},
 
-  root: ({ theme }: TabControlStylesProps) => ({
+  root: ({ theme }: TabControlStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
@@ -35,7 +35,7 @@ export default createMemoStyles({
     },
   }),
 
-  default: ({ theme, reduceMotion, color }: TabControlStylesProps) => ({
+  default: ({ theme, reduceMotion, color }: TabControlStyles) => ({
     transition: reduceMotion ? 'none' : 'border-color 150ms ease, color 150ms ease',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     borderBottom: '2px solid transparent',
@@ -50,7 +50,7 @@ export default createMemoStyles({
     },
   }),
 
-  outline: ({ theme }: TabControlStylesProps) => ({
+  outline: ({ theme }: TabControlStyles) => ({
     borderTopRightRadius: theme.radius.sm,
     borderTopLeftRadius: theme.radius.sm,
     border: '1px solid transparent',
@@ -73,7 +73,7 @@ export default createMemoStyles({
     height: 40,
   },
 
-  icon: ({ theme }: TabControlStylesProps) => ({
+  icon: ({ theme }: TabControlStyles) => ({
     '&:not(:only-child)': {
       marginRight: theme.spacing.xs,
     },

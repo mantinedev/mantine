@@ -1,6 +1,6 @@
 import { createMemoStyles, MantineTheme, getFontStyles } from '../../theme';
 
-interface TableStylesProps {
+interface TableStyles {
   theme: MantineTheme;
   captionSide: 'top' | 'bottom';
 }
@@ -9,7 +9,7 @@ export default createMemoStyles({
   striped: {},
   hover: {},
 
-  table: ({ theme, captionSide }: TableStylesProps) => ({
+  table: ({ theme, captionSide }: TableStyles) => ({
     ...getFontStyles(theme),
     width: '100%',
     borderCollapse: 'collapse',

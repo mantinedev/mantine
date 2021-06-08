@@ -9,7 +9,7 @@ import {
   MantineSize,
 } from '../../theme';
 
-interface SwitchStylesProps {
+interface SwitchStyles {
   reduceMotion: boolean;
   color: string;
   size: MantineSize;
@@ -52,7 +52,7 @@ export default createMemoStyles({
     alignItems: 'center',
   },
 
-  input: ({ size, radius, theme, reduceMotion, color }: SwitchStylesProps) => {
+  input: ({ size, radius, theme, reduceMotion, color }: SwitchStyles) => {
     const handleSize = getSizeValue({ size, sizes: handleSizes });
     const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
 
@@ -118,7 +118,7 @@ export default createMemoStyles({
     };
   },
 
-  label: ({ theme, size }: SwitchStylesProps) => ({
+  label: ({ theme, size }: SwitchStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),

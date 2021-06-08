@@ -8,7 +8,7 @@ import {
   getThemeColor,
 } from '../../../theme';
 
-interface RadioStylesProps {
+interface RadioStyles {
   theme: MantineTheme;
   size: MantineSize;
   color: string;
@@ -31,7 +31,7 @@ export default createMemoStyles({
     WebkitTapHighlightColor: 'transparent',
   },
 
-  radio: ({ theme, size, color }: RadioStylesProps) => ({
+  radio: ({ theme, size, color }: RadioStyles) => ({
     ...getFocusStyles(theme),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
     border: `1px solid ${
@@ -73,7 +73,7 @@ export default createMemoStyles({
     },
   }),
 
-  label: ({ theme, size }: RadioStylesProps) => ({
+  label: ({ theme, size }: RadioStyles) => ({
     ...getFontStyles(theme),
     display: 'flex',
     alignItems: 'center',

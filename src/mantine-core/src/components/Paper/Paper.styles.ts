@@ -1,6 +1,6 @@
 import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
 
-interface PaperStylesProps {
+interface PaperStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
   shadow: string;
@@ -8,7 +8,7 @@ interface PaperStylesProps {
 }
 
 export default createMemoStyles({
-  paper: ({ theme, radius, shadow, padding }: PaperStylesProps) => ({
+  paper: ({ theme, radius, shadow, padding }: PaperStyles) => ({
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     boxSizing: 'border-box',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),

@@ -2,13 +2,13 @@ import { createMemoStyles, getFontStyles, MantineTheme } from '../../theme';
 
 type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
-interface TitleStylesProps {
+interface TitleStyles {
   theme: MantineTheme;
   element: HeadingElement;
 }
 
 export default createMemoStyles({
-  title: ({ theme, element }: TitleStylesProps) => ({
+  title: ({ theme, element }: TitleStyles) => ({
     ...getFontStyles(theme),
     fontFamily: theme.headings.fontFamily,
     fontWeight: theme.headings.fontWeight,

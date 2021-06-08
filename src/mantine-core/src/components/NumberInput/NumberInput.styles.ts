@@ -1,6 +1,6 @@
 import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
 
-interface NumberInputStylesProps {
+interface NumberInputStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
 }
@@ -16,7 +16,7 @@ export default createMemoStyles({
     marginRight: 1,
   },
 
-  control: ({ theme }: NumberInputStylesProps) => ({
+  control: ({ theme }: NumberInputStyles) => ({
     position: 'relative',
     flex: '0 0 50%',
     boxSizing: 'border-box',
@@ -48,7 +48,7 @@ export default createMemoStyles({
     },
   }),
 
-  controlUp: ({ theme, radius }: NumberInputStylesProps) => ({
+  controlUp: ({ theme, radius }: NumberInputStyles) => ({
     borderTopRightRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
 
     '&::after': {
@@ -66,7 +66,7 @@ export default createMemoStyles({
     },
   }),
 
-  controlDown: ({ theme, radius }: NumberInputStylesProps) => ({
+  controlDown: ({ theme, radius }: NumberInputStyles) => ({
     borderBottomRightRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
     borderBottom: 0,
 
