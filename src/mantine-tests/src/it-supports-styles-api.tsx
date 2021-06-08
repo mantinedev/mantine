@@ -5,9 +5,10 @@ export function itSupportsStylesApi(
   Component: React.ElementType,
   requiredProps: Record<string, any>,
   styles: string[],
-  name: string
+  name: string,
+  variant?: string
 ) {
-  it('accepts style property', () => {
+  it(`uses styles api${variant ? `: ${variant}` : ''}`, () => {
     const classNames = {};
     const _styles = {};
 
@@ -22,7 +23,7 @@ export function itSupportsStylesApi(
 
     styles.forEach((part) => {
       const node = part === 'root' ? element : element.find(`.mantine-${name}-${part}`);
-      expect(node.hasClass(`test-${part}`)).toBe(true);
+      expect(node.attr('class')).toContain(`test-${part}`);
       expect(node.css('clear')).toBe('both');
       expect(node.css('text-orientation')).toBe('upright');
     });

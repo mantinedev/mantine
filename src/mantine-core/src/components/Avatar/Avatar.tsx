@@ -40,7 +40,7 @@ export function Avatar({
   ...others
 }: AvatarProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, radius, size, theme }, classNames);
+  const classes = useStyles({ color, radius, size, theme }, classNames, 'avatar');
   const _styles = mergeStyles(classes, styles);
   const [error, setError] = useState(!src);
 
@@ -51,12 +51,7 @@ export function Avatar({
   return (
     <div {...others} className={cx(classes.root, className)} style={{ ..._styles.root, ...style }}>
       {error ? (
-        <div
-          data-mantine-placeholder
-          className={classes.placeholder}
-          title={alt}
-          style={_styles.placeholder}
-        >
+        <div className={classes.placeholder} title={alt} style={_styles.placeholder}>
           {children || (
             <PlaceholderIcon className={classes.placeholderIcon} style={_styles.placeholderIcon} />
           )}
