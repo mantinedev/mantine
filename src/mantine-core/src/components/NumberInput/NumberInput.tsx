@@ -80,7 +80,7 @@ export function NumberInput({
   ...others
 }: NumberInputProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, radius }, classNames as any);
+  const classes = useStyles({ theme, radius }, classNames as any, 'number-input');
   const _styles = mergeStyles(classes, styles as any);
   const [focused, setFocused] = useState(false);
   const [_value, setValue] = useState(
@@ -130,7 +130,6 @@ export function NumberInput({
         type="button"
         tabIndex={-1}
         aria-hidden
-        data-mantine-increment
         disabled={finalValue >= max}
         className={cx(classes.control, classes.controlUp)}
         style={{ ..._styles.control, ..._styles.controlUp }}
@@ -144,7 +143,6 @@ export function NumberInput({
         type="button"
         tabIndex={-1}
         aria-hidden
-        data-mantine-decrement
         disabled={finalValue <= min}
         className={cx(classes.control, classes.controlDown)}
         style={{ ..._styles.control, ..._styles.controlDown }}

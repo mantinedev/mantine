@@ -6,7 +6,7 @@ import useStyles from './Input.styles';
 
 export const INPUT_VARIANTS = ['default', 'filled', 'unstyled'] as const;
 export type InputVariant = typeof INPUT_VARIANTS[number];
-export type InputStylesNames = keyof ReturnType<typeof useStyles>;
+export type InputStylesNames = Exclude<keyof ReturnType<typeof useStyles>, InputVariant>;
 
 export interface InputBaseProps {
   /** Sets border color to red and aria-invalid=true on input element */
