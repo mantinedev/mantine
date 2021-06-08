@@ -11,7 +11,8 @@ import {
 import useStyles, { heights } from './Badge.styles';
 
 export const BADGE_SIZES = heights;
-export const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot'];
+export const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot'] as const;
+export type BadgeVariant = typeof BADGE_VARIANTS[number];
 
 export interface BadgeProps extends DefaultProps<typeof useStyles> {
   /** Badge color from theme */

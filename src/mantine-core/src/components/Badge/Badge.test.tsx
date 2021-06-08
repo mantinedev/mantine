@@ -16,7 +16,7 @@ describe('@mantine/core/Badge', () => {
   itSupportsStylesApi(
     Badge,
     { children: 'test', leftSection: 'l', rightSection: 'r' },
-    Object.keys(BadgeStylesApi).filter((item) => !BADGE_VARIANTS.includes(item)),
+    Object.keys(BadgeStylesApi).filter((item) => !BADGE_VARIANTS.includes(item as any)),
     'badge'
   );
   itSupportsOthers(Badge, {});

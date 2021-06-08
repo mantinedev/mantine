@@ -12,6 +12,7 @@ import { GroupedTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { MantineDrawer, Drawer } from './Drawer';
+import { Drawer as DrawerStylesApi } from './styles.api';
 
 const defaultProps = {
   opened: true,
@@ -37,7 +38,7 @@ describe('@mantine/core/Drawer', () => {
   itRendersChildren(MantineDrawer, defaultProps);
   itSupportsOthers(MantineDrawer, defaultProps);
   itSupportsStyle(MantineDrawer, defaultProps);
-  itSupportsStylesApi(MantineDrawer, defaultProps, ['root', 'drawer'], 'drawer');
+  itSupportsStylesApi(MantineDrawer, defaultProps, Object.keys(DrawerStylesApi), 'drawer');
 
   it('passes transition, transitionDuration and transitionTimingFunction to GropedTransition component', () => {
     const element = shallow(

@@ -1,12 +1,9 @@
 import useStyles from './Badge.styles';
+import { BadgeVariant } from './Badge';
 
-export const Badge: MantineClasses<typeof useStyles> = {
+export const Badge: Omit<MantineClasses<typeof useStyles>, BadgeVariant> = {
   root: 'Root element',
   inner: 'Badge label container, contains children',
   leftSection: 'Left section, controlled by leftSectionProp',
   rightSection: 'Right section, controlled by rightSectionProp',
-  outline: 'Outline badge variant, styles added to root element',
-  filled: 'Filled badge variant, styles added to root element',
-  light: 'Light badge variant, styles added to root element',
-  dot: 'Dot badge variant, styles added to root element',
 };

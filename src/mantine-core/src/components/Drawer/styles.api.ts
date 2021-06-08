@@ -1,7 +1,6 @@
 import useStyles from './Drawer.styles';
 
-export const Drawer: MantineClasses<typeof useStyles> = {
+export const Drawer: Omit<MantineClasses<typeof useStyles>, 'noOverlay'> = {
   root: 'Root element',
-  noOverlay: 'No overlay variant, controlled by noOverlay prop',
   drawer: 'Drawer body element',
 };

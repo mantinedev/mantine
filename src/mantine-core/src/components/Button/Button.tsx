@@ -15,6 +15,7 @@ import useStyles, { heights } from './Button.styles';
 
 export const BUTTON_SIZES = heights;
 export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light'];
+export type ButtonVariant = 'link' | 'filled' | 'outline' | 'light';
 
 interface ButtonBaseProps extends DefaultProps<typeof useStyles> {
   /** Predefined button size */

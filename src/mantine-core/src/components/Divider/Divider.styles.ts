@@ -24,6 +24,8 @@ export const sizes = {
 };
 
 export default createMemoStyles({
+  root: {},
+
   withLabel: {
     borderTop: '0 !important',
   },
