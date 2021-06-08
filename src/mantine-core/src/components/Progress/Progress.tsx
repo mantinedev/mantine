@@ -41,7 +41,11 @@ export function Progress({
 }: ProgressProps) {
   const theme = useMantineTheme(themeOverride);
   const reduceMotion = useReducedMotion();
-  const classes = useStyles({ color, size, radius, striped, reduceMotion, theme }, classNames);
+  const classes = useStyles(
+    { color, size, radius, striped, reduceMotion, theme },
+    classNames,
+    'progress'
+  );
   const _styles = mergeStyles(classes, styles);
 
   return (
