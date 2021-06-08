@@ -98,6 +98,20 @@ describe('@mantine/core/Button', () => {
 });
 ```
 
+## itSupportsStylesApi
+
+Checks if component attaches correct styles to inner elements:
+
+```tsx
+import { itSupportsStylesApi } from '@mantine/tests';
+import { Button } from './Button';
+import { Button as ButtonStylesApi } from './styles.api';
+
+describe('@mantine/core/Button', () => {
+  itSupportsRef(Button, { children: 'test' }, Object.keys(ButtonStylesApi), 'button');
+});
+```
+
 ## mockResizeObserver
 
 Mocks ResizeObserver:

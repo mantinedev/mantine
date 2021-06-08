@@ -6,14 +6,22 @@ import {
   itSupportsOthers,
   itSupportsClassName,
   itRendersChildren,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Text } from '../Text/Text';
 import { Alert } from './Alert';
+import { Alert as AlertStylesApi } from './styles.api';
+
+const defaultProps = {
+  title: 'test-title',
+  children: 'test-alert',
+};
 
 describe('@mantine/core/Alert', () => {
-  itSupportsClassName(Alert, { children: 'test-alert' });
-  itSupportsOthers(Alert, { children: 'test-alert' });
-  itSupportsStyle(Alert, { children: 'test-alert' });
+  itSupportsStylesApi(Alert, defaultProps, Object.keys(AlertStylesApi), 'alert');
+  itSupportsClassName(Alert, defaultProps);
+  itSupportsOthers(Alert, defaultProps);
+  itSupportsStyle(Alert, defaultProps);
   itRendersChildren(Alert, {});
   checkAccessibility([
     mount(
