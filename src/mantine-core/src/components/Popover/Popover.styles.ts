@@ -65,6 +65,7 @@ export default createMemoStyles({
   center: {},
   start: {},
   end: {},
+  title: {},
 
   root: {
     position: 'relative',

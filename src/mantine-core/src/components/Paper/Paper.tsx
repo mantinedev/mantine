@@ -27,7 +27,8 @@ export function Paper({
   elementRef,
   ...others
 }: PaperProps) {
-  const classes = useStyles({ radius, shadow, padding, theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ radius, shadow, padding, theme }, null, 'paper');
 
   return (
     <div className={cx(classes.paper, className)} ref={elementRef} {...others}>

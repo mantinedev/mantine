@@ -8,8 +8,15 @@ import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { CloseIcon } from '../Modal/CloseIcon';
 import useStyles from './Popover.styles';
 
+type PopoverPosition = 'left' | 'right' | 'top' | 'bottom';
+type PopoverPlacement = 'center' | 'end' | 'start';
+export type PopoverStylesNames = Exclude<
+  keyof ReturnType<typeof useStyles>,
+  PopoverPosition | PopoverPlacement
+>;
+
 export interface PopoverProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<PopoverStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Disable closing by click outside */
   noClickOutside?: boolean;
@@ -114,7 +121,11 @@ export function Popover({
   ...others
 }: PopoverProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, gutter, arrowSize, radius, spacing, shadow }, classNames);
+  const classes = useStyles(
+    { theme, gutter, arrowSize, radius, spacing, shadow },
+    classNames,
+    'popover'
+  );
   const _styles = mergeStyles(classes, styles);
   const handleClose = () => typeof onClose === 'function' && onClose();
   const useClickOutsideRef = useClickOutside(() => !noClickOutside && handleClose());
@@ -149,7 +160,6 @@ export function Popover({
           <div
             role="dialog"
             tabIndex={-1}
-            data-mantine-popover
             aria-labelledby={titleId}
             aria-describedby={bodyId}
             className={classes.wrapper}
@@ -161,18 +171,12 @@ export function Popover({
               className={cx(classes.popover, classes[position], classes[placement])}
               style={{ zIndex, ..._styles.popover, ..._styles[position], ..._styles[placement] }}
             >
-              {withArrow && (
-                <div data-mantine-popover-arrow className={classes.arrow} style={_styles.arrow} />
-              )}
+              {withArrow && <div className={classes.arrow} style={_styles.arrow} />}
 
               <div className={classes.body} style={_styles.body}>
                 {!!title && (
-                  <div
-                    className={classes.header}
-                    style={_styles.header}
-                    data-mantine-popover-header
-                  >
-                    <Text size="sm" id={titleId} data-mantine-popover-title>
+                  <div className={classes.header} style={_styles.header}>
+                    <Text size="sm" id={titleId} className={classes.title} style={_styles.title}>
                       {title}
                     </Text>
                   </div>
@@ -181,7 +185,6 @@ export function Popover({
                 {withCloseButton && (
                   <ActionIcon
                     size="sm"
-                    data-mantine-popover-close
                     onClick={handleClose}
                     aria-label={closeButtonLabel}
                     className={cx(classes.close)}
@@ -190,12 +193,7 @@ export function Popover({
                     <CloseIcon style={{ width: 14, height: 14 }} />
                   </ActionIcon>
                 )}
-                <div
-                  className={classes.inner}
-                  id={bodyId}
-                  data-mantine-popover-body
-                  style={_styles.inner}
-                >
+                <div className={classes.inner} id={bodyId} style={_styles.inner}>
                   {children}
                 </div>
               </div>
@@ -204,7 +202,7 @@ export function Popover({
         )}
       </Transition>
 
-      <div data-mantine-popover-target className={classes.target} style={_styles.target}>
+      <div className={classes.target} style={_styles.target}>
         {target}
       </div>
     </div>

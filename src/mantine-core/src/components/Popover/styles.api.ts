@@ -1,20 +1,14 @@
-import useStyles from './Popover.styles';
+import { PopoverStylesNames } from './Popover';
 
-export const Popover: MantineClasses<typeof useStyles> = {
+export const Popover: Record<PopoverStylesNames, string> = {
   root: 'Root element',
-  center: 'Center placement',
-  start: 'Start placement',
-  end: 'End placement',
-  left: 'Left position',
-  right: 'Right position',
-  top: 'Top position',
-  bottom: 'Bottom position',
   wrapper: 'Popover wrapper, contains body and arrow',
-  popover: 'Popover itself',
-  arrow: 'Popover arrow',
+  popover: 'Popover element itself',
+  arrow: 'Arrow element',
   body: 'Popover body, contains header and inner',
-  inner: 'Popover children wrapper',
-  header: 'Popover header, contains title',
-  target: 'Popover control',
-  close: 'Popover close button',
+  inner: 'Children wrapper',
+  header: 'Header element, contains title',
+  title: 'Title element',
+  close: 'Close button',
+  target: 'Target control',
 };
