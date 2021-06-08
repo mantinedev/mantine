@@ -11,8 +11,6 @@ import * as tagPickerDemos from '@mantine/tag-picker/src/demos';
 import * as prismDemos from '@mantine/prism/src/demos';
 import Demo from '../../docs/src/components/Demo/Demo';
 
-console.log(prismDemos);
-
 const decorator = (Story: React.FC, props: any) => {
   const [colorScheme, setColorScheme] = useState<'light' | 'dark'>('light');
 

@@ -45,7 +45,7 @@ export const dark = (theme: MantineTheme): PrismTheme => ({
       },
     },
     {
-      types: ['class-name', 'attr-name'],
+      types: ['class-name', 'attr-name', 'maybe-class-name'],
       style: {
         color: theme.colors.yellow[5],
       },
@@ -139,7 +139,7 @@ export const light = (theme: MantineTheme): PrismTheme => ({
       },
     },
     {
-      types: ['class-name'],
+      types: ['class-name', 'maybe-class-name'],
       style: {
         color: theme.colors.red[9],
       },
