@@ -5,22 +5,27 @@ import {
   itSupportsRef,
   itSupportsClassName,
   itSupportsStyle,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Checkbox } from './Checkbox';
+import { Checkbox as CheckboxStylesApi } from './styles.api';
+
+const defaultProps = {
+  checked: true,
+  onChange: () => {},
+  label: 'test-label',
+};
 
 describe('@mantine/core/Checkbox', () => {
-  itSupportsStyle(Checkbox, {});
-  itSupportsClassName(Checkbox, {});
-  itSupportsRef(Checkbox, {}, HTMLInputElement, 'elementRef');
+  itSupportsStyle(Checkbox, defaultProps);
+  itSupportsClassName(Checkbox, defaultProps);
+  itSupportsRef(Checkbox, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsStylesApi(Checkbox, defaultProps, Object.keys(CheckboxStylesApi), 'checkbox');
   checkAccessibility([
     mount(<Checkbox aria-label="Checkbox without label" />),
     mount(<Checkbox label="With label" />),
     mount(<Checkbox id="with-id" label="With id" />),
   ]);
-
-  it('has correct displayName', () => {
-    expect(Checkbox.displayName).toEqual('@mantine/core/Checkbox');
-  });
 
   it('renders label based on label prop', () => {
     const withLabel = shallow(<Checkbox label="test-label" />);
@@ -80,5 +85,9 @@ describe('@mantine/core/Checkbox', () => {
 
     expect(element.render().find('input').attr('aria-checked')).toBe('true');
     expect(element.render().find('input').attr('width')).toBe('30px');
+  });
+
+  it('has correct displayName', () => {
+    expect(Checkbox.displayName).toEqual('@mantine/core/Checkbox');
   });
 });

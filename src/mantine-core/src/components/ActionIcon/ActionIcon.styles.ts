@@ -88,7 +88,7 @@ export default createMemoStyles({
     backgroundColor: 'transparent',
   }),
 
-  actionIcon: ({ radius, theme, size }: ActionIconStylesProps) => ({
+  root: ({ radius, theme, size }: ActionIconStylesProps) => ({
     ...getFocusStyles(theme),
     ...getFontStyles(theme),
     appearance: 'none',

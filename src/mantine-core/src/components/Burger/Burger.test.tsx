@@ -6,15 +6,23 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsRef,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Burger } from './Burger';
+import { Burger as BurgerStylesApi } from './styles.api';
+
+const defaultProps = {
+  opened: true,
+  title: 'Close navigation',
+};
 
 describe('@mantine/core/Burger', () => {
-  checkAccessibility([mount(<Burger opened title="Close navigation" />)]);
-  itSupportsOthers(Burger, { opened: true });
-  itSupportsClassName(Burger, { opened: true });
-  itSupportsStyle(Burger, { opened: true });
-  itSupportsRef(Burger, { opened: true }, HTMLButtonElement, 'elementRef');
+  checkAccessibility([mount(<Burger {...defaultProps} />)]);
+  itSupportsOthers(Burger, defaultProps);
+  itSupportsClassName(Burger, defaultProps);
+  itSupportsStyle(Burger, defaultProps);
+  itSupportsRef(Burger, defaultProps, HTMLButtonElement, 'elementRef');
+  itSupportsStylesApi(Burger, defaultProps, Object.keys(BurgerStylesApi), 'burger');
 
   it('has correct displayName', () => {
     expect(Burger.displayName).toEqual('@mantine/core/Burger');

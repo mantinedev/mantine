@@ -10,10 +10,11 @@ props: ['Code']
 import: "import { Code } from '@mantine/core';"
 source: 'mantine-core/src/components/Code/Code.tsx'
 docs: 'core/Code.mdx'
-styles: ['Code']
+styles: ['Code', 'single-node']
 ---
 
 import { CodeDemos } from '@demos/core';
+import * as PrismDemos from '@demos/prism';
 
 ## Inline code
 
@@ -33,3 +34,10 @@ By default code has gray color,
 you can change it to any color from <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>:
 
 <Demo data={CodeDemos.colors} />
+
+## Syntax highlight
+
+In case you need syntax highlight like in all code examples on Mantine website,
+use <GatsbyLink to="/others/prism/">@mantine/prism</GatsbyLink> package:
+
+<Demo data={PrismDemos.usage} />

@@ -11,6 +11,9 @@ function Demo() {
 `;
 
 const code = `
+import React from 'react';
+import { Prism } from '@mantine/prism';
+
 const demoCode = \`import React from 'react';
 import { Button } from '@mantine/core';
 
@@ -18,7 +21,9 @@ function Demo() {
   return <Button>Hello</Button>
 }\`;
 
-<Prism language="tsx">{demoCode}</Prism>
+function Demo() {
+  return <Prism language="tsx">{demoCode}</Prism>;
+}
 `;
 
 function Demo() {

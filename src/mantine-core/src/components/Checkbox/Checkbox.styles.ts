@@ -43,7 +43,7 @@ export default createMemoStyles({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
   }),
 
-  checkbox: ({ size, theme, color }: CheckboxStylesProps) => ({
+  input: ({ size, theme, color }: CheckboxStylesProps) => ({
     ...getFocusStyles(theme),
     appearance: 'none',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],

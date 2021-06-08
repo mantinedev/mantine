@@ -106,7 +106,7 @@ export function MantineDrawer({
 }: DrawerProps) {
   const theme = useMantineTheme(themeOverride);
   const duration = useReducedMotion() ? 1 : transitionDuration;
-  const classes = useStyles({ theme, size, position }, classNames);
+  const classes = useStyles({ theme, size, position }, classNames, 'drawer');
   const _styles = mergeStyles(classes, styles);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
   useScrollLock(opened && !noScrollLock);

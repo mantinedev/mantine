@@ -14,6 +14,7 @@ import { ComponentPassThrough } from '../../types';
 import useStyles, { heights } from './Button.styles';
 
 export const BUTTON_SIZES = heights;
+export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light'];
 
 interface ButtonBaseProps extends DefaultProps<typeof useStyles> {
   /** Predefined button size */
@@ -72,7 +73,7 @@ export function Button<
   elementRef?: React.ForwardedRef<U>;
 }) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, color, size, fullWidth, theme }, classNames);
+  const classes = useStyles({ radius, color, size, fullWidth, theme }, classNames, 'button');
   const _styles = mergeStyles(classes, styles);
 
   return (
@@ -88,7 +89,6 @@ export function Button<
       <div className={classes.inner} style={_styles.inner}>
         {leftIcon && (
           <span
-            data-mantine-left-icon
             className={cx(classes.icon, classes.leftIcon)}
             style={{ ..._styles.icon, ..._styles.leftIcon }}
           >
@@ -98,7 +98,6 @@ export function Button<
 
         <span
           className={classes.label}
-          data-mantine-label
           style={{ textTransform: uppercase ? 'uppercase' : undefined, ..._styles.label }}
         >
           {children}
@@ -106,7 +105,6 @@ export function Button<
 
         {rightIcon && (
           <span
-            data-mantine-right-icon
             className={cx(classes.icon, classes.rightIcon)}
             style={{ ..._styles.icon, ..._styles.rightIcon }}
           >

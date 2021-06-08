@@ -6,6 +6,7 @@ import {
   itRendersChildren,
   itSupportsStyle,
   itSupportsOthers,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { GroupedTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
@@ -36,10 +37,7 @@ describe('@mantine/core/Drawer', () => {
   itRendersChildren(MantineDrawer, defaultProps);
   itSupportsOthers(MantineDrawer, defaultProps);
   itSupportsStyle(MantineDrawer, defaultProps);
-
-  it('has correct displayName', () => {
-    expect(Drawer.displayName).toEqual('@mantine/core/Drawer');
-  });
+  itSupportsStylesApi(MantineDrawer, defaultProps, ['root', 'drawer'], 'drawer');
 
   it('passes transition, transitionDuration and transitionTimingFunction to GropedTransition component', () => {
     const element = shallow(
@@ -80,5 +78,9 @@ describe('@mantine/core/Drawer', () => {
   it('does not render overlay if noOverlay prop is set to true', () => {
     const element = mount(<MantineDrawer {...defaultProps} noOverlay />);
     expect(element.find(Overlay)).toHaveLength(0);
+  });
+
+  it('has correct displayName', () => {
+    expect(Drawer.displayName).toEqual('@mantine/core/Drawer');
   });
 });

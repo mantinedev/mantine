@@ -60,7 +60,8 @@ export function Divider({
       size,
       variant,
     },
-    classNames
+    classNames,
+    'divider'
   );
   const _styles = mergeStyles(classes, styles);
 
@@ -70,7 +71,6 @@ export function Divider({
 
   return (
     <div
-      data-mantine-hr
       className={cx(
         {
           [classes.vertical]: vertical,
@@ -89,7 +89,6 @@ export function Divider({
       {!!label && horizontal && (
         <Text
           {...labelProps}
-          data-mantine-label
           color={_color}
           size={labelProps?.size || 'xs'}
           style={{ marginTop: 2, ..._styles.label, ..._styles[labelPosition] }}

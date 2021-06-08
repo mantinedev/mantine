@@ -53,7 +53,7 @@ export function Checkbox({
 }: CheckboxProps) {
   const uuid = useId(id);
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, color, theme }, classNames);
+  const classes = useStyles({ size, color, theme }, classNames, 'checkbox');
   const _styles = mergeStyles(classes, styles);
 
   return (
@@ -67,8 +67,8 @@ export function Checkbox({
           id={uuid}
           ref={elementRef}
           type="checkbox"
-          className={classes.checkbox}
-          style={_styles.checkbox}
+          className={classes.input}
+          style={_styles.input}
           checked={indeterminate || checked}
           onChange={onChange}
           disabled={disabled}
