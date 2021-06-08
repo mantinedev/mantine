@@ -1,6 +1,6 @@
 import { MantineTheme, getFontStyles, getThemeColor, createMemoStyles } from '../../../theme';
 
-interface MenuButtonStylesProps {
+interface MenuButtonStyles {
   theme: MantineTheme;
   color: string;
 }
@@ -8,7 +8,7 @@ interface MenuButtonStylesProps {
 export default createMemoStyles({
   hovered: {},
 
-  root: ({ theme, color }: MenuButtonStylesProps) => ({
+  root: ({ theme, color }: MenuButtonStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     fontSize: theme.fontSizes.sm,
@@ -56,7 +56,7 @@ export default createMemoStyles({
     flex: 1,
   },
 
-  icon: ({ theme }: MenuButtonStylesProps) => ({
+  icon: ({ theme }: MenuButtonStyles) => ({
     marginRight: theme.spacing.xs,
 
     '& *': {

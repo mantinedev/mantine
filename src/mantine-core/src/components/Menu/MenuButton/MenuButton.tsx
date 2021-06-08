@@ -33,7 +33,7 @@ export function MenuButton<T extends React.ElementType = 'button'>({
   ...others
 }: ComponentPassThrough<T, MenuButtonProps>) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, theme }, classNames);
+  const classes = useStyles({ color, theme }, classNames, 'menu-item');
   const _styles = mergeStyles(classes, styles);
 
   return (

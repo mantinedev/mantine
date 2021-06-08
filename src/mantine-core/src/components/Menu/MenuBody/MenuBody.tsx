@@ -11,7 +11,7 @@ import useStyles from './MenuBody.styles';
 
 export type MenuBodyStylesNames = keyof ReturnType<typeof useStyles>;
 
-interface MenuBodyProps
+export interface MenuBodyProps
   extends DefaultProps<MenuBodyStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** When true menu is mounted to the dom */
@@ -78,7 +78,7 @@ function findInitialItem(items: MenuItemType[]) {
   return -1;
 }
 
-function MenuBody({
+export function MenuBody({
   className,
   style,
   themeOverride,
@@ -104,7 +104,7 @@ function MenuBody({
   const hoveredTimeout = useRef<number>();
   const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, theme }, classNames);
+  const classes = useStyles({ size, theme }, classNames, 'menu-body');
   const _styles = mergeStyles(classes, styles);
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
@@ -182,9 +182,9 @@ function MenuBody({
         <Divider
           key={index}
           variant="solid"
-          className={classes.hr}
+          className={classes.divider}
           margins={theme.spacing.xs / 2}
-          style={_styles.hr}
+          style={_styles.divider}
         />
       );
     }
@@ -219,5 +219,3 @@ function MenuBody({
 }
 
 MenuBody.displayName = '@mantine/core/MenuBody';
-
-export { MenuBody, MenuBodyProps };

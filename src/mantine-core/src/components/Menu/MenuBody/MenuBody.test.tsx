@@ -1,6 +1,11 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
+import {
+  itSupportsClassName,
+  itSupportsOthers,
+  itSupportsStyle,
+  itSupportsStylesApi,
+} from '@mantine/tests';
 import { Divider } from '../../Divider/Divider';
 import { Paper } from '../../Paper/Paper';
 import { MenuButton } from '../MenuButton/MenuButton';
@@ -17,6 +22,12 @@ describe('@mantine/core/MenuBody', () => {
   itSupportsStyle(MenuBody, defaultProps);
   itSupportsClassName(MenuBody, defaultProps);
   itSupportsOthers(MenuBody, defaultProps);
+  itSupportsStylesApi(
+    MenuBody,
+    { ...defaultProps, children: <Divider /> },
+    ['divider'],
+    'menu-body'
+  );
 
   it('has correct displayName', () => {
     expect(MenuBody.displayName).toEqual('@mantine/core/MenuBody');
