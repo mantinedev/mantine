@@ -53,7 +53,8 @@ export function Group({
       position,
       direction,
     },
-    classNames
+    classNames,
+    'group'
   );
   const _styles = mergeStyles(classes, styles);
 
