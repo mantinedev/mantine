@@ -6,8 +6,10 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Blockquote } from './Blockquote';
+import { Blockquote as BlockquoteStylesApi } from './styles.api';
 
 describe('@mantine/core/Blockquote', () => {
   checkAccessibility([
@@ -15,6 +17,12 @@ describe('@mantine/core/Blockquote', () => {
     mount(<Blockquote cite="test-cite">test-quote</Blockquote>),
   ]);
 
+  itSupportsStylesApi(
+    Blockquote,
+    { cite: 'test-cite', children: 'test-quote' },
+    Object.keys(BlockquoteStylesApi),
+    'blockquote'
+  );
   itRendersChildren(Blockquote, {});
   itSupportsClassName(Blockquote, {});
   itSupportsOthers(Blockquote, {});
@@ -28,8 +36,8 @@ describe('@mantine/core/Blockquote', () => {
     const withIcon = shallow(<Blockquote icon="$" />);
     const withoutIcon = shallow(<Blockquote icon={null} />);
 
-    expect(withIcon.render().find('[data-mantine-icon]').text()).toBe('$');
-    expect(withoutIcon.render().find('[data-mantine-icon]')).toHaveLength(0);
+    expect(withIcon.render().find('.mantine-blockquote-icon').text()).toBe('$');
+    expect(withoutIcon.render().find('.mantine-blockquote-icon')).toHaveLength(0);
   });
 
   it('renders given cite based on cite prop', () => {

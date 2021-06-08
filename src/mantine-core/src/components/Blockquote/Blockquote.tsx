@@ -32,7 +32,7 @@ export function Blockquote({
   ...others
 }: BlockquoteProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, theme }, classNames);
+  const classes = useStyles({ color, theme }, classNames, 'blockquote');
   const _styles = mergeStyles(classes, styles);
 
   return (
@@ -43,7 +43,7 @@ export function Blockquote({
     >
       <div className={classes.inner} style={_styles.inner}>
         {icon && (
-          <div data-mantine-icon className={classes.icon} style={_styles.icon}>
+          <div className={classes.icon} style={_styles.icon}>
             {icon}
           </div>
         )}
