@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab, useMantineTheme, TabProps } from '@mantine/core';
+import { Tabs, Tab, useMantineTheme, TabProps, hexToRgba } from '@mantine/core';
 import { Prism, PrismProps } from '../Prism';
 
 const tsx = `import React from 'react';
@@ -187,15 +187,16 @@ function Demo() {
   const theme = useMantineTheme();
   const tabStyles: TabProps['styles'] = {
     active: {
-      borderColor: theme.colorScheme === 'dark' && 'transparent',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+      borderColor: theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[1],
+      backgroundColor:
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : hexToRgba(theme.colors.gray[0], 0.65),
     },
   };
 
   const prismStyles: PrismProps['styles'] = {
     code: { borderRadius: 0 },
     root: {
-      border: `1px solid ${theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[2]}`,
+      border: `1px solid ${theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[1]}`,
       borderTop: 0,
     },
   };
@@ -203,7 +204,11 @@ function Demo() {
   return (
     <Tabs
       variant="outline"
-      styles={{ outline: { borderBottomColor: theme.colorScheme === 'dark' && 'transparent' } }}
+      styles={{
+        outline: {
+          borderBottomColor: theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[1],
+        },
+      }}
     >
       <Tab label="TypeScript" styles={tabStyles}>
         <Prism language="tsx" styles={prismStyles}>

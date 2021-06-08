@@ -92,7 +92,7 @@ export const dark = (theme: MantineTheme): PrismTheme => ({
 export const light = (theme: MantineTheme): PrismTheme => ({
   plain: {
     color: theme.colors.gray[9],
-    backgroundColor: hexToRgba(theme.colors.gray[0], 0.75),
+    backgroundColor: hexToRgba(theme.colors.gray[0], 0.65),
   },
 
   styles: [
