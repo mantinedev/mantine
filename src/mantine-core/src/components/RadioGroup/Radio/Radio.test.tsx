@@ -6,8 +6,10 @@ import {
   itRendersChildren,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Radio } from './Radio';
+import { Radio as RadioStylesApi } from '../styles.api';
 
 const defaultProps = {
   value: 'test-radio',
@@ -16,11 +18,11 @@ const defaultProps = {
 
 describe('@mantine/core/Radio', () => {
   checkAccessibility([mount(<Radio {...defaultProps} />)]);
-
   itSupportsClassName(Radio, defaultProps);
   itSupportsStyle(Radio, defaultProps);
   itRendersChildren(Radio, defaultProps);
   itSupportsRef(Radio, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsStylesApi(Radio, defaultProps, Object.keys(RadioStylesApi), 'radio');
 
   it('has correct displayName', () => {
     expect(Radio.displayName).toEqual('@mantine/core/Radio');

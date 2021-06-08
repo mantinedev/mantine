@@ -59,7 +59,8 @@ export function RadioGroup({
 }: RadioGroupProps) {
   const [_value, setValue] = useState(value || defaultValue || '');
   const finalValue = typeof value === 'string' ? value : _value;
-  const classes = useStyles({ spacing, variant, theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ spacing, variant, theme }, null, 'radio-group');
   const uuid = useId(name);
 
   const handleChange = (v: string) => {

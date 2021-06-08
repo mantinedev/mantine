@@ -1,8 +1,7 @@
 import useStyles from './Radio/Radio.styles';
 
-export const Radio: MantineClasses<typeof useStyles> = {
+export const Radio: Record<Exclude<keyof ReturnType<typeof useStyles>, 'labelDisabled'>, string> = {
   root: 'Root element',
   label: 'Label element',
-  labelDisabled: 'Disabled label element modifier',
   radio: 'Radio input',
 };
