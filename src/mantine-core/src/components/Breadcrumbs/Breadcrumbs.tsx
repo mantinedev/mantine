@@ -25,7 +25,7 @@ export function Breadcrumbs({
   ...others
 }: BreadcrumbsProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme });
+  const classes = useStyles({ theme }, classNames, 'breadcrumbs');
   const _styles = mergeStyles(classes, styles);
 
   const items = React.Children.toArray(children).reduce((acc: any[], child: any, index, array) => {
@@ -34,7 +34,6 @@ export function Breadcrumbs({
         className: classes.breadcrumb,
         style: _styles.breadcrumb,
         key: index,
-        'data-mantine-breadcrumb': true,
       })
     );
 
@@ -42,7 +41,6 @@ export function Breadcrumbs({
       acc.push(
         <Text
           size="sm"
-          data-mantine-separator
           className={classes.separator}
           style={_styles.separator}
           key={`separator-${index}`}
