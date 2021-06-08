@@ -1,7 +1,7 @@
-import { createUseStyles } from 'react-jss';
+import { createMemoStyles } from '../../theme';
 
-export default createUseStyles({
-  loadingOverlay: {
+export default createMemoStyles({
+  root: {
     position: 'absolute',
     top: 0,
     left: 0,

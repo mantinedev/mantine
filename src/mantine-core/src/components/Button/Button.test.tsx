@@ -9,7 +9,7 @@ import {
   itSupportsOthers,
   itSupportsStylesApi,
 } from '@mantine/tests';
-import { Button, BUTTON_VARIANTS } from './Button';
+import { Button } from './Button';
 import { Button as ButtonStylesApi } from './styles.api';
 
 describe('@mantine/core/Button', () => {
@@ -23,7 +23,7 @@ describe('@mantine/core/Button', () => {
   itSupportsStylesApi(
     Button,
     { children: 'test', leftIcon: 'l', rightIcon: 'r' },
-    Object.keys(ButtonStylesApi).filter((item) => !BUTTON_VARIANTS.includes(item)),
+    Object.keys(ButtonStylesApi),
     'button'
   );
 

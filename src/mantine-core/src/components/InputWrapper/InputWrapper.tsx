@@ -62,7 +62,7 @@ export function InputWrapper({
   ...others
 }: InputWrapperProps) {
   const theme = useMantineTheme();
-  const classes = useStyles({ theme });
+  const classes = useStyles({ theme }, classNames, 'input-wrapper');
   const _styles = mergeStyles(classes, styles);
   const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
   const inputLabel = createElement(
@@ -77,7 +77,7 @@ export function InputWrapper({
     <>
       {label}
       {required && (
-        <span data-mantine-required className={classes.required}>
+        <span data-mantine-required className={classes.required} style={_styles.required}>
           {' '}
           *
         </span>

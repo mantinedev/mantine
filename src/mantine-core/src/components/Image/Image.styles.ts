@@ -6,7 +6,7 @@ import {
   getFontStyles,
 } from '../../theme';
 
-interface ImageStylesProps {
+interface ImageStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
 }
@@ -17,7 +17,7 @@ export default createMemoStyles({
     overflow: 'hidden',
   },
 
-  image: ({ theme, radius }: ImageStylesProps) => ({
+  image: ({ theme, radius }: ImageStyles) => ({
     ...getFontStyles(theme),
     display: 'block',
     width: '100%',
@@ -26,7 +26,7 @@ export default createMemoStyles({
     border: 0,
   }),
 
-  placeholderIcon: ({ theme, radius }: ImageStylesProps) => ({
+  placeholder: ({ theme, radius }: ImageStyles) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

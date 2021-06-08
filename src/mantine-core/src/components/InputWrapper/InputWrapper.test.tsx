@@ -5,14 +5,31 @@ import {
   itSupportsClassName,
   itRendersChildren,
   itSupportsOthers,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { InputWrapper } from './InputWrapper';
+import { InputWrapper as InputWrapperStylesApi } from './styles.api';
+
+const defaultProps = {
+  id: 'test-id',
+  required: true,
+  children: 'test',
+  label: 'test-label',
+  error: 'test-error',
+  description: 'test-description',
+};
 
 describe('@mantine/core/InputWrapper', () => {
-  itSupportsOthers(InputWrapper, { id: 'test-id', children: 'test' });
-  itSupportsStyle(InputWrapper, { id: 'test-id', children: 'test' });
-  itSupportsClassName(InputWrapper, { id: 'test-id', children: 'test' });
+  itSupportsOthers(InputWrapper, defaultProps);
+  itSupportsStyle(InputWrapper, defaultProps);
+  itSupportsClassName(InputWrapper, defaultProps);
   itRendersChildren(InputWrapper, { id: 'test-id' });
+  itSupportsStylesApi(
+    InputWrapper,
+    defaultProps,
+    Object.keys(InputWrapperStylesApi),
+    'input-wrapper'
+  );
 
   it('renders correct error, description and label', () => {
     const withProps = shallow(
@@ -29,12 +46,14 @@ describe('@mantine/core/InputWrapper', () => {
     const withoutProps = shallow(<InputWrapper id="test-id">test-children</InputWrapper>);
 
     expect(withProps.render().find('label').text()).toBe('test-label');
-    expect(withProps.render().find('[data-mantine-description]').text()).toBe('test-description');
-    expect(withProps.render().find('[data-mantine-error]').text()).toBe('test-error');
+    expect(withProps.render().find('.mantine-input-wrapper-description').text()).toBe(
+      'test-description'
+    );
+    expect(withProps.render().find('.mantine-input-wrapper-error').text()).toBe('test-error');
 
     expect(withoutProps.render().find('label')).toHaveLength(0);
-    expect(withoutProps.render().find('[data-mantine-description]')).toHaveLength(0);
-    expect(withoutProps.render().find('[data-mantine-error]')).toHaveLength(0);
+    expect(withoutProps.render().find('.mantine-input-wrapper-description')).toHaveLength(0);
+    expect(withoutProps.render().find('.mantine-input-wrapper-error')).toHaveLength(0);
   });
 
   it('does not render error if error prop is boolean', () => {
@@ -43,7 +62,7 @@ describe('@mantine/core/InputWrapper', () => {
         test-children
       </InputWrapper>
     );
-    expect(element.render().find('[data-mantine-error]')).toHaveLength(0);
+    expect(element.render().find('.mantine-input-wrapper-error')).toHaveLength(0);
   });
 
   it('renders required asterisk with required prop is true', () => {
@@ -54,8 +73,8 @@ describe('@mantine/core/InputWrapper', () => {
     );
     const notRequired = shallow(<InputWrapper id="test-id">test-children</InputWrapper>);
 
-    expect(required.render().find('[data-mantine-required]').text()).toBe(' *');
-    expect(notRequired.render().find('[data-mantine-required]')).toHaveLength(0);
+    expect(required.render().find('.mantine-input-wrapper-required').text()).toBe(' *');
+    expect(notRequired.render().find('.mantine-input-wrapper-required')).toHaveLength(0);
   });
 
   it('passes id to label htmlFor prop', () => {
@@ -83,11 +102,15 @@ describe('@mantine/core/InputWrapper', () => {
       </InputWrapper>
     );
 
-    expect(element.render().find('[data-mantine-label]').attr('data-test-label')).toBe('true');
-    expect(element.render().find('[data-mantine-description]').attr('data-test-description')).toBe(
+    expect(element.render().find('.mantine-input-wrapper-label').attr('data-test-label')).toBe(
       'true'
     );
-    expect(element.render().find('[data-mantine-error]').attr('data-test-error')).toBe('true');
+    expect(
+      element.render().find('.mantine-input-wrapper-description').attr('data-test-description')
+    ).toBe('true');
+    expect(element.render().find('.mantine-input-wrapper-error').attr('data-test-error')).toBe(
+      'true'
+    );
   });
 
   it('sets label element based on labelElement prop', () => {
@@ -103,9 +126,9 @@ describe('@mantine/core/InputWrapper', () => {
       </InputWrapper>
     );
 
-    expect(label.find('[data-mantine-label]').type()).toBe('label');
-    expect(label.find('[data-mantine-label]').prop('htmlFor')).toBe('test-id');
-    expect(div.find('[data-mantine-label]').type()).toBe('div');
-    expect(div.find('[data-mantine-label]').prop('htmlFor')).toBe(undefined);
+    expect(label.find('.mantine-input-wrapper-label').type()).toBe('label');
+    expect(label.find('.mantine-input-wrapper-label').prop('htmlFor')).toBe('test-id');
+    expect(div.find('.mantine-input-wrapper-label').type()).toBe('div');
+    expect(div.find('.mantine-input-wrapper-label').prop('htmlFor')).toBe(undefined);
   });
 });

@@ -1,16 +1,16 @@
 import { createMemoStyles, MantineTheme, getFontStyles } from '../../theme';
 
-interface InputWrapperStylesProps {
+interface InputWrapperStyles {
   theme: MantineTheme;
 }
 
 export default createMemoStyles({
-  root: ({ theme }: InputWrapperStylesProps) => ({
+  root: ({ theme }: InputWrapperStyles) => ({
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,
   }),
 
-  label: ({ theme }: InputWrapperStylesProps) => ({
+  label: ({ theme }: InputWrapperStyles) => ({
     display: 'block',
     marginBottom: 5,
     fontSize: 14,
@@ -19,18 +19,18 @@ export default createMemoStyles({
     wordBreak: 'break-word',
   }),
 
-  error: ({ theme }: InputWrapperStylesProps) => ({
+  error: ({ theme }: InputWrapperStyles) => ({
     marginTop: theme.spacing.xs / 2,
     wordBreak: 'break-word',
   }),
 
-  description: ({ theme }: InputWrapperStylesProps) => ({
+  description: ({ theme }: InputWrapperStyles) => ({
     marginTop: theme.spacing.xs / 2,
     marginBottom: theme.spacing.xs / 2,
     wordBreak: 'break-word',
   }),
 
-  required: ({ theme }: InputWrapperStylesProps) => ({
+  required: ({ theme }: InputWrapperStyles) => ({
     color: theme.colorScheme === 'dark' ? theme.colors.red[5] : theme.colors.red[7],
   }),
 });

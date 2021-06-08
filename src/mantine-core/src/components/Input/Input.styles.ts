@@ -6,7 +6,7 @@ import {
   createMemoStyles,
 } from '../../theme';
 
-interface InputStylesProps {
+interface InputStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
 }
@@ -14,14 +14,14 @@ interface InputStylesProps {
 export default createMemoStyles({
   withIcon: {},
 
-  root: ({ radius, theme }: InputStylesProps) => ({
+  root: ({ radius, theme }: InputStyles) => ({
     position: 'relative',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
 
     '&, & *': { boxSizing: 'border-box' },
   }),
 
-  default: ({ theme, radius }: InputStylesProps) => ({
+  default: ({ theme, radius }: InputStyles) => ({
     '& $input': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       minHeight: 36,
@@ -53,7 +53,7 @@ export default createMemoStyles({
     },
   }),
 
-  filled: ({ theme, radius }: InputStylesProps) => ({
+  filled: ({ theme, radius }: InputStyles) => ({
     '& $input': {
       minHeight: 36,
       paddingLeft: theme.spacing.md,
@@ -96,7 +96,7 @@ export default createMemoStyles({
     },
   }),
 
-  unstyled: ({ theme }: InputStylesProps) => ({
+  unstyled: ({ theme }: InputStyles) => ({
     '& $input': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       backgroundColor: 'transparent',
@@ -118,7 +118,7 @@ export default createMemoStyles({
     },
   }),
 
-  input: ({ theme }: InputStylesProps) => ({
+  input: ({ theme }: InputStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     lineHeight: theme.lineHeight,
@@ -152,7 +152,7 @@ export default createMemoStyles({
     },
   }),
 
-  icon: ({ theme }: InputStylesProps) => ({
+  icon: ({ theme }: InputStyles) => ({
     pointerEvents: 'none',
     position: 'absolute',
     left: 0,
@@ -164,7 +164,7 @@ export default createMemoStyles({
     justifyContent: 'center',
   }),
 
-  invalid: ({ theme }: InputStylesProps) => ({
+  invalid: ({ theme }: InputStyles) => ({
     '& $input': {
       color: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
       borderColor: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],

@@ -23,6 +23,7 @@ export function itSupportsStylesApi(
 
     styles.forEach((part) => {
       const node = part === 'root' ? element : element.find(`.mantine-${name}-${part}`);
+      expect([node.attr('class'), `test-${part}`]).not.toEqual([undefined, `test-${part}`]);
       expect(node.attr('class')).toContain(`test-${part}`);
       expect(node.css('clear')).toBe('both');
       expect(node.css('text-orientation')).toBe('upright');

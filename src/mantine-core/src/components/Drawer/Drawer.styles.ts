@@ -12,7 +12,7 @@ export const sizes = {
 
 export type Position = 'top' | 'bottom' | 'left' | 'right';
 
-interface DrawerStylesProps {
+interface DrawerStyles {
   theme: MantineTheme;
   position: Position;
   size: number | string;
@@ -56,7 +56,7 @@ export default createMemoStyles({
     },
   },
 
-  drawer: ({ size, position }: DrawerStylesProps) => ({
+  drawer: ({ size, position }: DrawerStyles) => ({
     ...getPositionStyles({ position, size }),
     maxWidth: '100%',
     maxHeight: '100vh',

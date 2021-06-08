@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'clsx';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -23,7 +24,7 @@ export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRe
   color?: string;
 }
 
-export function Loader({ size = 'md', color, themeOverride, ...others }: LoaderProps) {
+export function Loader({ size = 'md', color, themeOverride, className, ...others }: LoaderProps) {
   const theme = useMantineTheme(themeOverride);
 
   return (
@@ -33,6 +34,7 @@ export function Loader({ size = 'md', color, themeOverride, ...others }: LoaderP
       viewBox="0 0 135 140"
       xmlns="http://www.w3.org/2000/svg"
       role="presentation"
+      className={cx('mantine-loader', className)}
       {...others}
     >
       <rect y="10" width="15" height="120" rx="6">

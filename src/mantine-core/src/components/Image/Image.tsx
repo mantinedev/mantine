@@ -61,7 +61,7 @@ export function Image({
   ...others
 }: ImageProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, theme }, classNames);
+  const classes = useStyles({ radius, theme }, classNames, 'image');
   const _styles = mergeStyles(classes, styles);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(!src);
@@ -86,12 +86,7 @@ export function Image({
       {...others}
     >
       {isPlaceholder && (
-        <div
-          data-mantine-image-placeholder
-          className={classes.placeholderIcon}
-          title={alt}
-          style={_styles.placeholderIcon}
-        >
+        <div className={classes.placeholder} title={alt} style={_styles.placeholder}>
           {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
         </div>
       )}

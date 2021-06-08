@@ -16,7 +16,7 @@ export const sizes = {
   xl: 36,
 };
 
-interface CheckboxStylesProps {
+interface CheckboxStyles {
   theme: MantineTheme;
   size: MantineSize;
   color: string;
@@ -28,13 +28,13 @@ export default createMemoStyles({
     alignItems: 'center',
   },
 
-  inner: ({ size }: CheckboxStylesProps) => ({
+  inner: ({ size }: CheckboxStyles) => ({
     position: 'relative',
     width: getSizeValue({ size, sizes }),
     height: getSizeValue({ size, sizes }),
   }),
 
-  label: ({ theme, size }: CheckboxStylesProps) => ({
+  label: ({ theme, size }: CheckboxStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     paddingLeft: theme.spacing.sm,
@@ -43,7 +43,7 @@ export default createMemoStyles({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
   }),
 
-  input: ({ size, theme, color }: CheckboxStylesProps) => ({
+  input: ({ size, theme, color }: CheckboxStyles) => ({
     ...getFocusStyles(theme),
     appearance: 'none',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],

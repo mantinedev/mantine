@@ -4,6 +4,8 @@ import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '.
 import { ComponentPassThrough } from '../../types';
 import useStyles from './Input.styles';
 
+export const INPUT_VARIANTS = ['default', 'filled', 'unstyled'] as const;
+export type InputVariant = typeof INPUT_VARIANTS[number];
 export type InputStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface InputBaseProps {
@@ -63,7 +65,7 @@ export function Input<
   elementRef?: React.ForwardedRef<U>;
 }) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, theme }, classNames);
+  const classes = useStyles({ radius, theme }, classNames, 'input');
   const _styles = mergeStyles(classes, styles);
 
   return (

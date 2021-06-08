@@ -8,7 +8,7 @@ import {
   itSupportsOthers,
   itSupportsStylesApi,
 } from '@mantine/tests';
-import { Badge, BADGE_VARIANTS } from './Badge';
+import { Badge } from './Badge';
 import { Badge as BadgeStylesApi } from './styles.api';
 
 describe('@mantine/core/Badge', () => {
@@ -16,7 +16,7 @@ describe('@mantine/core/Badge', () => {
   itSupportsStylesApi(
     Badge,
     { children: 'test', leftSection: 'l', rightSection: 'r' },
-    Object.keys(BadgeStylesApi).filter((item) => !BADGE_VARIANTS.includes(item as any)),
+    Object.keys(BadgeStylesApi),
     'badge'
   );
   itSupportsOthers(Badge, {});

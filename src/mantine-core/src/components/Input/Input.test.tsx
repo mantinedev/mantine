@@ -5,9 +5,11 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { DEFAULT_THEME } from '../../theme';
 import { Input } from './Input';
+import { Input as InputStylesApi } from './styles.api';
 
 describe('@mantine/core/Input', () => {
   beforeAll(() => {
@@ -25,6 +27,16 @@ describe('@mantine/core/Input', () => {
   itSupportsClassName(Input, {});
   itSupportsStyle(Input, {});
   itSupportsRef(Input, {}, HTMLInputElement, 'elementRef');
+  itSupportsStylesApi(
+    Input,
+    {
+      invalid: true,
+      icon: '$',
+      rightSection: 'test',
+    },
+    Object.keys(InputStylesApi).filter((key) => key !== 'invalid'),
+    'input'
+  );
 
   it('spread wrapperProps to root element', () => {
     const element = shallow(<Input wrapperProps={{ 'aria-label': 'test-input' }} />);

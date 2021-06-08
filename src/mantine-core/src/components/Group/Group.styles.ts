@@ -3,7 +3,7 @@ import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from 
 
 export type GroupPosition = 'right' | 'center' | 'left' | 'apart';
 
-interface GroupStylesProps {
+interface GroupStyles {
   position: GroupPosition;
   noWrap: boolean;
   grow: boolean;
@@ -21,7 +21,7 @@ const POSITIONS = {
 };
 
 export default createMemoStyles({
-  root: ({ spacing, position, noWrap, direction, theme, grow, align }: GroupStylesProps) => ({
+  root: ({ spacing, position, noWrap, direction, theme, grow, align }: GroupStyles) => ({
     display: 'flex',
     flexDirection: direction,
     alignItems: align || (direction === 'row' ? 'center' : grow ? 'stretch' : POSITIONS[position]),
@@ -30,7 +30,7 @@ export default createMemoStyles({
     margin: (-1 * getSizeValue({ size: spacing, sizes: theme.spacing })) / 2,
   }),
 
-  child: ({ grow, spacing, theme }: GroupStylesProps) => ({
+  child: ({ grow, spacing, theme }: GroupStyles) => ({
     flexGrow: grow ? 1 : 0,
     margin: getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
   }),

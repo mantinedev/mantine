@@ -7,7 +7,7 @@ import {
   getFocusStyles,
 } from '../../theme';
 
-interface BurgerStylesProps {
+interface BurgerStyles {
   size: MantineNumberSize;
   theme: MantineTheme;
   color: string;
@@ -25,7 +25,7 @@ export const sizes = {
 export default createMemoStyles({
   opened: {},
 
-  root: ({ size, theme }: BurgerStylesProps) => ({
+  root: ({ size, theme }: BurgerStyles) => ({
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     borderRadius: theme.radius.sm,
@@ -37,7 +37,7 @@ export default createMemoStyles({
     cursor: 'pointer',
   }),
 
-  burger: ({ size, theme, color, reduceMotion }: BurgerStylesProps) => {
+  burger: ({ size, theme, color, reduceMotion }: BurgerStyles) => {
     const sizeValue = getSizeValue({ size, sizes });
 
     return {

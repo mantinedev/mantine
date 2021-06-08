@@ -9,7 +9,7 @@ import {
   hexToRgba,
 } from '../../theme';
 
-interface ActionIconStylesProps {
+interface ActionIconStyles {
   color: string;
   size: MantineNumberSize;
   radius: MantineNumberSize;
@@ -25,7 +25,7 @@ export const sizes = {
 };
 
 export default createMemoStyles({
-  filled: ({ theme, color }: ActionIconStylesProps) => ({
+  filled: ({ theme, color }: ActionIconStyles) => ({
     backgroundColor: hexToRgba(
       getThemeColor({ theme, color, shade: 7 }),
       theme.colorScheme === 'dark' ? 0.65 : 1
@@ -48,7 +48,7 @@ export default createMemoStyles({
     },
   }),
 
-  light: ({ theme, color }: ActionIconStylesProps) => ({
+  light: ({ theme, color }: ActionIconStyles) => ({
     backgroundColor: hexToRgba(
       getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
       theme.colorScheme === 'dark' ? 0.3 : 1
@@ -71,7 +71,7 @@ export default createMemoStyles({
     },
   }),
 
-  hover: ({ theme, color }: ActionIconStylesProps) => ({
+  hover: ({ theme, color }: ActionIconStyles) => ({
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
     backgroundColor: 'transparent',
 
@@ -83,12 +83,12 @@ export default createMemoStyles({
     },
   }),
 
-  transparent: ({ theme, color }: ActionIconStylesProps) => ({
+  transparent: ({ theme, color }: ActionIconStyles) => ({
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
     backgroundColor: 'transparent',
   }),
 
-  root: ({ radius, theme, size }: ActionIconStylesProps) => ({
+  root: ({ radius, theme, size }: ActionIconStyles) => ({
     ...getFocusStyles(theme),
     ...getFontStyles(theme),
     appearance: 'none',
@@ -119,7 +119,7 @@ export default createMemoStyles({
     },
   }),
 
-  outline: ({ theme, color }: ActionIconStylesProps) => ({
+  outline: ({ theme, color }: ActionIconStyles) => ({
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
     backgroundColor: 'transparent',
     border: `1px solid ${hexToRgba(
