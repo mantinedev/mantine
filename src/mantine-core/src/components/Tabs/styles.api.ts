@@ -1,21 +1,17 @@
-import tabsStyles from './Tabs.styles';
-import tabStyles from './TabControl/TabControl.styles';
+import { TabsStylesNames } from './Tabs';
+import { TabControlStylesNames } from './TabControl/TabControl';
 
-export const Tabs: MantineClasses<typeof tabsStyles> = {
+export const Tabs: Record<TabsStylesNames, string> = {
   root: 'Root element',
   tabsListWrapper: 'Wrapper around tabs controls list',
   tabsList: 'Tabs control list',
-  default: 'Default variant',
-  outline: 'Outline variant',
   body: 'Tad body content',
 };
 
-export const Tab: MantineClasses<typeof tabStyles> = {
+export const Tab: Record<TabControlStylesNames, string> = {
   root: 'Root element',
   active: 'Active tab',
   label: 'Tab label',
-  default: 'Default variant',
-  outline: 'Outline variant',
   inner: 'Tab inner, includes label and icon',
   icon: 'Tab icon wrapper',
 };

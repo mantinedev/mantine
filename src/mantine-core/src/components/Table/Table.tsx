@@ -23,7 +23,8 @@ export function Table({
   captionSide = 'top',
   ...others
 }: TableProps) {
-  const classes = useStyles({ captionSide, theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ captionSide, theme }, null, 'table');
 
   return (
     <table

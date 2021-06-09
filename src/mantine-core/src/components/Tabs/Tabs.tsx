@@ -9,6 +9,10 @@ import useStyles from './Tabs.styles';
 export { Tab };
 export type { TabProps };
 
+export const TABS_VARIANTS = ['default', 'outline'] as const;
+export type TabsVariant = typeof TABS_VARIANTS[number];
+export type TabsStylesNames = Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>;
+
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
@@ -88,7 +92,7 @@ export function Tabs({
   ...others
 }: TabsProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames);
+  const classes = useStyles({ theme }, classNames, 'tabs');
   const _styles = mergeStyles(classes, styles);
 
   const controlRefs = useRef<Record<string, HTMLButtonElement>>({});

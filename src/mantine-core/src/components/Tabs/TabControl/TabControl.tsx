@@ -3,9 +3,10 @@ import cx from 'clsx';
 import { useMergedRef, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, mergeStyles } from '../../../theme';
 import { TabProps } from '../Tab/Tab';
+import type { TabsVariant } from '../Tabs';
 import useStyles from './TabControl.styles';
 
-export type TabControlStylesNames = keyof ReturnType<typeof useStyles>;
+export type TabControlStylesNames = Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>;
 
 export interface TabControlProps
   extends DefaultProps<typeof useStyles>,
@@ -32,13 +33,11 @@ export function TabControl({
 }: TabControlProps) {
   const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
   const theme = useMantineTheme(themeOverride);
+  const reduceMotion = useReducedMotion();
   const classes = useStyles(
-    {
-      reduceMotion: useReducedMotion(),
-      color: overrideColor || color,
-      theme,
-    },
-    classNames
+    { reduceMotion, color: overrideColor || color, theme },
+    classNames,
+    'tab-control'
   );
 
   const _styles = mergeStyles(classes, styles);

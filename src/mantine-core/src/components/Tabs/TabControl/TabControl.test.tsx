@@ -1,14 +1,26 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsStyle, itSupportsRef, itSupportsOthers } from '@mantine/tests';
+import {
+  itSupportsStyle,
+  itSupportsRef,
+  itSupportsOthers,
+  itSupportsStylesApi,
+} from '@mantine/tests';
 import { TabControl } from './TabControl';
+import { Tab as TabStylesApi } from '../styles.api';
 
-const defaultProps = { active: true, tabProps: { label: 'test' } };
+const defaultProps = { active: true, tabProps: { label: 'test', icon: '$' } };
 
 describe('@mantine/core/TabControl', () => {
   itSupportsStyle(TabControl, { ...defaultProps, elementRef: () => {} });
   itSupportsOthers(TabControl, { ...defaultProps, elementRef: () => {} });
   itSupportsRef(TabControl, defaultProps, HTMLButtonElement, 'elementRef');
+  itSupportsStylesApi(
+    TabControl,
+    defaultProps,
+    Object.keys(TabStylesApi).filter((key) => key !== 'active'),
+    'tab-control'
+  );
 
   it('has correct displayName', () => {
     expect(TabControl.displayName).toEqual('@mantine/core/TabControl');
