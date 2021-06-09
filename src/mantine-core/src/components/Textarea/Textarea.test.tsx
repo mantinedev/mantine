@@ -6,10 +6,13 @@ import {
   itSupportsStyle,
   itSupportsClassName,
   itSupportsRef,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { Textarea } from './Textarea';
+import { Input as InputStylesApi } from '../Input/styles.api';
+import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 const getInput = (element: any, input: any) => element.find(Input).dive().find(input);
 
@@ -29,6 +32,27 @@ describe('@mantine/core/Textarea', () => {
   itSupportsStyle(Textarea, {});
   itSupportsClassName(Textarea, {});
   itSupportsRef(Textarea, {}, HTMLTextAreaElement, 'elementRef');
+
+  itSupportsStylesApi(
+    Textarea,
+    { icon: '$', rightSection: '$' },
+    Object.keys(InputStylesApi).filter((key) => key !== 'invalid'),
+    'input',
+    'input'
+  );
+
+  itSupportsStylesApi(
+    Textarea,
+    {
+      label: 'test-label',
+      error: 'test-error',
+      description: 'test-description',
+      required: true,
+    },
+    Object.keys(InputWrapperStylesApi),
+    'input-wrapper',
+    'input-wrapper'
+  );
 
   it('renders correct component based on autosize prop', () => {
     const autosize = shallow(<Textarea autosize />);

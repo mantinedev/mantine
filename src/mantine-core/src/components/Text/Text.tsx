@@ -42,12 +42,13 @@ export function Text<T extends React.ElementType = 'div', U = HTMLDivElement>({
   elementRef,
   ...others
 }: ComponentPassThrough<T, TextProps> & { elementRef?: React.ForwardedRef<U> }) {
-  const classes = useStyles({ variant, color, size, theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ variant, color, size, theme }, null, 'text');
 
   return React.createElement(
     component,
     {
-      className: cx(classes.text, className),
+      className: cx(classes.root, className),
       style: { fontWeight: weight, textTransform: transform, textAlign: align, ...style },
       ref: elementRef,
       ...others,

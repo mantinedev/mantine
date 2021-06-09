@@ -32,15 +32,11 @@ export function ThemeIcon({
   themeOverride,
   ...others
 }: ThemeIconProps) {
-  const classes = useStyles({
-    theme: useMantineTheme(themeOverride),
-    radius,
-    color,
-    size,
-  });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme, radius, color, size }, null, 'theme-icon');
 
   return (
-    <div className={cx(classes.themeIcon, classes[variant], className)} {...others}>
+    <div className={cx(classes.root, classes[variant], className)} {...others}>
       {children}
     </div>
   );

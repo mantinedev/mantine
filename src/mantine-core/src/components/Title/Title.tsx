@@ -14,7 +14,8 @@ export function Title({ className, themeOverride, order = 1, children, ...others
   }
 
   const element = `h${order}` as const;
-  const classes = useStyles({ theme: useMantineTheme(themeOverride), element });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme, element }, null, 'title');
 
   return React.createElement(
     element,

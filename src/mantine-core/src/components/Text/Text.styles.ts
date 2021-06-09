@@ -14,7 +14,7 @@ interface TextStyles {
 }
 
 export default createMemoStyles({
-  text: ({ theme, color, variant, size }: TextStyles) => ({
+  root: ({ theme, color, variant, size }: TextStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     color:

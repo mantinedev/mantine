@@ -39,7 +39,7 @@ export default createMemoStyles({
     ),
   }),
 
-  themeIcon: ({ theme, size, radius }: ThemeIconStyles) => {
+  root: ({ theme, size, radius }: ThemeIconStyles) => {
     const iconSize = getSizeValue({ size, sizes });
 
     return {
