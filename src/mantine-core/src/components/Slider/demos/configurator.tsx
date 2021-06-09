@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slider, SliderProps } from '../Slider';
+import { Slider, SliderProps } from '../Slider/Slider';
 
 function Wrapper(props: SliderProps) {
   return (

@@ -39,6 +39,7 @@ export { RadioGroup, Radio, RADIO_SIZES } from './components/RadioGroup/RadioGro
 export { RingProgress } from './components/RingProgress/RingProgress';
 export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
 export { Select } from './components/Select/Select';
+export { Slider, RangeSlider, SLIDER_SIZES } from './components/Slider';
 export { Spoiler } from './components/Spoiler/Spoiler';
 export { Switch, SWITCH_SIZES } from './components/Switch/Switch';
 export { Table } from './components/Table/Table';
@@ -111,6 +112,7 @@ export type { RadioGroupProps, RadioProps } from './components/RadioGroup/RadioG
 export type { RingProgressProps } from './components/RingProgress/RingProgress';
 export type { SegmentedControlProps } from './components/SegmentedControl/SegmentedControl';
 export type { SelectProps } from './components/Select/Select';
+export type { SliderProps, RangeSliderProps } from './components/Slider';
 export type { SpoilerProps } from './components/Spoiler/Spoiler';
 export type { SwitchProps } from './components/Switch/Switch';
 export type { TableProps } from './components/Table/Table';

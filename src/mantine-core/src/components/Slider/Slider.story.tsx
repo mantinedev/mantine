@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '../../theme';
-import { Slider } from './Slider';
+import { Slider } from './Slider/Slider';
 import { RangeSlider } from './RangeSlider/RangeSlider';
 
 function Wrapper(props: Omit<React.ComponentPropsWithoutRef<typeof Slider>, 'value' | 'onChange'>) {

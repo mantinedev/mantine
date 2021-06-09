@@ -1,4 +1,4 @@
-import type { SliderStylesNames } from './Slider';
+import type { SliderStylesNames } from './Slider/Slider';
 
 export const Slider: Record<SliderStylesNames, string> = {
   root: 'Root element',

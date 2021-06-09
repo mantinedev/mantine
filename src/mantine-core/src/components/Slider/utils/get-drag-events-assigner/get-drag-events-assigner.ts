@@ -1,4 +1,4 @@
-import { ClientPositionEvent } from './get-client-position';
+import { ClientPositionEvent } from '../get-client-position/get-client-position';
 
 interface GetEventsManager {
   onDrag(event: ClientPositionEvent): void;

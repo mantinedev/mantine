@@ -1,10 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { DefaultProps, MantineNumberSize } from '../../../theme';
 import { MantineTransition } from '../../Transition/Transition';
-import { getClientPosition, ClientPositionEvent } from '../get-client-position';
-import { getPosition } from '../get-position';
-import { getChangeValue } from '../get-change-value';
-import { getDragEventsAssigner } from '../get-drag-events-assigner';
+import {
+  getClientPosition,
+  ClientPositionEvent,
+} from '../utils/get-client-position/get-client-position';
+import { getPosition } from '../utils/get-position/get-position';
+import { getChangeValue } from '../utils/get-change-value/get-change-value';
+import { getDragEventsAssigner } from '../utils/get-drag-events-assigner/get-drag-events-assigner';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import { Track, TrackStylesNames } from '../Track/Track';
 import { MarksStylesNames } from '../Marks/Marks';

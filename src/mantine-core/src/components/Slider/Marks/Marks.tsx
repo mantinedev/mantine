@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../../theme';
-import { getPosition } from '../get-position';
+import { getPosition } from '../utils/get-position/get-position';
 import useStyles from './Marks.styles';
 
 export type MarksStylesNames = keyof ReturnType<typeof useStyles>;
