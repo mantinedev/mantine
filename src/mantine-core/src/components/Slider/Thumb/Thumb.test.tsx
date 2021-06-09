@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { itSupportsStylesApi, checkAccessibility } from '@mantine/tests';
+import { itSupportsStylesApi, itSupportsRef, checkAccessibility } from '@mantine/tests';
 import { Transition } from '../../Transition/Transition';
 import { Thumb } from './Thumb';
 
@@ -25,6 +25,7 @@ const defaultProps = {
 describe('@mantine/core/Thumb', () => {
   checkAccessibility([mount(<Thumb {...defaultProps} />)]);
   itSupportsStylesApi(Thumb, defaultProps, ['label'], 'slider-thumb');
+  itSupportsRef(Thumb, defaultProps, HTMLDivElement, 'elementRef');
 
   it('sets left property based on position prop', () => {
     const element = shallow(<Thumb {...defaultProps} position={62} />);
