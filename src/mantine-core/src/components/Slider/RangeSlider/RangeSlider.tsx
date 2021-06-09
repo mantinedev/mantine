@@ -270,7 +270,7 @@ export function RangeSlider({
     >
       <Track
         offset={positions[0]}
-        width={positions[1] - positions[0]}
+        filled={positions[1] - positions[0]}
         marks={marks}
         size={size}
         radius={radius}

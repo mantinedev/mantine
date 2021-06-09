@@ -31,7 +31,7 @@ export function Marks({
   onChange,
 }: MarksProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size, color }, classNames);
+  const classes = useStyles({ theme, size, color }, classNames, 'slider-marks');
   const _styles = mergeStyles(classes, styles);
 
   const items = marks.map((mark, index) => (

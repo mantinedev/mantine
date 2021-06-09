@@ -6,7 +6,7 @@ import useStyles from './Track.styles';
 export type TrackStylesNames = keyof ReturnType<typeof useStyles>;
 
 interface TrackProps extends DefaultProps<TrackStylesNames> {
-  width: number;
+  filled: number;
   offset: number;
   marks: { value: number; label?: React.ReactNode }[];
   size: MantineNumberSize;
@@ -20,46 +20,38 @@ interface TrackProps extends DefaultProps<TrackStylesNames> {
 }
 
 export function Track({
-  width,
+  filled,
   size,
   color,
-  max,
-  min,
-  value,
   classNames,
   styles,
-  marks,
   radius,
   themeOverride,
   children,
   offset,
-  onChange,
+  ...others
 }: TrackProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color, size, radius }, classNames);
+  const classes = useStyles({ theme, color, size, radius }, classNames, 'slider-track');
   const _styles = mergeStyles(classes, styles);
 
   return (
     <div className={classes.track} style={_styles.track}>
       <div
         className={classes.bar}
-        style={{ ..._styles.bar, left: `${offset}%`, width: `${width}%` }}
+        style={{ ..._styles.bar, left: `${offset}%`, width: `${filled}%` }}
       />
 
       {children}
 
       <Marks
-        marks={marks}
+        {...others}
         size={size}
         color={color}
-        min={min}
-        max={max}
-        value={value}
+        offset={offset}
+        themeOverride={themeOverride}
         classNames={classNames as any}
         styles={styles as any}
-        themeOverride={themeOverride}
-        onChange={onChange}
-        offset={offset}
       />
     </div>
   );

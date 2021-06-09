@@ -214,7 +214,7 @@ export function Slider({
     >
       <Track
         offset={0}
-        width={position}
+        filled={position}
         marks={marks}
         size={size}
         radius={radius}
