@@ -33,7 +33,7 @@ export function RingProgress({
   styles,
   ...others
 }: RingProgressProps) {
-  const classes = useStyles(null, classNames);
+  const classes = useStyles(null, classNames, 'ring-progress');
   const _styles = mergeStyles(classes, styles);
 
   const curves = getCurves({ size, thickness, sections }).map((curve, index) => (
