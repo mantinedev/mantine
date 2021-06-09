@@ -32,7 +32,7 @@ export function Track({
   ...others
 }: TrackProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color, size, radius }, classNames, 'slider-track');
+  const classes = useStyles({ theme, color, size, radius }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
 
   return (

@@ -24,7 +24,7 @@ const defaultProps = {
 
 describe('@mantine/core/Thumb', () => {
   checkAccessibility([mount(<Thumb {...defaultProps} />)]);
-  itSupportsStylesApi(Thumb, defaultProps, ['label'], 'slider-thumb');
+  itSupportsStylesApi(Thumb, defaultProps, ['label'], 'slider');
   itSupportsRef(Thumb, defaultProps, HTMLDivElement, 'elementRef');
 
   it('sets left property based on position prop', () => {
@@ -37,9 +37,9 @@ describe('@mantine/core/Thumb', () => {
     const dragging = shallow(<Thumb {...defaultProps} labelAlwaysOn={false} dragging />);
     const labelOff = shallow(<Thumb {...defaultProps} labelAlwaysOn={false} dragging={false} />);
 
-    expect(labelAlwaysOn.render().find('.mantine-slider-thumb-label')).toHaveLength(1);
-    expect(dragging.render().find('.mantine-slider-thumb-label')).toHaveLength(1);
-    expect(labelOff.render().find('.mantine-slider-thumb-label')).toHaveLength(0);
+    expect(labelAlwaysOn.render().find('.mantine-slider-label')).toHaveLength(1);
+    expect(dragging.render().find('.mantine-slider-label')).toHaveLength(1);
+    expect(labelOff.render().find('.mantine-slider-label')).toHaveLength(0);
   });
 
   it('passes duration, transition and timingFunction to Transition component', () => {

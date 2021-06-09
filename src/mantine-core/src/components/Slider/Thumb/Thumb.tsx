@@ -45,7 +45,7 @@ export function Thumb({
   thumbLabel,
 }: ThumbProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, theme, size }, classNames, 'slider-thumb');
+  const classes = useStyles({ color, theme, size }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
   const [focused, setFocused] = useState(false);
 
