@@ -43,7 +43,8 @@ export function Spoiler({
       transitionDuration: !useReducedMotion() && transitionDuration,
       theme: useMantineTheme(themeOverride),
     },
-    classNames
+    classNames,
+    'spoiler'
   );
   const _styles = mergeStyles(classes, styles);
   const [show, setShowState] = useState(false);
