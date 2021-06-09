@@ -200,6 +200,8 @@ export function Slider({
       ref={container}
       onTouchStart={handleTrackMouseDown}
       onMouseDown={handleTrackMouseDown}
+      onTouchStartCapture={() => setDragging(true)}
+      onTouchEndCapture={() => setDragging(false)}
       onMouseDownCapture={() => setDragging(true)}
       onMouseUpCapture={() => setDragging(false)}
       onKeyDownCapture={handleTrackKeydownCapture}
