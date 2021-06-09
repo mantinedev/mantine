@@ -11,7 +11,7 @@ const code = `
 
 function Demo() {
   return (
-    <Tabs variant="outline">
+    <Tabs variant="outline" styles={{ body: { paddingTop: 5 } }}>
       <Tab label="First">First tab content</Tab>
       <Tab label="Second">Second tab content</Tab>
       <Tab label="Third">Third tab content</Tab>

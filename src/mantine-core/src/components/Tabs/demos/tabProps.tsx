@@ -17,7 +17,7 @@ const code = `
 
 function Demo() {
   return (
-    <Tabs>
+    <Tabs styles={{ body: { paddingTop: 5 } }}>
       <Tab label="First" title="Reveal hidden truth on long mouse over">
         First tab content
       </Tab>

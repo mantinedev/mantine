@@ -3,7 +3,7 @@ import { Tabs, Tab, TabsProps } from '../Tabs';
 
 function Wrapper(props: TabsProps) {
   return (
-    <Tabs {...props}>
+    <Tabs {...props} styles={{ body: { paddingTop: 5 } }}>
       <Tab label="First">First tab content</Tab>
       <Tab label="Second">Second tab content</Tab>
       <Tab label="Third">Third tab content</Tab>

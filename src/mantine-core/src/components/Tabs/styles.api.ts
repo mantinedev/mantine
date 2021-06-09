@@ -5,7 +5,7 @@ export const Tabs: Record<TabsStylesNames, string> = {
   root: 'Root element',
   tabsListWrapper: 'Wrapper around tabs controls list',
   tabsList: 'Tabs control list',
-  body: 'Tad body content',
+  body: 'Tab body content',
 };
 
 export const Tab: Record<TabControlStylesNames, string> = {
