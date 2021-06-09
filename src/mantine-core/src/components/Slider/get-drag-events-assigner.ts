@@ -7,18 +7,22 @@ interface GetEventsManager {
 
 export function getDragEventsAssigner({ onDrag, onDragEnd }: GetEventsManager) {
   const handleDrag = (event: ClientPositionEvent) => {
-    event.preventDefault();
+    if (event.cancelable) {
+      event.preventDefault();
+    }
     onDrag(event);
   };
 
   const handleDragEnd = (event: ClientPositionEvent) => {
-    event.preventDefault();
+    if (event.cancelable) {
+      event.preventDefault();
+    }
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     removeEvents();
     onDragEnd(event);
   };
 
-  const addEvents = () => {
+  const assignEvents = () => {
     document.addEventListener('mousemove', handleDrag);
     document.addEventListener('mouseup', handleDragEnd);
     document.addEventListener('touchmove', handleDrag, { passive: false });
@@ -34,5 +38,5 @@ export function getDragEventsAssigner({ onDrag, onDragEnd }: GetEventsManager) {
     document.removeEventListener('touchcancel', handleDragEnd);
   }
 
-  return addEvents;
+  return { assignEvents, removeEvents };
 }

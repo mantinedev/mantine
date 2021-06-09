@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
 import { MantineTransition } from '../Transition/Transition';
@@ -126,15 +126,21 @@ export function Slider({
     }
   };
 
-  const assignEvents = getDragEventsAssigner({
-    onDrag: (event: ClientPositionEvent) => {
-      container.current && container.current.focus();
-      handleChange(getClientPosition(event) + start.current - offset.current);
-    },
-    onDragEnd: () => {
-      setDragging(false);
-    },
+  const onDrag = useCallback((event: ClientPositionEvent) => {
+    container.current && container.current.focus();
+    handleChange(getClientPosition(event) + start.current - offset.current);
+  }, []);
+
+  const onDragEnd = useCallback(() => {
+    setDragging(false);
+  }, []);
+
+  const { assignEvents, removeEvents } = getDragEventsAssigner({
+    onDrag,
+    onDragEnd,
   });
+
+  useEffect(() => removeEvents, []);
 
   function handleThumbMouseDown(
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
