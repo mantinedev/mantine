@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '../../theme';
 import { Slider } from './Slider';
+import { RangeSlider } from './RangeSlider/RangeSlider';
 
 function Wrapper(props: Omit<React.ComponentPropsWithoutRef<typeof Slider>, 'value' | 'onChange'>) {
   const [value, setValue] = useState(50);
@@ -17,6 +18,11 @@ storiesOf('@mantine/core/Slider', module)
       <Slider defaultValue={60} size="lg" styles={{ root: { marginTop: 25 } }} />
       <Slider defaultValue={60} size="xl" styles={{ root: { marginTop: 25 } }} />
       <Slider defaultValue={60} size={20} styles={{ root: { marginTop: 25 } }} />
+    </div>
+  ))
+  .add('RangeSlider', () => (
+    <div style={{ padding: 100, minHeight: '100vh' }}>
+      <RangeSlider defaultValue={[40, 80]} />
     </div>
   ))
   .add('Controlled', () => (
