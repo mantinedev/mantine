@@ -7,12 +7,15 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Transition } from '../Transition/Transition';
 import { Tooltip } from './Tooltip';
+import { Tooltip as TooltipStylesApi } from './styles.api';
 
 const defaultProps = {
   opened: true,
+  withArrow: true,
   label: 'tooltip',
   children: 'tooltip',
 };
@@ -35,6 +38,7 @@ describe('@mantine/core/Tooltip', () => {
   itSupportsOthers(Tooltip, defaultProps);
   itSupportsStyle(Tooltip, defaultProps);
   itSupportsRef(Tooltip, defaultProps, HTMLDivElement, 'tooltipRef');
+  itSupportsStylesApi(Tooltip, defaultProps, Object.keys(TooltipStylesApi), 'tooltip');
 
   it('renders given label on inner tooltip', () => {
     const element = shallow(<Tooltip {...defaultProps} label="test-label" />);

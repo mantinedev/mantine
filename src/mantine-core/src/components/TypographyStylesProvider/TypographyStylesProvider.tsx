@@ -15,9 +15,9 @@ export function TypographyStylesProvider({
   themeOverride,
   ...others
 }: TypographyStylesProviderProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
-
-  return <div className={cx(classes.innerHtml, className)} {...others} />;
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme }, null, 'typography-styles-provider');
+  return <div className={cx(classes.root, className)} {...others} />;
 }
 
 TypographyStylesProvider.displayName = '@mantine/core/TypographyStylesProvider';

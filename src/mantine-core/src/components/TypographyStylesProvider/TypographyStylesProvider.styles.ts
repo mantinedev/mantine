@@ -11,7 +11,7 @@ interface TypographyStylesProviderStyles {
 }
 
 export default createMemoStyles({
-  innerHtml: ({ theme }: TypographyStylesProviderStyles) => {
+  root: ({ theme }: TypographyStylesProviderStyles) => {
     const headings = Object.keys(theme.headings.sizes).reduce((acc, h) => {
       acc[`& ${h}`] = {
         fontFamily: theme.headings.fontFamily,

@@ -5,8 +5,15 @@ import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import useStyles from './Tooltip.styles';
 
+type TooltipPosition = 'left' | 'right' | 'top' | 'bottom';
+type TooltipPlacement = 'center' | 'end' | 'start';
+export type TooltipStylesNames = Exclude<
+  keyof ReturnType<typeof useStyles>,
+  TooltipPosition | TooltipPlacement
+>;
+
 export interface TooltipProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<TooltipStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Tooltip content */
   label: React.ReactNode;
@@ -102,7 +109,7 @@ export function Tooltip({
   ...others
 }: TooltipProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color, gutter, arrowSize }, classNames);
+  const classes = useStyles({ theme, color, gutter, arrowSize }, classNames, 'tooltip');
   const _styles = mergeStyles(classes, styles);
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
