@@ -5,15 +5,22 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Select } from './Select';
+import { Input as InputStylesApi } from '../Input/styles.api';
+import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 const TEST_DATA = [
   { label: 'test-data-1', value: 'test-data-1' },
   { label: 'test-data-2', value: 'test-data-2' },
   { label: 'test-data-3', value: 'test-data-3' },
 ];
+
+const defaultProps = {
+  data: TEST_DATA,
+};
 
 describe('@mantine/core/Select', () => {
   beforeAll(() => {
@@ -27,9 +34,30 @@ describe('@mantine/core/Select', () => {
     mount(<Select data={TEST_DATA} aria-label="test-label" />),
   ]);
 
-  itSupportsClassName(Select, { data: TEST_DATA });
-  itSupportsStyle(Select, { data: TEST_DATA });
-  itSupportsRef(Select, { data: TEST_DATA }, HTMLSelectElement, 'elementRef');
+  itSupportsClassName(Select, defaultProps);
+  itSupportsStyle(Select, defaultProps);
+  itSupportsRef(Select, defaultProps, HTMLSelectElement, 'elementRef');
+
+  itSupportsStylesApi(
+    Select,
+    { ...defaultProps, icon: '$' },
+    Object.keys(InputStylesApi).filter((key) => key !== 'invalid'),
+    'input',
+    'input'
+  );
+
+  itSupportsStylesApi(
+    Select,
+    { ...defaultProps,
+      label: 'test-label',
+      error: 'test-error',
+      description: 'test-description',
+      required: true,
+    },
+    Object.keys(InputWrapperStylesApi),
+    'input-wrapper',
+    'input-wrapper'
+  );
 
   it('passes required and id props to select element', () => {
     const element = shallow(<Select data={TEST_DATA} required id="test-id" />);
