@@ -6,7 +6,8 @@ import useStyles from './Track.styles';
 export type TrackStylesNames = keyof ReturnType<typeof useStyles>;
 
 interface TrackProps extends DefaultProps<TrackStylesNames> {
-  position: number;
+  width: number;
+  offset: number;
   marks: { value: number; label?: React.ReactNode }[];
   size: MantineNumberSize;
   radius: MantineNumberSize;
@@ -19,7 +20,7 @@ interface TrackProps extends DefaultProps<TrackStylesNames> {
 }
 
 export function Track({
-  position,
+  width,
   size,
   color,
   max,
@@ -31,6 +32,7 @@ export function Track({
   radius,
   themeOverride,
   children,
+  offset,
   onChange,
 }: TrackProps) {
   const theme = useMantineTheme(themeOverride);
@@ -39,7 +41,10 @@ export function Track({
 
   return (
     <div className={classes.track} style={_styles.track}>
-      <div className={classes.bar} style={{ ..._styles.bar, width: `${position}%` }} />
+      <div
+        className={classes.bar}
+        style={{ ..._styles.bar, left: `${offset}%`, width: `${width}%` }}
+      />
 
       {children}
 

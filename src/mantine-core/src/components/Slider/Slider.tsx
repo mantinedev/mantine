@@ -210,7 +210,8 @@ export function Slider({
       styles={styles as any}
     >
       <Track
-        position={position}
+        offset={0}
+        width={position}
         marks={marks}
         size={size}
         radius={radius}

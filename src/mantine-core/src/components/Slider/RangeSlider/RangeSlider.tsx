@@ -243,7 +243,8 @@ export function RangeSlider({
       classNames={classNames as any}
     >
       <Track
-        position={positions[0]}
+        offset={positions[0]}
+        width={positions[1] - positions[0]}
         marks={marks}
         size={size}
         radius={radius}
