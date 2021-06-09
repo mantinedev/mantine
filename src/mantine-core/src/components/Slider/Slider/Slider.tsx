@@ -75,8 +75,6 @@ export interface SliderProps
 }
 
 export function Slider({
-  className,
-  style,
   themeOverride,
   classNames,
   styles,

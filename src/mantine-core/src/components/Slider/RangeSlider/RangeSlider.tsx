@@ -83,8 +83,6 @@ export interface RangeSliderProps
 }
 
 export function RangeSlider({
-  className,
-  style,
   themeOverride,
   classNames,
   styles,
@@ -337,8 +335,8 @@ export function RangeSlider({
         />
       </Track>
 
-      <input type="hidden" name={`${name}-from`} value={_value[0]} />
-      <input type="hidden" name={`${name}-to`} value={_value[1]} />
+      <input type="hidden" name={`${name}_from`} value={_value[0]} />
+      <input type="hidden" name={`${name}_to`} value={_value[1]} />
     </SliderRoot>
   );
 }
