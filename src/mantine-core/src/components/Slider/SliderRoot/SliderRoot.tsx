@@ -38,4 +38,4 @@ export function SliderRoot({
   );
 }
 
-SliderRoot.displayName = '@mantine/core/Slider/SliderRoot';
+SliderRoot.displayName = '@mantine/core/SliderRoot';
