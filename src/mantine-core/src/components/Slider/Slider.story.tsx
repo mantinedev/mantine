@@ -22,7 +22,7 @@ storiesOf('@mantine/core/Slider', module)
   ))
   .add('RangeSlider', () => (
     <div style={{ padding: 100, minHeight: '100vh' }}>
-      <RangeSlider defaultValue={[40, 80]} />
+      <RangeSlider defaultValue={[40, 80]} size="xl" />
     </div>
   ))
   .add('Controlled', () => (

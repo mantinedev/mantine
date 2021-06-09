@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { DefaultProps, MantineNumberSize } from '../../../theme';
 import { MantineTransition } from '../../Transition/Transition';
 import { getClientPosition, ClientPositionEvent } from '../get-client-position';
@@ -35,6 +35,9 @@ export interface RangeSliderProps
 
   /** Maximum possible value */
   max?: number;
+
+  /** Minimal range interval */
+  minRange?: number;
 
   /** Number by which value will be incremented/decremented with thumb drag and arrows */
   step?: number;
@@ -83,6 +86,7 @@ export function RangeSlider({
   radius = 'xl',
   min = 0,
   max = 100,
+  minRange = 10,
   step = 1,
   defaultValue,
   name,
@@ -98,6 +102,7 @@ export function RangeSlider({
   const [_value, setValue] = useState<Value>(
     Array.isArray(value) ? value : Array.isArray(defaultValue) ? defaultValue : [min, max]
   );
+  const _valueRef = useRef(_value);
   const container = useRef<HTMLDivElement>();
   const thumbs = useRef<HTMLDivElement[]>([]);
   const start = useRef<number>();
@@ -115,6 +120,7 @@ export function RangeSlider({
 
   const _setValue = (val: Value) => {
     setValue(val);
+    _valueRef.current = val;
     typeof onChange === 'function' && onChange(val);
   };
 
@@ -122,23 +128,40 @@ export function RangeSlider({
     if (container.current) {
       const containerWidth = container.current.getBoundingClientRect().width;
       const nextValue = getChangeValue({ value: val, containerWidth, min, max, step });
-      const clone: Value = [..._value];
+      const clone: Value = [..._valueRef.current];
       clone[index] = nextValue;
+
+      if (index === 0) {
+        if (nextValue > clone[1] - minRange) {
+          clone[1] = Math.min(nextValue + minRange, max);
+        }
+
+        if (nextValue > (max - minRange || min)) {
+          clone[index] = _valueRef.current[index];
+        }
+      }
+
+      if (index === 1) {
+        if (nextValue < clone[0] + minRange) {
+          clone[0] = Math.max(nextValue - minRange, min);
+        }
+
+        if (nextValue < (minRange || min)) {
+          clone[index] = _valueRef.current[index];
+        }
+      }
       _setValue(clone);
     }
   };
 
-  const onDrag = useCallback(
-    (event: ClientPositionEvent) => {
-      container.current && container.current.focus();
-      handleChange(getClientPosition(event) + start.current - offset.current, dragging);
-    },
-    [dragging, thumbs.current]
-  );
+  const onDrag = (event: ClientPositionEvent) => {
+    container.current && container.current.focus();
+    handleChange(getClientPosition(event) + start.current - offset.current, dragging);
+  };
 
-  const onDragEnd = useCallback(() => {
+  const onDragEnd = () => {
     setDragging(-1);
-  }, []);
+  };
 
   const { assignEvents, removeEvents } = getDragEventsAssigner({
     onDrag,
