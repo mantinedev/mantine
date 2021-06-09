@@ -1,7 +1,11 @@
 import React, { Children, cloneElement, useState } from 'react';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme, MantineSize } from '../../theme';
-import { InputWrapper, InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
+import {
+  InputWrapper,
+  InputWrapperBaseProps,
+  InputWrapperStylesNames,
+} from '../InputWrapper/InputWrapper';
 import { Radio, RadioProps } from './Radio/Radio';
 import { sizes } from './Radio/Radio.styles';
 import useStyles from './RadioGroup.styles';
@@ -12,7 +16,7 @@ export type { RadioProps };
 export const RADIO_SIZES = sizes;
 
 export interface RadioGroupProps
-  extends DefaultProps,
+  extends DefaultProps<InputWrapperStylesNames>,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** <Radio /> components only */
