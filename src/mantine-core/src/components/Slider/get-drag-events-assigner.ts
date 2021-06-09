@@ -28,6 +28,7 @@ export function getDragEventsAssigner({ onDrag, onDragEnd }: GetEventsManager) {
     document.addEventListener('touchmove', handleDrag, { passive: false });
     document.addEventListener('touchend', handleDragEnd, { passive: false });
     document.addEventListener('touchcancel', handleDragEnd, { passive: false });
+    document.addEventListener('mouseleave', handleDragEnd);
   };
 
   function removeEvents() {
@@ -36,6 +37,7 @@ export function getDragEventsAssigner({ onDrag, onDragEnd }: GetEventsManager) {
     document.removeEventListener('touchmove', handleDrag);
     document.removeEventListener('touchend', handleDragEnd);
     document.removeEventListener('touchcancel', handleDragEnd);
+    document.removeEventListener('mouseleave', handleDragEnd);
   }
 
   return { assignEvents, removeEvents };
