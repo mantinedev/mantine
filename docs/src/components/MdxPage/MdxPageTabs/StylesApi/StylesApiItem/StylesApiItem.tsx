@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Title, Text } from '@mantine/core';
 import { Prism } from '@mantine/prism';
+import { lowerFirst } from '@mantine/hooks';
 import * as CORE_STYLES_API from '@mantine/core/src/styles.api';
 import * as PRISM_STYLES_API from '@mantine/prism/src/styles.api';
 import { generateStylesCode, generateClassNamesCode } from '../generate-styles-code';
@@ -15,6 +16,9 @@ interface StylesApiItemProps {
   component: string;
 }
 
+const getSelector = (str: string) =>
+  lowerFirst(str).replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+
 export function StylesApiItem({ component }: StylesApiItemProps) {
   const classes = useStyles();
   const COMPONENT_STYLES = STYLES_API[component];
@@ -27,6 +31,7 @@ export function StylesApiItem({ component }: StylesApiItemProps) {
   const rows = CLASS_NAMES.map((name) => (
     <tr key={name}>
       <td>{name}</td>
+      <td>{`.mantine-${getSelector(component)}-${name}`}</td>
       <td>{COMPONENT_STYLES[name]}</td>
     </tr>
   ));
@@ -41,6 +46,7 @@ export function StylesApiItem({ component }: StylesApiItemProps) {
         <thead>
           <tr>
             <th>Name</th>
+            <th>Static selector</th>
             <th>Description</th>
           </tr>
         </thead>
