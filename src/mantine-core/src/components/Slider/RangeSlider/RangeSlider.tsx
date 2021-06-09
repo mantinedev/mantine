@@ -74,6 +74,12 @@ export interface RangeSliderProps
 
   /** If true label will be not be hidden when user stops dragging */
   labelAlwaysOn?: boolean;
+
+  /** First thumb aria-label */
+  thumbFromLabel?: string;
+
+  /** Second thumb aria-label */
+  thumbToLabel?: string;
 }
 
 export function RangeSlider({
@@ -99,6 +105,8 @@ export function RangeSlider({
   labelTransitionDuration = 150,
   labelTransitionTimingFunction,
   labelAlwaysOn = false,
+  thumbFromLabel = '',
+  thumbToLabel = '',
   ...others
 }: RangeSliderProps) {
   const [dragging, setDragging] = useState(-1);
@@ -252,6 +260,20 @@ export function RangeSlider({
     }
   };
 
+  const sharedThumbProps = {
+    max,
+    min,
+    color,
+    size,
+    labelTransition,
+    labelTransitionDuration,
+    labelTransitionTimingFunction,
+    labelAlwaysOn,
+    themeOverride,
+    classNames: classNames as any,
+    styles: styles as any,
+  };
+
   return (
     <SliderRoot
       {...others}
@@ -289,46 +311,29 @@ export function RangeSlider({
         }}
       >
         <Thumb
-          max={max}
-          min={min}
+          {...sharedThumbProps}
           value={_value[0]}
           position={positions[0]}
           dragging={dragging === 0}
-          color={color}
-          size={size}
           label={typeof label === 'function' ? label(_value[0]) : label}
           elementRef={(node) => {
             thumbs.current[0] = node;
           }}
+          thumbLabel={thumbFromLabel}
           onMouseDown={(event) => handleThumbMouseDown(event, 0)}
-          labelTransition={labelTransition}
-          labelTransitionDuration={labelTransitionDuration}
-          labelTransitionTimingFunction={labelTransitionTimingFunction}
-          labelAlwaysOn={labelAlwaysOn}
-          themeOverride={themeOverride}
-          classNames={classNames as any}
-          styles={styles as any}
         />
+
         <Thumb
-          max={max}
-          min={min}
+          {...sharedThumbProps}
+          thumbLabel={thumbToLabel}
           value={_value[1]}
           position={positions[1]}
           dragging={dragging === 1}
-          color={color}
-          size={size}
           label={typeof label === 'function' ? label(_value[1]) : label}
           elementRef={(node) => {
             thumbs.current[1] = node;
           }}
           onMouseDown={(event) => handleThumbMouseDown(event, 1)}
-          labelTransition={labelTransition}
-          labelTransitionDuration={labelTransitionDuration}
-          labelTransitionTimingFunction={labelTransitionTimingFunction}
-          labelAlwaysOn={labelAlwaysOn}
-          themeOverride={themeOverride}
-          classNames={classNames as any}
-          styles={styles as any}
         />
       </Track>
 

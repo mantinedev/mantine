@@ -31,7 +31,7 @@ export default createMemoStyles({
     position: 'absolute',
     height: getSizeValue({ sizes, size }) * 2,
     width: getSizeValue({ sizes, size }) * 2,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.white,
+    backgroundColor: theme.white,
     border: `2px solid ${getThemeColor({
       theme,
       color,

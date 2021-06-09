@@ -69,6 +69,9 @@ export interface SliderProps
 
   /** If true label will be not be hidden when user stops dragging */
   labelAlwaysOn?: boolean;
+
+  /** Thumb aria-label */
+  thumbLabel?: string;
 }
 
 export function Slider({
@@ -93,6 +96,7 @@ export function Slider({
   labelTransitionDuration = 150,
   labelTransitionTimingFunction,
   labelAlwaysOn = false,
+  thumbLabel = '',
   ...others
 }: SliderProps) {
   const [dragging, setDragging] = useState(false);
@@ -245,6 +249,7 @@ export function Slider({
           themeOverride={themeOverride}
           classNames={classNames as any}
           styles={styles as any}
+          thumbLabel={thumbLabel}
         />
       </Track>
 

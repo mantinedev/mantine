@@ -21,6 +21,7 @@ interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   labelTransitionDuration?: number;
   labelTransitionTimingFunction?: string;
   labelAlwaysOn: boolean;
+  thumbLabel: string;
 }
 
 export function Thumb({
@@ -41,6 +42,7 @@ export function Thumb({
   labelTransitionDuration,
   labelTransitionTimingFunction,
   labelAlwaysOn,
+  thumbLabel,
 }: ThumbProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ color, theme, size }, classNames, 'slider-thumb');
@@ -52,19 +54,18 @@ export function Thumb({
     <div
       tabIndex={0}
       role="slider"
+      aria-label={thumbLabel}
       aria-valuemax={max}
       aria-valuemin={min}
       aria-valuenow={value}
-      className={cx(classes.thumb, { [classes.dragging]: dragging })}
       ref={elementRef}
+      className={cx(classes.thumb, { [classes.dragging]: dragging })}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
       onTouchStart={onMouseDown}
       onMouseDown={onMouseDown}
+      onClick={(event) => event.stopPropagation()}
       style={{ ..._styles.thumb, ...(dragging ? _styles.dragging : null), left: `${position}%` }}
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
     >
       <Transition
         mounted={label != null && (labelAlwaysOn || dragging || focused)}
