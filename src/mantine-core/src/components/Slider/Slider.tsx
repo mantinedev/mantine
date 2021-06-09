@@ -139,8 +139,10 @@ export function Slider({
   function handleThumbMouseDown(
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) {
-    event.preventDefault();
-    event.stopPropagation();
+    if (event.cancelable) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
     start.current = thumb.current.offsetLeft;
     offset.current = getClientPosition(event as any);
@@ -151,8 +153,11 @@ export function Slider({
   const handleTrackMouseDown = (
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) => {
-    event.preventDefault();
-    const changePosition = getClientPosition(event as any);
+    if (event.cancelable) {
+      event.preventDefault();
+    }
+
+    const changePosition = getClientPosition(event.nativeEvent);
     const rect = container.current.getBoundingClientRect();
 
     start.current = changePosition - rect.left;

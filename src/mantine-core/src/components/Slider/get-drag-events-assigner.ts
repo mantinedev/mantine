@@ -22,8 +22,8 @@ export function getDragEventsAssigner({ onDrag, onDragEnd }: GetEventsManager) {
     document.addEventListener('mousemove', handleDrag);
     document.addEventListener('mouseup', handleDragEnd);
     document.addEventListener('touchmove', handleDrag, { passive: false });
-    document.addEventListener('touchend', handleDragEnd);
-    document.addEventListener('touchcancel', handleDragEnd);
+    document.addEventListener('touchend', handleDragEnd, { passive: false });
+    document.addEventListener('touchcancel', handleDragEnd, { passive: false });
   };
 
   function removeEvents() {

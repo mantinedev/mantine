@@ -22,6 +22,7 @@ export const sizes = {
 export default createMemoStyles({
   root: ({ theme, size }: SliderStyles) => ({
     ...getFontStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
     outline: 0,
     height: getSizeValue({ sizes, size }) * 2,
     display: 'flex',
