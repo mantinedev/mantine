@@ -56,7 +56,7 @@ export function Prism({
   ...others
 }: PrismProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames);
+  const classes = useStyles({ theme }, classNames, 'prism');
   const _styles = mergeStyles(classes, styles);
   const clipboard = useClipboard();
 
