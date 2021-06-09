@@ -5,8 +5,15 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Switch } from './Switch';
+import { Switch as SwitchStylesApi } from './styles.api';
+
+const defaultProps = {
+  checked: true,
+  label: 'test-label',
+};
 
 describe('@mantine/core/Switch', () => {
   checkAccessibility([
@@ -15,9 +22,10 @@ describe('@mantine/core/Switch', () => {
     mount(<Switch id="with-id" label="With id" />),
   ]);
 
-  itSupportsClassName(Switch, {});
-  itSupportsStyle(Switch, {});
-  itSupportsRef(Switch, {}, HTMLInputElement, 'elementRef');
+  itSupportsClassName(Switch, defaultProps);
+  itSupportsStyle(Switch, defaultProps);
+  itSupportsRef(Switch, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsStylesApi(Switch, defaultProps, Object.keys(SwitchStylesApi), 'switch');
 
   it('has correct displayName', () => {
     expect(Switch.displayName).toEqual('@mantine/core/Switch');

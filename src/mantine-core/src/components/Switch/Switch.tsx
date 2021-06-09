@@ -55,7 +55,7 @@ export function Switch({
 }: SwitchProps) {
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, color, radius, reduceMotion, theme }, classNames);
+  const classes = useStyles({ size, color, radius, reduceMotion, theme }, classNames, 'switch');
   const _styles = mergeStyles(classes, styles);
 
   const uuid = useId(id);
