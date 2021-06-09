@@ -119,14 +119,16 @@ export function Slider({
   };
 
   const handleChange = (val: number) => {
-    const containerWidth = container.current.getBoundingClientRect().width;
-    const nextValue = getChangeValue({ value: val, containerWidth, min, max, step });
-    _setValue(nextValue);
+    if (container.current) {
+      const containerWidth = container.current.getBoundingClientRect().width;
+      const nextValue = getChangeValue({ value: val, containerWidth, min, max, step });
+      _setValue(nextValue);
+    }
   };
 
   const assignEvents = getDragEventsAssigner({
     onDrag: (event: ClientPositionEvent) => {
-      container.current.focus();
+      container.current && container.current.focus();
       handleChange(getClientPosition(event) + start.current - offset.current);
     },
     onDragEnd: () => {
