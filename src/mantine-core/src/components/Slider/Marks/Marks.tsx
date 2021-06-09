@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../../theme';
 import { getPosition } from '../utils/get-position/get-position';
+import { isMarkFilled } from './is-mark-filled';
 import useStyles from './Marks.styles';
 
 export type MarksStylesNames = keyof ReturnType<typeof useStyles>;
@@ -41,13 +42,10 @@ export function Marks({
       key={index}
     >
       <div
-        className={cx(classes.mark, {
-          [classes.markFilled]:
-            typeof offset === 'number'
-              ? mark.value >= offset && mark.value <= value
-              : mark.value <= value,
-        })}
         style={{ ..._styles.mark, ...(mark.value <= value ? _styles.markFilled : null) }}
+        className={cx(classes.mark, {
+          [classes.markFilled]: isMarkFilled({ mark, value, offset }),
+        })}
       />
       {mark.label && (
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -58,6 +56,10 @@ export function Marks({
             event.stopPropagation();
             onChange(mark.value);
           }}
+          onTouchStart={(event) => {
+            event.stopPropagation();
+            onChange(mark.value);
+          }}
         >
           {mark.label}
         </div>
@@ -65,7 +67,7 @@ export function Marks({
     </div>
   ));
 
-  return <>{items}</>;
+  return <div>{items}</div>;
 }
 
 Marks.displayName = '@mantine/core/SliderMarks';
