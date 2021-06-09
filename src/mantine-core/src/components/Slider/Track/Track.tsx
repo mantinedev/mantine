@@ -59,6 +59,7 @@ export function Track({
         styles={styles as any}
         themeOverride={themeOverride}
         onChange={onChange}
+        offset={offset}
       />
     </div>
   );

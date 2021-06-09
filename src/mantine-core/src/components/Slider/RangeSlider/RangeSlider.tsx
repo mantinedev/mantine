@@ -274,11 +274,16 @@ export function RangeSlider({
         color={color}
         min={min}
         max={max}
-        value={_value[0]}
+        value={_value[1]}
         themeOverride={themeOverride}
         styles={styles as any}
         classNames={classNames as any}
-        onChange={(val) => setValue([val, 100])}
+        onChange={(val) => {
+          const nearestValue = Math.abs(_value[0] - val) > Math.abs(_value[1] - val) ? 1 : 0;
+          const clone: Value = [..._value];
+          clone[nearestValue] = val;
+          _setValue(clone);
+        }}
       >
         <Thumb
           max={max}

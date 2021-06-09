@@ -8,6 +8,12 @@ function Wrapper(props: Omit<React.ComponentPropsWithoutRef<typeof Slider>, 'val
   const [value, setValue] = useState(50);
   return <Slider value={value} onChange={setValue} {...props} />;
 }
+function RangeWrapper(
+  props: Omit<React.ComponentPropsWithoutRef<typeof RangeSlider>, 'value' | 'onChange'>
+) {
+  const [value, setValue] = useState<[number, number]>([50, 100]);
+  return <RangeSlider value={value} onChange={setValue} {...props} />;
+}
 
 storiesOf('@mantine/core/Slider', module)
   .add('General usage', () => (
@@ -17,18 +23,28 @@ storiesOf('@mantine/core/Slider', module)
       <Slider defaultValue={60} size="md" styles={{ root: { marginTop: 25 } }} />
       <Slider defaultValue={60} size="lg" styles={{ root: { marginTop: 25 } }} />
       <Slider defaultValue={60} size="xl" styles={{ root: { marginTop: 25 } }} />
-      <Slider defaultValue={60} size={20} styles={{ root: { marginTop: 25 } }} />
-    </div>
-  ))
-  .add('RangeSlider', () => (
-    <div style={{ padding: 100, minHeight: '100vh' }}>
-      <RangeSlider defaultValue={[40, 80]} size="xl" />
+      <RangeWrapper defaultValue={[40, 80]} size="xl" styles={{ root: { marginTop: 25 } }} />
     </div>
   ))
   .add('Controlled', () => (
     <div style={{ width: 280, padding: 40 }}>
       <Wrapper
         step={25}
+        radius={0}
+        color="red"
+        marks={[
+          { value: 0, label: 'xs' },
+          { value: 25, label: 'sm' },
+          { value: 50, label: 'md' },
+          { value: 75, label: 'lg' },
+          { value: 100, label: 'xl' },
+        ]}
+      />
+
+      <RangeWrapper
+        styles={{ root: { marginTop: 25 } }}
+        step={25}
+        minRange={25}
         radius={0}
         color="red"
         marks={[

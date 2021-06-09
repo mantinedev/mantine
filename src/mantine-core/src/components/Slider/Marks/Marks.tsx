@@ -14,6 +14,7 @@ interface MarksProps extends DefaultProps<MarksStylesNames> {
   max: number;
   value: number;
   onChange(value: number): void;
+  offset?: number;
 }
 
 export function Marks({
@@ -26,6 +27,7 @@ export function Marks({
   themeOverride,
   classNames,
   styles,
+  offset,
   onChange,
 }: MarksProps) {
   const theme = useMantineTheme(themeOverride);
@@ -39,7 +41,12 @@ export function Marks({
       key={index}
     >
       <div
-        className={cx(classes.mark, { [classes.markFilled]: mark.value <= value })}
+        className={cx(classes.mark, {
+          [classes.markFilled]:
+            typeof offset === 'number'
+              ? mark.value >= offset && mark.value <= value
+              : mark.value <= value,
+        })}
         style={{ ..._styles.mark, ...(mark.value <= value ? _styles.markFilled : null) }}
       />
       {mark.label && (
