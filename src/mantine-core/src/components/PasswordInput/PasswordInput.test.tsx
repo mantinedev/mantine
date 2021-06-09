@@ -5,11 +5,14 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Input } from '../Input/Input';
 import { TextInput } from '../TextInput/TextInput';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { PasswordInput } from './PasswordInput';
+import { Input as InputStylesApi } from '../Input/styles.api';
+import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 // retrieves Input component from nested TextInput component
 const getInput = (element: any) => element.find(TextInput).dive().find(Input);
@@ -25,6 +28,27 @@ describe('@mantine/core/PasswordInput', () => {
   itSupportsClassName(PasswordInput, {});
   itSupportsStyle(PasswordInput, {});
   itSupportsRef(PasswordInput, {}, HTMLInputElement, 'elementRef');
+
+  itSupportsStylesApi(
+    PasswordInput,
+    { icon: '$' },
+    Object.keys(InputStylesApi).filter((key) => key !== 'invalid'),
+    'input',
+    'input'
+  );
+
+  itSupportsStylesApi(
+    PasswordInput,
+    {
+      label: 'test-label',
+      error: 'test-error',
+      description: 'test-description',
+      required: true,
+    },
+    Object.keys(InputWrapperStylesApi),
+    'input-wrapper',
+    'input-wrapper'
+  );
 
   it('has correct displayName', () => {
     expect(PasswordInput.displayName).toEqual('@mantine/core/PasswordInput');
