@@ -84,7 +84,8 @@ export function SegmentedControl({
       transitionDuration,
       transitionTimingFunction,
     },
-    classNames
+    classNames,
+    'segmented-control'
   );
 
   const _styles = mergeStyles(classes, styles);
@@ -121,7 +122,6 @@ export function SegmentedControl({
       key={item.value}
     >
       <input
-        data-mantine-radio
         className={classes.input}
         style={_styles.input}
         type="radio"
@@ -133,7 +133,6 @@ export function SegmentedControl({
       />
 
       <label
-        data-mantine-label
         className={cx(classes.label, { [classes.labelActive]: value === item.value })}
         style={{ ..._styles.label, ...(value === item.value ? _styles.labelActive : null) }}
         htmlFor={`${uuid}-${item.value}`}
@@ -155,7 +154,6 @@ export function SegmentedControl({
     >
       {!!value && (
         <span
-          data-mantine-active
           className={classes.active}
           style={{
             ..._styles.active,
