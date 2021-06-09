@@ -12,3 +12,5 @@ export const Slider: Record<SliderStylesNames, string> = {
   markFilled: 'Styles added to mark when it is located in filled area',
   markLabel: 'Mark label, displayed below track',
 };
+
+export const RangeSlider: Record<SliderStylesNames, string> = Slider;

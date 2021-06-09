@@ -4,9 +4,9 @@ import {
   getSizeValue,
   MantineNumberSize,
   MantineTheme,
-} from '../../theme';
+} from '../../../theme';
 
-interface SliderStyles {
+interface SliderRootStyles {
   theme: MantineTheme;
   size: MantineNumberSize;
 }
@@ -20,7 +20,7 @@ export const sizes = {
 };
 
 export default createMemoStyles({
-  root: ({ theme, size }: SliderStyles) => ({
+  root: ({ theme, size }: SliderRootStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     outline: 0,

@@ -5,7 +5,7 @@ import {
   getSizeValue,
   getThemeColor,
 } from '../../../theme';
-import { sizes } from '../Slider.styles';
+import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface MarksStyles {
   theme: MantineTheme;

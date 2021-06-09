@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
+import { DefaultProps, MantineNumberSize } from '../../theme';
 import { MantineTransition } from '../Transition/Transition';
 import { getClientPosition, ClientPositionEvent } from './get-client-position';
 import { getPosition } from './get-position';
@@ -9,10 +8,10 @@ import { getDragEventsAssigner } from './get-drag-events-assigner';
 import { Thumb, ThumbStylesNames } from './Thumb/Thumb';
 import { Track, TrackStylesNames } from './Track/Track';
 import { MarksStylesNames } from './Marks/Marks';
-import useStyles from './Slider.styles';
+import { SliderRoot, SliderRootStylesNames } from './SliderRoot/SliderRoot';
 
 export type SliderStylesNames =
-  | keyof ReturnType<typeof useStyles>
+  | SliderRootStylesNames
   | ThumbStylesNames
   | TrackStylesNames
   | MarksStylesNames;
@@ -93,9 +92,6 @@ export function Slider({
   labelAlwaysOn = false,
   ...others
 }: SliderProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames as any);
-  const _styles = mergeStyles(classes, styles as any);
   const [dragging, setDragging] = useState(false);
   const [_value, setValue] = useState(
     typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : 0
@@ -198,12 +194,10 @@ export function Slider({
   };
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div
+    <SliderRoot
       {...others}
-      tabIndex={-1}
-      className={cx(classes.root, className)}
-      ref={container}
+      size={size}
+      elementRef={container}
       onTouchStart={handleTrackMouseDown}
       onMouseDown={handleTrackMouseDown}
       onTouchStartCapture={() => setDragging(true)}
@@ -211,7 +205,9 @@ export function Slider({
       onMouseDownCapture={() => setDragging(true)}
       onMouseUpCapture={() => setDragging(false)}
       onKeyDownCapture={handleTrackKeydownCapture}
-      style={{ ...style, ..._styles.root }}
+      themeOverride={themeOverride}
+      classNames={classNames as any}
+      styles={styles as any}
     >
       <Track
         position={position}
@@ -223,9 +219,9 @@ export function Slider({
         max={max}
         value={_value}
         themeOverride={themeOverride}
+        onChange={setValue}
         styles={styles as any}
         classNames={classNames as any}
-        onChange={setValue}
       >
         <Thumb
           max={max}
@@ -249,7 +245,7 @@ export function Slider({
       </Track>
 
       <input type="hidden" name={name} value={_value} />
-    </div>
+    </SliderRoot>
   );
 }
 

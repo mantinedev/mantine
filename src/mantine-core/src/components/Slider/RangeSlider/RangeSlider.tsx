@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../../theme';
+import { DefaultProps, MantineNumberSize } from '../../../theme';
 import { MantineTransition } from '../../Transition/Transition';
 import { getClientPosition, ClientPositionEvent } from '../get-client-position';
 import { getPosition } from '../get-position';
@@ -9,10 +8,10 @@ import { getDragEventsAssigner } from '../get-drag-events-assigner';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import { Track, TrackStylesNames } from '../Track/Track';
 import { MarksStylesNames } from '../Marks/Marks';
-import useStyles from '../Slider.styles';
+import { SliderRoot, SliderRootStylesNames } from '../SliderRoot/SliderRoot';
 
 export type RangeSliderStylesNames =
-  | keyof ReturnType<typeof useStyles>
+  | SliderRootStylesNames
   | ThumbStylesNames
   | TrackStylesNames
   | MarksStylesNames;
@@ -95,9 +94,6 @@ export function RangeSlider({
   labelAlwaysOn = false,
   ...others
 }: RangeSliderProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames as any);
-  const _styles = mergeStyles(classes, styles as any);
   const [dragging, setDragging] = useState(-1);
   const [_value, setValue] = useState<Value>(
     Array.isArray(value) ? value : Array.isArray(defaultValue) ? defaultValue : [min, max]
@@ -231,12 +227,10 @@ export function RangeSlider({
   };
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div
+    <SliderRoot
       {...others}
-      tabIndex={-1}
-      className={cx(classes.root, className)}
-      ref={container}
+      size={size}
+      elementRef={container}
       onTouchStart={handleTrackMouseDown}
       onMouseDown={handleTrackMouseDown}
       onTouchStartCapture={handleTrackMouseDownCapture}
@@ -244,7 +238,9 @@ export function RangeSlider({
       onMouseDownCapture={handleTrackMouseDownCapture}
       onMouseUpCapture={() => setDragging(-1)}
       onKeyDownCapture={handleTrackKeydownCapture}
-      style={{ ...style, ..._styles.root }}
+      themeOverride={themeOverride}
+      styles={styles as any}
+      classNames={classNames as any}
     >
       <Track
         position={positions[0]}
@@ -306,7 +302,7 @@ export function RangeSlider({
 
       <input type="hidden" name={`${name}-from`} value={_value[0]} />
       <input type="hidden" name={`${name}-to`} value={_value[1]} />
-    </div>
+    </SliderRoot>
   );
 }
 

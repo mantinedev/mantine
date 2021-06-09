@@ -5,7 +5,7 @@ import {
   MantineNumberSize,
   MantineTheme,
 } from '../../../theme';
-import { sizes } from '../Slider.styles';
+import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface TrackStyles {
   theme: MantineTheme;

@@ -6,7 +6,7 @@ import {
   getSizeValue,
   MantineNumberSize,
 } from '../../../theme';
-import { sizes } from '../Slider.styles';
+import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface ThumbStyles {
   theme: MantineTheme;
