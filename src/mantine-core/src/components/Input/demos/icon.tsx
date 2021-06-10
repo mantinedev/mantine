@@ -7,9 +7,9 @@ const code = `
 <Input
   icon={<TwitterLogoIcon />}
   placeholder="Your twitter"
-  rightSectionWidth={70}
-  rightSectionProps={{ style: { pointerEvents: 'none' } }}
   rightSection={rightSection}
+  rightSectionWidth={70}
+  styles={{ rightSection: { pointerEvents: 'none' } }}
 />
 `;
 
@@ -24,9 +24,9 @@ function Demo() {
     <Input
       icon={<TwitterLogoIcon />}
       placeholder="Your twitter"
-      rightSectionWidth={70}
-      rightSectionProps={{ style: { pointerEvents: 'none' } }}
       rightSection={rightSection}
+      rightSectionWidth={70}
+      styles={{ rightSection: { pointerEvents: 'none' } }}
     />
   );
 }

@@ -1,4 +1,11 @@
-type MantineDemoControlType = 'boolean' | 'color' | 'select' | 'string' | 'size' | 'number';
+type MantineDemoControlType =
+  | 'boolean'
+  | 'color'
+  | 'select'
+  | 'string'
+  | 'size'
+  | 'number'
+  | 'segmented';
 
 interface MantineDemoControlProps {
   type: MantineDemoControlType;

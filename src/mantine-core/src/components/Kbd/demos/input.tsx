@@ -24,7 +24,7 @@ function Demo() {
       icon={<MagnifyingGlassIcon />}
       rightSectionWidth={90}
       rightSection={rightSection}
-      rightSectionProps={{ style: { pointerEvents: 'none' } }}
+      styles={{ rightSection: { pointerEvents: 'none' } }}
       variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
     />
   );
@@ -48,7 +48,7 @@ function Demo() {
       icon={<MagnifyingGlassIcon />}
       rightSectionWidth={90}
       rightSection={rightSection}
-      rightSectionProps={{ style: { pointerEvents: 'none' } }}
+      styles={{ rightSection: { pointerEvents: 'none' } }}
       variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
     />
   );

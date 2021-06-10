@@ -113,7 +113,7 @@ export default function Search({ data, isMacOS }: SearchProps) {
         icon={<MagnifyingGlassIcon />}
         rightSection={rightSection}
         rightSectionWidth={isMacOS ? 50 : 72}
-        rightSectionProps={{ style: { pointerEvents: 'none' } }}
+        styles={{ rightSection: { pointerEvents: 'none' } }}
         onFocus={() => setDropdownOpened(true)}
         onKeyDown={handleInputKeydown}
         variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}

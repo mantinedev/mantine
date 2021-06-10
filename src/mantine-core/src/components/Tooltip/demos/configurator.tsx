@@ -53,7 +53,7 @@ export const configurator: MantineDemo = {
     },
     {
       name: 'placement',
-      type: 'select',
+      type: 'segmented',
       data: [
         { label: 'start', value: 'start' },
         { label: 'center', value: 'center' },

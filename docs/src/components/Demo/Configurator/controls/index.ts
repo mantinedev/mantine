@@ -4,6 +4,7 @@ import { StringControl } from './StringControl';
 import { ColorControl } from './ColorControl';
 import { SelectControl } from './SelectControl';
 import { NumberControl } from './NumberControl';
+import { SegmentedControl } from './SegmentedControl';
 
 const controls = {
   boolean: BooleanControl,
@@ -12,6 +13,7 @@ const controls = {
   string: StringControl,
   size: SizeControl,
   number: NumberControl,
+  segmented: SegmentedControl,
 } as const;
 
 export type ControlType = keyof typeof controls;

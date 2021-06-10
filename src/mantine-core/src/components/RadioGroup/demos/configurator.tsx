@@ -28,24 +28,8 @@ export const configurator: MantineDemo = {
   configuratorProps: { multiline: true },
   configurator: [
     {
-      name: 'label',
-      type: 'string',
-      initialValue: 'Select your favorite framework/library',
-    },
-    {
-      name: 'description',
-      type: 'string',
-      initialValue: 'This is anonymous',
-    },
-    {
-      name: 'error',
-      type: 'string',
-      initialValue: '',
-    },
-    { name: 'spacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
-    {
       name: 'variant',
-      type: 'select',
+      type: 'segmented',
       data: [
         { label: 'horizontal', value: 'horizontal' },
         { label: 'vertical', value: 'vertical' },
@@ -53,23 +37,12 @@ export const configurator: MantineDemo = {
       initialValue: 'horizontal',
       defaultValue: 'horizontal',
     },
-    {
-      name: 'color',
-      type: 'color',
-      initialValue: 'blue',
-      defaultValue: 'blue',
-    },
-    {
-      name: 'size',
-      type: 'size',
-      initialValue: 'md',
-      defaultValue: 'md',
-    },
-    {
-      name: 'required',
-      type: 'boolean',
-      initialValue: true,
-      defaultValue: false,
-    },
+    { name: 'label', type: 'string', initialValue: 'Select your favorite framework/library' },
+    { name: 'description', type: 'string', initialValue: 'This is anonymous' },
+    { name: 'error', type: 'string', initialValue: '' },
+    { name: 'spacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
+    { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
+    { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
+    { name: 'required', type: 'boolean', initialValue: true, defaultValue: false },
   ],
 };
