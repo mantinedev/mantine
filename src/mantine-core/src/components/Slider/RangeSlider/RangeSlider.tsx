@@ -108,6 +108,7 @@ export function RangeSlider({
   ...others
 }: RangeSliderProps) {
   const [dragging, setDragging] = useState(-1);
+  const [focused, setFocused] = useState(-1);
   const [_value, setValue] = useState<Value>(
     Array.isArray(value) ? value : Array.isArray(defaultValue) ? defaultValue : [min, max]
   );
@@ -133,33 +134,37 @@ export function RangeSlider({
     typeof onChange === 'function' && onChange(val);
   };
 
+  const setRangedValue = (val: number, index: number) => {
+    const clone: Value = [..._valueRef.current];
+    clone[index] = val;
+
+    if (index === 0) {
+      if (val > clone[1] - minRange) {
+        clone[1] = Math.min(val + minRange, max);
+      }
+
+      if (val > (max - minRange || min)) {
+        clone[index] = _valueRef.current[index];
+      }
+    }
+
+    if (index === 1) {
+      if (val < clone[0] + minRange) {
+        clone[0] = Math.max(val - minRange, min);
+      }
+
+      if (val < (minRange || min)) {
+        clone[index] = _valueRef.current[index];
+      }
+    }
+    _setValue(clone);
+  };
+
   const handleChange = (val: number, index: number) => {
     if (container.current) {
       const containerWidth = container.current.getBoundingClientRect().width;
       const nextValue = getChangeValue({ value: val, containerWidth, min, max, step });
-      const clone: Value = [..._valueRef.current];
-      clone[index] = nextValue;
-
-      if (index === 0) {
-        if (nextValue > clone[1] - minRange) {
-          clone[1] = Math.min(nextValue + minRange, max);
-        }
-
-        if (nextValue > (max - minRange || min)) {
-          clone[index] = _valueRef.current[index];
-        }
-      }
-
-      if (index === 1) {
-        if (nextValue < clone[0] + minRange) {
-          clone[0] = Math.max(nextValue - minRange, min);
-        }
-
-        if (nextValue < (minRange || min)) {
-          clone[index] = _valueRef.current[index];
-        }
-      }
-      _setValue(clone);
+      setRangedValue(nextValue, index);
     }
   };
 
@@ -218,6 +223,7 @@ export function RangeSlider({
       event.preventDefault();
     }
 
+    container.current.focus();
     const rect = container.current.getBoundingClientRect();
     const changePosition = getClientPosition(event.nativeEvent);
     const changeValue = getChangeValue({
@@ -234,21 +240,38 @@ export function RangeSlider({
     setDragging(nearestHandle);
   };
 
+  const getFocusedThumbIndex = () => {
+    if (focused !== 1 && focused !== 0) {
+      setFocused(0);
+      return 0;
+    }
+
+    return focused;
+  };
+
   const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
     switch (event.nativeEvent.code) {
       case 'ArrowUp':
       case 'ArrowRight': {
         event.preventDefault();
-        thumbs[dragging].current.focus();
-        _setValue([Math.min(Math.max(_value[0] + step, min), max), 100]);
+        const focusedIndex = getFocusedThumbIndex();
+        thumbs.current[focusedIndex].focus();
+        setRangedValue(
+          Math.min(Math.max(_valueRef.current[focusedIndex] + step, min), max),
+          focusedIndex
+        );
         break;
       }
 
       case 'ArrowDown':
       case 'ArrowLeft': {
         event.preventDefault();
-        thumbs[dragging].current.focus();
-        _setValue([Math.min(Math.max(_value[0] - step, min), max), 100]);
+        const focusedIndex = getFocusedThumbIndex();
+        thumbs.current[focusedIndex].focus();
+        setRangedValue(
+          Math.min(Math.max(_valueRef.current[focusedIndex] - step, min), max),
+          focusedIndex
+        );
         break;
       }
 
@@ -268,6 +291,7 @@ export function RangeSlider({
     labelTransitionTimingFunction,
     labelAlwaysOn,
     themeOverride,
+    onBlur: () => setFocused(-1),
     classNames: classNames as any,
     styles: styles as any,
   };
@@ -319,6 +343,7 @@ export function RangeSlider({
           }}
           thumbLabel={thumbFromLabel}
           onMouseDown={(event) => handleThumbMouseDown(event, 0)}
+          onFocus={() => setFocused(0)}
         />
 
         <Thumb
@@ -332,6 +357,7 @@ export function RangeSlider({
             thumbs.current[1] = node;
           }}
           onMouseDown={(event) => handleThumbMouseDown(event, 1)}
+          onFocus={() => setFocused(1)}
         />
       </Track>
 

@@ -22,6 +22,8 @@ interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   labelTransitionTimingFunction?: string;
   labelAlwaysOn: boolean;
   thumbLabel: string;
+  onFocus?(): void;
+  onBlur?(): void;
 }
 
 export function Thumb({
@@ -43,6 +45,8 @@ export function Thumb({
   labelTransitionTimingFunction,
   labelAlwaysOn,
   thumbLabel,
+  onFocus,
+  onBlur,
 }: ThumbProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ color, theme, size }, classNames, 'slider');
@@ -60,8 +64,14 @@ export function Thumb({
       aria-valuenow={value}
       ref={elementRef}
       className={cx(classes.thumb, { [classes.dragging]: dragging })}
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
+      onFocus={() => {
+        setFocused(true);
+        typeof onFocus === 'function' && onFocus();
+      }}
+      onBlur={() => {
+        setFocused(false);
+        typeof onBlur === 'function' && onBlur();
+      }}
       onTouchStart={onMouseDown}
       onMouseDown={onMouseDown}
       onClick={(event) => event.stopPropagation()}
