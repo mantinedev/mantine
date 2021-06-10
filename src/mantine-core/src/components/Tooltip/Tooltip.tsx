@@ -176,7 +176,12 @@ export function Tooltip({
         )}
       </Transition>
 
-      <div onMouseEnter={handleOpen} onMouseLeave={handleClose}>
+      <div
+        onMouseEnter={handleOpen}
+        onMouseLeave={handleClose}
+        onFocusCapture={handleOpen}
+        onBlurCapture={handleClose}
+      >
         {children}
       </div>
     </div>
