@@ -169,7 +169,7 @@ export function Popover({
           >
             <div
               className={cx(classes.popover, classes[position], classes[placement])}
-              style={{ zIndex, ..._styles.popover, ..._styles[position], ..._styles[placement] }}
+              style={{ zIndex, ..._styles.popover }}
             >
               {withArrow && <div className={classes.arrow} style={_styles.arrow} />}
 

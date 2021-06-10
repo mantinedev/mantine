@@ -150,8 +150,6 @@ export function Tooltip({
             role="tooltip"
             style={{
               ..._styles.tooltip,
-              ..._styles[placement],
-              ..._styles[position],
               zIndex,
               width,
               pointerEvents: allowPointerEvents ? 'all' : 'none',
