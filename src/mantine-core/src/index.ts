@@ -1,6 +1,7 @@
 export * from './theme';
 
 export { ActionIcon, ACTION_ICON_SIZES } from './components/ActionIcon/ActionIcon';
+export { CloseButton } from './components/ActionIcon/CloseButton/CloseButton';
 export { Alert } from './components/Alert/Alert';
 export { Avatar, AVATAR_SIZES } from './components/Avatar/Avatar';
 export { Badge, BADGE_SIZES, BADGE_VARIANTS } from './components/Badge/Badge';
@@ -57,10 +58,9 @@ export {
 } from './components/Transition/Transition';
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
-/** Deprecated – these components will be removed in next major release */
-
 // Types are exported separately due to build issue: bundled types were not included with regular export
 export type { ActionIconProps } from './components/ActionIcon/ActionIcon';
+export type { CloseButtonProps } from './components/ActionIcon/CloseButton/CloseButton';
 export type { AlertProps } from './components/Alert/Alert';
 export type { AvatarProps } from './components/Avatar/Avatar';
 export type { BadgeProps } from './components/Badge/Badge';
