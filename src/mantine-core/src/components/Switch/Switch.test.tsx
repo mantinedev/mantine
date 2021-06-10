@@ -12,6 +12,7 @@ import { Switch as SwitchStylesApi } from './styles.api';
 
 const defaultProps = {
   checked: true,
+  onChange: () => {},
   label: 'test-label',
 };
 

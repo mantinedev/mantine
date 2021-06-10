@@ -59,16 +59,6 @@ export { TypographyStylesProvider } from './components/TypographyStylesProvider/
 
 /** Deprecated – these components will be removed in next major release */
 
-// Hr renamed to Divider to support vertical orientation
-export { Divider as Hr, DIVIDER_SIZES as HR_SIZES } from './components/Divider/Divider';
-
-// ElementsGroup renamed to Group for simplicity
-export { Group as ElementsGroup } from './components/Group/Group';
-
-// CardsGrid replaced with more generic Grid component
-export { CardsGrid } from './components/Card/Card';
-export type { CardsGridProps } from './components/Card/Card';
-
 // Types are exported separately due to build issue: bundled types were not included with regular export
 export type { ActionIconProps } from './components/ActionIcon/ActionIcon';
 export type { AlertProps } from './components/Alert/Alert';
