@@ -3,9 +3,8 @@ import cx from 'clsx';
 import { useClickOutside, useFocusTrap, useId, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
 import { MantineTransition, Transition } from '../Transition/Transition';
+import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
-import { ActionIcon } from '../ActionIcon/ActionIcon';
-import { CloseIcon } from '../Modal/CloseIcon';
 import useStyles from './Popover.styles';
 
 type PopoverPosition = 'left' | 'right' | 'top' | 'bottom';
@@ -183,15 +182,14 @@ export function Popover({
                 )}
 
                 {withCloseButton && (
-                  <ActionIcon
+                  <CloseButton
+                    themeOverride={themeOverride}
                     size="sm"
                     onClick={handleClose}
                     aria-label={closeButtonLabel}
-                    className={cx(classes.close)}
+                    className={classes.close}
                     style={_styles.close}
-                  >
-                    <CloseIcon style={{ width: 14, height: 14 }} />
-                  </ActionIcon>
+                  />
                 )}
                 <div className={classes.inner} id={bodyId} style={_styles.inner}>
                   {children}

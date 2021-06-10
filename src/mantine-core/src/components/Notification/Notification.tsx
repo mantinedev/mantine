@@ -4,8 +4,7 @@ import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
 import { Paper } from '../Paper/Paper';
 import { Text } from '../Text/Text';
 import { Loader } from '../Loader/Loader';
-import { ActionIcon } from '../ActionIcon/ActionIcon';
-import { CloseIcon } from '../Modal/CloseIcon';
+import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import useStyles from './Notification.styles';
 
 export interface NotificationProps
@@ -101,14 +100,13 @@ export function Notification({
       </div>
 
       {!disallowClose && (
-        <ActionIcon
+        <CloseButton
           {...closeButtonProps}
+          iconSize={16}
           color="gray"
           onClick={onClose}
           themeOverride={themeOverride}
-        >
-          <CloseIcon />
-        </ActionIcon>
+        />
       )}
     </Paper>
   );

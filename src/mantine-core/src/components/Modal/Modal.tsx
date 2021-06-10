@@ -8,13 +8,12 @@ import {
   useFocusTrap,
 } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
-import { ActionIcon } from '../ActionIcon/ActionIcon';
+import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { Portal } from '../Portal/Portal';
 import { GroupedTransition, MantineTransition } from '../Transition/Transition';
-import { CloseIcon } from './CloseIcon';
 import useStyles, { sizes } from './Modal.styles';
 
 export const MODAL_SIZES = sizes;
@@ -127,6 +126,7 @@ export function MantineModal({
             ref={focusTrapRef}
           >
             <Paper
+              themeOverride={themeOverride}
               className={classes.modal}
               shadow="lg"
               role="dialog"
@@ -139,14 +139,22 @@ export function MantineModal({
             >
               {(title || !hideCloseButton) && (
                 <div className={classes.header} style={_styles.header}>
-                  <Text id={titleId} className={classes.title} style={_styles.title}>
+                  <Text
+                    id={titleId}
+                    className={classes.title}
+                    style={_styles.title}
+                    themeOverride={themeOverride}
+                  >
                     {title}
                   </Text>
 
                   {!hideCloseButton && (
-                    <ActionIcon onClick={onClose} aria-label={closeButtonLabel}>
-                      <CloseIcon />
-                    </ActionIcon>
+                    <CloseButton
+                      iconSize={16}
+                      onClick={onClose}
+                      aria-label={closeButtonLabel}
+                      themeOverride={themeOverride}
+                    />
                   )}
                 </div>
               )}
