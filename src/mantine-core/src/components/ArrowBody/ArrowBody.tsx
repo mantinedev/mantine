@@ -26,6 +26,9 @@ export interface ArrowBodyProps
 
   /** Popover z-index */
   zIndex?: number;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
 export function ArrowBody({
@@ -39,13 +42,18 @@ export function ArrowBody({
   children,
   classNames,
   styles,
+  elementRef,
   ...others
 }: ArrowBodyProps) {
   const classes = useStyles({ gutter, arrowSize }, classNames, 'arrow-body');
   const _styles = mergeStyles(classes, styles);
 
   return (
-    <div className={cx(classes[position], classes[placement], className)} {...others}>
+    <div
+      className={cx(classes[position], classes[placement], className)}
+      ref={elementRef}
+      {...others}
+    >
       {withArrow && <div className={classes.arrow} style={_styles.arrow} />}
       {children}
     </div>

@@ -2,15 +2,11 @@ import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
+import { ArrowBody, ArrowBodyPosition, ArrowBodyPlacement } from '../ArrowBody/ArrowBody';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import useStyles from './Tooltip.styles';
 
-type TooltipPosition = 'left' | 'right' | 'top' | 'bottom';
-type TooltipPlacement = 'center' | 'end' | 'start';
-export type TooltipStylesNames = Exclude<
-  keyof ReturnType<typeof useStyles>,
-  TooltipPosition | TooltipPlacement
->;
+export type TooltipStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface TooltipProps
   extends DefaultProps<TooltipStylesNames>,
@@ -43,10 +39,10 @@ export interface TooltipProps
   arrowSize?: number;
 
   /** Tooltip position relative to children */
-  position?: 'top' | 'left' | 'right' | 'bottom';
+  position?: ArrowBodyPosition;
 
   /** Tooltip placement relative to children */
-  placement?: 'start' | 'center' | 'end';
+  placement?: ArrowBodyPlacement;
 
   /** Tooltip z-index */
   zIndex?: number;
@@ -91,7 +87,7 @@ export function Tooltip({
   color = 'gray',
   disabled = false,
   withArrow = false,
-  arrowSize = 3,
+  arrowSize = 2,
   position = 'top',
   placement = 'center',
   transition = 'slide-up',
@@ -109,7 +105,7 @@ export function Tooltip({
   ...others
 }: TooltipProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color, gutter, arrowSize }, classNames, 'tooltip');
+  const classes = useStyles({ theme, color }, classNames, 'tooltip');
   const _styles = mergeStyles(classes, styles);
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
@@ -134,7 +130,7 @@ export function Tooltip({
   return (
     <div
       className={cx(classes.root, className)}
-      ref={tooltipRef}
+      ref={elementRef}
       style={{ ...style, ..._styles.root }}
       {...others}
     >
@@ -145,34 +141,36 @@ export function Tooltip({
         timingFunction={transitionTimingFunction}
       >
         {(transitionStyles) => (
-          <div
+          <ArrowBody
             id={tooltipId}
+            gutter={gutter}
+            position={position}
+            placement={placement}
+            withArrow={withArrow}
+            arrowSize={arrowSize}
             role="tooltip"
+            className={classes.tooltip}
+            classNames={{ arrow: classes.arrow }}
+            styles={{ arrow: _styles.arrow }}
+            elementRef={tooltipRef}
             style={{
               ..._styles.tooltip,
               zIndex,
               width,
               pointerEvents: allowPointerEvents ? 'all' : 'none',
             }}
-            data-mantine-tooltip
-            className={cx(classes.tooltip, classes[placement], classes[position])}
-            ref={tooltipRef}
           >
             <div
-              data-mantine-tooltip-inner
-              className={cx(classes.body, {
-                [classes.withArrow]: withArrow,
-              })}
+              className={classes.body}
               style={{
-                ...transitionStyles,
                 ..._styles.body,
-                ...(withArrow ? _styles.withArrow : null),
+                ...transitionStyles,
                 whiteSpace: wrapLines ? 'normal' : 'nowrap',
               }}
             >
               {label}
             </div>
-          </div>
+          </ArrowBody>
         )}
       </Transition>
 

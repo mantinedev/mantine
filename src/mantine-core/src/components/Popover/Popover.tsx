@@ -166,6 +166,7 @@ export function Popover({
               gutter={gutter}
               className={classes.popover}
               classNames={{ arrow: classes.arrow }}
+              styles={{ arrow: _styles.arrow }}
               style={{ zIndex, ..._styles.popover }}
             >
               <div className={classes.body} style={_styles.body}>
