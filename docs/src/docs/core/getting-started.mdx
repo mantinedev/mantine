@@ -6,7 +6,7 @@ pageTitle: 'Mantine Core'
 description: 'Core components library'
 order: 0
 slug: /core/getting-started/
-installation: '@mantine/core'
+installation: 'react-jss @mantine/core @mantine/hooks'
 bundleSize: '@mantine/core'
 source: 'mantine-core/'
 license: MIT
@@ -14,12 +14,28 @@ license: MIT
 
 import { CoreGroups } from '../../components/IndexGroups/CoreGroups';
 
-## Components by category
+## Installation
 
-<CoreGroups />
+Package depends on [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks) and [react-jss](https://www.npmjs.com/package/react-jss).
+
+Install with npm:
+
+```sh
+npm install react-jss @mantine/core @mantine/hooks
+```
+
+Install with yarn:
+
+```sh
+yarn add react-jss @mantine/core @mantine/hooks
+```
 
 ## Browser support
 
 All components are tested to work in all major modern browsers.
-Some components depend on wep APIs that may not be supported by old browsers,
+Some components depend on wep APIs that may not be supported by old browsers (e.g. [window.matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) and [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)),
 if you encounter any issues with browsers compatibility [open an issue](https://github.com/mantinedev/mantine/issues/new).
+
+## Components by category
+
+<CoreGroups />
