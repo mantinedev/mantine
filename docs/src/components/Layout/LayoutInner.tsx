@@ -20,6 +20,7 @@ const query = graphql`
             title
             order
             slug
+            category
           }
         }
       }

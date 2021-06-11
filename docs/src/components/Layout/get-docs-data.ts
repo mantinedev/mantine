@@ -1,7 +1,12 @@
+import {
+  MANTINE_CORE_COMPONENTS_ORDER,
+  MANTINE_CORE_COMPONENTS_CATEGORIES,
+} from '../ComponentsByCategory/get-components-data';
+
 interface DocsQuery {
   allMdx: {
     edges: {
-      node: { frontmatter: { group: string; title?: string; order?: number; slug: string } };
+      node: { frontmatter: Frontmatter };
     }[];
   };
 }
@@ -11,6 +16,7 @@ export interface DocItem {
   package: string;
   order?: number;
   title: string;
+  category?: string;
 }
 
 export type DocsData = Record<string, DocItem[]>;
@@ -23,12 +29,23 @@ export default function getDocsData(query: DocsQuery): DocsData {
       acc[item.node.frontmatter.group] = [];
     }
 
-    acc[item.node.frontmatter.group].push({
-      title: item.node.frontmatter.title,
-      order: item.node.frontmatter.order || 0,
-      to: item.node.frontmatter.slug,
-      package: item.node.frontmatter.group,
-    });
+    if (MANTINE_CORE_COMPONENTS_ORDER.includes(item.node.frontmatter.category as any)) {
+      acc[item.node.frontmatter.group].push({
+        title: item.node.frontmatter.title,
+        order: item.node.frontmatter.order || 0,
+        to: item.node.frontmatter.slug,
+        package: item.node.frontmatter.group,
+        category: MANTINE_CORE_COMPONENTS_CATEGORIES[item.node.frontmatter.category].title,
+      });
+    } else {
+      acc[item.node.frontmatter.group].push({
+        title: item.node.frontmatter.title,
+        order: item.node.frontmatter.order || 0,
+        to: item.node.frontmatter.slug,
+        package: item.node.frontmatter.group,
+      });
+    }
+
     return acc;
   }, {});
 
