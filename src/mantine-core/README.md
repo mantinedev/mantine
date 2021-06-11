@@ -2,8 +2,6 @@
 
 Mantine is a MIT licensed open source react components and hooks library with focus on usability, accessibility and developer experience.
 
-![Banner](https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/mantine-ph.png)
-
 ## Links
 
 - [Documentation](https://mantine.dev/)
