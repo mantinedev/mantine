@@ -9,7 +9,7 @@ import {
   itRendersChildren,
   itSupportsStylesApi,
 } from '@mantine/tests';
-import { ActionIcon } from '../ActionIcon/ActionIcon';
+import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Loader } from '../Loader/Loader';
 import { Notification } from './Notification';
 import { Notification as NotificationStylesApi } from './styles.api';
@@ -55,8 +55,8 @@ describe('@mantine/core/Notification', () => {
     const allowClose = shallow(<Notification {...defaultProps} disallowClose={false} />);
     const disallowClose = shallow(<Notification {...defaultProps} disallowClose />);
 
-    expect(allowClose.find(ActionIcon)).toHaveLength(1);
-    expect(disallowClose.find(ActionIcon)).toHaveLength(0);
+    expect(allowClose.find(CloseButton)).toHaveLength(1);
+    expect(disallowClose.find(CloseButton)).toHaveLength(0);
   });
 
   it('renders given icon', () => {
@@ -94,7 +94,7 @@ describe('@mantine/core/Notification', () => {
         closeButtonProps={{ 'data-test-prop': true, style: { color: 'red' } }}
       />
     );
-    expect(element.find(ActionIcon).prop('data-test-prop')).toBe(true);
-    expect(element.find(ActionIcon).prop('style')).toEqual({ color: 'red' });
+    expect(element.find(CloseButton).prop('data-test-prop')).toBe(true);
+    expect(element.find(CloseButton).prop('style')).toEqual({ color: 'red' });
   });
 });
