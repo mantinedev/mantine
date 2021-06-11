@@ -105,11 +105,13 @@ export function Select({
         elementRef={elementRef}
         id={uuid}
         rightSection={chevron}
-        rightSectionProps={{ style: { pointerEvents: 'none' } }}
         required={required}
         themeOverride={themeOverride}
         value={value === null ? '' : value}
-        styles={styles as any}
+        styles={{
+          ...styles,
+          rightSection: { ...(styles as any)?.rightSection, pointerEvents: 'none' },
+        }}
         classNames={classNames as any}
       >
         {options}
