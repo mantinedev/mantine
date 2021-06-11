@@ -1,13 +1,19 @@
 import 'normalize.css';
 
 import React, { useState } from 'react';
-import { NotificationsProvider } from '@mantine/notifications';
 import { graphql, useStaticQuery } from 'gatsby';
+import { NotificationsProvider } from '@mantine/notifications';
 import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
 import useStyles from './Layout.styles';
+import { EXCLUDE_LAYOUT_PATHS } from '../../settings';
 import { getDocsData } from './get-docs-data';
+
+export interface LayoutProps {
+  children: React.ReactNode;
+  path: string;
+}
 
 const query = graphql`
   {
@@ -29,10 +35,11 @@ const query = graphql`
   }
 `;
 
-export default function LayoutInner({ children }: { children: React.ReactNode }) {
+export function LayoutInner({ children, path }: LayoutProps) {
   const classes = useStyles();
   const [navbarOpened, setNavbarState] = useState(false);
   const data = getDocsData(useStaticQuery(query));
+  const shouldRenderNavbar = !EXCLUDE_LAYOUT_PATHS.includes(path);
 
   return (
     <div className={classes.layout}>
@@ -42,7 +49,9 @@ export default function LayoutInner({ children }: { children: React.ReactNode })
         toggleNavbar={() => setNavbarState((o) => !o)}
       />
 
-      <Navbar data={data} opened={navbarOpened} onClose={() => setNavbarState(false)} />
+      {shouldRenderNavbar && (
+        <Navbar data={data} opened={navbarOpened} onClose={() => setNavbarState(false)} />
+      )}
 
       <main className={classes.main}>
         <div className={classes.content}>
