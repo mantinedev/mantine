@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab, useMantineTheme } from '@mantine/core';
+import { Tabs, Tab } from '@mantine/core';
 import { Prism, PrismProps } from '../Prism';
 
 const tsx = `import React from 'react';
@@ -184,14 +184,8 @@ const scss = `.accordion-button {
 }`;
 
 function Demo() {
-  const theme = useMantineTheme();
-
   const prismStyles: PrismProps['styles'] = {
     code: { borderRadius: 0 },
-    root: {
-      border: `1px solid ${theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[1]}`,
-      borderTop: 0,
-    },
   };
 
   return (
