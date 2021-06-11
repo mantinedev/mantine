@@ -3,7 +3,6 @@ import {
   StackIcon,
   InputIcon,
   MixIcon,
-  Link2Icon,
   ExclamationTriangleIcon,
   LetterCaseCapitalizeIcon,
   ContainerIcon,
@@ -17,7 +16,6 @@ export const MANTINE_CORE_ORDER = [
   'overlay',
   'typography',
   'feedback',
-  'navigation',
   'misc',
 ] as const;
 
@@ -44,12 +42,6 @@ export const MANTINE_CORE_CATEGORIES: Record<typeof MANTINE_CORE_ORDER[number], 
     title: 'Miscellaneous',
     icon: MixIcon,
     color: 'teal',
-  },
-
-  navigation: {
-    title: 'Navigation',
-    icon: Link2Icon,
-    color: 'violet',
   },
 
   feedback: {
