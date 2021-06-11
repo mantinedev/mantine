@@ -3,16 +3,12 @@ import cx from 'clsx';
 import { useClickOutside, useFocusTrap, useId, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
 import { MantineTransition, Transition } from '../Transition/Transition';
+import { ArrowBody, ArrowBodyPlacement, ArrowBodyPosition } from '../ArrowBody/ArrowBody';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
 import useStyles from './Popover.styles';
 
-type PopoverPosition = 'left' | 'right' | 'top' | 'bottom';
-type PopoverPlacement = 'center' | 'end' | 'start';
-export type PopoverStylesNames = Exclude<
-  keyof ReturnType<typeof useStyles>,
-  PopoverPosition | PopoverPlacement
->;
+export type PopoverStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface PopoverProps
   extends DefaultProps<PopoverStylesNames>,
@@ -33,10 +29,10 @@ export interface PopoverProps
   disabled?: boolean;
 
   /** Popover placement relative to target */
-  placement?: 'center' | 'end' | 'start';
+  placement?: ArrowBodyPlacement;
 
   /** Popover position relative to target */
-  position?: 'left' | 'right' | 'top' | 'bottom';
+  position?: ArrowBodyPosition;
 
   /** Space between popover and target in px */
   gutter?: number;
@@ -120,11 +116,7 @@ export function Popover({
   ...others
 }: PopoverProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles(
-    { theme, gutter, arrowSize, radius, spacing, shadow },
-    classNames,
-    'popover'
-  );
+  const classes = useStyles({ theme, radius, spacing, shadow }, classNames, 'popover');
   const _styles = mergeStyles(classes, styles);
   const handleClose = () => typeof onClose === 'function' && onClose();
   const useClickOutsideRef = useClickOutside(() => !noClickOutside && handleClose());
@@ -166,12 +158,16 @@ export function Popover({
             ref={focusTrapRef}
             onKeyDownCapture={handleKeydown}
           >
-            <div
-              className={cx(classes.popover, classes[position], classes[placement])}
+            <ArrowBody
+              withArrow={withArrow}
+              arrowSize={arrowSize}
+              position={position}
+              placement={placement}
+              gutter={gutter}
+              className={classes.popover}
+              classNames={{ arrow: classes.arrow }}
               style={{ zIndex, ..._styles.popover }}
             >
-              {withArrow && <div className={classes.arrow} style={_styles.arrow} />}
-
               <div className={classes.body} style={_styles.body}>
                 {!!title && (
                   <div className={classes.header} style={_styles.header}>
@@ -195,7 +191,7 @@ export function Popover({
                   {children}
                 </div>
               </div>
-            </div>
+            </ArrowBody>
           </div>
         )}
       </Transition>
