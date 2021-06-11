@@ -141,36 +141,37 @@ export function Tooltip({
         timingFunction={transitionTimingFunction}
       >
         {(transitionStyles) => (
-          <ArrowBody
-            id={tooltipId}
-            gutter={gutter}
-            position={position}
-            placement={placement}
-            withArrow={withArrow}
-            arrowSize={arrowSize}
-            role="tooltip"
-            className={classes.tooltip}
-            classNames={{ arrow: classes.arrow }}
-            styles={{ arrow: _styles.arrow }}
-            elementRef={tooltipRef}
-            style={{
-              ..._styles.tooltip,
-              zIndex,
-              width,
-              pointerEvents: allowPointerEvents ? 'all' : 'none',
-            }}
-          >
-            <div
-              className={classes.body}
+          <div className={classes.wrapper} style={{ ..._styles.wrapper, ...transitionStyles }}>
+            <ArrowBody
+              id={tooltipId}
+              gutter={gutter}
+              position={position}
+              placement={placement}
+              withArrow={withArrow}
+              arrowSize={arrowSize}
+              role="tooltip"
+              className={classes.tooltip}
+              classNames={{ arrow: classes.arrow }}
+              styles={{ arrow: _styles.arrow }}
+              elementRef={tooltipRef}
               style={{
-                ..._styles.body,
-                ...transitionStyles,
-                whiteSpace: wrapLines ? 'normal' : 'nowrap',
+                ..._styles.tooltip,
+                zIndex,
+                width,
+                pointerEvents: allowPointerEvents ? 'all' : 'none',
               }}
             >
-              {label}
-            </div>
-          </ArrowBody>
+              <div
+                className={classes.body}
+                style={{
+                  ..._styles.body,
+                  whiteSpace: wrapLines ? 'normal' : 'nowrap',
+                }}
+              >
+                {label}
+              </div>
+            </ArrowBody>
+          </div>
         )}
       </Transition>
 

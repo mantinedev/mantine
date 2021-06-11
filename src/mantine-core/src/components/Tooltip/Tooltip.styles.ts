@@ -11,6 +11,16 @@ export default createMemoStyles({
     display: 'inline-block',
   },
 
+  wrapper: {
+    background: 'transparent',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    pointerEvents: 'none',
+  },
+
   body: ({ theme, color }: TooltipStyles) => ({
     ...getFontStyles(theme),
     backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
