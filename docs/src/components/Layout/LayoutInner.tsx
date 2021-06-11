@@ -7,7 +7,7 @@ import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
 import useStyles from './Layout.styles';
-import getDocsData from './get-docs-data';
+import { getDocsData } from './get-docs-data';
 
 const query = graphql`
   {
@@ -21,6 +21,7 @@ const query = graphql`
             order
             slug
             category
+            package
           }
         }
       }

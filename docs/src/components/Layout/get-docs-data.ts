@@ -1,7 +1,4 @@
-import {
-  MANTINE_CORE_COMPONENTS_ORDER,
-  MANTINE_CORE_COMPONENTS_CATEGORIES,
-} from '../ComponentsByCategory/get-components-data';
+import { CATEGORIZED, Category } from '../../settings';
 
 interface DocsQuery {
   allMdx: {
@@ -11,60 +8,46 @@ interface DocsQuery {
   };
 }
 
-export interface DocItem {
-  to: string;
-  package: string;
-  order?: number;
-  title: string;
-  category?: string;
+interface GroupPages {
+  query: DocsQuery;
+  categories: Record<string, Category>;
+  order: readonly string[];
+  group: string;
 }
 
-export type DocsData = Record<string, DocItem[]>;
+export function groupPages({ query, categories, order, group }: GroupPages): {
+  uncategorized: Frontmatter[];
+  groups: { category: Category; pages: Frontmatter[] }[];
+  group: string;
+} {
+  const pages = query.allMdx.edges
+    .map(({ node }) => node.frontmatter)
+    .filter((page) => page.group === group);
 
-const order = ['guides', 'mantine-hooks', 'mantine-core', 'Other packages'];
+  const uncategorized = [];
 
-export default function getDocsData(query: DocsQuery): DocsData {
-  const results = query.allMdx.edges.reduce((acc: DocsData, item) => {
-    if (!(item.node.frontmatter.group in acc)) {
-      acc[item.node.frontmatter.group] = [];
+  const categorized = pages.reduce((acc, page) => {
+    if (!(page.category in categories)) {
+      uncategorized.push({ ...page, order: page.order || 0 });
+      return acc;
     }
 
-    if (MANTINE_CORE_COMPONENTS_ORDER.includes(item.node.frontmatter.category as any)) {
-      acc[item.node.frontmatter.group].push({
-        title: item.node.frontmatter.title,
-        order: item.node.frontmatter.order || 0,
-        to: item.node.frontmatter.slug,
-        package: item.node.frontmatter.group,
-        category: MANTINE_CORE_COMPONENTS_CATEGORIES[item.node.frontmatter.category].title,
-      });
-    } else {
-      acc[item.node.frontmatter.group].push({
-        title: item.node.frontmatter.title,
-        order: item.node.frontmatter.order || 0,
-        to: item.node.frontmatter.slug,
-        package: item.node.frontmatter.group,
-      });
+    if (!(page.category in acc)) {
+      acc[page.category] = [];
     }
 
+    acc[page.category].push({ ...page, order: page.order || 0 });
     return acc;
-  }, {});
+  }, {} as { category: Category; pages: Frontmatter[] });
 
-  Object.keys(results).forEach((category) => {
-    results[category].sort((a, b) => {
-      if ('order' in a && 'order' in b) {
-        if (a.order === b.order) {
-          return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
-        }
+  const groups = order.map((category) => ({
+    category: categories[category],
+    pages: categorized[category],
+  }));
 
-        return a.order - b.order;
-      }
+  return { uncategorized, groups, group };
+}
 
-      return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
-    });
-  });
-
-  return order.reduce((acc, item) => {
-    acc[item] = results[item];
-    return acc;
-  }, {});
+export function getDocsData(query: DocsQuery) {
+  return CATEGORIZED.map((data) => groupPages({ ...data, query }));
 }

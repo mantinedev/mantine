@@ -9,14 +9,14 @@ import {
   MoonIcon,
 } from '@modulz/radix-icons';
 import corePackageJson from '../../../../package.json';
-import { DocsData } from '../get-docs-data';
+import { getDocsData } from '../get-docs-data';
 import { ColorSchemeContext } from '../ColorScheme.context';
 import Search from './Search/Search';
 import { Logo } from './Logo';
 import useStyles from './Header.styles';
 
 interface HeaderProps {
-  data: DocsData;
+  data: ReturnType<typeof getDocsData>;
   navbarOpened: boolean;
   toggleNavbar(): void;
 }
