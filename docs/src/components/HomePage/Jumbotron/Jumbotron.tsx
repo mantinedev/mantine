@@ -25,7 +25,7 @@ export function Jumbotron() {
         <Group className={classes.controls}>
           <Button
             component={Link}
-            to="/getting-started"
+            to="/getting-started/"
             size="xl"
             className={classes.control}
             color={theme.colorScheme === 'dark' ? 'blue' : 'dark'}
