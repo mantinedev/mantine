@@ -85,7 +85,7 @@ export function Button<
       disabled={disabled}
       ref={elementRef}
       onTouchStart={() => {}}
-      style={{ ...style, ..._styles.root, ..._styles[variant] }}
+      style={{ ...style, ..._styles.root }}
     >
       <div className={classes.inner} style={_styles.inner}>
         {leftIcon && (

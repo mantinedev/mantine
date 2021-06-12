@@ -28,7 +28,6 @@ export function Jumbotron() {
             size="xl"
             className={classes.control}
             color={theme.colorScheme === 'dark' ? 'blue' : 'dark'}
-            styles={{ inner: { height: '100%' } }}
           >
             Get started
           </Button>

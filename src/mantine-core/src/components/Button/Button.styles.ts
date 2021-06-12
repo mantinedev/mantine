@@ -104,11 +104,12 @@ export default createMemoStyles({
     WebkitAppearance: 'none',
   }),
 
-  outline: ({ color, radius, theme }: ButtonStylesProps) => ({
+  outline: ({ color, size, radius, theme }: ButtonStylesProps) => ({
     backgroundColor: 'transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 600,
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
+    height: sizes[size].height,
     border: `1px solid ${hexToRgba(
       getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 9 }),
       theme.colorScheme === 'dark' ? 0.65 : 0.45
@@ -130,6 +131,7 @@ export default createMemoStyles({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 600,
     border: '1px solid transparent',
+    height: sizes[size].height,
     backgroundColor: hexToRgba(
       getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 5 }),
       theme.colorScheme === 'dark' ? 0.3 : 0.1
@@ -137,7 +139,7 @@ export default createMemoStyles({
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 2 : 7 }),
 
     '& $inner': {
-      height: sizes[size].height - 2,
+      height: '100%',
     },
 
     '&:not(:disabled):active': {
@@ -163,9 +165,10 @@ export default createMemoStyles({
     ),
     textShadow: '1px 1px 1px rgba(0, 0, 0, .3)',
     color: theme.white,
+    height: sizes[size].height,
 
     '& $inner': {
-      height: sizes[size].height - 2,
+      height: '100%',
     },
 
     '&:not(:disabled):active': {
