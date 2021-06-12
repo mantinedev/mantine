@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, ThemeIcon, Paper, Container, Group } from '@mantine/core';
+import { SectionTitle } from '../SectionTitle/SectionTitle';
 import data from './data';
 import useStyles from './Features.styles';
 
@@ -23,7 +24,7 @@ export function Features() {
   return (
     <>
       <div className={classes.wrapper}>
-        <h1 className={classes.sectionTitle}>Features</h1>
+        <SectionTitle>Features</SectionTitle>
         <Container size={1100}>
           <Group align="stretch">{items}</Group>
         </Container>
