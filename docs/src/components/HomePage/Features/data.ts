@@ -63,7 +63,7 @@ export default [
     color: 'lime',
     title: 'React JSS',
     description:
-      'Take advantage of all react-jss features: automatic critical css extraction during ssr, lazy evaluation, dynamic theming and others',
+      'Take advantage of all react-jss features: automatic critical css extraction during ssr, lazy evaluation, dynamic theming, etc.',
   },
   {
     icon: FaceIcon,

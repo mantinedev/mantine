@@ -14,7 +14,7 @@ export default createUseStyles(
       textAlign: 'left',
       marginBottom: theme.spacing.xl * 2.5,
       letterSpacing: 1,
-      marginLeft: 24,
+      marginLeft: 22,
       textTransform: 'uppercase',
 
       '&::before, &::after': {
