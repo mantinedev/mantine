@@ -14,7 +14,7 @@ export default [
   {
     icon: BlendingModeIcon,
     color: 'violet',
-    title: 'Customizable',
+    title: 'Customization',
     description:
       'Colors, fonts, shadows and many other parts are customizable to fit your design needs',
   },
@@ -26,7 +26,7 @@ export default [
   },
   {
     icon: FaceIcon,
-    color: 'orange',
+    color: 'indigo',
     title: 'Accessibility and usability',
     description:
       'All components follow accessibility best practices and feature full keyboard support',
@@ -68,7 +68,7 @@ export default [
   {
     icon: ShuffleIcon,
     color: 'teal',
-    title: 'Flexible',
+    title: 'Flexibility',
     description:
       'Configure components appearance and behavior with vast amount of settings or overwrite any part of component styles',
   },

@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'clsx';
 import { Link } from 'gatsby';
 import { Container, Group, Button, Text, useMantineTheme } from '@mantine/core';
 import { MarkGithubIcon } from '@primer/octicons-react';
@@ -37,10 +38,10 @@ export function Jumbotron() {
             href="https://github.com/mantinedev/mantine"
             size="xl"
             variant="outline"
-            className={classes.control}
+            className={cx(classes.control, classes.githubControl)}
             color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
-            leftIcon={<MarkGithubIcon size={20} />}
-            styles={{ leftIcon: { marginRight: 15 } }}
+            leftIcon={<MarkGithubIcon size={18} />}
+            styles={{ leftIcon: { marginRight: 12 } }}
           >
             Github
           </Button>

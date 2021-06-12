@@ -26,19 +26,8 @@ export default createUseStyles(
       paddingTop: 200,
       paddingBottom: 120,
 
-      '&::after': {
-        content: '""',
-        position: 'absolute',
-        bottom: 0,
-        right: theme.spacing.md,
-        left: theme.spacing.md,
-        borderBottom: `1px dashed ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
-        }`,
-      },
-
       [BREAKPOINT]: {
-        paddingBottom: 40,
+        paddingBottom: 80,
         paddingTop: 80,
       },
     },
@@ -94,6 +83,12 @@ export default createUseStyles(
         paddingRight: 18,
         flex: 1,
       },
+    },
+
+    githubControl: {
+      borderWidth: 2,
+      borderColor: theme.colorScheme === 'dark' ? 'transparent' : theme.colors.dark[9],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : 'transparent',
     },
   }),
   { theming }

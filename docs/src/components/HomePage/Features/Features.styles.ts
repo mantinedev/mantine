@@ -6,9 +6,37 @@ const BREAKPOINT = '@media (max-width: 600px)';
 export default createUseStyles(
   (theme) => ({
     wrapper: {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? '#03498b' : theme.colors.blue[6],
+
+      '& svg': {
+        display: 'block',
+      },
+    },
+
+    waves: {
+      fill: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
+      width: '200%',
+      height: 88,
+      transform: 'scaleX(-1)',
+
+      [BREAKPOINT]: {
+        height: 34,
+      },
+    },
+
+    wavesBottom: {
+      height: 44,
+      transform: 'rotate(180deg)',
+      fill: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+
+      [BREAKPOINT]: {
+        height: 24,
+      },
+    },
+
+    inner: {
       paddingTop: 100,
-      paddingBottom: 120,
+      paddingBottom: 160,
 
       [BREAKPOINT]: {
         paddingTop: 40,
@@ -17,16 +45,16 @@ export default createUseStyles(
     },
 
     item: {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-      margin: theme.spacing.md / 2,
-      flex: `0 0 calc(33.33333% - ${theme.spacing.md}px)`,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      margin: theme.spacing.lg / 2,
+      flex: `0 0 calc(33.33333% - ${theme.spacing.lg}px)`,
 
       '@media (max-width: 1000px)': {
-        flex: `0 0 calc(50% - ${theme.spacing.md}px)`,
+        flex: `0 0 calc(50% - ${theme.spacing.lg}px)`,
       },
 
       [BREAKPOINT]: {
-        flex: `0 0 calc(100% - ${theme.spacing.md}px)`,
+        flex: `0 0 calc(100% - ${theme.spacing.lg}px)`,
       },
     },
 
