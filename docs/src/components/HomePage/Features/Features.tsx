@@ -46,7 +46,7 @@ export function Features() {
 
         <div className={classes.inner}>
           <Container size={1100}>
-            <SectionTitle>Features</SectionTitle>
+            <SectionTitle type="white">Features</SectionTitle>
             <Group align="stretch">{items}</Group>
           </Container>
         </div>

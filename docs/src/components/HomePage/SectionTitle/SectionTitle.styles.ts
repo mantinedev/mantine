@@ -11,40 +11,52 @@ export default createUseStyles(
       lineHeight: 1.1,
       margin: 0,
       padding: 0,
-      color: theme.white,
       textAlign: 'left',
       marginBottom: theme.spacing.xl * 2.5,
       letterSpacing: 1,
-      textShadow: '1px 2px 2px rgba(0, 0, 0, .3)',
       marginLeft: 24,
+      textTransform: 'uppercase',
 
-      '&::before': {
+      '&::before, &::after': {
         content: '""',
         position: 'absolute',
-        filter: 'drop-shadow(1px 2px 2px rgba(0, 0, 0, .3))',
-        top: -14,
-        left: -22,
         width: 10,
         height: 10,
-        borderLeft: `5px solid ${theme.white}`,
-        borderTop: `5px solid ${theme.white}`,
+      },
+
+      '&::before': {
+        top: -14,
+        left: -22,
+        borderLeft: '5px solid transparent',
+        borderTop: '5px solid transparent',
       },
 
       '&::after': {
-        content: '""',
-        position: 'absolute',
-        filter: 'drop-shadow(1px 2px 2px rgba(0, 0, 0, .3))',
         bottom: -14,
         right: -22,
-        width: 10,
-        height: 10,
-        borderRight: `5px solid ${theme.white}`,
-        borderBottom: `5px solid ${theme.white}`,
+        borderRight: '5px solid transparent',
+        borderBottom: '5px solid transparent',
       },
 
       '@media (max-width: 600px)': {
         fontSize: 30,
         marginBottom: theme.spacing.xl * 2,
+      },
+    },
+
+    white: {
+      color: theme.white,
+      textShadow: '1px 2px 2px rgba(0, 0, 0, .3)',
+
+      '&::before, &::after': {
+        filter: 'drop-shadow(1px 2px 2px rgba(0, 0, 0, .3))',
+        borderColor: theme.white,
+      },
+    },
+
+    default: {
+      '&::before, &::after': {
+        borderColor: 'inherit',
       },
     },
   }),
