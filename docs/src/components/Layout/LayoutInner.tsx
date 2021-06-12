@@ -1,6 +1,7 @@
 import 'normalize.css';
 
 import React, { useState } from 'react';
+import cx from 'clsx';
 import { graphql, useStaticQuery } from 'gatsby';
 import { NotificationsProvider } from '@mantine/notifications';
 import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
@@ -42,7 +43,7 @@ export function LayoutInner({ children, path }: LayoutProps) {
   const shouldRenderNavbar = !EXCLUDE_LAYOUT_PATHS.includes(path);
 
   return (
-    <div className={classes.layout}>
+    <div className={cx({ [classes.withNavbar]: shouldRenderNavbar })}>
       <Header
         data={data}
         navbarOpened={navbarOpened}

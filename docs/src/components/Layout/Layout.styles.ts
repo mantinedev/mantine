@@ -25,7 +25,7 @@ export default createUseStyles(
       },
     },
 
-    layout: {
+    withNavbar: {
       paddingLeft: NAVBAR_WIDTH,
 
       [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {

@@ -1,12 +1,13 @@
 import React from 'react';
-import { Link } from 'gatsby';
 import Head from '../Head/Head';
+import { Jumbotron } from './Jumbotron/Jumbotron';
 
 export function HomePage() {
   return (
-    <div style={{ padding: 300 }}>
+    <div>
       <Head title="Mantine" disableTitleTemplate />
-      <Link to="/core/tabs/">Tabs</Link>
+      <Jumbotron />
+      Hello
     </div>
   );
 }
