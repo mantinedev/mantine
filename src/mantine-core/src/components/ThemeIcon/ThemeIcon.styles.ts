@@ -32,7 +32,7 @@ export default createMemoStyles({
   }),
 
   filled: ({ theme, color }: ThemeIconStyles) => ({
-    color: theme.colorScheme === 'dark' ? getThemeColor({ theme, color, shade: 0 }) : theme.white,
+    color: theme.white,
     backgroundColor: hexToRgba(
       getThemeColor({ theme, color, shade: 7 }),
       theme.colorScheme === 'dark' ? 0.65 : 1

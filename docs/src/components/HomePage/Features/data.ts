@@ -4,7 +4,8 @@ import {
   BlendingModeIcon,
   MarginIcon,
   FaceIcon,
-  Half2Icon,
+  MoonIcon,
+  ShuffleIcon,
   LightningBoltIcon,
   MagicWandIcon,
 } from '@modulz/radix-icons';
@@ -12,14 +13,14 @@ import {
 export default [
   {
     icon: BlendingModeIcon,
-    color: 'teal',
+    color: 'violet',
     title: 'Customizable',
     description:
       'Colors, fonts, shadows and many other parts are customizable to fit your design needs',
   },
   {
-    icon: Half2Icon,
-    color: 'violet',
+    icon: MoonIcon,
+    color: 'dark',
     title: 'Dark theme',
     description: 'Mantine supports dark theme by default in all components',
   },
@@ -48,7 +49,7 @@ export default [
     color: 'yellow',
     title: 'Developer experience',
     description:
-      'Mantine comes with more than 50 components and 15 hooks to cover you in most cases',
+      'Mantine comes with more than 70 components and 20 hooks to cover you in most cases',
   },
   {
     icon: MarginIcon,
@@ -63,5 +64,12 @@ export default [
     title: 'React JSS',
     description:
       'Take advantage of all react-jss features: automatic critical css extraction during ssr, lazy evaluation, dynamic theming and others',
+  },
+  {
+    icon: ShuffleIcon,
+    color: 'teal',
+    title: 'Flexible',
+    description:
+      'Configure components appearance and behavior with vast amount of settings or overwrite any part of component styles',
   },
 ];
