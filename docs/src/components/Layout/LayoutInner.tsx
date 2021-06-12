@@ -3,13 +3,15 @@ import 'normalize.css';
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { graphql, useStaticQuery } from 'gatsby';
+import { useMediaQuery } from '@mantine/hooks';
 import { NotificationsProvider } from '@mantine/notifications';
 import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
-import useStyles from './Layout.styles';
+import { NAVBAR_BREAKPOINT } from './Navbar/Navbar.styles';
 import { EXCLUDE_LAYOUT_PATHS } from '../../settings';
 import { getDocsData } from './get-docs-data';
+import useStyles from './Layout.styles';
 
 export interface LayoutProps {
   children: React.ReactNode;
@@ -40,7 +42,8 @@ export function LayoutInner({ children, path }: LayoutProps) {
   const classes = useStyles();
   const [navbarOpened, setNavbarState] = useState(false);
   const data = getDocsData(useStaticQuery(query));
-  const shouldRenderNavbar = !EXCLUDE_LAYOUT_PATHS.includes(path);
+  const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);
+  const shouldRenderNavbar = !EXCLUDE_LAYOUT_PATHS.includes(path) || navbarCollapsed;
 
   return (
     <div className={cx({ [classes.withNavbar]: shouldRenderNavbar })}>
