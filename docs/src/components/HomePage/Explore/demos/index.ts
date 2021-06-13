@@ -1,4 +1,4 @@
-import { CoreDemo } from './Core';
+import { CoreDemo } from './core/Core';
 import { CustomizationDemo } from './Customization';
 import { AnimationsDemo } from './Animations';
 import { DatesDemo } from './Dates';

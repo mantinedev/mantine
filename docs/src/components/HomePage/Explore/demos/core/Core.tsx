@@ -1,6 +1,7 @@
 import React from 'react';
 import { InputIcon, StackIcon, DashboardIcon, LetterCaseCapitalizeIcon } from '@modulz/radix-icons';
 import { Tabs, Tab } from '@mantine/core';
+import { InputsDemo } from './InputsDemo';
 
 export function CoreDemo() {
   const tabStyle = { fontSize: 18, marginLeft: 5 };
@@ -9,7 +10,7 @@ export function CoreDemo() {
     <div style={{ marginTop: -14 }}>
       <Tabs grow variant="pills" styles={{ body: { paddingTop: 20 } }}>
         <Tab label="Inputs" icon={<InputIcon style={iconStyles} />} styles={{ label: tabStyle }}>
-          Inputs
+          <InputsDemo />
         </Tab>
         <Tab label="Overlay" icon={<StackIcon style={iconStyles} />} styles={{ label: tabStyle }}>
           overlays
