@@ -58,7 +58,7 @@ export default createUseStyles(
       boxSizing: 'border-box',
       height: 80,
       display: 'flex',
-      alignItems: 'flex-end',
+      alignItems: 'center',
       color: theme.colors.gray[7],
     },
   }),

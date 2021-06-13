@@ -27,7 +27,7 @@ export function Tabs({ data, active, onChange, className }: TabsProps) {
       <Transition
         mounted={tab.id === active}
         duration={200}
-        // timingFunction="ease"
+        timingFunction="ease"
         transition={{
           in: { maxHeight: 80, opacity: 1 },
           out: { maxHeight: 0, opacity: 0 },
