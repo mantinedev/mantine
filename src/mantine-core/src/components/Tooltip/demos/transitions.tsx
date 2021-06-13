@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip, Button, Group, AVAILABLE_TRANSITIONS } from '../../../index';
+import { Tooltip, Badge, Group, AVAILABLE_TRANSITIONS } from '../../../index';
 
 export function Demo() {
   const transitions = AVAILABLE_TRANSITIONS.map((transition) => (
@@ -10,7 +10,7 @@ export function Demo() {
       transition={transition}
       transitionDuration={300}
     >
-      <Button variant="outline">{transition}</Button>
+      <Badge>{transition}</Badge>
     </Tooltip>
   ));
 

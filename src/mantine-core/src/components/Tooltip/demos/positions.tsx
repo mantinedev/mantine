@@ -13,7 +13,9 @@ function Demo() {
         withArrow
         gutter={10}
       >
-        <Button variant="outline" color="gray" size="xl">{`${position}-${placement}`}</Button>
+        <Button variant="outline" color="gray" size="xl">
+          {`${position}-${placement}`}
+        </Button>
       </Tooltip>
     ));
 

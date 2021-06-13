@@ -13,7 +13,7 @@ const data: readonly ExploreDataItem[] = [
   },
   {
     id: 'customization',
-    title: 'Customization',
+    title: 'Theme and customization',
     description:
       'Extends Mantine theme with additional colors, sizes, etc. or completely overwrite component styles to match your design',
   },

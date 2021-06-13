@@ -2,6 +2,7 @@ import React from 'react';
 import { InputIcon, StackIcon, DashboardIcon, LetterCaseCapitalizeIcon } from '@modulz/radix-icons';
 import { Tabs, Tab } from '@mantine/core';
 import { InputsDemo } from './InputsDemo';
+import { OverlaysDemos } from './OverlaysDemos';
 
 export function CoreDemo() {
   const tabStyle = { fontSize: 18, marginLeft: 5 };
@@ -13,7 +14,7 @@ export function CoreDemo() {
           <InputsDemo />
         </Tab>
         <Tab label="Overlay" icon={<StackIcon style={iconStyles} />} styles={{ label: tabStyle }}>
-          overlays
+          <OverlaysDemos />
         </Tab>
         <Tab
           label="Data display"
