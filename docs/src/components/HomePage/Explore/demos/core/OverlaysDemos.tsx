@@ -61,7 +61,7 @@ export function OverlaysDemos() {
           <Text size="lg" style={{ marginBottom: 15 }}>
             Popover
           </Text>
-          <div style={{ display: 'inline-block' }}>
+          <div style={{ display: 'inline-block', position: 'relative', zIndex: 1 }}>
             <PopoverDemo />
           </div>
         </div>

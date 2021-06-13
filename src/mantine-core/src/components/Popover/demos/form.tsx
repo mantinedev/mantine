@@ -131,6 +131,7 @@ export function EditUserPopover() {
         withArrow
         withCloseButton
         title="Edit user"
+        transition="slide-up"
         target={
           <ActionIcon
             variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
@@ -259,6 +260,7 @@ export function Demo() {
         withArrow
         withCloseButton
         title="Edit user"
+        transition="slide-up"
         target={
           <ActionIcon
             variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
