@@ -8,6 +8,8 @@ export default createMemoStyles({
   root: {},
   tabsListWrapper: {},
   tabsList: {},
+  pills: {},
+  body: {},
 
   default: ({ theme }: TabsStyles) => ({
     borderBottom: `2px solid ${
@@ -28,6 +30,4 @@ export default createMemoStyles({
       marginBottom: -1,
     },
   }),
-
-  body: {},
 });

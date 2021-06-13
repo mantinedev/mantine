@@ -9,7 +9,7 @@ import useStyles from './Tabs.styles';
 export { Tab };
 export type { TabProps };
 
-export const TABS_VARIANTS = ['default', 'outline'] as const;
+export const TABS_VARIANTS = ['default', 'outline', 'pills'] as const;
 export type TabsVariant = typeof TABS_VARIANTS[number];
 export type TabsStylesNames = Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>;
 
@@ -42,7 +42,7 @@ export interface TabsProps
   onTabChange?(tabIndex: number): void;
 
   /** Controls appearance */
-  variant?: 'default' | 'outline';
+  variant?: 'default' | 'outline' | 'pills';
 }
 
 function getPreviousTab(active: number, tabs: TabType[]) {
@@ -156,7 +156,7 @@ export function Tabs({
           style={_styles.tabsList}
           role="tablist"
           aria-orientation="horizontal"
-          spacing={0}
+          spacing={variant === 'pills' ? 'md' : 0}
           position={position}
           grow={grow}
         >

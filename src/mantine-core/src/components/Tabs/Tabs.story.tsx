@@ -150,10 +150,16 @@ storiesOf('@mantine/core/Tabs', module)
       </Tabs>
     </div>
   ))
-  .add('Outline', () => (
+  .add('Outline & pills', () => (
     <div style={{ padding: 50 }}>
       <Tabs variant="outline">
         <Tab label="First" icon={<ImageIcon />} styles={{ label: { color: 'red' } }} />
+        <Tab label="Only tabs" />
+        <Tab label="Nothing here" />
+        <Tab label="Outline" />
+      </Tabs>
+      <Tabs variant="pills">
+        <Tab label="First" icon={<ImageIcon />} />
         <Tab label="Only tabs" />
         <Tab label="Nothing here" />
         <Tab label="Outline" />

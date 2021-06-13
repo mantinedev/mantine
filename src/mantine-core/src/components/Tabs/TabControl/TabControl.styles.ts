@@ -4,6 +4,7 @@ import {
   getFontStyles,
   getFocusStyles,
   getThemeColor,
+  hexToRgba,
 } from '../../../theme';
 
 interface TabControlStyles {
@@ -64,13 +65,27 @@ export default createMemoStyles({
     },
   }),
 
+  pills: ({ theme, color }: TabControlStyles) => ({
+    borderRadius: 1000,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
+
+    '&$active': {
+      color: theme.white,
+      background: hexToRgba(
+        getThemeColor({ theme, color, shade: 6 }),
+        theme.colorScheme === 'dark' ? 0.65 : 1
+      ),
+    },
+  }),
+
   inner: {
     boxSizing: 'border-box',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     lineHeight: 1,
-    height: 40,
+    height: '100%',
   },
 
   icon: ({ theme }: TabControlStyles) => ({

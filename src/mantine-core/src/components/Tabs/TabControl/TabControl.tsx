@@ -15,7 +15,7 @@ export interface TabControlProps
   elementRef(node: HTMLButtonElement): void;
   tabProps: TabProps;
   color?: string;
-  variant?: 'default' | 'outline';
+  variant?: TabsVariant;
 }
 
 export function TabControl({
