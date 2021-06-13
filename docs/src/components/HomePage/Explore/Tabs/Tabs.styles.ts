@@ -22,7 +22,9 @@ export default createUseStyles(
       },
 
       '&:not(:last-of-type)': {
-        borderBottom: `1px solid ${theme.colors.gray[3]}`,
+        borderBottom: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+        }`,
       },
     },
 
@@ -38,8 +40,10 @@ export default createUseStyles(
     index: {
       fontSize: theme.fontSizes.xl,
       fontWeight: 500,
-      border: `2px solid ${theme.colors.gray[7]}`,
-      color: theme.colors.gray[7],
+      border: `2px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7]
+      }`,
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
       borderRadius: theme.radius.md,
       display: 'flex',
       alignItems: 'center',
@@ -52,7 +56,7 @@ export default createUseStyles(
       fontSize: 22,
       fontWeight: 700,
       marginLeft: theme.spacing.md,
-      color: theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
     },
 
     description: {
@@ -60,7 +64,7 @@ export default createUseStyles(
       height: 80,
       display: 'flex',
       alignItems: 'center',
-      color: theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
     },
   }),
   { theming }

@@ -7,7 +7,7 @@ export function CoreDemo() {
   const iconStyles = { width: 16, height: 16 };
   return (
     <div style={{ marginTop: -14 }}>
-      <Tabs grow variant="pills">
+      <Tabs grow variant="pills" styles={{ body: { paddingTop: 20 } }}>
         <Tab label="Inputs" icon={<InputIcon style={iconStyles} />} styles={{ label: tabStyle }}>
           Inputs
         </Tab>
