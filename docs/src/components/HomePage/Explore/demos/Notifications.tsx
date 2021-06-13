@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'gatsby';
-import { ArrowRightIcon } from '@modulz/radix-icons';
-import { Title, Anchor, Group } from '@mantine/core';
+import { Title } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import * as NotificationDemos from '@demos/notifications';
 import Demo from '../../../Demo/Demo';
+import { LinkTitle } from './LinkTitle';
 
 const code = `import { Button } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
@@ -25,13 +24,8 @@ function Demo() {
 
 export function NotificationsDemo() {
   return (
-    <div>
-      <Group position="apart" spacing={0}>
-        <Title order={3}>Notification system features</Title>
-        <Anchor component={Link} to="/others/notifications/">
-          Get started <ArrowRightIcon style={{ width: 12, height: 12 }} />
-        </Anchor>
-      </Group>
+    <>
+      <LinkTitle title="Notification system features" link="/others/notifications/" />
       <Demo data={NotificationDemos.root} />
       <Title order={3} style={{ marginBottom: 12 }}>
         Clean and simple API
@@ -39,6 +33,6 @@ export function NotificationsDemo() {
       <Prism noCopy language="tsx">
         {code}
       </Prism>
-    </div>
+    </>
   );
 }
