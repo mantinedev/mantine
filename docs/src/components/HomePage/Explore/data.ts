@@ -13,20 +13,21 @@ const data: readonly ExploreDataItem[] = [
   },
   {
     id: 'customization',
-    title: 'Theme and customization',
+    title: 'Components customization',
     description:
-      'Extends Mantine theme with additional colors, sizes, etc. or completely overwrite component styles to match your design',
+      'Add your styles to any part of component with inline styles, direct classNames passing or using static selectors',
+  },
+  {
+    id: 'theme',
+    title: 'Theming',
+    description:
+      'Extends Mantine theme with additional colors, sizes, etc. to match your design requirements',
   },
   {
     id: 'animations',
     title: 'Animations',
     description:
       'Animate presence with premade transition or build your own animation with simple API, all Mantine components support custom transitions',
-  },
-  {
-    id: 'dates',
-    title: 'Date pickers and inputs',
-    description: 'Capture date or dates range from user with date pickers and inputs',
   },
   {
     id: 'notifications',

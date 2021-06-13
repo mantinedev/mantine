@@ -1,7 +1,7 @@
 import { CoreDemo } from './core/Core';
 import { CustomizationDemo } from './Customization';
 import { AnimationsDemo } from './Animations';
-import { DatesDemo } from './Dates';
+import { ThemingDemo } from './Theming';
 import { NotificationsDemo } from './Notifications';
 import { HooksDemo } from './Hooks';
 import { PrismDemo } from './Prism';
@@ -10,7 +10,7 @@ export default {
   core: CoreDemo,
   customization: CustomizationDemo,
   animations: AnimationsDemo,
-  dates: DatesDemo,
+  theme: ThemingDemo,
   notifications: NotificationsDemo,
   hooks: HooksDemo,
   prism: PrismDemo,
