@@ -20,7 +20,7 @@ export default createUseStyles(
       boxSizing: 'border-box',
       paddingLeft: theme.spacing.xl * 1.5,
       flex: '0 0 60%',
-      paddingTop: 11,
+      paddingTop: theme.spacing.md,
     },
   }),
   { theming }

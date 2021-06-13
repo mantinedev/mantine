@@ -1,9 +1,10 @@
 import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/core';
+import { theming, getFocusStyles } from '@mantine/core';
 
 export default createUseStyles(
   (theme) => ({
     tab: {
+      ...getFocusStyles(theme),
       display: 'block',
       width: '100%',
       backgroundColor: 'transparent',
