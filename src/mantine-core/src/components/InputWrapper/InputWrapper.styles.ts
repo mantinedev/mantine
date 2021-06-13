@@ -17,6 +17,7 @@ export default createMemoStyles({
     fontWeight: 500,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
     wordBreak: 'break-word',
+    cursor: 'default',
   }),
 
   error: ({ theme }: InputWrapperStyles) => ({
