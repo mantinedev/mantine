@@ -67,7 +67,7 @@ export function OverlaysDemos() {
         </div>
       </Group>
 
-      <Text size="lg" style={{ marginTop: 15, marginBottom: 10 }}>
+      <Text size="lg" style={{ marginTop: 30, marginBottom: 10 }}>
         Clean and easy API
       </Text>
 
