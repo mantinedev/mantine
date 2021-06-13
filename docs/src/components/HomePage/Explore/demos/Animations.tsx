@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Prism } from '@mantine/prism';
-import { Text, useMantineTheme, Modal, Button } from '@mantine/core';
+import { Text, Title, useMantineTheme, Modal, Button } from '@mantine/core';
 import { AuthenticationForm } from '@mantine/core/demos/AuthenticationForm/AuthenticationForm';
 import { transitions as TransitionDemo } from '@mantine/core/src/components/Tooltip/demos/transitions';
 
@@ -30,14 +30,14 @@ export function AnimationsDemo() {
   const [modalOpened, setModalOpened] = useState(false);
   return (
     <>
-      <Text size="lg" style={{ marginBottom: 5 }}>
+      <Title order={3} style={{ marginBottom: 5 }}>
         Premade transitions
-      </Text>
+      </Title>
 
       <Text
         size="sm"
         style={{
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[6],
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
           maxWidth: 400,
           marginBottom: 15,
         }}
@@ -48,9 +48,9 @@ export function AnimationsDemo() {
         <Transitions />
       </div>
 
-      <Text size="lg" style={{ marginBottom: 10, marginTop: 45 }}>
+      <Title order={3} style={{ marginBottom: 10, marginTop: 45 }}>
         Or create your own animations with simple object
-      </Text>
+      </Title>
 
       <Prism language="tsx" noCopy>
         {code}
