@@ -21,6 +21,8 @@ export default createMemoStyles({
     flex: '0 0 50%',
     boxSizing: 'border-box',
     width: CONTROL_WIDTH,
+    padding: 0,
+    WebkitTapHighlightColor: 'transparent',
     borderBottom: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
     }`,
