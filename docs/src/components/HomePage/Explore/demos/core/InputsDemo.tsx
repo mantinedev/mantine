@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createUseStyles } from 'react-jss';
 import { MailIcon } from '@primer/octicons-react';
 import {
   TextInput,
@@ -15,6 +16,35 @@ import {
   RadioGroup,
   Radio,
 } from '@mantine/core';
+import { BREAKPOINT } from '../../Explore.styles';
+
+const useStyles = createUseStyles({
+  wrapper: {
+    display: 'flex',
+
+    [BREAKPOINT]: {
+      flexDirection: 'column',
+    },
+  },
+
+  column: {
+    flex: 1,
+
+    '&:first-of-type': {
+      paddingRight: 10,
+    },
+
+    '&:last-of-type': {
+      paddingLeft: 10,
+    },
+
+    [BREAKPOINT]: {
+      '& + &': {
+        marginTop: 20,
+      },
+    },
+  },
+});
 
 const data = [
   { label: 'React', value: 'react' },
@@ -31,9 +61,11 @@ export function SegmentedControlWrapper(
 }
 
 export function InputsDemo() {
+  const classes = useStyles();
+
   return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ flex: 1, paddingRight: 10 }}>
+    <div className={classes.wrapper}>
+      <div className={classes.column}>
         <TextInput
           label="Text input"
           placeholder="General text input"
@@ -70,7 +102,7 @@ export function InputsDemo() {
         <Switch style={{ marginTop: 15 }} label="Switch" defaultChecked />
       </div>
 
-      <div style={{ flex: 1, paddingLeft: 10 }}>
+      <div className={classes.column}>
         <NumberInput label="Number input" description="Enter your age" defaultValue={18} />
 
         <Textarea

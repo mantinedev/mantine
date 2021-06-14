@@ -47,8 +47,7 @@ export function ContentDemos() {
             maxWidth: 400,
             marginLeft: 'auto',
             marginRight: 'auto',
-            paddingTop: 30,
-            paddingBottom: 30,
+            padding: 30,
           }}
         >
           <AlertComponent />

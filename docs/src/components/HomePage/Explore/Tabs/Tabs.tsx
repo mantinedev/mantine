@@ -43,5 +43,5 @@ export function Tabs({ data, active, onChange, className }: TabsProps) {
       </Transition>
     </button>
   ));
-  return <div className={className}>{tabs}</div>;
+  return <div className={cx(classes.tabs, className)}>{tabs}</div>;
 }

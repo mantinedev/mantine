@@ -36,7 +36,11 @@ export function OverlaysDemos() {
       <Drawer opened={drawerOpened} onClose={() => setDrawerOpened(false)} padding="xl" size={440}>
         <Group position="apart">
           <Text size="lg">Register</Text>
-          <CloseButton style={{ marginRight: -1 }} iconSize={18} />
+          <CloseButton
+            style={{ marginRight: -1 }}
+            iconSize={18}
+            onClick={() => setDrawerOpened(false)}
+          />
         </Group>
         <Divider margins="md" />
         <AuthenticationForm noShadow noPadding />

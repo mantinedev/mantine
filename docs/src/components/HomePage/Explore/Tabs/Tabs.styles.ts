@@ -1,8 +1,16 @@
 import { createUseStyles } from 'react-jss';
 import { theming, getFocusStyles } from '@mantine/core';
+import { BREAKPOINT } from '../Explore.styles';
 
 export default createUseStyles(
   (theme) => ({
+    tabs: {
+      [BREAKPOINT]: {
+        display: 'flex',
+        overflowX: 'scroll',
+      },
+    },
+
     tab: {
       ...getFocusStyles(theme),
       display: 'block',
@@ -25,6 +33,15 @@ export default createUseStyles(
         borderBottom: `1px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
         }`,
+      },
+
+      [BREAKPOINT]: {
+        whiteSpace: 'nowrap',
+
+        '&:not(:last-of-type)': {
+          borderBottom: 0,
+          marginRight: theme.spacing.lg,
+        },
       },
     },
 
@@ -50,6 +67,13 @@ export default createUseStyles(
       justifyContent: 'center',
       width: 40,
       height: 40,
+
+      [BREAKPOINT]: {
+        borderRadius: theme.radius.sm,
+        width: 20,
+        height: 20,
+        fontSize: 12,
+      },
     },
 
     title: {
@@ -57,6 +81,11 @@ export default createUseStyles(
       fontWeight: 700,
       marginLeft: theme.spacing.md,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+
+      [BREAKPOINT]: {
+        fontSize: 16,
+        fontWeight: 500,
+      },
     },
 
     description: {
@@ -65,6 +94,10 @@ export default createUseStyles(
       display: 'flex',
       alignItems: 'center',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+
+      [BREAKPOINT]: {
+        display: 'none',
+      },
     },
   }),
   { theming }
