@@ -27,7 +27,7 @@ export function NotificationsDemo() {
     <>
       <LinkTitle title="Notification system features" link="/others/notifications/" />
       <Demo data={NotificationDemos.root} />
-      <Title order={3} style={{ marginBottom: 12 }}>
+      <Title order={4} style={{ marginBottom: 10 }}>
         Clean and simple API
       </Title>
       <Prism noCopy language="tsx">

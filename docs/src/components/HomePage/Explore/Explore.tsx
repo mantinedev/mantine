@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container } from '@mantine/core';
+import { useLocalStorageValue } from '@mantine/hooks';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
 import { Tabs } from './Tabs/Tabs';
 import data from './data';
@@ -8,7 +9,10 @@ import useStyles from './Explore.styles';
 
 export function Explore() {
   const classes = useStyles();
-  const [active, setActive] = useState('core');
+  const [active, setActive] = useLocalStorageValue<string>({
+    key: '@mantine/home-tabs',
+    defaultValue: 'core',
+  });
   const Demo = active in demos ? demos[active] : () => null;
 
   return (
@@ -16,7 +20,12 @@ export function Explore() {
       <Container size={1100}>
         <SectionTitle>Explore examples</SectionTitle>
         <div className={classes.inner}>
-          <Tabs className={classes.tabs} data={data} active={active} onChange={setActive} />
+          <Tabs
+            className={classes.tabs}
+            data={data}
+            active={active}
+            onChange={(value) => setActive(value)}
+          />
           <div className={classes.main}>
             <Demo />
           </div>
