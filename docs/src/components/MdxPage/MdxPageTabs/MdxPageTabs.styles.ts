@@ -11,14 +11,11 @@ import {
 export default createUseStyles(
   (theme) => ({
     tabs: {
-      marginTop: -TAB_HEIGHT,
-
-      [`@media (max-width: ${BREAKPOINT}px)`]: {
-        marginTop: -TAB_HEIGHT_MOBILE,
-      },
+      // background: theme.colors.gray[0],
     },
 
     tabsWrapper: {
+      background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2],
     },
 

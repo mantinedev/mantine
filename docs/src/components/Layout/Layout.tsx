@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useState } from 'react';
-import {} from 'gatsby';
 import { MantineProvider } from '@mantine/core';
 import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
 import { ColorSchemeContext, ColorScheme } from './ColorScheme.context';

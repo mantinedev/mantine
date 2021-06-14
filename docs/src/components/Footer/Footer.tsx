@@ -1,53 +1,49 @@
 import React from 'react';
-import { Link } from 'gatsby';
-import { Text } from '@mantine/core';
-import {
-  StarIcon,
-  ChatBubbleIcon,
-  ExclamationTriangleIcon,
-  TwitterLogoIcon,
-  EnvelopeClosedIcon,
-} from '@modulz/radix-icons';
+import { Container, Text, Group } from '@mantine/core';
+import cx from 'clsx';
+import { Logo } from '../Logo/Logo';
+import { GitterButton } from '../GitterButton/GitterButton';
+import { TwitterButton } from '../TwitterButton/TwitterButton';
 import useStyles from './Footer.styles';
 
-export function Footer() {
+interface FooterProps {
+  withNavbar?: boolean;
+}
+
+export function Footer({ withNavbar }: FooterProps) {
   const classes = useStyles();
-
   return (
-    <footer className={classes.wrapper}>
-      <Text size="sm" align="center" color="gray">
-        Mantine respects your privacy. This website has no trackers, analytics or ads.
-      </Text>
-      <Text size="sm" align="center" color="gray">
-        This project is open source and relies on contributors, please consider{' '}
-        <Text component={Link} size="sm" variant="link" to="/pages/contribute">
-          contributing
-        </Text>
-        .
-      </Text>
+    <>
+      <div className={classes.spacer} />
+      <div className={cx(classes.wrapper, { [classes.withNavbar]: withNavbar })}>
+        <Container size={1100}>
+          <div className={classes.inner}>
+            <div className={classes.logoSection}>
+              <Logo />
+              <Text className={classes.description} size="sm">
+                Build fully functional accessible web applications with ease
+              </Text>
+            </div>
 
-      <div className={classes.links}>
-        <a href="https://github.com/mantinedev/mantine" className={classes.link}>
-          <StarIcon />
-          <span className={classes.linkLabel}>Star project on Github</span>
-        </a>
-        <a href="https://github.com/mantinedev/mantine/discussions" className={classes.link}>
-          <ChatBubbleIcon />
-          <span className={classes.linkLabel}>Ask a question</span>
-        </a>
-        <a href="https://github.com/mantinedev/mantine/issues/new" className={classes.link}>
-          <ExclamationTriangleIcon />
-          <span className={classes.linkLabel}>Report an issue</span>
-        </a>
-        <a href="https://twitter.com/mantinedev" className={classes.link}>
-          <TwitterLogoIcon />
-          <span className={classes.linkLabel}>Follow Mantine on Twitter</span>
-        </a>
-        <a href="https://buttondown.email/mantine" className={classes.link}>
-          <EnvelopeClosedIcon />
-          <span className={classes.linkLabel}>Subscribe to monthly updates newsletter</span>
-        </a>
+            <div>links</div>
+          </div>
+
+          <div className={classes.afterFooter}>
+            <Group position="apart">
+              <Text size="xs" className={classes.afterFooterNote}>
+                Built by <a href="https://github.com/rtivital">Vitaly Rtishchev</a> and{' '}
+                <a href="https://github.com/mantinedev/mantine/graphs/contributors">
+                  these awesome people
+                </a>
+              </Text>
+              <div style={{ display: 'flex' }}>
+                <GitterButton />
+                <TwitterButton style={{ marginLeft: 10 }} />
+              </div>
+            </Group>
+          </div>
+        </Container>
       </div>
-    </footer>
+    </>
   );
 }

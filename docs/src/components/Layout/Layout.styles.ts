@@ -38,7 +38,6 @@ export default createUseStyles(
       flex: 1,
       // aligns page top most heading with navigation and table of contents
       paddingTop: HEADER_HEIGHT - theme.spacing.xl - 2,
-      paddingBottom: theme.spacing.xl * 2,
 
       [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
         paddingLeft: 0,
