@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Link } from 'gatsby';
 import { Burger, Code, ActionIcon, Tooltip } from '@mantine/core';
 import {
   GitHubLogoIcon,
@@ -12,7 +11,7 @@ import corePackageJson from '../../../../package.json';
 import { getDocsData } from '../get-docs-data';
 import { ColorSchemeContext } from '../ColorScheme.context';
 import Search from './Search/Search';
-import { Logo } from './Logo';
+import { Logo } from '../../Logo/Logo';
 import useStyles from './Header.styles';
 
 interface HeaderProps {
@@ -52,9 +51,10 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
           aria-label={burgerTitle}
         />
         <div className={classes.logoWrapper}>
-          <Link to="/" className={classes.logo} aria-label="Getting started">
-            <Logo className={classes.image} />
-          </Link>
+          <div className={classes.logo}>
+            <Logo />
+          </div>
+
           <a href="https://github.com/mantinedev/mantine/releases" className={classes.version}>
             <Code>v{corePackageJson.version}</Code>
           </a>

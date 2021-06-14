@@ -8,6 +8,7 @@ export default createUseStyles(
     wrapper: {
       position: 'relative',
       paddingTop: 120,
+      paddingBottom: 120,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     },
 
