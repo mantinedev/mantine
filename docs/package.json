@@ -37,6 +37,7 @@
   "scripts": {
     "build": "gatsby build",
     "start": "gatsby develop -p 7001",
+    "start:expose": "gatsby develop -H 0.0.0.0 -p 7001",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
   }
