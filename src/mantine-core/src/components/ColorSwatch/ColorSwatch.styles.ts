@@ -14,6 +14,7 @@ interface ColorSwatchStyles {
 export default createMemoStyles({
   colorSwatch: ({ theme, radius }: ColorSwatchStyles) => ({
     ...getFocusStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
     border: 0,
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     appearance: 'none',
