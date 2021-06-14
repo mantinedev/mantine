@@ -35,19 +35,8 @@ export function CustomizationDemo() {
         link="/guides/styles/"
         label="Learn about styles API"
       />
-      <Text
-        size="sm"
-        style={{
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
-          marginBottom: 25,
-          maxWidth: 420,
-          marginTop: 10,
-        }}
-      >
-        Add your styles to any part of component with inline styles, direct classNames passing or
-        using static selectors
-      </Text>
-      <div style={{ marginBottom: 20 }}>
+
+      <div style={{ marginBottom: 20, marginTop: 15 }}>
         <Text style={{ marginBottom: 5 }} size="lg">
           Default slider styles
         </Text>

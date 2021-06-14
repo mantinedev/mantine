@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Prism } from '@mantine/prism';
-import { Text, Title, useMantineTheme, Modal, Button } from '@mantine/core';
+import { Title, Modal, Button } from '@mantine/core';
 import { AuthenticationForm } from '@mantine/core/demos/AuthenticationForm/AuthenticationForm';
 import { transitions as TransitionDemo } from '@mantine/core/src/components/Tooltip/demos/transitions';
 import { LinkTitle } from './LinkTitle';
@@ -26,7 +26,6 @@ const scaleY = {
 `.trim();
 
 export function AnimationsDemo() {
-  const theme = useMantineTheme();
   const Transitions = TransitionDemo.component;
   const [modalOpened, setModalOpened] = useState(false);
   return (
@@ -35,19 +34,9 @@ export function AnimationsDemo() {
         title="Premade transitions"
         link="/core/transition/"
         label="Learn more about transitions"
+        description="Use premade transitions in any Mantine component which animates presence, e.g. Modal"
       />
 
-      <Text
-        size="sm"
-        style={{
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
-          maxWidth: 400,
-          marginBottom: 15,
-          marginTop: 5,
-        }}
-      >
-        Use premade transitions in any Mantine component which animates presence, e.g. Modal
-      </Text>
       <div style={{ maxWidth: 520 }}>
         <Transitions />
       </div>
