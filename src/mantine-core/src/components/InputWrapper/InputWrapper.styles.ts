@@ -18,6 +18,7 @@ export default createMemoStyles({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
     wordBreak: 'break-word',
     cursor: 'default',
+    WebkitTapHighlightColor: 'transparent',
   }),
 
   error: ({ theme }: InputWrapperStyles) => ({
