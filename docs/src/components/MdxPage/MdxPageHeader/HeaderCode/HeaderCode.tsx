@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tooltip } from '@mantine/core';
-import { useClipboard } from '@mantine/hooks';
+import { useClipboard, useMediaQuery } from '@mantine/hooks';
 import { Prism } from '@mantine/prism';
 import { Language } from 'prism-react-renderer';
 import useStyles from './HeaderCode.styles';
@@ -14,6 +14,7 @@ interface ImportStatementProps {
 export function HeaderCode({ code, icon, language }: ImportStatementProps) {
   const clipboard = useClipboard();
   const classes = useStyles();
+  const mobile = useMediaQuery('(max-width: 500px)');
 
   return (
     <div className={classes.wrapper}>
@@ -28,6 +29,8 @@ export function HeaderCode({ code, icon, language }: ImportStatementProps) {
         arrowSize={4}
         gutter={15}
         color={clipboard.copied ? 'teal' : undefined}
+        style={{ flex: 1 }}
+        disabled={mobile}
       >
         <button className={classes.copy} type="button" onClick={() => clipboard.copy(code)}>
           <Prism

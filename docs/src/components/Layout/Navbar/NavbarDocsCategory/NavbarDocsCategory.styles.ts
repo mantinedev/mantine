@@ -78,6 +78,7 @@ export default createUseStyles(
 
     link: {
       ...getFocusStyles(theme),
+      WebkitTapHighlightColor: 'transparent',
       borderLeft: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,

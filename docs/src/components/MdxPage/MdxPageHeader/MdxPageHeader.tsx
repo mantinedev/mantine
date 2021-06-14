@@ -3,7 +3,6 @@ import cx from 'clsx';
 import { Title, Text } from '@mantine/core';
 import { MarkGithubIcon, PencilIcon, LawIcon } from '@primer/octicons-react';
 import { ImportStatement } from './ImportStatement/ImportStatement';
-import { Installation } from './Installation/Installation';
 import { BundleSize } from './BundleSize/BundleSize';
 import { NpmIcon } from './NpmIcon';
 import { LinkItem } from './LinkItem/LinkItem';
@@ -33,8 +32,6 @@ export function MdxPageHeader({ frontmatter }: MdxPage) {
         </Text>
 
         {frontmatter.import && <ImportStatement code={frontmatter.import} />}
-
-        {frontmatter.installation && <Installation packages={frontmatter.installation} />}
 
         {frontmatter.source && (
           <LinkItem

@@ -38,12 +38,21 @@ export default createUseStyles(
       marginBottom: theme.spacing.xs,
       fontFamily: `Dosis, ${theme.headings.fontFamily}`,
       fontWeight: 800,
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        fontSize: 32,
+        lineHeight: 1.2,
+      },
     },
 
     description: {
       maxWidth: 450,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
       marginBottom: theme.spacing.xl,
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        fontSize: theme.fontSizes.md,
+      },
     },
   }),
   { theming }

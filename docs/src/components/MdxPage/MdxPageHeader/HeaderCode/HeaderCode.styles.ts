@@ -30,6 +30,12 @@ export default createUseStyles(
       border: 0,
       appearance: 'none',
       backgroundColor: 'transparent',
+      textAlign: 'left',
+      display: 'block',
+      width: '100%',
+      flex: 1,
+      overflowX: 'scroll',
+      WebkitTapHighlightColor: 'transparent',
     },
   }),
   { theming }

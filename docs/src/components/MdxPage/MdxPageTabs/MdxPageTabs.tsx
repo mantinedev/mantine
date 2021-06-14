@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tabs, Tab, Title } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import TableOfContents from '../TableOfContents/TableOfContents';
 import { Footer } from '../../Footer/Footer';
@@ -9,6 +10,7 @@ import useStyles from './MdxPageTabs.styles';
 
 export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
   const classes = useStyles();
+  const mobile = useMediaQuery('(max-width: 500px)');
   const hasProps = Array.isArray(frontmatter.props);
   const hasStyles = Array.isArray(frontmatter.styles);
 
@@ -58,7 +60,7 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
       </Tab>
 
       {hasProps && (
-        <Tab label="Component props" className={classes.tab}>
+        <Tab label={mobile ? 'Props' : 'Component props'} className={classes.tab}>
           <div
             style={{ maxWidth: 1080, margin: 'auto', marginTop: 24 }}
             className={classes.tabContent}
@@ -69,7 +71,7 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
       )}
 
       {hasStyles && (
-        <Tab label="Styles API" className={classes.tab}>
+        <Tab label={mobile ? 'Styles' : 'Styles API'} className={classes.tab}>
           <div
             style={{ maxWidth: 1080, margin: 'auto', marginTop: 24 }}
             className={classes.tabContent}

@@ -1,11 +1,21 @@
 import { createUseStyles } from 'react-jss';
 import { theming } from '@mantine/core';
-import { BREAKPOINT, TABLE_OF_CONTENTS_WIDTH, CONTENT_WIDTH, TAB_HEIGHT } from '../settings';
+import {
+  BREAKPOINT,
+  TABLE_OF_CONTENTS_WIDTH,
+  CONTENT_WIDTH,
+  TAB_HEIGHT,
+  TAB_HEIGHT_MOBILE,
+} from '../settings';
 
 export default createUseStyles(
   (theme) => ({
     tabs: {
       marginTop: -TAB_HEIGHT,
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        marginTop: -TAB_HEIGHT_MOBILE,
+      },
     },
 
     tabsWrapper: {
@@ -35,6 +45,13 @@ export default createUseStyles(
       paddingRight: theme.spacing.lg,
       marginBottom: -1,
       borderColor: theme.colorScheme === 'dark' ? `${theme.colors.dark[8]} !important` : undefined,
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        paddingLeft: theme.spacing.lg,
+        paddingRight: theme.spacing.lg,
+        fontSize: theme.fontSizes.sm,
+        height: TAB_HEIGHT_MOBILE,
+      },
 
       '&:first-of-type': {
         marginLeft: theme.spacing.xl * 2,
