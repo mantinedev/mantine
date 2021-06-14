@@ -5,6 +5,10 @@ import { BREAKPOINT } from '../Explore.styles';
 export default createUseStyles(
   (theme) => ({
     tabs: {
+      position: 'sticky',
+      top: 60,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      zIndex: 1,
       [BREAKPOINT]: {
         display: 'flex',
         overflowX: 'scroll',
@@ -22,8 +26,7 @@ export default createUseStyles(
       WebkitTapHighlightColor: 'transparent',
       opacity: 0.6,
       cursor: 'pointer',
-      paddingBottom: theme.spacing.md,
-      paddingTop: theme.spacing.md,
+      padding: [theme.spacing.md, 0],
 
       '&:hover': {
         opacity: 1,

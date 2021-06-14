@@ -39,6 +39,13 @@ const useStyles = createUseStyles({
     },
 
     [BREAKPOINT]: {
+      '&:first-of-type': {
+        paddingRight: 0,
+      },
+
+      '&:last-of-type': {
+        paddingLeft: 0,
+      },
       '& + &': {
         marginTop: 20,
       },
@@ -91,7 +98,7 @@ export function InputsDemo() {
           error="Please enter a valid email"
         />
 
-        <RadioGroup label="Radio group" style={{ marginTop: 15 }}>
+        <RadioGroup label="Radio group" style={{ marginTop: 15 }} defaultValue="react">
           <Radio value="react">React</Radio>
           <Radio value="svelte">Svelte</Radio>
           <Radio value="vue">Vue</Radio>
