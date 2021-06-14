@@ -15,7 +15,9 @@ import useStyles from './Layout.styles';
 
 export interface LayoutProps {
   children: React.ReactNode;
-  path: string;
+  location: {
+    pathname: string;
+  };
 }
 
 const query = graphql`
@@ -38,12 +40,12 @@ const query = graphql`
   }
 `;
 
-export function LayoutInner({ children, path }: LayoutProps) {
+export function LayoutInner({ children, location }: LayoutProps) {
   const classes = useStyles();
   const [navbarOpened, setNavbarState] = useState(false);
   const data = getDocsData(useStaticQuery(query));
   const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);
-  const shouldRenderNavbar = !EXCLUDE_LAYOUT_PATHS.includes(path) || navbarCollapsed;
+  const shouldRenderNavbar = !EXCLUDE_LAYOUT_PATHS.includes(location.pathname) || navbarCollapsed;
 
   return (
     <div className={cx({ [classes.withNavbar]: shouldRenderNavbar })}>
