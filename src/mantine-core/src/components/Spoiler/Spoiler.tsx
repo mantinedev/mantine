@@ -20,6 +20,9 @@ export interface SpoilerProps
   /** Get ref of spoiler toggle button */
   controlRef?: React.ForwardedRef<HTMLButtonElement>;
 
+  /** Initial spoiler state, true to wrap content in spoiler, false to show content without spoiler, opened state will be updated on mount */
+  initialState?: boolean;
+
   /** Spoiler reveal transition duration in ms, 0 or null to turn off animation */
   transitionDuration?: number;
 }
@@ -34,6 +37,7 @@ export function Spoiler({
   themeOverride,
   transitionDuration = 200,
   controlRef,
+  initialState = false,
   classNames,
   styles,
   ...others
@@ -47,8 +51,8 @@ export function Spoiler({
     'spoiler'
   );
   const _styles = mergeStyles(classes, styles);
-  const [show, setShowState] = useState(false);
-  const [spoiler, setSpoilerState] = useState(false);
+  const [show, setShowState] = useState(initialState);
+  const [spoiler, setSpoilerState] = useState(initialState);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const spoilerMoreContent = show ? hideLabel : showLabel;
@@ -75,6 +79,8 @@ export function Spoiler({
           elementRef={controlRef}
           onClick={() => setShowState((opened) => !opened)}
           themeOverride={themeOverride}
+          className={classes.control}
+          style={_styles.control}
         >
           {spoilerMoreContent}
         </Button>

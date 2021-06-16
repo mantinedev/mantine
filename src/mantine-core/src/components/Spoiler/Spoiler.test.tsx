@@ -28,7 +28,12 @@ describe('@mantine/core/Spoiler', () => {
   itSupportsClassName(Spoiler, defaultProps);
   itRendersChildren(Spoiler, defaultProps);
   itSupportsStyle(Spoiler, defaultProps);
-  itSupportsStylesApi(Spoiler, defaultProps, Object.keys(SpoilerStylesApi), 'spoiler');
+  itSupportsStylesApi(
+    Spoiler,
+    { ...defaultProps, initialState: true },
+    Object.keys(SpoilerStylesApi),
+    'spoiler'
+  );
 
   it('has correct displayName', () => {
     expect(Spoiler.displayName).toEqual('@mantine/core/Spoiler');
