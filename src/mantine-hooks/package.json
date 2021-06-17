@@ -8,6 +8,7 @@
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
+  "homepage": "https://mantine.dev/hooks/getting-started/",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",

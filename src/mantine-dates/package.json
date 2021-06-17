@@ -9,6 +9,7 @@
   "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "homepage": "https://mantine.dev/dates/getting-started/",
   "peerDependencies": {
     "@mantine/core": "1.4.0-alpha.0",
     "react": ">=16.8.0",
