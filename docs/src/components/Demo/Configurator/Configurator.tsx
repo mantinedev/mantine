@@ -14,6 +14,7 @@ interface ConfiguratorProps {
   multiline?: boolean;
   includeCode?: boolean;
   props: ControlProps[];
+  filter?: string[];
 }
 
 export default function Configurator({
@@ -23,6 +24,7 @@ export default function Configurator({
   props: componentProps,
   multiline = false,
   includeCode = true,
+  filter = [],
 }: ConfiguratorProps) {
   const theme = useMantineTheme();
   const classes = useStyles();
@@ -52,7 +54,11 @@ export default function Configurator({
     );
   });
 
-  const propsCode = propsToString({ props: componentProps, values: state, multiline });
+  const propsCode = propsToString({
+    props: componentProps.filter((prop) => !filter.includes(prop.name)),
+    values: state,
+    multiline,
+  });
 
   const code = codeTemplate(
     propsCode.length > 0 ? ` ${propsCode}` : propsCode,

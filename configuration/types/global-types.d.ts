@@ -43,6 +43,7 @@ interface MantineConfiguratorDemo extends MantineDemoBase {
     previewBackground?: string;
     multiline?: boolean;
     includeCode?: boolean;
+    filter?: string[];
   };
 }
 

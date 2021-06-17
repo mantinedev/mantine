@@ -18,3 +18,30 @@ import { SliderDemos } from '@demos/core';
 ## Usage
 
 <Demo data={SliderDemos.configurator} />
+
+## Controlled
+
+By default both Slider and RangeSlider are uncontrolled, add onChange and value props to make them controlled:
+
+```tsx
+import React, { useState } from 'react';
+import { Slider, RangeSlider } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(40);
+  const [rangeValue, setRangeValue] = useState([20, 80]);
+
+  return (
+    <>
+      <Slider value={value} onChange={setValue} />
+      <RangeSlider value={rangeValue} onChange={setRangeValue} />
+    </>
+  );
+}
+```
+
+## Customize
+
+You can change styles of any element in slider component with <GatsbyLink to="/guides/styles/">Styles API</GatsbyLink> to match your design requirements:
+
+<Demo data={SliderDemos.customize} />

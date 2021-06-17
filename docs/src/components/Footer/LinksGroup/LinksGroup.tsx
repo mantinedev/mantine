@@ -14,10 +14,15 @@ export interface LinksGroupProps {
 
 export function LinksGroup({ data, title }: LinksGroupProps) {
   const classes = useStyles();
-  const links = data.map((link) => {
+  const links = data.map((link, index) => {
     const props = link.type === 'gatsby' ? { to: link.link } : { href: link.link };
     return (
-      <Text className={classes.link} component={link.type === 'gatsby' ? Link : 'a'} {...props}>
+      <Text
+        className={classes.link}
+        component={link.type === 'gatsby' ? Link : 'a'}
+        {...props}
+        key={index}
+      >
         {link.label}
       </Text>
     );

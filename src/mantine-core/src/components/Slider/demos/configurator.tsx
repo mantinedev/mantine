@@ -1,10 +1,13 @@
 import React from 'react';
-import { Slider, SliderProps } from '../Slider/Slider';
+import { Slider } from '../Slider/Slider';
+import { RangeSlider } from '../RangeSlider/RangeSlider';
 
-function Wrapper(props: SliderProps) {
+function Wrapper(props: any) {
+  const Component = props.type === 'range' ? RangeSlider : Slider;
+
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
-      <Slider
+      <Component
         defaultValue={40}
         marks={[
           { value: 20, label: '20%' },
@@ -17,7 +20,9 @@ function Wrapper(props: SliderProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<Slider${props ? `\n ${props}` : ''}
+const codeTemplate = (props: string) => `<${props.includes('range') ? 'RangeSlider' : 'Slider'}${
+  props ? `\n  ${props.replace('type="range"', '').trim()}` : '' // please don't judge, this works somehow
+}
   marks={[
     { value: 20, label: '20%' },
     { value: 50, label: '50%' },
@@ -31,6 +36,16 @@ export const configurator: MantineDemo = {
   codeTemplate,
   configuratorProps: { multiline: true },
   configurator: [
+    {
+      name: 'type',
+      type: 'segmented',
+      initialValue: 'slider',
+      defaultValue: 'slider',
+      data: [
+        { label: 'Default', value: 'slider' },
+        { label: 'Range', value: 'range' },
+      ],
+    },
     { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
     { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
