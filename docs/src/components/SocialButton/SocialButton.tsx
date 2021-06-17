@@ -27,7 +27,7 @@ const data = {
 
   discord: {
     icon: DiscordIcon,
-    label: 'Join Discord server',
+    label: 'Join Discord community',
     link: 'https://discord.gg/eUZpPbpxb4',
     color: '#7289da',
   },

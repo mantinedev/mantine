@@ -13,7 +13,7 @@ export const FOOTER_LINKS_DATA: LinksGroupProps[] = [
   {
     title: 'Community',
     data: [
-      { type: 'link', label: 'Join Discord server', link: 'https://discord.gg/eUZpPbpxb4' },
+      { type: 'link', label: 'Join Discord community', link: 'https://discord.gg/eUZpPbpxb4' },
       { type: 'link', label: 'Follow on Twitter', link: 'https://twitter.com/mantinedev' },
       { type: 'link', label: 'Email newsletter', link: 'https://buttondown.email/mantine' },
       {
