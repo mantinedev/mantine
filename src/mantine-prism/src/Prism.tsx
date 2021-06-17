@@ -75,10 +75,12 @@ export function Prism({
           arrowSize={4}
           gutter={8}
           color={clipboard.copied ? 'teal' : undefined}
+          themeOverride={themeOverride}
         >
           <ActionIcon
             aria-label={clipboard.copied ? copiedLabel : copyLabel}
             onClick={() => clipboard.copy(children)}
+            themeOverride={themeOverride}
           >
             <CopyIcon copied={clipboard.copied} />
           </ActionIcon>
