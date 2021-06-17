@@ -83,6 +83,7 @@ export default createMemoStyles({
 
   vertical: ({ theme, size, variant, color, margins }: DividerStyles) => ({
     border: 0,
+    alignSelf: 'stretch',
     borderLeftWidth: getSizeValue({ size, sizes }),
     borderLeftColor: getThemeColor({ theme, color, shade: 4 }),
     borderLeftStyle: variant,
