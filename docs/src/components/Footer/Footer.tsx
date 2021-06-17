@@ -3,7 +3,7 @@ import { Container, Text, Group, Button } from '@mantine/core';
 import cx from 'clsx';
 import { ArrowRightIcon } from '@modulz/radix-icons';
 import { Logo } from '../Logo/Logo';
-import { GitterButton } from '../GitterButton/GitterButton';
+import { DiscordButton } from '../DiscordButton/DiscordButton';
 import { TwitterButton } from '../TwitterButton/TwitterButton';
 import { LinksGroup } from './LinksGroup/LinksGroup';
 import { FOOTER_LINKS_DATA } from './data';
@@ -67,7 +67,7 @@ export function Footer({ withNavbar }: FooterProps) {
                 </a>
               </Text>
               <div style={{ display: 'flex' }}>
-                <GitterButton />
+                <DiscordButton />
                 <TwitterButton style={{ marginLeft: 10 }} />
               </div>
             </Group>

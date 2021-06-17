@@ -2,7 +2,7 @@ import { createUseStyles } from 'react-jss';
 
 export default createUseStyles({
   button: {
-    backgroundImage: 'linear-gradient(180deg, #FB0766 0%, #C50948 100%)',
+    backgroundColor: '#7289da',
     textShadow: 'unset',
     border: 0,
     height: 42,
