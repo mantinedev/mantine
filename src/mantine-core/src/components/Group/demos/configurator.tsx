@@ -23,7 +23,6 @@ export const configurator: MantineDemo = {
   component: Wrapper,
   codeTemplate,
   configurator: [
-    { name: 'grow', type: 'boolean', initialValue: false, defaultValue: false },
     {
       name: 'position',
       type: 'select',
@@ -38,7 +37,7 @@ export const configurator: MantineDemo = {
     },
     {
       name: 'direction',
-      type: 'select',
+      type: 'segmented',
       data: [
         { label: 'row', value: 'row' },
         { label: 'column', value: 'column' },
@@ -47,5 +46,6 @@ export const configurator: MantineDemo = {
       defaultValue: 'row',
     },
     { name: 'spacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
+    { name: 'grow', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };
