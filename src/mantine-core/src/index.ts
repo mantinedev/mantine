@@ -9,7 +9,7 @@ export { Badge, BADGE_SIZES, BADGE_VARIANTS } from './components/Badge/Badge';
 export { Blockquote } from './components/Blockquote/Blockquote';
 export { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
 export { Burger, BURGER_SIZES } from './components/Burger/Burger';
-export { Button, BUTTON_SIZES, BUTTON_VARIANTS } from './components/Button/Button';
+export { Button, UnstyledButton, BUTTON_SIZES, BUTTON_VARIANTS } from './components/Button/Button';
 export { Card } from './components/Card/Card';
 export { Center } from './components/Center/Center';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';

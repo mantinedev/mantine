@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { MantineSize, DEFAULT_THEME } from '../../theme';
 import { Group } from '../Group/Group';
-import { Button } from './Button';
+import { Button, UnstyledButton } from './Button';
 
 const getThemes = (props?: any) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (
@@ -34,6 +34,11 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
 ));
 
 storiesOf('@mantine/core/Button', module)
+  .add('UnstyledButton', () => (
+    <div style={{ padding: 20 }}>
+      <UnstyledButton>unstyled</UnstyledButton>
+    </div>
+  ))
   .add('Themes', () => (
     <>
       <Group style={{ padding: 20 }}>{getThemes()}</Group>

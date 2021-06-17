@@ -13,11 +13,14 @@ import {
 import { ComponentPassThrough } from '../../types';
 import useStyles, { heights } from './Button.styles';
 
+export { UnstyledButton } from './UnstyledButton/UnstyledButton';
+
 export const BUTTON_SIZES = heights;
 export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light'];
 export type ButtonVariant = 'link' | 'filled' | 'outline' | 'light';
+export type ButtonStylesNames = Exclude<keyof ReturnType<typeof useStyles>, ButtonVariant>;
 
-interface ButtonBaseProps extends DefaultProps<typeof useStyles> {
+interface ButtonBaseProps extends DefaultProps<ButtonStylesNames> {
   /** Predefined button size */
   size?: MantineSize;
 

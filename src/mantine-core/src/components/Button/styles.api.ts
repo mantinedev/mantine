@@ -1,7 +1,6 @@
-import useStyles from './Button.styles';
-import { ButtonVariant } from './Button';
+import { ButtonStylesNames } from './Button';
 
-export const Button: Omit<MantineClasses<typeof useStyles>, ButtonVariant> = {
+export const Button: Record<ButtonStylesNames, string> = {
   root: 'Root button element',
   icon: 'Shared icon styles',
   leftIcon: 'Left icon',
