@@ -7,6 +7,12 @@ export default createUseStyles(
       '& + &': {
         marginLeft: 80,
       },
+
+      '@media (max-width: 1000px)': {
+        '& + &': {
+          marginLeft: 40,
+        },
+      },
     },
 
     link: {

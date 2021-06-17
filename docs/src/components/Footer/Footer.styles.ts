@@ -4,11 +4,21 @@ import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from '../Layout/Navbar/Navbar.styles'
 import { BREAKPOINT as MDX_PAGE_BREAKPOINT } from '../MdxPage/settings';
 
 const FOOTER_HEIGHT = 360;
+const FOOTER_HEIGHT_TABLET = 460;
+const FOOTER_HEIGHT_MOBILE = 320;
 
 export default createUseStyles(
   (theme) => ({
     spacer: {
       height: FOOTER_HEIGHT,
+
+      '@media (max-width: 800px)': {
+        height: FOOTER_HEIGHT_TABLET,
+      },
+
+      '@media (max-width: 640px)': {
+        height: FOOTER_HEIGHT_MOBILE,
+      },
     },
 
     wrapper: {
@@ -18,6 +28,14 @@ export default createUseStyles(
       left: 0,
       right: 0,
       height: FOOTER_HEIGHT,
+
+      '@media (max-width: 800px)': {
+        height: FOOTER_HEIGHT_TABLET,
+      },
+
+      '@media (max-width: 640px)': {
+        height: FOOTER_HEIGHT_MOBILE,
+      },
     },
 
     withNavbar: {
@@ -40,10 +58,26 @@ export default createUseStyles(
       paddingBottom: theme.spacing.xl * 2,
       display: 'flex',
       justifyContent: 'space-between',
+
+      '@media (max-width: 800px)': {
+        flexDirection: 'column',
+      },
+
+      '@media (max-width: 640px)': {
+        paddingBottom: theme.spacing.md,
+      },
     },
 
     logoSection: {
       maxWidth: 300,
+
+      '@media (max-width: 800px)': {
+        marginBottom: theme.spacing.xl,
+      },
+
+      '@media (max-width: 640px)': {
+        marginBottom: 0,
+      },
     },
 
     description: {
@@ -73,16 +107,47 @@ export default createUseStyles(
 
     groups: {
       display: 'flex',
+
+      '@media (max-width: 640px)': {
+        display: 'none',
+      },
     },
 
     feedback: {
       maxWidth: 260,
       marginLeft: 80,
+
+      '@media (max-width: 1000px)': {
+        marginLeft: 40,
+      },
     },
 
     feedbackDescription: {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
       marginBottom: theme.spacing.sm,
+    },
+
+    social: {
+      display: 'flex',
+
+      '@media (max-width: 640px)': {
+        display: 'block',
+      },
+    },
+
+    socialButton: {
+      '& + &': {
+        marginLeft: theme.spacing.md,
+      },
+
+      '@media (max-width: 640px)': {
+        flex: 1,
+        width: '100%',
+        '& + &': {
+          marginLeft: 0,
+          marginTop: theme.spacing.md,
+        },
+      },
     },
   }),
   { theming }

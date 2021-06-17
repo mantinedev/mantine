@@ -66,9 +66,9 @@ export function Footer({ withNavbar }: FooterProps) {
                   these awesome people
                 </a>
               </Text>
-              <div style={{ display: 'flex' }}>
-                <DiscordButton />
-                <TwitterButton style={{ marginLeft: 10 }} />
+              <div className={classes.social}>
+                <DiscordButton className={classes.socialButton} />
+                <TwitterButton className={classes.socialButton} />
               </div>
             </Group>
           </div>
