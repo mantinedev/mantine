@@ -17,7 +17,7 @@ export function StylesApiHeader({ component, singleNode }: StylesApiHeaderProps)
       </Title>
 
       {singleNode ? (
-        <Text>
+        <Text style={{ marginBottom: 15 }}>
           {component} renders single node, use className and style props to override styles:
         </Text>
       ) : (
