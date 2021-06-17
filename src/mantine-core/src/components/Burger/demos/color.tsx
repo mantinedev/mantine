@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Burger } from '../Burger';
+import React from 'react';
+import { WrappedBurger } from './WrappedBurger';
 import { Group } from '../../Group/Group';
 
 const code = `
@@ -9,14 +9,11 @@ const code = `
 `;
 
 export function Demo() {
-  const [opened, setOpened] = useState(false);
-  const title = opened ? 'Close navigation' : 'Open navigation';
-
   return (
     <Group position="center">
-      <Burger opened={opened} onClick={() => setOpened((o) => !o)} title={title} />
-      <Burger color="#fe6734" opened={opened} onClick={() => setOpened((o) => !o)} title={title} />
-      <Burger color="#45f50d" opened={opened} onClick={() => setOpened((o) => !o)} title={title} />
+      <WrappedBurger />
+      <WrappedBurger color="#fe6734" />
+      <WrappedBurger color="#45f50d" />
     </Group>
   );
 }

@@ -1,16 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MANTINE_SIZES } from '../../../theme';
-import { Burger } from '../Burger';
+import { WrappedBurger } from './WrappedBurger';
 import { Group } from '../../Group/Group';
-
-function WrappedBurger(props: Omit<React.ComponentProps<typeof Burger>, 'opened' | 'onChange'>) {
-  const [opened, onChange] = useState(false);
-  return (
-    <div style={{ padding: 10 }}>
-      <Burger opened={opened} onClick={() => onChange((s) => !s)} {...props} />
-    </div>
-  );
-}
 
 const items = MANTINE_SIZES.map((size) => <WrappedBurger size={size} key={size} />);
 

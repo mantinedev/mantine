@@ -1,16 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '../../theme';
-import { Burger } from './Burger';
-
-function WrappedBurger(props: Omit<React.ComponentProps<typeof Burger>, 'opened' | 'onChange'>) {
-  const [opened, onChange] = useState(false);
-  return (
-    <div style={{ padding: 10 }}>
-      <Burger opened={opened} onClick={() => onChange((s) => !s)} {...props} />
-    </div>
-  );
-}
+import { WrappedBurger } from './demos/WrappedBurger';
 
 const getThemes = (props?: any) =>
   ['#fff', '#fe6734'].map((color) => <WrappedBurger key={color} color={color} {...props} />);
