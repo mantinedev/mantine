@@ -2,7 +2,6 @@ import {
   createMemoStyles,
   MantineTheme,
   MantineNumberSize,
-  getThemeColor,
   getSizeValue,
   getFocusStyles,
 } from '../../theme';
@@ -37,7 +36,7 @@ export default createMemoStyles({
     cursor: 'pointer',
   }),
 
-  burger: ({ size, theme, color, reduceMotion }: BurgerStyles) => {
+  burger: ({ size, color, reduceMotion }: BurgerStyles) => {
     const sizeValue = getSizeValue({ size, sizes });
 
     return {
@@ -49,11 +48,7 @@ export default createMemoStyles({
         display: 'block',
         width: sizeValue,
         height: Math.ceil(sizeValue / 12),
-        backgroundColor: getThemeColor({
-          theme,
-          color,
-          shade: theme.colorScheme === 'dark' ? 4 : 7,
-        }),
+        backgroundColor: color,
         outline: '1px solid transparent',
         transitionProperty: 'background-color, transform',
         transitionDuration: reduceMotion ? '0ms' : '300ms',

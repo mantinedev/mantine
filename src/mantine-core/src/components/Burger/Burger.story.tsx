@@ -13,9 +13,7 @@ function WrappedBurger(props: Omit<React.ComponentProps<typeof Burger>, 'opened'
 }
 
 const getThemes = (props?: any) =>
-  Object.keys(DEFAULT_THEME.colors).map((color) => (
-    <WrappedBurger key={color} color={color} {...props} />
-  ));
+  ['#fff', '#fe6734'].map((color) => <WrappedBurger key={color} color={color} {...props} />);
 
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl', 80, 120] as any).map((size) => (
   <WrappedBurger size={size} key={size} />

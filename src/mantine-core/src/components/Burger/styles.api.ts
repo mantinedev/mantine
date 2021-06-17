@@ -1,6 +1,6 @@
-import useStyles from './Burger.styles';
+import { BurgerStylesNames } from './Burger';
 
-export const Burger: Omit<MantineClasses<typeof useStyles>, 'opened'> = {
+export const Burger: Record<BurgerStylesNames, string> = {
   root: 'Root button element',
   burger: 'Burger icon',
 };
