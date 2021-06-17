@@ -3,7 +3,7 @@ import { theming } from '@mantine/core';
 import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from '../Layout/Navbar/Navbar.styles';
 import { BREAKPOINT as MDX_PAGE_BREAKPOINT } from '../MdxPage/settings';
 
-const FOOTER_HEIGHT = 360;
+const FOOTER_HEIGHT = 400;
 const FOOTER_HEIGHT_TABLET = 460;
 const FOOTER_HEIGHT_MOBILE = 320;
 
