@@ -3,8 +3,7 @@ import { Container, Text, Group, Button } from '@mantine/core';
 import cx from 'clsx';
 import { ArrowRightIcon } from '@modulz/radix-icons';
 import { Logo } from '../Logo/Logo';
-import { DiscordButton } from '../DiscordButton/DiscordButton';
-import { TwitterButton } from '../TwitterButton/TwitterButton';
+import { SocialButton } from '../SocialButton/SocialButton';
 import { LinksGroup } from './LinksGroup/LinksGroup';
 import { FOOTER_LINKS_DATA } from './data';
 import useStyles from './Footer.styles';
@@ -67,8 +66,8 @@ export function Footer({ withNavbar }: FooterProps) {
                 </a>
               </Text>
               <div className={classes.social}>
-                <DiscordButton className={classes.socialButton} />
-                <TwitterButton className={classes.socialButton} />
+                <SocialButton type="large" service="discord" className={classes.socialButton} />
+                <SocialButton type="large" service="twitter" className={classes.socialButton} />
               </div>
             </Group>
           </div>

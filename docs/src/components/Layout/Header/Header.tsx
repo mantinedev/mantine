@@ -1,17 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Burger, Code, ActionIcon, Tooltip } from '@mantine/core';
-import {
-  GitHubLogoIcon,
-  ChatBubbleIcon,
-  ExclamationTriangleIcon,
-  SunIcon,
-  MoonIcon,
-} from '@modulz/radix-icons';
+import { Burger, Code, ActionIcon, Tooltip, Group } from '@mantine/core';
+import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 import corePackageJson from '../../../../package.json';
 import { getDocsData } from '../get-docs-data';
 import { ColorSchemeContext } from '../ColorScheme.context';
 import Search from './Search/Search';
 import { Logo } from '../../Logo/Logo';
+import { SocialButton } from '../../SocialButton/SocialButton';
 import useStyles from './Header.styles';
 
 interface HeaderProps {
@@ -65,28 +60,20 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
       <div className={classes.links}>
         <Search data={data} isMacOS={isMacOS} />
 
-        <a className={classes.link} href="https://github.com/mantinedev/mantine">
-          <GitHubLogoIcon />
-          <span className={classes.linkLabel}>Source code</span>
-        </a>
-
-        <a className={classes.link} href="https://github.com/mantinedev/mantine/discussions">
-          <ChatBubbleIcon />
-          <span className={classes.linkLabel}>Discuss</span>
-        </a>
-
-        <a className={classes.link} href="https://github.com/mantinedev/mantine/issues/new">
-          <ExclamationTriangleIcon />
-          <span className={classes.linkLabel}>Report issue</span>
-        </a>
+        <Group spacing="xs">
+          <SocialButton type="small" service="github" />
+          <SocialButton type="small" service="discord" />
+          <SocialButton type="small" service="twitter" />
+          <SocialButton type="small" service="email" />
+        </Group>
 
         <Tooltip
-          label={`${isMacOS ? '⌘' : 'Ctrl'} + J`}
-          position="left"
-          placement="center"
+          label={`Toggle color scheme: ${isMacOS ? '⌘' : 'Ctrl'} + J`}
           transition="fade"
           withArrow
-          arrowSize={4}
+          position="bottom"
+          placement="end"
+          style={{ marginLeft: 20 }}
         >
           <ActionIcon
             aria-label="Toggle theme"
