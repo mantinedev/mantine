@@ -35,5 +35,16 @@ export const positionConfigurator: MantineDemo = {
         { label: 'apart', value: 'apart' },
       ],
     },
+    {
+      name: 'variant',
+      type: 'segmented',
+      initialValue: 'default',
+      defaultValue: 'default',
+      data: [
+        { value: 'default', label: 'Default' },
+        { value: 'outline', label: 'Outline' },
+        { value: 'pills', label: 'Pills' },
+      ],
+    },
   ],
 };

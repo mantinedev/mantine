@@ -69,6 +69,7 @@ export default createMemoStyles({
     borderRadius: 1000,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
+    fontSize: theme.fontSizes.md,
 
     '&$active': {
       color: theme.white,
