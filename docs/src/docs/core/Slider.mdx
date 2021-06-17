@@ -8,7 +8,7 @@ category: 'inputs'
 description: 'Capture user feedback from a range of values'
 props: ['Slider', 'RangeSlider']
 import: "import { Slider, RangeSlider } from '@mantine/core';"
-source: 'mantine-core/src/components/Slider/Slider.tsx'
+source: 'mantine-core/src/components/Slider'
 docs: 'core/Slider.mdx'
 styles: ['Slider', 'RangeSlider']
 ---
@@ -39,6 +39,21 @@ function Demo() {
   );
 }
 ```
+
+## Marks
+
+Add any amount of marks to slider by setting `marks` prop to an array of objects:
+
+```tsx
+const marks = [
+  { value: 20 }, // -> displays mark on slider track
+  { value: 40, label: '40%' }, // -> adds mark label below slider track
+];
+```
+
+Note that mark value is relative to slider value, not width:
+
+<Demo data={SliderDemos.marks} />
 
 ## Customize
 
