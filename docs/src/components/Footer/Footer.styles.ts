@@ -3,7 +3,7 @@ import { theming } from '@mantine/core';
 import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from '../Layout/Navbar/Navbar.styles';
 import { BREAKPOINT as MDX_PAGE_BREAKPOINT } from '../MdxPage/settings';
 
-const FOOTER_HEIGHT = 320;
+const FOOTER_HEIGHT = 360;
 
 export default createUseStyles(
   (theme) => ({
@@ -12,7 +12,7 @@ export default createUseStyles(
     },
 
     wrapper: {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       position: 'fixed',
       bottom: 0,
       left: 0,
@@ -37,7 +37,7 @@ export default createUseStyles(
 
     inner: {
       paddingTop: theme.spacing.xl * 2,
-      paddingBottom: theme.spacing.xl * 4,
+      paddingBottom: theme.spacing.xl * 2,
       display: 'flex',
       justifyContent: 'space-between',
     },
@@ -57,9 +57,10 @@ export default createUseStyles(
     },
 
     afterFooter: {
-      borderTop: `1px solid ${theme.colors.gray[2]}`,
+      borderTop: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+      }`,
       paddingTop: theme.spacing.md,
-      paddingBottom: theme.spacing.md,
     },
 
     afterFooterNote: {
@@ -68,6 +69,20 @@ export default createUseStyles(
       '& a': {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
       },
+    },
+
+    groups: {
+      display: 'flex',
+    },
+
+    feedback: {
+      maxWidth: 260,
+      marginLeft: 80,
+    },
+
+    feedbackDescription: {
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
+      marginBottom: theme.spacing.sm,
     },
   }),
   { theming }

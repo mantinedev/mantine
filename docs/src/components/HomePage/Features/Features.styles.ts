@@ -14,7 +14,7 @@ export default createUseStyles(
     },
 
     waves: {
-      fill: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      fill: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
       width: '200%',
       height: 88,
       transform: 'scaleX(-1)',
@@ -27,6 +27,7 @@ export default createUseStyles(
     wavesBottom: {
       height: 44,
       transform: 'rotate(180deg)',
+      fill: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
 
       [BREAKPOINT]: {
         height: 24,
