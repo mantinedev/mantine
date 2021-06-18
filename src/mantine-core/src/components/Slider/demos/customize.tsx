@@ -9,11 +9,11 @@ const code = `
   labelTransition="fade"
   styles={{
     track: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.blue[1] },
-    label: { fontSize: 16, top: 'unset' },
+    label: { fontSize: 16, bottom: -36, top: 'unset' },
     mark: { width: 2, borderRadius: 0, transform: 'translateX(-2px)', borderColor: theme.colors.blue[3] },
     markLabel: { fontSize: theme.fontSizes.xs, marginBottom: 5, marginTop: 0 },
     markWrapper: { display: 'flex', flexDirection: 'column-reverse', top: 'unset', bottom: 0 },
-    thumb: { backgroundColor: theme.colors.blue[6], borderRadius: 0, borderColor: theme.colors.blue[6] },
+    thumb: { backgroundColor: theme.white, border: \`1px solid \${theme.colors.gray[3]}\`, boxShadow: theme.shadows.sm, },
   }}
 />
 `;
@@ -37,7 +37,7 @@ function Demo() {
             backgroundColor:
               theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.blue[1],
           },
-          label: { fontSize: 16, top: 'unset' },
+          label: { fontSize: 16, bottom: -36, top: 'unset' },
           mark: {
             width: 2,
             borderRadius: 0,
@@ -52,9 +52,9 @@ function Demo() {
             bottom: 0,
           },
           thumb: {
-            backgroundColor: theme.colors.blue[6],
-            borderRadius: 0,
-            borderColor: theme.colors.blue[6],
+            backgroundColor: theme.white,
+            border: `1px solid ${theme.colors.gray[3]}`,
+            boxShadow: theme.shadows.sm,
           },
         }}
       />

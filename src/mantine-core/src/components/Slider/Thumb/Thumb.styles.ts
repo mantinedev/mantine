@@ -23,6 +23,7 @@ export default createMemoStyles({
     color: theme.white,
     padding: theme.spacing.xs / 2,
     borderRadius: theme.radius.sm,
+    whiteSpace: 'nowrap',
   }),
 
   thumb: ({ theme, color, size }: ThumbStyles) => ({

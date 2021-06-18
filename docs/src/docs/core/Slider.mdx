@@ -40,6 +40,20 @@ function Demo() {
 }
 ```
 
+## Control label
+
+To change label behavior and appearance set props:
+
+- `label` – formatter function, accepts value as an argument, set to null to disable label, defaults to `f => f`
+- `labelAlwaysOn` – if true – label will always be displayed, by default label is visible only when user is dragging
+- `labelTransition`, `labelTransitionDuration`, `labelTransitionTimingFunction` – label uses <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component to animate presence, you can choose any premade transition or create your own
+
+<Demo data={SliderDemos.label} />
+
+## Min, max and step
+
+<Demo data={SliderDemos.step} />
+
 ## Marks
 
 Add any amount of marks to slider by setting `marks` prop to an array of objects:
@@ -55,8 +69,23 @@ Note that mark value is relative to slider value, not width:
 
 <Demo data={SliderDemos.marks} />
 
-## Customize
+## Styles API
 
 You can change styles of any element in slider component with <GatsbyLink to="/guides/styles/">Styles API</GatsbyLink> to match your design requirements:
 
 <Demo data={SliderDemos.customize} />
+
+## Accessibility and usability
+
+Slider and RangeSlider components are accessible by default:
+
+- Slider thumbs are focusable
+- When user uses mouse to interact with slider, focus is moved on slider track, when user presses arrows focus is moved on thumb
+- Value can be changed with arrows with step increment/decrement
+
+To label component for screen readers add labels to thumbs:
+
+```tsx
+<Slider thumbLabel="Thumb aria-label" />
+<RangeSlider thumbFromLabel="First thumb aria-label" thumbToLabel="Second thumb aria-label" />
+```
