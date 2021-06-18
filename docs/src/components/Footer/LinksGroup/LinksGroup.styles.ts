@@ -5,7 +5,7 @@ export default createUseStyles(
   (theme) => ({
     wrapper: {
       '& + &': {
-        marginLeft: 80,
+        marginLeft: 60,
       },
 
       '@media (max-width: 1000px)': {
