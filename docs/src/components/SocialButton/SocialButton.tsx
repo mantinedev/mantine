@@ -7,7 +7,7 @@ import { DiscordIcon } from './DiscordIcon';
 
 interface SocialButtonProps extends Omit<React.ComponentProps<'button'>, 'type'> {
   type?: 'small' | 'large';
-  service: 'github' | 'twitter' | 'discord' | 'email';
+  service: 'github' | 'twitter' | 'discord' | 'email' | 'tg';
 }
 
 const data = {
@@ -38,6 +38,13 @@ const data = {
     link: 'https://twitter.com/mantinedev',
     color: '#00acee',
   },
+
+  tg: {
+    icon: null,
+    label: 'Contact on Telegram',
+    link: 'https://t.me/rtivital',
+    color: '#40B3E0',
+  },
 };
 
 export function SocialButton({ type = 'large', service, style, ...others }: SocialButtonProps) {
@@ -50,7 +57,7 @@ export function SocialButton({ type = 'large', service, style, ...others }: Soci
         target="_blank"
         rel="noopener noreferrer"
         href={serviceData.link}
-        leftIcon={<serviceData.icon style={{ width: 14, marginRight: 5 }} />}
+        leftIcon={serviceData.icon && <serviceData.icon style={{ width: 14, marginRight: 5 }} />}
         style={{
           ...style,
           backgroundColor: serviceData.color,

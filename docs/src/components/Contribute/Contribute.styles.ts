@@ -9,6 +9,12 @@ export default createUseStyles(
       paddingTop: 54,
       paddingLeft: theme.spacing.xl * 2,
       paddingRight: theme.spacing.xl * 2,
+      paddingBottom: theme.spacing.xl * 4,
+      minHeight: 'calc(100vh - 180px)',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      position: 'relative',
+      zIndex: 1,
+      boxShadow: theme.shadows.sm,
 
       [BREAKPOINT]: {
         paddingLeft: theme.spacing.xl,
@@ -24,6 +30,7 @@ export default createUseStyles(
 
     subtitle: {
       marginTop: theme.spacing.xl,
+      marginBottom: theme.spacing.md,
     },
 
     header: {
@@ -43,7 +50,9 @@ export default createUseStyles(
     card: {
       boxSizing: 'border-box',
       flex: `0 0 calc(33.333333% - ${theme.spacing.md}px)`,
-      border: `1px solid ${theme.colors.gray[2]}`,
+      borderRadius: theme.radius.sm,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+      border: `1px solid ${theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[2]}`,
       padding: theme.spacing.md,
 
       [BREAKPOINT]: {
