@@ -11,14 +11,18 @@ import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '.
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { Portal } from '../Portal/Portal';
+import { Text } from '../Text/Text';
+import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { GroupedTransition, MantineTransition } from '../Transition/Transition';
 import useStyles, { Position, sizes } from './Drawer.styles';
 
 export const DRAWER_SIZES = sizes;
 
+export type DrawerStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'noOverlay'>;
+
 export interface DrawerProps
-  extends DefaultProps<typeof useStyles>,
-    React.ComponentPropsWithoutRef<'div'> {
+  extends DefaultProps<DrawerStylesNames>,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** If true drawer is mounted to the dom */
   opened: boolean;
 
@@ -69,6 +73,15 @@ export interface DrawerProps
 
   /** Sets overlay color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
   overlayColor?: string;
+
+  /** Drawer title, displayed in header before close button */
+  title?: React.ReactNode;
+
+  /** Hides close button, modal still can be closed with escape key and by clicking outside */
+  hideCloseButton?: boolean;
+
+  /** Close button aria-label */
+  closeButtonLabel?: string;
 }
 
 const transitions: Record<Position, MantineTransition> = {
@@ -100,6 +113,9 @@ export function MantineDrawer({
   noOverlay = false,
   shadow = 'md',
   padding = 0,
+  title,
+  hideCloseButton,
+  closeButtonLabel,
   classNames,
   styles,
   ...others
@@ -168,6 +184,22 @@ export function MantineDrawer({
             padding={padding}
             themeOverride={themeOverride}
           >
+            {(title || !hideCloseButton) && (
+              <div className={classes.header} style={_styles.header}>
+                <Text className={classes.title} style={_styles.title} themeOverride={themeOverride}>
+                  {title}
+                </Text>
+
+                {!hideCloseButton && (
+                  <CloseButton
+                    iconSize={16}
+                    onClick={onClose}
+                    aria-label={closeButtonLabel}
+                    themeOverride={themeOverride}
+                  />
+                )}
+              </div>
+            )}
             {children}
           </Paper>
 

@@ -57,7 +57,7 @@ export interface ModalProps
   /** Modal body transitionTimingFunction, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
 
-  /** Close button aria-label and title attributes */
+  /** Close button aria-label */
   closeButtonLabel?: string;
 
   /** id base, used to generate ids to connect modal title and body with aria- attributes, defaults to random id */

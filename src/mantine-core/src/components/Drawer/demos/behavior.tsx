@@ -14,6 +14,7 @@ function Demo() {
         opened={opened}
         onClose={() => setOpened(false)}
         padding="md"
+        hideCloseButton
         noCloseOnClickOutside
         noFocusTrap
         noScrollLock
@@ -39,6 +40,7 @@ function Demo() {
         opened={opened}
         onClose={() => setOpened(false)}
         padding="md"
+        hideCloseButton
         noCloseOnClickOutside
         noFocusTrap
         noScrollLock

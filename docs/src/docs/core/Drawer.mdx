@@ -96,10 +96,15 @@ By default:
 - Drawer transitions use disabled when user prefers to reduce motion
 - Drawer body has `aria-modal` and `role="dialog"` attributes
 
-Add [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-labelledby_attribute) and [aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute) for better screen readers support:
+Add [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-labelledby_attribute), [aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute)
+and `closeButtonLabel` props for better screen readers support:
 
 ```tsx
-<Drawer aria-labelledby="drawer-title" aria-describedby="drawer-body">
+<Drawer
+  aria-labelledby="drawer-title"
+  aria-describedby="drawer-body"
+  closeButtonLabel="Close drawer"
+>
   <h1 id="drawer-title">Title</h1>
   <div id="drawer-body">Body</div>
 </Drawer>

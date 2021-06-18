@@ -17,7 +17,13 @@ function Demo() {
 
   return (
     <>
-      <Drawer opened={opened} onClose={() => setOpened(false)} padding="md" size={size}>
+      <Drawer
+        opened={opened}
+        onClose={() => setOpened(false)}
+        padding="md"
+        size={size}
+        hideCloseButton
+      >
         Press escape to close the drawer
       </Drawer>
 

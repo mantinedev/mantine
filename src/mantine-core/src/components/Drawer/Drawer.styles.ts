@@ -63,4 +63,19 @@ export default createMemoStyles({
     position: 'fixed',
     outline: 0,
   }),
+
+  title: ({ theme }: DrawerStyles) => ({
+    marginRight: theme.spacing.md,
+    textOverflow: 'ellipsis',
+    display: 'block',
+    wordBreak: 'break-word',
+  }),
+
+  header: ({ theme }: DrawerStyles) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: theme.spacing.md,
+    marginRight: -9,
+  }),
 });

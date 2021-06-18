@@ -11,10 +11,12 @@ import {
 import { GroupedTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
+import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { MantineDrawer, Drawer } from './Drawer';
 import { Drawer as DrawerStylesApi } from './styles.api';
 
 const defaultProps = {
+  title: 'Test',
   opened: true,
   onClose: () => {},
 };
@@ -27,6 +29,7 @@ describe('@mantine/core/Drawer', () => {
         onClose={() => {}}
         aria-labelledby="drawer-title"
         aria-describedby="drawer-body"
+        closeButtonLabel="Close drawer"
       >
         <h1 id="drawer-title">Title</h1>
         <div id="drawer-body">Body</div>
@@ -54,6 +57,35 @@ describe('@mantine/core/Drawer', () => {
     expect(element.find(GroupedTransition).prop('transitions').drawer.timingFunction).toBe(
       'linear'
     );
+  });
+
+  it('closes modal on close button click', () => {
+    const spy = jest.fn();
+    const element = mount(
+      <MantineDrawer opened onClose={spy}>
+        test-modal
+      </MantineDrawer>
+    );
+    element.find(CloseButton).simulate('click');
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('renders correct title', () => {
+    const element = mount(
+      <MantineDrawer opened onClose={() => {}} title="test-title">
+        test-modal
+      </MantineDrawer>
+    );
+
+    expect(element.render().find('.mantine-drawer-title').text()).toBe('test-title');
+  });
+
+  it('allows to hide close button with hideCloseButton prop', () => {
+    const withButton = mount(<MantineDrawer opened onClose={() => {}} />);
+    const withoutButton = mount(<MantineDrawer opened onClose={() => {}} hideCloseButton />);
+
+    expect(withButton.find(CloseButton)).toHaveLength(1);
+    expect(withoutButton.find(CloseButton)).toHaveLength(0);
   });
 
   it('passes shadow and padding to Paper component', () => {
