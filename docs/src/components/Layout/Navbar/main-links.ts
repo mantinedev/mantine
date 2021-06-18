@@ -14,5 +14,5 @@ export default [
     theme: DEFAULT_THEME.colors.teal[6],
     icon: ArchiveIcon,
   },
-  { to: '/pages/contribute/', label: 'Contribute', theme: '#000', icon: GitHubLogoIcon },
+  { to: '/contribute/', label: 'Contribute', theme: '#000', icon: GitHubLogoIcon },
 ];
