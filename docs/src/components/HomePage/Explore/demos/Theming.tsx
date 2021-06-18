@@ -31,7 +31,7 @@ export function ThemingDemo() {
     <>
       <LinkTitle
         title="Extend theme with additional values"
-        link="/pages/theming"
+        link="/theming/extend-theme/"
         label="Learn more"
         description="Customize theme for entire application with MantineProvider or override it per component with themeOverride prop"
       />
