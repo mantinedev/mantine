@@ -14,6 +14,7 @@ export const MANTINE_CORE_CATEGORIZED = {
 };
 
 export const CATEGORIZED = [
+  { group: 'theming', categories: {}, order: [] },
   { group: 'guides', categories: {}, order: [] },
   MANTINE_HOOKS_CATEGORIZED,
   MANTINE_CORE_CATEGORIZED,
