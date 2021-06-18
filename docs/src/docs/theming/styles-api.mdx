@@ -5,4 +5,132 @@ slug: /theming/styles-api/
 order: 4
 ---
 
+import { ButtonDemos, SliderDemos } from '@demos/core';
+import * as CORE_STYLES_API from '@mantine/core/src/styles.api';
+
 # Styles API
+
+All Mantine components support styling of each component part with inline styles or by passing classNames.
+
+## Styling with classNames
+
+Let's say you want to make <GatsbyLink to="/core/slider/">Slider</GatsbyLink> component look something like this:
+
+<Demo data={SliderDemos.customize} demoProps={{ code: null }} />
+
+But default slider has completely different styles:
+
+<Demo data={SliderDemos.configurator} configuratorProps={{ includeCode: false }} />
+
+To apply your styles to Slider component, go to "Styles API" tab under component documentation and find
+styles names table. Name column will tell you how to target specific element in component:
+
+<DataTable
+  head={['Name', 'Static selector', 'Description']}
+  data={Object.keys(CORE_STYLES_API.Slider).map((name) => [
+    name,
+    `.mantine-slider-${name}`,
+    CORE_STYLES_API.Slider[name],
+  ])}
+/>
+
+For example, if you want to add styles to slider thumb:
+
+```tsx
+// Add className to thumb
+<Slider classNames={{ thumb: 'my-slider-thumb' }} />
+
+// Add inline styles to thumb
+<Slider styles={{ thumb: { backgroundColor: 'red' } }} />
+```
+
+Now you can write styles for your component with <GatsbyLink to="/theming/react-jss/">react-jss</GatsbyLink>
+or any other any other styling tools and languages:
+
+```tsx
+import { createUseStyles } from 'react-jss';
+import { Slider, theming } from '@mantine/core';
+
+const useStyles = createUseStyles(
+  (theme) => ({
+    track: {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.blue[1],
+    },
+
+    label: {
+      fontSize: 16,
+      bottom: -36,
+      top: 'unset',
+    },
+
+    mark: {
+      width: 2,
+      borderRadius: 0,
+      transform: 'translateX(-2px)',
+      borderColor: theme.colors.blue[3],
+    },
+
+    markLabel: {
+      fontSize: theme.fontSizes.xs,
+      marginBottom: 5,
+      marginTop: 0,
+    },
+
+    markWrapper: {
+      display: 'flex',
+      flexDirection: 'column-reverse',
+      top: 'unset',
+      bottom: 0,
+    },
+
+    thumb: {
+      backgroundColor: theme.white,
+      border: `1px solid ${theme.colors.gray[3]}`,
+      boxShadow: theme.shadows.sm,
+    },
+  }),
+  { theming }
+);
+
+function MyCustomSlider() {
+  const classes = useStyles();
+  return (
+    <Slider
+      classNames={{
+        track: classes.track,
+        label: classes.label,
+        mark: classes.mark,
+        markLabel: classes.markLabel,
+        markWrapper: classes.markWrapper,
+        thumb: classes.thumb,
+      }}
+    />
+  );
+}
+```
+
+## Styling with inline styles
+
+Same as in the above example – to make this twitter button you will need to use styles API:
+
+<Demo data={ButtonDemos.customize} demoProps={{ code: null }} />
+
+Styles names for button component:
+
+<DataTable
+  head={['Name', 'Static selector', 'Description']}
+  data={Object.keys(CORE_STYLES_API.Button).map((name) => [
+    name,
+    `.mantine-button-${name}`,
+    CORE_STYLES_API.Button[name],
+  ])}
+/>
+
+Here extra styles are required only for root element and left icon:
+
+<Demo data={ButtonDemos.customize} />
+
+## Static class names
+
+Apart from `classNames` and `styles` props each component also has static classes on each element.
+You can use them to apply your styles if you do not use css modules or just do not want to pass `classNames` prop.
