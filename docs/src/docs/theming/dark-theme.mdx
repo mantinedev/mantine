@@ -5,4 +5,204 @@ slug: /theming/dark-theme/
 order: 2
 ---
 
+import { DarkThemeToggleDemo } from '@docs/demos';
+import { ColorsGroup } from '../../components/ThemeColors/ColorsGroup.tsx';
+
 # Dark theme
+
+All mantine components support dark color scheme natively without any additional steps.
+To use dark color scheme wrap your application in MantineProvider and specify `colorScheme`:
+
+```tsx
+import React from 'react';
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ colorScheme: 'dark' }}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+## Colors
+
+Mantine uses `theme.colors.dark` values to style components with dark color scheme.
+Default colors have purple-blue accent:
+
+<ColorsGroup group="dark" noTitle />
+
+You can customize these values just like any other color:
+
+```tsx
+<MantineProvider
+  theme={{
+    colorScheme: 'dark',
+    colors: {
+      // override dark colors here to change them for all components
+      dark: [
+        '#d5d7e0',
+        '#acaebf',
+        '#8c8fa3',
+        '#666980',
+        '#4d4f66',
+        '#34354a',
+        '#2b2c3d',
+        '#1d1e30',
+        '#0c0d21',
+        '#01010a',
+      ],
+    },
+  }}
+>
+  <App />
+</MantineProvider>
+```
+
+## Global styles
+
+`theme.colors.dark[7]` shade is considered to be the body background color and `theme.colors.dark[0]` shade as text color with dark color scheme.
+Mantine does not have any global styles so you will need to set it yourself.
+Usually global styles are added on top level component inside MantineProvider:
+
+```tsx
+import React from 'react';
+import { createUseStyles } from 'react-jss';
+import { MantineProvider, theming } from '@mantine/core';
+
+const useStyles = createUseStyles(
+  (theme) => ({
+    '@global': {
+      body: {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+      },
+    },
+  }),
+  { theming }
+);
+
+function App() {
+  useStyles();
+  return <div>Your app here</div>;
+}
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ colorScheme: 'dark' }}>
+      {/* Add App component with global styles inside
+      MantineProvider to subscribe to theming context */}
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+## Color scheme toggle
+
+Mantine support dynamic color scheme change.
+To implement this create context that will save colorScheme value
+and provide handler to change it:
+
+```tsx
+// ColorSchemeContext.jsx file
+import { createContext } from 'react';
+
+export default createContext(null);
+```
+
+Then wrap your application with provider:
+
+```tsx
+import React from 'react';
+import { MantineProvider } from '@mantine/core';
+import ColorSchemeContext from './ColorSchemeContext';
+
+export default function Demo() {
+  const [colorScheme, setColorScheme] = useState('light');
+
+  return (
+    <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
+      <MantineProvider theme={{ colorScheme }}>
+        <App />
+      </MantineProvider>
+    </ColorSchemeContext.Provider>
+  );
+}
+```
+
+And create theme toggle control:
+
+<DarkThemeToggleDemo />
+
+## Save to localStorage and add keyboard shortcut
+
+If you want to replicate dark theme behavior of Mantine docs website
+use <GatsbyLink to="/hooks/use-local-storage-value/">use-local-storage-value</GatsbyLink>
+hook to store theme state in localStorage and sync it across all opened tabs
+and <GatsbyLink to="/hooks/use-window-event/">use-window-event</GatsbyLink>
+to add `Ctrl/⌘ + J` keyboard shortcut for theme toggle:
+
+```tsx
+import React from 'react';
+import { MantineProvider } from '@mantine/core';
+import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
+import ColorSchemeContext from './ColorSchemeContext';
+
+export default function Demo() {
+  const [colorScheme, setColorScheme] = useLocalStorageValue({
+    key: 'mantine-color-scheme',
+    defaultValue: 'light',
+  });
+
+  useWindowEvent('keydown', (event) => {
+    if (event.code === 'KeyJ' && (event.ctrlKey || event.metaKey)) {
+      setColorScheme((current) => (current === 'dark' ? 'light' : 'dark'));
+    }
+  });
+
+  return (
+    <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
+      <MantineProvider theme={{ colorScheme }}>
+        <App />
+      </MantineProvider>
+    </ColorSchemeContext.Provider>
+  );
+}
+```
+
+Usually saving value to localStorage is not the best strategy as it will create
+[FART](https://css-tricks.com/flash-of-inaccurate-color-theme-fart/).
+If it is possible store user preferred color scheme on server and serve your application without flashes.
+
+For example, Mantine docs are deployed to gh-pages and do not have server (website is fully static) –
+in this case if you refresh the page with dark theme, first you will see the prerendered light theme
+and your selected dark theme will be applied only after a few moments.
+
+## Detect user preferred color scheme
+
+You can detect user preferred color scheme with media query or <GatsbyLink to="/hooks/use-color-scheme/">use-color-scheme</GatsbyLink>
+hook and set is as default value:
+
+```tsx
+import React from 'react';
+import { MantineProvider } from '@mantine/core';
+import { useColorScheme } from '@mantine/hooks';
+import ColorSchemeContext from './ColorSchemeContext';
+
+export default function Demo() {
+  // hook will return either 'dark' or 'light' on client
+  // and always 'light' during ssr as window.matchMedia is not available
+  const preferredColorScheme = useColorScheme();
+  const [colorScheme, setColorScheme] = useState(preferredColorScheme);
+
+  return (
+    <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
+      <MantineProvider theme={{ colorScheme }}>
+        <App />
+      </MantineProvider>
+    </ColorSchemeContext.Provider>
+  );
+}
+```
