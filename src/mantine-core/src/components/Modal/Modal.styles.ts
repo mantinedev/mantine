@@ -56,6 +56,7 @@ export default createMemoStyles({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: theme.spacing.md,
+    marginRight: -9,
   }),
 
   body: ({ overflow }: ModalStyles) => ({
