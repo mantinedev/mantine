@@ -15,6 +15,23 @@ interface GroupPages {
   group: string;
 }
 
+function sortPages(pages: Frontmatter[]) {
+  const clone = [...pages];
+  clone.sort((a, b) => {
+    if ('order' in a && 'order' in b) {
+      if (a.order === b.order) {
+        return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+      }
+
+      return a.order - b.order;
+    }
+
+    return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+  });
+
+  return clone;
+}
+
 export function groupPages({ query, categories, order, group }: GroupPages): {
   uncategorized: Frontmatter[];
   groups: { category: Category; pages: Frontmatter[] }[];
@@ -42,10 +59,10 @@ export function groupPages({ query, categories, order, group }: GroupPages): {
 
   const groups = order.map((category) => ({
     category: categories[category],
-    pages: categorized[category],
+    pages: sortPages(categorized[category]),
   }));
 
-  return { uncategorized, groups, group };
+  return { uncategorized: sortPages(uncategorized), groups, group };
 }
 
 export function getDocsData(query: DocsQuery) {
