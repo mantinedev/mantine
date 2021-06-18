@@ -1,0 +1,112 @@
+---
+group: 'theming'
+title: Extend theme
+slug: /theming/extend-theme/
+order: 1
+---
+
+import { PaperDemos } from '@demos/core';
+import { ThemeColorExtendDemo, ThemeFontsExtendDemo, PrimaryColorDemo } from '@docs/demos';
+import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
+
+# Extend theme
+
+## Typography
+
+By default Mantine uses system fonts. It brings fast and familiar experience to users.
+You can change fonts and other text styles for headings, code and all other components:
+
+- **theme.fontFamilyMonospace** – controls components with monospace font-family, for example, <GatsbyLink to="/core/code/">Code</GatsbyLink> and <GatsbyLink to="/core/kbd/">Kbd</GatsbyLink>
+- **theme.fontFamily** – controls font-family in all other cases
+- **theme.lineHeight** – controls line-height property in all components except headings
+- **theme.fontSizes** – controls font-size in all components except headings
+- **theme.headings** – controls font-family, line-heigh and font-size of h1-h6 tags in <GatsbyLink to="/core/title/">Title</GatsbyLink> and <GatsbyLink to="/core/typography-styles-provider/">TypographyStylesProvider</GatsbyLink> components
+
+<ThemeFontsExtendDemo />
+
+## Default colors
+
+Mantine uses [open-color](https://yeun.github.io/open-color/) in default theme with some additions.
+Each color has 10 shades.
+
+Colors are exposed on theme object as an array of strings,
+you can access color shade by color name and index (0-9), colors with larger index are darker:
+
+```tsx
+theme.colors.red[5];
+theme.colors.gray[9];
+theme.colors.blue[0];
+```
+
+<ThemeColors />
+
+## Extend or replace colors
+
+You can add any amount of extra colors by extending theme.colors with MantineProvider.
+This will allow you to use these colors with all components which support color change,
+for example, <GatsbyLink to="/core/button/">Button</GatsbyLink>, <GatsbyLink to="/core/badge/">Badge</GatsbyLink> or <GatsbyLink to="/core/switch/">Switch</GatsbyLink>.
+
+Note that all colors that are added should **always include 10 shades**.
+You can use some of these tools to generate or copy ready color palettes:
+
+- [Themera](https://themera.vercel.app/)
+- [Material Design Colors](https://www.materialui.co/colors)
+- [Omatsuri](https://omatsuri.app/color-shades-generator)
+- [Smart Swatch](https://smart-swatch.netlify.app/)
+- [Palx](https://palx.jxnblk.com/)
+
+<ThemeColorExtendDemo />
+
+## Primary color
+
+Default primary color is blue, you can change it to any color defined in `theme.colors`.
+Primary color is used:
+
+- in some components to determine color value if component didn't receive color prop;
+- to define focus styles for all interactive elements.
+
+For example, <GatsbyLink to="/core/button/">Button</GatsbyLink> Component
+by default will use **theme.primaryColor** (press any key on keyboard to see focus ring):
+
+<PrimaryColorDemo />
+
+## Spacing, radius and shadows
+
+Mantine supports 5 sizes for spacing, radius and shadows: xs, sm, md, lg, xl.
+These values are exposed on theme:
+
+- **theme.spacing** – general spacing values used for paddings and margins, for example, to set padding on <GatsbyLink to="/core/paper/">Paper</GatsbyLink> or <GatsbyLink to="/core/container/">Container</GatsbyLink> components or to calculate margins in <GatsbyLink to="/core/typography-styles-provider/">TypographyStylesProvider</GatsbyLink> component.
+- **theme.shadows** – box-shadow values – used with components which extend <GatsbyLink to="/core/paper/">Paper</GatsbyLink>: <GatsbyLink to="/core/modal/">Modal</GatsbyLink>, <GatsbyLink to="/core/menu/">Menu</GatsbyLink> and others
+- **theme.radius** – border-radius values – used in all components which support radius: <GatsbyLink to="/core/paper/">Paper</GatsbyLink>, <GatsbyLink to="/core/button/">Button</GatsbyLink>, <GatsbyLink to="/core/input/">Input</GatsbyLink> and others
+
+Example with <GatsbyLink to="/core/paper/">Paper</GatsbyLink> component (padding is set with `theme.spacing`):
+
+<Demo data={PaperDemos.configurator} />
+
+You can change size values by setting corresponding properties.
+In this example:
+
+- xs and xl values from theme will be overwritten
+- sm, md and lg values will be used from default theme
+
+```tsx
+import React from 'react';
+import { Button, Code, MantineProvider, Title } from '@mantine/core';
+
+function YourApp() {
+  return (
+    <MantineProvider
+      theme={{
+        spacing: {
+          xs: 2,
+          xl: 20,
+        },
+      }}
+    >
+      <Title order={3}>Georgia or serif title</Title>
+      <Button>Verdana button</Button>
+      <Code>Courier Code</Code>
+    </MantineProvider>
+  );
+}
+```

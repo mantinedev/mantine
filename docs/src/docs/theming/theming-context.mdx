@@ -1,13 +1,15 @@
 ---
 group: 'theming'
-title: Mantine provider
-slug: /theming/mantine-provider/
+title: Theming context
+slug: /theming/theming-context/
 order: 0
 ---
 
 import { NestedProvidersDemo, ThemeOverrideDemo } from '@docs/demos';
 
-# Mantine provider
+# Theming context
+
+## MantineProvider
 
 MantineProvider component allows you to change theme globally.
 It is not required if you decide to stick with default theme:
@@ -32,6 +34,20 @@ function WithProvider() {
 // Default theme is used in all components in App
 function NoProvider() {
   return <App />;
+}
+```
+
+## use-mantine-theme hook
+
+Hook returns theme from MantineProvider context or default theme
+if you did not wrap application with MantineProvider.
+
+```tsx
+import { useMantineTheme } from '@mantine/core';
+
+function Component() {
+  const theme = useMantineTheme();
+  return <div style={{ background: theme.colors.blue[5] }} />;
 }
 ```
 

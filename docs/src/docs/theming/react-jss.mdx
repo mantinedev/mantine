@@ -6,3 +6,92 @@ order: 3
 ---
 
 # Styling with react-jss
+
+All Mantine components are built with [react-jss](https://cssinjs.org/react-jss/).
+We recommend to use react-jss to style the rest of your application
+as it provides you with the most convenient way to utilize Mantine theme, but it is not required
+– you can use any other styling tools and languages.
+
+## Theming context
+
+If your application is wrapped with MantineProvider you can utilize theming context in createUseStyles:
+
+```tsx
+import React from 'react';
+import { createUseStyles } from 'react-jss';
+import { theming } from '@mantine/core';
+
+const useStyles = createUseStyles(
+  (theme) => ({
+    wrapper: {
+      background: theme.colors.gray[5],
+    },
+  }),
+  { theming }
+);
+
+function YourComponent() {
+  const classes = useStyles();
+  return <div className={classes.wrapper} />;
+}
+```
+
+## Theme as function value
+
+This way will work in all cases no matter if you use MantineProvider or not:
+
+```tsx
+import React from 'react';
+import { createUseStyles } from 'react-jss';
+import { useMantineTheme } from '@mantine/core';
+
+const useStyles = createUseStyles({
+  wrapper: ({ theme }) => ({
+    background: theme.colors.gray[5],
+  }),
+});
+
+function YourComponent() {
+  const classes = useStyles({ theme: useMantineTheme() });
+  return <div className={classes.wrapper} />;
+}
+```
+
+## getFocusStyles util
+
+getFocusStyles function returns mantine focus styles in jss format for interactive elements.
+Focus styles are visible only when user navigates with keyboard.
+
+```tsx
+import { createUseStyles } from 'react-jss';
+import { getFocusStyles, theming } from '@mantine/core';
+
+createUseStyles(
+  (theme) => ({
+    button: {
+      ...getFocusStyles(theme),
+      color: 'red',
+    },
+  }),
+  { theming }
+);
+```
+
+## getFontStyles util
+
+getFontStyles function returns font styles from theme with [font smoothing](https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth):
+
+```tsx
+import { createUseStyles } from 'react-jss';
+import { getFontStyles, theming } from '@mantine/core';
+
+createUseStyles(
+  (theme) => ({
+    wrapper: {
+      ...getFontStyles(theme),
+      color: 'red',
+    },
+  }),
+  { theming }
+);
+```
