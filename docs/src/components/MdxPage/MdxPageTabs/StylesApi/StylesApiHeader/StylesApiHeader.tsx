@@ -24,7 +24,7 @@ export function StylesApiHeader({ component, singleNode }: StylesApiHeaderProps)
         <Text style={{ maxWidth: 600, marginBottom: 30 }}>
           Mantine components support styling of individual elements by adding your class or inline
           styles to any element inside component. For more information see{' '}
-          <GatsbyLink to="/guides/styles/">styles API guide</GatsbyLink>.
+          <GatsbyLink to="/theming/styles-api/">styles API guide</GatsbyLink>.
         </Text>
       )}
 

@@ -32,7 +32,7 @@ export function CustomizationDemo() {
     <>
       <LinkTitle
         title="Customize components"
-        link="/guides/styles/"
+        link="/theming/styles-api/"
         label="Learn about styles API"
       />
 
