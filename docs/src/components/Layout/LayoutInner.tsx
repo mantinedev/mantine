@@ -1,5 +1,3 @@
-import 'normalize.css';
-
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { graphql, useStaticQuery } from 'gatsby';

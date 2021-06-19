@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "clsx": "^1.1.1",
+    "normalize-jss": "^4.0.0",
     "react-textarea-autosize": "^8.3.2",
     "react-transition-group": "^4.4.2"
   },

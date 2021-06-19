@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, NormalizeCSS } from '@mantine/core';
 import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
 import { ColorSchemeContext, ColorScheme } from './ColorScheme.context';
 import { LayoutInner, LayoutProps } from './LayoutInner';
@@ -35,6 +35,7 @@ export default function Layout({ children, location }: LayoutProps) {
 
   return (
     <React.StrictMode>
+      <NormalizeCSS />
       <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
         <MantineProvider theme={{ colorScheme }}>
           <LayoutInner key={key} location={location}>

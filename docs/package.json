@@ -23,7 +23,6 @@
     "gatsby-source-filesystem": "^3.6.0",
     "github-slugger": "^1.3.0",
     "lodash.debounce": "^4.0.8",
-    "normalize.css": "^8.0.1",
     "prism-react-renderer": "^1.2.1",
     "react-helmet": "^6.1.0",
     "remark-slug": "^6.0.0"
