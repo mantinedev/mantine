@@ -5,7 +5,7 @@ category: 'utils'
 title: 'use-did-update'
 order: 1
 slug: /hooks/use-did-update/
-description: 'Set document.title to given string'
+description: 'Call function in useEffect when value changes, but not when component mounts'
 import: "import { useDidUpdate } from '@mantine/hooks';"
 docs: 'hooks/use-did-update.mdx'
 source: 'mantine-hooks/src/use-did-update/use-did-update.ts'
@@ -13,7 +13,9 @@ source: 'mantine-hooks/src/use-did-update/use-did-update.ts'
 
 ## Usage
 
-use-did-update is a wrapper for common updates tracking pattern:
+When component mounts useEffect hook is called.
+This is fine in most cases but if you need to track value changes and not component mount
+you will need to implement something like this to prevent useEffect call on mount:
 
 ```tsx
 const mounted = useRef(false);
@@ -27,7 +29,7 @@ useEffect(() => {
 }, dependencies);
 ```
 
-This prevents fn function call in useEffect on initial mount:
+use-did-update uses the same logic:
 
 ```tsx
 useDidUpdate(() => console.log("Won't be called when mounted"), [value]);
