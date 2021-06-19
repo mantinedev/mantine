@@ -63,37 +63,17 @@ You can customize these values just like any other color:
 ## Global styles
 
 `theme.colors.dark[7]` shade is considered to be the body background color and `theme.colors.dark[0]` shade as text color with dark color scheme.
-Mantine does not have any global styles so you will need to set it yourself.
+You can create these styles on your own or add <GatsbyLink to="theming/global-styles/">GlobalStyles</GatsbyLink> component, which includes them by default.
 Usually global styles are added on top level component inside MantineProvider:
 
 ```tsx
-import React from 'react';
-import { createUseStyles } from 'react-jss';
-import { MantineProvider, theming } from '@mantine/core';
-
-const useStyles = createUseStyles(
-  (theme) => ({
-    '@global': {
-      body: {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      },
-    },
-  }),
-  { theming }
-);
-
-function App() {
-  useStyles();
-  return <div>Your app here</div>;
-}
+import { MantineProvider, GlobalStyles } from '@mantine/core';
 
 function Demo() {
   return (
     <MantineProvider theme={{ colorScheme: 'dark' }}>
-      {/* Add App component with global styles inside
-      MantineProvider to subscribe to theming context */}
-      <App />
+      <GlobalStyles />
+      <YourApp />
     </MantineProvider>
   );
 }
