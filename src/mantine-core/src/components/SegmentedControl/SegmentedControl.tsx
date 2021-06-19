@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cx from 'clsx';
-import { useId, useReducedMotion } from '@mantine/hooks';
+import { useId, useReducedMotion, useUncontrolled } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -76,6 +76,13 @@ export function SegmentedControl({
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [_value, handleValueChange] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: Array.isArray(data) ? data[0].value : null,
+    onChange,
+    rule: (val) => !!val,
+  });
 
   const classes = useStyles(
     {
@@ -97,20 +104,6 @@ export function SegmentedControl({
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [_value, setValue] = useState(
-    value || defaultValue || (Array.isArray(data) ? data[0].value : null)
-  );
-
-  const handleValueChange = (val: string) => {
-    typeof onChange === 'function' && onChange(val);
-    setValue(val);
-  };
-
-  useEffect(() => {
-    if (typeof value === 'string') {
-      setValue(value);
-    }
-  }, [value]);
 
   useEffect(() => {
     const observer = new ResizeObserver(() => {
