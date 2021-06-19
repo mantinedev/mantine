@@ -1,5 +1,5 @@
 import React, { useState, useRef, cloneElement } from 'react';
-import { useId, useClickOutside, useMergedRef } from '@mantine/hooks';
+import { useId, useClickOutside, useMergedRef, useWindowEvent } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize } from '../../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { MantineTransition } from '../Transition/Transition';
@@ -114,24 +114,31 @@ export function Menu({
   const uuid = useId(menuId);
   const controlled = typeof opened === 'boolean';
   const [_opened, setOpened] = useState(false);
-  const menuOpened = controlled ? opened : _opened;
+  const menuOpened: boolean = controlled ? opened : _opened;
+  const openedRef = useRef(menuOpened);
 
-  const handleClose = () => {
-    setOpened(false);
-    typeof onClose === 'function' && onClose();
-    controlRefFocusTimeout.current = window.setTimeout(() => {
-      typeof controlRef.current?.focus === 'function' && controlRef.current.focus();
-    }, transitionDuration + 10);
+  const handleClose = (scroll = false) => {
+    if (openedRef.current) {
+      openedRef.current = false;
+      setOpened(false);
+      typeof onClose === 'function' && onClose();
+      controlRefFocusTimeout.current = window.setTimeout(() => {
+        !scroll && typeof controlRef.current?.focus === 'function' && controlRef.current.focus();
+      }, transitionDuration + 10);
+    }
   };
 
   const handleOpen = () => {
+    openedRef.current = true;
     setOpened(true);
     window.clearTimeout(controlRefFocusTimeout.current);
     typeof onOpen === 'function' && onOpen();
   };
 
-  const wrapperRef = useClickOutside(() => menuOpened && handleClose());
+  // Closes menu on scroll
+  useWindowEvent('scroll', () => handleClose(true));
 
+  const wrapperRef = useClickOutside(() => menuOpened && handleClose());
   const toggleMenu = () => (opened || _opened ? handleClose() : handleOpen());
 
   const menuControl = cloneElement(control, {
