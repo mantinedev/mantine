@@ -1,18 +1,11 @@
 import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, getFontStyles } from '@mantine/core';
+import { theming, MantineTheme } from '@mantine/core';
 import { HEADER_HEIGHT } from './Header/Header.styles';
 import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from './Navbar/Navbar.styles';
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
     '@global': {
-      body: {
-        ...getFontStyles(theme),
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        lineHeight: theme.lineHeight,
-      },
-
       '#nprogress': {
         zIndex: 100000,
       },

@@ -11,6 +11,7 @@ export { mergeStyles } from './utils/merge-styles/merge-styles';
 
 export { MantineProvider } from './MantineProvider/MantineProvider';
 export { NormalizeCSS } from './NormalizeCSS';
+export { GlobalStyles } from './GlobalStyles';
 export { useMantineTheme } from './use-mantine-theme/use-mantine-theme';
 export { theming } from './MantineProvider/theme-context';
 export { DEFAULT_THEME, MANTINE_COLORS, MANTINE_SIZES } from './default-theme';
