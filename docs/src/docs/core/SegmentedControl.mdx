@@ -25,6 +25,29 @@ SegmentedControl is usually used as an alternative to:
 
 <Demo data={SegmentedControlDemos.usage} />
 
+## Controlled
+
+```tsx
+import React, { useState } from 'react';
+import { SegmentedControl } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('react');
+  return (
+    <SegmentedControl
+      value={value}
+      onChange={setValue}
+      data={[
+        { label: 'React', value: 'react' },
+        { label: 'Angular', value: 'ng' },
+        { label: 'Vue', value: 'vue' },
+        { label: 'Svelte', value: 'svelte' },
+      ]}
+    />
+  );
+}
+```
+
 ## Full width
 
 By default SegmentedControl is inline and will take only the amount of space which is required to render elements.

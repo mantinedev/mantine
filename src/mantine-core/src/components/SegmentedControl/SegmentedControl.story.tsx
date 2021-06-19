@@ -35,7 +35,7 @@ const colors = Object.keys(DEFAULT_THEME.colors).map((color) => (
 storiesOf('@mantine/core/SegmentedControl', module)
   .add('General usage', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <Wrapper />
+      <SegmentedControl data={data} defaultValue="vue" />
       <Wrapper
         fullWidth
         transitionDuration={500}

@@ -22,10 +22,10 @@ export interface SegmentedControlProps
   data: SegmentedControlItem[];
 
   /** Current selected value */
-  value: string;
+  value?: string;
 
   /** Called when value changes */
-  onChange(value: string): void;
+  onChange?(value: string): void;
 
   /** Name of the radio group, default to random id */
   name?: string;
@@ -47,6 +47,9 @@ export interface SegmentedControlProps
 
   /** Transition timing function for all transitions, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
+
+  /** Default value for uncontrolled component */
+  defaultValue?: string;
 }
 
 export function SegmentedControl({
@@ -65,6 +68,7 @@ export function SegmentedControl({
   transitionTimingFunction,
   classNames,
   styles,
+  defaultValue,
   ...others
 }: SegmentedControlProps) {
   // reduce motion should be implemented via js, there is a bug in jss with media queries
@@ -93,11 +97,25 @@ export function SegmentedControl({
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const [_value, setValue] = useState(
+    value || defaultValue || (Array.isArray(data) ? data[0].value : null)
+  );
+
+  const handleValueChange = (val: string) => {
+    typeof onChange === 'function' && onChange(val);
+    setValue(val);
+  };
+
+  useEffect(() => {
+    if (typeof value === 'string') {
+      setValue(value);
+    }
+  }, [value]);
 
   useEffect(() => {
     const observer = new ResizeObserver(() => {
-      if (value in refs.current && wrapperRef.current) {
-        const element = refs.current[value];
+      if (_value in refs.current && wrapperRef.current) {
+        const element = refs.current[_value];
         const rect = element.getBoundingClientRect();
         setActivePosition({
           width: rect.width,
@@ -113,12 +131,12 @@ export function SegmentedControl({
     });
     observer.observe(wrapperRef.current);
     return () => observer.disconnect();
-  }, [value]);
+  }, [_value]);
 
   const controls = data.map((item) => (
     <div
-      className={cx(classes.control, { [classes.controlActive]: value === item.value })}
-      style={{ ..._styles.control, ...(value === item.value ? _styles.controlActive : null) }}
+      className={cx(classes.control, { [classes.controlActive]: _value === item.value })}
+      style={{ ..._styles.control, ...(_value === item.value ? _styles.controlActive : null) }}
       key={item.value}
     >
       <input
@@ -128,13 +146,13 @@ export function SegmentedControl({
         name={uuid}
         value={item.value}
         id={`${uuid}-${item.value}`}
-        checked={value === item.value}
-        onChange={() => onChange(item.value)}
+        checked={_value === item.value}
+        onChange={() => handleValueChange(item.value)}
       />
 
       <label
-        className={cx(classes.label, { [classes.labelActive]: value === item.value })}
-        style={{ ..._styles.label, ...(value === item.value ? _styles.labelActive : null) }}
+        className={cx(classes.label, { [classes.labelActive]: _value === item.value })}
+        style={{ ..._styles.label, ...(_value === item.value ? _styles.labelActive : null) }}
         htmlFor={`${uuid}-${item.value}`}
         ref={(node) => {
           refs.current[item.value] = node;
@@ -152,7 +170,7 @@ export function SegmentedControl({
       style={{ ...style, ..._styles.root }}
       {...others}
     >
-      {!!value && (
+      {!!_value && (
         <span
           className={classes.active}
           style={{

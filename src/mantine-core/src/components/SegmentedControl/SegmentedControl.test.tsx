@@ -67,10 +67,7 @@ describe('@mantine/core/SegmentedControl', () => {
 
   it('renders active control based on value prop', () => {
     const withValue = shallow(<SegmentedControl {...defaultProps} value="test-value-1" />);
-    const withoutValue = shallow(<SegmentedControl {...defaultProps} value={null} />);
-
     expect(withValue.find('.mantine-segmented-control-active')).toHaveLength(1);
-    expect(withoutValue.find('.mantine-segmented-control-active')).toHaveLength(0);
   });
 
   it('has correct displayName', () => {
