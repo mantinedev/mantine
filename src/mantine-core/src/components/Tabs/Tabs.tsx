@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import cx from 'clsx';
+import { useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
@@ -101,28 +102,26 @@ export function Tabs({
     (item: TabType) => item.type === Tab
   ) as TabType[];
 
-  const [_activeTab, _setActiveTab] = useState(
-    typeof initialTab === 'number' ? initialTab : findInitialTab(tabs)
-  );
-  const activeTab = clamp(typeof active === 'number' ? active : _activeTab, 0, tabs.length - 1);
-  const setActiveTab = (tabIndex: number) => {
-    _setActiveTab(tabIndex);
+  const [_activeTab, handleActiveTabChange] = useUncontrolled({
+    value: active,
+    defaultValue: initialTab,
+    finalValue: findInitialTab(tabs),
+    rule: (value) => typeof value === 'number',
+    onChange: onTabChange,
+  });
 
-    if (typeof onTabChange === 'function') {
-      onTabChange(tabIndex);
-    }
-  };
+  const activeTab = clamp(_activeTab, 0, tabs.length - 1);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if (event.nativeEvent.code === 'ArrowRight') {
       const nextTab = getNextTab(activeTab, tabs);
-      setActiveTab(nextTab);
+      handleActiveTabChange(nextTab);
       controlRefs.current[nextTab].focus();
     }
 
     if (event.nativeEvent.code === 'ArrowLeft') {
       const previousTab = getPreviousTab(activeTab, tabs);
-      setActiveTab(previousTab);
+      handleActiveTabChange(previousTab);
       controlRefs.current[previousTab].focus();
     }
   };
@@ -139,7 +138,7 @@ export function Tabs({
       elementRef={(node) => {
         controlRefs.current[index] = node;
       }}
-      onClick={() => activeTab !== index && setActiveTab(index)}
+      onClick={() => activeTab !== index && handleActiveTabChange(index)}
     />
   ));
 
