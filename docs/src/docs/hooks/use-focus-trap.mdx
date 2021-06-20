@@ -19,7 +19,6 @@ Use use-focus-trap hook to trap focus at given node, for example in modal, drawe
 Node must include at least one focusable element. When node unmounts, focus trap automatically disabled.
 
 ```tsx
-import React from 'react';
 import { useFocusTrap } from '@mantine/hooks';
 
 function YourModal() {
@@ -61,7 +60,7 @@ const focusTrapRef = useFocusTrap();
 Usually focus trap is not used alone. To combine use-focus-trap hook with other ref based hooks use <GatsbyLink to="/hooks/use-merged-ref/">use-merged-ref hook</GatsbyLink>:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useClickOutside, useFocusTrap, useMergedRef } from '@mantine/hooks';
 
 function Demo() {
@@ -81,7 +80,6 @@ To specify element that should receive initial focus add `data-autofocus` attrib
 note that focus trap works with dom and this attribute should be added to element:
 
 ```tsx
-import React from 'react';
 import { useFocusTrap } from '@mantine/hooks';
 
 function YourModal() {

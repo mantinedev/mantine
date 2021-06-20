@@ -72,7 +72,7 @@ In `pages/_app.jsx` removed styles generated on server with useEffect and
 add MantineProvider in case you decide to change theme:
 
 ```tsx
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Head from 'next/head';
 import { MantineProvider } from '@mantine/core';
 
@@ -137,7 +137,6 @@ plugins: [`gatsby-plugin-jss` /* other plugins */];
 Wrap your [layout component](https://github.com/mantinedev/mantine-gatsby-example/blob/master/src/components/layout.js) with MantineProvider (skip this step if you stick with default theme):
 
 ```tsx
-import React from 'react';
 import { MantineProvider } from '@mantine/core';
 
 const Layout = ({ children }) => {
@@ -158,7 +157,6 @@ Follow [instruction](https://cssinjs.org/react-jss/?v=v10.6.0#server-side-render
 Setup JssProvider on server:
 
 ```tsx
-import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { JssProvider, SheetsRegistry, createGenerateId } from 'react-jss';
 import App from './App';
@@ -192,7 +190,7 @@ In your App component use MantineProvider and remove styles generated on server
 with useEffect hook
 
 ```tsx
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { MantineProvider } from '@mantine/core';
 
 export default function App(props) {

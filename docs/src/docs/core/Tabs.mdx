@@ -30,7 +30,7 @@ Tabs state can be controlled, to implement this pass `active` and `onTabChange` 
 You can also use `onTabChange` callback with uncontrolled Tabs.
 
 ```tsx
-import React from 'react';
+import { useState } from 'react';
 import { Tabs, Tab } from '@mantine/core';
 
 function Demo() {
@@ -88,7 +88,7 @@ In addition to `icon` and `label` props shown before,
 You can get tab control ref by passing `elementRef` prop to `Tab` component
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Tabs, Tab } from '@mantine/core';
 
 function TabsDemo() {

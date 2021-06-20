@@ -112,7 +112,7 @@ You can get both tooltip and root element refs with `elementRef` and `tooltipRef
 Use it to customize behavior, for example, with <GatsbyLink to="/hooks/use-click-outside/">use-click-outside</GatsbyLink> hook.
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Tooltip } from '@mantine/core';
 
 function Demo() {
@@ -130,7 +130,7 @@ Component is unmounted from the dom and is not visible to screen readers in defa
 If you want to make tooltip accessible use controlled variant, open tooltip on focus, provide `tooltipId` and `aria-describedby` props:
 
 ```tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Tooltip, Button } from '@mantine/core';
 
 function Demo() {

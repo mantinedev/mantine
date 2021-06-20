@@ -14,7 +14,6 @@ All mantine components support dark color scheme natively without any additional
 To use dark color scheme wrap your application in MantineProvider and specify `colorScheme`:
 
 ```tsx
-import React from 'react';
 import { MantineProvider } from '@mantine/core';
 
 function Demo() {
@@ -95,7 +94,6 @@ export default createContext(null);
 Then wrap your application with provider:
 
 ```tsx
-import React from 'react';
 import { MantineProvider } from '@mantine/core';
 import ColorSchemeContext from './ColorSchemeContext';
 
@@ -125,7 +123,6 @@ and <GatsbyLink to="/hooks/use-window-event/">use-window-event</GatsbyLink>
 to add `Ctrl/⌘ + J` keyboard shortcut for theme toggle:
 
 ```tsx
-import React from 'react';
 import { MantineProvider } from '@mantine/core';
 import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
 import ColorSchemeContext from './ColorSchemeContext';
@@ -166,7 +163,6 @@ You can detect user preferred color scheme with media query or <GatsbyLink to="/
 hook and set is as default value:
 
 ```tsx
-import React from 'react';
 import { MantineProvider } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
 import ColorSchemeContext from './ColorSchemeContext';
