@@ -82,7 +82,7 @@ export type { GridProps, ColProps } from './components/Grid/Grid';
 export type { GroupProps } from './components/Group/Group';
 export type { HighlightProps } from './components/Highlight/Highlight';
 export type { ImageProps } from './components/Image/Image';
-export type { InputProps } from './components/Input/Input';
+export type { InputProps, InputBaseProps } from './components/Input/Input';
 export type {
   InputWrapperBaseProps,
   InputWrapperProps,
