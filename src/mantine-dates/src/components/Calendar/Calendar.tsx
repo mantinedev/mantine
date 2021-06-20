@@ -5,6 +5,7 @@ import { DefaultProps, useMantineTheme, mergeStyles, Text, Group, ActionIcon } f
 import { useUncontrolled } from '@mantine/hooks';
 import { Month } from '../Month/Month';
 import { ArrowIcon } from './ArrowIcon';
+import { CalendarLabel } from './CalendarLabel/CalendarLabel';
 import useStyles from './Calendar.styles';
 
 interface CalendarProps
@@ -18,6 +19,9 @@ interface CalendarProps
   previousMonthLabel?: string;
   locale?: string;
   onMonthChange?(value: Date): void;
+  labelFormat?: string;
+  withMonthPicker?: boolean;
+  yearsRange?: { from: number; to: number };
 }
 
 export function Calendar({
@@ -34,6 +38,9 @@ export function Calendar({
   onMonthChange,
   value,
   onChange,
+  labelFormat = 'MMMM YYYY',
+  withMonthPicker = false,
+  yearsRange = { from: 2020, to: 2030 },
 }: CalendarProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames, 'calendar');
@@ -56,7 +63,16 @@ export function Calendar({
           <ArrowIcon direction="left" width={14} height={14} />
         </ActionIcon>
 
-        <Text>{dayjs(_month).locale(locale).format('MMMM')}</Text>
+        <CalendarLabel
+          locale={locale}
+          classNames={classNames as any}
+          styles={styles as any}
+          withMonthPicker
+          withYearPicker
+          yearsRange={yearsRange}
+          value={_month}
+          onChange={setMonth}
+        />
 
         <ActionIcon
           aria-label={previousMonthLabel}
