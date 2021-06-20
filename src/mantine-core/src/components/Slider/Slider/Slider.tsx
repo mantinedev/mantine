@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize } from '../../../theme';
 import { MantineTransition } from '../../Transition/Transition';
 import {
@@ -98,9 +99,13 @@ export function Slider({
   ...others
 }: SliderProps) {
   const [dragging, setDragging] = useState(false);
-  const [_value, setValue] = useState(
-    typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : 0
-  );
+  const [_value, setValue] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: 0,
+    rule: (val) => typeof val === 'number',
+    onChange,
+  });
   const container = useRef<HTMLDivElement>();
   const thumb = useRef<HTMLDivElement>();
   const start = useRef<number>();
@@ -108,22 +113,11 @@ export function Slider({
   const position = getPosition({ value: _value, min, max });
   const _label = typeof label === 'function' ? label(_value) : label;
 
-  useEffect(() => {
-    if (typeof value === 'number') {
-      setValue(value);
-    }
-  }, [value]);
-
-  const _setValue = (val: number) => {
-    setValue(val);
-    typeof onChange === 'function' && onChange(val);
-  };
-
   const handleChange = (val: number) => {
     if (container.current) {
       const containerWidth = container.current.getBoundingClientRect().width;
       const nextValue = getChangeValue({ value: val, containerWidth, min, max, step });
-      _setValue(nextValue);
+      setValue(nextValue);
     }
   };
 
@@ -180,7 +174,7 @@ export function Slider({
       case 'ArrowRight': {
         event.preventDefault();
         thumb.current.focus();
-        _setValue(Math.min(Math.max(_value + step, min), max));
+        setValue(Math.min(Math.max(_value + step, min), max));
         break;
       }
 
@@ -188,7 +182,7 @@ export function Slider({
       case 'ArrowLeft': {
         event.preventDefault();
         thumb.current.focus();
-        _setValue(Math.min(Math.max(_value - step, min), max));
+        setValue(Math.min(Math.max(_value - step, min), max));
         break;
       }
 

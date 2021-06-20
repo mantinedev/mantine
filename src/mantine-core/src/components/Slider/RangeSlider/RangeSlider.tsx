@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize } from '../../../theme';
 import { MantineTransition } from '../../Transition/Transition';
 import {
@@ -109,9 +110,13 @@ export function RangeSlider({
 }: RangeSliderProps) {
   const [dragging, setDragging] = useState(-1);
   const [focused, setFocused] = useState(-1);
-  const [_value, setValue] = useState<Value>(
-    Array.isArray(value) ? value : Array.isArray(defaultValue) ? defaultValue : [min, max]
-  );
+  const [_value, setValue] = useUncontrolled<Value>({
+    value,
+    defaultValue,
+    finalValue: [min, max],
+    rule: (val) => Array.isArray(val),
+    onChange,
+  });
   const _valueRef = useRef(_value);
   const container = useRef<HTMLDivElement>();
   const thumbs = useRef<HTMLDivElement[]>([]);
@@ -122,16 +127,9 @@ export function RangeSlider({
     getPosition({ value: _value[1], min, max }),
   ];
 
-  useEffect(() => {
-    if (typeof value === 'number') {
-      setValue(value);
-    }
-  }, [value]);
-
   const _setValue = (val: Value) => {
     setValue(val);
     _valueRef.current = val;
-    typeof onChange === 'function' && onChange(val);
   };
 
   const setRangedValue = (val: number, index: number) => {
