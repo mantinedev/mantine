@@ -9,9 +9,11 @@ import useStyles from './Calendar.styles';
 
 interface CalendarProps
   extends DefaultProps<typeof useStyles>,
-    React.ComponentPropsWithoutRef<'div'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   initialMonth?: Date;
   month?: Date;
+  value?: Date;
+  onChange?(value: Date): void;
   nextMonthLabel?: string;
   previousMonthLabel?: string;
   locale?: string;
@@ -30,6 +32,8 @@ export function Calendar({
   initialMonth,
   month,
   onMonthChange,
+  value,
+  onChange,
 }: CalendarProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames, 'calendar');
@@ -39,7 +43,7 @@ export function Calendar({
     defaultValue: initialMonth,
     finalValue: new Date(),
     onChange: onMonthChange,
-    rule: (value) => value instanceof Date,
+    rule: (val) => val instanceof Date,
   });
 
   return (
@@ -62,7 +66,7 @@ export function Calendar({
         </ActionIcon>
       </Group>
 
-      <Month month={_month} />
+      <Month month={_month} value={value} onChange={onChange} />
     </div>
   );
 }

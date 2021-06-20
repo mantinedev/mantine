@@ -6,7 +6,9 @@ import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
 import Day from './Day/Day';
 import useStyles from './Month.styles';
 
-export interface MonthProps extends DefaultProps, React.ComponentPropsWithoutRef<'table'> {
+export interface MonthProps
+  extends DefaultProps,
+    Omit<React.ComponentPropsWithoutRef<'table'>, 'onChange' | 'value'> {
   /** Date at which month should be shown */
   month: Date;
 
@@ -14,7 +16,7 @@ export interface MonthProps extends DefaultProps, React.ComponentPropsWithoutRef
   locale?: string;
 
   /** Selected date */
-  selected?: Date;
+  value?: Date;
 
   /** Autofocus selected date on mount, if no date is selected autofocus is applied to first month day */
   autoFocus?: boolean;
@@ -22,14 +24,15 @@ export interface MonthProps extends DefaultProps, React.ComponentPropsWithoutRef
   /** When true dates that are outside of given month cannot be clicked or focused */
   disableOutsideEvents?: boolean;
 
-  onDayClick?(day: Date): void;
+  /** Called when day is selected */
+  onChange?(value: Date): void;
 }
 
 export function Month({
   className,
   month,
-  selected,
-  onDayClick,
+  value,
+  onChange,
   autoFocus = false,
   disableOutsideEvents = false,
   locale = 'en',
@@ -80,7 +83,7 @@ export function Month({
       const date = new Date(
         month.getFullYear(),
         month.getMonth(),
-        selected ? selected.getDate() : 1
+        value ? value.getDate() : 1
       ).toISOString();
 
       if (date in daysRefs.current) {
@@ -103,10 +106,10 @@ export function Month({
       const weekend = weekday === 6 || weekday === 0;
       const outside = date.getMonth() !== month.getMonth();
       const isSelected =
-        selected instanceof Date &&
-        date.getFullYear() === selected.getFullYear() &&
-        date.getMonth() === selected.getMonth() &&
-        date.getDate() === selected.getDate();
+        value instanceof Date &&
+        date.getFullYear() === value.getFullYear() &&
+        date.getMonth() === value.getMonth() &&
+        date.getDate() === value.getDate();
 
       return (
         <td key={cellIndex}>
@@ -114,7 +117,7 @@ export function Month({
             elementRef={(button) => {
               daysRefs.current[date.toISOString()] = button;
             }}
-            onClick={() => typeof onDayClick === 'function' && onDayClick(date)}
+            onClick={() => typeof onChange === 'function' && onChange(date)}
             value={date}
             outside={outside}
             weekend={weekend}
