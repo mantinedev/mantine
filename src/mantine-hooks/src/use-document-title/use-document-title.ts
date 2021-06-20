@@ -1,7 +1,7 @@
-import { useLayoutEffect } from 'react';
+import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 
 export function useDocumentTitle(title: string) {
-  useLayoutEffect(() => {
+  useIsomorphicEffect(() => {
     if (typeof title === 'string' && title.trim().length > 0) {
       document.title = title.trim();
     }
