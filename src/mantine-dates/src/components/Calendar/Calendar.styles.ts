@@ -6,4 +6,5 @@ interface CalendarStyles {
 
 export default createMemoStyles({
   root: {},
+  header: {},
 });
