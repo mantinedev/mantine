@@ -34,7 +34,7 @@ export default function Day({
       onClick={onClick}
       ref={elementRef}
       onKeyDown={(event) => onKeyDown(value, event)}
-      tabIndex={outside && disableOutsideEvents ? -1 : 0}
+      tabIndex={outside && disableOutsideEvents ? -1 : selected ? 0 : -1}
       className={cx(
         classes.day,
         {
