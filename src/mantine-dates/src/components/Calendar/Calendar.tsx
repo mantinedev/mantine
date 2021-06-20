@@ -3,6 +3,7 @@ import cx from 'clsx';
 import dayjs from 'dayjs';
 import { DefaultProps, useMantineTheme, mergeStyles, Text, Group, ActionIcon } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
+import { Month } from '../Month/Month';
 import { ArrowIcon } from './ArrowIcon';
 import useStyles from './Calendar.styles';
 
@@ -43,7 +44,7 @@ export function Calendar({
 
   return (
     <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }}>
-      <Group className={classes.header}>
+      <Group className={classes.header} position="apart">
         <ActionIcon
           aria-label={nextMonthLabel}
           onClick={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
@@ -60,6 +61,8 @@ export function Calendar({
           <ArrowIcon direction="right" width={14} height={14} />
         </ActionIcon>
       </Group>
+
+      <Month month={_month} />
     </div>
   );
 }

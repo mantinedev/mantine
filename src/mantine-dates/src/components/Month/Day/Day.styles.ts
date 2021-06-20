@@ -13,7 +13,7 @@ export default createUseStyles({
     position: 'relative',
     WebkitTapHighlightColor: 'transparent',
     backgroundColor: 'transparent',
-    width: 34,
+    width: '100%',
     height: 34,
     lineHeight: '34px',
     padding: 0,

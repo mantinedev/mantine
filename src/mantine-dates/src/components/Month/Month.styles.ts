@@ -5,6 +5,8 @@ export default createUseStyles({
   month: ({ theme }: { theme: MantineTheme }) => ({
     ...getFontStyles(theme),
     borderCollapse: 'collapse',
+    width: '100%',
+    tableLayout: 'fixed',
 
     '& td': {
       padding: 0,
