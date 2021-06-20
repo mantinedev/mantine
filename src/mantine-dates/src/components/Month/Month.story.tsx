@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import 'dayjs/locale/ru';
 import { Month } from './Month';
 
 function WrappedMonth(
@@ -11,6 +12,6 @@ function WrappedMonth(
 
 storiesOf('@mantine/dates/Month', module).add('Month', () => (
   <>
-    <WrappedMonth disableOutsideEvents autoFocus />
+    <WrappedMonth autoFocus locale="ru" />
   </>
 ));

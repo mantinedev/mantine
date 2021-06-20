@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, Text } from '@mantine/core';
+import { upperFirst } from '@mantine/hooks';
 import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
 import Day from './Day/Day';
 import useStyles from './Month.styles';
@@ -91,7 +92,7 @@ export function Month({
   const weekdays = getWeekdaysNames(locale).map((weekday) => (
     <th key={weekday}>
       <Text color="gray" size="xs">
-        {weekday.slice(0, 1).toUpperCase()}
+        {upperFirst(weekday)}
       </Text>
     </th>
   ));

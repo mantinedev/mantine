@@ -97,6 +97,7 @@
   "dependencies": {
     "@modulz/radix-icons": "^4.0.0",
     "clsx": "^1.1.1",
+    "dayjs": "^1.10.5",
     "normalize-jss": "^4.0.0",
     "prism-react-renderer": "^1.2.1",
     "react": "^17.0.2",
