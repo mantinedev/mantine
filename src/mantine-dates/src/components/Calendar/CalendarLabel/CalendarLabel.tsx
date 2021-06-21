@@ -38,6 +38,7 @@ export function CalendarLabel({
       <Select
         className={classes.select}
         style={_styles.select}
+        size="xs"
         themeOverride={themeOverride}
         value={value.getMonth()}
         onChange={(event) =>
@@ -52,6 +53,7 @@ export function CalendarLabel({
       <Select
         className={classes.select}
         style={_styles.select}
+        size="xs"
         themeOverride={themeOverride}
         value={value.getFullYear()}
         onChange={(event) =>
