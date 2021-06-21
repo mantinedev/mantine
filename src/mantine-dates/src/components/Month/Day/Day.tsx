@@ -12,6 +12,7 @@ export interface DayProps extends DefaultProps<typeof useStyles> {
   elementRef(ref: HTMLButtonElement): void;
   onKeyDown(date: Date, event: React.KeyboardEvent): void;
   disabled: boolean;
+  hasValue: boolean;
 }
 
 export default function Day({
@@ -28,6 +29,7 @@ export default function Day({
   classNames,
   disabled,
   styles,
+  hasValue,
 }: DayProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames, 'month');
@@ -39,7 +41,7 @@ export default function Day({
       onClick={onClick}
       ref={elementRef}
       onKeyDown={(event) => onKeyDown(value, event)}
-      tabIndex={selected ? 0 : -1}
+      tabIndex={hasValue ? (selected ? 0 : -1) : 0}
       style={{ ..._styles.day, ...style }}
       disabled={disabled}
       className={cx(

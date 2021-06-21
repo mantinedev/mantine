@@ -129,12 +129,18 @@ export function Month({
     </th>
   ));
 
+  const hasValue = value instanceof Date;
+  const hasValueInMonthRange =
+    hasValue &&
+    dayjs(value).isAfter(dayjs(month).startOf('month')) &&
+    dayjs(value).isBefore(dayjs(month).endOf('month'));
+
   const rows = days.map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
       const weekday = date.getDay();
       const weekend = weekday === 6 || weekday === 0;
       const outside = date.getMonth() !== month.getMonth();
-      const isSelected = value instanceof Date && isSameDate(date, value);
+      const isSelected = hasValue && isSameDate(date, value);
       const isAfterMax = maxDate instanceof Date && dayjs(maxDate).isBefore(date, 'day');
       const isBeforeMin = minDate instanceof Date && dayjs(minDate).isAfter(date, 'day');
       const shouldExclude = typeof excludeDate === 'function' && excludeDate(date);
@@ -152,6 +158,7 @@ export function Month({
             outside={outside}
             weekend={weekend}
             selected={isSelected}
+            hasValue={hasValueInMonthRange}
             onKeyDown={handleKeyDown}
             themeOverride={themeOverride}
             className={typeof dayClassName === 'function' ? dayClassName(date) : null}
