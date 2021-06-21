@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import dayjs from 'dayjs';
-import { DefaultProps, useMantineTheme, mergeStyles, Text, Group, ActionIcon } from '@mantine/core';
+import { DefaultProps, useMantineTheme, mergeStyles, Group, ActionIcon } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { Month } from '../Month/Month';
 import { ArrowIcon } from './ArrowIcon';
@@ -20,7 +20,7 @@ interface CalendarProps
   locale?: string;
   onMonthChange?(value: Date): void;
   labelFormat?: string;
-  withMonthPicker?: boolean;
+  withSelect?: boolean;
   yearsRange?: { from: number; to: number };
 }
 
@@ -39,7 +39,7 @@ export function Calendar({
   value,
   onChange,
   labelFormat = 'MMMM YYYY',
-  withMonthPicker = false,
+  withSelect = false,
   yearsRange = { from: 2020, to: 2030 },
 }: CalendarProps) {
   const theme = useMantineTheme(themeOverride);
@@ -67,11 +67,11 @@ export function Calendar({
           locale={locale}
           classNames={classNames as any}
           styles={styles as any}
-          withMonthPicker
-          withYearPicker
+          withSelect={withSelect}
           yearsRange={yearsRange}
           value={_month}
           onChange={setMonth}
+          labelFormat={labelFormat}
         />
 
         <ActionIcon
