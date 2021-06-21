@@ -1,9 +1,9 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '@mantine/core';
+import { DefaultProps, mergeStyles, useMantineTheme } from '@mantine/core';
 import useStyles from './Day.styles';
 
-export interface DayProps extends DefaultProps {
+export interface DayProps extends DefaultProps<typeof useStyles> {
   value: Date;
   selected: boolean;
   outside: boolean;
@@ -25,8 +25,12 @@ export default function Day({
   onKeyDown,
   disableOutsideEvents,
   themeOverride,
+  classNames,
+  styles,
 }: DayProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme }, classNames, 'month');
+  const _styles = mergeStyles(classes, styles);
 
   return (
     <button
@@ -35,6 +39,7 @@ export default function Day({
       ref={elementRef}
       onKeyDown={(event) => onKeyDown(value, event)}
       tabIndex={outside && disableOutsideEvents ? -1 : selected ? 0 : -1}
+      style={_styles.day}
       className={cx(
         classes.day,
         {

@@ -1,8 +1,13 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles } from '@mantine/core';
+import { MantineTheme, getFontStyles, createMemoStyles } from '@mantine/core';
 
-export default createUseStyles({
-  month: ({ theme }: { theme: MantineTheme }) => ({
+interface MonthStyles {
+  theme: MantineTheme;
+}
+
+export default createMemoStyles({
+  weekday: {},
+
+  root: ({ theme }: MonthStyles) => ({
     ...getFontStyles(theme),
     borderCollapse: 'collapse',
     width: '100%',

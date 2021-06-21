@@ -1,13 +1,16 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles, getFocusStyles } from '@mantine/core';
+import { MantineTheme, getFontStyles, getFocusStyles, createMemoStyles } from '@mantine/core';
 
-export default createUseStyles({
+interface DayStyles {
+  theme: MantineTheme;
+}
+
+export default createMemoStyles({
   disableOutsideEvents: {},
   weekend: {},
   outside: {},
   selected: {},
 
-  day: ({ theme }: { theme: MantineTheme }) => ({
+  day: ({ theme }: DayStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     position: 'relative',

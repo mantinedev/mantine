@@ -1,18 +1,18 @@
 import React, { useRef, useEffect } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, Text } from '@mantine/core';
+import { DefaultProps, useMantineTheme, mergeStyles, Text } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
 import Day from './Day/Day';
 import useStyles from './Month.styles';
 
 export interface MonthProps
-  extends DefaultProps,
+  extends DefaultProps<typeof useStyles>,
     Omit<React.ComponentPropsWithoutRef<'table'>, 'onChange' | 'value'> {
   /** Date at which month should be shown */
   month: Date;
 
-  /** Locale is used to get weekdays names with date.toLocaleDateString  */
+  /** Locale is used to get weekdays names with dayjs format */
   locale?: string;
 
   /** Selected date */
@@ -30,6 +30,7 @@ export interface MonthProps
 
 export function Month({
   className,
+  style,
   month,
   value,
   onChange,
@@ -37,9 +38,13 @@ export function Month({
   disableOutsideEvents = false,
   locale = 'en',
   themeOverride,
+  classNames,
+  styles,
   ...others
 }: MonthProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme }, classNames, 'month');
+  const _styles = mergeStyles(classes, styles);
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
 
@@ -94,7 +99,7 @@ export function Month({
 
   const weekdays = getWeekdaysNames(locale).map((weekday) => (
     <th key={weekday}>
-      <Text color="gray" size="xs">
+      <Text color="gray" size="xs" className={classes.weekday} style={_styles.weekday}>
         {upperFirst(weekday)}
       </Text>
     </th>
@@ -125,6 +130,8 @@ export function Month({
             disableOutsideEvents={disableOutsideEvents}
             onKeyDown={handleKeyDown}
             themeOverride={themeOverride}
+            styles={styles as any}
+            classNames={classNames as any}
           />
         </td>
       );
@@ -134,7 +141,11 @@ export function Month({
   });
 
   return (
-    <table className={cx(classes.month, className)} {...others}>
+    <table
+      className={cx(classes.root, className)}
+      style={{ ...style, ..._styles.root }}
+      {...others}
+    >
       <thead>
         <tr>{weekdays}</tr>
       </thead>
