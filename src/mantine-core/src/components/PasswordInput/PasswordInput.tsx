@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
+import { getSizeValue } from '../../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { TextInput } from '../TextInput/TextInput';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
@@ -19,6 +20,30 @@ export interface PasswordInputProps
   focusInputOnToggle?: boolean;
 }
 
+const buttonSizes = {
+  xs: 22,
+  sm: 28,
+  md: 26,
+  lg: 32,
+  xl: 40,
+};
+
+const iconSizes = {
+  xs: 12,
+  sm: 15,
+  md: 17,
+  lg: 19,
+  xl: 21,
+};
+
+const rightSectionWidth = {
+  xs: 28,
+  sm: 34,
+  md: 34,
+  lg: 44,
+  xl: 54,
+};
+
 export function PasswordInput({
   radius,
   disabled,
@@ -27,6 +52,7 @@ export function PasswordInput({
   themeOverride,
   focusInputOnToggle = false,
   elementRef,
+  size = 'sm',
   ...others
 }: PasswordInputProps) {
   const inputRef = useRef<HTMLInputElement>();
@@ -46,8 +72,9 @@ export function PasswordInput({
       title={reveal ? hidePasswordLabel : showPasswordLabel}
       aria-label={reveal ? hidePasswordLabel : showPasswordLabel}
       radius={radius}
+      size={getSizeValue({ size, sizes: buttonSizes })}
     >
-      <PasswordToggleIcon reveal={reveal} />
+      <PasswordToggleIcon reveal={reveal} size={getSizeValue({ size, sizes: iconSizes })} />
     </ActionIcon>
   );
 
@@ -59,6 +86,8 @@ export function PasswordInput({
       elementRef={useMergedRef(inputRef, elementRef)}
       type={reveal ? 'text' : 'password'}
       rightSection={disabled ? null : rightSection}
+      rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
+      size={size}
       radius={radius}
     />
   );

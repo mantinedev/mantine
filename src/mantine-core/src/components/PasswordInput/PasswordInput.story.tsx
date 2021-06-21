@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { LockClosedIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME } from '../../theme';
+import { DEFAULT_THEME, MANTINE_SIZES } from '../../theme';
 import { PasswordInput } from './PasswordInput';
+
+const sizes = MANTINE_SIZES.map((size) => (
+  <PasswordInput placeholder={size} key={size} size={size} style={{ marginTop: 20 }} />
+));
 
 function WrappedPasswordInput(
   props: Omit<React.ComponentProps<typeof PasswordInput>, 'value' | 'onChange'>
@@ -18,14 +22,15 @@ function WrappedPasswordInput(
 }
 
 storiesOf('@mantine/core/PasswordInput', module)
-  .add('General usage', () => (
+  .add('Controlled', () => (
     <div style={{ width: 300, padding: 20 }}>
       <WrappedPasswordInput label="Password" placeholder="Password" type="password" />
     </div>
   ))
+  .add('Sizes', () => <div style={{ width: 300, padding: 20 }}>{sizes}</div>)
   .add('With icon', () => (
     <div style={{ width: 300, padding: 20 }}>
-      <WrappedPasswordInput
+      <PasswordInput
         label="Password"
         placeholder="Password"
         type="password"
@@ -35,7 +40,7 @@ storiesOf('@mantine/core/PasswordInput', module)
   ))
   .add('With description', () => (
     <div style={{ width: 300, padding: 20 }}>
-      <WrappedPasswordInput
+      <PasswordInput
         label="Password"
         placeholder="Password"
         type="password"
