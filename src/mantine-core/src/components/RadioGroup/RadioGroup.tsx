@@ -1,5 +1,5 @@
-import React, { Children, cloneElement, useState } from 'react';
-import { useId } from '@mantine/hooks';
+import React, { Children, cloneElement } from 'react';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme, MantineSize } from '../../theme';
 import {
   InputWrapper,
@@ -61,28 +61,28 @@ export function RadioGroup({
   size,
   ...others
 }: RadioGroupProps) {
-  const [_value, setValue] = useState(value || defaultValue || '');
-  const finalValue = typeof value === 'string' ? value : _value;
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ spacing, variant, theme }, null, 'radio-group');
   const uuid = useId(name);
-
-  const handleChange = (v: string) => {
-    setValue(v);
-    typeof onChange === 'function' && onChange(v);
-  };
+  const [_value, setValue] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: '',
+    onChange,
+    rule: (val) => typeof val === 'string',
+  });
 
   const radios: any = (Children.toArray(children) as React.ReactElement[])
     .filter((item) => item.type === Radio)
     .map((radio, index) =>
       cloneElement(radio, {
         key: index,
-        checked: finalValue === radio.props.value,
+        checked: _value === radio.props.value,
         name: uuid,
         color,
         size,
         onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-          handleChange(event.currentTarget.value),
+          setValue(event.currentTarget.value),
       })
     );
 

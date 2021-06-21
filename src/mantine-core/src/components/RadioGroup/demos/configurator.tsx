@@ -12,7 +12,7 @@ const codeTemplate = (props: string) => `<RadioGroup
 
 function Wrapper(props: RadioGroupProps) {
   return (
-    <RadioGroup {...props}>
+    <RadioGroup defaultValue="react" {...props}>
       <Radio value="react">React</Radio>
       <Radio value="svelte">Svelte</Radio>
       <Radio value="ng">Angular</Radio>
