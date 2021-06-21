@@ -33,7 +33,7 @@ export interface TextareaProps
   elementRef?: React.ForwardedRef<HTMLTextAreaElement>;
 
   /** Input size */
-  size: MantineSize;
+  size?: MantineSize;
 }
 
 export function Textarea({
