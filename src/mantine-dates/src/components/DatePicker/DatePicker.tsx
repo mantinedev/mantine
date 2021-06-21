@@ -19,7 +19,7 @@ interface DatePickerProps
     InputBaseProps,
     InputWrapperBaseProps,
     Omit<
-      React.ComponentPropsWithoutRef<'div'>,
+      React.ComponentPropsWithoutRef<'button'>,
       'value' | 'defaultValue' | 'onChange' | 'placeholder'
     > {
   value?: Date;

@@ -8,7 +8,7 @@ const defaultProps = {
   selected: true,
   outside: false,
   weekend: false,
-  disableOutsideEvents: false,
+  disabled: false,
   elementRef: () => {},
   onKeyDown: () => {},
 };
@@ -30,23 +30,5 @@ describe('@mantine/core/Month/Day', () => {
   it('render correct label with given date value', () => {
     const element = shallow(<Day {...defaultProps} />);
     expect(element.render().text()).toBe(defaultProps.value.getDate().toString());
-  });
-
-  it('sets correct tabIndex based on outside and disableOutsideEvents props', () => {
-    const outsideNoEvents = shallow(<Day {...defaultProps} outside disableOutsideEvents />);
-    const outsideWithEvents = shallow(
-      <Day {...defaultProps} outside disableOutsideEvents={false} />
-    );
-    const insideWithEvents = shallow(
-      <Day {...defaultProps} outside={false} disableOutsideEvents />
-    );
-    const insideWithoutEvents = shallow(
-      <Day {...defaultProps} outside={false} disableOutsideEvents={false} />
-    );
-
-    expect(outsideNoEvents.render().attr('tabindex')).toBe('-1');
-    expect(outsideWithEvents.render().attr('tabindex')).toBe('0');
-    expect(insideWithEvents.render().attr('tabindex')).toBe('0');
-    expect(insideWithoutEvents.render().attr('tabindex')).toBe('0');
   });
 });
