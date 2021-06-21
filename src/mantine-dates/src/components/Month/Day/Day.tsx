@@ -6,9 +6,8 @@ import useStyles from './Day.styles';
 export interface DayProps extends DefaultProps<typeof useStyles> {
   value: Date;
   selected: boolean;
-  outside: boolean;
   weekend: boolean;
-  disableOutsideEvents: boolean;
+  outside: boolean;
   onClick?(): void;
   elementRef(ref: HTMLButtonElement): void;
   onKeyDown(date: Date, event: React.KeyboardEvent): void;
@@ -20,12 +19,11 @@ export default function Day({
   style,
   value,
   selected,
-  outside,
   weekend,
+  outside,
   onClick,
   elementRef,
   onKeyDown,
-  disableOutsideEvents,
   themeOverride,
   classNames,
   disabled,
@@ -41,7 +39,7 @@ export default function Day({
       onClick={onClick}
       ref={elementRef}
       onKeyDown={(event) => onKeyDown(value, event)}
-      tabIndex={outside && disableOutsideEvents ? -1 : selected ? 0 : -1}
+      tabIndex={selected ? 0 : -1}
       style={{ ..._styles.day, ...style }}
       disabled={disabled}
       className={cx(
@@ -50,7 +48,6 @@ export default function Day({
           [classes.outside]: outside,
           [classes.weekend]: weekend,
           [classes.selected]: selected,
-          [classes.disableOutsideEvents]: disableOutsideEvents,
         },
         className
       )}

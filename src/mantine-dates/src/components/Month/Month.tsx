@@ -138,7 +138,8 @@ export function Month({
       const isAfterMax = maxDate instanceof Date && dayjs(maxDate).isBefore(date, 'day');
       const isBeforeMin = minDate instanceof Date && dayjs(minDate).isAfter(date, 'day');
       const shouldExclude = typeof excludeDate === 'function' && excludeDate(date);
-      const disabled = isAfterMax || isBeforeMin || shouldExclude;
+      const disabledOutside = disableOutsideEvents && outside;
+      const disabled = isAfterMax || isBeforeMin || shouldExclude || disabledOutside;
 
       return (
         <td key={cellIndex}>
@@ -151,7 +152,6 @@ export function Month({
             outside={outside}
             weekend={weekend}
             selected={isSelected}
-            disableOutsideEvents={disableOutsideEvents}
             onKeyDown={handleKeyDown}
             themeOverride={themeOverride}
             className={typeof dayClassName === 'function' ? dayClassName(date) : null}

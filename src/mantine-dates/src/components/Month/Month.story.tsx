@@ -14,7 +14,7 @@ function WrappedMonth(
 storiesOf('@mantine/dates/Month', module)
   .add('General usage', () => (
     <div style={{ maxWidth: 240, padding: 40 }}>
-      <WrappedMonth autoFocus locale="ru" excludeDate={(date) => date.getDate() === 10} />
+      <WrappedMonth autoFocus locale="ru" />
     </div>
   ))
   .add('Day style', () => (

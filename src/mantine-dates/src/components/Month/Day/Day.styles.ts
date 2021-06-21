@@ -26,16 +26,21 @@ export default createMemoStyles({
     fontSize: theme.fontSizes.sm,
     userSelect: 'none',
 
+    '&:disabled': {
+      pointerEvents: 'none',
+      color: theme.colors.gray[4],
+    },
+
     '&:hover': {
       backgroundColor: theme.colors.gray[0],
     },
 
-    '&$weekend': {
+    '&$weekend:not(:disabled)': {
       color: theme.colors.red[7],
     },
 
     '&$outside': {
-      color: theme.colors.gray[4],
+      color: `${theme.colors.gray[4]} !important`,
 
       '&$disableOutsideEvents': {
         pointerEvents: 'none',
