@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'clsx';
 import {
   DefaultProps,
@@ -9,9 +9,12 @@ import {
   Text,
   InputBaseProps,
   InputWrapperBaseProps,
+  Paper,
+  MantineTransition,
 } from '@mantine/core';
 import { useUncontrolled, useId } from '@mantine/hooks';
 import dayjs from 'dayjs';
+import { Calendar } from '../Calendar/Calendar';
 import useStyles from './DatePicker.styles';
 
 interface DatePickerProps
@@ -27,6 +30,9 @@ interface DatePickerProps
   defaultValue?: Date;
   wrapperProps?: Record<string, any>;
   placeholder?: React.ReactNode;
+  transition?: MantineTransition;
+  transitionDuration?: number;
+  transitionTimingFunction?: string;
 }
 
 export function DatePicker({
@@ -45,11 +51,16 @@ export function DatePicker({
   id,
   description,
   placeholder,
+  shadow = 'sm',
+  transition = 'slide-up',
+  transitionDuration = 200,
+  transitionTimingFunction,
   ...others
 }: DatePickerProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames, 'date-picker');
   const _styles = mergeStyles(classes, styles);
+  const [dropdownOpened, setDropdownOpened] = useState(false);
   const uuid = useId(id);
 
   const [_value] = useUncontrolled({
@@ -88,6 +99,12 @@ export function DatePicker({
             <Text className={classes.placeholder}>{placeholder}</Text>
           )}
         </Input>
+      </div>
+
+      <div className={classes.dropdownWrapper}>
+        <Paper className={classes.dropdown} shadow={shadow}>
+          <Calendar />
+        </Paper>
       </div>
     </InputWrapper>
   );

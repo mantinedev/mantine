@@ -4,6 +4,6 @@ import { DatePicker } from './DatePicker';
 
 storiesOf('@mantine/dates/DatePicker', module).add('Uncontrolled', () => (
   <div style={{ padding: 40 }}>
-    <DatePicker placeholder="Pick date" />
+    <DatePicker placeholder="Pick date" label="Date picker" />
   </div>
 ));

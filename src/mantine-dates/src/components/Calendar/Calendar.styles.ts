@@ -7,8 +7,6 @@ interface CalendarStyles {
 export default createMemoStyles({
   root: {},
   header: ({ theme }: CalendarStyles) => ({
-    paddingLeft: 12,
-    paddingRight: 12,
     marginBottom: theme.spacing.xs,
   }),
 });
