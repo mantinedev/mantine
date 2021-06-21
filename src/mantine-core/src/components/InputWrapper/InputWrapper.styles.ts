@@ -1,7 +1,14 @@
-import { createMemoStyles, MantineTheme, getFontStyles } from '../../theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  getFontStyles,
+  getSizeValue,
+  MantineSize,
+} from '../../theme';
 
 interface InputWrapperStyles {
   theme: MantineTheme;
+  size: MantineSize;
 }
 
 export default createMemoStyles({
@@ -10,10 +17,10 @@ export default createMemoStyles({
     lineHeight: theme.lineHeight,
   }),
 
-  label: ({ theme }: InputWrapperStyles) => ({
+  label: ({ theme, size }: InputWrapperStyles) => ({
     display: 'block',
     marginBottom: 5,
-    fontSize: 14,
+    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     fontWeight: 500,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
     wordBreak: 'break-word',

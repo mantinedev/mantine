@@ -1,6 +1,6 @@
 import React, { createElement } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles, MantineSize } from '../../theme';
 import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
@@ -41,6 +41,9 @@ export interface InputWrapperProps
 
   /** Render label as label with htmlFor or as div */
   labelElement?: 'label' | 'div';
+
+  /** Controls all elements font-size */
+  size?: MantineSize;
 }
 
 export function InputWrapper({
@@ -59,12 +62,14 @@ export function InputWrapper({
   errorProps,
   classNames,
   styles,
+  size = 'sm',
   ...others
 }: InputWrapperProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme }, classNames, 'input-wrapper');
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme, size }, classNames, 'input-wrapper');
   const _styles = mergeStyles(classes, styles);
   const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
+  const elementsSize = size === 'lg' || size === 'xl' ? 'md' : 'xs';
   const inputLabel = createElement(
     labelElement,
     {
@@ -95,7 +100,7 @@ export function InputWrapper({
           themeOverride={themeOverride}
           data-mantine-description
           color="gray"
-          size="xs"
+          size={elementsSize}
           className={classes.description}
           style={_styles.description}
         >
@@ -111,7 +116,7 @@ export function InputWrapper({
           themeOverride={themeOverride}
           data-mantine-error
           color="red"
-          size="sm"
+          size={elementsSize}
           className={classes.error}
           style={_styles.error}
         >
