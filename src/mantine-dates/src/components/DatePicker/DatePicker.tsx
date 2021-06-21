@@ -37,6 +37,7 @@ interface DatePickerProps
   transitionTimingFunction?: string;
   shadow?: string;
   closeCalendarOnChange?: boolean;
+  inputFormat?: string;
 }
 
 export function DatePicker({
@@ -57,6 +58,7 @@ export function DatePicker({
   placeholder,
   shadow = 'sm',
   locale = 'en',
+  inputFormat = 'DD/MM/YYYY',
   transition = 'rotate-right',
   transitionDuration = 200,
   transitionTimingFunction,
@@ -114,7 +116,7 @@ export function DatePicker({
             {...others}
           >
             {_value instanceof Date ? (
-              dayjs(_value).format('DD/MM/YYYY')
+              dayjs(_value).format(inputFormat)
             ) : (
               <Text className={classes.placeholder}>{placeholder}</Text>
             )}

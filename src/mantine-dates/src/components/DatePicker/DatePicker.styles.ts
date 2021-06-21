@@ -17,6 +17,7 @@ export default createMemoStyles({
 
   dropdownWrapper: {
     position: 'relative',
+    zIndex: 4,
   },
 
   dropdown: ({ theme }: DatePickerStyles) => ({

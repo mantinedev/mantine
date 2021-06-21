@@ -16,6 +16,7 @@ import {
   RadioGroup,
   Radio,
 } from '@mantine/core';
+import { DatePicker } from '@mantine/dates';
 import { BREAKPOINT } from '../../Explore.styles';
 
 const useStyles = createUseStyles({
@@ -73,7 +74,16 @@ export function InputsDemo() {
   return (
     <div className={classes.wrapper}>
       <div className={classes.column}>
+        <DatePicker
+          label="Date picker"
+          description="Capture date input from user"
+          required
+          defaultValue={new Date()}
+          inputFormat="MMMM D, YYYY"
+        />
+
         <TextInput
+          style={{ marginTop: 15 }}
           label="Text input"
           placeholder="General text input"
           description="Use text input to capture string data from user"
