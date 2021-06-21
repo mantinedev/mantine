@@ -62,6 +62,9 @@ export function Calendar({
   dayClassName,
   dayStyle,
   disableOutsideEvents,
+  minDate,
+  maxDate,
+  excludeDate,
 }: CalendarProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames, 'calendar');
@@ -110,6 +113,9 @@ export function Calendar({
         dayClassName={dayClassName}
         dayStyle={dayStyle}
         disableOutsideEvents={disableOutsideEvents}
+        minDate={minDate}
+        maxDate={maxDate}
+        excludeDate={excludeDate}
       />
     </div>
   );

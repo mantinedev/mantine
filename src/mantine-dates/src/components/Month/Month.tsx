@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles, Text } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
+import dayjs from 'dayjs';
 import { getMonthDays, isSameMonth, getWeekdaysNames, isSameDate } from '../../utils';
 import Day from './Day/Day';
 import useStyles from './Month.styles';
@@ -15,6 +16,15 @@ export interface MonthSettings {
 
   /** When true dates that are outside of given month cannot be clicked or focused */
   disableOutsideEvents?: boolean;
+
+  /** Minimum possible date */
+  minDate?: Date;
+
+  /** Maximum possible date */
+  maxDate?: Date;
+
+  /** Callback function to determine if day should be disabled */
+  excludeDate?(date: Date): boolean;
 }
 
 export interface MonthProps
@@ -51,6 +61,9 @@ export function Month({
   themeOverride,
   classNames,
   styles,
+  minDate,
+  maxDate,
+  excludeDate,
   ...others
 }: MonthProps) {
   const theme = useMantineTheme(themeOverride);
@@ -122,6 +135,10 @@ export function Month({
       const weekend = weekday === 6 || weekday === 0;
       const outside = date.getMonth() !== month.getMonth();
       const isSelected = value instanceof Date && isSameDate(date, value);
+      const isAfterMax = maxDate instanceof Date && dayjs(maxDate).isBefore(date, 'day');
+      const isBeforeMin = minDate instanceof Date && dayjs(minDate).isAfter(date, 'day');
+      const shouldExclude = typeof excludeDate === 'function' && excludeDate(date);
+      const disabled = isAfterMax || isBeforeMin || shouldExclude;
 
       return (
         <td key={cellIndex}>
@@ -141,6 +158,7 @@ export function Month({
             style={typeof dayStyle === 'function' ? dayStyle(date) : null}
             styles={styles as any}
             classNames={classNames as any}
+            disabled={disabled}
           />
         </td>
       );

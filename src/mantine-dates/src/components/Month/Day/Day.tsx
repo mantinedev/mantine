@@ -12,6 +12,7 @@ export interface DayProps extends DefaultProps<typeof useStyles> {
   onClick?(): void;
   elementRef(ref: HTMLButtonElement): void;
   onKeyDown(date: Date, event: React.KeyboardEvent): void;
+  disabled: boolean;
 }
 
 export default function Day({
@@ -27,6 +28,7 @@ export default function Day({
   disableOutsideEvents,
   themeOverride,
   classNames,
+  disabled,
   styles,
 }: DayProps) {
   const theme = useMantineTheme(themeOverride);
@@ -41,6 +43,7 @@ export default function Day({
       onKeyDown={(event) => onKeyDown(value, event)}
       tabIndex={outside && disableOutsideEvents ? -1 : selected ? 0 : -1}
       style={{ ..._styles.day, ...style }}
+      disabled={disabled}
       className={cx(
         classes.day,
         {
