@@ -58,7 +58,7 @@ export function DatePicker({
   placeholder,
   shadow = 'sm',
   locale = 'en',
-  inputFormat = 'DD/MM/YYYY',
+  inputFormat = 'MMMM D, YYYY',
   transition = 'rotate-right',
   transitionDuration = 200,
   transitionTimingFunction,
@@ -113,6 +113,7 @@ export function DatePicker({
             classNames={classNames as any}
             styles={styles as any}
             onClick={() => setDropdownOpened((o) => !o)}
+            id={uuid}
             {...others}
           >
             {_value instanceof Date ? (
