@@ -69,7 +69,6 @@ export function InputWrapper({
   const classes = useStyles({ theme, size }, classNames, 'input-wrapper');
   const _styles = mergeStyles(classes, styles);
   const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
-  const elementsSize = size === 'lg' || size === 'xl' ? 'md' : 'xs';
   const inputLabel = createElement(
     labelElement,
     {
@@ -100,7 +99,7 @@ export function InputWrapper({
           themeOverride={themeOverride}
           data-mantine-description
           color="gray"
-          size={elementsSize}
+          size={size}
           className={classes.description}
           style={_styles.description}
         >
@@ -116,7 +115,7 @@ export function InputWrapper({
           themeOverride={themeOverride}
           data-mantine-error
           color="red"
-          size={elementsSize}
+          size={size}
           className={classes.error}
           style={_styles.error}
         >

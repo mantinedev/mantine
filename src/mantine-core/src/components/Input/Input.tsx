@@ -40,9 +40,6 @@ export interface InputBaseProps {
 
   /** Defines input appearance */
   variant?: 'default' | 'filled' | 'unstyled';
-
-  /** Input size */
-  size?: MantineSize;
 }
 
 export interface InputProps extends InputBaseProps, DefaultProps<typeof useStyles> {}
@@ -74,6 +71,9 @@ export function Input<
   Omit<React.ComponentPropsWithoutRef<T>, 'size'> & {
     /** Element or component that will be used as root element */
     component?: T;
+
+    /** Input size */
+    size?: MantineSize;
 
     /** Get element ref */
     elementRef?: React.ForwardedRef<U>;

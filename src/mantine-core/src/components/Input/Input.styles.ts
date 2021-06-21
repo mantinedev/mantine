@@ -16,9 +16,9 @@ interface InputStyles {
 export const sizes = {
   xs: 28,
   sm: 36,
-  md: 42,
-  lg: 48,
-  xl: 52,
+  md: 40,
+  lg: 46,
+  xl: 56,
 };
 
 export default createMemoStyles({

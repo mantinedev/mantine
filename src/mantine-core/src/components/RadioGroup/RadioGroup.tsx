@@ -56,7 +56,7 @@ export function RadioGroup({
   defaultValue,
   onChange,
   variant = 'horizontal',
-  spacing = 'md',
+  spacing = 'sm',
   color,
   size,
   ...others
@@ -87,7 +87,7 @@ export function RadioGroup({
     );
 
   return (
-    <InputWrapper labelElement="div" {...others}>
+    <InputWrapper labelElement="div" size={size} {...others}>
       <div role="radiogroup" className={classes.wrapper}>
         {radios}
       </div>

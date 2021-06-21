@@ -1,6 +1,6 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineSize } from '../../theme';
 import {
   InputWrapperBaseProps,
   InputWrapper,
@@ -19,7 +19,7 @@ export interface SelectProps
   extends DefaultProps<InputStylesNames | InputWrapperStylesNames>,
     InputWrapperBaseProps,
     Omit<InputBaseProps, 'rightSection' | 'rightSectionWidth' | 'rightSectionProps'>,
-    React.ComponentPropsWithoutRef<'select'> {
+    Omit<React.ComponentPropsWithoutRef<'select'>, 'size'> {
   /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
 
@@ -37,6 +37,9 @@ export interface SelectProps
 
   /** Get element ref */
   elementRef?: React.ForwardedRef<HTMLSelectElement>;
+
+  /** Input size */
+  size?: MantineSize;
 }
 
 export function Select({
@@ -58,6 +61,7 @@ export function Select({
   value,
   classNames,
   styles,
+  size = 'sm',
   ...others
 }: SelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -92,6 +96,7 @@ export function Select({
       style={style}
       themeOverride={themeOverride}
       description={description}
+      size={size}
       styles={styles as any}
       classNames={classNames as any}
     >
@@ -108,6 +113,7 @@ export function Select({
         required={required}
         themeOverride={themeOverride}
         value={value === null ? '' : value}
+        size={size}
         styles={{
           ...styles,
           rightSection: { ...(styles as any)?.rightSection, pointerEvents: 'none' },
