@@ -10,6 +10,6 @@ storiesOf('@mantine/dates/Calendar', module)
   ))
   .add('With select', () => (
     <div style={{ padding: 40, width: 400 }}>
-      <Calendar withSelect />
+      <Calendar withSelect disableOutsideEvents />
     </div>
   ));

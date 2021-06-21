@@ -6,8 +6,20 @@ import { getMonthDays, isSameMonth, getWeekdaysNames, isSameDate } from '../../u
 import Day from './Day/Day';
 import useStyles from './Month.styles';
 
+export interface MonthSettings {
+  /** Adds className to day button based on date */
+  dayClassName?(date: Date): string;
+
+  /** Adds style to day button based on date */
+  dayStyle?(date: Date): React.CSSProperties;
+
+  /** When true dates that are outside of given month cannot be clicked or focused */
+  disableOutsideEvents?: boolean;
+}
+
 export interface MonthProps
   extends DefaultProps<typeof useStyles>,
+    MonthSettings,
     Omit<React.ComponentPropsWithoutRef<'table'>, 'onChange' | 'value'> {
   /** Date at which month should be shown */
   month: Date;
@@ -21,17 +33,8 @@ export interface MonthProps
   /** Autofocus selected date on mount, if no date is selected autofocus is applied to first month day */
   autoFocus?: boolean;
 
-  /** When true dates that are outside of given month cannot be clicked or focused */
-  disableOutsideEvents?: boolean;
-
   /** Called when day is selected */
   onChange?(value: Date): void;
-
-  /** Adds className to day button based on date */
-  dayClassName?(date: Date): string;
-
-  /** Adds style to day button based on date */
-  dayStyle?(date: Date): React.CSSProperties;
 }
 
 export function Month({

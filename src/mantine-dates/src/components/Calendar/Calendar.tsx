@@ -3,25 +3,43 @@ import cx from 'clsx';
 import dayjs from 'dayjs';
 import { DefaultProps, useMantineTheme, mergeStyles, Group, ActionIcon } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import { Month } from '../Month/Month';
+import { Month, MonthSettings } from '../Month/Month';
 import { ArrowIcon } from './ArrowIcon';
 import { CalendarLabel } from './CalendarLabel/CalendarLabel';
 import useStyles from './Calendar.styles';
 
+export interface CalendarSettings {
+  /** aria-label for next month arrow button */
+  nextMonthLabel?: string;
+
+  /** aria-label for previous month arrow button */
+  previousMonthLabel?: string;
+
+  /** Locale used for all labels formatting */
+  locale?: string;
+
+  /** Initial selected month */
+  initialMonth?: Date;
+
+  /** dayjs label format */
+  labelFormat?: string;
+
+  /** Replace calendar label with month and year selects */
+  withSelect?: boolean;
+
+  /** Years range for year select */
+  yearsRange?: { from: number; to: number };
+}
+
 interface CalendarProps
   extends DefaultProps<typeof useStyles>,
+    MonthSettings,
+    CalendarSettings,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
-  initialMonth?: Date;
   month?: Date;
   value?: Date;
   onChange?(value: Date): void;
-  nextMonthLabel?: string;
-  previousMonthLabel?: string;
-  locale?: string;
   onMonthChange?(value: Date): void;
-  labelFormat?: string;
-  withSelect?: boolean;
-  yearsRange?: { from: number; to: number };
 }
 
 export function Calendar({
@@ -41,6 +59,9 @@ export function Calendar({
   labelFormat = 'MMMM YYYY',
   withSelect = false,
   yearsRange = { from: 2020, to: 2030 },
+  dayClassName,
+  dayStyle,
+  disableOutsideEvents,
 }: CalendarProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames, 'calendar');
@@ -82,7 +103,14 @@ export function Calendar({
         </ActionIcon>
       </Group>
 
-      <Month month={_month} value={value} onChange={onChange} />
+      <Month
+        month={_month}
+        value={value}
+        onChange={onChange}
+        dayClassName={dayClassName}
+        dayStyle={dayStyle}
+        disableOutsideEvents={disableOutsideEvents}
+      />
     </div>
   );
 }
