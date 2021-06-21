@@ -66,7 +66,7 @@ export function CalendarLabel({
       />
     </Group>
   ) : (
-    <Text className={classes.label} style={_styles.label}>
+    <Text className={classes.label} style={_styles.label} size="sm">
       {dayjs(value).format(labelFormat)}
     </Text>
   );
