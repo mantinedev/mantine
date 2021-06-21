@@ -4,12 +4,22 @@ import {
   getFontStyles,
   getSizeValue,
   createMemoStyles,
+  MantineSize,
 } from '../../theme';
 
 interface InputStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
+  size: MantineSize;
 }
+
+export const sizes = {
+  xs: 28,
+  sm: 36,
+  md: 42,
+  lg: 48,
+  xl: 52,
+};
 
 export default createMemoStyles({
   withIcon: {},
@@ -21,12 +31,12 @@ export default createMemoStyles({
     '&, & *': { boxSizing: 'border-box' },
   }),
 
-  default: ({ theme, radius }: InputStyles) => ({
+  default: ({ theme, radius, size }: InputStyles) => ({
     '& $input': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-      minHeight: 36,
-      paddingLeft: theme.spacing.md,
-      paddingRight: theme.spacing.md,
+      minHeight: getSizeValue({ size, sizes }),
+      paddingLeft: getSizeValue({ size, sizes: theme.spacing }),
+      paddingRight: getSizeValue({ size, sizes: theme.spacing }),
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
@@ -49,15 +59,15 @@ export default createMemoStyles({
     },
 
     '& $icon': {
-      width: 36,
+      width: getSizeValue({ size, sizes }),
     },
   }),
 
-  filled: ({ theme, radius }: InputStyles) => ({
+  filled: ({ theme, radius, size }: InputStyles) => ({
     '& $input': {
-      minHeight: 36,
-      paddingLeft: theme.spacing.md,
-      paddingRight: theme.spacing.md,
+      minHeight: getSizeValue({ size, sizes }),
+      paddingLeft: getSizeValue({ size, sizes: theme.spacing }),
+      paddingRight: getSizeValue({ size, sizes: theme.spacing }),
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: '1px solid transparent',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
@@ -91,7 +101,7 @@ export default createMemoStyles({
     },
 
     '& $icon': {
-      width: 36,
+      width: getSizeValue({ size, sizes }),
       color: theme.colors.gray[6],
     },
   }),
@@ -118,14 +128,14 @@ export default createMemoStyles({
     },
   }),
 
-  input: ({ theme }: InputStyles) => ({
+  input: ({ theme, size }: InputStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     lineHeight: theme.lineHeight,
     appearance: 'none',
     resize: 'none',
     boxSizing: 'border-box',
-    fontSize: theme.fontSizes.sm,
+    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     width: '100%',
     color: theme.black,
     display: 'block',

@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import Textarea from 'react-textarea-autosize';
-import { DEFAULT_THEME } from '../../theme';
+import { DEFAULT_THEME, MANTINE_SIZES } from '../../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
 
@@ -11,6 +11,10 @@ const actionIcon = (
     <MagnifyingGlassIcon />
   </ActionIcon>
 );
+
+const sizes = MANTINE_SIZES.map((size) => (
+  <Input placeholder={`${size} input`} key={size} style={{ marginTop: 15 }} size={size} />
+));
 
 const getStates = (props?: any) => (
   <div style={{ maxWidth: 300, padding: 50 }}>
@@ -51,6 +55,7 @@ const getStates = (props?: any) => (
 );
 
 storiesOf('@mantine/core/Input', module)
+  .add('Sizes', () => <div style={{ maxWidth: 300, padding: 50 }}>{sizes}</div>)
   .add('Default variant', () => <>{getStates()}</>)
   .add('Filled variant', () => <>{getStates({ variant: 'filled' })}</>)
   .add('Unstyled variant', () => <>{getStates({ variant: 'unstyled' })}</>)

@@ -1,7 +1,12 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
-import { ComponentPassThrough } from '../../types';
+import {
+  DefaultProps,
+  useMantineTheme,
+  MantineNumberSize,
+  mergeStyles,
+  MantineSize,
+} from '../../theme';
 import useStyles from './Input.styles';
 
 export const INPUT_VARIANTS = ['default', 'filled', 'unstyled'] as const;
@@ -35,6 +40,9 @@ export interface InputBaseProps {
 
   /** Defines input appearance */
   variant?: 'default' | 'filled' | 'unstyled';
+
+  /** Input size */
+  size?: MantineSize;
 }
 
 export interface InputProps extends InputBaseProps, DefaultProps<typeof useStyles> {}
@@ -43,7 +51,8 @@ export function Input<
   T extends React.ElementType = 'input',
   U extends HTMLElement = HTMLInputElement
 >({
-  component: Element = 'input',
+  // @ts-ignore
+  component = 'input',
   className,
   invalid = false,
   required = false,
@@ -54,19 +63,25 @@ export function Input<
   rightSection,
   rightSectionProps = {},
   radius = 'sm',
+  size = 'sm',
   themeOverride,
   wrapperProps,
   elementRef,
   classNames,
   styles,
   ...others
-}: ComponentPassThrough<T, InputProps> & {
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<U>;
-}) {
+}: InputProps &
+  Omit<React.ComponentPropsWithoutRef<T>, 'size'> & {
+    /** Element or component that will be used as root element */
+    component?: T;
+
+    /** Get element ref */
+    elementRef?: React.ForwardedRef<U>;
+  }) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, theme }, classNames, 'input');
+  const classes = useStyles({ radius, theme, size }, classNames, 'input');
   const _styles = mergeStyles(classes, styles);
+  const Element: any = component;
 
   return (
     <div
