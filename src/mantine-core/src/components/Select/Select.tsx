@@ -1,6 +1,6 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineSize } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineSize, getSizeValue } from '../../theme';
 import {
   InputWrapperBaseProps,
   InputWrapper,
@@ -42,6 +42,22 @@ export interface SelectProps
   size?: MantineSize;
 }
 
+const iconSizes = {
+  xs: 14,
+  sm: 18,
+  md: 20,
+  lg: 24,
+  xl: 28,
+};
+
+const rightSectionWidth = {
+  xs: 24,
+  sm: 30,
+  md: 34,
+  lg: 44,
+  xl: 54,
+};
+
 export function Select({
   id,
   className,
@@ -82,7 +98,10 @@ export function Select({
   }
 
   const chevron = (
-    <ChevronIcon style={{ color: error ? theme.colors.red[6] : theme.colors.gray[6] }} />
+    <ChevronIcon
+      style={{ color: error ? theme.colors.red[6] : theme.colors.gray[6] }}
+      size={getSizeValue({ size, sizes: iconSizes })}
+    />
   );
 
   return (
@@ -113,6 +132,7 @@ export function Select({
         required={required}
         themeOverride={themeOverride}
         value={value === null ? '' : value}
+        rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
         size={size}
         styles={{
           ...styles,
