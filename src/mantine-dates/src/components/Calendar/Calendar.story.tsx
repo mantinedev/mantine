@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Calendar } from './Calendar';
 
-storiesOf('@mantine/dates/Calendar', module)
-  .add('General usage', () => (
-    <div style={{ padding: 40, width: 400 }}>
-      <Calendar value={new Date()} />
-    </div>
-  ))
-  .add('With select', () => (
-    <div style={{ padding: 40, width: 400 }}>
-      <Calendar withSelect disableOutsideEvents />
-    </div>
-  ));
+function WrappedCalendar(props: React.ComponentPropsWithoutRef<typeof Calendar>) {
+  const [value, onChange] = useState(new Date());
+  return <Calendar month={value} value={value} onChange={onChange} {...props} />;
+}
+
+storiesOf('@mantine/dates/Calendar', module).add('General usage', () => (
+  <div style={{ padding: 40, width: 400 }}>
+    <WrappedCalendar />
+    <WrappedCalendar withSelect disableOutsideEvents style={{ marginTop: 40 }} />
+  </div>
+));
