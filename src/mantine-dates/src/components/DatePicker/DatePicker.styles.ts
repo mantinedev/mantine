@@ -24,7 +24,7 @@ export default createMemoStyles({
     position: 'absolute',
     left: 0,
     top: theme.spacing.xs,
-    maxWidth: 260,
+    maxWidth: 280,
     border: `1px solid ${theme.colors.gray[2]}`,
     zIndex: 4,
     padding: [theme.spacing.md, theme.spacing.xs],

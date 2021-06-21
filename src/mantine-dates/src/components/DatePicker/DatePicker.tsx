@@ -65,6 +65,15 @@ export function DatePicker({
   nextMonthLabel,
   previousMonthLabel,
   closeCalendarOnChange = true,
+  labelFormat,
+  withSelect,
+  yearsRange,
+  dayClassName,
+  dayStyle,
+  disableOutsideEvents,
+  minDate,
+  maxDate,
+  excludeDate,
   ...others
 }: DatePickerProps) {
   const theme = useMantineTheme(themeOverride);
@@ -106,7 +115,7 @@ export function DatePicker({
       {...wrapperProps}
     >
       <div ref={clickOutsideRef}>
-        <div className={cx(classes.wrapper, className)} style={{ ...style, ..._styles.wrapper }}>
+        <div className={cx(classes.wrapper, className)} style={_styles.wrapper}>
           <Input
             themeOverride={themeOverride}
             component="button"
@@ -148,6 +157,15 @@ export function DatePicker({
                   month={_value}
                   value={_value}
                   onChange={handleValueChange}
+                  labelFormat={labelFormat}
+                  withSelect={withSelect}
+                  yearsRange={yearsRange}
+                  dayClassName={dayClassName}
+                  dayStyle={dayStyle}
+                  disableOutsideEvents={disableOutsideEvents}
+                  minDate={minDate}
+                  maxDate={maxDate}
+                  excludeDate={excludeDate}
                 />
               </Paper>
             </div>
