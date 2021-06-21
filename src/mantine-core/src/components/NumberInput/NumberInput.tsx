@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { useMergedRef, assignRef } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, mergeStyles } from '../../theme';
+import { useMantineTheme, DefaultProps, mergeStyles, getSizeValue } from '../../theme';
 import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
-import useStyles, { CONTROL_WIDTH } from './NumberInput.styles';
+import useStyles, { CONTROL_SIZES } from './NumberInput.styles';
 
 export type NumberInputStylesNames = keyof ReturnType<typeof useStyles>;
 
@@ -77,10 +77,11 @@ export function NumberInput({
   handlersRef,
   classNames,
   styles,
+  size,
   ...others
 }: NumberInputProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, radius }, classNames as any, 'number-input');
+  const classes = useStyles({ theme, radius, size }, classNames as any, 'number-input');
   const _styles = mergeStyles(classes, styles as any);
   const [focused, setFocused] = useState(false);
   const [_value, setValue] = useState(
@@ -197,11 +198,12 @@ export function NumberInput({
       onBlur={handleBlur}
       onFocus={handleFocus}
       rightSection={disabled || hideControls || variant === 'unstyled' ? null : rightSection}
-      rightSectionWidth={CONTROL_WIDTH + 1}
+      rightSectionWidth={getSizeValue({ size, sizes: CONTROL_SIZES }) + 1}
       radius={radius}
       max={max}
       min={min}
       step={step}
+      size={size}
       styles={styles as any}
       classNames={classNames as any}
     />

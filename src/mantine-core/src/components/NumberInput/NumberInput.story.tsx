@@ -1,9 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MantineProvider } from '../../theme';
+import { DEFAULT_THEME, MantineProvider, MANTINE_SIZES } from '../../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Group } from '../Group/Group';
 import { NumberInput, NumberInputHandlers } from './NumberInput';
+
+const sizes = MANTINE_SIZES.map((size) => (
+  <NumberInput defaultValue={0} label={size} size={size} key={size} style={{ marginTop: 30 }} />
+));
 
 function Wrapper(props: Omit<React.ComponentProps<typeof NumberInput>, 'value' | 'onChange'>) {
   const [value, setValue] = useState(0);
@@ -82,6 +86,7 @@ storiesOf('@mantine/core/NumberInput', module)
       />
     </div>
   ))
+  .add('Sizes', () => <div style={{ padding: 40, maxWidth: 400 }}>{sizes}</div>)
   .add('Handlers', () => <HandlersWrapper />)
   .add('Dark theme', () => (
     <MantineProvider theme={{ colorScheme: 'dark' }}>

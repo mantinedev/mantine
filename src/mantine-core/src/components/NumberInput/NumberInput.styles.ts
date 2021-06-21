@@ -1,11 +1,24 @@
-import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  MantineNumberSize,
+  getSizeValue,
+  MantineSize,
+} from '../../theme';
 
 interface NumberInputStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
+  size: MantineSize;
 }
 
-export const CONTROL_WIDTH = 24;
+export const CONTROL_SIZES = {
+  xs: 20,
+  sm: 24,
+  md: 30,
+  lg: 34,
+  xl: 36,
+};
 
 export default createMemoStyles({
   rightSection: {
@@ -16,11 +29,11 @@ export default createMemoStyles({
     marginRight: 1,
   },
 
-  control: ({ theme }: NumberInputStyles) => ({
+  control: ({ theme, size }: NumberInputStyles) => ({
     position: 'relative',
     flex: '0 0 50%',
     boxSizing: 'border-box',
-    width: CONTROL_WIDTH,
+    width: getSizeValue({ size, sizes: CONTROL_SIZES }),
     padding: 0,
     WebkitTapHighlightColor: 'transparent',
     borderBottom: `1px solid ${
