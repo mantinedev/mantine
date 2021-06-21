@@ -16,6 +16,7 @@ export interface DayProps extends DefaultProps<typeof useStyles> {
 
 export default function Day({
   className,
+  style,
   value,
   selected,
   outside,
@@ -39,7 +40,7 @@ export default function Day({
       ref={elementRef}
       onKeyDown={(event) => onKeyDown(value, event)}
       tabIndex={outside && disableOutsideEvents ? -1 : selected ? 0 : -1}
-      style={_styles.day}
+      style={{ ..._styles.day, ...style }}
       className={cx(
         classes.day,
         {

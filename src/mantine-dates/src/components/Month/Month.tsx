@@ -26,6 +26,12 @@ export interface MonthProps
 
   /** Called when day is selected */
   onChange?(value: Date): void;
+
+  /** Adds className to day button based on date */
+  dayClassName?(date: Date): string;
+
+  /** Adds style to day button based on date */
+  dayStyle?(date: Date): React.CSSProperties;
 }
 
 export function Month({
@@ -37,6 +43,8 @@ export function Month({
   autoFocus = false,
   disableOutsideEvents = false,
   locale = 'en',
+  dayClassName,
+  dayStyle,
   themeOverride,
   classNames,
   styles,
@@ -130,6 +138,8 @@ export function Month({
             disableOutsideEvents={disableOutsideEvents}
             onKeyDown={handleKeyDown}
             themeOverride={themeOverride}
+            className={typeof dayClassName === 'function' ? dayClassName(date) : null}
+            style={typeof dayStyle === 'function' ? dayStyle(date) : null}
             styles={styles as any}
             classNames={classNames as any}
           />
