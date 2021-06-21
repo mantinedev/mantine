@@ -8,7 +8,7 @@ import { ArrowIcon } from './ArrowIcon';
 import { CalendarLabel } from './CalendarLabel/CalendarLabel';
 import useStyles from './Calendar.styles';
 
-export interface CalendarSettings {
+export interface CalendarSettings extends MonthSettings {
   /** aria-label for next month arrow button */
   nextMonthLabel?: string;
 
@@ -33,7 +33,6 @@ export interface CalendarSettings {
 
 interface CalendarProps
   extends DefaultProps<typeof useStyles>,
-    MonthSettings,
     CalendarSettings,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   month?: Date;
