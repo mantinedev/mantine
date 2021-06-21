@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles, Text } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
-import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
+import { getMonthDays, isSameMonth, getWeekdaysNames, isSameDate } from '../../utils';
 import Day from './Day/Day';
 import useStyles from './Month.styles';
 
@@ -118,11 +118,7 @@ export function Month({
       const weekday = date.getDay();
       const weekend = weekday === 6 || weekday === 0;
       const outside = date.getMonth() !== month.getMonth();
-      const isSelected =
-        value instanceof Date &&
-        date.getFullYear() === value.getFullYear() &&
-        date.getMonth() === value.getMonth() &&
-        date.getDate() === value.getDate();
+      const isSelected = value instanceof Date && isSameDate(date, value);
 
       return (
         <td key={cellIndex}>
