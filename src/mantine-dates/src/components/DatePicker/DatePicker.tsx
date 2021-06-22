@@ -12,6 +12,8 @@ import {
   Paper,
   Transition,
   MantineTransition,
+  InputStylesNames,
+  InputWrapperStylesNames,
 } from '@mantine/core';
 import {
   useUncontrolled,
@@ -21,8 +23,14 @@ import {
   useMergedRef,
 } from '@mantine/hooks';
 import dayjs from 'dayjs';
-import { Calendar, CalendarSettings } from '../Calendar/Calendar';
+import { Calendar, CalendarSettings, CalendarStylesNames } from '../Calendar/Calendar';
 import useStyles from './DatePicker.styles';
+
+export type DatePickerStylesNames =
+  | keyof ReturnType<typeof useStyles>
+  | CalendarStylesNames
+  | InputStylesNames
+  | InputWrapperStylesNames;
 
 interface DatePickerProps
   extends DefaultProps<typeof useStyles>,
