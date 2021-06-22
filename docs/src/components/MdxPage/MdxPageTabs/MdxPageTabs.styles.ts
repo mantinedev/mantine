@@ -10,9 +10,7 @@ import {
 
 export default createUseStyles(
   (theme) => ({
-    tabs: {
-      // background: theme.colors.gray[0],
-    },
+    tabs: {},
 
     tabsWrapper: {
       background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
@@ -72,7 +70,8 @@ export default createUseStyles(
     main: {
       width: `calc(100% - ${TABLE_OF_CONTENTS_WIDTH}px)`,
       maxWidth: CONTENT_WIDTH,
-      margin: 'auto',
+      marginLeft: 'auto',
+      marginRight: 'auto',
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         width: '100%',
