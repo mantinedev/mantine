@@ -10,6 +10,7 @@ function WrappedCalendar(props: React.ComponentPropsWithoutRef<typeof Calendar>)
 storiesOf('@mantine/dates/Calendar', module).add('General usage', () => (
   <div style={{ padding: 40, width: 400 }}>
     <WrappedCalendar minDate={new Date()} />
+    <WrappedCalendar maxDate={new Date()} />
     <WrappedCalendar withSelect disableOutsideEvents style={{ marginTop: 40 }} />
   </div>
 ));

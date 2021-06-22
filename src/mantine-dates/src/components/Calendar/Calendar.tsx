@@ -76,12 +76,17 @@ export function Calendar({
     rule: (val) => val instanceof Date,
   });
 
+  const nextDisabled = maxDate instanceof Date && dayjs(_month).endOf('month').isAfter(maxDate);
+  const previousDisabled =
+    minDate instanceof Date && dayjs(_month).startOf('month').isBefore(minDate);
+
   return (
     <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }}>
       <Group className={classes.header} position="apart">
         <ActionIcon
           aria-label={nextMonthLabel}
           onClick={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
+          disabled={previousDisabled}
         >
           <ArrowIcon direction="left" width={14} height={14} />
         </ActionIcon>
@@ -100,6 +105,7 @@ export function Calendar({
         <ActionIcon
           aria-label={previousMonthLabel}
           onClick={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
+          disabled={nextDisabled}
         >
           <ArrowIcon direction="right" width={14} height={14} />
         </ActionIcon>
