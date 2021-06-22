@@ -8,6 +8,7 @@ export { getSizeValue } from './utils/get-size-value/get-size-value';
 export { hexToRgba } from './utils/hex-to-rgba/hex-to-rgba';
 export { mergeClassNames } from './utils/merge-class-names/merge-class-names';
 export { mergeStyles } from './utils/merge-styles/merge-styles';
+export { omitStyles } from './utils/omit-styles/omit-styles';
 
 export { MantineProvider } from './MantineProvider/MantineProvider';
 export { NormalizeCSS } from './NormalizeCSS';
