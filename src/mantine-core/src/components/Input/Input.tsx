@@ -40,6 +40,9 @@ export interface InputBaseProps {
 
   /** Defines input appearance */
   variant?: 'default' | 'filled' | 'unstyled';
+
+  /** Static css selector base */
+  __staticSelector?: string;
 }
 
 export interface InputProps extends InputBaseProps, DefaultProps<typeof useStyles> {}
@@ -66,6 +69,7 @@ export function Input<
   elementRef,
   classNames,
   styles,
+  __staticSelector = 'input',
   ...others
 }: InputProps &
   Omit<React.ComponentPropsWithoutRef<T>, 'size'> & {
@@ -79,7 +83,7 @@ export function Input<
     elementRef?: React.ForwardedRef<U>;
   }) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, theme, size }, classNames, 'input');
+  const classes = useStyles({ radius, theme, size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const Element: any = component;
 

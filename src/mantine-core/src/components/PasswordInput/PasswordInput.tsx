@@ -93,6 +93,7 @@ export function PasswordInput({
       rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
       size={size}
       radius={radius}
+      __staticSelector="password-input"
     />
   );
 }

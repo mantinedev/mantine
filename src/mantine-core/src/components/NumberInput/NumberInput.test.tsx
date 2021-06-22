@@ -10,9 +10,7 @@ import {
 } from '@mantine/tests';
 import { TextInput } from '../TextInput/TextInput';
 import { NumberInput, NumberInputHandlers } from './NumberInput';
-import { NumberInputInner as NumberInputStylesApi } from './styles.api';
-import { Input as InputStylesApi } from '../Input/styles.api';
-import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
+import { NumberInput as NumberInputStylesApi } from './styles.api';
 
 const defaultProps = {
   value: 0,
@@ -36,30 +34,16 @@ describe('@mantine/core/NumberInput', () => {
   itSupportsRef(NumberInput, defaultProps, HTMLInputElement, 'elementRef');
   itSupportsStylesApi(
     NumberInput,
-    defaultProps,
-    Object.keys(NumberInputStylesApi),
-    'number-input',
-    'number-input'
-  );
-  itSupportsStylesApi(
-    NumberInput,
-    { ...defaultProps, icon: '$' },
-    Object.keys(InputStylesApi).filter((key) => key !== 'invalid'),
-    'input',
-    'input'
-  );
-  itSupportsStylesApi(
-    NumberInput,
     {
-      ...defaultProps,
+      icon: '$',
+      rightSection: '$',
       label: 'test-label',
       error: 'test-error',
       description: 'test-description',
       required: true,
     },
-    Object.keys(InputWrapperStylesApi),
-    'input-wrapper',
-    'input-wrapper'
+    Object.keys(NumberInputStylesApi),
+    'number-input'
   );
 
   it('has correct displayName', () => {

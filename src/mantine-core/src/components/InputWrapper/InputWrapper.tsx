@@ -44,6 +44,9 @@ export interface InputWrapperProps
 
   /** Controls all elements font-size */
   size?: MantineSize;
+
+  /** Static css selector base */
+  __staticSelector?: string;
 }
 
 export function InputWrapper({
@@ -63,10 +66,11 @@ export function InputWrapper({
   classNames,
   styles,
   size = 'sm',
+  __staticSelector = 'input-wrapper',
   ...others
 }: InputWrapperProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'input-wrapper');
+  const classes = useStyles({ theme, size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
   const inputLabel = createElement(

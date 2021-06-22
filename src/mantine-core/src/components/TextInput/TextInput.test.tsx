@@ -30,23 +30,16 @@ describe('@mantine/core/Input', () => {
   itSupportsStyle(TextInput, {});
   itSupportsStylesApi(
     TextInput,
-    { icon: '$', rightSection: '$' },
-    Object.keys(InputStylesApi).filter((key) => key !== 'invalid'),
-    'input',
-    'input'
-  );
-
-  itSupportsStylesApi(
-    TextInput,
     {
+      icon: '$',
+      rightSection: '$',
       label: 'test-label',
       error: 'test-error',
       description: 'test-description',
       required: true,
     },
-    Object.keys(InputWrapperStylesApi),
-    'input-wrapper',
-    'input-wrapper'
+    Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
+    'text-input'
   );
 
   it('has correct displayName', () => {

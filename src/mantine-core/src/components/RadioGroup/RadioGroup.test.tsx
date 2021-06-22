@@ -25,8 +25,7 @@ describe('@mantine/core/RadioGroup', () => {
       required: true,
     },
     Object.keys(InputWrapperStylesApi),
-    'input-wrapper',
-    'input-wrapper'
+    'radio-group'
   );
 
   it('has correct displayName', () => {

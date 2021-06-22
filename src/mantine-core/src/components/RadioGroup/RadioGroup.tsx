@@ -87,7 +87,7 @@ export function RadioGroup({
     );
 
   return (
-    <InputWrapper labelElement="div" size={size} {...others}>
+    <InputWrapper labelElement="div" size={size} __staticSelector="radio-group" {...others}>
       <div role="radiogroup" className={classes.wrapper}>
         {radios}
       </div>

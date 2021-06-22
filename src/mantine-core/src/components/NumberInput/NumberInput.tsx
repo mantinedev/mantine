@@ -210,6 +210,7 @@ export function NumberInput({
       size={size}
       styles={styles as any}
       classNames={classNames as any}
+      __staticSelector="number-input"
     />
   );
 }

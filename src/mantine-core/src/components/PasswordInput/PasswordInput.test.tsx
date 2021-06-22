@@ -31,23 +31,16 @@ describe('@mantine/core/PasswordInput', () => {
 
   itSupportsStylesApi(
     PasswordInput,
-    { icon: '$' },
-    Object.keys(InputStylesApi).filter((key) => key !== 'invalid'),
-    'input',
-    'input'
-  );
-
-  itSupportsStylesApi(
-    PasswordInput,
     {
+      icon: '$',
+      rightSection: '$',
       label: 'test-label',
       error: 'test-error',
       description: 'test-description',
       required: true,
     },
-    Object.keys(InputWrapperStylesApi),
-    'input-wrapper',
-    'input-wrapper'
+    Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
+    'password-input'
   );
 
   it('has correct displayName', () => {

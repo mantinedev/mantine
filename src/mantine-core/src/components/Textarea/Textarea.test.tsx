@@ -35,23 +35,16 @@ describe('@mantine/core/Textarea', () => {
 
   itSupportsStylesApi(
     Textarea,
-    { icon: '$', rightSection: '$' },
-    Object.keys(InputStylesApi).filter((key) => key !== 'invalid'),
-    'input',
-    'input'
-  );
-
-  itSupportsStylesApi(
-    Textarea,
     {
+      icon: '$',
+      rightSection: '$',
       label: 'test-label',
       error: 'test-error',
       description: 'test-description',
       required: true,
     },
-    Object.keys(InputWrapperStylesApi),
-    'input-wrapper',
-    'input-wrapper'
+    Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
+    'textarea'
   );
 
   it('renders correct component based on autosize prop', () => {

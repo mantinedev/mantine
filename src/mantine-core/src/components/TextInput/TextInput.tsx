@@ -32,6 +32,9 @@ export interface TextInputProps
 
   /** Input size */
   size?: MantineSize;
+
+  /** Static css selector base */
+  __staticSelector?: string;
 }
 
 export function TextInput({
@@ -50,6 +53,7 @@ export function TextInput({
   size = 'sm',
   classNames,
   styles,
+  __staticSelector = 'text-input',
   ...others
 }: TextInputProps) {
   const uuid = useId(id);
@@ -67,6 +71,7 @@ export function TextInput({
       themeOverride={themeOverride}
       classNames={classNames as any}
       styles={styles as any}
+      __staticSelector={__staticSelector}
       {...wrapperProps}
     >
       <Input<'input', HTMLInputElement>
@@ -81,6 +86,7 @@ export function TextInput({
         themeOverride={themeOverride}
         classNames={classNames as any}
         styles={styles as any}
+        __staticSelector={__staticSelector}
       />
     </InputWrapper>
   );

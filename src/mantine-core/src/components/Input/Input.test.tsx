@@ -38,6 +38,14 @@ describe('@mantine/core/Input', () => {
     'input'
   );
 
+  itSupportsStylesApi(
+    Input,
+    { invalid: true, icon: '$', rightSection: 'test', __staticSelector: 'test-input' },
+    Object.keys(InputStylesApi).filter((key) => key !== 'invalid'),
+    'test-input',
+    'static selector'
+  );
+
   it('spread wrapperProps to root element', () => {
     const element = shallow(<Input wrapperProps={{ 'aria-label': 'test-input' }} />);
     expect(element.render().attr('aria-label')).toBe('test-input');

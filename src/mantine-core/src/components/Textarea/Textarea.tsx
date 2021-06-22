@@ -81,6 +81,7 @@ export function Textarea({
       classNames={classNames as any}
       styles={styles as any}
       size={size}
+      __staticSelector="textarea"
       {...wrapperProps}
     >
       {autosize ? (
@@ -108,6 +109,7 @@ export function Textarea({
           classNames={classNames as any}
           styles={inputStyles}
           size={size}
+          __staticSelector="textarea"
           {...others}
         />
       )}

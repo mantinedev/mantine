@@ -31,6 +31,14 @@ describe('@mantine/core/InputWrapper', () => {
     'input-wrapper'
   );
 
+  itSupportsStylesApi(
+    InputWrapper,
+    { ...defaultProps, __staticSelector: 'test-input-wrapper' },
+    Object.keys(InputWrapperStylesApi),
+    'test-input-wrapper',
+    'static selector'
+  );
+
   it('renders correct error, description and label', () => {
     const withProps = shallow(
       <InputWrapper

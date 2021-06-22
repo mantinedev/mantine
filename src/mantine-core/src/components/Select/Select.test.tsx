@@ -40,23 +40,17 @@ describe('@mantine/core/Select', () => {
 
   itSupportsStylesApi(
     Select,
-    { ...defaultProps, icon: '$' },
-    Object.keys(InputStylesApi).filter((key) => key !== 'invalid'),
-    'input',
-    'input'
-  );
-
-  itSupportsStylesApi(
-    Select,
-    { ...defaultProps,
+    {
+      data: [],
+      icon: '$',
+      rightSection: '$',
       label: 'test-label',
       error: 'test-error',
       description: 'test-description',
       required: true,
     },
-    Object.keys(InputWrapperStylesApi),
-    'input-wrapper',
-    'input-wrapper'
+    Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
+    'select'
   );
 
   it('passes required and id props to select element', () => {

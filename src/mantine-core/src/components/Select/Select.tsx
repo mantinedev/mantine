@@ -120,6 +120,7 @@ export function Select({
       size={size}
       styles={styles as any}
       classNames={classNames as any}
+      __staticSelector="select"
     >
       <Input<'select', HTMLSelectElement>
         {...others}
@@ -141,6 +142,7 @@ export function Select({
           rightSection: { ...(styles as any)?.rightSection, pointerEvents: 'none' },
         }}
         classNames={classNames as any}
+        __staticSelector="select"
       >
         {options}
       </Input>
