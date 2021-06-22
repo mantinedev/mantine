@@ -82,10 +82,11 @@ export type { GridProps, ColProps } from './components/Grid/Grid';
 export type { GroupProps } from './components/Group/Group';
 export type { HighlightProps } from './components/Highlight/Highlight';
 export type { ImageProps } from './components/Image/Image';
-export type { InputProps, InputBaseProps } from './components/Input/Input';
+export type { InputProps, InputBaseProps, InputStylesNames } from './components/Input/Input';
 export type {
   InputWrapperBaseProps,
   InputWrapperProps,
+  InputWrapperStylesNames,
 } from './components/InputWrapper/InputWrapper';
 export type { KbdProps } from './components/Kbd/Kbd';
 export type { LoaderProps } from './components/Loader/Loader';
