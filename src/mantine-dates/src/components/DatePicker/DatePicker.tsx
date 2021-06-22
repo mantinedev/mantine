@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import {
   DefaultProps,
@@ -13,7 +13,13 @@ import {
   Transition,
   MantineTransition,
 } from '@mantine/core';
-import { useUncontrolled, useId, useClickOutside, useFocusTrap } from '@mantine/hooks';
+import {
+  useUncontrolled,
+  useId,
+  useClickOutside,
+  useFocusTrap,
+  useMergedRef,
+} from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { Calendar, CalendarSettings } from '../Calendar/Calendar';
 import useStyles from './DatePicker.styles';
@@ -38,6 +44,7 @@ interface DatePickerProps
   shadow?: string;
   closeCalendarOnChange?: boolean;
   inputFormat?: string;
+  elementRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
 export function DatePicker({
@@ -74,18 +81,24 @@ export function DatePicker({
   minDate,
   maxDate,
   excludeDate,
+  elementRef,
   ...others
 }: DatePickerProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames, 'date-picker');
   const _styles = mergeStyles(classes, styles);
   const [dropdownOpened, setDropdownOpened] = useState(false);
-  const closeDropdown = () => setDropdownOpened(false);
   const uuid = useId(id);
-  const clickOutsideRef = useClickOutside(closeDropdown);
+
   const focusTrapRef = useFocusTrap();
+  const inputRef = useRef<HTMLButtonElement>();
+  const closeDropdown = () => {
+    setDropdownOpened(false);
+    setTimeout(() => inputRef.current?.focus(), transitionDuration + 20);
+  };
   const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
     event.nativeEvent.code === 'Escape' && closeDropdown();
+  const clickOutsideRef = useClickOutside(closeDropdown);
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -123,6 +136,7 @@ export function DatePicker({
             styles={styles as any}
             onClick={() => setDropdownOpened((o) => !o)}
             id={uuid}
+            elementRef={useMergedRef(elementRef, inputRef)}
             {...others}
           >
             {_value instanceof Date ? (
