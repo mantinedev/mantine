@@ -35,9 +35,16 @@ interface CalendarProps
   extends DefaultProps<typeof useStyles>,
     CalendarSettings,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
+  /** Current month */
   month?: Date;
+
+  /** Selected date */
   value?: Date;
+
+  /** Called when selected date changes */
   onChange?(value: Date): void;
+
+  /** Called when month changes */
   onMonthChange?(value: Date): void;
 }
 

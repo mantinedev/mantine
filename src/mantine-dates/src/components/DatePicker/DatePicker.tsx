@@ -33,17 +33,40 @@ interface DatePickerProps
       React.ComponentPropsWithoutRef<'button'>,
       'value' | 'defaultValue' | 'onChange' | 'placeholder'
     > {
+  /** Selected date, required with controlled input */
   value?: Date;
+
+  /** Called when date changes */
   onChange?(value: Date): void;
+
+  /** Default value for uncontrolled input */
   defaultValue?: Date;
+
+  /** Props spread to root element (InputWrapper) */
   wrapperProps?: Record<string, any>;
+
+  /** Placeholder, displayed when date is not selected */
   placeholder?: React.ReactNode;
+
+  /** Dropdown appear/disappear transition */
   transition?: MantineTransition;
+
+  /** Dropdown appear/disappear transition duration */
   transitionDuration?: number;
+
+  /** Dropdown appear/disappear transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
+
+  /** Dropdown shadow from theme or css value for custom box-shadow */
   shadow?: string;
+
+  /** Set to false to force dropdown to stay open after date was selected */
   closeCalendarOnChange?: boolean;
+
+  /** dayjs input format */
   inputFormat?: string;
+
+  /** Get input button ref */
   elementRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
