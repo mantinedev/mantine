@@ -1,7 +1,6 @@
 {
   "name": "@mantine/dates",
   "description": "Calendars, date and time pickers based on Mantine components",
-  "private": true,
   "version": "1.4.0-alpha.0",
   "main": "cjs/index.js",
   "module": "esm/index.js",
