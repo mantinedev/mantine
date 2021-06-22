@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import dayjs from 'dayjs';
 import { DatePicker } from './DatePicker';
 
 function Controlled() {
@@ -24,6 +25,13 @@ storiesOf('@mantine/dates/DatePicker', module)
         placeholder="With month and year"
         label="Date picker"
         withSelect
+        style={{ marginTop: 20 }}
+      />
+      <DatePicker
+        placeholder="Initial month"
+        label="Initial month"
+        withSelect
+        initialMonth={dayjs(new Date()).subtract(1, 'year').toDate()}
         style={{ marginTop: 20 }}
       />
     </div>

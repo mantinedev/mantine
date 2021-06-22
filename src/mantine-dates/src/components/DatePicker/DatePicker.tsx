@@ -82,6 +82,7 @@ export function DatePicker({
   maxDate,
   excludeDate,
   elementRef,
+  initialMonth,
   ...others
 }: DatePickerProps) {
   const theme = useMantineTheme(themeOverride);
@@ -170,7 +171,7 @@ export function DatePicker({
                   themeOverride={themeOverride}
                   nextMonthLabel={nextMonthLabel}
                   previousMonthLabel={previousMonthLabel}
-                  month={_value}
+                  month={_value instanceof Date ? _value : initialMonth}
                   value={_value}
                   onChange={handleValueChange}
                   labelFormat={labelFormat}
