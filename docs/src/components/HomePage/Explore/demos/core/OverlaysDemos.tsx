@@ -33,7 +33,13 @@ export function OverlaysDemos() {
         <AuthenticationForm noShadow noPadding />
       </Modal>
 
-      <Drawer opened={drawerOpened} onClose={() => setDrawerOpened(false)} padding="xl" size={440}>
+      <Drawer
+        opened={drawerOpened}
+        onClose={() => setDrawerOpened(false)}
+        padding="xl"
+        size={440}
+        hideCloseButton
+      >
         <Group position="apart">
           <Text size="lg">Register</Text>
           <CloseButton

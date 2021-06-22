@@ -10,6 +10,7 @@ const PACKAGES = [
   'mantine-notifications',
   'mantine-tag-picker',
   'mantine-prism',
+  'mantine-dates',
 ];
 
 function truncateNumber(number: number) {

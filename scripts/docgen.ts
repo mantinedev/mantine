@@ -16,6 +16,7 @@ const EXTRA_FILES_PATHS = [
 
 const PATHS: DeclarationPath[] = [
   { type: 'package', path: path.join(__dirname, '../src/mantine-core/src/components') },
+  { type: 'package', path: path.join(__dirname, '../src/mantine-dates/src/components') },
   ...EXTRA_FILES_PATHS.map((filePath) => ({
     type: 'file' as const,
     path: path.join(__dirname, filePath),
