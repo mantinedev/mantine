@@ -5,7 +5,6 @@ interface DayStyles {
 }
 
 export default createMemoStyles({
-  disableOutsideEvents: {},
   weekend: {},
   outside: {},
   selected: {},
@@ -41,10 +40,6 @@ export default createMemoStyles({
 
     '&$outside': {
       color: `${theme.colors.gray[4]} !important`,
-
-      '&$disableOutsideEvents': {
-        pointerEvents: 'none',
-      },
     },
 
     '&$selected:not(:disabled)': {

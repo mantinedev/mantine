@@ -1,12 +1,21 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
+import {
+  itSupportsClassName,
+  itSupportsOthers,
+  itSupportsStyle,
+  itSupportsStylesApi,
+} from '@mantine/tests';
 import { Month } from './Month';
+import { Month as MonthStylesApi } from './styles.api';
+
+const defaultProps = { month: new Date(), value: new Date() };
 
 describe('@mantine/core/Month', () => {
-  itSupportsStyle(Month, { month: new Date() });
-  itSupportsClassName(Month, { month: new Date() });
-  itSupportsOthers(Month, { month: new Date() });
+  itSupportsStyle(Month, defaultProps);
+  itSupportsClassName(Month, defaultProps);
+  itSupportsOthers(Month, defaultProps);
+  itSupportsStylesApi(Month, defaultProps, Object.keys(MonthStylesApi), 'month');
 
   it('has correct displayName', () => {
     expect(Month.displayName).toEqual('@mantine/core/Month');
@@ -14,7 +23,7 @@ describe('@mantine/core/Month', () => {
 
   it('renders correct amount of weekdays', () => {
     const element = shallow(<Month month={new Date()} />);
-    expect(element.render().find('thead th')).toHaveLength(7);
+    expect(element.render().find('.mantine-month-weekdayCell')).toHaveLength(7);
   });
 
   it('renders correct amount of days', () => {

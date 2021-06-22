@@ -4,7 +4,7 @@ import { DefaultProps, useMantineTheme, mergeStyles, Text } from '@mantine/core'
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { getMonthDays, isSameMonth, getWeekdaysNames, isSameDate } from '../../utils';
-import Day from './Day/Day';
+import { Day, DayStylesNames } from './Day/Day';
 import useStyles from './Month.styles';
 
 export interface MonthSettings {
@@ -27,8 +27,10 @@ export interface MonthSettings {
   excludeDate?(date: Date): boolean;
 }
 
+export type MonthStylesNames = keyof ReturnType<typeof useStyles> | DayStylesNames;
+
 export interface MonthProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<MonthStylesNames>,
     MonthSettings,
     Omit<React.ComponentPropsWithoutRef<'table'>, 'onChange' | 'value'> {
   /** Date at which month should be shown */
@@ -67,8 +69,8 @@ export function Month({
   ...others
 }: MonthProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'month');
-  const _styles = mergeStyles(classes, styles);
+  const classes = useStyles({ theme }, classNames as any, 'month');
+  const _styles = mergeStyles(classes, styles as any);
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
 
@@ -122,7 +124,7 @@ export function Month({
   }, []);
 
   const weekdays = getWeekdaysNames(locale).map((weekday) => (
-    <th key={weekday}>
+    <th className={classes.weekdayCell} style={_styles.weekdayCell} key={weekday}>
       <Text color="gray" size="xs" className={classes.weekday} style={_styles.weekday}>
         {upperFirst(weekday)}
       </Text>
@@ -148,7 +150,7 @@ export function Month({
       const disabled = isAfterMax || isBeforeMin || shouldExclude || disabledOutside;
 
       return (
-        <td key={cellIndex}>
+        <td className={classes.cell} style={_styles.cell} key={cellIndex}>
           <Day
             elementRef={(button) => {
               daysRefs.current[date.toISOString()] = button;

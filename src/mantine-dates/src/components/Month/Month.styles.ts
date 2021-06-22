@@ -12,18 +12,18 @@ export default createMemoStyles({
     borderCollapse: 'collapse',
     width: '100%',
     tableLayout: 'fixed',
+  }),
 
-    '& td': {
-      padding: 0,
-    },
+  cell: {
+    padding: 0,
+  },
 
-    '& th': {
-      padding: 0,
-      fontWeight: 'normal',
-      paddingBottom: theme.spacing.xs / 2,
-      textAlign: 'center',
-      cursor: 'default',
-      userSelect: 'none',
-    },
+  weekdayCell: ({ theme }: MonthStyles) => ({
+    padding: 0,
+    fontWeight: 'normal',
+    paddingBottom: theme.spacing.xs / 2,
+    textAlign: 'center',
+    cursor: 'default',
+    userSelect: 'none',
   }),
 });

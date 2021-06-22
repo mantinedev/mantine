@@ -3,7 +3,9 @@ import cx from 'clsx';
 import { DefaultProps, mergeStyles, useMantineTheme } from '@mantine/core';
 import useStyles from './Day.styles';
 
-export interface DayProps extends DefaultProps<typeof useStyles> {
+export type DayStylesNames = keyof ReturnType<typeof useStyles>;
+
+export interface DayProps extends DefaultProps<DayStylesNames> {
   value: Date;
   selected: boolean;
   weekend: boolean;
@@ -15,7 +17,7 @@ export interface DayProps extends DefaultProps<typeof useStyles> {
   hasValue: boolean;
 }
 
-export default function Day({
+export function Day({
   className,
   style,
   value,
@@ -42,7 +44,13 @@ export default function Day({
       ref={elementRef}
       onKeyDown={(event) => onKeyDown(value, event)}
       tabIndex={hasValue ? (selected ? 0 : -1) : 0}
-      style={{ ..._styles.day, ...style }}
+      style={{
+        ..._styles.day,
+        ...(outside ? _styles.outside : null),
+        ...(weekend ? _styles.weekend : null),
+        ...(selected ? _styles.selected : null),
+        ...style,
+      }}
       disabled={disabled}
       className={cx(
         classes.day,
