@@ -93,8 +93,10 @@ export function DatePicker({
   const focusTrapRef = useFocusTrap();
   const inputRef = useRef<HTMLButtonElement>();
   const closeDropdown = () => {
-    setDropdownOpened(false);
-    setTimeout(() => inputRef.current?.focus(), transitionDuration + 20);
+    if (dropdownOpened) {
+      setDropdownOpened(false);
+      setTimeout(() => inputRef.current?.focus(), transitionDuration + 20);
+    }
   };
   const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
     event.nativeEvent.code === 'Escape' && closeDropdown();
