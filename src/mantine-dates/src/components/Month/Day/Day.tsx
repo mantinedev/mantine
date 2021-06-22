@@ -15,6 +15,7 @@ export interface DayProps extends DefaultProps<DayStylesNames> {
   onKeyDown(date: Date, event: React.KeyboardEvent): void;
   disabled: boolean;
   hasValue: boolean;
+  __staticSelector?: string;
 }
 
 export function Day({
@@ -32,9 +33,10 @@ export function Day({
   disabled,
   styles,
   hasValue,
+  __staticSelector = 'month',
 }: DayProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'month');
+  const classes = useStyles({ theme }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return (

@@ -6,9 +6,6 @@ import {
 } from '@mantine/tests';
 import { Calendar } from './Calendar';
 import { Calendar as CalendarStylesApi } from './styles.api';
-import { Month as MonthStylesApi } from '../Month/styles.api';
-
-const monthStyles = Object.keys(MonthStylesApi).filter((prop) => prop !== 'root');
 
 const defaultProps = { month: new Date(), value: new Date(), withSelect: true };
 
@@ -19,9 +16,7 @@ describe('@mantine/dates/Calendar', () => {
   itSupportsStylesApi(
     Calendar,
     defaultProps,
-    Object.keys(CalendarStylesApi).filter(
-      (prop) => !monthStyles.includes(prop) && prop !== 'calendar' && prop !== 'label'
-    ),
+    Object.keys(CalendarStylesApi).filter((prop) => prop !== 'calendar' && prop !== 'label'),
     'calendar',
     'with select'
   );
@@ -29,9 +24,11 @@ describe('@mantine/dates/Calendar', () => {
   itSupportsStylesApi(
     Calendar,
     { ...defaultProps, withSelect: false },
-    monthStyles,
-    'month',
-    'month'
+    Object.keys(CalendarStylesApi).filter(
+      (prop) => prop !== 'calendar' && prop !== 'select' && prop !== 'selectGroup'
+    ),
+    'calendar',
+    'with label'
   );
 
   it('has correct displayName', () => {

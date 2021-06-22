@@ -13,6 +13,7 @@ interface CalendarLabelProps extends DefaultProps<CalendarLabelStylesNames> {
   value: Date;
   onChange(value: Date): void;
   labelFormat: string;
+  __staticSelector: string;
 }
 
 export function CalendarLabel({
@@ -25,9 +26,10 @@ export function CalendarLabel({
   themeOverride,
   labelFormat,
   onChange,
+  __staticSelector,
 }: CalendarLabelProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'calendar');
+  const classes = useStyles({ theme }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return withSelect ? (

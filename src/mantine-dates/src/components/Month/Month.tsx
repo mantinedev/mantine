@@ -47,6 +47,9 @@ export interface MonthProps
 
   /** Called when day is selected */
   onChange?(value: Date): void;
+
+  /** Static css selector base */
+  __staticSelector?: string;
 }
 
 export function Month({
@@ -66,10 +69,11 @@ export function Month({
   minDate,
   maxDate,
   excludeDate,
+  __staticSelector = 'month',
   ...others
 }: MonthProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames as any, 'month');
+  const classes = useStyles({ theme }, classNames as any, __staticSelector);
   const _styles = mergeStyles(classes, styles as any);
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
@@ -168,6 +172,7 @@ export function Month({
             styles={styles as any}
             classNames={classNames as any}
             disabled={disabled}
+            __staticSelector={__staticSelector}
           />
         </td>
       );

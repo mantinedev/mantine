@@ -76,6 +76,9 @@ interface DatePickerProps
 
   /** Get input button ref */
   elementRef?: React.ForwardedRef<HTMLButtonElement>;
+
+  /** Control initial dropdown opened state */
+  initiallyOpened?: boolean;
 }
 
 export function DatePicker({
@@ -103,8 +106,8 @@ export function DatePicker({
   nextMonthLabel,
   previousMonthLabel,
   closeCalendarOnChange = true,
-  labelFormat,
-  withSelect,
+  labelFormat = 'MMMM YYYY',
+  withSelect = false,
   yearsRange,
   dayClassName,
   dayStyle,
@@ -114,12 +117,13 @@ export function DatePicker({
   excludeDate,
   elementRef,
   initialMonth,
+  initiallyOpened = false,
   ...others
 }: DatePickerProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames, 'date-picker');
   const _styles = mergeStyles(classes, styles);
-  const [dropdownOpened, setDropdownOpened] = useState(false);
+  const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const uuid = useId(id);
 
   const focusTrapRef = useFocusTrap();
@@ -159,6 +163,7 @@ export function DatePicker({
       themeOverride={themeOverride}
       classNames={classNames as any}
       styles={styles as any}
+      __staticSelector="date-picker"
       {...wrapperProps}
     >
       <div ref={clickOutsideRef}>
@@ -171,12 +176,15 @@ export function DatePicker({
             onClick={() => setDropdownOpened((o) => !o)}
             id={uuid}
             elementRef={useMergedRef(elementRef, inputRef)}
+            __staticSelector="date-picker"
             {...others}
           >
             {_value instanceof Date ? (
               dayjs(_value).format(inputFormat)
             ) : (
-              <Text className={classes.placeholder}>{placeholder}</Text>
+              <Text style={_styles.placeholder} className={classes.placeholder}>
+                {placeholder}
+              </Text>
             )}
           </Input>
         </div>
@@ -194,7 +202,7 @@ export function DatePicker({
               ref={focusTrapRef}
               onKeyDownCapture={closeOnEscape}
             >
-              <Paper className={classes.dropdown} shadow={shadow}>
+              <Paper className={classes.dropdown} style={_styles.dropdown} shadow={shadow}>
                 <Calendar
                   classNames={classNames as any}
                   styles={styles as any}
@@ -214,6 +222,7 @@ export function DatePicker({
                   minDate={minDate}
                   maxDate={maxDate}
                   excludeDate={excludeDate}
+                  __staticSelector="date-picker"
                 />
               </Paper>
             </div>

@@ -51,6 +51,9 @@ interface CalendarProps
 
   /** Called when month changes */
   onMonthChange?(value: Date): void;
+
+  /** Static css selector base */
+  __staticSelector?: string;
 }
 
 export function Calendar({
@@ -76,10 +79,11 @@ export function Calendar({
   minDate,
   maxDate,
   excludeDate,
+  __staticSelector = 'calendar',
   ...others
 }: CalendarProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames as any, 'calendar');
+  const classes = useStyles({ theme }, classNames as any, __staticSelector);
   const _styles = mergeStyles(classes, styles as any);
   const [_month, setMonth] = useUncontrolled({
     value: month,
@@ -126,6 +130,7 @@ export function Calendar({
           onChange={setMonth}
           labelFormat={labelFormat}
           themeOverride={themeOverride}
+          __staticSelector={__staticSelector}
         />
 
         <ActionIcon
@@ -153,6 +158,7 @@ export function Calendar({
         excludeDate={excludeDate}
         classNames={classNames as any}
         styles={styles as any}
+        __staticSelector={__staticSelector}
       />
     </div>
   );
