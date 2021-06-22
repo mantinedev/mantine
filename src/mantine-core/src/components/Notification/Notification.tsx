@@ -7,8 +7,10 @@ import { Loader } from '../Loader/Loader';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import useStyles from './Notification.styles';
 
+export type NotificationStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'withIcon'>;
+
 export interface NotificationProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<NotificationStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Called when close button is clicked */
   onClose(): void;

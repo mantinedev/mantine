@@ -12,8 +12,10 @@ import useStyles, { sizes } from './Switch.styles';
 
 export const SWITCH_SIZES = sizes;
 
+export type SwitchStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface SwitchProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<SwitchStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;

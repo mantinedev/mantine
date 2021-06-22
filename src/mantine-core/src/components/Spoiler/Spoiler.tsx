@@ -5,8 +5,10 @@ import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
 
+export type SpoilerStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface SpoilerProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<SpoilerStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Max height of visible content, when this point is reached spoiler appears */
   maxHeight: number;

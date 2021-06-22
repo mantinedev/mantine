@@ -9,8 +9,10 @@ import {
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 
+export type TextareaStylesNames = InputStylesNames | InputWrapperStylesNames;
+
 export interface TextareaProps
-  extends DefaultProps<InputStylesNames | InputWrapperStylesNames>,
+  extends DefaultProps<TextareaStylesNames>,
     InputWrapperBaseProps,
     InputBaseProps,
     React.ComponentPropsWithoutRef<'textarea'> {

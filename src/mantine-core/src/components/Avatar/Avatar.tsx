@@ -6,8 +6,10 @@ import useStyles, { sizes } from './Avatar.styles';
 
 export const AVATAR_SIZES = sizes;
 
+export type AvatarStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface AvatarProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<AvatarStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Image url */
   src?: string;

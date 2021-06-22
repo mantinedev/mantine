@@ -4,8 +4,10 @@ import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { Text } from '../Text/Text';
 import useStyles from './Breadcrumbs.styles';
 
+export type BreadcrumbsStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface BreadcrumbsProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<BreadcrumbsStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Separator between breadcrumbs */
   separator?: React.ReactNode;

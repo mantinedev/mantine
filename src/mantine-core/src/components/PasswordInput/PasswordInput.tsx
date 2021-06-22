@@ -1,9 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import { getSizeValue } from '../../theme';
+import type { InputStylesNames } from '../Input/Input';
+import type { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { TextInput } from '../TextInput/TextInput';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
+
+export type PasswordInputStylesNames = InputStylesNames | InputWrapperStylesNames;
 
 export interface PasswordInputProps
   extends Omit<

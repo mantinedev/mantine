@@ -7,7 +7,11 @@ import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
 import useStyles, { CONTROL_SIZES } from './NumberInput.styles';
 
-export type NumberInputStylesNames = keyof ReturnType<typeof useStyles>;
+export type InnerNumberInputStylesNames = keyof ReturnType<typeof useStyles>;
+export type NumberInputStylesNames =
+  | InputStylesNames
+  | InputWrapperStylesNames
+  | InnerNumberInputStylesNames;
 
 export interface NumberInputHandlers {
   increment(): void;
@@ -15,7 +19,7 @@ export interface NumberInputHandlers {
 }
 
 export interface NumberInputProps
-  extends DefaultProps<InputStylesNames | InputWrapperStylesNames | NumberInputStylesNames>,
+  extends DefaultProps<NumberInputStylesNames>,
     Omit<
       React.ComponentPropsWithoutRef<typeof TextInput>,
       | 'rightSection'

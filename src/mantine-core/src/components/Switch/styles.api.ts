@@ -1,6 +1,6 @@
-import useStyles from './Switch.styles';
+import { SwitchStylesNames } from './Switch';
 
-export const Switch: MantineClasses<typeof useStyles> = {
+export const Switch: Record<SwitchStylesNames, string> = {
   root: 'Root element',
   input: 'Checkbox input',
   label: 'Label element',

@@ -4,8 +4,10 @@ import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
+export type BlockquoteStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface BlockquoteProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<BlockquoteStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'blockquote'>, 'cite'> {
   /** Border and icon color from theme */
   color?: string;

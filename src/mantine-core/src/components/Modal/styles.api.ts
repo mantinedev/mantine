@@ -1,6 +1,6 @@
-import useStyles from './Modal.styles';
+import { ModalStylesNames } from './Modal';
 
-export const Modal: MantineClasses<typeof useStyles> = {
+export const Modal: Record<ModalStylesNames, string> = {
   root: 'Root element, contains modal and overlay',
   inner: 'Modal wrapper, centers modal',
   modal: 'Modal root',

@@ -15,8 +15,10 @@ interface SegmentedControlItem {
   label: React.ReactNode;
 }
 
+export type SegmentedControlStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface SegmentedControlProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<SegmentedControlStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Data based on which controls are rendered */
   data: SegmentedControlItem[];

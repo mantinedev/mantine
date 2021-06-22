@@ -1,6 +1,6 @@
-import useStyles from './Blockquote.styles';
+import { BlockquoteStylesNames } from './Blockquote';
 
-export const Blockquote: MantineClasses<typeof useStyles> = {
+export const Blockquote: Record<BlockquoteStylesNames, string> = {
   root: 'Root element',
   inner: 'Blockquote inner flex container, contains children, icon and cite',
   body: 'Contains blockquote content',

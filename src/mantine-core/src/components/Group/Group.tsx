@@ -3,8 +3,10 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
 import useStyles, { GroupPosition } from './Group.styles';
 
+export type GroupStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface GroupProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<GroupStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Defines justify-content property */
   position?: GroupPosition;

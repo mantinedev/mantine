@@ -4,8 +4,10 @@ import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '.
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
 
+export type ImageStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface ImageProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<ImageStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'placeholder'> {
   /** Image src */
   src?: string;

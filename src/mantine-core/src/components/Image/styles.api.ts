@@ -1,6 +1,6 @@
-import useStyles from './Image.styles';
+import { ImageStylesNames } from './Image';
 
-export const Image: MantineClasses<typeof useStyles> = {
+export const Image: Record<ImageStylesNames, string> = {
   root: 'Root element',
   image: 'img element',
   placeholder: 'Placeholder wrapper',

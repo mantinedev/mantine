@@ -5,9 +5,10 @@ import useStyles from './ArrowBody.styles';
 
 export type ArrowBodyPosition = 'left' | 'right' | 'top' | 'bottom';
 export type ArrowBodyPlacement = 'center' | 'end' | 'start';
+export type ArrowBodyStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface ArrowBodyProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<ArrowBodyStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Element placement relative to target */
   placement?: ArrowBodyPlacement;

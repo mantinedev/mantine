@@ -8,8 +8,10 @@ import {
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
 
+export type TextInputStylesNames = InputStylesNames | InputWrapperStylesNames;
+
 export interface TextInputProps
-  extends DefaultProps<InputStylesNames | InputWrapperStylesNames>,
+  extends DefaultProps<TextInputStylesNames>,
     InputBaseProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {

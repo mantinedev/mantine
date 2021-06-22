@@ -1,6 +1,6 @@
-import useStyles from './Progress.styles';
+import { ProgressStylesNames } from './Progress';
 
-export const Progress: MantineClasses<typeof useStyles> = {
+export const Progress: Record<ProgressStylesNames, string> = {
   root: 'Root element',
   bar: 'Filled bar',
 };

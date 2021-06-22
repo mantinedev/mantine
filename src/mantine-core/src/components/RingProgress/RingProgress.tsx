@@ -5,8 +5,10 @@ import { DefaultProps, mergeStyles } from '../../theme';
 import { getCurves } from './get-curves/get-curves';
 import useStyles from './RingProgress.styles';
 
+export type RingProgressStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface RingProgressProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<RingProgressStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Label displayed in the center of the ring */
   label?: React.ReactNode;

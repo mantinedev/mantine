@@ -1,6 +1,6 @@
-import useStyles from './Group.styles';
+import { GroupStylesNames } from './Group';
 
-export const Group: MantineClasses<typeof useStyles> = {
+export const Group: Record<GroupStylesNames, string> = {
   root: 'Root element',
   child: 'Styles added to every child inside Group',
 };

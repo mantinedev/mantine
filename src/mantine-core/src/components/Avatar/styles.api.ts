@@ -1,6 +1,6 @@
-import useStyles from './Avatar.styles';
+import { AvatarStylesNames } from './Avatar';
 
-export const Avatar: MantineClasses<typeof useStyles> = {
+export const Avatar: Record<AvatarStylesNames, string> = {
   root: 'Root element',
   image: 'Main img tag, rendered when src is set to valid image url',
   placeholder: 'Placeholder element, rendered when src is null or image cannot be loaded',

@@ -5,8 +5,10 @@ import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import useStyles from './Alert.styles';
 
+export type AlertStylesName = keyof ReturnType<typeof useStyles>;
+
 export interface AlertProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<AlertStylesName>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Optional alert title */
   title?: React.ReactNode;

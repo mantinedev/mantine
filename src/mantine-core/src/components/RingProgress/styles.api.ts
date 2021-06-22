@@ -1,6 +1,6 @@
-import useStyles from './RingProgress.styles';
+import { RingProgressStylesNames } from './RingProgress';
 
-export const RingProgress: MantineClasses<typeof useStyles> = {
+export const RingProgress: Record<RingProgressStylesNames, string> = {
   root: 'Root element',
   label: 'Label element',
 };

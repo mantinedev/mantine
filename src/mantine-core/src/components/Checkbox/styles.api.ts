@@ -1,6 +1,6 @@
-import useStyles from './Checkbox.styles';
+import { CheckboxStylesNames } from './Checkbox';
 
-export const Checkbox: MantineClasses<typeof useStyles> = {
+export const Checkbox: Record<CheckboxStylesNames, string> = {
   root: 'Root button element',
   inner: 'Includes input and label',
   label: 'Label element',

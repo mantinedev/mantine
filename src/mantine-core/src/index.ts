@@ -62,26 +62,29 @@ export { TypographyStylesProvider } from './components/TypographyStylesProvider/
 // Types are exported separately due to build issue: bundled types were not included with regular export
 export type { ActionIconProps } from './components/ActionIcon/ActionIcon';
 export type { CloseButtonProps } from './components/ActionIcon/CloseButton/CloseButton';
-export type { AlertProps } from './components/Alert/Alert';
-export type { ArrowBodyProps } from './components/ArrowBody/ArrowBody';
-export type { AvatarProps } from './components/Avatar/Avatar';
-export type { BadgeProps } from './components/Badge/Badge';
-export type { BlockquoteProps } from './components/Blockquote/Blockquote';
-export type { BreadcrumbsProps } from './components/Breadcrumbs/Breadcrumbs';
-export type { BurgerProps } from './components/Burger/Burger';
-export type { ButtonProps } from './components/Button/Button';
+export type { AlertProps, AlertStylesName } from './components/Alert/Alert';
+export type { ArrowBodyProps, ArrowBodyStylesNames } from './components/ArrowBody/ArrowBody';
+export type { AvatarProps, AvatarStylesNames } from './components/Avatar/Avatar';
+export type { BadgeProps, BadgeStylesNames } from './components/Badge/Badge';
+export type { BlockquoteProps, BlockquoteStylesNames } from './components/Blockquote/Blockquote';
+export type {
+  BreadcrumbsProps,
+  BreadcrumbsStylesNames,
+} from './components/Breadcrumbs/Breadcrumbs';
+export type { BurgerProps, BurgerStylesNames } from './components/Burger/Burger';
+export type { ButtonProps, ButtonStylesNames } from './components/Button/Button';
 export type { CardProps } from './components/Card/Card';
 export type { CenterProps } from './components/Center/Center';
-export type { CheckboxProps } from './components/Checkbox/Checkbox';
+export type { CheckboxProps, CheckboxStylesNames } from './components/Checkbox/Checkbox';
 export type { CodeProps } from './components/Code/Code';
 export type { ColorSwatchProps } from './components/ColorSwatch/ColorSwatch';
 export type { ContainerProps } from './components/Container/Container';
-export type { DrawerProps } from './components/Drawer/Drawer';
-export type { DividerProps } from './components/Divider/Divider';
+export type { DividerProps, DividerStylesNames } from './components/Divider/Divider';
+export type { DrawerProps, DrawerStylesNames } from './components/Drawer/Drawer';
 export type { GridProps, ColProps } from './components/Grid/Grid';
-export type { GroupProps } from './components/Group/Group';
+export type { GroupProps, GroupStylesNames } from './components/Group/Group';
 export type { HighlightProps } from './components/Highlight/Highlight';
-export type { ImageProps } from './components/Image/Image';
+export type { ImageProps, ImageStylesNames } from './components/Image/Image';
 export type { InputProps, InputBaseProps, InputStylesNames } from './components/Input/Input';
 export type {
   InputWrapperBaseProps,
@@ -92,30 +95,43 @@ export type { KbdProps } from './components/Kbd/Kbd';
 export type { LoaderProps } from './components/Loader/Loader';
 export type { LoadingOverlayProps } from './components/LoadingOverlay/LoadingOverlay';
 export type { MenuProps, MenuItemProps, MenuBodyProps } from './components/Menu/Menu';
-export type { ModalProps } from './components/Modal/Modal';
-export type { NotificationProps } from './components/Notification/Notification';
-export type { NumberInputProps, NumberInputHandlers } from './components/NumberInput/NumberInput';
+export type { ModalProps, ModalStylesNames } from './components/Modal/Modal';
+export type {
+  NotificationProps,
+  NotificationStylesNames,
+} from './components/Notification/Notification';
+export type {
+  NumberInputProps,
+  NumberInputHandlers,
+  NumberInputStylesNames,
+} from './components/NumberInput/NumberInput';
 export type { OverlayProps } from './components/Overlay/Overlay';
 export type { PaperProps } from './components/Paper/Paper';
-export type { PasswordInputProps } from './components/PasswordInput/PasswordInput';
-export type { PopoverProps } from './components/Popover/Popover';
+export type {
+  PasswordInputProps,
+  PasswordInputStylesNames,
+} from './components/PasswordInput/PasswordInput';
+export type { PopoverProps, PopoverStylesNames } from './components/Popover/Popover';
 export type { PortalProps } from './components/Portal/Portal';
-export type { ProgressProps } from './components/Progress/Progress';
+export type { ProgressProps, ProgressStylesNames } from './components/Progress/Progress';
 export type { RadioGroupProps, RadioProps } from './components/RadioGroup/RadioGroup';
 export type { RingProgressProps } from './components/RingProgress/RingProgress';
-export type { SegmentedControlProps } from './components/SegmentedControl/SegmentedControl';
-export type { SelectProps } from './components/Select/Select';
-export type { SliderProps, RangeSliderProps } from './components/Slider';
-export type { SpoilerProps } from './components/Spoiler/Spoiler';
-export type { SwitchProps } from './components/Switch/Switch';
+export type {
+  SegmentedControlProps,
+  SegmentedControlStylesNames,
+} from './components/SegmentedControl/SegmentedControl';
+export type { SelectProps, SelectStylesNames } from './components/Select/Select';
+export type { SliderProps, RangeSliderProps, SliderStylesNames } from './components/Slider';
+export type { SpoilerProps, SpoilerStylesNames } from './components/Spoiler/Spoiler';
+export type { SwitchProps, SwitchStylesNames } from './components/Switch/Switch';
 export type { TableProps } from './components/Table/Table';
-export type { TabsProps, TabProps } from './components/Tabs/Tabs';
+export type { TabsProps, TabProps, TabsStylesNames } from './components/Tabs/Tabs';
 export type { TextProps, AnchorProps } from './components/Text/Text';
-export type { TextareaProps } from './components/Textarea/Textarea';
-export type { TextInputProps } from './components/TextInput/TextInput';
+export type { TextareaProps, TextareaStylesNames } from './components/Textarea/Textarea';
+export type { TextInputProps, TextInputStylesNames } from './components/TextInput/TextInput';
 export type { ThemeIconProps } from './components/ThemeIcon/ThemeIcon';
 export type { TitleProps } from './components/Title/Title';
-export type { TooltipProps } from './components/Tooltip/Tooltip';
+export type { TooltipProps, TooltipStylesNames } from './components/Tooltip/Tooltip';
 export type {
   MantineTransition,
   TransitionProps,

@@ -1,6 +1,6 @@
-import useStyles from './SegmentedControl.styles';
+import { SegmentedControlStylesNames } from './SegmentedControl';
 
-export const SegmentedControl: MantineClasses<typeof useStyles> = {
+export const SegmentedControl: Record<SegmentedControlStylesNames, string> = {
   root: 'Root element',
   label: 'Input label element',
   labelActive: 'Label of active element',

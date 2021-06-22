@@ -7,6 +7,8 @@ import useStyles, { sizes } from './Checkbox.styles';
 
 export const CHECKBOX_SIZES = sizes;
 
+export type CheckboxStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface CheckboxProps
   extends DefaultProps<typeof useStyles>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {

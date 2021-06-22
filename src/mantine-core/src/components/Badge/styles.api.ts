@@ -1,7 +1,6 @@
-import useStyles from './Badge.styles';
-import { BadgeVariant } from './Badge';
+import { BadgeStylesNames } from './Badge';
 
-export const Badge: Omit<MantineClasses<typeof useStyles>, BadgeVariant> = {
+export const Badge: Record<BadgeStylesNames, string> = {
   root: 'Root element',
   inner: 'Badge label container, contains children',
   leftSection: 'Left section, controlled by leftSectionProp',

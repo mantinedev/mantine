@@ -15,8 +15,10 @@ interface SelectItem {
   disabled?: boolean;
 }
 
+export type SelectStylesNames = InputStylesNames | InputWrapperStylesNames;
+
 export interface SelectProps
-  extends DefaultProps<InputStylesNames | InputWrapperStylesNames>,
+  extends DefaultProps<SelectStylesNames>,
     InputWrapperBaseProps,
     Omit<InputBaseProps, 'rightSection' | 'rightSectionWidth' | 'rightSectionProps'>,
     Omit<React.ComponentPropsWithoutRef<'select'>, 'size'> {
