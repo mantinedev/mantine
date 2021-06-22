@@ -4,7 +4,9 @@ import { useMantineTheme, DefaultProps, mergeStyles, Select, Group, Text } from 
 import { getMonthsNames, getYearsRange } from '../../../utils';
 import useStyles from './CalendarLabel.styles';
 
-interface CalendarLabelProps extends DefaultProps<typeof useStyles> {
+export type CalendarLabelStylesNames = keyof ReturnType<typeof useStyles>;
+
+interface CalendarLabelProps extends DefaultProps<CalendarLabelStylesNames> {
   locale: string;
   withSelect: boolean;
   yearsRange: { from: number; to: number };

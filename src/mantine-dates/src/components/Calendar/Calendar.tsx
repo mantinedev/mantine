@@ -3,9 +3,9 @@ import cx from 'clsx';
 import dayjs from 'dayjs';
 import { DefaultProps, useMantineTheme, mergeStyles, Group, ActionIcon } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import { Month, MonthSettings } from '../Month/Month';
+import { Month, MonthSettings, MonthStylesNames } from '../Month/Month';
 import { ArrowIcon } from './ArrowIcon';
-import { CalendarLabel } from './CalendarLabel/CalendarLabel';
+import { CalendarLabel, CalendarLabelStylesNames } from './CalendarLabel/CalendarLabel';
 import useStyles from './Calendar.styles';
 
 export interface CalendarSettings extends MonthSettings {
@@ -31,8 +31,13 @@ export interface CalendarSettings extends MonthSettings {
   yearsRange?: { from: number; to: number };
 }
 
+export type CalendarStylesNames =
+  | keyof ReturnType<typeof useStyles>
+  | Exclude<MonthStylesNames, 'root'>
+  | CalendarLabelStylesNames;
+
 interface CalendarProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<CalendarStylesNames>,
     CalendarSettings,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Current month */
@@ -71,10 +76,11 @@ export function Calendar({
   minDate,
   maxDate,
   excludeDate,
+  ...others
 }: CalendarProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'calendar');
-  const _styles = mergeStyles(classes, styles);
+  const classes = useStyles({ theme }, classNames as any, 'calendar');
+  const _styles = mergeStyles(classes, styles as any);
   const [_month, setMonth] = useUncontrolled({
     value: month,
     defaultValue: initialMonth,
@@ -88,12 +94,24 @@ export function Calendar({
     minDate instanceof Date && dayjs(_month).startOf('month').isBefore(minDate);
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }}>
-      <Group className={classes.header} position="apart">
+    <div
+      className={cx(classes.calendar, className)}
+      style={{ ...style, ..._styles.calendar }}
+      {...others}
+    >
+      <Group
+        className={classes.header}
+        style={_styles.header}
+        position="apart"
+        themeOverride={themeOverride}
+      >
         <ActionIcon
           aria-label={nextMonthLabel}
           onClick={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
           disabled={previousDisabled}
+          themeOverride={themeOverride}
+          className={classes.control}
+          style={_styles.control}
         >
           <ArrowIcon direction="left" width={14} height={14} />
         </ActionIcon>
@@ -107,18 +125,23 @@ export function Calendar({
           value={_month}
           onChange={setMonth}
           labelFormat={labelFormat}
+          themeOverride={themeOverride}
         />
 
         <ActionIcon
           aria-label={previousMonthLabel}
           onClick={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
           disabled={nextDisabled}
+          themeOverride={themeOverride}
+          className={classes.control}
+          style={_styles.control}
         >
           <ArrowIcon direction="right" width={14} height={14} />
         </ActionIcon>
       </Group>
 
       <Month
+        themeOverride={themeOverride}
         month={_month}
         value={value}
         onChange={onChange}
@@ -128,6 +151,8 @@ export function Calendar({
         minDate={minDate}
         maxDate={maxDate}
         excludeDate={excludeDate}
+        classNames={classNames as any}
+        styles={styles as any}
       />
     </div>
   );

@@ -5,7 +5,8 @@ interface CalendarStyles {
 }
 
 export default createMemoStyles({
-  root: {},
+  calendar: {},
+  control: {},
   header: ({ theme }: CalendarStyles) => ({
     marginBottom: theme.spacing.xs,
   }),
