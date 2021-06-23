@@ -79,6 +79,9 @@ interface DatePickerProps
 
   /** Control initial dropdown opened state */
   initiallyOpened?: boolean;
+
+  /** Input name, useful fon uncontrolled variant to capture data with native form */
+  name?: string;
 }
 
 export function DatePicker({
@@ -118,6 +121,7 @@ export function DatePicker({
   elementRef,
   initialMonth,
   initiallyOpened = false,
+  name = 'date',
   ...others
 }: DatePickerProps) {
   const theme = useMantineTheme(themeOverride);
@@ -229,6 +233,7 @@ export function DatePicker({
           )}
         </Transition>
       </div>
+      <input type="hidden" name={name} value={_value.toISOString()} />
     </InputWrapper>
   );
 }
