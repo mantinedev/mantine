@@ -9,7 +9,6 @@ export * from './hooks/use-media-query';
 export * from './hooks/use-reduced-motion';
 export * from './hooks/use-scroll-lock';
 
-export * from './inputs-guide/inputs-list';
 export * from './inputs-guide/color-input';
 export * from './inputs-guide/json-input';
 
