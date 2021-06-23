@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Title, Text } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { PACKAGES_DATA } from './data';
 import { PackageItem } from './PackageItem/PackageItem';
 import useStyles from './Installation.styles';
 
-export function Installation() {
+interface InstallationProps {
+  setDependencies(dependencies: string): void;
+}
+
+export function Installation({ setDependencies }: InstallationProps) {
   const classes = useStyles();
   const [values, setValues] = useState({
     '@mantine/hooks': true,
@@ -38,6 +42,10 @@ export function Installation() {
   )
     .sort()
     .reverse();
+
+  useEffect(() => {
+    setDependencies(dependencies.join(' '));
+  }, [dependencies]);
 
   const installation = dependencies.join(' ');
   const nothingToInstall = "Good job, you've deselected all packages, nothing to install!";

@@ -3,11 +3,21 @@ import cx from 'clsx';
 import { CheckIcon } from '@modulz/radix-icons';
 import { Text, Title, ThemeIcon, Transition } from '@mantine/core';
 import { GUIDES_DATA } from './data';
+import { CraGuide } from './guides/CraGuide';
 import useStyles from './Guides.styles';
 
-export function Guides() {
+interface GuidesProps {
+  dependencies: string;
+}
+
+const guides = {
+  cra: CraGuide,
+};
+
+export function Guides({ dependencies }: GuidesProps) {
   const [selected, setSelected] = useState('cra');
   const classes = useStyles();
+  const Guide = guides[selected];
 
   const controls = GUIDES_DATA.map((guide) => (
     <button
@@ -32,6 +42,9 @@ export function Guides() {
     <div>
       <Title>Get started with</Title>
       <div className={classes.controls}>{controls}</div>
+      <div className={classes.guide}>
+        <Guide dependencies={dependencies} />
+      </div>
     </div>
   );
 }

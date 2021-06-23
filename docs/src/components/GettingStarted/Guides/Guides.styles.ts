@@ -3,6 +3,10 @@ import { theming, getFontStyles, getFocusStyles } from '@mantine/core';
 
 export default createUseStyles(
   (theme) => ({
+    guide: {
+      paddingTop: theme.spacing.xl,
+    },
+
     controls: {
       display: 'flex',
       flexWrap: 'wrap',
