@@ -2,6 +2,7 @@ import React from 'react';
 import { Text } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { Installation } from './Installation';
+import { Done } from './Done';
 
 interface CraGuideProps {
   dependencies: string;
@@ -18,6 +19,7 @@ export function CraGuide({ dependencies }: CraGuideProps) {
         Install dependencies
       </Text>
       <Installation dependencies={dependencies} />
+      <Done />
     </div>
   );
 }
