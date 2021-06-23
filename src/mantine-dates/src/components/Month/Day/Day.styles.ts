@@ -24,31 +24,30 @@ export default createMemoStyles({
     cursor: 'pointer',
     fontSize: theme.fontSizes.sm,
     userSelect: 'none',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
 
     '&:disabled': {
       pointerEvents: 'none',
-      color: theme.colors.gray[4],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
     },
 
     '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
     },
 
     '&$weekend:not(:disabled)': {
-      color: theme.colors.red[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.red[5] : theme.colors.red[7],
     },
 
     '&$outside': {
-      color: `${theme.colors.gray[4]} !important`,
+      color: `${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+      } !important`,
     },
 
     '&$selected:not(:disabled)': {
-      backgroundColor: theme.colors[theme.primaryColor][0],
-      color: theme.colors[theme.primaryColor][6],
-
-      '&:hover': {
-        backgroundColor: theme.colors[theme.primaryColor][0],
-      },
+      backgroundColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 0],
+      color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 0 : 7],
     },
   }),
 });

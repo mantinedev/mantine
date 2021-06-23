@@ -5,7 +5,9 @@ interface MonthStyles {
 }
 
 export default createMemoStyles({
-  weekday: {},
+  weekday: ({ theme }: MonthStyles) => ({
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[5],
+  }),
 
   root: ({ theme }: MonthStyles) => ({
     ...getFontStyles(theme),

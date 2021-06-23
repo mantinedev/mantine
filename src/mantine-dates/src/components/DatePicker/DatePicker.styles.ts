@@ -25,7 +25,10 @@ export default createMemoStyles({
     left: 0,
     top: theme.spacing.xs,
     maxWidth: 280,
-    border: `1px solid ${theme.colors.gray[2]}`,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
+    }`,
     zIndex: 4,
     padding: [theme.spacing.md, theme.spacing.xs],
 
@@ -36,9 +39,13 @@ export default createMemoStyles({
       height: 8,
       width: 8,
       transform: 'rotate(45deg)',
-      backgroundColor: theme.white,
-      borderTop: `1px solid ${theme.colors.gray[2]}`,
-      borderLeft: `1px solid ${theme.colors.gray[2]}`,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+      borderTop: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
+      }`,
+      borderLeft: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
+      }`,
     },
   }),
 });
