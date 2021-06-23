@@ -163,7 +163,6 @@ export default createMemoStyles({
       getThemeColor({ theme, color, shade: 6 }),
       theme.colorScheme === 'dark' ? 0.65 : 1
     ),
-    textShadow: '1px 1px 1px rgba(0, 0, 0, .3)',
     color: theme.white,
     height: sizes[size].height,
 

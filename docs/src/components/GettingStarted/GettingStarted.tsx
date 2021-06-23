@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container } from '@mantine/core';
 import { Footer } from '../Footer/Footer';
+import Head from '../Head/Head';
 import { Installation } from './Installation/Installation';
 import { Guides } from './Guides/Guides';
 import { NextSteps } from './NextSteps/NextSteps';
@@ -12,6 +13,8 @@ export function GettingStarted() {
 
   return (
     <>
+      <Head title="Getting started" />
+
       <div className={classes.wrapper}>
         <Container className={classes.container}>
           <Installation setDependencies={setDependencies} />
@@ -19,6 +22,7 @@ export function GettingStarted() {
           <NextSteps />
         </Container>
       </div>
+
       <Footer withNavbar />
     </>
   );
