@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { Container } from '@mantine/core';
+import { Footer } from '../Footer/Footer';
 import { Installation } from './Installation/Installation';
 import { Guides } from './Guides/Guides';
+import useStyles from './GettingStarted.styles';
 
 export function GettingStarted() {
+  const classes = useStyles();
   const [dependencies, setDependencies] = useState('react-jss @mantine/hooks @mantine/core');
 
   return (
-    <Container style={{ padding: 40, paddingTop: 80 }}>
-      <Installation setDependencies={setDependencies} />
-      <Guides dependencies={dependencies} />
-    </Container>
+    <>
+      <div className={classes.wrapper}>
+        <Container className={classes.container}>
+          <Installation setDependencies={setDependencies} />
+          <Guides dependencies={dependencies} />
+        </Container>
+      </div>
+      <Footer withNavbar />
+    </>
   );
 }
