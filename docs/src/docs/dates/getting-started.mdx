@@ -3,7 +3,7 @@ group: 'mantine-dates'
 package: '@mantine/dates'
 title: 'Getting started'
 pageTitle: 'Mantine Dates'
-description: 'Dates related Mantine extension'
+description: 'Capture date inputs from user and display calendars'
 order: 0
 slug: /dates/getting-started/
 installation: '@mantine/dates'
@@ -13,3 +13,50 @@ license: MIT
 ---
 
 ## Installation
+
+Package depends on:
+
+- [react](https://www.npmjs.com/package/react)
+- [react-dom](https://www.npmjs.com/package/react-dom)
+- [dayjs](https://www.npmjs.com/package/dayjs)
+- [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks)
+- [@mantine/core](https://www.npmjs.com/package/@mantine/core)
+- [react-jss](https://www.npmjs.com/package/react-jss).
+
+Install with npm:
+
+```sh
+npm install react-jss dayjs @mantine/core @mantine/hooks @mantine/dates
+```
+
+Install with yarn:
+
+```sh
+yarn add react-jss dayjs @mantine/core @mantine/hooks @mantine/dates
+```
+
+## Localization
+
+Mantine dates use [dayjs](https://day.js.org/) library for localization.
+Follow [example](https://day.js.org/docs/en/i18n/loading-into-nodejs) to load required locales in your application:
+
+```tsx
+// Import German language
+import 'dayjs/locale/de';
+```
+
+Then when you use components provide imported locale:
+
+```tsx
+import { DatePicker, Calendar, Month } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <>
+      <DatePicker locale="de" />
+      <Calendar locale="de" />
+      <Month locale="de" />
+    </>
+  );
+}
+```

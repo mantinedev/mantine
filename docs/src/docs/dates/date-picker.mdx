@@ -30,4 +30,18 @@ styles: ['DatePicker']
 
 ## Format labels
 
+## Get element ref
+
+You can get input ref with `elementRef` prop:
+
+```tsx
+import { useRef } from 'react';
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  const ref = useRef(null);
+  return <DatePicker elementRef={ref} />;
+}
+```
+
 ## Accessibility and usability
