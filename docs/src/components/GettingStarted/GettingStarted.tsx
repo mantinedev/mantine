@@ -3,6 +3,7 @@ import { Container } from '@mantine/core';
 import { Footer } from '../Footer/Footer';
 import { Installation } from './Installation/Installation';
 import { Guides } from './Guides/Guides';
+import { NextSteps } from './NextSteps/NextSteps';
 import useStyles from './GettingStarted.styles';
 
 export function GettingStarted() {
@@ -15,6 +16,7 @@ export function GettingStarted() {
         <Container className={classes.container}>
           <Installation setDependencies={setDependencies} />
           <Guides dependencies={dependencies} />
+          <NextSteps />
         </Container>
       </div>
       <Footer withNavbar />
