@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Title, Text, Anchor } from '@mantine/core';
+import { Title, Text } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { PACKAGES_DATA } from './data';
 import { PackageItem } from './PackageItem/PackageItem';
@@ -42,30 +42,11 @@ export function Installation() {
   const installation = dependencies.join(' ');
   const nothingToInstall = "Good job, you've deselected all packages, nothing to install!";
 
-  const links = dependencies.map((dependency) => (
-    <li key={dependency}>
-      <Anchor
-        href={`https://www.npmjs.com/package/${dependency}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {dependency}
-      </Anchor>
-    </li>
-  ));
-
   return (
     <div className={classes.wrapper}>
       <Title>Installation</Title>
       <Text style={{ marginTop: 5 }}>Choose packages that you will need in your application:</Text>
       <div className={classes.controls}>{items}</div>
-
-      {links.length > 0 && (
-        <div>
-          <Text>Dependencies that will be installed</Text>
-          <ul>{links}</ul>
-        </div>
-      )}
 
       <div className={classes.installation}>
         <Text style={{ marginBottom: 5 }}>Install with yarn</Text>

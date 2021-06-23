@@ -1,13 +1,24 @@
 import { createUseStyles } from 'react-jss';
-import { getFontStyles, theming } from '@mantine/core';
+import { theming, getFontStyles, getFocusStyles } from '@mantine/core';
 
 export default createUseStyles(
   (theme) => ({
-    wrapper: {
-      ...getFontStyles(theme),
+    controls: {
       display: 'flex',
+      flexWrap: 'wrap',
+      marginLeft: -theme.spacing.md / 2,
+      marginRight: -theme.spacing.md / 2,
+      marginTop: theme.spacing.xs,
+    },
+
+    control: {
+      ...getFontStyles(theme),
+      ...getFocusStyles(theme),
+      position: 'relative',
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
       alignItems: 'center',
-      flex: `0 0 calc(50% - ${theme.spacing.md}px)`,
       border: `2px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
       }`,
@@ -17,24 +28,27 @@ export default createUseStyles(
       borderRadius: theme.radius.sm,
       margin: theme.spacing.md / 2,
       cursor: 'pointer',
+      transition: 'border-color 100ms ease',
 
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
       },
     },
 
-    body: {
-      marginLeft: theme.spacing.xl,
+    checked: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      borderBottomRightRadius: theme.radius.sm,
+      backgroundColor: theme.colors.blue[7],
     },
 
-    title: {
-      fontFamily: theme.fontFamilyMonospace,
-      marginBottom: 3,
+    controlTitle: {
+      marginTop: theme.spacing.md,
     },
 
-    description: {
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
-      fontSize: theme.fontSizes.sm,
+    active: {
+      borderColor: theme.colors.blue[7],
     },
   }),
   { theming }

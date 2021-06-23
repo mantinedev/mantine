@@ -3,7 +3,9 @@ import { theming } from '@mantine/core';
 
 export default createUseStyles(
   (theme) => ({
-    wrapper: {},
+    wrapper: {
+      marginBottom: theme.spacing.xl * 2,
+    },
 
     controls: {
       display: 'flex',
