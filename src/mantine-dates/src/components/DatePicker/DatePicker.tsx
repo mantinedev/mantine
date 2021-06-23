@@ -233,7 +233,7 @@ export function DatePicker({
           )}
         </Transition>
       </div>
-      <input type="hidden" name={name} value={_value.toISOString()} />
+      <input type="hidden" name={name} value={_value instanceof Date ? _value.toISOString() : ''} />
     </InputWrapper>
   );
 }
