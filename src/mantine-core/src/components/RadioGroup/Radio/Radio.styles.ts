@@ -33,7 +33,7 @@ export default createMemoStyles({
 
   radio: ({ theme, size, color }: RadioStyles) => ({
     ...getFocusStyles(theme),
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
     }`,
@@ -50,13 +50,13 @@ export default createMemoStyles({
     justifyContent: 'center',
 
     '&:checked': {
-      background: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
-      borderColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      background: getThemeColor({ theme, color, shade: 6 }),
+      borderColor: getThemeColor({ theme, color, shade: 6 }),
 
       '&::before': {
         content: '""',
         display: 'block',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        backgroundColor: theme.white,
         width: getSizeValue({ sizes, size }) / 2,
         height: getSizeValue({ sizes, size }) / 2,
         borderRadius: getSizeValue({ sizes, size }) / 2,
