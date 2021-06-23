@@ -79,7 +79,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         <Button variant="link" color="gray" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit" size="sm" variant={theme.colorScheme === 'dark' ? 'light' : 'filled'}>
+        <Button type="submit" size="sm">
           Save
         </Button>
       </Group>
@@ -208,9 +208,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         <Button size="sm" variant="link" color="gray" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit" variant={theme.colorScheme === 'dark' ? 'light' : 'filled'}>
-          Save
-        </Button>
+        <Button type="submit">Save</Button>
       </Group>
     </form>
   );
