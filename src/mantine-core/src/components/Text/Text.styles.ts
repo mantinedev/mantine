@@ -19,9 +19,9 @@ export default createMemoStyles({
     ...getFocusStyles(theme),
     color:
       color in theme.colors
-        ? theme.colors[color][theme.colorScheme === 'dark' ? 4 : 6]
+        ? theme.colors[color][theme.colorScheme === 'dark' ? 5 : 7]
         : variant === 'link'
-        ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]
+        ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 7]
         : theme.colorScheme === 'dark'
         ? theme.colors.dark[0]
         : theme.black,

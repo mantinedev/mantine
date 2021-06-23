@@ -39,7 +39,7 @@ export default createMemoStyles({
       paddingRight: getSizeValue({ size, sizes: theme.spacing }),
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
       }`,
       transition: 'border-color 100ms ease, box-shadow 100ms ease',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
@@ -51,7 +51,7 @@ export default createMemoStyles({
     },
 
     '&$invalid $input': {
-      borderColor: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
+      borderColor: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
     },
 
     '& $withIcon': {
@@ -92,7 +92,7 @@ export default createMemoStyles({
     },
 
     '&$invalid $input': {
-      borderColor: theme.colorScheme === 'dark' ? theme.colors.red[4] : 'transparent',
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.red[5] : 'transparent',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.red[0],
     },
 
@@ -176,16 +176,16 @@ export default createMemoStyles({
 
   invalid: ({ theme }: InputStyles) => ({
     '& $input': {
-      color: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
-      borderColor: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
+      color: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
+      borderColor: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
 
       '&::placeholder': {
-        color: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
+        color: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
       },
     },
 
     '& $icon': {
-      color: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
+      color: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
     },
   }),
 
