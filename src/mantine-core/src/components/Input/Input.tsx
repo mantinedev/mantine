@@ -38,7 +38,7 @@ export interface InputBaseProps {
   /** Input border-radius from theme or number to set border-radius in px */
   radius?: MantineNumberSize;
 
-  /** Defines input appearance */
+  /** Defines input appearance, defaults to default in light color scheme and filled in dark */
   variant?: 'default' | 'filled' | 'unstyled';
 
   /** Static css selector base */
@@ -56,7 +56,7 @@ export function Input<
   className,
   invalid = false,
   required = false,
-  variant = 'default',
+  variant,
   icon,
   style,
   rightSectionWidth = 36,
@@ -84,12 +84,13 @@ export function Input<
   }) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ radius, theme, size }, classNames, __staticSelector);
+  const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
   const _styles = mergeStyles(classes, styles);
   const Element: any = component;
 
   return (
     <div
-      className={cx(classes.root, { [classes.invalid]: invalid }, classes[variant], className)}
+      className={cx(classes.root, { [classes.invalid]: invalid }, classes[_variant], className)}
       style={{
         ...style,
         ..._styles.root,

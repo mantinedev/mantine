@@ -46,7 +46,7 @@ export default createMemoStyles({
 
       '&:focus': {
         outline: 'none',
-        borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 6],
+        borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 7],
       },
     },
 
@@ -76,7 +76,7 @@ export default createMemoStyles({
       '&:focus': {
         outline: 'none',
         borderColor: `${
-          theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 6]
+          theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 6 : 7]
         } !important`,
       },
 
