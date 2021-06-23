@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { navigate } from 'gatsby';
 import { TextInput, Kbd, Text, Paper, Highlight, useMantineTheme } from '@mantine/core';
-import { useClickOutside, useWindowEvent } from '@mantine/hooks';
+import { useClickOutside, useWindowEvent, upperFirst } from '@mantine/hooks';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { getDocsData } from '../../get-docs-data';
 import useStyles from './Search.styles';
@@ -23,6 +23,12 @@ function filterData(query: string, data: ReturnType<typeof getDocsData>) {
         acc.push(...group.pages);
       }
     });
+
+    part.uncategorized
+      .filter((page) => page.title.toLowerCase() !== 'getting started')
+      .forEach((page) => {
+        acc.push(page);
+      });
 
     return acc;
   }, []);
@@ -92,7 +98,7 @@ export default function Search({ data, isMacOS }: SearchProps) {
     >
       <Highlight highlight={query}>{item.title}</Highlight>
       <Text color="gray" size="sm" className={classes.package}>
-        {item.package.replace('mantine-', '@mantine/')}
+        {item.package ? item.package.replace('mantine-', '@mantine/') : upperFirst(item.group)}
       </Text>
     </button>
   ));
