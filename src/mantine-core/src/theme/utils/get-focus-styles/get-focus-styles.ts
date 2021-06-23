@@ -2,6 +2,8 @@ import { MantineTheme } from '../../types';
 
 export function getFocusStyles(theme: MantineTheme) {
   return {
+    WebkitTapHighlightColor: 'transparent',
+
     '&:focus': {
       outline: 'none',
       boxShadow: `0 0 0 2px ${
