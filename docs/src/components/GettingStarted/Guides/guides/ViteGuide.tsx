@@ -7,7 +7,7 @@ interface CraGuideProps {
   dependencies: string;
 }
 
-export function NextGuide({ dependencies }: CraGuideProps) {
+export function ViteGuide({ dependencies }: CraGuideProps) {
   return (
     <div>
       <Text weight={700} style={{ marginBottom: 15 }}>

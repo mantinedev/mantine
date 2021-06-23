@@ -4,6 +4,10 @@ import { CheckIcon } from '@modulz/radix-icons';
 import { Text, Title, ThemeIcon, Transition } from '@mantine/core';
 import { GUIDES_DATA } from './data';
 import { CraGuide } from './guides/CraGuide';
+import { NextGuide } from './guides/NextGuide';
+import { ViteGuide } from './guides/ViteGuide';
+import { GatsbyGuide } from './guides/GatsbyGuide';
+import { PreactGuide } from './guides/PreactGuide';
 import useStyles from './Guides.styles';
 
 interface GuidesProps {
@@ -12,6 +16,10 @@ interface GuidesProps {
 
 const guides = {
   cra: CraGuide,
+  next: NextGuide,
+  vite: ViteGuide,
+  gatsby: GatsbyGuide,
+  preact: PreactGuide,
 };
 
 export function Guides({ dependencies }: GuidesProps) {
@@ -40,7 +48,7 @@ export function Guides({ dependencies }: GuidesProps) {
 
   return (
     <div>
-      <Title>Get started with</Title>
+      <Title>And get started with</Title>
       <div className={classes.controls}>{controls}</div>
       <div className={classes.guide}>
         <Guide dependencies={dependencies} />

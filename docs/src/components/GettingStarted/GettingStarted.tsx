@@ -7,7 +7,7 @@ export function GettingStarted() {
   const [dependencies, setDependencies] = useState('react-jss @mantine/hooks @mantine/core');
 
   return (
-    <Container style={{ padding: 40 }}>
+    <Container style={{ padding: 40, paddingTop: 80 }}>
       <Installation setDependencies={setDependencies} />
       <Guides dependencies={dependencies} />
     </Container>

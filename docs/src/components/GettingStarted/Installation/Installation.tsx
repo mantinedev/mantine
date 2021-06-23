@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Title, Text } from '@mantine/core';
-import { Prism } from '@mantine/prism';
+import { Title } from '@mantine/core';
 import { PACKAGES_DATA } from './data';
 import { PackageItem } from './PackageItem/PackageItem';
 import useStyles from './Installation.styles';
@@ -47,28 +46,10 @@ export function Installation({ setDependencies }: InstallationProps) {
     setDependencies(dependencies.join(' '));
   }, [dependencies]);
 
-  const installation = dependencies.join(' ');
-  const nothingToInstall = "Good job, you've deselected all packages, nothing to install!";
-
   return (
     <div className={classes.wrapper}>
-      <Title>Installation</Title>
-      <Text style={{ marginTop: 5 }}>Choose packages that you will need in your application:</Text>
+      <Title>Choose packages</Title>
       <div className={classes.controls}>{items}</div>
-
-      <div className={classes.installation}>
-        <Text style={{ marginBottom: 5 }}>Install with yarn</Text>
-        <Prism language="bash">
-          {dependencies.length > 0 ? `yarn add ${installation}` : nothingToInstall}
-        </Prism>
-      </div>
-
-      <div className={classes.installation}>
-        <Text style={{ marginBottom: 5 }}>Install with npm</Text>
-        <Prism language="bash">
-          {dependencies.length > 0 ? `npm install ${installation}` : nothingToInstall}
-        </Prism>
-      </div>
     </div>
   );
 }
