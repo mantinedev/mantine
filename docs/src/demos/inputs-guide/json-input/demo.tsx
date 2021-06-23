@@ -12,7 +12,7 @@ export function JsonInputDemo() {
   const [value, setValue] = useState('');
 
   return (
-    <CodeDemo code={code} language="tsx" toggle>
+    <CodeDemo code={code} language="tsx">
       <div style={{ maxWidth: 359, margin: 'auto' }}>
         <JsonInput
           label="Your package.json"
