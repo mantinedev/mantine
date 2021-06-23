@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/core';
+import { theming, getFocusStyles } from '@mantine/core';
 import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from '../Layout/Navbar/Navbar.styles';
 import { BREAKPOINT as MDX_PAGE_BREAKPOINT } from '../MdxPage/settings';
 
@@ -101,6 +101,7 @@ export default createUseStyles(
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
 
       '& a': {
+        ...getFocusStyles(theme),
         color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
       },
     },
