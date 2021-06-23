@@ -46,7 +46,7 @@ export default createMemoStyles({
   input: ({ size, theme, color }: CheckboxStyles) => ({
     ...getFocusStyles(theme),
     appearance: 'none',
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
     }`,
@@ -59,16 +59,12 @@ export default createMemoStyles({
     margin: 0,
 
     '&:checked': {
-      backgroundColor: getThemeColor({
-        theme,
-        color,
-        shade: theme.colorScheme === 'dark' ? 4 : 6,
-      }),
-      borderColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+      borderColor: getThemeColor({ theme, color, shade: 6 }),
       color: theme.white,
 
       '& + $icon': {
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
+        color: theme.white,
         display: 'block',
       },
     },
