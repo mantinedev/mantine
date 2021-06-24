@@ -21,6 +21,7 @@ import {
   useClickOutside,
   useFocusTrap,
   useMergedRef,
+  useWindowEvent,
 } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { Calendar, CalendarSettings, CalendarStylesNames } from '../Calendar/Calendar';
@@ -82,6 +83,9 @@ interface DatePickerProps
 
   /** Input name, useful fon uncontrolled variant to capture data with native form */
   name?: string;
+
+  /** Set to true to disable dropdown closing on scroll */
+  closeDropdownOnScroll?: boolean;
 }
 
 export function DatePicker({
@@ -121,6 +125,7 @@ export function DatePicker({
   elementRef,
   initialMonth,
   initiallyOpened = false,
+  closeDropdownOnScroll = true,
   name = 'date',
   ...others
 }: DatePickerProps) {
@@ -154,6 +159,8 @@ export function DatePicker({
     setValue(date);
     closeCalendarOnChange && closeDropdown();
   };
+
+  useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
 
   return (
     <InputWrapper

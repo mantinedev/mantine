@@ -146,7 +146,6 @@ export function Menu({
     window.clearTimeout(controlRefFocusTimeout.current);
   };
 
-  // Closes menu on scroll
   useWindowEvent('scroll', () => handleClose(true));
 
   const wrapperRef = useClickOutside(() => _opened && handleClose());
