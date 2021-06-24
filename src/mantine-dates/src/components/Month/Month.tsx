@@ -40,6 +40,9 @@ export interface MonthSettings {
 
   /** Controls month days font-size and height */
   size?: MantineSize;
+
+  /** Set to true to make calendar take 100% of container width */
+  fullWidth?: boolean;
 }
 
 export type MonthStylesNames = keyof ReturnType<typeof useStyles> | DayStylesNames;
@@ -97,10 +100,11 @@ export function Month({
   hideWeekdays = false,
   __staticSelector = 'month',
   size = 'sm',
+  fullWidth = false,
   ...others
 }: MonthProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames as any, __staticSelector);
+  const classes = useStyles({ theme, fullWidth }, classNames as any, __staticSelector);
   const _styles = mergeStyles(classes, styles as any);
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
@@ -225,6 +229,7 @@ export function Month({
             __staticSelector={__staticSelector}
             onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
             size={size}
+            fullWidth={fullWidth}
           />
         </td>
       );

@@ -2,6 +2,7 @@ import { MantineTheme, getFontStyles, createMemoStyles } from '@mantine/core';
 
 interface MonthStyles {
   theme: MantineTheme;
+  fullWidth: boolean;
 }
 
 export default createMemoStyles({
@@ -9,10 +10,10 @@ export default createMemoStyles({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[5],
   }),
 
-  root: ({ theme }: MonthStyles) => ({
+  root: ({ theme, fullWidth }: MonthStyles) => ({
     ...getFontStyles(theme),
     borderCollapse: 'collapse',
-    width: '100%',
+    width: fullWidth ? '100%' : 'auto',
     tableLayout: 'fixed',
   }),
 

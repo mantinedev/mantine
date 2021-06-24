@@ -10,14 +10,15 @@ import {
 interface DayStyles {
   theme: MantineTheme;
   size: MantineSize;
+  fullWidth: boolean;
 }
 
 const sizes = {
-  xs: 26,
-  sm: 34,
-  md: 38,
-  lg: 48,
-  xl: 56,
+  xs: 34,
+  sm: 38,
+  md: 46,
+  lg: 58,
+  xl: 66,
 };
 
 export default createMemoStyles({
@@ -28,13 +29,13 @@ export default createMemoStyles({
   firstInRange: {},
   lastInRange: {},
 
-  day: ({ theme, size }: DayStyles) => ({
+  day: ({ theme, size, fullWidth }: DayStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     position: 'relative',
     WebkitTapHighlightColor: 'transparent',
     backgroundColor: 'transparent',
-    width: '100%',
+    width: fullWidth ? '100%' : getSizeValue({ size, sizes }),
     height: getSizeValue({ size, sizes }),
     lineHeight: `${getSizeValue({ size, sizes })}px`,
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),

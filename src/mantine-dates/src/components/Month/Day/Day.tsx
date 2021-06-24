@@ -22,6 +22,7 @@ export interface DayProps
   firstInRange: boolean;
   lastInRange: boolean;
   size: MantineSize;
+  fullWidth: boolean;
   __staticSelector?: string;
 }
 
@@ -46,10 +47,11 @@ export function Day({
   __staticSelector = 'month',
   range,
   size,
+  fullWidth,
   ...others
 }: DayProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, __staticSelector);
+  const classes = useStyles({ theme, size, fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return (
