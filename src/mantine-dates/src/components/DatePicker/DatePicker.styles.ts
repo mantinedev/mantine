@@ -24,7 +24,6 @@ export default createMemoStyles({
     position: 'absolute',
     left: 0,
     top: theme.spacing.xs,
-    maxWidth: 280,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
