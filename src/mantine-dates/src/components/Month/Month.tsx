@@ -3,18 +3,10 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles, Text, MantineSize } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
-import { getMonthDays, isSameMonth, getWeekdaysNames, isSameDate } from '../../utils';
+import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
 import { Day, DayStylesNames } from './Day/Day';
+import { getDayProps, DayModifiers } from './get-day-props/get-day-props';
 import useStyles from './Month.styles';
-
-export interface DayModifiers {
-  selected: boolean;
-  outside: boolean;
-  weekend: boolean;
-  range: boolean;
-  firstInRange: boolean;
-  lastInRange: boolean;
-}
 
 export interface MonthSettings {
   /** Adds className to day button based on date and modifiers */
@@ -174,35 +166,17 @@ export function Month({
 
   const rows = days.map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
-      const weekday = date.getDay();
-      const weekend = weekday === 6 || weekday === 0;
-      const outside = date.getMonth() !== month.getMonth();
-      const isSelected = hasValue && isSameDate(date, value);
-      const isAfterMax = maxDate instanceof Date && dayjs(maxDate).isBefore(date, 'day');
-      const isBeforeMin = minDate instanceof Date && dayjs(minDate).isAfter(date, 'day');
-      const shouldExclude = typeof excludeDate === 'function' && excludeDate(date);
-      const disabledOutside = disableOutsideEvents && outside;
-      const disabled = isAfterMax || isBeforeMin || shouldExclude || disabledOutside;
-      const hasRange = Array.isArray(range);
-      const inclusiveRange = hasRange && [
-        dayjs(range[0]).subtract(1, 'day'),
-        dayjs(range[1]).add(1, 'day'),
-      ];
-      const firstInRange = hasRange && isSameDate(date, range[0]);
-      const lastInRange = hasRange && isSameDate(date, range[1]);
-      const isInRange =
-        hasRange &&
-        dayjs(date).isAfter(inclusiveRange[0], 'day') &&
-        dayjs(date).isBefore(inclusiveRange[1], 'day');
-      const selectedInRange = firstInRange || lastInRange;
-      const modifiers: DayModifiers = {
-        selected: isSelected,
-        range: isInRange,
-        firstInRange,
-        lastInRange,
-        weekend,
-        outside,
-      };
+      const dayProps = getDayProps({
+        date,
+        month,
+        hasValue,
+        minDate,
+        maxDate,
+        value,
+        excludeDate,
+        disableOutsideEvents,
+        range,
+      });
 
       return (
         <td className={classes.cell} style={_styles.cell} key={cellIndex}>
@@ -212,20 +186,20 @@ export function Month({
             }}
             onClick={() => typeof onChange === 'function' && onChange(date)}
             value={date}
-            outside={outside}
-            weekend={weekend}
-            range={isInRange}
-            firstInRange={firstInRange}
-            lastInRange={lastInRange}
-            selected={isSelected || selectedInRange}
+            outside={dayProps.outside}
+            weekend={dayProps.weekend}
+            range={dayProps.inRange}
+            firstInRange={dayProps.firstInRange}
+            lastInRange={dayProps.lastInRange}
+            selected={dayProps.selected || dayProps.selectedInRange}
             hasValue={hasValueInMonthRange}
             onKeyDown={handleKeyDown}
             themeOverride={themeOverride}
-            className={typeof dayClassName === 'function' ? dayClassName(date, modifiers) : null}
-            style={typeof dayStyle === 'function' ? dayStyle(date, modifiers) : null}
+            className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
+            style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
             styles={styles as any}
             classNames={classNames as any}
-            disabled={disabled}
+            disabled={dayProps.disabled}
             __staticSelector={__staticSelector}
             onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
             size={size}
