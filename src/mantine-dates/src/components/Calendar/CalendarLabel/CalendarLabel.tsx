@@ -1,6 +1,14 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { useMantineTheme, DefaultProps, mergeStyles, Select, Group, Text } from '@mantine/core';
+import {
+  useMantineTheme,
+  DefaultProps,
+  mergeStyles,
+  Select,
+  Group,
+  Text,
+  MantineSize,
+} from '@mantine/core';
 import { getMonthsNames, getYearsRange } from '../../../utils';
 import useStyles from './CalendarLabel.styles';
 
@@ -14,6 +22,7 @@ interface CalendarLabelProps extends DefaultProps<CalendarLabelStylesNames> {
   onChange(value: Date): void;
   labelFormat: string;
   __staticSelector: string;
+  size: MantineSize;
 }
 
 export function CalendarLabel({
@@ -26,15 +35,18 @@ export function CalendarLabel({
   themeOverride,
   labelFormat,
   onChange,
+  size,
   __staticSelector,
 }: CalendarLabelProps) {
   const theme = useMantineTheme(themeOverride);
+  const selectSize = size === 'lg' || size === 'xl' ? 'md' : 'xs';
   const classes = useStyles({ theme }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return withSelect ? (
     <Group
       spacing={5}
+      noWrap
       themeOverride={themeOverride}
       className={classes.selectGroup}
       style={_styles.selectGroup}
@@ -42,7 +54,7 @@ export function CalendarLabel({
       <Select
         className={classes.select}
         style={_styles.select}
-        size="xs"
+        size={selectSize}
         themeOverride={themeOverride}
         value={value.getMonth()}
         onChange={(event) =>
@@ -57,7 +69,7 @@ export function CalendarLabel({
       <Select
         className={classes.select}
         style={_styles.select}
-        size="xs"
+        size={selectSize}
         themeOverride={themeOverride}
         value={value.getFullYear()}
         onChange={(event) =>
@@ -70,7 +82,7 @@ export function CalendarLabel({
       />
     </Group>
   ) : (
-    <Text className={classes.label} style={_styles.label} size="sm">
+    <Text className={classes.label} style={_styles.label} size={size}>
       {dayjs(value).format(labelFormat)}
     </Text>
   );

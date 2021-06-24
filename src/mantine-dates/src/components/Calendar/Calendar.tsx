@@ -1,11 +1,19 @@
 import React from 'react';
 import cx from 'clsx';
 import dayjs from 'dayjs';
-import { DefaultProps, useMantineTheme, mergeStyles, Group, ActionIcon } from '@mantine/core';
+import {
+  DefaultProps,
+  useMantineTheme,
+  mergeStyles,
+  Group,
+  ActionIcon,
+  getSizeValue,
+} from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { Month, MonthSettings, MonthStylesNames } from '../Month/Month';
 import { ArrowIcon } from './ArrowIcon';
 import { CalendarLabel, CalendarLabelStylesNames } from './CalendarLabel/CalendarLabel';
+import { sizes as DAY_SIZES } from '../Month/Day/Day.styles';
 import useStyles from './Calendar.styles';
 
 export interface CalendarSettings extends MonthSettings {
@@ -56,6 +64,14 @@ interface CalendarProps
   __staticSelector?: string;
 }
 
+const iconSizes = {
+  xs: 10,
+  sm: 12,
+  md: 14,
+  lg: 18,
+  xl: 20,
+};
+
 export function Calendar({
   className,
   classNames,
@@ -79,12 +95,16 @@ export function Calendar({
   minDate,
   maxDate,
   excludeDate,
+  fullWidth = false,
+  size = 'sm',
   __staticSelector = 'calendar',
   ...others
 }: CalendarProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames as any, __staticSelector);
+  const classes = useStyles({ theme, fullWidth, size }, classNames as any, __staticSelector);
   const _styles = mergeStyles(classes, styles as any);
+  const iconSize = getSizeValue({ size, sizes: iconSizes });
+  const iconButtonSize = getSizeValue({ size, sizes: DAY_SIZES });
   const [_month, setMonth] = useUncontrolled({
     value: month,
     defaultValue: initialMonth,
@@ -107,6 +127,7 @@ export function Calendar({
         className={classes.header}
         style={_styles.header}
         position="apart"
+        noWrap
         themeOverride={themeOverride}
       >
         <ActionIcon
@@ -116,8 +137,9 @@ export function Calendar({
           themeOverride={themeOverride}
           className={classes.control}
           style={_styles.control}
+          size={iconButtonSize}
         >
-          <ArrowIcon direction="left" width={14} height={14} />
+          <ArrowIcon direction="left" width={iconSize} height={iconSize} />
         </ActionIcon>
 
         <CalendarLabel
@@ -130,6 +152,7 @@ export function Calendar({
           onChange={setMonth}
           labelFormat={labelFormat}
           themeOverride={themeOverride}
+          size={size}
           __staticSelector={__staticSelector}
         />
 
@@ -140,8 +163,9 @@ export function Calendar({
           themeOverride={themeOverride}
           className={classes.control}
           style={_styles.control}
+          size={iconButtonSize}
         >
-          <ArrowIcon direction="right" width={14} height={14} />
+          <ArrowIcon direction="right" width={iconSize} height={iconSize} />
         </ActionIcon>
       </Group>
 
@@ -158,6 +182,8 @@ export function Calendar({
         excludeDate={excludeDate}
         classNames={classNames as any}
         styles={styles as any}
+        fullWidth={fullWidth}
+        size={size}
         __staticSelector={__staticSelector}
       />
     </div>

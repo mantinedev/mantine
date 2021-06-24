@@ -13,7 +13,7 @@ interface DayStyles {
   fullWidth: boolean;
 }
 
-const sizes = {
+export const sizes = {
   xs: 34,
   sm: 38,
   md: 46,
