@@ -5,7 +5,9 @@ import useStyles from './Day.styles';
 
 export type DayStylesNames = keyof ReturnType<typeof useStyles>;
 
-export interface DayProps extends DefaultProps<DayStylesNames> {
+export interface DayProps
+  extends DefaultProps<DayStylesNames>,
+    Omit<React.ComponentPropsWithoutRef<'button'>, 'value' | 'onKeyDown' | 'onMouseEnter'> {
   value: Date;
   selected: boolean;
   weekend: boolean;
@@ -13,6 +15,7 @@ export interface DayProps extends DefaultProps<DayStylesNames> {
   onClick?(): void;
   elementRef(ref: HTMLButtonElement): void;
   onKeyDown(date: Date, event: React.KeyboardEvent): void;
+  onMouseEnter(date: Date, event: React.MouseEvent): void;
   disabled: boolean;
   hasValue: boolean;
   __staticSelector?: string;
@@ -28,12 +31,14 @@ export function Day({
   onClick,
   elementRef,
   onKeyDown,
+  onMouseEnter,
   themeOverride,
   classNames,
   disabled,
   styles,
   hasValue,
   __staticSelector = 'month',
+  ...others
 }: DayProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames, __staticSelector);
@@ -41,10 +46,12 @@ export function Day({
 
   return (
     <button
+      {...others}
       type="button"
       onClick={onClick}
       ref={elementRef}
       onKeyDown={(event) => onKeyDown(value, event)}
+      onMouseEnter={(event) => onMouseEnter(value, event)}
       tabIndex={hasValue ? (selected ? 0 : -1) : 0}
       style={{
         ..._styles.day,

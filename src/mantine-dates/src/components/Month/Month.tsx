@@ -25,6 +25,9 @@ export interface MonthSettings {
 
   /** Callback function to determine if day should be disabled */
   excludeDate?(date: Date): boolean;
+
+  /** Set to false to remove weekdays row */
+  hideWeekdays?: boolean;
 }
 
 export type MonthStylesNames = keyof ReturnType<typeof useStyles> | DayStylesNames;
@@ -42,6 +45,9 @@ export interface MonthProps
   /** Selected date */
   value?: Date;
 
+  /** Selected range */
+  range?: [Date, Date];
+
   /** Autofocus selected date on mount, if no date is selected autofocus is applied to first month day */
   autoFocus?: boolean;
 
@@ -50,7 +56,12 @@ export interface MonthProps
 
   /** Static css selector base */
   __staticSelector?: string;
+
+  /** Called when onMouseEnter event fired on day button */
+  onDayMouseEnter?(date: Date, event: React.MouseEvent): void;
 }
+
+const noop = () => {};
 
 export function Month({
   className,
@@ -69,6 +80,9 @@ export function Month({
   minDate,
   maxDate,
   excludeDate,
+  onDayMouseEnter,
+  range,
+  hideWeekdays = false,
   __staticSelector = 'month',
   ...others
 }: MonthProps) {
@@ -129,7 +143,7 @@ export function Month({
 
   const weekdays = getWeekdaysNames(locale).map((weekday) => (
     <th className={classes.weekdayCell} style={_styles.weekdayCell} key={weekday}>
-      <Text color="gray" size="xs" className={classes.weekday} style={_styles.weekday}>
+      <Text size="xs" className={classes.weekday} style={_styles.weekday}>
         {upperFirst(weekday)}
       </Text>
     </th>
@@ -173,6 +187,7 @@ export function Month({
             classNames={classNames as any}
             disabled={disabled}
             __staticSelector={__staticSelector}
+            onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
           />
         </td>
       );
@@ -187,9 +202,11 @@ export function Month({
       style={{ ...style, ..._styles.root }}
       {...others}
     >
-      <thead>
-        <tr>{weekdays}</tr>
-      </thead>
+      {!hideWeekdays && (
+        <thead>
+          <tr>{weekdays}</tr>
+        </thead>
+      )}
       <tbody>{rows}</tbody>
     </table>
   );

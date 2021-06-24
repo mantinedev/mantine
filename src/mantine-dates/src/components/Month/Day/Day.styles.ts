@@ -46,8 +46,8 @@ export default createMemoStyles({
     },
 
     '&$selected:not(:disabled)': {
-      backgroundColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 0],
-      color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 0 : 7],
+      backgroundColor: theme.colors[theme.primaryColor][6],
+      color: theme.white,
     },
   }),
 });

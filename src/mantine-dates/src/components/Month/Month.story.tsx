@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import 'dayjs/locale/ru';
 import { DEFAULT_THEME } from '@mantine/core';
+import dayjs from 'dayjs';
 import { Month } from './Month';
 
 function WrappedMonth(
@@ -15,6 +16,17 @@ storiesOf('@mantine/dates/Month', module)
   .add('General usage', () => (
     <div style={{ maxWidth: 240, padding: 40 }}>
       <WrappedMonth autoFocus locale="ru" />
+    </div>
+  ))
+  .add('With range', () => (
+    <div style={{ maxWidth: 240, padding: 40 }}>
+      <Month
+        month={new Date()}
+        range={[
+          dayjs(new Date()).subtract(5, 'days').toDate(),
+          dayjs(new Date()).add(2, 'days').toDate(),
+        ]}
+      />
     </div>
   ))
   .add('Day style', () => (
