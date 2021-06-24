@@ -34,8 +34,8 @@ export default createMemoStyles({
   }),
 
   description: ({ theme }: InputWrapperStyles) => ({
-    marginTop: theme.spacing.xs / 2,
-    marginBottom: theme.spacing.xs / 2,
+    marginTop: -3,
+    marginBottom: 5,
     wordBreak: 'break-word',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
   }),

@@ -127,6 +127,7 @@ export function DatePicker({
   initiallyOpened = false,
   closeDropdownOnScroll = true,
   name = 'date',
+  size = 'sm',
   ...others
 }: DatePickerProps) {
   const theme = useMantineTheme(themeOverride);
@@ -174,6 +175,7 @@ export function DatePicker({
       themeOverride={themeOverride}
       classNames={classNames as any}
       styles={styles as any}
+      size={size}
       __staticSelector="date-picker"
       {...wrapperProps}
     >
@@ -188,12 +190,13 @@ export function DatePicker({
             id={uuid}
             elementRef={useMergedRef(elementRef, inputRef)}
             __staticSelector="date-picker"
+            size={size}
             {...others}
           >
             {_value instanceof Date ? (
               dayjs(_value).format(inputFormat)
             ) : (
-              <Text style={_styles.placeholder} className={classes.placeholder}>
+              <Text style={_styles.placeholder} className={classes.placeholder} size={size}>
                 {placeholder}
               </Text>
             )}
@@ -234,6 +237,7 @@ export function DatePicker({
                   maxDate={maxDate}
                   excludeDate={excludeDate}
                   __staticSelector="date-picker"
+                  size={size}
                 />
               </Paper>
             </div>
