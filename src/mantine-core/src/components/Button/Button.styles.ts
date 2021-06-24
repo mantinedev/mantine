@@ -23,31 +23,31 @@ const sizes = {
   xs: {
     fontSize: 10,
     height: 22,
-    padding: [0, 11],
+    padding: [0, 12],
   },
 
   sm: {
     fontSize: 12,
-    height: 26,
-    padding: [0, 13],
+    height: 30,
+    padding: [0, 14],
   },
 
   md: {
     fontSize: 15,
-    height: 32,
-    padding: [0, 15],
-  },
-
-  lg: {
-    fontSize: 18,
     height: 36,
     padding: [0, 18],
   },
 
-  xl: {
-    fontSize: 22,
+  lg: {
+    fontSize: 18,
     height: 44,
     padding: [0, 22],
+  },
+
+  xl: {
+    fontSize: 22,
+    height: 52,
+    padding: [0, 28],
   },
 };
 
