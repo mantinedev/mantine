@@ -134,6 +134,7 @@ export function DatePicker({
   const classes = useStyles({ theme }, classNames, 'date-picker');
   const _styles = mergeStyles(classes, styles);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
+  const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
   const uuid = useId(id);
 
   const focusTrapRef = useFocusTrap();
@@ -237,7 +238,7 @@ export function DatePicker({
                   maxDate={maxDate}
                   excludeDate={excludeDate}
                   __staticSelector="date-picker"
-                  size={size}
+                  size={calendarSize}
                 />
               </Paper>
             </div>
