@@ -7,12 +7,21 @@ import { getMonthDays, isSameMonth, getWeekdaysNames, isSameDate } from '../../u
 import { Day, DayStylesNames } from './Day/Day';
 import useStyles from './Month.styles';
 
-export interface MonthSettings {
-  /** Adds className to day button based on date */
-  dayClassName?(date: Date): string;
+export interface DayModifiers {
+  selected: boolean;
+  outside: boolean;
+  weekend: boolean;
+  range: boolean;
+  firstInRange: boolean;
+  lastInRange: boolean;
+}
 
-  /** Adds style to day button based on date */
-  dayStyle?(date: Date): React.CSSProperties;
+export interface MonthSettings {
+  /** Adds className to day button based on date and modifiers */
+  dayClassName?(date: Date, modifiers: DayModifiers): string;
+
+  /** Adds style to day button based on date and modifiers */
+  dayStyle?(date: Date, modifiers: DayModifiers): React.CSSProperties;
 
   /** When true dates that are outside of given month cannot be clicked or focused */
   disableOutsideEvents?: boolean;
@@ -178,6 +187,14 @@ export function Month({
         dayjs(date).isAfter(inclusiveRange[0], 'day') &&
         dayjs(date).isBefore(inclusiveRange[1], 'day');
       const selectedInRange = firstInRange || lastInRange;
+      const modifiers: DayModifiers = {
+        selected: isSelected,
+        range: isInRange,
+        firstInRange,
+        lastInRange,
+        weekend,
+        outside,
+      };
 
       return (
         <td className={classes.cell} style={_styles.cell} key={cellIndex}>
@@ -196,8 +213,8 @@ export function Month({
             hasValue={hasValueInMonthRange}
             onKeyDown={handleKeyDown}
             themeOverride={themeOverride}
-            className={typeof dayClassName === 'function' ? dayClassName(date) : null}
-            style={typeof dayStyle === 'function' ? dayStyle(date) : null}
+            className={typeof dayClassName === 'function' ? dayClassName(date, modifiers) : null}
+            style={typeof dayStyle === 'function' ? dayStyle(date, modifiers) : null}
             styles={styles as any}
             classNames={classNames as any}
             disabled={disabled}
