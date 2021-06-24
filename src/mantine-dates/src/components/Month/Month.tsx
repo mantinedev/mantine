@@ -166,6 +166,18 @@ export function Month({
       const shouldExclude = typeof excludeDate === 'function' && excludeDate(date);
       const disabledOutside = disableOutsideEvents && outside;
       const disabled = isAfterMax || isBeforeMin || shouldExclude || disabledOutside;
+      const hasRange = Array.isArray(range);
+      const inclusiveRange = hasRange && [
+        dayjs(range[0]).subtract(1, 'day'),
+        dayjs(range[1]).add(1, 'day'),
+      ];
+      const firstInRange = hasRange && isSameDate(date, range[0]);
+      const lastInRange = hasRange && isSameDate(date, range[1]);
+      const isInRange =
+        hasRange &&
+        dayjs(date).isAfter(inclusiveRange[0], 'day') &&
+        dayjs(date).isBefore(inclusiveRange[1], 'day');
+      const selectedInRange = firstInRange || lastInRange;
 
       return (
         <td className={classes.cell} style={_styles.cell} key={cellIndex}>
@@ -177,7 +189,10 @@ export function Month({
             value={date}
             outside={outside}
             weekend={weekend}
-            selected={isSelected}
+            range={isInRange}
+            firstInRange={firstInRange}
+            lastInRange={lastInRange}
+            selected={isSelected || selectedInRange}
             hasValue={hasValueInMonthRange}
             onKeyDown={handleKeyDown}
             themeOverride={themeOverride}

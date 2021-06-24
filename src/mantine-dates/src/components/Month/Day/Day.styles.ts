@@ -8,6 +8,9 @@ export default createMemoStyles({
   weekend: {},
   outside: {},
   selected: {},
+  range: {},
+  firstInRange: {},
+  lastInRange: {},
 
   day: ({ theme }: DayStyles) => ({
     ...getFontStyles(theme),
@@ -45,9 +48,24 @@ export default createMemoStyles({
       } !important`,
     },
 
+    '&$range:not(:disabled)': {
+      backgroundColor: theme.colors[theme.primaryColor][0],
+      borderRadius: 0,
+    },
+
     '&$selected:not(:disabled)': {
       backgroundColor: theme.colors[theme.primaryColor][6],
       color: theme.white,
+    },
+
+    '&$firstInRange:not(:disabled)': {
+      borderTopLeftRadius: theme.radius.sm,
+      borderBottomLeftRadius: theme.radius.sm,
+    },
+
+    '&$lastInRange:not(:disabled)': {
+      borderTopRightRadius: theme.radius.sm,
+      borderBottomRightRadius: theme.radius.sm,
     },
   }),
 });

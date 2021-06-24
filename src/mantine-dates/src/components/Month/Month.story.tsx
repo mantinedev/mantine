@@ -23,7 +23,7 @@ storiesOf('@mantine/dates/Month', module)
       <Month
         month={new Date()}
         range={[
-          dayjs(new Date()).subtract(5, 'days').toDate(),
+          dayjs(new Date()).subtract(7, 'days').toDate(),
           dayjs(new Date()).add(2, 'days').toDate(),
         ]}
       />

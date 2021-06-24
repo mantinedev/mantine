@@ -18,6 +18,7 @@ export default createMemoStyles({
 
   cell: {
     padding: 0,
+    borderTop: '1px solid transparent',
   },
 
   weekdayCell: ({ theme }: MonthStyles) => ({
