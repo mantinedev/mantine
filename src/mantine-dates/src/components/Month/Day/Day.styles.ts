@@ -1,8 +1,24 @@
-import { MantineTheme, getFontStyles, getFocusStyles, createMemoStyles } from '@mantine/core';
+import {
+  MantineTheme,
+  getFontStyles,
+  getFocusStyles,
+  createMemoStyles,
+  MantineSize,
+  getSizeValue,
+} from '@mantine/core';
 
 interface DayStyles {
   theme: MantineTheme;
+  size: MantineSize;
 }
+
+const sizes = {
+  xs: 26,
+  sm: 34,
+  md: 38,
+  lg: 48,
+  xl: 56,
+};
 
 export default createMemoStyles({
   weekend: {},
@@ -12,20 +28,20 @@ export default createMemoStyles({
   firstInRange: {},
   lastInRange: {},
 
-  day: ({ theme }: DayStyles) => ({
+  day: ({ theme, size }: DayStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     position: 'relative',
     WebkitTapHighlightColor: 'transparent',
     backgroundColor: 'transparent',
     width: '100%',
-    height: 34,
-    lineHeight: '34px',
+    height: getSizeValue({ size, sizes }),
+    lineHeight: `${getSizeValue({ size, sizes })}px`,
+    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     padding: 0,
     borderRadius: theme.radius.sm,
     border: '1px dotted transparent',
     cursor: 'pointer',
-    fontSize: theme.fontSizes.sm,
     userSelect: 'none',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
 

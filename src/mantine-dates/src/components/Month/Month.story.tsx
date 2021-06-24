@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import 'dayjs/locale/ru';
-import { DEFAULT_THEME } from '@mantine/core';
+import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/core';
 import dayjs from 'dayjs';
 import { Month } from './Month';
 
@@ -11,6 +11,10 @@ function WrappedMonth(
   const [value, onChange] = useState(new Date());
   return <Month month={value} value={value} onChange={onChange} {...props} />;
 }
+
+const sizes = MANTINE_SIZES.map((size) => (
+  <WrappedMonth size={size} key={size} style={{ marginTop: 30 }} />
+));
 
 storiesOf('@mantine/dates/Month', module)
   .add('General usage', () => (
@@ -29,8 +33,9 @@ storiesOf('@mantine/dates/Month', module)
       />
     </div>
   ))
+  .add('Sizes', () => <div style={{ maxWidth: 440, padding: 40 }}>{sizes}</div>)
   .add('Day style', () => (
-    <div style={{ maxWidth: 240, padding: 40 }}>
+    <div>
       <WrappedMonth
         autoFocus
         locale="ru"

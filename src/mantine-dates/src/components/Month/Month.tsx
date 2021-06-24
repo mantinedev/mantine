@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles, Text } from '@mantine/core';
+import { DefaultProps, useMantineTheme, mergeStyles, Text, MantineSize } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { getMonthDays, isSameMonth, getWeekdaysNames, isSameDate } from '../../utils';
@@ -37,6 +37,9 @@ export interface MonthSettings {
 
   /** Set to false to remove weekdays row */
   hideWeekdays?: boolean;
+
+  /** Controls month days font-size and height */
+  size?: MantineSize;
 }
 
 export type MonthStylesNames = keyof ReturnType<typeof useStyles> | DayStylesNames;
@@ -93,6 +96,7 @@ export function Month({
   range,
   hideWeekdays = false,
   __staticSelector = 'month',
+  size = 'sm',
   ...others
 }: MonthProps) {
   const theme = useMantineTheme(themeOverride);
@@ -152,7 +156,7 @@ export function Month({
 
   const weekdays = getWeekdaysNames(locale).map((weekday) => (
     <th className={classes.weekdayCell} style={_styles.weekdayCell} key={weekday}>
-      <Text size="xs" className={classes.weekday} style={_styles.weekday}>
+      <Text size={size} className={classes.weekday} style={_styles.weekday}>
         {upperFirst(weekday)}
       </Text>
     </th>
@@ -220,6 +224,7 @@ export function Month({
             disabled={disabled}
             __staticSelector={__staticSelector}
             onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
+            size={size}
           />
         </td>
       );
