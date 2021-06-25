@@ -87,3 +87,5 @@ export function CalendarLabel({
     </Text>
   );
 }
+
+CalendarLabel.displayName = '@mantine/dates/CalendarLabel';
