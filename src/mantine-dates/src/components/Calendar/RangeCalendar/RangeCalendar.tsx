@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { DefaultProps } from '@mantine/core';
+import { DefaultProps, useMantineTheme } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { isSameDate } from '../../../utils';
 import { Month } from '../../Month/Month';
+import { DayModifiers } from '../../Month/get-day-props/get-day-props';
 import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
 import { CalendarWrapper } from '../CalendarWrapper/CalendarWrapper';
 import { getDisabledState } from '../get-disabled-state/get-disabled-state';
@@ -57,6 +58,7 @@ export function RangeCalendar({
   __staticSelector = 'calendar',
   ...others
 }: RangeCalendarProps) {
+  const theme = useMantineTheme(themeOverride);
   const [hoveredDay, setHoveredDay] = useState<Date>(null);
   const [pickedDate, setPickedDate] = useState<Date>(null);
 
@@ -77,11 +79,26 @@ export function RangeCalendar({
 
     onRangeChange([null, null]);
     setPickedDate(date);
+    return null;
   };
 
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
     typeof onMouseLeave === 'function' && onMouseLeave(event);
     setHoveredDay(null);
+  };
+
+  const shouldHighlightDate = (date: Date, modifiers: DayModifiers) => {
+    if (pickedDate instanceof Date && hoveredDay instanceof Date) {
+      const result: [Date, Date] = [hoveredDay, pickedDate];
+      result.sort((a, b) => a.getTime() - b.getTime());
+      return (
+        !modifiers.selected &&
+        dayjs(date).subtract(1, 'day').isBefore(result[1]) &&
+        dayjs(date).add(1, 'day').isAfter(result[0])
+      );
+    }
+
+    return false;
   };
 
   const [_month, setMonth] = useUncontrolled({
@@ -123,7 +140,18 @@ export function RangeCalendar({
         value={pickedDate}
         onChange={setRangeDate}
         dayClassName={dayClassName}
-        dayStyle={dayStyle}
+        dayStyle={(date, modifiers) => {
+          const initialStyles = typeof dayStyle === 'function' ? dayStyle(date, modifiers) : {};
+          if (shouldHighlightDate(date, modifiers)) {
+            return {
+              ...initialStyles,
+              backgroundColor: theme.colors[theme.primaryColor][0],
+              borderRadius: 0,
+            };
+          }
+
+          return initialStyles;
+        }}
         disableOutsideEvents={disableOutsideEvents}
         minDate={minDate}
         maxDate={maxDate}
