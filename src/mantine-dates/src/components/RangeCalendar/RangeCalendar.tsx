@@ -18,10 +18,10 @@ interface RangeCalendarProps
   month?: Date;
 
   /** Selected dates */
-  range: [Date, Date];
+  value: [Date, Date];
 
   /** Called when selected date changes */
-  onRangeChange(value: [Date, Date]): void;
+  onChange(value: [Date, Date]): void;
 
   /** Called when month changes */
   onMonthChange?(value: Date): void;
@@ -41,8 +41,8 @@ export function RangeCalendar({
   initialMonth,
   month,
   onMonthChange,
-  range,
-  onRangeChange,
+  value,
+  onChange,
   labelFormat = 'MMMM YYYY',
   withSelect = false,
   yearsRange = { from: 2020, to: 2030 },
@@ -72,12 +72,12 @@ export function RangeCalendar({
 
       const result: [Date, Date] = [date, pickedDate];
       result.sort((a, b) => a.getTime() - b.getTime());
-      onRangeChange(result);
+      onChange(result);
       setPickedDate(null);
       return null;
     }
 
-    onRangeChange([null, null]);
+    onChange([null, null]);
     setPickedDate(date);
     return null;
   };
@@ -136,7 +136,7 @@ export function RangeCalendar({
       <Month
         themeOverride={themeOverride}
         month={_month}
-        range={range}
+        range={value}
         value={pickedDate}
         onChange={setRangeDate}
         dayClassName={dayClassName}
