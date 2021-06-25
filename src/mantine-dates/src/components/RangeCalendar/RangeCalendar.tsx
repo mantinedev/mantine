@@ -33,7 +33,6 @@ export interface RangeCalendarProps
 export function RangeCalendar({
   classNames,
   styles,
-  style,
   locale = 'en',
   themeOverride,
   nextMonthLabel,
@@ -55,7 +54,7 @@ export function RangeCalendar({
   fullWidth = false,
   size = 'sm',
   onMouseLeave,
-  __staticSelector = 'calendar',
+  __staticSelector = 'range-calendar',
   ...others
 }: RangeCalendarProps) {
   const theme = useMantineTheme(themeOverride);
