@@ -3,6 +3,7 @@ import { DefaultProps, getSizeValue } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
+import { CalendarWrapper } from '../CalendarWrapper/CalendarWrapper';
 import { Month } from '../../Month/Month';
 import { CalendarSettings, CalendarStylesNames } from '../Calendar';
 import { sizes as DAY_SIZES } from '../../Month/Day/Day.styles';
@@ -29,7 +30,6 @@ interface RangeCalendarProps
 }
 
 export function RangeCalendar({
-  className,
   classNames,
   styles,
   style,
@@ -97,15 +97,7 @@ export function RangeCalendar({
     minDate instanceof Date && dayjs(_month).startOf('month').isBefore(minDate);
 
   return (
-    <div
-      className={className}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        maxWidth: fullWidth ? '100%' : getSizeValue({ size, sizes: DAY_SIZES }) * 7,
-        ...style,
-      }}
-      {...others}
-    >
+    <CalendarWrapper size={size} fullWidth={fullWidth} onMouseLeave={handleMouseLeave} {...others}>
       <CalendarHeader
         size={size}
         themeOverride={themeOverride}
@@ -145,7 +137,7 @@ export function RangeCalendar({
         onDayMouseEnter={(date) => setHoveredDay(date)}
         __staticSelector={__staticSelector}
       />
-    </div>
+    </CalendarWrapper>
   );
 }
 

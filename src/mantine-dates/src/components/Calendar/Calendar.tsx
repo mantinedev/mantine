@@ -1,11 +1,11 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { DefaultProps, getSizeValue } from '@mantine/core';
+import { DefaultProps } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { Month, MonthSettings, MonthStylesNames } from '../Month/Month';
 import { CalendarLabelStylesNames } from './CalendarLabel/CalendarLabel';
 import { CalendarHeader } from './CalendarHeader/CalendarHeader';
-import { sizes as DAY_SIZES } from '../Month/Day/Day.styles';
+import { CalendarWrapper } from './CalendarWrapper/CalendarWrapper';
 
 export interface CalendarSettings extends MonthSettings {
   /** aria-label for next month arrow button */
@@ -53,7 +53,6 @@ interface CalendarProps
 }
 
 export function Calendar({
-  className,
   classNames,
   styles,
   style,
@@ -93,14 +92,7 @@ export function Calendar({
     minDate instanceof Date && dayjs(_month).startOf('month').isBefore(minDate);
 
   return (
-    <div
-      className={className}
-      style={{
-        maxWidth: fullWidth ? '100%' : getSizeValue({ size, sizes: DAY_SIZES }) * 7,
-        ...style,
-      }}
-      {...others}
-    >
+    <CalendarWrapper size={size} fullWidth={fullWidth} {...others}>
       <CalendarHeader
         size={size}
         themeOverride={themeOverride}
@@ -138,7 +130,7 @@ export function Calendar({
         size={size}
         __staticSelector={__staticSelector}
       />
-    </div>
+    </CalendarWrapper>
   );
 }
 
