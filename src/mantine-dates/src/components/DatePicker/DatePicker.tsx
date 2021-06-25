@@ -93,7 +93,7 @@ export function DatePicker({
         size={size}
         styles={styles}
         classNames={classNames}
-        __inputLabel={_value instanceof Date ? dayjs(_value).format(inputFormat) : null}
+        inputLabel={_value instanceof Date ? dayjs(_value).format(inputFormat) : null}
         __staticSelector="date-picker"
         {...others}
       >

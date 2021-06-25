@@ -67,7 +67,7 @@ export interface DatePickerBaseSharedProps
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
   /** Internal prop to set input label */
-  __inputLabel?: string;
+  inputLabel?: string;
 
   /** Static css selector base */
   __staticSelector?: string;
@@ -98,7 +98,7 @@ export function DatePickerBase({
   closeDropdownOnScroll = true,
   size = 'sm',
   children,
-  __inputLabel,
+  inputLabel,
   __staticSelector = 'date-picker',
   dropdownOpened,
   setDropdownOpened,
@@ -151,9 +151,11 @@ export function DatePickerBase({
             elementRef={useMergedRef(elementRef, inputRef)}
             __staticSelector={__staticSelector}
             size={size}
+            required={required}
+            invalid={!!error}
             {...others}
           >
-            {__inputLabel || (
+            {inputLabel || (
               <Text style={_styles.placeholder} className={classes.placeholder} size={size}>
                 {placeholder}
               </Text>
