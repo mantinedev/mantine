@@ -6,6 +6,7 @@ import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
 import { Month } from '../../Month/Month';
 import { CalendarSettings, CalendarStylesNames } from '../Calendar';
 import { sizes as DAY_SIZES } from '../../Month/Day/Day.styles';
+import { isSameDate } from '../../../utils';
 
 interface RangeCalendarProps
   extends DefaultProps<CalendarStylesNames>,
@@ -52,12 +53,35 @@ export function RangeCalendar({
   excludeDate,
   fullWidth = false,
   size = 'sm',
+  onMouseLeave,
   __staticSelector = 'calendar',
   ...others
 }: RangeCalendarProps) {
-  const [currentRange, setCurrentRange] = useState<[Date, Date]>(range || [null, null]);
+  const [hoveredDay, setHoveredDay] = useState<Date>(null);
+  const [pickedDate, setPickedDate] = useState<Date>(null);
+
   const setRangeDate = (date: Date) => {
-    setCurrentRange([date, date]);
+    if (pickedDate instanceof Date) {
+      if (isSameDate(date, pickedDate)) {
+        setPickedDate(null);
+        setHoveredDay(null);
+        return null;
+      }
+
+      const result: [Date, Date] = [date, pickedDate];
+      result.sort((a, b) => a.getTime() - b.getTime());
+      onRangeChange(result);
+      setPickedDate(null);
+      return null;
+    }
+
+    onRangeChange([null, null]);
+    setPickedDate(date);
+  };
+
+  const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
+    typeof onMouseLeave === 'function' && onMouseLeave(event);
+    setHoveredDay(null);
   };
 
   const [_month, setMonth] = useUncontrolled({
@@ -75,6 +99,7 @@ export function RangeCalendar({
   return (
     <div
       className={className}
+      onMouseLeave={handleMouseLeave}
       style={{
         maxWidth: fullWidth ? '100%' : getSizeValue({ size, sizes: DAY_SIZES }) * 7,
         ...style,
@@ -104,7 +129,8 @@ export function RangeCalendar({
       <Month
         themeOverride={themeOverride}
         month={_month}
-        range={currentRange}
+        range={range}
+        value={pickedDate}
         onChange={setRangeDate}
         dayClassName={dayClassName}
         dayStyle={dayStyle}
@@ -116,6 +142,7 @@ export function RangeCalendar({
         styles={styles as any}
         fullWidth={fullWidth}
         size={size}
+        onDayMouseEnter={(date) => setHoveredDay(date)}
         __staticSelector={__staticSelector}
       />
     </div>
