@@ -60,3 +60,80 @@ function Demo() {
   );
 }
 ```
+
+## Utility functions
+
+Apart from components @mantine/dates package also exports several utility function to help you build
+your own dates related components
+
+**get-month-days**
+
+Returns an array of weeks of current month, used to build <GatsbyLink to="/dates/month/">Month</GatsbyLink> component
+
+```tsx
+import { getMonthDays } from '@mantine/dates';
+
+getMonthDays(new Date()); // -> [[7xDate objects] x amount of weeks in current month]
+```
+
+**get-months-names**
+
+Returns full months names for given locale, used in <GatsbyLink to="/dates/calendar">Calendar</GatsbyLink> component to render month select
+
+```tsx
+import { getMonthsNames } from '@mantine/dates';
+
+getMonthsNames('en');
+// -> [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+// to localize import locale from dayjs package
+import 'dayjs/locale/ru';
+import { getMonthsNames } from '@mantine/dates';
+
+getMonthsNames('ru');
+// -> ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь']
+```
+
+**get-weekdays-names**
+
+Returns an array of short weekdays names for given locale, used in <GatsbyLink to="/dates/month/">Month</GatsbyLink> component to render weekdays row
+
+```tsx
+import { getWeekdaysNames } from '@mantine/dates';
+
+getWeekdaysNames('en');
+// -> ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
+```
+
+**get-years-range**
+
+Returns an array of years, which fall into given range, used in <GatsbyLink to="/dates/calendar">Calendar</GatsbyLink> component to render year select
+
+```tsx
+import { getYearsRange } from '@mantine/dates';
+
+getYearsRange({ from: 2020, to: 2025 });
+// -> [2020, 2021, 2022, 2023, 2024, 2025]
+```
+
+**is-same-date**
+
+Returns true if two dates have the same year, month and date, other properties (minutes, seconds, etc.) are ignored
+
+```tsx
+import { isSameDate } from '@mantine/dates';
+
+isSameDate(new Date(2020, 7, 21), new Date(2020, 7, 21)); // -> true
+isSameDate(new Date(2020, 7, 21), new Date(2020, 7, 22)); // -> false
+```
+
+**is-same-month**
+
+Returns true if two dates have the same year and month, other properties (date, minutes, seconds, etc.) are ignored
+
+```tsx
+import { isSameMonth } from '@mantine/dates';
+
+isSameMonth(new Date(2020, 7, 21), new Date(2020, 7, 22)); // -> true
+isSameMonth(new Date(2020, 7, 21), new Date(2020, 8, 22)); // -> false
+```
