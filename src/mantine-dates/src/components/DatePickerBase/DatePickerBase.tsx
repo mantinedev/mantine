@@ -27,7 +27,9 @@ export type DatePickerStylesNames =
   | InputWrapperStylesNames;
 
 export interface DatePickerBaseSharedProps
-  extends DefaultProps<DatePickerStylesNames>,
+  extends InputBaseProps,
+    InputWrapperBaseProps,
+    DefaultProps<DatePickerStylesNames>,
     Omit<
       React.ComponentPropsWithoutRef<'button'>,
       'value' | 'defaultValue' | 'onChange' | 'placeholder'
@@ -60,13 +62,10 @@ export interface DatePickerBaseSharedProps
   closeDropdownOnScroll?: boolean;
 
   /** Input size */
-  size: MantineSize;
+  size?: MantineSize;
 }
 
-export interface DatePickerBaseProps
-  extends InputBaseProps,
-    InputWrapperBaseProps,
-    DatePickerBaseSharedProps {
+export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
   /** Internal prop to set input label */
   __inputLabel?: string;
 
