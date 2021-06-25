@@ -16,7 +16,14 @@ describe('@mantine/dates/Calendar', () => {
   itSupportsStylesApi(
     Calendar,
     defaultProps,
-    Object.keys(CalendarStylesApi).filter((prop) => prop !== 'calendar' && prop !== 'label'),
+    Object.keys(CalendarStylesApi).filter(
+      (prop) =>
+        prop !== 'calendar' &&
+        prop !== 'label' &&
+        prop !== 'inRange' &&
+        prop !== 'firstInRange' &&
+        prop !== 'lastInRange'
+    ),
     'calendar',
     'with select'
   );
@@ -25,7 +32,13 @@ describe('@mantine/dates/Calendar', () => {
     Calendar,
     { ...defaultProps, withSelect: false },
     Object.keys(CalendarStylesApi).filter(
-      (prop) => prop !== 'calendar' && prop !== 'select' && prop !== 'selectGroup'
+      (prop) =>
+        prop !== 'calendar' &&
+        prop !== 'select' &&
+        prop !== 'selectGroup' &&
+        prop !== 'inRange' &&
+        prop !== 'firstInRange' &&
+        prop !== 'lastInRange'
     ),
     'calendar',
     'with label'

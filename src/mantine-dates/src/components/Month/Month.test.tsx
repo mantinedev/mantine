@@ -15,7 +15,14 @@ describe('@mantine/core/Month', () => {
   itSupportsStyle(Month, defaultProps);
   itSupportsClassName(Month, defaultProps);
   itSupportsOthers(Month, defaultProps);
-  itSupportsStylesApi(Month, defaultProps, Object.keys(MonthStylesApi), 'month');
+  itSupportsStylesApi(
+    Month,
+    defaultProps,
+    Object.keys(MonthStylesApi).filter(
+      (key) => key !== 'inRange' && key !== 'firstInRange' && key !== 'lastInRange'
+    ),
+    'month'
+  );
 
   it('has correct displayName', () => {
     expect(Month.displayName).toEqual('@mantine/core/Month');

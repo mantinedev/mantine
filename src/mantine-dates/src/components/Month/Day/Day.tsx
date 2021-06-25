@@ -18,7 +18,7 @@ export interface DayProps
   onMouseEnter(date: Date, event: React.MouseEvent): void;
   disabled: boolean;
   hasValue: boolean;
-  range: boolean;
+  inRange: boolean;
   firstInRange: boolean;
   lastInRange: boolean;
   size: MantineSize;
@@ -45,7 +45,7 @@ export function Day({
   firstInRange,
   lastInRange,
   __staticSelector = 'month',
-  range,
+  inRange,
   size,
   fullWidth,
   ...others
@@ -68,7 +68,7 @@ export function Day({
         ...(outside ? _styles.outside : null),
         ...(weekend ? _styles.weekend : null),
         ...(selected ? _styles.selected : null),
-        ...(range ? _styles.range : null),
+        ...(inRange ? _styles.inRange : null),
         ...(firstInRange ? _styles.firstInRange : null),
         ...(lastInRange ? _styles.lastInRange : null),
         ...style,
@@ -80,7 +80,7 @@ export function Day({
           [classes.outside]: outside,
           [classes.weekend]: weekend,
           [classes.selected]: selected,
-          [classes.range]: range,
+          [classes.inRange]: inRange,
           [classes.firstInRange]: firstInRange,
           [classes.lastInRange]: lastInRange,
         },

@@ -188,7 +188,7 @@ export function Month({
             value={date}
             outside={dayProps.outside}
             weekend={dayProps.weekend}
-            range={dayProps.inRange}
+            inRange={dayProps.inRange}
             firstInRange={dayProps.firstInRange}
             lastInRange={dayProps.lastInRange}
             selected={dayProps.selected || dayProps.selectedInRange}

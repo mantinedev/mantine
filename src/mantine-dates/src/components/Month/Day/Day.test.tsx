@@ -10,8 +10,14 @@ const defaultProps = {
   weekend: false,
   disabled: false,
   hasValue: true,
+  firstInRange: false,
+  lastInRange: false,
+  inRange: false,
+  fullWidth: false,
+  size: 'sm' as const,
   elementRef: () => {},
   onKeyDown: () => {},
+  onMouseEnter: () => {},
 };
 
 describe('@mantine/core/Month/Day', () => {

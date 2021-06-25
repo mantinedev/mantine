@@ -28,7 +28,14 @@ describe('@mantine/dates/DatePicker', () => {
   itSupportsStylesApi(
     DatePicker,
     defaultProps,
-    Object.keys(DatePickerStylesApi).filter((key) => key !== 'invalid' && key !== 'placeholder'),
+    Object.keys(DatePickerStylesApi).filter(
+      (key) =>
+        key !== 'invalid' &&
+        key !== 'placeholder' &&
+        key !== 'inRange' &&
+        key !== 'firstInRange' &&
+        key !== 'lastInRange'
+    ),
     'date-picker',
     'without placeholder'
   );
@@ -36,7 +43,14 @@ describe('@mantine/dates/DatePicker', () => {
   itSupportsStylesApi(
     DatePicker,
     { ...defaultProps, value: null },
-    Object.keys(DatePickerStylesApi).filter((key) => key !== 'invalid' && key !== 'selected'),
+    Object.keys(DatePickerStylesApi).filter(
+      (key) =>
+        key !== 'invalid' &&
+        key !== 'selected' &&
+        key !== 'inRange' &&
+        key !== 'firstInRange' &&
+        key !== 'lastInRange'
+    ),
     'date-picker',
     'with placeholder'
   );

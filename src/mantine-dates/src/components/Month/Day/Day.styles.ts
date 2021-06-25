@@ -25,7 +25,7 @@ export default createMemoStyles({
   weekend: {},
   outside: {},
   selected: {},
-  range: {},
+  inRange: {},
   firstInRange: {},
   lastInRange: {},
 
@@ -65,7 +65,7 @@ export default createMemoStyles({
       } !important`,
     },
 
-    '&$range:not(:disabled)': {
+    '&$inRange:not(:disabled)': {
       backgroundColor: theme.colors[theme.primaryColor][0],
       borderRadius: 0,
     },

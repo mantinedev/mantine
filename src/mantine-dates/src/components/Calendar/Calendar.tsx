@@ -56,7 +56,6 @@ interface CalendarProps
 export function Calendar({
   classNames,
   styles,
-  style,
   locale = 'en',
   themeOverride,
   nextMonthLabel,
