@@ -1,49 +1,24 @@
-import React from 'react';
-import dayjs from 'dayjs';
+import React, { useState } from 'react';
 import { DefaultProps, getSizeValue } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import { Month, MonthSettings, MonthStylesNames } from '../Month/Month';
-import { CalendarLabelStylesNames } from './CalendarLabel/CalendarLabel';
-import { CalendarHeader } from './CalendarHeader/CalendarHeader';
-import { sizes as DAY_SIZES } from '../Month/Day/Day.styles';
+import dayjs from 'dayjs';
+import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
+import { Month } from '../../Month/Month';
+import { CalendarSettings, CalendarStylesNames } from '../Calendar';
+import { sizes as DAY_SIZES } from '../../Month/Day/Day.styles';
 
-export interface CalendarSettings extends MonthSettings {
-  /** aria-label for next month arrow button */
-  nextMonthLabel?: string;
-
-  /** aria-label for previous month arrow button */
-  previousMonthLabel?: string;
-
-  /** Locale used for all labels formatting */
-  locale?: string;
-
-  /** Initial selected month */
-  initialMonth?: Date;
-
-  /** dayjs label format */
-  labelFormat?: string;
-
-  /** Replace calendar label with month and year selects */
-  withSelect?: boolean;
-
-  /** Years range for year select */
-  yearsRange?: { from: number; to: number };
-}
-
-export type CalendarStylesNames = Exclude<MonthStylesNames, 'root'> | CalendarLabelStylesNames;
-
-interface CalendarProps
+interface RangeCalendarProps
   extends DefaultProps<CalendarStylesNames>,
     CalendarSettings,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Current month */
   month?: Date;
 
-  /** Selected date */
-  value?: Date;
+  /** Selected dates */
+  range: [Date, Date];
 
   /** Called when selected date changes */
-  onChange?(value: Date): void;
+  onRangeChange(value: [Date, Date]): void;
 
   /** Called when month changes */
   onMonthChange?(value: Date): void;
@@ -52,7 +27,7 @@ interface CalendarProps
   __staticSelector?: string;
 }
 
-export function Calendar({
+export function RangeCalendar({
   className,
   classNames,
   styles,
@@ -64,8 +39,8 @@ export function Calendar({
   initialMonth,
   month,
   onMonthChange,
-  value,
-  onChange,
+  range,
+  onRangeChange,
   labelFormat = 'MMMM YYYY',
   withSelect = false,
   yearsRange = { from: 2020, to: 2030 },
@@ -79,7 +54,12 @@ export function Calendar({
   size = 'sm',
   __staticSelector = 'calendar',
   ...others
-}: CalendarProps) {
+}: RangeCalendarProps) {
+  const [currentRange, setCurrentRange] = useState<[Date, Date]>(range || [null, null]);
+  const setRangeDate = (date: Date) => {
+    setCurrentRange([date, date]);
+  };
+
   const [_month, setMonth] = useUncontrolled({
     value: month,
     defaultValue: initialMonth,
@@ -124,8 +104,8 @@ export function Calendar({
       <Month
         themeOverride={themeOverride}
         month={_month}
-        value={value}
-        onChange={onChange}
+        range={currentRange}
+        onChange={setRangeDate}
         dayClassName={dayClassName}
         dayStyle={dayStyle}
         disableOutsideEvents={disableOutsideEvents}
@@ -142,4 +122,4 @@ export function Calendar({
   );
 }
 
-Calendar.displayName = '@mantine/dates/Calendar';
+RangeCalendar.displayName = '@mantine/dates/RangeCalendar';

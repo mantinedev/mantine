@@ -72,7 +72,7 @@ export function getDayProps({
   const shouldExclude = typeof excludeDate === 'function' && excludeDate(date);
   const disabledOutside = disableOutsideEvents && outside;
   const disabled = isAfterMax || isBeforeMin || shouldExclude || disabledOutside;
-  const hasRange = Array.isArray(range);
+  const hasRange = Array.isArray(range) && range.every((val) => val instanceof Date);
   const inclusiveRange = hasRange && [
     dayjs(range[0]).subtract(1, 'day'),
     dayjs(range[1]).add(1, 'day'),
