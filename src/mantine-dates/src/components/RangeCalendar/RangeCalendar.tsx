@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { DefaultProps, useMantineTheme } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
-import { isSameDate } from '../../../utils';
-import { Month } from '../../Month/Month';
-import { DayModifiers } from '../../Month/get-day-props/get-day-props';
-import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
-import { CalendarWrapper } from '../CalendarWrapper/CalendarWrapper';
-import { getDisabledState } from '../get-disabled-state/get-disabled-state';
-import { CalendarSettings, CalendarStylesNames } from '../Calendar';
+import { isSameDate } from '../../utils';
+import { Month } from '../Month/Month';
+import { DayModifiers } from '../Month/get-day-props/get-day-props';
+import { CalendarHeader } from '../Calendar/CalendarHeader/CalendarHeader';
+import { CalendarWrapper } from '../Calendar/CalendarWrapper/CalendarWrapper';
+import { getDisabledState } from '../Calendar/get-disabled-state/get-disabled-state';
+import { CalendarSettings, CalendarStylesNames } from '../Calendar/Calendar';
 
 interface RangeCalendarProps
   extends DefaultProps<CalendarStylesNames>,
