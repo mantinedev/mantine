@@ -5,7 +5,7 @@ import {
   itSupportsStylesApi,
 } from '@mantine/tests';
 import { DatePicker } from './DatePicker';
-import { DatePicker as DatePickerStylesApi } from './styles.api';
+import { DatePicker as DatePickerStylesApi } from '../DatePickerBase/styles.api';
 
 const defaultProps = {
   icon: '$',

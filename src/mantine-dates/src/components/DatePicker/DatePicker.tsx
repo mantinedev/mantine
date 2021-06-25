@@ -1,18 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { InputStylesNames, InputWrapperStylesNames } from '@mantine/core';
 import { useUncontrolled, useMergedRef } from '@mantine/hooks';
 import dayjs from 'dayjs';
-import { Calendar, CalendarSettings, CalendarStylesNames } from '../Calendar/Calendar';
+import { Calendar, CalendarSettings } from '../Calendar/Calendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
-import useStyles from './DatePicker.styles';
 
-export type DatePickerStylesNames =
-  | keyof ReturnType<typeof useStyles>
-  | CalendarStylesNames
-  | InputStylesNames
-  | InputWrapperStylesNames;
-
-interface DatePickerProps extends DatePickerBaseSharedProps, Omit<CalendarSettings, 'size'> {
+export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<CalendarSettings, 'size'> {
   /** Selected date, required with controlled input */
   value?: Date;
 

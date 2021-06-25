@@ -1,6 +1,6 @@
 import { Input, InputWrapper } from '@mantine/core/src/styles.api';
 import { Calendar } from '../Calendar/styles.api';
-import { DatePickerStylesNames } from './DatePicker';
+import { DatePickerStylesNames } from './DatePickerBase';
 
 export const DatePicker: Record<DatePickerStylesNames, string> = {
   wrapper: 'Wrapper around input and dropdown',

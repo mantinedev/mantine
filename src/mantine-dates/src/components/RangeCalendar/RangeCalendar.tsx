@@ -10,7 +10,7 @@ import { CalendarWrapper } from '../Calendar/CalendarWrapper/CalendarWrapper';
 import { getDisabledState } from '../Calendar/get-disabled-state/get-disabled-state';
 import { CalendarSettings, CalendarStylesNames } from '../Calendar/Calendar';
 
-interface RangeCalendarProps
+export interface RangeCalendarProps
   extends DefaultProps<CalendarStylesNames>,
     CalendarSettings,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {

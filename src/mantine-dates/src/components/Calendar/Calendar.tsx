@@ -33,7 +33,7 @@ export interface CalendarSettings extends MonthSettings {
 
 export type CalendarStylesNames = Exclude<MonthStylesNames, 'root'> | CalendarLabelStylesNames;
 
-interface CalendarProps
+export interface CalendarProps
   extends DefaultProps<CalendarStylesNames>,
     CalendarSettings,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
