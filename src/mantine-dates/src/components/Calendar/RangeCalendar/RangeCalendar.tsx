@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { DefaultProps, getSizeValue } from '@mantine/core';
+import { DefaultProps } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
+import { isSameDate } from '../../../utils';
+import { Month } from '../../Month/Month';
 import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
 import { CalendarWrapper } from '../CalendarWrapper/CalendarWrapper';
-import { Month } from '../../Month/Month';
+import { getDisabledState } from '../get-disabled-state/get-disabled-state';
 import { CalendarSettings, CalendarStylesNames } from '../Calendar';
-import { sizes as DAY_SIZES } from '../../Month/Day/Day.styles';
-import { isSameDate } from '../../../utils';
 
 interface RangeCalendarProps
   extends DefaultProps<CalendarStylesNames>,
@@ -92,9 +92,7 @@ export function RangeCalendar({
     rule: (val) => val instanceof Date,
   });
 
-  const nextDisabled = maxDate instanceof Date && dayjs(_month).endOf('month').isAfter(maxDate);
-  const previousDisabled =
-    minDate instanceof Date && dayjs(_month).startOf('month').isBefore(minDate);
+  const disabledState = getDisabledState({ month: _month, minDate, maxDate });
 
   return (
     <CalendarWrapper size={size} fullWidth={fullWidth} onMouseLeave={handleMouseLeave} {...others}>
@@ -103,8 +101,8 @@ export function RangeCalendar({
         themeOverride={themeOverride}
         nextMonthLabel={nextMonthLabel}
         previousMonthLabel={previousMonthLabel}
-        previousMonthDisabled={previousDisabled}
-        nextMonthDisabled={nextDisabled}
+        previousMonthDisabled={disabledState.previousDisabled}
+        nextMonthDisabled={disabledState.nextDisabled}
         onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
         onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
         classNames={classNames}

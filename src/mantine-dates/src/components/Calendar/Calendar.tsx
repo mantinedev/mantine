@@ -6,6 +6,7 @@ import { Month, MonthSettings, MonthStylesNames } from '../Month/Month';
 import { CalendarLabelStylesNames } from './CalendarLabel/CalendarLabel';
 import { CalendarHeader } from './CalendarHeader/CalendarHeader';
 import { CalendarWrapper } from './CalendarWrapper/CalendarWrapper';
+import { getDisabledState } from './get-disabled-state/get-disabled-state';
 
 export interface CalendarSettings extends MonthSettings {
   /** aria-label for next month arrow button */
@@ -87,9 +88,7 @@ export function Calendar({
     rule: (val) => val instanceof Date,
   });
 
-  const nextDisabled = maxDate instanceof Date && dayjs(_month).endOf('month').isAfter(maxDate);
-  const previousDisabled =
-    minDate instanceof Date && dayjs(_month).startOf('month').isBefore(minDate);
+  const disabledState = getDisabledState({ month: _month, minDate, maxDate });
 
   return (
     <CalendarWrapper size={size} fullWidth={fullWidth} {...others}>
@@ -98,8 +97,8 @@ export function Calendar({
         themeOverride={themeOverride}
         nextMonthLabel={nextMonthLabel}
         previousMonthLabel={previousMonthLabel}
-        previousMonthDisabled={previousDisabled}
-        nextMonthDisabled={nextDisabled}
+        previousMonthDisabled={disabledState.previousDisabled}
+        nextMonthDisabled={disabledState.nextDisabled}
         onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
         onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
         classNames={classNames}
