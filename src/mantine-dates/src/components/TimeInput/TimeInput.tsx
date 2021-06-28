@@ -148,6 +148,7 @@ export function TimeInput({
         required={required}
         invalid={!!error}
         onClick={() => hoursRef.current.focus()}
+        size={size}
         {...others}
       >
         <div className={classes.controls}>
@@ -159,6 +160,7 @@ export function TimeInput({
             id={uuid}
             className={classes.timeInput}
             withSeparator
+            size={size}
             max={23}
           />
 
@@ -169,6 +171,7 @@ export function TimeInput({
             setValue={setMinutes}
             className={classes.timeInput}
             withSeparator
+            size={size}
             max={59}
           />
 
@@ -178,6 +181,7 @@ export function TimeInput({
             onChange={handleSecondsChange}
             setValue={setSeconds}
             className={classes.timeInput}
+            size={size}
             max={59}
           />
         </div>
