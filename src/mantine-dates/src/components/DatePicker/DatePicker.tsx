@@ -70,7 +70,7 @@ export function DatePicker({
     defaultValue,
     finalValue: null,
     onChange,
-    rule: (val) => val instanceof Date,
+    rule: (val) => val === null || val instanceof Date,
   });
 
   const closeDropdown = () => {
