@@ -12,11 +12,11 @@ interface TimeInputStyles {
 }
 
 const inputSizes = {
-  xs: 19,
-  sm: 21,
-  md: 23,
-  lg: 25,
-  xl: 28,
+  xs: 20,
+  sm: 23,
+  md: 25,
+  lg: 27,
+  xl: 29,
 };
 
 export default createMemoStyles({
