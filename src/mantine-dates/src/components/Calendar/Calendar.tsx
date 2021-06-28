@@ -15,6 +15,12 @@ export interface CalendarSettings extends MonthSettings {
   /** aria-label for previous month arrow button */
   previousMonthLabel?: string;
 
+  /** aria-label for month select */
+  monthLabel?: string;
+
+  /** aria-label for year select */
+  yearLabel?: string;
+
   /** Locale used for all labels formatting */
   locale?: string;
 
@@ -77,6 +83,8 @@ export function Calendar({
   fullWidth = false,
   size = 'sm',
   __staticSelector = 'calendar',
+  monthLabel,
+  yearLabel,
   ...others
 }: CalendarProps) {
   const [_month, setMonth] = useUncontrolled({
@@ -109,6 +117,8 @@ export function Calendar({
         setMonth={setMonth}
         labelFormat={labelFormat}
         __staticSelector={__staticSelector}
+        monthLabel={monthLabel}
+        yearLabel={yearLabel}
       />
 
       <Month

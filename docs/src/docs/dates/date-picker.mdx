@@ -65,3 +65,23 @@ function Demo() {
 ```
 
 ## Accessibility and usability
+
+To make all component controls visible to screen reader set following props:
+
+```tsx
+// When withSelect prop set to false
+<DatePicker
+  withSelect={false}
+  nextMonthLabel="Next month" // -> aria-label for button that switches to next month
+  previousMonthLabel="Previous month" // -> aria-label for button that switches to previous month
+/>
+
+// When withSelect prop set to true
+<DatePicker
+  withSelect
+  nextMonthLabel="Next month" // -> aria-label for button that switches to next month
+  previousMonthLabel="Previous month" // -> aria-label for button that switches to previous month
+  yearLabel="Select year" // -> year select aria-label
+  monthLabel="Select month" // -> month select aria-label
+/>
+```

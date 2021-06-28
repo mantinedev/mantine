@@ -23,6 +23,8 @@ interface CalendarLabelProps extends DefaultProps<CalendarLabelStylesNames> {
   labelFormat: string;
   __staticSelector: string;
   size: MantineSize;
+  monthLabel?: string;
+  yearLabel?: string;
 }
 
 export function CalendarLabel({
@@ -37,6 +39,8 @@ export function CalendarLabel({
   onChange,
   size,
   __staticSelector,
+  monthLabel,
+  yearLabel,
 }: CalendarLabelProps) {
   const theme = useMantineTheme(themeOverride);
   const selectSize = size === 'lg' || size === 'xl' ? 'md' : 'xs';
@@ -52,6 +56,7 @@ export function CalendarLabel({
       style={_styles.selectGroup}
     >
       <Select
+        aria-label={monthLabel}
         className={classes.select}
         style={_styles.select}
         size={selectSize}
@@ -67,6 +72,7 @@ export function CalendarLabel({
       />
 
       <Select
+        aria-label={yearLabel}
         className={classes.select}
         style={_styles.select}
         size={selectSize}

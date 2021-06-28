@@ -1,10 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  checkAccessibility,
 } from '@mantine/tests';
 import { Calendar } from './Calendar';
 import { Month } from '../Month/Month';
@@ -18,6 +19,25 @@ describe('@mantine/dates/Calendar', () => {
   itSupportsClassName(Calendar, defaultProps);
   itSupportsOthers(Calendar, defaultProps);
   itSupportsStyle(Calendar, defaultProps);
+  checkAccessibility([
+    mount(
+      <Calendar
+        {...defaultProps}
+        nextMonthLabel="Next month"
+        previousMonthLabel="Previous month"
+        monthLabel="Select month"
+        yearLabel="Select year"
+      />
+    ),
+    mount(
+      <Calendar
+        {...defaultProps}
+        withSelect={false}
+        nextMonthLabel="Next month"
+        previousMonthLabel="Previous month"
+      />
+    ),
+  ]);
   itSupportsStylesApi(
     Calendar,
     defaultProps,

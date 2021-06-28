@@ -36,6 +36,8 @@ interface CalendarHeaderProps extends DefaultProps {
   setMonth(date: Date): void;
   labelFormat: string;
   __staticSelector: string;
+  monthLabel?: string;
+  yearLabel?: string;
 }
 
 export function CalendarHeader({
@@ -56,6 +58,8 @@ export function CalendarHeader({
   setMonth,
   labelFormat,
   __staticSelector,
+  monthLabel,
+  yearLabel,
 }: CalendarHeaderProps) {
   const theme = useMantineTheme(themeOverride);
   const iconSize = getSizeValue({ size, sizes: iconSizes });
@@ -90,6 +94,8 @@ export function CalendarHeader({
         themeOverride={themeOverride}
         size={size}
         __staticSelector={__staticSelector}
+        monthLabel={monthLabel}
+        yearLabel={yearLabel}
       />
 
       <ActionIcon
