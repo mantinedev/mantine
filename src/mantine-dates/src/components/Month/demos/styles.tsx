@@ -7,7 +7,7 @@ const code = `
   month={new Date(2021, 7)}
   dayStyle={(date) =>
     date.getDay() === 5 && date.getDate() === 13
-      ? { backgroundColor: theme.colors.red[9] }
+      ? { backgroundColor: theme.colors.red[9], color: theme.white }
       : null
   }
 />
@@ -21,7 +21,7 @@ function Demo() {
         month={new Date(2021, 7)}
         dayStyle={(date) =>
           date.getDay() === 5 && date.getDate() === 13
-            ? { backgroundColor: theme.colors.red[9] }
+            ? { backgroundColor: theme.colors.red[9], color: theme.white }
             : null
         }
       />

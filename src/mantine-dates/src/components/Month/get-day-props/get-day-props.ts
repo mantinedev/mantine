@@ -29,7 +29,7 @@ interface GetDayProps {
 }
 
 export interface DayModifiers {
-  /** Is date selected and is first in range? */
+  /** Is date selected and is first or last in range? */
   selectedInRange: boolean;
 
   /** Is date equal to value? */
