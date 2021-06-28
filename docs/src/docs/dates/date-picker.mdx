@@ -30,41 +30,131 @@ function Demo() {
 }
 ```
 
+## Localization
+
+All @mantine/dates components are built with [dayjs](https://day.js.org/) library.
+Default locale is `en`, to change this follow [dayjs localization guide](https://day.js.org/docs/en/i18n/loading-into-nodejs):
+
+```tsx
+// First import locale data
+import 'dayjs/locale/ru';
+```
+
+Then set `locale` prop in component:
+
+<Demo data={DatePickerDemos.localization} />
+
 ## Open calendal within modal
+
+You can change the way calendar pop up on the page.
+Default variant is `popover`, set it to `modal` to display calendar in modal:
 
 <Demo data={DatePickerDemos.modal} />
 
+In most cases you would want to switch to modal when certain breakpoint is reached.
+To implement this use <GatsbyLink to="/hooks/use-media-query/">use-media-query</GatsbyLink> hook:
+
+```tsx
+import { useMediaQuery } from '@mantine/hooks';
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  const isMobile = useMediaQuery('(max-width: 755px)');
+  return <DatePicker dropdownType={isMobile ? 'modal' : 'popover'} />;
+}
+```
+
 ## Input props
+
+Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
 
 <Demo data={DatePickerDemos.configurator} />
 
 ## Year and month picker
 
+You can replace calendar label with year and month selects.
+To use this option provide props:
+
+- `withSelect` – replace label with month and year select
+- `yearsRange` – years range that should be used to generate years select options
+
 <Demo data={DatePickerDemos.withSelect} />
 
 ## Min and max dates
+
+Set `minDate` and `maxDate` props to define minimum and maximum possible dates.
+Dates which are not included in available interval will be disabled:
 
 <Demo data={DatePickerDemos.boundaries} />
 
 ## Exclude dates
 
+To exclude dates set `excludeDates` prop with function that receives date as an argument and returns
+`true` if date should be disabled. For example, to disable weekends check if date day is 0 or 6:
+
 <Demo data={DatePickerDemos.exclude} />
 
 ## Add styles to days
 
+You can apply styles to any day with `dayStyle` or `dayClassName` callbacks.
+Both functions receive two arguments:
+
+- `date` – date object which is used to render day
+- `modifiers` – modifiers that are applied to day
+
+### Modifiers
+
+```tsx
+interface DayModifiers {
+  /** Is date selected and is first or last in range? */
+  selectedInRange: boolean;
+
+  /** Is date equal to value? */
+  selected: boolean;
+
+  /** Based on minDate, maxDate, excludeDate and disableOutsideEvents props */
+  disabled: boolean;
+
+  /** Is date is range? */
+  inRange: boolean;
+
+  /** Is date first or last in given range? */
+  firstInRange: boolean;
+  lastInRange: boolean;
+
+  /** Is date Saturday or Sunday? */
+  weekend: boolean;
+
+  /** Is date outside of given month? */
+  outside: boolean;
+}
+```
+
 ### Styles based on date
+
+`dayStyle` callback allows you to add inline styles to days.
+Function must return either styles object or null.
+
+In this example we will add red background to each Friday 13th based on date (first argument):
 
 <Demo data={DatePickerDemos.styles} />
 
 ### Styles based on modifiers
 
+`dayClassName` callback allows you to add className to days.
+Function must return either className string or null.
+
+In this example we will hide all outside dates and change color of weekends based on modifiers (second argument):
+
 <Demo data={DatePickerDemos.modifiers} />
 
-## Localization
-
-<Demo data={DatePickerDemos.localization} />
-
 ## Format labels
+
+By default DatePicker will display dates in human readable format.
+To change that you can provide [dayjs](https://day.js.org/docs/en/display/format) format string to the following props:
+
+- `inputFormat` – set input value date format
+- `labelFormat` – set calendar month label format
 
 <Demo data={DatePickerDemos.format} />
 
