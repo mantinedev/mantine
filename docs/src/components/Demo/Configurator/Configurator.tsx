@@ -13,6 +13,7 @@ interface ConfiguratorProps {
   previewBackground?: string;
   multiline?: boolean;
   includeCode?: boolean;
+  center?: boolean;
   props: ControlProps[];
   filter?: string[];
 }
@@ -24,6 +25,7 @@ export default function Configurator({
   props: componentProps,
   multiline = false,
   includeCode = true,
+  center = true,
   filter = [],
 }: ConfiguratorProps) {
   const theme = useMantineTheme();
@@ -71,6 +73,7 @@ export default function Configurator({
         <div
           className={classes.preview}
           style={{
+            justifyContent: center ? 'center' : 'flex-start',
             background:
               previewBackground ||
               (theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white),

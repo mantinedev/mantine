@@ -9,6 +9,7 @@ import {
   Text,
   MantineSize,
 } from '@mantine/core';
+import { upperFirst } from '@mantine/hooks';
 import { getMonthsNames, getYearsRange } from '../../../utils';
 import useStyles from './CalendarLabel.styles';
 
@@ -89,7 +90,7 @@ export function CalendarLabel({
     </Group>
   ) : (
     <Text className={classes.label} style={_styles.label} size={size}>
-      {dayjs(value).format(labelFormat)}
+      {upperFirst(dayjs(value).locale(locale).format(labelFormat))}
     </Text>
   );
 }

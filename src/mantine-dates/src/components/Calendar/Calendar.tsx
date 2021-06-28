@@ -136,6 +136,7 @@ export function Calendar({
         styles={styles as any}
         fullWidth={fullWidth}
         size={size}
+        locale={locale}
         __staticSelector={__staticSelector}
       />
     </CalendarWrapper>

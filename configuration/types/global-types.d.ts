@@ -44,6 +44,7 @@ interface MantineConfiguratorDemo extends MantineDemoBase {
     multiline?: boolean;
     includeCode?: boolean;
     filter?: string[];
+    center?: boolean;
   };
 }
 

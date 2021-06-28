@@ -10,9 +10,12 @@ interface GetDisabledState {
 }
 
 export function getDisabledState({ maxDate, minDate, month }: GetDisabledState) {
-  const nextDisabled = maxDate instanceof Date && dayjs(month).endOf('month').isAfter(maxDate);
+  const nextDisabled =
+    maxDate instanceof Date &&
+    dayjs(month).endOf('month').isAfter(dayjs(maxDate).endOf('day').subtract(1, 'minute'));
   const previousDisabled =
-    minDate instanceof Date && dayjs(month).startOf('month').isBefore(minDate);
+    minDate instanceof Date &&
+    dayjs(month).startOf('month').isBefore(dayjs(minDate).startOf('day').add(1, 'minute'));
 
   return { nextDisabled, previousDisabled };
 }

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useUncontrolled, useMergedRef } from '@mantine/hooks';
+import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { Calendar, CalendarSettings } from '../Calendar/Calendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
@@ -94,7 +94,11 @@ export function DatePicker({
         size={size}
         styles={styles}
         classNames={classNames}
-        inputLabel={_value instanceof Date ? dayjs(_value).format(inputFormat) : null}
+        inputLabel={
+          _value instanceof Date
+            ? upperFirst(dayjs(_value).locale(locale).format(inputFormat))
+            : null
+        }
         __staticSelector="date-picker"
         dropdownType={dropdownType}
         {...others}

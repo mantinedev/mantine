@@ -33,7 +33,6 @@ export default createUseStyles(
       padding: theme.spacing.md,
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
     },
 
     controls: {
