@@ -1,14 +1,14 @@
 import React from 'react';
 import cx from 'clsx';
+import { Group, theming } from '@mantine/core';
 import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/core';
-import { DatePicker } from '../DatePicker';
+import { Calendar } from '../Calendar';
 
 const code = `
 import cx from 'clsx';
 import { createUseStyles } from 'react-jss';
 import { theming } from '@mantine/core';
-import { DatePicker } from '@mantine/dates';
+import { Calendar } from '@mantine/dates';
 
 const useStyles = createUseStyles(
   (theme) => ({
@@ -28,10 +28,8 @@ function Demo() {
   const classes = useStyles();
 
   return (
-    <DatePicker
+    <Calendar
       disableOutsideEvents
-      placeholder="Pick date"
-      label="Event date"
       initialMonth={new Date(2021, 7)}
       dayClassName={(date, modifiers) =>
         cx({ [classes.outside]: modifiers.outside, [classes.weekend]: modifiers.weekend })
@@ -56,19 +54,16 @@ const useStyles = createUseStyles(
 
 function Demo() {
   const classes = useStyles();
-
   return (
-    <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <DatePicker
+    <Group position="center">
+      <Calendar
         disableOutsideEvents
-        placeholder="Pick date"
-        label="Event date"
         initialMonth={new Date(2021, 7)}
         dayClassName={(date, modifiers) =>
           cx({ [classes.outside]: modifiers.outside, [classes.weekend]: modifiers.weekend })
         }
       />
-    </div>
+    </Group>
   );
 }
 

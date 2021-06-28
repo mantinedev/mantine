@@ -8,6 +8,7 @@ const code = `
 import cx from 'clsx';
 import { createUseStyles } from 'react-jss';
 import { theming } from '@mantine/core';
+import { Month } from '@mantine/dates';
 
 const useStyles = createUseStyles(
   (theme) => ({

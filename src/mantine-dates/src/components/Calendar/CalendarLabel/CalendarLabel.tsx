@@ -67,7 +67,7 @@ export function CalendarLabel({
           onChange(dayjs(value).set('month', parseInt(event.currentTarget.value, 10)).toDate())
         }
         data={getMonthsNames(locale).map((month, index) => ({
-          label: month,
+          label: upperFirst(month),
           value: index.toString(),
         }))}
       />
