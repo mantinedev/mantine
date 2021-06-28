@@ -11,7 +11,7 @@ import {
   useMantineTheme,
   mergeStyles,
 } from '@mantine/core';
-import { useId } from '@mantine/hooks';
+import { useId, useMergedRef } from '@mantine/hooks';
 import { TimeField } from './TimeField/TimeField';
 import { createTimeHandler } from './create-time-handler/create-time-handler';
 import useStyles from './TimeInput.styles';
@@ -28,6 +28,9 @@ interface TimeInputProps
     React.ComponentPropsWithoutRef<'div'> {
   /** Input size */
   size?: MantineSize;
+
+  /** Get element ref of hours input */
+  elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
 export function TimeInput({
@@ -43,6 +46,7 @@ export function TimeInput({
   classNames,
   styles,
   id,
+  elementRef,
   ...others
 }: TimeInputProps) {
   const theme = useMantineTheme(themeOverride);
@@ -109,7 +113,7 @@ export function TimeInput({
       >
         <div className={classes.controls} style={_styles.controls}>
           <TimeField
-            elementRef={hoursRef}
+            elementRef={useMergedRef(hoursRef, elementRef)}
             value={hours.toString()}
             onChange={handleHoursChange}
             setValue={setHours}
