@@ -4,7 +4,7 @@ package: '@mantine/dates'
 title: Month
 order: 1
 slug: /dates/month/
-description: 'Display month'
+description: 'Most basic date related component, displays given month with optional weekdays row'
 props: ['Month']
 import: "import { Month } from '@mantine/dates';"
 source: 'mantine-dates/src/components/Month/Month.tsx'
@@ -12,12 +12,30 @@ docs: 'dates/Month.mdx'
 styles: ['Month']
 ---
 
+import { MonthDemos } from '@demos/dates';
+
 ## Usage
 
-## Value and onChange
+<Demo data={MonthDemos.usage} />
+
+## Range
+
+<Demo data={MonthDemos.range} />
 
 ## Min and max dates
 
+<Demo data={MonthDemos.boundaries} />
+
 ## Exclude dates
 
+<Demo data={MonthDemos.exclude} />
+
 ## Add styles to days
+
+### Styles based on date
+
+<Demo data={MonthDemos.styles} />
+
+### Styles based on modifiers
+
+<Demo data={MonthDemos.modifiers} />
