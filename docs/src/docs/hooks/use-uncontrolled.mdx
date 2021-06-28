@@ -89,6 +89,7 @@ function useUncontrolled<T>(configuration: {
   defaultValue: T;
   finalValue: T;
   onChange(value: T): void;
+  onValueUpdate?(value: T): void;
   rule: (value: T) => boolean;
 }): readonly [T, (val: T) => void];
 ```
