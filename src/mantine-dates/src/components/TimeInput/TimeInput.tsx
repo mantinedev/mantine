@@ -11,7 +11,7 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core';
-import { clamp } from '@mantine/hooks';
+import { clamp, useId } from '@mantine/hooks';
 import useStyles from './TimeInput.styles';
 
 export type TimeInputStylesNames =
@@ -22,7 +22,8 @@ export type TimeInputStylesNames =
 interface TimeInputProps
   extends DefaultProps<TimeInputStylesNames>,
     InputBaseProps,
-    InputWrapperBaseProps {
+    InputWrapperBaseProps,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Input size */
   size?: MantineSize;
 }
@@ -88,10 +89,12 @@ export function TimeInput({
   wrapperProps,
   classNames,
   styles,
+  id,
   ...others
 }: TimeInputProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, size }, classNames as any, 'time-input');
+  const uuid = useId(id);
   const hoursRef = useRef<HTMLInputElement>();
   const minutesRef = useRef<HTMLInputElement>();
   const secondsRef = useRef<HTMLInputElement>();
@@ -125,7 +128,6 @@ export function TimeInput({
   return (
     <InputWrapper
       required={required}
-      labelElement="div"
       label={label}
       error={error}
       description={description}
@@ -136,6 +138,7 @@ export function TimeInput({
       styles={styles as any}
       size={size}
       __staticSelector="time-input"
+      id={uuid}
       {...wrapperProps}
     >
       <Input
@@ -144,16 +147,19 @@ export function TimeInput({
         themeOverride={themeOverride}
         required={required}
         invalid={!!error}
+        onClick={() => hoursRef.current.focus()}
         {...others}
       >
         <div className={classes.controls}>
           <input
+            id={uuid}
             ref={hoursRef}
             className={classes.timeInput}
             onFocus={() => hoursRef.current.select()}
             onBlur={(event) => setHours(padTime(parseInt(event.currentTarget.value, 10)))}
             type="text"
             value={hours.toString()}
+            onClick={(event) => event.stopPropagation()}
             onChange={(event) => handleHoursChange(event.currentTarget.value)}
           />
           <Text size={size} style={{ lineHeight: 1 }}>
@@ -166,6 +172,7 @@ export function TimeInput({
             className={classes.timeInput}
             type="text"
             value={minutes}
+            onClick={(event) => event.stopPropagation()}
             onChange={(event) => handleMinutesChange(event.currentTarget.value)}
           />
           <Text size={size} style={{ lineHeight: 1 }}>
@@ -178,6 +185,7 @@ export function TimeInput({
             className={classes.timeInput}
             type="text"
             value={seconds}
+            onClick={(event) => event.stopPropagation()}
             onChange={(event) => handleSecondsChange(event.currentTarget.value)}
           />
         </div>
