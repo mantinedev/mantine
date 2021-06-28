@@ -5,6 +5,7 @@ import {
   createMemoStyles,
   MantineSize,
   getSizeValue,
+  hexToRgba,
 } from '@mantine/core';
 
 interface DayStyles {
@@ -66,7 +67,10 @@ export default createMemoStyles({
     },
 
     '&$inRange:not(:disabled)': {
-      backgroundColor: theme.colors[theme.primaryColor][0],
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? hexToRgba(theme.colors[theme.primaryColor][9], 0.3)
+          : theme.colors[theme.primaryColor][0],
       borderRadius: 0,
     },
 

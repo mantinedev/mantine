@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DefaultProps, useMantineTheme } from '@mantine/core';
+import { DefaultProps, useMantineTheme, hexToRgba } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { isSameDate } from '../../utils';
@@ -144,7 +144,10 @@ export function RangeCalendar({
           if (shouldHighlightDate(date, modifiers)) {
             return {
               ...initialStyles,
-              backgroundColor: theme.colors[theme.primaryColor][0],
+              backgroundColor:
+                theme.colorScheme === 'dark'
+                  ? hexToRgba(theme.colors[theme.primaryColor][9], 0.3)
+                  : theme.colors[theme.primaryColor][0],
               borderRadius: 0,
             };
           }
