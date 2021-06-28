@@ -20,6 +20,20 @@ import { DatePickerDemos } from '@demos/dates';
 
 ## Controlled
 
+```tsx
+import { useState } from 'react';
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  const [value, onChange] = useState(new Date());
+  return <DatePicker value={value} onChange={onChange} />;
+}
+```
+
+## Open calendal within modal
+
+<Demo data={DatePickerDemos.modal} />
+
 ## Input props
 
 ## Year and month picker
