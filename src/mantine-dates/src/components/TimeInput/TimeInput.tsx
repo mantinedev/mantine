@@ -9,6 +9,7 @@ import {
   InputWrapper,
   MantineSize,
   useMantineTheme,
+  mergeStyles,
 } from '@mantine/core';
 import { useId } from '@mantine/hooks';
 import { TimeField } from './TimeField/TimeField';
@@ -46,6 +47,7 @@ export function TimeInput({
 }: TimeInputProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, size }, classNames as any, 'time-input');
+  const _styles = mergeStyles(classes, styles as any);
   const uuid = useId(id);
   const hoursRef = useRef<HTMLInputElement>();
   const minutesRef = useRef<HTMLInputElement>();
@@ -101,9 +103,11 @@ export function TimeInput({
         invalid={!!error}
         onClick={() => hoursRef.current.focus()}
         size={size}
+        classNames={classNames as any}
+        styles={styles as any}
         {...others}
       >
-        <div className={classes.controls}>
+        <div className={classes.controls} style={_styles.controls}>
           <TimeField
             elementRef={hoursRef}
             value={hours.toString()}
@@ -111,6 +115,7 @@ export function TimeInput({
             setValue={setHours}
             id={uuid}
             className={classes.timeInput}
+            style={_styles.timeInput}
             withSeparator
             size={size}
             max={23}
@@ -122,6 +127,7 @@ export function TimeInput({
             onChange={handleMinutesChange}
             setValue={setMinutes}
             className={classes.timeInput}
+            style={_styles.timeInput}
             withSeparator
             size={size}
             max={59}
@@ -133,6 +139,7 @@ export function TimeInput({
             onChange={handleSecondsChange}
             setValue={setSeconds}
             className={classes.timeInput}
+            style={_styles.timeInput}
             size={size}
             max={59}
           />
