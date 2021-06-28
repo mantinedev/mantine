@@ -13,8 +13,8 @@ export function createTimeHandler({ onChange, nextRef, min, max, maxValue }: Cre
   return (value: string) => {
     if (value === '00') {
       onChange('00');
-      nextRef?.current.focus();
-      nextRef?.current.select();
+      nextRef?.current?.focus();
+      nextRef?.current?.select();
       return null;
     }
 
@@ -26,8 +26,8 @@ export function createTimeHandler({ onChange, nextRef, min, max, maxValue }: Cre
 
     if (parsed > maxValue) {
       onChange(padTime(clamp({ value: parsed, min, max })));
-      nextRef?.current.focus();
-      nextRef?.current.select();
+      nextRef?.current?.focus();
+      nextRef?.current?.select();
       return null;
     }
 

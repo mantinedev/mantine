@@ -42,6 +42,12 @@ interface TimeInputProps
 
   /** Controlled input onChange handler */
   onChange?(value: Date): void;
+
+  /** Display seconds input */
+  withSeconds?: boolean;
+
+  /** Uncontrolled input name */
+  name?: string;
 }
 
 export function TimeInput({
@@ -61,6 +67,8 @@ export function TimeInput({
   value,
   defaultValue,
   onChange,
+  withSeconds = false,
+  name,
   ...others
 }: TimeInputProps) {
   const theme = useMantineTheme(themeOverride);
@@ -162,21 +170,25 @@ export function TimeInput({
             setValue={(val) => setTime((c) => ({ ...c, minutes: val }))}
             className={classes.timeInput}
             style={_styles.timeInput}
-            withSeparator
+            withSeparator={withSeconds}
             size={size}
             max={59}
           />
 
-          <TimeField
-            elementRef={secondsRef}
-            value={time.seconds}
-            onChange={handleSecondsChange}
-            setValue={(val) => setTime((c) => ({ ...c, seconds: val }))}
-            className={classes.timeInput}
-            style={_styles.timeInput}
-            size={size}
-            max={59}
-          />
+          {withSeconds && (
+            <TimeField
+              elementRef={secondsRef}
+              value={time.seconds}
+              onChange={handleSecondsChange}
+              setValue={(val) => setTime((c) => ({ ...c, seconds: val }))}
+              className={classes.timeInput}
+              style={_styles.timeInput}
+              size={size}
+              max={59}
+            />
+          )}
+
+          {name && <input type="hidden" name={name} value={_value.toISOString()} />}
         </div>
       </Input>
     </InputWrapper>
