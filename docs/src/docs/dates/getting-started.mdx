@@ -12,6 +12,8 @@ source: 'mantine-dates/'
 license: MIT
 ---
 
+import { CalendarDemos, RangeCalendarDemos, MonthDemos, DatePickerDemos } from '@demos/dates';
+
 ## Installation
 
 Package depends on:
@@ -21,7 +23,7 @@ Package depends on:
 - [dayjs](https://www.npmjs.com/package/dayjs)
 - [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks)
 - [@mantine/core](https://www.npmjs.com/package/@mantine/core)
-- [react-jss](https://www.npmjs.com/package/react-jss).
+- [react-jss](https://www.npmjs.com/package/react-jss)
 
 Install with npm:
 
@@ -60,6 +62,37 @@ function Demo() {
   );
 }
 ```
+
+## Components
+
+### DatePicker
+
+<GatsbyLink to="/dates/date-picker/">DatePicker</GatsbyLink> allows you to capture dates without free
+user input. Component supports the same props as any other input from @mantine/core library and can be
+used in forms:
+
+<Demo data={DatePickerDemos.usage} demoProps={{ toggle: true, zIndex: 4 }} />
+
+### Calendar
+
+<GatsbyLink to="/dates/calendar/">Calendar</GatsbyLink> component allows you to capture date input fom
+user or display events:
+
+<Demo data={CalendarDemos.usage} demoProps={{ toggle: true }} />
+
+### RangeCalendar
+
+Capture dates range input with <GatsbyLink to="/dates/range-calendar/">RangeCalendar</GatsbyLink> component:
+
+<Demo data={RangeCalendarDemos.usage} demoProps={{ toggle: true }} />
+
+### Month
+
+<GatsbyLink to="/dates/month/">Month</GatsbyLink> component displays given month, it is the most basic
+component which is used in all other components. You can use it to create your own date pickers and calendars
+if Mantine components do not fit your requirements:
+
+<Demo data={MonthDemos.usage} demoProps={{ toggle: true }} />
 
 ## Utility functions
 

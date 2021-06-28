@@ -9,3 +9,5 @@ export const Calendar: Record<CalendarStylesNames, string> = {
 };
 
 delete (Calendar as any).root;
+
+export const RangeCalendar = Calendar;
