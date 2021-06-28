@@ -18,11 +18,13 @@ export default createMemoStyles({
   }),
 
   cell: {
+    boxSizing: 'border-box',
     padding: 0,
     borderTop: '1px solid transparent',
   },
 
   weekdayCell: ({ theme }: MonthStyles) => ({
+    boxSizing: 'border-box',
     padding: 0,
     fontWeight: 'normal',
     paddingBottom: theme.spacing.xs / 2,
