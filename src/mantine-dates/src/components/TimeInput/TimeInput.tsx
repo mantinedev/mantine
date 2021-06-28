@@ -8,10 +8,10 @@ import {
   Input,
   InputWrapper,
   MantineSize,
-  Text,
   useMantineTheme,
 } from '@mantine/core';
 import { clamp, useId } from '@mantine/hooks';
+import { TimeField } from './TimeField/TimeField';
 import useStyles from './TimeInput.styles';
 
 export type TimeInputStylesNames =
@@ -151,42 +151,29 @@ export function TimeInput({
         {...others}
       >
         <div className={classes.controls}>
-          <input
-            id={uuid}
-            ref={hoursRef}
-            className={classes.timeInput}
-            onFocus={() => hoursRef.current.select()}
-            onBlur={(event) => setHours(padTime(parseInt(event.currentTarget.value, 10)))}
-            type="text"
+          <TimeField
+            elementRef={hoursRef}
             value={hours.toString()}
-            onClick={(event) => event.stopPropagation()}
-            onChange={(event) => handleHoursChange(event.currentTarget.value)}
-          />
-          <Text size={size} style={{ lineHeight: 1 }}>
-            :
-          </Text>
-          <input
-            ref={minutesRef}
-            onFocus={() => minutesRef.current.select()}
-            onBlur={(event) => setMinutes(padTime(parseInt(event.currentTarget.value, 10)))}
+            onChange={handleHoursChange}
+            setValue={setHours}
+            id={uuid}
             className={classes.timeInput}
-            type="text"
-            value={minutes}
-            onClick={(event) => event.stopPropagation()}
-            onChange={(event) => handleMinutesChange(event.currentTarget.value)}
+            withSeparator
           />
-          <Text size={size} style={{ lineHeight: 1 }}>
-            :
-          </Text>
-          <input
-            ref={secondsRef}
-            onFocus={() => secondsRef.current.select()}
-            onBlur={(event) => setSeconds(padTime(parseInt(event.currentTarget.value, 10)))}
+          <TimeField
+            elementRef={minutesRef}
+            value={minutes.toString()}
+            onChange={handleMinutesChange}
+            setValue={setMinutes}
             className={classes.timeInput}
-            type="text"
-            value={seconds}
-            onClick={(event) => event.stopPropagation()}
-            onChange={(event) => handleSecondsChange(event.currentTarget.value)}
+            withSeparator
+          />
+          <TimeField
+            elementRef={secondsRef}
+            value={seconds.toString()}
+            onChange={handleSecondsChange}
+            setValue={setSeconds}
+            className={classes.timeInput}
           />
         </div>
       </Input>
