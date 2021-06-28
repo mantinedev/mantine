@@ -159,7 +159,9 @@ export function TimeInput({
             id={uuid}
             className={classes.timeInput}
             withSeparator
+            max={23}
           />
+
           <TimeField
             elementRef={minutesRef}
             value={minutes.toString()}
@@ -167,13 +169,16 @@ export function TimeInput({
             setValue={setMinutes}
             className={classes.timeInput}
             withSeparator
+            max={59}
           />
+
           <TimeField
             elementRef={secondsRef}
             value={seconds.toString()}
             onChange={handleSecondsChange}
             setValue={setSeconds}
             className={classes.timeInput}
+            max={59}
           />
         </div>
       </Input>

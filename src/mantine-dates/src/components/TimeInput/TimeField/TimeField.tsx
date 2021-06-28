@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useMergedRef } from '@mantine/hooks';
+import { useMergedRef, clamp } from '@mantine/hooks';
 import { Text, MantineSize } from '@mantine/core';
 import { padTime } from '../pad-time/pad-time';
 
@@ -19,6 +19,9 @@ interface TimeFieldProps
 
   /** Colon text size */
   size?: MantineSize;
+
+  /** Maximum possible value, min value is always 0 */
+  max?: number;
 }
 
 export function TimeField({
@@ -29,9 +32,37 @@ export function TimeField({
   setValue,
   withSeparator = false,
   size = 'sm',
+  max,
   ...others
 }: TimeFieldProps) {
   const inputRef = useRef<HTMLInputElement>();
+
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    typeof onFocus === 'function' && onFocus(event);
+    inputRef.current.select();
+  };
+
+  const handleBlur = (event: any) => {
+    typeof onBlur === 'function' && onBlur(event);
+    setValue(padTime(parseInt(event.currentTarget.value, 10)));
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    event.stopPropagation();
+    inputRef.current.select();
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.nativeEvent.code === 'ArrowUp') {
+      event.preventDefault();
+      setValue(padTime(clamp({ value: parseInt(event.currentTarget.value, 10) + 1, max, min: 0 })));
+    }
+
+    if (event.nativeEvent.code === 'ArrowDown') {
+      event.preventDefault();
+      setValue(padTime(clamp({ value: parseInt(event.currentTarget.value, 10) - 1, max, min: 0 })));
+    }
+  };
 
   return (
     <>
@@ -39,18 +70,10 @@ export function TimeField({
         type="text"
         ref={useMergedRef(inputRef, elementRef)}
         onChange={(event) => onChange(event.currentTarget.value)}
-        onClick={(event) => {
-          event.stopPropagation();
-          inputRef.current.select();
-        }}
-        onFocus={(event) => {
-          typeof onFocus === 'function' && onFocus(event);
-          inputRef.current.select();
-        }}
-        onBlur={(event) => {
-          typeof onBlur === 'function' && onBlur(event);
-          setValue(padTime(parseInt(event.currentTarget.value, 10)));
-        }}
+        onClick={handleClick}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
         {...others}
       />
 
