@@ -59,6 +59,7 @@ export function DatePicker({
   initiallyOpened = false,
   name = 'date',
   size = 'sm',
+  dropdownType = 'popover',
   ...others
 }: DatePickerProps) {
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
@@ -95,6 +96,7 @@ export function DatePicker({
         classNames={classNames}
         inputLabel={_value instanceof Date ? dayjs(_value).format(inputFormat) : null}
         __staticSelector="date-picker"
+        dropdownType={dropdownType}
         {...others}
       >
         <Calendar
@@ -117,7 +119,8 @@ export function DatePicker({
           maxDate={maxDate}
           excludeDate={excludeDate}
           __staticSelector="date-picker"
-          size={calendarSize}
+          fullWidth={dropdownType === 'modal'}
+          size={dropdownType === 'modal' ? 'lg' : calendarSize}
         />
       </DatePickerBase>
 

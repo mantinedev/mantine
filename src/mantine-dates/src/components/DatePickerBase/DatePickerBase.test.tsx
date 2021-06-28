@@ -6,7 +6,7 @@ import {
   itSupportsRef,
   itSupportsStyle,
 } from '@mantine/tests';
-import { Input, InputWrapper } from '@mantine/core';
+import { Input, InputWrapper, Modal } from '@mantine/core';
 import { DatePickerBase } from './DatePickerBase';
 
 const defaultProps = {
@@ -87,6 +87,13 @@ describe('@mantine/dates/DatePickerBase', () => {
     expect(element.find(Input).prop('invalid')).toBe(true);
     expect(element.find(Input).prop('icon')).toBe('$');
     expect(element.find(Input).prop('radius')).toBe('sm');
+  });
+
+  it('renters modal instead of popover when dropdownType is set to modal', () => {
+    const modal = shallow(<DatePickerBase {...defaultProps} dropdownType="modal" />);
+    const popover = shallow(<DatePickerBase {...defaultProps} dropdownType="popover" />);
+    expect(modal.find(Modal)).toHaveLength(1);
+    expect(popover.find(Modal)).toHaveLength(0);
   });
 
   it('has correct displayName', () => {

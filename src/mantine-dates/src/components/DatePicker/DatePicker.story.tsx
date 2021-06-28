@@ -50,6 +50,11 @@ storiesOf('@mantine/dates/DatePicker', module)
     </div>
   ))
   .add('Sizes', () => <div style={{ maxWidth: 300, padding: 40 }}>{sizes}</div>)
+  .add('In modal', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <DatePicker dropdownType="modal" placeholder="Pick date" label="Date picker" />
+    </div>
+  ))
   .add('Controlled', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
       <Controlled />

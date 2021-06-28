@@ -15,6 +15,7 @@ import {
   InputStylesNames,
   InputWrapperStylesNames,
   MantineSize,
+  Modal,
 } from '@mantine/core';
 import { useId, useClickOutside, useFocusTrap, useMergedRef, useWindowEvent } from '@mantine/hooks';
 import { CalendarStylesNames } from '../Calendar/Calendar';
@@ -63,6 +64,9 @@ export interface DatePickerBaseSharedProps
 
   /** Input size */
   size?: MantineSize;
+
+  /** Where to show calendar in modal or popover */
+  dropdownType?: 'popover' | 'modal';
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -102,6 +106,7 @@ export function DatePickerBase({
   __staticSelector = 'date-picker',
   dropdownOpened,
   setDropdownOpened,
+  dropdownType = 'popover',
   ...others
 }: DatePickerBaseProps) {
   const theme = useMantineTheme(themeOverride);
@@ -119,7 +124,7 @@ export function DatePickerBase({
   };
   const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
     event.nativeEvent.code === 'Escape' && closeDropdown();
-  const clickOutsideRef = useClickOutside(closeDropdown);
+  const clickOutsideRef = useClickOutside(() => dropdownType === 'popover' && closeDropdown());
 
   useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
 
@@ -163,25 +168,31 @@ export function DatePickerBase({
           </Input>
         </div>
 
-        <Transition
-          mounted={dropdownOpened}
-          transition={transition}
-          duration={transitionDuration}
-          timingFunction={transitionTimingFunction}
-        >
-          {(transitionStyles) => (
-            <div
-              className={classes.dropdownWrapper}
-              style={{ ..._styles.dropdownWrapper, ...transitionStyles }}
-              ref={focusTrapRef}
-              onKeyDownCapture={closeOnEscape}
-            >
-              <Paper className={classes.dropdown} style={_styles.dropdown} shadow={shadow}>
-                {children}
-              </Paper>
-            </div>
-          )}
-        </Transition>
+        {dropdownType === 'popover' ? (
+          <Transition
+            mounted={dropdownOpened}
+            transition={transition}
+            duration={transitionDuration}
+            timingFunction={transitionTimingFunction}
+          >
+            {(transitionStyles) => (
+              <div
+                className={classes.dropdownWrapper}
+                style={{ ..._styles.dropdownWrapper, ...transitionStyles }}
+                ref={focusTrapRef}
+                onKeyDownCapture={closeOnEscape}
+              >
+                <Paper className={classes.dropdown} style={_styles.dropdown} shadow={shadow}>
+                  {children}
+                </Paper>
+              </div>
+            )}
+          </Transition>
+        ) : (
+          <Modal opened={dropdownOpened} onClose={closeDropdown} hideCloseButton>
+            {children}
+          </Modal>
+        )}
       </div>
     </InputWrapper>
   );
