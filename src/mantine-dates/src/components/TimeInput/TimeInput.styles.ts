@@ -23,11 +23,16 @@ export default createMemoStyles({
   controls: ({ size }: TimeInputStyles) => ({
     display: 'flex',
     alignItems: 'center',
-    height: getSizeValue({ size, sizes: INPUT_SIZES }),
+    // -2 for border offset
+    height: getSizeValue({ size, sizes: INPUT_SIZES }) - 2,
   }),
 
   timeInput: ({ theme, size }: TimeInputStyles) => ({
     width: getSizeValue({ size, sizes: inputSizes }),
+    appearance: 'none',
+    backgroundColor: 'transparent',
+    color: 'inherit',
+    padding: 0,
     textAlign: 'center',
     border: '1px solid transparent',
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),

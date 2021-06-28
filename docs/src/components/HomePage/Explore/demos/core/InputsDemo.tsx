@@ -16,7 +16,7 @@ import {
   RadioGroup,
   Radio,
 } from '@mantine/core';
-import { DatePicker } from '@mantine/dates';
+import { DatePicker, TimeInput } from '@mantine/dates';
 import { BREAKPOINT } from '../../Explore.styles';
 
 const useStyles = createUseStyles({
@@ -120,7 +120,18 @@ export function InputsDemo() {
       </div>
 
       <div className={classes.column}>
-        <NumberInput label="Number input" description="Enter your age" defaultValue={18} />
+        <TimeInput
+          label="Time input"
+          description="Capture time from user"
+          defaultValue={new Date()}
+        />
+
+        <NumberInput
+          label="Number input"
+          description="Enter your age"
+          defaultValue={18}
+          style={{ marginTop: 15 }}
+        />
 
         <Textarea
           style={{ marginTop: 15 }}
