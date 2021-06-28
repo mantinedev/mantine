@@ -22,7 +22,7 @@ export { Grid, Col } from './components/Grid/Grid';
 export { Group } from './components/Group/Group';
 export { Highlight } from './components/Highlight/Highlight';
 export { Image } from './components/Image/Image';
-export { Input, INPUT_VARIANTS } from './components/Input/Input';
+export { Input, INPUT_VARIANTS, INPUT_SIZES } from './components/Input/Input';
 export { InputWrapper } from './components/InputWrapper/InputWrapper';
 export { Kbd } from './components/Kbd/Kbd';
 export { Loader, LOADER_SIZES } from './components/Loader/Loader';

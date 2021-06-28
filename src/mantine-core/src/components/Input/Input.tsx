@@ -7,9 +7,10 @@ import {
   mergeStyles,
   MantineSize,
 } from '../../theme';
-import useStyles from './Input.styles';
+import useStyles, { sizes } from './Input.styles';
 
 export const INPUT_VARIANTS = ['default', 'filled', 'unstyled'] as const;
+export const INPUT_SIZES = sizes;
 export type InputVariant = typeof INPUT_VARIANTS[number];
 export type InputStylesNames = Exclude<keyof ReturnType<typeof useStyles>, InputVariant>;
 
