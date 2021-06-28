@@ -12,7 +12,13 @@ source: 'mantine-dates/'
 license: MIT
 ---
 
-import { CalendarDemos, RangeCalendarDemos, MonthDemos, DatePickerDemos } from '@demos/dates';
+import {
+  CalendarDemos,
+  RangeCalendarDemos,
+  MonthDemos,
+  DatePickerDemos,
+  TimeInputDemos,
+} from '@demos/dates';
 
 ## Installation
 
@@ -72,6 +78,13 @@ user input. Component supports the same props as any other input from @mantine/c
 used in forms:
 
 <Demo data={DatePickerDemos.usage} demoProps={{ toggle: true, zIndex: 4 }} />
+
+### TimeInput
+
+<GatsbyLink to="/dates/time-input/">TimeInput</GatsbyLink> component allows to capture time input from
+user:
+
+<Demo data={TimeInputDemos.usage} demoProps={{ toggle: true }} />
 
 ### Calendar
 
