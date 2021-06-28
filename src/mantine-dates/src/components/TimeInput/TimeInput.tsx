@@ -23,7 +23,7 @@ export type TimeInputStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames;
 
-interface TimeInputProps
+export interface TimeInputProps
   extends DefaultProps<TimeInputStylesNames>,
     InputBaseProps,
     InputWrapperBaseProps,

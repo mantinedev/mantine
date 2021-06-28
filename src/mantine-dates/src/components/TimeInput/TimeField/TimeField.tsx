@@ -85,3 +85,5 @@ export function TimeField({
     </>
   );
 }
+
+TimeField.displayName = '@mantine/dates/TimeField';
