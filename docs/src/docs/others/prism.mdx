@@ -9,7 +9,7 @@ props: ['Prism']
 import: "import { Prism } from '@mantine/prism';"
 source: 'mantine-prism/src'
 docs: 'others/prism.mdx'
-installation: 'react-prism-renderer @mantine/prism'
+installation: 'prism-react-renderer @mantine/prism'
 bundleSize: '@mantine/prism'
 license: MIT
 styles: ['Prism']
@@ -19,24 +19,24 @@ import * as PrismDemos from '@demos/prism';
 
 ## Installation
 
-Package depends on [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks), [@mantine/core](https://www.npmjs.com/package/@mantine/core), [react-jss](https://www.npmjs.com/package/react-jss) and [react-prism-renderer](https://www.npmjs.com/package/react-prism-renderer).
+Package depends on [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks), [@mantine/core](https://www.npmjs.com/package/@mantine/core), [react-jss](https://www.npmjs.com/package/react-jss) and [prism-react-renderer](https://www.npmjs.com/package/prism-react-renderer).
 
 Install with npm:
 
 ```sh
-npm install react-jss react-prism-renderer @mantine/prism @mantine/core @mantine/hooks
+npm install react-jss prism-react-renderer @mantine/prism @mantine/core @mantine/hooks
 ```
 
 Install with yarn:
 
 ```sh
-yarn add react-jss react-prism-renderer @mantine/prism @mantine/core @mantine/hooks
+yarn add react-jss prism-react-renderer @mantine/prism @mantine/core @mantine/hooks
 ```
 
 ## Usage
 
 Use Prism component to highlight code with Mantine theme styles.
-Component uses [react-prism-renderer](https://github.com/FormidableLabs/prism-react-renderer)
+Component uses [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer)
 under the hood and support light and dark theme, it is used in Mantine docs to display all code examples.
 
 <Demo data={PrismDemos.usage} />
@@ -70,6 +70,6 @@ You can force dark color scheme by setting `themeOverride={{ colorScheme: 'dark'
 
 ## Languages
 
-Component supports all languages which are supported by [react-prism-renderer](https://github.com/FormidableLabs/prism-react-renderer):
+Component supports all languages which are supported by [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer):
 
 <Demo data={PrismDemos.languages} />

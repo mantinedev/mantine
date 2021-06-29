@@ -27,7 +27,7 @@ export const PACKAGES_DATA = [
       '@mantine/core',
       '@mantine/prism',
       'react-jss',
-      'react-prism-renderer',
+      'prism-react-renderer',
     ],
   },
 ];
