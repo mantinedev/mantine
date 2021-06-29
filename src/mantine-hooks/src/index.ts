@@ -21,3 +21,4 @@ export { useReducedMotion } from './use-reduced-motion/use-reduced-motion';
 export { useScrollLock } from './use-scroll-lock/use-scroll-lock';
 export { useUncontrolled } from './use-uncontrolled/use-uncontrolled';
 export { useWindowEvent } from './use-window-event/use-window-event';
+export { useWindowScroll } from './use-window-scroll/use-window-scroll';
