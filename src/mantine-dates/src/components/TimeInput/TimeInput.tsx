@@ -48,6 +48,15 @@ export interface TimeInputProps
 
   /** Uncontrolled input name */
   name?: string;
+
+  /** aria-label for hours input */
+  hoursLabel?: string;
+
+  /** aria-label for minutes input */
+  minutesLabel?: string;
+
+  /** aria-label for seconds input */
+  secondsLabel?: string;
 }
 
 export function TimeInput({
@@ -69,6 +78,9 @@ export function TimeInput({
   onChange,
   withSeconds = false,
   name,
+  hoursLabel,
+  minutesLabel,
+  secondsLabel,
   ...others
 }: TimeInputProps) {
   const theme = useMantineTheme(themeOverride);
@@ -161,6 +173,7 @@ export function TimeInput({
             withSeparator
             size={size}
             max={23}
+            aria-label={hoursLabel}
           />
 
           <TimeField
@@ -173,6 +186,7 @@ export function TimeInput({
             withSeparator={withSeconds}
             size={size}
             max={59}
+            aria-label={minutesLabel}
           />
 
           {withSeconds && (
@@ -185,6 +199,7 @@ export function TimeInput({
               style={_styles.timeInput}
               size={size}
               max={59}
+              aria-label={secondsLabel}
             />
           )}
 
