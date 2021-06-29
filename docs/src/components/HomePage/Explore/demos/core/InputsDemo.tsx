@@ -16,7 +16,7 @@ import {
   RadioGroup,
   Radio,
 } from '@mantine/core';
-import { DatePicker, TimeInput } from '@mantine/dates';
+import { DatePicker, TimeInput, DateRangePicker } from '@mantine/dates';
 import { BREAKPOINT } from '../../Explore.styles';
 
 const useStyles = createUseStyles({
@@ -80,6 +80,13 @@ export function InputsDemo() {
           required
           defaultValue={new Date()}
           inputFormat="MMMM D, YYYY"
+        />
+
+        <DateRangePicker
+          label="Date range picker"
+          description="Capture dates range from user"
+          placeholder="Pick dates range"
+          style={{ marginTop: 15 }}
         />
 
         <TextInput
