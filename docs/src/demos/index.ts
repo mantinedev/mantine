@@ -10,6 +10,7 @@ export * from './hooks/use-reduced-motion';
 export * from './hooks/use-scroll-lock';
 export * from './hooks/use-force-update';
 export * from './hooks/use-toggle';
+export * from './hooks/use-window-scroll';
 
 export * from './inputs-guide/color-input';
 export * from './inputs-guide/json-input';

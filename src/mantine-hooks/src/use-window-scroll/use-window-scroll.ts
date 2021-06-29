@@ -12,7 +12,7 @@ function getScrollPosition(): ScrollPosition {
     : { x: 0, y: 0 };
 }
 
-function scrollTo({ x, y }: ScrollPosition) {
+function scrollTo({ x, y }: Partial<ScrollPosition>) {
   if (typeof window !== 'undefined') {
     const scrollOptions: ScrollToOptions = { behavior: 'smooth' };
 
@@ -34,5 +34,5 @@ export function useWindowScroll() {
   useWindowEvent('scroll', () => setPosition(getScrollPosition()));
   useWindowEvent('resize', () => setPosition(getScrollPosition()));
 
-  return [position, scrollTo];
+  return [position, scrollTo] as const;
 }
