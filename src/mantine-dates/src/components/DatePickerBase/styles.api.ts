@@ -12,3 +12,5 @@ export const DatePicker: Record<DatePickerStylesNames, string> = {
   // Calendar styles api is included as all date pickers are used only with calendar
   ...Calendar,
 };
+
+export const DateRangePicker = DatePicker;
