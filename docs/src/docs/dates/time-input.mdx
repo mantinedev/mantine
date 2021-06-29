@@ -18,10 +18,6 @@ import { TimeInputDemos } from '@demos/dates';
 
 <Demo data={TimeInputDemos.usage} />
 
-## With seconds
-
-## Input props
-
 ## Controlled
 
 ```tsx
@@ -33,6 +29,18 @@ function Demo() {
   return <TimeInput value={value} onChange={onChange} />;
 }
 ```
+
+## With seconds
+
+To add seconds set `withSeconds` prop:
+
+<Demo data={TimeInputDemos.withSeconds} />
+
+## Input props
+
+Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
+
+<Demo data={TimeInputDemos.configurator} />
 
 ## Get elementRef
 

@@ -78,7 +78,7 @@ export function TimeField({
       />
 
       {withSeparator && (
-        <Text size={size} style={{ lineHeight: 1 }}>
+        <Text size={size} style={{ lineHeight: 1, color: 'inherit' }}>
           :
         </Text>
       )}

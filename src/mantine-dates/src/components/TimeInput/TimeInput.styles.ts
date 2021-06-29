@@ -20,6 +20,11 @@ const inputSizes = {
 };
 
 export default createMemoStyles({
+  disabled: {
+    opacity: 0.6,
+    cursor: 'not-allowed',
+  },
+
   controls: ({ size }: TimeInputStyles) => ({
     display: 'flex',
     alignItems: 'center',
@@ -38,5 +43,10 @@ export default createMemoStyles({
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     lineHeight: 1,
     outline: 0,
+
+    '&[disabled]': {
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
+      cursor: 'not-allowed',
+    },
   }),
 });

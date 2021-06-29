@@ -15,7 +15,7 @@ function Controlled() {
 storiesOf('@mantine/dates/TimeInput', module)
   .add('General usage', () => (
     <div style={{ width: 320, padding: 40 }}>
-      <TimeInput label="Time input" required />
+      <TimeInput label="Time input" disabled />
     </div>
   ))
   .add('Controlled', () => (

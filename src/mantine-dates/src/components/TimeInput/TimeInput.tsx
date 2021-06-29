@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import cx from 'clsx';
 import {
   InputBaseProps,
   InputWrapperBaseProps,
@@ -57,6 +58,9 @@ export interface TimeInputProps
 
   /** aria-label for seconds input */
   secondsLabel?: string;
+
+  /** Disable field */
+  disabled?: boolean;
 }
 
 export function TimeInput({
@@ -81,6 +85,7 @@ export function TimeInput({
   hoursLabel,
   minutesLabel,
   secondsLabel,
+  disabled = false,
   ...others
 }: TimeInputProps) {
   const theme = useMantineTheme(themeOverride);
@@ -157,6 +162,7 @@ export function TimeInput({
         invalid={!!error}
         onClick={() => hoursRef.current.focus()}
         size={size}
+        className={cx({ [classes.disabled]: disabled })}
         classNames={classNames as any}
         styles={styles as any}
         {...others}
@@ -174,6 +180,7 @@ export function TimeInput({
             size={size}
             max={23}
             aria-label={hoursLabel}
+            disabled={disabled}
           />
 
           <TimeField
@@ -187,6 +194,7 @@ export function TimeInput({
             size={size}
             max={59}
             aria-label={minutesLabel}
+            disabled={disabled}
           />
 
           {withSeconds && (
@@ -200,6 +208,7 @@ export function TimeInput({
               size={size}
               max={59}
               aria-label={secondsLabel}
+              disabled={disabled}
             />
           )}
 

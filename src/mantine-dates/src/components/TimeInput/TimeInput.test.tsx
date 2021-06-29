@@ -41,6 +41,7 @@ describe('@mantine/dates/TimeInput', () => {
       error: 'test-error',
       description: 'test-description',
       required: true,
+      disabled: true,
     },
     Object.keys(TimeInputStylesApi).filter((key) => key !== 'invalid'),
     'time-input'
