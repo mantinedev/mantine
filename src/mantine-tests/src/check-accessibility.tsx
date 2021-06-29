@@ -20,5 +20,5 @@ export function checkAccessibility(elements: ReactWrapper[]) {
       expect(result).toHaveNoViolations();
     }
     /* eslint-enable no-restricted-syntax, no-await-in-loop */
-  });
+  }, 30000);
 }
