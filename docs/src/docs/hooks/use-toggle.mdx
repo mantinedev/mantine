@@ -11,4 +11,61 @@ docs: 'hooks/use-toggle.mdx'
 source: 'mantine-hooks/src/use-toggle/use-toggle.ts'
 ---
 
+import { useToggleHook } from '@docs/demos';
+
 ## Usage
+
+Hook implements common state pattern – it switches state between two given values:
+
+<Demo data={useToggleHook} />
+
+## API
+
+Hook accepts two arguments:
+
+- `initialValue` – initial state
+- `options` – an array with 2 elements, must include initial value
+
+Hook returns an array with state value and toggle function:
+
+```tsx
+const [value, toggle] = useToggle('dark', ['light', 'dark']);
+
+toggle(); // -> value == 'light'
+toggle(); // -> value == 'dark'
+
+// You can force specific value, in this case state will be set to given value
+toggle('dark'); // -> value == 'dark'
+```
+
+## use-boolean-toggle
+
+use-boolean-toggle is a wrapper around use-toggle that works with boolean values:
+
+```tsx
+import { useBooleanToggle, useToggle } from '@mantine/hooks';
+
+const [value, toggle] = useBooleanToggle(false);
+// same as
+const [value, toggle] = useToggle(false, [true, false]);
+```
+
+## TypeScript
+
+### Set type
+
+By default TypeScript will guess your type, but in most cases it's better to set type manually:
+
+```tsx
+const [value, toggle] = useToggle('dark', ['light', 'dark']); // value is string
+const [value, toggle] = useToggle<'dark' | 'light'>('dark', ['light', 'dark']); // value is 'dark' | 'light'
+```
+
+### Definition
+
+```tsx
+function useToggle<T>(
+  initialValue: T,
+  options: [T, T]
+): readonly [T, (value?: React.SetStateAction<T>) => void];
+```
