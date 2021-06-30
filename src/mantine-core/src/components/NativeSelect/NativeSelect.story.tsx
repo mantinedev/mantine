@@ -25,7 +25,7 @@ function WrappedSelect(
   );
 }
 
-storiesOf('@mantine/core/Select', module)
+storiesOf('@mantine/core/NativeSelect', module)
   .add('General usage', () => (
     <div style={{ maxWidth: 300, padding: 20 }}>
       <WrappedSelect label="Your favorite library" placeholder="Your favorite library" />
