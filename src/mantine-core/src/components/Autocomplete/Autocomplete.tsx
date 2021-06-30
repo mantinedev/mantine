@@ -9,6 +9,7 @@ import {
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { Paper } from '../Paper/Paper';
+import { Transition, MantineTransition } from '../Transition/Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import useStyles from './Autocomplete.styles';
 
@@ -56,6 +57,18 @@ interface AutocompleteProps
 
   /** Controlled input onChange handler */
   onChange?(value: string): void;
+
+  /** Dropdown body appear/disappear transition */
+  transition?: MantineTransition;
+
+  /** Dropdown body transition duration */
+  transitionDuration?: number;
+
+  /** Dropdown body transition timing function, defaults to theme.transitionTimingFunction */
+  transitionTimingFunction?: string;
+
+  /** Initial dropdown opened state */
+  initiallyOpened?: boolean;
 }
 
 export function Autocomplete({
@@ -76,6 +89,12 @@ export function Autocomplete({
   itemComponent: Item = DefaultItem,
   onItemSubmit,
   onKeyDown,
+  onFocus,
+  onBlur,
+  transition = 'skew-up',
+  transitionDuration = 200,
+  initiallyOpened = false,
+  transitionTimingFunction,
   wrapperProps,
   elementRef,
   themeOverride,
@@ -86,6 +105,7 @@ export function Autocomplete({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, size }, classNames as any, 'autocomplete');
   const _styles = mergeStyles(classes, styles as any);
+  const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
   const uuid = useId(id);
@@ -103,17 +123,18 @@ export function Autocomplete({
     inputRef.current.focus();
   };
 
-  const items = data
-    .slice(0, limit)
-    .map((item, index) => (
-      <Item
-        key={item.value}
-        className={cx(classes.item, { [classes.hovered]: hovered === index })}
-        onMouseEnter={() => setHovered(index)}
-        onClick={() => handleItemClick(item)}
-        {...item}
-      />
-    ));
+  const items = data.slice(0, limit).map((item, index) => (
+    <Item
+      key={item.value}
+      className={cx(classes.item, { [classes.hovered]: hovered === index })}
+      onMouseEnter={() => setHovered(index)}
+      onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        handleItemClick(item);
+      }}
+      {...item}
+    />
+  ));
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     typeof onKeyDown === 'function' && onKeyDown(event);
@@ -140,6 +161,18 @@ export function Autocomplete({
       }
     }
   };
+
+  const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    typeof onFocus === 'function' && onFocus(event);
+    setDropdownOpened(true);
+  };
+
+  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    typeof onBlur === 'function' && onBlur(event);
+    setDropdownOpened(false);
+  };
+
+  const shouldRenderDropdown = dropdownOpened && data.length > 1;
 
   return (
     <InputWrapper
@@ -173,11 +206,26 @@ export function Autocomplete({
           __staticSelector="autocomplete"
           value={_value}
           onChange={(event) => handleChange(event.currentTarget.value)}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
         />
 
-        <Paper className={classes.dropdown} shadow={shadow}>
-          {items}
-        </Paper>
+        <Transition
+          mounted={shouldRenderDropdown}
+          transition={transition}
+          duration={transitionDuration}
+          timingFunction={transitionTimingFunction}
+        >
+          {(transitionStyles) => (
+            <Paper
+              className={classes.dropdown}
+              shadow={shadow}
+              style={{ ..._styles.dropdown, ...transitionStyles }}
+            >
+              {items}
+            </Paper>
+          )}
+        </Transition>
       </div>
     </InputWrapper>
   );
