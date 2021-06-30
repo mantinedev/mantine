@@ -142,6 +142,8 @@ export function Autocomplete({
       key={item.value}
       className={cx(classes.item, { [classes.hovered]: hovered === index })}
       onMouseEnter={() => setHovered(index)}
+      id={`${uuid}-${index}`}
+      aria-selected={hovered === index}
       onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         handleItemClick(item);
@@ -205,7 +207,14 @@ export function Autocomplete({
       __staticSelector="autocomplete"
       {...wrapperProps}
     >
-      <div className={classes.wrapper} style={_styles.wrapper} onMouseLeave={() => setHovered(-1)}>
+      <div
+        className={classes.wrapper}
+        style={_styles.wrapper}
+        aria-haspopup="listbox"
+        aria-owns={uuid}
+        aria-expanded={shouldRenderDropdown}
+        onMouseLeave={() => setHovered(-1)}
+      >
         <Input<'input'>
           {...others}
           required={required}
@@ -223,6 +232,9 @@ export function Autocomplete({
           onChange={(event) => handleChange(event.currentTarget.value)}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
+          aria-autocomplete="list"
+          aria-controls={`${uuid}-items`}
+          aria-activedescendant={`${uuid}-${hovered}`}
         />
 
         <Transition
@@ -233,6 +245,7 @@ export function Autocomplete({
         >
           {(transitionStyles) => (
             <Paper
+              id={`${uuid}-items`}
               className={classes.dropdown}
               shadow={shadow}
               style={{ ..._styles.dropdown, ...transitionStyles }}
