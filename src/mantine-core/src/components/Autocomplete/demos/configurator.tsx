@@ -21,7 +21,7 @@ export const configurator: MantineDemo = {
     {
       name: 'label',
       type: 'string',
-      initialValue: 'Your favorite framework, library',
+      initialValue: 'Your favorite framework/library',
     },
     {
       name: 'description',
