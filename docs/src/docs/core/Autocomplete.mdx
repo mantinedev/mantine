@@ -17,17 +17,42 @@ import { AutocompleteDemos } from '@demos/core';
 
 ## Usage
 
+Autocomplete is an input with which you can suggest user to select one of the given values:
+
 <Demo data={AutocompleteDemos.usage} />
 
 ## Dynamic data
+
+`data` prop can have dynamic values:
 
 <Demo data={AutocompleteDemos.dynamic} />
 
 ## Custom item component
 
+`data` prop must be an array of objects with required `value` field:
+
+```tsx
+// Minimum data for default autocomplete
+[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }];
+```
+
+You can add any other fields to your data:
+
+```tsx
+[
+  { value: 'bob@handsome.inc', color: 'red', email: 'bob@handsome.inc', name: 'Bob Handsome' },
+  { value: 'bill@outlook.com', color: 'teal', email: 'bill@outlook.com', name: 'Bill Gates' },
+  { value: 'amy@wong.cn', color: 'blue', email: 'amy@wong.cn', name: 'Amy Wong' },
+];
+```
+
+Based on this data shape you can create custom `filter` function and `itemComponent`:
+
 <Demo data={AutocompleteDemos.itemComponent} />
 
 ## Input props
+
+Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
 
 <Demo data={AutocompleteDemos.configurator} />
 
