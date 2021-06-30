@@ -13,6 +13,7 @@ export default createMemoStyles({
 
   dropdown: ({ theme, size }: AutocompleteStyles) => ({
     position: 'absolute',
+    zIndex: 1,
     top: getSizeValue({ size, sizes: INPUT_SIZES }) + theme.spacing.sm / 2,
     left: 0,
     right: 0,

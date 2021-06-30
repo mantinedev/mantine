@@ -21,6 +21,18 @@ Autocomplete is an input with which you can suggest user to select one of the gi
 
 <Demo data={AutocompleteDemos.usage} />
 
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <Autocomplete value={value} onChange={setValue} />;
+}
+```
+
 ## Dynamic data
 
 `data` prop can have dynamic values:

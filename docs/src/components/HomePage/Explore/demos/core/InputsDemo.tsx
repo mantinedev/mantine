@@ -15,6 +15,7 @@ import {
   SegmentedControlProps,
   RadioGroup,
   Radio,
+  Autocomplete,
 } from '@mantine/core';
 import { DatePicker, TimeInput, DateRangePicker } from '@mantine/dates';
 import { BREAKPOINT } from '../../Explore.styles';
@@ -131,6 +132,15 @@ export function InputsDemo() {
           label="Time input"
           description="Capture time from user"
           defaultValue={new Date()}
+        />
+
+        <Autocomplete
+          label="Autocomplete"
+          description="Use to create search or propose options"
+          placeholder="Your favorite library/framework"
+          styles={{ dropdown: { zIndex: 4 } }}
+          style={{ marginTop: 15 }}
+          data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
         />
 
         <NumberInput
