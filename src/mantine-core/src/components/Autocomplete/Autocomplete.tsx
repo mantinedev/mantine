@@ -69,6 +69,13 @@ interface AutocompleteProps
 
   /** Initial dropdown opened state */
   initiallyOpened?: boolean;
+
+  /** Function based on which items in dropdown are filtered */
+  filter?(value: string, item: AutocompleteItem): boolean;
+}
+
+function defaultFilter(value: string, item: AutocompleteItem) {
+  return item.value.toLowerCase().trim().includes(value.toLowerCase().trim());
 }
 
 export function Autocomplete({
@@ -100,6 +107,7 @@ export function Autocomplete({
   themeOverride,
   classNames,
   styles,
+  filter = defaultFilter,
   ...others
 }: AutocompleteProps) {
   const theme = useMantineTheme(themeOverride);
@@ -123,18 +131,21 @@ export function Autocomplete({
     inputRef.current.focus();
   };
 
-  const items = data.slice(0, limit).map((item, index) => (
-    <Item
-      key={item.value}
-      className={cx(classes.item, { [classes.hovered]: hovered === index })}
-      onMouseEnter={() => setHovered(index)}
-      onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        handleItemClick(item);
-      }}
-      {...item}
-    />
-  ));
+  const items = data
+    .filter((item) => filter(_value, item))
+    .slice(0, limit)
+    .map((item, index) => (
+      <Item
+        key={item.value}
+        className={cx(classes.item, { [classes.hovered]: hovered === index })}
+        onMouseEnter={() => setHovered(index)}
+        onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
+          event.preventDefault();
+          handleItemClick(item);
+        }}
+        {...item}
+      />
+    ));
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     typeof onKeyDown === 'function' && onKeyDown(event);
@@ -172,7 +183,7 @@ export function Autocomplete({
     setDropdownOpened(false);
   };
 
-  const shouldRenderDropdown = dropdownOpened && data.length > 1;
+  const shouldRenderDropdown = dropdownOpened && !data.some((item) => item.value === _value);
 
   return (
     <InputWrapper
