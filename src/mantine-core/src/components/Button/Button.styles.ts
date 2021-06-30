@@ -108,12 +108,13 @@ export default createMemoStyles({
     backgroundColor: 'transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 600,
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
     height: sizes[size].height,
-    border: `1px solid ${hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 9 }),
-      theme.colorScheme === 'dark' ? 0.65 : 0.45
-    )}`,
+    border: `1px solid ${getThemeColor({
+      theme,
+      color,
+      shade: theme.colorScheme === 'dark' ? 3 : 7,
+    })}`,
 
     '&:not(:disabled):active': {
       transform: 'translateY(1px)',
