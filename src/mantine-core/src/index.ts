@@ -41,7 +41,7 @@ export { Progress, PROGRESS_SIZES } from './components/Progress/Progress';
 export { RadioGroup, Radio, RADIO_SIZES } from './components/RadioGroup/RadioGroup';
 export { RingProgress } from './components/RingProgress/RingProgress';
 export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
-export { Select } from './components/Select/Select';
+export { NativeSelect } from './components/NativeSelect/NativeSelect';
 export { Slider, RangeSlider, SLIDER_SIZES } from './components/Slider';
 export { Spoiler } from './components/Spoiler/Spoiler';
 export { Switch, SWITCH_SIZES } from './components/Switch/Switch';
@@ -126,7 +126,10 @@ export type {
   SegmentedControlProps,
   SegmentedControlStylesNames,
 } from './components/SegmentedControl/SegmentedControl';
-export type { SelectProps, SelectStylesNames } from './components/Select/Select';
+export type {
+  NativeSelectProps,
+  NativeSelectStylesNames,
+} from './components/NativeSelect/NativeSelect';
 export type { SliderProps, RangeSliderProps, SliderStylesNames } from './components/Slider';
 export type { SpoilerProps, SpoilerStylesNames } from './components/Spoiler/Spoiler';
 export type { SwitchProps, SwitchStylesNames } from './components/Switch/Switch';

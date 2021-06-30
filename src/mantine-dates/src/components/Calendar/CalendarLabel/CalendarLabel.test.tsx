@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Text, Select } from '@mantine/core';
+import { Text, NativeSelect } from '@mantine/core';
 import { CalendarLabel } from './CalendarLabel';
 
 const defaultProps = {
@@ -26,14 +26,15 @@ describe('@mantine/dates/CalendarLabel', () => {
   it('sets select inputs value based on month and year from value prop', () => {
     const date = new Date();
     const element = shallow(<CalendarLabel {...defaultProps} value={date} withSelect />);
-    expect(element.find(Select).at(0).prop('value')).toBe(date.getMonth());
-    expect(element.find(Select).at(1).prop('value')).toBe(date.getFullYear());
+    expect(element.find(NativeSelect).at(0).prop('value')).toBe(date.getMonth());
+    expect(element.find(NativeSelect).at(1).prop('value')).toBe(date.getFullYear());
   });
 
   it('provides months data to month select element', () => {
     const element = shallow(<CalendarLabel {...defaultProps} withSelect />)
-      .find(Select)
+      .find(NativeSelect)
       .at(0);
+
     expect(element.prop('data')).toEqual([
       { label: 'January', value: '0' },
       { label: 'February', value: '1' },
@@ -54,8 +55,9 @@ describe('@mantine/dates/CalendarLabel', () => {
     const element = shallow(
       <CalendarLabel {...defaultProps} withSelect yearsRange={{ from: 2021, to: 2023 }} />
     )
-      .find(Select)
+      .find(NativeSelect)
       .at(1);
+
     expect(element.prop('data')).toEqual([
       { label: '2021', value: '2021' },
       { label: '2022', value: '2022' },

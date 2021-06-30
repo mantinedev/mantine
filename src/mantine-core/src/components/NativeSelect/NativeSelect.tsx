@@ -15,10 +15,10 @@ interface SelectItem {
   disabled?: boolean;
 }
 
-export type SelectStylesNames = InputStylesNames | InputWrapperStylesNames;
+export type NativeSelectStylesNames = InputStylesNames | InputWrapperStylesNames;
 
-export interface SelectProps
-  extends DefaultProps<SelectStylesNames>,
+export interface NativeSelectProps
+  extends DefaultProps<NativeSelectStylesNames>,
     InputWrapperBaseProps,
     Omit<InputBaseProps, 'rightSection' | 'rightSectionWidth' | 'rightSectionProps'>,
     Omit<React.ComponentPropsWithoutRef<'select'>, 'size'> {
@@ -60,7 +60,7 @@ const rightSectionWidth = {
   xl: 54,
 };
 
-export function Select({
+export function NativeSelect({
   id,
   className,
   required,
@@ -81,7 +81,7 @@ export function Select({
   styles,
   size = 'sm',
   ...others
-}: SelectProps) {
+}: NativeSelectProps) {
   const theme = useMantineTheme(themeOverride);
   const uuid = useId(id);
 
@@ -150,4 +150,4 @@ export function Select({
   );
 }
 
-Select.displayName = '@mantine/core/Select';
+NativeSelect.displayName = '@mantine/core/NativeSelect';

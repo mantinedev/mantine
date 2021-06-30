@@ -8,7 +8,7 @@ import {
   itSupportsStylesApi,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
-import { Select } from './Select';
+import { NativeSelect } from './NativeSelect';
 import { Input as InputStylesApi } from '../Input/styles.api';
 import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
@@ -22,7 +22,7 @@ const defaultProps = {
   data: TEST_DATA,
 };
 
-describe('@mantine/core/Select', () => {
+describe('@mantine/core/NativeSelect', () => {
   beforeAll(() => {
     // JSDom does not implement this and an error was being
     // thrown from jest-axe because of it.
@@ -30,16 +30,16 @@ describe('@mantine/core/Select', () => {
   });
 
   checkAccessibility([
-    mount(<Select data={TEST_DATA} label="test-label" />),
-    mount(<Select data={TEST_DATA} aria-label="test-label" />),
+    mount(<NativeSelect data={TEST_DATA} label="test-label" />),
+    mount(<NativeSelect data={TEST_DATA} aria-label="test-label" />),
   ]);
 
-  itSupportsClassName(Select, defaultProps);
-  itSupportsStyle(Select, defaultProps);
-  itSupportsRef(Select, defaultProps, HTMLSelectElement, 'elementRef');
+  itSupportsClassName(NativeSelect, defaultProps);
+  itSupportsStyle(NativeSelect, defaultProps);
+  itSupportsRef(NativeSelect, defaultProps, HTMLSelectElement, 'elementRef');
 
   itSupportsStylesApi(
-    Select,
+    NativeSelect,
     {
       data: [],
       icon: '$',
@@ -54,7 +54,7 @@ describe('@mantine/core/Select', () => {
   );
 
   it('passes required and id props to select element', () => {
-    const element = shallow(<Select data={TEST_DATA} required id="test-id" />);
+    const element = shallow(<NativeSelect data={TEST_DATA} required id="test-id" />);
 
     expect(element.render().find('select').attr('id')).toBe('test-id');
     expect(element.render().find('select').attr('aria-required')).toBe('true');
@@ -62,7 +62,7 @@ describe('@mantine/core/Select', () => {
 
   it('passes required, id, label, error and description props to InputWrapper component', () => {
     const element = shallow(
-      <Select
+      <NativeSelect
         data={TEST_DATA}
         id="test-id"
         required
@@ -80,13 +80,15 @@ describe('@mantine/core/Select', () => {
   });
 
   it('passes wrapperProps to InputWrapper', () => {
-    const element = shallow(<Select data={TEST_DATA} wrapperProps={{ 'data-label': 'test' }} />);
+    const element = shallow(
+      <NativeSelect data={TEST_DATA} wrapperProps={{ 'data-label': 'test' }} />
+    );
     expect(element.render().attr('data-label')).toBe('test');
   });
 
   it('renders correct amount of options', () => {
-    const withoutPlaceholder = shallow(<Select data={TEST_DATA} />);
-    const withPlaceholder = shallow(<Select data={TEST_DATA} placeholder="placeholder" />);
+    const withoutPlaceholder = shallow(<NativeSelect data={TEST_DATA} />);
+    const withPlaceholder = shallow(<NativeSelect data={TEST_DATA} placeholder="placeholder" />);
 
     expect(withoutPlaceholder.render().find('option')).toHaveLength(TEST_DATA.length);
     expect(withPlaceholder.render().find('option')).toHaveLength(TEST_DATA.length + 1);

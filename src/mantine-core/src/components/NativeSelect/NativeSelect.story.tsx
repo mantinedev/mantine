@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { RocketIcon } from '@modulz/radix-icons';
 import { DEFAULT_THEME } from '../../theme';
-import { Select } from './Select';
+import { NativeSelect } from './NativeSelect';
 
 const data = [
   { label: 'React', value: 'react' },
@@ -12,11 +12,11 @@ const data = [
 ];
 
 function WrappedSelect(
-  props: Omit<React.ComponentProps<typeof Select>, 'value' | 'onChange' | 'data'>
+  props: Omit<React.ComponentProps<typeof NativeSelect>, 'value' | 'onChange' | 'data'>
 ) {
   const [value, onChange] = useState(null);
   return (
-    <Select
+    <NativeSelect
       value={value}
       onChange={(event) => onChange(event.currentTarget.value)}
       data={data}
@@ -33,7 +33,7 @@ storiesOf('@mantine/core/Select', module)
   ))
   .add('Uncontrolled', () => (
     <div style={{ maxWidth: 300, padding: 20 }}>
-      <Select label="Your favorite library" placeholder="Your favorite library" data={data} />
+      <NativeSelect label="Your favorite library" placeholder="Your favorite library" data={data} />
     </div>
   ))
   .add('Required', () => (
@@ -87,13 +87,13 @@ storiesOf('@mantine/core/Select', module)
   ))
   .add('Disabled', () => (
     <div style={{ maxWidth: 300, padding: 20 }}>
-      <Select
+      <NativeSelect
         disabled
         label="Your favorite library"
         placeholder="Your favorite library"
         data={data}
       />
-      <Select
+      <NativeSelect
         style={{ marginTop: 20 }}
         disabled
         label="Your favorite library"
@@ -116,7 +116,7 @@ storiesOf('@mantine/core/Select', module)
   .add('Dark theme', () => (
     <div style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40, minHeight: '100vh' }}>
       <div style={{ width: 300, padding: 20 }}>
-        <Select
+        <NativeSelect
           label="Your favorite library"
           placeholder="Your favorite library"
           data={data}

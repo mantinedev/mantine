@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, SelectProps } from '../Select';
+import { NativeSelect } from '../NativeSelect';
 
 const data = [
   { value: 'react', label: 'React' },
@@ -8,7 +8,7 @@ const data = [
   { value: 'svelte', label: 'Svelte' },
 ];
 
-const codeTemplate = (props: string) => `<Select
+const codeTemplate = (props: string) => `<NativeSelect
   data={[
     { value: 'react', label: 'React' },
     { value: 'vue', label: 'Vue' },
@@ -20,7 +20,7 @@ const codeTemplate = (props: string) => `<Select
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: (props: SelectProps) => <Select {...props} data={data} />,
+  component: (props: any) => <NativeSelect {...props} data={data} />,
   codeTemplate,
   configuratorProps: { multiline: true },
   configurator: [

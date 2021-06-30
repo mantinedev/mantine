@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, useMantineTheme } from '@mantine/core';
+import { NativeSelect, useMantineTheme } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 
 interface SelectControlProps {
@@ -21,7 +21,7 @@ export function SelectControl({
   const theme = useMantineTheme();
 
   return (
-    <Select
+    <NativeSelect
       data={data.map((item) => ({
         value: item.value,
         label: capitalizeItems ? upperFirst(item.label) : item.label,

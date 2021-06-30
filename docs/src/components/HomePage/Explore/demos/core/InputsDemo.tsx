@@ -5,7 +5,7 @@ import {
   TextInput,
   Textarea,
   NumberInput,
-  Select,
+  NativeSelect,
   Slider,
   InputWrapper,
   RangeSlider,
@@ -97,7 +97,7 @@ export function InputsDemo() {
           description="Use text input to capture string data from user"
         />
 
-        <Select
+        <NativeSelect
           style={{ marginTop: 15 }}
           label="Native select"
           data={[

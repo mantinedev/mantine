@@ -4,7 +4,7 @@ import {
   useMantineTheme,
   DefaultProps,
   mergeStyles,
-  Select,
+  NativeSelect,
   Group,
   Text,
   MantineSize,
@@ -56,7 +56,7 @@ export function CalendarLabel({
       className={classes.selectGroup}
       style={_styles.selectGroup}
     >
-      <Select
+      <NativeSelect
         aria-label={monthLabel}
         className={classes.select}
         style={_styles.select}
@@ -72,7 +72,7 @@ export function CalendarLabel({
         }))}
       />
 
-      <Select
+      <NativeSelect
         aria-label={yearLabel}
         className={classes.select}
         style={_styles.select}
