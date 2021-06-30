@@ -24,21 +24,21 @@ export default createMemoStyles({
     padding: [0, theme.spacing.sm],
     cursor: 'pointer',
     color: color
-      ? getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 })
+      ? getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 })
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[0]
       : theme.colors.gray[9],
 
     '&:disabled': {
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[5],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
       cursor: 'not-allowed',
     },
 
     '&$hovered:not(:disabled), &:not(:disabled):hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
 
       '&:not(:disabled):active': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2],
       },
     },
   }),
