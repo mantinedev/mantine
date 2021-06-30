@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
-import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
+import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
 import {
   InputWrapper,
@@ -20,7 +20,7 @@ export type SelectStylesNames =
 
 export interface SelectItem {
   value: string;
-  label: React.ReactNode;
+  label: string;
   [key: string]: any;
 }
 
@@ -28,7 +28,7 @@ export interface SelectProps
   extends DefaultProps<SelectStylesNames>,
     InputBaseProps,
     InputWrapperBaseProps,
-    Omit<React.ComponentPropsWithoutRef<'button'>, 'size' | 'onChange'> {
+    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange'> {
   /** Input size */
   size?: MantineSize;
 
@@ -43,12 +43,6 @@ export interface SelectProps
 
   /** Dropdown shadow from theme or any value to set box-shadow */
   shadow?: string;
-
-  /** Limit amount of items rendered in dropdown */
-  limit?: number;
-
-  /** Called when item from dropdown was selected */
-  onItemSubmit?(item: SelectItem): void;
 
   /** Controlled input value */
   value?: string;
@@ -76,7 +70,7 @@ export interface SelectProps
 }
 
 function defaultFilter(value: string, item: SelectItem) {
-  return item.value.toLowerCase().trim().includes(value.toLowerCase().trim());
+  return item.label.toLowerCase().trim().includes(value.toLowerCase().trim());
 }
 
 export function Select({
@@ -90,12 +84,10 @@ export function Select({
   size = 'sm',
   shadow = 'sm',
   data,
-  limit = 5,
   value,
   defaultValue,
   onChange,
   itemComponent: Item = DefaultItem,
-  onItemSubmit,
   onKeyDown,
   onFocus,
   onBlur,
@@ -121,22 +113,22 @@ export function Select({
   const [_value, handleChange] = useUncontrolled({
     value,
     defaultValue,
-    finalValue: '',
+    finalValue: null,
     onChange,
     rule: (val) => typeof val === 'string',
   });
 
-  useDidUpdate(() => {
-    setHovered(0);
-  }, [_value]);
+  const selectedValue = data.find((item) => item.value === _value);
+  const [inputValue, setInputValue] = useState(selectedValue?.label || '');
 
-  const handleItemClick = (item: SelectItem) => {
-    typeof onItemSubmit === 'function' && onItemSubmit(item);
+  const handleItemSelect = (item: SelectItem) => {
     handleChange(item.value);
+    setInputValue(item.label);
+    setDropdownOpened(false);
     inputRef.current.focus();
   };
 
-  const filteredData = data.filter((item) => filter(_value, item)).slice(0, limit);
+  const filteredData = data.filter((item) => filter(inputValue, item));
 
   const items = filteredData.map((item, index) => (
     <Item
@@ -149,7 +141,7 @@ export function Select({
       aria-selected={hovered === index}
       onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        handleItemClick(item);
+        handleItemSelect(item);
       }}
       {...item}
     />
@@ -174,11 +166,27 @@ export function Select({
       case 'Enter': {
         if (filteredData[hovered]) {
           event.preventDefault();
-          typeof onItemSubmit === 'function' && onItemSubmit(filteredData[hovered]);
-          handleChange(filteredData[hovered].value);
+          handleItemSelect(filteredData[hovered]);
         }
       }
     }
+  };
+
+  const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    typeof onFocus === 'function' && onFocus(event);
+    setDropdownOpened(true);
+  };
+
+  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    typeof onBlur === 'function' && onBlur(event);
+    const selected = data.find((item) => item.value === _value);
+    setInputValue(selected?.label || '');
+    setDropdownOpened(false);
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.currentTarget.value);
+    setDropdownOpened(true);
   };
 
   return (
@@ -208,9 +216,9 @@ export function Select({
         onMouseLeave={() => setHovered(-1)}
         tabIndex={-1}
       >
-        <Input<'button'>
+        <Input<'input'>
           {...others}
-          component="button"
+          type="text"
           required={required}
           elementRef={useMergedRef(elementRef, inputRef)}
           id={uuid}
@@ -221,15 +229,15 @@ export function Select({
           classNames={classNames as any}
           styles={styles as any}
           __staticSelector="autocomplete"
-          value={_value}
-          onChange={(event) => handleChange(event.currentTarget.value)}
+          value={inputValue}
+          onChange={handleInputChange}
           aria-autocomplete="list"
           aria-controls={dropdownOpened ? `${uuid}-items` : null}
           aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
           onClick={() => setDropdownOpened(true)}
-        >
-          Select
-        </Input>
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+        />
 
         <Transition
           mounted={dropdownOpened}
