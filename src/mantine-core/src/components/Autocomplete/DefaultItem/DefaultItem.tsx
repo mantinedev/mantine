@@ -12,3 +12,5 @@ export function DefaultItem({ value, ...others }: DefaultItemProps) {
     </UnstyledButton>
   );
 }
+
+DefaultItem.displayName = '@mantine/core/DefaultItem';
