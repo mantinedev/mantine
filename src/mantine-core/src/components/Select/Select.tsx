@@ -70,6 +70,9 @@ export interface SelectProps
 
   /** Maximum dropdown height in px */
   maxDropdownHeight?: number;
+
+  /** Set to true to enable search */
+  searchable?: boolean;
 }
 
 function defaultFilter(value: string, item: SelectItem) {
@@ -94,7 +97,7 @@ export function Select({
   onKeyDown,
   onFocus,
   onBlur,
-  transition = 'skew-up',
+  transition = 'fade',
   transitionDuration = 0,
   initiallyOpened = false,
   transitionTimingFunction,
@@ -105,6 +108,7 @@ export function Select({
   styles,
   filter = defaultFilter,
   maxDropdownHeight = 220,
+  searchable = false,
   ...others
 }: SelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -133,12 +137,15 @@ export function Select({
     inputRef.current.focus();
   };
 
-  const filteredData = data.filter((item) => filter(inputValue, item));
+  const filteredData = searchable ? data.filter((item) => filter(inputValue, item)) : data;
 
   const items = filteredData.map((item, index) => (
     <Item
       key={item.value}
-      className={cx(classes.item, { [classes.hovered]: hovered === index })}
+      className={cx(classes.item, {
+        [classes.hovered]: hovered === index,
+        [classes.selected]: item.value === _value,
+      })}
       style={{ ..._styles.item, ...(hovered === index ? _styles.hovered : null) }}
       onMouseEnter={() => setHovered(index)}
       id={`${uuid}-${index}`}
@@ -232,7 +239,10 @@ export function Select({
           size={size}
           onKeyDown={handleInputKeydown}
           themeOverride={themeOverride}
-          classNames={classNames as any}
+          classNames={{
+            ...classNames,
+            input: cx({ [classes.notSearchable]: !searchable }, (classNames as any)?.input),
+          }}
           styles={styles as any}
           __staticSelector="autocomplete"
           value={inputValue}
@@ -243,6 +253,7 @@ export function Select({
           onClick={() => setDropdownOpened(true)}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
+          readOnly={!searchable}
         />
 
         <Transition

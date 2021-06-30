@@ -34,6 +34,13 @@ function Controlled() {
 storiesOf('@mantine/core/Select', module).add('General usage', () => (
   <div style={{ padding: 40, maxWidth: 300 }}>
     <Select label="Choose your favorite library/framework" placeholder="Choose value" data={data} />
+    <Select
+      searchable
+      label="Choose your favorite library/framework"
+      placeholder="Choose value"
+      data={data}
+      style={{ marginTop: 20 }}
+    />
     <Controlled />
     <Select
       label="Large data set"

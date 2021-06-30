@@ -11,6 +11,10 @@ export default createMemoStyles({
     position: 'relative',
   },
 
+  notSearchable: {
+    cursor: 'pointer',
+  },
+
   dropdown: ({ theme, size }: SelectStyles) => ({
     position: 'absolute',
     zIndex: 1,
@@ -35,6 +39,16 @@ export default createMemoStyles({
     ],
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+  }),
+
+  selected: ({ theme }: SelectStyles) => ({
+    backgroundColor: theme.colors[theme.primaryColor][0],
+    color: theme.colors[theme.primaryColor][9],
+
+    '&$hovered': {
+      backgroundColor: theme.colors[theme.primaryColor][0],
+      color: theme.colors[theme.primaryColor][9],
+    },
   }),
 
   hovered: ({ theme }: SelectStyles) => ({
