@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import cx from 'clsx';
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
 import {
   InputWrapper,
@@ -17,6 +17,11 @@ export type AutocompleteStylesNames =
   | InputWrapperStylesNames
   | keyof ReturnType<typeof useStyles>;
 
+interface AutocompleteItem {
+  value: string;
+  [key: string]: any;
+}
+
 interface AutocompleteProps
   extends DefaultProps<AutocompleteStylesNames>,
     InputBaseProps,
@@ -29,7 +34,7 @@ interface AutocompleteProps
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 
   /** Autocomplete data used to renderer items in dropdown */
-  data: { value: string; [key: string]: any }[];
+  data: AutocompleteItem[];
 
   /** Change item renderer */
   itemComponent?: React.FC<any>;
@@ -41,7 +46,7 @@ interface AutocompleteProps
   limit?: number;
 
   /** Called when item from dropdown was selected */
-  onItemSubmit?(item: { value: string; [key: string]: any }): void;
+  onItemSubmit?(item: AutocompleteItem): void;
 
   /** Controlled input value */
   value?: string;
@@ -82,6 +87,7 @@ export function Autocomplete({
   const classes = useStyles({ theme, size }, classNames as any, 'autocomplete');
   const _styles = mergeStyles(classes, styles as any);
   const [hovered, setHovered] = useState(-1);
+  const inputRef = useRef<HTMLInputElement>();
   const uuid = useId(id);
   const [_value, handleChange] = useUncontrolled({
     value,
@@ -91,6 +97,12 @@ export function Autocomplete({
     rule: (val) => typeof val === 'string',
   });
 
+  const handleItemClick = (item: AutocompleteItem) => {
+    typeof onItemSubmit === 'function' && onItemSubmit(item);
+    handleChange(item.value);
+    inputRef.current.focus();
+  };
+
   const items = data
     .slice(0, limit)
     .map((item, index) => (
@@ -98,6 +110,7 @@ export function Autocomplete({
         key={item.value}
         className={cx(classes.item, { [classes.hovered]: hovered === index })}
         onMouseEnter={() => setHovered(index)}
+        onClick={() => handleItemClick(item)}
         {...item}
       />
     ));
@@ -148,7 +161,7 @@ export function Autocomplete({
         <Input<'input'>
           {...others}
           required={required}
-          elementRef={elementRef}
+          elementRef={useMergedRef(elementRef, inputRef)}
           id={uuid}
           type="string"
           invalid={!!error}
