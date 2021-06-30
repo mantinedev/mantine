@@ -23,7 +23,7 @@ interface AutocompleteItem {
   [key: string]: any;
 }
 
-interface AutocompleteProps
+export interface AutocompleteProps
   extends DefaultProps<AutocompleteStylesNames>,
     InputBaseProps,
     InputWrapperBaseProps,

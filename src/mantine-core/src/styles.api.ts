@@ -1,4 +1,5 @@
 export * from './components/Alert/styles.api';
+export * from './components/Autocomplete/styles.api';
 export * from './components/Avatar/styles.api';
 export * from './components/Badge/styles.api';
 export * from './components/Blockquote/styles.api';

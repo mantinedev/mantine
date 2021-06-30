@@ -4,6 +4,7 @@ export { ActionIcon, ACTION_ICON_SIZES } from './components/ActionIcon/ActionIco
 export { CloseButton } from './components/ActionIcon/CloseButton/CloseButton';
 export { Alert } from './components/Alert/Alert';
 export { ArrowBody } from './components/ArrowBody/ArrowBody';
+export { Autocomplete } from './components/Autocomplete/Autocomplete';
 export { Avatar, AVATAR_SIZES } from './components/Avatar/Avatar';
 export { Badge, BADGE_SIZES, BADGE_VARIANTS } from './components/Badge/Badge';
 export { Blockquote } from './components/Blockquote/Blockquote';
@@ -64,6 +65,10 @@ export type { ActionIconProps } from './components/ActionIcon/ActionIcon';
 export type { CloseButtonProps } from './components/ActionIcon/CloseButton/CloseButton';
 export type { AlertProps, AlertStylesName } from './components/Alert/Alert';
 export type { ArrowBodyProps, ArrowBodyStylesNames } from './components/ArrowBody/ArrowBody';
+export type {
+  AutocompleteProps,
+  AutocompleteStylesNames,
+} from './components/Autocomplete/Autocomplete';
 export type { AvatarProps, AvatarStylesNames } from './components/Avatar/Avatar';
 export type { BadgeProps, BadgeStylesNames } from './components/Badge/Badge';
 export type { BlockquoteProps, BlockquoteStylesNames } from './components/Blockquote/Blockquote';
