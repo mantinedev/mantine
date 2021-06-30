@@ -78,6 +78,7 @@ export function InputWrapper({
     {
       ..._labelProps,
       ...labelProps,
+      id: id ? `${id}-label` : undefined,
       'data-mantine-label': true,
       className: classes.label,
       style: _styles.label,
