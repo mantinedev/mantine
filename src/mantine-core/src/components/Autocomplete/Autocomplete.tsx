@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
-import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
+import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
 import {
   InputWrapper,
@@ -99,7 +99,7 @@ export function Autocomplete({
   onFocus,
   onBlur,
   transition = 'skew-up',
-  transitionDuration = 200,
+  transitionDuration = 0,
   initiallyOpened = false,
   transitionTimingFunction,
   wrapperProps,
@@ -125,27 +125,30 @@ export function Autocomplete({
     rule: (val) => typeof val === 'string',
   });
 
+  useDidUpdate(() => {
+    setHovered(0);
+  }, [_value]);
+
   const handleItemClick = (item: AutocompleteItem) => {
     typeof onItemSubmit === 'function' && onItemSubmit(item);
     handleChange(item.value);
     inputRef.current.focus();
   };
 
-  const items = data
-    .filter((item) => filter(_value, item))
-    .slice(0, limit)
-    .map((item, index) => (
-      <Item
-        key={item.value}
-        className={cx(classes.item, { [classes.hovered]: hovered === index })}
-        onMouseEnter={() => setHovered(index)}
-        onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
-          event.preventDefault();
-          handleItemClick(item);
-        }}
-        {...item}
-      />
-    ));
+  const filteredData = data.filter((item) => filter(_value, item)).slice(0, limit);
+
+  const items = filteredData.map((item, index) => (
+    <Item
+      key={item.value}
+      className={cx(classes.item, { [classes.hovered]: hovered === index })}
+      onMouseEnter={() => setHovered(index)}
+      onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        handleItemClick(item);
+      }}
+      {...item}
+    />
+  ));
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     typeof onKeyDown === 'function' && onKeyDown(event);
@@ -159,15 +162,15 @@ export function Autocomplete({
 
       case 'ArrowDown': {
         event.preventDefault();
-        setHovered((current) => (current < data.length - 1 ? current + 1 : current));
+        setHovered((current) => (current < filteredData.length - 1 ? current + 1 : current));
         break;
       }
 
       case 'Enter': {
-        if (data[hovered]) {
+        if (filteredData[hovered]) {
           event.preventDefault();
-          typeof onItemSubmit === 'function' && onItemSubmit(data[hovered]);
-          handleChange(data[hovered].value);
+          typeof onItemSubmit === 'function' && onItemSubmit(filteredData[hovered]);
+          handleChange(filteredData[hovered].value);
         }
       }
     }
@@ -183,7 +186,8 @@ export function Autocomplete({
     setDropdownOpened(false);
   };
 
-  const shouldRenderDropdown = dropdownOpened && !data.some((item) => item.value === _value);
+  const shouldRenderDropdown =
+    dropdownOpened && filteredData.length > 0 && !data.some((item) => item.value === _value);
 
   return (
     <InputWrapper

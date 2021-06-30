@@ -33,6 +33,6 @@ export default createMemoStyles({
   }),
 
   hovered: ({ theme }: AutocompleteStyles) => ({
-    backgroundColor: theme.colors.gray[0],
+    backgroundColor: theme.colors.gray[1],
   }),
 });
