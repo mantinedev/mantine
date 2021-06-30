@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'clsx';
 import { useId } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
@@ -54,6 +54,7 @@ export function Autocomplete({
   data,
   limit = 5,
   itemComponent: Item = DefaultItem,
+  onKeyDown,
   wrapperProps,
   elementRef,
   themeOverride,
@@ -64,11 +65,40 @@ export function Autocomplete({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, size }, classNames as any, 'autocomplete');
   const _styles = mergeStyles(classes, styles as any);
+  const [hovered, setHovered] = useState(-1);
   const uuid = useId(id);
 
   const items = data
     .slice(0, limit)
-    .map((item) => <Item key={item.value} className={cx(classes.item)} {...item} />);
+    .map((item, index) => (
+      <Item
+        key={item.value}
+        className={cx(classes.item, { [classes.hovered]: hovered === index })}
+        onMouseEnter={() => setHovered(index)}
+        {...item}
+      />
+    ));
+
+  const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    typeof onKeyDown === 'function' && onKeyDown(event);
+
+    switch (event.nativeEvent.code) {
+      case 'ArrowUp': {
+        event.preventDefault();
+        setHovered((current) => (current > 0 ? current - 1 : current));
+        break;
+      }
+
+      case 'ArrowDown': {
+        event.preventDefault();
+        setHovered((current) => (current < data.length - 1 ? current + 1 : current));
+        break;
+      }
+
+      default:
+        break;
+    }
+  };
 
   return (
     <InputWrapper
@@ -86,8 +116,8 @@ export function Autocomplete({
       __staticSelector="autocomplete"
       {...wrapperProps}
     >
-      <div className={classes.wrapper} style={_styles.wrapper}>
-        <Input
+      <div className={classes.wrapper} style={_styles.wrapper} onMouseLeave={() => setHovered(-1)}>
+        <Input<'input'>
           {...others}
           required={required}
           elementRef={elementRef}
@@ -95,6 +125,7 @@ export function Autocomplete({
           type="string"
           invalid={!!error}
           size={size}
+          onKeyDown={handleInputKeydown}
           themeOverride={themeOverride}
           classNames={classNames as any}
           styles={styles as any}

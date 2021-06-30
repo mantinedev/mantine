@@ -11,6 +11,17 @@ export default createMemoStyles({
     position: 'relative',
   },
 
+  dropdown: ({ theme, size }: AutocompleteStyles) => ({
+    position: 'absolute',
+    top: getSizeValue({ size, sizes: INPUT_SIZES }) + theme.spacing.sm / 2,
+    left: 0,
+    right: 0,
+    backgroundColor: theme.white,
+    border: `1px solid ${theme.colors.gray[2]}`,
+    paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
+  }),
+
   item: ({ theme, size }: AutocompleteStyles) => ({
     textAlign: 'left',
     width: '100%',
@@ -21,14 +32,7 @@ export default createMemoStyles({
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
   }),
 
-  dropdown: ({ theme, size }: AutocompleteStyles) => ({
-    position: 'absolute',
-    top: getSizeValue({ size, sizes: INPUT_SIZES }) + theme.spacing.sm / 2,
-    left: 0,
-    right: 0,
-    backgroundColor: theme.white,
-    border: `1px solid ${theme.colors.gray[2]}`,
-    paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
-    paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
+  hovered: ({ theme }: AutocompleteStyles) => ({
+    backgroundColor: theme.colors.gray[0],
   }),
 });
