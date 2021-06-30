@@ -5,8 +5,10 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Autocomplete } from './Autocomplete';
+import { Autocomplete as AutocompleteStylesApi } from './styles.api';
 
 const defaultProps = {
   initiallyOpened: true,
@@ -23,6 +25,21 @@ describe('@mantine/core/Autocomplete', () => {
     mount(<Autocomplete {...defaultProps} />),
     mount(<Autocomplete {...defaultProps} initiallyOpened={false} />),
   ]);
+
+  itSupportsStylesApi(
+    Autocomplete,
+    {
+      ...defaultProps,
+      icon: '$',
+      rightSection: '$',
+      label: 'test-label',
+      error: 'test-error',
+      description: 'test-description',
+      required: true,
+    },
+    Object.keys(AutocompleteStylesApi).filter((key) => key !== 'hovered'),
+    'autocomplete'
+  );
 
   it('has correct displayName', () => {
     expect(Autocomplete.displayName).toEqual('@mantine/core/Autocomplete');
