@@ -23,6 +23,7 @@ export default createMemoStyles({
     }`,
     paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
     paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    overflowY: 'auto',
   }),
 
   item: ({ theme, size }: SelectStyles) => ({

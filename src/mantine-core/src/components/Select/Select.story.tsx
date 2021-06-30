@@ -9,6 +9,13 @@ const data = [
   { value: 'vue', label: 'Vue' },
 ];
 
+const largeData = Array(50)
+  .fill(0)
+  .map((_, index) => ({
+    value: `${index}`,
+    label: `Item ${index}`,
+  }));
+
 function Controlled() {
   const [value, setValue] = useState(null);
 
@@ -28,5 +35,11 @@ storiesOf('@mantine/core/Select', module).add('General usage', () => (
   <div style={{ padding: 40, maxWidth: 300 }}>
     <Select label="Choose your favorite library/framework" placeholder="Choose value" data={data} />
     <Controlled />
+    <Select
+      label="Large data set"
+      placeholder="Choose value"
+      data={largeData}
+      style={{ marginTop: 20 }}
+    />
   </div>
 ));

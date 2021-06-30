@@ -67,6 +67,9 @@ export interface SelectProps
 
   /** Function based on which items in dropdown are filtered */
   filter?(value: string, item: SelectItem): boolean;
+
+  /** Maximum dropdown height in px */
+  maxDropdownHeight?: number;
 }
 
 function defaultFilter(value: string, item: SelectItem) {
@@ -101,6 +104,7 @@ export function Select({
   classNames,
   styles,
   filter = defaultFilter,
+  maxDropdownHeight = 220,
   ...others
 }: SelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -123,6 +127,7 @@ export function Select({
 
   const handleItemSelect = (item: SelectItem) => {
     handleChange(item.value);
+    setHovered(-1);
     setInputValue(item.label);
     setDropdownOpened(false);
     inputRef.current.focus();
@@ -186,6 +191,7 @@ export function Select({
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.currentTarget.value);
+    setHovered(0);
     setDropdownOpened(true);
   };
 
@@ -252,7 +258,7 @@ export function Select({
               role="listbox"
               className={classes.dropdown}
               shadow={shadow}
-              style={{ ..._styles.dropdown, ...transitionStyles }}
+              style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
             >
               {items}
             </Paper>
