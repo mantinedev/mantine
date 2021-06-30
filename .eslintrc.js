@@ -41,6 +41,9 @@ module.exports = {
     // sometimes it is better
     'no-nested-ternary': 'off',
 
+    // Usually default case is not required
+    'default-case': 'off',
+
     // controlled with prettier
     'arrow-parens': 'off',
     'function-paren-newline': 'off',
