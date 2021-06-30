@@ -13,4 +13,40 @@ docs: 'core/Autocomplete.mdx'
 styles: ['Autocomplete']
 ---
 
+import { AutocompleteDemos } from '@demos/core';
+
 ## Usage
+
+<Demo data={AutocompleteDemos.usage} />
+
+## Dynamic data
+
+## Custom item component
+
+## Input props
+
+<Demo data={AutocompleteDemos.configurator} />
+
+## Get element ref
+
+You can get input ref with `elementRef` prop:
+
+```tsx
+import { useRef } from 'react';
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef(null);
+  return <Autocomplete elementRef={ref} />;
+}
+```
+
+## Accessibility
+
+Provide `aria-label` in case you use component without label for screen reader support:
+
+```tsx
+<Autocomplete label="My input" />; // -> ok, input and label is connected
+<Autocomplete />; // not ok, input is not labeled
+<Autocomplete aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
+```
