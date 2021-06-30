@@ -143,6 +143,7 @@ export function Autocomplete({
       className={cx(classes.item, { [classes.hovered]: hovered === index })}
       onMouseEnter={() => setHovered(index)}
       id={`${uuid}-${index}`}
+      role="option"
       aria-selected={hovered === index}
       onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -210,10 +211,13 @@ export function Autocomplete({
       <div
         className={classes.wrapper}
         style={_styles.wrapper}
+        role="combobox"
         aria-haspopup="listbox"
-        aria-owns={uuid}
+        aria-owns={`${uuid}-items`}
+        aria-controls={uuid}
         aria-expanded={shouldRenderDropdown}
         onMouseLeave={() => setHovered(-1)}
+        tabIndex={-1}
       >
         <Input<'input'>
           {...others}
@@ -233,8 +237,8 @@ export function Autocomplete({
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           aria-autocomplete="list"
-          aria-controls={`${uuid}-items`}
-          aria-activedescendant={`${uuid}-${hovered}`}
+          aria-controls={shouldRenderDropdown ? `${uuid}-items` : null}
+          aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
         />
 
         <Transition
@@ -246,6 +250,8 @@ export function Autocomplete({
           {(transitionStyles) => (
             <Paper
               id={`${uuid}-items`}
+              aria-labelledby={`${uuid}-label`}
+              role="listbox"
               className={classes.dropdown}
               shadow={shadow}
               style={{ ..._styles.dropdown, ...transitionStyles }}
