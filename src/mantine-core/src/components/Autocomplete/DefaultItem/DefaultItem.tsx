@@ -6,5 +6,9 @@ interface DefaultItemProps extends Omit<React.ComponentPropsWithoutRef<'button'>
 }
 
 export function DefaultItem({ value, ...others }: DefaultItemProps) {
-  return <UnstyledButton {...others}>{value}</UnstyledButton>;
+  return (
+    <UnstyledButton {...others} tabIndex={-1}>
+      {value}
+    </UnstyledButton>
+  );
 }

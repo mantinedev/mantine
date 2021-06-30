@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
-import { useId } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
 import {
   InputWrapper,
@@ -21,7 +21,7 @@ interface AutocompleteProps
   extends DefaultProps<AutocompleteStylesNames>,
     InputBaseProps,
     InputWrapperBaseProps,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
+    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange'> {
   /** Input size */
   size?: MantineSize;
 
@@ -39,6 +39,18 @@ interface AutocompleteProps
 
   /** Limit amount of items rendered in dropdown */
   limit?: number;
+
+  /** Called when item from dropdown was selected */
+  onItemSubmit?(item: { value: string; [key: string]: any }): void;
+
+  /** Controlled input value */
+  value?: string;
+
+  /** Uncontrolled input defaultValue */
+  defaultValue?: string;
+
+  /** Controlled input onChange handler */
+  onChange?(value: string): void;
 }
 
 export function Autocomplete({
@@ -53,7 +65,11 @@ export function Autocomplete({
   shadow = 'sm',
   data,
   limit = 5,
+  value,
+  defaultValue,
+  onChange,
   itemComponent: Item = DefaultItem,
+  onItemSubmit,
   onKeyDown,
   wrapperProps,
   elementRef,
@@ -67,6 +83,13 @@ export function Autocomplete({
   const _styles = mergeStyles(classes, styles as any);
   const [hovered, setHovered] = useState(-1);
   const uuid = useId(id);
+  const [_value, handleChange] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: '',
+    onChange,
+    rule: (val) => typeof val === 'string',
+  });
 
   const items = data
     .slice(0, limit)
@@ -95,8 +118,13 @@ export function Autocomplete({
         break;
       }
 
-      default:
-        break;
+      case 'Enter': {
+        if (data[hovered]) {
+          event.preventDefault();
+          typeof onItemSubmit === 'function' && onItemSubmit(data[hovered]);
+          handleChange(data[hovered].value);
+        }
+      }
     }
   };
 
@@ -130,6 +158,8 @@ export function Autocomplete({
           classNames={classNames as any}
           styles={styles as any}
           __staticSelector="autocomplete"
+          value={_value}
+          onChange={(event) => handleChange(event.currentTarget.value)}
         />
 
         <Paper className={classes.dropdown} shadow={shadow}>
