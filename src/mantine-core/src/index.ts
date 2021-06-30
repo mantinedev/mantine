@@ -68,6 +68,7 @@ export type { ArrowBodyProps, ArrowBodyStylesNames } from './components/ArrowBod
 export type {
   AutocompleteProps,
   AutocompleteStylesNames,
+  AutocompleteItem,
 } from './components/Autocomplete/Autocomplete';
 export type { AvatarProps, AvatarStylesNames } from './components/Avatar/Avatar';
 export type { BadgeProps, BadgeStylesNames } from './components/Badge/Badge';

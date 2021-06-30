@@ -18,7 +18,7 @@ export type AutocompleteStylesNames =
   | InputWrapperStylesNames
   | keyof ReturnType<typeof useStyles>;
 
-interface AutocompleteItem {
+export interface AutocompleteItem {
   value: string;
   [key: string]: any;
 }
