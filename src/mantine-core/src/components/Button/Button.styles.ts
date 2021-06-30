@@ -134,8 +134,8 @@ export default createMemoStyles({
     border: '1px solid transparent',
     height: sizes[size].height,
     backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 5 }),
-      theme.colorScheme === 'dark' ? 0.3 : 0.1
+      getThemeColor({ theme, color, shade: 5 }),
+      theme.colorScheme === 'dark' ? 0.35 : 0.1
     ),
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 2 : 7 }),
 
@@ -160,10 +160,7 @@ export default createMemoStyles({
     border: '1px solid transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 600,
-    backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: 6 }),
-      theme.colorScheme === 'dark' ? 0.65 : 1
-    ),
+    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
     color: theme.white,
     height: sizes[size].height,
 
