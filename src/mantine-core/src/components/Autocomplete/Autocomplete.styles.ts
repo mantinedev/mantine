@@ -28,7 +28,7 @@ export default createMemoStyles({
     textAlign: 'left',
     width: '100%',
     padding: [
-      getSizeValue({ size, sizes: theme.spacing }) / 2,
+      getSizeValue({ size, sizes: theme.spacing }) / 1.5,
       getSizeValue({ size, sizes: theme.spacing }),
     ],
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
@@ -36,6 +36,6 @@ export default createMemoStyles({
   }),
 
   hovered: ({ theme }: AutocompleteStyles) => ({
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
   }),
 });
