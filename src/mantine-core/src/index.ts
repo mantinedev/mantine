@@ -30,6 +30,7 @@ export { Loader, LOADER_SIZES } from './components/Loader/Loader';
 export { LoadingOverlay } from './components/LoadingOverlay/LoadingOverlay';
 export { Menu, MenuItem, MenuBody, MENU_SIZES } from './components/Menu/Menu';
 export { Modal, MODAL_SIZES } from './components/Modal/Modal';
+export { NativeSelect } from './components/NativeSelect/NativeSelect';
 export { Notification } from './components/Notification/Notification';
 export { NumberInput } from './components/NumberInput/NumberInput';
 export { Overlay } from './components/Overlay/Overlay';
@@ -41,7 +42,7 @@ export { Progress, PROGRESS_SIZES } from './components/Progress/Progress';
 export { RadioGroup, Radio, RADIO_SIZES } from './components/RadioGroup/RadioGroup';
 export { RingProgress } from './components/RingProgress/RingProgress';
 export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
-export { NativeSelect } from './components/NativeSelect/NativeSelect';
+export { Select } from './components/Select/Select';
 export { Slider, RangeSlider, SLIDER_SIZES } from './components/Slider';
 export { Spoiler } from './components/Spoiler/Spoiler';
 export { Switch, SWITCH_SIZES } from './components/Switch/Switch';
@@ -59,6 +60,8 @@ export {
   AVAILABLE_TRANSITIONS,
 } from './components/Transition/Transition';
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
+
+export type { ComponentPassThrough } from './types';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
 export type { ActionIconProps } from './components/ActionIcon/ActionIcon';
@@ -103,6 +106,10 @@ export type { LoadingOverlayProps } from './components/LoadingOverlay/LoadingOve
 export type { MenuProps, MenuItemProps, MenuBodyProps } from './components/Menu/Menu';
 export type { ModalProps, ModalStylesNames } from './components/Modal/Modal';
 export type {
+  NativeSelectProps,
+  NativeSelectStylesNames,
+} from './components/NativeSelect/NativeSelect';
+export type {
   NotificationProps,
   NotificationStylesNames,
 } from './components/Notification/Notification';
@@ -126,10 +133,7 @@ export type {
   SegmentedControlProps,
   SegmentedControlStylesNames,
 } from './components/SegmentedControl/SegmentedControl';
-export type {
-  NativeSelectProps,
-  NativeSelectStylesNames,
-} from './components/NativeSelect/NativeSelect';
+export type { SelectProps, SelectStylesNames } from './components/Select/Select';
 export type { SliderProps, RangeSliderProps, SliderStylesNames } from './components/Slider';
 export type { SpoilerProps, SpoilerStylesNames } from './components/Spoiler/Spoiler';
 export type { SwitchProps, SwitchStylesNames } from './components/Switch/Switch';
