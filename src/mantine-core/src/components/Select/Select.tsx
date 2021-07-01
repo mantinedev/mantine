@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineSize, mergeStyles, getSizeValue } from '../../theme';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -10,6 +10,8 @@ import {
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { Paper } from '../Paper/Paper';
 import { Text } from '../Text/Text';
+import { ChevronIcon } from '../NativeSelect/ChevronIcon';
+import { rightSectionWidth } from '../NativeSelect/NativeSelect';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { scrollIntoView } from './scroll-into-view/scroll-into-view';
@@ -240,6 +242,8 @@ export function Select({
     setDropdownOpened(true);
   };
 
+  const chevron = <ChevronIcon error={error} size={size} themeOverride={themeOverride} />;
+
   return (
     <InputWrapper
       required={required}
@@ -281,7 +285,10 @@ export function Select({
             ...classNames,
             input: cx({ [classes.notSearchable]: !searchable }, (classNames as any)?.input),
           }}
-          styles={styles as any}
+          styles={{
+            ...styles,
+            rightSection: { ...(styles as any)?.rightSection, pointerEvents: 'none' },
+          }}
           __staticSelector="select"
           value={inputValue}
           onChange={handleInputChange}
@@ -292,6 +299,8 @@ export function Select({
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           readOnly={!searchable}
+          rightSection={chevron}
+          rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
         />
 
         <Transition

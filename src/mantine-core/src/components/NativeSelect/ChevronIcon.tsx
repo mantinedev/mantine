@@ -1,17 +1,31 @@
 import React from 'react';
+import { useMantineTheme, DefaultProps, MantineSize, getSizeValue } from '../../theme';
 
-interface ChevronIconProps extends React.ComponentProps<'svg'> {
-  size: number;
+interface ChevronIconProps extends DefaultProps, React.ComponentProps<'svg'> {
+  size: MantineSize;
+  error: any;
 }
 
-export function ChevronIcon({ size, ...others }: ChevronIconProps) {
+const iconSizes = {
+  xs: 14,
+  sm: 18,
+  md: 20,
+  lg: 24,
+  xl: 28,
+};
+
+export function ChevronIcon({ size, error, style, themeOverride, ...others }: ChevronIconProps) {
+  const _size = getSizeValue({ size, sizes: iconSizes });
+  const theme = useMantineTheme(themeOverride);
+
   return (
     <svg
-      width={size}
-      height={size}
+      width={_size}
+      height={_size}
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      style={{ color: error ? theme.colors.red[6] : theme.colors.gray[6], ...style }}
       {...others}
     >
       <path

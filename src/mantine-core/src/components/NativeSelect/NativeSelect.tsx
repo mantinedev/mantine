@@ -1,6 +1,6 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineSize, getSizeValue } from '../../theme';
+import { DefaultProps, MantineSize, getSizeValue } from '../../theme';
 import {
   InputWrapperBaseProps,
   InputWrapper,
@@ -44,15 +44,7 @@ export interface NativeSelectProps
   size?: MantineSize;
 }
 
-const iconSizes = {
-  xs: 14,
-  sm: 18,
-  md: 20,
-  lg: 24,
-  xl: 28,
-};
-
-const rightSectionWidth = {
+export const rightSectionWidth = {
   xs: 24,
   sm: 30,
   md: 34,
@@ -82,7 +74,6 @@ export function NativeSelect({
   size = 'sm',
   ...others
 }: NativeSelectProps) {
-  const theme = useMantineTheme(themeOverride);
   const uuid = useId(id);
 
   const options = data.map((item) => (
@@ -99,12 +90,7 @@ export function NativeSelect({
     );
   }
 
-  const chevron = (
-    <ChevronIcon
-      style={{ color: error ? theme.colors.red[6] : theme.colors.gray[6] }}
-      size={getSizeValue({ size, sizes: iconSizes })}
-    />
-  );
+  const chevron = <ChevronIcon error={error} size={size} themeOverride={themeOverride} />;
 
   return (
     <InputWrapper
