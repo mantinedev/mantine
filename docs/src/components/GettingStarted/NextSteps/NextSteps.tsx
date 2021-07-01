@@ -6,13 +6,13 @@ import useStyles from './NextSteps.styles';
 
 export function NextSteps() {
   const classes = useStyles();
-  const items = NEXT_STEPS_DATA.map((item) => {
+  const items = NEXT_STEPS_DATA.map((item, index) => {
     // eslint-disable-next-line jsx-a11y/anchor-has-content
     const LinkComponent = item.type === 'gatsby' ? Link : (props: any) => <a {...props} />;
     const linkProps = item.type === 'gatsby' ? { to: item.link } : { href: item.link };
 
     return (
-      <LinkComponent className={classes.link} {...linkProps}>
+      <LinkComponent className={classes.link} key={index} {...linkProps}>
         <Group spacing="lg">
           <ThemeIcon size={40} style={{ backgroundColor: item.color }}>
             <item.icon width={26} height={26} size={26} />
