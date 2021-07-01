@@ -5,6 +5,7 @@ import { Jumbotron } from './Jumbotron/Jumbotron';
 import { Features } from './Features/Features';
 import { Footer } from '../Footer/Footer';
 import { Explore } from './Explore/Explore';
+import { Community } from './Community/Community';
 
 export function HomePage() {
   const theme = useMantineTheme();
@@ -15,6 +16,7 @@ export function HomePage() {
         <Jumbotron />
         <Features />
         <Explore />
+        <Community />
       </div>
       <Footer />
     </div>
