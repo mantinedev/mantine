@@ -46,7 +46,9 @@ describe('@mantine/core/Select', () => {
       description: 'test-description',
       required: true,
     },
-    Object.keys(SelectStylesApi).filter((key) => key !== 'hovered' && key !== 'selected'),
+    Object.keys(SelectStylesApi).filter(
+      (key) => key !== 'hovered' && key !== 'selected' && key !== 'nothingFound'
+    ),
     'select'
   );
 
