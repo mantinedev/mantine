@@ -42,8 +42,9 @@ export default createMemoStyles({
   }),
 
   selected: ({ theme }: SelectStyles) => ({
-    backgroundColor: theme.colors[theme.primaryColor][0],
-    color: theme.colors[theme.primaryColor][9],
+    backgroundColor:
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors[theme.primaryColor][0],
+    color: theme.colorScheme === 'dark' ? theme.white : theme.colors[theme.primaryColor][9],
   }),
 
   hovered: ({ theme }: SelectStyles) => ({
