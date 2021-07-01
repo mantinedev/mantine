@@ -17,6 +17,7 @@ import {
   Radio,
   Autocomplete,
 } from '@mantine/core';
+import { CustomSelectDemo } from '@mantine/core/src/components/Select/demos/itemComponent';
 import { DatePicker, TimeInput, DateRangePicker } from '@mantine/dates';
 import { BREAKPOINT } from '../../Explore.styles';
 
@@ -100,6 +101,7 @@ export function InputsDemo() {
         <NativeSelect
           style={{ marginTop: 15 }}
           label="Native select"
+          description="HTML select element wrapper"
           data={[
             { value: 'react', label: 'React' },
             { value: 'vue', label: 'Vue' },
@@ -132,6 +134,12 @@ export function InputsDemo() {
           label="Time input"
           description="Capture time from user"
           defaultValue={new Date()}
+        />
+
+        <CustomSelectDemo
+          label="Custom select"
+          description="Custom select with any component as item"
+          style={{ marginTop: 15 }}
         />
 
         <Autocomplete

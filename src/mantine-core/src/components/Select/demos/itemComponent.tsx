@@ -86,21 +86,28 @@ function SelectItem({ image, label, name, ...others }: ItemProps) {
   );
 }
 
+export function CustomSelectDemo(props: any) {
+  return (
+    <Select
+      label="Choose employee of the month"
+      placeholder="Pick one"
+      itemComponent={SelectItem}
+      data={data}
+      searchable
+      nothingFound="Nobody here"
+      filter={(value, item) =>
+        item.name.toLowerCase().includes(value.toLowerCase().trim()) ||
+        item.label.toLowerCase().includes(value.toLowerCase().trim())
+      }
+      {...props}
+    />
+  );
+}
+
 function Demo() {
   return (
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Select
-        label="Choose employee of the month"
-        placeholder="Pick one"
-        itemComponent={SelectItem}
-        data={data}
-        searchable
-        nothingFound="Nobody here"
-        filter={(value, item) =>
-          item.name.toLowerCase().includes(value.toLowerCase().trim()) ||
-          item.label.toLowerCase().includes(value.toLowerCase().trim())
-        }
-      />
+      <CustomSelectDemo />
     </div>
   );
 }
