@@ -137,7 +137,8 @@ export function Select({
     inputRef.current.focus();
   };
 
-  const filteredData = searchable ? data.filter((item) => filter(inputValue, item)) : data;
+  const shouldFilter = searchable && data.every((item) => item.label !== inputValue);
+  const filteredData = shouldFilter ? data.filter((item) => filter(inputValue, item)) : data;
 
   const items = filteredData.map((item, index) => (
     <Item
