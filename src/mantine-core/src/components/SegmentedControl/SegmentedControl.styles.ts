@@ -7,7 +7,6 @@ import {
   getSizeValue,
   getThemeColor,
   getFocusStyles,
-  hexToRgba,
 } from '../../theme';
 
 export const WRAPPER_PADDING = 4;
@@ -156,10 +155,7 @@ export default createMemoStyles({
     }`,
     backgroundColor:
       color in theme.colors
-        ? hexToRgba(
-            getThemeColor({ theme, color, shade: 6 }),
-            theme.colorScheme === 'dark' ? 0.55 : 1
-          )
+        ? getThemeColor({ theme, color, shade: 6 })
         : theme.colorScheme === 'dark'
         ? theme.colors.dark[5]
         : theme.white,

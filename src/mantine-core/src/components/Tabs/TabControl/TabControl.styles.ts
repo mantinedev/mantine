@@ -4,7 +4,6 @@ import {
   getFontStyles,
   getFocusStyles,
   getThemeColor,
-  hexToRgba,
 } from '../../../theme';
 
 interface TabControlStyles {
@@ -73,10 +72,7 @@ export default createMemoStyles({
 
     '&$active': {
       color: theme.white,
-      background: hexToRgba(
-        getThemeColor({ theme, color, shade: 6 }),
-        theme.colorScheme === 'dark' ? 0.65 : 1
-      ),
+      background: getThemeColor({ theme, color, shade: 7 }),
     },
   }),
 

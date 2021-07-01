@@ -5,7 +5,6 @@ import {
   MantineNumberSize,
   getFontStyles,
   getThemeColor,
-  hexToRgba,
 } from '../../theme';
 
 export const sizes = {
@@ -45,10 +44,7 @@ export default createMemoStyles({
     fontSize: getSizeValue({ size, sizes }) / 2.5,
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 0 : 6 }),
     fontWeight: 700,
-    backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
-      theme.colorScheme === 'dark' ? 0.5 : 1
-    ),
+    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

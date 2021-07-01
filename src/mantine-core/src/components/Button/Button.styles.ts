@@ -160,9 +160,10 @@ export default createMemoStyles({
     border: '1px solid transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 600,
-    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
     color: theme.white,
     height: sizes[size].height,
+    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
 
     '& $inner': {
       height: '100%',

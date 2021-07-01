@@ -105,21 +105,15 @@ export default createMemoStyles({
   }),
 
   filled: ({ theme, color }: BadgeStyles) => ({
-    backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: 7 }),
-      theme.colorScheme === 'dark' ? 0.65 : 1
-    ),
+    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
     color: theme.white,
-    textShadow: theme.colorScheme === 'dark' ? 'none' : '1px 1px 1px rgba(0, 0, 0, .3)',
+    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
   }),
 
   outline: ({ theme, color }: BadgeStyles) => ({
     backgroundColor: 'transparent',
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
-    borderColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
-      0.55
-    ),
+    borderColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
   }),
 
   dot: ({ theme, color, size }: BadgeStyles) => {

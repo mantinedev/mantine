@@ -18,7 +18,7 @@ export default createMemoStyles({
   label: ({ theme, color }: ThumbStyles) => ({
     position: 'absolute',
     top: -32,
-    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 6 }),
+    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
     fontSize: theme.fontSizes.xs,
     color: theme.white,
     padding: theme.spacing.xs / 2,
@@ -36,7 +36,7 @@ export default createMemoStyles({
     border: `2px solid ${getThemeColor({
       theme,
       color,
-      shade: theme.colorScheme === 'dark' ? 8 : 6,
+      shade: 6,
     })}`,
     transform: 'translate(-50%, -50%)',
     top: '50%',
