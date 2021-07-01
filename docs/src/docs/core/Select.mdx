@@ -5,7 +5,7 @@ title: Select
 order: 1
 slug: /core/select/
 category: 'inputs'
-description: 'Capture user feedback limited to large set of options'
+description: 'Custom searchable select'
 props: ['Select']
 import: "import { Select } from '@mantine/core';"
 source: 'mantine-core/src/components/Select/Select.tsx'
@@ -13,17 +13,13 @@ docs: 'core/Select.mdx'
 styles: ['Select']
 ---
 
-import { SelectDemos } from '@demos/core';
-
 ## Usage
 
-Use Select when you need to capture user feedback limited to certain options.
-If you only have 2-5 options consider using <GatsbyLink to="/core/radio-group/">RadioGroup</GatsbyLink> instead of Select,
-as it provides better UX for smaller data sets.
+## Searchable
 
-Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> (except for `rightSection`) and <GatsbyLink to="/core/input-wrapper">InputWrapper</GatsbyLink> components.
+## Custom item component
 
-<Demo data={SelectDemos.configurator} />
+## Input props
 
 ## Controlled
 
@@ -33,7 +29,7 @@ import { Select } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
-  return <Select value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+  return <Select value={value} onChange={setValue} />;
 }
 ```
 

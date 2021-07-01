@@ -1,0 +1,62 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: NativeSelect
+order: 1
+slug: /core/native-select/
+category: 'inputs'
+description: 'Capture user feedback limited to large set of options'
+props: ['NativeSelect']
+import: "import { NativeSelect } from '@mantine/core';"
+source: 'mantine-core/src/components/NativeSelect/NativeSelect.tsx'
+docs: 'core/NativeSelect.mdx'
+styles: ['NativeSelect']
+---
+
+import { NativeSelectDemos } from '@demos/core';
+
+## Usage
+
+Use select when you need to capture user feedback limited to certain options.
+If you only have 2-5 options consider using <GatsbyLink to="/core/radio-group/">RadioGroup</GatsbyLink> instead of select,
+as it provides better UX for smaller data sets.
+
+Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> (except for `rightSection`) and <GatsbyLink to="/core/input-wrapper">InputWrapper</GatsbyLink> components.
+
+<Demo data={NativeSelectDemos.configurator} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { NativeSelect } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <NativeSelect value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+}
+```
+
+## Get element ref
+
+You can get input ref by passing `elementRef` prop to NativeSelect component:
+
+```tsx
+import { useRef } from 'react';
+import { NativeSelect } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef(null);
+  return <NativeSelect elementRef={ref} />;
+}
+```
+
+## Accessibility
+
+Provide `aria-label` in case you use component without label for screen reader support:
+
+```tsx
+<NativeSelect label="My select" />; // -> ok, select and label is connected
+<NativeSelect />; // not ok, select is not labeled
+<NativeSelect aria-label="My select" />; // -> ok, label is not visible but will be announced by screen reader
+```

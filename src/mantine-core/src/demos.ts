@@ -36,7 +36,7 @@ export * as ProgressDemos from './components/Progress/demos';
 export * as RadioGroupDemos from './components/RadioGroup/demos';
 export * as RingProgressDemos from './components/RingProgress/demos';
 export * as SegmentedControlDemos from './components/SegmentedControl/demos';
-export * as SelectDemos from './components/NativeSelect/demos';
+export * as NativeSelectDemos from './components/NativeSelect/demos';
 export * as SliderDemos from './components/Slider/demos';
 export * as SpoilerDemos from './components/Spoiler/demos';
 export * as SwitchDemos from './components/Switch/demos';
