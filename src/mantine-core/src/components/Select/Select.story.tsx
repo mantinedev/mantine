@@ -45,6 +45,7 @@ storiesOf('@mantine/core/Select', module).add('General usage', () => (
     <Select
       label="Large data set"
       placeholder="Choose value"
+      searchable
       data={largeData}
       style={{ marginTop: 20 }}
     />

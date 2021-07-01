@@ -3,11 +3,12 @@ import { UnstyledButton } from '../../Button/Button';
 
 interface DefaultItemProps extends Omit<React.ComponentPropsWithoutRef<'button'>, 'value'> {
   label: React.ReactNode;
+  elementRef: React.ForwardedRef<HTMLButtonElement>;
 }
 
-export function DefaultItem({ label, ...others }: DefaultItemProps) {
+export function DefaultItem({ label, elementRef, ...others }: DefaultItemProps) {
   return (
-    <UnstyledButton {...others} tabIndex={-1}>
+    <UnstyledButton {...others} elementRef={elementRef} tabIndex={-1}>
       {label}
     </UnstyledButton>
   );

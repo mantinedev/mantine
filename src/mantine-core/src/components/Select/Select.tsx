@@ -117,6 +117,7 @@ export function Select({
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
+  const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const uuid = useId(id);
   const [_value, handleChange] = useUncontrolled({
     value,
@@ -152,6 +153,9 @@ export function Select({
       id={`${uuid}-${index}`}
       role="option"
       aria-selected={hovered === index}
+      elementRef={(node: HTMLButtonElement) => {
+        itemsRefs.current[item.value] = node;
+      }}
       onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         handleItemSelect(item);
@@ -167,14 +171,22 @@ export function Select({
       case 'ArrowUp': {
         event.preventDefault();
         setDropdownOpened(true);
-        setHovered((current) => (current > 0 ? current - 1 : current));
+        setHovered((current) => {
+          const nextIndex = current > 0 ? current - 1 : current;
+          itemsRefs.current[filteredData[nextIndex]?.value]?.scrollIntoView(false);
+          return nextIndex;
+        });
         break;
       }
 
       case 'ArrowDown': {
         event.preventDefault();
         setDropdownOpened(true);
-        setHovered((current) => (current < filteredData.length - 1 ? current + 1 : current));
+        setHovered((current) => {
+          const nextIndex = current < filteredData.length - 1 ? current + 1 : current;
+          itemsRefs.current[filteredData[nextIndex]?.value]?.scrollIntoView(false);
+          return nextIndex;
+        });
         break;
       }
 
@@ -186,7 +198,7 @@ export function Select({
       }
 
       case 'Space': {
-        if (!searchable) {
+        if (!searchable && !dropdownOpened) {
           event.preventDefault();
           setDropdownOpened(true);
           setHovered(0);
