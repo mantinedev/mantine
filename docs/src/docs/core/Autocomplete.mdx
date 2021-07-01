@@ -17,7 +17,8 @@ import { AutocompleteDemos } from '@demos/core';
 
 ## Usage
 
-Autocomplete is an input with which you can suggest user to select one of the given values:
+Autocomplete is an input with which you can suggest user to select one of the given values
+(if you need to force specific values without free input use <GatsbyLink to="/core/select/">Select component</GatsbyLink>):
 
 <Demo data={AutocompleteDemos.usage} />
 
@@ -41,10 +42,17 @@ function Demo() {
 
 ## Custom item component
 
+You can change autocomplete item component and filtering logic that is used in search.
+To do so you will need to:
+
+- Add extra props to `data` objects
+- Create `filter` function which determines whether item should be added to the search results
+- Provide `itemComponent` which will consume `data` objects
+
 `data` prop must be an array of objects with required `value` field:
 
 ```tsx
-// Minimum data for default autocomplete
+// Minimum data for default autocomplete used in previous examples
 [{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }];
 ```
 

@@ -10,7 +10,7 @@ const data = Array(50)
 }));
 
 <Select
-  label="Your favorite framework/library"
+  label="What item is the best?"
   placeholder="Pick one"
   searchable
   nothingFound="No options"
@@ -30,7 +30,7 @@ function Demo() {
   return (
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
       <Select
-        label="Your favorite framework/library"
+        label="What item is the best?"
         placeholder="Pick one"
         searchable
         nothingFound="No options"
