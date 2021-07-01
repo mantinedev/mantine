@@ -9,6 +9,7 @@ import {
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { Paper } from '../Paper/Paper';
+import { Text } from '../Text/Text';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import useStyles from './Select.styles';
@@ -73,6 +74,9 @@ export interface SelectProps
 
   /** Set to true to enable search */
   searchable?: boolean;
+
+  /** Nothing found label */
+  nothingFound?: React.ReactNode;
 }
 
 function defaultFilter(value: string, item: SelectItem) {
@@ -109,6 +113,7 @@ export function Select({
   filter = defaultFilter,
   maxDropdownHeight = 220,
   searchable = false,
+  nothingFound,
   ...others
 }: SelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -302,7 +307,13 @@ export function Select({
               shadow={shadow}
               style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
             >
-              {items}
+              {items.length > 0 ? (
+                items
+              ) : (
+                <Text size={size} className={classes.nothingFound} style={_styles.nothingFound}>
+                  {nothingFound}
+                </Text>
+              )}
             </Paper>
           )}
         </Transition>

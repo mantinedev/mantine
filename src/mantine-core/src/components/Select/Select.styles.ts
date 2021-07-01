@@ -44,14 +44,16 @@ export default createMemoStyles({
   selected: ({ theme }: SelectStyles) => ({
     backgroundColor: theme.colors[theme.primaryColor][0],
     color: theme.colors[theme.primaryColor][9],
-
-    '&$hovered': {
-      backgroundColor: theme.colors[theme.primaryColor][0],
-      color: theme.colors[theme.primaryColor][9],
-    },
   }),
 
   hovered: ({ theme }: SelectStyles) => ({
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+  }),
+
+  nothingFound: ({ theme, size }: SelectStyles) => ({
+    color: theme.colors.gray[6],
+    paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    textAlign: 'center',
   }),
 });

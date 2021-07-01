@@ -40,6 +40,7 @@ storiesOf('@mantine/core/Select', module).add('General usage', () => (
       placeholder="Choose value"
       data={data}
       style={{ marginTop: 20 }}
+      nothingFound="No options"
     />
     <Controlled />
     <Select
