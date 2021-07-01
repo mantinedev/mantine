@@ -166,13 +166,31 @@ export function Select({
     switch (event.nativeEvent.code) {
       case 'ArrowUp': {
         event.preventDefault();
+        setDropdownOpened(true);
         setHovered((current) => (current > 0 ? current - 1 : current));
         break;
       }
 
       case 'ArrowDown': {
         event.preventDefault();
+        setDropdownOpened(true);
         setHovered((current) => (current < filteredData.length - 1 ? current + 1 : current));
+        break;
+      }
+
+      case 'Escape': {
+        event.preventDefault();
+        setDropdownOpened(false);
+        setHovered(-1);
+        break;
+      }
+
+      case 'Space': {
+        if (!searchable) {
+          event.preventDefault();
+          setDropdownOpened(true);
+          setHovered(0);
+        }
         break;
       }
 
