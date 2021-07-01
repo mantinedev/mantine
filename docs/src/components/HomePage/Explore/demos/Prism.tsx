@@ -21,9 +21,11 @@ export function PrismDemo() {
     <>
       <LinkTitle title="Highlight code with your theme colors" link="/others/prism/" />
 
-      <Prism language="tsx" style={{ marginTop: 15 }}>
-        {code}
-      </Prism>
+      <div style={{ backgroundColor: '#fff', borderRadius: 3 }}>
+        <Prism language="tsx" themeOverride={{ colorScheme: 'light' }} style={{ marginTop: 15 }}>
+          {code}
+        </Prism>
+      </div>
       <Prism language="tsx" themeOverride={{ colorScheme: 'dark' }} style={{ marginTop: 15 }}>
         {code}
       </Prism>
