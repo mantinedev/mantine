@@ -112,7 +112,7 @@ export function Select({
   ...others
 }: SelectProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames as any, 'autocomplete');
+  const classes = useStyles({ theme, size }, classNames as any, 'select');
   const _styles = mergeStyles(classes, styles as any);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
@@ -246,7 +246,7 @@ export function Select({
       themeOverride={themeOverride}
       classNames={classNames as any}
       styles={styles as any}
-      __staticSelector="autocomplete"
+      __staticSelector="select"
       {...wrapperProps}
     >
       <div
@@ -275,7 +275,7 @@ export function Select({
             input: cx({ [classes.notSearchable]: !searchable }, (classNames as any)?.input),
           }}
           styles={styles as any}
-          __staticSelector="autocomplete"
+          __staticSelector="select"
           value={inputValue}
           onChange={handleInputChange}
           aria-autocomplete="list"
