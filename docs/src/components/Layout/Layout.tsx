@@ -34,17 +34,15 @@ export default function Layout({ children, location }: LayoutProps) {
   }, []);
 
   return (
-    <React.StrictMode>
-      <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
-        <MantineProvider theme={{ colorScheme }}>
-          <GlobalStyles />
-          <NormalizeCSS />
+    <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
+      <MantineProvider theme={{ colorScheme }}>
+        <GlobalStyles />
+        <NormalizeCSS />
 
-          <LayoutInner key={key} location={location}>
-            {children}
-          </LayoutInner>
-        </MantineProvider>
-      </ColorSchemeContext.Provider>
-    </React.StrictMode>
+        <LayoutInner key={key} location={location}>
+          {children}
+        </LayoutInner>
+      </MantineProvider>
+    </ColorSchemeContext.Provider>
   );
 }

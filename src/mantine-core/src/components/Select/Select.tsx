@@ -12,6 +12,7 @@ import { Paper } from '../Paper/Paper';
 import { Text } from '../Text/Text';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
+import { scrollIntoView } from './scroll-into-view/scroll-into-view';
 import useStyles from './Select.styles';
 
 export type SelectStylesNames =
@@ -122,6 +123,7 @@ export function Select({
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
+  const dropdownRef = useRef<HTMLDivElement>();
   const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const uuid = useId(id);
   const [_value, handleChange] = useUncontrolled({
@@ -178,7 +180,7 @@ export function Select({
         setDropdownOpened(true);
         setHovered((current) => {
           const nextIndex = current > 0 ? current - 1 : current;
-          itemsRefs.current[filteredData[nextIndex]?.value]?.scrollIntoView(false);
+          scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
           return nextIndex;
         });
         break;
@@ -189,7 +191,7 @@ export function Select({
         setDropdownOpened(true);
         setHovered((current) => {
           const nextIndex = current < filteredData.length - 1 ? current + 1 : current;
-          itemsRefs.current[filteredData[nextIndex]?.value]?.scrollIntoView(false);
+          scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
           return nextIndex;
         });
         break;
@@ -305,6 +307,7 @@ export function Select({
               role="listbox"
               className={classes.dropdown}
               shadow={shadow}
+              elementRef={dropdownRef}
               style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
             >
               {items.length > 0 ? (
