@@ -1,16 +1,56 @@
 import React from 'react';
-import { useMantineTheme, Text } from '@mantine/core';
+import { ChatBubbleIcon, ImageIcon, GearIcon } from '@modulz/radix-icons';
+import { useMantineTheme, Text, Tabs, Tab, RingProgress, Group } from '@mantine/core';
 import { usage as CardDemo } from '@mantine/core/src/components/Card/demos/usage';
-import { usage as AlertDemo } from '@mantine/core/src/components/Alert/demos/usage';
 
 export function ContentDemos() {
   const theme = useMantineTheme();
   const CardComponent = CardDemo.component;
-  const AlertComponent = AlertDemo.component;
 
   return (
     <>
-      <Text size="lg" style={{ marginBottom: 15 }}>
+      <Group align="flex-start" grow spacing={30}>
+        <div>
+          <Text size="lg" style={{ marginBottom: 5 }}>
+            RingProgress component
+          </Text>
+
+          <Group position="center">
+            <RingProgress
+              label={
+                <Text size="xs" align="center">
+                  Application data usage
+                </Text>
+              }
+              sections={[
+                { value: 40, color: 'cyan' },
+                { value: 15, color: 'orange' },
+                { value: 15, color: 'grape' },
+              ]}
+            />
+          </Group>
+        </div>
+
+        <div>
+          <Text size="lg" style={{ marginBottom: 5 }}>
+            Tabs component
+          </Text>
+
+          <Tabs grow>
+            <Tab label="Messages" icon={<ChatBubbleIcon />} />
+            <Tab label="Gallery" icon={<ImageIcon />} />
+            <Tab label="Settings" icon={<GearIcon />} />
+          </Tabs>
+
+          <Tabs grow variant="outline" style={{ marginTop: 30 }}>
+            <Tab label="Messages" icon={<ChatBubbleIcon />} />
+            <Tab label="Gallery" icon={<ImageIcon />} />
+            <Tab label="Settings" icon={<GearIcon />} />
+          </Tabs>
+        </div>
+      </Group>
+
+      <Text size="lg" style={{ marginBottom: 15, marginTop: 30 }}>
         Card component
       </Text>
       <div
@@ -29,28 +69,6 @@ export function ContentDemos() {
           }}
         >
           <CardComponent />
-        </div>
-      </div>
-
-      <Text size="lg" style={{ marginBottom: 15, marginTop: 30 }}>
-        Alert component
-      </Text>
-
-      <div
-        style={{
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 400,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            padding: 30,
-          }}
-        >
-          <AlertComponent />
         </div>
       </div>
     </>
