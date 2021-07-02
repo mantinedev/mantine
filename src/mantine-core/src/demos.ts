@@ -21,6 +21,7 @@ export * as HighlightDemos from './components/Highlight/demos';
 export * as ImageDemos from './components/Image/demos';
 export * as InputDemos from './components/Input/demos';
 export * as InputWrapperDemos from './components/InputWrapper/demos';
+export * as JsonInputDemos from './components/JsonInput/demos';
 export * as KbdDemos from './components/Kbd/demos';
 export * as LoaderDemos from './components/Loader/demos';
 export * as LoadingOverlayDemos from './components/LoadingOverlay/demos';

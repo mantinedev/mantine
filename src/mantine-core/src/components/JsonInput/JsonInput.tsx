@@ -59,6 +59,7 @@ export function JsonInput({
     const isValid = validateJson(event.currentTarget.value);
     formatOnBlur &&
       isValid &&
+      event.currentTarget.value.trim() !== '' &&
       setValue(JSON.stringify(JSON.parse(event.currentTarget.value), null, 2));
     setValid(isValid);
   };

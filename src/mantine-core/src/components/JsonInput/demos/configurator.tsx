@@ -1,20 +1,20 @@
-import { Textarea } from '../Textarea';
+import { JsonInput } from '../JsonInput';
 
-const codeTemplate = (props: string) => `<Textarea
+const codeTemplate = (props: string) => `<JsonInput
  ${props}
 />`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: Textarea,
+  component: JsonInput,
   codeTemplate,
   configuratorProps: { multiline: true },
   configurator: [
-    { name: 'placeholder', type: 'string', initialValue: 'Your comment' },
+    { name: 'placeholder', type: 'string', initialValue: 'Your package.json' },
     {
       name: 'label',
       type: 'string',
-      initialValue: 'Your comment',
+      initialValue: 'Your package.json',
     },
     {
       name: 'description',
