@@ -91,8 +91,8 @@ export default createMemoStyles({
       },
 
       '&:checked': {
-        backgroundColor: getThemeColor({ theme, color, shade: 6 }),
-        borderColor: getThemeColor({ theme, color, shade: 6 }),
+        backgroundColor: getThemeColor({ theme, color, shade: 7 }),
+        borderColor: getThemeColor({ theme, color, shade: 7 }),
 
         '&::before': {
           transform: `translateX(${

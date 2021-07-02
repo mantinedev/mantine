@@ -112,8 +112,12 @@ export default createMemoStyles({
 
   outline: ({ theme, color }: BadgeStyles) => ({
     backgroundColor: 'transparent',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
-    borderColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
+    border: `1px solid ${getThemeColor({
+      theme,
+      color,
+      shade: theme.colorScheme === 'dark' ? 4 : 7,
+    })}`,
   }),
 
   dot: ({ theme, color, size }: BadgeStyles) => {

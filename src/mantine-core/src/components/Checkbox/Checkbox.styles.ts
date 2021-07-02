@@ -59,8 +59,8 @@ export default createMemoStyles({
     margin: 0,
 
     '&:checked': {
-      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
-      borderColor: getThemeColor({ theme, color, shade: 6 }),
+      backgroundColor: getThemeColor({ theme, color, shade: 7 }),
+      borderColor: getThemeColor({ theme, color, shade: 7 }),
       color: theme.white,
 
       '& + $icon': {

@@ -18,7 +18,7 @@ export default createMemoStyles({
     borderLeft: `3px solid ${getThemeColor({
       theme,
       color,
-      shade: theme.colorScheme === 'dark' ? 4 : 6,
+      shade: 6,
     })}`,
     padding: [theme.spacing.md, theme.spacing.lg],
   }),
@@ -34,7 +34,7 @@ export default createMemoStyles({
   },
 
   icon: ({ theme, color }: BlockquoteStyles) => ({
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    color: getThemeColor({ theme, color, shade: 6 }),
     marginRight: theme.spacing.md,
     marginTop: 2,
     width: 22,

@@ -42,7 +42,7 @@ export default createMemoStyles({
   placeholder: ({ theme, size, color }: AvatarStyles) => ({
     ...getFontStyles(theme),
     fontSize: getSizeValue({ size, sizes }) / 2.5,
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 0 : 6 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 0 : 9 }),
     fontWeight: 700,
     backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
     display: 'flex',

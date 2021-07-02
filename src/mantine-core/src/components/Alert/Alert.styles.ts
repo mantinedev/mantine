@@ -5,7 +5,7 @@ interface AlertStyles {
   theme: MantineTheme;
 }
 
-const LINE_WIDTH = 4;
+const LINE_WIDTH = 6;
 
 export default createMemoStyles({
   root: ({ color, theme }: AlertStyles) => ({
@@ -29,7 +29,7 @@ export default createMemoStyles({
       backgroundColor: getThemeColor({
         theme,
         color,
-        shade: theme.colorScheme === 'dark' ? 4 : 6,
+        shade: 6,
       }),
     },
   }),

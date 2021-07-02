@@ -19,6 +19,7 @@ import {
   Tabs,
   Tab,
   ThemeIcon,
+  Badge,
   MANTINE_COLORS,
 } from './index';
 
@@ -32,10 +33,16 @@ const getColors = (Component: React.FC<any>, props: any) => (
 
 function AllColored() {
   return (
-    <Container size={1400}>
+    <Container size={1400} style={{ paddingBottom: 200, paddingTop: 40 }}>
       {getColors(ActionIcon, { children: '$', variant: 'filled' })}
+      {getColors(ActionIcon, { children: '$', variant: 'light' })}
+      {getColors(ActionIcon, { children: '$', variant: 'outline' })}
       {getColors(ThemeIcon, { children: '$', variant: 'filled' })}
+      {getColors(ThemeIcon, { children: '$', variant: 'light' })}
       {getColors(Avatar, { children: 'BR' })}
+      {getColors(Badge, { children: 'Light', variant: 'light' })}
+      {getColors(Badge, { children: 'Filled', variant: 'filled' })}
+      {getColors(Badge, { children: 'Outline', variant: 'outline' })}
       {getColors(Button, { children: 'Outline', variant: 'outline' })}
       {getColors(Button, { children: 'Filled' })}
       {getColors(Button, { children: 'Light', variant: 'light' })}

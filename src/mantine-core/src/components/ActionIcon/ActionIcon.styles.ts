@@ -26,12 +26,9 @@ export const sizes = {
 
 export default createMemoStyles({
   filled: ({ theme, color }: ActionIconStyles) => ({
-    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
     color: theme.white,
-
-    '&:not(:disabled):hover': {
-      backgroundColor: getThemeColor({ theme, color, shade: 7 }),
-    },
+    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
 
     '&:disabled': {
       backgroundColor: getThemeColor({
@@ -114,12 +111,13 @@ export default createMemoStyles({
   }),
 
   outline: ({ theme, color }: ActionIconStyles) => ({
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
     backgroundColor: 'transparent',
-    border: `1px solid ${hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 4 }),
-      theme.colorScheme === 'dark' ? 0.45 : 1
-    )}`,
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
+    border: `1px solid ${getThemeColor({
+      theme,
+      color,
+      shade: theme.colorScheme === 'dark' ? 4 : 7,
+    })}`,
 
     '&:not(:disabled):hover': {
       backgroundColor:

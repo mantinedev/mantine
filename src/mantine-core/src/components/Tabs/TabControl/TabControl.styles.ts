@@ -41,11 +41,11 @@ export default createMemoStyles({
     borderBottom: '2px solid transparent',
 
     '&$active': {
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 6 : 7 }),
       borderBottomColor: getThemeColor({
         theme,
         color,
-        shade: theme.colorScheme === 'dark' ? 4 : 6,
+        shade: theme.colorScheme === 'dark' ? 6 : 7,
       }),
     },
   }),
