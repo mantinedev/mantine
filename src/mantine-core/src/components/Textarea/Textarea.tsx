@@ -55,6 +55,7 @@ export function Textarea({
   classNames,
   styles,
   size = 'sm',
+  __staticSelector = 'textarea',
   ...others
 }: TextareaProps) {
   const uuid = useId(id);
@@ -81,7 +82,7 @@ export function Textarea({
       classNames={classNames as any}
       styles={styles as any}
       size={size}
-      __staticSelector="textarea"
+      __staticSelector={__staticSelector}
       {...wrapperProps}
     >
       {autosize ? (
@@ -109,7 +110,7 @@ export function Textarea({
           classNames={classNames as any}
           styles={inputStyles}
           size={size}
-          __staticSelector="textarea"
+          __staticSelector={__staticSelector}
           {...others}
         />
       )}

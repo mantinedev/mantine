@@ -71,6 +71,7 @@ export function JsonInput({
       onFocus={handleFocus}
       onBlur={handleBlur}
       error={valid ? error : validationError || true}
+      __staticSelector="json-input"
       styles={{
         ...styles,
         input: {
@@ -82,3 +83,5 @@ export function JsonInput({
     />
   );
 }
+
+JsonInput.displayName = '@mantine/core/JsonInput';
