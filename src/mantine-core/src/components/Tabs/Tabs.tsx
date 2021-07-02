@@ -10,7 +10,7 @@ import useStyles from './Tabs.styles';
 export { Tab };
 export type { TabProps };
 
-export const TABS_VARIANTS = ['default', 'outline', 'pills'] as const;
+export const TABS_VARIANTS = ['default', 'outline', 'pills', 'unstyled'] as const;
 export type TabsVariant = typeof TABS_VARIANTS[number];
 export type TabsStylesNames =
   | Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>
@@ -21,7 +21,7 @@ function clamp(value: number, min: number, max: number) {
 }
 
 export interface TabsProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<TabsStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** <Tab /> components only */
   children: React.ReactNode;
@@ -45,7 +45,7 @@ export interface TabsProps
   onTabChange?(tabIndex: number): void;
 
   /** Controls appearance */
-  variant?: 'default' | 'outline' | 'pills';
+  variant?: 'default' | 'outline' | 'pills' | 'unstyled';
 }
 
 function getPreviousTab(active: number, tabs: TabType[]) {
@@ -95,8 +95,8 @@ export function Tabs({
   ...others
 }: TabsProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'tabs');
-  const _styles = mergeStyles(classes, styles);
+  const classes = useStyles({ theme }, classNames as any, 'tabs');
+  const _styles = mergeStyles(classes, styles as any);
 
   const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
 

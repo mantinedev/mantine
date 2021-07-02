@@ -16,7 +16,7 @@ export default createMemoStyles({
   tabActive: {},
   tabLabel: {},
 
-  root: ({ theme }: TabControlStyles) => ({
+  tabControl: ({ theme }: TabControlStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',

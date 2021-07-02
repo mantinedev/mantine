@@ -5,7 +5,7 @@ slug: /theming/styles-api/
 order: 4
 ---
 
-import { ButtonDemos, SliderDemos } from '@demos/core';
+import { ButtonDemos, SliderDemos, TabsDemos } from '@demos/core';
 import { CalendarDemos } from '@demos/dates';
 import * as CORE_STYLES_API from '@mantine/core/src/styles.api';
 
@@ -131,13 +131,21 @@ Here extra styles are required only for root element and left icon:
 
 <Demo data={ButtonDemos.customize} />
 
-## More examples
-
-<GatsbyLink to="/dates/calendar">Calendar</GatsbyLink> component customization with styles API:
-
-<Demo data={CalendarDemos.stylesApi} />
-
 ## Static class names
 
 Apart from `classNames` and `styles` props each component also has static classes on each element.
 You can use them to apply your styles if you do not use css modules or just do not want to pass `classNames` prop.
+
+## More examples
+
+### Calendar component
+
+<GatsbyLink to="/dates/calendar/">Calendar</GatsbyLink> component customization with styles API:
+
+<Demo data={CalendarDemos.stylesApi} />
+
+### Tabs component
+
+<GatsbyLink to="/core/tabs/">Tabs</GatsbyLink> component customization with styles API:
+
+<Demo data={TabsDemos.stylesApi} />

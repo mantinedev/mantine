@@ -48,14 +48,19 @@ export function TabControl({
       {...props}
       data-mantine-tab
       tabIndex={active ? 0 : -1}
-      className={cx(classes.root, classes[variant], { [classes.tabActive]: active }, className)}
+      className={cx(
+        classes.tabControl,
+        classes[variant],
+        { [classes.tabActive]: active },
+        className
+      )}
       type="button"
       role="tab"
       aria-selected={active}
       ref={useMergedRef(elementRef, tabProps.elementRef)}
       style={{
         ...style,
-        ..._styles.root,
+        ..._styles.tabControl,
         ..._styles[variant],
         ...(active ? _styles.tabActive : null),
       }}
