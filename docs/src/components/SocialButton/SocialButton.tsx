@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Tooltip, ActionIcon, DEFAULT_THEME } from '@mantine/core';
-import { EnvelopeOpenIcon } from '@modulz/radix-icons';
 import { MarkGithubIcon } from '@primer/octicons-react';
 import { TwitterIcon } from './TwitterIcon';
 import { DiscordIcon } from './DiscordIcon';
+import { MailIcon } from './MailIcon';
 
 interface SocialButtonProps extends Omit<React.ComponentProps<'button'>, 'type'> {
   type?: 'small' | 'large';
@@ -12,8 +12,8 @@ interface SocialButtonProps extends Omit<React.ComponentProps<'button'>, 'type'>
 
 const data = {
   email: {
-    icon: EnvelopeOpenIcon,
-    label: 'Join email newsletter',
+    icon: MailIcon,
+    label: 'Subscribe to email newsletter',
     link: 'https://buttondown.email/mantine',
     color: DEFAULT_THEME.colors.blue[6],
   },
