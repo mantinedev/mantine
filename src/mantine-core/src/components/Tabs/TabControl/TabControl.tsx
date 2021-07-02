@@ -37,7 +37,7 @@ export function TabControl({
   const classes = useStyles(
     { reduceMotion, color: overrideColor || color, theme },
     classNames,
-    'tab-control'
+    'tabs'
   );
 
   const _styles = mergeStyles(classes, styles);
@@ -48,7 +48,7 @@ export function TabControl({
       {...props}
       data-mantine-tab
       tabIndex={active ? 0 : -1}
-      className={cx(classes.root, classes[variant], { [classes.active]: active }, className)}
+      className={cx(classes.root, classes[variant], { [classes.tabActive]: active }, className)}
       type="button"
       role="tab"
       aria-selected={active}
@@ -57,18 +57,18 @@ export function TabControl({
         ...style,
         ..._styles.root,
         ..._styles[variant],
-        ...(active ? _styles.active : null),
+        ...(active ? _styles.tabActive : null),
       }}
     >
-      <div className={classes.inner} style={_styles.inner}>
+      <div className={classes.tabInner} style={_styles.tabInner}>
         {icon && (
-          <div data-mantine-icon className={classes.icon} style={_styles.icon}>
+          <div className={classes.tabIcon} style={_styles.tabIcon}>
             {icon}
           </div>
         )}
 
         {label && (
-          <div className={classes.label} style={_styles.label} data-mantine-label>
+          <div className={classes.tabLabel} style={_styles.tabLabel}>
             {label}
           </div>
         )}

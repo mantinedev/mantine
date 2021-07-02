@@ -12,7 +12,7 @@ import { Tabs, Tab } from './Tabs';
 import { Tabs as TabsStylesApi } from './styles.api';
 
 const content = [
-  <Tab label="tab-1" key="tab-1">
+  <Tab label="tab-1" key="tab-1" icon="test-icon">
     tab-1
   </Tab>,
   <Tab label="tab-2" key="tab-2">

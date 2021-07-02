@@ -13,8 +13,8 @@ interface TabControlStyles {
 }
 
 export default createMemoStyles({
-  active: {},
-  label: {},
+  tabActive: {},
+  tabLabel: {},
 
   root: ({ theme }: TabControlStyles) => ({
     ...getFontStyles(theme),
@@ -40,7 +40,7 @@ export default createMemoStyles({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     borderBottom: '2px solid transparent',
 
-    '&$active': {
+    '&$tabActive': {
       color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 6 : 7 }),
       borderBottomColor: getThemeColor({
         theme,
@@ -57,7 +57,7 @@ export default createMemoStyles({
     borderBottom: 0,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
 
-    '&$active': {
+    '&$tabActive': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
       background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
@@ -70,13 +70,13 @@ export default createMemoStyles({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
     fontSize: theme.fontSizes.md,
 
-    '&$active': {
+    '&$tabActive': {
       color: theme.white,
       background: getThemeColor({ theme, color, shade: 7 }),
     },
   }),
 
-  inner: {
+  tabInner: {
     boxSizing: 'border-box',
     display: 'flex',
     alignItems: 'center',
@@ -85,7 +85,7 @@ export default createMemoStyles({
     height: '100%',
   },
 
-  icon: ({ theme }: TabControlStyles) => ({
+  tabIcon: ({ theme }: TabControlStyles) => ({
     '&:not(:only-child)': {
       marginRight: theme.spacing.xs,
     },

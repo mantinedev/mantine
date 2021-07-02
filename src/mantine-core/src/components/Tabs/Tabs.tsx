@@ -4,7 +4,7 @@ import { useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
-import { TabControl } from './TabControl/TabControl';
+import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
 
 export { Tab };
@@ -12,7 +12,9 @@ export type { TabProps };
 
 export const TABS_VARIANTS = ['default', 'outline', 'pills'] as const;
 export type TabsVariant = typeof TABS_VARIANTS[number];
-export type TabsStylesNames = Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>;
+export type TabsStylesNames =
+  | Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>
+  | TabControlStylesNames;
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
@@ -139,6 +141,8 @@ export function Tabs({
         controlRefs.current[index] = node;
       }}
       onClick={() => activeTab !== index && handleActiveTabChange(index)}
+      classNames={classNames as any}
+      styles={styles as any}
     />
   ));
 

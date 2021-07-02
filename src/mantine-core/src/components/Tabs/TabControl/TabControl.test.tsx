@@ -1,13 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {
-  itSupportsStyle,
-  itSupportsRef,
-  itSupportsOthers,
-  itSupportsStylesApi,
-} from '@mantine/tests';
+import { itSupportsStyle, itSupportsRef, itSupportsOthers } from '@mantine/tests';
 import { TabControl } from './TabControl';
-import { Tab as TabStylesApi } from '../styles.api';
 
 const defaultProps = { active: true, tabProps: { label: 'test', icon: '$' } };
 
@@ -15,12 +9,6 @@ describe('@mantine/core/TabControl', () => {
   itSupportsStyle(TabControl, { ...defaultProps, elementRef: () => {} });
   itSupportsOthers(TabControl, { ...defaultProps, elementRef: () => {} });
   itSupportsRef(TabControl, defaultProps, HTMLButtonElement, 'elementRef');
-  itSupportsStylesApi(
-    TabControl,
-    defaultProps,
-    Object.keys(TabStylesApi).filter((key) => key !== 'active'),
-    'tab-control'
-  );
 
   it('has correct displayName', () => {
     expect(TabControl.displayName).toEqual('@mantine/core/TabControl');
@@ -53,21 +41,21 @@ describe('@mantine/core/TabControl', () => {
       />
     ).render();
 
-    expect(withIcon.find('[data-mantine-icon]').text()).toBe('$');
-    expect(withoutIcon.find('[data-mantine-icon]')).toHaveLength(0);
+    expect(withIcon.find('.mantine-tabs-tabIcon').text()).toBe('$');
+    expect(withoutIcon.find('.mantine-tabs-tabIcon')).toHaveLength(0);
   });
 
   it('renders label from tabProps', () => {
-    const withIcon = shallow(
+    const withLabel = shallow(
       <TabControl {...defaultProps} elementRef={() => {}} tabProps={{ label: 'test' }} />
     ).render();
 
-    const withoutIcon = shallow(
+    const withoutLabel = shallow(
       <TabControl {...defaultProps} elementRef={() => {}} tabProps={{ icon: '$', label: null }} />
     ).render();
 
-    expect(withIcon.find('[data-mantine-label]').text()).toBe('test');
-    expect(withoutIcon.find('[data-mantine-label]')).toHaveLength(0);
+    expect(withLabel.find('.mantine-tabs-tabLabel').text()).toBe('test');
+    expect(withoutLabel.find('.mantine-tabs-tabLabel')).toHaveLength(0);
   });
 
   it('spreads tabProps to root element', () => {

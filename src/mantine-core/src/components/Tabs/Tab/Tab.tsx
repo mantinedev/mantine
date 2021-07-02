@@ -1,10 +1,7 @@
 import React from 'react';
 import { DefaultProps } from '../../../theme';
-import type { TabControlStylesNames } from '../TabControl/TabControl';
 
-export interface TabProps
-  extends DefaultProps<TabControlStylesNames>,
-    React.ComponentProps<'button'> {
+export interface TabProps extends DefaultProps, React.ComponentProps<'button'> {
   /** Tab control label */
   label?: React.ReactNode;
 
