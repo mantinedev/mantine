@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useUncontrolled, useId } from '@mantine/hooks';
 import { DefaultProps } from '../../theme';
 import {
   AccordionItem,
@@ -36,6 +36,9 @@ export interface AccordionProps
 
   /** Open/close item transition duration in ms */
   transitionDuration?: number;
+
+  /** Used to connect accordion items controls to related content */
+  id?: string;
 }
 
 export function Accordion({
@@ -49,8 +52,10 @@ export function Accordion({
   themeOverride,
   classNames,
   styles,
+  id,
   ...others
 }: AccordionProps) {
+  const uuid = useId(id);
   const items = React.Children.toArray(children).filter(
     (item: AccordionItemType) => item.type === AccordionItem
   ) as AccordionItemType[];
@@ -93,6 +98,7 @@ export function Accordion({
       onToggle={() => handleItemToggle(index)}
       classNames={classNames}
       styles={styles}
+      id={`${uuid}-${index}`}
     />
   ));
 

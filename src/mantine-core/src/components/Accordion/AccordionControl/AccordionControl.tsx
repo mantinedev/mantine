@@ -15,6 +15,7 @@ interface AccordionControlProps
   opened: boolean;
   onToggle(): void;
   transitionDuration: number;
+  id: string;
 }
 
 export function AccordionControl({
@@ -28,6 +29,7 @@ export function AccordionControl({
   themeOverride,
   transitionDuration,
   style,
+  id,
   ...others
 }: AccordionControlProps) {
   const forceUpdate = useForceUpdate();
@@ -54,6 +56,9 @@ export function AccordionControl({
         style={_styles.control}
         onClick={onToggle}
         type="button"
+        aria-expanded={opened}
+        aria-controls={`${id}-body`}
+        id={id}
       >
         <div className={classes.label} style={_styles.label}>
           {label}
@@ -65,6 +70,9 @@ export function AccordionControl({
 
       <div
         className={classes.content}
+        role="region"
+        id={`${id}-body`}
+        aria-labelledby={id}
         style={{
           ..._styles.content,
           height: opened ? (!rect ? 'auto' : rect.getBoundingClientRect().height) : 0,

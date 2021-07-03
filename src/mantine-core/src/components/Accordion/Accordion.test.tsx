@@ -1,9 +1,11 @@
 import React from 'react';
+import { mount, shallow } from 'enzyme';
 import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  checkAccessibility,
 } from '@mantine/tests';
 import { Accordion, AccordionItem } from './Accordion';
 import { Accordion as AccordionStylesApi } from './styles.api';
@@ -20,6 +22,7 @@ describe('@mantine/core/Accordion', () => {
   itSupportsClassName(Accordion, defaultProps);
   itSupportsOthers(Accordion, defaultProps);
   itSupportsStyle(Accordion, defaultProps);
+  checkAccessibility([mount(<Accordion {...defaultProps} />)]);
   itSupportsStylesApi(Accordion, defaultProps, Object.keys(AccordionStylesApi), 'accordion');
 
   it('has correct displayName', () => {
