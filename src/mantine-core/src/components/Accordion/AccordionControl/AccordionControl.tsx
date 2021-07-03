@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import cx from 'clsx';
+import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
 import { useMantineTheme, DefaultProps, mergeStyles } from '../../../theme';
 import { UnstyledButton } from '../../Button/UnstyledButton/UnstyledButton';
 import { AccordionItemProps } from '../AccordionItem/AccordionItem';
+import { ChevronIcon } from './ChevronIcon';
 import useStyles from './AccordionControl.styles';
 
 export type AccordionControlStylesNames = keyof ReturnType<typeof useStyles>;
@@ -11,6 +14,7 @@ interface AccordionControlProps
     AccordionItemProps {
   opened: boolean;
   onToggle(): void;
+  transitionDuration: number;
 }
 
 export function AccordionControl({
@@ -18,22 +22,35 @@ export function AccordionControl({
   onToggle,
   label,
   children,
+  className,
   classNames,
   styles,
   themeOverride,
+  transitionDuration,
   ...others
 }: AccordionControlProps) {
+  const forceUpdate = useForceUpdate();
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'accordion');
+  const reduceMotion = useReducedMotion();
+  const classes = useStyles(
+    { theme, transitionDuration: reduceMotion ? 0 : transitionDuration },
+    classNames,
+    'accordion'
+  );
   const _styles = mergeStyles(classes, styles);
   const [rect, setRect] = useState<HTMLDivElement>(null);
 
+  useWindowEvent('resize', () => forceUpdate());
+
   return (
-    <div {...others}>
+    <div className={cx(classes.item, { [classes.itemOpened]: opened }, className)} {...others}>
       <UnstyledButton className={classes.control} onClick={onToggle}>
         <div className={classes.label}>{label}</div>
-        <div className={classes.icon}>^</div>
+        <div className={classes.icon}>
+          <ChevronIcon />
+        </div>
       </UnstyledButton>
+
       <div
         className={classes.content}
         style={{

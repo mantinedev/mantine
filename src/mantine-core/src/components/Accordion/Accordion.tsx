@@ -28,6 +28,9 @@ export interface AccordionProps
 
   /** Allow multiple items to be opened at the same time */
   multiple?: boolean;
+
+  /** Open/close item transition duration in ms */
+  transitionDuration?: number;
 }
 
 export function Accordion({
@@ -37,6 +40,7 @@ export function Accordion({
   state,
   onChange,
   multiple = false,
+  transitionDuration = 200,
   ...others
 }: AccordionProps) {
   const items = React.Children.toArray(children).filter(
@@ -74,6 +78,7 @@ export function Accordion({
   const controls = items.map((item, index) => (
     <AccordionControl
       {...item.props}
+      transitionDuration={transitionDuration}
       opened={value[index]}
       onToggle={() => handleItemToggle(index)}
     />
