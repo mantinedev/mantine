@@ -60,7 +60,7 @@ export function AccordionControl({
       >
         <div
           className={classes.contentInner}
-          style={_styles.contentInner}
+          style={{ ..._styles.contentInner, opacity: opened ? 1 : 0 }}
           ref={(node) => setRect(node)}
         >
           {children}
