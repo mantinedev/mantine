@@ -1,7 +1,7 @@
 import React from 'react';
 import { DefaultProps } from '../../../theme';
 
-export interface AccordionItemProps extends DefaultProps, React.ComponentProps<'button'> {
+export interface AccordionItemProps extends DefaultProps, React.ComponentProps<'div'> {
   /** AccordionItem control label */
   label?: React.ReactNode;
 
