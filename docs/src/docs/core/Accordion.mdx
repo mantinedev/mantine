@@ -26,8 +26,47 @@ import { AccordionDemos } from '@demos/core';
 
 ## Change labels
 
+You can use any react component as label:
+
 <Demo data={AccordionDemos.label} />
 
 ## Multiple opened items
 
+Set `multiple` prop on Accordion component to allow any amount of items to be opened at the same time:
+
 <Demo data={AccordionDemos.multiple} />
+
+## Component state
+
+In most cases you would use uncontrolled Accordion, to change initial opened item use `initialItem` prop:
+
+```tsx
+// -> Third element will be opened initially
+<Accordion initialItem={2} />;
+
+// -> No element will be opened initially
+<Accordion initialItem={-1} />;
+```
+
+If you need to manage component state on your own provide `state` and `onChange` props:
+
+```tsx
+import { useState } from 'react';
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  // Second item will be initially opened
+  const [state, onChange] = useState({ 0: false, 1: true, 2: false });
+  return <Accordion state={state} onChange={onChange} />;
+}
+```
+
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<Accordion /> // -> random id generated both on client and server, props mismatch warning
+<Accordion id="my-accordion" /> // -> id is static, no mismatches
+```
