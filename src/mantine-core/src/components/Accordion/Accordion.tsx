@@ -2,12 +2,14 @@ import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { DefaultProps } from '../../theme';
 import { AccordionItem, AccordionItemType } from './AccordionItem/AccordionItem';
-import { AccordionControl } from './AccordionControl/AccordionControl';
+import { AccordionControl, AccordionControlStylesNames } from './AccordionControl/AccordionControl';
 
 export { AccordionItem };
 
+export type AccordionStylesNames = AccordionControlStylesNames;
+
 export interface AccordionProps
-  extends DefaultProps,
+  extends DefaultProps<AccordionStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** <AccordionItem /> components only */
   children: React.ReactNode;
