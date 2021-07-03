@@ -7,14 +7,19 @@ interface AccordionControlStyles {
 
 export default createMemoStyles({
   label: {
+    color: 'inherit',
     fontWeight: 500,
   },
 
   item: ({ theme }: AccordionControlStyles) => ({
-    borderTop: `1px solid ${theme.colors.gray[2]}`,
+    borderTop: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+    }`,
 
     '&:last-of-type': {
-      borderBottom: `1px solid ${theme.colors.gray[2]}`,
+      borderBottom: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+      }`,
     },
   }),
 
@@ -35,6 +40,7 @@ export default createMemoStyles({
     justifyContent: 'space-between',
     padding: theme.spacing.md,
     textAlign: 'left',
+    color: 'inherit',
   }),
 
   content: ({ transitionDuration }: AccordionControlStyles) => ({
