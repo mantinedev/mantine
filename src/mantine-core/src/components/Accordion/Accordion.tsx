@@ -47,6 +47,8 @@ export function Accordion({
   multiple = false,
   transitionDuration = 200,
   themeOverride,
+  classNames,
+  styles,
   ...others
 }: AccordionProps) {
   const items = React.Children.toArray(children).filter(
@@ -84,10 +86,13 @@ export function Accordion({
   const controls = items.map((item, index) => (
     <AccordionControl
       {...item.props}
+      key={index}
       themeOverride={themeOverride}
       transitionDuration={transitionDuration}
       opened={value[index]}
       onToggle={() => handleItemToggle(index)}
+      classNames={classNames}
+      styles={styles}
     />
   ));
 

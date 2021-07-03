@@ -27,6 +27,7 @@ export function AccordionControl({
   styles,
   themeOverride,
   transitionDuration,
+  style,
   ...others
 }: AccordionControlProps) {
   const forceUpdate = useForceUpdate();
@@ -43,10 +44,21 @@ export function AccordionControl({
   useWindowEvent('resize', () => forceUpdate());
 
   return (
-    <div className={cx(classes.item, { [classes.itemOpened]: opened }, className)} {...others}>
-      <UnstyledButton className={classes.control} onClick={onToggle}>
-        <div className={classes.label}>{label}</div>
-        <div className={classes.icon}>
+    <div
+      className={cx(classes.item, { [classes.itemOpened]: opened }, className)}
+      style={{ ..._styles.item, ...(opened ? _styles.itemOpened : null), ...style }}
+      {...others}
+    >
+      <UnstyledButton
+        className={classes.control}
+        style={_styles.control}
+        onClick={onToggle}
+        type="button"
+      >
+        <div className={classes.label} style={_styles.label}>
+          {label}
+        </div>
+        <div className={classes.icon} style={_styles.icon}>
           <ChevronIcon />
         </div>
       </UnstyledButton>

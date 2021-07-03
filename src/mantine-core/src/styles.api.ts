@@ -1,3 +1,4 @@
+export * from './components/Accordion/styles.api';
 export * from './components/Alert/styles.api';
 export * from './components/Autocomplete/styles.api';
 export * from './components/Avatar/styles.api';
