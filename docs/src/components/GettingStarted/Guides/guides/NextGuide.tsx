@@ -9,12 +9,11 @@ interface CraGuideProps {
 }
 
 const appCode = `
-// pages/_app.tsx
 import { useEffect } from "react";
 import { JssProvider } from "react-jss";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, NormalizeCSS, GlobalStyles } from "@mantine/core";
 import { createGenerateId } from "jss";
 
 export default function App(props: AppProps) {
@@ -23,7 +22,7 @@ export default function App(props: AppProps) {
   useEffect(() => {
     const jssStyles = document.getElementById("mantine-ssr-styles");
     if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
+      jssStyles?.parentElement?.removeChild(jssStyles);
     }
   }, []);
 
@@ -37,12 +36,15 @@ export default function App(props: AppProps) {
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
         </Head>
+
         <MantineProvider
           theme={{
             /** Put your mantine theme override here */
             colorScheme: "light",
           }}
         >
+          <NormalizeCSS />
+          <GlobalStyles />
           <Component {...pageProps} />
         </MantineProvider>
       </JssProvider>
@@ -52,14 +54,7 @@ export default function App(props: AppProps) {
 `.trim();
 
 const documentCode = `
-// pages/_document.tsx
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentContext,
-} from "next/document";
+import Document, { Html, Head, Main, NextScript, DocumentContext } from "next/document";
 import { SheetsRegistry, JssProvider, createGenerateId } from "react-jss";
 
 export default class _Document extends Document {
