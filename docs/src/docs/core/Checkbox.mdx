@@ -80,6 +80,16 @@ function Demo() {
 }
 ```
 
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<Checkbox /> // -> random id generated both on client and server, props mismatch warning
+<Checkbox id="my-accordion" /> // -> id is static, no mismatches
+```
+
 ## Accessibility
 
 Provide `aria-label` in case you use checkbox without label for screen reader support:

@@ -128,6 +128,16 @@ function Demo() {
 }
 ```
 
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `menuId` prop to prevent props mismatch:
+
+```tsx
+<Menu /> // -> random id generated both on client and server, props mismatch warning
+<Menu menuId="my-accordion" /> // -> id is static, no mismatches
+```
+
 ## Accessibility and usability
 
 To make component more accessible for users with screen readers set `menuButtonLabel` prop.
