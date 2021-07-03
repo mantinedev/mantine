@@ -1,3 +1,4 @@
+export * as AccordionDemos from './components/Accordion/demos';
 export * as ActionIconDemos from './components/ActionIcon/demos';
 export * as AffixDemos from './components/Affix/demos';
 export * as AlertDemos from './components/Alert/demos';
