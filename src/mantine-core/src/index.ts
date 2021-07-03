@@ -1,5 +1,6 @@
 export * from './theme';
 
+export { Accordion, AccordionItem } from './components/Accordion/Accordion';
 export { ActionIcon, ACTION_ICON_SIZES } from './components/ActionIcon/ActionIcon';
 export { Affix } from './components/Affix/Affix';
 export { CloseButton } from './components/ActionIcon/CloseButton/CloseButton';
@@ -66,6 +67,11 @@ export { TypographyStylesProvider } from './components/TypographyStylesProvider/
 export type { ComponentPassThrough } from './types';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
+export type {
+  AccordionProps,
+  AccordionItemProps,
+  AccordionStylesNames,
+} from './components/Accordion/Accordion';
 export type { ActionIconProps } from './components/ActionIcon/ActionIcon';
 export type { AffixProps } from './components/Affix/Affix';
 export type { CloseButtonProps } from './components/ActionIcon/CloseButton/CloseButton';

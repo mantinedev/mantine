@@ -1,9 +1,14 @@
 import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { DefaultProps } from '../../theme';
-import { AccordionItem, AccordionItemType } from './AccordionItem/AccordionItem';
+import {
+  AccordionItem,
+  AccordionItemType,
+  AccordionItemProps,
+} from './AccordionItem/AccordionItem';
 import { AccordionControl, AccordionControlStylesNames } from './AccordionControl/AccordionControl';
 
+export type { AccordionItemProps };
 export { AccordionItem };
 
 export type AccordionStylesNames = AccordionControlStylesNames;
@@ -41,6 +46,7 @@ export function Accordion({
   onChange,
   multiple = false,
   transitionDuration = 200,
+  themeOverride,
   ...others
 }: AccordionProps) {
   const items = React.Children.toArray(children).filter(
@@ -78,6 +84,7 @@ export function Accordion({
   const controls = items.map((item, index) => (
     <AccordionControl
       {...item.props}
+      themeOverride={themeOverride}
       transitionDuration={transitionDuration}
       opened={value[index]}
       onToggle={() => handleItemToggle(index)}
