@@ -6,10 +6,16 @@ interface AccordionControlStyles {
 }
 
 export default createMemoStyles({
-  label: {},
+  label: {
+    fontWeight: 500,
+  },
 
   item: ({ theme }: AccordionControlStyles) => ({
     borderTop: `1px solid ${theme.colors.gray[2]}`,
+
+    '&:last-of-type': {
+      borderBottom: `1px solid ${theme.colors.gray[2]}`,
+    },
   }),
 
   icon: ({ transitionDuration }: AccordionControlStyles) => ({
@@ -25,6 +31,7 @@ export default createMemoStyles({
   control: ({ theme }: AccordionControlStyles) => ({
     width: '100%',
     display: 'flex',
+    alignItems: 'center',
     justifyContent: 'space-between',
     padding: theme.spacing.md,
     textAlign: 'left',
