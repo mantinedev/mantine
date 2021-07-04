@@ -22,6 +22,17 @@ Use Menu to combine a list of secondary actions into single interactive area.
 
 <Demo data={MenuDemos.usage} />
 
+## Show menu on hover
+
+To show menu on hover set props:
+
+- `trigger` to hover
+- `delay` to number in ms (defaults to 0)
+
+In this case menu will use `onMouseEnter` and `onFocus` events instead of `onClick`:
+
+<Demo data={MenuDemos.hover} />
+
 ## MenuItem component
 
 You can use <GatsbyLink to="/core/divider/">Divider</GatsbyLink> (renders horizontal line) and MenuItem components inside Menu.

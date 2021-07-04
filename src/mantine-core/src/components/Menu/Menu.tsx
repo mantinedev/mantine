@@ -123,6 +123,7 @@ export function Menu({
   styles,
   onMouseLeave,
   onMouseEnter,
+  onChange,
   ...others
 }: MenuProps) {
   const controlRefFocusTimeout = useRef<number>();
@@ -136,7 +137,9 @@ export function Menu({
     finalValue: false,
     rule: (val) => typeof val === 'boolean',
     onChange: (value) =>
-      value ? typeof onOpen === 'function' && onOpen() : typeof onClose === 'function' && onClose(),
+      !value
+        ? typeof onOpen === 'function' && onOpen()
+        : typeof onClose === 'function' && onClose(),
   });
 
   const openedRef = useRef(_opened);
