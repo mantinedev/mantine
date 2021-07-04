@@ -17,7 +17,14 @@ import {
   MantineSize,
   Modal,
 } from '@mantine/core';
-import { useId, useClickOutside, useFocusTrap, useMergedRef, useWindowEvent } from '@mantine/hooks';
+import {
+  useId,
+  useClickOutside,
+  useFocusTrap,
+  useMergedRef,
+  useWindowEvent,
+  useReducedMotion,
+} from '@mantine/hooks';
 import { CalendarStylesNames } from '../Calendar/Calendar';
 import useStyles from './DatePickerBase.styles';
 
@@ -112,6 +119,7 @@ export function DatePickerBase({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames as any, __staticSelector);
   const _styles = mergeStyles(classes, styles as any);
+  const reduceMotion = useReducedMotion();
   const uuid = useId(id);
 
   const focusTrapRef = useFocusTrap();
@@ -172,7 +180,7 @@ export function DatePickerBase({
           <Transition
             mounted={dropdownOpened}
             transition={transition}
-            duration={transitionDuration}
+            duration={reduceMotion ? 0 : transitionDuration}
             timingFunction={transitionTimingFunction}
           >
             {(transitionStyles) => (
