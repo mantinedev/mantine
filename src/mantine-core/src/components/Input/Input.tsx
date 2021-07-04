@@ -44,6 +44,9 @@ export interface InputBaseProps {
 
   /** Static css selector base */
   __staticSelector?: string;
+
+  /** Will input have multiple lines? */
+  multiline?: boolean;
 }
 
 export interface InputProps extends InputBaseProps, DefaultProps<typeof useStyles> {}
@@ -71,6 +74,7 @@ export function Input<
   classNames,
   styles,
   __staticSelector = 'input',
+  multiline = false,
   ...others
 }: InputProps &
   Omit<React.ComponentPropsWithoutRef<T>, 'size'> & {
@@ -84,7 +88,7 @@ export function Input<
     elementRef?: React.ForwardedRef<U>;
   }) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, theme, size }, classNames, __staticSelector);
+  const classes = useStyles({ radius, theme, size, multiline }, classNames, __staticSelector);
   const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
   const _styles = mergeStyles(classes, styles);
   const Element: any = component;

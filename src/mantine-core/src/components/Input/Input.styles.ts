@@ -11,14 +11,15 @@ interface InputStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
   size: MantineSize;
+  multiline: boolean;
 }
 
 export const sizes = {
-  xs: 28,
-  sm: 36,
-  md: 40,
-  lg: 46,
-  xl: 56,
+  xs: 30,
+  sm: 38,
+  md: 42,
+  lg: 50,
+  xl: 60,
 };
 
 export default createMemoStyles({
@@ -128,10 +129,10 @@ export default createMemoStyles({
     },
   }),
 
-  input: ({ theme, size }: InputStyles) => ({
+  input: ({ theme, size, multiline }: InputStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
-    lineHeight: theme.lineHeight,
+    lineHeight: multiline ? theme.lineHeight : `${getSizeValue({ size, sizes })}px`,
     appearance: 'none',
     resize: 'none',
     boxSizing: 'border-box',

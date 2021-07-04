@@ -97,6 +97,7 @@ export function Textarea({
           classNames={classNames as any}
           styles={inputStyles}
           size={size}
+          multiline
           {...others}
         />
       ) : (
@@ -111,6 +112,7 @@ export function Textarea({
           styles={inputStyles}
           size={size}
           __staticSelector={__staticSelector}
+          multiline
           {...others}
         />
       )}
