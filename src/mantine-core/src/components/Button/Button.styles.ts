@@ -10,6 +10,7 @@ import {
   MantineSizes,
   hexToRgba,
 } from '../../theme';
+import { INPUT_SIZES } from '../Input/Input';
 
 interface ButtonStylesProps {
   color: string;
@@ -21,33 +22,33 @@ interface ButtonStylesProps {
 
 const sizes = {
   xs: {
-    fontSize: 10,
-    height: 22,
-    padding: [0, 12],
+    fontSize: 12,
+    height: INPUT_SIZES.xs,
+    padding: [0, 14],
   },
 
   sm: {
-    fontSize: 12,
-    height: 30,
-    padding: [0, 14],
+    fontSize: 13,
+    height: INPUT_SIZES.sm,
+    padding: [0, 18],
   },
 
   md: {
     fontSize: 15,
-    height: 36,
-    padding: [0, 18],
+    height: INPUT_SIZES.md,
+    padding: [0, 22],
   },
 
   lg: {
     fontSize: 18,
-    height: 44,
-    padding: [0, 22],
+    height: INPUT_SIZES.lg,
+    padding: [0, 26],
   },
 
   xl: {
     fontSize: 22,
-    height: 52,
-    padding: [0, 28],
+    height: INPUT_SIZES.xl,
+    padding: [0, 32],
   },
 };
 
