@@ -1,19 +1,17 @@
-import { ClientPositionEvent } from '../get-client-position/get-client-position';
-
 interface GetEventsManager {
-  onDrag(event: ClientPositionEvent): void;
-  onDragEnd(event: ClientPositionEvent): void;
+  onDrag(event: any): void;
+  onDragEnd(event: any): void;
 }
 
 export function getDragEventsAssigner({ onDrag, onDragEnd }: GetEventsManager) {
-  const handleDrag = (event: ClientPositionEvent) => {
+  const handleDrag = (event: any) => {
     if (event.cancelable) {
       event.preventDefault();
     }
     onDrag(event);
   };
 
-  const handleDragEnd = (event: ClientPositionEvent) => {
+  const handleDragEnd = (event: any) => {
     if (event.cancelable) {
       event.preventDefault();
     }

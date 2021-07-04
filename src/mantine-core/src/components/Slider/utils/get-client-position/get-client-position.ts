@@ -1,7 +1,5 @@
-export type ClientPositionEvent = MouseEvent | TouchEvent;
-
-export function getClientPosition(event: ClientPositionEvent) {
-  if (event instanceof TouchEvent) {
+export function getClientPosition(event: any) {
+  if (Array.isArray(event.touches)) {
     const touch = event.touches[0];
     return touch.clientX;
   }

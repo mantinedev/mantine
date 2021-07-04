@@ -2,10 +2,7 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize } from '../../../theme';
 import { MantineTransition } from '../../Transition/Transition';
-import {
-  getClientPosition,
-  ClientPositionEvent,
-} from '../utils/get-client-position/get-client-position';
+import { getClientPosition } from '../utils/get-client-position/get-client-position';
 import { getPosition } from '../utils/get-position/get-position';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';
 import { getDragEventsAssigner } from '../utils/get-drag-events-assigner/get-drag-events-assigner';
@@ -121,7 +118,7 @@ export function Slider({
     }
   };
 
-  const onDrag = useCallback((event: ClientPositionEvent) => {
+  const onDrag = useCallback((event: any) => {
     container.current && container.current.focus();
     handleChange(getClientPosition(event) + start.current - offset.current);
   }, []);
