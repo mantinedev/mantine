@@ -2,6 +2,7 @@ import React from 'react';
 import { ChatBubbleIcon, ImageIcon, GearIcon } from '@modulz/radix-icons';
 import { useMantineTheme, Text, Tabs, Tab, RingProgress, Group } from '@mantine/core';
 import { usage as CardDemo } from '@mantine/core/src/components/Card/demos/usage';
+import { AccordionDemo } from '@mantine/core/src/components/Accordion/demos/label';
 
 export function ContentDemos() {
   const theme = useMantineTheme();
@@ -29,6 +30,13 @@ export function ContentDemos() {
               ]}
             />
           </Group>
+        </div>
+
+        <div>
+          <Text size="lg" style={{ marginBottom: 15 }}>
+            Accordion component
+          </Text>
+          <AccordionDemo />
         </div>
 
         <div>
