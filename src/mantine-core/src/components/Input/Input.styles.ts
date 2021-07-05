@@ -16,7 +16,7 @@ interface InputStyles {
 
 export const sizes = {
   xs: 30,
-  sm: 38,
+  sm: 36,
   md: 42,
   lg: 50,
   xl: 60,
@@ -132,7 +132,7 @@ export default createMemoStyles({
   input: ({ theme, size, multiline }: InputStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
-    lineHeight: multiline ? theme.lineHeight : `${getSizeValue({ size, sizes })}px`,
+    lineHeight: multiline ? theme.lineHeight : `${getSizeValue({ size, sizes }) - 2}px`,
     appearance: 'none',
     resize: 'none',
     boxSizing: 'border-box',
