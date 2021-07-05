@@ -21,6 +21,10 @@ export default createUseStyles(
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
       },
+
+      '@media (max-width: 1000px)': {
+        flex: `0 0 calc(100% - ${theme.spacing.md}px)`,
+      },
     },
 
     body: {
