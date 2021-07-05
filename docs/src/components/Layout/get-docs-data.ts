@@ -1,53 +1,70 @@
+import { CATEGORIZED, Category } from '../../settings';
+
 interface DocsQuery {
   allMdx: {
     edges: {
-      node: { frontmatter: { group: string; title?: string; order?: number; slug: string } };
+      node: { frontmatter: Frontmatter };
     }[];
   };
 }
 
-export interface DocItem {
-  to: string;
-  package: string;
-  order?: number;
-  title: string;
+interface GroupPages {
+  query: DocsQuery;
+  categories: Record<string, Category>;
+  order: readonly string[];
+  group: string;
 }
 
-export type DocsData = Record<string, DocItem[]>;
-
-const order = ['guides', 'mantine-hooks', 'mantine-core', 'Other packages'];
-
-export default function getDocsData(query: DocsQuery): DocsData {
-  const results = query.allMdx.edges.reduce((acc: DocsData, item) => {
-    if (!(item.node.frontmatter.group in acc)) {
-      acc[item.node.frontmatter.group] = [];
-    }
-
-    acc[item.node.frontmatter.group].push({
-      title: item.node.frontmatter.title,
-      order: item.node.frontmatter.order || 0,
-      to: item.node.frontmatter.slug,
-      package: item.node.frontmatter.group,
-    });
-    return acc;
-  }, {});
-
-  Object.keys(results).forEach((category) => {
-    results[category].sort((a, b) => {
-      if ('order' in a && 'order' in b) {
-        if (a.order === b.order) {
-          return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
-        }
-
-        return a.order - b.order;
+function sortPages(pages: Frontmatter[]) {
+  const clone = [...pages];
+  clone.sort((a, b) => {
+    if ('order' in a && 'order' in b) {
+      if (a.order === b.order) {
+        return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
       }
 
-      return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
-    });
+      return a.order - b.order;
+    }
+
+    return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
   });
 
-  return order.reduce((acc, item) => {
-    acc[item] = results[item];
+  return clone;
+}
+
+export function groupPages({ query, categories, order, group }: GroupPages): {
+  uncategorized: Frontmatter[];
+  groups: { category: Category; pages: Frontmatter[] }[];
+  group: string;
+} {
+  const pages = query.allMdx.edges
+    .map(({ node }) => node.frontmatter)
+    .filter((page) => page.group === group);
+
+  const uncategorized = [];
+
+  const categorized = pages.reduce((acc, page) => {
+    if (!(page.category in categories)) {
+      uncategorized.push({ ...page, order: page.order || 0 });
+      return acc;
+    }
+
+    if (!(page.category in acc)) {
+      acc[page.category] = [];
+    }
+
+    acc[page.category].push({ ...page, order: page.order || 0 });
     return acc;
-  }, {});
+  }, {} as { category: Category; pages: Frontmatter[] });
+
+  const groups = order.map((category) => ({
+    category: categories[category],
+    pages: sortPages(categorized[category]),
+  }));
+
+  return { uncategorized: sortPages(uncategorized), groups, group };
+}
+
+export function getDocsData(query: DocsQuery) {
+  return CATEGORIZED.map((data) => groupPages({ ...data, query }));
 }

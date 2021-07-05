@@ -1,14 +1,16 @@
 import React from 'react';
 import cx from 'clsx';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineSize } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
 import { CheckboxIcon } from './CheckboxIcon';
 import useStyles, { sizes } from './Checkbox.styles';
 
 export const CHECKBOX_SIZES = sizes;
 
+export type CheckboxStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface CheckboxProps
-  extends DefaultProps,
+  extends DefaultProps<typeof useStyles>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
   /** Checkbox checked and indeterminate state color from theme, defaults to theme.primaryColor */
   color?: string;
@@ -22,12 +24,6 @@ export interface CheckboxProps
   /** Indeterminate state of checkbox, overwrites checked */
   indeterminate?: boolean;
 
-  /** Style properties added to input element */
-  inputStyle?: React.CSSProperties;
-
-  /** Class name added to input element */
-  inputClassName?: string;
-
   /** Props spread to wrapper element */
   wrapperProps?: Record<string, any>;
 
@@ -40,6 +36,7 @@ export interface CheckboxProps
 
 export function Checkbox({
   className,
+  style,
   checked,
   onChange,
   color,
@@ -50,35 +47,40 @@ export function Checkbox({
   id,
   size,
   wrapperProps,
-  style,
-  inputStyle,
-  inputClassName,
   elementRef,
   children,
+  classNames,
+  styles,
   ...others
 }: CheckboxProps) {
   const uuid = useId(id);
-  const classes = useStyles({ size, color, theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ size, color, theme }, classNames, 'checkbox');
+  const _styles = mergeStyles(classes, styles);
 
   return (
-    <div className={cx(classes.wrapper, className)} style={style} {...wrapperProps}>
-      <div className={classes.checkboxWrapper}>
+    <div
+      className={cx(classes.root, className)}
+      style={{ ...style, ..._styles.root }}
+      {...wrapperProps}
+    >
+      <div className={classes.inner} style={_styles.inner}>
         <input
           id={uuid}
           ref={elementRef}
           type="checkbox"
-          className={cx(classes.checkbox, inputClassName)}
+          className={classes.input}
+          style={_styles.input}
           checked={indeterminate || checked}
           onChange={onChange}
           disabled={disabled}
-          style={inputStyle}
           {...others}
         />
-        <CheckboxIcon indeterminate={indeterminate} className={classes.icon} />
+        <CheckboxIcon indeterminate={indeterminate} className={classes.icon} style={_styles.icon} />
       </div>
 
       {label && (
-        <label className={classes.label} htmlFor={uuid}>
+        <label className={classes.label} htmlFor={uuid} style={_styles.label}>
           {label}
         </label>
       )}

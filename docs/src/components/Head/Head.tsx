@@ -20,6 +20,10 @@ export default function Head({ title, description, disableTitleTemplate }: HeadP
       titleTemplate={disableTitleTemplate ? undefined : '%s | Mantine'}
       meta={[
         {
+          name: 'viewport',
+          content: 'width=device-width, user-scalable=no',
+        },
+        {
           name: 'description',
           content: metaDescription,
         },

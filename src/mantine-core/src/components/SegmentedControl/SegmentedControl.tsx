@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cx from 'clsx';
-import { useId, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '../../theme';
+import { useId, useReducedMotion, useUncontrolled } from '@mantine/hooks';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  mergeStyles,
+  useMantineTheme,
+} from '../../theme';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
 interface SegmentedControlItem {
@@ -9,17 +15,19 @@ interface SegmentedControlItem {
   label: React.ReactNode;
 }
 
+export type SegmentedControlStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface SegmentedControlProps
-  extends DefaultProps,
+  extends DefaultProps<SegmentedControlStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Data based on which controls are rendered */
   data: SegmentedControlItem[];
 
   /** Current selected value */
-  value: string;
+  value?: string;
 
   /** Called when value changes */
-  onChange(value: string): void;
+  onChange?(value: string): void;
 
   /** Name of the radio group, default to random id */
   name?: string;
@@ -41,10 +49,14 @@ export interface SegmentedControlProps
 
   /** Transition timing function for all transitions, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
+
+  /** Default value for uncontrolled component */
+  defaultValue?: string;
 }
 
 export function SegmentedControl({
   className,
+  style,
   themeOverride,
   data,
   name,
@@ -56,6 +68,9 @@ export function SegmentedControl({
   size = 'sm',
   transitionDuration = 200,
   transitionTimingFunction,
+  classNames,
+  styles,
+  defaultValue,
   ...others
 }: SegmentedControlProps) {
   // reduce motion should be implemented via js, there is a bug in jss with media queries
@@ -63,18 +78,30 @@ export function SegmentedControl({
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
   const [shouldAnimate, setShouldAnimate] = useState(false);
-
-  const classes = useStyles({
-    theme,
-    size,
-    fullWidth,
-    color,
-    radius,
-    reduceMotion: reduceMotion || !shouldAnimate,
-    transitionDuration,
-    transitionTimingFunction,
+  const [_value, handleValueChange] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: Array.isArray(data) ? data[0].value : null,
+    onChange,
+    rule: (val) => !!val,
   });
 
+  const classes = useStyles(
+    {
+      theme,
+      size,
+      fullWidth,
+      color,
+      radius,
+      reduceMotion: reduceMotion || !shouldAnimate,
+      transitionDuration,
+      transitionTimingFunction,
+    },
+    classNames,
+    'segmented-control'
+  );
+
+  const _styles = mergeStyles(classes, styles);
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
   const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
@@ -82,8 +109,8 @@ export function SegmentedControl({
 
   useEffect(() => {
     const observer = new ResizeObserver(() => {
-      if (value in refs.current && wrapperRef.current) {
-        const element = refs.current[value];
+      if (_value in refs.current && wrapperRef.current) {
+        const element = refs.current[_value];
         const rect = element.getBoundingClientRect();
         setActivePosition({
           width: rect.width,
@@ -99,27 +126,28 @@ export function SegmentedControl({
     });
     observer.observe(wrapperRef.current);
     return () => observer.disconnect();
-  }, [value]);
+  }, [_value]);
 
   const controls = data.map((item) => (
     <div
-      className={cx(classes.control, { [classes.controlActive]: value === item.value })}
+      className={cx(classes.control, { [classes.controlActive]: _value === item.value })}
+      style={{ ..._styles.control, ...(_value === item.value ? _styles.controlActive : null) }}
       key={item.value}
     >
       <input
-        data-mantine-radio
         className={classes.input}
+        style={_styles.input}
         type="radio"
         name={uuid}
         value={item.value}
         id={`${uuid}-${item.value}`}
-        checked={value === item.value}
-        onChange={() => onChange(item.value)}
+        checked={_value === item.value}
+        onChange={() => handleValueChange(item.value)}
       />
 
       <label
-        data-mantine-label
-        className={cx(classes.label, { [classes.labelActive]: value === item.value })}
+        className={cx(classes.label, { [classes.labelActive]: _value === item.value })}
+        style={{ ..._styles.label, ...(_value === item.value ? _styles.labelActive : null) }}
         htmlFor={`${uuid}-${item.value}`}
         ref={(node) => {
           refs.current[item.value] = node;
@@ -131,12 +159,17 @@ export function SegmentedControl({
   ));
 
   return (
-    <div className={cx(classes.wrapper, className)} ref={wrapperRef} {...others}>
-      {!!value && (
+    <div
+      className={cx(classes.root, className)}
+      ref={wrapperRef}
+      style={{ ...style, ..._styles.root }}
+      {...others}
+    >
+      {!!_value && (
         <span
-          data-mantine-active
           className={classes.active}
           style={{
+            ..._styles.active,
             width: activePosition.width,
             transform: `translateX(${activePosition.translate}px)`,
           }}

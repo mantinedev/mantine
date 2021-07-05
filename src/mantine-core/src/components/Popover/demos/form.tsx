@@ -37,6 +37,9 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
   const isMobile = useMediaQuery('(max-width: 755px');
   const theme = useMantineTheme();
   const inputVariant = theme.colorScheme === 'dark' ? 'filled' : 'default';
+  const inputStyles = {
+    input: { backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }
+  };
 
   const form = useForm({
     initialValues,
@@ -57,7 +60,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
         error={form.errors.name}
         variant={inputVariant}
-        inputStyle={{ backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }}
+        styles={inputStyles}
       />
 
       <TextInput
@@ -69,14 +72,14 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
         error={form.errors.email}
         variant={inputVariant}
-        inputStyle={{ backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }}
+        styles={inputStyles}
       />
 
       <Group position="apart" style={{ marginTop: 15 }}>
         <Button variant="link" color="gray" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit" size="sm" variant={theme.colorScheme === 'dark' ? 'light' : 'filled'}>
+        <Button type="submit" size="sm">
           Save
         </Button>
       </Group>
@@ -128,6 +131,7 @@ export function EditUserPopover() {
         withArrow
         withCloseButton
         title="Edit user"
+        transition="slide-up"
         target={
           <ActionIcon
             variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
@@ -161,6 +165,9 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
   const isMobile = useMediaQuery('(max-width: 755px');
   const theme = useMantineTheme();
   const inputVariant = theme.colorScheme === 'dark' ? 'filled' : 'default';
+  const inputStyles = {
+    input: { backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] },
+  };
 
   const form = useForm({
     initialValues,
@@ -182,7 +189,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
         error={form.errors.name}
         variant={inputVariant}
-        inputStyle={{ backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }}
+        styles={inputStyles}
       />
 
       <TextInput
@@ -194,16 +201,14 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
         error={form.errors.email}
         variant={inputVariant}
-        inputStyle={{ backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }}
+        styles={inputStyles}
       />
 
       <Group position="apart" style={{ marginTop: 15 }}>
         <Button size="sm" variant="link" color="gray" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit" variant={theme.colorScheme === 'dark' ? 'light' : 'filled'}>
-          Save
-        </Button>
+        <Button type="submit">Save</Button>
       </Group>
     </form>
   );
@@ -253,6 +258,7 @@ export function Demo() {
         withArrow
         withCloseButton
         title="Edit user"
+        transition="slide-up"
         target={
           <ActionIcon
             variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}

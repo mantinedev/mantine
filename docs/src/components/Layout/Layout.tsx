@@ -1,12 +1,12 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, NormalizeCSS, GlobalStyles } from '@mantine/core';
 import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
 import { ColorSchemeContext, ColorScheme } from './ColorScheme.context';
-import LayoutInner from './LayoutInner';
+import { LayoutInner, LayoutProps } from './LayoutInner';
 
 const THEME_KEY = 'mantine-color-scheme';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children, location }: LayoutProps) {
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
     key: THEME_KEY,
     defaultValue: 'light',
@@ -34,12 +34,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <React.StrictMode>
-      <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
-        <MantineProvider theme={{ colorScheme }}>
-          <LayoutInner key={key}>{children}</LayoutInner>
-        </MantineProvider>
-      </ColorSchemeContext.Provider>
-    </React.StrictMode>
+    <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
+      <MantineProvider theme={{ colorScheme }}>
+        <GlobalStyles />
+        <NormalizeCSS />
+
+        <LayoutInner key={key} location={location}>
+          {children}
+        </LayoutInner>
+      </MantineProvider>
+    </ColorSchemeContext.Provider>
   );
 }

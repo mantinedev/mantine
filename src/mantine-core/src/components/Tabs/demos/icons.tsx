@@ -12,7 +12,7 @@ const code = `
 
 function Demo() {
   return (
-    <Tabs>
+    <Tabs styles={{ body: { paddingTop: 5 } }}>
       <Tab label="Chat" icon={<ChatBubbleIcon />}>
         Chat here
       </Tab>

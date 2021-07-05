@@ -1,9 +1,9 @@
 import React from 'react';
-import { Tooltip, Button, Group } from '../../../index';
+import { Tooltip, Badge, Group } from '../../../index';
 
 function Demo() {
   const tooltips = (['top', 'right', 'bottom', 'left'] as const).map((position, index) => {
-    const placements = (['start', 'center', 'end'] as const).map((placement) => (
+    const placements = (['start', 'center', 'end'] as const).map((placement, placementIndex) => (
       <Tooltip
         data-mantine-composable
         key={placement}
@@ -12,8 +12,11 @@ function Demo() {
         label={`${position}-${placement}`}
         withArrow
         gutter={10}
+        style={{ zIndex: 6 - index - (position === 'right' ? placementIndex : -placementIndex) }}
       >
-        <Button variant="outline" color="gray" size="xl">{`${position}-${placement}`}</Button>
+        <Badge color="blue" size="lg">
+          {`${position}-${placement}`}
+        </Badge>
       </Tooltip>
     ));
 

@@ -5,11 +5,12 @@ title: Tooltip
 order: 1
 slug: /core/tooltip/
 category: 'overlay'
-description: 'Render tooltip on mouse over or any other event'
+description: 'Renders tooltip at given element on mouse over or any other event'
 props: ['Tooltip']
 import: "import { Tooltip } from '@mantine/core';"
 source: 'mantine-core/src/components/Tooltip/Tooltip.tsx'
 docs: 'core/Tooltip.mdx'
+styles: ['Tooltip']
 ---
 
 import { TooltipDemos } from '@demos/core';
@@ -84,7 +85,7 @@ All available predefined transitions demo:
 
 ## Change color
 
-You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>:
+You can choose any color defined in <GatsbyLink to="/theming/extend-theme/#default-colors">theme.colors</GatsbyLink>:
 
 <Demo data={TooltipDemos.colors} />
 
@@ -111,7 +112,7 @@ You can get both tooltip and root element refs with `elementRef` and `tooltipRef
 Use it to customize behavior, for example, with <GatsbyLink to="/hooks/use-click-outside/">use-click-outside</GatsbyLink> hook.
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Tooltip } from '@mantine/core';
 
 function Demo() {
@@ -129,7 +130,7 @@ Component is unmounted from the dom and is not visible to screen readers in defa
 If you want to make tooltip accessible use controlled variant, open tooltip on focus, provide `tooltipId` and `aria-describedby` props:
 
 ```tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Tooltip, Button } from '@mantine/core';
 
 function Demo() {

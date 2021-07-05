@@ -40,6 +40,7 @@ export const configurator: MantineDemo = {
       defaultValue: 'default',
     },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
+    { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
     {
       name: 'required',

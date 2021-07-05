@@ -5,50 +5,122 @@ title: Select
 order: 1
 slug: /core/select/
 category: 'inputs'
-description: 'Capture user feedback limited to large set of options'
+description: 'Custom searchable select'
 props: ['Select']
 import: "import { Select } from '@mantine/core';"
 source: 'mantine-core/src/components/Select/Select.tsx'
 docs: 'core/Select.mdx'
+styles: ['Select']
 ---
 
 import { SelectDemos } from '@demos/core';
 
 ## Usage
 
-Use Select when you need to capture user feedback limited to certain options.
-If you only have 2-5 options consider using <GatsbyLink to="/core/radio-group/">RadioGroup</GatsbyLink> instead of Select,
-as it provides better UX for smaller data sets.
+Select component allows user to pick one option from the given `data`,
+use this component when you need to create custom value selection which is not possible with <GatsbyLink to="/core/native-select/">NativeSelect</GatsbyLink>:
 
-Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> (except for `rightSection`) and <GatsbyLink to="/core/input-wrapper">InputWrapper</GatsbyLink> components.
-See full information about shared inputs props in <GatsbyLink to="/guides/inputs/">inputs guide</GatsbyLink>.
+<Demo data={SelectDemos.itemComponent} demoProps={{ toggle: true, zIndex: 4 }} />
 
-<Demo data={SelectDemos.configurator} />
+Bare minimum usage example:
+
+<Demo data={SelectDemos.usage} />
 
 ## Controlled
 
 ```tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Select } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
-  return <Select value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+  return <Select value={value} onChange={setValue} />;
 }
 ```
+
+## Searchable
+
+Set `searchable` prop to enable search in select and `nothingFound` prop to provide label that will be shown when no options were found:
+
+<Demo data={SelectDemos.searchable} />
+
+## Large data set
+
+When dropdown height is exceeded dropdown becomes scrollable, to change max-height set `maxDropdownHeight` prop with value in px:
+
+<Demo data={SelectDemos.large} />
+
+## Custom item component
+
+You can change select item component and filtering logic that is used in search.
+To do so you will need to:
+
+- Add extra props to `data` objects
+- Create `filter` function which determines whether item should be added to the search results
+- Provide `itemComponent` which will consume `data` objects
+
+```tsx
+// Minimum data for default autocomplete used in previous examples
+[
+  { value: 'react', label: 'React' },
+  { value: 'ng', label: 'Angular' },
+  { value: 'svelte', label: 'Svelte' },
+  { value: 'vue', label: 'Vue' },
+];
+```
+
+You can add any other fields to your data:
+
+```tsx
+[
+  {
+    value: 'bob@handsome.inc',
+    image: 'image-link',
+    label: 'bob@handsome.inc',
+    name: 'Bob Handsome',
+  },
+  {
+    value: 'bill@outlook.com',
+    image: 'image-link',
+    label: 'bill@outlook.com',
+    name: 'Bill Rataconda',
+  },
+  { value: 'amy@wong.cn', image: 'image-link', label: 'amy@wong.cn', name: 'Amy Wong' },
+];
+```
+
+Based on this data shape you can create custom `filter` function and `itemComponent`:
+
+<Demo data={SelectDemos.itemComponent} />
+
+## Input props
+
+Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
+
+<Demo data={SelectDemos.configurator} />
 
 ## Get element ref
 
 You can get input ref by passing `elementRef` prop to Select component:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Select } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
   return <Select elementRef={ref} />;
 }
+```
+
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<Select /> // -> random id generated both on client and server, props mismatch warning
+<Select id="my-accordion" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility

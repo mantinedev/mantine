@@ -4,12 +4,13 @@ package: '@mantine/core'
 title: Burger
 order: 1
 slug: /core/burger/
-category: 'navigation'
-description: 'Display open/close navigation button'
+category: 'misc'
+description: 'Open/close navigation button'
 props: ['Burger']
 import: "import { Burger } from '@mantine/core';"
 source: 'mantine-core/src/components/Burger/Burger.tsx'
 docs: 'core/Burger.mdx'
+styles: ['Burger']
 ---
 
 import { BurgerDemos } from '@demos/core';
@@ -23,12 +24,16 @@ If `opened` prop is set cross will be rendered, otherwise – burger:
 
 <Demo data={BurgerDemos.usage} />
 
-## Size and color
+## Color
 
-Default Burger color is gray.
-You can use any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>:
+Burger default colors are `theme.black` for light color scheme and `theme.white` for dark color scheme.
+You can change it to any color value by setting `color` prop:
 
-<Demo data={BurgerDemos.configurator} />
+<Demo data={BurgerDemos.color} />
+
+## Size
+
+<Demo data={BurgerDemos.sizes} />
 
 Burger has predefined sizes: xs, sm, md, lg, xl.
 Alternatively you can use number to set width and height in px:
@@ -54,7 +59,7 @@ import { BURGER_SIZES } from '@mantine/core';
 You can get burger button ref by setting `elementRef` prop:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Burger } from '@mantine/core';
 
 function Demo() {

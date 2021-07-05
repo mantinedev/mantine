@@ -44,7 +44,7 @@ export function LoadingOverlay({
   ...others
 }: LoadingOverlayProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles();
+  const classes = useStyles(null, null, 'loading-overlay');
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 1 : transitionDuration;
 
@@ -57,7 +57,7 @@ export function LoadingOverlay({
     >
       {(transitionStyles) => (
         <div
-          className={cx(classes.loadingOverlay, className)}
+          className={cx(classes.root, className)}
           style={{ ...transitionStyles, ...style, zIndex }}
           {...others}
         >

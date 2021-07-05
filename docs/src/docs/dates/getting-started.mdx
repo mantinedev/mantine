@@ -1,0 +1,193 @@
+---
+group: 'mantine-dates'
+package: '@mantine/dates'
+title: 'Getting started'
+pageTitle: 'Mantine Dates'
+description: 'Capture date inputs from user and display calendars'
+order: 0
+slug: /dates/getting-started/
+installation: '@mantine/dates'
+bundleSize: '@mantine/dates'
+source: 'mantine-dates/'
+license: MIT
+---
+
+import {
+  CalendarDemos,
+  RangeCalendarDemos,
+  MonthDemos,
+  DatePickerDemos,
+  TimeInputDemos,
+  DateRangePickerDemos,
+} from '@demos/dates';
+
+## Installation
+
+Package depends on:
+
+- [react](https://www.npmjs.com/package/react)
+- [react-dom](https://www.npmjs.com/package/react-dom)
+- [dayjs](https://www.npmjs.com/package/dayjs)
+- [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks)
+- [@mantine/core](https://www.npmjs.com/package/@mantine/core)
+- [react-jss](https://www.npmjs.com/package/react-jss)
+
+Install with npm:
+
+```sh
+npm install react-jss dayjs @mantine/core @mantine/hooks @mantine/dates
+```
+
+Install with yarn:
+
+```sh
+yarn add react-jss dayjs @mantine/core @mantine/hooks @mantine/dates
+```
+
+## Localization
+
+Mantine dates use [dayjs](https://day.js.org/) library for localization.
+Follow [example](https://day.js.org/docs/en/i18n/loading-into-nodejs) to load required locales in your application:
+
+```tsx
+// Import German language
+import 'dayjs/locale/de';
+```
+
+Then when you use components provide imported locale:
+
+```tsx
+import { DatePicker, Calendar, Month } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <>
+      <DatePicker locale="de" />
+      <Calendar locale="de" />
+      <Month locale="de" />
+    </>
+  );
+}
+```
+
+## Components
+
+### DatePicker
+
+<GatsbyLink to="/dates/date-picker/">DatePicker</GatsbyLink> allows you to capture dates without free
+user input. Component supports the same props as any other input from @mantine/core library and can be
+used in forms:
+
+<Demo data={DatePickerDemos.usage} demoProps={{ toggle: true, zIndex: 5 }} />
+
+### DateRangePicker
+
+<GatsbyLink to="/dates/date-range-picker/">DateRangePicker</GatsbyLink> allows you to capture dates range
+from user:
+
+<Demo data={DateRangePickerDemos.usage} demoProps={{ toggle: true, zIndex: 4 }} />
+
+### TimeInput
+
+<GatsbyLink to="/dates/time-input/">TimeInput</GatsbyLink> component allows to capture time input from
+user:
+
+<Demo data={TimeInputDemos.usage} demoProps={{ toggle: true }} />
+
+### Calendar
+
+<GatsbyLink to="/dates/calendar/">Calendar</GatsbyLink> component allows you to capture date input fom
+user or display events:
+
+<Demo data={CalendarDemos.usage} demoProps={{ toggle: true }} />
+
+### RangeCalendar
+
+Capture dates range input with <GatsbyLink to="/dates/range-calendar/">RangeCalendar</GatsbyLink> component:
+
+<Demo data={RangeCalendarDemos.usage} demoProps={{ toggle: true }} />
+
+### Month
+
+<GatsbyLink to="/dates/month/">Month</GatsbyLink> component displays given month, it is the most basic
+component which is used in all other components. You can use it to create your own date pickers and calendars
+if Mantine components do not fit your requirements:
+
+<Demo data={MonthDemos.usage} demoProps={{ toggle: true }} />
+
+## Utility functions
+
+Apart from components @mantine/dates package also exports several utility function to help you build
+your own dates related components
+
+**get-month-days**
+
+Returns an array of weeks of current month, used to build <GatsbyLink to="/dates/month/">Month</GatsbyLink> component
+
+```tsx
+import { getMonthDays } from '@mantine/dates';
+
+getMonthDays(new Date()); // -> [[7xDate objects] x amount of weeks in current month]
+```
+
+**get-months-names**
+
+Returns full months names for given locale, used in <GatsbyLink to="/dates/calendar">Calendar</GatsbyLink> component to render month select
+
+```tsx
+import { getMonthsNames } from '@mantine/dates';
+
+getMonthsNames('en');
+// -> [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+// to localize import locale from dayjs package
+import 'dayjs/locale/ru';
+import { getMonthsNames } from '@mantine/dates';
+
+getMonthsNames('ru');
+// -> ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь']
+```
+
+**get-weekdays-names**
+
+Returns an array of short weekdays names for given locale, used in <GatsbyLink to="/dates/month/">Month</GatsbyLink> component to render weekdays row
+
+```tsx
+import { getWeekdaysNames } from '@mantine/dates';
+
+getWeekdaysNames('en');
+// -> ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
+```
+
+**get-years-range**
+
+Returns an array of years, which fall into given range, used in <GatsbyLink to="/dates/calendar">Calendar</GatsbyLink> component to render year select
+
+```tsx
+import { getYearsRange } from '@mantine/dates';
+
+getYearsRange({ from: 2020, to: 2025 });
+// -> [2020, 2021, 2022, 2023, 2024, 2025]
+```
+
+**is-same-date**
+
+Returns true if two dates have the same year, month and date, other properties (minutes, seconds, etc.) are ignored
+
+```tsx
+import { isSameDate } from '@mantine/dates';
+
+isSameDate(new Date(2020, 7, 21), new Date(2020, 7, 21)); // -> true
+isSameDate(new Date(2020, 7, 21), new Date(2020, 7, 22)); // -> false
+```
+
+**is-same-month**
+
+Returns true if two dates have the same year and month, other properties (date, minutes, seconds, etc.) are ignored
+
+```tsx
+import { isSameMonth } from '@mantine/dates';
+
+isSameMonth(new Date(2020, 7, 21), new Date(2020, 7, 22)); // -> true
+isSameMonth(new Date(2020, 7, 21), new Date(2020, 8, 22)); // -> false
+```

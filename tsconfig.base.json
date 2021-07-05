@@ -7,7 +7,9 @@
     "**/*.story.ts",
     "**/*.story.tsx",
     "**/*.test.ts",
-    "**/*.test.tsx"
+    "**/*.test.tsx",
+    "jest-config.js",
+    "configuration/storybook/main.js"
   ],
   "compilerOptions": {
     "target": "ES2015",

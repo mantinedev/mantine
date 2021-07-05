@@ -7,8 +7,9 @@ export default createUseStyles(
   (theme: MantineTheme) => ({
     configurator: {
       display: 'flex',
+      maxWidth: '100%',
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
       }`,
       overflow: 'hidden',
       borderTopLeftRadius: theme.radius.sm,
@@ -23,7 +24,7 @@ export default createUseStyles(
     noCode: {
       borderRadius: theme.radius.sm,
       borderBottom: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
       }`,
     },
 
@@ -32,7 +33,6 @@ export default createUseStyles(
       padding: theme.spacing.md,
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
     },
 
     controls: {
@@ -40,14 +40,14 @@ export default createUseStyles(
       width: 250,
       padding: theme.spacing.md,
       borderLeft: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
       }`,
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         width: '100%',
         borderLeft: 0,
         borderTop: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+          theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
         }`,
       },
     },
@@ -57,7 +57,7 @@ export default createUseStyles(
       borderTopLeftRadius: 0,
       marginTop: 0,
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
       }`,
     },
   }),

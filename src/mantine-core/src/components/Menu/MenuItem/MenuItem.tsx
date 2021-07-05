@@ -1,7 +1,11 @@
 import React from 'react';
 import { ComponentPassThrough } from '../../../types';
+import { DefaultProps } from '../../../theme';
+import type { MenuButtonStylesNames } from '../MenuButton/MenuButton';
 
-export interface MenuItemProps extends React.ComponentPropsWithoutRef<'button'> {
+export interface MenuItemProps
+  extends DefaultProps<MenuButtonStylesNames>,
+    React.ComponentPropsWithoutRef<'button'> {
   /** Item label */
   children: React.ReactNode;
 

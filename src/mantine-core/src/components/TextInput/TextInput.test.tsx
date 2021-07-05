@@ -5,10 +5,13 @@ import {
   itSupportsRef,
   itSupportsStyle,
   checkAccessibility,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { TextInput } from './TextInput';
+import { Input as InputStylesApi } from '../Input/styles.api';
+import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 describe('@mantine/core/Input', () => {
   beforeAll(() => {
@@ -25,6 +28,19 @@ describe('@mantine/core/Input', () => {
   itSupportsClassName(TextInput, {});
   itSupportsRef(TextInput, {}, HTMLInputElement, 'elementRef');
   itSupportsStyle(TextInput, {});
+  itSupportsStylesApi(
+    TextInput,
+    {
+      icon: '$',
+      rightSection: '$',
+      label: 'test-label',
+      error: 'test-error',
+      description: 'test-description',
+      required: true,
+    },
+    Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
+    'text-input'
+  );
 
   it('has correct displayName', () => {
     expect(TextInput.displayName).toEqual('@mantine/core/TextInput');

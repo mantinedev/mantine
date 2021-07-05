@@ -1,12 +1,12 @@
 import { createMemoStyles, MantineTheme, getFontStyles, getThemeColor } from '../../theme';
 
-interface BlockquoteStylesProps {
+interface BlockquoteStyles {
   theme: MantineTheme;
   color: string;
 }
 
 export default createMemoStyles({
-  blockquote: ({ theme, color }: BlockquoteStylesProps) => ({
+  root: ({ theme, color }: BlockquoteStyles) => ({
     ...getFontStyles(theme),
     fontSize: theme.fontSizes.lg,
     lineHeight: theme.lineHeight,
@@ -18,7 +18,7 @@ export default createMemoStyles({
     borderLeft: `3px solid ${getThemeColor({
       theme,
       color,
-      shade: theme.colorScheme === 'dark' ? 4 : 6,
+      shade: 6,
     })}`,
     padding: [theme.spacing.md, theme.spacing.lg],
   }),
@@ -33,14 +33,14 @@ export default createMemoStyles({
     textOverflow: 'ellipsis',
   },
 
-  icon: ({ theme, color }: BlockquoteStylesProps) => ({
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+  icon: ({ theme, color }: BlockquoteStyles) => ({
+    color: getThemeColor({ theme, color, shade: 6 }),
     marginRight: theme.spacing.md,
     marginTop: 2,
     width: 22,
   }),
 
-  cite: ({ theme }: BlockquoteStylesProps) => ({
+  cite: ({ theme }: BlockquoteStyles) => ({
     display: 'block',
     fontSize: theme.fontSizes.sm,
     marginTop: theme.spacing.xs,

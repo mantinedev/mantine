@@ -4,3 +4,4 @@ export { positions } from './positions';
 export { transitions } from './transitions';
 export { configurator } from './configurator';
 export { component } from './component';
+export { hover } from './hover';

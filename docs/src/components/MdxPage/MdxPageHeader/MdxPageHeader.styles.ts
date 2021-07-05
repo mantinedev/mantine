@@ -1,10 +1,12 @@
 import { createUseStyles } from 'react-jss';
 import { theming } from '@mantine/core';
-import { BREAKPOINT, CONTENT_WIDTH, TABLE_OF_CONTENTS_WIDTH, TAB_HEIGHT } from '../settings';
+import { BREAKPOINT, CONTENT_WIDTH, TABLE_OF_CONTENTS_WIDTH } from '../settings';
 
 export default createUseStyles(
   (theme) => ({
     wrapper: {
+      position: 'relative',
+      zIndex: 4,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       paddingLeft: theme.spacing.xl * 2,
       paddingRight: theme.spacing.xl * 2,
@@ -25,12 +27,12 @@ export default createUseStyles(
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         maxWidth: '100%',
         paddingRight: 0,
-        paddingBottom: TAB_HEIGHT + theme.spacing.xl,
+        paddingBottom: theme.spacing.xl,
       },
     },
 
     withTabs: {
-      paddingBottom: TAB_HEIGHT + theme.spacing.xl * 1.5,
+      paddingBottom: theme.spacing.xl * 1.5,
     },
 
     title: {
@@ -38,12 +40,21 @@ export default createUseStyles(
       marginBottom: theme.spacing.xs,
       fontFamily: `Dosis, ${theme.headings.fontFamily}`,
       fontWeight: 800,
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        fontSize: 32,
+        lineHeight: 1.2,
+      },
     },
 
     description: {
       maxWidth: 450,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
       marginBottom: theme.spacing.xl,
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        fontSize: theme.fontSizes.md,
+      },
     },
   }),
   { theming }

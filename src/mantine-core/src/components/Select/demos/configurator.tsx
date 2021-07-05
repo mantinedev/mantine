@@ -1,26 +1,29 @@
 import React from 'react';
-import { Select, SelectProps } from '../Select';
-
-const data = [
-  { value: 'react', label: 'React' },
-  { value: 'vue', label: 'Vue' },
-  { value: 'ng', label: 'Angular' },
-  { value: 'svelte', label: 'Svelte' },
-];
+import { Select } from '../Select';
 
 const codeTemplate = (props: string) => `<Select
+ ${props}
   data={[
     { value: 'react', label: 'React' },
-    { value: 'vue', label: 'Vue' },
     { value: 'ng', label: 'Angular' },
     { value: 'svelte', label: 'Svelte' },
+    { value: 'vue', label: 'Vue' },
   ]}
- ${props}
 />`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: (props: SelectProps) => <Select {...props} data={data} />,
+  component: (props: any) => (
+    <Select
+      data={[
+        { value: 'react', label: 'React' },
+        { value: 'ng', label: 'Angular' },
+        { value: 'svelte', label: 'Svelte' },
+        { value: 'vue', label: 'Vue' },
+      ]}
+      {...props}
+    />
+  ),
   codeTemplate,
   configuratorProps: { multiline: true },
   configurator: [
@@ -28,12 +31,12 @@ export const configurator: MantineDemo = {
     {
       name: 'label',
       type: 'string',
-      initialValue: 'Select your favorite framework/library',
+      initialValue: 'Your favorite framework/library',
     },
     {
       name: 'description',
       type: 'string',
-      initialValue: 'This is anonymous',
+      initialValue: '',
     },
     {
       name: 'error',
@@ -52,6 +55,7 @@ export const configurator: MantineDemo = {
       defaultValue: 'default',
     },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
+    { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
     {
       name: 'required',

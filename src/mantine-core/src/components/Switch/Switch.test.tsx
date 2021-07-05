@@ -5,8 +5,16 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Switch } from './Switch';
+import { Switch as SwitchStylesApi } from './styles.api';
+
+const defaultProps = {
+  checked: true,
+  onChange: () => {},
+  label: 'test-label',
+};
 
 describe('@mantine/core/Switch', () => {
   checkAccessibility([
@@ -15,9 +23,10 @@ describe('@mantine/core/Switch', () => {
     mount(<Switch id="with-id" label="With id" />),
   ]);
 
-  itSupportsClassName(Switch, {});
-  itSupportsStyle(Switch, {});
-  itSupportsRef(Switch, {}, HTMLInputElement, 'elementRef');
+  itSupportsClassName(Switch, defaultProps);
+  itSupportsStyle(Switch, defaultProps);
+  itSupportsRef(Switch, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsStylesApi(Switch, defaultProps, Object.keys(SwitchStylesApi), 'switch');
 
   it('has correct displayName', () => {
     expect(Switch.displayName).toEqual('@mantine/core/Switch');
@@ -61,18 +70,6 @@ describe('@mantine/core/Switch', () => {
     expect(element.attr('aria-label')).toBe('test-aria-label');
     expect(element.css('border')).toBe('1px solid red');
     expect(element.css('line-height')).toBe('1px');
-  });
-
-  it('adds input styles with inputStyle prop', () => {
-    const element = shallow(<Switch inputStyle={{ border: '1px solid red', lineHeight: '1px' }} />);
-
-    expect(element.render().find('input').css('border')).toBe('1px solid red');
-    expect(element.render().find('input').css('line-height')).toBe('1px');
-  });
-
-  it('adds className to input with inputClassName prop', () => {
-    const element = shallow(<Switch inputClassName="test-input" />);
-    expect(element.render().find('input').hasClass('test-input')).toBe(true);
   });
 
   it('sets checked state based on checked prop', () => {

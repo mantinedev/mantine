@@ -1,57 +1,85 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import {
   checkAccessibility,
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
+import { Input } from '../Input/Input';
 import { Select } from './Select';
+import { Select as SelectStylesApi } from './styles.api';
 
-const TEST_DATA = [
-  { label: 'test-data-1', value: 'test-data-1' },
-  { label: 'test-data-2', value: 'test-data-2' },
-  { label: 'test-data-3', value: 'test-data-3' },
-];
+const defaultProps = {
+  initiallyOpened: true,
+  label: 'Test',
+  data: [
+    { value: 'test-1', label: 'Test 1' },
+    { value: 'test-2', label: 'Test 2' },
+  ],
+};
+
+const data = Array(50)
+  .fill(0)
+  .map((_, index) => ({ value: index.toString(), label: index.toString() }));
 
 describe('@mantine/core/Select', () => {
-  beforeAll(() => {
-    // JSDom does not implement this and an error was being
-    // thrown from jest-axe because of it.
-    window.getComputedStyle = jest.fn();
-  });
+  itSupportsClassName(Select, defaultProps);
+  itSupportsStyle(Select, defaultProps);
+  itSupportsRef(Select, defaultProps, HTMLInputElement, 'elementRef');
 
   checkAccessibility([
-    mount(<Select data={TEST_DATA} label="test-label" />),
-    mount(<Select data={TEST_DATA} aria-label="test-label" />),
+    mount(<Select {...defaultProps} />),
+    mount(<Select {...defaultProps} initiallyOpened={false} />),
   ]);
 
-  itSupportsClassName(Select, { data: TEST_DATA });
-  itSupportsStyle(Select, { data: TEST_DATA });
-  itSupportsRef(Select, { data: TEST_DATA }, HTMLSelectElement, 'elementRef');
+  itSupportsStylesApi(
+    Select,
+    {
+      ...defaultProps,
+      icon: '$',
+      rightSection: '$',
+      label: 'test-label',
+      error: 'test-error',
+      description: 'test-description',
+      required: true,
+    },
+    Object.keys(SelectStylesApi).filter(
+      (key) => key !== 'hovered' && key !== 'selected' && key !== 'nothingFound'
+    ),
+    'select'
+  );
 
-  it('passes required, inputStyle, inputClassName and id props to select element', () => {
+  it('renders correct amount of items based on data prop', () => {
+    const element = shallow(<Select data={data.slice(0, 5)} initiallyOpened />);
+    expect(element.render().find('.mantine-select-item')).toHaveLength(5);
+  });
+
+  it('renders correct amount of items based on filter prop', () => {
     const element = shallow(
       <Select
-        data={TEST_DATA}
-        required
-        id="test-id"
-        inputStyle={{ border: '1px solid red' }}
-        inputClassName="test-input-class"
+        data={data}
+        initiallyOpened
+        searchable
+        filter={(query, item) => item.value.includes('2')}
       />
     );
 
-    expect(element.render().find('select').attr('id')).toBe('test-id');
-    expect(element.render().find('select').attr('aria-required')).toBe('true');
-    expect(element.render().find('select').css('border')).toBe('1px solid red');
-    expect(element.render().find('select').hasClass('test-input-class')).toBe(true);
+    // Numbers 0-50 which include 2
+    expect(element.render().find('.mantine-select-item')).toHaveLength(14);
+  });
+
+  it('passes wrapperProps to InputWrapper', () => {
+    const element = shallow(<Select {...defaultProps} wrapperProps={{ 'aria-label': 'test' }} />);
+    expect(element.render().attr('aria-label')).toBe('test');
   });
 
   it('passes required, id, label, error and description props to InputWrapper component', () => {
     const element = shallow(
       <Select
-        data={TEST_DATA}
+        {...defaultProps}
         id="test-id"
         required
         label="test-label"
@@ -67,16 +95,27 @@ describe('@mantine/core/Select', () => {
     expect(element.find(InputWrapper).prop('description')).toBe('test-description');
   });
 
-  it('passes wrapperProps to InputWrapper', () => {
-    const element = shallow(<Select data={TEST_DATA} wrapperProps={{ 'data-label': 'test' }} />);
-    expect(element.render().attr('data-label')).toBe('test');
+  it('passes required, id, invalid, icon and radius props to Input component', () => {
+    const element = shallow(
+      <Select
+        {...defaultProps}
+        required
+        id="test-id"
+        type="number"
+        error="test-error"
+        icon="$"
+        radius="sm"
+      />
+    );
+
+    expect(element.find(Input).prop('id')).toBe('test-id');
+    expect(element.find(Input).prop('required')).toBe(true);
+    expect(element.find(Input).prop('invalid')).toBe(true);
+    expect(element.find(Input).prop('icon')).toBe('$');
+    expect(element.find(Input).prop('radius')).toBe('sm');
   });
 
-  it('renders correct amount of options', () => {
-    const withoutPlaceholder = shallow(<Select data={TEST_DATA} />);
-    const withPlaceholder = shallow(<Select data={TEST_DATA} placeholder="placeholder" />);
-
-    expect(withoutPlaceholder.render().find('option')).toHaveLength(TEST_DATA.length);
-    expect(withPlaceholder.render().find('option')).toHaveLength(TEST_DATA.length + 1);
+  it('has correct displayName', () => {
+    expect(Select.displayName).toEqual('@mantine/core/Select');
   });
 });

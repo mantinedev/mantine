@@ -4,9 +4,13 @@ const replace = {
   MantineNumberSize: 'number | "xs" | "sm" | "md" | "lg" | "xl"',
   MantineSize: '"xs" | "sm" | "md" | "lg" | "xl"',
   GroupPosition: '"right" | "center" | "left" | "apart"',
+  ArrowBodyPlacement: '"start" | "center" | "end"',
+  ArrowBodyPosition: '"top" | "left" | "bottom" | "right"',
   ReactText: 'string | number',
   'ReactElement<any, string | ((props: any) => ReactElement<any, any>) | (new (props: any) => Component<any, any, any>)>':
     'ReactElement',
+  'string | number | boolean | {} | ReactElement<any, string | ((props: any) => ReactElement<any, any>) | (new (props: any) => Component<any, any, any>)> | ReactNodeArray | ReactPortal | ((value: number) => ReactNode)':
+    'ReactNode | (value: number) => ReactNode',
 };
 
 export function prepareDeclaration(declaration: ComponentDoc) {

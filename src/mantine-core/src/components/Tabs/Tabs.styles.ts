@@ -1,33 +1,33 @@
 import { createMemoStyles, MantineTheme } from '../../theme';
 
-interface TabsStylesProps {
+interface TabsStyles {
   theme: MantineTheme;
 }
 
 export default createMemoStyles({
-  tabsInner: {},
+  root: {},
+  tabsListWrapper: {},
+  tabsList: {},
+  pills: {},
+  body: {},
 
-  default: ({ theme }: TabsStylesProps) => ({
+  default: ({ theme }: TabsStyles) => ({
     borderBottom: `2px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
 
-    '& $tabsInner': {
+    '& $tabsList': {
       marginBottom: -2,
     },
   }),
 
-  outline: ({ theme }: TabsStylesProps) => ({
+  outline: ({ theme }: TabsStyles) => ({
     borderBottom: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
 
-    '& $tabsInner': {
+    '& $tabsList': {
       marginBottom: -1,
     },
-  }),
-
-  body: ({ theme }: TabsStylesProps) => ({
-    paddingTop: theme.spacing.sm,
   }),
 });

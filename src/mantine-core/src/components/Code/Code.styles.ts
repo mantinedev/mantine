@@ -6,13 +6,13 @@ import {
   hexToRgba,
 } from '../../theme';
 
-interface CodeStylesProps {
+interface CodeStyles {
   theme: MantineTheme;
   color: string;
 }
 
 export default createMemoStyles({
-  code: ({ theme, color }: CodeStylesProps) => ({
+  root: ({ theme, color }: CodeStyles) => ({
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,
     padding: [1, theme.spacing.xs / 2],
@@ -35,7 +35,7 @@ export default createMemoStyles({
     }`,
   }),
 
-  pre: ({ theme }: CodeStylesProps) => ({
+  block: ({ theme }: CodeStyles) => ({
     padding: theme.spacing.xs,
     margin: 0,
     overflowX: 'auto',

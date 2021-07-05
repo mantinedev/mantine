@@ -55,7 +55,7 @@ export function PasswordStrength() {
       position="bottom"
       placement="start"
       withArrow
-      bodyStyle={{ width: '100%' }}
+      styles={{ popover: { width: '100%' } }}
       noFocusTrap
       transition="skew-up"
       onFocusCapture={() => setPopoverOpened(true)}
@@ -129,11 +129,11 @@ function Demo() {
         position="bottom"
         placement="start"
         withArrow
-        bodyStyle={{ width: '100%' }}
         noFocusTrap
         transition="skew-up"
         onFocusCapture={() => setPopoverOpened(true)}
         onBlurCapture={() => setPopoverOpened(false)}
+        styles={{ popover: { width: '100%' } }}
         target={
           <PasswordInput
             required

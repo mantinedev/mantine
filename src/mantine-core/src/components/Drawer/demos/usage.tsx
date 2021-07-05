@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Drawer, Button, Group } from '../../../index';
+import { AuthenticationForm } from '../../../../demos/AuthenticationForm/AuthenticationForm';
 
 const code = `
 import React, { useState } from 'react';
@@ -13,9 +14,11 @@ function Demo() {
       <Drawer
         opened={opened}
         onClose={() => setOpened(false)}
-        padding="md"
+        title="Register"
+        padding="xl"
+        size="xl"
       >
-        Press escape to close the drawer
+        <AuthenticationForm />
       </Drawer>
 
       <Group position="center">
@@ -31,8 +34,14 @@ function Demo() {
 
   return (
     <>
-      <Drawer opened={opened} onClose={() => setOpened(false)} padding="md">
-        Press escape to close the drawer
+      <Drawer
+        opened={opened}
+        onClose={() => setOpened(false)}
+        padding="xl"
+        title="Register"
+        size="xl"
+      >
+        <AuthenticationForm noPadding noShadow />
       </Drawer>
 
       <Group position="center">

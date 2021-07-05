@@ -5,11 +5,12 @@ title: ThemeIcon
 order: 1
 slug: /core/theme-icon/
 category: 'data-display'
-description: 'Render icon with theme colors'
+description: 'Render icon inside element with theme colors'
 props: ['ThemeIcon']
 import: "import { ThemeIcon } from '@mantine/core';"
 source: 'mantine-core/src/components/ThemeIcon/ThemeIcon.tsx'
 docs: 'core/ThemeIcon.mdx'
+styles: ['ThemeIcon', 'single-node']
 ---
 
 import { ThemeIconDemos } from '@demos/core';
@@ -27,8 +28,8 @@ Use ThemeIcon do display svg icon with theme color background and color. You can
 
 ## Color
 
-You can use any color from <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>,
-default color is <GatsbyLink to="/pages/theming/#primary-color">theme.primaryColor</GatsbyLink>:
+You can use any color from <GatsbyLink to="/theming/extend-theme/#default-colors">theme.colors</GatsbyLink>,
+default color is <GatsbyLink to="/theming/extend-theme/#primary-color">theme.primaryColor</GatsbyLink>:
 
 <Demo data={ThemeIconDemos.colors} />
 
@@ -60,7 +61,7 @@ import { THEME_ICON_SIZES } from '@mantine/core';
 
 ## Radius
 
-xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
+xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.radius</GatsbyLink>.
 Alternatively you can use number to set radius in px:
 
 ```tsx

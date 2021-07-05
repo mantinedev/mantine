@@ -4,44 +4,55 @@ import {
   getFontStyles,
   getSizeValue,
   createMemoStyles,
+  MantineSize,
 } from '../../theme';
 
-interface InputStylesProps {
+interface InputStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
+  size: MantineSize;
+  multiline: boolean;
 }
+
+export const sizes = {
+  xs: 30,
+  sm: 36,
+  md: 42,
+  lg: 50,
+  xl: 60,
+};
 
 export default createMemoStyles({
   withIcon: {},
 
-  inputWrapper: ({ radius, theme }: InputStylesProps) => ({
+  root: ({ radius, theme }: InputStyles) => ({
     position: 'relative',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
 
     '&, & *': { boxSizing: 'border-box' },
   }),
 
-  defaultVariant: ({ theme, radius }: InputStylesProps) => ({
+  default: ({ theme, radius, size }: InputStyles) => ({
     '& $input': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-      minHeight: 36,
-      paddingLeft: theme.spacing.md,
-      paddingRight: theme.spacing.md,
+      minHeight: getSizeValue({ size, sizes }),
+      paddingLeft: getSizeValue({ size, sizes: theme.spacing }),
+      paddingRight: getSizeValue({ size, sizes: theme.spacing }),
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
       }`,
       transition: 'border-color 100ms ease, box-shadow 100ms ease',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
       '&:focus': {
         outline: 'none',
-        borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 6],
+        borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 7],
       },
     },
 
     '&$invalid $input': {
-      borderColor: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
+      borderColor: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
     },
 
     '& $withIcon': {
@@ -49,15 +60,15 @@ export default createMemoStyles({
     },
 
     '& $icon': {
-      width: 36,
+      width: getSizeValue({ size, sizes }),
     },
   }),
 
-  filledVariant: ({ theme, radius }: InputStylesProps) => ({
+  filled: ({ theme, radius, size }: InputStyles) => ({
     '& $input': {
-      minHeight: 36,
-      paddingLeft: theme.spacing.md,
-      paddingRight: theme.spacing.md,
+      minHeight: getSizeValue({ size, sizes }),
+      paddingLeft: getSizeValue({ size, sizes: theme.spacing }),
+      paddingRight: getSizeValue({ size, sizes: theme.spacing }),
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: '1px solid transparent',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
@@ -66,7 +77,7 @@ export default createMemoStyles({
       '&:focus': {
         outline: 'none',
         borderColor: `${
-          theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 6]
+          theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 6 : 7]
         } !important`,
       },
 
@@ -82,7 +93,7 @@ export default createMemoStyles({
     },
 
     '&$invalid $input': {
-      borderColor: theme.colorScheme === 'dark' ? theme.colors.red[4] : 'transparent',
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.red[5] : 'transparent',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.red[0],
     },
 
@@ -91,12 +102,12 @@ export default createMemoStyles({
     },
 
     '& $icon': {
-      width: 36,
+      width: getSizeValue({ size, sizes }),
       color: theme.colors.gray[6],
     },
   }),
 
-  unstyledVariant: ({ theme }: InputStylesProps) => ({
+  unstyled: ({ theme }: InputStyles) => ({
     '& $input': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       backgroundColor: 'transparent',
@@ -118,14 +129,14 @@ export default createMemoStyles({
     },
   }),
 
-  input: ({ theme }: InputStylesProps) => ({
+  input: ({ theme, size, multiline }: InputStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
-    lineHeight: theme.lineHeight,
+    lineHeight: multiline ? theme.lineHeight : `${getSizeValue({ size, sizes }) - 2}px`,
     appearance: 'none',
     resize: 'none',
     boxSizing: 'border-box',
-    fontSize: theme.fontSizes.sm,
+    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     width: '100%',
     color: theme.black,
     display: 'block',
@@ -142,16 +153,17 @@ export default createMemoStyles({
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
     },
 
-    '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration': {
-      appearance: 'none',
-    },
+    '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration':
+      {
+        appearance: 'none',
+      },
 
     '&[type=number]': {
       MozAppearance: 'textfield',
     },
   }),
 
-  icon: ({ theme }: InputStylesProps) => ({
+  icon: ({ theme }: InputStyles) => ({
     pointerEvents: 'none',
     position: 'absolute',
     left: 0,
@@ -163,18 +175,18 @@ export default createMemoStyles({
     justifyContent: 'center',
   }),
 
-  invalid: ({ theme }: InputStylesProps) => ({
+  invalid: ({ theme }: InputStyles) => ({
     '& $input': {
-      color: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
-      borderColor: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
+      color: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
+      borderColor: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
 
       '&::placeholder': {
-        color: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
+        color: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
       },
     },
 
     '& $icon': {
-      color: theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6],
+      color: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
     },
   }),
 

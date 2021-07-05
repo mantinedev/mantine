@@ -1,11 +1,11 @@
 import { createMemoStyles, MantineTheme } from '../../theme';
 
-interface BreadcrumbsStylesProps {
+interface BreadcrumbsStyles {
   theme: MantineTheme;
 }
 
 export default createMemoStyles({
-  breadcrumbs: {
+  root: {
     display: 'flex',
   },
 
@@ -15,7 +15,7 @@ export default createMemoStyles({
     WebkitTapHighlightColor: 'transparent',
   },
 
-  separator: ({ theme }: BreadcrumbsStylesProps) => ({
+  separator: ({ theme }: BreadcrumbsStyles) => ({
     marginLeft: theme.spacing.xs,
     marginRight: theme.spacing.xs,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],

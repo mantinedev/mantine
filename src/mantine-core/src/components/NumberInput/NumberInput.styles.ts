@@ -1,11 +1,24 @@
-import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  MantineNumberSize,
+  getSizeValue,
+  MantineSize,
+} from '../../theme';
 
-interface NumberInputStylesProps {
+interface NumberInputStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
+  size: MantineSize;
 }
 
-export const CONTROL_WIDTH = 24;
+export const CONTROL_SIZES = {
+  xs: 20,
+  sm: 24,
+  md: 30,
+  lg: 34,
+  xl: 36,
+};
 
 export default createMemoStyles({
   rightSection: {
@@ -16,11 +29,13 @@ export default createMemoStyles({
     marginRight: 1,
   },
 
-  control: ({ theme }: NumberInputStylesProps) => ({
+  control: ({ theme, size }: NumberInputStyles) => ({
     position: 'relative',
     flex: '0 0 50%',
     boxSizing: 'border-box',
-    width: CONTROL_WIDTH,
+    width: getSizeValue({ size, sizes: CONTROL_SIZES }),
+    padding: 0,
+    WebkitTapHighlightColor: 'transparent',
     borderBottom: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
     }`,
@@ -48,7 +63,7 @@ export default createMemoStyles({
     },
   }),
 
-  controlUp: ({ theme, radius }: NumberInputStylesProps) => ({
+  controlUp: ({ theme, radius }: NumberInputStyles) => ({
     borderTopRightRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
 
     '&::after': {
@@ -66,7 +81,7 @@ export default createMemoStyles({
     },
   }),
 
-  controlDown: ({ theme, radius }: NumberInputStylesProps) => ({
+  controlDown: ({ theme, radius }: NumberInputStyles) => ({
     borderBottomRightRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
     borderBottom: 0,
 

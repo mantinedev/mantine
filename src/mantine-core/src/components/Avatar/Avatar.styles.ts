@@ -5,7 +5,6 @@ import {
   MantineNumberSize,
   getFontStyles,
   getThemeColor,
-  hexToRgba,
 } from '../../theme';
 
 export const sizes = {
@@ -16,7 +15,7 @@ export const sizes = {
   xl: 84,
 };
 
-interface AvatarStylesProps {
+interface AvatarStyles {
   size: MantineNumberSize;
   radius: MantineNumberSize;
   theme: MantineTheme;
@@ -24,7 +23,7 @@ interface AvatarStylesProps {
 }
 
 export default createMemoStyles({
-  avatar: ({ size, radius, theme }: AvatarStylesProps) => ({
+  root: ({ size, radius, theme }: AvatarStyles) => ({
     boxSizing: 'border-box',
     position: 'relative',
     userSelect: 'none',
@@ -40,15 +39,12 @@ export default createMemoStyles({
     height: '100%',
   },
 
-  placeholder: ({ theme, size, color }: AvatarStylesProps) => ({
+  placeholder: ({ theme, size, color }: AvatarStyles) => ({
     ...getFontStyles(theme),
     fontSize: getSizeValue({ size, sizes }) / 2.5,
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 0 : 6 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 0 : 9 }),
     fontWeight: 700,
-    backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
-      theme.colorScheme === 'dark' ? 0.5 : 1
-    ),
+    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -57,7 +53,7 @@ export default createMemoStyles({
     userSelect: 'none',
   }),
 
-  placeholderIcon: ({ theme, color }: AvatarStylesProps) => ({
+  placeholderIcon: ({ theme, color }: AvatarStyles) => ({
     width: '70%',
     height: '70%',
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 0 : 6 }),

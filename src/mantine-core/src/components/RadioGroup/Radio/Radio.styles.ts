@@ -8,7 +8,7 @@ import {
   getThemeColor,
 } from '../../../theme';
 
-interface RadioStylesProps {
+interface RadioStyles {
   theme: MantineTheme;
   size: MantineSize;
   color: string;
@@ -18,22 +18,22 @@ export const sizes = {
   xs: 12,
   sm: 16,
   md: 20,
-  lg: 26,
+  lg: 24,
   xl: 36,
 };
 
 export default createMemoStyles({
   labelDisabled: {},
 
-  wrapper: {
+  root: {
     display: 'flex',
     alignItems: 'center',
     WebkitTapHighlightColor: 'transparent',
   },
 
-  radio: ({ theme, size, color }: RadioStylesProps) => ({
+  radio: ({ theme, size, color }: RadioStyles) => ({
     ...getFocusStyles(theme),
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
     }`,
@@ -50,13 +50,13 @@ export default createMemoStyles({
     justifyContent: 'center',
 
     '&:checked': {
-      background: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
-      borderColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      background: getThemeColor({ theme, color, shade: 6 }),
+      borderColor: getThemeColor({ theme, color, shade: 6 }),
 
       '&::before': {
         content: '""',
         display: 'block',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        backgroundColor: theme.white,
         width: getSizeValue({ sizes, size }) / 2,
         height: getSizeValue({ sizes, size }) / 2,
         borderRadius: getSizeValue({ sizes, size }) / 2,
@@ -73,7 +73,7 @@ export default createMemoStyles({
     },
   }),
 
-  label: ({ theme, size }: RadioStylesProps) => ({
+  label: ({ theme, size }: RadioStyles) => ({
     ...getFontStyles(theme),
     display: 'flex',
     alignItems: 'center',

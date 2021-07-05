@@ -1,6 +1,7 @@
 import React from 'react';
+import { DefaultProps } from '../../../theme';
 
-export interface TabProps extends React.ComponentProps<'button'> {
+export interface TabProps extends DefaultProps, React.ComponentProps<'button'> {
   /** Tab control label */
   label?: React.ReactNode;
 

@@ -3,7 +3,7 @@ import { Tabs, Tab, TabsProps } from '../Tabs';
 
 function Wrapper(props: TabsProps) {
   return (
-    <Tabs {...props}>
+    <Tabs {...props} styles={{ body: { paddingTop: 5 } }}>
       <Tab label="First">First tab content</Tab>
       <Tab label="Second">Second tab content</Tab>
       <Tab label="Third">Third tab content</Tab>
@@ -33,6 +33,17 @@ export const positionConfigurator: MantineDemo = {
         { label: 'right', value: 'right' },
         { label: 'center', value: 'center' },
         { label: 'apart', value: 'apart' },
+      ],
+    },
+    {
+      name: 'variant',
+      type: 'segmented',
+      initialValue: 'default',
+      defaultValue: 'default',
+      data: [
+        { value: 'default', label: 'Default' },
+        { value: 'outline', label: 'Outline' },
+        { value: 'pills', label: 'Pills' },
       ],
     },
   ],

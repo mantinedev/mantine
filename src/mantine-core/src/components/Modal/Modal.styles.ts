@@ -9,14 +9,14 @@ export const sizes = {
   full: '100%',
 };
 
-interface ModalStylesProps {
+interface ModalStyles {
   theme: MantineTheme;
   overflow: 'outside' | 'inside';
   size: string | number;
 }
 
 export default createMemoStyles({
-  wrapper: {
+  root: {
     position: 'fixed',
     top: 0,
     left: 0,
@@ -24,7 +24,7 @@ export default createMemoStyles({
     bottom: 0,
   },
 
-  inner: ({ theme }: ModalStylesProps) => ({
+  inner: ({ theme }: ModalStyles) => ({
     position: 'absolute',
     top: 0,
     left: 0,
@@ -37,28 +37,29 @@ export default createMemoStyles({
     alignItems: 'flex-start',
   }),
 
-  title: ({ theme }: ModalStylesProps) => ({
+  title: ({ theme }: ModalStyles) => ({
     marginRight: theme.spacing.md,
     textOverflow: 'ellipsis',
     display: 'block',
     wordBreak: 'break-word',
   }),
 
-  modal: ({ theme, size }: ModalStylesProps) => ({
+  modal: ({ theme, size }: ModalStyles) => ({
     width: getSizeValue({ sizes, size }),
     padding: theme.spacing.lg,
     outline: 0,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
   }),
 
-  header: ({ theme }: ModalStylesProps) => ({
+  header: ({ theme }: ModalStyles) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: theme.spacing.md,
+    marginRight: -9,
   }),
 
-  body: ({ overflow }: ModalStylesProps) => ({
+  body: ({ overflow }: ModalStyles) => ({
     maxHeight: overflow === 'inside' && 'calc(100vh - 185px)',
     overflowY: overflow === 'inside' && 'auto',
     wordBreak: 'break-word',

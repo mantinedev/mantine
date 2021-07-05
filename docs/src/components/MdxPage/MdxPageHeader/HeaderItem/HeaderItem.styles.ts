@@ -7,6 +7,7 @@ export default createUseStyles(
       display: 'flex',
       alignItems: 'center',
       minHeight: 20,
+      overflowX: 'auto',
 
       '& + &': {
         marginTop: theme.spacing.xs,

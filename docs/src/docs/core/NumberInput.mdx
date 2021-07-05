@@ -10,6 +10,7 @@ props: ['NumberInput']
 import: "import { NumberInput } from '@mantine/core';"
 source: 'mantine-core/src/components/NumberInput/NumberInput.tsx'
 docs: 'core/NumberInput.mdx'
+styles: ['NumberInput']
 ---
 
 import { NumberInputDemos } from '@demos/core';
@@ -17,7 +18,7 @@ import { NumberInputDemos } from '@demos/core';
 ## Usage
 
 NumberInput is based on <GatsbyLink to="/core/text-input/">TextInput</GatsbyLink>
-and supports the same props, except `rightSection`. See full information about shared inputs props in <GatsbyLink to="/guides/inputs/">inputs guide</GatsbyLink>.
+and supports the same props, except `rightSection`.
 
 <Demo data={NumberInputDemos.configurator} />
 
@@ -62,7 +63,7 @@ You can use it to create custom controls:
 Unlike other Mantine inputs NumberInput does not expose input event in onChange handler, it provides value instead.
 
 ```tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { NumberInput } from '@mantine/core';
 
 function Demo() {
@@ -76,13 +77,23 @@ function Demo() {
 You can get input ref with `elementRef` prop:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { NumberInput } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
   return <NumberInput elementRef={ref} />;
 }
+```
+
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<NumberInput /> // -> random id generated both on client and server, props mismatch warning
+<NumberInput id="my-accordion" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility

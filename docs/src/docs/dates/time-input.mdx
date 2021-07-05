@@ -1,0 +1,64 @@
+---
+group: 'mantine-dates'
+package: '@mantine/dates'
+title: TimeInput
+order: 1
+slug: /dates/time-input/
+description: 'Capture time input from user'
+props: ['TimeInput']
+import: "import { TimeInput } from '@mantine/dates';"
+source: 'mantine-dates/src/components/TimeInput/TimeInput.tsx'
+docs: 'dates/TimeInput.mdx'
+styles: ['TimeInput']
+---
+
+import { TimeInputDemos } from '@demos/dates';
+
+## Usage
+
+<Demo data={TimeInputDemos.usage} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { TimeInput } from '@mantine/dates';
+
+function Demo() {
+  const [value, onChange] = useState(new Date());
+  return <TimeInput value={value} onChange={onChange} />;
+}
+```
+
+## With seconds
+
+To add seconds set `withSeconds` prop:
+
+<Demo data={TimeInputDemos.withSeconds} />
+
+## Input props
+
+Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
+
+<Demo data={TimeInputDemos.configurator} />
+
+## Get elementRef
+
+You can get hours input ref with `elementRef` prop:
+
+```tsx
+import { useRef } from 'react';
+
+function Demo() {
+  const inputRef = useRef();
+  return <TimeInput elementRef={inputRef} />;
+}
+```
+
+## Accessibility
+
+Provide hours, minutes and seconds labels to make inputs visible to screen reader:
+
+```tsx
+<TimeInput hoursLabel="Hours" minutesLabel="Minutes" seconds="Seconds" />
+```

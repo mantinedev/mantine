@@ -17,7 +17,7 @@ function Demo() {
       noFocusTrap
       noEscape
       transition="slide-up"
-      bodyStyle={{ width: 260, pointerEvents: 'none' }}
+      styles={{ body: { width: 260, pointerEvents: 'none' } }}
       target={
         <Badge onMouseEnter={() => setOpened(true)} onMouseLeave={() => setOpened(false)}>
           Hover badge to see popover
@@ -51,7 +51,7 @@ function Demo() {
           withArrow
           noFocusTrap
           noEscape
-          bodyStyle={{ width: 260, pointerEvents: 'none' }}
+          styles={{ body: { width: 260, pointerEvents: 'none' } }}
           transition="slide-up"
           target={
             <Badge onMouseEnter={() => setOpened(true)} onMouseLeave={() => setOpened(false)}>

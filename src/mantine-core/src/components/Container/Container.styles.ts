@@ -1,6 +1,6 @@
 import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
 
-interface ContainerStylesProps {
+interface ContainerStyles {
   fluid: boolean;
   size: MantineNumberSize;
   theme: MantineTheme;
@@ -16,7 +16,7 @@ export const sizes = {
 };
 
 export default createMemoStyles({
-  container: ({ fluid, size, padding, theme }: ContainerStylesProps) => ({
+  container: ({ fluid, size, padding, theme }: ContainerStyles) => ({
     maxWidth: fluid ? '100%' : getSizeValue({ size, sizes }),
     marginLeft: 'auto',
     marginRight: 'auto',

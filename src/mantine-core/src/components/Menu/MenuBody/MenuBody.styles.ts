@@ -1,6 +1,6 @@
 import { createMemoStyles, getSizeValue, MantineNumberSize, MantineTheme } from '../../../theme';
 
-interface MenuStylesProps {
+interface MenuBodyStyles {
   theme: MantineTheme;
   size: MantineNumberSize;
 }
@@ -14,20 +14,20 @@ export const sizes = {
 };
 
 export default createMemoStyles({
-  menu: ({ theme, size }: MenuStylesProps) => ({
+  menu: ({ theme, size }: MenuBodyStyles) => ({
     position: 'absolute',
     width: getSizeValue({ size, sizes }),
     overflow: 'hidden',
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
     border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
+      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
     }`,
     paddingTop: theme.spacing.xs / 2,
     paddingBottom: theme.spacing.xs / 2,
   }),
 
-  hr: ({ theme }: MenuStylesProps) => ({
-    borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+  divider: ({ theme }: MenuBodyStyles) => ({
+    borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2],
     marginTop: theme.spacing.xs / 2,
     marginBottom: theme.spacing.xs / 2,
   }),

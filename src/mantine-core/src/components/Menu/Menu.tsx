@@ -1,10 +1,16 @@
-import React, { useState, useRef, cloneElement } from 'react';
-import { useId, useClickOutside, useMergedRef } from '@mantine/hooks';
+import React, { useRef, cloneElement } from 'react';
+import {
+  useId,
+  useClickOutside,
+  useMergedRef,
+  useWindowEvent,
+  useUncontrolled,
+} from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize } from '../../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { MantineTransition } from '../Transition/Transition';
 import { MenuIcon } from './MenuIcon';
-import { MenuBody, MenuBodyProps } from './MenuBody/MenuBody';
+import { MenuBody, MenuBodyProps, MenuBodyStylesNames } from './MenuBody/MenuBody';
 import { sizes } from './MenuBody/MenuBody.styles';
 import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
 
@@ -20,7 +26,9 @@ interface MenuPosition {
   right?: React.CSSProperties['right'];
 }
 
-export interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface MenuProps
+  extends DefaultProps<MenuBodyStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** <MenuItem /> and <Divider /> components only, children are passed to MenuBody component  */
   children: React.ReactNode;
 
@@ -74,6 +82,12 @@ export interface MenuProps extends DefaultProps, React.ComponentPropsWithoutRef<
 
   /** Get control ref */
   elementRef?: React.ForwardedRef<HTMLButtonElement>;
+
+  /** Event which should open menu */
+  trigger?: 'click' | 'hover';
+
+  /** Close delay for hover trigger */
+  delay?: number;
 }
 
 const defaultControl = (
@@ -101,40 +115,87 @@ export function Menu({
   transitionTimingFunction,
   menuButtonLabel,
   controlRefProp = 'elementRef',
+  trigger = 'click',
+  delay = 0,
   zIndex = 1000,
   elementRef,
+  classNames,
+  styles,
+  onMouseLeave,
+  onMouseEnter,
+  onChange,
   ...others
 }: MenuProps) {
   const controlRefFocusTimeout = useRef<number>();
+  const delayTimeout = useRef<number>();
   const controlRef = useRef<HTMLButtonElement>(null);
   const uuid = useId(menuId);
-  const controlled = typeof opened === 'boolean';
-  const [_opened, setOpened] = useState(false);
-  const menuOpened = controlled ? opened : _opened;
 
-  const handleClose = () => {
-    setOpened(false);
-    typeof onClose === 'function' && onClose();
-    controlRefFocusTimeout.current = window.setTimeout(() => {
-      typeof controlRef.current?.focus === 'function' && controlRef.current.focus();
-    }, transitionDuration + 10);
+  const [_opened, setOpened] = useUncontrolled({
+    value: opened,
+    defaultValue: false,
+    finalValue: false,
+    rule: (val) => typeof val === 'boolean',
+    onChange: (value) =>
+      !value
+        ? typeof onOpen === 'function' && onOpen()
+        : typeof onClose === 'function' && onClose(),
+  });
+
+  const openedRef = useRef(_opened);
+
+  const handleClose = (scroll = false) => {
+    if (openedRef.current) {
+      openedRef.current = false;
+      setOpened(false);
+      if (trigger === 'click') {
+        controlRefFocusTimeout.current = window.setTimeout(() => {
+          !scroll && typeof controlRef.current?.focus === 'function' && controlRef.current.focus();
+        }, transitionDuration + 10);
+      }
+    }
   };
 
   const handleOpen = () => {
+    openedRef.current = true;
     setOpened(true);
     window.clearTimeout(controlRefFocusTimeout.current);
-    typeof onOpen === 'function' && onOpen();
   };
 
-  const wrapperRef = useClickOutside(() => menuOpened && handleClose());
+  useWindowEvent('scroll', () => handleClose(true));
 
-  const toggleMenu = () => (opened || _opened ? handleClose() : handleOpen());
+  const wrapperRef = useClickOutside(() => _opened && handleClose());
+  const toggleMenu = () => {
+    _opened ? handleClose() : handleOpen();
+  };
+
+  const controlEventHandlers =
+    trigger === 'click'
+      ? { onClick: toggleMenu }
+      : { onMouseEnter: handleOpen, onFocus: handleOpen };
+
+  const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    typeof onMouseLeave === 'function' && onMouseLeave(event);
+
+    if (trigger === 'hover') {
+      if (delay > 0) {
+        delayTimeout.current = window.setTimeout(() => handleClose(true), delay);
+      } else {
+        handleClose(true);
+      }
+    }
+  };
+
+  const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    typeof onMouseEnter === 'function' && onMouseEnter(event);
+    window.clearTimeout(delayTimeout.current);
+  };
 
   const menuControl = cloneElement(control, {
-    onClick: toggleMenu,
+    ...controlEventHandlers,
     role: 'button',
     'aria-haspopup': 'menu',
-    'aria-expanded': menuOpened,
+    'aria-expanded': _opened,
     'aria-controls': uuid,
     'aria-label': menuButtonLabel,
     'data-mantine-menu': true,
@@ -146,13 +207,15 @@ export function Menu({
     <div
       ref={wrapperRef}
       style={{ display: 'inline-block', position: 'relative', ...style }}
+      onMouseLeave={handleMouseLeave}
+      onMouseEnter={handleMouseEnter}
       {...others}
     >
       {menuControl}
 
       <MenuBody
         {...menuBodyProps}
-        opened={menuOpened}
+        opened={_opened}
         onClose={handleClose}
         id={uuid}
         themeOverride={themeOverride}
@@ -165,6 +228,8 @@ export function Menu({
         size={size}
         shadow={shadow}
         zIndex={zIndex}
+        classNames={classNames}
+        styles={styles}
       >
         {children}
       </MenuBody>

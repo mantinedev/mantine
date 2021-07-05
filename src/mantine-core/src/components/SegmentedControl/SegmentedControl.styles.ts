@@ -7,7 +7,6 @@ import {
   getSizeValue,
   getThemeColor,
   getFocusStyles,
-  hexToRgba,
 } from '../../theme';
 
 export const WRAPPER_PADDING = 4;
@@ -59,7 +58,7 @@ export default createMemoStyles({
     },
   }),
 
-  wrapper: ({ theme, fullWidth, radius }: SegmentedControlStyles) => ({
+  root: ({ theme, fullWidth, radius }: SegmentedControlStyles) => ({
     position: 'relative',
     display: fullWidth ? 'flex' : 'inline-flex',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
@@ -156,10 +155,7 @@ export default createMemoStyles({
     }`,
     backgroundColor:
       color in theme.colors
-        ? hexToRgba(
-            getThemeColor({ theme, color, shade: 6 }),
-            theme.colorScheme === 'dark' ? 0.55 : 1
-          )
+        ? getThemeColor({ theme, color, shade: 6 })
         : theme.colorScheme === 'dark'
         ? theme.colors.dark[5]
         : theme.white,

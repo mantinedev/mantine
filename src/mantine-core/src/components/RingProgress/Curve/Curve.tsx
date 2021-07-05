@@ -33,8 +33,8 @@ export function Curve({
         color: color || (theme.colorScheme === 'dark' ? 'dark' : 'gray'),
         shade: color
           ? theme.colorScheme === 'dark'
-            ? 7
-            : 5
+            ? 6
+            : 7
           : theme.colorScheme === 'dark'
           ? 4
           : 2,

@@ -5,22 +5,27 @@ import {
   itSupportsRef,
   itSupportsClassName,
   itSupportsStyle,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Checkbox } from './Checkbox';
+import { Checkbox as CheckboxStylesApi } from './styles.api';
+
+const defaultProps = {
+  checked: true,
+  onChange: () => {},
+  label: 'test-label',
+};
 
 describe('@mantine/core/Checkbox', () => {
-  itSupportsStyle(Checkbox, {});
-  itSupportsClassName(Checkbox, {});
-  itSupportsRef(Checkbox, {}, HTMLInputElement, 'elementRef');
+  itSupportsStyle(Checkbox, defaultProps);
+  itSupportsClassName(Checkbox, defaultProps);
+  itSupportsRef(Checkbox, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsStylesApi(Checkbox, defaultProps, Object.keys(CheckboxStylesApi), 'checkbox');
   checkAccessibility([
     mount(<Checkbox aria-label="Checkbox without label" />),
     mount(<Checkbox label="With label" />),
     mount(<Checkbox id="with-id" label="With id" />),
   ]);
-
-  it('has correct displayName', () => {
-    expect(Checkbox.displayName).toEqual('@mantine/core/Checkbox');
-  });
 
   it('renders label based on label prop', () => {
     const withLabel = shallow(<Checkbox label="test-label" />);
@@ -62,15 +67,6 @@ describe('@mantine/core/Checkbox', () => {
     expect(element.css('line-height')).toBe('1px');
   });
 
-  it('adds input styles with inputStyle prop', () => {
-    const element = shallow(
-      <Checkbox inputStyle={{ border: '1px solid red', lineHeight: '1px' }} />
-    );
-
-    expect(element.render().find('input').css('border')).toBe('1px solid red');
-    expect(element.render().find('input').css('line-height')).toBe('1px');
-  });
-
   it('sets checked state based on checked prop', () => {
     const checked = shallow(<Checkbox checked onChange={() => {}} />);
     const notChecked = shallow(<Checkbox checked={false} onChange={() => {}} />);
@@ -84,15 +80,14 @@ describe('@mantine/core/Checkbox', () => {
     expect(element.render().find('input').attr('checked')).toBe('checked');
   });
 
-  it('adds className to input with inputClassName prop', () => {
-    const element = shallow(<Checkbox inputClassName="test-input" />);
-    expect(element.render().find('input').hasClass('test-input')).toBe(true);
-  });
-
   it('spreads ...others to input element', () => {
     const element = shallow(<Checkbox aria-checked width="30px" />);
 
     expect(element.render().find('input').attr('aria-checked')).toBe('true');
     expect(element.render().find('input').attr('width')).toBe('30px');
+  });
+
+  it('has correct displayName', () => {
+    expect(Checkbox.displayName).toEqual('@mantine/core/Checkbox');
   });
 });

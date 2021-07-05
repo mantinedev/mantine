@@ -1,4 +1,4 @@
-import { createMemoStyles, MantineTheme, getThemeColor, hexToRgba } from '../../theme';
+import { createMemoStyles, MantineTheme, getThemeColor } from '../../theme';
 
 interface NotificationStyles {
   color: string;
@@ -15,7 +15,7 @@ export default createMemoStyles({
     },
   },
 
-  notification: ({ color, theme }: NotificationStyles) => ({
+  root: ({ color, theme }: NotificationStyles) => ({
     boxSizing: 'border-box',
     position: 'relative',
     display: 'flex',
@@ -42,15 +42,12 @@ export default createMemoStyles({
       backgroundColor: getThemeColor({
         theme,
         color,
-        shade: theme.colorScheme === 'dark' ? 7 : 6,
+        shade: 6,
       }),
     },
 
     '& $icon': {
-      backgroundColor: hexToRgba(
-        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 7 : 6 }),
-        theme.colorScheme === 'dark' ? 0.7 : 1
-      ),
+      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
       color: theme.white,
     },
   }),

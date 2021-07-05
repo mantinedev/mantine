@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'clsx';
 import { ComponentPassThrough } from '../../types';
 
 export interface OverlayProps {
@@ -13,15 +14,17 @@ export interface OverlayProps {
 }
 
 export function Overlay<T extends React.ElementType = 'div'>({
+  className,
+  style,
   opacity = 0.6,
   color = '#fff',
   zIndex = 1000,
-  style,
   component: Element = 'div',
   ...others
 }: ComponentPassThrough<T, OverlayProps>) {
   return (
     <Element
+      className={cx('mantine-overlay', className)}
       style={{
         opacity,
         backgroundColor: color,

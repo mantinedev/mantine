@@ -1,0 +1,111 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Autocomplete
+order: 1
+slug: /core/autocomplete/
+category: 'inputs'
+description: 'Autocomplete user input with any list of options'
+props: ['Autocomplete']
+import: "import { Autocomplete } from '@mantine/core';"
+source: 'mantine-core/src/components/Autocomplete/Autocomplete.tsx'
+docs: 'core/Autocomplete.mdx'
+styles: ['Autocomplete']
+---
+
+import { AutocompleteDemos } from '@demos/core';
+
+## Usage
+
+Autocomplete is an input with which you can suggest user to select one of the given values
+(if you need to force specific values without free input use <GatsbyLink to="/core/select/">Select component</GatsbyLink>):
+
+<Demo data={AutocompleteDemos.usage} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <Autocomplete value={value} onChange={setValue} />;
+}
+```
+
+## Dynamic data
+
+`data` prop can have dynamic values:
+
+<Demo data={AutocompleteDemos.dynamic} />
+
+## Custom item component
+
+You can change autocomplete item component and filtering logic that is used in search.
+To do so you will need to:
+
+- Add extra props to `data` objects
+- Create `filter` function which determines whether item should be added to the search results
+- Provide `itemComponent` which will consume `data` objects
+
+`data` prop must be an array of objects with required `value` field:
+
+```tsx
+// Minimum data for default autocomplete used in previous examples
+[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }];
+```
+
+You can add any other fields to your data:
+
+```tsx
+[
+  { value: 'bob@handsome.inc', color: 'red', email: 'bob@handsome.inc', name: 'Bob Handsome' },
+  { value: 'bill@outlook.com', color: 'teal', email: 'bill@outlook.com', name: 'Bill Gates' },
+  { value: 'amy@wong.cn', color: 'blue', email: 'amy@wong.cn', name: 'Amy Wong' },
+];
+```
+
+Based on this data shape you can create custom `filter` function and `itemComponent`:
+
+<Demo data={AutocompleteDemos.itemComponent} />
+
+## Input props
+
+Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
+
+<Demo data={AutocompleteDemos.configurator} />
+
+## Get element ref
+
+You can get input ref with `elementRef` prop:
+
+```tsx
+import { useRef } from 'react';
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef(null);
+  return <Autocomplete elementRef={ref} />;
+}
+```
+
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<Autocomplete /> // -> random id generated both on client and server, props mismatch warning
+<Autocomplete id="my-accordion" /> // -> id is static, no mismatches
+```
+
+## Accessibility
+
+Provide `aria-label` in case you use component without label for screen reader support:
+
+```tsx
+<Autocomplete label="My input" />; // -> ok, input and label is connected
+<Autocomplete />; // not ok, input is not labeled
+<Autocomplete aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
+```

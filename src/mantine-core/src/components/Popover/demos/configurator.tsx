@@ -11,7 +11,7 @@ function Wrapper(props: PopoverProps) {
         withArrow
         noFocusTrap
         noEscape
-        bodyStyle={{ width: 260, pointerEvents: 'none' }}
+        styles={{ body: { width: 260, pointerEvents: 'none' } }}
         transition="slide-up"
         target={<Badge>Badge with popover</Badge>}
         {...props}

@@ -17,6 +17,22 @@ license: MIT
 import * as MantineNotificationsDemos from '@demos/notifications';
 import { NotificationDemos } from '@demos/core';
 
+## Installation
+
+Package depends on [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks), [@mantine/core](https://www.npmjs.com/package/@mantine/core) and [react-jss](https://www.npmjs.com/package/react-jss).
+
+Install with npm:
+
+```sh
+npm install react-jss @mantine/notifications @mantine/core @mantine/hooks
+```
+
+Install with yarn:
+
+```sh
+yarn add react-jss @mantine/notifications @mantine/core @mantine/hooks
+```
+
 ## Demo
 
 <Demo data={MantineNotificationsDemos.root} />
@@ -27,7 +43,6 @@ Wrap your application with NotificationsProvider.
 **Important:** if you use MantineProvider, NotificationsProvider must be placed inside:
 
 ```tsx
-import React from 'react';
 import { NotificationsProvider } from '@mantine/notifications';
 
 function YourApp() {

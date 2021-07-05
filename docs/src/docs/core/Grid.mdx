@@ -10,6 +10,7 @@ props: ['Grid']
 import: "import { Grid, Col } from '@mantine/core';"
 source: 'mantine-core/src/components/Grid/Grid.tsx'
 docs: 'core/Grid.mdx'
+styles: ['Grid', 'single-node']
 ---
 
 import { GridDemos } from '@demos/core';
@@ -23,7 +24,7 @@ Grid component provides simple grid system based on flexbox container:
 ## Gutter
 
 Customize spacing between columns with `gutter` prop on Grid component.
-Use xs, sm, md, lg, xl values to set spacing from <GatsbyLink to="/pages/theming/#spacing-radius-and-shadows">theme.spacing</GatsbyLink>
+Use xs, sm, md, lg, xl values to set spacing from <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.spacing</GatsbyLink>
 or number to set spacing in px:
 
 ```tsx
@@ -81,7 +82,6 @@ If you want to enhance it with additional logic – pass all props to child Col:
 
 ```tsx
 // Example Col component wrapper, used in all demos
-import React from 'react';
 import { Col, Text, useMantineTheme } from '@mantine/core';
 
 function ColWrapper(props: React.ComponentProps<typeof Col>) {

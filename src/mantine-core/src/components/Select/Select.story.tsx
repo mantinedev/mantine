@@ -1,127 +1,54 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { RocketIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME } from '../../theme';
 import { Select } from './Select';
 
 const data = [
-  { label: 'React', value: 'react' },
-  { label: 'Angular', value: 'ng' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
+  { value: 'react', label: 'React' },
+  { value: 'ng', label: 'Angular' },
+  { value: 'svelte', label: 'Svelte' },
+  { value: 'vue', label: 'Vue' },
 ];
 
-function WrappedSelect(
-  props: Omit<React.ComponentProps<typeof Select>, 'value' | 'onChange' | 'data'>
-) {
-  const [value, onChange] = useState(null);
+const largeData = Array(50)
+  .fill(0)
+  .map((_, index) => ({
+    value: `${index}`,
+    label: `Item ${index}`,
+  }));
+
+function Controlled() {
+  const [value, setValue] = useState(null);
+
   return (
     <Select
+      label="Controlled"
+      placeholder="Controlled"
       value={value}
-      onChange={(event) => onChange(event.currentTarget.value)}
+      onChange={setValue}
       data={data}
-      {...props}
+      style={{ marginTop: 30 }}
     />
   );
 }
 
-storiesOf('@mantine/core/Select', module)
-  .add('General usage', () => (
-    <div style={{ maxWidth: 300, padding: 20 }}>
-      <WrappedSelect label="Your favorite library" placeholder="Your favorite library" />
-    </div>
-  ))
-  .add('Uncontrolled', () => (
-    <div style={{ maxWidth: 300, padding: 20 }}>
-      <Select label="Your favorite library" placeholder="Your favorite library" data={data} />
-    </div>
-  ))
-  .add('Required', () => (
-    <div style={{ maxWidth: 300, padding: 20 }}>
-      <WrappedSelect required label="Your favorite library" placeholder="Your favorite library" />
-    </div>
-  ))
-  .add('Filled', () => (
-    <div style={{ maxWidth: 300, padding: 20 }}>
-      <WrappedSelect
-        required
-        label="Your favorite library"
-        placeholder="Your favorite library"
-        variant="filled"
-      />
-    </div>
-  ))
-  .add('With description', () => (
-    <div style={{ maxWidth: 300, padding: 20 }}>
-      <WrappedSelect
-        description="Please choose wisely, you will not be able to change answer"
-        required
-        label="Your favorite library"
-        placeholder="Your favorite library"
-      />
-    </div>
-  ))
-  .add('With error', () => (
-    <div style={{ maxWidth: 300, padding: 20 }}>
-      <WrappedSelect
-        required
-        label="Your favorite library"
-        placeholder="Your favorite library"
-        error="You need to choose value"
-      />
-    </div>
-  ))
-  .add('Invalid without error', () => (
-    <div style={{ maxWidth: 300, padding: 20 }}>
-      <WrappedSelect label="Your favorite library" placeholder="Your favorite library" error />
-    </div>
-  ))
-  .add('Custom radius', () => (
-    <div style={{ maxWidth: 300, padding: 20 }}>
-      <WrappedSelect
-        label="Your favorite library"
-        placeholder="Your favorite library"
-        radius="xl"
-      />
-    </div>
-  ))
-  .add('Disabled', () => (
-    <div style={{ maxWidth: 300, padding: 20 }}>
-      <Select
-        disabled
-        label="Your favorite library"
-        placeholder="Your favorite library"
-        data={data}
-      />
-      <Select
-        style={{ marginTop: 20 }}
-        disabled
-        label="Your favorite library"
-        placeholder="Your favorite library"
-        value="react"
-        data={data}
-      />
-    </div>
-  ))
-  .add('With icon', () => (
-    <div style={{ maxWidth: 300, padding: 20 }}>
-      <WrappedSelect
-        icon={<RocketIcon />}
-        label="Your favorite library"
-        required
-        placeholder="Your favorite library"
-      />
-    </div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40, minHeight: '100vh' }}>
-      <div style={{ width: 300, padding: 20 }}>
-        <Select
-          label="Your favorite library"
-          placeholder="Your favorite library"
-          data={data}
-          themeOverride={{ colorScheme: 'dark' }}
-        />
-      </div>
-    </div>
-  ));
+storiesOf('@mantine/core/Select', module).add('General usage', () => (
+  <div style={{ padding: 40, maxWidth: 300 }}>
+    <Select label="Choose your favorite library/framework" placeholder="Choose value" data={data} />
+    <Select
+      searchable
+      label="Choose your favorite library/framework"
+      placeholder="Choose value"
+      data={data}
+      style={{ marginTop: 20 }}
+      nothingFound="No options"
+    />
+    <Controlled />
+    <Select
+      label="Large data set"
+      placeholder="Choose value"
+      searchable
+      data={largeData}
+      style={{ marginTop: 20 }}
+    />
+  </div>
+));

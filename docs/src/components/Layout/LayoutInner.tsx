@@ -1,13 +1,22 @@
-import 'normalize.css';
-
 import React, { useState } from 'react';
-import { NotificationsProvider } from '@mantine/notifications';
+import cx from 'clsx';
 import { graphql, useStaticQuery } from 'gatsby';
+import { useMediaQuery } from '@mantine/hooks';
+import { NotificationsProvider } from '@mantine/notifications';
 import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
+import { NAVBAR_BREAKPOINT } from './Navbar/Navbar.styles';
+import { EXCLUDE_LAYOUT_PATHS } from '../../settings';
+import { getDocsData } from './get-docs-data';
 import useStyles from './Layout.styles';
-import getDocsData from './get-docs-data';
+
+export interface LayoutProps {
+  children: React.ReactNode;
+  location: {
+    pathname: string;
+  };
+}
 
 const query = graphql`
   {
@@ -20,6 +29,8 @@ const query = graphql`
             title
             order
             slug
+            category
+            package
           }
         }
       }
@@ -27,20 +38,24 @@ const query = graphql`
   }
 `;
 
-export default function LayoutInner({ children }: { children: React.ReactNode }) {
+export function LayoutInner({ children, location }: LayoutProps) {
   const classes = useStyles();
   const [navbarOpened, setNavbarState] = useState(false);
   const data = getDocsData(useStaticQuery(query));
+  const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);
+  const shouldRenderNavbar = !EXCLUDE_LAYOUT_PATHS.includes(location.pathname) || navbarCollapsed;
 
   return (
-    <div className={classes.layout}>
+    <div className={cx({ [classes.withNavbar]: shouldRenderNavbar })}>
       <Header
         data={data}
         navbarOpened={navbarOpened}
         toggleNavbar={() => setNavbarState((o) => !o)}
       />
 
-      <Navbar data={data} opened={navbarOpened} onClose={() => setNavbarState(false)} />
+      {shouldRenderNavbar && (
+        <Navbar data={data} opened={navbarOpened} onClose={() => setNavbarState(false)} />
+      )}
 
       <main className={classes.main}>
         <div className={classes.content}>

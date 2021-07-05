@@ -1,10 +1,14 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { Text } from '../Text/Text';
 import useStyles from './Breadcrumbs.styles';
 
-export interface BreadcrumbsProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export type BreadcrumbsStylesNames = keyof ReturnType<typeof useStyles>;
+
+export interface BreadcrumbsProps
+  extends DefaultProps<BreadcrumbsStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Separator between breadcrumbs */
   separator?: React.ReactNode;
 
@@ -14,19 +18,24 @@ export interface BreadcrumbsProps extends DefaultProps, React.ComponentPropsWith
 
 export function Breadcrumbs({
   className,
+  style,
   themeOverride,
   children,
   separator = '/',
+  classNames,
+  styles,
   ...others
 }: BreadcrumbsProps) {
-  const classes = useStyles({ theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme }, classNames, 'breadcrumbs');
+  const _styles = mergeStyles(classes, styles);
 
   const items = React.Children.toArray(children).reduce((acc: any[], child: any, index, array) => {
     acc.push(
       React.cloneElement(child, {
         className: classes.breadcrumb,
+        style: _styles.breadcrumb,
         key: index,
-        'data-mantine-breadcrumb': true,
       })
     );
 
@@ -34,8 +43,8 @@ export function Breadcrumbs({
       acc.push(
         <Text
           size="sm"
-          data-mantine-separator
           className={classes.separator}
+          style={_styles.separator}
           key={`separator-${index}`}
           themeOverride={themeOverride}
         >
@@ -48,7 +57,7 @@ export function Breadcrumbs({
   }, []);
 
   return (
-    <div className={cx(classes.breadcrumbs, className)} {...others}>
+    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       {items}
     </div>
   );

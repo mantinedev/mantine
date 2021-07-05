@@ -1,29 +1,39 @@
 import React from 'react';
-import { InputWrapper, SegmentedControl } from '@mantine/core';
+import { Slider, InputWrapper } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 
-const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => ({
-  value: size,
-  label: size,
-}));
+const MARKS = [
+  { value: 0, label: 'xs' },
+  { value: 25, label: 'sm' },
+  { value: 50, label: 'md' },
+  { value: 75, label: 'lg' },
+  { value: 100, label: 'xl' },
+];
 
 interface SizeControlProps {
   value: string;
   label: string;
+  step?: number;
   onChange(value: string): void;
 }
 
-export function SizeControl({ value, label, onChange, ...others }: SizeControlProps) {
+export function SizeControl({ label, value, onChange, step = 25, ...others }: SizeControlProps) {
+  const _value = MARKS.find((mark) => mark.label === value).value;
+  const handleChange = (val: number) => onChange(MARKS.find((mark) => mark.value === val).label);
+
   return (
     <InputWrapper labelElement="div" label={upperFirst(label)} {...others}>
-      <SegmentedControl
-        data={SIZES}
-        value={value}
-        onChange={onChange}
-        fullWidth
-        transitionDuration={100}
-        transitionTimingFunction="ease"
-      />
+      <div style={{ paddingLeft: 4, paddingRight: 4 }}>
+        <Slider
+          value={_value}
+          onChange={handleChange}
+          label={(val) => MARKS.find((mark) => mark.value === val).label}
+          step={step}
+          radius={0}
+          marks={MARKS}
+          styles={{ markLabel: { display: 'none' } }}
+        />
+      </div>
     </InputWrapper>
   );
 }

@@ -10,7 +10,7 @@ import {
   hexToRgba,
 } from '../../theme';
 
-interface BadgeStylesProps {
+interface BadgeStyles {
   color: string;
   theme: MantineTheme;
   size: MantineSize;
@@ -55,11 +55,11 @@ export const heights = Object.keys(sizes).reduce((acc, key) => {
 }, {} as Record<MantineSize, number>);
 
 export default createMemoStyles({
-  leftSection: ({ theme }: BadgeStylesProps) => ({
+  leftSection: ({ theme }: BadgeStyles) => ({
     marginRight: theme.spacing.xs / 2,
   }),
 
-  rightSection: ({ theme }: BadgeStylesProps) => ({
+  rightSection: ({ theme }: BadgeStyles) => ({
     marginLeft: theme.spacing.xs / 2,
   }),
 
@@ -69,7 +69,7 @@ export default createMemoStyles({
     textOverflow: 'ellipsis',
   },
 
-  badge: ({ theme, size, fullWidth, radius }: BadgeStylesProps) => {
+  root: ({ theme, size, fullWidth, radius }: BadgeStyles) => {
     const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
     return {
       ...getFocusStyles(theme),
@@ -96,7 +96,7 @@ export default createMemoStyles({
     };
   },
 
-  light: ({ theme, color }: BadgeStylesProps) => ({
+  light: ({ theme, color }: BadgeStyles) => ({
     backgroundColor: hexToRgba(
       getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
       theme.colorScheme === 'dark' ? 0.3 : 1
@@ -104,28 +104,23 @@ export default createMemoStyles({
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
   }),
 
-  filled: ({ theme, color }: BadgeStylesProps) => ({
-    backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: 7 }),
-      theme.colorScheme === 'dark' ? 0.65 : 1
-    ),
+  filled: ({ theme, color }: BadgeStyles) => ({
+    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
     color: theme.white,
-    textShadow:
-      theme.colorScheme === 'dark'
-        ? 'none'
-        : '1px 1px 1px rgba(0, 0, 0, .3)',
+    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
   }),
 
-  outline: ({ theme, color }: BadgeStylesProps) => ({
+  outline: ({ theme, color }: BadgeStyles) => ({
     backgroundColor: 'transparent',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
-    borderColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 8 }),
-      0.55
-    ),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
+    border: `1px solid ${getThemeColor({
+      theme,
+      color,
+      shade: theme.colorScheme === 'dark' ? 4 : 7,
+    })}`,
   }),
 
-  dot: ({ theme, color, size }: BadgeStylesProps) => {
+  dot: ({ theme, color, size }: BadgeStyles) => {
     const dotSize = getSizeValue({ size, sizes: dotSizes });
 
     return {
@@ -140,7 +135,11 @@ export default createMemoStyles({
         width: dotSize,
         height: dotSize,
         borderRadius: dotSize,
-        backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+        backgroundColor: getThemeColor({
+          theme,
+          color,
+          shade: theme.colorScheme === 'dark' ? 4 : 6,
+        }),
         marginRight: dotSize,
       },
     };

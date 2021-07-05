@@ -10,6 +10,7 @@ props: ['InputWrapper']
 import: "import { InputWrapper } from '@mantine/core';"
 source: 'mantine-core/src/components/InputWrapper/InputWrapper.tsx'
 docs: 'core/InputWrapper.mdx'
+styles: ['InputWrapper']
 ---
 
 import { InputWrapperDemos } from '@demos/core';
@@ -23,8 +24,6 @@ All Mantine inputs support the same props as InputWrapper.
 You can combine it with <GatsbyLink to="/core/input/">Input</GatsbyLink> component
 to build your own custom inputs with the same style and behavior.
 
-See <GatsbyLink to="/guides/inputs/">guide on inputs</GatsbyLink> to learn how to build custom inputs with this component.
-
 <Demo data={InputWrapperDemos.configurator} />
 
 ## Change label element
@@ -34,7 +33,6 @@ may require to detach label from certain element.
 To implement this, use `labelElement`:
 
 ```tsx
-import React from 'react';
 import { InputWrapper } from '@mantine/core';
 
 // id is required to connect label and input

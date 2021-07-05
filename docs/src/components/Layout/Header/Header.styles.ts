@@ -25,19 +25,11 @@ export default createUseStyles(
     },
 
     logo: {
-      ...getFocusStyles(theme),
       paddingRight: theme.spacing.md,
       paddingLeft: theme.spacing.md,
       height: HEADER_HEIGHT,
       display: 'flex',
       alignItems: 'center',
-      textDecoration: 'none',
-      userSelect: 'none',
-      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-    },
-
-    image: {
-      height: 30,
     },
 
     links: {

@@ -12,7 +12,7 @@ export const sizes = {
 
 export type Position = 'top' | 'bottom' | 'left' | 'right';
 
-interface DrawerStylesProps {
+interface DrawerStyles {
   theme: MantineTheme;
   position: Position;
   size: number | string;
@@ -46,7 +46,7 @@ function getPositionStyles({
 export default createMemoStyles({
   noOverlay: {},
 
-  wrapper: {
+  root: {
     '&:not($noOverlay)': {
       position: 'fixed',
       top: 0,
@@ -56,11 +56,26 @@ export default createMemoStyles({
     },
   },
 
-  drawer: ({ size, position }: DrawerStylesProps) => ({
+  drawer: ({ size, position }: DrawerStyles) => ({
     ...getPositionStyles({ position, size }),
     maxWidth: '100%',
     maxHeight: '100vh',
     position: 'fixed',
     outline: 0,
+  }),
+
+  title: ({ theme }: DrawerStyles) => ({
+    marginRight: theme.spacing.md,
+    textOverflow: 'ellipsis',
+    display: 'block',
+    wordBreak: 'break-word',
+  }),
+
+  header: ({ theme }: DrawerStyles) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: theme.spacing.md,
+    marginRight: -9,
   }),
 });

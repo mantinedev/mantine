@@ -5,12 +5,14 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsOthers,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { TabControl } from './TabControl/TabControl';
 import { Tabs, Tab } from './Tabs';
+import { Tabs as TabsStylesApi } from './styles.api';
 
 const content = [
-  <Tab label="tab-1" key="tab-1">
+  <Tab label="tab-1" key="tab-1" icon="test-icon">
     tab-1
   </Tab>,
   <Tab label="tab-2" key="tab-2">
@@ -32,6 +34,7 @@ describe('@mantine/core/Tabs', () => {
   itSupportsOthers(Tabs, defaultProps);
   itSupportsStyle(Tabs, defaultProps);
   itSupportsClassName(Tabs, defaultProps);
+  itSupportsStylesApi(Tabs, defaultProps, Object.keys(TabsStylesApi), 'tabs');
 
   it('has correct displayName', () => {
     expect(Tabs.displayName).toEqual('@mantine/core/Tabs');

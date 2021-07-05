@@ -1,14 +1,20 @@
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useId } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps } from '../../theme';
-import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
-import { Input, InputProps } from '../Input/Input';
+import { useMantineTheme, DefaultProps, MantineSize } from '../../theme';
+import {
+  InputWrapperBaseProps,
+  InputWrapper,
+  InputWrapperStylesNames,
+} from '../InputWrapper/InputWrapper';
+import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
+
+export type TextareaStylesNames = InputStylesNames | InputWrapperStylesNames;
 
 export interface TextareaProps
-  extends DefaultProps,
+  extends DefaultProps<TextareaStylesNames>,
     InputWrapperBaseProps,
-    InputProps,
+    InputBaseProps,
     React.ComponentPropsWithoutRef<'textarea'> {
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
@@ -22,14 +28,14 @@ export interface TextareaProps
   /** Defined minRows in autosize variant and rows in regular variant */
   minRows?: number;
 
-  /** Style properties added to input element */
-  inputStyle?: React.CSSProperties;
-
   /** Props passed to root element (InputWrapper component) */
   wrapperProps?: Record<string, any>;
 
   /** Get element ref */
   elementRef?: React.ForwardedRef<HTMLTextAreaElement>;
+
+  /** Input size */
+  size?: MantineSize;
 }
 
 export function Textarea({
@@ -45,12 +51,24 @@ export function Textarea({
   themeOverride,
   style,
   wrapperProps,
-  inputStyle,
   elementRef,
+  classNames,
+  styles,
+  size = 'sm',
+  __staticSelector = 'textarea',
   ...others
 }: TextareaProps) {
   const uuid = useId(id);
   const theme = useMantineTheme(themeOverride);
+  const _styles = styles as any;
+  const inputStyles = {
+    ..._styles,
+    input: {
+      paddingTop: theme.spacing.xs,
+      paddingBottom: theme.spacing.xs,
+      ..._styles?.input,
+    },
+  } as any;
 
   return (
     <InputWrapper
@@ -61,6 +79,10 @@ export function Textarea({
       required={required}
       style={style}
       className={className}
+      classNames={classNames as any}
+      styles={styles as any}
+      size={size}
+      __staticSelector={__staticSelector}
       {...wrapperProps}
     >
       {autosize ? (
@@ -72,12 +94,10 @@ export function Textarea({
           minRows={minRows}
           id={uuid}
           elementRef={elementRef}
-          inputStyle={{
-            paddingTop: theme.spacing.xs,
-            paddingBottom: theme.spacing.xs,
-            ...inputStyle,
-            height: undefined,
-          }}
+          classNames={classNames as any}
+          styles={inputStyles}
+          size={size}
+          multiline
           {...others}
         />
       ) : (
@@ -88,11 +108,11 @@ export function Textarea({
           invalid={!!error}
           rows={minRows}
           elementRef={elementRef}
-          inputStyle={{
-            paddingTop: theme.spacing.xs,
-            paddingBottom: theme.spacing.xs,
-            ...inputStyle,
-          }}
+          classNames={classNames as any}
+          styles={inputStyles}
+          size={size}
+          __staticSelector={__staticSelector}
+          multiline
           {...others}
         />
       )}

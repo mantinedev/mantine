@@ -4,10 +4,10 @@ import { Text } from '../../Text/Text';
 
 const code = `
 // No transitions
-<SegmentedControlWrapper transitionDuration={0} />
+<SegmentedControl transitionDuration={0} />
 
 // 500ms linear transition
-<SegmentedControlWrapper
+<SegmentedControl
   transitionDuration={500}
   transitionTimingFunction="linear"
 />

@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
 
+export type ImageStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface ImageProps
-  extends DefaultProps,
+  extends DefaultProps<ImageStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'placeholder'> {
   /** Image src */
   src?: string;
@@ -43,6 +45,7 @@ export interface ImageProps
 
 export function Image({
   className,
+  style,
   themeOverride,
   alt,
   src,
@@ -50,15 +53,18 @@ export function Image({
   width = '100%',
   height = 'auto',
   radius = 0,
-  style,
   imageProps,
   withPlaceholder = false,
   placeholder,
   imageRef,
   elementRef,
+  classNames,
+  styles,
   ...others
 }: ImageProps) {
-  const classes = useStyles({ radius, theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ radius, theme }, classNames, 'image');
+  const _styles = mergeStyles(classes, styles);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(!src);
   const isPlaceholder = withPlaceholder && (!loaded || error);
@@ -76,22 +82,22 @@ export function Image({
   return (
     <div
       data-mantine-image
-      className={cx(classes.wrapper, className)}
-      style={{ width, height, ...style }}
+      className={cx(classes.root, className)}
+      style={{ width, height, ...style, ..._styles.root }}
       ref={elementRef}
       {...others}
     >
       {isPlaceholder && (
-        <div data-mantine-image-placeholder className={classes.placeholderIcon} title={alt}>
+        <div className={classes.placeholder} title={alt} style={_styles.placeholder}>
           {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
         </div>
       )}
 
       <img
-        className={cx(classes.image, imageProps?.className)}
+        className={classes.image}
         src={src}
         alt={alt}
-        style={{ ...imageProps?.style, objectFit: fit }}
+        style={{ ..._styles.image, objectFit: fit }}
         ref={imageRef}
         onLoad={(event) => {
           setLoaded(true);

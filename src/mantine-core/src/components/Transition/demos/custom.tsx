@@ -77,6 +77,7 @@ export function Demo() {
               left: 0,
               right: 0,
               height: 120,
+              padding: theme.spacing.xl,
               backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
             }}
             elementRef={clickOutsideRef}

@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'clsx';
 import { DefaultProps, useMantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
 
 export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -22,6 +23,7 @@ export function Col({
   grow,
   style,
   columns,
+  className,
   ...others
 }: ColProps) {
   const theme = useMantineTheme(themeOverride);
@@ -43,7 +45,7 @@ export function Col({
   }
 
   return (
-    <div style={styles} {...others}>
+    <div style={styles} className={cx('mantine-col', className)} {...others}>
       {children}
     </div>
   );

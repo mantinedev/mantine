@@ -6,10 +6,13 @@ import {
   itSupportsStyle,
   itSupportsClassName,
   itSupportsRef,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { Textarea } from './Textarea';
+import { Input as InputStylesApi } from '../Input/styles.api';
+import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 const getInput = (element: any, input: any) => element.find(Input).dive().find(input);
 
@@ -30,6 +33,20 @@ describe('@mantine/core/Textarea', () => {
   itSupportsClassName(Textarea, {});
   itSupportsRef(Textarea, {}, HTMLTextAreaElement, 'elementRef');
 
+  itSupportsStylesApi(
+    Textarea,
+    {
+      icon: '$',
+      rightSection: '$',
+      label: 'test-label',
+      error: 'test-error',
+      description: 'test-description',
+      required: true,
+    },
+    Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
+    'textarea'
+  );
+
   it('renders correct component based on autosize prop', () => {
     const autosize = shallow(<Textarea autosize />);
     const notAutosize = shallow(<Textarea />);
@@ -47,19 +64,10 @@ describe('@mantine/core/Textarea', () => {
         minRows={1}
         id="test-id"
         placeholder="test-placeholder"
-        inputStyle={{ border: '1px solid red' }}
-        inputClassName="test-class"
       />
     );
     const notAutosize = shallow(
-      <Textarea
-        required
-        id="test-id"
-        placeholder="test-placeholder"
-        minRows={2}
-        inputStyle={{ border: '1px solid red' }}
-        inputClassName="test-class"
-      />
+      <Textarea required id="test-id" placeholder="test-placeholder" minRows={2} />
     );
 
     expect(getInput(autosize, TextareaAutosize).prop('aria-required')).toBe(true);
@@ -67,15 +75,11 @@ describe('@mantine/core/Textarea', () => {
     expect(getInput(autosize, TextareaAutosize).prop('minRows')).toBe(1);
     expect(getInput(autosize, TextareaAutosize).prop('id')).toBe('test-id');
     expect(getInput(autosize, TextareaAutosize).prop('placeholder')).toBe('test-placeholder');
-    expect(getInput(autosize, TextareaAutosize).prop('style').border).toBe('1px solid red');
-    expect(getInput(autosize, TextareaAutosize).hasClass('test-class')).toBe(true);
 
     expect(getInput(notAutosize, 'textarea').prop('aria-required')).toBe(true);
     expect(getInput(notAutosize, 'textarea').prop('rows')).toBe(2);
     expect(getInput(notAutosize, 'textarea').prop('id')).toBe('test-id');
     expect(getInput(notAutosize, 'textarea').prop('placeholder')).toBe('test-placeholder');
-    expect(getInput(notAutosize, 'textarea').prop('style').border).toBe('1px solid red');
-    expect(getInput(notAutosize, 'textarea').hasClass('test-class')).toBe(true);
   });
 
   it('passes wrapperProps to InputWrapper', () => {

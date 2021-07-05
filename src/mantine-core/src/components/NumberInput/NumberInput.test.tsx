@@ -6,9 +6,11 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { TextInput } from '../TextInput/TextInput';
 import { NumberInput, NumberInputHandlers } from './NumberInput';
+import { NumberInput as NumberInputStylesApi } from './styles.api';
 
 const defaultProps = {
   value: 0,
@@ -30,6 +32,19 @@ describe('@mantine/core/NumberInput', () => {
   itSupportsClassName(NumberInput, defaultProps);
   itSupportsStyle(NumberInput, defaultProps);
   itSupportsRef(NumberInput, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsStylesApi(
+    NumberInput,
+    {
+      icon: '$',
+      rightSection: '$',
+      label: 'test-label',
+      error: 'test-error',
+      description: 'test-description',
+      required: true,
+    },
+    Object.keys(NumberInputStylesApi),
+    'number-input'
+  );
 
   it('has correct displayName', () => {
     expect(NumberInput.displayName).toEqual('@mantine/core/NumberInput');
@@ -51,10 +66,10 @@ describe('@mantine/core/NumberInput', () => {
     const spy = jest.fn();
     const element = mount(<NumberInput value={0} step={10} onChange={spy} />);
 
-    element.find('[data-mantine-increment]').simulate('mousedown');
+    element.find('.mantine-number-input-controlUp').simulate('mousedown');
     expect(spy).toHaveBeenLastCalledWith(10);
 
-    element.find('[data-mantine-decrement]').simulate('mousedown');
+    element.find('.mantine-number-input-controlDown').simulate('mousedown');
     expect(spy).toHaveBeenLastCalledWith(-10);
   });
 
@@ -62,10 +77,10 @@ describe('@mantine/core/NumberInput', () => {
     const spy = jest.fn();
     const element = mount(<NumberInput value={5} max={10} min={0} step={6} onChange={spy} />);
 
-    element.find('[data-mantine-increment]').simulate('mousedown');
+    element.find('.mantine-number-input-controlUp').simulate('mousedown');
     expect(spy).toHaveBeenLastCalledWith(10);
 
-    element.find('[data-mantine-decrement]').simulate('mousedown');
+    element.find('.mantine-number-input-controlDown').simulate('mousedown');
     expect(spy).toHaveBeenLastCalledWith(0);
   });
 

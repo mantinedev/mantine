@@ -17,7 +17,7 @@ function HandlersWrapper() {
 
   return (
     <Group spacing={5}>
-      <ActionIcon size={36} variant="outline" onClick={() => handlers.current.decrement()}>
+      <ActionIcon size={42} variant="outline" onClick={() => handlers.current.decrement()}>
         –
       </ActionIcon>
       <NumberInput
@@ -28,9 +28,9 @@ function HandlersWrapper() {
         max={10}
         min={0}
         step={2}
-        inputStyle={{ width: 54, textAlign: 'center' }}
+        styles={{ input: { width: 54, textAlign: 'center' } }}
       />
-      <ActionIcon size={36} variant="outline" onClick={() => handlers.current.increment()}>
+      <ActionIcon size={42} variant="outline" onClick={() => handlers.current.increment()}>
         +
       </ActionIcon>
     </Group>
@@ -46,7 +46,7 @@ function Demo() {
   return (
     <Group spacing={5} position="center">
       <ActionIcon
-        size={36}
+        size={42}
         variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}
         onClick={() => handlers.current.decrement()}
         style={{
@@ -64,11 +64,11 @@ function Demo() {
         max={10}
         min={0}
         step={2}
-        inputStyle={{ width: 54, textAlign: 'center' }}
+        styles={{ input: { width: 54, textAlign: 'center' } }}
         variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
       />
       <ActionIcon
-        size={36}
+        size={42}
         variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}
         onClick={() => handlers.current.increment()}
         style={{

@@ -5,11 +5,12 @@ title: ActionIcon
 order: 1
 slug: /core/action-icon/
 category: 'inputs'
-description: 'Display icon button to indicate secondary action'
+description: 'Icon button to indicate secondary action'
 props: ['ActionIcon']
 import: "import { ActionIcon } from '@mantine/core';"
 source: 'mantine-core/src/components/ActionIcon/ActionIcon.tsx'
 docs: 'core/ActionIcon.mdx'
+styles: ['ActionIcon', 'single-node']
 ---
 
 import { ActionIconDemos } from '@demos/core';
@@ -44,7 +45,7 @@ ActionIcon has 5 variants: hover (default), transparent, filled, light and outli
 
 ## Color
 
-You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>:
+You can choose any color defined in <GatsbyLink to="/theming/extend-theme/#default-colors">theme.colors</GatsbyLink>:
 
 ```tsx
 <ActionIcon color="red" />
@@ -85,7 +86,7 @@ import { ACTION_ICON_SIZES } from '@mantine/core';
 You can get button ref with `elementRef` prop:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { ActionIcon } from '@mantine/core';
 
 function Demo() {
@@ -93,6 +94,13 @@ function Demo() {
   return <ActionIcon elementRef={ref} />;
 }
 ```
+
+## Close button
+
+CloseButton is a premade ActionIcon with close icon, it is used in all other components: <GatsbyLink to="/core/popover/">Popover</GatsbyLink>, <GatsbyLink to="/core/modal/">Modal</GatsbyLink>, <GatsbyLink to="/core/notification/">Notification</GatsbyLink>, etc.
+Component accepts the same props as ActionIcon with additional `iconSize` prop to control icon width and height:
+
+<Demo data={ActionIconDemos.closeButton} />
 
 ## Accessibility
 

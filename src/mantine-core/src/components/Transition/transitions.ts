@@ -16,7 +16,10 @@ export type MantineTransitionName =
   | 'slide-down'
   | 'slide-up'
   | 'slide-right'
-  | 'slide-left';
+  | 'slide-left'
+  | 'scale-y'
+  | 'scale-x'
+  | 'scale';
 
 export type MantineTransition = MantineTransitionName | MantineTransitionStyles;
 
@@ -25,6 +28,27 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
     in: { opacity: 1 },
     out: { opacity: 0 },
     transitionProperty: 'opacity',
+  },
+
+  scale: {
+    in: { opacity: 1, transform: 'scale(1)' },
+    out: { opacity: 0, transform: 'scale(0)' },
+    common: { transformOrigin: 'top' },
+    transitionProperty: 'transform, opacity',
+  },
+
+  'scale-y': {
+    in: { opacity: 1, transform: 'scaleY(1)' },
+    out: { opacity: 0, transform: 'scaleY(0)' },
+    common: { transformOrigin: 'top' },
+    transitionProperty: 'transform, opacity',
+  },
+
+  'scale-x': {
+    in: { opacity: 1, transform: 'scaleX(1)' },
+    out: { opacity: 0, transform: 'scaleX(0)' },
+    common: { transformOrigin: 'left' },
+    transitionProperty: 'transform, opacity',
   },
 
   'skew-up': {

@@ -3,13 +3,24 @@
 
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '../../theme';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineSize,
+  MantineNumberSize,
+  mergeStyles,
+} from '../../theme';
 import { ComponentPassThrough } from '../../types';
 import useStyles, { heights } from './Button.styles';
 
-export const BUTTON_SIZES = heights;
+export { UnstyledButton } from './UnstyledButton/UnstyledButton';
 
-export interface ButtonBaseProps extends DefaultProps {
+export const BUTTON_SIZES = heights;
+export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light'];
+export type ButtonVariant = 'link' | 'filled' | 'outline' | 'light';
+export type ButtonStylesNames = Exclude<keyof ReturnType<typeof useStyles>, ButtonVariant>;
+
+interface ButtonBaseProps extends DefaultProps<ButtonStylesNames> {
   /** Predefined button size */
   size?: MantineSize;
 
@@ -43,6 +54,7 @@ export function Button<
   U extends HTMLElement = HTMLButtonElement
 >({
   className,
+  style,
   size = 'md',
   color,
   type = 'button',
@@ -57,45 +69,49 @@ export function Button<
   elementRef,
   themeOverride,
   uppercase = false,
+  classNames,
+  styles,
   ...others
 }: ComponentPassThrough<T, ButtonBaseProps> & {
   /** Get root element ref */
   elementRef?: React.ForwardedRef<U>;
 }) {
-  const classes = useStyles({
-    radius,
-    color,
-    size,
-    fullWidth,
-    theme: useMantineTheme(themeOverride),
-  });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ radius, color, size, fullWidth, theme }, classNames, 'button');
+  const _styles = mergeStyles(classes, styles);
 
   return (
     <Element
       {...others}
-      className={cx(classes.shared, classes[variant], className)}
+      className={cx(classes.root, classes[variant], className)}
       type={type}
       disabled={disabled}
       ref={elementRef}
       onTouchStart={() => {}}
+      style={{ ...style, ..._styles.root }}
     >
-      <div className={classes.inner}>
+      <div className={classes.inner} style={_styles.inner}>
         {leftIcon && (
-          <span data-mantine-left-icon className={cx(classes.icon, classes.leftIcon)}>
+          <span
+            className={cx(classes.icon, classes.leftIcon)}
+            style={{ ..._styles.icon, ..._styles.leftIcon }}
+          >
             {leftIcon}
           </span>
         )}
 
         <span
           className={classes.label}
-          data-mantine-label
-          style={{ textTransform: uppercase ? 'uppercase' : undefined }}
+          style={{ textTransform: uppercase ? 'uppercase' : undefined, ..._styles.label }}
         >
           {children}
         </span>
 
         {rightIcon && (
-          <span data-mantine-right-icon className={cx(classes.icon, classes.rightIcon)}>
+          <span
+            className={cx(classes.icon, classes.rightIcon)}
+            style={{ ..._styles.icon, ..._styles.rightIcon }}
+          >
             {rightIcon}
           </span>
         )}

@@ -10,6 +10,7 @@ props: ['Input']
 import: "import { Input } from '@mantine/core';"
 source: 'mantine-core/src/components/Input/Input.tsx'
 docs: 'core/Input.mdx'
+styles: ['Input']
 ---
 
 import { InputDemos, ActionIconDemos, KbdDemos } from '@demos/core';
@@ -20,7 +21,6 @@ Input component is used as base for all other inputs (<GatsbyLink to="/core/sele
 The single purpose of Input is to provide shared styles and features to other inputs.
 Use other components listed above to build forms (as they provide better accessibility)
 and Input component as base for your own custom inputs with Mantine theme.
-See <GatsbyLink to="/guides/inputs/">guide on inputs</GatsbyLink> to learn how to build custom inputs with this component.
 
 <Demo data={InputDemos.configurator} />
 
@@ -66,7 +66,7 @@ you can pass `component` prop which will define root element:
 You can get input ref by passing `elementRef` prop to Input component:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Input } from '@mantine/core';
 
 function Demo() {

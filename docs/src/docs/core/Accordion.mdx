@@ -1,0 +1,79 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Accordion
+order: 1
+slug: /core/accordion/
+category: 'data-display'
+description: 'Divide content into collapsible sections'
+props: ['Accordion', 'AccordionItem']
+import: "import { Accordion, AccordionItem } from '@mantine/core';"
+source: 'mantine-core/src/components/Accordion/Accordion.tsx'
+docs: 'core/Accordion.mdx'
+styles: ['Accordion']
+---
+
+import { AccordionDemos } from '@demos/core';
+
+## Components
+
+- `AccordionItem` – utility component to pass data to `Accordion` component, does not render anything on its own. Do not use outside of `Accordion` component.
+- `Accordion` – receives data from `AccordionItem` content and renders component
+
+## Usage
+
+<Demo data={AccordionDemos.usage} />
+
+## Change labels
+
+You can use any react component as label:
+
+<Demo data={AccordionDemos.label} />
+
+## Styles API
+
+Default Accordion has bare minimum styles to make customization more simple,
+you can add any additional styles with <GatsbyLink to="/theming/styles-api/">Styles API</GatsbyLink>:
+
+<Demo data={AccordionDemos.stylesApi} />
+
+## Multiple opened items
+
+Set `multiple` prop on Accordion component to allow any amount of items to be opened at the same time:
+
+<Demo data={AccordionDemos.multiple} />
+
+## Component state
+
+In most cases you would use uncontrolled Accordion, to change initial opened item use `initialItem` prop:
+
+```tsx
+// -> Third element will be opened initially
+<Accordion initialItem={2} />;
+
+// -> No element will be opened initially
+<Accordion initialItem={-1} />;
+```
+
+If you need to manage component state on your own provide `state` and `onChange` props:
+
+```tsx
+import { useState } from 'react';
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  // Second item will be initially opened
+  const [state, onChange] = useState({ 0: false, 1: true, 2: false });
+  return <Accordion state={state} onChange={onChange} />;
+}
+```
+
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<Accordion /> // -> random id generated both on client and server, props mismatch warning
+<Accordion id="my-accordion" /> // -> id is static, no mismatches
+```

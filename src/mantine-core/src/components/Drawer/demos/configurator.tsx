@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Drawer, DrawerProps } from '../Drawer';
 import { Button, Group } from '../../../index';
+import { AuthenticationForm } from '../../../../demos/AuthenticationForm/AuthenticationForm';
 
 function Wrapper(props: DrawerProps) {
   const [opened, setOpened] = useState(false);
@@ -8,7 +9,7 @@ function Wrapper(props: DrawerProps) {
   return (
     <div>
       <Drawer opened={opened} onClose={() => setOpened(false)} {...props}>
-        Press escape to close the drawer if you are trapped
+        <AuthenticationForm noPadding noShadow />
       </Drawer>
       <Group position="center">
         <Button onClick={() => setOpened(true)}>Open drawer</Button>
@@ -22,7 +23,7 @@ const codeTemplate = (props: string) => `function Demo() {
   return (
     <>
       <Drawer opened={opened} onClose={() => setOpened(false)}${props}>
-        Press escape to close the  drawer if you are trapped
+        <AuthenticationForm />
       </Drawer>
 
       <Group position="center">
@@ -49,23 +50,11 @@ export const configurator: MantineDemo = {
         { label: 'bottom', value: 'bottom' },
       ],
     },
-    {
-      name: 'size',
-      type: 'select',
-      initialValue: 'md',
-      defaultValue: 'md',
-      capitalize: false,
-      data: [
-        { label: 'xs', value: 'xs' },
-        { label: 'sm', value: 'sm' },
-        { label: 'md', value: 'md' },
-        { label: 'lg', value: 'lg' },
-        { label: 'xl', value: 'xl' },
-        { label: 'full', value: 'full' },
-      ],
-    },
+    { name: 'title', type: 'string', initialValue: 'Register', defaultValue: '' },
+    { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
     { name: 'padding', type: 'size', initialValue: 'md', defaultValue: 0 },
     { name: 'shadow', type: 'size', initialValue: 'xs', defaultValue: 'md' },
+    { name: 'hideCloseButton', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'noOverlay', type: 'boolean', defaultValue: false },
     { name: 'noFocusTrap', type: 'boolean', defaultValue: false },
     { name: 'noScrollLock', type: 'boolean', defaultValue: false },

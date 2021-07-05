@@ -6,7 +6,7 @@ import {
   getThemeColor,
 } from '../../../theme';
 
-interface TabControlStylesProps {
+interface TabControlStyles {
   theme: MantineTheme;
   reduceMotion: boolean;
   color: string;
@@ -14,8 +14,9 @@ interface TabControlStylesProps {
 
 export default createMemoStyles({
   tabActive: {},
+  tabLabel: {},
 
-  tab: ({ theme }: TabControlStylesProps) => ({
+  tabControl: ({ theme }: TabControlStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
@@ -34,22 +35,22 @@ export default createMemoStyles({
     },
   }),
 
-  defaultVariant: ({ theme, reduceMotion, color }: TabControlStylesProps) => ({
+  default: ({ theme, reduceMotion, color }: TabControlStyles) => ({
     transition: reduceMotion ? 'none' : 'border-color 150ms ease, color 150ms ease',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     borderBottom: '2px solid transparent',
 
     '&$tabActive': {
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 6 : 7 }),
       borderBottomColor: getThemeColor({
         theme,
         color,
-        shade: theme.colorScheme === 'dark' ? 4 : 6,
+        shade: theme.colorScheme === 'dark' ? 6 : 7,
       }),
     },
   }),
 
-  outlineVariant: ({ theme }: TabControlStylesProps) => ({
+  outline: ({ theme }: TabControlStyles) => ({
     borderTopRightRadius: theme.radius.sm,
     borderTopLeftRadius: theme.radius.sm,
     border: '1px solid transparent',
@@ -63,16 +64,28 @@ export default createMemoStyles({
     },
   }),
 
+  pills: ({ theme, color }: TabControlStyles) => ({
+    borderRadius: 1000,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
+    fontSize: theme.fontSizes.md,
+
+    '&$tabActive': {
+      color: theme.white,
+      background: getThemeColor({ theme, color, shade: 7 }),
+    },
+  }),
+
   tabInner: {
     boxSizing: 'border-box',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     lineHeight: 1,
-    height: 40,
+    height: '100%',
   },
 
-  tabIcon: ({ theme }: TabControlStylesProps) => ({
+  tabIcon: ({ theme }: TabControlStyles) => ({
     '&:not(:only-child)': {
       marginRight: theme.spacing.xs,
     },

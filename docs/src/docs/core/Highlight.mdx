@@ -5,11 +5,12 @@ title: Highlight
 order: 1
 slug: /core/highlight/
 category: 'typography'
-description: 'Highlight given part of the string with mark tag'
+description: 'Highlight given part of a string with mark tag'
 props: ['Highlight']
 import: "import { Highlight } from '@mantine/core';"
 source: 'mantine-core/src/components/Highlight/Highlight.tsx'
 docs: 'core/Highlight.mdx'
+styles: ['Highlight', 'single-node']
 ---
 
 import { HighlightDemos } from '@demos/core';
@@ -22,7 +23,7 @@ Pass main string as children to Highlight component and string part that should 
 If main string does not include `highlight` part, it will be ignored.
 Component ignores trailing whitespace and highlights only first matched characters sequence.
 
-You can change color of mark by passing `highlightColor` prop with <GatsbyLink to="/pages/theming/">theme</GatsbyLink> color.
+You can change color of mark by passing `highlightColor` prop with <GatsbyLink to="/theming/extend-theme/#default-colors">theme</GatsbyLink> color.
 
 <Demo data={HighlightDemos.configurator} />
 

@@ -1,9 +1,13 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
 import useStyles, { GroupPosition } from './Group.styles';
 
-export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export type GroupStylesNames = keyof ReturnType<typeof useStyles>;
+
+export interface GroupProps
+  extends DefaultProps<GroupStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Defines justify-content property */
   position?: GroupPosition;
 
@@ -27,6 +31,7 @@ export type { GroupPosition };
 
 export function Group({
   className,
+  style,
   position = 'left',
   align,
   children,
@@ -35,24 +40,35 @@ export function Group({
   spacing = 'md',
   direction = 'row',
   themeOverride,
+  classNames,
+  styles,
   ...others
 }: GroupProps) {
-  const classes = useStyles({
-    theme: useMantineTheme(themeOverride),
-    align,
-    grow,
-    noWrap,
-    spacing,
-    position,
-    direction,
-  });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles(
+    {
+      theme,
+      align,
+      grow,
+      noWrap,
+      spacing,
+      position,
+      direction,
+    },
+    classNames,
+    'group'
+  );
+  const _styles = mergeStyles(classes, styles);
 
   const items = (Children.toArray(children) as React.ReactElement[]).map((child) =>
-    React.cloneElement(child, { className: cx(classes.child, child.props.className) })
+    React.cloneElement(child, {
+      className: cx(classes.child, child.props.className),
+      style: { ...child.props.style, ..._styles.child },
+    })
   );
 
   return (
-    <div className={cx(classes.group, className)} {...others}>
+    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       {items}
     </div>
   );

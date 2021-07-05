@@ -7,7 +7,7 @@ import {
   getThemeColor,
 } from '../../theme';
 
-interface DividerStylesProps {
+interface DividerStyles {
   theme: MantineTheme;
   size: MantineNumberSize;
   margins: MantineNumberSize;
@@ -24,6 +24,8 @@ export const sizes = {
 };
 
 export default createMemoStyles({
+  root: {},
+
   withLabel: {
     borderTop: '0 !important',
   },
@@ -40,7 +42,7 @@ export default createMemoStyles({
     },
   },
 
-  label: ({ theme, color, variant }: DividerStylesProps) => ({
+  label: ({ theme, color, variant }: DividerStyles) => ({
     display: 'flex',
     alignItems: 'center',
     color: color === 'dark' ? theme.colors.dark[1] : getThemeColor({ theme, color, shade: 6 }),
@@ -69,7 +71,7 @@ export default createMemoStyles({
     },
   }),
 
-  horizontal: ({ theme, size, variant, color, margins }: DividerStylesProps) => ({
+  horizontal: ({ theme, size, variant, color, margins }: DividerStyles) => ({
     border: 0,
     borderTopWidth: getSizeValue({ size, sizes }),
     borderTopColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 4 }),
@@ -79,8 +81,9 @@ export default createMemoStyles({
     marginBottom: getSizeValue({ size: margins, sizes: theme.spacing }),
   }),
 
-  vertical: ({ theme, size, variant, color, margins }: DividerStylesProps) => ({
+  vertical: ({ theme, size, variant, color, margins }: DividerStyles) => ({
     border: 0,
+    alignSelf: 'stretch',
     borderLeftWidth: getSizeValue({ size, sizes }),
     borderLeftColor: getThemeColor({ theme, color, shade: 4 }),
     borderLeftStyle: variant,

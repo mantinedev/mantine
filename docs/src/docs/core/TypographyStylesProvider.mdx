@@ -10,6 +10,7 @@ props: ['TypographyStylesProvider']
 import: "import { TypographyStylesProvider } from '@mantine/core';"
 source: 'mantine-core/src/components/TypographyStylesProvider/TypographyStylesProvider.tsx'
 docs: 'core/TypographyStylesProvider.mdx'
+styles: ['TypographyStylesProvider', 'single-node']
 ---
 
 import { TypographyStylesProviderDemos } from '@demos/core';
@@ -20,7 +21,6 @@ Mantine does not expose global styles.
 Use TypographyStylesProvider to add Mantine typography styles to your html content:
 
 ```tsx
-import React from 'react';
 import { TypographyStylesProvider } from '@mantine/core';
 
 function Demo() {

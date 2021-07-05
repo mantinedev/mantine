@@ -8,7 +8,7 @@ import { Portal } from '../Portal/Portal';
 import { Modal } from './Modal';
 
 function WrappedModal(props: Omit<React.ComponentProps<typeof Modal>, 'opened' | 'onClose'>) {
-  const [opened, setOpened] = useState(false);
+  const [opened, setOpened] = useState(true);
 
   return (
     <div style={{ padding: 50 }}>

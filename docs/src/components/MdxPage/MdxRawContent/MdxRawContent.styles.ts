@@ -5,6 +5,8 @@ import { BREAKPOINT, TABLE_OF_CONTENTS_WIDTH, CONTENT_WIDTH } from '../settings'
 export default createUseStyles(
   (theme) => ({
     wrapper: {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark : theme.white,
+      zIndex: 1,
       display: 'flex',
       position: 'relative',
       justifyContent: 'space-between',

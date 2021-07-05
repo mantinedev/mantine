@@ -38,8 +38,47 @@ export default createUseStyles(
       transform: 'rotate(-90deg)',
     },
 
+    innerCategory: {
+      paddingTop: 15,
+    },
+
+    innerCategoryIcon: {
+      marginRight: 10,
+      width: 14,
+      height: 14,
+    },
+
+    innerCategoryTitle: {
+      position: 'relative',
+      paddingLeft: 23,
+      marginLeft: 7,
+      marginBottom: 5,
+      borderLeft: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+      }`,
+      height: 34,
+      display: 'flex',
+      alignItems: 'center',
+      fontSize: theme.fontSizes.xs,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+      borderTopRightRadius: theme.radius.sm,
+      borderBottomRightRadius: theme.radius.sm,
+
+      '&::after': {
+        content: '""',
+        position: 'absolute',
+        bottom: -5,
+        left: -1,
+        height: 5,
+        width: 1,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
+      },
+    },
+
     link: {
       ...getFocusStyles(theme),
+      WebkitTapHighlightColor: 'transparent',
       borderLeft: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,

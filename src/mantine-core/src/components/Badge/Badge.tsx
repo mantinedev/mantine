@@ -1,12 +1,21 @@
 import React from 'react';
 import cx from 'clsx';
 import { ComponentPassThrough } from '../../types';
-import { useMantineTheme, DefaultProps, MantineSize, MantineNumberSize } from '../../theme';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineSize,
+  MantineNumberSize,
+  mergeStyles,
+} from '../../theme';
 import useStyles, { heights } from './Badge.styles';
 
 export const BADGE_SIZES = heights;
+export const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot'] as const;
+export type BadgeVariant = typeof BADGE_VARIANTS[number];
+export type BadgeStylesNames = Exclude<keyof ReturnType<typeof useStyles>, BadgeVariant>;
 
-export interface BadgeProps extends DefaultProps {
+export interface BadgeProps extends DefaultProps<BadgeStylesNames> {
   /** Badge color from theme */
   color?: string;
 
@@ -32,6 +41,7 @@ export interface BadgeProps extends DefaultProps {
 export function Badge<T extends React.ElementType = 'div'>({
   component: Component = 'div',
   className,
+  style,
   color,
   variant = 'light',
   fullWidth,
@@ -41,28 +51,36 @@ export function Badge<T extends React.ElementType = 'div'>({
   leftSection,
   rightSection,
   radius = 'xl',
+  classNames,
+  styles,
   ...others
 }: ComponentPassThrough<T, BadgeProps>) {
-  const classes = useStyles({
-    size,
-    fullWidth,
-    color,
-    radius,
-    theme: useMantineTheme(themeOverride),
-  });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ size, fullWidth, color, radius, theme }, classNames, 'badge');
+  const _styles = mergeStyles(classes, styles);
 
   return (
-    <Component {...others} className={cx(classes.badge, classes[variant], className)}>
+    <Component
+      {...others}
+      className={cx(classes.root, classes[variant], className)}
+      style={{ ...style, ..._styles.root, ..._styles[variant] }}
+    >
       {leftSection && (
-        <span data-mantine-badge-left className={classes.leftSection}>
+        <span data-mantine-badge-left className={classes.leftSection} style={_styles.leftSection}>
           {leftSection}
         </span>
       )}
 
-      <span className={classes.inner}>{children}</span>
+      <span className={classes.inner} style={_styles.inner}>
+        {children}
+      </span>
 
       {rightSection && (
-        <span data-mantine-badge-right className={classes.rightSection}>
+        <span
+          data-mantine-badge-right
+          className={classes.rightSection}
+          style={_styles.rightSection}
+        >
           {rightSection}
         </span>
       )}

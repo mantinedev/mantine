@@ -1,13 +1,21 @@
 import React from 'react';
 import cx from 'clsx';
 import { useId, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, useMantineTheme } from '../../theme';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  mergeStyles,
+  useMantineTheme,
+} from '../../theme';
 import useStyles, { sizes } from './Switch.styles';
 
 export const SWITCH_SIZES = sizes;
 
+export type SwitchStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface SwitchProps
-  extends DefaultProps,
+  extends DefaultProps<SwitchStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
@@ -23,12 +31,6 @@ export interface SwitchProps
 
   /** Predefined border-radius value from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;
-
-  /** Style properties added to input element */
-  inputStyle?: React.CSSProperties;
-
-  /** Class name added to input element */
-  inputClassName?: string;
 
   /** Props spread to wrapper element */
   wrapperProps?: Record<string, any>;
@@ -47,35 +49,36 @@ export function Switch({
   radius = 'xl',
   themeOverride,
   wrapperProps,
-  inputStyle,
-  inputClassName,
   elementRef,
   children,
+  classNames,
+  styles,
   ...others
 }: SwitchProps) {
-  const classes = useStyles({
-    size,
-    color,
-    radius,
-    reduceMotion: useReducedMotion(),
-    theme: useMantineTheme(themeOverride),
-  });
+  const reduceMotion = useReducedMotion();
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ size, color, radius, reduceMotion, theme }, classNames, 'switch');
+  const _styles = mergeStyles(classes, styles);
 
   const uuid = useId(id);
 
   return (
-    <div className={cx(classes.wrapper, className)} style={style} {...wrapperProps}>
+    <div
+      className={cx(classes.root, className)}
+      style={{ ...style, ..._styles.root }}
+      {...wrapperProps}
+    >
       <input
         {...others}
         id={uuid}
         ref={elementRef}
         type="checkbox"
-        className={cx(classes.switch, inputClassName)}
-        style={inputStyle}
+        className={classes.input}
+        style={_styles.input}
       />
 
       {label && (
-        <label className={classes.label} htmlFor={uuid}>
+        <label className={classes.label} htmlFor={uuid} style={_styles.label}>
           {label}
         </label>
       )}

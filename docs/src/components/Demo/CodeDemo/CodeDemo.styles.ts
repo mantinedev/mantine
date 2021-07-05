@@ -4,8 +4,9 @@ import { theming, MantineTheme } from '@mantine/core';
 export default createUseStyles(
   (theme: MantineTheme) => ({
     demo: {
+      maxWidth: '100%',
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[3]
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
       }`,
       position: 'relative',
 
@@ -21,7 +22,7 @@ export default createUseStyles(
       borderTopLeftRadius: 0,
       marginTop: 0,
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[3]
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
       }`,
     },
 

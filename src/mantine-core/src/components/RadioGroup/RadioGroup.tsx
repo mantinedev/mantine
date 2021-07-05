@@ -1,7 +1,11 @@
-import React, { Children, cloneElement, useState } from 'react';
-import { useId } from '@mantine/hooks';
+import React, { Children, cloneElement } from 'react';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme, MantineSize } from '../../theme';
-import { InputWrapper, InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
+import {
+  InputWrapper,
+  InputWrapperBaseProps,
+  InputWrapperStylesNames,
+} from '../InputWrapper/InputWrapper';
 import { Radio, RadioProps } from './Radio/Radio';
 import { sizes } from './Radio/Radio.styles';
 import useStyles from './RadioGroup.styles';
@@ -12,7 +16,7 @@ export type { RadioProps };
 export const RADIO_SIZES = sizes;
 
 export interface RadioGroupProps
-  extends DefaultProps,
+  extends DefaultProps<InputWrapperStylesNames>,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** <Radio /> components only */
@@ -52,37 +56,38 @@ export function RadioGroup({
   defaultValue,
   onChange,
   variant = 'horizontal',
-  spacing = 'md',
+  spacing = 'sm',
   color,
   size,
   ...others
 }: RadioGroupProps) {
-  const [_value, setValue] = useState(value || defaultValue || '');
-  const finalValue = typeof value === 'string' ? value : _value;
-  const classes = useStyles({ spacing, variant, theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ spacing, variant, theme }, null, 'radio-group');
   const uuid = useId(name);
-
-  const handleChange = (v: string) => {
-    setValue(v);
-    typeof onChange === 'function' && onChange(v);
-  };
+  const [_value, setValue] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: '',
+    onChange,
+    rule: (val) => typeof val === 'string',
+  });
 
   const radios: any = (Children.toArray(children) as React.ReactElement[])
     .filter((item) => item.type === Radio)
     .map((radio, index) =>
       cloneElement(radio, {
         key: index,
-        checked: finalValue === radio.props.value,
+        checked: _value === radio.props.value,
         name: uuid,
         color,
         size,
         onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-          handleChange(event.currentTarget.value),
+          setValue(event.currentTarget.value),
       })
     );
 
   return (
-    <InputWrapper labelElement="div" {...others}>
+    <InputWrapper labelElement="div" size={size} __staticSelector="radio-group" {...others}>
       <div role="radiogroup" className={classes.wrapper}>
         {radios}
       </div>

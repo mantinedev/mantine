@@ -1,9 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
-import { useMergedRef } from '@mantine/hooks';
-import { useMantineTheme } from '../../theme';
+import { useMergedRef, assignRef } from '@mantine/hooks';
+import { useMantineTheme, DefaultProps, mergeStyles, getSizeValue } from '../../theme';
 import { TextInput } from '../TextInput/TextInput';
-import useStyles, { CONTROL_WIDTH } from './NumberInput.styles';
+import { InputStylesNames } from '../Input/Input';
+import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
+import useStyles, { CONTROL_SIZES } from './NumberInput.styles';
+
+export type InnerNumberInputStylesNames = keyof ReturnType<typeof useStyles>;
+export type NumberInputStylesNames =
+  | InputStylesNames
+  | InputWrapperStylesNames
+  | InnerNumberInputStylesNames;
 
 export interface NumberInputHandlers {
   increment(): void;
@@ -11,10 +19,17 @@ export interface NumberInputHandlers {
 }
 
 export interface NumberInputProps
-  extends Omit<
-    React.ComponentPropsWithoutRef<typeof TextInput>,
-    'rightSection' | 'rightSectionProps' | 'rightSectionWidth' | 'onChange' | 'value'
-  > {
+  extends DefaultProps<NumberInputStylesNames>,
+    Omit<
+      React.ComponentPropsWithoutRef<typeof TextInput>,
+      | 'rightSection'
+      | 'rightSectionProps'
+      | 'rightSectionWidth'
+      | 'onChange'
+      | 'value'
+      | 'classNames'
+      | 'styles'
+    > {
   /** onChange input handler for controlled variant, note that input event is not exposed */
   onChange?(value: number): void;
 
@@ -64,10 +79,14 @@ export function NumberInput({
   defaultValue,
   noClampOnBlur = false,
   handlersRef,
+  classNames,
+  styles,
+  size,
   ...others
 }: NumberInputProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, radius });
+  const classes = useStyles({ theme, radius, size }, classNames as any, 'number-input');
+  const _styles = mergeStyles(classes, styles as any);
   const [focused, setFocused] = useState(false);
   const [_value, setValue] = useState(
     typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : 0
@@ -101,12 +120,7 @@ export function NumberInput({
     setTempValue(result);
   };
 
-  if (typeof handlersRef === 'function') {
-    handlersRef({ increment, decrement });
-  } else if (typeof handlersRef === 'object' && handlersRef !== null && 'current' in handlersRef) {
-    // eslint-disable-next-line no-param-reassign
-    handlersRef.current = { increment, decrement };
-  }
+  assignRef(handlersRef, { increment, decrement });
 
   useEffect(() => {
     if (typeof value === 'number' && !focused) {
@@ -116,14 +130,14 @@ export function NumberInput({
   }, [value]);
 
   const rightSection = (
-    <div className={classes.rightSection}>
+    <div className={classes.rightSection} style={_styles.rightSection}>
       <button
         type="button"
         tabIndex={-1}
         aria-hidden
-        data-mantine-increment
         disabled={finalValue >= max}
         className={cx(classes.control, classes.controlUp)}
+        style={{ ..._styles.control, ..._styles.controlUp }}
         onMouseDown={(event) => {
           event.preventDefault();
           increment();
@@ -134,9 +148,9 @@ export function NumberInput({
         type="button"
         tabIndex={-1}
         aria-hidden
-        data-mantine-decrement
         disabled={finalValue <= min}
         className={cx(classes.control, classes.controlDown)}
+        style={{ ..._styles.control, ..._styles.controlDown }}
         onMouseDown={(event) => {
           event.preventDefault();
           decrement();
@@ -188,11 +202,15 @@ export function NumberInput({
       onBlur={handleBlur}
       onFocus={handleFocus}
       rightSection={disabled || hideControls || variant === 'unstyled' ? null : rightSection}
-      rightSectionWidth={CONTROL_WIDTH + 1}
+      rightSectionWidth={getSizeValue({ size, sizes: CONTROL_SIZES }) + 1}
       radius={radius}
       max={max}
       min={min}
       step={step}
+      size={size}
+      styles={styles as any}
+      classNames={classNames as any}
+      __staticSelector="number-input"
     />
   );
 }

@@ -13,7 +13,7 @@ export function ColorInputDemo() {
   const colors = Object.keys(theme.colors).map((color) => theme.colors[color][7]);
 
   return (
-    <CodeDemo code={code} language="tsx" toggle>
+    <CodeDemo code={code} language="tsx">
       <div style={{ maxWidth: 359, margin: 'auto' }}>
         <ColorInput
           data={colors}

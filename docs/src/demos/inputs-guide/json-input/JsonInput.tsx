@@ -7,14 +7,7 @@ interface JsonInputProps
   onChange(value: string): void;
 }
 
-export function JsonInput({
-  value,
-  onChange,
-  onBlur,
-  onFocus,
-  inputStyle,
-  ...others
-}: JsonInputProps) {
+export function JsonInput({ value, onChange, onBlur, onFocus, ...others }: JsonInputProps) {
   const [valid, setValid] = useState(true);
   const theme = useMantineTheme();
 
@@ -24,10 +17,11 @@ export function JsonInput({
       value={value}
       minRows={2}
       error={!valid && 'Invalid json'}
-      inputStyle={{
-        fontFamily: theme.fontFamilyMonospace,
-        fontSize: theme.fontSizes.xs,
-        ...inputStyle,
+      styles={{
+        input: {
+          fontFamily: theme.fontFamilyMonospace,
+          fontSize: theme.fontSizes.xs,
+        },
       }}
       onChange={(event) => onChange(event.currentTarget.value)}
       onFocus={(event) => {

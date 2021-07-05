@@ -63,11 +63,8 @@ storiesOf('@mantine/core/Menu', module)
   ))
   .add('Default connected menu', () => (
     <div style={{ padding: 200 }}>
-      <Menu transition="rotate-right" menuPosition={{ bottom: 0, right: 0 }}>
+      <Menu trigger="hover" transition="fade" delay={1000}>
         <MenuItem icon={<GearIcon style={{ width: 12, height: 12 }} />}>Settings</MenuItem>
-        <MenuItem disabled icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
-          Disabled
-        </MenuItem>
         <Divider />
         <MenuItem icon={<ChatBubbleIcon style={{ width: 12, height: 12 }} />}>Messages</MenuItem>
         <MenuItem color="red" icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>

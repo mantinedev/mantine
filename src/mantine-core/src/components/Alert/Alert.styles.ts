@@ -1,14 +1,14 @@
 import { createMemoStyles, MantineTheme, getThemeColor, getFontStyles } from '../../theme';
 
-interface AlertStylesProps {
+interface AlertStyles {
   color: string;
   theme: MantineTheme;
 }
 
-const LINE_WIDTH = 4;
+const LINE_WIDTH = 6;
 
 export default createMemoStyles({
-  alert: ({ color, theme }: AlertStylesProps) => ({
+  root: ({ color, theme }: AlertStyles) => ({
     position: 'relative',
     padding: [theme.spacing.xs, theme.spacing.md],
     paddingLeft: theme.spacing.md + theme.spacing.xs / 2 + LINE_WIDTH,
@@ -29,12 +29,12 @@ export default createMemoStyles({
       backgroundColor: getThemeColor({
         theme,
         color,
-        shade: theme.colorScheme === 'dark' ? 4 : 6,
+        shade: 6,
       }),
     },
   }),
 
-  title: ({ color, theme }: AlertStylesProps) => ({
+  title: ({ color, theme }: AlertStyles) => ({
     boxSizing: 'border-box',
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
     margin: 0,
@@ -43,7 +43,7 @@ export default createMemoStyles({
     overflow: 'hidden',
   }),
 
-  body: ({ theme }: AlertStylesProps) => ({
+  body: ({ theme }: AlertStyles) => ({
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,
     borderBottomLeftRadius: theme.radius.sm,

@@ -1,6 +1,7 @@
 # Mantine Hooks
 
-React hooks for [Mantine](https://mantine.dev/) components library.
+Hooks library with 20+ hooks to manage state and ui.
+
 Package includes hooks that are used to build components in @mantine/ scoped packages.
 You can use these hooks in your applications with or without other @mantine/ packages.
 

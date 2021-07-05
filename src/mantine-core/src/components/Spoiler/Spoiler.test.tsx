@@ -6,8 +6,10 @@ import {
   itRendersChildren,
   itSupportsClassName,
   itSupportsOthers,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Spoiler } from './Spoiler';
+import { Spoiler as SpoilerStylesApi } from './styles.api';
 
 const defaultProps = { maxHeight: 100, showLabel: 'show', hideLabel: 'hide' };
 
@@ -26,6 +28,12 @@ describe('@mantine/core/Spoiler', () => {
   itSupportsClassName(Spoiler, defaultProps);
   itRendersChildren(Spoiler, defaultProps);
   itSupportsStyle(Spoiler, defaultProps);
+  itSupportsStylesApi(
+    Spoiler,
+    { ...defaultProps, initialState: true },
+    Object.keys(SpoilerStylesApi),
+    'spoiler'
+  );
 
   it('has correct displayName', () => {
     expect(Spoiler.displayName).toEqual('@mantine/core/Spoiler');

@@ -10,6 +10,7 @@ import {
   MantineSizes,
   hexToRgba,
 } from '../../theme';
+import { INPUT_SIZES } from '../Input/Input';
 
 interface ButtonStylesProps {
   color: string;
@@ -21,33 +22,33 @@ interface ButtonStylesProps {
 
 const sizes = {
   xs: {
-    fontSize: 10,
-    height: 22,
-    padding: [0, 11],
+    fontSize: 12,
+    height: INPUT_SIZES.xs,
+    padding: [0, 14],
   },
 
   sm: {
-    fontSize: 12,
-    height: 26,
-    padding: [0, 13],
+    fontSize: 13,
+    height: INPUT_SIZES.sm,
+    padding: [0, 18],
   },
 
   md: {
     fontSize: 15,
-    height: 32,
-    padding: [0, 15],
+    height: INPUT_SIZES.md,
+    padding: [0, 22],
   },
 
   lg: {
     fontSize: 18,
-    height: 36,
-    padding: [0, 18],
+    height: INPUT_SIZES.lg,
+    padding: [0, 26],
   },
 
   xl: {
     fontSize: 22,
-    height: 44,
-    padding: [0, 22],
+    height: INPUT_SIZES.xl,
+    padding: [0, 32],
   },
 };
 
@@ -90,7 +91,7 @@ export default createMemoStyles({
     textOverflow: 'ellipsis',
   },
 
-  shared: (props: ButtonStylesProps) => ({
+  root: (props: ButtonStylesProps) => ({
     ...sizes[props.size],
     ...getFontStyles(props.theme),
     ...getFocusStyles(props.theme),
@@ -104,15 +105,17 @@ export default createMemoStyles({
     WebkitAppearance: 'none',
   }),
 
-  outline: ({ color, radius, theme }: ButtonStylesProps) => ({
+  outline: ({ color, size, radius, theme }: ButtonStylesProps) => ({
     backgroundColor: 'transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 600,
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
-    border: `1px solid ${hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 9 }),
-      theme.colorScheme === 'dark' ? 0.65 : 0.45
-    )}`,
+    height: sizes[size].height,
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
+    border: `1px solid ${getThemeColor({
+      theme,
+      color,
+      shade: theme.colorScheme === 'dark' ? 4 : 7,
+    })}`,
 
     '&:not(:disabled):active': {
       transform: 'translateY(1px)',
@@ -130,14 +133,15 @@ export default createMemoStyles({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 600,
     border: '1px solid transparent',
+    height: sizes[size].height,
     backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 5 }),
-      theme.colorScheme === 'dark' ? 0.3 : 0.1
+      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+      theme.colorScheme === 'dark' ? 0.3 : 1
     ),
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 2 : 7 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
 
     '& $inner': {
-      height: sizes[size].height - 2,
+      height: '100%',
     },
 
     '&:not(:disabled):active': {
@@ -157,15 +161,13 @@ export default createMemoStyles({
     border: '1px solid transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 600,
-    backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: 6 }),
-      theme.colorScheme === 'dark' ? 0.65 : 1
-    ),
-    textShadow: '1px 1px 1px rgba(0, 0, 0, .3)',
+    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
     color: theme.white,
+    height: sizes[size].height,
+    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
 
     '& $inner': {
-      height: sizes[size].height - 2,
+      height: '100%',
     },
 
     '&:not(:disabled):active': {

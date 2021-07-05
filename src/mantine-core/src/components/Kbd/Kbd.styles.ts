@@ -1,11 +1,11 @@
 import { createMemoStyles, MantineTheme } from '../../theme';
 
-interface KbdStylesProps {
+interface KbdStyles {
   theme: MantineTheme;
 }
 
 export default createMemoStyles({
-  kbd: ({ theme }: KbdStylesProps) => ({
+  kbd: ({ theme }: KbdStyles) => ({
     lineHeight: theme.lineHeight,
     fontFamily: theme.fontFamilyMonospace,
     fontSize: theme.fontSizes.xs,

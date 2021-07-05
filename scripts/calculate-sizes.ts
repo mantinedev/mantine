@@ -4,7 +4,14 @@ import gzipSize from 'gzip-size';
 
 const REPO_ROOT = path.join(__dirname, '../');
 
-const PACKAGES = ['mantine-hooks', 'mantine-core', 'mantine-notifications', 'mantine-tag-picker'];
+const PACKAGES = [
+  'mantine-hooks',
+  'mantine-core',
+  'mantine-notifications',
+  'mantine-tag-picker',
+  'mantine-prism',
+  'mantine-dates',
+];
 
 function truncateNumber(number: number) {
   return parseFloat(number.toFixed(2));

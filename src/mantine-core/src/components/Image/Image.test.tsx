@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Image } from './Image';
 
@@ -25,6 +26,14 @@ describe('@mantine/core/Image', () => {
   itSupportsOthers(Image, defaultProps);
   itSupportsStyle(Image, defaultProps);
   itSupportsRef(Image, defaultProps, HTMLImageElement, 'imageRef');
+  itSupportsStylesApi(
+    Image,
+    { src: null, withPlaceholder: true },
+    ['root', 'placeholder'],
+    'image',
+    'with placeholder'
+  );
+  itSupportsStylesApi(Image, { src: 'test.png' }, ['root', 'image'], 'image', 'with image');
 
   it('has correct displayName', () => {
     expect(Image.displayName).toEqual('@mantine/core/Image');
@@ -39,7 +48,7 @@ describe('@mantine/core/Image', () => {
 
   it('sets given width and height on wrapper element', () => {
     const element = shallow(<Image {...defaultProps} width={478} height={207} />);
-    const styles = element.find('[data-mantine-image]').prop('style');
+    const styles = element.find('.mantine-image-root').prop('style');
     expect(styles.width).toBe(478);
     expect(styles.height).toBe(207);
   });
@@ -48,8 +57,8 @@ describe('@mantine/core/Image', () => {
     const withPlaceholder = shallow(<Image src={null} withPlaceholder />);
     const withoutPlaceholder = shallow(<Image src={null} withPlaceholder={false} />);
 
-    expect(withPlaceholder.find('[data-mantine-image-placeholder]')).toHaveLength(1);
-    expect(withoutPlaceholder.find('[data-mantine-image-placeholder]')).toHaveLength(0);
+    expect(withPlaceholder.find('.mantine-image-placeholder')).toHaveLength(1);
+    expect(withoutPlaceholder.find('.mantine-image-placeholder')).toHaveLength(0);
   });
 
   it('renders given placeholder if image was not loaded', () => {
@@ -57,6 +66,6 @@ describe('@mantine/core/Image', () => {
       <Image {...defaultProps} withPlaceholder placeholder="test-placeholder" />
     );
 
-    expect(element.find('[data-mantine-image-placeholder]').text()).toBe('test-placeholder');
+    expect(element.find('.mantine-image-placeholder').text()).toBe('test-placeholder');
   });
 });

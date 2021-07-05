@@ -12,7 +12,7 @@ function Demo() {
       opened={opened}
       onClose={() => setOpened(false)}
       target={<Button onClick={() => setOpened((o) => !o)}>Toggle popover</Button>}
-      bodyStyle={{ width: 200 }}
+      styles={{ body: { width: 260 } }}
       position="bottom"
       withArrow
     >
@@ -39,7 +39,7 @@ function Demo() {
         opened={opened}
         onClose={() => setOpened(false)}
         target={<Button onClick={() => setOpened((o) => !o)}>Toggle popover</Button>}
-        bodyStyle={{ width: 260 }}
+        styles={{ body: { width: 260 } }}
         position="bottom"
         withArrow
         noFocusTrap

@@ -2,12 +2,11 @@ import {
   createMemoStyles,
   MantineTheme,
   MantineNumberSize,
-  getThemeColor,
   getSizeValue,
   getFocusStyles,
 } from '../../theme';
 
-interface BurgerStylesProps {
+interface BurgerStyles {
   size: MantineNumberSize;
   theme: MantineTheme;
   color: string;
@@ -25,7 +24,7 @@ export const sizes = {
 export default createMemoStyles({
   opened: {},
 
-  wrapper: ({ size, theme }: BurgerStylesProps) => ({
+  root: ({ size, theme }: BurgerStyles) => ({
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     borderRadius: theme.radius.sm,
@@ -37,7 +36,7 @@ export default createMemoStyles({
     cursor: 'pointer',
   }),
 
-  burger: ({ size, theme, color, reduceMotion }: BurgerStylesProps) => {
+  burger: ({ size, color, reduceMotion }: BurgerStyles) => {
     const sizeValue = getSizeValue({ size, sizes });
 
     return {
@@ -49,11 +48,7 @@ export default createMemoStyles({
         display: 'block',
         width: sizeValue,
         height: Math.ceil(sizeValue / 12),
-        backgroundColor: getThemeColor({
-          theme,
-          color,
-          shade: theme.colorScheme === 'dark' ? 4 : 7,
-        }),
+        backgroundColor: color,
         outline: '1px solid transparent',
         transitionProperty: 'background-color, transform',
         transitionDuration: reduceMotion ? '0ms' : '300ms',

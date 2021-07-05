@@ -5,11 +5,12 @@ title: ColorSwatch
 order: 1
 slug: /core/color-swatch/
 category: 'data-display'
-description: 'Display color value'
+description: 'Display color swatch'
 props: ['ColorSwatch']
 import: "import { ColorSwatch } from '@mantine/core';"
 source: 'mantine-core/src/components/ColorSwatch/ColorSwatch.tsx'
 docs: 'core/ColorSwatch.mdx'
+styles: ['ColorSwatch', 'single-node']
 ---
 
 import { ColorSwatchDemos } from '@demos/core';
@@ -29,7 +30,7 @@ Example with default Mantine theme colors:
 ## Size and radius
 
 ColorSwatch does not have predefined size values, use number to set width and height in px,
-radius has predefined xs, sm, md, lg, xl values from <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>:
+radius has predefined xs, sm, md, lg, xl values from <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.radius</GatsbyLink>:
 
 ```tsx
 <ColorSwatch size={50} /> // -> { width: 50, height: 50 }
@@ -48,7 +49,7 @@ Use any component or element with ColorSwatch by setting `component` prop:
 You can get root element ref with `elementRef` prop:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { ColorSwatch } from '@mantine/core';
 
 function Demo() {

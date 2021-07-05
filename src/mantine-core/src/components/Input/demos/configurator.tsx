@@ -15,7 +15,7 @@ export const configurator: MantineDemo = {
   configurator: [
     {
       name: 'variant',
-      type: 'select',
+      type: 'segmented',
       data: [
         { label: 'default', value: 'default' },
         { label: 'filled', value: 'filled' },

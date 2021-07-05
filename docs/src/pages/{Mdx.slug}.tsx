@@ -40,6 +40,7 @@ export const query = graphql`
         installation
         pageTitle
         license
+        styles
       }
       body
     }

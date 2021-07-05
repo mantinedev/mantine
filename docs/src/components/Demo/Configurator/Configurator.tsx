@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { useMantineTheme } from '@mantine/core';
-import CodeHighlight from '../../CodeHighlight/CodeHighlight';
+import { Prism } from '@mantine/prism';
 import DocsSection from '../../DocsSection/DocsSection';
 import controls, { ControlProps } from './controls';
 import { propsToString } from './props-to-string';
@@ -13,7 +13,9 @@ interface ConfiguratorProps {
   previewBackground?: string;
   multiline?: boolean;
   includeCode?: boolean;
+  center?: boolean;
   props: ControlProps[];
+  filter?: string[];
 }
 
 export default function Configurator({
@@ -23,6 +25,8 @@ export default function Configurator({
   props: componentProps,
   multiline = false,
   includeCode = true,
+  center = true,
+  filter = [],
 }: ConfiguratorProps) {
   const theme = useMantineTheme();
   const classes = useStyles();
@@ -52,7 +56,11 @@ export default function Configurator({
     );
   });
 
-  const propsCode = propsToString({ props: componentProps, values: state, multiline });
+  const propsCode = propsToString({
+    props: componentProps.filter((prop) => !filter.includes(prop.name)),
+    values: state,
+    multiline,
+  });
 
   const code = codeTemplate(
     propsCode.length > 0 ? ` ${propsCode}` : propsCode,
@@ -65,6 +73,7 @@ export default function Configurator({
         <div
           className={classes.preview}
           style={{
+            justifyContent: center ? 'center' : 'flex-start',
             background:
               previewBackground ||
               (theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white),
@@ -77,7 +86,11 @@ export default function Configurator({
         <div className={classes.controls}>{items}</div>
       </div>
 
-      {includeCode && <CodeHighlight code={code.trim()} language="tsx" className={classes.code} />}
+      {includeCode && (
+        <Prism language="tsx" classNames={{ code: classes.code }}>
+          {code.trim()}
+        </Prism>
+      )}
     </DocsSection>
   );
 }

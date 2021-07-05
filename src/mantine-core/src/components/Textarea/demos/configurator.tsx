@@ -10,16 +10,16 @@ export const configurator: MantineDemo = {
   codeTemplate,
   configuratorProps: { multiline: true },
   configurator: [
-    { name: 'placeholder', type: 'string', initialValue: 'Password' },
+    { name: 'placeholder', type: 'string', initialValue: 'Your comment' },
     {
       name: 'label',
       type: 'string',
-      initialValue: 'Password',
+      initialValue: 'Your comment',
     },
     {
       name: 'description',
       type: 'string',
-      initialValue: 'Password must include at least one letter, number and special character',
+      initialValue: '',
     },
     {
       name: 'error',
@@ -38,6 +38,7 @@ export const configurator: MantineDemo = {
       defaultValue: 'default',
     },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
+    { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
     {
       name: 'required',

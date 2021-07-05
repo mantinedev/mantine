@@ -26,6 +26,8 @@ storiesOf('@mantine/core/Alert', module)
       </Alert>
 
       <Alert
+        classNames={{ title: 'hello', root: 'there' }}
+        styles={{ root: { background: 'lightgray' }, title: { color: 'red' } }}
         title="AlertTitleWithoutSpacesThatWillNotBreakToAnotherLineAndWillDamageTheLayout"
         style={{ marginTop: 20 }}
       >

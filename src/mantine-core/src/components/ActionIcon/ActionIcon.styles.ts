@@ -9,7 +9,7 @@ import {
   hexToRgba,
 } from '../../theme';
 
-interface ActionIconStylesProps {
+interface ActionIconStyles {
   color: string;
   size: MantineNumberSize;
   radius: MantineNumberSize;
@@ -25,19 +25,10 @@ export const sizes = {
 };
 
 export default createMemoStyles({
-  filled: ({ theme, color }: ActionIconStylesProps) => ({
-    backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: 7 }),
-      theme.colorScheme === 'dark' ? 0.65 : 1
-    ),
+  filled: ({ theme, color }: ActionIconStyles) => ({
+    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
     color: theme.white,
-
-    '&:not(:disabled):hover': {
-      backgroundColor: hexToRgba(
-        getThemeColor({ theme, color, shade: 8 }),
-        theme.colorScheme === 'dark' ? 0.95 : 1
-      ),
-    },
+    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
 
     '&:disabled': {
       backgroundColor: getThemeColor({
@@ -48,7 +39,7 @@ export default createMemoStyles({
     },
   }),
 
-  light: ({ theme, color }: ActionIconStylesProps) => ({
+  light: ({ theme, color }: ActionIconStyles) => ({
     backgroundColor: hexToRgba(
       getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
       theme.colorScheme === 'dark' ? 0.3 : 1
@@ -71,8 +62,8 @@ export default createMemoStyles({
     },
   }),
 
-  hover: ({ theme, color }: ActionIconStylesProps) => ({
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
+  hover: ({ theme, color }: ActionIconStyles) => ({
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
     backgroundColor: 'transparent',
 
     '&:not(:disabled):hover': {
@@ -83,12 +74,12 @@ export default createMemoStyles({
     },
   }),
 
-  transparent: ({ theme, color }: ActionIconStylesProps) => ({
+  transparent: ({ theme, color }: ActionIconStyles) => ({
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
     backgroundColor: 'transparent',
   }),
 
-  actionIcon: ({ radius, theme, size }: ActionIconStylesProps) => ({
+  root: ({ radius, theme, size }: ActionIconStyles) => ({
     ...getFocusStyles(theme),
     ...getFontStyles(theme),
     appearance: 'none',
@@ -119,13 +110,14 @@ export default createMemoStyles({
     },
   }),
 
-  outline: ({ theme, color }: ActionIconStylesProps) => ({
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 8 }),
+  outline: ({ theme, color }: ActionIconStyles) => ({
     backgroundColor: 'transparent',
-    border: `1px solid ${hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 4 }),
-      theme.colorScheme === 'dark' ? 0.45 : 1
-    )}`,
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
+    border: `1px solid ${getThemeColor({
+      theme,
+      color,
+      shade: theme.colorScheme === 'dark' ? 4 : 7,
+    })}`,
 
     '&:not(:disabled):hover': {
       backgroundColor:

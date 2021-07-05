@@ -1,7 +1,8 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { checkAccessibility } from '@mantine/tests';
+import { checkAccessibility, itSupportsStylesApi } from '@mantine/tests';
 import { RadioGroup, Radio } from './RadioGroup';
+import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 describe('@mantine/core/RadioGroup', () => {
   checkAccessibility([
@@ -13,6 +14,19 @@ describe('@mantine/core/RadioGroup', () => {
       </RadioGroup>
     ),
   ]);
+
+  itSupportsStylesApi(
+    RadioGroup,
+    {
+      children: <Radio value="test-1">test-1</Radio>,
+      label: 'test-label',
+      error: 'test-error',
+      description: 'test-description',
+      required: true,
+    },
+    Object.keys(InputWrapperStylesApi),
+    'radio-group'
+  );
 
   it('has correct displayName', () => {
     expect(RadioGroup.displayName).toEqual('@mantine/core/RadioGroup');

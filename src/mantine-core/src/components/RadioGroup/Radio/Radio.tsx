@@ -1,11 +1,11 @@
 import React from 'react';
 import cx from 'clsx';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineSize } from '../../../theme';
+import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../../theme';
 import useStyles from './Radio.styles';
 
 export interface RadioProps
-  extends DefaultProps,
+  extends DefaultProps<typeof useStyles>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
   /** Radio label */
   children: React.ReactNode;
@@ -25,29 +25,43 @@ export interface RadioProps
 
 export function Radio({
   className,
+  style,
   themeOverride,
   id,
   children,
-  style,
   size,
   elementRef,
   title,
   disabled,
   color,
+  classNames,
+  styles,
   ...others
 }: RadioProps) {
-  const classes = useStyles({ color, size, theme: useMantineTheme(themeOverride) });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ color, size, theme }, classNames, 'radio');
+  const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);
 
   return (
-    <div data-mantine-radio className={cx(classes.wrapper, className)} style={style} title={title}>
-      <label className={cx(classes.label, { [classes.labelDisabled]: disabled })} htmlFor={uuid}>
+    <div
+      data-mantine-radio
+      className={cx(classes.root, className)}
+      style={{ ...style, ..._styles.root }}
+      title={title}
+    >
+      <label
+        className={cx(classes.label, { [classes.labelDisabled]: disabled })}
+        htmlFor={uuid}
+        style={{ ..._styles.label, ...(disabled ? _styles.labelDisabled : null) }}
+      >
         <input
           ref={elementRef}
           className={classes.radio}
           type="radio"
           id={uuid}
           disabled={disabled}
+          style={_styles.radio}
           {...others}
         />
         <span>{children}</span>

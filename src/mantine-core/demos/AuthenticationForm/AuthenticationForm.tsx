@@ -73,7 +73,6 @@ export function AuthenticationForm({
       shadow={noShadow ? null : 'sm'}
       style={{
         position: 'relative',
-        overflow: 'hidden',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
         ...style,
       }}
@@ -156,13 +155,13 @@ export function AuthenticationForm({
 
         {!noSubmit && (
           <Group position="apart" style={{ marginTop: 25 }}>
-            <Button variant="link" color="gray" onClick={toggleFormType}>
+            <Button variant="link" color="gray" onClick={toggleFormType} size="sm">
               {formType === 'register'
                 ? 'Have an account? Login'
                 : "Don't have an account? Register"}
             </Button>
 
-            <Button color="blue" type="submit" radius="xl">
+            <Button color="blue" type="submit">
               {formType === 'register' ? 'Register' : 'Login'}
             </Button>
           </Group>

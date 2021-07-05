@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { itSupportsStyle, itSupportsRef, itSupportsOthers } from '@mantine/tests';
 import { TabControl } from './TabControl';
 
-const defaultProps = { active: true, tabProps: { label: 'test' } };
+const defaultProps = { active: true, tabProps: { label: 'test', icon: '$' } };
 
 describe('@mantine/core/TabControl', () => {
   itSupportsStyle(TabControl, { ...defaultProps, elementRef: () => {} });
@@ -41,21 +41,21 @@ describe('@mantine/core/TabControl', () => {
       />
     ).render();
 
-    expect(withIcon.find('[data-mantine-icon]').text()).toBe('$');
-    expect(withoutIcon.find('[data-mantine-icon]')).toHaveLength(0);
+    expect(withIcon.find('.mantine-tabs-tabIcon').text()).toBe('$');
+    expect(withoutIcon.find('.mantine-tabs-tabIcon')).toHaveLength(0);
   });
 
   it('renders label from tabProps', () => {
-    const withIcon = shallow(
+    const withLabel = shallow(
       <TabControl {...defaultProps} elementRef={() => {}} tabProps={{ label: 'test' }} />
     ).render();
 
-    const withoutIcon = shallow(
+    const withoutLabel = shallow(
       <TabControl {...defaultProps} elementRef={() => {}} tabProps={{ icon: '$', label: null }} />
     ).render();
 
-    expect(withIcon.find('[data-mantine-label]').text()).toBe('test');
-    expect(withoutIcon.find('[data-mantine-label]')).toHaveLength(0);
+    expect(withLabel.find('.mantine-tabs-tabLabel').text()).toBe('test');
+    expect(withoutLabel.find('.mantine-tabs-tabLabel')).toHaveLength(0);
   });
 
   it('spreads tabProps to root element', () => {
@@ -67,13 +67,11 @@ describe('@mantine/core/TabControl', () => {
           label: 'test',
           disabled: true,
           title: 'test-title',
-          style: { border: '1px solid red' },
         }}
       />
     ).render();
 
     expect(element.attr('disabled')).toBe('disabled');
     expect(element.attr('title')).toBe('test-title');
-    expect(element.css('border')).toBe('1px solid red');
   });
 });

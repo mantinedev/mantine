@@ -1,14 +1,20 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps } from '../../theme';
-import { Input, InputProps } from '../Input/Input';
-import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
+import { DefaultProps, MantineSize } from '../../theme';
+import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
+import {
+  InputWrapperBaseProps,
+  InputWrapper,
+  InputWrapperStylesNames,
+} from '../InputWrapper/InputWrapper';
+
+export type TextInputStylesNames = InputStylesNames | InputWrapperStylesNames;
 
 export interface TextInputProps
-  extends DefaultProps,
-    InputProps,
+  extends DefaultProps<TextInputStylesNames>,
+    InputBaseProps,
     InputWrapperBaseProps,
-    React.ComponentPropsWithoutRef<'input'> {
+    Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
   /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
 
@@ -23,6 +29,12 @@ export interface TextInputProps
 
   /** Get element ref */
   elementRef?: React.ForwardedRef<HTMLInputElement>;
+
+  /** Input size */
+  size?: MantineSize;
+
+  /** Static css selector base */
+  __staticSelector?: string;
 }
 
 export function TextInput({
@@ -38,6 +50,10 @@ export function TextInput({
   themeOverride,
   wrapperProps,
   elementRef,
+  size = 'sm',
+  classNames,
+  styles,
+  __staticSelector = 'text-input',
   ...others
 }: TextInputProps) {
   const uuid = useId(id);
@@ -49,9 +65,13 @@ export function TextInput({
       label={label}
       error={error}
       description={description}
+      size={size}
       className={className}
       style={style}
       themeOverride={themeOverride}
+      classNames={classNames as any}
+      styles={styles as any}
+      __staticSelector={__staticSelector}
       {...wrapperProps}
     >
       <Input<'input', HTMLInputElement>
@@ -62,7 +82,11 @@ export function TextInput({
         type={type}
         invalid={!!error}
         icon={icon}
+        size={size}
         themeOverride={themeOverride}
+        classNames={classNames as any}
+        styles={styles as any}
+        __staticSelector={__staticSelector}
       />
     </InputWrapper>
   );

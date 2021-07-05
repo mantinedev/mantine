@@ -7,20 +7,21 @@ import {
   useScrollLock,
   useFocusTrap,
 } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme } from '../../theme';
-import { ActionIcon } from '../ActionIcon/ActionIcon';
+import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
+import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { Portal } from '../Portal/Portal';
 import { GroupedTransition, MantineTransition } from '../Transition/Transition';
-import { CloseIcon } from './CloseIcon';
 import useStyles, { sizes } from './Modal.styles';
 
 export const MODAL_SIZES = sizes;
 
+export type ModalStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface ModalProps
-  extends DefaultProps,
+  extends DefaultProps<ModalStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Mounts modal if true */
   opened: boolean;
@@ -58,7 +59,7 @@ export interface ModalProps
   /** Modal body transitionTimingFunction, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
 
-  /** Close button aria-label and title attributes */
+  /** Close button aria-label */
   closeButtonLabel?: string;
 
   /** id base, used to generate ids to connect modal title and body with aria- attributes, defaults to random id */
@@ -67,6 +68,7 @@ export interface ModalProps
 
 export function MantineModal({
   className,
+  style,
   opened,
   themeOverride,
   title,
@@ -82,6 +84,8 @@ export function MantineModal({
   overflow = 'outside',
   transition = 'slide-down',
   id,
+  classNames,
+  styles,
   ...others
 }: ModalProps) {
   const baseId = useId(id);
@@ -89,7 +93,8 @@ export function MantineModal({
   const bodyId = `${baseId}-body`;
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, overflow, theme });
+  const classes = useStyles({ size, overflow, theme }, classNames, 'modal');
+  const _styles = mergeStyles(classes, styles);
   const clickOutsideRef = useClickOutside(onClose);
   const focusTrapRef = useFocusTrap();
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -110,47 +115,59 @@ export function MantineModal({
         overlay: { duration: duration / 2, transition: 'fade', timingFunction: 'ease' },
       }}
     >
-      {(styles) => (
-        <div className={cx(classes.wrapper, className)} {...others}>
+      {(transitionStyles) => (
+        <div
+          className={cx(classes.root, className)}
+          style={{ ...style, ..._styles.root }}
+          {...others}
+        >
           <div
-            data-mantine-modal-inner
             className={classes.inner}
             onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}
-            style={{ zIndex: zIndex + 1 }}
+            style={{ zIndex: zIndex + 1, ..._styles.inner }}
             ref={focusTrapRef}
           >
             <Paper
+              themeOverride={themeOverride}
               className={classes.modal}
               shadow="lg"
               role="dialog"
               aria-labelledby={titleId}
               aria-describedby={bodyId}
               aria-modal
-              style={styles.modal}
+              style={{ ..._styles.modal, ...transitionStyles.modal }}
               elementRef={clickOutsideRef}
               tabIndex={-1}
             >
               {(title || !hideCloseButton) && (
-                <div data-mantine-modal-header className={classes.header}>
-                  <Text id={titleId} data-mantine-modal-title className={classes.title}>
+                <div className={classes.header} style={_styles.header}>
+                  <Text
+                    id={titleId}
+                    className={classes.title}
+                    style={_styles.title}
+                    themeOverride={themeOverride}
+                  >
                     {title}
                   </Text>
 
                   {!hideCloseButton && (
-                    <ActionIcon onClick={onClose} aria-label={closeButtonLabel}>
-                      <CloseIcon />
-                    </ActionIcon>
+                    <CloseButton
+                      iconSize={16}
+                      onClick={onClose}
+                      aria-label={closeButtonLabel}
+                      themeOverride={themeOverride}
+                    />
                   )}
                 </div>
               )}
 
-              <div id={bodyId} className={classes.body}>
+              <div id={bodyId} className={classes.body} style={_styles.body}>
                 {children}
               </div>
             </Paper>
           </div>
 
-          <div style={styles.overlay}>
+          <div style={transitionStyles.overlay}>
             <Overlay
               color={
                 overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)

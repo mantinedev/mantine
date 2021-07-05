@@ -5,11 +5,12 @@ title: Textarea
 order: 1
 slug: /core/textarea/
 category: 'inputs'
-description: 'Render textarea with optional autosize variant'
+description: 'Renders textarea with optional autosize variant'
 props: ['Textarea']
 import: "import { Textarea } from '@mantine/core';"
 source: 'mantine-core/src/components/Textarea/Textarea.tsx'
 docs: 'core/Textarea.mdx'
+styles: ['Textarea']
 ---
 
 import { TextareaDemos } from '@demos/core';
@@ -17,8 +18,7 @@ import { TextareaDemos } from '@demos/core';
 ## Usage
 
 Use TextInput when you need to capture large amounts of text from user.
-Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper">InputWrapper</GatsbyLink> components.
-See full information about shared inputs props in <GatsbyLink to="/guides/inputs/">inputs guide</GatsbyLink>.
+Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper">InputWrapper</GatsbyLink> components:
 
 <Demo data={TextareaDemos.configurator} />
 
@@ -32,7 +32,7 @@ The height will grow until `maxRows` are reached or indefinitely if `maxRows` no
 ## Controlled
 
 ```tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Textarea } from '@mantine/core';
 
 function Demo() {
@@ -46,13 +46,23 @@ function Demo() {
 You can get input ref with `elementRef` prop:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Textarea } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
   return <Textarea elementRef={ref} />;
 }
+```
+
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<Textarea /> // -> random id generated both on client and server, props mismatch warning
+<Textarea id="my-accordion" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility

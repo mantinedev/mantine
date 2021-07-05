@@ -5,9 +5,10 @@ import {
   getSizeValue,
   getThemeColor,
   hexToRgba,
+  getFontStyles,
 } from '../../theme';
 
-interface ThemeIconStylesProps {
+interface ThemeIconStyles {
   theme: MantineTheme;
   color: string;
   size: MantineNumberSize;
@@ -23,26 +24,25 @@ export const sizes = {
 };
 
 export default createMemoStyles({
-  light: ({ theme, color }: ThemeIconStylesProps) => ({
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
+  light: ({ theme, color }: ThemeIconStyles) => ({
     backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 1 }),
+      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
       theme.colorScheme === 'dark' ? 0.3 : 1
     ),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
   }),
 
-  filled: ({ theme, color }: ThemeIconStylesProps) => ({
-    color: theme.colorScheme === 'dark' ? getThemeColor({ theme, color, shade: 0 }) : theme.white,
-    backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: 7 }),
-      theme.colorScheme === 'dark' ? 0.65 : 1
-    ),
+  filled: ({ theme, color }: ThemeIconStyles) => ({
+    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
+    color: theme.white,
+    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
   }),
 
-  themeIcon: ({ theme, size, radius }: ThemeIconStylesProps) => {
+  root: ({ theme, size, radius }: ThemeIconStyles) => {
     const iconSize = getSizeValue({ size, sizes });
 
     return {
+      ...getFontStyles(theme),
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',

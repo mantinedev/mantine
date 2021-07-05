@@ -1,14 +1,19 @@
 import { createUseStyles } from 'react-jss';
 import { theming } from '@mantine/core';
-import { BREAKPOINT, TABLE_OF_CONTENTS_WIDTH, CONTENT_WIDTH, TAB_HEIGHT } from '../settings';
+import {
+  BREAKPOINT,
+  TABLE_OF_CONTENTS_WIDTH,
+  CONTENT_WIDTH,
+  TAB_HEIGHT,
+  TAB_HEIGHT_MOBILE,
+} from '../settings';
 
 export default createUseStyles(
   (theme) => ({
-    tabs: {
-      marginTop: -TAB_HEIGHT,
-    },
+    tabs: {},
 
     tabsWrapper: {
+      background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2],
     },
 
@@ -36,6 +41,13 @@ export default createUseStyles(
       marginBottom: -1,
       borderColor: theme.colorScheme === 'dark' ? `${theme.colors.dark[8]} !important` : undefined,
 
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        paddingLeft: theme.spacing.lg,
+        paddingRight: theme.spacing.lg,
+        fontSize: theme.fontSizes.sm,
+        height: TAB_HEIGHT_MOBILE,
+      },
+
       '&:first-of-type': {
         marginLeft: theme.spacing.xl * 2,
 
@@ -58,7 +70,8 @@ export default createUseStyles(
     main: {
       width: `calc(100% - ${TABLE_OF_CONTENTS_WIDTH}px)`,
       maxWidth: CONTENT_WIDTH,
-      margin: 'auto',
+      marginLeft: 'auto',
+      marginRight: 'auto',
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         width: '100%',

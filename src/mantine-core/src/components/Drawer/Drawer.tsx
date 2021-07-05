@@ -7,16 +7,22 @@ import {
   useReducedMotion,
   useFocusTrap,
 } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineNumberSize } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { Portal } from '../Portal/Portal';
+import { Text } from '../Text/Text';
+import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { GroupedTransition, MantineTransition } from '../Transition/Transition';
 import useStyles, { Position, sizes } from './Drawer.styles';
 
 export const DRAWER_SIZES = sizes;
 
-export interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export type DrawerStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'noOverlay'>;
+
+export interface DrawerProps
+  extends DefaultProps<DrawerStylesNames>,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** If true drawer is mounted to the dom */
   opened: boolean;
 
@@ -67,6 +73,15 @@ export interface DrawerProps extends DefaultProps, React.ComponentPropsWithoutRe
 
   /** Sets overlay color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
   overlayColor?: string;
+
+  /** Drawer title, displayed in header before close button */
+  title?: React.ReactNode;
+
+  /** Hides close button, modal still can be closed with escape key and by clicking outside */
+  hideCloseButton?: boolean;
+
+  /** Close button aria-label */
+  closeButtonLabel?: string;
 }
 
 const transitions: Record<Position, MantineTransition> = {
@@ -77,9 +92,10 @@ const transitions: Record<Position, MantineTransition> = {
 };
 
 export function MantineDrawer({
+  className,
+  style,
   opened,
   onClose,
-  className,
   themeOverride,
   position = 'left',
   size = 'md',
@@ -97,11 +113,17 @@ export function MantineDrawer({
   noOverlay = false,
   shadow = 'md',
   padding = 0,
+  title,
+  hideCloseButton,
+  closeButtonLabel,
+  classNames,
+  styles,
   ...others
 }: DrawerProps) {
   const theme = useMantineTheme(themeOverride);
   const duration = useReducedMotion() ? 1 : transitionDuration;
-  const classes = useStyles({ theme, size, position });
+  const classes = useStyles({ theme, size, position }, classNames, 'drawer');
+  const _styles = mergeStyles(classes, styles);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
   useScrollLock(opened && !noScrollLock);
   const clickOutsideRef = useClickOutside(() => opened && !noCloseOnClickOutside && onClose());
@@ -141,17 +163,18 @@ export function MantineDrawer({
         },
       }}
     >
-      {(styles) => (
+      {(transitionStyles) => (
         <div
-          className={cx(classes.wrapper, { [classes.noOverlay]: noOverlay }, className)}
+          className={cx(classes.root, { [classes.noOverlay]: noOverlay }, className)}
           role="dialog"
           aria-modal
+          style={{ ...style, ..._styles.root, ...(noOverlay ? _styles.noOverlay : null) }}
           {...others}
         >
           <Paper
             className={cx(classes.drawer, className)}
             elementRef={useMergedRef(focusTrapRef, clickOutsideRef)}
-            style={{ ...styles.drawer, zIndex: zIndex + 1 }}
+            style={{ ...transitionStyles.drawer, ..._styles.drawer, zIndex: zIndex + 1 }}
             radius={0}
             tabIndex={-1}
             onKeyDownCapture={(event) =>
@@ -161,11 +184,27 @@ export function MantineDrawer({
             padding={padding}
             themeOverride={themeOverride}
           >
+            {(title || !hideCloseButton) && (
+              <div className={classes.header} style={_styles.header}>
+                <Text className={classes.title} style={_styles.title} themeOverride={themeOverride}>
+                  {title}
+                </Text>
+
+                {!hideCloseButton && (
+                  <CloseButton
+                    iconSize={16}
+                    onClick={onClose}
+                    aria-label={closeButtonLabel}
+                    themeOverride={themeOverride}
+                  />
+                )}
+              </div>
+            )}
             {children}
           </Paper>
 
           {!noOverlay && (
-            <div style={styles.overlay}>
+            <div style={transitionStyles.overlay}>
               <Overlay
                 opacity={_overlayOpacity}
                 zIndex={zIndex}

@@ -38,17 +38,13 @@ export function ActionIcon<T extends React.ElementType = 'button', U = HTMLButto
   component: Element = 'button',
   ...others
 }: ComponentPassThrough<T, ActionIconProps> & { elementRef?: React.ForwardedRef<U> }) {
-  const classes = useStyles({
-    size,
-    radius,
-    color,
-    theme: useMantineTheme(themeOverride),
-  });
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ size, radius, color, theme }, null, 'action-icon');
 
   return (
     <Element
       {...others}
-      className={cx(classes.actionIcon, classes[variant], className)}
+      className={cx(classes.root, classes[variant], className)}
       type="button"
       ref={elementRef}
     >

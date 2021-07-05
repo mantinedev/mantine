@@ -5,14 +5,16 @@ title: Divider
 order: 1
 slug: /core/divider/
 category: 'misc'
-description: 'Display horizontal line with optional label or vertical divider'
+description: 'Horizontal line with optional label or vertical divider'
 props: ['Divider']
 import: "import { Divider } from '@mantine/core';"
 source: 'mantine-core/src/components/Divider/Divider.tsx'
 docs: 'core/Divider.mdx'
+styles: ['Divider']
 ---
 
 import { DividerDemos } from '@demos/core';
+import { GroupDemos } from '@demos/core';
 import { DIVIDER_SIZES } from '@mantine/core';
 
 ## Usage
@@ -34,7 +36,7 @@ by setting `label` and control its appearance with `labelPosition` and `labelPro
 
 Set margin prop to add margins on left and right sides in vertical orientation and top and bottom in horizontal:
 
-<Demo data={DividerDemos.vertical} />
+<Demo data={GroupDemos.divider} />
 
 ## Sizes
 

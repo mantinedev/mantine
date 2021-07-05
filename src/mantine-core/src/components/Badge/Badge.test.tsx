@@ -6,11 +6,19 @@ import {
   itRendersChildren,
   itSupportsStyle,
   itSupportsOthers,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Badge } from './Badge';
+import { Badge as BadgeStylesApi } from './styles.api';
 
 describe('@mantine/core/Badge', () => {
   checkAccessibility([mount(<Badge>this is badge</Badge>)]);
+  itSupportsStylesApi(
+    Badge,
+    { children: 'test', leftSection: 'l', rightSection: 'r' },
+    Object.keys(BadgeStylesApi),
+    'badge'
+  );
   itSupportsOthers(Badge, {});
   itSupportsClassName(Badge, {});
   itRendersChildren(Badge, {});
@@ -37,7 +45,7 @@ describe('@mantine/core/Badge', () => {
         test
       </Badge>
     );
-    expect(element.render().find('[data-mantine-badge-right]').text()).toBe('test-right');
-    expect(element.render().find('[data-mantine-badge-left]').text()).toBe('test-left');
+    expect(element.render().find('.mantine-badge-rightSection').text()).toBe('test-right');
+    expect(element.render().find('.mantine-badge-leftSection').text()).toBe('test-left');
   });
 });

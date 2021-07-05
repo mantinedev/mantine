@@ -1,0 +1,161 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: 'Custom inputs'
+order: 1
+slug: /core/custom-inputs/
+---
+
+import { JsonInputDemo, ColorInputDemo } from '@docs/demos';
+
+# Building custom inputs
+
+@mantine/core and @mantine/hooks come with all utilities that you need to build custom inputs.
+These examples with provide a reference on how to enhance existing components with extra logic to fit your needs
+and how to use mantine packages to create completely new accessible inputs based on <GatsbyLink to="/core/input/">Input</GatsbyLink>
+and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components.
+
+## Wrapped Textarea
+
+First option to create custom input is to enhance existing Mantine component with extra logic and styles.
+In this example we will build JsonInput component that adds additional styles and validation logic to Textarea.
+
+JsonInput uses autosize variant of <GatsbyLink to="/core/textarea/">Textarea</GatsbyLink>
+component, which accepts json, validates and formats it.
+
+<JsonInputDemo />
+
+**Key parts:**
+
+- Use `styles` or `classNames` to apply styles to any element (styles applied to input in this example)
+- `onChange`, `onFocus`, `onBlur` and all other input related props go directly to input element
+- Use `typeof Textarea` to get Textarea component props in TypeScript
+
+## Custom input with dropdown
+
+Second option to create custom input is to build everything from scratch.
+In this example we will utilize Mantine components and hooks to create accessible color picker component.
+
+ColorInput is a custom input built with <GatsbyLink to="/core/input/">Input</GatsbyLink>
+and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components.
+
+<ColorInputDemo />
+
+### Input
+
+For this input we will use <GatsbyLink to="/core/input/">Input</GatsbyLink> as button,
+as we do not want to allow any free user input. We will also grab button ref for future focus management:
+
+```tsx
+<Input
+  component="button"
+  onClick={() => setDropdownOpened(true)}
+  inputStyle={{ cursor: 'pointer' }}
+  elementRef={controlRef}
+  {...others}
+>
+  {/*
+    Since Input is rendered as a button
+    we can use children to display current value or placeholder
+  */}
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <ColorSwatch color={value} size={20} style={{ marginRight: 10 }} />
+    <Text size="sm" transform="uppercase">
+      {value}
+    </Text>
+  </div>
+</Input>
+```
+
+### InputWrapper
+
+To give ColorInput component the same label, description and error props as in other Mantine inputs,
+we will wrap it with <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink>
+and ensure that label is connected to input with <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook:
+
+```tsx
+// if input receives id from props, this id will be used,
+// otherwise random id will be generated
+const uuid = useId(id);
+
+// We just set InputWrapper props from ColorInput props
+// It's not a rocket science as you see
+<InputWrapper required={required} id={uuid} label={label} error={error} description={description}>
+  <Input id={uuid} /* other input props */ />
+</InputWrapper>;
+```
+
+### Dropdown
+
+Dropdown is built with <GatsbyLink to="/core/paper/">Paper</GatsbyLink>
+and <GatsbyLink to="/core/color-swatch/">ColorSwatch</GatsbyLink> components.
+
+```tsx
+// Colors generated from data prop
+const colors = data.map((color) => (
+  <ColorSwatch
+    key={color}
+    // make color swatch interactive, focus styles from theme are already applied
+    component="button"
+    color={color}
+    onClick={() => handleChange(color)}
+    style={{ cursor: 'pointer' }}
+  />
+));
+
+const dropdown = (
+  <Paper
+    // predefined shadow and padding from theme.shadows and theme.spacing
+    shadow="md"
+    padding="md"
+    // get element ref for focus trap and click outside
+    elementRef={dropdownRef}
+    // Close dropdown when user presses escape
+    // since focus is trapped inside we do not need to pollute window with this event
+    onKeyDownCapture={(event) => {
+      if (event.nativeEvent.code === 'Escape') {
+        closeDropdown();
+      }
+    }}
+  >
+    <Group position="center">{colors}</Group>
+  </Paper>
+);
+```
+
+### Click outside and focus trap
+
+When dropdown is opened usually it is a good idea to trap focus inside
+and close it with outside clicks. To implement this use <GatsbyLink to="/hooks/use-click-outside/">use-click-outside</GatsbyLink>
+and <GatsbyLink to="/hooks/use-focus-trap/">use-focus-trap</GatsbyLink>.
+Both hooks return ref that should be passed to dropdown, to combine them use <GatsbyLink to="/hooks/use-merged-ref/">use-merged-ref</GatsbyLink>
+hook:
+
+```tsx
+const focusTrapRef = useFocusTrap();
+const clickOutsideRef = useClickOutside(closeDropdown);
+const dropdownRef = useMergedRef(focusTrapRef, clickOutsideRef);
+
+// on dropdown component
+<Paper elementRef={dropdownRef} /* ...other dropdown props */ />;
+```
+
+### Animations
+
+To animate dropdown presence we will use <GatsbyLink to="/core/transition/">Transition</GatsbyLink>
+component, it has some premade transitions, for this example `skew-up` will do the job:
+
+```tsx
+<Transition
+  transition="skew-up"
+  duration={250}
+  mounted={dropdownOpened}
+  onExited={() => setTimeout(() => controlRef.current.focus(), 10)}
+>
+  {(transitionStyles) => <Paper style={transitionStyles} /* ...other dropdown props */ />}
+</Transition>
+```
+
+When `dropdownOpened` is false, dropdown will not be mounted to the dom
+– focus trap will have no effect and click outside events will not be registered.
+When dropdown transition is finished we move focus back to control with `onExit` callback.

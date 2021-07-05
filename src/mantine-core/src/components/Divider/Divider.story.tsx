@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '../../theme';
 import { Divider } from './Divider';
 import { Badge } from '../Badge/Badge';
+import { Group } from '../Group/Group';
 import { Text } from '../Text/Text';
 
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl', 10] as const).map((size) => (
@@ -34,20 +35,13 @@ storiesOf('@mantine/core/Divider', module)
   ))
   .add('Vertical Divider', () => (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          marginTop: 15,
-        }}
-      >
+      <Group>
         <Badge>Light</Badge>
-        <Divider orientation="vertical" />
+        <Divider orientation="vertical" margins={10} />
         <Badge>Outline</Badge>
         <Divider orientation="vertical" />
         <Badge>Filled</Badge>
-      </div>
+      </Group>
       <div
         style={{
           display: 'flex',

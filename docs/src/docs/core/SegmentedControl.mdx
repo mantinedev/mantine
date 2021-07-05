@@ -5,11 +5,12 @@ title: SegmentedControl
 order: 1
 slug: /core/segmented-control/
 category: 'inputs'
-description: 'Horizontal control made of multiple segments'
+description: 'Horizontal control made of multiple segments, alternative to RadioGroup'
 props: ['SegmentedControl']
 import: "import { SegmentedControl } from '@mantine/core';"
 source: 'mantine-core/src/components/SegmentedControl/SegmentedControl.tsx'
 docs: 'core/SegmentedControl.mdx'
+styles: ['SegmentedControl']
 ---
 
 import { SegmentedControlDemos } from '@demos/core';
@@ -23,6 +24,29 @@ SegmentedControl is usually used as an alternative to:
   options
 
 <Demo data={SegmentedControlDemos.usage} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { SegmentedControl } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('react');
+  return (
+    <SegmentedControl
+      value={value}
+      onChange={setValue}
+      data={[
+        { label: 'React', value: 'react' },
+        { label: 'Angular', value: 'ng' },
+        { label: 'Vue', value: 'vue' },
+        { label: 'Svelte', value: 'svelte' },
+      ]}
+    />
+  );
+}
+```
 
 ## Full width
 
@@ -46,7 +70,7 @@ SegmentedControl sizes from xs to xl:
 
 ## Radius
 
-xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
+xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.radius</GatsbyLink>.
 Alternatively you can use number to set radius in px:
 
 ```tsx
@@ -62,7 +86,7 @@ Default theme radius values from xs to xl with lg size:
 ## Color
 
 By default segmented control uses `theme.white` with shadow in light color scheme and `theme.colors.dark[6]` background color for active element.
-You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink> in case you need colored variant:
+You can choose any color defined in <GatsbyLink to="/theming/extend-theme/#default-colors">theme.colors</GatsbyLink> in case you need colored variant:
 
 <Demo data={SegmentedControlDemos.configurator} />
 

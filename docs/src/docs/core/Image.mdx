@@ -5,11 +5,12 @@ title: Image
 order: 1
 slug: /core/image/
 category: 'data-display'
-description: 'Display image with optional placeholder for loading and error state'
+description: 'Image with optional placeholder for loading and error state'
 props: ['Image']
 import: "import { Image } from '@mantine/core';"
 source: 'mantine-core/src/components/Image/Image.tsx'
 docs: 'core/Image.mdx'
+styles: ['Image']
 ---
 
 import { ImageDemos } from '@demos/core';
@@ -48,7 +49,7 @@ Placeholder is centered vertically and horizontally across provided width and he
 
 ## Radius
 
-Radius has predefined values: xs, sm, md, lg, xl which are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
+Radius has predefined values: xs, sm, md, lg, xl which are defined in <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.radius</GatsbyLink>.
 Alternatively you can use number to set border-radius in px:
 
 ```tsx
@@ -64,7 +65,7 @@ Radius is applied both to image and placeholder.
 You can get both image and root element (div) refs with `elementRef` and `imageRef` props:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Image } from '@mantine/core';
 
 function Demo() {

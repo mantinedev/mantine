@@ -10,6 +10,7 @@ props: ['Checkbox']
 import: "import { Checkbox } from '@mantine/core';"
 source: 'mantine-core/src/components/Checkbox/Checkbox.tsx'
 docs: 'core/Checkbox.mdx'
+styles: ['Checkbox']
 ---
 
 import { CheckboxDemos } from '@demos/core';
@@ -25,7 +26,7 @@ For better accessibility set `label` prop, it will add associated label element.
 ## Sizes
 
 Checkbox has 5 predefined sizes: xs, sm, md, lg, xl.
-Size defines label font-size (from <GatsbyLink to="/pages/theming/">theme.fontSizes</GatsbyLink>), input width and height:
+Size defines label font-size, input width and height:
 
 ```tsx
 <Checkbox size="xl" /> // -> predefined xl size
@@ -54,7 +55,7 @@ Checkbox supports indeterminate state. When `indeterminate` prop is set to true,
 ## Controlled
 
 ```tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Checkbox } from '@mantine/core';
 
 function Demo() {
@@ -70,13 +71,23 @@ function Demo() {
 You can get input ref by setting `elementRef` prop:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Checkbox } from '@mantine/core';
 
 function Demo() {
   const ref = useRef();
   return <Checkbox elementRef={ref} />;
 }
+```
+
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<Checkbox /> // -> random id generated both on client and server, props mismatch warning
+<Checkbox id="my-accordion" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility

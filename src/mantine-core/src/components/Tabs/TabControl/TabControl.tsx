@@ -1,34 +1,46 @@
 import React from 'react';
 import cx from 'clsx';
 import { useMergedRef, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme } from '../../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles } from '../../../theme';
 import { TabProps } from '../Tab/Tab';
+import type { TabsVariant } from '../Tabs';
 import useStyles from './TabControl.styles';
 
-export interface TabControlProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
+export type TabControlStylesNames = Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>;
+
+export interface TabControlProps
+  extends DefaultProps<typeof useStyles>,
+    React.ComponentPropsWithoutRef<'button'> {
   active: boolean;
   elementRef(node: HTMLButtonElement): void;
   tabProps: TabProps;
   color?: string;
-  variant?: 'default' | 'outline';
+  variant?: TabsVariant;
 }
 
 export function TabControl({
+  className,
+  style,
   themeOverride,
   active,
   elementRef,
   tabProps,
   color,
-  className,
   variant = 'default',
+  classNames,
+  styles,
   ...others
 }: TabControlProps) {
   const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
-  const classes = useStyles({
-    reduceMotion: useReducedMotion(),
-    color: overrideColor || color,
-    theme: useMantineTheme(themeOverride),
-  });
+  const theme = useMantineTheme(themeOverride);
+  const reduceMotion = useReducedMotion();
+  const classes = useStyles(
+    { reduceMotion, color: overrideColor || color, theme },
+    classNames,
+    'tabs'
+  );
+
+  const _styles = mergeStyles(classes, styles);
 
   return (
     <button
@@ -37,8 +49,8 @@ export function TabControl({
       data-mantine-tab
       tabIndex={active ? 0 : -1}
       className={cx(
-        classes.tab,
-        classes[`${variant}Variant`],
+        classes.tabControl,
+        classes[variant],
         { [classes.tabActive]: active },
         className
       )}
@@ -46,14 +58,25 @@ export function TabControl({
       role="tab"
       aria-selected={active}
       ref={useMergedRef(elementRef, tabProps.elementRef)}
+      style={{
+        ...style,
+        ..._styles.tabControl,
+        ..._styles[variant],
+        ...(active ? _styles.tabActive : null),
+      }}
     >
-      <div className={classes.tabInner}>
+      <div className={classes.tabInner} style={_styles.tabInner}>
         {icon && (
-          <div data-mantine-icon className={classes.tabIcon}>
+          <div className={classes.tabIcon} style={_styles.tabIcon}>
             {icon}
           </div>
         )}
-        {label && <div data-mantine-label>{label}</div>}
+
+        {label && (
+          <div className={classes.tabLabel} style={_styles.tabLabel}>
+            {label}
+          </div>
+        )}
       </div>
     </button>
   );

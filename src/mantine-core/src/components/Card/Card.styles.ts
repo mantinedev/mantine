@@ -1,13 +1,13 @@
 import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
 
-interface CardStylesProps {
+interface CardStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
   padding: MantineNumberSize;
 }
 
 export default createMemoStyles({
-  card: ({ theme, radius, padding }: CardStylesProps) => {
+  card: ({ theme, radius, padding }: CardStyles) => {
     const spacing = getSizeValue({ size: padding, sizes: theme.spacing });
     const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
 
@@ -40,7 +40,7 @@ export default createMemoStyles({
         },
       },
 
-      '& [data-mantine-hr]': {
+      '& [data-mantine-divider]': {
         borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
         marginLeft: -spacing,
         marginRight: -spacing,

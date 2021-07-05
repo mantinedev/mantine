@@ -1,13 +1,13 @@
 import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
 
-interface RadioGroupStylesProps {
+interface RadioGroupStyles {
   theme: MantineTheme;
   spacing: MantineNumberSize;
   variant: 'vertical' | 'horizontal';
 }
 
 export default createMemoStyles({
-  wrapper: ({ theme, spacing, variant }: RadioGroupStylesProps) => ({
+  wrapper: ({ theme, spacing, variant }: RadioGroupStyles) => ({
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: variant === 'vertical' ? 'column' : 'row',

@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { ImageIcon } from '@modulz/radix-icons';
 import { DEFAULT_THEME, MantineProvider } from '../../theme';
 import { Text } from '../Text/Text';
 import { Tabs, Tab } from './Tabs';
+
+function Controlled() {
+  const [activeTab, setActiveTab] = useState(1);
+
+  return (
+    <Tabs active={activeTab} onTabChange={setActiveTab}>
+      <Tab label="First">First tab content</Tab>
+      <Tab label="Second">Second tab content</Tab>
+      <Tab label="Third">Third tab content</Tab>
+    </Tabs>
+  );
+}
 
 function NgIcon() {
   return (
@@ -91,6 +103,7 @@ storiesOf('@mantine/core/Tabs', module)
       </Tabs>
     </div>
   ))
+  .add('Controlled', () => <Controlled />)
   .add('Positions', () => (
     <div style={{ padding: 50 }}>
       <Tabs style={{ marginTop: 20 }}>
@@ -150,9 +163,15 @@ storiesOf('@mantine/core/Tabs', module)
       </Tabs>
     </div>
   ))
-  .add('Outline', () => (
+  .add('Outline & pills', () => (
     <div style={{ padding: 50 }}>
       <Tabs variant="outline">
+        <Tab label="First" icon={<ImageIcon />} styles={{ label: { color: 'red' } }} />
+        <Tab label="Only tabs" />
+        <Tab label="Nothing here" />
+        <Tab label="Outline" />
+      </Tabs>
+      <Tabs variant="pills">
         <Tab label="First" icon={<ImageIcon />} />
         <Tab label="Only tabs" />
         <Tab label="Nothing here" />

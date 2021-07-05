@@ -1,0 +1,46 @@
+---
+group: 'mantine-dates'
+package: '@mantine/dates'
+title: RangeCalendar
+order: 1
+slug: /dates/range-calendar/
+description: 'Display calendar with dates range'
+props: ['RangeCalendar']
+import: "import { RangeCalendar } from '@mantine/dates';"
+source: 'mantine-dates/src/components/RangeCalendar/RangeCalendar.tsx'
+docs: 'dates/RangeCalendar.mdx'
+styles: ['RangeCalendar']
+---
+
+import { RangeCalendarDemos } from '@demos/dates';
+
+## Usage
+
+<Demo data={RangeCalendarDemos.usage} />
+
+## Calendar props
+
+RangeCalendar component uses the same props as <GatsbyLink to="/dates/calendar/">Calendar</GatsbyLink> component.
+The only difference is in `value` and `onChange` props shown in previous example.
+
+## Accessibility and usability
+
+To make all component controls visible to screen reader set following props:
+
+```tsx
+// When withSelect prop set to false
+<RangeCalendar
+  withSelect={false}
+  nextMonthLabel="Next month" // -> aria-label for button that switches to next month
+  previousMonthLabel="Previous month" // -> aria-label for button that switches to previous month
+/>
+
+// When withSelect prop set to true
+<RangeCalendar
+  withSelect
+  nextMonthLabel="Next month" // -> aria-label for button that switches to next month
+  previousMonthLabel="Previous month" // -> aria-label for button that switches to previous month
+  yearLabel="Select year" // -> year select aria-label
+  monthLabel="Select month" // -> month select aria-label
+/>
+```

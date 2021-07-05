@@ -1,26 +1,29 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../theme';
+import { DEFAULT_THEME, MANTINE_SIZES } from '../../theme';
 import { InputWrapper } from './InputWrapper';
 import { Text } from '../Text/Text';
+
+const sizes = MANTINE_SIZES.map((size) => (
+  <InputWrapper
+    size={size}
+    key={size}
+    label={`${size} Input label`}
+    required
+    error="Validation error"
+    id="input-wrapper-1"
+    description="Provide additional information about input here, can be multiline. Dimmed and smaller compared to label."
+    style={{ marginTop: 30 }}
+  >
+    <Text>Input is located here</Text>
+  </InputWrapper>
+));
 
 const lorem =
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet consequatur vitae commodi ipsa ipsam vel voluptatem eligendi placeat. Deleniti nulla atque officiis mollitia quasi numquam explicabo animi earum quas labore.';
 
 storiesOf('@mantine/core/InputWrapper', module)
-  .add('All parts', () => (
-    <div style={{ padding: 15, maxWidth: 400 }}>
-      <InputWrapper
-        label="Input label"
-        required
-        error="Validation error"
-        id="input-wrapper-1"
-        description="Provide additional information about input here, can be multiline. Dimmed and smaller compared to label."
-      >
-        <Text>Input is located here</Text>
-      </InputWrapper>
-    </div>
-  ))
+  .add('Sizes', () => <div style={{ padding: 15, maxWidth: 400 }}>{sizes}</div>)
   .add('Label only', () => (
     <div style={{ padding: 15, maxWidth: 400 }}>
       <InputWrapper label="Input label" required id="input-wrapper-1">
