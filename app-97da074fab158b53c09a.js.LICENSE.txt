@@ -1,11 +1,6 @@
 /* NProgress, (c) 2013, 2014 Rico Sta. Cruz - http://ricostacruz.com/nprogress
  * @license MIT */
 
-/*!
- * domready (c) Dustin Diaz 2014 - License MIT
- * ie10 fix - Mikael Kristiansson 2019
- */
-
 /**
  * A better abstraction over CSS.
  *
