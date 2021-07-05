@@ -36,8 +36,8 @@ export default createMemoStyles({
     '& $input': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       minHeight: getSizeValue({ size, sizes }),
-      paddingLeft: getSizeValue({ size, sizes: theme.spacing }),
-      paddingRight: getSizeValue({ size, sizes: theme.spacing }),
+      paddingLeft: getSizeValue({ size, sizes }) / 3,
+      paddingRight: getSizeValue({ size, sizes }) / 3,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
@@ -67,8 +67,8 @@ export default createMemoStyles({
   filled: ({ theme, radius, size }: InputStyles) => ({
     '& $input': {
       minHeight: getSizeValue({ size, sizes }),
-      paddingLeft: getSizeValue({ size, sizes: theme.spacing }),
-      paddingRight: getSizeValue({ size, sizes: theme.spacing }),
+      paddingLeft: getSizeValue({ size, sizes }) / 3,
+      paddingRight: getSizeValue({ size, sizes }) / 3,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       border: '1px solid transparent',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
