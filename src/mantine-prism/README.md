@@ -5,7 +5,7 @@ under the hood and support light and dark theme.
 
 [Read documentation on Mantine website](https://mantine.dev/others/prism/)
 
-![Demo](https://raw.githubusercontent.com/mantinedev/mantine/next-minor/.demo/prism.png)
+![Demo](https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/prism.png)
 
 ## Installation
 
