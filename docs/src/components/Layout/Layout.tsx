@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { MantineProvider, NormalizeCSS, GlobalStyles } from '@mantine/core';
-import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
+import { useWindowEvent, useLocalStorageValue, randomId } from '@mantine/hooks';
 import { ColorSchemeContext, ColorScheme } from './ColorScheme.context';
 import { LayoutInner, LayoutProps } from './LayoutInner';
 
@@ -25,12 +25,7 @@ export default function Layout({ children, location }: LayoutProps) {
   });
 
   useLayoutEffect(() => {
-    const initialTheme = localStorage.getItem(THEME_KEY);
-
-    if (initialTheme === 'dark') {
-      setKey('dark');
-      setColorScheme('dark');
-    }
+    setKey(randomId());
   }, []);
 
   return (

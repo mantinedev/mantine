@@ -15,7 +15,6 @@ module.exports = {
     'gatsby-plugin-cname',
     'gatsby-plugin-tsconfig-paths',
     'gatsby-plugin-react-helmet',
-    'gatsby-plugin-jss',
     {
       resolve: 'gatsby-plugin-web-font-loader',
       options: {
