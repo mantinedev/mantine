@@ -26,6 +26,7 @@ export const configurator: MantineDemo = {
     },
     { name: 'placeholder', type: 'string', initialValue: 'Your email' },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
+    { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'invalid', type: 'boolean', initialValue: false, defaultValue: false },
   ],

@@ -56,7 +56,7 @@ export default createMemoStyles({
     },
 
     '& $withIcon': {
-      paddingLeft: 35,
+      paddingLeft: getSizeValue({ size, sizes }),
     },
 
     '& $icon': {
@@ -98,7 +98,7 @@ export default createMemoStyles({
     },
 
     '& $withIcon': {
-      paddingLeft: 35,
+      paddingLeft: getSizeValue({ size, sizes }),
     },
 
     '& $icon': {
@@ -107,7 +107,7 @@ export default createMemoStyles({
     },
   }),
 
-  unstyled: ({ theme }: InputStyles) => ({
+  unstyled: ({ theme, size }: InputStyles) => ({
     '& $input': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       backgroundColor: 'transparent',
@@ -125,7 +125,7 @@ export default createMemoStyles({
     },
 
     '& $withIcon': {
-      paddingLeft: 34,
+      paddingLeft: getSizeValue({ size, sizes }),
     },
   }),
 
