@@ -28,7 +28,7 @@ export default createMemoStyles({
     top: 0,
     bottom: 0,
     left: 0,
-    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   }),
 });
