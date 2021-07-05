@@ -1,7 +1,15 @@
-import { createMemoStyles, getFontStyles, MantineTheme } from '@mantine/core';
+import {
+  createMemoStyles,
+  getFontStyles,
+  getSizeValue,
+  MantineTheme,
+  MantineSize,
+  INPUT_SIZES,
+} from '@mantine/core';
 
 interface DatePickerBaseStyles {
   theme: MantineTheme;
+  size: MantineSize;
 }
 
 export default createMemoStyles({
@@ -10,7 +18,8 @@ export default createMemoStyles({
     position: 'relative',
   }),
 
-  placeholder: ({ theme }: DatePickerBaseStyles) => ({
+  placeholder: ({ theme, size }: DatePickerBaseStyles) => ({
+    lineHeight: `${getSizeValue({ size, sizes: INPUT_SIZES }) - 2}px`,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
   }),
 
