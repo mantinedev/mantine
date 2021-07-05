@@ -1,5 +1,5 @@
 export function getClientPosition(event: any) {
-  if (Array.isArray(event.touches)) {
+  if ('TouchEvent' in window && event instanceof window.TouchEvent) {
     const touch = event.touches[0];
     return touch.clientX;
   }
