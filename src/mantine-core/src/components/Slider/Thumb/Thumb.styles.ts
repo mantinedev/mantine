@@ -33,11 +33,15 @@ export default createMemoStyles({
     height: getSizeValue({ sizes, size }) * 2,
     width: getSizeValue({ sizes, size }) * 2,
     backgroundColor: theme.white,
-    border: `2px solid ${getThemeColor({
-      theme,
-      color,
-      shade: 7,
-    })}`,
+    border: `2px solid ${
+      theme.colorScheme === 'dark'
+        ? theme.white
+        : getThemeColor({
+            theme,
+            color,
+            shade: 7,
+          })
+    }`,
     transform: 'translate(-50%, -50%)',
     top: '50%',
     cursor: 'pointer',
