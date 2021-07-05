@@ -28,13 +28,13 @@ const sizes = {
   },
 
   sm: {
-    fontSize: 13,
+    fontSize: 14,
     height: INPUT_SIZES.sm,
     padding: [0, 18],
   },
 
   md: {
-    fontSize: 15,
+    fontSize: 16,
     height: INPUT_SIZES.md,
     padding: [0, 22],
   },

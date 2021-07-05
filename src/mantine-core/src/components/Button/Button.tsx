@@ -55,7 +55,7 @@ export function Button<
 >({
   className,
   style,
-  size = 'md',
+  size = 'sm',
   color,
   type = 'button',
   disabled = false,
