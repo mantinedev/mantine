@@ -7,6 +7,7 @@ import {
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
+import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { Paper } from '../Paper/Paper';
 import { Text } from '../Text/Text';
@@ -80,6 +81,12 @@ export interface SelectProps
 
   /** Nothing found label */
   nothingFound?: React.ReactNode;
+
+  /** Allow to clear item */
+  clearable?: boolean;
+
+  /** aria-label for clear button */
+  clearButtonLabel?: string;
 }
 
 function defaultFilter(value: string, item: SelectItem) {
@@ -116,7 +123,9 @@ export function Select({
   filter = defaultFilter,
   maxDropdownHeight = 220,
   searchable = false,
+  clearable = false,
   nothingFound,
+  clearButtonLabel,
   ...others
 }: SelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -138,6 +147,12 @@ export function Select({
 
   const selectedValue = data.find((item) => item.value === _value);
   const [inputValue, setInputValue] = useState(selectedValue?.label || '');
+
+  const handleClear = () => {
+    handleChange(null);
+    setInputValue('');
+    inputRef.current.focus();
+  };
 
   useEffect(() => {
     const newSelectedValue = data.find((item) => item.value === value);
@@ -244,12 +259,27 @@ export function Select({
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.currentTarget.value);
+    if (clearable && event.currentTarget.value === '') {
+      handleChange(null);
+      setInputValue('');
+    } else {
+      setInputValue(event.currentTarget.value);
+    }
     setHovered(0);
     setDropdownOpened(true);
   };
 
-  const chevron = <ChevronIcon error={error} size={size} themeOverride={themeOverride} />;
+  const shouldShowClear = clearable && !!selectedValue;
+  const rightSection = shouldShowClear ? (
+    <CloseButton
+      themeOverride={themeOverride}
+      variant="transparent"
+      aria-label={clearButtonLabel}
+      onClick={handleClear}
+    />
+  ) : (
+    <ChevronIcon error={error} size={size} themeOverride={themeOverride} />
+  );
 
   return (
     <InputWrapper
@@ -294,7 +324,10 @@ export function Select({
           }}
           styles={{
             ...styles,
-            rightSection: { ...(styles as any)?.rightSection, pointerEvents: 'none' },
+            rightSection: {
+              ...(styles as any)?.rightSection,
+              pointerEvents: shouldShowClear ? undefined : 'none',
+            },
           }}
           __staticSelector="select"
           value={inputValue}
@@ -306,7 +339,7 @@ export function Select({
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           readOnly={!searchable}
-          rightSection={chevron}
+          rightSection={rightSection}
           rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
         />
 

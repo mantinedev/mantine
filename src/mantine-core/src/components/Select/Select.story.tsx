@@ -36,24 +36,51 @@ function Controlled() {
   );
 }
 
-storiesOf('@mantine/core/Select', module).add('General usage', () => (
-  <div style={{ padding: 40, maxWidth: 300 }}>
-    <Select label="Choose your favorite library/framework" placeholder="Choose value" data={data} />
-    <Select
-      searchable
-      label="Choose your favorite library/framework"
-      placeholder="Choose value"
-      data={data}
-      style={{ marginTop: 20 }}
-      nothingFound="No options"
-    />
-    <Controlled />
-    <Select
-      label="Large data set"
-      placeholder="Choose value"
-      searchable
-      data={largeData}
-      style={{ marginTop: 20 }}
-    />
-  </div>
-));
+storiesOf('@mantine/core/Select', module)
+  .add('General usage', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Select
+        label="Choose your favorite library/framework"
+        placeholder="Choose value"
+        data={data}
+      />
+      <Select
+        searchable
+        label="Choose your favorite library/framework"
+        placeholder="Choose value"
+        data={data}
+        style={{ marginTop: 20 }}
+        nothingFound="No options"
+      />
+      <Controlled />
+      <Select
+        label="Large data set"
+        placeholder="Choose value"
+        searchable
+        data={largeData}
+        style={{ marginTop: 20 }}
+      />
+    </div>
+  ))
+  .add('Clearable', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Select
+        searchable
+        clearable
+        label="Choose your favorite library/framework"
+        placeholder="Choose value"
+        data={data}
+        style={{ marginTop: 20 }}
+        nothingFound="No options"
+      />
+
+      <Select
+        clearable
+        label="Choose your favorite library/framework"
+        placeholder="Choose value"
+        data={data}
+        style={{ marginTop: 20 }}
+        nothingFound="No options"
+      />
+    </div>
+  ));
