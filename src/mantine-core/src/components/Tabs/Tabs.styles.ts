@@ -1,7 +1,8 @@
-import { createMemoStyles, MantineTheme } from '../../theme';
+import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
 
 interface TabsStyles {
   theme: MantineTheme;
+  tabPadding: MantineNumberSize;
 }
 
 export default createMemoStyles({
@@ -9,7 +10,10 @@ export default createMemoStyles({
   tabsListWrapper: {},
   tabsList: {},
   pills: {},
-  body: {},
+
+  body: ({ theme, tabPadding }: TabsStyles) => ({
+    paddingTop: getSizeValue({ size: tabPadding, sizes: theme.spacing }),
+  }),
 
   default: ({ theme }: TabsStyles) => ({
     borderBottom: `2px solid ${

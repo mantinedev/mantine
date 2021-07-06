@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import cx from 'clsx';
 import { useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
@@ -46,6 +46,9 @@ export interface TabsProps
 
   /** Controls appearance */
   variant?: 'default' | 'outline' | 'pills' | 'unstyled';
+
+  /** Controls tab content padding-top */
+  tabPadding?: MantineNumberSize;
 }
 
 function getPreviousTab(active: number, tabs: TabType[]) {
@@ -92,10 +95,11 @@ export function Tabs({
   variant = 'default',
   classNames,
   styles,
+  tabPadding = 'xs',
   ...others
 }: TabsProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames as any, 'tabs');
+  const classes = useStyles({ theme, tabPadding }, classNames as any, 'tabs');
   const _styles = mergeStyles(classes, styles as any);
 
   const controlRefs = useRef<Record<string, HTMLButtonElement>>({});

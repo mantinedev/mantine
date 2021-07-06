@@ -189,7 +189,7 @@ function Demo() {
   };
 
   return (
-    <Tabs>
+    <Tabs tabPadding={0}>
       <Tab label="TypeScript">
         <Prism language="tsx" styles={prismStyles}>
           {tsx}

@@ -4,7 +4,7 @@ import { Tabs, Tab, TabsProps } from '../Tabs';
 
 function Wrapper(props: TabsProps) {
   return (
-    <Tabs {...props} styles={{ body: { paddingTop: 5 } }}>
+    <Tabs {...props}>
       <Tab label="Gallery" icon={<ImageIcon />}>
         Gallery tab content
       </Tab>
@@ -41,5 +41,6 @@ export const colorsConfigurator: MantineDemo = {
         { value: 'pills', label: 'Pills' },
       ],
     },
+    { name: 'tabPadding', type: 'size', initialValue: 'xs', defaultValue: 'xs' },
   ],
 };
