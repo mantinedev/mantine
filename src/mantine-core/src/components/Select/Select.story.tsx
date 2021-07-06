@@ -65,6 +65,7 @@ storiesOf('@mantine/core/Select', module)
   .add('Clearable', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
       <Select
+        size="xl"
         searchable
         clearable
         label="Choose your favorite library/framework"

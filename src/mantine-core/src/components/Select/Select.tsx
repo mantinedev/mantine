@@ -276,6 +276,7 @@ export function Select({
       variant="transparent"
       aria-label={clearButtonLabel}
       onClick={handleClear}
+      size={size}
     />
   ) : (
     <ChevronIcon error={error} size={size} themeOverride={themeOverride} />
