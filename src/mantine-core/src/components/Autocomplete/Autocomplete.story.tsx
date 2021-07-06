@@ -26,6 +26,15 @@ storiesOf('@mantine/core/Autocomplete', module)
       />
     </div>
   ))
+  .add('Repetitive data', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Autocomplete
+        label="Choose your favorite library/framework"
+        placeholder="Choose value"
+        data={[{ value: 'AA' }, { value: 'AAA' }, { value: 'AAAA' }]}
+      />
+    </div>
+  ))
   .add('Dynamic data', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
       <DynamicData />

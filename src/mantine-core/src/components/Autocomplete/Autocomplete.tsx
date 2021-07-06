@@ -98,6 +98,7 @@ export function Autocomplete({
   onKeyDown,
   onFocus,
   onBlur,
+  onClick,
   transition = 'skew-up',
   transitionDuration = 0,
   initiallyOpened = false,
@@ -132,6 +133,7 @@ export function Autocomplete({
   const handleItemClick = (item: AutocompleteItem) => {
     typeof onItemSubmit === 'function' && onItemSubmit(item);
     handleChange(item.value);
+    setDropdownOpened(false);
     inputRef.current.focus();
   };
 
@@ -190,8 +192,12 @@ export function Autocomplete({
     setDropdownOpened(false);
   };
 
-  const shouldRenderDropdown =
-    dropdownOpened && filteredData.length > 0 && !data.some((item) => item.value === _value);
+  const handleInputClick = (event: any) => {
+    typeof onClick === 'function' && onClick(event);
+    setDropdownOpened(true);
+  };
+
+  const shouldRenderDropdown = dropdownOpened && filteredData.length > 1;
 
   return (
     <InputWrapper
@@ -237,6 +243,7 @@ export function Autocomplete({
           onChange={(event) => handleChange(event.currentTarget.value)}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
+          onClick={handleInputClick}
           aria-autocomplete="list"
           aria-controls={shouldRenderDropdown ? `${uuid}-items` : null}
           aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
