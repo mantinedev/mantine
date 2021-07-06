@@ -6,7 +6,7 @@ const BREAKPOINT = '@media (max-width: 600px)';
 export default createUseStyles(
   (theme) => ({
     wrapper: {
-      backgroundColor: theme.colors.blue[6],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[6],
 
       '& svg': {
         display: 'block',
