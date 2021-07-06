@@ -48,10 +48,24 @@ describe('@mantine/core/Autocomplete', () => {
   );
 
   it('does not render dropdown when value is exact same as any of items', () => {
-    const withExactValue = shallow(<Autocomplete data={data} value="2" initiallyOpened />);
+    const withExactValue = shallow(
+      <Autocomplete
+        data={[{ value: 'test-1' }, { value: 'test-2' }]}
+        value="test-2"
+        initiallyOpened
+      />
+    );
     const withoutExactValue = shallow(<Autocomplete data={data} value="" initiallyOpened />);
     expect(withExactValue.render().find('.mantine-autocomplete-dropdown')).toHaveLength(0);
     expect(withoutExactValue.render().find('.mantine-autocomplete-dropdown')).toHaveLength(1);
+  });
+
+  it('renders dropdown when value has both full match and partial match', () => {
+    const element = shallow(
+      <Autocomplete data={[{ value: 'AAA' }, { value: 'AA' }]} value="AA" initiallyOpened />
+    );
+
+    expect(element.render().find('.mantine-autocomplete-dropdown')).toHaveLength(1);
   });
 
   it('renders correct amount of items based on data prop', () => {
