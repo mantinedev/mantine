@@ -29,7 +29,7 @@ function Demo() {
         weekdayCell: {
           fontSize: theme.fontSizes.xl,
           backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
           border: \`1px solid \${
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
           }\`,
@@ -63,7 +63,7 @@ function Demo() {
           weekdayCell: {
             fontSize: theme.fontSizes.xl,
             backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
             border: `1px solid ${
               theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
             }`,
