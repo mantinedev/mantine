@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { useMergedRef } from '@mantine/hooks';
+import React from 'react';
+import { useBooleanToggle } from '@mantine/hooks';
 import { getSizeValue } from '../../theme';
 import type { InputStylesNames } from '../Input/Input';
 import type { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
@@ -20,8 +20,8 @@ export interface PasswordInputProps
   /** Title for visibility toggle button in visible state */
   hidePasswordLabel?: string;
 
-  /** Focus input when toggle button is pressed */
-  focusInputOnToggle?: boolean;
+  /** Toggle button tabIndex, set to 0 to make button focusable with tab key */
+  toggleTabIndex?: -1 | 0;
 }
 
 const buttonSizes = {
@@ -54,24 +54,26 @@ export function PasswordInput({
   hidePasswordLabel,
   showPasswordLabel,
   themeOverride,
-  focusInputOnToggle = false,
   elementRef,
   size = 'sm',
+  toggleTabIndex = -1,
   ...others
 }: PasswordInputProps) {
-  const inputRef = useRef<HTMLInputElement>();
-  const [reveal, setReveal] = useState(false);
-
-  const toggleReveal = () => {
-    setReveal((current) => !current);
-    if (focusInputOnToggle) {
-      inputRef.current.focus();
-    }
-  };
+  const [reveal, toggle] = useBooleanToggle(false);
 
   const rightSection = (
-    <ActionIcon
-      onClick={toggleReveal}
+    <ActionIcon<'button'>
+      onMouseDown={(event) => {
+        event.preventDefault();
+        toggle();
+      }}
+      onKeyDown={(event) => {
+        if (event.nativeEvent.code === 'Space') {
+          event.preventDefault();
+          toggle();
+        }
+      }}
+      tabIndex={toggleTabIndex}
       themeOverride={themeOverride}
       title={reveal ? hidePasswordLabel : showPasswordLabel}
       aria-label={reveal ? hidePasswordLabel : showPasswordLabel}
@@ -87,7 +89,6 @@ export function PasswordInput({
       {...others}
       disabled={disabled}
       themeOverride={themeOverride}
-      elementRef={useMergedRef(inputRef, elementRef)}
       type={reveal ? 'text' : 'password'}
       rightSection={disabled ? null : rightSection}
       rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}

@@ -1,37 +1,33 @@
 import React from 'react';
 import { PasswordInput } from '../PasswordInput';
-import { useMantineTheme } from '../../../index';
 
 const code = `
 <PasswordInput
-  label="Focus will be on button"
-  placeholder="Focus will be on button"
+  label="Toggle button is not focusable"
+  placeholder="Toggle button is not focusable"
 />
 
 <PasswordInput
-  focusInputOnToggle
-  label="Focus will move to input"
-  placeholder="Focus will move to input"
+  label="Toggle button is focusable"
+  placeholder="Toggle button is focusable"
+  toggleTabIndex={0}
 />
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
-
   return (
     <div style={{ maxWidth: 360, margin: 'auto' }}>
       <PasswordInput
-        label="Focus will be on button"
-        placeholder="Focus will be on button"
-        variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
+        label="Toggle button is not focusable"
+        placeholder="Toggle button is not focusable"
+        toggleTabIndex={-1}
       />
 
       <PasswordInput
-        focusInputOnToggle
-        label="Focus will move to input"
-        placeholder="Focus will move to input"
+        label="Toggle button is focusable"
+        placeholder="Toggle button is focusable"
+        toggleTabIndex={0}
         style={{ marginTop: 15 }}
-        variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
       />
     </div>
   );
