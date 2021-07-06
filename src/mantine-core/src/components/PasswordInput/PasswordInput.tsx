@@ -54,7 +54,6 @@ export function PasswordInput({
   hidePasswordLabel,
   showPasswordLabel,
   themeOverride,
-  elementRef,
   size = 'sm',
   toggleTabIndex = -1,
   ...others

@@ -52,8 +52,16 @@ describe('@mantine/core/PasswordInput', () => {
       <PasswordInput hidePasswordLabel="test-hide" showPasswordLabel="test-show" />
     );
     expect(getInput(element).prop('type')).toBe('password');
-    getActionIcon(element).simulate('click');
+    getActionIcon(element).simulate('mousedown', { preventDefault: jest.fn() });
     expect(getInput(element).prop('type')).toBe('text');
+  });
+
+  it('sets toggle button tabIndex based on toggleTabIndex prop', () => {
+    const focusable = shallow(<PasswordInput toggleTabIndex={0} />);
+    const notFocusable = shallow(<PasswordInput toggleTabIndex={-1} />);
+
+    expect(getActionIcon(focusable).prop('tabIndex')).toBe(0);
+    expect(getActionIcon(notFocusable).prop('tabIndex')).toBe(-1);
   });
 
   it('sets correct title and aria-label attributes on hide/show button based on state', () => {
@@ -64,7 +72,7 @@ describe('@mantine/core/PasswordInput', () => {
     expect(getActionIcon(element).prop('title')).toBe('test-show');
     expect(getActionIcon(element).prop('aria-label')).toBe('test-show');
 
-    getActionIcon(element).simulate('click');
+    getActionIcon(element).simulate('mousedown', { preventDefault: jest.fn() });
 
     expect(getActionIcon(element).prop('title')).toBe('test-hide');
     expect(getActionIcon(element).prop('aria-label')).toBe('test-hide');
