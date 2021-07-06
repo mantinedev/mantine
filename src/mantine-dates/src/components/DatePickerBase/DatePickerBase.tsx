@@ -157,6 +157,7 @@ export function DatePickerBase({
           <Input
             themeOverride={themeOverride}
             component="button"
+            type="button"
             classNames={classNames as any}
             styles={styles as any}
             onClick={() => setDropdownOpened(!dropdownOpened)}
