@@ -7,6 +7,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
 } from '@mantine/tests';
+import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { Select } from './Select';
@@ -114,6 +115,17 @@ describe('@mantine/core/Select', () => {
     expect(element.find(Input).prop('invalid')).toBe(true);
     expect(element.find(Input).prop('icon')).toBe('$');
     expect(element.find(Input).prop('radius')).toBe('sm');
+  });
+
+  it('clears value when clear button is clicked', () => {
+    const spy = jest.fn();
+    const element = shallow(
+      <Select {...defaultProps} initiallyOpened clearable value="test-1" onChange={spy} />
+    );
+    const clearButton = element.find(Input).dive().find(CloseButton);
+    expect(clearButton).toHaveLength(1);
+    clearButton.simulate('click');
+    expect(spy).toHaveBeenCalledWith(null);
   });
 
   it('has correct displayName', () => {

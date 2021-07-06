@@ -151,7 +151,7 @@ export function Select({
   const handleClear = () => {
     handleChange(null);
     setInputValue('');
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   useEffect(() => {
