@@ -33,6 +33,7 @@ describe('@mantine/core/Select', () => {
   checkAccessibility([
     mount(<Select {...defaultProps} />),
     mount(<Select {...defaultProps} initiallyOpened={false} />),
+    mount(<Select {...defaultProps} value="test-1" clearable clearButtonLabel="test-clear" />),
   ]);
 
   itSupportsStylesApi(
