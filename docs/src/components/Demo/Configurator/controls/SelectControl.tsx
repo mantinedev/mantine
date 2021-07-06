@@ -1,5 +1,5 @@
 import React from 'react';
-import { NativeSelect, useMantineTheme } from '@mantine/core';
+import { NativeSelect } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 
 interface SelectControlProps {
@@ -18,8 +18,6 @@ export function SelectControl({
   capitalize: capitalizeItems = true,
   ...others
 }: SelectControlProps) {
-  const theme = useMantineTheme();
-
   return (
     <NativeSelect
       data={data.map((item) => ({
@@ -29,7 +27,6 @@ export function SelectControl({
       value={value}
       label={upperFirst(label)}
       onChange={(event) => onChange(event.currentTarget.value)}
-      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
       {...others}
     />
   );

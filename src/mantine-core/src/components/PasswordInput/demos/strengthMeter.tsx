@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
-import { PasswordInput, Progress, Text, Popover, useMantineTheme } from '../../../index';
+import { PasswordInput, Progress, Text, Popover } from '../../../index';
 
 const code = `
 import React, { useState } from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
-import { PasswordInput, Progress, Text, Popover, useMantineTheme } from '@mantine/core';
+import { PasswordInput, Progress, Text, Popover } from '@mantine/core';
 
 function PasswordRequirement({ meets, label }: { meets: boolean; label: string }) {
   return (
@@ -39,7 +39,6 @@ function getStrength(password: string) {
 }
 
 export function PasswordStrength() {
-  const theme = useMantineTheme();
   const [popoverOpened, setPopoverOpened] = useState(false);
   const [value, setValue] = useState('');
   const checks = requirements.map((requirement, index) => (
@@ -68,7 +67,6 @@ export function PasswordStrength() {
           description="Strong password should include letters in lower and uppercase, at least 1 number, at least 1 special symbol"
           value={value}
           onChange={(event) => setValue(event.currentTarget.value)}
-          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
         />
       }
     >
@@ -112,7 +110,6 @@ function getStrength(password: string) {
 }
 
 function Demo() {
-  const theme = useMantineTheme();
   const [popoverOpened, setPopoverOpened] = useState(false);
   const [value, setValue] = useState('');
   const checks = requirements.map((requirement, index) => (
@@ -142,7 +139,6 @@ function Demo() {
             description="Strong password should include letters in lower and uppercase, at least 1 number, at least 1 special symbol"
             value={value}
             onChange={(event) => setValue(event.currentTarget.value)}
-            variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
           />
         }
       >

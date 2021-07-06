@@ -1,16 +1,11 @@
 import React from 'react';
-import { InputWrapper, InputWrapperProps, Input, useMantineTheme } from '../../../index';
+import { InputWrapper, InputWrapperProps, Input } from '../../../index';
 
 function Wrapper(props: InputWrapperProps) {
-  const theme = useMantineTheme();
   return (
     <div style={{ maxWidth: 300, margin: 'auto' }}>
       <InputWrapper id="input-demo" {...props}>
-        <Input
-          id="input-demo"
-          placeholder="Your email"
-          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
-        />
+        <Input id="input-demo" placeholder="Your email" />
       </InputWrapper>
     </div>
   );

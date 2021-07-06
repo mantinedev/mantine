@@ -88,7 +88,6 @@ export function UseFormServerValidationDemo() {
             placeholder="your@email.com"
             error={form.errors.email && (serverError || 'Please specify valid email')}
             value={form.values.email}
-            variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
             onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
             onFocus={() => {
               setServerError(null);

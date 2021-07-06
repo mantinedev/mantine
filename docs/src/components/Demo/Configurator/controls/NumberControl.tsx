@@ -1,5 +1,5 @@
 import React from 'react';
-import { NumberInput, useMantineTheme } from '@mantine/core';
+import { NumberInput } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 
 interface NumberControlProps {
@@ -9,8 +9,6 @@ interface NumberControlProps {
 }
 
 export function NumberControl({ value, label, onChange, ...others }: NumberControlProps) {
-  const theme = useMantineTheme();
-
   return (
     <NumberInput
       {...others}
@@ -18,7 +16,6 @@ export function NumberControl({ value, label, onChange, ...others }: NumberContr
       label={upperFirst(label)}
       value={value}
       onChange={onChange}
-      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
     />
   );
 }

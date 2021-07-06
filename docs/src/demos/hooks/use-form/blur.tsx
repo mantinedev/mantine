@@ -52,7 +52,6 @@ export function UseFormBlurValidateDemo() {
           value={form.values.email}
           onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
           onBlur={() => form.validateField('email')}
-          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
         />
       </div>
     </CodeDemo>

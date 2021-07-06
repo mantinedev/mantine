@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, useMantineTheme } from '@mantine/core';
+import { TextInput } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 
 interface StringControlProps {
@@ -9,8 +9,6 @@ interface StringControlProps {
 }
 
 export function StringControl({ value, label, onChange, ...others }: StringControlProps) {
-  const theme = useMantineTheme();
-
   return (
     <TextInput
       {...others}
@@ -18,7 +16,6 @@ export function StringControl({ value, label, onChange, ...others }: StringContr
       placeholder={upperFirst(label)}
       value={value}
       onChange={(event) => onChange(event.currentTarget.value)}
-      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
     />
   );
 }

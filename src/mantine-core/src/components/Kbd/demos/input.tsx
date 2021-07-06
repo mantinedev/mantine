@@ -1,15 +1,13 @@
 import React from 'react';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
-import { Kbd, TextInput, useMantineTheme } from '../../../index';
+import { Kbd, TextInput } from '../../../index';
 
 const code = `
 import React from 'react';
-import { Kbd, TextInput, useMantineTheme } from '@mantine/core';
+import { Kbd, TextInput } from '@mantine/core';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 
 function Demo() {
-  const theme = useMantineTheme();
-
   const rightSection = (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <Kbd>Ctrl</Kbd>
@@ -25,15 +23,12 @@ function Demo() {
       rightSectionWidth={90}
       rightSection={rightSection}
       styles={{ rightSection: { pointerEvents: 'none' } }}
-      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
     />
   );
 }
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
-
   const rightSection = (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <Kbd>Ctrl</Kbd>
@@ -49,7 +44,6 @@ function Demo() {
       rightSectionWidth={90}
       rightSection={rightSection}
       styles={{ rightSection: { pointerEvents: 'none' } }}
-      variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
     />
   );
 }

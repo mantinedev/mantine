@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useMantineTheme } from '@mantine/core';
 import { JsonInput } from './JsonInput';
 import CodeDemo from '../../../components/Demo/CodeDemo/CodeDemo';
 
@@ -8,7 +7,6 @@ import CodeDemo from '../../../components/Demo/CodeDemo/CodeDemo';
 import code from '!!raw-loader!./JsonInput.tsx';
 
 export function JsonInputDemo() {
-  const theme = useMantineTheme();
   const [value, setValue] = useState('');
 
   return (
@@ -19,7 +17,6 @@ export function JsonInputDemo() {
           placeholder="Your package.json"
           value={value}
           onChange={setValue}
-          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
         />
       </div>
     </CodeDemo>

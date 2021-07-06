@@ -1,5 +1,5 @@
 import React from 'react';
-import { NumberInput, useMantineTheme } from '../../../index';
+import { NumberInput } from '../../../index';
 
 const code = `
 <NumberInput
@@ -21,9 +21,6 @@ const code = `
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
-  const variant = theme.colorScheme === 'dark' ? 'filled' : 'default';
-
   return (
     <div style={{ maxWidth: 420, margin: 'auto' }}>
       <NumberInput
@@ -32,7 +29,6 @@ function Demo() {
         placeholder="Your age"
         max={120}
         min={0}
-        variant={variant}
       />
       <NumberInput
         style={{ marginTop: 15 }}
@@ -41,7 +37,6 @@ function Demo() {
         defaultValue={80}
         step={5}
         min={0}
-        variant={variant}
       />
     </div>
   );

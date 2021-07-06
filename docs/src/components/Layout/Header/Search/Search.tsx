@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { navigate } from 'gatsby';
-import { TextInput, Kbd, Text, Paper, Highlight, useMantineTheme } from '@mantine/core';
+import { TextInput, Kbd, Text, Paper, Highlight } from '@mantine/core';
 import { useClickOutside, useWindowEvent, upperFirst } from '@mantine/hooks';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { getDocsData } from '../../get-docs-data';
@@ -39,7 +39,6 @@ function filterData(query: string, data: ReturnType<typeof getDocsData>) {
 }
 
 export default function Search({ data, isMacOS }: SearchProps) {
-  const theme = useMantineTheme();
   const classes = useStyles();
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(0);
@@ -128,7 +127,6 @@ export default function Search({ data, isMacOS }: SearchProps) {
         styles={{ rightSection: { pointerEvents: 'none' } }}
         onFocus={() => setDropdownOpened(true)}
         onKeyDown={handleInputKeydown}
-        variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
       />
 
       {dropdownOpened && (

@@ -21,7 +21,6 @@ export function ColorInputDemo() {
           placeholder="Pick color"
           value={value}
           onChange={setValue}
-          variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
         />
       </div>
     </CodeDemo>

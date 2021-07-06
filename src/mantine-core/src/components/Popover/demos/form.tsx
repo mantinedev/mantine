@@ -36,7 +36,6 @@ interface UserEditFormProps {
 function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) {
   const isMobile = useMediaQuery('(max-width: 755px');
   const theme = useMantineTheme();
-  const inputVariant = theme.colorScheme === 'dark' ? 'filled' : 'default';
   const inputStyles = {
     input: { backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }
   };
@@ -59,7 +58,6 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         value={form.values.name}
         onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
         error={form.errors.name}
-        variant={inputVariant}
         styles={inputStyles}
       />
 
@@ -71,7 +69,6 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         value={form.values.email}
         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
         error={form.errors.email}
-        variant={inputVariant}
         styles={inputStyles}
       />
 
@@ -164,7 +161,6 @@ interface UserEditFormProps {
 function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) {
   const isMobile = useMediaQuery('(max-width: 755px');
   const theme = useMantineTheme();
-  const inputVariant = theme.colorScheme === 'dark' ? 'filled' : 'default';
   const inputStyles = {
     input: { backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] },
   };
@@ -188,7 +184,6 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         value={form.values.name}
         onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
         error={form.errors.name}
-        variant={inputVariant}
         styles={inputStyles}
       />
 
@@ -200,7 +195,6 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         value={form.values.email}
         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
         error={form.errors.email}
-        variant={inputVariant}
         styles={inputStyles}
       />
 

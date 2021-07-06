@@ -65,7 +65,6 @@ function Demo() {
         min={0}
         step={2}
         styles={{ input: { width: 54, textAlign: 'center' } }}
-        variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
       />
       <ActionIcon
         size={42}
