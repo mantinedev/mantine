@@ -20,14 +20,19 @@ function Controlled() {
   const [value, setValue] = useState(null);
 
   return (
-    <Select
-      label="Controlled"
-      placeholder="Controlled"
-      value={value}
-      onChange={setValue}
-      data={data}
-      style={{ marginTop: 30 }}
-    />
+    <div>
+      <Select
+        label="Controlled"
+        placeholder="Controlled"
+        value={value}
+        onChange={setValue}
+        data={data}
+        style={{ marginTop: 30 }}
+      />
+      <button type="button" onClick={() => setValue('react')}>
+        Fill value
+      </button>
+    </div>
   );
 }
 

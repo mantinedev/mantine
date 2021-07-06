@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize, mergeStyles, getSizeValue } from '../../theme';
@@ -138,6 +138,13 @@ export function Select({
 
   const selectedValue = data.find((item) => item.value === _value);
   const [inputValue, setInputValue] = useState(selectedValue?.label || '');
+
+  useEffect(() => {
+    const newSelectedValue = data.find((item) => item.value === value);
+    if (newSelectedValue) {
+      setInputValue(newSelectedValue.label);
+    }
+  }, [value]);
 
   const handleItemSelect = (item: SelectItem) => {
     handleChange(item.value);
