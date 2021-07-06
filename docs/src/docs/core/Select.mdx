@@ -44,6 +44,13 @@ Set `searchable` prop to enable search in select and `nothingFound` prop to prov
 
 <Demo data={SelectDemos.searchable} />
 
+## Clearable
+
+Set `clearable` prop to enable clearing select value.
+When prop is true and value is selected clear button will replace chevron in right section:
+
+<Demo data={SelectDemos.clearable} />
+
 ## Large data set
 
 When dropdown height is exceeded dropdown becomes scrollable, to change max-height set `maxDropdownHeight` prop with value in px:
@@ -131,4 +138,10 @@ Provide `aria-label` in case you use component without label for screen reader s
 <Select label="My select" />; // -> ok, select and label is connected
 <Select />; // not ok, select is not labeled
 <Select aria-label="My select" />; // -> ok, label is not visible but will be announced by screen reader
+```
+
+If you use `clearable` option set `clearButtonLabel`:
+
+```tsx
+<Select clearable clearButtonLabel="Clear select field" />
 ```
