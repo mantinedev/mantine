@@ -239,6 +239,7 @@ export function Demo() {
   const [values, setValues] = useState({ name: 'Bob Handsome', email: 'bob@handsome.inc' });
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
+  const isMobile = useMediaQuery('(max-width: 510px');
 
   return (
     <Group position="center">
@@ -248,7 +249,7 @@ export function Demo() {
         opened={opened}
         onClose={() => setOpened(false)}
         position="bottom"
-        placement="end"
+        placement={isMobile ? 'center' : 'end'}
         withArrow
         withCloseButton
         title="Edit user"
