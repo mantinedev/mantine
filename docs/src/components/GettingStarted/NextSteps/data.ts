@@ -23,8 +23,8 @@ export const NEXT_STEPS_DATA = [
     title: 'Explore source code',
     description:
       'Mantine packages and documentation website is open source, if you like Mantine please give us a star',
-    link: '/theming/styles-api/',
-    type: 'gatsby',
+    link: 'https://github.com/mantinedev/mantine',
+    type: 'link',
     icon: MarkGithubIcon,
     color: '#000',
   },
