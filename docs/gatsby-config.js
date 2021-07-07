@@ -16,14 +16,6 @@ module.exports = {
     'gatsby-plugin-tsconfig-paths',
     'gatsby-plugin-react-helmet',
     {
-      resolve: 'gatsby-plugin-web-font-loader',
-      options: {
-        google: {
-          families: ['Dosis:800'],
-        },
-      },
-    },
-    {
       resolve: 'gatsby-plugin-layout',
       options: {
         component: `${__dirname}/src/components/Layout/Layout`,
