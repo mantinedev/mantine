@@ -6012,13 +6012,6 @@ gatsby-plugin-cname@^1.0.0:
   resolved "https://registry.yarnpkg.com/gatsby-plugin-cname/-/gatsby-plugin-cname-1.0.0.tgz#5752d006c476a3c7897fca5c307901df5501747a"
   integrity sha512-U0yRgn4cm1zBi+qC5a827acPFnUqKSowoCvAxT3MDmMJVLSWB4vmSyM7m6ThVz35obO4nKr4iP4vZhvA7gEVsA==
 
-gatsby-plugin-jss@^3.8.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-jss/-/gatsby-plugin-jss-3.8.0.tgz#f1d50c6e4360d49237cea8d7d60430ee38d2ad78"
-  integrity sha512-LRy4sPLwEaQSnNeGLgyomYKBXB/ta6X+IW8DDYf5h1t6mAm7GQOxOWX3EszLmpnUb8Wy8GYHcYYflSe1r2Pb8g==
-  dependencies:
-    "@babel/runtime" "^7.14.0"
-
 gatsby-plugin-layout@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-layout/-/gatsby-plugin-layout-2.6.0.tgz#5194124b6b81921b60d87e85ffac4490ff19464a"

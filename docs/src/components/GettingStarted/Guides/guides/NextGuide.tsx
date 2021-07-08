@@ -10,11 +10,10 @@ interface CraGuideProps {
 
 const appCode = `
 import { useEffect } from "react";
-import { JssProvider } from "react-jss";
+import { JssProvider, createGenerateId } from "react-jss";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider, NormalizeCSS, GlobalStyles } from "@mantine/core";
-import { createGenerateId } from "jss";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
