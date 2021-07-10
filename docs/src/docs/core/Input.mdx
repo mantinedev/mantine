@@ -13,6 +13,7 @@ docs: 'core/Input.mdx'
 styles: ['Input']
 ---
 
+import { INPUT_SIZES } from '@mantine/core';
 import { InputDemos, ActionIconDemos, KbdDemos } from '@demos/core';
 
 ## Usage
@@ -53,6 +54,23 @@ Or you can add keyboard shortcut like in search on Mantine docs website:
 Right section with <GatsbyLink to="/core/tooltip/">Tooltip</GatsbyLink>:
 
 <Demo data={InputDemos.tooltip} />
+
+## Sizes
+
+Component has 5 premade sizes: xs, sm, md, lg, xl, use `size` prop to control input height, padding and font-size:
+
+<Demo data={InputDemos.sizes} />
+
+You can get predefined input heights by importing `INPUT_SIZES`:
+
+```tsx
+import { INPUT_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Size', 'Input height']}
+  data={Object.keys(INPUT_SIZES).map((size) => [size, `${INPUT_SIZES[size]}px`])}
+/>
 
 ## Custom component
 
