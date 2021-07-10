@@ -359,6 +359,7 @@ export function Select({
               shadow={shadow}
               elementRef={dropdownRef}
               style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
+              onMouseDown={(event) => event.preventDefault()}
             >
               {items.length > 0 ? (
                 items
