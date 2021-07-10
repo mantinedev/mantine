@@ -176,6 +176,7 @@ export function Autocomplete({
         if (filteredData[hovered]) {
           event.preventDefault();
           typeof onItemSubmit === 'function' && onItemSubmit(filteredData[hovered]);
+          setDropdownOpened(false);
           handleChange(filteredData[hovered].value);
         }
       }
@@ -197,7 +198,7 @@ export function Autocomplete({
     setDropdownOpened(true);
   };
 
-  const shouldRenderDropdown = dropdownOpened && filteredData.length > 1;
+  const shouldRenderDropdown = dropdownOpened && filteredData.length > 0;
 
   return (
     <InputWrapper
@@ -240,7 +241,10 @@ export function Autocomplete({
           styles={styles as any}
           __staticSelector="autocomplete"
           value={_value}
-          onChange={(event) => handleChange(event.currentTarget.value)}
+          onChange={(event) => {
+            handleChange(event.currentTarget.value);
+            setDropdownOpened(true);
+          }}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           onClick={handleInputClick}
