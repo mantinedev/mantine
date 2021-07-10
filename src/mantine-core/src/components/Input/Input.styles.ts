@@ -32,10 +32,11 @@ export default createMemoStyles({
     '&, & *': { boxSizing: 'border-box' },
   }),
 
-  default: ({ theme, radius, size }: InputStyles) => ({
+  default: ({ theme, radius, size, multiline }: InputStyles) => ({
     '& $input': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       minHeight: getSizeValue({ size, sizes }),
+      height: multiline ? 'auto' : getSizeValue({ size, sizes }),
       paddingLeft: getSizeValue({ size, sizes }) / 3,
       paddingRight: getSizeValue({ size, sizes }) / 3,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
@@ -64,9 +65,10 @@ export default createMemoStyles({
     },
   }),
 
-  filled: ({ theme, radius, size }: InputStyles) => ({
+  filled: ({ theme, radius, size, multiline }: InputStyles) => ({
     '& $input': {
       minHeight: getSizeValue({ size, sizes }),
+      height: multiline ? 'auto' : getSizeValue({ size, sizes }),
       paddingLeft: getSizeValue({ size, sizes }) / 3,
       paddingRight: getSizeValue({ size, sizes }) / 3,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
