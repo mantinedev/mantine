@@ -38,6 +38,16 @@ function Demo() {
 }
 ```
 
+Note that Select value should always be either **string** or **null**:
+
+```tsx
+// Incorrect, will have bugs
+<Select data={[{ value: 1, label: '1' }]} value={1} />
+
+// Correct, works as expected
+<Select data={[{ value: '1', label: '1' }]} value="1" />
+```
+
 ## Searchable
 
 Set `searchable` prop to enable search in select and `nothingFound` prop to provide label that will be shown when no options were found:
