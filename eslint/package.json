@@ -1,6 +1,6 @@
 {
   "name": "@mantine/eslint-config",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "main": "eslint.config.js",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
@@ -12,6 +12,8 @@
     "directory": "src/mantine-hooks"
   },
   "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
     "eslint": "^7.27.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.23.4",
