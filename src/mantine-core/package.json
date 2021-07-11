@@ -1,7 +1,7 @@
 {
   "name": "@mantine/core",
   "description": "React components library focused on usability, accessibility and developer experience",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "browser": "lib/index.umd.js",
@@ -16,7 +16,7 @@
     "directory": "src/mantine-core"
   },
   "peerDependencies": {
-    "@mantine/hooks": "2.0.2",
+    "@mantine/hooks": "2.0.3",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "react-jss": ">=10.1.1"
