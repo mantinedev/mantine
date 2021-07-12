@@ -1,0 +1,77 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'dom'
+title: 'use-intersection'
+order: 1
+slug: /hooks/use-intersection/
+description: 'A IntersectionObserver hook'
+import: "import { useIntersection } from '@mantine/hooks';"
+docs: 'hooks/use-intersection.mdx'
+source: 'mantine-hooks/src/use-intersection/use-intersection.ts'
+---
+
+import { UseIntersectionSimpleDemo, UseIntersectionContainedDemo } from '@docs/demos';
+
+## Usage
+
+Use use-intersection to expose the functionality of `IntersectionObserver` as a hook.
+
+```tsx
+import { useIntersection } from '@mantine/hooks';
+
+function Component() {
+  const [ref, ioEntry] = useIntersection({
+    rootMargin: '-20px',
+  });
+
+  return <div ref={ref}>Text</div>;
+}
+```
+
+## API
+
+Hook accepts `IntersectionObserver`'s options as its only argument. The argument is optional.
+
+```tsx
+useIntersection({
+  root: someDomElement,
+  rootMargin: '0px',
+  threshold: 1.0,
+});
+```
+
+Hook returns the ref that should be passed to the observed element, and the latest entry, as returned by `IntersectionObserver`'s callback.
+
+On the first render (as well as during SSR), or when no element is being observed, the entry is `null`.
+
+```tsx
+const [ref, ioEntry] = useIntersection();
+
+// With regular element:
+<div ref={ref}>Observed</div>
+
+// With Mantine component:
+<Paper elementRef={ref}>Observed</Paper>
+```
+
+## SSR
+
+During the SSR pass, the entry returned will be `null`.
+
+## Definition
+
+```tsx
+function useIntersection<T extends HTMLElement = any>(
+  options?: ConstructorParameters<typeof IntersectionObserver>[1]
+): readonly [(element: T) => void, IntersectionObserverEntry | null];
+```
+
+
+## Demo
+
+<Demo data={UseIntersectionSimpleDemo} />
+
+Inside a scrollable container (scroll down):
+
+<Demo data={UseIntersectionContainedDemo} />

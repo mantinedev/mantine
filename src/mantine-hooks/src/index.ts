@@ -23,3 +23,4 @@ export { useToggle, useBooleanToggle } from './use-toggle/use-toggle';
 export { useUncontrolled } from './use-uncontrolled/use-uncontrolled';
 export { useWindowEvent } from './use-window-event/use-window-event';
 export { useWindowScroll } from './use-window-scroll/use-window-scroll';
+export { useIntersection } from './use-intersection/use-intersection';
