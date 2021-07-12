@@ -4,30 +4,23 @@ import { Text, Paper, Center } from '@mantine/core';
 
 const code = `
 import { useIntersection } from '@mantine/hooks';
-import { Text, Paper, Center } from '@mantine/core';
+import { Paper, Center, Text } from '@mantine/core';
 
 function Demo() {
   const containerRef = useRef();
   const [ref, ioEntry] = useIntersection({
     root: containerRef.current,
-    threshold: 1,
+    threshold: 1
   });
 
   return (
-    <Paper elementRef={containerRef} style={{ overflowY: 'scroll', height: '300px' }}>
+    <div ref={containerRef} style={{ overflowY: 'scroll', height: '300px' }}>
       <Center style={{ height: '900px' }}>
-        <Paper
-          elementRef={ref}
-          padding={18}
-          style={{
-            backgroundColor: ioEntry?.isIntersecting ? '#a0ea93' : '#f19090',
-            minWidth: '50%',
-          }}
-        >
+        <Paper elementRef={ref}>
           <Text>{ioEntry?.isIntersecting ? 'Fully visible' : 'Obscured'}</Text>
         </Paper>
       </Center>
-    </Paper>
+    </div>
   );
 }
 `;
