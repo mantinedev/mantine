@@ -40,7 +40,7 @@ export default createUseStyles(
     },
 
     description: {
-      minHeight: 80,
+      minHeight: 60,
     },
 
     cards: {
@@ -49,7 +49,7 @@ export default createUseStyles(
 
     card: {
       boxSizing: 'border-box',
-      flex: `0 0 calc(33.333333% - ${theme.spacing.md}px)`,
+      flex: `0 0 calc(50% - ${theme.spacing.md}px)`,
       borderRadius: theme.radius.sm,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       border: `1px solid ${theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[2]}`,

@@ -1,6 +1,14 @@
-import { ReaderIcon, ChatBubbleIcon, TwitterLogoIcon } from '@modulz/radix-icons';
+import { ReaderIcon, ChatBubbleIcon, TwitterLogoIcon, GitHubLogoIcon } from '@modulz/radix-icons';
 
 export const CONTRIBUTE_DATA = [
+  {
+    title: 'Contribute to codebase',
+    color: 'dark',
+    icon: GitHubLogoIcon,
+    description: 'Find task in roadmap that is interesting to you and implement it',
+    link: 'https://trello.com/b/e1AT7w4M/mantine-roadmap',
+    linkLabel: 'Start contributing',
+  },
   {
     title: 'Give feedback',
     icon: ChatBubbleIcon,
