@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
 export function useIntersection(
-  options: ConstructorParameters<typeof IntersectionObserver>[1]
+  options?: ConstructorParameters<typeof IntersectionObserver>[1]
 ) {
   const [latestEntry, setLatestEntry] = useState<null | IntersectionObserverEntry>(null);
 
