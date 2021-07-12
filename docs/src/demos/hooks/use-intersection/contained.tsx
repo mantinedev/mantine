@@ -37,7 +37,7 @@ function Demo() {
       <Center style={{ height: '900px' }}>
         <Paper
           elementRef={ref}
-          padding={18}
+          padding={30}
           style={{
             backgroundColor: ioEntry?.isIntersecting ? '#a0ea93' : '#f19090',
             minWidth: '50%',
