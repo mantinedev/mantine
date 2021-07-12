@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntersection } from '@mantine/hooks';
-import { Text, Group } from '@mantine/core';
+import { Text, Group, Paper } from '@mantine/core';
 
 const code = `
 import { useIntersection } from '@mantine/hooks';
@@ -8,7 +8,7 @@ import { Text, Group } from '@mantine/core';
 
 function Demo() {
   const [ref, ioEntry] = useIntersection({
-    rootMargin: '-300px',
+    rootMargin: '0px 0px -300px 0px',
   });
 
   return (
@@ -23,7 +23,7 @@ function Demo() {
 
 function Demo() {
   const [ref, ioEntry] = useIntersection({
-    rootMargin: '-300px',
+    rootMargin: '0px 0px -300px 0px',
   });
 
   return (
