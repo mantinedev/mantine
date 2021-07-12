@@ -1,14 +1,19 @@
 import { useCallback, useRef, useState } from 'react';
 
-export function useIntersection(options?: ConstructorParameters<typeof IntersectionObserver>[1]) {
+export function useIntersection<T extends HTMLElement = any>(
+  options?: ConstructorParameters<typeof IntersectionObserver>[1]
+) {
   const [latestEntry, setLatestEntry] = useState<null | IntersectionObserverEntry>(null);
 
   const ioRef = useRef<IntersectionObserver>();
 
   const refCallback = useCallback(
-    (element: HTMLElement | null) => {
+    (element: T | null) => {
       if (ioRef.current) ioRef.current.disconnect();
-      if (element === null) return;
+      if (element === null) {
+        setLatestEntry(null);
+        return;
+      }
 
       ioRef.current = new IntersectionObserver(([entry]) => {
         /* The hook supports observing just one element */
