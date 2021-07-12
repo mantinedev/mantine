@@ -9,7 +9,11 @@ export function useIntersection<T extends HTMLElement = any>(
 
   const refCallback = useCallback(
     (element: T | null) => {
-      if (ioRef.current) ioRef.current.disconnect();
+      if (ioRef.current) {
+        ioRef.current.disconnect();
+        ioRef.current = null;
+      }
+
       if (element === null) {
         setLatestEntry(null);
         return;
