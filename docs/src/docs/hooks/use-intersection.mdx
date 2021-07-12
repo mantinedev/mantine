@@ -11,7 +11,7 @@ docs: 'hooks/use-intersection.mdx'
 source: 'mantine-hooks/src/use-intersection/use-intersection.ts'
 ---
 
-import { useIntersectionHook } from '@docs/demos';
+import { UseIntersectionSimpleDemo, UseIntersectionContainedDemo } from '@docs/demos';
 
 ## Usage
 
@@ -59,7 +59,19 @@ const [ref, ioEntry] = useIntersection();
 
 During the SSR pass, the entry returned will be `null`.
 
+## Definition
+
+```tsx
+function useIntersection<T extends HTMLElement = any>(
+  options?: ConstructorParameters<typeof IntersectionObserver>[1]
+): readonly [(element: T) => void, IntersectionObserverEntry | null];
+```
+
 
 ## Demo
 
-<Demo data={useIntersectionHook} />
+<Demo data={UseIntersectionSimpleDemo} />
+
+Inside a scrollable container:
+
+<Demo data={UseIntersectionContainedDemo} />

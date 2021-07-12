@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 
 export function useIntersection<T extends HTMLElement = any>(
   options?: ConstructorParameters<typeof IntersectionObserver>[1]
-) {
+): readonly [(element: T) => void, IntersectionObserverEntry | null] {
   const [latestEntry, setLatestEntry] = useState<null | IntersectionObserverEntry>(null);
 
   const ioRef = useRef<IntersectionObserver>();

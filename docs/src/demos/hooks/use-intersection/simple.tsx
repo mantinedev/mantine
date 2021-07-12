@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntersection } from '@mantine/hooks';
-import { Text, Group, Paper } from '@mantine/core';
+import { Text, Group } from '@mantine/core';
 
 const code = `
 import { useIntersection } from '@mantine/hooks';
@@ -35,7 +35,7 @@ function Demo() {
   );
 }
 
-export const useIntersectionHook: MantineDemo = {
+export const UseIntersectionSimpleDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,
