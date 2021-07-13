@@ -48,6 +48,7 @@ storiesOf('@mantine/core/Select', module)
         searchable
         label="Choose your favorite library/framework"
         placeholder="Choose value"
+        limit={2}
         data={data}
         style={{ marginTop: 20 }}
         nothingFound="No options"

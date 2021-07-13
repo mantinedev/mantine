@@ -87,6 +87,9 @@ export interface SelectProps
 
   /** aria-label for clear button */
   clearButtonLabel?: string;
+
+  /** Limit amount of items displayed at a time for searchable select */
+  limit?: number;
 }
 
 function defaultFilter(value: string, item: SelectItem) {
@@ -126,6 +129,7 @@ export function Select({
   clearable = false,
   nothingFound,
   clearButtonLabel,
+  limit = Infinity,
   ...others
 }: SelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -170,7 +174,9 @@ export function Select({
   };
 
   const shouldFilter = searchable && data.every((item) => item.label !== inputValue);
-  const filteredData = shouldFilter ? data.filter((item) => filter(inputValue, item)) : data;
+  const filteredData = shouldFilter
+    ? data.filter((item) => filter(inputValue, item)).slice(0, limit)
+    : data;
 
   const items = filteredData.map((item, index) => (
     <Item
