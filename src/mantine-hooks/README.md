@@ -26,7 +26,7 @@ npm install @mantine/hooks
 - [use-color-scheme](https://mantine.dev/hooks/use-color-scheme/) – detect system color scheme
 - [use-debounced-value](https://mantine.dev/hooks/use-debounced-value/) – - debounce value with useEffect
 - [use-document-title](https://mantine.dev/hooks/use-document-title/) - set document.title property
-- [use-focus-tap](https://mantine.dev/hooks/use-focus-tap/) – trap focus at given node
+- [use-focus-trap](https://mantine.dev/hooks/use-focus-trap/) – trap focus at given node
 - [use-form](https://mantine.dev/hooks/use-form/) – bare minimum form state management
 - [use-id](https://mantine.dev/hooks/use-id/) – ensure id for form controls binding
 - [use-list-state](https://mantine.dev/hooks/use-list-state/) – hook for convenient array state management
@@ -36,6 +36,13 @@ npm install @mantine/hooks
 - [use-reduced-motion](https://mantine.dev/hooks/use-reduced-motion/) – check if user prefers to reduce motion
 - [use-scroll-lock](https://mantine.dev/hooks/use-scroll-lock/) – lock document.body scroll at current position
 - [use-window-event](https://mantine.dev/hooks/use-window-event/) – adds event listener to window object on component mount and removes it on unmount
+- [use-window-scroll](https://mantine.dev/hooks/use-window-scroll/) – subscribe to window scroll and scroll smoothly to given position
+- [use-toggle](https://mantine.dev/hooks/use-toggle/) – switch between two states
+- [use-uncontrolled](https://mantine.dev/hooks/use-uncontrolled/) – manage state of both controlled and uncontrolled components
+- [use-interval](https://mantine.dev/hooks/use-interval/) – wrapper around `window.setInterval`
+- [use-force-update](https://mantine.dev/hooks/use-force-update/) – force component to render without state change
+- [use-did-update](https://mantine.dev/hooks/use-did-update/) – call function in useEffect when value changes, but not when component mounts
+- [use-isomorphic-effect](https://mantine.dev/hooks/use-isomorphic-effect/) – switch between useEffect during SSR and useLayoutEffect after hydration
 
 ## Licence
 
