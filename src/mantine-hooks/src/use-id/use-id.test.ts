@@ -13,7 +13,7 @@ describe('@mantine/hooks/use-id', () => {
   });
 
   it('returns generated id if id was not provided', () => {
-    const hook = renderHook(() => useId(undefined, () => 'test-id'));
+    const hook = renderHook(() => useId(null, () => 'test-id'));
     expect(hook.result.current).toBe('test-id');
   });
 });
