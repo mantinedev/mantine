@@ -21,7 +21,7 @@ export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCat
   React.useEffect(() => {
     if (activeCoreItemRef.current) {
       activeCoreItemRef.current.scrollIntoView({
-        behavior: 'smooth',
+        behavior: 'auto',
         inline: 'center',
         block: 'center',
       });
