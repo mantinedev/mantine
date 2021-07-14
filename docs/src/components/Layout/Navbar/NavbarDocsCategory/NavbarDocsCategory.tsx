@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'gatsby';
 import cx from 'clsx';
 import { ChevronDownIcon } from '@modulz/radix-icons';
 import { Text } from '@mantine/core';
+import { useLocation } from '@reach/router';
 import { getDocsData } from '../../get-docs-data';
 import useStyles from './NavbarDocsCategory.styles';
 
@@ -14,7 +15,18 @@ interface NavbarDocsCategoryProps {
 export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCategoryProps) {
   const classes = useStyles();
   const [collapsed, setCollapsed] = useState(false);
+  const activeCoreItemRef = useRef(null);
+  const location = useLocation();
 
+  React.useEffect(() => {
+    if (activeCoreItemRef.current) {
+      activeCoreItemRef.current.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'center',
+      });
+    }
+  }, [activeCoreItemRef.current]);
   const uncategorized = group.uncategorized.map((link) => (
     <Link
       key={link.slug}
@@ -40,6 +52,7 @@ export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCat
             activeClassName={classes.linkActive}
             to={link.slug}
             onClick={onLinkClick}
+            ref={location.pathname === link.slug ? activeCoreItemRef : null}
           >
             {link.title}
           </Link>
