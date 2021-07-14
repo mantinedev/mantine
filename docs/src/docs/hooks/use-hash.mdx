@@ -1,0 +1,31 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'state'
+title: 'use-hash'
+order: 1
+slug: /hooks/use-hash/
+description: 'Manipulating hash value in URL'
+import: "import { useHash } from '@mantine/hooks';"
+docs: 'hooks/use-hash.mdx'
+source: 'mantine-hooks/src/use-hash/use-hash.ts'
+---
+
+import { useHash } from '@mantine/hooks';
+
+## Usage
+
+use-hash returns an array of two values `[hash,setHash]`. `hash` is the current hash value in the url.
+It will be `null` if the execution is server-side. `setHash` is a function that will take a string as a parameter and updates the hash value.
+
+```tsx
+import { useHash } from '@mantine/hooks';
+
+function App() {
+  const [hash, setHash] = useHash();
+
+  // The below line updates the hash value
+  // NOTE: '#' symbol is not required ONLY the string value must be passed as below
+  setHash('section-2'); // updates link looks like something.com/#section-2
+}
+```
