@@ -135,7 +135,7 @@ export default createMemoStyles({
         opacity: 0.6,
         cursor: 'not-allowed',
 
-        '&:placeholder': {
+        '&::placeholder': {
           color: theme.colors.dark[2],
         },
       },
