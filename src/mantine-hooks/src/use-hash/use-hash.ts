@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useWindowEvent } from 'src/use-window-event/use-window-event';
+import { useWindowEvent } from '../use-window-event/use-window-event';
 
 export function useHash() {
   const isBrowser = typeof window !== 'undefined';
