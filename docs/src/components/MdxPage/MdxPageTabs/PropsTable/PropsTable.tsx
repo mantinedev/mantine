@@ -3,11 +3,21 @@ import { Table, Text, useMantineTheme } from '@mantine/core';
 import DocsSection from '../../../DocsSection/DocsSection';
 import PROPS_DATA from '../../../../../.docgen/docgen.json';
 
-export default function PropsTable({ component }: { component: string }) {
+export default function PropsTable({
+  component,
+  searchValue,
+}: {
+  component: string;
+  searchValue: string;
+}) {
   const theme = useMantineTheme();
 
   const rows = Object.keys(PROPS_DATA[component].props).map((propKey) => {
     const prop = PROPS_DATA[component].props[propKey];
+
+    if (searchValue && !prop.name.includes(searchValue)) {
+      return <React.Fragment key={propKey} />;
+    }
     return (
       <tr key={propKey}>
         <td style={{ whiteSpace: 'nowrap' }}>
