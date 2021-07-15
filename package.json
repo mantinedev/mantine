@@ -4,14 +4,14 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "2.0.3",
+  "version": "2.0.5",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "cd docs && yarn",
+    "postinstall": "npm run docs:docgen && npm run docs:sizes && cd docs && yarn",
     "syncpack": "syncpack list-mismatches",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",

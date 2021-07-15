@@ -88,18 +88,21 @@ export function Input<
     elementRef?: React.ForwardedRef<U>;
   }) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, theme, size, multiline }, classNames, __staticSelector);
   const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
+  const classes = useStyles(
+    { radius, theme, size, multiline, variant: _variant, invalid },
+    classNames,
+    __staticSelector
+  );
   const _styles = mergeStyles(classes, styles);
   const Element: any = component;
 
   return (
     <div
-      className={cx(classes.root, { [classes.invalid]: invalid }, classes[_variant], className)}
+      className={cx(classes.root, classes[_variant], className)}
       style={{
         ...style,
         ..._styles.root,
-        ...(invalid ? _styles.invalid : null),
         ..._styles[variant],
       }}
       {...wrapperProps}

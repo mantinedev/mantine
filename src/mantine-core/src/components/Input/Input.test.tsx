@@ -34,14 +34,14 @@ describe('@mantine/core/Input', () => {
       icon: '$',
       rightSection: 'test',
     },
-    Object.keys(InputStylesApi).filter((key) => key !== 'invalid'),
+    Object.keys(InputStylesApi),
     'input'
   );
 
   itSupportsStylesApi(
     Input,
     { invalid: true, icon: '$', rightSection: 'test', __staticSelector: 'test-input' },
-    Object.keys(InputStylesApi).filter((key) => key !== 'invalid'),
+    Object.keys(InputStylesApi),
     'test-input',
     'static selector'
   );
