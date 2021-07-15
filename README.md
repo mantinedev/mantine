@@ -31,3 +31,11 @@ Mantine is a MIT licensed open source react components and hooks library with fo
 ## Licence
 
 All Mantine packages have MIT licence. All Mantine dependencies also have MIT licence, except react-transition-group package which has BSD-3-Clause license.
+
+## Contributors
+
+<a href="https://github.com/mantinedev/mantine/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=mantinedev/mantine" />
+</a>
+
+[Become a contributor](https://mantine.dev/contribute/)
