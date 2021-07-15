@@ -10,13 +10,14 @@ interface TabControlStyles {
   theme: MantineTheme;
   reduceMotion: boolean;
   color: string;
+  orientation: 'horizontal' | 'vertical';
 }
 
 export default createMemoStyles({
   tabActive: {},
   tabLabel: {},
 
-  tabControl: ({ theme }: TabControlStyles) => ({
+  tabControl: ({ theme, orientation }: TabControlStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
@@ -28,6 +29,7 @@ export default createMemoStyles({
     padding: [0, theme.spacing.md],
     fontSize: theme.fontSizes.sm,
     cursor: 'pointer',
+    width: orientation === 'vertical' && '100%',
 
     '&:disabled': {
       cursor: 'not-allowed',
@@ -35,14 +37,14 @@ export default createMemoStyles({
     },
   }),
 
-  default: ({ theme, reduceMotion, color }: TabControlStyles) => ({
+  default: ({ theme, reduceMotion, color, orientation }: TabControlStyles) => ({
     transition: reduceMotion ? 'none' : 'border-color 150ms ease, color 150ms ease',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-    borderBottom: '2px solid transparent',
+    [orientation === 'horizontal' ? 'borderBottom' : 'borderRight']: '2px solid transparent',
 
     '&$tabActive': {
       color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 6 : 7 }),
-      borderBottomColor: getThemeColor({
+      [orientation === 'horizontal' ? 'borderBottomColor' : 'borderRightColor']: getThemeColor({
         theme,
         color,
         shade: theme.colorScheme === 'dark' ? 6 : 7,
@@ -50,11 +52,12 @@ export default createMemoStyles({
     },
   }),
 
-  outline: ({ theme }: TabControlStyles) => ({
-    borderTopRightRadius: theme.radius.sm,
+  outline: ({ theme, orientation }: TabControlStyles) => ({
+    borderBottomLeftRadius: orientation === 'vertical' && theme.radius.sm,
+    borderTopRightRadius: orientation === 'horizontal' && theme.radius.sm,
     borderTopLeftRadius: theme.radius.sm,
     border: '1px solid transparent',
-    borderBottom: 0,
+    [orientation === 'horizontal' ? 'borderBottom' : 'borderRight']: 0,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
 
     '&$tabActive': {
@@ -76,14 +79,14 @@ export default createMemoStyles({
     },
   }),
 
-  tabInner: {
+  tabInner: ({ orientation }: TabControlStyles) => ({
     boxSizing: 'border-box',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: orientation === 'horizontal' ? 'center' : 'flex-start',
     lineHeight: 1,
     height: '100%',
-  },
+  }),
 
   tabIcon: ({ theme }: TabControlStyles) => ({
     '&:not(:only-child)': {

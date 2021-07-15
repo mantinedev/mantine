@@ -3,35 +3,42 @@ import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from 
 interface TabsStyles {
   theme: MantineTheme;
   tabPadding: MantineNumberSize;
+  orientation: 'horizontal' | 'vertical';
 }
 
 export default createMemoStyles({
-  root: {},
+  root: ({ orientation }: TabsStyles) => ({
+    display: orientation === 'vertical' ? 'flex' : 'block',
+  }),
+
   tabsListWrapper: {},
   tabsList: {},
   pills: {},
 
-  body: ({ theme, tabPadding }: TabsStyles) => ({
-    paddingTop: getSizeValue({ size: tabPadding, sizes: theme.spacing }),
+  body: ({ theme, tabPadding, orientation }: TabsStyles) => ({
+    [orientation === 'horizontal' ? 'paddingTop' : 'paddingLeft']: getSizeValue({
+      size: tabPadding,
+      sizes: theme.spacing,
+    }),
   }),
 
-  default: ({ theme }: TabsStyles) => ({
-    borderBottom: `2px solid ${
+  default: ({ theme, orientation }: TabsStyles) => ({
+    [orientation === 'horizontal' ? 'borderBottom' : 'borderRight']: `2px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
 
     '& $tabsList': {
-      marginBottom: -2,
+      [orientation === 'horizontal' ? 'marginBottom' : 'marginRight']: -2,
     },
   }),
 
-  outline: ({ theme }: TabsStyles) => ({
-    borderBottom: `1px solid ${
+  outline: ({ theme, orientation }: TabsStyles) => ({
+    [orientation === 'horizontal' ? 'borderBottom' : 'borderRight']: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
 
     '& $tabsList': {
-      marginBottom: -1,
+      [orientation === 'horizontal' ? 'marginBottom' : 'marginRight']: -1,
     },
   }),
 });
