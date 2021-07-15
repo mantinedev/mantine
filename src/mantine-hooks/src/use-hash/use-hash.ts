@@ -18,5 +18,5 @@ export function useHash() {
 
   useWindowEvent('hashchange', handleHashChange);
 
-  return [hash, setHash];
+  return [hash, setHash] as const;
 }
