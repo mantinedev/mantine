@@ -29,7 +29,7 @@ export default createMemoStyles({
     padding: [0, theme.spacing.md],
     fontSize: theme.fontSizes.sm,
     cursor: 'pointer',
-    width: orientation === 'vertical' && '100%',
+    width: orientation === 'vertical' ? '100%' : 'auto',
 
     '&:disabled': {
       cursor: 'not-allowed',
@@ -53,8 +53,8 @@ export default createMemoStyles({
   }),
 
   outline: ({ theme, orientation }: TabControlStyles) => ({
-    borderBottomLeftRadius: orientation === 'vertical' && theme.radius.sm,
-    borderTopRightRadius: orientation === 'horizontal' && theme.radius.sm,
+    borderBottomLeftRadius: orientation === 'vertical' ? theme.radius.sm : 0,
+    borderTopRightRadius: orientation === 'horizontal' ? theme.radius.sm : 0,
     borderTopLeftRadius: theme.radius.sm,
     border: '1px solid transparent',
     [orientation === 'horizontal' ? 'borderBottom' : 'borderRight']: 0,

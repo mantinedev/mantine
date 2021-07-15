@@ -118,7 +118,8 @@ function TabsDemo() {
 Tabs component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html) on accessibility.
 Component fully supports keyboard events handling and has correct aria-roles:
 
-- Use right and left arrow keys to change tabs
+- Use right and left arrow keys to change tabs when orientation is horizontal
+- Use down and up arrow keys to change tabs when orientation is vertical
 - Only selected tab control can be focused
 - All elements have correct roles: tab, tablist and tabpanel
-- aria-orientation is always set to horizontal as component does not support vertical tabs
+- aria-orientation is set based off `orientation` prop (default is horizontal)
