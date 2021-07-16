@@ -91,5 +91,5 @@ function useUncontrolled<T>(configuration: {
   onChange(value: T): void;
   onValueUpdate?(value: T): void;
   rule: (value: T) => boolean;
-}): readonly [T, (val: T) => void];
+}): readonly [T, (val: T) => void, 'controlled' | 'uncontrolled'];
 ```

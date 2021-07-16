@@ -141,7 +141,7 @@ export function Select({
   const dropdownRef = useRef<HTMLDivElement>();
   const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const uuid = useId(id);
-  const [_value, handleChange] = useUncontrolled({
+  const [_value, handleChange, inputMode] = useUncontrolled({
     value,
     defaultValue,
     finalValue: null,
@@ -154,21 +154,27 @@ export function Select({
 
   const handleClear = () => {
     handleChange(null);
-    setInputValue('');
+    if (inputMode === 'uncontrolled') {
+      setInputValue('');
+    }
     inputRef.current?.focus();
   };
 
   useEffect(() => {
-    const newSelectedValue = data.find((item) => item.value === value);
+    const newSelectedValue = data.find((item) => item.value === _value);
     if (newSelectedValue) {
       setInputValue(newSelectedValue.label);
+    } else {
+      setInputValue('');
     }
-  }, [value]);
+  }, [_value]);
 
   const handleItemSelect = (item: SelectItem) => {
     handleChange(item.value);
     setHovered(-1);
-    setInputValue(item.label);
+    if (inputMode === 'uncontrolled') {
+      setInputValue(item.label);
+    }
     setDropdownOpened(false);
     inputRef.current.focus();
   };
@@ -267,7 +273,9 @@ export function Select({
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (clearable && event.currentTarget.value === '') {
       handleChange(null);
-      setInputValue('');
+      if (inputMode === 'uncontrolled') {
+        setInputValue('');
+      }
     } else {
       setInputValue(event.currentTarget.value);
     }

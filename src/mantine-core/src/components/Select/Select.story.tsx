@@ -16,12 +16,13 @@ const largeData = Array(50)
     label: `Item ${index}`,
   }));
 
-function Controlled() {
+function Controlled({ clearable = false }: { clearable?: boolean }) {
   const [value, setValue] = useState(null);
 
   return (
     <div>
       <Select
+        clearable={clearable}
         label="Controlled"
         placeholder="Controlled"
         value={value}
@@ -55,6 +56,14 @@ storiesOf('@mantine/core/Select', module)
       />
       <Controlled />
       <Select
+        label="Controlled (fixed value)"
+        placeholder="Choose value"
+        searchable
+        value="react"
+        data={data}
+        style={{ marginTop: 20 }}
+      />
+      <Select
         label="Large data set"
         placeholder="Choose value"
         searchable
@@ -83,6 +92,16 @@ storiesOf('@mantine/core/Select', module)
         data={data}
         style={{ marginTop: 20 }}
         nothingFound="No options"
+      />
+      <Controlled clearable />
+      <Select
+        clearable
+        label="Controlled (fixed value)"
+        placeholder="Choose value"
+        searchable
+        value="react"
+        data={data}
+        style={{ marginTop: 20 }}
       />
     </div>
   ));
