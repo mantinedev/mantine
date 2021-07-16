@@ -1,4 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+type UncontrolledMode = 'initial' | 'controlled' | 'uncontrolled';
+
+export interface UncontrolledOptions<T> {
+  value: T;
+  defaultValue: T;
+  finalValue: T;
+  onChange(value: T): void;
+  onValueUpdate?(value: T): void;
+  rule: (value: T) => boolean;
+}
 
 export function useUncontrolled<T>({
   value,
@@ -7,28 +18,51 @@ export function useUncontrolled<T>({
   rule,
   onChange,
   onValueUpdate,
-}: {
-  value: T;
-  defaultValue: T;
-  finalValue: T;
-  onChange(value: T): void;
-  onValueUpdate?(value: T): void;
-  rule: (value: T) => boolean;
-}) {
-  const initialValue = rule(value) ? value : rule(defaultValue) ? defaultValue : finalValue;
-  const [_value, setValue] = useState(initialValue);
+}: UncontrolledOptions<T>) {
+  // determine, whether new props indicate controlled state
+  const shouldBeControlled = rule(value);
 
-  const handleChange = (val: T) => {
-    typeof onChange === 'function' && onChange(val);
-    setValue(val);
+  // initialize state
+  const modeRef = useRef<UncontrolledMode>('initial');
+  const initialValue = rule(defaultValue) ? defaultValue : finalValue;
+  const [uncontrolledValue, setUncontrolledValue] = useState(initialValue);
+
+  // compute effective value
+  let effectiveValue = shouldBeControlled ? value : uncontrolledValue;
+
+  if (!shouldBeControlled && modeRef.current === 'controlled') {
+    // We are transitioning from controlled to uncontrolled
+    // this transition is special as it happens when clearing out
+    // the input using "invalid" value (typically null or undefined).
+    //
+    // Since the value is invalid, doing nothing would mean just
+    // transitioning to uncontrolled state and using whatever value
+    // it currently holds which is likely not the bavior
+    // user expects, so lets change the state to finalValue.
+    //
+    // The value will be propagated to internal state by useEffect below.
+
+    effectiveValue = finalValue;
+  }
+  modeRef.current = shouldBeControlled ? 'controlled' : 'uncontrolled';
+  const mode = modeRef.current;
+
+  const handleChange = (nextValue: T) => {
+    typeof onChange === 'function' && onChange(nextValue);
+
+    // Controlled input only triggers onChange event and expects
+    // the controller to propagate new value back.
+    if (mode === 'uncontrolled') {
+      setUncontrolledValue(nextValue);
+    }
   };
 
   useEffect(() => {
-    if (rule(value)) {
-      setValue(value);
-      typeof onValueUpdate === 'function' && onValueUpdate(value);
+    if (mode === 'uncontrolled') {
+      setUncontrolledValue(effectiveValue);
     }
-  }, [value]);
+    typeof onValueUpdate === 'function' && onValueUpdate(effectiveValue);
+  }, [mode, effectiveValue]);
 
-  return [_value, handleChange] as const;
+  return [effectiveValue, handleChange, modeRef.current] as const;
 }
