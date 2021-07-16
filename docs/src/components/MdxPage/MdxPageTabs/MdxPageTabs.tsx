@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tabs, Tab, Title, Input } from '@mantine/core';
+import { Tabs, Tab, Title, TextInput } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import TableOfContents from '../TableOfContents/TableOfContents';
@@ -66,7 +66,7 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
               style={{ maxWidth: 1080, margin: 'auto', marginTop: 24 }}
               className={classes.tabContent}
             >
-              <Input
+              <TextInput
                 variant="default"
                 placeholder="Search Props"
                 style={{
