@@ -57,7 +57,8 @@ export default createMemoStyles({
     borderTopRightRadius: orientation === 'horizontal' ? theme.radius.sm : 0,
     borderTopLeftRadius: theme.radius.sm,
     border: '1px solid transparent',
-    [orientation === 'horizontal' ? 'borderBottom' : 'borderRight']: 0,
+    borderBottom: orientation === 'horizontal' ? 0 : '1px solid transparent',
+    borderRight: orientation === 'vertical' ? 0 : '1px solid transparent',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
 
     '&$tabActive': {

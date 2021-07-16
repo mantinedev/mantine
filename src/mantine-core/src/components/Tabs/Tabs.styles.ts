@@ -13,7 +13,10 @@ export default createMemoStyles({
 
   tabsListWrapper: {},
   tabsList: {},
-  pills: {},
+
+  pills: ({ orientation }: TabsStyles) => ({
+    marginRight: orientation === 'vertical' ? 20 : 0,
+  }),
 
   body: ({ theme, tabPadding, orientation }: TabsStyles) => ({
     [orientation === 'horizontal' ? 'paddingTop' : 'paddingLeft']: getSizeValue({
