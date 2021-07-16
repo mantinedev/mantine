@@ -35,6 +35,17 @@ storiesOf('@mantine/core/Autocomplete', module)
       />
     </div>
   ))
+  .add('Fixed value', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Autocomplete
+        label="Choose your favorite library/framework"
+        placeholder="Choose value"
+        value="React"
+        onChange={() => {}}
+        data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
+      />
+    </div>
+  ))
   .add('Dynamic data', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
       <DynamicData />
