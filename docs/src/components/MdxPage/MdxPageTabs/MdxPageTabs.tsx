@@ -9,7 +9,7 @@ import { StylesApi } from './StylesApi/StylesApi';
 import useStyles from './MdxPageTabs.styles';
 
 export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
-  const [searchValue, setSearchValue] = useState('');
+  const [query, setQuery] = useState('');
   const classes = useStyles();
   const mobile = useMediaQuery('(max-width: 500px)');
   const hasProps = Array.isArray(frontmatter.props);
@@ -25,7 +25,7 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
           <Title order={2} style={{ fontWeight: 600, marginBottom: 20 }}>
             {component} component props
           </Title>
-          <PropsTable key={component} component={component} searchValue={searchValue} />
+          <PropsTable key={component} component={component} query={query} />
         </div>
       ))
     : null;
@@ -67,15 +67,12 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
               className={classes.tabContent}
             >
               <TextInput
-                variant="default"
                 placeholder="Search Props"
                 style={{
                   marginBottom: 20,
                 }}
-                value={searchValue}
-                onChange={(event: { currentTarget: { value: React.SetStateAction<string> } }) =>
-                  setSearchValue(event.currentTarget.value)
-                }
+                value={query}
+                onChange={(event) => setQuery(event.currentTarget.value)}
               />
               {propsTables}
             </div>
