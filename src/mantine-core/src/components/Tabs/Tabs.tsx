@@ -49,6 +49,9 @@ export interface TabsProps
 
   /** Controls tab content padding-top */
   tabPadding?: MantineNumberSize;
+
+  /** Controls tab orientation */
+  orientation?: 'horizontal' | 'vertical';
 }
 
 function getPreviousTab(active: number, tabs: TabType[]) {
@@ -96,10 +99,11 @@ export function Tabs({
   classNames,
   styles,
   tabPadding = 'xs',
+  orientation = 'horizontal',
   ...others
 }: TabsProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, tabPadding }, classNames as any, 'tabs');
+  const classes = useStyles({ theme, tabPadding, orientation }, classNames as any, 'tabs');
   const _styles = mergeStyles(classes, styles as any);
 
   const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
@@ -118,14 +122,17 @@ export function Tabs({
 
   const activeTab = clamp(_activeTab, 0, tabs.length - 1);
 
+  const nextTabCode = orientation === 'horizontal' ? 'ArrowRight' : 'ArrowDown';
+  const previousTabCode = orientation === 'horizontal' ? 'ArrowLeft' : 'ArrowUp';
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (event.nativeEvent.code === 'ArrowRight') {
+    if (event.nativeEvent.code === nextTabCode) {
       const nextTab = getNextTab(activeTab, tabs);
       handleActiveTabChange(nextTab);
       controlRefs.current[nextTab].focus();
     }
 
-    if (event.nativeEvent.code === 'ArrowLeft') {
+    if (event.nativeEvent.code === previousTabCode) {
       const previousTab = getPreviousTab(activeTab, tabs);
       handleActiveTabChange(previousTab);
       controlRefs.current[previousTab].focus();
@@ -141,6 +148,7 @@ export function Tabs({
       onKeyDown={handleKeyDown}
       color={color}
       variant={variant}
+      orientation={orientation}
       elementRef={(node) => {
         controlRefs.current[index] = node;
       }}
@@ -162,7 +170,8 @@ export function Tabs({
           className={classes.tabsList}
           style={_styles.tabsList}
           role="tablist"
-          aria-orientation="horizontal"
+          direction={orientation === 'horizontal' ? 'row' : 'column'}
+          aria-orientation={orientation}
           spacing={variant === 'pills' ? 'md' : 0}
           position={position}
           grow={grow}

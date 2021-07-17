@@ -16,6 +16,7 @@ export interface TabControlProps
   tabProps: TabProps;
   color?: string;
   variant?: TabsVariant;
+  orientation?: 'horizontal' | 'vertical';
 }
 
 export function TabControl({
@@ -29,13 +30,14 @@ export function TabControl({
   variant = 'default',
   classNames,
   styles,
+  orientation = 'horizontal',
   ...others
 }: TabControlProps) {
   const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
   const theme = useMantineTheme(themeOverride);
   const reduceMotion = useReducedMotion();
   const classes = useStyles(
-    { reduceMotion, color: overrideColor || color, theme },
+    { reduceMotion, color: overrideColor || color, theme, orientation },
     classNames,
     'tabs'
   );

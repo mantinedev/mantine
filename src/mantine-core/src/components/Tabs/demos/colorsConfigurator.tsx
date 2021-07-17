@@ -42,5 +42,15 @@ export const colorsConfigurator: MantineDemo = {
       ],
     },
     { name: 'tabPadding', type: 'size', initialValue: 'xs', defaultValue: 'xs' },
+    {
+      name: 'orientation',
+      type: 'segmented',
+      initialValue: 'horizontal',
+      defaultValue: 'horizontal',
+      data: [
+        { value: 'horizontal', label: 'Horizontal' },
+        { value: 'vertical', label: 'Vertical' },
+      ],
+    },
   ],
 };
