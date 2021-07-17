@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { getHotkeyMatcher } from './parse-hotkey';
 
 export type HotkeyEventHandler = (event: KeyboardEvent) => void;
@@ -16,23 +16,16 @@ export function useHotkey(hotkey: string, handler: HotkeyEventHandler) {
     latestHandler.current = handler;
   });
 
-  const handleHotkey = useCallback(
-    (event: KeyboardEvent) => {
+  useEffect(() => {
+    const element = document.documentElement;
+
+    const keydownListener = (event: KeyboardEvent) => {
       if (!getHotkeyMatcher(hotkey)(event)) {
         return;
       }
 
       event.preventDefault();
       latestHandler.current(event);
-    },
-    [hotkey]
-  );
-
-  useEffect(() => {
-    const element = document.documentElement;
-
-    const keydownListener = (event: KeyboardEvent) => {
-      handleHotkey(event);
     };
 
     if (!element || !('addEventListener' in element)) {
@@ -44,5 +37,5 @@ export function useHotkey(hotkey: string, handler: HotkeyEventHandler) {
     return () => {
       element.removeEventListener('keydown', keydownListener);
     };
-  }, [handleHotkey]);
+  }, [hotkey]);
 }
