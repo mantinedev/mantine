@@ -25,3 +25,4 @@ export { useWindowEvent } from './use-window-event/use-window-event';
 export { useWindowScroll } from './use-window-scroll/use-window-scroll';
 export { useIntersection } from './use-intersection/use-intersection';
 export { useHash } from './use-hash/use-hash';
+export { useHotkey } from './use-hotkey/use-hotkey';
