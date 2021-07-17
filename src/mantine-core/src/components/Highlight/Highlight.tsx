@@ -4,30 +4,30 @@ import { DefaultProps, useMantineTheme, getThemeColor } from '../../theme';
 import { ComponentPassThrough } from '../../types';
 import { Text, TextProps } from '../Text/Text';
 
-export function highlighter(value: string, highlightPart: string) {
-  const normalizedValue = value.trim().toLowerCase();
-  const normalizedHighlight = highlightPart.trim().toLowerCase();
-  const diff = highlightPart.length - normalizedHighlight.length;
-  const highlightLength = highlightPart.length - diff;
+export function highlighter(value: string, highlight: string | string[], multiple?: boolean) {
+  const matcher =
+    typeof highlight === 'string'
+      ? highlight.trim()
+      : highlight.map((part) => part.trim()).join('|');
 
-  const highlightIndex = normalizedValue.indexOf(normalizedHighlight);
-  if (highlightIndex === -1) {
-    return { start: value, highlighted: '', end: '' };
-  }
+  const re = new RegExp(`(${matcher})`, `${multiple ? 'g' : ''}i`);
+  const chunks = value
+    .split(re)
+    .map((part) => ({ chunk: part, highlighted: re.test(part) }))
+    .filter(({ chunk }) => chunk);
 
-  const start = value.slice(0, highlightIndex);
-  const highlighted = value.slice(highlightIndex, highlightIndex + highlightLength);
-  const end = value.slice(highlightIndex + highlightLength);
-
-  return { start, highlighted, end };
+  return chunks;
 }
 
 export interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'> {
-  /** String part to highligh in children */
-  highlight: string;
+  /** String and or an array of strings to highlight in children */
+  highlight: string | string[];
 
   /** Color from theme that is used for highlighting */
   highlightColor?: string;
+
+  /** Highlights each substring if true */
+  multiple?: boolean;
 
   /** Full string part of which will be highlighted */
   children: string;
@@ -36,6 +36,7 @@ export interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'
 export function Highlight<T extends React.ElementType = 'div'>({
   children,
   highlight,
+  multiple,
   component,
   themeOverride,
   highlightColor = 'yellow',
@@ -49,7 +50,7 @@ export function Highlight<T extends React.ElementType = 'div'>({
     shade: theme.colorScheme === 'dark' ? 5 : 2,
   });
 
-  const { start, end, highlighted } = highlighter(children, highlight);
+  const highlightChunks = highlighter(children, highlight, multiple);
 
   return (
     <Text
@@ -58,18 +59,21 @@ export function Highlight<T extends React.ElementType = 'div'>({
       className={cx('mantine-highlight', className)}
       {...others}
     >
-      {!!start && start}
-      {!!highlighted && (
-        <mark
-          style={{
-            backgroundColor: color,
-            color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
-          }}
-        >
-          {highlighted}
-        </mark>
+      {highlightChunks.map(({ chunk, highlighted }, i) =>
+        highlighted ? (
+          <mark
+            key={i}
+            style={{
+              backgroundColor: color,
+              color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
+            }}
+          >
+            {chunk}
+          </mark>
+        ) : (
+          <span key={i}>{chunk}</span>
+        )
       )}
-      {!!end && end}
     </Text>
   );
 }
