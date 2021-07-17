@@ -46,7 +46,7 @@ export function getHotkeyMatcher(hotkey: string): CheckHotkeyMatch {
 
 /**
  * Check if only specified keys are pressed in the event.
- * So for the hotkey "ctrl+S" only "ctrl+S" match but not "ctrl+alt+S"
+ * The hotkey "ctrl+S" should only match "ctrl+S" but not "ctrl+alt+S"
  * @param hotkey
  * @param event
  * @returns
@@ -60,7 +60,7 @@ function isExactHotkey(hotkey: Hotkey, event: KeyboardEvent): boolean {
   }
   if (mod) {
     if (!ctrlKey && !metaKey) {
-      return;
+      return false;
     }
   } else {
     if (ctrl !== ctrlKey) {

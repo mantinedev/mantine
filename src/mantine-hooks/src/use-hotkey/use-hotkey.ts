@@ -5,7 +5,7 @@ export type HotkeyEventHandler = (event: KeyboardEvent) => void;
 
 /**
  * Hook to globally register (on `document.documentElement`) a keyboard event
- * which fires `handler` when the given keys in `hotkey` match
+ * which calls `handler` when the given keys in `hotkey` match
  * @param hotkey Keys separated by "+". Supported modifiers: ctrl, alt, meta, shift, mod
  * @param handler
  */
