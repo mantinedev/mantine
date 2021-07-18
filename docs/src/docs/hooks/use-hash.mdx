@@ -5,7 +5,7 @@ category: 'state'
 title: 'use-hash'
 order: 1
 slug: /hooks/use-hash/
-description: 'Manipulating hash value in URL'
+description: 'Get and set hash value in url'
 import: "import { useHash } from '@mantine/hooks';"
 docs: 'hooks/use-hash.mdx'
 source: 'mantine-hooks/src/use-hash/use-hash.ts'
@@ -16,7 +16,12 @@ import { useHashHook } from '@docs/demos';
 
 ## Usage
 
-use-hash returns an array of two values `[hash,setHash]`. `hash` is the current hash value in the url.
-It will be `null` if the execution is on server-side. `setHash` is a function that will take a string as a parameter and updates the hash value.
+Hook lets you subscribe to get hash from url, subscribe to its changes with [hashchange event](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event) and set it:
 
 <Demo data={useHashHook} />
+
+## Definition
+
+```tsx
+function useHash(): readonly [string, (value: string) => void];
+```

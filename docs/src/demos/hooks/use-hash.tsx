@@ -2,29 +2,21 @@ import React from 'react';
 import { useHash, randomId } from '@mantine/hooks';
 import { Group, Button } from '@mantine/core';
 
-const code = `import React from 'react';
+const code = `
 import { useHash, randomId } from '@mantine/hooks';
 import { Button } from '@mantine/core';
 
 export function Demo() {
- const [hash, setHash] = useHash();
-  return (
-    <Group position="center">
-      {/* NOTE: '#' symbol is not required ONLY the string
-      value must be passed as below */}
-      <Button onClick={() => setHash(randomId())}>Set hash in URL to random id</Button>
-    </Group>
-  );
+  const [hash, setHash] = useHash();
+  return <Button onClick={() => setHash(randomId())}>Set hash to random string</Button>
 }`;
 
 function Demo() {
-  const [hash, setHash] = useHash();
-  
+  const [, setHash] = useHash();
+
   return (
     <Group position="center">
-      {/* NOTE: '#' symbol is not required ONLY the string
-      value must be passed as below */}
-      <Button onClick={() => setHash(randomId())}>Set hash in URL to random id</Button>
+      <Button onClick={() => setHash(randomId())}>Set hash to random string</Button>
     </Group>
   );
 }
