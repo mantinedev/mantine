@@ -23,14 +23,13 @@ import { UseHotkeyDemo } from '@docs/demos';
 
 ## API
 
-`useHotkey` accepts 2 arguments:
+Hook accepts 2 arguments:
 
 - `hotkey` - hotkey described as a string e.g. `ctrl+E`, `shift+alt+L`, `mod+S`
-- `handler` - event handler when the given hotkey was detected
+- `handler` - event handler when the given combination was pressed
 
 ## Definition
 
 ```tsx
-type HotkeyEventHandler = (event: KeyboardEvent) => void;
-function useHotkey(hotkey: string, handler: HotkeyEventHandler): void;
+function useHotkey(hotkey: string, handler: (event: KeyboardEvent) => void): void;
 ```

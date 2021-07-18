@@ -12,6 +12,7 @@ describe('@mantine/hooks/parse-hotkey', () => {
       shift: false,
       key: 's',
     });
+
     expect(parseHotkey('alt+shift+L')).toMatchObject({
       alt: true,
       ctrl: false,
@@ -20,6 +21,7 @@ describe('@mantine/hooks/parse-hotkey', () => {
       shift: true,
       key: 'l',
     });
+
     expect(parseHotkey('mod+K')).toMatchObject({
       alt: false,
       ctrl: false,
@@ -28,6 +30,7 @@ describe('@mantine/hooks/parse-hotkey', () => {
       shift: false,
       key: 'k',
     });
+
     expect(parseHotkey('ctrl+shift+alt+K')).toMatchObject({
       alt: true,
       ctrl: true,
@@ -36,6 +39,7 @@ describe('@mantine/hooks/parse-hotkey', () => {
       shift: true,
       key: 'k',
     });
+
     expect(parseHotkey('mod+S+A')).toMatchObject({
       alt: false,
       ctrl: false,

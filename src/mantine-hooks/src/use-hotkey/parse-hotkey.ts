@@ -33,24 +33,6 @@ export function parseHotkey(hotkey: string): Hotkey {
   };
 }
 
-/**
- * Returns a function to check if an event is a exact match for the given hotkey
- * @param hotkey Keys separated by "+" e.g. "ctrl+alt+L", "mod+S"
- * @returns
- */
-export function getHotkeyMatcher(hotkey: string): CheckHotkeyMatch {
-  return (event) => {
-    return isExactHotkey(parseHotkey(hotkey), event);
-  };
-}
-
-/**
- * Check if only specified keys are pressed in the event.
- * The hotkey "ctrl+S" should only match "ctrl+S" but not "ctrl+alt+S"
- * @param hotkey
- * @param event
- * @returns
- */
 function isExactHotkey(hotkey: Hotkey, event: KeyboardEvent): boolean {
   const { alt, ctrl, meta, mod, shift, key } = hotkey;
   const { altKey, ctrlKey, metaKey, shiftKey, key: pressedKey } = event;
@@ -79,4 +61,8 @@ function isExactHotkey(hotkey: Hotkey, event: KeyboardEvent): boolean {
   }
 
   return true;
+}
+
+export function getHotkeyMatcher(hotkey: string): CheckHotkeyMatch {
+  return (event) => isExactHotkey(parseHotkey(hotkey), event);
 }
