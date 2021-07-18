@@ -33,10 +33,13 @@ export function Col({
     return null;
   }
 
+  const columnWidth = `calc(${100 / (columns / span)}% - ${spacing}px)`;
+
   const styles: React.CSSProperties = {
     ...style,
     boxSizing: 'border-box',
-    flex: `${grow ? '1' : '0'} 0 calc(${100 / (columns / span)}% - ${spacing}px)`,
+    flex: `${grow ? '1' : '0'} 0 ${columnWidth}`,
+    maxWidth: grow ? 'unset' : columnWidth,
     margin: spacing / 2,
   };
 
