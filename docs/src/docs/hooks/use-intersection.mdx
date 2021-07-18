@@ -5,33 +5,24 @@ category: 'dom'
 title: 'use-intersection'
 order: 1
 slug: /hooks/use-intersection/
-description: 'A IntersectionObserver hook'
+description: 'Get information about intersection of given element with its scroll container'
 import: "import { useIntersection } from '@mantine/hooks';"
 docs: 'hooks/use-intersection.mdx'
 source: 'mantine-hooks/src/use-intersection/use-intersection.ts'
 ---
 
-import { UseIntersectionSimpleDemo, UseIntersectionContainedDemo } from '@docs/demos';
+import { useIntersectionDemo } from '@docs/demos';
 
 ## Usage
 
-Use use-intersection to expose the functionality of `IntersectionObserver` as a hook.
+Use hook to get information about intersection
+of given element with its scroll container or body element with [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API):
 
-```tsx
-import { useIntersection } from '@mantine/hooks';
-
-function Component() {
-  const [ref, ioEntry] = useIntersection({
-    rootMargin: '-20px',
-  });
-
-  return <div ref={ref}>Text</div>;
-}
-```
+<Demo data={useIntersectionDemo} />
 
 ## API
 
-Hook accepts `IntersectionObserver`'s options as its only argument. The argument is optional.
+Hook accepts `IntersectionObserver`'s options as its only optional argument:
 
 ```tsx
 useIntersection({
@@ -41,7 +32,8 @@ useIntersection({
 });
 ```
 
-Hook returns the ref that should be passed to the observed element, and the latest entry, as returned by `IntersectionObserver`'s callback.
+Hook returns ref function that should be passed to the observed element, and the latest entry, as returned by `IntersectionObserver`'s callback.
+See [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) documentation to learn everything about options.
 
 On the first render (as well as during SSR), or when no element is being observed, the entry is `null`.
 
@@ -55,23 +47,10 @@ const [ref, ioEntry] = useIntersection();
 <Paper elementRef={ref}>Observed</Paper>
 ```
 
-## SSR
-
-During the SSR pass, the entry returned will be `null`.
-
 ## Definition
 
 ```tsx
 function useIntersection<T extends HTMLElement = any>(
   options?: ConstructorParameters<typeof IntersectionObserver>[1]
-): readonly [(element: T) => void, IntersectionObserverEntry | null];
+): readonly [(element: T | null) => void, IntersectionObserverEntry];
 ```
-
-
-## Demo
-
-<Demo data={UseIntersectionSimpleDemo} />
-
-Inside a scrollable container (scroll down):
-
-<Demo data={UseIntersectionContainedDemo} />
