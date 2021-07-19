@@ -178,6 +178,16 @@ function Demo() {
 }
 ```
 
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<DatePicker /> // -> random id generated both on client and server, props mismatch warning
+<DatePicker id="my-date-picker" /> // -> id is static, no mismatches
+```
+
 ## Accessibility and usability
 
 To make all component controls visible to screen reader set following props:
