@@ -1,0 +1,57 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'dom'
+title: 'use-hotkeys'
+order: 1
+slug: /hooks/use-hotkeys/
+description: 'Listen for keys combinations on document element'
+import: "import { useHotkeys } from '@mantine/hooks';"
+docs: 'hooks/use-hotkeys.mdx'
+source: 'mantine-hooks/src/use-hotkeys/use-hotkeys.ts'
+---
+
+import { useHotkeysHook } from '@docs/demos';
+
+## Usage
+
+Hook accepts an array with hotkey and handler tuples:
+
+- `hotkey` - hotkey string e.g. `ctrl+E`, `shift+alt+L`, `mod+S`
+- `handler` - event handler called when given combination was pressed
+
+```tsx
+import { useHotkeys } from '@mantine/hooks';
+
+function Demo() {
+  // ctrl + J and ⌘ + J to toggle color scheme
+  // ctrl + K and ⌘ + K to search
+  useHotkeys([
+    ['mod+J', () => toggleColorScheme()],
+    ['ctrl+K', () => search()],
+    ['alt+mod+shift+X', () => rickRoll()],
+  ]);
+
+  return null;
+}
+```
+
+## Targeting elements
+
+use-hotkeys hook can work only with document element, you will need to create your own event listener
+if you need to support other elements. For this purpose package exports `getHotkeysHandler` function
+which should be used with `onKeyDown`:
+
+<Demo data={useHotkeysHook} />
+
+## Supported formats
+
+- `mod+S` – detects `⌘+S` on macOS and `Ctrl+S` on Windows
+- `ctrl+shift+X` – handles multiple modifiers
+- `alt + shift + L` – you can use whitespace inside hotkey
+
+## Definition
+
+```tsx
+function useHotkeys(hotkey: string, handler: (event: KeyboardEvent) => void): void;
+```

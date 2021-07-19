@@ -13,7 +13,10 @@ export type Hotkey = KeyboardModifiers & {
 type CheckHotkeyMatch = (event: KeyboardEvent) => boolean;
 
 export function parseHotkey(hotkey: string): Hotkey {
-  const keys = hotkey.toLowerCase().trim().split('+');
+  const keys = hotkey
+    .toLowerCase()
+    .split('+')
+    .map((part) => part.trim());
 
   const modifiers: KeyboardModifiers = {
     alt: keys.includes('alt'),
@@ -40,6 +43,7 @@ function isExactHotkey(hotkey: Hotkey, event: KeyboardEvent): boolean {
   if (alt !== altKey) {
     return false;
   }
+
   if (mod) {
     if (!ctrlKey && !metaKey) {
       return false;
@@ -56,13 +60,30 @@ function isExactHotkey(hotkey: Hotkey, event: KeyboardEvent): boolean {
     return false;
   }
 
-  if (key && pressedKey.toLowerCase() !== key.toLowerCase()) {
-    return false;
+  if (
+    key &&
+    (pressedKey.toLowerCase() === key.toLowerCase() ||
+      event.code.replace('Key', '').toLowerCase() === key.toLowerCase())
+  ) {
+    return true;
   }
 
-  return true;
+  return false;
 }
 
 export function getHotkeyMatcher(hotkey: string): CheckHotkeyMatch {
   return (event) => isExactHotkey(parseHotkey(hotkey), event);
+}
+
+type HotkeyItem = [string, (event: React.KeyboardEvent<HTMLElement>) => void];
+
+export function getHotkeyHandler(hotkeys: HotkeyItem[]) {
+  return (event: React.KeyboardEvent<HTMLElement>) => {
+    hotkeys.forEach(([hotkey, handler]) => {
+      if (getHotkeyMatcher(hotkey)(event.nativeEvent)) {
+        event.preventDefault();
+        handler(event);
+      }
+    });
+  };
 }

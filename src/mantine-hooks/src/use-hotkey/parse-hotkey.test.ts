@@ -1,8 +1,6 @@
-import { renderHook } from '@testing-library/react-hooks';
 import { getHotkeyMatcher, parseHotkey } from './parse-hotkey';
-import { useHotkey } from './use-hotkey';
 
-describe('@mantine/hooks/parse-hotkey', () => {
+describe('@mantine/hooks/use-hot-key/parse-hotkey', () => {
   it('should parse hotkey correctly', () => {
     expect(parseHotkey('meta+S')).toMatchObject({
       alt: false,
@@ -80,48 +78,5 @@ describe('@mantine/hooks/parse-hotkey', () => {
         })
       )
     ).toBe(false);
-  });
-});
-
-describe('@mantine/hooks/use-hotkey', () => {
-  it('should listen to document events', () => {
-    const handler = jest.fn();
-    renderHook(() => useHotkey('shift+ctrl+S', handler));
-
-    const event = new KeyboardEvent('keydown', {
-      shiftKey: true,
-      ctrlKey: true,
-      key: 'S',
-    });
-    document.documentElement.dispatchEvent(event);
-
-    expect(handler).toHaveBeenCalled();
-  });
-
-  it('should not fire when keys mismatch', () => {
-    const handler = jest.fn();
-    renderHook(() => useHotkey('alt+L', handler));
-
-    const wrongKeysEvent = new KeyboardEvent('keydown', {
-      metaKey: true,
-      key: 'L',
-    });
-    document.documentElement.dispatchEvent(wrongKeysEvent);
-
-    expect(handler).not.toHaveBeenCalled();
-  });
-
-  it('should not fire when event is no exact match', () => {
-    const handler = jest.fn();
-    renderHook(() => useHotkey('mod+P', handler));
-
-    const notExactEvent = new KeyboardEvent('keydown', {
-      metaKey: true,
-      altKey: true,
-      key: 'P',
-    });
-    document.documentElement.dispatchEvent(notExactEvent);
-
-    expect(handler).not.toHaveBeenCalled();
   });
 });
