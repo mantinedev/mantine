@@ -96,6 +96,30 @@ function Demo() {
 }
 ```
 
+## Usage with Next Link
+
+Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
+to make Button and other similar components work with Next Link, create wrapper component in your components folder:
+
+```tsx
+// This component can be reused in every Mantine component which supports component pass through
+function NextLink({ href, ...others }: any) {
+  return (
+    <Link href={href}>
+      <a {...others} />
+    </Link>
+  );
+}
+```
+
+And then pass it to Button or other component:
+
+```tsx
+<Button component={NextLink} href="/hello">
+  Next Link button
+</Button>
+```
+
 ## Get element ref
 
 You can get root element ref with `elementRef` prop:

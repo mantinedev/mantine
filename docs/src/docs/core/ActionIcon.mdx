@@ -81,6 +81,40 @@ import { ACTION_ICON_SIZES } from '@mantine/core';
   data={Object.keys(ACTION_ICON_SIZES).map((size) => [size, `${ACTION_ICON_SIZES[size]}px`])}
 />
 
+## Usage with react-router and other libraries
+
+You can use ActionIcon component with [react-router-dom](https://reactrouter.com/web/guides/quick-start)
+or other similar libraries by passing `Link` as component to ActionIcon:
+
+```tsx
+import { Link } from 'react-router-dom';
+import { ActionIcon } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ActionIcon component={Link} to="/react-router">
+      React router link
+    </ActionIcon>
+  );
+}
+```
+
+## Usage with Next Link
+
+Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
+to make ActionIcon and other similar components work with Next Link, create wrapper component in your components folder:
+
+```tsx
+// This component can be reused in every Mantine component which supports component pass through
+function NextLink({ href, ...others }: any) {
+  return (
+    <Link href={href}>
+      <a {...others} />
+    </Link>
+  );
+}
+```
+
 ## Get element ref
 
 You can get button ref with `elementRef` prop:
