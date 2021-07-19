@@ -195,6 +195,7 @@ export function Select({
       onMouseEnter={() => setHovered(index)}
       id={`${uuid}-${index}`}
       role="option"
+      tabIndex={-1}
       aria-selected={hovered === index}
       elementRef={(node: HTMLButtonElement) => {
         itemsRefs.current[item.value] = node;

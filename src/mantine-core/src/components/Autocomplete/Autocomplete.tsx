@@ -147,6 +147,7 @@ export function Autocomplete({
       onMouseEnter={() => setHovered(index)}
       id={`${uuid}-${index}`}
       role="option"
+      tabIndex={-1}
       aria-selected={hovered === index}
       onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
