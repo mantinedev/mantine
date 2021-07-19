@@ -20,6 +20,7 @@ interface CheckboxStyles {
   theme: MantineTheme;
   size: MantineSize;
   color: string;
+  transitionDuration: number;
 }
 
 export default createMemoStyles({
@@ -43,7 +44,7 @@ export default createMemoStyles({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
   }),
 
-  input: ({ size, theme, color }: CheckboxStyles) => ({
+  input: ({ size, theme, color, transitionDuration }: CheckboxStyles) => ({
     ...getFocusStyles(theme),
     appearance: 'none',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
@@ -57,15 +58,15 @@ export default createMemoStyles({
     outline: 0,
     display: 'block',
     margin: 0,
+    transition: `border-color ${transitionDuration}ms ease, background-color ${transitionDuration}ms ease`,
 
     '&:checked': {
       backgroundColor: getThemeColor({ theme, color, shade: 7 }),
       borderColor: getThemeColor({ theme, color, shade: 7 }),
-      color: theme.white,
 
       '& + $icon': {
-        color: theme.white,
-        display: 'block',
+        opacity: 1,
+        transform: 'translateY(0) scale(1)',
       },
     },
 
@@ -80,8 +81,11 @@ export default createMemoStyles({
     },
   }),
 
-  icon: {
-    display: 'none',
+  icon: ({ theme, transitionDuration }: CheckboxStyles) => ({
+    color: theme.white,
+    transform: 'translateY(5px) scale(0.5)',
+    opacity: 0,
+    transition: `opacity ${transitionDuration}ms ease, transform ${transitionDuration}ms ease`,
     pointerEvents: 'none',
     width: '80%',
     height: '80%',
@@ -92,5 +96,5 @@ export default createMemoStyles({
     left: 0,
     right: 0,
     margin: 'auto',
-  },
+  }),
 });
