@@ -21,12 +21,11 @@ export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCat
   React.useEffect(() => {
     if (activeCoreItemRef.current) {
       activeCoreItemRef.current.scrollIntoView({
-        behavior: 'auto',
-        inline: 'center',
-        block: 'center',
+        block: 'start',
       });
     }
   }, [activeCoreItemRef.current]);
+
   const uncategorized = group.uncategorized.map((link) => (
     <Link
       key={link.slug}

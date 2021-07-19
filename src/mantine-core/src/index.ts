@@ -1,4 +1,5 @@
 export * from './theme';
+export * from './utils';
 
 export { Accordion, AccordionItem } from './components/Accordion/Accordion';
 export { ActionIcon, ACTION_ICON_SIZES } from './components/ActionIcon/ActionIcon';

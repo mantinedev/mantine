@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize, mergeStyles, getSizeValue } from '../../theme';
+import { scrollIntoView } from '../../utils';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -15,7 +16,6 @@ import { ChevronIcon } from '../NativeSelect/ChevronIcon';
 import { rightSectionWidth } from '../NativeSelect/NativeSelect';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
-import { scrollIntoView } from './scroll-into-view/scroll-into-view';
 import useStyles from './Select.styles';
 
 export type SelectStylesNames =
