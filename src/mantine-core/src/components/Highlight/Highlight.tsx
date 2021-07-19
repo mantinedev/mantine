@@ -4,13 +4,20 @@ import { DefaultProps, useMantineTheme, getThemeColor } from '../../theme';
 import { ComponentPassThrough } from '../../types';
 import { Text, TextProps } from '../Text/Text';
 
-export function highlighter(value: string, highlight: string | string[], multiple?: boolean) {
+export function highlighter(value: string, highlight: string | string[]) {
+  if (typeof highlight === 'string' && highlight.trim() === '') {
+    return [{ chunk: value, highlighted: false }];
+  }
+
   const matcher =
     typeof highlight === 'string'
       ? highlight.trim()
-      : highlight.map((part) => part.trim()).join('|');
+      : highlight
+          .filter((part) => part.trim().length === 0)
+          .map((part) => part.trim())
+          .join('|');
 
-  const re = new RegExp(`(${matcher})`, `${multiple ? 'g' : ''}i`);
+  const re = new RegExp(`(${matcher})`, 'gi');
   const chunks = value
     .split(re)
     .map((part) => ({ chunk: part, highlighted: re.test(part) }))
@@ -20,14 +27,11 @@ export function highlighter(value: string, highlight: string | string[], multipl
 }
 
 export interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'> {
-  /** String and or an array of strings to highlight in children */
+  /** Substring or an array of substrings to highlight in children */
   highlight: string | string[];
 
   /** Color from theme that is used for highlighting */
   highlightColor?: string;
-
-  /** Highlights each substring if true */
-  multiple?: boolean;
 
   /** Full string part of which will be highlighted */
   children: string;
@@ -36,7 +40,6 @@ export interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'
 export function Highlight<T extends React.ElementType = 'div'>({
   children,
   highlight,
-  multiple,
   component,
   themeOverride,
   highlightColor = 'yellow',
@@ -50,7 +53,7 @@ export function Highlight<T extends React.ElementType = 'div'>({
     shade: theme.colorScheme === 'dark' ? 5 : 2,
   });
 
-  const highlightChunks = highlighter(children, highlight, multiple);
+  const highlightChunks = highlighter(children, highlight);
 
   return (
     <Text
