@@ -65,6 +65,12 @@ describe('@mantine/core/Highlight/highlighter', () => {
     ]);
   });
 
+  it('returns initial string if highlight is empty', () => {
+    expect(highlighter(VALUE, '')).toEqual([{ chunk: VALUE, highlighted: false }]);
+    expect(highlighter(VALUE, [])).toEqual([{ chunk: VALUE, highlighted: false }]);
+    expect(highlighter(VALUE, ['', ''])).toEqual([{ chunk: VALUE, highlighted: false }]);
+  });
+
   it('highlights uppercased value', () => {
     expect(highlighter(VALUE, 'HELL')).toEqual([
       { chunk: 'Hell', highlighted: true },

@@ -5,7 +5,11 @@ import { ComponentPassThrough } from '../../types';
 import { Text, TextProps } from '../Text/Text';
 
 export function highlighter(value: string, highlight: string | string[]) {
-  if (typeof highlight === 'string' && highlight.trim() === '') {
+  const shouldHighlight = Array.isArray(highlight)
+    ? highlight.filter((part) => part.trim().length > 0).length > 0
+    : highlight.trim() !== '';
+
+  if (!shouldHighlight) {
     return [{ chunk: value, highlighted: false }];
   }
 
@@ -13,7 +17,7 @@ export function highlighter(value: string, highlight: string | string[]) {
     typeof highlight === 'string'
       ? highlight.trim()
       : highlight
-          .filter((part) => part.trim().length === 0)
+          .filter((part) => part.trim().length !== 0)
           .map((part) => part.trim())
           .join('|');
 
