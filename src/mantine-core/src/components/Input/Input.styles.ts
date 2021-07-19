@@ -103,6 +103,10 @@ export default createMemoStyles({
   }),
 
   input: ({ theme, size, multiline, radius, variant, invalid }: InputStyles) => {
+    if (variant === 'headless') {
+      return {};
+    }
+
     const sizeStyles =
       variant === 'default' || variant === 'filled'
         ? {

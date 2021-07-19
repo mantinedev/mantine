@@ -79,6 +79,13 @@ you can pass `component` prop which will define root element:
 
 <Demo data={InputDemos.component} />
 
+## Headless variant
+
+If you want to add your own styles to input it's better to start from scratch rather than overriding Mantine styles,
+use special `headless` variant which does not include any Mantine styles but still supports all other features: icon, right section, etc.:
+
+<Demo data={InputDemos.headless} />
+
 ## Get element ref
 
 You can get input ref by passing `elementRef` prop to Input component:

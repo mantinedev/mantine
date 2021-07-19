@@ -9,7 +9,7 @@ import {
 } from '../../theme';
 import useStyles, { sizes } from './Input.styles';
 
-export const INPUT_VARIANTS = ['default', 'filled', 'unstyled'] as const;
+export const INPUT_VARIANTS = ['default', 'filled', 'unstyled', 'headless'] as const;
 export const INPUT_SIZES = sizes;
 export type InputVariant = typeof INPUT_VARIANTS[number];
 export type InputStylesNames = Exclude<keyof ReturnType<typeof useStyles>, InputVariant>;
@@ -40,7 +40,7 @@ export interface InputBaseProps {
   radius?: MantineNumberSize;
 
   /** Defines input appearance, defaults to default in light color scheme and filled in dark */
-  variant?: 'default' | 'filled' | 'unstyled';
+  variant?: 'default' | 'filled' | 'unstyled' | 'headless';
 
   /** Static css selector base */
   __staticSelector?: string;
