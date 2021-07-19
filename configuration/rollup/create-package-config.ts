@@ -27,16 +27,16 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     fs.readFileSync(path.join(config.basePath, './package.json')).toString('utf-8')
   );
   const pkgList = await getPackagesList();
+
   const aliasEntries: Alias[] = pkgList.map((pkg) => ({
     find: new RegExp(`^${pkg.packageJson.name}`),
     replacement: path.resolve(pkg.path, 'src'),
   }));
+
   const plugins = [
     commonjs(),
     nodeExternals(),
-    nodeResolve({
-      extensions: ['.ts', '.tsx', '.js', '.jsx'],
-    }),
+    nodeResolve({ extensions: ['.ts', '.tsx', '.js', '.jsx'] }),
     esbuild({
       minify: config.format === 'umd',
       sourceMap: false,
@@ -46,6 +46,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     alias({ entries: aliasEntries }),
     replace({ preventAssignment: true }),
   ];
+
   let externals;
 
   if (config.format === 'umd') {
@@ -92,6 +93,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
         }))
         .reduce((globals, pkgGlobal) => ({ ...globals, ...pkgGlobal }), {}),
       react: 'React',
+      dayjs: 'dayjs',
       'react-dom': 'ReactDOM',
       'react-jss': 'reactJss',
     };
