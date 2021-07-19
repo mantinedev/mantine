@@ -67,10 +67,9 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
               className={classes.tabContent}
             >
               <TextInput
+                autoFocus
                 placeholder="Search Props"
-                style={{
-                  marginBottom: 20,
-                }}
+                style={{ marginBottom: 20 }}
                 value={query}
                 onChange={(event) => setQuery(event.currentTarget.value)}
               />
