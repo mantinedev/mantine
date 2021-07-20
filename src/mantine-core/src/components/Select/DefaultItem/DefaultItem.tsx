@@ -6,12 +6,8 @@ interface DefaultItemProps extends Omit<React.ComponentPropsWithoutRef<'button'>
   elementRef: React.ForwardedRef<HTMLButtonElement>;
 }
 
-export function DefaultItem({ label, elementRef, ...others }: DefaultItemProps) {
-  return (
-    <UnstyledButton {...others} elementRef={elementRef} tabIndex={-1}>
-      {label}
-    </UnstyledButton>
-  );
+export function DefaultItem({ label, ...others }: DefaultItemProps) {
+  return <UnstyledButton {...others}>{label}</UnstyledButton>;
 }
 
 DefaultItem.displayName = '@mantine/core/DefaultItem';

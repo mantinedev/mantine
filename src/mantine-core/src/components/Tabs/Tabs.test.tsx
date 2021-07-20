@@ -67,26 +67,33 @@ describe('@mantine/core/Tabs', () => {
     expect(spy).toHaveBeenCalledTimes(2);
   });
 
-  it('supports keyboard events', () => {
-    const element = mount(<Tabs initialTab={1}>{content}</Tabs>);
+  it.each([
+    ['horizontal' as const, 'ArrowRight', 'ArrowLeft'],
+    ['vertical' as const, 'ArrowDown', 'ArrowUp'],
+  ])('supports keyboard events (%s)', (orientation, next, previous) => {
+    const element = mount(
+      <Tabs initialTab={1} orientation={orientation}>
+        {content}
+      </Tabs>
+    );
     expect(tabContent(element)).toBe('tab-2');
 
     const keydown = (position: number, code: string) =>
       element.find(TabControl).at(position).simulate('keydown', { nativeEvent: { code } });
 
-    keydown(1, 'ArrowRight');
+    keydown(1, next);
     expect(tabContent(element)).toBe('tab-3');
 
-    keydown(2, 'ArrowRight');
+    keydown(2, next);
     expect(tabContent(element)).toBe('tab-3');
 
-    keydown(2, 'ArrowLeft');
+    keydown(2, previous);
     expect(tabContent(element)).toBe('tab-2');
 
-    keydown(1, 'ArrowLeft');
+    keydown(1, previous);
     expect(tabContent(element)).toBe('tab-1');
 
-    keydown(0, 'ArrowLeft');
+    keydown(0, previous);
     expect(tabContent(element)).toBe('tab-1');
   });
 

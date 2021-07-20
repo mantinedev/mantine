@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { useId } from '@mantine/hooks';
+import { useId, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
 import { CheckboxIcon } from './CheckboxIcon';
 import useStyles, { sizes } from './Checkbox.styles';
@@ -32,6 +32,9 @@ export interface CheckboxProps
 
   /** Get input ref */
   elementRef?: React.ForwardedRef<HTMLInputElement>;
+
+  /** Check/uncheck transition duration, set to 0 to disable all transitions */
+  transitionDuration?: number;
 }
 
 export function Checkbox({
@@ -51,11 +54,17 @@ export function Checkbox({
   children,
   classNames,
   styles,
+  transitionDuration = 100,
   ...others
 }: CheckboxProps) {
   const uuid = useId(id);
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, color, theme }, classNames, 'checkbox');
+  const reduceMotion = useReducedMotion();
+  const classes = useStyles(
+    { size, color, theme, transitionDuration: reduceMotion ? 0 : transitionDuration },
+    classNames,
+    'checkbox'
+  );
   const _styles = mergeStyles(classes, styles);
 
   return (

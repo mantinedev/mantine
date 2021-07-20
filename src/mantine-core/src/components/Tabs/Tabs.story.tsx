@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { ImageIcon } from '@modulz/radix-icons';
+import { ImageIcon, ChatBubbleIcon, MixerVerticalIcon } from '@modulz/radix-icons';
 import { DEFAULT_THEME, MantineProvider } from '../../theme';
 import { Text } from '../Text/Text';
 import { Tabs, Tab } from './Tabs';
@@ -137,6 +137,21 @@ storiesOf('@mantine/core/Tabs', module)
         <Tab label="No body" />
         <Tab label="Only tabs" />
         <Tab label="Nothing here" />
+      </Tabs>
+    </div>
+  ))
+  .add('Vertical', () => (
+    <div style={{ padding: 50 }}>
+      <Tabs orientation="vertical">
+        <Tab label="Gallery" icon={<ImageIcon />}>
+          Gallery tab content
+        </Tab>
+        <Tab label="Messages" icon={<ChatBubbleIcon />}>
+          Messages tab content
+        </Tab>
+        <Tab label="Settings" icon={<MixerVerticalIcon />}>
+          Settings tab content
+        </Tab>
       </Tabs>
     </div>
   ))

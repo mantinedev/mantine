@@ -11,6 +11,9 @@ export * from './hooks/use-scroll-lock';
 export * from './hooks/use-force-update';
 export * from './hooks/use-toggle';
 export * from './hooks/use-window-scroll';
+export * from './hooks/use-intersection';
+export * from './hooks/use-hash';
+export * from './hooks/use-hotkeys';
 
 export * from './inputs-guide/color-input';
 export * from './inputs-guide/json-input';

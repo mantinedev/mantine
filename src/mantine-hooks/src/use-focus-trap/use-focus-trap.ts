@@ -9,7 +9,7 @@ import { FOCUS_SELECTOR, focusable, tabbable } from './tabbable';
 import { scopeTab } from './scope-tab';
 import { createAriaHider } from './create-aria-hider';
 
-export function useFocusTrap(active = true): (instance: HTMLElement) => void {
+export function useFocusTrap(active = true): (instance: HTMLElement | null) => void {
   const ref = useRef<HTMLElement | null>();
   const restoreAria = useRef<Function | null>(null);
 

@@ -3,7 +3,13 @@ title: Changelog
 slug: /pages/changelog/
 ---
 
-import { UseDebouncedValueBaseDemo, useIntervalHook } from '@docs/demos';
+import {
+  UseDebouncedValueBaseDemo,
+  useIntervalHook,
+  useHotkeysHook,
+  useIntersectionDemo,
+  useHashHook,
+} from '@docs/demos';
 import {
   SegmentedControlDemos,
   PopoverDemos,
@@ -33,6 +39,33 @@ import {
 import * as PrismDemos from '@demos/prism';
 
 # Changelog
+
+## 2.1.0 – August 2021
+
+### New hooks and components
+
+New <GatsbyLink to="/hooks/use-hotkeys/">use-hotkeys</GatsbyLink> hook allows you to subscribe to multiple
+hotkeys with single hook (document element) or function (any other element):
+
+<Demo data={useHotkeysHook} demoProps={{ toggle: true }} />
+
+New <GatsbyLink to="/hooks/use-intersection/">use-intersection</GatsbyLink> hook allows you to get information
+about intersection of given element with its scroll container or `document.body`:
+
+<Demo data={useIntersectionDemo} demoProps={{ toggle: true }} />
+
+Get and set hash in url with new <GatsbyLink to="/hooks/use-hash/">use-hash</GatsbyLink> hook:
+
+<Demo data={useHashHook} demoProps={{ toggle: true }} />
+
+### Other new features
+
+- <GatsbyLink to="/core/highlight/">Highlight</GatsbyLink> component now supports multiple substrings
+  highlight and highlighting of the same string multiple times
+- <GatsbyLink to="/core/tabs/">Tabs</GatsbyLink> component now supports vertical orientation
+- <GatsbyLink to="/core/input/">Input</GatsbyLink> and all other components that use it (Select, Textarea,
+  TextInput, Autocomplete, etc.) now supports headless variant without Mantine styles to help you create
+  your own custom input styles with Styles API
 
 ## 2.0.0 – July 2021
 

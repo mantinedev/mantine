@@ -23,3 +23,6 @@ export { useToggle, useBooleanToggle } from './use-toggle/use-toggle';
 export { useUncontrolled } from './use-uncontrolled/use-uncontrolled';
 export { useWindowEvent } from './use-window-event/use-window-event';
 export { useWindowScroll } from './use-window-scroll/use-window-scroll';
+export { useIntersection } from './use-intersection/use-intersection';
+export { useHash } from './use-hash/use-hash';
+export { useHotkeys, getHotkeyHandler } from './use-hotkey/use-hotkeys';

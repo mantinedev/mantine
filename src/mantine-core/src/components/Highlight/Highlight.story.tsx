@@ -14,6 +14,13 @@ storiesOf('@mantine/core/Highlight', module)
     <>
       <Highlight highlight="that">Nothing nothing</Highlight>
       <Highlight highlight="Highlight all">Highlight all</Highlight>
+      <Highlight highlight={['Highlight', 'array']}>Highlight array</Highlight>
+      <Highlight highlight="multiple">
+        Multiple strings will be highlighted with multiple enabled
+      </Highlight>
+      <Highlight highlight={['hello', 'world']}>
+        Even arrays like hello world will be highlighted multiple, hello world!
+      </Highlight>
     </>
   ))
   .add('Themes', () => <>{themes}</>)

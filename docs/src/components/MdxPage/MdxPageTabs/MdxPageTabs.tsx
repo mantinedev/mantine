@@ -1,5 +1,5 @@
-import React from 'react';
-import { Tabs, Tab, Title } from '@mantine/core';
+import React, { useState } from 'react';
+import { Tabs, Tab, Title, TextInput } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import TableOfContents from '../TableOfContents/TableOfContents';
@@ -9,6 +9,7 @@ import { StylesApi } from './StylesApi/StylesApi';
 import useStyles from './MdxPageTabs.styles';
 
 export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
+  const [query, setQuery] = useState('');
   const classes = useStyles();
   const mobile = useMediaQuery('(max-width: 500px)');
   const hasProps = Array.isArray(frontmatter.props);
@@ -24,7 +25,7 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
           <Title order={2} style={{ fontWeight: 600, marginBottom: 20 }}>
             {component} component props
           </Title>
-          <PropsTable key={component} component={component} />
+          <PropsTable key={component} component={component} query={query} />
         </div>
       ))
     : null;
@@ -65,6 +66,13 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
               style={{ maxWidth: 1080, margin: 'auto', marginTop: 24 }}
               className={classes.tabContent}
             >
+              <TextInput
+                autoFocus
+                placeholder="Search Props"
+                style={{ marginBottom: 20 }}
+                value={query}
+                onChange={(event) => setQuery(event.currentTarget.value)}
+              />
               {propsTables}
             </div>
           </Tab>

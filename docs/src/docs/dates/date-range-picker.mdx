@@ -23,6 +23,16 @@ import { DateRangePickerDemos } from '@demos/dates';
 DateRangePicker component uses the same props as <GatsbyLink to="/dates/date-picker/">DatePicker</GatsbyLink> component.
 The only difference is in `value` and `onChange` props shown in previous example.
 
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<DateRangePicker /> // -> random id generated both on client and server, props mismatch warning
+<DateRangePicker id="my-date-range" /> // -> id is static, no mismatches
+```
+
 ## Accessibility and usability
 
 To make all component controls visible to screen reader set following props:

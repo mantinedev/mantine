@@ -43,6 +43,7 @@ npm install @mantine/hooks
 - [use-force-update](https://mantine.dev/hooks/use-force-update/) – force component to render without state change
 - [use-did-update](https://mantine.dev/hooks/use-did-update/) – call function in useEffect when value changes, but not when component mounts
 - [use-isomorphic-effect](https://mantine.dev/hooks/use-isomorphic-effect/) – switch between useEffect during SSR and useLayoutEffect after hydration
+- [use-hash](https://mantine.dev/hooks/use-hash/) – get and set hash value in url
 
 ## Licence
 
