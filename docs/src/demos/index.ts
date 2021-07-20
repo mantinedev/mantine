@@ -3,6 +3,7 @@ export * from './hooks/use-form';
 export * from './hooks/use-click-outside';
 export * from './hooks/use-clipboard';
 export * from './hooks/use-color-scheme';
+export * from './hooks/use-cookie';
 export * from './hooks/use-document-title';
 export * from './hooks/use-interval';
 export * from './hooks/use-media-query';
