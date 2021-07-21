@@ -14,6 +14,7 @@ export * from './hooks/use-window-scroll';
 export * from './hooks/use-intersection';
 export * from './hooks/use-hash';
 export * from './hooks/use-hotkeys';
+export * from './hooks/use-fullscreen';
 
 export * from './inputs-guide/color-input';
 export * from './inputs-guide/json-input';
