@@ -24,9 +24,9 @@ npm install @mantine/hooks
 - [use-click-outside](https://mantine.dev/hooks/use-click-outside/) – capture click and touch events from outside of given container
 - [use-clipboard](https://mantine.dev/hooks/use-clipboard/) – provides convenient interface to work with clipboard api
 - [use-color-scheme](https://mantine.dev/hooks/use-color-scheme/) – detect system color scheme
-- [use-cookie](https://mantine.dev/hooks/use-cookie/) - access and handle cookies.
-- [use-debounced-value](https://mantine.dev/hooks/use-debounced-value/) – - debounce value with useEffect
-- [use-document-title](https://mantine.dev/hooks/use-document-title/) - set document.title property
+- [use-cookie](https://mantine.dev/hooks/use-cookie/) - access and handle cookies
+- [use-debounced-value](https://mantine.dev/hooks/use-debounced-value/) – debounce value with useEffect
+- [use-document-title](https://mantine.dev/hooks/use-document-title/) – set document.title property
 - [use-focus-trap](https://mantine.dev/hooks/use-focus-trap/) – trap focus at given node
 - [use-form](https://mantine.dev/hooks/use-form/) – bare minimum form state management
 - [use-id](https://mantine.dev/hooks/use-id/) – ensure id for form controls binding
@@ -45,6 +45,8 @@ npm install @mantine/hooks
 - [use-did-update](https://mantine.dev/hooks/use-did-update/) – call function in useEffect when value changes, but not when component mounts
 - [use-isomorphic-effect](https://mantine.dev/hooks/use-isomorphic-effect/) – switch between useEffect during SSR and useLayoutEffect after hydration
 - [use-hash](https://mantine.dev/hooks/use-hash/) – get and set hash value in url
+- [use-intersection](https://mantine.dev/hooks/use-intersection/) – wrapper for IntersectionObserver API
+- [use-hotkeys](https://mantine.dev/hooks/use-hotkeys/) – subscribe to multiple hotkeys with single hook
 
 ## Licence
 

@@ -1,49 +1,43 @@
 import { useRef } from 'react';
 
-function getCookie(name:string) {
-    const cname = `${name}=`;
-    const decoded = decodeURIComponent(document.cookie); //to be careful
-    const arr = decoded.split('; ');
-    let res;
-    arr.forEach(val => {
-        if (val.indexOf(cname) === 0) res = val.substring(cname.length);
-    });
-    return res;
-}
-
-function setCookieUtil(name:string, value:string) {
-    const cname = `${name}=`;
-    let cvalue = '';
-    //if empty erase the cookie
-    if (value === '') {
-        cvalue = `${cname}; Expires=Thu, 01 Jan 1970 00:00:01 GMT`;
-    } else {
-        //if the user forgets to add the cookie-key
-        cvalue = value.indexOf(cname) === 0 ? value.substring(cname.length) : value;
+function getCookie(name: string) {
+  const cookie = `${name}=`;
+  const decoded = decodeURIComponent(document.cookie);
+  const arr = decoded.split('; ');
+  return arr.reduce((acc, val) => {
+    if (val.indexOf(cookie) === 0) {
+      return val.substring(cookie.length);
     }
-    document.cookie = `${cname}${cvalue}`;
-
-    return value === '' ? '' : cvalue;
+    return acc;
+  }, '');
 }
 
-export function useCookie(name:string) {
-    const cookieValueRef = useRef<string | undefined>(getCookie(name));
+function _setCookie(name: string, value: string) {
+  const cookieName = `${name}=`;
+  const cookieValue =
+    value === ''
+      ? `${cookieName}; Expires=Thu, 01 Jan 1970 00:00:01 GMT`
+      : value.indexOf(cookieName) === 0
+      ? value.substring(cookieName.length)
+      : value;
 
-    const setCookie = (value?:React.SetStateAction<string>) => {
-        if (typeof value === 'string') {
-            cookieValueRef.current = setCookieUtil(name, value);
-        } else if (typeof value === 'function') {
-            /*
-            Providing a callback to `setCookie` to give the user
-            option to further customise the cookie value with options like - Expire, SameSite or other site specific options.
-             */
-            const cookieValue = value(cookieValueRef.current);
-            cookieValueRef.current = setCookieUtil(name, cookieValue);
-        } else {
-            //default case is to erase the cookie
-            cookieValueRef.current = setCookieUtil(name, '');
-        }
-    };
+  document.cookie = `${cookieName}${cookieValue}`;
+  return value === '' ? '' : cookieValue;
+}
 
-    return [cookieValueRef, setCookie] as const;
+export function useCookie(name: string) {
+  const cookieValueRef = useRef<string>(getCookie(name));
+
+  const setCookie = (value?: React.SetStateAction<string>) => {
+    if (typeof value === 'string') {
+      cookieValueRef.current = _setCookie(name, value);
+    } else if (typeof value === 'function') {
+      const cookieValue = value(cookieValueRef.current);
+      cookieValueRef.current = _setCookie(name, cookieValue);
+    } else {
+      cookieValueRef.current = _setCookie(name, '');
+    }
+  };
+
+  return [cookieValueRef, setCookie] as const;
 }
