@@ -110,7 +110,7 @@ export function DatePicker({
           themeOverride={themeOverride}
           nextMonthLabel={nextMonthLabel}
           previousMonthLabel={previousMonthLabel}
-          month={_value instanceof Date ? _value : initialMonth}
+          initialMonth={_value instanceof Date ? _value : initialMonth}
           value={_value}
           onChange={handleValueChange}
           labelFormat={labelFormat}

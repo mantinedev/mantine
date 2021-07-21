@@ -1,7 +1,7 @@
 {
   "name": "@mantine/tag-picker",
   "description": "Notion style tag picker built with Mantine",
-  "version": "2.1.0-alpha.0",
+  "version": "2.1.1",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "browser": "lib/index.umd.js",
@@ -16,8 +16,8 @@
     "directory": "src/mantine-tag-picker"
   },
   "peerDependencies": {
-    "@mantine/core": "2.1.0-alpha.0",
-    "@mantine/hooks": "2.1.0-alpha.0",
+    "@mantine/core": "2.1.1",
+    "@mantine/hooks": "2.1.1",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "react-jss": ">=10.1.1"
