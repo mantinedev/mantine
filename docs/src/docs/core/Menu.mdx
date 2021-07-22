@@ -124,6 +124,19 @@ By default menu items render as button, to change that set `component` prop on M
 
 <Demo data={MenuDemos.component} />
 
+## Customize behavior
+
+You can control menu behavior with following props:
+
+- `trapFocus` – traps focus inside menu when it is opened
+- `closeOnScroll` – closes menu when page is scrolled
+
+By default both options are `true` to ensure better accessibility, to turn them off set to `false`:
+
+```tsx
+<Menu trapFocus={false} closeOnScroll={false} />
+```
+
 ## Get element ref
 
 You can get menu control ref by passing `elementRef` prop to Menu component:

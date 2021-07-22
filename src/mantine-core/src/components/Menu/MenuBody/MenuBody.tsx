@@ -49,6 +49,9 @@ export interface MenuBodyProps
 
   /** Body border-radius */
   radius?: MantineNumberSize;
+
+  /** Trap focus inside menu */
+  trapFocus?: boolean;
 }
 
 function getPreviousItem(active: number, items: MenuItemType[]) {
@@ -99,6 +102,7 @@ export function MenuBody({
   classNames,
   styles,
   radius,
+  trapFocus = true,
   ...others
 }: MenuBodyProps) {
   const items = React.Children.toArray(children).filter(
@@ -113,7 +117,7 @@ export function MenuBody({
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
   const [hovered, setHovered] = useState(findInitialItem(items));
-  const focusTrapRef = useFocusTrap();
+  const focusTrapRef = useFocusTrap(trapFocus);
 
   useEffect(() => {
     if (!opened) {
@@ -134,7 +138,7 @@ export function MenuBody({
       onClose();
     }
 
-    if (code === 'Tab') {
+    if (code === 'Tab' && trapFocus) {
       event.preventDefault();
     }
 

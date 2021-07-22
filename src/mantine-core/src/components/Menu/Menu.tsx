@@ -91,6 +91,12 @@ export interface MenuProps
 
   /** Menu body and items border-radius */
   radius?: MantineNumberSize;
+
+  /** Close menu on scroll */
+  closeOnScroll?: boolean;
+
+  /** Trap focus inside menu */
+  trapFocus?: boolean;
 }
 
 const defaultControl = (
@@ -125,6 +131,8 @@ export function Menu({
   elementRef,
   classNames,
   styles,
+  closeOnScroll = true,
+  trapFocus = true,
   onMouseLeave,
   onMouseEnter,
   onChange,
@@ -166,7 +174,7 @@ export function Menu({
     window.clearTimeout(controlRefFocusTimeout.current);
   };
 
-  useWindowEvent('scroll', () => handleClose(true));
+  useWindowEvent('scroll', () => closeOnScroll && handleClose(true));
 
   const wrapperRef = useClickOutside(() => _opened && handleClose());
   const toggleMenu = () => {
@@ -235,6 +243,7 @@ export function Menu({
         classNames={classNames}
         styles={styles}
         radius={radius}
+        trapFocus={trapFocus}
       >
         {children}
       </MenuBody>

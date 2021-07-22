@@ -86,7 +86,12 @@ storiesOf('@mantine/core/Menu', module)
   ))
   .add('Button connected menu', () => (
     <div style={{ padding: 40 }}>
-      <Menu menuPosition={{ top: 36, left: 0 }} control={button} controlRefProp="elementRef">
+      <Menu
+        menuPosition={{ top: 36, left: 0 }}
+        control={button}
+        controlRefProp="elementRef"
+        trapFocus={false}
+      >
         <MenuItem
           component="a"
           href="https://mantine.dev"

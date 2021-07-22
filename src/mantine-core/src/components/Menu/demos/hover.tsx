@@ -4,7 +4,7 @@ import { Group } from '../../Group/Group';
 import { menuItems } from './_menu-items';
 
 const code = `
-<Menu trigger="hover" delay={500}>
+<Menu trigger="hover" delay={500} trapFocus={false} closeOnScroll={false}>
   {/* ... menu items */}
 </Menu>
 `;
@@ -12,7 +12,7 @@ const code = `
 function Demo() {
   return (
     <Group position="center">
-      <Menu trigger="hover" delay={500}>
+      <Menu trigger="hover" delay={500} trapFocus={false} closeOnScroll={false}>
         {menuItems}
       </Menu>
     </Group>
