@@ -50,4 +50,13 @@ storiesOf('@mantine/core/Autocomplete', module)
     <div style={{ padding: 40, maxWidth: 300 }}>
       <DynamicData />
     </div>
+  ))
+  .add('Strings as data', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Autocomplete
+        label="Choose your favorite library/framework"
+        placeholder="Choose value"
+        data={['React', 'Angular', 'Svelte', 'Vue']}
+      />
+    </div>
   ));
