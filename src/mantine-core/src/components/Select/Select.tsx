@@ -29,6 +29,12 @@ export interface SelectItem {
   [key: string]: any;
 }
 
+export type SelectItemDataProp = string | {
+  value: string;
+  label: string;
+  [key: string]: any;
+};
+
 export interface SelectProps
   extends DefaultProps<SelectStylesNames>,
     InputBaseProps,
@@ -41,7 +47,7 @@ export interface SelectProps
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 
   /** Select data used to renderer items in dropdown */
-  data: SelectItem[];
+  data: SelectItemDataProp[];
 
   /** Change item renderer */
   itemComponent?: React.FC<any>;
@@ -149,7 +155,9 @@ export function Select({
     rule: (val) => typeof val === 'string',
   });
 
-  const selectedValue = data.find((item) => item.value === _value);
+  const formattedData = data.map((item) => typeof item === 'string' ? ({ label: item, value: item }) : item);
+
+  const selectedValue = formattedData.find((item) => item.value === _value);
   const [inputValue, setInputValue] = useState(selectedValue?.label || '');
 
   const handleClear = () => {
@@ -161,7 +169,7 @@ export function Select({
   };
 
   useEffect(() => {
-    const newSelectedValue = data.find((item) => item.value === _value);
+    const newSelectedValue = formattedData.find((item) => item.value === _value);
     if (newSelectedValue) {
       setInputValue(newSelectedValue.label);
     } else {
@@ -179,10 +187,10 @@ export function Select({
     inputRef.current.focus();
   };
 
-  const shouldFilter = searchable && data.every((item) => item.label !== inputValue);
+  const shouldFilter = searchable && formattedData.every((item) => item.label !== inputValue);
   const filteredData = shouldFilter
-    ? data.filter((item) => filter(inputValue, item)).slice(0, limit)
-    : data;
+    ? formattedData.filter((item) => filter(inputValue, item)).slice(0, limit)
+    : formattedData;
 
   const items = filteredData.map((item, index) => (
     <Item
@@ -266,7 +274,7 @@ export function Select({
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onBlur === 'function' && onBlur(event);
-    const selected = data.find((item) => item.value === _value);
+    const selected = formattedData.find((item) => item.value === _value);
     setInputValue(selected?.label || '');
     setDropdownOpened(false);
   };
