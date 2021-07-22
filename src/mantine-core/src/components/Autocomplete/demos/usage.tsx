@@ -5,7 +5,7 @@ const code = `
 <Autocomplete
   label="Your favorite framework/library"
   placeholder="Pick one"
-  data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
+  data={['React', 'Angular', 'Svelte', 'Vue']}
 />
 `;
 
@@ -15,7 +15,7 @@ function Demo() {
       <Autocomplete
         label="Your favorite framework/library"
         placeholder="Pick one"
-        data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
+        data={['React', 'Angular', 'Svelte', 'Vue']}
       />
     </div>
   );

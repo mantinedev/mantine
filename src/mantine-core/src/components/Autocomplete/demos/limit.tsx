@@ -6,7 +6,7 @@ const code = `
   label="Only 2 options at a time"
   placeholder="Your favorite framework"
   limit={2}
-  data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
+  data={['React', 'Angular', 'Svelte', 'Vue']}
 />
 `;
 
@@ -17,7 +17,7 @@ function Demo() {
         label="Only 2 options at a time"
         placeholder="Your favorite framework"
         limit={2}
-        data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
+        data={['React', 'Angular', 'Svelte', 'Vue']}
       />
     </div>
   );

@@ -6,9 +6,7 @@ function Demo() {
   const [value, setValue] = useState('');
   const data =
     value.trim().length > 0 && !value.includes('@')
-      ? ['gmail.com', 'outlook.com', 'yahoo.com'].map((provider) => ({
-          value: \`\${value}@\${provider}\`,
-        }))
+      ? ['gmail.com', 'outlook.com', 'yahoo.com'].map((provider) => \`\${value}@\${provider}\`)
       : [];
 
   return (
@@ -21,16 +19,13 @@ function Demo() {
     />
   );
 }
-
 `;
 
 function Demo() {
   const [value, setValue] = useState('');
   const data =
     value.trim().length > 0 && !value.includes('@')
-      ? ['gmail.com', 'outlook.com', 'yahoo.com'].map((provider) => ({
-          value: `${value}@${provider}`,
-        }))
+      ? ['gmail.com', 'outlook.com', 'yahoo.com'].map((provider) => `${value}@${provider}`)
       : [];
 
   return (
