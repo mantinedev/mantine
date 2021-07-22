@@ -1,5 +1,11 @@
 import React from 'react';
-import { GearIcon, ChatBubbleIcon, ImageIcon, MagnifyingGlassIcon } from '@modulz/radix-icons';
+import {
+  GearIcon,
+  ChatBubbleIcon,
+  ImageIcon,
+  MagnifyingGlassIcon,
+  TrashIcon,
+} from '@modulz/radix-icons';
 import { Menu, MenuItem } from '../Menu';
 import { Divider } from '../../Divider/Divider';
 import { Group } from '../../Group/Group';
@@ -8,12 +14,6 @@ import { Text } from '../../Text/Text';
 const code = `
 import React from 'react';
 import { Menu, MenuItem, Divider, Text } from '@mantine/core';
-import {
-  GearIcon,
-  ChatBubbleIcon,
-  ImageIcon,
-  MagnifyingGlassIcon,
-} from '@modulz/radix-icons';
 
 function Demo() {
   return (
@@ -39,15 +39,17 @@ function Demo() {
 }
 `;
 
+const iconProps = { width: 14, height: 14 };
+
 function Demo() {
   return (
     <Group position="center">
       <Menu>
-        <MenuItem icon={<GearIcon width={14} height={14} />}>Settings</MenuItem>
-        <MenuItem icon={<ChatBubbleIcon width={14} height={14} />}>Messages</MenuItem>
-        <MenuItem icon={<ImageIcon width={14} height={14} />}>Gallery</MenuItem>
+        <MenuItem icon={<GearIcon {...iconProps} />}>Settings</MenuItem>
+        <MenuItem icon={<ChatBubbleIcon {...iconProps} />}>Messages</MenuItem>
+        <MenuItem icon={<ImageIcon {...iconProps} />}>Gallery</MenuItem>
         <MenuItem
-          icon={<MagnifyingGlassIcon width={14} height={14} />}
+          icon={<MagnifyingGlassIcon {...iconProps} />}
           rightSection={
             <Text size="xs" color="gray">
               ⌘K
@@ -57,8 +59,9 @@ function Demo() {
           Search
         </MenuItem>
         <Divider />
-        <MenuItem disabled>Delete my data</MenuItem>
-        <MenuItem color="red">Delete account</MenuItem>
+        <MenuItem color="red" icon={<TrashIcon {...iconProps} />}>
+          Delete my data
+        </MenuItem>
       </Menu>
     </Group>
   );

@@ -114,7 +114,7 @@ export function Menu({
   transitionDuration = 250,
   size = 'md',
   shadow = 'md',
-  transition = 'skew-up',
+  transition = 'pop-top-left',
   transitionTimingFunction,
   menuButtonLabel,
   controlRefProp = 'elementRef',

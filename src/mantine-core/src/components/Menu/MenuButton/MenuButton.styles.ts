@@ -5,6 +5,7 @@ import {
   createMemoStyles,
   MantineNumberSize,
   getSizeValue,
+  hexToRgba,
 } from '../../../theme';
 
 interface MenuButtonStyles {
@@ -43,11 +44,14 @@ export default createMemoStyles({
     },
 
     '&$hovered:not(:disabled), &:not(:disabled):hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
-
-      '&:not(:disabled):active': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
-      },
+      backgroundColor: color
+        ? hexToRgba(
+            getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+            theme.colorScheme === 'dark' ? 0.2 : 1
+          )
+        : theme.colorScheme === 'dark'
+        ? hexToRgba(theme.colors.dark[3], 0.35)
+        : theme.colors.gray[0],
     },
   }),
 
