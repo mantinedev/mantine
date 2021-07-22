@@ -1,0 +1,23 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Affix
+order: 1
+slug: /core/affix/
+category: 'overlay'
+description: 'Render react node inside portal at fixed position'
+props: ['Affix']
+import: "import { Affix } from '@mantine/core';"
+source: 'mantine-core/src/components/Affix/Affix.tsx'
+docs: 'core/Affix.mdx'
+styles: ['Affix', 'single-node']
+---
+
+import { AffixDemos } from '@demos/core';
+
+## Usage
+
+Affix renders div element with fixed position inside <GatsbyLink to="/core/portal/">Portal</GatsbyLink> component.
+Use component to display elements fixed at any position on screen, e.g. scroll to top button:
+
+<Demo data={AffixDemos.usage} />

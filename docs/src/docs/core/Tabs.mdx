@@ -1,29 +1,19 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Tabs
 order: 1
 slug: /core/tabs/
 category: 'data-display'
-description: 'Hide content under tabs'
+description: 'Switch between different views'
+props: ['Tabs', 'Tab']
+import: "import { Tabs, Tab } from '@mantine/core';"
+source: 'mantine-core/src/components/Tabs/Tabs.tsx'
+docs: 'core/Tabs.mdx'
+styles: ['Tabs']
 ---
 
-import { TabsSimpleDemo } from '../demos/core/Tabs/tabs-simple.demo';
-import { TabsControlledDemo } from '../demos/core/Tabs/tabs-controlled.demo';
-import { TabsIconDemo } from '../demos/core/Tabs/tabs-icon.demo';
-import { TabsTabPropsDemo } from '../demos/core/Tabs/tabs-tab-props.demo';
-import { TabsColorDemo } from '../demos/core/Tabs/tabs-color.demo';
-import {
-  TabsPositionConfigurator,
-  TabsColorConfigurator,
-} from '../demos/core/Tabs/tabs.configurator';
-
-# Tabs
-
-<PageHeader source="mantine-core/src/Tabs/Tabs.tsx" docs="core/Tabs.mdx" package="@mantine/core" />
-
-```tsx
-import { Tabs, Tab } from '@mantine/core';
-```
+import { TabsDemos } from '@demos/core';
 
 ## Components
 
@@ -32,14 +22,29 @@ import { Tabs, Tab } from '@mantine/core';
 
 ## Usage
 
-<TabsSimpleDemo />
+<Demo data={TabsDemos.colorsConfigurator} />
 
 ## Controlled Tabs
 
 Tabs state can be controlled, to implement this pass `active` and `onTabChange` props.
 You can also use `onTabChange` callback with uncontrolled Tabs.
 
-<TabsControlledDemo />
+```tsx
+import { useState } from 'react';
+import { Tabs, Tab } from '@mantine/core';
+
+function Demo() {
+  const [activeTab, setActiveTab] = useState(1);
+
+  return (
+    <Tabs active={activeTab} onTabChange={setActiveTab}>
+      <Tab label="First">First tab content</Tab>
+      <Tab label="Second">Second tab content</Tab>
+      <Tab label="Third">Third tab content</Tab>
+    </Tabs>
+  );
+}
+```
 
 ## Tabs with icons
 
@@ -50,21 +55,17 @@ If `icon` prop is set, it is not necessary to pass `label`. You can use icons fr
 - [feather](https://feathericons.com/)
 - [react-icons](https://react-icons.github.io/react-icons)
 
-<TabsIconDemo />
+<Demo data={TabsDemos.icons} />
 
 ## Change colors
 
 You can change color of individual tab by passing `color` property to `Tab` component,
 or change color of all tabs by passing color to `Tabs` component.
-Color that you pass to these components should be defined in <GatsbyLink to="/pages/theming/">theme.colors</GatsbyLink>.
+Color that you pass to these components should be defined in <GatsbyLink to="/theming/extend-theme/#default-colors">theme.colors</GatsbyLink>.
 
 Color calculation prioritizes deeper values: first `<Tab color="value" />` value will be used if defined, then `<Tabs color="value">`, after that value will be set to `theme.primaryColor`.
 
-<TabsColorDemo />
-
-## Theme colors
-
-<TabsColorConfigurator />
+<Demo data={TabsDemos.colors} />
 
 ## Tabs position
 
@@ -72,7 +73,7 @@ Tabs controls position is controlled with `grow` and `position` props.
 If `grow` property is set to true, controls will take 100% of available space
 and `position` property is ignored.
 
-<TabsPositionConfigurator />
+<Demo data={TabsDemos.positionConfigurator} />
 
 ## Tab component props
 
@@ -80,14 +81,21 @@ In addition to `icon` and `label` props shown before,
 `Tab` component accepts `color`, `disabled` and any other props from regular button (e.g. style, title, aria-, data-).
 `color` prop will override `color` defined in `Tabs` component.
 
-<TabsTabPropsDemo />
+<Demo data={TabsDemos.tabProps} />
+
+## Add your styles with styles API
+
+You can change styles of any element in button component with <GatsbyLink to="/theming/styles-api/">Styles API</GatsbyLink> to match your design requirements.
+To remove all default styles set `variant` prop to `unstyled`:
+
+<Demo data={TabsDemos.stylesApi} />
 
 ## Get tab control ref
 
 You can get tab control ref by passing `elementRef` prop to `Tab` component
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Tabs, Tab } from '@mantine/core';
 
 function TabsDemo() {
@@ -110,15 +118,8 @@ function TabsDemo() {
 Tabs component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html) on accessibility.
 Component fully supports keyboard events handling and has correct aria-roles:
 
-- Use right and left arrow keys to change tabs
+- Use right and left arrow keys to change tabs when orientation is horizontal
+- Use down and up arrow keys to change tabs when orientation is vertical
 - Only selected tab control can be focused
 - All elements have correct roles: tab, tablist and tabpanel
-- aria-orientation is always set to horizontal as component does not support vertical tabs
-
-## Tabs component props
-
-<PropsTable component="Tabs" />
-
-## Tab component props
-
-<PropsTable component="Tab" />
+- aria-orientation is set based off `orientation` prop (default is horizontal)

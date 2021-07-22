@@ -1,0 +1,38 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Group
+order: 1
+slug: /core/group/
+category: 'layout'
+description: 'Compose elements and components in flex container'
+props: ['Group']
+import: "import { Group } from '@mantine/core';"
+source: 'mantine-core/src/components/Group/Group.tsx'
+docs: 'core/Group.mdx'
+styles: ['Group']
+---
+
+import { GroupDemos } from '@demos/core';
+
+## Usage
+
+Group allows you to compose any elements and components in flex container.
+Use these props to change elements position inside Group:
+
+- **position** controls `justify-content` property
+- **grow** if true sets `flex-grow` property to 1 for all child elements
+- **spacing** controls space between elements – predefined values from `theme.spacing` or number for spacing in px
+- **noWrap** controls `flex-wrap` property and if set to true prevents elements from wrapping on next line once space on current line was exceeded
+- **direction** controls `flex-direction`: row (default) for horizontal orientation, column for vertical
+
+Note that Group component uses `className` prop to add styles,
+child components must accept it otherwise unexpected negative margins will be applied the element.
+
+<Demo data={GroupDemos.configurator} />
+
+## With divider
+
+You can use <GatsbyLink to="/core/divider">Divider</GatsbyLink> component to add additional visual separation and spacing:
+
+<Demo data={GroupDemos.divider} />

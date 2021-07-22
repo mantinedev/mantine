@@ -1,99 +1,62 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Avatar
 order: 1
 slug: /core/avatar/
 category: 'data-display'
 description: 'Display user profile image, initials or fallback icon'
+props: ['Avatar']
+import: "import { Avatar } from '@mantine/core';"
+source: 'mantine-core/src/components/Avatar/Avatar.tsx'
+docs: 'core/Avatar.mdx'
+styles: ['Avatar']
 ---
 
+import { AvatarDemos } from '@demos/core';
 import { AVATAR_SIZES } from '@mantine/core';
-import {
-  AvatarRootDemo,
-  AvatarPlaceholderDemo,
-  AvatarIconPlaceholderDemo,
-  AvatarLettersPlaceholderDemo,
-} from '../demos/core/Avatar/avatar.demos';
-import { AvatarConfigurator } from '../demos/core/Avatar/avatar.configurator';
-import { AvatarRadiusDemo } from '../demos/core/Avatar/avatar-radius.demo';
-import { AvatarSizesDemo } from '../demos/core/Avatar/avatar-sizes.demo';
-
-# Avatar
-
-<PageHeader
-  source="mantine-core/src/Avatar/Avatar.tsx"
-  docs="core/Avatar.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Avatar } from '@mantine/core';
-```
 
 ## Usage
 
-Use Avatar to display user profile image, initials or fallback icon.
+<Demo data={AvatarDemos.usage} />
 
-<AvatarRootDemo />
+## Placeholder
 
-## Radius
+If `src` prop is not set, equals to null or image cannot be loaded,
+placeholder icon will be rendered instead.
+You can use any React node instead of placeholder icon.
+Usually icon or initials are used in this case:
 
-xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
-Alternatively you can use number to set radius in px:
+<Demo data={AvatarDemos.placeholders} />
+
+## Size and radius
+
+<Demo data={AvatarDemos.configurator} />
+
+Control avatar width and height with `size` and border-radius with `radius`.
+Both props have predefined values: xs, sm, md, lg, xl.
+Alternatively, you can use a number to set radius or size in px:
 
 ```tsx
 <Avatar radius="lg" /> // -> theme predefined large radius
-<Avatar radius={1000} /> // -> { borderRadius: 1000 }
-```
+<Avatar radius={10} /> // -> { borderRadius: '10px' }
 
-<AvatarRadiusDemo />
-
-## Size
-
-Avatar has predefined sizes: xs, sm, md, lg, xl.
-You can pass size as number and it will be set as width and height in px.
-
-```tsx
 <Avatar size="sm" /> // -> predefined small size
-<Avatar size={50} /> // -> { width: 50, height: 50 }
+<Avatar size={50} /> // -> { width: '50px', height: '50px' }
 ```
 
-Predefined avatar sizes from xs to xl:
+<Demo data={AvatarDemos.sizes} />
 
-<AvatarSizesDemo />
-
-You can get predefined Avatar sizes by importing `AVATAR_SIZES`:
+You can get predefined avatar sizes by importing `AVATAR_SIZES`:
 
 ```tsx
 import { AVATAR_SIZES } from '@mantine/core';
 ```
 
 <DataTable
-  head={['Prop value', 'Width and height']}
+  head={['Size', 'Width and height']}
   data={Object.keys(AVATAR_SIZES).map((size) => [size, `${AVATAR_SIZES[size]}px`])}
 />
-
-<AvatarConfigurator />
-
-## Placeholder
-
-If `src` prop is not set, equals to null or image cannot be loaded, placeholder icon will be rendered instead.
-
-<AvatarPlaceholderDemo />
-
-## Custom placeholders
-
-You can rendered any React node instead of placeholder icon by passing it as `children`. Usually icon or initials are used in this case.
-
-You can choose any color defined in <GatsbyLink to="/pages/theming/">theme</GatsbyLink> for Avatar placeholder.
-
-### Placeholder icon
-
-<AvatarIconPlaceholderDemo />
-
-### Placeholder letters
-
-<AvatarLettersPlaceholderDemo />
 
 ## Accessibility
 
@@ -107,7 +70,3 @@ In case of image load failing alt will be used as `title` for placeholder.
 // alt is used as title attribute
 <Avatar alt="Rob Johnson">RJ</Avatar>
 ```
-
-## Component props
-
-<PropsTable component="Avatar" />

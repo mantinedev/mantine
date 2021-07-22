@@ -1,5 +1,3 @@
-module.exports = {
-  printWidth: 100,
-  singleQuote: true,
-  trailingComma: 'es5',
-};
+const config = require('./eslint/prettier.config');
+
+module.exports = config;

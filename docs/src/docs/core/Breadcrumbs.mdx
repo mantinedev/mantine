@@ -1,32 +1,23 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Breadcrumbs
 order: 1
 slug: /core/breadcrumbs/
-category: 'navigation'
+category: 'misc'
 description: 'Separate list of react nodes with given separator'
+props: ['Breadcrumbs']
+import: "import { Breadcrumbs } from '@mantine/core';"
+source: 'mantine-core/src/components/Breadcrumbs/Breadcrumbs.tsx'
+docs: 'core/Breadcrumbs.mdx'
+styles: ['Breadcrumbs']
 ---
 
-import { BreadcrumbsBaseDemo } from '../demos/core/Breadcrumbs/breadcrumbs-base.demo';
-
-# Breadcrumbs
-
-<PageHeader
-  source="mantine-core/src/Breadcrumbs/Breadcrumbs.tsx"
-  docs="core/Breadcrumbs.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Breadcrumbs } from '@mantine/core';
-```
+import { BreadcrumbsDemos } from '@demos/core';
 
 ## Usage
 
-Breadcrumbs accept any react nodes as children and places given separator (defaults to `/`) between them.
+Breadcrumbs accept any react nodes as children
+and places given separator (defaults to `/`) between them:
 
-<BreadcrumbsBaseDemo />
-
-## Component props
-
-<PropsTable component="Breadcrumbs" />
+<Demo data={BreadcrumbsDemos.usage} />

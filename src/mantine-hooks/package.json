@@ -1,11 +1,19 @@
 {
   "name": "@mantine/hooks",
-  "version": "1.0.3",
-  "main": "dist/lib.js",
-  "types": "dist/mantine-hooks/src/index.d.ts",
+  "version": "2.1.1",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "browser": "lib/index.umd.js",
+  "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
+  "homepage": "https://mantine.dev/hooks/getting-started/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-hooks"
+  },
   "peerDependencies": {
     "react": ">=16.8.0"
   },

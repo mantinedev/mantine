@@ -1,0 +1,27 @@
+{
+  "exclude": [
+    "node_modules",
+    "lib",
+    "esm",
+    "cjs",
+    "**/*.story.ts",
+    "**/*.story.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "jest-config.js",
+    "configuration/storybook/main.js"
+  ],
+  "compilerOptions": {
+    "target": "ES2015",
+    "lib": ["DOM", "ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmitOnError": true,
+    "allowJs": true,
+    "baseUrl": "."
+  }
+}

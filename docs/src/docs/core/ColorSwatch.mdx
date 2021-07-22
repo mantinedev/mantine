@@ -1,31 +1,23 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: ColorSwatch
 order: 1
 slug: /core/color-swatch/
 category: 'data-display'
-description: 'Display color value'
+description: 'Display color swatch'
+props: ['ColorSwatch']
+import: "import { ColorSwatch } from '@mantine/core';"
+source: 'mantine-core/src/components/ColorSwatch/ColorSwatch.tsx'
+docs: 'core/ColorSwatch.mdx'
+styles: ['ColorSwatch', 'single-node']
 ---
 
-import { ColorSwatchBaseDemo } from '../demos/core/ColorSwatch/color-swatch.demos';
-import { ColorSwatchComponentDemo } from '../demos/core/ColorSwatch/color-swatch-component.demo';
-import { ColorSwatchRadiusDemo } from '../demos/core/ColorSwatch/color-swatch-radius.demo';
-
-# ColorSwatch
-
-<PageHeader
-  source="mantine-core/src/ColorSwatch/ColorSwatch.tsx"
-  docs="core/ColorSwatch.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { ColorSwatch } from '@mantine/core';
-```
+import { ColorSwatchDemos } from '@demos/core';
 
 ## Usage
 
-Use ColorSwatch to display color
+Use ColorSwatch to display color:
 
 ```tsx
 <ColorSwatch color="#c3c3c3" />
@@ -33,41 +25,32 @@ Use ColorSwatch to display color
 
 Example with default Mantine theme colors:
 
-<ColorSwatchBaseDemo />
+<Demo data={ColorSwatchDemos.usage} />
 
-## Size
+## Size and radius
 
-ColorSwatch does not have predefined size values, use number to set width and height in px:
+ColorSwatch does not have predefined size values, use number to set width and height in px,
+radius has predefined xs, sm, md, lg, xl values from <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.radius</GatsbyLink>:
 
 ```tsx
 <ColorSwatch size={50} /> // -> { width: 50, height: 50 }
-```
-
-## Radius
-
-xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/pages/theming/">theme.radius</GatsbyLink>.
-Alternatively you can use number to set radius in px:
-
-```tsx
 <ColorSwatch radius="lg" /> // -> theme predefined large radius
 <ColorSwatch radius={10} /> // -> { borderRadius: 10 }
 ```
-
-<ColorSwatchRadiusDemo />
 
 ## Custom component
 
 Use any component or element with ColorSwatch by setting `component` prop:
 
-<ColorSwatchComponentDemo />
+<Demo data={ColorSwatchDemos.component} />
 
 ## Get element ref
 
 You can get root element ref with `elementRef` prop:
 
 ```tsx
-import React, { useRef } from 'react';
-import { Button } from '@mantine/core';
+import { useRef } from 'react';
+import { ColorSwatch } from '@mantine/core';
 
 function Demo() {
   const ref = useRef();
@@ -97,7 +80,3 @@ in case you need full type coverage for events and `elementRef`:
   }}
 />
 ```
-
-## Component props
-
-<PropsTable component="ColorSwatch" />

@@ -5,6 +5,7 @@ export default createUseStyles(
   (theme: MantineTheme) => ({
     mainLink: {
       ...getFocusStyles(theme),
+      WebkitTapHighlightColor: 'transparent',
       display: 'flex',
       alignItems: 'center',
       textDecoration: 'none',
@@ -24,7 +25,7 @@ export default createUseStyles(
 
     active: {
       color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     },
 
     body: {

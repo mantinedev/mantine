@@ -1,50 +1,92 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles, getFocusStyles } from '@mantine/core';
+import {
+  MantineTheme,
+  getFontStyles,
+  getFocusStyles,
+  createMemoStyles,
+  MantineSize,
+  getSizeValue,
+  hexToRgba,
+} from '@mantine/core';
 
-export default createUseStyles({
-  disableOutsideEvents: {},
+interface DayStyles {
+  theme: MantineTheme;
+  size: MantineSize;
+  fullWidth: boolean;
+}
+
+export const sizes = {
+  xs: 34,
+  sm: 38,
+  md: 46,
+  lg: 58,
+  xl: 66,
+};
+
+export default createMemoStyles({
   weekend: {},
   outside: {},
   selected: {},
+  inRange: {},
+  firstInRange: {},
+  lastInRange: {},
 
-  day: ({ theme }: { theme: MantineTheme }) => ({
+  day: ({ theme, size, fullWidth }: DayStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    position: 'relative',
     WebkitTapHighlightColor: 'transparent',
     backgroundColor: 'transparent',
-    width: 34,
-    height: 34,
-    lineHeight: '34px',
+    width: fullWidth ? '100%' : getSizeValue({ size, sizes }),
+    height: getSizeValue({ size, sizes }),
+    lineHeight: `${getSizeValue({ size, sizes })}px`,
+    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     padding: 0,
     borderRadius: theme.radius.sm,
     border: '1px dotted transparent',
     cursor: 'pointer',
-    fontSize: theme.fontSizes.sm,
     userSelect: 'none',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
 
-    '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+    '&:disabled': {
+      pointerEvents: 'none',
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
     },
 
-    '&$weekend': {
-      color: theme.colors.red[7],
+    '&:hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    },
+
+    '&$weekend:not(:disabled)': {
+      color: theme.colorScheme === 'dark' ? theme.colors.red[5] : theme.colors.red[7],
     },
 
     '&$outside': {
-      color: theme.colors.gray[4],
-
-      '&$disableOutsideEvents': {
-        pointerEvents: 'none',
-      },
+      color: `${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+      } !important`,
     },
 
-    '&$selected': {
-      backgroundColor: theme.colors[theme.primaryColor][0],
-      color: theme.colors[theme.primaryColor][6],
+    '&$inRange:not(:disabled)': {
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? hexToRgba(theme.colors[theme.primaryColor][9], 0.3)
+          : theme.colors[theme.primaryColor][0],
+      borderRadius: 0,
+    },
 
-      '&:hover': {
-        backgroundColor: theme.colors[theme.primaryColor][0],
-      },
+    '&$selected:not(:disabled)': {
+      backgroundColor: theme.colors[theme.primaryColor][7],
+      color: theme.white,
+    },
+
+    '&$firstInRange:not(:disabled)': {
+      borderTopLeftRadius: theme.radius.sm,
+      borderBottomLeftRadius: theme.radius.sm,
+    },
+
+    '&$lastInRange:not(:disabled)': {
+      borderTopRightRadius: theme.radius.sm,
+      borderBottomRightRadius: theme.radius.sm,
     },
   }),
 });

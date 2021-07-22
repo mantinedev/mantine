@@ -11,8 +11,9 @@ export default createUseStyles(
     navbar: {
       boxSizing: 'border-box',
       height: '100vh',
-      borderRight:
-        theme.colorScheme === 'dark' ? theme.colors.dark[8] : `1px solid ${theme.colors.gray[1]}`,
+      borderRight: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
+      }`,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       position: 'fixed',
       zIndex: 5,

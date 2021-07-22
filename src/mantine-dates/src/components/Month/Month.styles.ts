@@ -1,22 +1,35 @@
-import { createUseStyles } from 'react-jss';
-import { MantineTheme, getFontStyles } from '@mantine/core';
+import { MantineTheme, getFontStyles, createMemoStyles } from '@mantine/core';
 
-export default createUseStyles({
-  month: ({ theme }: { theme: MantineTheme }) => ({
+interface MonthStyles {
+  theme: MantineTheme;
+  fullWidth: boolean;
+}
+
+export default createMemoStyles({
+  weekday: ({ theme }: MonthStyles) => ({
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[5],
+  }),
+
+  root: ({ theme, fullWidth }: MonthStyles) => ({
     ...getFontStyles(theme),
     borderCollapse: 'collapse',
+    width: fullWidth ? '100%' : 'auto',
+    tableLayout: 'fixed',
+  }),
 
-    '& td': {
-      padding: 0,
-    },
+  cell: {
+    boxSizing: 'border-box',
+    padding: 0,
+    borderTop: '1px solid transparent',
+  },
 
-    '& th': {
-      padding: 0,
-      fontWeight: 'normal',
-      paddingBottom: theme.spacing.xs / 2,
-      textAlign: 'center',
-      cursor: 'default',
-      userSelect: 'none',
-    },
+  weekdayCell: ({ theme }: MonthStyles) => ({
+    boxSizing: 'border-box',
+    padding: 0,
+    fontWeight: 'normal',
+    paddingBottom: theme.spacing.xs / 2,
+    textAlign: 'center',
+    cursor: 'default',
+    userSelect: 'none',
   }),
 });

@@ -1,61 +1,27 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Drawer
 order: 1
 slug: /core/drawer/
 category: 'overlay'
 description: 'Display overlay area at any side of the screen'
+props: ['Drawer']
+import: "import { Drawer } from '@mantine/core';"
+source: 'mantine-core/src/components/Drawer/Drawer.tsx'
+docs: 'core/Drawer.mdx'
+styles: ['Drawer']
 ---
 
+import { DrawerDemos } from '@demos/core';
 import { DRAWER_SIZES } from '@mantine/core';
-import { DrawerConfigurator } from '../demos/core/Drawer/drawer.configurator';
-import { DrawerBaseDemo } from '../demos/core/Drawer/drawer-base.demo';
-import { DrawerPositionsDemo } from '../demos/core/Drawer/drawer-positions.demo';
-import { DrawerSizesDemo } from '../demos/core/Drawer/drawer-sizes.demo';
-import { DrawerInactiveDemo } from '../demos/core/Drawer/drawer-inactive.demo';
-import { DrawerTransitionsDemo } from '../demos/core/Drawer/drawer-transitions.demo';
-
-# Drawer
-
-<PageHeader
-  source="mantine-core/src/Drawer/Drawer.tsx"
-  docs="core/Drawer.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Drawer } from '@mantine/core';
-```
 
 ## Usage
 
-<DrawerBaseDemo />
+Drawer is wrapped in <GatsbyLink to="/core/portal/">Portal</GatsbyLink> component,
+it can be rendered only on client as createPortal is not available during server side rendering:
 
-## Usage with Portal
-
-Usually, it is a good idea to render drawer outside of current component to avoid z-index collisions.
-To implement this use <GatsbyLink to="/core/portal/">Portal</GatsbyLink> component.
-
-```tsx
-import React, { useState } from 'react';
-import { Drawer, Portal } from '@mantine/core';
-
-function PortalDemo() {
-  const [opened, setOpened] = useState(false);
-
-  return (
-    <div style={{ position: 'relative', zIndex: 1 }}>
-      <Portal zIndex={5}>
-        <Drawer opened={opened} onClose={() => setOpened(false)}>
-          Drawer is rendered at the end of document.body
-        </Drawer>
-      </Portal>
-
-      <button onClick={() => setOpened(true)}>Open drawer</button>
-    </div>
-  );
-}
-```
+<Demo data={DrawerDemos.usage} />
 
 ## Position
 
@@ -65,7 +31,7 @@ Drawer can be placed on left (default), top, right and bottom. Control drawer po
 <Drawer position="right" />
 ```
 
-<DrawerPositionsDemo />
+<Demo data={DrawerDemos.positions} />
 
 ## Sizes
 
@@ -81,7 +47,7 @@ Size cannot exceed 100% of width and 100vh of height.
 <Drawer position="bottom" size="500vh" /> // 100vh height as max-height is 100vh
 ```
 
-<DrawerSizesDemo />
+<Demo data={DrawerDemos.sizes} />
 
 You can get predefined sizes by importing `DRAWER_SIZES`:
 
@@ -107,19 +73,19 @@ You can change drawer behavior with props:
 - `noCloseOnClickOutside` – do not trigger onClose for outside clicks
 - `noCloseOnEscape` – do not trigger onClose for escape key press
 
-<DrawerInactiveDemo />
+<Demo data={DrawerDemos.behavior} />
 
 Try combining these props to achieve desired behavior.
-Note that, disabling some parts will break accessibility and usability.
+Note that disabling some parts will break accessibility and usability.
 
-<DrawerConfigurator />
+<Demo data={DrawerDemos.configurator} />
 
 ## Change transition
 
 Drawer is built with <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component.
 You can customize transition, timing function and duration:
 
-<DrawerTransitionsDemo />
+<Demo data={DrawerDemos.transitions} />
 
 ## Accessibility and usability
 
@@ -130,15 +96,30 @@ By default:
 - Drawer transitions use disabled when user prefers to reduce motion
 - Drawer body has `aria-modal` and `role="dialog"` attributes
 
-Add [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-labelledby_attribute) and [aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute) for better screen readers support:
+Add [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-labelledby_attribute), [aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-describedby_attribute)
+and `closeButtonLabel` props for better screen readers support:
 
 ```tsx
-<Drawer aria-labelledby="drawer-title" aria-describedby="drawer-body">
+<Drawer
+  aria-labelledby="drawer-title"
+  aria-describedby="drawer-body"
+  closeButtonLabel="Close drawer"
+>
   <h1 id="drawer-title">Title</h1>
   <div id="drawer-body">Body</div>
 </Drawer>
 ```
 
-## Component props
+## Initial focus
 
-<PropsTable component="Drawer" />
+Drawer uses <GatsbyLink to='/hooks/use-focus-trap/'>use-focus-trap</GatsbyLink> to manage focus.
+To specify initial focus element add `data-autofocus` attribute:
+
+```tsx
+<Drawer>
+  <input />
+  {/* Second input in modal will have initial focus */}
+  <input data-autofocus />
+  <input />
+</Drawer>
+```

@@ -1,37 +1,31 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: LoadingOverlay
 order: 1
 slug: /core/loading-overlay/
 category: 'overlay'
-description: 'Display loader with overlay over current container'
+description: 'Overlay over given container with centered Loader'
+props: ['LoadingOverlay']
+import: "import { LoadingOverlay } from '@mantine/core';"
+source: 'mantine-core/src/components/LoadingOverlay/LoadingOverlay.tsx'
+docs: 'core/LoadingOverlay.mdx'
+styles: ['LoadingOverlay', 'single-node']
 ---
 
-import { LoadingOverlayBaseDemo } from '../demos/core/LoadingOverlay/loading-overlay.demos';
-
-# LoadingOverlay
-
-<PageHeader
-  source="mantine-core/src/LoadingOverlay/LoadingOverlay.tsx"
-  docs="core/LoadingOverlay.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { LoadingOverlay } from '@mantine/core';
-```
+import { LoadingOverlayDemos } from '@demos/core';
 
 ## Usage
 
 Use LoadingOverlay to overlay element to disable interactions and indicate loading state.
-Note that, elements under overlay are still focusable with keyboard remember to add additional logic to handle this case.
+Note that elements under overlay are still focusable with keyboard. Remember to add additional logic to handle this case.
 
-Overlay had absolute position and will take 100% of width and height of parent container.
+Overlay had absolute position and will take 100% of width and height of nearest parent container with relative position.
 Use it when you need to disable user interactions and indicate loading state, for example, while form is submitting.
 
 `visible` is the only required prop, if it set to false component will not render anything.
 
-<LoadingOverlayBaseDemo />
+<Demo data={LoadingOverlayDemos.usage} />
 
 ## Transition duration
 
@@ -48,7 +42,7 @@ You can change appear and disappear animations duration by passing `transitionDu
 ## Loader and Overlay props
 
 LoadingOverlay is built using <GatsbyLink to="/core/overlay/">Overlay</GatsbyLink> and <GatsbyLink to="/core/loader/">Loader</GatsbyLink> components.
-You can change all props of Loader component and opacity and color of Overlay:
+You can change all props of Loader component, opacity and color of Overlay:
 
 ```tsx
 <LoadingOverlay
@@ -58,6 +52,8 @@ You can change all props of Loader component and opacity and color of Overlay:
 />
 ```
 
-## Component props
+## Custom loader
 
-<PropsTable component="LoadingOverlay" />
+You can use any other loader with LoadingOverlay by setting `loader` prop:
+
+<Demo data={LoadingOverlayDemos.loader} />

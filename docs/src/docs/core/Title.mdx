@@ -1,36 +1,26 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Title
 order: 1
 slug: /core/title/
 category: 'typography'
-description: 'Display h1-h6 headings'
+description: 'h1-h6 headings'
+props: ['Title']
+import: "import { Title } from '@mantine/core';"
+source: 'mantine-core/src/components/Title/Title.tsx'
+docs: 'core/Title.mdx'
+styles: ['Title', 'single-node']
 ---
 
-import { TitleBaseDemo } from '../demos/core/Title/title.demos';
-
-# Title
-
-<PageHeader
-  source="mantine-core/src/Title/Title.tsx"
-  docs="core/Title.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Title } from '@mantine/core';
-```
+import { TitleDemos } from '@demos/core';
 
 ## Usage
 
 Use Title component to render h1-h6 headings with Mantine theme styles.
 By default Title has no margins and paddings.
-You can change headings font-size and line-height properties in <GatsbyLink to="/pages/theming/">theme</GatsbyLink>.
+You can change headings font-size and line-height properties in <GatsbyLink to="/theming/extend-theme/">theme</GatsbyLink>.
 
 Pass `order` prop to render specific element (h1-h6), default order is 1:
 
-<TitleBaseDemo />
-
-## Component props
-
-<PropsTable component="Title" />
+<Demo data={TitleDemos.usage} />

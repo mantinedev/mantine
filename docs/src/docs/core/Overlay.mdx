@@ -1,25 +1,19 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Overlay
 order: 1
 slug: /core/overlay/
 category: 'overlay'
-description: 'Display overlay with any color and opacity over element'
+description: 'Overlays given element with div element with any color and opacity'
+props: ['Overlay']
+import: "import { Overlay } from '@mantine/core';"
+source: 'mantine-core/src/components/Overlay/Overlay.tsx'
+docs: 'core/Overlay.mdx'
+styles: ['Overlay', 'single-node']
 ---
 
-import { OverlayBaseDemo, OverlayLinkDemo } from '../demos/core/Overlay/overlay.demos';
-
-# Overlay
-
-<PageHeader
-  source="mantine-core/src/Overlay/Overlay.tsx"
-  docs="core/Overlay.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Overlay } from '@mantine/core';
-```
+import { OverlayDemos, CardDemos } from '@demos/core';
 
 ## Usage
 
@@ -28,7 +22,7 @@ It is used to build components like <GatsbyLink to="/core/modal/">Modal</GatsbyL
 
 You can change overlay opacity (from 0 to 1), color (css color value, not connected to mantine theme) and z-index (number).
 
-<OverlayBaseDemo />
+<Demo data={OverlayDemos.usage} />
 
 ## Custom component
 
@@ -43,8 +37,4 @@ import { Link } from 'react-router-dom';
 
 For example, you can create link overlay and intercept all clicks:
 
-<OverlayLinkDemo />
-
-## Component props
-
-<PropsTable component="Overlay" />
+<Demo data={CardDemos.overlay} />

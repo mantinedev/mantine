@@ -1,0 +1,30 @@
+{
+  "name": "@mantine/prism",
+  "description": "Code highlight with Mantine theme",
+  "version": "2.1.1",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "browser": "lib/index.umd.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev/others/prism/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-prism"
+  },
+  "peerDependencies": {
+    "@mantine/core": "2.1.1",
+    "@mantine/hooks": "2.1.1",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "react-jss": ">=10.1.1"
+  },
+  "dependencies": {
+    "clsx": "^1.1.1",
+    "prism-react-renderer": "^1.2.1"
+  },
+  "devDependencies": {}
+}

@@ -1,22 +1,16 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Link } from 'gatsby';
-import { Burger, Code, ActionIcon, Tooltip } from '@mantine/core';
-import {
-  GitHubLogoIcon,
-  ChatBubbleIcon,
-  ExclamationTriangleIcon,
-  SunIcon,
-  MoonIcon,
-} from '@modulz/radix-icons';
+import { Burger, Code, ActionIcon, Tooltip, Group } from '@mantine/core';
+import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 import corePackageJson from '../../../../package.json';
-import { DocsData } from '../get-docs-data';
+import { getDocsData } from '../get-docs-data';
 import { ColorSchemeContext } from '../ColorScheme.context';
 import Search from './Search/Search';
-import { Logo } from './Logo';
+import { Logo } from '../../Logo/Logo';
+import { SocialButton } from '../../SocialButton/SocialButton';
 import useStyles from './Header.styles';
 
 interface HeaderProps {
-  data: DocsData;
+  data: ReturnType<typeof getDocsData>;
   navbarOpened: boolean;
   toggleNavbar(): void;
 }
@@ -52,9 +46,10 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
           aria-label={burgerTitle}
         />
         <div className={classes.logoWrapper}>
-          <Link to="/" className={classes.logo} aria-label="Getting started">
-            <Logo className={classes.image} />
-          </Link>
+          <div className={classes.logo}>
+            <Logo />
+          </div>
+
           <a href="https://github.com/mantinedev/mantine/releases" className={classes.version}>
             <Code>v{corePackageJson.version}</Code>
           </a>
@@ -65,28 +60,20 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
       <div className={classes.links}>
         <Search data={data} isMacOS={isMacOS} />
 
-        <a className={classes.link} href="https://github.com/mantinedev/mantine">
-          <GitHubLogoIcon />
-          <span className={classes.linkLabel}>Source code</span>
-        </a>
-
-        <a className={classes.link} href="https://github.com/mantinedev/mantine/discussions">
-          <ChatBubbleIcon />
-          <span className={classes.linkLabel}>Discuss</span>
-        </a>
-
-        <a className={classes.link} href="https://github.com/mantinedev/mantine/issues/new">
-          <ExclamationTriangleIcon />
-          <span className={classes.linkLabel}>Report issue</span>
-        </a>
+        <Group spacing="xs">
+          <SocialButton type="small" service="github" />
+          <SocialButton type="small" service="discord" />
+          <SocialButton type="small" service="twitter" />
+          <SocialButton type="small" service="email" />
+        </Group>
 
         <Tooltip
-          label={`${isMacOS ? '⌘' : 'Ctrl'} + J`}
-          position="left"
-          placement="center"
+          label={`Toggle color scheme: ${isMacOS ? '⌘' : 'Ctrl'} + J`}
           transition="fade"
           withArrow
-          arrowSize={4}
+          position="bottom"
+          placement="end"
+          style={{ marginLeft: 20 }}
         >
           <ActionIcon
             aria-label="Toggle theme"

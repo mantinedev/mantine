@@ -1,37 +1,41 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Menu
 order: 1
 slug: /core/menu/
 category: 'overlay'
 description: 'Combine a list of secondary actions into single interactive area'
+props: ['Menu', 'MenuItem']
+import: "import { Menu, MenuItem } from '@mantine/core';"
+source: 'mantine-core/src/components/Menu/Menu.tsx'
+docs: 'core/Menu.mdx'
+styles: ['Menu', 'MenuItem']
 ---
 
+import { MenuDemos } from '@demos/core';
 import { MENU_SIZES } from '@mantine/core';
-import { MenuBaseDemo } from '../demos/core/Menu/menu.root-demo';
-import { MenuComponentDemo } from '../demos/core/Menu/menu-component.demo';
-import { MenuComposeDemo } from '../demos/core/Menu/menu-compose.demo';
-import { MenuTransitionsDemo } from '../demos/core/Menu/menu-transitions.demo';
-import { MenuPositionDemo } from '../demos/core/Menu/menu-position.demo';
-import { MenuConfigurator } from '../demos/core/Menu/menu.configurator';
-
-# Menu
-
-<PageHeader source="mantine-core/src/Menu/Menu.tsx" docs="core/Menu.mdx" package="@mantine/core" />
-
-```tsx
-import { Menu, MenuItem } from '@mantine/core';
-```
 
 ## Usage
 
 Use Menu to combine a list of secondary actions into single interactive area.
 
-<MenuBaseDemo />
+<Demo data={MenuDemos.usage} />
+
+## Show menu on hover
+
+To show menu on hover set props:
+
+- `trigger` to hover
+- `delay` to number in ms (defaults to 0)
+
+In this case menu will use `onMouseEnter` and `onFocus` events instead of `onClick`:
+
+<Demo data={MenuDemos.hover} />
 
 ## MenuItem component
 
-You can use <GatsbyLink to="/core/hr/">Hr</GatsbyLink> (renders horizontal line) and MenuItem components inside Menu.
+You can use <GatsbyLink to="/core/divider/">Divider</GatsbyLink> (renders horizontal line) and MenuItem components inside Menu.
 MenuItem renders button and accepts props:
 
 - **icon** – icon on the left
@@ -58,7 +62,7 @@ MenuItem renders button and accepts props:
 By default menu button uses <GatsbyLink to="/core/action-icon/">ActionIcon</GatsbyLink> with horizontal dots.
 You can change it by setting `control` and `controlRefProp` props:
 
-<MenuComponentDemo />
+<Demo data={MenuDemos.controls} />
 
 `controlRefProp` is the prop name with which element ref can be accessed.
 It defaults to `elementRef` as all interactive Mantine components use it to get ref.
@@ -68,27 +72,25 @@ For regular html element it will be `controlRefProp="ref"`
 
 Menu position defaults to `{ top: 0, left: 0 }` and is set with object which contains optional top, left, bottom and right properties:
 
-<MenuPositionDemo />
+<Demo data={MenuDemos.positions} />
 
 ## Change transition
 
 Menu is built with <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component.
 You can customize transition, timing function and duration:
 
-<MenuTransitionsDemo />
+<Demo data={MenuDemos.transitions} />
 
-## Shadow
+## Size and shadow
 
-You can use predefined shadows defined in <GatsbyLink to="/pages/theming/#spacing-radius-and-shadows">theme.shadows</GatsbyLink> or your own:
+You can use predefined shadows defined in <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.shadows</GatsbyLink> or your own:
 
 ```tsx
 <Menu shadow="sm" /> // -> predefined small shadow
 <Menu shadow="1px 1px 3px rgba(0, 0, 0, .1)" /> // -> custom shadow
 ```
 
-## Size
-
-<MenuConfigurator />
+<Demo data={MenuDemos.configurator} />
 
 Menu has predefined sizes: xs, sm, md, lg, xl. Size prop controls menu width.
 You can also use number value to set width in px:
@@ -98,7 +100,7 @@ You can also use number value to set width in px:
 <Menu size={200} /> // -> 200px width
 ```
 
-You can get predefined menu sizes by importing `BUTTON_SIZES`:
+You can get predefined menu sizes by importing `MENU_SIZES`:
 
 ```tsx
 import { MENU_SIZES } from '@mantine/core';
@@ -109,24 +111,42 @@ import { MENU_SIZES } from '@mantine/core';
   data={Object.keys(MENU_SIZES).map((size) => [size, `${MENU_SIZES[size]}px`])}
 />
 
-## Compose with ElementsGroup
+## Custom component as MenuItem
 
-You can compose Menu with any other components that support composition feature with <GatsbyLink to="/core/elements-group/">ElementsGroup</GatsbyLink> component.
+By default menu items render as button, to change that set `component` prop on MenuItem component:
 
-<MenuComposeDemo />
+```tsx
+// Regular anchor as MenuItem root element
+<MenuItem component="a" href="https://mantine/dev" target="_blank" />
+
+// React router link as MenuItem root element
+<MenuItem component={Link} to="/hello" />
+```
+
+<Demo data={MenuDemos.component} />
 
 ## Get element ref
 
 You can get menu control ref by passing `elementRef` prop to Menu component:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Menu } from '@mantine/core';
 
 function Demo() {
   const menuControlRef = useRef();
   return <Menu elementRef={menuControlRef} />;
 }
+```
+
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `menuId` prop to prevent props mismatch:
+
+```tsx
+<Menu /> // -> random id generated both on client and server, props mismatch warning
+<Menu menuId="my-accordion" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility and usability
@@ -144,11 +164,3 @@ Component behavior and properties:
 - Menu control has `aria-haspopup`, `aria-expanded`, `aria-controls` and `aria-label` attributes, `aria-label` is defined by `menuButtonLabel` prop
 - Menu body has `menu` role, `aria-orientation` is always set to `vertical`
 - Menu item has `menuitem` role
-
-## Menu component props
-
-<PropsTable component="Menu" />
-
-## MenuItem component props
-
-<PropsTable component="MenuItem" />

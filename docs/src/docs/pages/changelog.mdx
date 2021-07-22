@@ -1,0 +1,261 @@
+---
+title: Changelog
+slug: /pages/changelog/
+---
+
+import {
+  UseDebouncedValueBaseDemo,
+  useIntervalHook,
+  useHotkeysHook,
+  useIntersectionDemo,
+  useHashHook,
+} from '@docs/demos';
+import {
+  SegmentedControlDemos,
+  PopoverDemos,
+  DividerDemos,
+  GroupDemos,
+  GridDemos,
+  CenterDemos,
+  TabsDemos,
+  RingProgressDemos,
+  BadgeDemos,
+  NumberInputDemos,
+  AccordionDemos,
+  SelectDemos,
+  AutocompleteDemos,
+  JsonInputDemos,
+  SliderDemos,
+  AffixDemos,
+} from '@demos/core';
+import {
+  CalendarDemos,
+  RangeCalendarDemos,
+  MonthDemos,
+  DatePickerDemos,
+  TimeInputDemos,
+  DateRangePickerDemos,
+} from '@demos/dates';
+import * as PrismDemos from '@demos/prism';
+
+# Changelog
+
+## 2.1.0 – August 2021
+
+### New hooks and components
+
+New <GatsbyLink to="/hooks/use-hotkeys/">use-hotkeys</GatsbyLink> hook allows you to subscribe to multiple
+hotkeys with single hook (document element) or function (any other element):
+
+<Demo data={useHotkeysHook} demoProps={{ toggle: true }} />
+
+New <GatsbyLink to="/hooks/use-intersection/">use-intersection</GatsbyLink> hook allows you to get information
+about intersection of given element with its scroll container or `document.body`:
+
+<Demo data={useIntersectionDemo} demoProps={{ toggle: true }} />
+
+Get and set hash in url with new <GatsbyLink to="/hooks/use-hash/">use-hash</GatsbyLink> hook:
+
+<Demo data={useHashHook} demoProps={{ toggle: true }} />
+
+### Other new features
+
+- <GatsbyLink to="/core/highlight/">Highlight</GatsbyLink> component now supports multiple substrings
+  highlight and highlighting of the same string multiple times
+- <GatsbyLink to="/core/tabs/">Tabs</GatsbyLink> component now supports vertical orientation
+- <GatsbyLink to="/core/input/">Input</GatsbyLink> and all other components that use it (Select, Textarea,
+  TextInput, Autocomplete, etc.) now supports headless variant without Mantine styles to help you create
+  your own custom input styles with Styles API
+
+## 2.0.0 – July 2021
+
+### Breaking changes
+
+- All inputs no longer support `inputStyle` and `inputClassName` props, this feature was replaced by <GatsbyLink to="/theming/styles-api/">Styles API</GatsbyLink>
+- <GatsbyLink to="/core/burger/">Burger</GatsbyLink> component no longer uses colors from theme, use
+  hex color value instead
+- Select component was renamed to <GatsbyLink to="/core/native-select">NativeSelect</GatsbyLink>
+- `ElementsGroup`, `Hr` and `CardsGrid` components are replaced and no longer exported from @mantine/core package
+- All inputs variant is set by default to filled in dark theme
+
+### New theming options
+
+- @mantine/core package now exports <GatsbyLink to="/theming/global-styles/">GlobalStyles and NormalizeCSS</GatsbyLink> components to include global styles
+- New <GatsbyLink to="/theming/styles-api/">Styles API</GatsbyLink> allows you to style any part of Mantine components with inline styles or classes
+
+<Demo data={TabsDemos.stylesApi} />
+
+### @mantine/dates package
+
+<GatsbyLink to="/dates/getting-started/">@mantine/dates</GatsbyLink> is a new package that includes date
+pickers and calendars:
+
+<br />
+<br />
+
+<GatsbyLink to="/dates/date-picker/">DatePicker</GatsbyLink> allows you to capture dates without free
+user input. Component supports the same props as any other input from @mantine/core library and can be
+used in forms:
+
+<Demo data={DatePickerDemos.usage} demoProps={{ toggle: true, zIndex: 5 }} />
+
+<GatsbyLink to="/dates/date-range-picker/">DateRangePicker</GatsbyLink> allows you to capture dates range
+from user:
+
+<Demo data={DateRangePickerDemos.usage} demoProps={{ toggle: true, zIndex: 4 }} />
+
+<GatsbyLink to="/dates/time-input/">TimeInput</GatsbyLink> component allows to capture time input from
+user:
+
+<Demo data={TimeInputDemos.usage} demoProps={{ toggle: true }} />
+
+<GatsbyLink to="/dates/calendar/">Calendar</GatsbyLink> component allows you to capture date input fom
+user or display events:
+
+<Demo data={CalendarDemos.usage} demoProps={{ toggle: true }} />
+
+Capture dates range input with <GatsbyLink to="/dates/range-calendar/">RangeCalendar</GatsbyLink> component:
+
+<Demo data={RangeCalendarDemos.usage} demoProps={{ toggle: true }} />
+
+<GatsbyLink to="/dates/month/">Month</GatsbyLink> component displays given month, it is the most basic
+component which is used in all other components. You can use it to create your own date pickers and calendars
+if Mantine components do not fit your requirements:
+
+<Demo data={MonthDemos.usage} demoProps={{ toggle: true }} />
+
+### @mantine/prism package
+
+<GatsbyLink to="/others/prism/">@mantine/prism</GatsbyLink> is a new package that allows you to highlight
+code with your theme colors just like in Mantine docs:
+
+<Demo data={PrismDemos.usage} demoProps={{ toggle: true }} />
+
+### New @mantine/core components
+
+<GatsbyLink to="/core/accordion/">Accordion</GatsbyLink> component:
+
+<Demo data={AccordionDemos.label} demoProps={{ toggle: true }} />
+
+<GatsbyLink to="/core/select/">Select</GatsbyLink> component:
+
+<Demo data={SelectDemos.itemComponent} demoProps={{ toggle: true, zIndex: 5 }} />
+
+<GatsbyLink to="/core/autocomplete/">Autocomplete</GatsbyLink> component:
+
+<Demo data={AutocompleteDemos.itemComponent} demoProps={{ toggle: true, zIndex: 4 }} />
+
+<GatsbyLink to="/core/json-input/">JsonInput</GatsbyLink> component:
+
+<Demo data={JsonInputDemos.usage} demoProps={{ toggle: true }} />
+
+<GatsbyLink to="/core/slider/">Slider and RangeSlider</GatsbyLink> components:
+
+<Demo data={SliderDemos.configurator} demoProps={{ toggle: true }} />
+
+<GatsbyLink to="/core/affix/">Affix</GatsbyLink> components:
+
+<Demo data={AffixDemos.usage} demoProps={{ toggle: true }} />
+
+### @mantine/core changes
+
+- <GatsbyLink to="/core/tabs/">Tabs</GatsbyLink> component now supports unstyled and pills variants
+- All inputs now support `size` prop
+- <GatsbyLink to="/core/drawer/">Drawer</GatsbyLink> component now support title and close button
+- <GatsbyLink to="/core/tooltip/">Tooltip</GatsbyLink> component now displays tooltip on focus by default
+- <GatsbyLink to="/core/menu/">Menu</GatsbyLink> component now closes on scroll to prevent incorrect
+  focus handling
+- <GatsbyLink to="/core/menu/">Menu</GatsbyLink> component now supports hover trigger
+- 3 new premade transitions were added to <GatsbyLink to="/core/transition/">Transition</GatsbyLink>: scale-y, scale-x and scale
+- @mantine/core now exports new <GatsbyLink to="/core/button/#unstyled-button">UnstyledButton</GatsbyLink> component that can be used to create custom buttons
+
+### New @mantine/hooks hooks
+
+- <GatsbyLink to="/hooks/use-did-update">use-did-update</GatsbyLink> – useEffect replacement when you
+  do not want hook to be called on mount
+- <GatsbyLink to="/hooks/use-isomorphic-effect">use-isomorphic-effect</GatsbyLink> – switch between useEffect
+  during server side rendering and useLayoutEffect after hydration
+- <GatsbyLink to="/hooks/use-force-update">use-force-update</GatsbyLink> – force component to rerender
+- <GatsbyLink to="/hooks/use-toggle">use-toggle</GatsbyLink> – switch state between two values
+- <GatsbyLink to="/hooks/use-uncontrolled">use-uncontrolled</GatsbyLink> – manage state for both controlled
+  and uncontrolled components
+- <GatsbyLink to="/hooks/use-window-scroll">use-window-scroll</GatsbyLink> – get current scroll position
+  and handler to scroll to given position
+
+## 1.3.0 – June 2021
+
+### New components and features
+
+<GatsbyLink to="/core/ring-progress/">RingProgress</GatsbyLink> component displays simple circle diagrams:
+<Demo data={RingProgressDemos.usage} demoProps={{ toggle: true }} />
+
+<GatsbyLink to="/core/tabs/">Tabs</GatsbyLink> component now supports outline variant:
+<Demo data={TabsDemos.outline} demoProps={{ toggle: true }} />
+
+<GatsbyLink to="/core/badge/">Badge</GatsbyLink> component now supports dot variant:
+<Demo data={BadgeDemos.dots} />
+
+<GatsbyLink to="/core/number-input/">NumberInput</GatsbyLink> component now exposes increment/decrement
+handlers and supports custom controls:
+<Demo data={NumberInputDemos.handlers} demoProps={{ toggle: true }} />
+
+<GatsbyLink to="/core/center/">Center</GatsbyLink> centers content vertically and horizontally:
+<Demo data={CenterDemos.usage} demoProps={{ toggle: true }} />
+
+New <GatsbyLink to="/hooks/use-interval/">use-interval</GatsbyLink> hook:
+
+<Demo data={useIntervalHook} demoProps={{ toggle: true }} />
+
+### Other changes
+
+- Mantine packages are now published with commonjs and es modules – this enables better tree shaking
+- All components props types are now exported from @mantine/core package, you can import it by adding `Props` to component name:
+
+```tsx
+import { ButtonProps } from '@mantine/core';
+```
+
+## 1.1.0 – May 2021
+
+### New components and features
+
+<GatsbyLink to="/core/segmented-control/">SegmentedControl</GatsbyLink> component is an alternative to <GatsbyLink to="/core/tabs/">
+  Tabs
+</GatsbyLink> and <GatsbyLink to="/core/radio-group/">RadioGroup</GatsbyLink>:
+<Demo data={SegmentedControlDemos.usage} demoProps={{ toggle: true }} />
+
+<GatsbyLink to="/core/popover/">Popover</GatsbyLink> component allows you to display popover section
+relative to given target element. Use it to render forms, complex tooltips, etc.
+<Demo data={PopoverDemos.form} demoProps={{ toggle: true, zIndex: 4 }} />
+
+<GatsbyLink to="/core/divider/">Divider</GatsbyLink> component now supports labels, vertical orientation
+and margins:
+<Demo data={DividerDemos.labels} demoProps={{ toggle: true }} />
+
+<GatsbyLink to="/core/group/">Group</GatsbyLink> component now supports vertical orientation:
+<Demo data={GroupDemos.configurator} demoProps={{ toggle: true }} />
+
+<GatsbyLink to="/core/grid/">Grid</GatsbyLink> component allows you to use flexbox grid with any columns
+count:
+<Demo data={GridDemos.growConfigurator} demoProps={{ toggle: true }} />
+
+<GatsbyLink to="/hooks/use-debounced-value/">use-debounced-value</GatsbyLink> - hook to debounce value
+with useEffect:
+<UseDebouncedValueBaseDemo toggle />
+
+### API Changes
+
+- Prop typo fix in <GatsbyLink to="/core/checkbox/">Checkbox</GatsbyLink> component (~~intermediate~~
+  -> indeterminate)
+- Hr component replaced with <GatsbyLink to="/core/divider/">Divider</GatsbyLink> to support more options
+- ElementsGroup component replaced with <GatsbyLink to="/core/group/">Group</GatsbyLink> to support all elements positioning
+- Custom component is now supported by <GatsbyLink to="/core/action-icon/">ActionIcon</GatsbyLink> and <GatsbyLink to="/core/menu">MenuItem</GatsbyLink> components
+- <GatsbyLink to="/core/modal/">Modal</GatsbyLink> and <GatsbyLink to="/core/drawer/">
+    Drawer
+  </GatsbyLink> components are wrapped with <GatsbyLink to="/core/portal/">Portal</GatsbyLink> by default
+- <GatsbyLink to="/core/loading-overlay">LoadingOverlay</GatsbyLink> now supports custom loaders
+
+### Other changes
+
+- Significant performance improvements with react-jss useStyles props memoization
+- Dark theme improvements, all components now use more balanced transparent colors in dark theme

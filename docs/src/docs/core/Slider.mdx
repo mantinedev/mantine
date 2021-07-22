@@ -1,0 +1,91 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Slider
+order: 1
+slug: /core/slider/
+category: 'inputs'
+description: 'Capture user feedback from a range of values'
+props: ['Slider', 'RangeSlider']
+import: "import { Slider, RangeSlider } from '@mantine/core';"
+source: 'mantine-core/src/components/Slider'
+docs: 'core/Slider.mdx'
+styles: ['Slider', 'RangeSlider']
+---
+
+import { SliderDemos } from '@demos/core';
+
+## Usage
+
+<Demo data={SliderDemos.configurator} />
+
+## Controlled
+
+By default both Slider and RangeSlider are uncontrolled, add onChange and value props to make them controlled:
+
+```tsx
+import { useState } from 'react';
+import { Slider, RangeSlider } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(40);
+  const [rangeValue, setRangeValue] = useState([20, 80]);
+
+  return (
+    <>
+      <Slider value={value} onChange={setValue} />
+      <RangeSlider value={rangeValue} onChange={setRangeValue} />
+    </>
+  );
+}
+```
+
+## Control label
+
+To change label behavior and appearance set props:
+
+- `label` – formatter function, accepts value as an argument, set to null to disable label, defaults to `f => f`
+- `labelAlwaysOn` – if true – label will always be displayed, by default label is visible only when user is dragging
+- `labelTransition`, `labelTransitionDuration`, `labelTransitionTimingFunction` – label uses <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component to animate presence, you can choose any premade transition or create your own
+
+<Demo data={SliderDemos.label} />
+
+## Min, max and step
+
+<Demo data={SliderDemos.step} />
+
+## Marks
+
+Add any amount of marks to slider by setting `marks` prop to an array of objects:
+
+```tsx
+const marks = [
+  { value: 20 }, // -> displays mark on slider track
+  { value: 40, label: '40%' }, // -> adds mark label below slider track
+];
+```
+
+Note that mark value is relative to slider value, not width:
+
+<Demo data={SliderDemos.marks} />
+
+## Styles API
+
+You can change styles of any element in slider component with <GatsbyLink to="/theming/styles-api/">Styles API</GatsbyLink> to match your design requirements:
+
+<Demo data={SliderDemos.customize} />
+
+## Accessibility and usability
+
+Slider and RangeSlider components are accessible by default:
+
+- Slider thumbs are focusable
+- When user uses mouse to interact with slider, focus is moved on slider track, when user presses arrows focus is moved on thumb
+- Value can be changed with arrows with step increment/decrement
+
+To label component for screen readers add labels to thumbs:
+
+```tsx
+<Slider thumbLabel="Thumb aria-label" />
+<RangeSlider thumbFromLabel="First thumb aria-label" thumbToLabel="Second thumb aria-label" />
+```

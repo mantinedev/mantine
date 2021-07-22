@@ -1,23 +1,15 @@
 ---
-package: mantine-hooks
+group: 'mantine-hooks'
+package: '@mantine/hooks'
 title: 'use-merged-ref'
+category: 'utils'
 order: 1
 slug: /hooks/use-merged-ref/
+description: 'Use multiple refs for one dom node'
+import: "import { useMergedRef } from '@mantine/hooks';"
+docs: 'hooks/use-merged-ref.mdx'
+source: 'mantine-hooks/src/use-merged-ref/use-merged-ref.ts'
 ---
-
-# use-merged-ref
-
-<PageHeader
-  source="mantine-hooks/src/use-merged-ref/use-merged-ref.ts"
-  docs="hooks/use-merged-ref.mdx"
-  package="@mantine/hooks"
-/>
-
-Use multiple refs for one dom node
-
-```tsx
-import { useMergedRef } from '@mantine/hooks';
-```
 
 ## Usage
 
@@ -26,7 +18,7 @@ Use hook when you need to use more than one ref on single dom node, for example,
 when you want to use <GatsbyLink to="/hooks/use-click-outside/">use-click-outside</GatsbyLink> and <GatsbyLink to="/hooks/use-focus-trap/">use-focus-trap</GatsbyLink> hooks and also get a ref for yourself:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useClickOutside, useFocusTrap, useMergedRef } from '@mantine/hooks';
 
 function Demo() {

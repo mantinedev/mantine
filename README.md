@@ -1,26 +1,24 @@
-# Mantine
+![Github](https://github.com/mantinedev/mantine/blob/master/.demo/Github.png?raw=true)
 
 Mantine is a MIT licensed open source react components and hooks library with focus on usability, accessibility and developer experience.
-
-![Banner](https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/mantine-ph.png)
 
 ## Links
 
 - [Documentation](https://mantine.dev/)
-- [Examples](https://mantine.dev/pages/examples/)
-- [Components by category](https://mantine.dev/core/getting-started/#components-by-category)
+- [Core components by category](https://mantine.dev/core/getting-started/)
 - [Hooks list](https://mantine.dev/hooks/getting-started/#included-hooks)
 - [Notifications system](https://mantine.dev/others/notifications/)
-- [Contributing](https://mantine.dev/pages/contribute/)
+- [Contributing](https://mantine.dev/contribute/)
 - [Ask question or give feedback](https://github.com/mantinedev/mantine/discussions)
-- [Features, components and hooks backlog](https://trello.com/b/R0D766tA/mantine)
-- [Changelog](./CHANGELOG.md)
+- [Changelog](https://mantine.dev/pages/changelog/)
 - [Sign up for monthly newsletter](https://buttondown.email/mantine)
 - [Follow Mantine on Twitter](https://twitter.com/mantinedev)
+- [Join Discord community](https://discord.gg/eUZpPbpxb4)
 
 ## Features
 
 - **Customization** – colors, fonts, shadows and many other parts are customizable to fit your design needs
+- **Flexibility** – configure components appearance and behavior with vast amount of settings or overwrite any part of component styles
 - **Dark theme** – mantine supports dark theme by default in all components
 - **Accessibility and usability** – all components follow accessibility best practices and feature full keyboard support
 - **TypeScript** – all @mantine/ scoped packages are built with TypeScript and support it by default
@@ -33,3 +31,11 @@ Mantine is a MIT licensed open source react components and hooks library with fo
 ## Licence
 
 All Mantine packages have MIT licence. All Mantine dependencies also have MIT licence, except react-transition-group package which has BSD-3-Clause license.
+
+## Contributors
+
+<a href="https://github.com/mantinedev/mantine/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=mantinedev/mantine" />
+</a>
+
+[Become a contributor](https://mantine.dev/contribute/)

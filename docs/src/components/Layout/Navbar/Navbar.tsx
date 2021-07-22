@@ -3,12 +3,12 @@ import cx from 'clsx';
 import { Scrollbars } from 'react-custom-scrollbars';
 import NavbarMainLink from './NavbarMainLink/NavbarMainLink';
 import NavbarDocsCategory from './NavbarDocsCategory/NavbarDocsCategory';
-import { DocsData } from '../get-docs-data';
+import { getDocsData } from '../get-docs-data';
 import mainLinks from './main-links';
 import useStyles from './Navbar.styles';
 
 interface NavbarProps {
-  data: DocsData;
+  data: ReturnType<typeof getDocsData>;
   opened: boolean;
   onClose(): void;
 }
@@ -28,8 +28,8 @@ export default function Navbar({ data, opened, onClose }: NavbarProps) {
     </NavbarMainLink>
   ));
 
-  const docs = Object.keys(data).map((key) => (
-    <NavbarDocsCategory links={data[key]} category={key} key={key} onLinkClick={onClose} />
+  const docs = data.map((group) => (
+    <NavbarDocsCategory group={group} key={group.group} onLinkClick={onClose} />
   ));
 
   return (

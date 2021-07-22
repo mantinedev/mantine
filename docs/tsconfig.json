@@ -1,6 +1,10 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "resolveJsonModule": true
+    "paths": {
+      "@docs/demos": ["./docs/src/demos"],
+      "@mantine/*": ["src/mantine-*/src"],
+      "@demos/*": ["src/mantine-*/src/demos"]
+    }
   }
 }

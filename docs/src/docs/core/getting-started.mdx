@@ -1,74 +1,41 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: 'Getting started'
+pageTitle: 'Mantine Core'
+description: 'Core components library'
 order: 0
 slug: /core/getting-started/
+installation: 'react-jss @mantine/core @mantine/hooks'
+bundleSize: '@mantine/core'
+source: 'mantine-core/'
+license: MIT
 ---
 
-import { ComponentsByCategory } from '../../components/ComponentsByCategory/ComponentsByCategory';
-
-# Mantine core
-
-@mantine/core is the main package that includes all essential components
-that you may need to build an application.
+import { CoreGroups } from '../../components/IndexGroups/CoreGroups';
 
 ## Installation
 
-With yarn:
+Package depends on [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks) and [react-jss](https://www.npmjs.com/package/react-jss).
+
+Install with npm:
 
 ```sh
-yarn add react-jss @mantine/hooks @mantine/core
+npm install react-jss @mantine/core @mantine/hooks
 ```
 
-With npm:
+Install with yarn:
 
 ```sh
-npm install react-jss @mantine/hooks @mantine/core
+yarn add react-jss @mantine/core @mantine/hooks
 ```
 
-With [peerdeps](https://www.npmjs.com/package/install-peerdeps):
+## Browser support
 
-```sh
-npx install-peerdeps @mantine/core
-```
+All components are tested to work in all major modern browsers.
+Some components depend on wep APIs that may not be supported by old browsers (e.g. [window.matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) and [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)),
+if you encounter any issues with browsers compatibility [open an issue](https://github.com/mantinedev/mantine/issues/new).
 
 ## Components by category
 
-<ComponentsByCategory />
-
-## Package information
-
-### Bundle size
-
-<BundleSize packageName="@mantine/core" />
-
-### Dependencies
-
-<Dependencies
-  packageName="@mantine/core"
-  dependencies={[
-    { name: '@mantine/hooks', type: 'peer' },
-    { name: 'react', type: 'peer' },
-    { name: 'react-dom', type: 'peer' },
-    { name: 'react-jss', type: 'peer', why: 'CSS-in-JS library used to style all components' },
-    {
-      name: 'clsx',
-      type: 'dependency',
-      why: 'Utility to construct className stings conditionally',
-    },
-    {
-      name: 'react-textarea-autosize',
-      type: 'dependency',
-      why: 'Utility component used to implement autosize in Textarea',
-    },
-    {
-      name: 'react-transition-group',
-      type: 'dependency',
-      why: 'Used to implement transitions in Transition component',
-    },
-  ]}
-/>
-
-## License
-
-<License />
+<CoreGroups />

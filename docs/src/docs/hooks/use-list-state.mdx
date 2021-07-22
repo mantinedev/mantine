@@ -1,25 +1,17 @@
 ---
-package: mantine-hooks
+group: 'mantine-hooks'
+package: '@mantine/hooks'
 title: 'use-list-state'
+category: 'state'
 order: 1
 slug: /hooks/use-list-state/
+description: 'Manage array state'
+import: "import { useListState } from '@mantine/hooks';"
+docs: 'hooks/use-list-state.mdx'
+source: 'mantine-hooks/src/use-list-state/use-list-state.ts'
 ---
 
-import { CheckboxIntermediateDemo } from '../demos/core/Checkbox/checkbox-intermediate.demo';
-import { UseListStateDemo } from '../demos/hooks/use-list-state.demos';
-import { TransitionsTableDemo } from '../demos/examples/transactions-table.demo';
-
-# use-list-state
-
-<PageHeader
-  source="mantine-hooks/src/use-list-state/use-list-state.ts"
-  docs="hooks/use-list-state.mdx"
-  package="@mantine/hooks"
-/>
-
-```tsx
-import { useListState } from '@mantine/hooks';
-```
+import { CheckboxDemos } from '@demos/core';
 
 ## Usage
 
@@ -81,28 +73,16 @@ Hook provides handlers to work with array data:
 - `setItemProp` – set item property at given index
 - `setState` – set list state with react action
 
-## Examples
+## Indeterminate state checkbox example
 
-### Todo list example
-
-<UseListStateDemo />
-
-### Intermediate state checkbox example
-
-<CheckboxIntermediateDemo />
-
-### Month spendings table
-
-<TransitionsTableDemo />
+<Demo data={CheckboxDemos.indeterminate} demoProps={{ toggle: true }} />
 
 ## TypeScript
 
 ### Definition
 
 ```tsx
-function useListState<T>(
-  initialValue: T[] = []
-): [
+function useListState<T>(initialValue: T[] = []): [
   T[],
   {
     setState: Dispatch<SetStateAction<T[]>>;

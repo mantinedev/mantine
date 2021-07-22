@@ -17,7 +17,7 @@ export default createUseStyles(
       position: 'fixed',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       borderBottom: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
       }`,
       display: 'flex',
       alignItems: 'center',
@@ -25,19 +25,11 @@ export default createUseStyles(
     },
 
     logo: {
-      ...getFocusStyles(theme),
       paddingRight: theme.spacing.md,
       paddingLeft: theme.spacing.md,
       height: HEADER_HEIGHT,
       display: 'flex',
       alignItems: 'center',
-      textDecoration: 'none',
-      userSelect: 'none',
-      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-    },
-
-    image: {
-      height: 30,
     },
 
     links: {
@@ -82,7 +74,7 @@ export default createUseStyles(
       color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
       textDecoration: 'none',
       borderRadius: theme.radius.sm,
-      padding: [6, theme.spacing.md],
+      padding: [4, theme.spacing.md],
       height: 36,
       boxSizing: 'border-box',
 
@@ -92,6 +84,8 @@ export default createUseStyles(
     },
 
     linkLabel: {
+      fontSize: theme.fontSizes.sm,
+      lineHeight: 1,
       marginLeft: theme.spacing.xs,
     },
 

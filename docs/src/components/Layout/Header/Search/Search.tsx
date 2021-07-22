@@ -2,27 +2,39 @@ import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { navigate } from 'gatsby';
 import { TextInput, Kbd, Text, Paper, Highlight } from '@mantine/core';
-import { useClickOutside, useWindowEvent } from '@mantine/hooks';
+import { useClickOutside, useWindowEvent, upperFirst } from '@mantine/hooks';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
-import { DocItem, DocsData } from '../../get-docs-data';
+import { getDocsData } from '../../get-docs-data';
 import useStyles from './Search.styles';
 
 interface SearchProps {
-  data: DocsData;
+  data: ReturnType<typeof getDocsData>;
   isMacOS: boolean;
 }
 
-function filterData(query: string, data: DocsData): DocItem[] {
-  return Object.keys(data)
-    .reduce((acc: DocItem[], key) => {
-      const filteredItems = data[key].filter(
-        (item) =>
-          item.title.toLowerCase().includes(query.trim().toLowerCase()) &&
-          item.title.toLowerCase() !== 'getting started'
-      );
+function filterData(query: string, data: ReturnType<typeof getDocsData>) {
+  const pages = data.reduce((acc, part) => {
+    if (!part || !Array.isArray(part.groups)) {
+      return acc;
+    }
 
-      return [...acc, ...filteredItems];
-    }, [])
+    part.groups.forEach((group) => {
+      if (group && Array.isArray(group.pages)) {
+        acc.push(...group.pages);
+      }
+    });
+
+    part.uncategorized
+      .filter((page) => page.title.toLowerCase() !== 'getting started')
+      .forEach((page) => {
+        acc.push(page);
+      });
+
+    return acc;
+  }, []);
+
+  return pages
+    .filter((page) => page.title.toLowerCase().includes(query.trim().toLowerCase()))
     .slice(0, 10);
 }
 
@@ -59,7 +71,7 @@ export default function Search({ data, isMacOS }: SearchProps) {
     }
 
     if (event.nativeEvent.code === 'Enter' && filteredData[hovered]) {
-      handleSubmit(filteredData[hovered].to);
+      handleSubmit(filteredData[hovered].slug);
     }
 
     if (event.nativeEvent.code === 'Escape') {
@@ -78,14 +90,14 @@ export default function Search({ data, isMacOS }: SearchProps) {
   const items = filteredData.map((item, index) => (
     <button
       type="button"
-      key={item.to}
-      onMouseDown={() => handleSubmit(item.to)}
+      key={item.slug}
+      onMouseDown={() => handleSubmit(item.slug)}
       className={cx(classes.item, { [classes.itemHovered]: hovered === index })}
       tabIndex={-1}
     >
       <Highlight highlight={query}>{item.title}</Highlight>
       <Text color="gray" size="sm" className={classes.package}>
-        {item.package.replace('mantine-', '@mantine/')}
+        {item.package ? item.package.replace('mantine-', '@mantine/') : upperFirst(item.group)}
       </Text>
     </button>
   ));
@@ -112,7 +124,7 @@ export default function Search({ data, isMacOS }: SearchProps) {
         icon={<MagnifyingGlassIcon />}
         rightSection={rightSection}
         rightSectionWidth={isMacOS ? 50 : 72}
-        rightSectionProps={{ style: { pointerEvents: 'none' } }}
+        styles={{ rightSection: { pointerEvents: 'none' } }}
         onFocus={() => setDropdownOpened(true)}
         onKeyDown={handleInputKeydown}
       />

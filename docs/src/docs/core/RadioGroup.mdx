@@ -1,27 +1,20 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: RadioGroup
 order: 1
 slug: /core/radio-group/
 category: 'inputs'
 description: 'Capture user feedback limited to small set of options'
+props: ['RadioGroup', 'Radio']
+import: "import { RadioGroup, Radio } from '@mantine/core';"
+source: 'mantine-core/src/components/RadioGroup/RadioGroup.tsx'
+docs: 'core/RadioGroup.mdx'
+styles: ['RadioGroup', 'Radio']
 ---
 
+import { RadioGroupDemos } from '@demos/core';
 import { RADIO_SIZES } from '@mantine/core';
-import { RadioGroupConfigurator } from '../demos/core/RadioGroup/radio-group.configurator';
-import { RadioSizesDemo } from '../demos/core/RadioGroup/radio-sizes.demo';
-
-# RadioGroup
-
-<PageHeader
-  source="mantine-core/src/RadioGroup/RadioGroup.tsx"
-  docs="core/RadioGroup.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { RadioGroup, Radio } from '@mantine/core';
-```
 
 ## Usage
 
@@ -30,16 +23,15 @@ If you more that 5 options consider using <GatsbyLink to="/core/select/">Select<
 as it provides better UX for large data sets.
 
 Component supports all props from <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> component.
-See full information about shared inputs props in <GatsbyLink to="/guides/inputs/">inputs guide</GatsbyLink>.
 
-<RadioGroupConfigurator />
+<Demo data={RadioGroupDemos.configurator} />
 
 ## Size
 
 Checkbox has 5 predefined sizes: xs, sm, md, lg, xl.
-Size defines label font-size (from <GatsbyLink to="/pages/theming/">theme.fontSizes</GatsbyLink>), input width and height.
+Size defines label font-size, input width and height.
 
-<RadioSizesDemo />
+<Demo data={RadioGroupDemos.sizes} />
 
 You can get checkbox sizes by importing `RADIO_SIZES`:
 
@@ -55,7 +47,7 @@ import { RADIO_SIZES } from '@mantine/core';
 ## Controlled
 
 ```tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { RadioGroup, Radio } from '@mantine/core';
 
 function Demo() {
@@ -66,14 +58,12 @@ function Demo() {
       value={value}
       onChange={setValue}
       label="Select your favorite framework/library"
-      description="This is anonymous, you can safely pick Angular"
+      description="This is anonymous"
       required
     >
       <Radio value="react">React</Radio>
       <Radio value="svelte">Svelte</Radio>
-      <Radio value="ng" disabled title="Unless you can't, haha">
-        Angular
-      </Radio>
+      <Radio value="ng">Angular</Radio>
       <Radio value="vue">Vue</Radio>
     </RadioGroup>
   );
@@ -85,7 +75,7 @@ function Demo() {
 You can get input ref with `elementRef` prop on Radio component:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Select } from '@mantine/core';
 
 function Demo() {
@@ -101,11 +91,3 @@ function Demo() {
   );
 }
 ```
-
-## RadioGroup component props
-
-<PropsTable component="RadioGroup" />
-
-## Radio component props
-
-<PropsTable component="Radio" />

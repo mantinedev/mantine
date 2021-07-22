@@ -1,50 +1,37 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Loader
 order: 1
 slug: /core/loader/
 category: 'feedback'
 description: 'Indicate loading state'
+props: ['Loader']
+import: "import { Loader } from '@mantine/core';"
+source: 'mantine-core/src/components/Loader/Loader.tsx'
+docs: 'core/Loader.mdx'
+styles: ['Loader', 'single-node']
 ---
 
+import { LoaderDemos } from '@demos/core';
 import { LOADER_SIZES } from '@mantine/core';
-import { LoaderConfigurator } from '../demos/core/Loader/loader.configurator';
-import { LoaderSizesDemo } from '../demos/core/Loader/loader-sizes.demo';
-
-# Loader
-
-<PageHeader
-  source="mantine-core/src/Loader/Loader.tsx"
-  docs="core/Loader.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Loader } from '@mantine/core';
-```
 
 ## Usage
 
-Use Loader to indicate loading state.
-
 By default loader will be rendered with `theme.primaryColor`.
-You can choose any color defined in <GatsbyLink to="/pages/theming/#colors">theme.colors</GatsbyLink>:
+You can choose any color defined in <GatsbyLink to="/theming/extend-theme/#default-colors">theme.colors</GatsbyLink>:
 
-<LoaderConfigurator />
+<Demo data={LoaderDemos.configurator} />
 
 ## Size
 
-Loader has predefined sizes: xs, sm, md, lg, xl. Size controls loader height.
-Alternatively you can use number to set height in px:
+Size controls loader height, width is calculated dynamically. Loader has predefined sizes: xs, sm, md, lg, xl.
+Alternatively, you can use a number to set height in px:
 
 ```tsx
 <Loader size="sm" /> // -> predefined small size
 <Loader size={50} /> // -> { height: 50 }
 ```
-
-Predefined sizes from xl to xs:
-
-<LoaderSizesDemo />
 
 You can get predefined sizes by importing `LOADER_SIZES`:
 
@@ -53,10 +40,6 @@ import { LOADER_SIZES } from '@mantine/core';
 ```
 
 <DataTable
-  head={['Prop value', 'Height']}
+  head={['Size', 'Height']}
   data={Object.keys(LOADER_SIZES).map((size) => [size, `${LOADER_SIZES[size]}px`])}
 />
-
-## Component props
-
-<PropsTable component="Loader" />

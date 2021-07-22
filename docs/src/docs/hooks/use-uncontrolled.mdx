@@ -1,0 +1,95 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+title: 'use-uncontrolled'
+category: 'state'
+order: 1
+slug: /hooks/use-uncontrolled/
+description: 'Manage state of both controlled and uncontrolled components'
+import: "import { useUncontrolled } from '@mantine/hooks';"
+docs: 'hooks/use-uncontrolled.mdx'
+source: 'mantine-hooks/src/use-uncontrolled/use-uncontrolled.ts'
+---
+
+## Usage
+
+Hook allows you to manage state for both controlled and uncontrolled components:
+
+```tsx
+import { useUncontrolled } from '@mantine/hooks';
+
+function YourInput({ value, defaultValue, onChange }) {
+  const [_value, handleChange] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: 'Final',
+    rule: (val) => typeof val === 'string',
+    onChange,
+  });
+
+  return (
+    <input
+      type="text"
+      value={_value}
+      onChange={(event) => handleChange(event.currentTarget.value)}
+    />
+  );
+}
+```
+
+In the example above `rule` function is used to determine with value should be used initially:
+
+```tsx
+// defaultValue and finalValue are ignored for controlled components
+// _value === 'Hello'
+<YourInput value="Hello" defaultValue="There" onChange={() => {}} />
+
+// Since value prop does not meet requirements default value will be used instead
+// _value === 'There'
+<YourInput value={null} defaultValue="There" />
+
+// When both value and defaultValue fail to meet requirements, finalValue will be used
+// _value === 'Final'
+<YourInput value={null} defaultValue={null} />
+```
+
+Now you can use your component as controlled and uncontrolled input:
+
+```tsx
+// Uncontrolled
+<YourInput />
+<YourInput defaultValue="hello" />
+<YourInput onChange={() => {}} /> // still possible since value is stored in internal state
+
+// Controlled
+<YourInput value="Hello" onChange={() => {}} />
+```
+
+## TypeScript
+
+### Set value type
+
+By default hook will set type automatically, but you can provide your own type:
+
+```tsx
+useUncontrolled<number>({
+  value: 10,
+  defaultValue: 5,
+  finalValue: 20,
+  rule: (val) => val >= 10,
+  onChange: (val) => console.log(val > 10),
+});
+```
+
+### Definition
+
+```tsx
+function useUncontrolled<T>(configuration: {
+  value: T;
+  defaultValue: T;
+  finalValue: T;
+  onChange(value: T): void;
+  onValueUpdate?(value: T): void;
+  rule: (value: T) => boolean;
+}): readonly [T, (val: T) => void, 'controlled' | 'uncontrolled'];
+```

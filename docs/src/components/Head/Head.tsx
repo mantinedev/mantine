@@ -20,6 +20,10 @@ export default function Head({ title, description, disableTitleTemplate }: HeadP
       titleTemplate={disableTitleTemplate ? undefined : '%s | Mantine'}
       meta={[
         {
+          name: 'viewport',
+          content: 'width=device-width, user-scalable=no',
+        },
+        {
           name: 'description',
           content: metaDescription,
         },
@@ -29,8 +33,7 @@ export default function Head({ title, description, disableTitleTemplate }: HeadP
         },
         {
           property: 'og:image',
-          content:
-            'https://raw.githubusercontent.com/mantinedev/mantine/master/docs/src/images/og-image.png',
+          content: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png',
         },
         {
           property: 'og:image:width',
@@ -65,6 +68,13 @@ export default function Head({ title, description, disableTitleTemplate }: HeadP
           content: metaDescription,
         },
       ]}
-    />
+    >
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Dosis:wght@800&display=swap"
+        rel="stylesheet"
+      />
+    </Helmet>
   );
 }

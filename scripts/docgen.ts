@@ -7,13 +7,16 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
   '../src/mantine-core/src/Menu/MenuItem/MenuItem.tsx',
   '../src/mantine-core/src/RadioGroup/Radio/Radio.tsx',
-  '../src/mantine-core/src/Tabs/Tab/Tab.tsx',
-  '../src/mantine-core/src/Card/CardsGrid/CardsGrid.tsx',
+  '../src/mantine-core/src/components/Tabs/Tab/Tab.tsx',
+  '../src/mantine-core/src/components/Slider/Slider/Slider.tsx',
+  '../src/mantine-core/src/components/Slider/RangeSlider/RangeSlider.tsx',
   '../src/mantine-tag-picker/src/TagPickerContainer.tsx',
+  '../src/mantine-prism/src/Prism.tsx',
 ];
 
 const PATHS: DeclarationPath[] = [
-  { type: 'package', path: path.join(__dirname, '../src/mantine-core/src') },
+  { type: 'package', path: path.join(__dirname, '../src/mantine-core/src/components') },
+  { type: 'package', path: path.join(__dirname, '../src/mantine-dates/src/components') },
   ...EXTRA_FILES_PATHS.map((filePath) => ({
     type: 'file' as const,
     path: path.join(__dirname, filePath),

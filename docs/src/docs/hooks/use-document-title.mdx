@@ -1,23 +1,17 @@
 ---
-package: mantine-hooks
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'utils'
 title: 'use-document-title'
 order: 1
 slug: /hooks/use-document-title/
+description: 'Set document.title to given string'
+import: "import { useDocumentTitle } from '@mantine/hooks';"
+docs: 'hooks/use-document-title.mdx'
+source: 'mantine-hooks/src/use-document-title/use-document-title.ts'
 ---
 
-import { UseDocumentTitleDemo } from '../demos/hooks/use-document-title.demos';
-
-# use-document-title
-
-<PageHeader
-  source="mantine-hooks/src/use-document-title/use-document-title.ts"
-  docs="hooks/use-document-title.mdx"
-  package="@mantine/hooks"
-/>
-
-```tsx
-import { useDocumentTitle } from '@mantine/hooks';
-```
+import { useDocumentTitleHook } from '@docs/demos';
 
 ## Usage
 
@@ -27,4 +21,4 @@ Use this hook with client only applications, for isomorphic use more advanced op
 Call hook with string that should be set as document title inside any component.
 Hook is triggered every time value changes and value is not empty string (trailing whitespace is trimmed) or null.
 
-<UseDocumentTitleDemo />
+<Demo data={useDocumentTitleHook} />

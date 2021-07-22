@@ -1,21 +1,15 @@
 ---
-package: mantine-hooks
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'state'
 title: 'use-id'
 order: 1
 slug: /hooks/use-id/
+description: 'Generate memoized random id'
+import: "import { useId } from '@mantine/hooks';"
+docs: 'hooks/use-id.mdx'
+source: 'mantine-hooks/src/use-id/use-id.ts'
 ---
-
-# use-id
-
-<PageHeader
-  source="mantine-hooks/src/use-id/use-id.ts"
-  docs="hooks/use-id.mdx"
-  package="@mantine/hooks"
-/>
-
-```tsx
-import { useId } from '@mantine/hooks';
-```
 
 ## Usage
 
@@ -24,7 +18,6 @@ Hook is usually used to bind input elements to labels.
 Generated random id is saved to ref and will not change unless component is unmounted.
 
 ```tsx
-import React from 'react';
 import { useId } from '@mantine/hooks';
 
 function Input({ id }) {

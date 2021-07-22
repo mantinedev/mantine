@@ -1,0 +1,38 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: RingProgress
+order: 1
+slug: /core/ring-progress/
+category: 'feedback'
+description: 'Give user feedback for status of the task with circle diagram'
+props: ['RingProgress']
+import: "import { RingProgress } from '@mantine/core';"
+source: 'mantine-core/src/components/RingProgress/RingProgress.tsx'
+docs: 'core/RingProgress.mdx'
+styles: ['RingProgress']
+---
+
+import { RingProgressDemos } from '@demos/core';
+
+## Usage
+
+Set `sections` prop to an array of:
+
+- `value` – number between 0 and 100 – amount of space filled by segment
+- `color` – segment color from theme
+
+<Demo data={RingProgressDemos.usage} />
+
+## Size and thickness
+
+Use `size` and `thickness` props to configure RingProgress, all values are in px:
+
+<Demo data={RingProgressDemos.configurator} />
+
+## Customize label
+
+You can add any React node as label, e.g. <GatsbyLink to="/core/text/">Text</GatsbyLink> component with some additional styles
+or <GatsbyLink to="/core/theme-icon/">ThemeIcon</GatsbyLink>:
+
+<Demo data={RingProgressDemos.label} />

@@ -1,30 +1,20 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Input
 order: 1
 slug: /core/input/
 category: 'inputs'
 description: 'Base component to create custom inputs'
+props: ['Input']
+import: "import { Input } from '@mantine/core';"
+source: 'mantine-core/src/components/Input/Input.tsx'
+docs: 'core/Input.mdx'
+styles: ['Input']
 ---
 
-import { ActionIconUsageDemo } from '../demos/core/ActionIcon/action-icon.demos';
-import { InputVariantsDemo } from '../demos/core/Input/input-variants.demo';
-import { InputIconDemo } from '../demos/core/Input/input-icon.demo';
-import { InputConfigurator } from '../demos/core/Input/input.configurator';
-import { InputComponentDemo } from '../demos/core/Input/input-component.demo';
-import { KbdInputDemo } from '../demos/core/Kbd/kbd-input.demo';
-
-# Input
-
-<PageHeader
-  source="mantine-core/src/Input/Input.tsx"
-  docs="core/Input.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Input } from '@mantine/core';
-```
+import { INPUT_SIZES } from '@mantine/core';
+import { InputDemos, ActionIconDemos, KbdDemos } from '@demos/core';
 
 ## Usage
 
@@ -32,16 +22,15 @@ Input component is used as base for all other inputs (<GatsbyLink to="/core/sele
 The single purpose of Input is to provide shared styles and features to other inputs.
 Use other components listed above to build forms (as they provide better accessibility)
 and Input component as base for your own custom inputs with Mantine theme.
-See <GatsbyLink to="/guides/inputs/">guide on inputs</GatsbyLink> to learn how to build custom inputs with this component.
 
-<InputConfigurator />
+<Demo data={InputDemos.configurator} />
 
 ## Variants
 
 Input has 3 variants, all of which are available on all Mantine inputs.
-Note that, unstyled input variant may significantly impact usability, use it wisely.
+Note that unstyled input variant may significantly impact usability, use it wisely.
 
-<InputVariantsDemo />
+<Demo data={InputDemos.variants} />
 
 ## Icon and right section
 
@@ -51,30 +40,58 @@ You can add icon on the left side of the input, for example:
 - [feather](https://feathericons.com/)
 - [react-icons](https://react-icons.github.io/react-icons)
 
-<InputIconDemo />
+<Demo data={InputDemos.icon} />
 
 Right section allows you to place anything on the right side of the input. For example, in <GatsbyLink to="/core/password-input/">PasswordInput</GatsbyLink>
 component right section is used for show/hide password toggle:
 
-<ActionIconUsageDemo />
+<Demo data={ActionIconDemos.usage} />
 
 Or you can add keyboard shortcut like in search on Mantine docs website:
 
-<KbdInputDemo />
+<Demo data={KbdDemos.input} />
+
+Right section with <GatsbyLink to="/core/tooltip/">Tooltip</GatsbyLink>:
+
+<Demo data={InputDemos.tooltip} />
+
+## Sizes
+
+Component has 5 premade sizes: xs, sm, md, lg, xl, use `size` prop to control input height, padding and font-size:
+
+<Demo data={InputDemos.sizes} />
+
+You can get predefined input heights by importing `INPUT_SIZES`:
+
+```tsx
+import { INPUT_SIZES } from '@mantine/core';
+```
+
+<DataTable
+  head={['Size', 'Input height']}
+  data={Object.keys(INPUT_SIZES).map((size) => [size, `${INPUT_SIZES[size]}px`])}
+/>
 
 ## Custom component
 
 As Input component is intended to be a base for all other inputs,
 you can pass `component` prop which will define root element:
 
-<InputComponentDemo />
+<Demo data={InputDemos.component} />
+
+## Headless variant
+
+If you want to add your own styles to input it's better to start from scratch rather than overriding Mantine styles,
+use special `headless` variant which does not include any Mantine styles but still supports all other features: icon, right section, etc.:
+
+<Demo data={InputDemos.headless} />
 
 ## Get element ref
 
 You can get input ref by passing `elementRef` prop to Input component:
 
 ```tsx
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Input } from '@mantine/core';
 
 function Demo() {
@@ -105,7 +122,3 @@ in case you need full type coverage for events and `elementRef`:
   }}
 />
 ```
-
-## Component props
-
-<PropsTable component="Input" />

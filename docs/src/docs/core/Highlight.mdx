@@ -1,45 +1,40 @@
 ---
-package: mantine-core
+group: 'mantine-core'
+package: '@mantine/core'
 title: Highlight
 order: 1
 slug: /core/highlight/
-category: 'misc'
-description: 'Highlight given part of the string with mark tag'
+category: 'typography'
+description: 'Highlight given part of a string with mark tag'
+props: ['Highlight']
+import: "import { Highlight } from '@mantine/core';"
+source: 'mantine-core/src/components/Highlight/Highlight.tsx'
+docs: 'core/Highlight.mdx'
+styles: ['Highlight', 'single-node']
 ---
 
-import { HighlightConfigurator } from '../demos/core/Highlight/highlight.configurator';
-import { HighlightComponentDemo } from '../demos/core/Highlight/highlight.demos';
-
-# Highlight
-
-<PageHeader
-  source="mantine-core/src/Highlight/Highlight.tsx"
-  docs="core/Highlight.mdx"
-  package="@mantine/core"
-/>
-
-```tsx
-import { Highlight } from '@mantine/core';
-```
+import { HighlightDemos } from '@demos/core';
 
 ## Usage
 
-Use Highlight component to highlight part in given string with mark tag.
+Use Highlight component to highlight substring in given string with mark tag.
 
 Pass main string as children to Highlight component and string part that should be highlighted to `highlight` prop.
 If main string does not include `highlight` part, it will be ignored.
-Component ignores trailing whitespace and highlights only first matched characters sequence.
+Component ignores trailing whitespace and highlights all matched characters sequence.
 
-You can change color of mark by passing `highlightColor` prop with <GatsbyLink to="/pages/theming/">theme</GatsbyLink> color.
+You can change color of mark by passing `highlightColor` prop with <GatsbyLink to="/theming/extend-theme/#default-colors">theme</GatsbyLink> color.
 
-<HighlightConfigurator />
+<Demo data={HighlightDemos.configurator} />
+
+## Highlight multiple substrings
+
+You can highlight multiple substrings by providing an array of values:
+
+<Demo data={HighlightDemos.multiple} />
 
 ## Text props
 
 Highlight accepts the same props as <GatsbyLink to="/core/text/">Text</GatsbyLink> component:
 
-<HighlightComponentDemo />
-
-## Component props
-
-<PropsTable component="Highlight" />
+<Demo data={HighlightDemos.props} />

@@ -1,18 +1,12 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { MantineProvider } from '@mantine/core';
-import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
+import { MantineProvider, NormalizeCSS, GlobalStyles } from '@mantine/core';
+import { useWindowEvent, useLocalStorageValue, randomId } from '@mantine/hooks';
 import { ColorSchemeContext, ColorScheme } from './ColorScheme.context';
-import LayoutInner from './LayoutInner';
+import { LayoutInner, LayoutProps } from './LayoutInner';
 
 const THEME_KEY = 'mantine-color-scheme';
 
-export default function Layout({
-  children,
-  location,
-}: {
-  children: React.ReactNode;
-  location: { pathname: string };
-}) {
+export default function Layout({ children, location }: LayoutProps) {
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
     key: THEME_KEY,
     defaultValue: 'light',
@@ -31,18 +25,16 @@ export default function Layout({
   });
 
   useLayoutEffect(() => {
-    const initialTheme = localStorage.getItem(THEME_KEY);
-
-    if (initialTheme === 'dark') {
-      setKey('dark');
-      setColorScheme('dark');
-    }
+    setKey(randomId());
   }, []);
 
   return (
     <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
       <MantineProvider theme={{ colorScheme }}>
-        <LayoutInner tableOfContents={location.pathname !== '/'} key={key}>
+        <GlobalStyles />
+        <NormalizeCSS />
+
+        <LayoutInner key={key} location={location}>
           {children}
         </LayoutInner>
       </MantineProvider>

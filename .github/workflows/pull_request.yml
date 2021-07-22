@@ -3,7 +3,7 @@ name: Pull request workflow
 on:
   pull_request:
     branches:
-      - master
+      - '**'
 
 jobs:
   test_pull_request:
@@ -27,7 +27,5 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Build all packages
         run: npm run build all
-      - name: Generate types and sizes
-        run: npm run docs:docgen && npm run docs:sizes
       - name: Run syncpack, eslint, tsc and jest
         run: npm test

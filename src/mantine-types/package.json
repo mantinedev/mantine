@@ -1,8 +1,0 @@
-{
-  "name": "@mantine/types",
-  "private": true,
-  "version": "1.0.3",
-  "main": "dist/lib.js",
-  "license": "MIT",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>"
-}
