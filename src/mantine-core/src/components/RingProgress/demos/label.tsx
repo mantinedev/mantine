@@ -20,7 +20,7 @@ const code = `
   sections={[{ value: 100, color: 'teal' }]}
   label={
     <Center>
-      <ThemeIcon color="teal" variant="light" radius="xl size="xl">
+      <ThemeIcon color="teal" variant="light" radius="xl" size="xl">
         <CheckIcon style={{ height: 22, width: 22 }} />
       </ThemeIcon>
     </Center>
