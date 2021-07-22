@@ -65,26 +65,4 @@ describe('@mantine/hooks/use-idle', () => {
       expect(hook.result.current).toBe(true);
     }, 1001);
   });
-
-  it('Correct return value and callback invocation on event firing', () => {
-    const spy = jest.fn();
-    const hook = renderHook(() => useIdle(1000, spy));
-    expect(hook.result.current).toBe(true);
-    act(() => {
-      document.dispatchEvent(new TouchEvent('touchmove'));
-    });
-    expect(hook.result.current).toBe(false);
-    setTimeout(() => {
-      expect(hook.result.current).toBe(true);
-      expect(spy).toBeCalled();
-    }, 1001);
-    act(() => {
-      document.dispatchEvent(new MouseEvent('mousemove'));
-    });
-    expect(hook.result.current).toBe(false);
-    setTimeout(() => {
-      expect(hook.result.current).toBe(true);
-      expect(spy).toBeCalled();
-    }, 1001);
-  });
 });

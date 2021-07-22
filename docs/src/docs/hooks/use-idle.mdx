@@ -1,0 +1,48 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+title: 'use-idle'
+category: 'state'
+order: 1
+slug: /hooks/use-idle/
+description: 'Track period of inactivity or idle time.'
+import: "import { useIdle } from '@mantine/hooks';"
+docs: 'hooks/use-idle.mdx'
+source: 'mantine-hooks/src/use-idle/use-idle.ts'
+---
+
+import { useIdleHook } from '@docs/demos';
+
+## Usage
+
+This hook returns a boolean state value which keeps track of inactivity.
+
+<Demo data={useIdleHook} />
+
+## API
+
+Hook accepts one argument:
+
+- `timeout` – period of inactivity or idle time.
+
+Hook returns a boolean value depicting the idle status
+- true - idle >= timeout.
+- false - on any activity.
+
+```tsx
+const idleStatus = useIdle(1000);//timeout
+
+//initial value or on being idle for >= 1 sec
+idleStatus -> true
+
+//On any activity
+idleStatus -> false
+```
+
+### Definition
+
+```tsx
+function useIdle(
+  timeout: number
+): boolean;
+```
