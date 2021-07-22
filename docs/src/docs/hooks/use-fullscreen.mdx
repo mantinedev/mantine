@@ -5,7 +5,7 @@ category: 'dom'
 title: 'use-fullscreen'
 order: 1
 slug: /hooks/use-fullscreen/
-description: 'Control fullscreen state'
+description: 'Enter/exit fullscreen with given element'
 import: "import { useFullscreen } from '@mantine/hooks';"
 docs: 'hooks/use-fullscreen.mdx'
 source: 'mantine-hooks/src/use-fullscreen/use-fullscreen.ts'
@@ -15,16 +15,15 @@ import { useFullscreenDemo, useFullscreenRefDemo } from '@docs/demos';
 
 ## Usage
 
-Use hook to get control the state of fullscreen interations of document or
-of a given element using the [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API):
+Hook allows to enter/exit fullscreen for given element using the [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API).
+By default if you don't provide ref, hook will target `document.documentElement`:
 
 <Demo data={useFullscreenDemo} />
 
-## Custom Root
+## Custom root element
 
 Hook returns an optional ref function that can be passed to an element to act as root.
-
-Be sure to follow best practices to not confuse / trap the end user. [Fullscreen API Guide](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API/Guide#things_your_users_want_to_know):
+Be sure to follow best practices to not [confuse or trap the end user](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API/Guide#things_your_users_want_to_know):
 
 <Demo data={useFullscreenRefDemo} />
 
@@ -32,8 +31,8 @@ Be sure to follow best practices to not confuse / trap the end user. [Fullscreen
 
 ```tsx
 function useFullscreen<T extends HTMLElement = any>(): {
-    readonly ref: (element: T | null) => void;
-    readonly toggle: () => Promise<void>;
-    readonly fullscreen: boolean;
-}
+  readonly ref: (element: T | null) => void;
+  readonly toggle: () => Promise<void>;
+  readonly fullscreen: boolean;
+};
 ```
