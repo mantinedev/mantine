@@ -48,6 +48,58 @@ Note that Select value should always be either **string** or **null**:
 <Select data={[{ value: '1', label: '1' }]} value="1" />
 ```
 
+## Data prop
+
+Select support two different data formats:
+
+1. An array of strings – use when you do not need to customize item component or display `label` different than `value`
+2. An array of objects with required `value` and `label` properties and any other additional properties
+
+```tsx
+// Data as an array of strings, will be mapped to
+// [
+//  { value: 'React', label: 'React' },
+//  { value: 'Angular', label: 'Angular' },
+//  { value: 'Svelte', label: 'Svelte' },
+//  { value: 'Vue', label: 'Vue' },
+// ]
+<Select data={['React', 'Angular', 'Svelte', 'Vue']} />
+
+// Data as an array of objects:
+// Minimal example (same as first example above)
+<Select data={[
+  { value: 'React', label: 'React' },
+  { value: 'Angular', label: 'Angular' },
+  { value: 'Svelte', label: 'Svelte' },
+  { value: 'Vue', label: 'Vue' },
+]} />
+
+// Additional data properties for custom item component (see documentation below)
+<Select
+  itemComponent={({ value, label, image, name }) => /* Your custom item component with data properties */}
+  data={[
+    {
+      value: 'bob@handsome.inc',
+      label: 'bob@handsome.inc',
+      image: 'image-link',
+      name: 'Bob Handsome',
+    },
+    {
+      value: 'bill@outlook.com',
+      label: 'bill@outlook.com',
+      image: 'image-link',
+      name: 'Bill Rataconda',
+    },
+    {
+      value: 'amy@wong.cn',
+      label: 'amy@wong.cn',
+      image: 'image-link',
+      name: 'Amy Wong',
+    },
+  ]}
+/>
+```
+
 ## Searchable
 
 Set `searchable` prop to enable search in select and `nothingFound` prop to provide label that will be shown when no options were found:
