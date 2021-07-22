@@ -46,6 +46,9 @@ export interface MenuBodyProps
 
   /** Menu body z-index */
   zIndex?: number;
+
+  /** Body border-radius */
+  radius?: MantineNumberSize;
 }
 
 function getPreviousItem(active: number, items: MenuItemType[]) {
@@ -95,6 +98,7 @@ export function MenuBody({
   zIndex = 1000,
   classNames,
   styles,
+  radius,
   ...others
 }: MenuBodyProps) {
   const items = React.Children.toArray(children).filter(
@@ -161,6 +165,7 @@ export function MenuBody({
           key={index}
           hovered={hovered === index}
           onHover={() => setHovered(-1)}
+          radius={radius}
           onClick={(event) => {
             if (closeOnItemClick) {
               onClose();
@@ -209,6 +214,7 @@ export function MenuBody({
           elementRef={menuRef}
           role="menu"
           aria-orientation="vertical"
+          radius={radius}
           {...others}
         >
           <div ref={focusTrapRef}>{buttons}</div>

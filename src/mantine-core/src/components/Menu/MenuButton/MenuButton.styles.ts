@@ -1,14 +1,22 @@
-import { MantineTheme, getFontStyles, getThemeColor, createMemoStyles } from '../../../theme';
+import {
+  MantineTheme,
+  getFontStyles,
+  getThemeColor,
+  createMemoStyles,
+  MantineNumberSize,
+  getSizeValue,
+} from '../../../theme';
 
 interface MenuButtonStyles {
   theme: MantineTheme;
+  radius: MantineNumberSize;
   color: string;
 }
 
 export default createMemoStyles({
   hovered: {},
 
-  root: ({ theme, color }: MenuButtonStyles) => ({
+  root: ({ theme, color, radius }: MenuButtonStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     fontSize: theme.fontSizes.sm,
@@ -19,15 +27,15 @@ export default createMemoStyles({
     textAlign: 'left',
     display: 'inline-block',
     textDecoration: 'none',
-    height: 32,
     boxSizing: 'border-box',
-    padding: [0, theme.spacing.sm],
+    padding: [theme.spacing.xs, theme.spacing.sm],
     cursor: 'pointer',
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     color: color
       ? getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 })
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[0]
-      : theme.colors.gray[9],
+      : theme.black,
 
     '&:disabled': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
@@ -35,10 +43,10 @@ export default createMemoStyles({
     },
 
     '&$hovered:not(:disabled), &:not(:disabled):hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
 
       '&:not(:disabled):active': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
       },
     },
   }),

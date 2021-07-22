@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { ComponentPassThrough } from '../../../types';
-import { DefaultProps, mergeStyles, useMantineTheme } from '../../../theme';
+import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../../theme';
 import { MenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 
@@ -13,6 +13,7 @@ export interface MenuButtonProps extends DefaultProps<MenuButtonStylesNames>, Me
   onHover(): void;
   elementRef(node: HTMLButtonElement): void;
   component?: any;
+  radius?: MantineNumberSize;
 }
 
 export function MenuButton<T extends React.ElementType = 'button'>({
@@ -30,10 +31,11 @@ export function MenuButton<T extends React.ElementType = 'button'>({
   component: Element = 'button',
   classNames,
   styles,
+  radius,
   ...others
 }: ComponentPassThrough<T, MenuButtonProps>) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, theme }, classNames, 'menu-item');
+  const classes = useStyles({ color, theme, radius }, classNames, 'menu-item');
   const _styles = mergeStyles(classes, styles);
 
   return (

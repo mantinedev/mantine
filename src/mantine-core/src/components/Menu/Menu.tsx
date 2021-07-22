@@ -88,6 +88,9 @@ export interface MenuProps
 
   /** Close delay for hover trigger */
   delay?: number;
+
+  /** Menu body and items border-radius */
+  radius?: MantineNumberSize;
 }
 
 const defaultControl = (
@@ -116,6 +119,7 @@ export function Menu({
   menuButtonLabel,
   controlRefProp = 'elementRef',
   trigger = 'click',
+  radius = 'sm',
   delay = 0,
   zIndex = 1000,
   elementRef,
@@ -230,6 +234,7 @@ export function Menu({
         zIndex={zIndex}
         classNames={classNames}
         styles={styles}
+        radius={radius}
       >
         {children}
       </MenuBody>

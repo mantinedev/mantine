@@ -24,7 +24,7 @@ function Demo() {
       <MenuItem
         icon={<MagnifyingGlassIcon />}
         rightSection={
-          <Text size="sm" color="gray">
+          <Text size="xs" color="gray">
             ⌘K
           </Text>
         }
@@ -43,13 +43,13 @@ function Demo() {
   return (
     <Group position="center">
       <Menu>
-        <MenuItem icon={<GearIcon />}>Settings</MenuItem>
-        <MenuItem icon={<ChatBubbleIcon />}>Messages</MenuItem>
-        <MenuItem icon={<ImageIcon />}>Gallery</MenuItem>
+        <MenuItem icon={<GearIcon width={14} height={14} />}>Settings</MenuItem>
+        <MenuItem icon={<ChatBubbleIcon width={14} height={14} />}>Messages</MenuItem>
+        <MenuItem icon={<ImageIcon width={14} height={14} />}>Gallery</MenuItem>
         <MenuItem
-          icon={<MagnifyingGlassIcon />}
+          icon={<MagnifyingGlassIcon width={14} height={14} />}
           rightSection={
-            <Text size="sm" color="gray">
+            <Text size="xs" color="gray">
               ⌘K
             </Text>
           }
