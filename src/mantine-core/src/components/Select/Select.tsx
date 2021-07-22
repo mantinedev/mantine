@@ -29,11 +29,7 @@ export interface SelectItem {
   [key: string]: any;
 }
 
-export type SelectItemDataProp = string | {
-  value: string;
-  label: string;
-  [key: string]: any;
-};
+export type SelectDataItem = string | SelectItem;
 
 export interface SelectProps
   extends DefaultProps<SelectStylesNames>,
@@ -47,7 +43,7 @@ export interface SelectProps
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 
   /** Select data used to renderer items in dropdown */
-  data: SelectItemDataProp[];
+  data: SelectDataItem[];
 
   /** Change item renderer */
   itemComponent?: React.FC<any>;
@@ -155,7 +151,9 @@ export function Select({
     rule: (val) => typeof val === 'string',
   });
 
-  const formattedData = data.map((item) => typeof item === 'string' ? ({ label: item, value: item }) : item);
+  const formattedData = data.map((item) =>
+    typeof item === 'string' ? { label: item, value: item } : item
+  );
 
   const selectedValue = formattedData.find((item) => item.value === _value);
   const [inputValue, setInputValue] = useState(selectedValue?.label || '');

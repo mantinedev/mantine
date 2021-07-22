@@ -9,12 +9,7 @@ const data = [
   { value: 'vue', label: 'Vue' },
 ];
 
-const stringData = [
-  'React',
-  'Angular',
-  'Svelte',
-  'Vue',
-];
+const stringData = ['React', 'Angular', 'Svelte', 'Vue'];
 
 const largeData = Array(50)
   .fill(0)
@@ -111,7 +106,8 @@ storiesOf('@mantine/core/Select', module)
         style={{ marginTop: 20 }}
       />
     </div>
-  )).add('String as data', () => (
+  ))
+  .add('String as data', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
       <Select
         label="Choose your favorite library/framework"

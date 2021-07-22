@@ -23,10 +23,7 @@ export interface AutocompleteItem {
   [key: string]: any;
 }
 
-export type AutocompleteDataProp = string | {
-  value: string;
-  [key: string]: any;
-};
+export type AutocompleteDataItem = string | AutocompleteItem;
 
 export interface AutocompleteProps
   extends DefaultProps<AutocompleteStylesNames>,
@@ -40,7 +37,7 @@ export interface AutocompleteProps
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 
   /** Autocomplete data used to renderer items in dropdown */
-  data: AutocompleteDataProp[];
+  data: AutocompleteDataItem[];
 
   /** Change item renderer */
   itemComponent?: React.FC<any>;
@@ -142,8 +139,7 @@ export function Autocomplete({
     inputRef.current.focus();
   };
 
-  const formattedData = data.map((item) => typeof item === 'string' ? ({ value: item }) : item);
-
+  const formattedData = data.map((item) => (typeof item === 'string' ? { value: item } : item));
   const filteredData = formattedData.filter((item) => filter(_value, item)).slice(0, limit);
 
   const items = filteredData.map((item, index) => (
