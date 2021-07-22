@@ -27,3 +27,4 @@ export { useWindowScroll } from './use-window-scroll/use-window-scroll';
 export { useIntersection } from './use-intersection/use-intersection';
 export { useHash } from './use-hash/use-hash';
 export { useHotkeys, getHotkeyHandler } from './use-hotkey/use-hotkeys';
+export { useFullscreen } from './use-fullscreen/use-fullscreen';
