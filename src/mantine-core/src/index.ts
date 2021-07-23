@@ -32,7 +32,7 @@ export { JsonInput } from './components/JsonInput/JsonInput';
 export { Kbd } from './components/Kbd/Kbd';
 export { Loader, LOADER_SIZES } from './components/Loader/Loader';
 export { LoadingOverlay } from './components/LoadingOverlay/LoadingOverlay';
-export { Menu, MenuItem, MenuBody, MENU_SIZES } from './components/Menu/Menu';
+export { Menu, MenuItem, MenuBody, MenuLabel, MENU_SIZES } from './components/Menu/Menu';
 export { Modal, MODAL_SIZES } from './components/Modal/Modal';
 export { NativeSelect } from './components/NativeSelect/NativeSelect';
 export { Notification } from './components/Notification/Notification';
@@ -114,7 +114,12 @@ export type { JsonInputProps, JsonInputStylesNames } from './components/JsonInpu
 export type { KbdProps } from './components/Kbd/Kbd';
 export type { LoaderProps } from './components/Loader/Loader';
 export type { LoadingOverlayProps } from './components/LoadingOverlay/LoadingOverlay';
-export type { MenuProps, MenuItemProps, MenuBodyProps } from './components/Menu/Menu';
+export type {
+  MenuProps,
+  MenuItemProps,
+  MenuBodyProps,
+  MenuLabelProps,
+} from './components/Menu/Menu';
 export type { ModalProps, ModalStylesNames } from './components/Modal/Modal';
 export type {
   NativeSelectProps,

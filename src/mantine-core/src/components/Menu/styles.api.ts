@@ -4,6 +4,7 @@ import type { MenuButtonStylesNames } from './MenuButton/MenuButton';
 export const Menu: Record<MenuBodyStylesNames, string> = {
   menu: 'Menu body',
   divider: 'Divider inside menu body',
+  label: 'Menu label wrapper (Text component)',
 };
 
 export const MenuItem: Record<MenuButtonStylesNames, string> = {

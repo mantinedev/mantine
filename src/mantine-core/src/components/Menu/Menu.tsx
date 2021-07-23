@@ -13,9 +13,10 @@ import { MenuIcon } from './MenuIcon';
 import { MenuBody, MenuBodyProps, MenuBodyStylesNames } from './MenuBody/MenuBody';
 import { sizes } from './MenuBody/MenuBody.styles';
 import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
+import { MenuLabel, MenuLabelProps } from './MenuLabel/MenuLabel';
 
-export { MenuBody, MenuItem };
-export type { MenuBodyProps, MenuItemProps };
+export { MenuBody, MenuItem, MenuLabel };
+export type { MenuBodyProps, MenuItemProps, MenuLabelProps };
 
 export const MENU_SIZES = sizes;
 

@@ -31,4 +31,15 @@ export default createMemoStyles({
     borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2],
     margin: [theme.spacing.xs / 2, -MENU_PADDING],
   }),
+
+  label: ({ theme }: MenuBodyStyles) => ({
+    color: theme.colors.gray[6],
+    fontWeight: 500,
+    fontSize: theme.fontSizes.xs,
+    padding: [theme.spacing.xs / 2, theme.spacing.sm],
+
+    '&:fist-of-type': {
+      color: 'red',
+    },
+  }),
 });

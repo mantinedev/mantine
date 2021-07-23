@@ -5,7 +5,9 @@ import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '.
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import { Divider } from '../../Divider/Divider';
+import { Text } from '../../Text/Text';
 import { MenuItem, MenuItemType } from '../MenuItem/MenuItem';
+import { MenuLabel } from '../MenuLabel/MenuLabel';
 import { MenuButton } from '../MenuButton/MenuButton';
 import useStyles from './MenuBody.styles';
 
@@ -106,7 +108,8 @@ export function MenuBody({
   ...others
 }: MenuBodyProps) {
   const items = React.Children.toArray(children).filter(
-    (item: MenuItemType) => item.type === MenuItem || item.type === Divider
+    (item: MenuItemType) =>
+      item.type === MenuItem || item.type === Divider || item.type === MenuLabel
   ) as MenuItemType[];
 
   const hoveredTimeout = useRef<number>();
@@ -184,6 +187,10 @@ export function MenuBody({
           }}
         />
       );
+    }
+
+    if (item.type === MenuLabel) {
+      return <Text className={classes.label} {...(item.props as any)} />;
     }
 
     if (item.type === Divider) {

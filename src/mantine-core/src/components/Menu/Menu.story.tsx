@@ -11,7 +11,7 @@ import { DEFAULT_THEME, MantineProvider } from '../../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Divider } from '../Divider/Divider';
 import { Button } from '../Button/Button';
-import { Menu, MenuBody, MenuItem } from './Menu';
+import { Menu, MenuBody, MenuItem, MenuLabel } from './Menu';
 
 function MenuWrapper(
   props: Omit<React.ComponentPropsWithoutRef<typeof Menu>, 'opened' | 'onClose'>
@@ -86,12 +86,8 @@ storiesOf('@mantine/core/Menu', module)
   ))
   .add('Button connected menu', () => (
     <div style={{ padding: 40 }}>
-      <Menu
-        menuPosition={{ top: 36, left: 0 }}
-        control={button}
-        controlRefProp="elementRef"
-        trapFocus={false}
-      >
+      <Menu menuPosition={{ top: 36, left: 0 }} control={button} controlRefProp="elementRef" opened>
+        <MenuLabel>Monitoring</MenuLabel>
         <MenuItem
           component="a"
           href="https://mantine.dev"
@@ -104,6 +100,7 @@ storiesOf('@mantine/core/Menu', module)
           Disabled
         </MenuItem>
         <Divider />
+        <MenuLabel>Data usage</MenuLabel>
         <MenuItem icon={<ChatBubbleIcon style={{ width: 12, height: 12 }} />}>Messages</MenuItem>
         <MenuItem color="red" icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
           Delete
