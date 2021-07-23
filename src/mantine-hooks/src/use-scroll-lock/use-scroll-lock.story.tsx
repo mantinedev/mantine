@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Container, Text, Button, Group } from '@mantine/core';
 import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
@@ -8,7 +8,8 @@ const lorem =
   'Because and pointing threw system for read. That or spot. What stairs nor perfected lead to buttons to here. The in there I attention would left right look such may through they the seven. People, into probably must suppliers, something phase by the every there up rendering it logged although.';
 
 function Example() {
-  const [lockScroll, setLockScroll] = useState(false);
+  const [lockScroll, setLockScroll] = useScrollLock();
+
   const items = Array(10)
     .fill(0)
     .map((_, index) => (
@@ -16,8 +17,6 @@ function Example() {
         {lorem}
       </Text>
     ));
-
-  useScrollLock(lockScroll);
 
   return (
     <Container size="xs" style={{ padding: 20 }}>
