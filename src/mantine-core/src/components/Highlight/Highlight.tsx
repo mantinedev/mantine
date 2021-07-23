@@ -4,7 +4,7 @@ import { DefaultProps, useMantineTheme, getThemeColor } from '../../theme';
 import { ComponentPassThrough } from '../../types';
 import { Text, TextProps } from '../Text/Text';
 
-export function highlighter(value: string, highlight: string | string[]) {
+export function highlighter(value: string, highlight: string | string[], exact: boolean) {
   const shouldHighlight = Array.isArray(highlight)
     ? highlight.filter((part) => part.trim().length > 0).length > 0
     : highlight.trim() !== '';
@@ -21,13 +21,13 @@ export function highlighter(value: string, highlight: string | string[]) {
           .map((part) => part.trim())
           .join('|');
 
-  const re = new RegExp(`(${matcher})`, 'gi');
-  const chunks = value
+  const pattern = exact ? `\\b(${matcher})\\b` : `(${matcher})`
+
+  const re = new RegExp(pattern, 'gi');
+  return value
     .split(re)
     .map((part) => ({ chunk: part, highlighted: re.test(part) }))
     .filter(({ chunk }) => chunk);
-
-  return chunks;
 }
 
 export interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'> {
@@ -39,6 +39,9 @@ export interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'
 
   /** Full string part of which will be highlighted */
   children: string;
+
+  /** Only highlight when the words are matched exactly */
+  exact?: boolean;
 }
 
 export function Highlight<T extends React.ElementType = 'div'>({
@@ -47,6 +50,7 @@ export function Highlight<T extends React.ElementType = 'div'>({
   component,
   themeOverride,
   highlightColor = 'yellow',
+  exact = false,
   className,
   ...others
 }: ComponentPassThrough<T, HighlightProps>) {
@@ -57,7 +61,7 @@ export function Highlight<T extends React.ElementType = 'div'>({
     shade: theme.colorScheme === 'dark' ? 5 : 2,
   });
 
-  const highlightChunks = highlighter(children, highlight);
+  const highlightChunks = highlighter(children, highlight, exact);
 
   return (
     <Text
