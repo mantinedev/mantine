@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 
 function getCookie(name: string) {
+  if (typeof document === 'undefined') return null;
+
   const cookie = `${name}=`;
   const decoded = decodeURIComponent(document.cookie);
   const arr = decoded.split('; ');
