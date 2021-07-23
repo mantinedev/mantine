@@ -32,7 +32,7 @@ export const configurator: MantineDemo = {
       defaultValue: 'filled',
     },
     { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
-    { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
+    { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'children', type: 'string', initialValue: 'Settings' },
     { name: 'uppercase', type: 'boolean', initialValue: false, defaultValue: false },
