@@ -22,31 +22,26 @@ interface ButtonStylesProps {
 
 const sizes = {
   xs: {
-    fontSize: 12,
     height: INPUT_SIZES.xs,
     padding: [0, 14],
   },
 
   sm: {
-    fontSize: 14,
     height: INPUT_SIZES.sm,
     padding: [0, 18],
   },
 
   md: {
-    fontSize: 16,
     height: INPUT_SIZES.md,
     padding: [0, 22],
   },
 
   lg: {
-    fontSize: 18,
     height: INPUT_SIZES.lg,
     padding: [0, 26],
   },
 
   xl: {
-    fontSize: 22,
     height: INPUT_SIZES.xl,
     padding: [0, 32],
   },
@@ -96,6 +91,7 @@ export default createMemoStyles({
     ...getFontStyles(props.theme),
     ...getFocusStyles(props.theme),
     ...getWidthStyles(props.fullWidth),
+    fontSize: getSizeValue({ size: props.size, sizes: props.theme.fontSizes }),
     WebkitTapHighlightColor: 'transparent',
     userSelect: 'none',
     boxSizing: 'border-box',
