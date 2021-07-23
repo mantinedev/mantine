@@ -28,3 +28,4 @@ export { useIntersection } from './use-intersection/use-intersection';
 export { useHash } from './use-hash/use-hash';
 export { useHotkeys, getHotkeyHandler } from './use-hotkey/use-hotkeys';
 export { useFullscreen } from './use-fullscreen/use-fullscreen';
+export { useLogger } from './use-logger/use-logger';

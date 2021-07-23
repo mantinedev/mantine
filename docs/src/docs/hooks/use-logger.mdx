@@ -1,0 +1,37 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'utils'
+title: 'use-logger'
+order: 1
+slug: /hooks/use-logger/
+description: 'Log given value when dependencies change'
+import: "import { useLogger } from '@mantine/hooks';"
+docs: 'hooks/use-logger.mdx'
+source: 'mantine-hooks/src/use-logger/use-logger.ts'
+---
+
+import { useLoggerDemo, useLoggerOptionsDemo } from '@docs/demos';
+
+## Usage
+
+A simple hook to log the given props when the given dependencies change
+
+Open developer tools (F12) and check the console for the log messages:
+
+<Demo data={useLoggerDemo} />
+
+## Extra Options
+
+The hook takes an optional third parameter `options` which can be used to configure the logger:
+
+<Demo data={useLoggerOptionsDemo} />
+
+## Definition
+
+```tsx
+function useLogger(props: any, deps: React.DependencyList, options?: {
+    logLevel?: 'debug' | 'info' | 'warn' | 'error';
+    logName?: string;
+});
+```
