@@ -43,14 +43,14 @@ describe('@mantine/core/Highlight/highlighter', () => {
   const VALUE = 'Hello, World';
 
   it('highlights start of string', () => {
-    expect(highlighter(VALUE, 'Hell', false)).toEqual([
+    expect(highlighter(VALUE, 'Hell')).toEqual([
       { chunk: 'Hell', highlighted: true },
       { chunk: 'o, World', highlighted: false },
     ]);
   });
 
   it('Highlights middle of string', () => {
-    expect(highlighter(VALUE, 'llo, W', false)).toEqual([
+    expect(highlighter(VALUE, 'llo, W')).toEqual([
       { chunk: 'He', highlighted: false },
       { chunk: 'llo, W', highlighted: true },
       { chunk: 'orld', highlighted: false },
@@ -58,7 +58,7 @@ describe('@mantine/core/Highlight/highlighter', () => {
   });
 
   it('Highlights multiple of string', () => {
-    expect(highlighter(VALUE, ['Hell', 'world'], false)).toEqual([
+    expect(highlighter(VALUE, ['Hell', 'world'])).toEqual([
       { chunk: 'Hell', highlighted: true },
       { chunk: 'o, ', highlighted: false },
       { chunk: 'World', highlighted: true },
@@ -66,31 +66,31 @@ describe('@mantine/core/Highlight/highlighter', () => {
   });
 
   it('returns initial string if highlight is empty', () => {
-    expect(highlighter(VALUE, '', false)).toEqual([{ chunk: VALUE, highlighted: false }]);
-    expect(highlighter(VALUE, [], false)).toEqual([{ chunk: VALUE, highlighted: false }]);
-    expect(highlighter(VALUE, ['', ''], false)).toEqual([{ chunk: VALUE, highlighted: false }]);
+    expect(highlighter(VALUE, '')).toEqual([{ chunk: VALUE, highlighted: false }]);
+    expect(highlighter(VALUE, [])).toEqual([{ chunk: VALUE, highlighted: false }]);
+    expect(highlighter(VALUE, ['', ''])).toEqual([{ chunk: VALUE, highlighted: false }]);
   });
 
   it('highlights uppercased value', () => {
-    expect(highlighter(VALUE, 'HELL', false)).toEqual([
+    expect(highlighter(VALUE, 'HELL')).toEqual([
       { chunk: 'Hell', highlighted: true },
       { chunk: 'o, World', highlighted: false },
     ]);
-    expect(highlighter(VALUE, 'Hello,', false)).toEqual([
+    expect(highlighter(VALUE, 'Hello,')).toEqual([
       { chunk: 'Hello,', highlighted: true },
       { chunk: ' World', highlighted: false },
     ]);
   });
 
   it('highlights value with whitespace', () => {
-    expect(highlighter(VALUE, 'Hello  \t', false)).toEqual([
+    expect(highlighter(VALUE, 'Hello  \t')).toEqual([
       { chunk: 'Hello', highlighted: true },
       { chunk: ', World', highlighted: false },
     ]);
   });
 
   it('does not highlight if nothing found', () => {
-    expect(highlighter(VALUE, 'Hi, there', false)).toEqual([{ chunk: VALUE, highlighted: false }]);
+    expect(highlighter(VALUE, 'Hi, there')).toEqual([{ chunk: VALUE, highlighted: false }]);
   });
 
   it('should only highlight exact matches', () => {

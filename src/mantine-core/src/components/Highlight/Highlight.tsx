@@ -4,7 +4,7 @@ import { DefaultProps, useMantineTheme, getThemeColor } from '../../theme';
 import { ComponentPassThrough } from '../../types';
 import { Text, TextProps } from '../Text/Text';
 
-export function highlighter(value: string, highlight: string | string[], exact: boolean) {
+export function highlighter(value: string, highlight: string | string[], exact = false) {
   const shouldHighlight = Array.isArray(highlight)
     ? highlight.filter((part) => part.trim().length > 0).length > 0
     : highlight.trim() !== '';
