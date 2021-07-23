@@ -96,18 +96,18 @@ describe('@mantine/core/Highlight/highlighter', () => {
   it('should only highlight exact matches', () => {
     const EXACT_VALUE = 'Highlighting is the light of my days without lights';
     expect(highlighter(EXACT_VALUE, 'light', true)).toEqual([
-      { chunk: "Highlighting is the ", highlighted: false },
-      { chunk: "light", highlighted: true },
-      { chunk: " of my days without lights", highlighted: false }
-    ])
+      { chunk: 'Highlighting is the ', highlighted: false },
+      { chunk: 'light', highlighted: true },
+      { chunk: ' of my days without lights', highlighted: false },
+    ]);
     expect(highlighter(EXACT_VALUE, 'light', false)).toStrictEqual([
-      { chunk: "High", highlighted: false },
-      { chunk: "light", highlighted: true },
-      { chunk: "ing is the ", highlighted: false },
-      { chunk: "light", highlighted: true },
-      { chunk: " of my days without ", highlighted: false },
-      { chunk: "light", highlighted: true },
-      { chunk: "s", highlighted: false }
-    ])
-  })
+      { chunk: 'High', highlighted: false },
+      { chunk: 'light', highlighted: true },
+      { chunk: 'ing is the ', highlighted: false },
+      { chunk: 'light', highlighted: true },
+      { chunk: ' of my days without ', highlighted: false },
+      { chunk: 'light', highlighted: true },
+      { chunk: 's', highlighted: false },
+    ]);
+  });
 });

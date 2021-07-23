@@ -17,11 +17,11 @@ export function highlighter(value: string, highlight: string | string[], exact: 
     typeof highlight === 'string'
       ? highlight.trim()
       : highlight
-          .filter((part) => part.trim().length !== 0)
-          .map((part) => part.trim())
-          .join('|');
+        .filter((part) => part.trim().length !== 0)
+        .map((part) => part.trim())
+        .join('|');
 
-  const pattern = exact ? `\\b(${matcher})\\b` : `(${matcher})`
+  const pattern = exact ? `\\b(${matcher})\\b` : `(${matcher})`;
 
   const re = new RegExp(pattern, 'gi');
   return value

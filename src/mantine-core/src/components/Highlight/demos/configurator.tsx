@@ -25,6 +25,6 @@ export const configurator: MantineDemo = {
       type: 'string',
       initialValue: 'Highlight This, definitely THIS and also this!',
     },
-    { name: 'exact', type: 'boolean', initialValue: false }
+    { name: 'exact', type: 'boolean', initialValue: false },
   ],
 };
