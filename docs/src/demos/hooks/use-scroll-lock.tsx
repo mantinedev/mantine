@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useScrollLock } from '@mantine/hooks';
 import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 import { Group, Button } from '@mantine/core';
 
-const code = `import React, { useState } from 'react';
-import { useScrollLock } from '@mantine/hooks';
+const code = `import { useScrollLock } from '@mantine/hooks';
 import { Button } from '@mantine/core';
 import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 
 export function Demo() {
-  const [lockScroll, setLockScroll] = useState(false);
-  useScrollLock(lockScroll);
+  const [lockScroll, setLockScroll] = useScrollLock();
 
   return (
     <Button
@@ -24,8 +22,7 @@ export function Demo() {
 }`;
 
 function Demo() {
-  const [lockScroll, setLockScroll] = useState(false);
-  useScrollLock(lockScroll);
+  const [lockScroll, setLockScroll] = useScrollLock();
 
   return (
     <Group position="center">
