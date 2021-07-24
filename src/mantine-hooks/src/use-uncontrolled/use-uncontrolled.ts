@@ -37,13 +37,14 @@ export function useUncontrolled<T>({
     //
     // Since the value is invalid, doing nothing would mean just
     // transitioning to uncontrolled state and using whatever value
-    // it currently holds which is likely not the bavior
+    // it currently holds which is likely not the behavior
     // user expects, so lets change the state to finalValue.
     //
     // The value will be propagated to internal state by useEffect below.
 
     effectiveValue = finalValue;
   }
+
   modeRef.current = shouldBeControlled ? 'controlled' : 'uncontrolled';
   const mode = modeRef.current;
 
