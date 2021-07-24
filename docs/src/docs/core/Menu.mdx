@@ -161,6 +161,34 @@ By default both options are `true` to ensure better accessibility, to turn them 
 <Menu trapFocus={false} closeOnScroll={false} />
 ```
 
+## Store items separately
+
+Menu does not support fragments, the following example **will not work**:
+
+```tsx
+// Won't work, will not render items
+const items = (
+  <>
+    <MenuItem>First</MenuItem>
+    <MenuItem>Second</MenuItem>
+  </>
+);
+
+<Menu>{items}</Menu>;
+```
+
+In case you want to store items separately use array instead of fragment:
+
+```tsx
+// Works as expected
+const items = [
+  <MenuItem>First</MenuItem>
+  <MenuItem>Second</MenuItem>
+];
+
+<Menu>{items}</Menu>;
+```
+
 ## Get element ref
 
 You can get menu control ref by passing `elementRef` prop to Menu component:
@@ -182,7 +210,7 @@ provide static `menuId` prop to prevent props mismatch:
 
 ```tsx
 <Menu /> // -> random id generated both on client and server, props mismatch warning
-<Menu menuId="my-accordion" /> // -> id is static, no mismatches
+<Menu menuId="my-menu" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility and usability
