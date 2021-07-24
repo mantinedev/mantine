@@ -164,6 +164,12 @@ To change that you can provide [dayjs](https://day.js.org/docs/en/display/format
 
 <Demo data={DatePickerDemos.format} />
 
+## Disallow clear
+
+By default date picker can be cleared, to disable this, set `clearable` prop to `false`:
+
+<Demo data={DatePickerDemos.notClearable} />
+
 ## Get element ref
 
 You can get input ref with `elementRef` prop:
@@ -198,6 +204,7 @@ To make all component controls visible to screen reader set following props:
   withSelect={false}
   nextMonthLabel="Next month" // -> aria-label for button that switches to next month
   previousMonthLabel="Previous month" // -> aria-label for button that switches to previous month
+  clearButtonLabel="Clear field" // -> aria-label for clear button, use when clearable prop is true
 />
 
 // When withSelect prop set to true

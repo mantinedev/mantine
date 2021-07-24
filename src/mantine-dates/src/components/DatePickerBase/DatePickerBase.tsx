@@ -80,9 +80,6 @@ export interface DatePickerBaseSharedProps
 
   /** aria-label for clear button */
   clearButtonLabel?: string;
-
-  /** Called when clear button in clicked */
-  onClear(): void;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -94,7 +91,12 @@ export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
 
   /** Controls dropdown opened state */
   dropdownOpened: boolean;
+
+  /** Called when dropdown opened state changes */
   setDropdownOpened(opened: boolean): void;
+
+  /** Called when clear button in clicked */
+  onClear(): void;
 }
 
 export function DatePickerBase({

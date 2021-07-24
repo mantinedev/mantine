@@ -25,15 +25,6 @@ export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<Calenda
 
   /** Input name, useful fon uncontrolled variant to capture data with native form */
   name?: string;
-
-  /** Set to true to disable dropdown closing on scroll */
-  closeDropdownOnScroll?: boolean;
-
-  /** Allow to clear value */
-  clearable?: boolean;
-
-  /** aria-label for clear button */
-  clearButtonLabel?: string;
 }
 
 export function DatePicker({
