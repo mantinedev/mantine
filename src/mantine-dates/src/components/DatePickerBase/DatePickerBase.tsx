@@ -15,6 +15,7 @@ import {
   InputWrapperStylesNames,
   MantineSize,
   Modal,
+  CloseButton,
 } from '@mantine/core';
 import {
   useId,
@@ -73,6 +74,15 @@ export interface DatePickerBaseSharedProps
 
   /** Where to show calendar in modal or popover */
   dropdownType?: 'popover' | 'modal';
+
+  /** Allow to clear value */
+  clearable?: boolean;
+
+  /** aria-label for clear button */
+  clearButtonLabel?: string;
+
+  /** Called when clear button in clicked */
+  onClear(): void;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -113,6 +123,9 @@ export function DatePickerBase({
   dropdownOpened,
   setDropdownOpened,
   dropdownType = 'popover',
+  clearable = true,
+  clearButtonLabel,
+  onClear,
   ...others
 }: DatePickerBaseProps) {
   const theme = useMantineTheme(themeOverride);
@@ -134,6 +147,16 @@ export function DatePickerBase({
   const clickOutsideRef = useClickOutside(() => dropdownType === 'popover' && closeDropdown());
 
   useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
+
+  const rightSection = clearable ? (
+    <CloseButton
+      themeOverride={themeOverride}
+      variant="transparent"
+      aria-label={clearButtonLabel}
+      onClick={onClear}
+      size={size}
+    />
+  ) : null;
 
   return (
     <InputWrapper
@@ -166,6 +189,7 @@ export function DatePickerBase({
             size={size}
             required={required}
             invalid={!!error}
+            rightSection={rightSection}
             {...others}
           >
             {inputLabel || (

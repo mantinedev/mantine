@@ -34,6 +34,12 @@ export interface DateRangePickerProps
 
   /** Separator between dates */
   labelSeparator?: string;
+
+  /** Allow to clear value */
+  clearable?: boolean;
+
+  /** aria-label for clear button */
+  clearButtonLabel?: string;
 }
 
 const validationRule = (val: any) =>
@@ -70,6 +76,8 @@ export function DateRangePicker({
   size = 'sm',
   dropdownType = 'popover',
   labelSeparator = '–',
+  clearable = true,
+  clearButtonLabel,
   ...others
 }: DateRangePickerProps) {
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
@@ -95,6 +103,11 @@ export function DateRangePicker({
 
   const valueValid = validationRule(_value);
 
+  const handleClear = () => {
+    setValue([null, null]);
+    inputRef.current?.focus();
+  };
+
   return (
     <>
       <DatePickerBase
@@ -117,6 +130,9 @@ export function DateRangePicker({
         }
         __staticSelector="date-range-picker"
         dropdownType={dropdownType}
+        clearable={clearable && valueValid}
+        clearButtonLabel={clearButtonLabel}
+        onClear={handleClear}
         {...others}
       >
         <RangeCalendar
