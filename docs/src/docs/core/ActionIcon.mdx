@@ -106,7 +106,7 @@ to make ActionIcon and other similar components work with Next Link, create wrap
 
 ```tsx
 // This component can be reused in every Mantine component which supports component pass through
-function NextLink({ href, ...others }: any) {
+function NextLink({ href, ...others }) {
   return (
     <Link href={href}>
       <a {...others} />

@@ -124,6 +124,30 @@ By default menu items render as button, to change that set `component` prop on M
 
 <Demo data={MenuDemos.component} />
 
+## MenuItem as Next.js Link
+
+Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
+to make MenuItem and other similar components work with Next Link, create wrapper component in your components folder:
+
+```tsx
+// This component can be reused in every Mantine component which supports component pass through
+function NextLink({ href, ...others }) {
+  return (
+    <Link href={href}>
+      <a {...others} />
+    </Link>
+  );
+}
+```
+
+And then pass it to MenuItem or other component:
+
+```tsx
+<MenuItem component={NextLink} href="/hello">
+  Next Link button
+</MenuItem>
+```
+
 ## Customize behavior
 
 You can control menu behavior with following props:
