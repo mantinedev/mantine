@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button } from '../Button/Button';
+import { Container } from '../Container/Container';
 import { Group } from './Group';
 
 const positions = (['left', 'center', 'apart', 'right'] as const).map((position) => (
@@ -27,6 +28,21 @@ const spacings = ([0, 'xs', 'sm', 'md', 'lg', 'xl', 50] as const).map((spacing) 
 storiesOf('@mantine/core/Group', module)
   .add('Positions', () => <>{positions}</>)
   .add('Spacing', () => <>{spacings}</>)
+  .add('Within container', () => (
+    <div style={{ maxWidth: 400 }}>
+      <Container>
+        <Group>
+          <Button>Button 1</Button>
+          <Button>Button 2</Button>
+        </Group>
+        <p>Other content in container</p>
+      </Container>
+
+      <Group>
+        <span>out of container</span>
+      </Group>
+    </div>
+  ))
   .add('No wrap', () => (
     <div style={{ padding: 15, maxWidth: 200, backgroundColor: '#f3f3f3' }}>
       <Group noWrap>
