@@ -15,8 +15,6 @@ interface MenuButtonStyles {
 }
 
 export default createMemoStyles({
-  itemHovered: {},
-
   item: ({ theme, color, radius }: MenuButtonStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
@@ -42,17 +40,17 @@ export default createMemoStyles({
       color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
       cursor: 'not-allowed',
     },
+  }),
 
-    '&$itemHovered:not(:disabled), &:not(:disabled):hover': {
-      backgroundColor: color
-        ? hexToRgba(
-            getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
-            theme.colorScheme === 'dark' ? 0.2 : 1
-          )
-        : theme.colorScheme === 'dark'
-        ? hexToRgba(theme.colors.dark[3], 0.35)
-        : theme.colors.gray[0],
-    },
+  itemHovered: ({ theme, color }: MenuButtonStyles) => ({
+    backgroundColor: color
+      ? hexToRgba(
+          getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+          theme.colorScheme === 'dark' ? 0.2 : 1
+        )
+      : theme.colorScheme === 'dark'
+      ? hexToRgba(theme.colors.dark[3], 0.35)
+      : theme.colors.gray[0],
   }),
 
   itemInner: {

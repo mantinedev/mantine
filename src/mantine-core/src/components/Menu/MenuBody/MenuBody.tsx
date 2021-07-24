@@ -56,16 +56,6 @@ export interface MenuBodyProps
   trapFocus?: boolean;
 }
 
-function getPreviousItem(active: number, items: MenuItemType[]) {
-  for (let i = active - 1; i >= 0; i -= 1) {
-    if (!items[i].props.disabled && items[i].type === MenuItem) {
-      return i;
-    }
-  }
-
-  return active;
-}
-
 function getNextItem(active: number, items: MenuItemType[]) {
   for (let i = active + 1; i < items.length; i += 1) {
     if (!items[i].props.disabled && items[i].type === MenuItem) {
@@ -84,6 +74,20 @@ function findInitialItem(items: MenuItemType[]) {
   }
 
   return -1;
+}
+
+function getPreviousItem(active: number, items: MenuItemType[]) {
+  for (let i = active - 1; i >= 0; i -= 1) {
+    if (!items[i].props.disabled && items[i].type === MenuItem) {
+      return i;
+    }
+  }
+
+  if (!items[active] || items[active].type !== MenuItem) {
+    return findInitialItem(items);
+  }
+
+  return active;
 }
 
 export function MenuBody({
@@ -171,7 +175,7 @@ export function MenuBody({
           {...item.props}
           key={index}
           hovered={hovered === index}
-          onHover={() => setHovered(-1)}
+          onHover={() => setHovered(index)}
           radius={radius}
           classNames={classNames as any}
           styles={styles as any}
@@ -235,6 +239,7 @@ export function MenuBody({
           role="menu"
           aria-orientation="vertical"
           radius={radius}
+          onMouseLeave={() => setHovered(-1)}
           {...others}
         >
           <div ref={focusTrapRef}>{buttons}</div>
