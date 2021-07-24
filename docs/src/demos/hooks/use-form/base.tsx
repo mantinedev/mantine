@@ -74,7 +74,7 @@ export function UseFormBaseDemo() {
 
           <Checkbox
             style={{ marginTop: 15 }}
-            label="I agree to seel my privacy to this corporation"
+            label="I agree to sell my privacy to this corporation"
             checked={form.values.termsOfService}
             onChange={(event) => form.setFieldValue('termsOfService', event.currentTarget.checked)}
           />
