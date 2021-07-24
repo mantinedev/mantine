@@ -45,6 +45,17 @@ storiesOf('@mantine/core/Progress', module)
   .add('Striped', () => (
     <div style={{ maxWidth: 500, padding: 50 }}>{getThemes({ striped: true })}</div>
   ))
+  .add('Sections', () => (
+    <div style={{ maxWidth: 500, padding: 50 }}>
+      <Progress
+        sections={[
+          { value: 10, color: 'violet' },
+          { value: 25, color: 'pink' },
+          { value: 20, color: 'cyan' },
+        ]}
+      />
+    </div>
+  ))
   .add('Value changes', () => <SetDemo />)
   .add('Dark theme', () => (
     <MantineProvider theme={{ colorScheme: 'dark' }}>

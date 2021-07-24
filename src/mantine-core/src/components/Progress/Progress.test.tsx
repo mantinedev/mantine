@@ -23,6 +23,21 @@ describe('@mantine/core/Progress', () => {
     expect(Progress.displayName).toEqual('@mantine/core/Progress');
   });
 
+  it('renders given amount of sections', () => {
+    const element = shallow(
+      <Progress
+        value={84}
+        sections={[
+          { value: 40, color: 'cyan' },
+          { value: 20, color: 'red' },
+          { value: 15, color: 'lime' },
+        ]}
+      />
+    );
+
+    expect(element.render().find('.mantine-progress-bar')).toHaveLength(3);
+  });
+
   it('passes value prop to progressbar', () => {
     const element = shallow(<Progress value={84} />);
     expect(element.render().find('[role=progressbar]').prop('style').width).toBe('84%');
