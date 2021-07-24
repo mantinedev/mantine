@@ -29,9 +29,6 @@ export interface DateRangePickerProps
   /** Input name, useful fon uncontrolled variant to capture data with native form */
   name?: string;
 
-  /** Set to true to disable dropdown closing on scroll */
-  closeDropdownOnScroll?: boolean;
-
   /** Separator between dates */
   labelSeparator?: string;
 }
@@ -70,6 +67,8 @@ export function DateRangePicker({
   size = 'sm',
   dropdownType = 'popover',
   labelSeparator = '–',
+  clearable = true,
+  clearButtonLabel,
   ...others
 }: DateRangePickerProps) {
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
@@ -95,6 +94,11 @@ export function DateRangePicker({
 
   const valueValid = validationRule(_value);
 
+  const handleClear = () => {
+    setValue([null, null]);
+    inputRef.current?.focus();
+  };
+
   return (
     <>
       <DatePickerBase
@@ -117,6 +121,9 @@ export function DateRangePicker({
         }
         __staticSelector="date-range-picker"
         dropdownType={dropdownType}
+        clearable={clearable && valueValid}
+        clearButtonLabel={clearButtonLabel}
+        onClear={handleClear}
         {...others}
       >
         <RangeCalendar

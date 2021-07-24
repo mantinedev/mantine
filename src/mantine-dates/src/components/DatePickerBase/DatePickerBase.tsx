@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import cx from 'clsx';
 import {
   DefaultProps,
   useMantineTheme,
@@ -16,6 +15,7 @@ import {
   InputWrapperStylesNames,
   MantineSize,
   Modal,
+  CloseButton,
 } from '@mantine/core';
 import {
   useId,
@@ -74,6 +74,12 @@ export interface DatePickerBaseSharedProps
 
   /** Where to show calendar in modal or popover */
   dropdownType?: 'popover' | 'modal';
+
+  /** Allow to clear value */
+  clearable?: boolean;
+
+  /** aria-label for clear button */
+  clearButtonLabel?: string;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -85,7 +91,12 @@ export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
 
   /** Controls dropdown opened state */
   dropdownOpened: boolean;
+
+  /** Called when dropdown opened state changes */
   setDropdownOpened(opened: boolean): void;
+
+  /** Called when clear button in clicked */
+  onClear(): void;
 }
 
 export function DatePickerBase({
@@ -114,6 +125,9 @@ export function DatePickerBase({
   dropdownOpened,
   setDropdownOpened,
   dropdownType = 'popover',
+  clearable = true,
+  clearButtonLabel,
+  onClear,
   ...others
 }: DatePickerBaseProps) {
   const theme = useMantineTheme(themeOverride);
@@ -136,6 +150,16 @@ export function DatePickerBase({
 
   useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
 
+  const rightSection = clearable ? (
+    <CloseButton
+      themeOverride={themeOverride}
+      variant="transparent"
+      aria-label={clearButtonLabel}
+      onClick={onClear}
+      size={size}
+    />
+  ) : null;
+
   return (
     <InputWrapper
       required={required}
@@ -153,7 +177,7 @@ export function DatePickerBase({
       {...wrapperProps}
     >
       <div ref={clickOutsideRef}>
-        <div className={cx(classes.wrapper, className)} style={_styles.wrapper}>
+        <div className={classes.wrapper} style={_styles.wrapper}>
           <Input
             themeOverride={themeOverride}
             component="button"
@@ -167,6 +191,7 @@ export function DatePickerBase({
             size={size}
             required={required}
             invalid={!!error}
+            rightSection={rightSection}
             {...others}
           >
             {inputLabel || (

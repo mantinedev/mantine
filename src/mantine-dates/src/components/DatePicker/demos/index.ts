@@ -9,3 +9,4 @@ export { modifiers } from './modifiers';
 export { localization } from './localization';
 export { format } from './format';
 export { icon } from './icon';
+export { notClearable } from './notClearable';

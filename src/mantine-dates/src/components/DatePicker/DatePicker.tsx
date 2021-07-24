@@ -25,9 +25,6 @@ export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<Calenda
 
   /** Input name, useful fon uncontrolled variant to capture data with native form */
   name?: string;
-
-  /** Set to true to disable dropdown closing on scroll */
-  closeDropdownOnScroll?: boolean;
 }
 
 export function DatePicker({
@@ -60,6 +57,8 @@ export function DatePicker({
   name = 'date',
   size = 'sm',
   dropdownType = 'popover',
+  clearable = true,
+  clearButtonLabel,
   ...others
 }: DatePickerProps) {
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
@@ -83,6 +82,11 @@ export function DatePicker({
     closeCalendarOnChange && closeDropdown();
   };
 
+  const handleClear = () => {
+    setValue(null);
+    inputRef.current?.focus();
+  };
+
   return (
     <>
       <DatePickerBase
@@ -101,6 +105,9 @@ export function DatePicker({
         }
         __staticSelector="date-picker"
         dropdownType={dropdownType}
+        clearable={clearable && !!_value}
+        clearButtonLabel={clearButtonLabel}
+        onClear={handleClear}
         {...others}
       >
         <Calendar

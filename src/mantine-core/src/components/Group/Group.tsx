@@ -44,6 +44,7 @@ export function Group({
   styles,
   ...others
 }: GroupProps) {
+  const count = Children.count(children);
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles(
     {
@@ -54,10 +55,12 @@ export function Group({
       spacing,
       position,
       direction,
+      count,
     },
     classNames,
     'group'
   );
+
   const _styles = mergeStyles(classes, styles);
 
   const items = (Children.toArray(children) as React.ReactElement[]).map((child) =>
