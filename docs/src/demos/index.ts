@@ -5,6 +5,7 @@ export * from './hooks/use-clipboard';
 export * from './hooks/use-color-scheme';
 export * from './hooks/use-cookie';
 export * from './hooks/use-document-title';
+export * from './hooks/use-idle';
 export * from './hooks/use-interval';
 export * from './hooks/use-media-query';
 export * from './hooks/use-reduced-motion';

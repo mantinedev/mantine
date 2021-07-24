@@ -30,6 +30,7 @@ npm install @mantine/hooks
 - [use-focus-trap](https://mantine.dev/hooks/use-focus-trap/) – trap focus at given node
 - [use-form](https://mantine.dev/hooks/use-form/) – bare minimum form state management
 - [use-id](https://mantine.dev/hooks/use-id/) – ensure id for form controls binding
+- [use-idle](https://mantine.dev/hooks/use-idle/) - track period of inactivity or idle time
 - [use-list-state](https://mantine.dev/hooks/use-list-state/) – hook for convenient array state management
 - [use-local-storage-value](https://mantine.dev/hooks/use-local-storage-value/) – use value from localStorage as react state, sync state across tabs
 - [use-media-query](https://mantine.dev/hooks/use-media-query/) – execute and subscribe to window.matchMedia queries
