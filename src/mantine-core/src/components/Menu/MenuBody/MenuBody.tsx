@@ -8,10 +8,10 @@ import { Divider } from '../../Divider/Divider';
 import { Text } from '../../Text/Text';
 import { MenuItem, MenuItemType } from '../MenuItem/MenuItem';
 import { MenuLabel } from '../MenuLabel/MenuLabel';
-import { MenuButton } from '../MenuButton/MenuButton';
+import { MenuButton, MenuButtonStylesNames } from '../MenuButton/MenuButton';
 import useStyles from './MenuBody.styles';
 
-export type MenuBodyStylesNames = keyof ReturnType<typeof useStyles>;
+export type MenuBodyStylesNames = keyof ReturnType<typeof useStyles> | MenuButtonStylesNames;
 
 export interface MenuBodyProps
   extends DefaultProps<MenuBodyStylesNames>,
@@ -115,8 +115,8 @@ export function MenuBody({
   const hoveredTimeout = useRef<number>();
   const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, theme }, classNames, 'menu-body');
-  const _styles = mergeStyles(classes, styles);
+  const classes = useStyles({ size, theme }, classNames as any, 'menu');
+  const _styles = mergeStyles(classes, styles as any);
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
   const [hovered, setHovered] = useState(findInitialItem(items));
@@ -173,7 +173,9 @@ export function MenuBody({
           hovered={hovered === index}
           onHover={() => setHovered(-1)}
           radius={radius}
-          onClick={(event) => {
+          classNames={classNames as any}
+          styles={styles as any}
+          onClick={(event: any) => {
             if (closeOnItemClick) {
               onClose();
             }
@@ -182,7 +184,7 @@ export function MenuBody({
               item.props.onClick(event);
             }
           }}
-          elementRef={(node) => {
+          elementRef={(node: any) => {
             buttonsRefs.current[index] = node;
           }}
         />
@@ -190,17 +192,24 @@ export function MenuBody({
     }
 
     if (item.type === MenuLabel) {
-      return <Text className={classes.label} {...(item.props as any)} />;
+      return (
+        <Text
+          className={classes.label}
+          style={_styles.label}
+          {...(item.props as any)}
+          key={index}
+        />
+      );
     }
 
     if (item.type === Divider) {
       return (
         <Divider
-          key={index}
           variant="solid"
           className={classes.divider}
           margins={theme.spacing.xs / 2}
           style={_styles.divider}
+          key={index}
         />
       );
     }
@@ -219,8 +228,8 @@ export function MenuBody({
       {(transitionStyles) => (
         <Paper
           shadow={shadow}
-          className={cx(classes.menu, className)}
-          style={{ ...style, ..._styles.menu, ...transitionStyles, zIndex }}
+          className={cx(classes.body, className)}
+          style={{ ...style, ..._styles.body, ...transitionStyles, zIndex }}
           onKeyDownCapture={handleKeyDown}
           elementRef={menuRef}
           role="menu"

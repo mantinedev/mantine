@@ -16,7 +16,7 @@ export const sizes = {
 const MENU_PADDING = 4;
 
 export default createMemoStyles({
-  menu: ({ theme, size }: MenuBodyStyles) => ({
+  body: ({ theme, size }: MenuBodyStyles) => ({
     position: 'absolute',
     width: getSizeValue({ size, sizes }),
     overflow: 'hidden',
@@ -37,9 +37,5 @@ export default createMemoStyles({
     fontWeight: 500,
     fontSize: theme.fontSizes.xs,
     padding: [theme.spacing.xs / 2, theme.spacing.sm],
-
-    '&:fist-of-type': {
-      color: 'red',
-    },
   }),
 });

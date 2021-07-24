@@ -5,11 +5,9 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itRendersChildren,
-  itSupportsStylesApi,
 } from '@mantine/tests';
 import { shallow } from 'enzyme';
 import { MenuButton } from './MenuButton';
-import { MenuItem as MenuItemStylesApi } from '../styles.api';
 
 const defaultProps = {
   onHover: () => {},
@@ -23,12 +21,6 @@ describe('@mantine/core/MenuButton', () => {
   itSupportsOthers(MenuButton, defaultProps);
   itSupportsRef(MenuButton, defaultProps, HTMLButtonElement, 'elementRef');
   itRendersChildren(MenuButton, defaultProps);
-  itSupportsStylesApi(
-    MenuButton,
-    { ...defaultProps, hovered: true, icon: '$', rightSection: 'test' },
-    Object.keys(MenuItemStylesApi).filter((item) => item !== 'hovered'),
-    'menu-item'
-  );
 
   it('has correct displayName', () => {
     expect(MenuButton.displayName).toEqual('@mantine/core/MenuButton');

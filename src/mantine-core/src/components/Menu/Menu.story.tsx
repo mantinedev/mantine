@@ -1,111 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
-import {
-  GearIcon,
-  ChatBubbleIcon,
-  Cross1Icon,
-  DotsHorizontalIcon,
-  PlusIcon,
-} from '@modulz/radix-icons';
+import { GearIcon, ChatBubbleIcon, Cross1Icon } from '@modulz/radix-icons';
 import { DEFAULT_THEME, MantineProvider } from '../../theme';
-import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Divider } from '../Divider/Divider';
-import { Button } from '../Button/Button';
-import { Menu, MenuBody, MenuItem, MenuLabel } from './Menu';
-
-function MenuWrapper(
-  props: Omit<React.ComponentPropsWithoutRef<typeof Menu>, 'opened' | 'onClose'>
-) {
-  const [opened, setOpened] = useState(false);
-  return (
-    <div style={{ padding: 40 }}>
-      <div style={{ position: 'relative' }}>
-        <MenuBody opened={opened} onClose={() => setOpened(false)} {...props} />
-        <ActionIcon onClick={() => setOpened(true)}>
-          <DotsHorizontalIcon />
-        </ActionIcon>
-      </div>
-    </div>
-  );
-}
-
-const button = (
-  <Button color="indigo" variant="outline">
-    Open menu
-  </Button>
-);
+import { menuItems } from './demos/_menu-items';
+import { Menu, MenuItem } from './Menu';
 
 storiesOf('@mantine/core/Menu', module)
-  .add('General usage', () => (
-    <MenuWrapper>
-      <MenuItem icon={<GearIcon style={{ width: 12, height: 12 }} />}>Settings</MenuItem>
-      <MenuItem disabled icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
-        Disabled
-      </MenuItem>
-      <Divider />
-      <MenuItem icon={<ChatBubbleIcon style={{ width: 12, height: 12 }} />}>Messages</MenuItem>
-      <MenuItem color="red" icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
-        Delete
-      </MenuItem>
-    </MenuWrapper>
-  ))
-  .add('With shortcuts', () => (
-    <MenuWrapper>
-      <MenuItem icon={<PlusIcon />} rightSection="⌘T">
-        New tab
-      </MenuItem>
-      <MenuItem rightSection="⌘O">Open new file</MenuItem>
-      <MenuItem rightSection="⌘N">New window</MenuItem>
-      <MenuItem disabled rightSection="⌘Q">
-        Close application
-      </MenuItem>
-    </MenuWrapper>
-  ))
-  .add('Default connected menu', () => (
-    <div style={{ padding: 200 }}>
-      <Menu trigger="hover" transition="fade" delay={0} transitionDuration={150}>
-        <MenuItem icon={<GearIcon style={{ width: 12, height: 12 }} />}>Settings</MenuItem>
-        <Divider />
-        <MenuItem icon={<ChatBubbleIcon style={{ width: 12, height: 12 }} />}>Messages</MenuItem>
-        <MenuItem color="red" icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
-          Delete
-        </MenuItem>
-      </Menu>
-      <Menu transition="skew-up" menuPosition={{ top: 0, left: 0 }}>
-        <MenuItem icon={<GearIcon style={{ width: 12, height: 12 }} />}>Settings</MenuItem>
-        <MenuItem disabled icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
-          Disabled
-        </MenuItem>
-        <Divider />
-        <MenuItem icon={<ChatBubbleIcon style={{ width: 12, height: 12 }} />}>Messages</MenuItem>
-        <MenuItem color="red" icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
-          Delete
-        </MenuItem>
-      </Menu>
-    </div>
-  ))
-  .add('Button connected menu', () => (
-    <div style={{ padding: 40 }}>
-      <Menu menuPosition={{ top: 36, left: 0 }} control={button} controlRefProp="elementRef" opened>
-        <MenuLabel>Monitoring</MenuLabel>
-        <MenuItem
-          component="a"
-          href="https://mantine.dev"
-          target="_blank"
-          icon={<GearIcon style={{ width: 12, height: 12 }} />}
-        >
-          Settings
-        </MenuItem>
-        <MenuItem disabled icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
-          Disabled
-        </MenuItem>
-        <Divider />
-        <MenuLabel>Data usage</MenuLabel>
-        <MenuItem icon={<ChatBubbleIcon style={{ width: 12, height: 12 }} />}>Messages</MenuItem>
-        <MenuItem color="red" icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
-          Delete
-        </MenuItem>
-      </Menu>
+  .add('General Usage', () => (
+    <div style={{ padding: 60 }}>
+      <Menu>{menuItems}</Menu>
     </div>
   ))
   .add('Dark theme', () => (

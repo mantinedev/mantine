@@ -6,12 +6,15 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsRef,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Divider } from '../Divider/Divider';
 import { Button } from '../Button/Button';
-import { Menu, MenuBody, MenuItem } from './Menu';
+import { Menu, MenuBody, MenuItem, MenuLabel } from './Menu';
+import { Menu as MenuStylesApi } from './styles.api';
 
 const defaultProps = {
+  opened: true,
   children: <MenuItem>test-item</MenuItem>,
 };
 
@@ -32,6 +35,21 @@ describe('@mantine/core/Menu', () => {
   itSupportsStyle(Menu, defaultProps);
   itSupportsOthers(Menu, defaultProps);
   itSupportsRef(Menu, defaultProps, HTMLButtonElement, 'elementRef');
+  itSupportsStylesApi(
+    Menu,
+    {
+      ...defaultProps,
+      children: [
+        <Divider key="1" />,
+        <MenuLabel key="2">label</MenuLabel>,
+        <MenuItem key="3" icon="$">
+          item
+        </MenuItem>,
+      ],
+    },
+    Object.keys(MenuStylesApi),
+    'menu'
+  );
 
   it('has correct displayName', () => {
     expect(Menu.displayName).toEqual('@mantine/core/Menu');

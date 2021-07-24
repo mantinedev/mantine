@@ -14,11 +14,18 @@ import { Text } from '../../Text/Text';
 const iconProps = { width: 14, height: 14 };
 
 export const menuItems = [
-  <MenuLabel>Application</MenuLabel>,
-  <MenuItem icon={<GearIcon {...iconProps} />}>Settings</MenuItem>,
-  <MenuItem icon={<ChatBubbleIcon {...iconProps} />}>Messages</MenuItem>,
-  <MenuItem icon={<ImageIcon {...iconProps} />}>Gallery</MenuItem>,
+  <MenuLabel key="1">Application</MenuLabel>,
+  <MenuItem key="2" icon={<GearIcon {...iconProps} />}>
+    Settings
+  </MenuItem>,
+  <MenuItem key="3" icon={<ChatBubbleIcon {...iconProps} />}>
+    Messages
+  </MenuItem>,
+  <MenuItem key="4" icon={<ImageIcon {...iconProps} />}>
+    Gallery
+  </MenuItem>,
   <MenuItem
+    key="5"
     icon={<MagnifyingGlassIcon {...iconProps} />}
     rightSection={
       <Text size="xs" color="gray">
@@ -28,10 +35,12 @@ export const menuItems = [
   >
     Search
   </MenuItem>,
-  <Divider />,
-  <MenuLabel>Danger zone</MenuLabel>,
-  <MenuItem icon={<PinRightIcon {...iconProps} />}>Transfer my data</MenuItem>,
-  <MenuItem color="red" icon={<TrashIcon {...iconProps} />}>
+  <Divider key="6" />,
+  <MenuLabel key="7">Danger zone</MenuLabel>,
+  <MenuItem key="8" icon={<PinRightIcon {...iconProps} />}>
+    Transfer my data
+  </MenuItem>,
+  <MenuItem key="9" color="red" icon={<TrashIcon {...iconProps} />}>
     Delete my account
   </MenuItem>,
 ];

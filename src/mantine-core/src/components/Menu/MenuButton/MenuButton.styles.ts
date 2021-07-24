@@ -15,9 +15,9 @@ interface MenuButtonStyles {
 }
 
 export default createMemoStyles({
-  hovered: {},
+  itemHovered: {},
 
-  root: ({ theme, color, radius }: MenuButtonStyles) => ({
+  item: ({ theme, color, radius }: MenuButtonStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     fontSize: theme.fontSizes.sm,
@@ -43,7 +43,7 @@ export default createMemoStyles({
       cursor: 'not-allowed',
     },
 
-    '&$hovered:not(:disabled), &:not(:disabled):hover': {
+    '&$itemHovered:not(:disabled), &:not(:disabled):hover': {
       backgroundColor: color
         ? hexToRgba(
             getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
@@ -55,20 +55,20 @@ export default createMemoStyles({
     },
   }),
 
-  inner: {
+  itemInner: {
     display: 'flex',
     alignItems: 'center',
     height: '100%',
   },
 
-  body: {
+  itemBody: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     flex: 1,
   },
 
-  icon: ({ theme }: MenuButtonStyles) => ({
+  itemIcon: ({ theme }: MenuButtonStyles) => ({
     marginRight: theme.spacing.xs,
 
     '& *': {
@@ -76,7 +76,7 @@ export default createMemoStyles({
     },
   }),
 
-  label: {
+  itemLabel: {
     lineHeight: 1,
   },
 });
