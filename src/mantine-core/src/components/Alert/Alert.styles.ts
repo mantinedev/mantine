@@ -11,7 +11,7 @@ export default createMemoStyles({
   root: ({ color, theme }: AlertStyles) => ({
     position: 'relative',
     padding: [theme.spacing.xs, theme.spacing.md],
-    paddingLeft: theme.spacing.md + theme.spacing.xs / 2 + LINE_WIDTH,
+    paddingLeft: theme.spacing.md + 6,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
@@ -21,9 +21,9 @@ export default createMemoStyles({
       content: '""',
       display: 'block',
       position: 'absolute',
-      top: theme.spacing.xs,
-      bottom: theme.spacing.xs,
-      left: theme.spacing.xs,
+      top: 4,
+      bottom: 4,
+      left: 4,
       width: LINE_WIDTH,
       borderRadius: LINE_WIDTH,
       backgroundColor: getThemeColor({
