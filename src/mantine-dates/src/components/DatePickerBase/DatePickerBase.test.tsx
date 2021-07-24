@@ -19,6 +19,7 @@ const defaultProps = {
   placeholder: 'test-placeholder',
   dropdownOpened: true,
   setDropdownOpened: () => {},
+  onClear: () => {},
 };
 
 describe('@mantine/dates/DatePickerBase', () => {
