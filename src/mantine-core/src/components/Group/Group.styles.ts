@@ -11,6 +11,7 @@ interface GroupStyles {
   direction: 'row' | 'column';
   theme: MantineTheme;
   align: React.CSSProperties['alignItems'];
+  count: number;
 }
 
 const POSITIONS = {
@@ -30,7 +31,11 @@ export default createMemoStyles({
     margin: (-1 * getSizeValue({ size: spacing, sizes: theme.spacing })) / 2,
   }),
 
-  child: ({ grow, spacing, theme }: GroupStyles) => ({
+  child: ({ grow, spacing, theme, count, direction }: GroupStyles) => ({
+    maxWidth:
+      grow && direction === 'row'
+        ? `calc(${100 / count}% - ${getSizeValue({ size: spacing, sizes: theme.spacing })}px)`
+        : undefined,
     flexGrow: grow ? 1 : 0,
     margin: getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
   }),
