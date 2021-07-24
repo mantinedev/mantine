@@ -134,6 +134,8 @@ export function MenuBody({
     } else {
       window.clearTimeout(hoveredTimeout.current);
     }
+
+    return () => window.clearTimeout(hoveredTimeout.current);
   }, [opened]);
 
   const menuRef = useClickOutside(() => closeOnClickOutside && onClose());
