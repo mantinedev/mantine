@@ -20,6 +20,25 @@ import { MENU_SIZES } from '@mantine/core';
 
 <Demo data={MenuDemos.usage} />
 
+## Controlled
+
+To control component opened state provide `opened`, `onClose` and `onOpen` props:
+
+```tsx
+import { useState } from 'react';
+import { Menu } from '@mantine/core';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <Menu opened={opened} onOpen={() => setOpened(true)} onClose={() => setOpened(false)}>
+      {/* Menu items... */}
+    </Menu>
+  );
+}
+```
+
 ## Show menu on hover
 
 To show menu on hover set props:
