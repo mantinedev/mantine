@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import cx from 'clsx';
 import {
   DefaultProps,
   useMantineTheme,
@@ -153,7 +152,7 @@ export function DatePickerBase({
       {...wrapperProps}
     >
       <div ref={clickOutsideRef}>
-        <div className={cx(classes.wrapper, className)} style={_styles.wrapper}>
+        <div className={classes.wrapper} style={_styles.wrapper}>
           <Input
             themeOverride={themeOverride}
             component="button"

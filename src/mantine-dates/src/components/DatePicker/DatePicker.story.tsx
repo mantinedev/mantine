@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES } from '@mantine/core';
+import { MANTINE_SIZES, Group } from '@mantine/core';
 import dayjs from 'dayjs';
 import { DatePicker } from './DatePicker';
 
@@ -50,6 +50,14 @@ storiesOf('@mantine/dates/DatePicker', module)
     </div>
   ))
   .add('Sizes', () => <div style={{ maxWidth: 300, padding: 40 }}>{sizes}</div>)
+  .add('Within Group', () => (
+    <div style={{ padding: 40 }}>
+      <Group grow>
+        <DatePicker label="First" />
+        <DatePicker label="Second" />
+      </Group>
+    </div>
+  ))
   .add('In modal', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
       <DatePicker dropdownType="modal" placeholder="Pick date" label="Date picker" />
