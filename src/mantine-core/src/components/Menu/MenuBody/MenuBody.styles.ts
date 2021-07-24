@@ -37,5 +37,6 @@ export default createMemoStyles({
     fontWeight: 500,
     fontSize: theme.fontSizes.xs,
     padding: [theme.spacing.xs / 2, theme.spacing.sm],
+    cursor: 'default',
   }),
 });
