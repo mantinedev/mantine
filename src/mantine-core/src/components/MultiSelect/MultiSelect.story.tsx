@@ -1,5 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { Group } from '../Group/Group';
+import { TextInput } from '../TextInput/TextInput';
 import { MultiSelect } from './MultiSelect';
 
 const data = [
@@ -13,14 +15,28 @@ const data = [
 ];
 
 storiesOf('@mantine/core/MultiSelect', module).add('General usage', () => (
-  <div style={{ padding: 40, maxWidth: 400 }}>
-    <MultiSelect
-      label="Multi select"
-      data={data}
-      defaultValue={['react', 'ng']}
-      placeholder="Select items"
-      nothingFound="Nothing found"
-      searchable
-    />
-  </div>
+  <>
+    <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+      />
+      <TextInput label="Text input" placeholder="Select items" />
+    </Group>
+    <Group style={{ padding: 40, paddingTop: 0 }} grow align="flex-start">
+      <TextInput label="Text input" placeholder="Select items" />
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+      />
+    </Group>
+  </>
 ));

@@ -12,6 +12,7 @@ export default createMemoStyles({
     color: theme.colors[theme.primaryColor][9],
     lineHeight: 1,
     padding: [0, theme.spacing.xs],
+    height: 22,
     paddingRight: 0,
     fontWeight: 500,
     fontSize: theme.fontSizes.xs,

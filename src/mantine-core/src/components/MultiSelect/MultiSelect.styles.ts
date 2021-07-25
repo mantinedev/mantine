@@ -7,14 +7,16 @@ interface MultiSelectStyles {
 }
 
 export default createMemoStyles({
-  wrapper: {},
+  wrapper: {
+    position: 'relative',
+  },
 
   values: ({ theme }: MultiSelectStyles) => ({
-    minHeight: INPUT_SIZES.sm,
+    minHeight: INPUT_SIZES.sm - 2,
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginLeft: -theme.spacing.xs + 2,
+    marginLeft: -theme.spacing.xs / 2,
   }),
 
   input: {
@@ -26,14 +28,14 @@ export default createMemoStyles({
   }),
 
   searchInput: ({ theme }: MultiSelectStyles) => ({
-    width: 140,
+    width: 60,
+    height: 22,
     backgroundColor: 'transparent',
     border: 0,
     outline: 0,
     fontSize: theme.fontSizes.sm,
     padding: 0,
-    margin: 0,
-    marginLeft: 5,
+    margin: theme.spacing.xs / 2,
     appearance: 'none',
     cursor: 'default',
 
@@ -42,14 +44,15 @@ export default createMemoStyles({
     },
   }),
 
+  searchInputEmpty: () => ({
+    width: '100%',
+  }),
+
   searchInputInputHidden: {
     width: 0,
     height: 0,
     overflow: 'hidden',
   },
-
-  dropdown: {},
-  nothingFound: {},
 
   item: ({ theme, size }: MultiSelectStyles) => ({
     textAlign: 'left',
@@ -64,5 +67,27 @@ export default createMemoStyles({
 
   hovered: ({ theme }: MultiSelectStyles) => ({
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+  }),
+
+  dropdown: ({ theme, size }: MultiSelectStyles) => ({
+    position: 'absolute',
+    zIndex: 1,
+    top: getSizeValue({ size, sizes: INPUT_SIZES }) + theme.spacing.sm / 2,
+    left: 0,
+    right: 0,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+    }`,
+    paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    overflowY: 'auto',
+  }),
+
+  nothingFound: ({ theme, size }: MultiSelectStyles) => ({
+    color: theme.colors.gray[6],
+    paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    textAlign: 'center',
   }),
 });

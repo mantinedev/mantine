@@ -269,6 +269,7 @@ export function MultiSelect({
               id={uuid}
               className={cx(classes.searchInput, {
                 [classes.searchInputInputHidden]: !searchable && _value.length > 0,
+                [classes.searchInputEmpty]: _value.length === 0,
               })}
               onKeyDown={handleInputKeydown}
               value={searchValue}
