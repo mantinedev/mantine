@@ -34,7 +34,7 @@ function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'the
       }`,
       transition: 'border-color 100ms ease, box-shadow 100ms ease',
 
-      '&:focus': {
+      '&:focus, &:focus-within': {
         outline: 'none',
         borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 7],
       },
@@ -46,7 +46,7 @@ function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'the
       border: '1px solid transparent',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
 
-      '&:focus': {
+      '&:focus, &:focus-within': {
         outline: 'none',
         borderColor: `${
           theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 6 : 7]
