@@ -23,9 +23,22 @@ export default createMemoStyles({
     margin: theme.spacing.xs / 2,
   }),
 
-  searchInput: {
-    width: 180,
-  },
+  searchInput: ({ theme }: MultiSelectStyles) => ({
+    width: 140,
+    backgroundColor: 'transparent',
+    border: 0,
+    outline: 0,
+    fontSize: theme.fontSizes.sm,
+    padding: 0,
+    margin: 0,
+    marginLeft: 5,
+    appearance: 'none',
+    cursor: 'default',
+
+    '&::placeholder': {
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+    },
+  }),
 
   dropdown: {},
   nothingFound: {},
