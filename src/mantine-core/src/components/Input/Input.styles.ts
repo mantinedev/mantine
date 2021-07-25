@@ -148,6 +148,7 @@ export default createMemoStyles({
 
       '&::placeholder': {
         opacity: 1,
+        userSelect: 'none',
         color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
       },
 
