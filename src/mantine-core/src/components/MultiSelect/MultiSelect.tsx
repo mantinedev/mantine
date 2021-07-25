@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '../../theme';
+import { scrollIntoView } from '../../utils';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -202,23 +203,8 @@ export function MultiSelect({
 
   const handleValueRemove = (_val: string) => setValue(_value.filter((val) => val !== _val));
 
-  const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    switch (event.nativeEvent.code) {
-      case 'Backspace': {
-        if (_value.length > 0 && searchValue.length === 0) {
-          setValue(_value.slice(0, -1));
-        }
-
-        break;
-      }
-
-      case 'Escape': {
-        setDropdownOpened(false);
-      }
-    }
-  };
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setHovered(0);
     setSearchValue(event.currentTarget.value);
     setDropdownOpened(true);
   };
@@ -262,6 +248,44 @@ export function MultiSelect({
     filter,
     value: _value,
   });
+
+  const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    switch (event.nativeEvent.code) {
+      case 'ArrowUp': {
+        event.preventDefault();
+        setDropdownOpened(true);
+        setHovered((current) => {
+          const nextIndex = current > 0 ? current - 1 : current;
+          scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
+          return nextIndex;
+        });
+        break;
+      }
+
+      case 'ArrowDown': {
+        event.preventDefault();
+        setDropdownOpened(true);
+        setHovered((current) => {
+          const nextIndex = current < filteredData.length - 1 ? current + 1 : current;
+          scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
+          return nextIndex;
+        });
+        break;
+      }
+
+      case 'Backspace': {
+        if (_value.length > 0 && searchValue.length === 0) {
+          setValue(_value.slice(0, -1));
+        }
+
+        break;
+      }
+
+      case 'Escape': {
+        setDropdownOpened(false);
+      }
+    }
+  };
 
   const items = filteredData.map((item, index) => (
     <Item
