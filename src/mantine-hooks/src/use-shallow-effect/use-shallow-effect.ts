@@ -6,17 +6,17 @@ function typeOf(object: any): string {
     return object.constructor.name.toLowerCase();
 }
 
-const { hasOwnProperty } = Object.prototype;
+const keyList = Object.keys;
 
 function compare(a:any, b:any) {
-    let source = a;
-    let target = b;
+    const source = a;
+    const target = b;
     //for primitive types
     if (Object.is(source, target)) {
         return true;
     }
     //to check for undefined
-    if (typeof source !== 'object' || source === null || typeof target !== 'object' || target === null) {
+    if (!(source instanceof Object) || !(target instanceof Object)) {
         return false;
     }
 
@@ -24,31 +24,28 @@ function compare(a:any, b:any) {
         return false;
     }
 
-    if (typeOf(source) === 'map') {
-        source = Object.fromEntries(source);
-        target = Object.fromEntries(target);
+    const keys = keyList(a);
+    const { length } = keys;
+    for (let i = 0; i < length; i += 1) {
+      if (!(keys[i] in b)) return false;
+    }
+    for (let i = 0; i < length; i += 1) {
+      if (a[keys[i]] !== b[keys[i]]) return false;
     }
 
-    if (typeOf(source) === 'set') {
-        source = [...source];
-        target = [...target];
-    }
-
-    if (source.constructor.name === 'date') {
-        return source.getTime() === target.getTime();
-    }
-
-    return [...Object.keys(source), ...Object.keys(target)].every(k => source[k] === target[k]
-        && hasOwnProperty.call(source, k)
-        && hasOwnProperty.call(target, k));
+    return length === keyList(b).length;
 }
 
 function shallowCompare(prevValue: React.DependencyList, currValue: React.DependencyList) {
+    if (!prevValue || !currValue) {
+        return false;
+    }
+
     if (prevValue === currValue) {
         return true;
     }
 
-    if ((!prevValue.length || !currValue.length) && prevValue.length !== currValue.length) {
+    if (prevValue.length !== currValue.length) {
         return false;
     }
 
@@ -65,7 +62,7 @@ function useShallowCompare(value: React.DependencyList) {
     const ref = useRef<React.DependencyList>([]);
     const signalRef = useRef<number>(0);
 
-    if (!shallowCompare(value, ref.current)) {
+    if (!shallowCompare(ref.current, value)) {
         ref.current = value;
         signalRef.current += 1;
     }
