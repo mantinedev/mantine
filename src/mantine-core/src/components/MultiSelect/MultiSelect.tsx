@@ -77,6 +77,8 @@ export function MultiSelect({
   const [dropdownOpened] = useState(false);
   const [, setHovered] = useState(-1);
 
+  const [searchValue, setSearchValue] = useState('');
+
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -86,6 +88,16 @@ export function MultiSelect({
   });
 
   const handleValueRemove = (_val: string) => setValue(_value.filter((val) => val !== _val));
+
+  const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    switch (event.nativeEvent.code) {
+      case 'Backspace': {
+        if (_value.length > 0 && searchValue.length === 0) {
+          setValue(_value.slice(0, -1));
+        }
+      }
+    }
+  };
 
   const selectedItems = _value
     .map((val) => data.find((item) => item.value === val))
@@ -140,6 +152,9 @@ export function MultiSelect({
               type="text"
               id={uuid}
               className={classes.searchInput}
+              onKeyDown={handleInputKeydown}
+              value={searchValue}
+              onChange={(event) => setSearchValue(event.currentTarget.value)}
               {...others}
             />
           </div>
