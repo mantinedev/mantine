@@ -17,6 +17,7 @@ storiesOf('@mantine/core/MultiSelect', module).add('General usage', () => (
       defaultValue={['react', 'ng']}
       placeholder="Select items"
       nothingFound="Nothing found"
+      searchable
     />
   </div>
 ));

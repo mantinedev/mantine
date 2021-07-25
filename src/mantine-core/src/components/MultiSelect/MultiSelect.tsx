@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import cx from 'clsx';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '../../theme';
 import {
@@ -67,6 +68,9 @@ interface MultiSelectProps
 
   /** Nothing found label */
   nothingFound?: React.ReactNode;
+
+  /** Enable items searching */
+  searchable?: boolean;
 }
 
 export function MultiSelect({
@@ -95,6 +99,8 @@ export function MultiSelect({
   nothingFound,
   onFocus,
   onBlur,
+  searchable = false,
+  placeholder,
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -204,12 +210,16 @@ export function MultiSelect({
               ref={inputRef}
               type="text"
               id={uuid}
-              className={classes.searchInput}
+              className={cx(classes.searchInput, {
+                [classes.searchInputInputHidden]: !searchable && _value.length > 0,
+              })}
               onKeyDown={handleInputKeydown}
               value={searchValue}
               onChange={handleInputChange}
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
+              readOnly={!searchable}
+              placeholder={_value.length === 0 ? placeholder : undefined}
               {...others}
             />
           </div>

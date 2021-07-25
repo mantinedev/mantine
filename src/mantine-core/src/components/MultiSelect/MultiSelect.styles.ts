@@ -40,6 +40,12 @@ export default createMemoStyles({
     },
   }),
 
+  searchInputInputHidden: {
+    width: 0,
+    height: 0,
+    overflow: 'hidden',
+  },
+
   dropdown: {},
   nothingFound: {},
 });
