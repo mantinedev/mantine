@@ -22,4 +22,8 @@ export default createMemoStyles({
   value: ({ theme }: MultiSelectStyles) => ({
     margin: theme.spacing.xs / 2,
   }),
+
+  searchInput: {
+    width: 180,
+  },
 });

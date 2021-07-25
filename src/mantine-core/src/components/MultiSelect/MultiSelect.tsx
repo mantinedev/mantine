@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '../../theme';
 import {
@@ -25,7 +25,7 @@ interface MultiSelectProps
   extends DefaultProps<MultiSelectStylesNames>,
     InputWrapperBaseProps,
     InputBaseProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
+    Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange' | 'size'> {
   /** Input size */
   size?: MantineSize;
 
@@ -72,6 +72,7 @@ export function MultiSelect({
   const classes = useStyles({ theme }, classNames as any, 'multi-select');
   const _styles = mergeStyles(classes, styles as any);
 
+  const inputRef = useRef<HTMLInputElement>();
   const uuid = useId(id);
   const [dropdownOpened] = useState(false);
   const [, setHovered] = useState(-1);
@@ -100,7 +101,7 @@ export function MultiSelect({
   return (
     <InputWrapper
       required={required}
-      labelElement="div"
+      id={uuid}
       label={label}
       error={error}
       description={description}
@@ -124,8 +125,24 @@ export function MultiSelect({
         onMouseLeave={() => setHovered(-1)}
         tabIndex={-1}
       >
-        <Input className={classes.input} component="div" {...others}>
-          <div className={classes.values}>{selectedItems}</div>
+        <Input<'div'>
+          className={classes.input}
+          component="div"
+          onMouseDown={(event) => {
+            event.preventDefault();
+            inputRef.current?.focus();
+          }}
+        >
+          <div className={classes.values}>
+            {selectedItems}
+            <input
+              ref={inputRef}
+              type="text"
+              id={uuid}
+              className={classes.searchInput}
+              {...others}
+            />
+          </div>
         </Input>
       </div>
     </InputWrapper>

@@ -41,6 +41,7 @@ export function DefaultValue({
         variant="transparent"
         iconSize={12}
         className={classes.defaultLabelRemove}
+        tabIndex={-1}
       />
     </div>
   );

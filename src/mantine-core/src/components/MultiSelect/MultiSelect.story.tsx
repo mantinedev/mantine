@@ -11,8 +11,11 @@ const data = [
 
 storiesOf('@mantine/core/MultiSelect', module).add('General usage', () => (
   <div style={{ padding: 40 }}>
-    <MultiSelect data={data} defaultValue={['react', 'ng']}>
-      Hello
-    </MultiSelect>
+    <MultiSelect
+      label="Multi select"
+      data={data}
+      defaultValue={['react', 'ng']}
+      placeholder="Select items"
+    />
   </div>
 ));
