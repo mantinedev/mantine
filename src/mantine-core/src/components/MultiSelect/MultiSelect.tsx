@@ -317,6 +317,9 @@ export function MultiSelect({
     />
   ));
 
+  const shouldRenderDropdown =
+    items.length > 0 || (searchValue.length > 0 && !!nothingFound && items.length === 0);
+
   return (
     <InputWrapper
       required={required}
@@ -377,7 +380,7 @@ export function MultiSelect({
 
         <div style={{ position: 'relative' }}>
           <Transition
-            mounted={dropdownOpened}
+            mounted={shouldRenderDropdown && dropdownOpened}
             transition={transition}
             duration={transitionDuration}
             timingFunction={transitionTimingFunction}
