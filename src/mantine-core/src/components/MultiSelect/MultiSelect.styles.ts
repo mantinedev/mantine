@@ -16,7 +16,7 @@ export default createMemoStyles({
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginLeft: -theme.spacing.xs / 2 - 2,
+    marginLeft: -theme.spacing.xs / 2,
     paddingTop: theme.spacing.xs / 2 - 2,
     paddingBottom: theme.spacing.xs / 2 - 2,
   }),
@@ -26,7 +26,7 @@ export default createMemoStyles({
   },
 
   value: ({ theme }: MultiSelectStyles) => ({
-    margin: theme.spacing.xs / 2 - 2,
+    margin: [theme.spacing.xs / 2 - 2, theme.spacing.xs / 2],
   }),
 
   searchInput: ({ theme }: MultiSelectStyles) => ({
