@@ -207,10 +207,7 @@ export function MultiSelect({
   const items = filteredData.map((item, index) => (
     <Item
       key={item.value}
-      className={cx(classes.item, {
-        [classes.hovered]: hovered === index,
-        [classes.selected]: _value.some((val) => item.value === val),
-      })}
+      className={cx(classes.item, { [classes.hovered]: hovered === index })}
       style={{ ..._styles.item, ...(hovered === index ? _styles.hovered : null) }}
       onMouseEnter={() => setHovered(index)}
       id={`${uuid}-${index}`}

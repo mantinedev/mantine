@@ -1,4 +1,5 @@
 import { createMemoStyles, MantineTheme, getSizeValue, MantineSize } from '../../theme';
+import { INPUT_SIZES } from '../Input/Input';
 
 interface MultiSelectStyles {
   theme: MantineTheme;
@@ -9,11 +10,11 @@ export default createMemoStyles({
   wrapper: {},
 
   values: ({ theme }: MultiSelectStyles) => ({
-    height: `calc(100% + ${theme.spacing.xs}px)`,
+    minHeight: INPUT_SIZES.sm,
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    margin: -theme.spacing.xs / 2,
+    marginLeft: -theme.spacing.xs + 2,
   }),
 
   input: {
@@ -59,12 +60,6 @@ export default createMemoStyles({
     ],
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-  }),
-
-  selected: ({ theme }: MultiSelectStyles) => ({
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors[theme.primaryColor][0],
-    color: theme.colorScheme === 'dark' ? theme.white : theme.colors[theme.primaryColor][9],
   }),
 
   hovered: ({ theme }: MultiSelectStyles) => ({
