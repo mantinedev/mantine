@@ -79,14 +79,66 @@ interface MultiSelectProps
   searchable?: boolean;
 
   /** Function based on which items in dropdown are filtered */
-  filter?(value: string, item: MultiSelectItem): boolean;
+  filter?(value: string, selected: boolean, item: MultiSelectItem): boolean;
 
   /** Limit amount of items displayed at a time for searchable select */
   limit?: number;
+
+  /** Clear search value when item is selected */
+  clearSearchOnChange?: boolean;
 }
 
-function defaultFilter(value: string, item: MultiSelectItem) {
+function defaultFilter(value: string, selected: boolean, item: MultiSelectItem) {
+  if (selected) {
+    return false;
+  }
+
   return item.label.toLowerCase().trim().includes(value.toLowerCase().trim());
+}
+
+interface FilterData {
+  data: MultiSelectItem[];
+  limit: number;
+  searchable: boolean;
+  searchValue: string;
+  filter(value: string, selected: boolean, item: MultiSelectItem): boolean;
+  value: string[];
+}
+
+function filterData({ data, searchable, limit, searchValue, filter, value }: FilterData) {
+  if (!searchable && value.length === 0) {
+    return data;
+  }
+
+  if (!searchable) {
+    const result = [];
+    for (let i = 0; i < data.length; i += 1) {
+      if (!value.some((val) => val === data[i].value)) {
+        result.push(data[i]);
+      }
+    }
+
+    return result;
+  }
+
+  const result = [];
+  for (let i = 0; i < data.length; i += 1) {
+    if (
+      filter(
+        searchValue,
+        value.some((val) => val === data[i].value),
+        data[i]
+      )
+    ) {
+      result.push(data[i]);
+    }
+
+    if (result.length >= limit) {
+      break;
+    }
+  }
+
+  return result;
 }
 
 export function MultiSelect({
@@ -120,6 +172,7 @@ export function MultiSelect({
   placeholder,
   filter = defaultFilter,
   limit = Infinity,
+  clearSearchOnChange = true,
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -181,6 +234,8 @@ export function MultiSelect({
   };
 
   const handleItemSelect = (item: MultiSelectItem) => {
+    clearSearchOnChange && setSearchValue('');
+
     if (_value.includes(item.value)) {
       handleValueRemove(item.value);
     } else {
@@ -199,10 +254,14 @@ export function MultiSelect({
       />
     ));
 
-  const shouldFilter = searchable && formattedData.every((item) => item.label !== searchValue);
-  const filteredData = shouldFilter
-    ? formattedData.filter((item) => filter(searchValue, item)).slice(0, limit)
-    : formattedData;
+  const filteredData = filterData({
+    data: formattedData,
+    searchable,
+    searchValue,
+    limit,
+    filter,
+    value: _value,
+  });
 
   const items = filteredData.map((item, index) => (
     <Item
