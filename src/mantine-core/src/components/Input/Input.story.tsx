@@ -1,4 +1,5 @@
 import React from 'react';
+import { useBooleanToggle } from '@mantine/hooks';
 import { storiesOf } from '@storybook/react';
 import { createUseStyles } from 'react-jss';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
@@ -6,6 +7,20 @@ import Textarea from 'react-textarea-autosize';
 import { DEFAULT_THEME, MANTINE_SIZES } from '../../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
+
+function ValidInvalid() {
+  const [valid, toggle] = useBooleanToggle();
+  return (
+    <div style={{ padding: 40 }}>
+      <Input invalid={valid} placeholder="Hello there" />
+      <Input style={{ marginTop: 10 }} variant="filled" invalid={valid} placeholder="Hello there" />
+
+      <button type="button" onClick={() => toggle()} style={{ marginTop: 20 }}>
+        toggle
+      </button>
+    </div>
+  );
+}
 
 const useStyles = createUseStyles({
   input: {
@@ -123,4 +138,5 @@ storiesOf('@mantine/core/Input', module)
       })}
     </div>
   ))
+  .add('Invalid toggle', () => <ValidInvalid />)
   .add('With classNames', () => <WithStyles />);
