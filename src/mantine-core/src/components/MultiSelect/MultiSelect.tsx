@@ -12,6 +12,7 @@ import { Transition, MantineTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
 import { Text } from '../Text/Text';
 import { DefaultValue } from './DefaultValue/DefaultValue';
+import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import useStyles from './MultiSelect.styles';
 
 export interface MultiSelectItem {
@@ -19,6 +20,8 @@ export interface MultiSelectItem {
   label: string;
   [key: string]: any;
 }
+
+type MultiSelectDataItem = string | MultiSelectItem;
 
 export type MultiSelectStylesNames =
   | keyof ReturnType<typeof useStyles>
@@ -37,7 +40,7 @@ interface MultiSelectProps
   wrapperProps?: Record<string, any>;
 
   /** Data for select options */
-  data: MultiSelectItem[];
+  data: MultiSelectDataItem[];
 
   /** Value for controlled component */
   value?: string[];
@@ -50,6 +53,9 @@ interface MultiSelectProps
 
   /** Component used to render values */
   valueComponent?: React.FC<any>;
+
+  /** Component used to render item */
+  itemComponent?: React.FC<any>;
 
   /** Dropdown body appear/disappear transition */
   transition?: MantineTransition;
@@ -71,6 +77,16 @@ interface MultiSelectProps
 
   /** Enable items searching */
   searchable?: boolean;
+
+  /** Function based on which items in dropdown are filtered */
+  filter?(value: string, item: MultiSelectItem): boolean;
+
+  /** Limit amount of items displayed at a time for searchable select */
+  limit?: number;
+}
+
+function defaultFilter(value: string, item: MultiSelectItem) {
+  return item.label.toLowerCase().trim().includes(value.toLowerCase().trim());
 }
 
 export function MultiSelect({
@@ -90,6 +106,7 @@ export function MultiSelect({
   data,
   onChange,
   valueComponent: Value = DefaultValue,
+  itemComponent: Item = DefaultItem,
   id,
   transition = 'pop-top-left',
   transitionDuration = 0,
@@ -101,17 +118,20 @@ export function MultiSelect({
   onBlur,
   searchable = false,
   placeholder,
+  filter = defaultFilter,
+  limit = Infinity,
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames as any, 'multi-select');
+  const classes = useStyles({ theme, size }, classNames as any, 'multi-select');
   const _styles = mergeStyles(classes, styles as any);
 
   const dropdownRef = useRef<HTMLDivElement>();
   const inputRef = useRef<HTMLInputElement>();
+  const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const uuid = useId(id);
   const [dropdownOpened, setDropdownOpened] = useState(false);
-  const [, setHovered] = useState(-1);
+  const [hovered, setHovered] = useState(-1);
 
   const [searchValue, setSearchValue] = useState('');
 
@@ -122,6 +142,10 @@ export function MultiSelect({
     rule: (val) => Array.isArray(val),
     onChange,
   });
+
+  const formattedData = data.map((item) =>
+    typeof item === 'string' ? { label: item, value: item } : item
+  );
 
   const handleValueRemove = (_val: string) => setValue(_value.filter((val) => val !== _val));
 
@@ -156,8 +180,16 @@ export function MultiSelect({
     setDropdownOpened(false);
   };
 
+  const handleItemSelect = (item: MultiSelectItem) => {
+    if (_value.includes(item.value)) {
+      handleValueRemove(item.value);
+    } else {
+      setValue([..._value, item.value]);
+    }
+  };
+
   const selectedItems = _value
-    .map((val) => data.find((item) => item.value === val))
+    .map((val) => formattedData.find((item) => item.value === val))
     .map((item) => (
       <Value
         {...item}
@@ -167,7 +199,34 @@ export function MultiSelect({
       />
     ));
 
-  const items = [];
+  const shouldFilter = searchable && formattedData.every((item) => item.label !== searchValue);
+  const filteredData = shouldFilter
+    ? formattedData.filter((item) => filter(searchValue, item)).slice(0, limit)
+    : formattedData;
+
+  const items = filteredData.map((item, index) => (
+    <Item
+      key={item.value}
+      className={cx(classes.item, {
+        [classes.hovered]: hovered === index,
+        [classes.selected]: _value.some((val) => item.value === val),
+      })}
+      style={{ ..._styles.item, ...(hovered === index ? _styles.hovered : null) }}
+      onMouseEnter={() => setHovered(index)}
+      id={`${uuid}-${index}`}
+      role="option"
+      tabIndex={-1}
+      aria-selected={hovered === index}
+      elementRef={(node: HTMLButtonElement) => {
+        itemsRefs.current[item.value] = node;
+      }}
+      onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        handleItemSelect(item);
+      }}
+      {...item}
+    />
+  ));
 
   return (
     <InputWrapper
@@ -199,6 +258,7 @@ export function MultiSelect({
         <Input<'div'>
           className={classes.input}
           component="div"
+          multiline
           onMouseDown={(event) => {
             event.preventDefault();
             inputRef.current?.focus();
