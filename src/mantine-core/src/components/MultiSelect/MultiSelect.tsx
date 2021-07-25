@@ -273,6 +273,15 @@ export function MultiSelect({
         break;
       }
 
+      case 'Enter': {
+        if (filteredData[hovered]) {
+          event.preventDefault();
+          handleItemSelect(filteredData[hovered]);
+        }
+
+        break;
+      }
+
       case 'Backspace': {
         if (_value.length > 0 && searchValue.length === 0) {
           setValue(_value.slice(0, -1));
