@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useId } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '../../theme';
 import {
   InputWrapper,
@@ -7,6 +7,7 @@ import {
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
+import { DefaultValue } from './DefaultValue/DefaultValue';
 import useStyles from './MultiSelect.styles';
 
 export interface MultiSelectItem {
@@ -42,6 +43,9 @@ interface MultiSelectProps
 
   /** Called each time value changes */
   onChange?(value: string[]): void;
+
+  /** Component used to render values */
+  valueComponent?: React.FC<any>;
 }
 
 export function MultiSelect({
@@ -58,7 +62,9 @@ export function MultiSelect({
   wrapperProps,
   value,
   defaultValue,
+  data,
   onChange,
+  valueComponent: Value = DefaultValue,
   id,
   ...others
 }: MultiSelectProps) {
@@ -69,6 +75,27 @@ export function MultiSelect({
   const uuid = useId(id);
   const [dropdownOpened] = useState(false);
   const [, setHovered] = useState(-1);
+
+  const [_value, setValue] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: [],
+    rule: (val) => Array.isArray(val),
+    onChange,
+  });
+
+  const handleValueRemove = (_val: string) => setValue(_value.filter((val) => val !== _val));
+
+  const selectedItems = _value
+    .map((val) => data.find((item) => item.value === val))
+    .map((item) => (
+      <Value
+        className={classes.value}
+        onRemove={() => handleValueRemove(item.value)}
+        {...item}
+        key={item.value}
+      />
+    ));
 
   return (
     <InputWrapper
@@ -97,7 +124,9 @@ export function MultiSelect({
         onMouseLeave={() => setHovered(-1)}
         tabIndex={-1}
       >
-        <Input component="div" {...others} />
+        <Input className={classes.input} component="div" {...others}>
+          <div className={classes.values}>{selectedItems}</div>
+        </Input>
       </div>
     </InputWrapper>
   );
