@@ -7,6 +7,9 @@ import {
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
+import { Transition, MantineTransition } from '../Transition/Transition';
+import { Paper } from '../Paper/Paper';
+import { Text } from '../Text/Text';
 import { DefaultValue } from './DefaultValue/DefaultValue';
 import useStyles from './MultiSelect.styles';
 
@@ -46,6 +49,24 @@ interface MultiSelectProps
 
   /** Component used to render values */
   valueComponent?: React.FC<any>;
+
+  /** Dropdown body appear/disappear transition */
+  transition?: MantineTransition;
+
+  /** Dropdown body transition duration */
+  transitionDuration?: number;
+
+  /** Dropdown body transition timing function, defaults to theme.transitionTimingFunction */
+  transitionTimingFunction?: string;
+
+  /** Dropdown shadow from theme or any value to set box-shadow */
+  shadow?: string;
+
+  /** Maximum dropdown height in px */
+  maxDropdownHeight?: number;
+
+  /** Nothing found label */
+  nothingFound?: React.ReactNode;
 }
 
 export function MultiSelect({
@@ -66,15 +87,24 @@ export function MultiSelect({
   onChange,
   valueComponent: Value = DefaultValue,
   id,
+  transition = 'pop-top-left',
+  transitionDuration = 0,
+  transitionTimingFunction,
+  maxDropdownHeight = 220,
+  shadow = 'sm',
+  nothingFound,
+  onFocus,
+  onBlur,
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames as any, 'multi-select');
   const _styles = mergeStyles(classes, styles as any);
 
+  const dropdownRef = useRef<HTMLDivElement>();
   const inputRef = useRef<HTMLInputElement>();
   const uuid = useId(id);
-  const [dropdownOpened] = useState(false);
+  const [dropdownOpened, setDropdownOpened] = useState(false);
   const [, setHovered] = useState(-1);
 
   const [searchValue, setSearchValue] = useState('');
@@ -95,20 +125,43 @@ export function MultiSelect({
         if (_value.length > 0 && searchValue.length === 0) {
           setValue(_value.slice(0, -1));
         }
+
+        break;
+      }
+
+      case 'Escape': {
+        setDropdownOpened(false);
       }
     }
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.currentTarget.value);
+    setDropdownOpened(true);
+  };
+
+  const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    typeof onFocus === 'function' && onFocus(event);
+    setDropdownOpened(true);
+  };
+
+  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    typeof onBlur === 'function' && onBlur(event);
+    setDropdownOpened(false);
   };
 
   const selectedItems = _value
     .map((val) => data.find((item) => item.value === val))
     .map((item) => (
       <Value
+        {...item}
         className={classes.value}
         onRemove={() => handleValueRemove(item.value)}
-        {...item}
         key={item.value}
       />
     ));
+
+  const items = [];
 
   return (
     <InputWrapper
@@ -154,11 +207,41 @@ export function MultiSelect({
               className={classes.searchInput}
               onKeyDown={handleInputKeydown}
               value={searchValue}
-              onChange={(event) => setSearchValue(event.currentTarget.value)}
+              onChange={handleInputChange}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
               {...others}
             />
           </div>
         </Input>
+
+        <Transition
+          mounted={dropdownOpened}
+          transition={transition}
+          duration={transitionDuration}
+          timingFunction={transitionTimingFunction}
+        >
+          {(transitionStyles) => (
+            <Paper
+              id={`${uuid}-items`}
+              aria-labelledby={`${uuid}-label`}
+              role="listbox"
+              className={classes.dropdown}
+              shadow={shadow}
+              elementRef={dropdownRef}
+              style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
+              onMouseDown={(event) => event.preventDefault()}
+            >
+              {items.length > 0 ? (
+                items
+              ) : (
+                <Text size={size} className={classes.nothingFound} style={_styles.nothingFound}>
+                  {nothingFound}
+                </Text>
+              )}
+            </Paper>
+          )}
+        </Transition>
       </div>
     </InputWrapper>
   );

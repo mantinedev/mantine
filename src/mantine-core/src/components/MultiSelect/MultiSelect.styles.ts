@@ -26,4 +26,7 @@ export default createMemoStyles({
   searchInput: {
     width: 180,
   },
+
+  dropdown: {},
+  nothingFound: {},
 });
