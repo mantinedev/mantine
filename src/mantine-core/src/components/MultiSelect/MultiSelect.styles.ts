@@ -16,7 +16,9 @@ export default createMemoStyles({
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginLeft: -theme.spacing.xs / 2,
+    marginLeft: -theme.spacing.xs / 2 - 2,
+    paddingTop: theme.spacing.xs / 2 - 2,
+    paddingBottom: theme.spacing.xs / 2 - 2,
   }),
 
   input: {
@@ -24,12 +26,12 @@ export default createMemoStyles({
   },
 
   value: ({ theme }: MultiSelectStyles) => ({
-    margin: theme.spacing.xs / 2,
+    margin: theme.spacing.xs / 2 - 2,
   }),
 
   searchInput: ({ theme }: MultiSelectStyles) => ({
     width: 60,
-    height: 22,
+    height: 18,
     backgroundColor: 'transparent',
     border: 0,
     outline: 0,
@@ -72,7 +74,7 @@ export default createMemoStyles({
   dropdown: ({ theme, size }: MultiSelectStyles) => ({
     position: 'absolute',
     zIndex: 1,
-    top: getSizeValue({ size, sizes: INPUT_SIZES }) + theme.spacing.sm / 2,
+    top: theme.spacing.xs / 2,
     left: 0,
     right: 0,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,

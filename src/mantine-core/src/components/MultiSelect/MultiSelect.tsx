@@ -342,33 +342,35 @@ export function MultiSelect({
           </div>
         </Input>
 
-        <Transition
-          mounted={dropdownOpened}
-          transition={transition}
-          duration={transitionDuration}
-          timingFunction={transitionTimingFunction}
-        >
-          {(transitionStyles) => (
-            <Paper
-              id={`${uuid}-items`}
-              aria-labelledby={`${uuid}-label`}
-              role="listbox"
-              className={classes.dropdown}
-              shadow={shadow}
-              elementRef={dropdownRef}
-              style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
-              onMouseDown={(event) => event.preventDefault()}
-            >
-              {items.length > 0 ? (
-                items
-              ) : (
-                <Text size={size} className={classes.nothingFound} style={_styles.nothingFound}>
-                  {nothingFound}
-                </Text>
-              )}
-            </Paper>
-          )}
-        </Transition>
+        <div style={{ position: 'relative' }}>
+          <Transition
+            mounted={dropdownOpened}
+            transition={transition}
+            duration={transitionDuration}
+            timingFunction={transitionTimingFunction}
+          >
+            {(transitionStyles) => (
+              <Paper
+                id={`${uuid}-items`}
+                aria-labelledby={`${uuid}-label`}
+                role="listbox"
+                className={classes.dropdown}
+                shadow={shadow}
+                elementRef={dropdownRef}
+                style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
+                onMouseDown={(event) => event.preventDefault()}
+              >
+                {items.length > 0 ? (
+                  items
+                ) : (
+                  <Text size={size} className={classes.nothingFound} style={_styles.nothingFound}>
+                    {nothingFound}
+                  </Text>
+                )}
+              </Paper>
+            )}
+          </Transition>
+        </div>
       </div>
     </InputWrapper>
   );
