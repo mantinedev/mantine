@@ -112,14 +112,13 @@ export function Input<
       {...wrapperProps}
     >
       {icon && (
-        <div data-mantine-icon className={classes.icon} style={_styles.icon}>
+        <div className={classes.icon} style={_styles.icon}>
           {icon}
         </div>
       )}
 
       <Element
         {...others}
-        data-mantine-input
         ref={elementRef}
         aria-required={required}
         aria-invalid={invalid}
@@ -135,7 +134,6 @@ export function Input<
       {rightSection && (
         <div
           {...rightSectionProps}
-          data-mantine-input-section
           style={{ ..._styles.rightSection, width: rightSectionWidth }}
           className={classes.rightSection}
         >
