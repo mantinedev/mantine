@@ -8,6 +8,8 @@ import {
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
+import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
+import { ChevronIcon } from '../NativeSelect/ChevronIcon';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
@@ -89,6 +91,15 @@ interface MultiSelectProps
 
   /** Clear search value when item is selected */
   clearSearchOnChange?: boolean;
+
+  /** Allow to clear item */
+  clearable?: boolean;
+
+  /** aria-label for clear button */
+  clearButtonLabel?: string;
+
+  /** Clear search field value on blur */
+  clearSearchOnBlur?: boolean;
 }
 
 function defaultFilter(value: string, selected: boolean, item: MultiSelectItem) {
@@ -131,6 +142,9 @@ export function MultiSelect({
   filter = defaultFilter,
   limit = Infinity,
   clearSearchOnChange = true,
+  clearable = false,
+  clearSearchOnBlur = false,
+  clearButtonLabel,
   variant,
   ...others
 }: MultiSelectProps) {
@@ -174,6 +188,7 @@ export function MultiSelect({
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onBlur === 'function' && onBlur(event);
+    clearSearchOnBlur && setSearchValue('');
     setDropdownOpened(false);
   };
 
@@ -285,8 +300,27 @@ export function MultiSelect({
     />
   ));
 
+  const handleClear = () => {
+    setSearchValue('');
+    setValue([]);
+    inputRef.current?.focus();
+  };
+
   const shouldRenderDropdown =
     items.length > 0 || (searchValue.length > 0 && !!nothingFound && items.length === 0);
+
+  const shouldShowClear = clearable && _value.length > 0;
+  const rightSection = shouldShowClear ? (
+    <CloseButton
+      themeOverride={themeOverride}
+      variant="transparent"
+      aria-label={clearButtonLabel}
+      onClick={handleClear}
+      size={size}
+    />
+  ) : (
+    <ChevronIcon error={error} size={size} themeOverride={themeOverride} />
+  );
 
   return (
     <InputWrapper
@@ -323,6 +357,7 @@ export function MultiSelect({
           multiline
           size={size}
           variant={variant}
+          rightSection={rightSection}
           onMouseDown={(event) => {
             event.preventDefault();
             inputRef.current?.focus();
@@ -337,7 +372,8 @@ export function MultiSelect({
               id={uuid}
               style={_styles.searchInput}
               className={cx(classes.searchInput, {
-                [classes.searchInputInputHidden]: !searchable && _value.length > 0,
+                [classes.searchInputInputHidden]:
+                  !dropdownOpened || (!searchable && _value.length > 0),
                 [classes.searchInputEmpty]: _value.length === 0,
               })}
               onKeyDown={handleInputKeydown}

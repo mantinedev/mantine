@@ -132,5 +132,26 @@ storiesOf('@mantine/core/MultiSelect', module)
       />
     </div>
   ))
+  .add('Clearable', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+        clearable
+      />
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        clearable
+      />
+    </div>
+  ))
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Variants', () => <div style={{ padding: 40 }}>{variants}</div>);
