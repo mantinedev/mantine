@@ -219,16 +219,6 @@ export function MultiSelect({
     setDropdownOpened(false);
   };
 
-  const handleItemSelect = (item: MultiSelectItem) => {
-    clearSearchOnChange && setSearchValue('');
-
-    if (_value.includes(item.value)) {
-      handleValueRemove(item.value);
-    } else {
-      setValue([..._value, item.value]);
-    }
-  };
-
   const selectedItems = _value
     .map((val) => formattedData.find((item) => item.value === val))
     .map((item) => (
@@ -248,6 +238,19 @@ export function MultiSelect({
     filter,
     value: _value,
   });
+
+  const handleItemSelect = (item: MultiSelectItem) => {
+    clearSearchOnChange && setSearchValue('');
+
+    if (_value.includes(item.value)) {
+      handleValueRemove(item.value);
+    } else {
+      setValue([..._value, item.value]);
+      if (hovered === filteredData.length - 1) {
+        setHovered(filteredData.length - 2);
+      }
+    }
+  };
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     switch (event.nativeEvent.code) {
@@ -283,7 +286,7 @@ export function MultiSelect({
       }
 
       case 'Backspace': {
-        if (_value.length > 0 && searchValue.length === 0) {
+        if (_value.length > 0 && searchValue.length === 0 && searchable) {
           setValue(_value.slice(0, -1));
         }
 
