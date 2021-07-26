@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { MANTINE_SIZES } from '../../theme';
 import { Group } from '../Group/Group';
 import { TextInput } from '../TextInput/TextInput';
 import { MultiSelect } from './MultiSelect';
@@ -42,6 +43,20 @@ function Controlled() {
     </div>
   );
 }
+
+const sizes = MANTINE_SIZES.map((size) => (
+  <Group grow key={size} style={{ marginTop: 30 }} direction="column">
+    <MultiSelect
+      size={size}
+      label="Multi select"
+      data={data}
+      defaultValue={['react', 'ng']}
+      placeholder="Select items"
+      nothingFound="Nothing found"
+    />
+    <TextInput label="Text input" placeholder="Text input" size={size} />
+  </Group>
+));
 
 storiesOf('@mantine/core/MultiSelect', module)
   .add('Alignment', () => (
@@ -103,4 +118,5 @@ storiesOf('@mantine/core/MultiSelect', module)
         searchable
       />
     </div>
-  ));
+  ))
+  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>);

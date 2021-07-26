@@ -185,6 +185,8 @@ export function MultiSelect({
         style={_styles.value}
         onRemove={() => handleValueRemove(item.value)}
         key={item.value}
+        themeOverride={themeOverride}
+        size={size}
       />
     ));
 
@@ -315,6 +317,7 @@ export function MultiSelect({
           styles={styles as any}
           component="div"
           multiline
+          size={size}
           onMouseDown={(event) => {
             event.preventDefault();
             inputRef.current?.focus();

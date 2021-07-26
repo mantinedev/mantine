@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
-import { useMantineTheme, DefaultProps, mergeStyles } from '../../../theme';
+import { useMantineTheme, DefaultProps, mergeStyles, MantineSize } from '../../../theme';
 import useStyles from './DefaultValue.styles';
 
 export type DefaultValueStylesNames = keyof ReturnType<typeof useStyles>;
@@ -11,7 +11,16 @@ interface DefaultValueProps
     React.ComponentPropsWithoutRef<'div'> {
   label: string;
   onRemove(): void;
+  size: MantineSize;
 }
+
+const buttonSizes = {
+  xs: 16,
+  sm: 22,
+  md: 24,
+  lg: 26,
+  xl: 30,
+};
 
 export function DefaultValue({
   label,
@@ -20,10 +29,12 @@ export function DefaultValue({
   className,
   style,
   onRemove,
+  themeOverride,
+  size,
   ...others
 }: DefaultValueProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme }, classNames, 'multi-select');
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme, size }, classNames, 'multi-select');
   const _styles = mergeStyles(classes, styles);
 
   return (
@@ -35,11 +46,11 @@ export function DefaultValue({
       <div>{label}</div>
       <CloseButton
         onClick={onRemove}
-        size={22}
+        size={buttonSizes[size]}
         radius={2}
         color="blue"
         variant="transparent"
-        iconSize={12}
+        iconSize={buttonSizes[size] / 2}
         className={classes.defaultLabelRemove}
         tabIndex={-1}
       />

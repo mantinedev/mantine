@@ -1,27 +1,45 @@
-import { createMemoStyles, MantineTheme } from '../../../theme';
+import { createMemoStyles, getSizeValue, MantineSize, MantineTheme } from '../../../theme';
 
 interface DefaultLabelStyles {
   theme: MantineTheme;
+  size: MantineSize;
 }
 
+const sizes = {
+  xs: 16,
+  sm: 22,
+  md: 26,
+  lg: 30,
+  xl: 36,
+};
+
+const fontSizes = {
+  xs: 10,
+  sm: 12,
+  md: 14,
+  lg: 16,
+  xl: 18,
+};
+
 export default createMemoStyles({
-  defaultLabel: ({ theme }: DefaultLabelStyles) => ({
+  defaultLabel: ({ theme, size }: DefaultLabelStyles) => ({
     display: 'flex',
     alignItems: 'center',
     backgroundColor: theme.colors[theme.primaryColor][1],
     color: theme.colors[theme.primaryColor][9],
     lineHeight: 1,
-    padding: [0, theme.spacing.xs],
-    height: 22,
+    padding: [0, getSizeValue({ size, sizes: theme.spacing })],
+    height: getSizeValue({ size, sizes }),
     paddingRight: 0,
     fontWeight: 500,
-    fontSize: theme.fontSizes.xs,
+    fontSize: getSizeValue({ size, sizes: fontSizes }),
     borderRadius: theme.radius.sm,
     cursor: 'default',
     userSelect: 'none',
   }),
 
-  defaultLabelRemove: ({ theme }: DefaultLabelStyles) => ({
+  defaultLabelRemove: ({ theme, size }: DefaultLabelStyles) => ({
     color: theme.colors[theme.primaryColor][9],
+    marginLeft: getSizeValue({ size, sizes: theme.spacing }) / 8,
   }),
 });

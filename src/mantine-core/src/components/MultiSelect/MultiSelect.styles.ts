@@ -11,8 +11,8 @@ export default createMemoStyles({
     position: 'relative',
   },
 
-  values: ({ theme }: MultiSelectStyles) => ({
-    minHeight: INPUT_SIZES.sm - 2,
+  values: ({ theme, size }: MultiSelectStyles) => ({
+    minHeight: getSizeValue({ size, sizes: INPUT_SIZES }) - 2,
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
