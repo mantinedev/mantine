@@ -100,6 +100,9 @@ interface MultiSelectProps
 
   /** Clear search field value on blur */
   clearSearchOnBlur?: boolean;
+
+  /** Called each time search query changes */
+  onSearchChange?(query: string): void;
 }
 
 function defaultFilter(value: string, selected: boolean, item: MultiSelectItem) {
@@ -146,20 +149,24 @@ export function MultiSelect({
   clearSearchOnBlur = false,
   clearButtonLabel,
   variant,
+  onSearchChange,
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, size, variant }, classNames as any, 'multi-select');
   const _styles = mergeStyles(classes, styles as any);
-
   const dropdownRef = useRef<HTMLDivElement>();
   const inputRef = useRef<HTMLInputElement>();
   const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const uuid = useId(id);
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const [hovered, setHovered] = useState(-1);
-
   const [searchValue, setSearchValue] = useState('');
+
+  const handleSearchChange = (val: string) => {
+    typeof onSearchChange === 'function' && onSearchChange(val);
+    setSearchValue(val);
+  };
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -177,7 +184,7 @@ export function MultiSelect({
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setHovered(0);
-    setSearchValue(event.currentTarget.value);
+    handleSearchChange(event.currentTarget.value);
     setDropdownOpened(true);
   };
 
@@ -188,7 +195,7 @@ export function MultiSelect({
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onBlur === 'function' && onBlur(event);
-    clearSearchOnBlur && setSearchValue('');
+    clearSearchOnBlur && handleSearchChange('');
     setDropdownOpened(false);
   };
 
@@ -219,7 +226,7 @@ export function MultiSelect({
   });
 
   const handleItemSelect = (item: MultiSelectItem) => {
-    clearSearchOnChange && setSearchValue('');
+    clearSearchOnChange && handleSearchChange('');
 
     if (_value.includes(item.value)) {
       handleValueRemove(item.value);
@@ -301,7 +308,7 @@ export function MultiSelect({
   ));
 
   const handleClear = () => {
-    setSearchValue('');
+    handleSearchChange('');
     setValue([]);
     inputRef.current?.focus();
   };
