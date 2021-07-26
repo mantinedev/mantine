@@ -154,6 +154,27 @@ storiesOf('@mantine/core/MultiSelect', module)
       />
     </div>
   ))
+  .add('Disabled', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+        clearable
+        disabled
+      />
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        disabled
+      />
+    </div>
+  ))
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Variants', () => <div style={{ padding: 40 }}>{variants}</div>)
   .add('Countries select', () => (
@@ -175,6 +196,18 @@ storiesOf('@mantine/core/MultiSelect', module)
           nothingFound="Nothing found"
           searchable
           clearable
+        />
+
+        <MultiSelect
+          style={{ marginTop: 30 }}
+          label="Multi select"
+          data={data}
+          defaultValue={['react', 'ng']}
+          placeholder="Select items"
+          nothingFound="Nothing found"
+          searchable
+          clearable
+          disabled
         />
       </MantineProvider>
     </div>

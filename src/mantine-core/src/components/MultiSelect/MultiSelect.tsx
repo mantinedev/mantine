@@ -150,6 +150,7 @@ export function MultiSelect({
   clearButtonLabel,
   variant,
   onSearchChange,
+  disabled = false,
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -198,23 +199,6 @@ export function MultiSelect({
     clearSearchOnBlur && handleSearchChange('');
     setDropdownOpened(false);
   };
-
-  const selectedItems = _value
-    .map((val) => formattedData.find((item) => item.value === val))
-    .filter((val) => !!val)
-    .map((item) => (
-      <Value
-        {...item}
-        className={classes.value}
-        style={_styles.value}
-        onRemove={() => handleValueRemove(item.value)}
-        key={item.value}
-        themeOverride={themeOverride}
-        size={size}
-        styles={styles as any}
-        classNames={classNames as any}
-      />
-    ));
 
   const filteredData = filterData({
     data: formattedData,
@@ -307,14 +291,29 @@ export function MultiSelect({
     />
   ));
 
+  const selectedItems = _value
+    .map((val) => formattedData.find((item) => item.value === val))
+    .filter((val) => !!val)
+    .map((item) => (
+      <Value
+        {...item}
+        disabled={disabled}
+        className={classes.value}
+        style={_styles.value}
+        onRemove={() => handleValueRemove(item.value)}
+        key={item.value}
+        themeOverride={themeOverride}
+        size={size}
+        styles={styles as any}
+        classNames={classNames as any}
+      />
+    ));
+
   const handleClear = () => {
     handleSearchChange('');
     setValue([]);
     inputRef.current?.focus();
   };
-
-  const shouldRenderDropdown =
-    items.length > 0 || (searchValue.length > 0 && !!nothingFound && items.length === 0);
 
   const shouldShowClear = clearable && _value.length > 0;
   const rightSection = shouldShowClear ? (
@@ -325,10 +324,14 @@ export function MultiSelect({
       onClick={handleClear}
       size={size}
       style={{ pointerEvents: 'all' }}
+      disabled={disabled}
     />
   ) : (
     <ChevronIcon error={error} size={size} themeOverride={themeOverride} />
   );
+
+  const shouldRenderDropdown =
+    items.length > 0 || (searchValue.length > 0 && !!nothingFound && items.length === 0);
 
   return (
     <InputWrapper
@@ -366,6 +369,7 @@ export function MultiSelect({
           size={size}
           variant={variant}
           rightSection={rightSection}
+          disabled={disabled}
           onMouseDown={(event) => {
             event.preventDefault();
             inputRef.current?.focus();
@@ -391,6 +395,7 @@ export function MultiSelect({
               onBlur={handleInputBlur}
               readOnly={!searchable}
               placeholder={_value.length === 0 ? placeholder : undefined}
+              disabled={disabled}
               {...others}
             />
           </div>

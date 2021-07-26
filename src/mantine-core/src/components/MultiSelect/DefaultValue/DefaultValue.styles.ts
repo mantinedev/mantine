@@ -3,6 +3,7 @@ import { createMemoStyles, getSizeValue, MantineSize, MantineTheme } from '../..
 interface DefaultLabelStyles {
   theme: MantineTheme;
   size: MantineSize;
+  disabled: boolean;
 }
 
 const sizes = {
@@ -22,7 +23,7 @@ const fontSizes = {
 };
 
 export default createMemoStyles({
-  defaultValue: ({ theme, size }: DefaultLabelStyles) => ({
+  defaultValue: ({ theme, size, disabled }: DefaultLabelStyles) => ({
     display: 'flex',
     alignItems: 'center',
     backgroundColor:
@@ -32,11 +33,11 @@ export default createMemoStyles({
     lineHeight: 1,
     padding: [0, getSizeValue({ size, sizes: theme.spacing })],
     height: getSizeValue({ size, sizes }),
-    paddingRight: 0,
+    paddingRight: disabled ? getSizeValue({ size, sizes: theme.spacing }) : 0,
     fontWeight: 500,
     fontSize: getSizeValue({ size, sizes: fontSizes }),
     borderRadius: theme.radius.sm,
-    cursor: 'default',
+    cursor: disabled ? 'not-allowed' : 'default',
     userSelect: 'none',
   }),
 

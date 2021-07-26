@@ -11,6 +11,7 @@ interface DefaultValueProps
     React.ComponentPropsWithoutRef<'div'> {
   label: string;
   onRemove(): void;
+  disabled: boolean;
   size: MantineSize;
 }
 
@@ -30,11 +31,12 @@ export function DefaultValue({
   style,
   onRemove,
   themeOverride,
+  disabled,
   size,
   ...others
 }: DefaultValueProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'multi-select');
+  const classes = useStyles({ theme, size, disabled }, classNames, 'multi-select');
   const _styles = mergeStyles(classes, styles);
 
   return (
@@ -44,17 +46,19 @@ export function DefaultValue({
       {...others}
     >
       <div>{label}</div>
-      <CloseButton
-        onClick={onRemove}
-        size={buttonSizes[size]}
-        radius={2}
-        color="blue"
-        variant="transparent"
-        iconSize={buttonSizes[size] / 2}
-        className={classes.defaultValueRemove}
-        style={_styles.defaultValueRemove}
-        tabIndex={-1}
-      />
+      {!disabled && (
+        <CloseButton
+          onClick={onRemove}
+          size={buttonSizes[size]}
+          radius={2}
+          color="blue"
+          variant="transparent"
+          iconSize={buttonSizes[size] / 2}
+          className={classes.defaultValueRemove}
+          style={_styles.defaultValueRemove}
+          tabIndex={-1}
+        />
+      )}
     </div>
   );
 }
