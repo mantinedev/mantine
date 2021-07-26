@@ -221,6 +221,7 @@ export function MultiSelect({
 
   const selectedItems = _value
     .map((val) => formattedData.find((item) => item.value === val))
+    .filter((val) => !!val)
     .map((item) => (
       <Value
         {...item}
