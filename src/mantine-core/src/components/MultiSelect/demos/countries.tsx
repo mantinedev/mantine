@@ -34,9 +34,9 @@ function Value({ value, label, onRemove, ...others }) {
   );
 }
 
-function Item({ label, value, ...others }) {
+function Item({ label, value, elementRef, ...others }) {
   return (
-    <div {...others}>
+    <div ref={elementRef} {...others}>
       <div style={{ display: 'flex', cursor: 'default' }}>
         <div style={{ marginRight: 10 }}>
           <Flag code={value} size="S" />
@@ -91,9 +91,9 @@ function Value({ value, label, onRemove, ...others }: any) {
   );
 }
 
-function Item({ label, value, ...others }: any) {
+function Item({ label, value, elementRef, ...others }: any) {
   return (
-    <div {...others}>
+    <div ref={elementRef} {...others}>
       <div style={{ display: 'flex', cursor: 'default' }}>
         <div style={{ marginRight: 10 }}>
           <Flag code={value} size="S" />
