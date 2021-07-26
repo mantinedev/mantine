@@ -21,10 +21,6 @@ export default createMemoStyles({
     paddingBottom: theme.spacing.xs / 2 - 2,
   }),
 
-  input: {
-    overflow: 'hidden',
-  },
-
   value: ({ theme }: MultiSelectStyles) => ({
     margin: [theme.spacing.xs / 2 - 2, theme.spacing.xs / 2],
   }),

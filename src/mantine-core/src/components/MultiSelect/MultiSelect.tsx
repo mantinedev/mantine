@@ -25,7 +25,7 @@ export interface MultiSelectItem {
 type MultiSelectDataItem = string | MultiSelectItem;
 
 export type MultiSelectStylesNames =
-  | keyof ReturnType<typeof useStyles>
+  | Exclude<keyof ReturnType<typeof useStyles>, 'searchInputEmpty' | 'searchInputInputHidden'>
   | InputWrapperStylesNames
   | InputStylesNames;
 
@@ -226,6 +226,7 @@ export function MultiSelect({
       <Value
         {...item}
         className={classes.value}
+        style={_styles.value}
         onRemove={() => handleValueRemove(item.value)}
         key={item.value}
       />
@@ -353,7 +354,9 @@ export function MultiSelect({
         tabIndex={-1}
       >
         <Input<'div'>
-          className={classes.input}
+          style={{ overflow: 'hidden' }}
+          classNames={classNames as any}
+          styles={styles as any}
           component="div"
           multiline
           onMouseDown={(event) => {
@@ -361,12 +364,14 @@ export function MultiSelect({
             inputRef.current?.focus();
           }}
         >
-          <div className={classes.values}>
+          <div className={classes.values} style={_styles.values}>
             {selectedItems}
+
             <input
               ref={inputRef}
               type="text"
               id={uuid}
+              style={_styles.searchInput}
               className={cx(classes.searchInput, {
                 [classes.searchInputInputHidden]: !searchable && _value.length > 0,
                 [classes.searchInputEmpty]: _value.length === 0,
