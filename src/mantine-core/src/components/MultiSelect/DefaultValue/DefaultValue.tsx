@@ -45,9 +45,11 @@ export function DefaultValue({
       style={{ ...style, ..._styles.defaultValue }}
       {...others}
     >
-      <div>{label}</div>
+      <span>{label}</span>
+
       {!disabled && (
         <CloseButton
+          aria-hidden
           onClick={onRemove}
           size={buttonSizes[size]}
           radius={2}
