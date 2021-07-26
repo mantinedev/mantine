@@ -130,10 +130,11 @@ export function MultiSelect({
   filter = defaultFilter,
   limit = Infinity,
   clearSearchOnChange = true,
+  variant,
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames as any, 'multi-select');
+  const classes = useStyles({ theme, size, variant }, classNames as any, 'multi-select');
   const _styles = mergeStyles(classes, styles as any);
 
   const dropdownRef = useRef<HTMLDivElement>();
@@ -318,6 +319,7 @@ export function MultiSelect({
           component="div"
           multiline
           size={size}
+          variant={variant}
           onMouseDown={(event) => {
             event.preventDefault();
             inputRef.current?.focus();

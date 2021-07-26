@@ -58,6 +58,19 @@ const sizes = MANTINE_SIZES.map((size) => (
   </Group>
 ));
 
+const variants = (['default', 'filled', 'unstyled', 'headless'] as const).map((variant) => (
+  <Group grow key={variant} style={{ marginTop: 30 }} direction="column">
+    <MultiSelect
+      variant={variant}
+      label="Multi select"
+      data={data}
+      placeholder="Select items"
+      nothingFound="Nothing found"
+    />
+    <TextInput label="Text input" placeholder="Text input" variant={variant} />
+  </Group>
+));
+
 storiesOf('@mantine/core/MultiSelect', module)
   .add('Alignment', () => (
     <>
@@ -119,4 +132,5 @@ storiesOf('@mantine/core/MultiSelect', module)
       />
     </div>
   ))
-  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>);
+  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
+  .add('Variants', () => <div style={{ padding: 40 }}>{variants}</div>);

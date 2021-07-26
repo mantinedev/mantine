@@ -4,6 +4,7 @@ import { INPUT_SIZES } from '../Input/Input';
 interface MultiSelectStyles {
   theme: MantineTheme;
   size: MantineSize;
+  variant: string;
 }
 
 export default createMemoStyles({
@@ -38,7 +39,7 @@ export default createMemoStyles({
     cursor: 'default',
 
     '&::placeholder': {
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
     },
   }),
 
