@@ -37,6 +37,7 @@ export default createMemoStyles({
     margin: theme.spacing.xs / 2,
     appearance: 'none',
     cursor: 'default',
+    color: 'inherit',
 
     '&::placeholder': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],

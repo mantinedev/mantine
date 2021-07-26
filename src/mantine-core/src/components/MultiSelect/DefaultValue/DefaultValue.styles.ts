@@ -25,8 +25,10 @@ export default createMemoStyles({
   defaultValue: ({ theme, size }: DefaultLabelStyles) => ({
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: theme.colors[theme.primaryColor][1],
-    color: theme.colors[theme.primaryColor][9],
+    backgroundColor:
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors[theme.primaryColor][1],
+    color:
+      theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors[theme.primaryColor][9],
     lineHeight: 1,
     padding: [0, getSizeValue({ size, sizes: theme.spacing })],
     height: getSizeValue({ size, sizes }),
@@ -39,7 +41,8 @@ export default createMemoStyles({
   }),
 
   defaultValueRemove: ({ theme, size }: DefaultLabelStyles) => ({
-    color: theme.colors[theme.primaryColor][9],
+    color:
+      theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors[theme.primaryColor][9],
     marginLeft: getSizeValue({ size, sizes: theme.spacing }) / 8,
   }),
 });

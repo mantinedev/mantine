@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES } from '../../theme';
+import { MANTINE_SIZES, DEFAULT_THEME, MantineProvider } from '../../theme';
 import { Group } from '../Group/Group';
 import { TextInput } from '../TextInput/TextInput';
 import { MultiSelect } from './MultiSelect';
@@ -159,5 +159,23 @@ storiesOf('@mantine/core/MultiSelect', module)
   .add('Countries select', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <CountriesSelect />
+    </div>
+  ))
+  .add('Dark theme', () => (
+    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
+      <MantineProvider theme={{ colorScheme: 'dark' }}>
+        <CountriesSelect />
+
+        <MultiSelect
+          style={{ marginTop: 30 }}
+          label="Multi select"
+          data={data}
+          defaultValue={['react', 'ng']}
+          placeholder="Select items"
+          nothingFound="Nothing found"
+          searchable
+          clearable
+        />
+      </MantineProvider>
     </div>
   ));
