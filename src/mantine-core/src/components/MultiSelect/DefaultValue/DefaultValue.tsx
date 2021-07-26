@@ -39,8 +39,8 @@ export function DefaultValue({
 
   return (
     <div
-      className={cx(classes.defaultLabel, className)}
-      style={{ ...style, ..._styles.defaultLabel }}
+      className={cx(classes.defaultValue, className)}
+      style={{ ...style, ..._styles.defaultValue }}
       {...others}
     >
       <div>{label}</div>
@@ -51,7 +51,8 @@ export function DefaultValue({
         color="blue"
         variant="transparent"
         iconSize={buttonSizes[size] / 2}
-        className={classes.defaultLabelRemove}
+        className={classes.defaultValueRemove}
+        style={_styles.defaultValueRemove}
         tabIndex={-1}
       />
     </div>

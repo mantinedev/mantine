@@ -12,7 +12,7 @@ import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
 import { Text } from '../Text/Text';
-import { DefaultValue } from './DefaultValue/DefaultValue';
+import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import useStyles from './MultiSelect.styles';
@@ -26,6 +26,7 @@ export interface MultiSelectItem {
 type MultiSelectDataItem = string | MultiSelectItem;
 
 export type MultiSelectStylesNames =
+  | DefaultValueStylesNames
   | Exclude<keyof ReturnType<typeof useStyles>, 'searchInputEmpty' | 'searchInputInputHidden'>
   | InputWrapperStylesNames
   | InputStylesNames;
@@ -188,6 +189,8 @@ export function MultiSelect({
         key={item.value}
         themeOverride={themeOverride}
         size={size}
+        styles={styles as any}
+        classNames={classNames as any}
       />
     ));
 

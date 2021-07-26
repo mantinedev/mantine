@@ -22,7 +22,7 @@ const fontSizes = {
 };
 
 export default createMemoStyles({
-  defaultLabel: ({ theme, size }: DefaultLabelStyles) => ({
+  defaultValue: ({ theme, size }: DefaultLabelStyles) => ({
     display: 'flex',
     alignItems: 'center',
     backgroundColor: theme.colors[theme.primaryColor][1],
@@ -38,7 +38,7 @@ export default createMemoStyles({
     userSelect: 'none',
   }),
 
-  defaultLabelRemove: ({ theme, size }: DefaultLabelStyles) => ({
+  defaultValueRemove: ({ theme, size }: DefaultLabelStyles) => ({
     color: theme.colors[theme.primaryColor][9],
     marginLeft: getSizeValue({ size, sizes: theme.spacing }) / 8,
   }),
