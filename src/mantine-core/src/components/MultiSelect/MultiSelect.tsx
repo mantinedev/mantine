@@ -288,6 +288,7 @@ export function MultiSelect({
       case 'Backspace': {
         if (_value.length > 0 && searchValue.length === 0 && searchable) {
           setValue(_value.slice(0, -1));
+          setDropdownOpened(true);
         }
 
         break;

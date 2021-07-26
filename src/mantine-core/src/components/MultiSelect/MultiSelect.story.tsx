@@ -14,6 +14,15 @@ const data = [
   { value: 'blitz', label: 'Blitz.js' },
 ];
 
+const stringData = ['React', 'Angular', 'Svelte', 'Vue'];
+
+const largeData = Array(1000)
+  .fill(0)
+  .map((_, index) => ({
+    value: `${index}`,
+    label: `Item ${index}`,
+  }));
+
 storiesOf('@mantine/core/MultiSelect', module)
   .add('Alignment', () => (
     <>
@@ -38,6 +47,29 @@ storiesOf('@mantine/core/MultiSelect', module)
         />
       </Group>
     </>
+  ))
+  .add('String data', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={stringData}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+      />
+    </div>
+  ))
+  .add('Large data', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={largeData}
+        limit={20}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+      />
+    </div>
   ))
   .add('Searchable', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
