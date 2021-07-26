@@ -47,6 +47,9 @@ export interface InputBaseProps {
 
   /** Will input have multiple lines? */
   multiline?: boolean;
+
+  /** Disabled input state */
+  disabled?: boolean;
 }
 
 export interface InputProps extends InputBaseProps, DefaultProps<typeof useStyles> {}
@@ -60,6 +63,7 @@ export function Input<
   className,
   invalid = false,
   required = false,
+  disabled = false,
   variant,
   icon,
   style,
@@ -90,7 +94,7 @@ export function Input<
   const theme = useMantineTheme(themeOverride);
   const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
   const classes = useStyles(
-    { radius, theme, size, multiline, variant: _variant, invalid },
+    { radius, theme, size, multiline, variant: _variant, invalid, disabled },
     classNames,
     __staticSelector
   );
@@ -120,6 +124,7 @@ export function Input<
         aria-required={required}
         aria-invalid={invalid}
         className={cx({ [classes.withIcon]: icon }, classes.input)}
+        disabled={disabled}
         style={{
           paddingRight: rightSection ? rightSectionWidth : theme.spacing.md,
           ..._styles.input,

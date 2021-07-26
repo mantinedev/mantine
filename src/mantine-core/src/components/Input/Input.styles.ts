@@ -15,6 +15,7 @@ interface InputStyles {
   variant: InputVariant;
   multiline: boolean;
   invalid: boolean;
+  disabled: boolean;
 }
 
 export const sizes = {
@@ -104,7 +105,7 @@ export default createMemoStyles({
     '&, & *': { boxSizing: 'border-box' },
   }),
 
-  input: ({ theme, size, multiline, radius, variant, invalid }: InputStyles) => {
+  input: ({ theme, size, multiline, radius, variant, invalid, disabled }: InputStyles) => {
     if (variant === 'headless') {
       return {};
     }
@@ -120,6 +121,20 @@ export default createMemoStyles({
           }
         : null;
 
+    const disabledStyles = disabled
+      ? {
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+          color: theme.colors.dark[2],
+          opacity: 0.6,
+          cursor: 'not-allowed',
+
+          '&::placeholder': {
+            color: theme.colors.dark[2],
+          },
+        }
+      : null;
+
     return {
       ...getFontStyles(theme),
       ...getVariantStyles({ variant, theme }),
@@ -134,6 +149,7 @@ export default createMemoStyles({
       display: 'block',
       textAlign: 'left',
       ...sizeStyles,
+      ...disabledStyles,
 
       '&:disabled': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
