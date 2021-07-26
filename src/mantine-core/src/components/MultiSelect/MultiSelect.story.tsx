@@ -4,6 +4,7 @@ import { MANTINE_SIZES } from '../../theme';
 import { Group } from '../Group/Group';
 import { TextInput } from '../TextInput/TextInput';
 import { MultiSelect } from './MultiSelect';
+import { CountriesSelect } from './demos/countries';
 
 const data = [
   { value: 'react', label: 'React' },
@@ -154,4 +155,9 @@ storiesOf('@mantine/core/MultiSelect', module)
     </div>
   ))
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
-  .add('Variants', () => <div style={{ padding: 40 }}>{variants}</div>);
+  .add('Variants', () => <div style={{ padding: 40 }}>{variants}</div>)
+  .add('Countries select', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <CountriesSelect />
+    </div>
+  ));

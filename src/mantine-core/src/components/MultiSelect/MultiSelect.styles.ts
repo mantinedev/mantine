@@ -50,6 +50,7 @@ export default createMemoStyles({
   searchInputInputHidden: () => ({
     width: 0,
     height: 0,
+    margin: 0,
     overflow: 'hidden',
   }),
 

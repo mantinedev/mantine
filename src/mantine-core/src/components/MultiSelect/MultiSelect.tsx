@@ -317,6 +317,7 @@ export function MultiSelect({
       aria-label={clearButtonLabel}
       onClick={handleClear}
       size={size}
+      style={{ pointerEvents: 'all' }}
     />
   ) : (
     <ChevronIcon error={error} size={size} themeOverride={themeOverride} />
@@ -352,7 +353,7 @@ export function MultiSelect({
         <Input<'div'>
           style={{ overflow: 'hidden' }}
           classNames={classNames as any}
-          styles={styles as any}
+          styles={{ ...styles, rightSection: { pointerEvents: 'none' } } as any}
           component="div"
           multiline
           size={size}
@@ -373,7 +374,7 @@ export function MultiSelect({
               style={_styles.searchInput}
               className={cx(classes.searchInput, {
                 [classes.searchInputInputHidden]:
-                  !dropdownOpened || (!searchable && _value.length > 0),
+                  (!dropdownOpened && _value.length > 0) || (!searchable && _value.length > 0),
                 [classes.searchInputEmpty]: _value.length === 0,
               })}
               onKeyDown={handleInputKeydown}
