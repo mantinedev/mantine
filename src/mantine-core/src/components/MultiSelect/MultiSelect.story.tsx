@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Group } from '../Group/Group';
 import { TextInput } from '../TextInput/TextInput';
@@ -22,6 +22,26 @@ const largeData = Array(1000)
     value: `${index}`,
     label: `Item ${index}`,
   }));
+
+function Controlled() {
+  const [value, setValue] = useState([]);
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        value={value}
+        onChange={setValue}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+      />
+      <button type="button" onClick={() => setValue(['react', 'ng'])}>
+        Set value
+      </button>
+    </div>
+  );
+}
 
 storiesOf('@mantine/core/MultiSelect', module)
   .add('Alignment', () => (
@@ -71,6 +91,7 @@ storiesOf('@mantine/core/MultiSelect', module)
       />
     </div>
   ))
+  .add('Controlled', () => <Controlled />)
   .add('Searchable', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <MultiSelect
