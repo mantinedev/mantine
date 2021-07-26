@@ -50,11 +50,11 @@ export default createMemoStyles({
     width: '100%',
   }),
 
-  searchInputInputHidden: {
+  searchInputInputHidden: () => ({
     width: 0,
     height: 0,
     overflow: 'hidden',
-  },
+  }),
 
   item: ({ theme, size }: MultiSelectStyles) => ({
     textAlign: 'left',

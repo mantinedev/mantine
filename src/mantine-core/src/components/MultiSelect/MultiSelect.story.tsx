@@ -14,9 +14,33 @@ const data = [
   { value: 'blitz', label: 'Blitz.js' },
 ];
 
-storiesOf('@mantine/core/MultiSelect', module).add('General usage', () => (
-  <>
-    <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
+storiesOf('@mantine/core/MultiSelect', module)
+  .add('Alignment', () => (
+    <>
+      <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
+        <MultiSelect
+          label="Multi select"
+          data={data}
+          defaultValue={['react', 'ng']}
+          placeholder="Select items"
+          nothingFound="Nothing found"
+        />
+        <TextInput label="Text input" placeholder="Select items" />
+      </Group>
+      <Group style={{ padding: 40, paddingTop: 0 }} grow align="flex-start">
+        <TextInput label="Text input" placeholder="Select items" />
+        <MultiSelect
+          label="Multi select"
+          data={data}
+          defaultValue={['react', 'ng']}
+          placeholder="Select items"
+          nothingFound="Nothing found"
+        />
+      </Group>
+    </>
+  ))
+  .add('Searchable', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <MultiSelect
         label="Multi select"
         data={data}
@@ -25,18 +49,5 @@ storiesOf('@mantine/core/MultiSelect', module).add('General usage', () => (
         nothingFound="Nothing found"
         searchable
       />
-      <TextInput label="Text input" placeholder="Select items" />
-    </Group>
-    <Group style={{ padding: 40, paddingTop: 0 }} grow align="flex-start">
-      <TextInput label="Text input" placeholder="Select items" />
-      <MultiSelect
-        label="Multi select"
-        data={data}
-        defaultValue={['react', 'ng']}
-        placeholder="Select items"
-        nothingFound="Nothing found"
-        searchable
-      />
-    </Group>
-  </>
-));
+    </div>
+  ));
