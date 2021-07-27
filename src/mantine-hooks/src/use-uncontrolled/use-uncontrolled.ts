@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 
-type UncontrolledMode = 'initial' | 'controlled' | 'uncontrolled';
+export type UncontrolledMode = 'initial' | 'controlled' | 'uncontrolled';
 
 export interface UncontrolledOptions<T> {
-  value: T;
-  defaultValue: T;
-  finalValue: T;
-  onChange(value: T): void;
-  onValueUpdate?(value: T): void;
-  rule: (value: T) => boolean;
+  value: T | null | undefined;
+  defaultValue: T | null | undefined;
+  finalValue: T | null;
+  onChange(value: T | null): void;
+  onValueUpdate?(value: T | null): void;
+  rule: (value: T | null | undefined) => boolean;
 }
 
 export function useUncontrolled<T>({
@@ -18,7 +18,7 @@ export function useUncontrolled<T>({
   rule,
   onChange,
   onValueUpdate,
-}: UncontrolledOptions<T>) {
+}: UncontrolledOptions<T>): readonly [T | null, (nextValue: T | null) => void, UncontrolledMode] {
   // determine, whether new props indicate controlled state
   const shouldBeControlled = rule(value);
 
@@ -47,7 +47,7 @@ export function useUncontrolled<T>({
   modeRef.current = shouldBeControlled ? 'controlled' : 'uncontrolled';
   const mode = modeRef.current;
 
-  const handleChange = (nextValue: T) => {
+  const handleChange = (nextValue: T | null) => {
     typeof onChange === 'function' && onChange(nextValue);
 
     // Controlled input only triggers onChange event and expects
