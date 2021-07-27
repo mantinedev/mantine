@@ -21,6 +21,8 @@
     "storybook": "esno scripts/storybook-start",
     "test": "npm run syncpack && npm run typecheck && npm run lint && npm run jest",
     "docs": "npm run docs:clean && npm run docs:docgen && npm run docs:sizes && cd docs && npm start",
+    "docs:typecheck": "cd docs && npm run typecheck",
+    "docs:lint": "cd docs && npm run link",
     "docs:docgen": "esno scripts/docgen",
     "docs:sizes": "esno scripts/calculate-sizes",
     "docs:clean": "cd docs && npm run clean",

@@ -9,5 +9,9 @@
     "declarationMap": true,
     "declarationDir": "lib"
   },
-  "references": [{ "path": "../mantine-core" }, { "path": "../mantine-hooks" }]
+  "references": [
+    { "path": "../mantine-core" },
+    { "path": "../mantine-hooks" },
+    { "path": "../mantine-tests" }
+  ]
 }
