@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '../../theme';
 import { scrollIntoView } from '../../utils';
 import {
@@ -103,6 +103,12 @@ interface MultiSelectProps
 
   /** Called each time search query changes */
   onSearchChange?(query: string): void;
+
+  /** Initial dropdown opened state */
+  initiallyOpened?: boolean;
+
+  /** Get input ref */
+  elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
 function defaultFilter(value: string, selected: boolean, item: MultiSelectItem) {
@@ -151,6 +157,8 @@ export function MultiSelect({
   variant,
   onSearchChange,
   disabled = false,
+  initiallyOpened = false,
+  elementRef,
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -160,7 +168,7 @@ export function MultiSelect({
   const inputRef = useRef<HTMLInputElement>();
   const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const uuid = useId(id);
-  const [dropdownOpened, setDropdownOpened] = useState(false);
+  const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const [searchValue, setSearchValue] = useState('');
 
@@ -379,7 +387,7 @@ export function MultiSelect({
             {selectedItems}
 
             <input
-              ref={inputRef}
+              ref={useMergedRef(elementRef, inputRef)}
               type="text"
               id={uuid}
               style={_styles.searchInput}
