@@ -10,7 +10,7 @@ export function ContentDemos() {
 
   return (
     <>
-      <Group align="flex-start" grow spacing={30}>
+      <Group align="flex-start" grow spacing={30} direction="column">
         <div>
           <Text size="lg" style={{ marginBottom: 5 }}>
             RingProgress component
