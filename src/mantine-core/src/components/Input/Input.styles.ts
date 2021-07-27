@@ -64,10 +64,12 @@ function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'the
 
   if (variant === 'unstyled') {
     return {
+      borderWidth: 1,
+      borderColor: 'transparent',
+      borderStyle: 'solid',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       backgroundColor: 'transparent',
       height: 28,
-      border: 0,
       outline: 0,
 
       '&:disabled': {
@@ -101,8 +103,6 @@ export default createMemoStyles({
   root: ({ radius, theme }: InputStyles) => ({
     position: 'relative',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-
-    '&, & *': { boxSizing: 'border-box' },
   }),
 
   input: ({ theme, size, multiline, radius, variant, invalid, disabled }: InputStyles) => {
