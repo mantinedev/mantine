@@ -1,7 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
-import { useMantineTheme, DefaultProps, mergeStyles, MantineSize } from '../../../theme';
+import {
+  useMantineTheme,
+  DefaultProps,
+  mergeStyles,
+  MantineSize,
+  MantineNumberSize,
+} from '../../../theme';
 import useStyles from './DefaultValue.styles';
 
 export type DefaultValueStylesNames = keyof ReturnType<typeof useStyles>;
@@ -13,6 +19,7 @@ interface DefaultValueProps
   onRemove(): void;
   disabled: boolean;
   size: MantineSize;
+  radius: MantineNumberSize;
 }
 
 const buttonSizes = {
@@ -33,10 +40,11 @@ export function DefaultValue({
   themeOverride,
   disabled,
   size,
+  radius,
   ...others
 }: DefaultValueProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size, disabled }, classNames, 'multi-select');
+  const classes = useStyles({ theme, size, disabled, radius }, classNames, 'multi-select');
   const _styles = mergeStyles(classes, styles);
 
   return (

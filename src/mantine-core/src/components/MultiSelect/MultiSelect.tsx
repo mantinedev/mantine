@@ -158,11 +158,16 @@ export function MultiSelect({
   onSearchChange,
   disabled = false,
   initiallyOpened = false,
+  radius = 'sm',
   elementRef,
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size, variant }, classNames as any, 'multi-select');
+  const classes = useStyles(
+    { theme, size, variant, invalid: !!error },
+    classNames as any,
+    'multi-select'
+  );
   const _styles = mergeStyles(classes, styles as any);
   const dropdownRef = useRef<HTMLDivElement>();
   const inputRef = useRef<HTMLInputElement>();
@@ -314,6 +319,7 @@ export function MultiSelect({
         size={size}
         styles={styles as any}
         classNames={classNames as any}
+        radius={radius}
       />
     ));
 
@@ -378,6 +384,9 @@ export function MultiSelect({
           variant={variant}
           rightSection={rightSection}
           disabled={disabled}
+          invalid={!!error}
+          required={required}
+          radius={radius}
           onMouseDown={(event) => {
             event.preventDefault();
             inputRef.current?.focus();

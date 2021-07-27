@@ -5,6 +5,7 @@ interface MultiSelectStyles {
   theme: MantineTheme;
   size: MantineSize;
   variant: string;
+  invalid: boolean;
 }
 
 export default createMemoStyles({
@@ -27,13 +28,13 @@ export default createMemoStyles({
     margin: [theme.spacing.xs / 2 - 2, theme.spacing.xs / 2],
   }),
 
-  searchInput: ({ theme }: MultiSelectStyles) => ({
+  searchInput: ({ theme, invalid, size }: MultiSelectStyles) => ({
     width: 60,
-    height: 18,
+    // height: 18,
     backgroundColor: 'transparent',
     border: 0,
     outline: 0,
-    fontSize: theme.fontSizes.sm,
+    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     padding: 0,
     margin: theme.spacing.xs / 2,
     appearance: 'none',
@@ -41,7 +42,15 @@ export default createMemoStyles({
     color: 'inherit',
 
     '&::placeholder': {
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
+      color: invalid
+        ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
+        : theme.colorScheme === 'dark'
+        ? theme.colors.dark[2]
+        : theme.colors.gray[5],
+    },
+
+    '&:disabled': {
+      cursor: 'not-allowed',
     },
   }),
 

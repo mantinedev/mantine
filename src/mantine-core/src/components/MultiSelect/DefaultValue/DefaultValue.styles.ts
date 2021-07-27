@@ -1,8 +1,15 @@
-import { createMemoStyles, getSizeValue, MantineSize, MantineTheme } from '../../../theme';
+import {
+  createMemoStyles,
+  getSizeValue,
+  MantineNumberSize,
+  MantineSize,
+  MantineTheme,
+} from '../../../theme';
 
 interface DefaultLabelStyles {
   theme: MantineTheme;
   size: MantineSize;
+  radius: MantineNumberSize;
   disabled: boolean;
 }
 
@@ -23,7 +30,7 @@ const fontSizes = {
 };
 
 export default createMemoStyles({
-  defaultValue: ({ theme, size, disabled }: DefaultLabelStyles) => ({
+  defaultValue: ({ theme, size, disabled, radius }: DefaultLabelStyles) => ({
     display: 'flex',
     alignItems: 'center',
     backgroundColor:
@@ -36,7 +43,7 @@ export default createMemoStyles({
     paddingRight: disabled ? getSizeValue({ size, sizes: theme.spacing }) : 0,
     fontWeight: 500,
     fontSize: getSizeValue({ size, sizes: fontSizes }),
-    borderRadius: theme.radius.sm,
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     cursor: disabled ? 'not-allowed' : 'default',
     userSelect: 'none',
   }),
