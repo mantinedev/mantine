@@ -20,6 +20,7 @@ export default createMemoStyles({
     marginLeft: -theme.spacing.xs / 2,
     paddingTop: theme.spacing.xs / 2 - 2,
     paddingBottom: theme.spacing.xs / 2 - 2,
+    boxSizing: 'border-box',
   }),
 
   value: ({ theme }: MultiSelectStyles) => ({
