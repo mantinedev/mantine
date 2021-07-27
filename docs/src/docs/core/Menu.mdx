@@ -150,20 +150,27 @@ to make MenuItem and other similar components work with Next Link, create wrappe
 
 ```tsx
 // This component can be reused in every Mantine component which supports component pass through
-function NextLink({ href, ...others }) {
-  return (
+import React, { forwardRef } from 'react';
+import Link from 'next/link';
+
+export const NextLink = forwardRef(
+  (
+    { href, ...others }: React.ComponentPropsWithoutRef<typeof Link>,
+    ref: React.ForwardedRef<HTMLAnchorElement>
+  ) => (
     <Link href={href}>
-      <a {...others} />
+      {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
+      <a {...others} ref={ref} />
     </Link>
-  );
-}
+  )
+);
 ```
 
 And then pass it to MenuItem or other component:
 
 ```tsx
 <MenuItem component={NextLink} href="/hello">
-  Next Link button
+  Next Link menu item
 </MenuItem>
 ```
 
