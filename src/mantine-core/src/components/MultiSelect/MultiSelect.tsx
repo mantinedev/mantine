@@ -33,7 +33,7 @@ export type MultiSelectStylesNames =
   | InputWrapperStylesNames
   | InputStylesNames;
 
-interface MultiSelectProps
+export interface MultiSelectProps
   extends DefaultProps<MultiSelectStylesNames>,
     InputWrapperBaseProps,
     InputBaseProps,

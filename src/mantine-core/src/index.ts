@@ -34,6 +34,7 @@ export { Loader, LOADER_SIZES } from './components/Loader/Loader';
 export { LoadingOverlay } from './components/LoadingOverlay/LoadingOverlay';
 export { Menu, MenuItem, MenuBody, MenuLabel, MENU_SIZES } from './components/Menu/Menu';
 export { Modal, MODAL_SIZES } from './components/Modal/Modal';
+export { MultiSelect } from './components/MultiSelect/MultiSelect';
 export { NativeSelect } from './components/NativeSelect/NativeSelect';
 export { Notification } from './components/Notification/Notification';
 export { NumberInput } from './components/NumberInput/NumberInput';
@@ -121,6 +122,10 @@ export type {
   MenuLabelProps,
 } from './components/Menu/Menu';
 export type { ModalProps, ModalStylesNames } from './components/Modal/Modal';
+export type {
+  MultiSelectProps,
+  MultiSelectStylesNames,
+} from './components/MultiSelect/MultiSelect';
 export type {
   NativeSelectProps,
   NativeSelectStylesNames,

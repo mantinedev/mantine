@@ -17,6 +17,7 @@ export * from './components/JsonInput/styles.api';
 export * from './components/Input/styles.api';
 export * from './components/Menu/styles.api';
 export * from './components/Modal/styles.api';
+export * from './components/MultiSelect/styles.api';
 export * from './components/NativeSelect/styles.api';
 export * from './components/Notification/styles.api';
 export * from './components/NumberInput/styles.api';
