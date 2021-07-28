@@ -30,7 +30,6 @@ export default createMemoStyles({
 
   searchInput: ({ theme, invalid, size }: MultiSelectStyles) => ({
     width: 60,
-    // height: 18,
     backgroundColor: 'transparent',
     border: 0,
     outline: 0,

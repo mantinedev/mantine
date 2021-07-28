@@ -2,6 +2,10 @@ import { Input } from '../Input/styles.api';
 import { InputWrapper } from '../InputWrapper/styles.api';
 import { MultiSelectStylesNames } from './MultiSelect';
 
+const InputStyles = { ...Input };
+
+delete InputStyles.rightSection;
+
 export const MultiSelect: Record<MultiSelectStylesNames, string> = {
   wrapper: 'Wrapper around input and dropdown',
   dropdown: 'Dropdown element',
@@ -13,6 +17,6 @@ export const MultiSelect: Record<MultiSelectStylesNames, string> = {
   searchInput: 'Search input, rendered after all values',
   defaultValue: 'Default value component wrapper',
   defaultValueRemove: 'Default value remove control',
-  ...Input,
+  ...InputStyles,
   ...InputWrapper,
 };

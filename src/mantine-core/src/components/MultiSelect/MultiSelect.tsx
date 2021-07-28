@@ -31,12 +31,12 @@ export type MultiSelectStylesNames =
   | DefaultValueStylesNames
   | Exclude<keyof ReturnType<typeof useStyles>, 'searchInputEmpty' | 'searchInputInputHidden'>
   | InputWrapperStylesNames
-  | InputStylesNames;
+  | Exclude<InputStylesNames, 'rightSection'>;
 
 export interface MultiSelectProps
   extends DefaultProps<MultiSelectStylesNames>,
     InputWrapperBaseProps,
-    InputBaseProps,
+    Omit<InputBaseProps, 'rightSection' | 'rightSectionProps' | 'rightSectionWidth'>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange' | 'size'> {
   /** Input size */
   size?: MantineSize;
@@ -160,6 +160,7 @@ export function MultiSelect({
   initiallyOpened = false,
   radius = 'sm',
   elementRef,
+  icon,
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -375,6 +376,7 @@ export function MultiSelect({
         tabIndex={-1}
       >
         <Input<'div'>
+          __staticSelector="multi-select"
           style={{ overflow: 'hidden' }}
           classNames={classNames as any}
           styles={{ ...styles, rightSection: { pointerEvents: 'none' } } as any}
@@ -387,6 +389,7 @@ export function MultiSelect({
           invalid={!!error}
           required={required}
           radius={radius}
+          icon={icon}
           onMouseDown={(event) => {
             event.preventDefault();
             inputRef.current?.focus();
