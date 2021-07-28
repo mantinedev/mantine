@@ -33,7 +33,7 @@ export type SelectDataItem = string | SelectItem;
 
 export interface SelectProps
   extends DefaultProps<SelectStylesNames>,
-    InputBaseProps,
+    Omit<InputBaseProps, 'rightSection' | 'rightSectionProps' | 'rightSectionWidth'>,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange'> {
   /** Input size */
