@@ -8,6 +8,7 @@ const code = `
   label="Your favorite frameworks/libraries"
   placeholder="Pick all that you like"
   searchable
+  nothingFound="Nothing found"
 />
 `;
 
@@ -19,6 +20,7 @@ function Demo() {
         label="Your favorite frameworks/libraries"
         placeholder="Pick all that you like"
         searchable
+        nothingFound="Nothing found"
       />
     </div>
   );

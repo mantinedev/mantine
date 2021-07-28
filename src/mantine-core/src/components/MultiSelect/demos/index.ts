@@ -4,3 +4,4 @@ export { searchable } from './searchable';
 export { clearable } from './clearable';
 export { configurator } from './configurator';
 export { large } from './large';
+export { users } from './users';

@@ -17,28 +17,210 @@ import { MultiSelectDemos } from '@demos/core';
 
 ## Usage
 
-<Demo data={MultiSelectDemos.countries} demoProps={{ toggle: true }} />
+MultiSelect component allows user to pick any amount of option from the given `data`:
+
+<Demo data={MultiSelectDemos.countries} demoProps={{ toggle: true, zIndex: 4 }} />
+
+A bare minimum example:
 
 <Demo data={MultiSelectDemos.usage} />
 
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState([]);
+  return <MultiSelect value={value} onChange={setValue} />;
+}
+```
+
+Note that MultiSelect value should always be an array of either **string** or **null**:
+
+```tsx
+// Incorrect, will have bugs
+<MultiSelect data={[{ value: 1, label: '1' }]} value={[1]} />
+
+// Correct, works as expected
+<MultiSelect data={[{ value: '1', label: '1' }]} value={['1']} />
+```
+
+## Data prop
+
+MultiSelect support two different data formats:
+
+1. An array of strings – use when you do not need to customize item component or display `label` different than `value`
+2. An array of objects with required `value` and `label` properties and any other additional properties
+
+```tsx
+// Data as an array of strings, will be mapped to
+// [
+//  { value: 'React', label: 'React' },
+//  { value: 'Angular', label: 'Angular' },
+//  { value: 'Svelte', label: 'Svelte' },
+//  { value: 'Vue', label: 'Vue' },
+// ]
+<MultiSelect data={['React', 'Angular', 'Svelte', 'Vue']} />
+
+// Data as an array of objects:
+// Minimal example (same as first example above)
+<MultiSelect data={[
+  { value: 'React', label: 'React' },
+  { value: 'Angular', label: 'Angular' },
+  { value: 'Svelte', label: 'Svelte' },
+  { value: 'Vue', label: 'Vue' },
+]} />
+
+// Additional data properties for custom item component (see documentation below)
+<MultiSelect
+  valueComponent={({ value, label, image, name }) => /* Your custom value component with data properties */}
+  itemComponent={({ value, label, image, name }) => /* Your custom item component with data properties */}
+  data={[
+    {
+      value: 'bob@handsome.inc',
+      label: 'bob@handsome.inc',
+      image: 'image-link',
+      name: 'Bob Handsome',
+    },
+    {
+      value: 'bill@outlook.com',
+      label: 'bill@outlook.com',
+      image: 'image-link',
+      name: 'Bill Rataconda',
+    },
+    {
+      value: 'amy@wong.cn',
+      label: 'amy@wong.cn',
+      image: 'image-link',
+      name: 'Amy Wong',
+    },
+  ]}
+/>
+```
+
 ## Searchable
+
+Set `searchable` prop to enable search in select and `nothingFound` prop to provide label that will be shown when no options were found:
 
 <Demo data={MultiSelectDemos.searchable} />
 
 ## Clearable
 
+Set `clearable` prop to enable clearing all values at once.
+When prop is true and at least value is selected clear button will replace chevron in right section:
+
 <Demo data={MultiSelectDemos.clearable} />
-
-## Custom item and value components
-
-<Demo data={MultiSelectDemos.countries} />
 
 ## Large data set
 
+When dropdown height is exceeded dropdown becomes scrollable, to change max-height set `maxDropdownHeight` prop with value in px:
+
 <Demo data={MultiSelectDemos.large} />
+
+## Custom item component
+
+You can change select item component and filtering logic that is used in search.
+To do so you will need to:
+
+- Add extra props to `data` objects
+- Create `filter` function which determines whether item should be added to the search results
+- Provide `itemComponent` and `valueComponent` which will consume `data` objects
+
+```tsx
+// Minimum data used in previous examples
+[
+  { value: 'react', label: 'React' },
+  { value: 'ng', label: 'Angular' },
+  { value: 'svelte', label: 'Svelte' },
+  { value: 'vue', label: 'Vue' },
+];
+```
+
+You can add any other fields to your data:
+
+```tsx
+[
+  {
+    value: 'bob@handsome.inc',
+    image: 'image-link',
+    label: 'bob@handsome.inc',
+    name: 'Bob Handsome',
+  },
+  {
+    value: 'bill@outlook.com',
+    image: 'image-link',
+    label: 'bill@outlook.com',
+    name: 'Bill Rataconda',
+  },
+  { value: 'amy@wong.cn', image: 'image-link', label: 'amy@wong.cn', name: 'Amy Wong' },
+];
+```
+
+Based on this data shape you can create custom `filter` function and `itemComponent`:
+
+<Demo data={MultiSelectDemos.users} />
+
+## Custom label component
+
+Apart from `itemComponent` you can customize appearance of label by providing `labelComponent`:
+
+<Demo data={MultiSelectDemos.countries} />
 
 ## Performance
 
+If you have a large data set (> 100 items) you will have to optimize items rendering.
+The best strategy is to use `searchable` option with `limit`:
+
+```tsx
+// Only 20 items are rendered at a time
+// See countries list example above
+<MultiSelect searchable limit={20} />
+```
+
 ## Input props
 
+Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
+
 <Demo data={MultiSelectDemos.configurator} />
+
+## Get element ref
+
+You can get input ref by passing `elementRef` prop to Select component:
+
+```tsx
+import { useRef } from 'react';
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef(null);
+  return <MultiSelect elementRef={ref} />;
+}
+```
+
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<MultiSelect /> // -> random id generated both on client and server, props mismatch warning
+<MultiSelect id="my-select" /> // -> id is static, no mismatches
+```
+
+## Accessibility
+
+Provide `aria-label` in case you use component without label for screen reader support:
+
+```tsx
+<MultiSelect label="My select" />; // -> ok, select and label is connected
+<MultiSelect />; // not ok, select is not labeled
+<MultiSelect aria-label="My select" />; // -> ok, label is not visible but will be announced by screen reader
+```
+
+If you use `clearable` option set `clearButtonLabel`:
+
+```tsx
+<MultiSelect clearable clearButtonLabel="Clear select field" />
+```
