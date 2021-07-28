@@ -1,9 +1,9 @@
 import React from 'react';
-import { Group, Avatar, Text, UnstyledButton } from '../../../index';
+import { Group, Avatar, Text } from '../../../index';
 import { Select } from '../Select';
 
 const code = `
-import { Group, Avatar, Text, UnstyledButton, Select } from '@mantine/core';
+import { Group, Avatar, Text, Select } from '@mantine/core';
 
 const data = [
   { value: 'bob@handsome.inc', image: 'image-link', label: 'bob@handsome.inc', name: 'Bob Handsome' },
@@ -13,7 +13,7 @@ const data = [
 
 function SelectItem({ image, label, name, ...others }) {
   return (
-    <UnstyledButton {...others}>
+    <div {...others}>
       <Group>
         <Avatar src={image} radius="xl" />
 
@@ -24,7 +24,7 @@ function SelectItem({ image, label, name, ...others }) {
           </Text>
         </div>
       </Group>
-    </UnstyledButton>
+    </div>
   );
 }
 
@@ -63,7 +63,7 @@ const data = [
   { value: 'amy@wong.cn', image: images[2], label: 'amy@wong.cn', name: 'Amy Wong' },
 ];
 
-interface ItemProps extends React.ComponentProps<'button'> {
+interface ItemProps extends React.ComponentProps<'div'> {
   image: string;
   label: string;
   name: string;
@@ -71,7 +71,7 @@ interface ItemProps extends React.ComponentProps<'button'> {
 
 function SelectItem({ image, label, name, ...others }: ItemProps) {
   return (
-    <UnstyledButton {...others}>
+    <div {...others}>
       <Group>
         <Avatar src={image} radius="xl" />
 
@@ -82,7 +82,7 @@ function SelectItem({ image, label, name, ...others }: ItemProps) {
           </Text>
         </div>
       </Group>
-    </UnstyledButton>
+    </div>
   );
 }
 

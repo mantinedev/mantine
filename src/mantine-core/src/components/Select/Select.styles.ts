@@ -37,6 +37,7 @@ export default createMemoStyles({
       getSizeValue({ size, sizes: theme.spacing }) / 1.5,
       getSizeValue({ size, sizes: theme.spacing }),
     ],
+    cursor: 'pointer',
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
   }),
