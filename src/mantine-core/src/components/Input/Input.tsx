@@ -52,7 +52,7 @@ export interface InputBaseProps {
   disabled?: boolean;
 }
 
-export interface InputProps extends InputBaseProps, DefaultProps<typeof useStyles> {}
+export interface InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {}
 
 export function Input<
   T extends React.ElementType = 'input',
