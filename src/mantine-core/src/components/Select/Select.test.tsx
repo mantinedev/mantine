@@ -9,6 +9,7 @@ import {
 } from '@mantine/tests';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
+import { SelectRightSection } from './SelectRightSection/SelectRightSection';
 import { Input } from '../Input/Input';
 import { Select } from './Select';
 import { Select as SelectStylesApi } from './styles.api';
@@ -122,7 +123,12 @@ describe('@mantine/core/Select', () => {
     const element = shallow(
       <Select {...defaultProps} initiallyOpened clearable value="test-1" onChange={spy} />
     );
-    const clearButton = element.find(Input).dive().find(CloseButton);
+    const clearButton = element
+      .find(Input)
+      .dive()
+      .find(SelectRightSection)
+      .dive()
+      .find(CloseButton);
     expect(clearButton).toHaveLength(1);
     clearButton.simulate('click');
     expect(spy).toHaveBeenCalledWith(null);

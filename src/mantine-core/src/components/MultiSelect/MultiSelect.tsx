@@ -8,8 +8,6 @@ import {
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { ChevronIcon } from '../NativeSelect/ChevronIcon';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
@@ -17,6 +15,7 @@ import { Text } from '../Text/Text';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
+import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
 import useStyles from './MultiSelect.styles';
 
 export interface MultiSelectItem {
@@ -330,21 +329,6 @@ export function MultiSelect({
     inputRef.current?.focus();
   };
 
-  const shouldShowClear = clearable && _value.length > 0;
-  const rightSection = shouldShowClear ? (
-    <CloseButton
-      themeOverride={themeOverride}
-      variant="transparent"
-      aria-label={clearButtonLabel}
-      onClick={handleClear}
-      size={size}
-      style={{ pointerEvents: 'all' }}
-      disabled={disabled}
-    />
-  ) : (
-    <ChevronIcon error={error} size={size} themeOverride={themeOverride} />
-  );
-
   const shouldRenderDropdown =
     items.length > 0 || (searchValue.length > 0 && !!nothingFound && items.length === 0);
 
@@ -384,7 +368,6 @@ export function MultiSelect({
           multiline
           size={size}
           variant={variant}
-          rightSection={rightSection}
           disabled={disabled}
           invalid={!!error}
           required={required}
@@ -394,6 +377,15 @@ export function MultiSelect({
             event.preventDefault();
             inputRef.current?.focus();
           }}
+          {...getSelectRightSectionProps({
+            styles,
+            size,
+            shouldClear: clearable && _value.length > 0,
+            themeOverride,
+            clearButtonLabel,
+            onClear: handleClear,
+            error,
+          })}
         >
           <div className={classes.values} style={_styles.values}>
             {selectedItems}
