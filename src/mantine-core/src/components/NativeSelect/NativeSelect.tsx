@@ -1,13 +1,13 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineSize, getSizeValue } from '../../theme';
+import { DefaultProps, MantineSize } from '../../theme';
 import {
   InputWrapperBaseProps,
   InputWrapper,
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-import { ChevronIcon } from './ChevronIcon';
+import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
 
 interface SelectItem {
   value: string;
@@ -43,14 +43,6 @@ export interface NativeSelectProps
   /** Input size */
   size?: MantineSize;
 }
-
-export const rightSectionWidth = {
-  xs: 24,
-  sm: 30,
-  md: 34,
-  lg: 44,
-  xl: 54,
-};
 
 export function NativeSelect({
   id,
@@ -90,8 +82,6 @@ export function NativeSelect({
     );
   }
 
-  const chevron = <ChevronIcon error={error} size={size} themeOverride={themeOverride} />;
-
   return (
     <InputWrapper
       {...wrapperProps}
@@ -117,18 +107,13 @@ export function NativeSelect({
         aria-required={required}
         elementRef={elementRef}
         id={uuid}
-        rightSection={chevron}
         required={required}
         themeOverride={themeOverride}
         value={value === null ? '' : value}
-        rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
         size={size}
-        styles={{
-          ...styles,
-          rightSection: { ...(styles as any)?.rightSection, pointerEvents: 'none' },
-        }}
         classNames={classNames as any}
         __staticSelector="select"
+        {...getSelectRightSectionProps({ themeOverride, styles, shouldClear: false, size, error })}
       >
         {options}
       </Input>

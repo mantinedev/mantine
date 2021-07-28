@@ -7,7 +7,7 @@ export interface SelectRightSectionProps {
   shouldClear: boolean;
   themeOverride: MantineThemeOverride;
   clearButtonLabel?: string;
-  onClear: () => void;
+  onClear?: () => void;
   size: MantineSize;
   error?: any;
 }
