@@ -25,7 +25,7 @@ const content = [
 
 const defaultProps = { children: content };
 
-const tabContent = (element: any) => element.render().find('[data-mantine-tab-content]').text();
+const tabContent = (element: any) => element.render().find('.mantine-tabs-body').text();
 const activateTab = (element: any, position: number) =>
   element.find(TabControl).at(position).simulate('click');
 
