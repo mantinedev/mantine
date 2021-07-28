@@ -48,7 +48,7 @@ export function Checkbox({
   disabled,
   indeterminate,
   id,
-  size,
+  size = 'sm',
   wrapperProps,
   elementRef,
   children,

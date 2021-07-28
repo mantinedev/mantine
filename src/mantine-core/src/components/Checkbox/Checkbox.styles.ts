@@ -9,11 +9,11 @@ import {
 } from '../../theme';
 
 export const sizes = {
-  xs: 12,
-  sm: 16,
-  md: 20,
-  lg: 26,
-  xl: 36,
+  xs: 14,
+  sm: 18,
+  md: 22,
+  lg: 28,
+  xl: 34,
 };
 
 interface CheckboxStyles {
