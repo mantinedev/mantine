@@ -5,7 +5,7 @@ import { Group } from '../../Group/Group';
 function Wrapper(props: LoaderProps) {
   return (
     <Group position="center">
-      <Loader data-mantine-composable {...props} />
+      <Loader {...props} />
     </Group>
   );
 }

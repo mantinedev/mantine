@@ -5,7 +5,6 @@ function Demo() {
   const tooltips = (['top', 'right', 'bottom', 'left'] as const).map((position, index) => {
     const placements = (['start', 'center', 'end'] as const).map((placement, placementIndex) => (
       <Tooltip
-        data-mantine-composable
         key={placement}
         placement={placement}
         position={position}

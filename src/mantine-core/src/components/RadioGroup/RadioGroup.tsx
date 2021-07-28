@@ -1,22 +1,23 @@
 import React, { Children, cloneElement } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, useMantineTheme, MantineSize } from '../../theme';
+import { DefaultProps, MantineNumberSize, MantineSize } from '../../theme';
 import {
   InputWrapper,
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
-import { Radio, RadioProps } from './Radio/Radio';
+import { Radio, RadioProps, RadioStylesNames } from './Radio/Radio';
+import { Group } from '../Group/Group';
 import { sizes } from './Radio/Radio.styles';
-import useStyles from './RadioGroup.styles';
 
 export { Radio };
 export type { RadioProps };
+export type RadioGroupStylesNames = InputWrapperStylesNames | RadioStylesNames;
 
 export const RADIO_SIZES = sizes;
 
 export interface RadioGroupProps
-  extends DefaultProps<InputWrapperStylesNames>,
+  extends DefaultProps<RadioGroupStylesNames>,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** <Radio /> components only */
@@ -59,10 +60,10 @@ export function RadioGroup({
   spacing = 'sm',
   color,
   size,
+  classNames,
+  styles,
   ...others
 }: RadioGroupProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ spacing, variant, theme }, null, 'radio-group');
   const uuid = useId(name);
   const [_value, setValue] = useUncontrolled({
     value,
@@ -81,16 +82,30 @@ export function RadioGroup({
         name: uuid,
         color,
         size,
+        classNames,
+        styles,
         onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
           setValue(event.currentTarget.value),
       })
     );
 
   return (
-    <InputWrapper labelElement="div" size={size} __staticSelector="radio-group" {...others}>
-      <div role="radiogroup" className={classes.wrapper}>
+    <InputWrapper
+      labelElement="div"
+      size={size}
+      __staticSelector="radio-group"
+      classNames={classNames as any}
+      styles={styles as any}
+      {...others}
+    >
+      <Group
+        role="radiogroup"
+        spacing={spacing}
+        direction={variant === 'horizontal' ? 'row' : 'column'}
+        style={{ paddingTop: 5 }}
+      >
         {radios}
-      </div>
+      </Group>
     </InputWrapper>
   );
 }

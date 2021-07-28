@@ -58,20 +58,20 @@ describe('@mantine/core/MenuButton', () => {
       </MenuButton>
     );
 
-    expect(withoutIcon.render().find('[data-mantine-icon]')).toHaveLength(0);
-    expect(withIcon.render().find('[data-mantine-icon]').text()).toBe('$$$');
+    expect(withoutIcon.render().find('.mantine-menu-itemIcon')).toHaveLength(0);
+    expect(withIcon.render().find('.mantine-menu-itemIcon').text()).toBe('$$$');
   });
 
   it('renders given right section', () => {
     const withoutCmd = shallow(<MenuButton {...defaultProps}>test</MenuButton>);
     const withCmd = shallow(
-      <MenuButton {...defaultProps} rightSection={<span data-mantine-cmd>$$$</span>}>
+      <MenuButton {...defaultProps} rightSection={<span data-cmd>$$$</span>}>
         test
       </MenuButton>
     );
 
-    expect(withoutCmd.render().find('[data-mantine-cmd]')).toHaveLength(0);
-    expect(withCmd.render().find('[data-mantine-cmd]').text()).toBe('$$$');
+    expect(withoutCmd.render().find('span[data-cmd]')).toHaveLength(0);
+    expect(withCmd.render().find('span[data-cmd]').text()).toBe('$$$');
   });
 
   it('accepts component from component prop', () => {

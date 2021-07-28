@@ -10,6 +10,7 @@ import {
 } from '@mantine/tests';
 import { Divider } from '../Divider/Divider';
 import { Button } from '../Button/Button';
+import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Menu, MenuBody, MenuItem, MenuLabel } from './Menu';
 import { Menu as MenuStylesApi } from './styles.api';
 
@@ -92,8 +93,8 @@ describe('@mantine/core/Menu', () => {
       </Menu>
     );
 
-    element.find('[data-mantine-menu]').simulate('click');
-    element.find('[data-mantine-menu]').simulate('click');
+    element.find(ActionIcon).simulate('click');
+    element.find(ActionIcon).simulate('click');
 
     expect(onOpen).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -108,8 +109,8 @@ describe('@mantine/core/Menu', () => {
       </Menu>
     );
 
-    expect(element.find('[data-mantine-menu]').type()).toBe(Button);
-    expect(element.render().find('[data-mantine-menu]').text()).toBe('Test button');
+    expect(element.find(Button).type()).toBe(Button);
+    expect(element.find(Button).dive().text()).toBe('Test button');
   });
 
   it('uses menuId prop to bind control and menu body', () => {
@@ -121,7 +122,7 @@ describe('@mantine/core/Menu', () => {
       </Menu>
     );
 
-    expect(element.find('[data-mantine-menu]').prop('aria-controls')).toBe('test-id');
+    expect(element.find(ActionIcon).prop('aria-controls')).toBe('test-id');
     expect(element.find(MenuBody).prop('id')).toBe('test-id');
   });
 

@@ -209,7 +209,6 @@ export function Menu({
     'aria-expanded': _opened,
     'aria-controls': uuid,
     'aria-label': menuButtonLabel,
-    'data-mantine-menu': true,
     title: menuButtonLabel,
     [controlRefProp]: useMergedRef(controlRef, elementRef),
   });

@@ -51,7 +51,7 @@ export function MenuButton<T extends React.ElementType = 'button'>({
     >
       <div className={classes.itemInner} style={_styles.itemInner}>
         {icon && (
-          <div data-mantine-icon className={classes.itemIcon} style={_styles.itemIcon}>
+          <div className={classes.itemIcon} style={_styles.itemIcon}>
             {icon}
           </div>
         )}

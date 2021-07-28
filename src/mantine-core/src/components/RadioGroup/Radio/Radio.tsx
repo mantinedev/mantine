@@ -4,8 +4,10 @@ import { useId } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../../theme';
 import useStyles from './Radio.styles';
 
+export type RadioStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'labelDisabled'>;
+
 export interface RadioProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<RadioStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
   /** Radio label */
   children: React.ReactNode;
@@ -39,21 +41,20 @@ export function Radio({
   ...others
 }: RadioProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, size, theme }, classNames, 'radio');
+  const classes = useStyles({ color, size, theme }, classNames, 'radio-group');
   const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);
 
   return (
     <div
-      data-mantine-radio
-      className={cx(classes.root, className)}
-      style={{ ...style, ..._styles.root }}
+      className={cx(classes.radioWrapper, className)}
+      style={{ ...style, ..._styles.radioWrapper }}
       title={title}
     >
       <label
         className={cx(classes.label, { [classes.labelDisabled]: disabled })}
         htmlFor={uuid}
-        style={{ ..._styles.label, ...(disabled ? _styles.labelDisabled : null) }}
+        style={_styles.label}
       >
         <input
           ref={elementRef}

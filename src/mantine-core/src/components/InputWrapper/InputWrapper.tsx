@@ -79,14 +79,13 @@ export function InputWrapper({
       ..._labelProps,
       ...labelProps,
       id: id ? `${id}-label` : undefined,
-      'data-mantine-label': true,
       className: classes.label,
       style: _styles.label,
     },
     <>
       {label}
       {required && (
-        <span data-mantine-required className={classes.required} style={_styles.required}>
+        <span className={classes.required} style={_styles.required}>
           {' '}
           *
         </span>
@@ -102,7 +101,6 @@ export function InputWrapper({
         <Text
           {...descriptionProps}
           themeOverride={themeOverride}
-          data-mantine-description
           color="gray"
           size={size}
           className={classes.description}
@@ -118,7 +116,6 @@ export function InputWrapper({
         <Text
           {...errorProps}
           themeOverride={themeOverride}
-          data-mantine-error
           color="red"
           size={size}
           className={classes.error}
