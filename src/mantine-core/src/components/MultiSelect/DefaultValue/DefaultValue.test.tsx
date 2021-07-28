@@ -14,6 +14,7 @@ const defaultProps = {
   onRemove: () => {},
   disabled: false,
   size: 'sm' as const,
+  radius: 'sm' as const,
 };
 
 describe('@mantine/core/MultiSelect/DefaultValue', () => {
