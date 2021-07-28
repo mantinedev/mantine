@@ -9,7 +9,7 @@ const code = `
 import Flag from 'react-flagpack';
 import { CloseButton, MultiSelect } from '@mantine/core';
 
-function Value({ value, label, onRemove, ...others }) {
+function Value({ value, label, onRemove, themeOverride, classNames, ...others }) {
   const theme = useMantineTheme();
 
   return (
@@ -63,8 +63,8 @@ export function CountriesSelect() {
 }
 `;
 
-function Value({ value, label, onRemove, ...others }: any) {
-  const theme = useMantineTheme();
+function Value({ value, label, onRemove, themeOverride, classNames, ...others }: any) {
+  const theme = useMantineTheme(themeOverride);
 
   return (
     <div {...others}>

@@ -11,9 +11,9 @@ const data = [
   { value: 'amy@wong.cn', image: 'image-link', label: 'amy@wong.cn', name: 'Amy Wong' },
 ];
 
-function SelectItem({ image, label, name, ...others }) {
+function SelectItem({ image, label, name, elementRef, ...others }) {
   return (
-    <div {...others}>
+    <div ref={elementRef} {...others}>
       <Group>
         <Avatar src={image} radius="xl" />
 
@@ -67,11 +67,12 @@ interface ItemProps extends React.ComponentProps<'div'> {
   image: string;
   label: string;
   name: string;
+  elementRef: any;
 }
 
-function SelectItem({ image, label, name, ...others }: ItemProps) {
+function SelectItem({ image, label, name, elementRef, ...others }: ItemProps) {
   return (
-    <div {...others}>
+    <div ref={elementRef} {...others}>
       <Group>
         <Avatar src={image} radius="xl" />
 
