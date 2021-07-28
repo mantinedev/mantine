@@ -1,21 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineSize, mergeStyles, getSizeValue } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
 import { scrollIntoView } from '../../utils';
 import {
   InputWrapper,
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { Paper } from '../Paper/Paper';
 import { Text } from '../Text/Text';
-import { ChevronIcon } from '../NativeSelect/ChevronIcon';
-import { rightSectionWidth } from '../NativeSelect/NativeSelect';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
+import { getSelectRightSectionProps } from './SelectRightSection/get-select-right-section-props';
 import useStyles from './Select.styles';
 
 export type SelectStylesNames =
@@ -290,19 +288,6 @@ export function Select({
     setDropdownOpened(true);
   };
 
-  const shouldShowClear = clearable && !!selectedValue;
-  const rightSection = shouldShowClear ? (
-    <CloseButton
-      themeOverride={themeOverride}
-      variant="transparent"
-      aria-label={clearButtonLabel}
-      onClick={handleClear}
-      size={size}
-    />
-  ) : (
-    <ChevronIcon error={error} size={size} themeOverride={themeOverride} />
-  );
-
   return (
     <InputWrapper
       required={required}
@@ -344,13 +329,6 @@ export function Select({
             ...classNames,
             input: cx({ [classes.notSearchable]: !searchable }, (classNames as any)?.input),
           }}
-          styles={{
-            ...styles,
-            rightSection: {
-              ...(styles as any)?.rightSection,
-              pointerEvents: shouldShowClear ? undefined : 'none',
-            },
-          }}
           __staticSelector="select"
           value={inputValue}
           onChange={handleInputChange}
@@ -361,8 +339,15 @@ export function Select({
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           readOnly={!searchable}
-          rightSection={rightSection}
-          rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
+          {...getSelectRightSectionProps({
+            styles,
+            size,
+            shouldClear: clearable && !!selectedValue,
+            themeOverride,
+            clearButtonLabel,
+            onClear: handleClear,
+            error,
+          })}
         />
 
         <Transition
