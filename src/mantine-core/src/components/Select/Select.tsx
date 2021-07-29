@@ -2,30 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, MantineSize } from '../../theme';
 import { scrollIntoView } from '../../utils';
-import {
-  InputWrapper,
-  InputWrapperBaseProps,
-  InputWrapperStylesNames,
-} from '../InputWrapper/InputWrapper';
-import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
+import { InputWrapper } from '../InputWrapper/InputWrapper';
+import { Input } from '../Input/Input';
 import { MantineTransition } from '../Transition/Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { getSelectRightSectionProps } from './SelectRightSection/get-select-right-section-props';
-import { SelectItems, SelectItemsStylesNames } from './SelectItems/SelectItems';
-import { SelectDropdown, SelectDropdownStylesNames } from './SelectDropdown/SelectDropdown';
-import { SelectDataItem, SelectItem } from './types';
+import { SelectItems } from './SelectItems/SelectItems';
+import { SelectDropdown } from './SelectDropdown/SelectDropdown';
+import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 
-export type SelectStylesNames =
-  | InputStylesNames
-  | InputWrapperStylesNames
-  | SelectItemsStylesNames
-  | SelectDropdownStylesNames;
+export type SelectStylesNames = BaseSelectStylesNames;
 
-export interface SelectProps
-  extends DefaultProps<SelectStylesNames>,
-    Omit<InputBaseProps, 'rightSection' | 'rightSectionProps' | 'rightSectionWidth'>,
-    InputWrapperBaseProps,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange'> {
+export interface SelectProps extends DefaultProps<SelectStylesNames>, BaseSelectProps {
   /** Input size */
   size?: MantineSize;
 
