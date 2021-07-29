@@ -1,11 +1,11 @@
-import type { MultiSelectItem } from '../MultiSelect';
+import type { SelectItem } from '../../Select/types';
 
 interface FilterData {
-  data: MultiSelectItem[];
+  data: SelectItem[];
   limit: number;
   searchable: boolean;
   searchValue: string;
-  filter(value: string, selected: boolean, item: MultiSelectItem): boolean;
+  filter(value: string, selected: boolean, item: SelectItem): boolean;
   value: string[];
 }
 

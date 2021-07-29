@@ -3,34 +3,29 @@ import cx from 'clsx';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '../../theme';
 import { scrollIntoView } from '../../utils';
-import {
-  InputWrapper,
-  InputWrapperBaseProps,
-  InputWrapperStylesNames,
-} from '../InputWrapper/InputWrapper';
-import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-import { Transition, MantineTransition } from '../Transition/Transition';
-import { Paper } from '../Paper/Paper';
+import { InputWrapper } from '../InputWrapper/InputWrapper';
+import { Input } from '../Input/Input';
+import { MantineTransition } from '../Transition/Transition';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
-import { SelectItem, SelectDataItem } from '../Select/types';
-import { SelectItems, SelectItemsStylesNames } from '../Select/SelectItems/SelectItems';
+import {
+  SelectItem,
+  SelectDataItem,
+  BaseSelectProps,
+  BaseSelectStylesNames,
+} from '../Select/types';
+import { SelectItems } from '../Select/SelectItems/SelectItems';
+import { SelectDropdown } from '../Select/SelectDropdown/SelectDropdown';
 import useStyles from './MultiSelect.styles';
 
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
   | Exclude<keyof ReturnType<typeof useStyles>, 'searchInputEmpty' | 'searchInputInputHidden'>
-  | Exclude<SelectItemsStylesNames, 'selected'>
-  | InputWrapperStylesNames
-  | Exclude<InputStylesNames, 'rightSection'>;
+  | Exclude<BaseSelectStylesNames, 'selected'>;
 
-export interface MultiSelectProps
-  extends DefaultProps<MultiSelectStylesNames>,
-    InputWrapperBaseProps,
-    Omit<InputBaseProps, 'rightSection' | 'rightSectionProps' | 'rightSectionWidth'>,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange' | 'size'> {
+export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, BaseSelectProps {
   /** Input size */
   size?: MantineSize;
 
@@ -387,44 +382,38 @@ export function MultiSelect({
           </div>
         </Input>
 
-        <div style={{ position: 'relative' }}>
-          <Transition
-            mounted={shouldRenderDropdown && dropdownOpened}
-            transition={transition}
-            duration={transitionDuration}
-            timingFunction={transitionTimingFunction}
-          >
-            {(transitionStyles) => (
-              <Paper
-                id={`${uuid}-items`}
-                aria-labelledby={`${uuid}-label`}
-                role="listbox"
-                className={classes.dropdown}
-                shadow={shadow}
-                elementRef={dropdownRef}
-                style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
-                onMouseDown={(event) => event.preventDefault()}
-              >
-                <SelectItems
-                  data={filteredData}
-                  hovered={hovered}
-                  themeOverride={themeOverride}
-                  classNames={classNames as any}
-                  styles={styles as any}
-                  isItemSelected={() => false}
-                  uuid={uuid}
-                  __staticSelector="multi-select"
-                  onItemHover={setHovered}
-                  onItemSelect={handleItemSelect}
-                  itemsRefs={itemsRefs}
-                  itemComponent={itemComponent}
-                  size={size}
-                  nothingFound={nothingFound}
-                />
-              </Paper>
-            )}
-          </Transition>
-        </div>
+        <SelectDropdown
+          themeOverride={themeOverride}
+          mounted={dropdownOpened && shouldRenderDropdown}
+          transition={transition}
+          transitionDuration={transitionDuration}
+          transitionTimingFunction={transitionTimingFunction}
+          uuid={uuid}
+          shadow={shadow}
+          maxDropdownHeight={maxDropdownHeight}
+          classNames={classNames as any}
+          styles={styles as any}
+          size={size}
+          elementRef={dropdownRef}
+          __staticSelector="multi-select"
+        >
+          <SelectItems
+            data={filteredData}
+            hovered={hovered}
+            themeOverride={themeOverride}
+            classNames={classNames as any}
+            styles={styles as any}
+            isItemSelected={() => false}
+            uuid={uuid}
+            __staticSelector="multi-select"
+            onItemHover={setHovered}
+            onItemSelect={handleItemSelect}
+            itemsRefs={itemsRefs}
+            itemComponent={itemComponent}
+            size={size}
+            nothingFound={nothingFound}
+          />
+        </SelectDropdown>
       </div>
     </InputWrapper>
   );
