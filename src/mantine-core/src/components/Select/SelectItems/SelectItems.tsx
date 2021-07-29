@@ -41,30 +41,38 @@ export function SelectItems({
   const classes = useStyles({ theme, size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
-  const items = data.map((item, index) => (
-    <Item
-      key={item.value}
-      className={cx(classes.item, {
-        [classes.hovered]: hovered === index,
-        [classes.selected]: isItemSelected(item.value),
-      })}
-      style={{ ..._styles.item, ...(hovered === index ? _styles.hovered : null) }}
-      onMouseEnter={() => onItemHover(index)}
-      id={`${uuid}-${index}`}
-      role="option"
-      tabIndex={-1}
-      aria-selected={hovered === index}
-      elementRef={(node: HTMLDivElement) => {
-        // eslint-disable-next-line no-param-reassign
-        itemsRefs.current[item.value] = node;
-      }}
-      onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {
-        event.preventDefault();
-        onItemSelect(item);
-      }}
-      {...item}
-    />
-  ));
+  const items = data.map((item, index) => {
+    const selected = isItemSelected(item.value);
+
+    return (
+      <Item
+        key={item.value}
+        className={cx(classes.item, {
+          [classes.hovered]: hovered === index,
+          [classes.selected]: selected,
+        })}
+        style={{
+          ..._styles.item,
+          ...(hovered === index ? _styles.hovered : null),
+          ...(selected ? _styles.selected : null),
+        }}
+        onMouseEnter={() => onItemHover(index)}
+        id={`${uuid}-${index}`}
+        role="option"
+        tabIndex={-1}
+        aria-selected={hovered === index}
+        elementRef={(node: HTMLDivElement) => {
+          // eslint-disable-next-line no-param-reassign
+          itemsRefs.current[item.value] = node;
+        }}
+        onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {
+          event.preventDefault();
+          onItemSelect(item);
+        }}
+        {...item}
+      />
+    );
+  });
 
   return items.length > 0 ? (
     <>{items}</>
