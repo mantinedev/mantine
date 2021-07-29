@@ -64,21 +64,6 @@ export default createMemoStyles({
     overflow: 'hidden',
   }),
 
-  item: ({ theme, size }: MultiSelectStyles) => ({
-    textAlign: 'left',
-    width: '100%',
-    padding: [
-      getSizeValue({ size, sizes: theme.spacing }) / 1.5,
-      getSizeValue({ size, sizes: theme.spacing }),
-    ],
-    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-  }),
-
-  hovered: ({ theme }: MultiSelectStyles) => ({
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
-  }),
-
   dropdown: ({ theme, size }: MultiSelectStyles) => ({
     position: 'absolute',
     zIndex: 1,
@@ -92,12 +77,5 @@ export default createMemoStyles({
     paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
     paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
     overflowY: 'auto',
-  }),
-
-  nothingFound: ({ theme, size }: MultiSelectStyles) => ({
-    color: theme.colors.gray[6],
-    paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
-    paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
-    textAlign: 'center',
   }),
 });

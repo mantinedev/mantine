@@ -11,24 +11,18 @@ import {
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
-import { Text } from '../Text/Text';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
+import { SelectItem, SelectDataItem } from '../Select/types';
+import { SelectItems, SelectItemsStylesNames } from '../Select/SelectItems/SelectItems';
 import useStyles from './MultiSelect.styles';
-
-export interface MultiSelectItem {
-  value: string;
-  label: string;
-  [key: string]: any;
-}
-
-type MultiSelectDataItem = string | MultiSelectItem;
 
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
   | Exclude<keyof ReturnType<typeof useStyles>, 'searchInputEmpty' | 'searchInputInputHidden'>
+  | Exclude<SelectItemsStylesNames, 'selected'>
   | InputWrapperStylesNames
   | Exclude<InputStylesNames, 'rightSection'>;
 
@@ -44,7 +38,7 @@ export interface MultiSelectProps
   wrapperProps?: Record<string, any>;
 
   /** Data for select options */
-  data: MultiSelectDataItem[];
+  data: SelectDataItem[];
 
   /** Value for controlled component */
   value?: string[];
@@ -83,7 +77,7 @@ export interface MultiSelectProps
   searchable?: boolean;
 
   /** Function based on which items in dropdown are filtered */
-  filter?(value: string, selected: boolean, item: MultiSelectItem): boolean;
+  filter?(value: string, selected: boolean, item: SelectItem): boolean;
 
   /** Limit amount of items displayed at a time for searchable select */
   limit?: number;
@@ -110,7 +104,7 @@ export interface MultiSelectProps
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
-function defaultFilter(value: string, selected: boolean, item: MultiSelectItem) {
+function defaultFilter(value: string, selected: boolean, item: SelectItem) {
   if (selected) {
     return false;
   }
@@ -135,7 +129,7 @@ export function MultiSelect({
   data,
   onChange,
   valueComponent: Value = DefaultValue,
-  itemComponent: Item = DefaultItem,
+  itemComponent = DefaultItem,
   id,
   transition = 'pop-top-left',
   transitionDuration = 0,
@@ -171,7 +165,7 @@ export function MultiSelect({
   const _styles = mergeStyles(classes, styles as any);
   const dropdownRef = useRef<HTMLDivElement>();
   const inputRef = useRef<HTMLInputElement>();
-  const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
+  const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
   const uuid = useId(id);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
@@ -222,7 +216,7 @@ export function MultiSelect({
     value: _value,
   });
 
-  const handleItemSelect = (item: MultiSelectItem) => {
+  const handleItemSelect = (item: SelectItem) => {
     clearSearchOnChange && handleSearchChange('');
 
     if (_value.includes(item.value)) {
@@ -283,27 +277,6 @@ export function MultiSelect({
     }
   };
 
-  const items = filteredData.map((item, index) => (
-    <Item
-      key={item.value}
-      className={cx(classes.item, { [classes.hovered]: hovered === index })}
-      style={{ ..._styles.item, ...(hovered === index ? _styles.hovered : null) }}
-      onMouseEnter={() => setHovered(index)}
-      id={`${uuid}-${index}`}
-      role="option"
-      tabIndex={-1}
-      aria-selected={hovered === index}
-      elementRef={(node: HTMLButtonElement) => {
-        itemsRefs.current[item.value] = node;
-      }}
-      onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        handleItemSelect(item);
-      }}
-      {...item}
-    />
-  ));
-
   const selectedItems = _value
     .map((val) => formattedData.find((item) => item.value === val))
     .filter((val) => !!val)
@@ -330,7 +303,8 @@ export function MultiSelect({
   };
 
   const shouldRenderDropdown =
-    items.length > 0 || (searchValue.length > 0 && !!nothingFound && items.length === 0);
+    filteredData.length > 0 ||
+    (searchValue.length > 0 && !!nothingFound && filteredData.length === 0);
 
   return (
     <InputWrapper
@@ -431,13 +405,22 @@ export function MultiSelect({
                 style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
                 onMouseDown={(event) => event.preventDefault()}
               >
-                {items.length > 0 ? (
-                  items
-                ) : (
-                  <Text size={size} className={classes.nothingFound} style={_styles.nothingFound}>
-                    {nothingFound}
-                  </Text>
-                )}
+                <SelectItems
+                  data={filteredData}
+                  hovered={hovered}
+                  themeOverride={themeOverride}
+                  classNames={classNames as any}
+                  styles={styles as any}
+                  isItemSelected={() => false}
+                  uuid={uuid}
+                  __staticSelector="multi-select"
+                  onItemHover={setHovered}
+                  onItemSelect={handleItemSelect}
+                  itemsRefs={itemsRefs}
+                  itemComponent={itemComponent}
+                  size={size}
+                  nothingFound={nothingFound}
+                />
               </Paper>
             )}
           </Transition>

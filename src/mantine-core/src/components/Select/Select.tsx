@@ -343,7 +343,7 @@ export function Select({
                 themeOverride={themeOverride}
                 classNames={classNames as any}
                 styles={styles as any}
-                isItemSelected={() => false}
+                isItemSelected={(val) => val === _value}
                 uuid={uuid}
                 __staticSelector="select"
                 onItemHover={setHovered}
