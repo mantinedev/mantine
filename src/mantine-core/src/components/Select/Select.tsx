@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cx from 'clsx';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
+import { DefaultProps, MantineSize } from '../../theme';
 import { scrollIntoView } from '../../utils';
 import {
   InputWrapper,
@@ -9,19 +8,18 @@ import {
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-import { Paper } from '../Paper/Paper';
-import { Transition, MantineTransition } from '../Transition/Transition';
+import { MantineTransition } from '../Transition/Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { getSelectRightSectionProps } from './SelectRightSection/get-select-right-section-props';
 import { SelectItems, SelectItemsStylesNames } from './SelectItems/SelectItems';
+import { SelectDropdown, SelectDropdownStylesNames } from './SelectDropdown/SelectDropdown';
 import { SelectDataItem, SelectItem } from './types';
-import useStyles from './Select.styles';
 
 export type SelectStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
   | SelectItemsStylesNames
-  | keyof ReturnType<typeof useStyles>;
+  | SelectDropdownStylesNames;
 
 export interface SelectProps
   extends DefaultProps<SelectStylesNames>,
@@ -126,9 +124,6 @@ export function Select({
   limit = Infinity,
   ...others
 }: SelectProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames as any, 'select');
-  const _styles = mergeStyles(classes, styles as any);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
@@ -275,8 +270,6 @@ export function Select({
       {...wrapperProps}
     >
       <div
-        className={classes.wrapper}
-        style={_styles.wrapper}
         role="combobox"
         aria-haspopup="listbox"
         aria-owns={`${uuid}-items`}
@@ -295,10 +288,7 @@ export function Select({
           size={size}
           onKeyDown={handleInputKeydown}
           themeOverride={themeOverride}
-          classNames={{
-            ...classNames,
-            input: cx({ [classes.notSearchable]: !searchable }, (classNames as any)?.input),
-          }}
+          classNames={classNames as any}
           __staticSelector="select"
           value={inputValue}
           onChange={handleInputChange}
@@ -310,7 +300,10 @@ export function Select({
           onBlur={handleInputBlur}
           readOnly={!searchable}
           {...getSelectRightSectionProps({
-            styles,
+            styles: {
+              ...styles,
+              input: { cursor: !searchable ? 'pointer' : undefined, ...(styles as any)?.input },
+            },
             size,
             shouldClear: clearable && !!selectedValue,
             themeOverride,
@@ -320,42 +313,38 @@ export function Select({
           })}
         />
 
-        <Transition
+        <SelectDropdown
+          themeOverride={themeOverride}
           mounted={dropdownOpened}
           transition={transition}
-          duration={transitionDuration}
-          timingFunction={transitionTimingFunction}
+          transitionDuration={transitionDuration}
+          transitionTimingFunction={transitionTimingFunction}
+          uuid={uuid}
+          shadow={shadow}
+          maxDropdownHeight={maxDropdownHeight}
+          classNames={classNames as any}
+          styles={styles as any}
+          size={size}
+          elementRef={dropdownRef}
+          __staticSelector="select"
         >
-          {(transitionStyles) => (
-            <Paper
-              id={`${uuid}-items`}
-              aria-labelledby={`${uuid}-label`}
-              role="listbox"
-              className={classes.dropdown}
-              shadow={shadow}
-              elementRef={dropdownRef}
-              style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
-              onMouseDown={(event) => event.preventDefault()}
-            >
-              <SelectItems
-                data={filteredData}
-                hovered={hovered}
-                themeOverride={themeOverride}
-                classNames={classNames as any}
-                styles={styles as any}
-                isItemSelected={(val) => val === _value}
-                uuid={uuid}
-                __staticSelector="select"
-                onItemHover={setHovered}
-                onItemSelect={handleItemSelect}
-                itemsRefs={itemsRefs}
-                itemComponent={itemComponent}
-                size={size}
-                nothingFound={nothingFound}
-              />
-            </Paper>
-          )}
-        </Transition>
+          <SelectItems
+            data={filteredData}
+            hovered={hovered}
+            themeOverride={themeOverride}
+            classNames={classNames as any}
+            styles={styles as any}
+            isItemSelected={(val) => val === _value}
+            uuid={uuid}
+            __staticSelector="select"
+            onItemHover={setHovered}
+            onItemSelect={handleItemSelect}
+            itemsRefs={itemsRefs}
+            itemComponent={itemComponent}
+            size={size}
+            nothingFound={nothingFound}
+          />
+        </SelectDropdown>
       </div>
     </InputWrapper>
   );

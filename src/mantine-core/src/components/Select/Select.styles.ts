@@ -1,32 +1,7 @@
-import { createMemoStyles, getSizeValue, MantineSize, MantineTheme } from '../../theme';
-import { INPUT_SIZES } from '../Input/Input';
-
-interface SelectStyles {
-  theme: MantineTheme;
-  size: MantineSize;
-}
+import { createMemoStyles } from '../../theme';
 
 export default createMemoStyles({
-  wrapper: {
-    position: 'relative',
-  },
-
   notSearchable: {
     cursor: 'pointer',
   },
-
-  dropdown: ({ theme, size }: SelectStyles) => ({
-    position: 'absolute',
-    zIndex: 1,
-    top: getSizeValue({ size, sizes: INPUT_SIZES }) + theme.spacing.sm / 2,
-    left: 0,
-    right: 0,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
-    border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
-    }`,
-    paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
-    paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
-    overflowY: 'auto',
-  }),
 });
