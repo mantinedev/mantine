@@ -5,7 +5,7 @@ import { ChevronIcon } from './ChevronIcon';
 
 export interface SelectRightSectionProps {
   shouldClear: boolean;
-  themeOverride: MantineThemeOverride;
+  themeOverride?: MantineThemeOverride;
   clearButtonLabel?: string;
   onClear?: () => void;
   size: MantineSize;
