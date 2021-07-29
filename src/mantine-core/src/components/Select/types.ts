@@ -5,7 +5,7 @@ import type { SelectItemsStylesNames } from './SelectItems/SelectItems';
 
 export interface SelectItem {
   value: string;
-  label: string;
+  label?: string;
   [key: string]: any;
 }
 

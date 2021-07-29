@@ -13,7 +13,7 @@ interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
   __staticSelector: string;
   isItemSelected?(itemValue: string): boolean;
   uuid: string;
-  itemsRefs: React.MutableRefObject<Record<string, HTMLDivElement>>;
+  itemsRefs?: React.MutableRefObject<Record<string, HTMLDivElement>>;
   onItemHover(index: number): void;
   onItemSelect(item: SelectItem): void;
   size: MantineSize;
@@ -62,8 +62,10 @@ export function SelectItems({
         tabIndex={-1}
         aria-selected={hovered === index}
         elementRef={(node: HTMLDivElement) => {
-          // eslint-disable-next-line no-param-reassign
-          itemsRefs.current[item.value] = node;
+          if (itemsRefs && itemsRefs.current) {
+            // eslint-disable-next-line no-param-reassign
+            itemsRefs.current[item.value] = node;
+          }
         }}
         onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {
           event.preventDefault();

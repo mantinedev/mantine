@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
 import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
 import {
@@ -8,14 +7,16 @@ import {
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-import { Paper } from '../Paper/Paper';
-import { Transition, MantineTransition } from '../Transition/Transition';
-import { DefaultItem } from './DefaultItem/DefaultItem';
+import { MantineTransition } from '../Transition/Transition';
+import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
+import { SelectItems } from '../Select/SelectItems/SelectItems';
+import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import useStyles from './Autocomplete.styles';
 
 export type AutocompleteStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
+  | SelectDropdownStylesNames
   | keyof ReturnType<typeof useStyles>;
 
 export interface AutocompleteItem {
@@ -95,7 +96,7 @@ export function Autocomplete({
   value,
   defaultValue,
   onChange,
-  itemComponent: Item = DefaultItem,
+  itemComponent = DefaultItem,
   onItemSubmit,
   onKeyDown,
   onFocus,
@@ -141,24 +142,6 @@ export function Autocomplete({
 
   const formattedData = data.map((item) => (typeof item === 'string' ? { value: item } : item));
   const filteredData = formattedData.filter((item) => filter(_value, item)).slice(0, limit);
-
-  const items = filteredData.map((item, index) => (
-    <Item
-      key={item.value}
-      className={cx(classes.item, { [classes.hovered]: hovered === index })}
-      style={{ ..._styles.item, ...(hovered === index ? _styles.hovered : null) }}
-      onMouseEnter={() => setHovered(index)}
-      id={`${uuid}-${index}`}
-      role="option"
-      tabIndex={-1}
-      aria-selected={hovered === index}
-      onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        handleItemClick(item);
-      }}
-      {...item}
-    />
-  ));
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     typeof onKeyDown === 'function' && onKeyDown(event);
@@ -257,25 +240,35 @@ export function Autocomplete({
           aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
         />
 
-        <Transition
-          mounted={shouldRenderDropdown}
+        <SelectDropdown
+          themeOverride={themeOverride}
+          mounted={dropdownOpened}
           transition={transition}
-          duration={transitionDuration}
-          timingFunction={transitionTimingFunction}
+          transitionDuration={transitionDuration}
+          transitionTimingFunction={transitionTimingFunction}
+          uuid={uuid}
+          shadow={shadow}
+          maxDropdownHeight="auto"
+          classNames={classNames as any}
+          styles={styles as any}
+          size={size}
+          __staticSelector="autocomplete"
         >
-          {(transitionStyles) => (
-            <Paper
-              id={`${uuid}-items`}
-              aria-labelledby={`${uuid}-label`}
-              role="listbox"
-              className={classes.dropdown}
-              shadow={shadow}
-              style={{ ..._styles.dropdown, ...transitionStyles }}
-            >
-              {items}
-            </Paper>
-          )}
-        </Transition>
+          <SelectItems
+            data={filteredData}
+            hovered={hovered}
+            themeOverride={themeOverride}
+            classNames={classNames as any}
+            styles={styles as any}
+            isItemSelected={(val) => val === _value}
+            uuid={uuid}
+            __staticSelector="autocomplete"
+            onItemHover={setHovered}
+            onItemSelect={handleItemClick}
+            itemComponent={itemComponent}
+            size={size}
+          />
+        </SelectDropdown>
       </div>
     </InputWrapper>
   );

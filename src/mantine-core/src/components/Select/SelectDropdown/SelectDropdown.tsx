@@ -13,11 +13,11 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   transitionTimingFunction: string;
   uuid: string;
   shadow: string;
-  maxDropdownHeight: number;
+  maxDropdownHeight?: number | string;
   children: React.ReactNode;
   __staticSelector: string;
   size: MantineSize;
-  elementRef: React.ForwardedRef<HTMLDivElement>;
+  elementRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
 export function SelectDropdown({
