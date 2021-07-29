@@ -10,24 +10,18 @@ import {
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { Paper } from '../Paper/Paper';
-import { Text } from '../Text/Text';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { getSelectRightSectionProps } from './SelectRightSection/get-select-right-section-props';
+import { SelectItems, SelectItemsStylesNames } from './SelectItems/SelectItems';
+import { SelectDataItem, SelectItem } from './types';
 import useStyles from './Select.styles';
 
 export type SelectStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
+  | SelectItemsStylesNames
   | keyof ReturnType<typeof useStyles>;
-
-export interface SelectItem {
-  value: string;
-  label: string;
-  [key: string]: any;
-}
-
-export type SelectDataItem = string | SelectItem;
 
 export interface SelectProps
   extends DefaultProps<SelectStylesNames>,
@@ -110,7 +104,7 @@ export function Select({
   value,
   defaultValue,
   onChange,
-  itemComponent: Item = DefaultItem,
+  itemComponent = DefaultItem,
   onKeyDown,
   onFocus,
   onBlur,
@@ -139,7 +133,7 @@ export function Select({
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
   const dropdownRef = useRef<HTMLDivElement>();
-  const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
+  const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
   const uuid = useId(id);
   const [_value, handleChange, inputMode] = useUncontrolled({
     value,
@@ -187,30 +181,6 @@ export function Select({
   const filteredData = shouldFilter
     ? formattedData.filter((item) => filter(inputValue, item)).slice(0, limit)
     : formattedData;
-
-  const items = filteredData.map((item, index) => (
-    <Item
-      key={item.value}
-      className={cx(classes.item, {
-        [classes.hovered]: hovered === index,
-        [classes.selected]: item.value === _value,
-      })}
-      style={{ ..._styles.item, ...(hovered === index ? _styles.hovered : null) }}
-      onMouseEnter={() => setHovered(index)}
-      id={`${uuid}-${index}`}
-      role="option"
-      tabIndex={-1}
-      aria-selected={hovered === index}
-      elementRef={(node: HTMLButtonElement) => {
-        itemsRefs.current[item.value] = node;
-      }}
-      onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        handleItemSelect(item);
-      }}
-      {...item}
-    />
-  ));
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     typeof onKeyDown === 'function' && onKeyDown(event);
@@ -367,13 +337,22 @@ export function Select({
               style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
               onMouseDown={(event) => event.preventDefault()}
             >
-              {items.length > 0 ? (
-                items
-              ) : (
-                <Text size={size} className={classes.nothingFound} style={_styles.nothingFound}>
-                  {nothingFound}
-                </Text>
-              )}
+              <SelectItems
+                data={filteredData}
+                hovered={hovered}
+                themeOverride={themeOverride}
+                classNames={classNames as any}
+                styles={styles as any}
+                isItemSelected={() => false}
+                uuid={uuid}
+                __staticSelector="select"
+                onItemHover={setHovered}
+                onItemSelect={handleItemSelect}
+                itemsRefs={itemsRefs}
+                itemComponent={itemComponent}
+                size={size}
+                nothingFound={nothingFound}
+              />
             </Paper>
           )}
         </Transition>
