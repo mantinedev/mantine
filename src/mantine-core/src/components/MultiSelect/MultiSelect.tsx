@@ -403,7 +403,6 @@ export function MultiSelect({
             themeOverride={themeOverride}
             classNames={classNames as any}
             styles={styles as any}
-            isItemSelected={() => false}
             uuid={uuid}
             __staticSelector="multi-select"
             onItemHover={setHovered}

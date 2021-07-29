@@ -42,7 +42,7 @@ export function SelectItems({
   const _styles = mergeStyles(classes, styles);
 
   const items = data.map((item, index) => {
-    const selected = isItemSelected(item.value);
+    const selected = typeof isItemSelected === 'function' ? isItemSelected(item.value) : false;
 
     return (
       <Item

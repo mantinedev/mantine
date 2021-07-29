@@ -260,7 +260,6 @@ export function Autocomplete({
             themeOverride={themeOverride}
             classNames={classNames as any}
             styles={styles as any}
-            isItemSelected={(val) => val === _value}
             uuid={uuid}
             __staticSelector="autocomplete"
             onItemHover={setHovered}
