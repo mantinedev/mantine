@@ -18,10 +18,51 @@ import { CardDemos } from '@demos/core';
 ## Usage
 
 Card component is a wrapper around <GatsbyLink to="/core/paper/">Paper</GatsbyLink> component
-with context styles for <GatsbyLink to="/core/image/">Image</GatsbyLink> and <GatsbyLink to="/core/divider/">Divider</GatsbyLink>
-components. Combine Card component with other Mantine components to create product cards:
+with context styles for CardSection component.
+Combine Card component with other Mantine components to create cards with your design requirements:
 
 <Demo data={CardDemos.usage} />
+
+## CardSection
+
+CardSection is a special component that is used to remove Card padding from its children while other elements still have horizontal spacing.
+CardSection works the following way:
+
+- It component is a first child in Card then it has negative top, left and right margins
+- If it is a last child in Card then it has negative bottom, left and right margins
+- If it is in the middle then only left and right margins will be negative
+
+```tsx
+<Card padding="xl">
+  {/* top, right, left margins are negative – -1 * theme.spacing.xl */}
+  <CardSection>First section</CardSection>
+
+  {/* Content that is not inside CardSection will have theme.spacing.xl spacing on all sides relative to Card */}
+  <Text>Some other content</Text>
+
+  {/* right, left margins are negative – -1 * theme.spacing.xl */}
+  <CardSection>Middle section</CardSection>
+
+  {/* bottom, right, left margins are negative – -1 * theme.spacing.xl */}
+  <CardSection>Last section</CardSection>
+</Card>
+```
+
+Note that Card relies on mapping direct children and you cannot use fragments or others wrappers for CardSection:
+
+```tsx
+<Card padding="xl">
+  <div>
+    <CardSection>Won't work</CardSection>
+  </div>
+
+  <>
+    <CardSection>Won't work either</CardSection>
+  </>
+
+  <CardSection>Works fine</CardSection>
+</Card>
+```
 
 ## Link overlay
 

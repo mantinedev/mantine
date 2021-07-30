@@ -14,7 +14,7 @@ export { Blockquote } from './components/Blockquote/Blockquote';
 export { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
 export { Burger, BURGER_SIZES } from './components/Burger/Burger';
 export { Button, UnstyledButton, BUTTON_SIZES, BUTTON_VARIANTS } from './components/Button/Button';
-export { Card } from './components/Card/Card';
+export { Card, CardSection } from './components/Card/Card';
 export { Center } from './components/Center/Center';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
 export { Code } from './components/Code/Code';
@@ -94,7 +94,7 @@ export type {
 } from './components/Breadcrumbs/Breadcrumbs';
 export type { BurgerProps, BurgerStylesNames } from './components/Burger/Burger';
 export type { ButtonProps, ButtonStylesNames } from './components/Button/Button';
-export type { CardProps } from './components/Card/Card';
+export type { CardProps, CardSectionProps } from './components/Card/Card';
 export type { CenterProps } from './components/Center/Center';
 export type { CheckboxProps, CheckboxStylesNames } from './components/Checkbox/Checkbox';
 export type { CodeProps } from './components/Code/Code';
