@@ -1,0 +1,26 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Mark
+order: 1
+slug: /core/mark/
+category: 'typography'
+description: 'Highlight part of the text'
+props: ['Mark']
+import: "import { Mark } from '@mantine/core';"
+source: 'mantine-core/src/components/Mark/Mark.tsx'
+docs: 'core/Mark.mdx'
+styles: ['Mark', 'single-node']
+---
+
+import { MarkDemos, HighlightDemos } from '@demos/core';
+
+## Usage
+
+Use Mark to highlight part of the text with <GatsbyLink to="/theming/extend-theme/#default-colors">theme colors</GatsbyLink>:
+
+<Demo data={MarkDemos.usage} />
+
+It is used in other Mantine components, for example, in <GatsbyLink to="/core/highlight/">Highlight</GatsbyLink>:
+
+<Demo data={HighlightDemos.multiple} />

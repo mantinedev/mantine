@@ -32,6 +32,7 @@ export { JsonInput } from './components/JsonInput/JsonInput';
 export { Kbd } from './components/Kbd/Kbd';
 export { Loader, LOADER_SIZES } from './components/Loader/Loader';
 export { LoadingOverlay } from './components/LoadingOverlay/LoadingOverlay';
+export { Mark } from './components/Mark/Mark';
 export { Menu, MenuItem, MenuBody, MenuLabel, MENU_SIZES } from './components/Menu/Menu';
 export { Modal, MODAL_SIZES } from './components/Modal/Modal';
 export { MultiSelect } from './components/MultiSelect/MultiSelect';
@@ -115,6 +116,7 @@ export type { JsonInputProps, JsonInputStylesNames } from './components/JsonInpu
 export type { KbdProps } from './components/Kbd/Kbd';
 export type { LoaderProps } from './components/Loader/Loader';
 export type { LoadingOverlayProps } from './components/LoadingOverlay/LoadingOverlay';
+export type { MarkProps } from './components/Mark/Mark';
 export type {
   MenuProps,
   MenuItemProps,
