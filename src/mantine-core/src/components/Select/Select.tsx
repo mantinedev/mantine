@@ -73,7 +73,7 @@ export interface SelectProps extends DefaultProps<SelectStylesNames>, BaseSelect
   limit?: number;
 }
 
-function defaultFilter(value: string, item: SelectItem) {
+export function defaultFilter(value: string, item: SelectItem) {
   return item.label.toLowerCase().trim().includes(value.toLowerCase().trim());
 }
 
@@ -167,7 +167,6 @@ export function Select({
     limit,
     searchValue: inputValue,
     filter,
-    value: inputValue,
   });
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {

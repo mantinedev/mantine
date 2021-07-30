@@ -6,14 +6,9 @@ interface FilterData {
   searchable: boolean;
   searchValue: string;
   filter(value: string, item: SelectItem): boolean;
-  value: string;
 }
 
-export function filterData({ data, searchable, limit, searchValue, filter, value }: FilterData) {
-  if (!searchable && value) {
-    return data;
-  }
-
+export function filterData({ data, searchable, limit, searchValue, filter }: FilterData) {
   if (!searchable) {
     return data;
   }
