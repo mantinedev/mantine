@@ -1,8 +1,9 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, getThemeColor } from '../../theme';
+import { DefaultProps } from '../../theme';
 import { ComponentPassThrough } from '../../types';
 import { Text, TextProps } from '../Text/Text';
+import { Mark } from '../Mark/Mark';
 
 export function highlighter(value: string, highlight: string | string[]) {
   const shouldHighlight = Array.isArray(highlight)
@@ -50,13 +51,6 @@ export function Highlight<T extends React.ElementType = 'div'>({
   className,
   ...others
 }: ComponentPassThrough<T, HighlightProps>) {
-  const theme = useMantineTheme(themeOverride);
-  const color = getThemeColor({
-    theme,
-    color: highlightColor,
-    shade: theme.colorScheme === 'dark' ? 5 : 2,
-  });
-
   const highlightChunks = highlighter(children, highlight);
 
   return (
@@ -68,15 +62,9 @@ export function Highlight<T extends React.ElementType = 'div'>({
     >
       {highlightChunks.map(({ chunk, highlighted }, i) =>
         highlighted ? (
-          <mark
-            key={i}
-            style={{
-              backgroundColor: color,
-              color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
-            }}
-          >
+          <Mark key={i} color={highlightColor}>
             {chunk}
-          </mark>
+          </Mark>
         ) : (
           <span key={i}>{chunk}</span>
         )
