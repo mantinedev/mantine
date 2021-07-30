@@ -74,6 +74,11 @@ function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'the
 
       '&:disabled': {
         backgroundColor: 'transparent',
+
+        '&:focus, &:focus-within': {
+          outline: 'none',
+          borderColor: 'transparent',
+        },
       },
     };
   }
