@@ -65,5 +65,9 @@ export default createMemoStyles({
 
   searchInputPointer: {
     cursor: 'pointer',
+
+    '&:disabled': {
+      cursor: 'not-allowed',
+    },
   },
 });

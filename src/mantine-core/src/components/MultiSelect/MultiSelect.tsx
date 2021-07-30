@@ -351,7 +351,10 @@ export function MultiSelect({
           {...getSelectRightSectionProps({
             styles: {
               ...styles,
-              input: { ...(styles as any)?.input, cursor: !searchable ? 'pointer' : undefined },
+              input: {
+                ...(styles as any)?.input,
+                cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
+              },
             },
             size,
             shouldClear: clearable && _value.length > 0,

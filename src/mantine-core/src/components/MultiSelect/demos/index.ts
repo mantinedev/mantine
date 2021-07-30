@@ -6,3 +6,5 @@ export { configurator } from './configurator';
 export { large } from './large';
 export { users } from './users';
 export { transitions } from './transitions';
+export { validation } from './validation';
+export { disabled } from './disabled';
