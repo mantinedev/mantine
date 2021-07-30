@@ -141,7 +141,10 @@ export function Tooltip({
         timingFunction={transitionTimingFunction}
       >
         {(transitionStyles) => (
-          <div className={classes.wrapper} style={{ ..._styles.wrapper, ...transitionStyles }}>
+          <div
+            className={classes.wrapper}
+            style={{ ..._styles.wrapper, ...transitionStyles, zIndex }}
+          >
             <ArrowBody
               id={tooltipId}
               gutter={gutter}
