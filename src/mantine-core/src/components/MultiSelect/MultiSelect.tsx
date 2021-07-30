@@ -99,7 +99,7 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
-function defaultFilter(value: string, selected: boolean, item: SelectItem) {
+export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
   if (selected) {
     return false;
   }
