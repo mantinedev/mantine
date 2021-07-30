@@ -154,7 +154,7 @@ export function Popover({
             aria-labelledby={titleId}
             aria-describedby={bodyId}
             className={classes.wrapper}
-            style={{ ...transitionStyles, ..._styles.wrapper }}
+            style={{ ...transitionStyles, ..._styles.wrapper, zIndex }}
             ref={focusTrapRef}
             onKeyDownCapture={handleKeydown}
           >

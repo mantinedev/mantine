@@ -3,7 +3,7 @@ import { Tooltip, Badge, Group } from '../../../index';
 
 function Demo() {
   const tooltips = (['top', 'right', 'bottom', 'left'] as const).map((position, index) => {
-    const placements = (['start', 'center', 'end'] as const).map((placement, placementIndex) => (
+    const placements = (['start', 'center', 'end'] as const).map((placement) => (
       <Tooltip
         key={placement}
         placement={placement}
@@ -11,7 +11,6 @@ function Demo() {
         label={`${position}-${placement}`}
         withArrow
         gutter={10}
-        style={{ zIndex: 6 - index - (position === 'right' ? placementIndex : -placementIndex) }}
       >
         <Badge color="blue" size="lg">
           {`${position}-${placement}`}
