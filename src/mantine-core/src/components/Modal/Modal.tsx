@@ -7,7 +7,7 @@ import {
   useScrollLock,
   useFocusTrap,
 } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
@@ -64,6 +64,12 @@ export interface ModalProps
 
   /** id base, used to generate ids to connect modal title and body with aria- attributes, defaults to random id */
   id?: string;
+
+  /** Modal shadow from theme or css value */
+  shadow?: string;
+
+  /** Modal padding from theme or number value for padding in px */
+  padding?: MantineNumberSize;
 }
 
 export function MantineModal({
@@ -83,6 +89,8 @@ export function MantineModal({
   zIndex = 1000,
   overflow = 'outside',
   transition = 'slide-down',
+  padding = 'lg',
+  shadow = 'lg',
   id,
   classNames,
   styles,
@@ -130,7 +138,8 @@ export function MantineModal({
             <Paper
               themeOverride={themeOverride}
               className={classes.modal}
-              shadow="lg"
+              shadow={shadow}
+              padding={padding}
               role="dialog"
               aria-labelledby={titleId}
               aria-describedby={bodyId}

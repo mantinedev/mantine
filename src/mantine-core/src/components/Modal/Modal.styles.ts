@@ -46,7 +46,6 @@ export default createMemoStyles({
 
   modal: ({ theme, size }: ModalStyles) => ({
     width: getSizeValue({ sizes, size }),
-    padding: theme.spacing.lg,
     outline: 0,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
   }),

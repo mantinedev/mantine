@@ -4,7 +4,6 @@ import { AuthenticationForm } from '../../../demos';
 import { DEFAULT_THEME, MantineProvider } from '../../theme';
 import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
-import { Portal } from '../Portal/Portal';
 import { Modal } from './Modal';
 
 function WrappedModal(props: Omit<React.ComponentProps<typeof Modal>, 'opened' | 'onClose'>) {
@@ -14,21 +13,6 @@ function WrappedModal(props: Omit<React.ComponentProps<typeof Modal>, 'opened' |
     <div style={{ padding: 50 }}>
       <Button onClick={() => setOpened(true)}>Open Modal</Button>
       <Modal opened={opened} onClose={() => setOpened(false)} {...props} />
-    </div>
-  );
-}
-
-function InPortal() {
-  const [opened, setOpened] = useState(false);
-
-  return (
-    <div style={{ padding: 50 }}>
-      <Button onClick={() => setOpened(true)}>Open Modal</Button>
-      <Portal>
-        <Modal title="Authenticate in portal" opened={opened} onClose={() => setOpened(false)}>
-          <AuthenticationForm noPadding noShadow />
-        </Modal>
-      </Portal>
     </div>
   );
 }
@@ -44,7 +28,6 @@ storiesOf('@mantine/core/Modal', module)
       IDecidedToPutSoMuchUnbreakableContentInsideModalSoThatItWillOverflow
     </WrappedModal>
   ))
-  .add('Inside portal', () => <InPortal />)
   .add('Vertical scroll', () => (
     <WrappedModal title="Authentication form">
       {Array(100)
