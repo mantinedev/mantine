@@ -37,7 +37,6 @@ export default createMemoStyles({
     padding: 0,
     margin: theme.spacing.xs / 2,
     appearance: 'none',
-    cursor: 'default',
     color: 'inherit',
 
     '&::placeholder': {
@@ -63,4 +62,8 @@ export default createMemoStyles({
     margin: 0,
     overflow: 'hidden',
   }),
+
+  searchInputPointer: {
+    cursor: 'pointer',
+  },
 });

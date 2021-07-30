@@ -22,7 +22,10 @@ import useStyles from './MultiSelect.styles';
 
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
-  | Exclude<keyof ReturnType<typeof useStyles>, 'searchInputEmpty' | 'searchInputInputHidden'>
+  | Exclude<
+      keyof ReturnType<typeof useStyles>,
+      'searchInputEmpty' | 'searchInputInputHidden' | 'searchInputPointer'
+    >
   | Exclude<BaseSelectStylesNames, 'selected'>;
 
 export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, BaseSelectProps {
@@ -332,7 +335,6 @@ export function MultiSelect({
           __staticSelector="multi-select"
           style={{ overflow: 'hidden' }}
           classNames={classNames as any}
-          styles={{ ...styles, rightSection: { pointerEvents: 'none' } } as any}
           component="div"
           multiline
           size={size}
@@ -347,7 +349,10 @@ export function MultiSelect({
             inputRef.current?.focus();
           }}
           {...getSelectRightSectionProps({
-            styles,
+            styles: {
+              ...styles,
+              input: { ...(styles as any)?.input, cursor: !searchable ? 'pointer' : undefined },
+            },
             size,
             shouldClear: clearable && _value.length > 0,
             themeOverride,
@@ -365,6 +370,7 @@ export function MultiSelect({
               id={uuid}
               style={_styles.searchInput}
               className={cx(classes.searchInput, {
+                [classes.searchInputPointer]: !searchable,
                 [classes.searchInputInputHidden]:
                   (!dropdownOpened && _value.length > 0) || (!searchable && _value.length > 0),
                 [classes.searchInputEmpty]: _value.length === 0,
