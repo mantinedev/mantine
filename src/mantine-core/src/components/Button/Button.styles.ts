@@ -18,6 +18,7 @@ interface ButtonStylesProps {
   radius: MantineNumberSize;
   theme: MantineTheme;
   fullWidth: boolean;
+  compact: boolean;
 }
 
 const sizes = {
@@ -45,12 +46,45 @@ const sizes = {
     height: INPUT_SIZES.xl,
     padding: [0, 32],
   },
+
+  'compact-xs': {
+    height: 22,
+    padding: [0, 7],
+  },
+
+  'compact-sm': {
+    height: 26,
+    padding: [0, 8],
+  },
+
+  'compact-md': {
+    height: 30,
+    padding: [0, 10],
+  },
+
+  'compact-lg': {
+    height: 34,
+    padding: [0, 12],
+  },
+
+  'compact-xl': {
+    height: 40,
+    padding: [0, 14],
+  },
 };
 
 export const heights = Object.keys(sizes).reduce((acc, size) => {
   acc[size] = sizes[size].height;
   return acc;
 }, {} as MantineSizes);
+
+const getSizeStyles = ({ compact, size }: { compact: boolean; size: MantineSize }) => {
+  if (!compact) {
+    return sizes[size];
+  }
+
+  return sizes[`compact-${size}`];
+};
 
 const getWidthStyles = (fullWidth: boolean) => ({
   display: fullWidth ? 'block' : 'inline-block',
@@ -80,14 +114,15 @@ export default createMemoStyles({
   },
 
   label: {
-    display: 'block',
+    display: 'flex',
+    alignItems: 'center',
     whiteSpace: 'nowrap',
+    height: '100%',
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
   },
 
   root: (props: ButtonStylesProps) => ({
-    ...sizes[props.size],
+    ...getSizeStyles({ compact: props.compact, size: props.size }),
     ...getFontStyles(props.theme),
     ...getFocusStyles(props.theme),
     ...getWidthStyles(props.fullWidth),
@@ -101,11 +136,10 @@ export default createMemoStyles({
     WebkitAppearance: 'none',
   }),
 
-  outline: ({ color, size, radius, theme }: ButtonStylesProps) => ({
+  outline: ({ color, radius, theme }: ButtonStylesProps) => ({
     backgroundColor: 'transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 600,
-    height: sizes[size].height,
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
     border: `1px solid ${getThemeColor({
       theme,
@@ -125,20 +159,15 @@ export default createMemoStyles({
     },
   }),
 
-  light: ({ color, size, radius, theme }: ButtonStylesProps) => ({
+  light: ({ color, radius, theme }: ButtonStylesProps) => ({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 600,
     border: '1px solid transparent',
-    height: sizes[size].height,
     backgroundColor: hexToRgba(
       getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
       theme.colorScheme === 'dark' ? 0.3 : 1
     ),
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
-
-    '& $inner': {
-      height: '100%',
-    },
 
     '&:not(:disabled):active': {
       transform: 'translateY(1px)',
@@ -153,18 +182,13 @@ export default createMemoStyles({
     },
   }),
 
-  filled: ({ color, size, radius, theme }: ButtonStylesProps) => ({
+  filled: ({ color, radius, theme }: ButtonStylesProps) => ({
     border: '1px solid transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     fontWeight: 600,
     backgroundColor: getThemeColor({ theme, color, shade: 7 }),
     color: theme.white,
-    height: sizes[size].height,
     textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
-
-    '& $inner': {
-      height: '100%',
-    },
 
     '&:not(:disabled):active': {
       transform: 'translateY(1px)',
@@ -187,6 +211,7 @@ export default createMemoStyles({
     display: 'inline-block',
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
     cursor: 'pointer',
+    height: 'auto',
     lineHeight: theme.lineHeight,
 
     '&:hover': {

@@ -40,6 +40,12 @@ You can change styles of any element in button component with <GatsbyLink to="/t
 
 <Demo data={ButtonDemos.customize} />
 
+## Compact
+
+Set `compact` prop to reduce button height and horizontal padding:
+
+<Demo data={ButtonDemos.compact} />
+
 ## Size and radius
 
 Control button font-size, height and padding with `size` and border-radius with `radius` props.
@@ -68,7 +74,7 @@ import { BUTTON_SIZES } from '@mantine/core';
 ## Full width and overflow
 
 Button can take full width of container if you pass `fullWidth` prop.
-If button is too large for its container, overflow content will be hidden with ellipsis.
+If button is too large for its container, overflow content will be hidden:
 
 <Demo data={ButtonDemos.overflow} />
 
