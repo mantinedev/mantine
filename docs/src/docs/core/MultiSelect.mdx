@@ -179,6 +179,17 @@ The best strategy is to use `searchable` option with `limit`:
 <MultiSelect searchable limit={20} />
 ```
 
+## Animations
+
+By default dropdown animations are turned off to increase responsiveness.
+You can enable them by setting optional props:
+
+- `transition` – premade transition name or custom transition styles object, see <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component for all available options
+- `transitionDuration` – transition duration in ms, defaults to 0
+- `transitionTimingFunction` – defaults to `theme.transitionTimingFunction`
+
+<Demo data={MultiSelectDemos.transitions} />
+
 ## Input props
 
 Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
