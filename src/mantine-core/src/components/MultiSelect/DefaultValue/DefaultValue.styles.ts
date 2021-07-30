@@ -33,10 +33,20 @@ export default createMemoStyles({
   defaultValue: ({ theme, size, disabled, radius }: DefaultLabelStyles) => ({
     display: 'flex',
     alignItems: 'center',
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors[theme.primaryColor][1],
-    color:
-      theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors[theme.primaryColor][9],
+    backgroundColor: disabled
+      ? theme.colorScheme === 'dark'
+        ? theme.colors.dark[5]
+        : theme.colors.gray[3]
+      : theme.colorScheme === 'dark'
+      ? theme.colors.dark[7]
+      : theme.colors[theme.primaryColor][1],
+    color: disabled
+      ? theme.colorScheme === 'dark'
+        ? theme.colors.dark[1]
+        : theme.colors.gray[7]
+      : theme.colorScheme === 'dark'
+      ? theme.colors.dark[0]
+      : theme.colors[theme.primaryColor][9],
     lineHeight: 1,
     height: getSizeValue({ size, sizes }),
     paddingLeft: getSizeValue({ size, sizes: theme.spacing }),
