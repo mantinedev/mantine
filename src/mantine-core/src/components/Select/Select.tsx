@@ -10,6 +10,7 @@ import { getSelectRightSectionProps } from './SelectRightSection/get-select-righ
 import { SelectItems } from './SelectItems/SelectItems';
 import { SelectDropdown } from './SelectDropdown/SelectDropdown';
 import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
+import { filterData } from './filter-data/filter-data';
 
 export type SelectStylesNames = BaseSelectStylesNames;
 
@@ -160,10 +161,14 @@ export function Select({
     inputRef.current.focus();
   };
 
-  const shouldFilter = searchable && formattedData.every((item) => item.label !== inputValue);
-  const filteredData = shouldFilter
-    ? formattedData.filter((item) => filter(inputValue, item)).slice(0, limit)
-    : formattedData;
+  const filteredData = filterData({
+    data: formattedData,
+    searchable,
+    limit,
+    searchValue: inputValue,
+    filter,
+    value: inputValue,
+  });
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     typeof onKeyDown === 'function' && onKeyDown(event);
