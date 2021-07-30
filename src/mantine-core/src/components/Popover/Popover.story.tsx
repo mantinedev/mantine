@@ -4,7 +4,28 @@ import { MantineProvider, DEFAULT_THEME } from '../../theme';
 import { TextInput } from '../TextInput/TextInput';
 import { Group } from '../Group/Group';
 import { Button } from '../Button/Button';
+import { Switch } from '../Switch/Switch';
 import { Popover } from './Popover';
+
+function ZIndex() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div style={{ marginBottom: 5 }}>
+      <Popover
+        target={<Button onClick={() => setIsOpen(!isOpen)}>Press me</Button>}
+        opened={isOpen}
+        onClose={() => setIsOpen(false)}
+        placement="start"
+        styles={{ body: { width: 120 } }}
+        position="bottom"
+        transitionDuration={1500}
+      >
+        Hello World
+      </Popover>
+    </div>
+  );
+}
 
 function Wrapper(props: any) {
   const [opened, setOpened] = useState(true);
@@ -37,6 +58,13 @@ storiesOf('@mantine/core/Popover', module)
         transition="slide-up"
         withCloseButton
       />
+    </div>
+  ))
+  .add('zIndex', () => (
+    <div style={{ padding: 100 }}>
+      <ZIndex />
+      <ZIndex />
+      <Switch label="Switch label" />
     </div>
   ))
   .add('Dark theme', () => (
