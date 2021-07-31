@@ -2,10 +2,10 @@
 group: 'mantine-hooks'
 package: '@mantine/hooks'
 title: 'use-shallow-effect'
-category: 'state'
+category: 'lifecycle'
 order: 1
 slug: /hooks/use-shallow-effect/
-description: 'useEffect hook with shallow comparison on the dependency array'
+description: 'useEffect drop in replacement with dependencies shallow comparison'
 import: "import { useShallowEffect } from '@mantine/hooks';"
 docs: 'hooks/use-shallow-effect.mdx'
 source: 'mantine-hooks/src/use-shallow-effect/use-shallow-effect.ts'
@@ -13,56 +13,36 @@ source: 'mantine-hooks/src/use-shallow-effect/use-shallow-effect.ts'
 
 ## Usage
 
-use-shallow-effect hook provides functionality and signature similar to useEffect but is
-triggered based on shallow-comparison of elements in dependency array, not referential equality.
+use-shallow-effect works exactly like useEffect but performs shallow dependencies comparison instead of referential comparison:
 
 ```tsx
+import { useEffect } from 'react';
 import { useShallowEffect } from '@mantine/hooks';
 
-// the callback passed to use-shallow-effect will be called
-// on shallow comparison between the elements inside the dependency array.
-useShallowEffect(() => {}, [elem1, elem2]);
+// Will be called on each render
+useEffect(() => {}, [{ a: 1 }]);
+
+// Will be called only once
+useShallowEffect(() => {}, [{ a: 1 }]);
 ```
 
-## Example
+Hook works with primitive values, arrays and objects:
 
 ```tsx
-import { useState } from 'react';
-import { useShallowEffect } from '@mantine/hooks';
-import { Card, Image, Text } from '@mantine/core';
+// Primitive values are handled like in useEffect
+useShallowEffect(() => {}, [1, 2, 3]);
 
-function ShallowEffectDemo({ url }) {
-  const [data, setData] = useState([]);
+// Arrays with primitive values will not trigger callback
+useShallowEffect(() => {}, [[1], [2], [3]]);
 
-  // similar to useEffect hook, performing all side-effects
-  // in using the use-shallow-effect hook.
-  useShallowEffect(() => {
-    const getData = async () => {
-      const result = await axios.get(url);
-      setState(result.data);
-    };
-  });
+// Objects with primitive values will not trigger callback
+useShallowEffect(() => {}, [{ a: 1 }, { b: 2 }]);
 
-  return data.map((elem) => (
-    <Card>
-      <Image src={elem.url} height={160} alt={elem.name} />
-      <Text weight={500}>{elem.name}</Text>
-    </Card>
-  ));
-}
+// Arrays with objects will trigger callback since values are not shallow equal
+useShallowEffect(() => {}, [[{ a: 1 }], [{ b: 2 }]]);
 ```
 
-## Shallow Comparison
-
-Unlike useEffect which performs a referential comparison to trigger the callback,
-useShallowEffect performs a shallow comparison:
-
-1. Simple '===' comparison for primitive types like number,string etc.
-2. For objects and arrays same '===' comparison between the keys or elements respectively.
-
-## Supported Types
-
-Currently support shallow comparison between primitive types, objects and arrays:
+## Definition
 
 ```tsx
 function useShallowEffect(cb: () => void, dependencies?: React.DependencyList): void;
