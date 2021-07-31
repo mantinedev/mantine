@@ -3,15 +3,26 @@ import { TwitterLogoIcon } from '@modulz/radix-icons';
 import { Input } from '../Input';
 
 const code = `
-<Input variant="headless" placeholder="Add your own styles with styles API" />
+<Input
+  variant="headless"
+  placeholder="Add your own styles with styles API"
+  icon={<TwitterLogoIcon />}
+  rightSection="$"
+  styles={{
+    input: {
+      width: '100%',
+      boxSizing: 'border-box',
+    }
+  }}
+/>
 `;
 
 function Demo() {
   return (
     <Input
-      styles={{ input: { width: '100%' } }}
+      styles={{ input: { width: '100%', boxSizing: 'border-box' } }}
       icon={<TwitterLogoIcon />}
-      rightSection="$$$"
+      rightSection="$"
       variant="headless"
       placeholder="Add your own styles with styles API"
     />
