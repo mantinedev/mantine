@@ -1,19 +1,16 @@
 /* eslint-disable no-console */
 import { useEffect } from 'react';
+import { useDidUpdate } from '../use-did-update/use-did-update';
 
-export function useLogger(
-  props: any,
-  deps: React.DependencyList,
-  options?: {
-    logLevel?: 'debug' | 'info' | 'warn' | 'error';
-    logName?: string;
-  }
-) {
+export function useLogger(componentName: string, props: any[]) {
   useEffect(() => {
-    options?.logName
-      ? console[options?.logLevel || 'log'](options.logName, props)
-      : console[options?.logLevel || 'log'](props);
-  }, [deps]);
+    console.log(`${componentName} mounted`, ...props);
+    return () => console.log(`${componentName} unmounted`);
+  }, []);
+
+  useDidUpdate(() => {
+    console.log(`${componentName} updated`, ...props);
+  });
 
   return null;
 }
