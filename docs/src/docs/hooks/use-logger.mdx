@@ -1,7 +1,7 @@
 ---
 group: 'mantine-hooks'
 package: '@mantine/hooks'
-category: 'utils'
+category: 'lifecycle'
 title: 'use-logger'
 order: 1
 slug: /hooks/use-logger/
@@ -30,8 +30,12 @@ The hook takes an optional third parameter `options` which can be used to config
 ## Definition
 
 ```tsx
-function useLogger(props: any, deps: React.DependencyList, options?: {
+function useLogger(
+  props: any,
+  deps: React.DependencyList,
+  options?: {
     logLevel?: 'debug' | 'info' | 'warn' | 'error';
     logName?: string;
-});
+  }
+);
 ```
