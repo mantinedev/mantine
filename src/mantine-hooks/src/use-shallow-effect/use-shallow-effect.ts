@@ -1,42 +1,40 @@
 import { useEffect, useRef } from 'react';
-import { shallowCompare as compare } from '../utils/shallow-compare/shallow-compare';
-
-type useEffectReturnType = ReturnType<typeof useEffect>;
+import { shallowEqual } from '../utils/shallow-equal/shallow-equal';
 
 function shallowCompare(prevValue: React.DependencyList, currValue: React.DependencyList) {
-    if (!prevValue || !currValue) {
-        return false;
-    }
+  if (!prevValue || !currValue) {
+    return false;
+  }
 
-    if (prevValue === currValue) {
-        return true;
-    }
-
-    if (prevValue.length !== currValue.length) {
-        return false;
-    }
-
-    for (let i = 0; i < prevValue.length; i += 1) {
-        if (!compare(prevValue[i], currValue[i])) {
-            return false;
-        }
-    }
-
+  if (prevValue === currValue) {
     return true;
-}
+  }
 
-function useShallowCompare(value: React.DependencyList) {
-    const ref = useRef<React.DependencyList>([]);
-    const signalRef = useRef<number>(0);
+  if (prevValue.length !== currValue.length) {
+    return false;
+  }
 
-    if (!shallowCompare(ref.current, value)) {
-        ref.current = value;
-        signalRef.current += 1;
+  for (let i = 0; i < prevValue.length; i += 1) {
+    if (!shallowEqual(prevValue[i], currValue[i])) {
+      return false;
     }
+  }
 
-    return [signalRef.current];
+  return true;
 }
 
-export function useShallowEffect(cb: () => void, deps: React.DependencyList): useEffectReturnType {
-    useEffect(cb, useShallowCompare(deps));
+function useShallowCompare(dependencies: React.DependencyList) {
+  const ref = useRef<React.DependencyList>([]);
+  const updateRef = useRef<number>(0);
+
+  if (!shallowCompare(ref.current, dependencies)) {
+    ref.current = dependencies;
+    updateRef.current += 1;
+  }
+
+  return [updateRef.current];
+}
+
+export function useShallowEffect(cb: () => void, dependencies?: React.DependencyList): void {
+  useEffect(cb, useShallowCompare(dependencies));
 }
