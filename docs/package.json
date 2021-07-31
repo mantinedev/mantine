@@ -7,7 +7,6 @@
   "dependencies": {
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
-    "@primer/octicons-react": "^14.2.1",
     "@types/mdx-js__react": "^1.5.3",
     "@types/react-helmet": "^6.1.1",
     "gatsby": "^3.8.1",

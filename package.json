@@ -99,6 +99,7 @@
   },
   "dependencies": {
     "@modulz/radix-icons": "^4.0.0",
+    "@primer/octicons-react": "^14.2.1",
     "clsx": "^1.1.1",
     "dayjs": "^1.10.5",
     "prism-react-renderer": "^1.2.1",

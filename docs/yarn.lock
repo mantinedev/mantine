@@ -2218,11 +2218,6 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@primer/octicons-react@^14.2.1":
-  version "14.2.1"
-  resolved "https://registry.yarnpkg.com/@primer/octicons-react/-/octicons-react-14.2.1.tgz#03a2a68a48e67317c5363078b4847c2cb33582d3"
-  integrity sha512-3ulFFCazU34aBxaLeoAZkRnx6zzRAfiFJkcRb490SDVK74/AYONRFA/6hYJFSpsz2Wx+UtR9HafTBau1m21tfA==
-
 "@sideway/address@^4.1.0":
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/@sideway/address/-/address-4.1.2.tgz#811b84333a335739d3969cfc434736268170cad1"
