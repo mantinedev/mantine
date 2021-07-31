@@ -86,7 +86,6 @@ export function Image({
 
   return (
     <div
-      data-mantine-image
       className={cx(classes.root, className)}
       style={{ width, height, ...style, ..._styles.root }}
       ref={elementRef}

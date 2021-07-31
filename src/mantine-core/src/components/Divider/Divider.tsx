@@ -73,7 +73,6 @@ export function Divider({
 
   return (
     <div
-      data-mantine-divider
       className={cx(
         {
           [classes.vertical]: vertical,
