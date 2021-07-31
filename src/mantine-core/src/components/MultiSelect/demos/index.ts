@@ -8,3 +8,4 @@ export { users } from './users';
 export { transitions } from './transitions';
 export { validation } from './validation';
 export { disabled } from './disabled';
+export { icon } from './icon';
