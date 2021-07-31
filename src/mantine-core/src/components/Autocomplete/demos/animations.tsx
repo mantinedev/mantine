@@ -4,7 +4,7 @@ import { Autocomplete } from '../Autocomplete';
 const code = `
 <Autocomplete
   transition="pop-top-left"
-  transitionDuration={150}
+  transitionDuration={80}
   transitionTimingFunction="ease"
 />
 `;
@@ -17,7 +17,7 @@ function Demo() {
         placeholder="Pick one"
         data={['React', 'Angular', 'Svelte', 'Vue']}
         transition="pop-top-left"
-        transitionDuration={150}
+        transitionDuration={80}
         transitionTimingFunction="ease"
       />
     </div>

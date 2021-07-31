@@ -161,11 +161,19 @@ export function Autocomplete({
       }
 
       case 'Enter': {
-        if (filteredData[hovered]) {
+        if (filteredData[hovered] && dropdownOpened) {
           event.preventDefault();
           typeof onItemSubmit === 'function' && onItemSubmit(filteredData[hovered]);
           setDropdownOpened(false);
           handleChange(filteredData[hovered].value);
+        }
+        break;
+      }
+
+      case 'Escape': {
+        if (dropdownOpened) {
+          event.preventDefault();
+          setDropdownOpened(false);
         }
       }
     }
