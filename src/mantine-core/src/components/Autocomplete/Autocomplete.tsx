@@ -11,6 +11,7 @@ import { MantineTransition } from '../Transition/Transition';
 import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
+import { filterData } from './filter-data/filter-data';
 import useStyles from './Autocomplete.styles';
 
 export type AutocompleteStylesNames =
@@ -77,7 +78,7 @@ export interface AutocompleteProps
   filter?(value: string, item: AutocompleteItem): boolean;
 }
 
-function defaultFilter(value: string, item: AutocompleteItem) {
+export function defaultFilter(value: string, item: AutocompleteItem) {
   return item.value.toLowerCase().trim().includes(value.toLowerCase().trim());
 }
 
@@ -141,7 +142,7 @@ export function Autocomplete({
   };
 
   const formattedData = data.map((item) => (typeof item === 'string' ? { value: item } : item));
-  const filteredData = formattedData.filter((item) => filter(_value, item)).slice(0, limit);
+  const filteredData = filterData({ data: formattedData, value: _value, limit, filter });
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     typeof onKeyDown === 'function' && onKeyDown(event);
@@ -242,7 +243,7 @@ export function Autocomplete({
 
         <SelectDropdown
           themeOverride={themeOverride}
-          mounted={dropdownOpened}
+          mounted={shouldRenderDropdown}
           transition={transition}
           transitionDuration={transitionDuration}
           transitionTimingFunction={transitionTimingFunction}
