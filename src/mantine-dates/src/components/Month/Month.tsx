@@ -191,6 +191,7 @@ export function Month({
             inRange={dayProps.inRange}
             firstInRange={dayProps.firstInRange}
             lastInRange={dayProps.lastInRange}
+            firstInMonth={cellIndex === 0 && rowIndex === 0}
             selected={dayProps.selected || dayProps.selectedInRange}
             hasValue={hasValueInMonthRange}
             onKeyDown={handleKeyDown}

@@ -24,6 +24,7 @@ export interface DayProps
   size: MantineSize;
   fullWidth: boolean;
   __staticSelector?: string;
+  firstInMonth: boolean;
 }
 
 export function Day({
@@ -48,6 +49,7 @@ export function Day({
   inRange,
   size,
   fullWidth,
+  firstInMonth,
   ...others
 }: DayProps) {
   const theme = useMantineTheme(themeOverride);
@@ -62,7 +64,8 @@ export function Day({
       ref={elementRef}
       onKeyDown={(event) => onKeyDown(value, event)}
       onMouseEnter={(event) => onMouseEnter(value, event)}
-      tabIndex={hasValue ? (selected ? 0 : -1) : 0}
+      tabIndex={hasValue ? (selected ? 0 : -1) : firstInMonth ? 0 : -1}
+      data-autofocus={hasValue ? (selected ? true : undefined) : firstInMonth ? true : undefined}
       style={{
         ..._styles.day,
         ...(outside ? _styles.outside : null),
