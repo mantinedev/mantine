@@ -54,7 +54,7 @@ export default createUseStyles(
       marginLeft: 7,
       marginBottom: 5,
       borderLeft: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3]
       }`,
       height: 34,
       display: 'flex',
@@ -72,7 +72,7 @@ export default createUseStyles(
         left: -1,
         height: 5,
         width: 1,
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3],
       },
     },
 
@@ -80,7 +80,7 @@ export default createUseStyles(
       ...getFocusStyles(theme),
       WebkitTapHighlightColor: 'transparent',
       borderLeft: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3]
       }`,
       outline: 0,
       display: 'block',
@@ -98,7 +98,7 @@ export default createUseStyles(
     },
 
     linkActive: {
-      borderLeftColor: theme.colors.blue[5],
+      borderLeftColor: theme.colors.blue[7],
       backgroundColor:
         theme.colorScheme === 'dark' ? hexToRgba(theme.colors.blue[9], 0.45) : theme.colors.blue[0],
       color: theme.colorScheme === 'dark' ? theme.colors.blue[1] : theme.colors.blue[8],
