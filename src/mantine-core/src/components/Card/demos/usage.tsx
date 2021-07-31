@@ -22,7 +22,7 @@ import {
   Button,
   Group,
   useMantineTheme,
-} from '@mant';
+} from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
