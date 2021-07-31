@@ -100,6 +100,17 @@ By default Autocomplete will render 5 items at a time, to change that set `limit
 
 <Demo data={AutocompleteDemos.limit} />
 
+## Animations
+
+By default dropdown animations are turned off to increase responsiveness.
+You can enable them by setting optional props:
+
+- `transition` – premade transition name or custom transition styles object, see <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component for all available options
+- `transitionDuration` – transition duration in ms, defaults to 0
+- `transitionTimingFunction` – defaults to `theme.transitionTimingFunction`
+
+<Demo data={AutocompleteDemos.animations} />
+
 ## Input props
 
 Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
