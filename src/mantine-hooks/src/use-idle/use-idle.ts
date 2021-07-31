@@ -1,25 +1,30 @@
 import { useState, useEffect, useRef } from 'react';
 
-export function useIdle(timeout: number) {
-    const [idleStatus, setIdleStatus] = useState<boolean>(true);
-    const timer = useRef<ReturnType<typeof setTimeout>>();
+const DEFAULT_EVENTS = ['keypress', 'mousemove', 'touchmove', 'click', 'scroll'];
 
-    useEffect(() => {
-        const events = ['keypress', 'mousemove', 'touchmove', 'click', 'scroll'];
-        const handleEvents = () => {
-          setIdleStatus(false);
-          if (timer.current) clearTimeout(timer.current);
-          timer.current = setTimeout(() => {
-            setIdleStatus(true);
-          }, timeout);
-        };
-        events.forEach((event) => document.addEventListener(event, handleEvents));
-        return () => {
-          events.forEach((event) =>
-            document.removeEventListener(event, handleEvents)
-          );
-        };
-      }, [timeout]);
+export function useIdle(timeout: number, events: string[] = DEFAULT_EVENTS) {
+  const [idle, setIdle] = useState<boolean>(true);
+  const timer = useRef<number>();
 
-    return idleStatus;
+  useEffect(() => {
+    const handleEvents = () => {
+      setIdle(false);
+
+      if (timer.current) {
+        window.clearTimeout(timer.current);
+      }
+
+      timer.current = window.setTimeout(() => {
+        setIdle(true);
+      }, timeout);
+    };
+
+    events.forEach((event) => document.addEventListener(event, handleEvents));
+
+    return () => {
+      events.forEach((event) => document.removeEventListener(event, handleEvents));
+    };
+  }, [timeout]);
+
+  return idle;
 }

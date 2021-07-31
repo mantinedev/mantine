@@ -1,28 +1,41 @@
 import React from 'react';
-import { Group, Text } from '@mantine/core';
+import { Group, Badge } from '@mantine/core';
 import { useIdle } from '@mantine/hooks';
 
 const code = `
-import React from 'react';
-import { Text } from '@mantine/core';
+import { Badge } from '@mantine/core';
 import { useIdle } from '@mantine/hooks';
 
 function Demo() {
-    const idleStatus = useIdle(5000);
-  
-    return (
-      <Group position="center">
-      <Text weight={700}>Am I Idle : </Text><Text color="blue">{JSON.stringify(idleStatus).toLocaleUpperCase()}</Text>
-      </Group>
-    );
+  const idleStatus = useIdle(2000);
+  return <Badge color={idle ? 'blue' : 'teal'}>Current state: {idle ? 'idle' : 'not idle'}</Badge>;
+};`;
+
+const eventsCode = `
+import { Badge } from '@mantine/core';
+import { useIdle } from '@mantine/hooks';
+
+function Demo() {
+  const idleStatus = useIdle(2000, ['click', 'touchstart']);
+  return <Badge color={idle ? 'blue' : 'teal'}>Current state: {idle ? 'idle' : 'not idle'}</Badge>;
 };`;
 
 function Demo() {
-  const idleStatus = useIdle(5000);
+  const idle = useIdle(2000);
 
   return (
     <Group position="center">
-        <Text weight={700}>Am I Idle : </Text><Text color="blue">{`${JSON.stringify(idleStatus).toLocaleUpperCase()} ${!idleStatus ? '( Watch me change after an inactivity of 5 seconds )' : ''}`}</Text>
+      <Badge color={idle ? 'blue' : 'teal'}>Current state: {idle ? 'idle' : 'not idle'}</Badge>
+    </Group>
+  );
+}
+
+function EventsDemo() {
+  const idle = useIdle(2000, ['click', 'touchstart']);
+
+  return (
+    <Group position="center">
+      <Badge color={idle ? 'blue' : 'teal'}>Current state: {idle ? 'idle' : 'not idle'}</Badge>
     </Group>
   );
 }
@@ -31,4 +44,10 @@ export const useIdleHook: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,
+};
+
+export const useIdleEvents: MantineDemo = {
+  type: 'demo',
+  code: eventsCode,
+  component: EventsDemo,
 };
