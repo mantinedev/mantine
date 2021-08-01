@@ -3,8 +3,7 @@ import { Group, Button, Code, Title, MantineProvider } from '@mantine/core';
 import { ColorSchemeContext } from '../../components/Layout/ColorScheme.context';
 import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
-const code = `import React from 'react';
-import { Button, Code, Title, MantineProvider } from '@mantine/core';
+const code = `import { Button, Code, Title, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (

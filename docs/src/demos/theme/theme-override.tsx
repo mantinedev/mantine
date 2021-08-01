@@ -2,8 +2,7 @@ import React from 'react';
 import { Group, Button } from '@mantine/core';
 import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
-const code = `import React from 'react';
-import { Button } from '@mantine/core';
+const code = `import { Button } from '@mantine/core';
 
 function Demo() {
   return (

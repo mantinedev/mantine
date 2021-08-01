@@ -2,7 +2,7 @@ import React from 'react';
 import { Group, Button } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 
-const code = `import React from 'react';
+const code = `
 import { Button } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 

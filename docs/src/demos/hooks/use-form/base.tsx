@@ -3,8 +3,7 @@ import { TextInput, Group, Button, Checkbox, useMantineTheme } from '@mantine/co
 import { useForm } from '@mantine/hooks';
 import CodeDemo from '../../../components/Demo/CodeDemo/CodeDemo';
 
-const code = `import React from 'react';
-import { TextInput, Button } from '@mantine/core';
+const code = `import { TextInput, Button } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 
 export function Demo() {

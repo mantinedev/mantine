@@ -3,8 +3,7 @@ import { Group, Button, Badge, Switch, MantineProvider } from '@mantine/core';
 import { ColorSchemeContext } from '../../components/Layout/ColorScheme.context';
 import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
-const code = `import React from 'react';
-import { Badge, Button, MantineProvider, Switch } from '@mantine/core';
+const code = `import { Badge, Button, MantineProvider, Switch } from '@mantine/core';
 
 function Demo() {
   return (
