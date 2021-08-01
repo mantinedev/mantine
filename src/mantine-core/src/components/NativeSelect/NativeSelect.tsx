@@ -8,12 +8,7 @@ import {
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
-
-interface SelectItem {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
+import { SelectItem } from '../Select/types';
 
 export type NativeSelectStylesNames = InputStylesNames | InputWrapperStylesNames;
 
@@ -29,7 +24,7 @@ export interface NativeSelectProps
   placeholder?: string;
 
   /** Data used to render options */
-  data: SelectItem[];
+  data: (string | SelectItem)[];
 
   /** Style properties added to select element */
   inputStyle?: React.CSSProperties;
@@ -68,7 +63,11 @@ export function NativeSelect({
 }: NativeSelectProps) {
   const uuid = useId(id);
 
-  const options = data.map((item) => (
+  const formattedData = data.map((item) =>
+    typeof item === 'string' ? { label: item, value: item } : item
+  );
+
+  const options = formattedData.map((item) => (
     <option key={item.value} value={item.value} disabled={item.disabled}>
       {item.label}
     </option>
