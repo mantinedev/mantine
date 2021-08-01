@@ -3,15 +3,12 @@ import { storiesOf } from '@storybook/react';
 import { useSlider } from './use-slider';
 
 const Demo = () => {
-  const [value, onChange] = useState(0);
-  const { ref, sliding } = useSlider({
-    value,
-    onChange,
-  });
+  const [value, onChange] = useState(0.3);
+  const { ref, sliding } = useSlider(onChange);
 
   return (
     <div>
-      <div style={{ color: sliding ? 'red' : 'green', marginBottom: 10 }}>
+      <div style={{ color: sliding ? 'red' : 'blue', marginBottom: 10 }}>
         {Math.round(value * 100)}%
       </div>
       <div ref={ref} style={{ position: 'relative', height: 10, backgroundColor: 'red' }}>

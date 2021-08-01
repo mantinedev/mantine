@@ -1,98 +1,49 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { useEffect, useState, useRef } from 'react';
+import { clamp } from '../utils';
 
-const noop = () => {};
-
-function on<T extends Window | Document | HTMLElement | EventTarget>(
-  obj: T | null,
-  ...args: Parameters<T['addEventListener']> | [string, Function | null, ...any]
-): void {
-  if (obj && obj.addEventListener) {
-    obj.addEventListener(...(args as Parameters<HTMLElement['addEventListener']>));
-  }
-}
-
-function off<T extends Window | Document | HTMLElement | EventTarget>(
-  obj: T | null,
-  ...args: Parameters<T['removeEventListener']> | [string, Function | null, ...any]
-): void {
-  if (obj && obj.removeEventListener) {
-    obj.removeEventListener(...(args as Parameters<HTMLElement['removeEventListener']>));
-  }
-}
-
-interface UseSliderOptions {
-  value: number;
-  onChange(value: number): void;
-}
-
-export function useSlider<T extends HTMLElement = HTMLDivElement>(options: UseSliderOptions) {
+export function useSlider<T extends HTMLElement = HTMLDivElement>(
+  onChange: (value: number) => void
+) {
   const ref = useRef<T>();
   const mounted = useRef<boolean>(false);
   const isSliding = useRef(false);
-  const valueRef = useRef(0);
   const frame = useRef(0);
-  const [value, setValue] = useState(0);
   const [sliding, setSliding] = useState(false);
-
-  valueRef.current = value;
 
   useEffect(() => {
     mounted.current = true;
   }, []);
 
   useEffect(() => {
-    const styles = true;
-    const reverse = false;
-
-    if (ref.current && styles) {
-      // eslint-disable-next-line no-param-reassign
-      ref.current.style.userSelect = 'none';
-    }
-
-    const onScrub = (clientXY: number) => {
+    const onScrub = (clientX: number) => {
       cancelAnimationFrame(frame.current);
 
       frame.current = requestAnimationFrame(() => {
         if (mounted.current && ref.current) {
+          ref.current.style.userSelect = 'none';
           const rect = ref.current.getBoundingClientRect();
 
-          if (!rect.width) {
-            return;
+          if (rect.width) {
+            const val = clamp({ value: (clientX - rect.left) / rect.width, min: 0, max: 1 });
+            onChange(val);
           }
-
-          let val = (clientXY - rect.left) / rect.width;
-
-          if (val > 1) {
-            val = 1;
-          } else if (val < 0) {
-            val = 0;
-          }
-
-          if (reverse) {
-            val = 1 - val;
-          }
-          setValue(val);
-
-          (options.onChange || noop)(val);
         }
       });
     };
 
     const bindEvents = () => {
-      on(document, 'mousemove', onMouseMove);
-      on(document, 'mouseup', stopScrubbing);
-
-      on(document, 'touchmove', onTouchMove);
-      on(document, 'touchend', stopScrubbing);
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', stopScrubbing);
+      document.addEventListener('touchmove', onTouchMove);
+      document.addEventListener('touchend', stopScrubbing);
     };
 
     const unbindEvents = () => {
-      off(document, 'mousemove', onMouseMove);
-      off(document, 'mouseup', stopScrubbing);
-
-      off(document, 'touchmove', onTouchMove);
-      off(document, 'touchend', stopScrubbing);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', stopScrubbing);
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchend', stopScrubbing);
     };
 
     const startScrubbing = () => {
@@ -125,12 +76,12 @@ export function useSlider<T extends HTMLElement = HTMLDivElement>(options: UseSl
 
     const onTouchMove = (event: TouchEvent) => onScrub(event.changedTouches[0].clientX);
 
-    on(ref.current, 'mousedown', onMouseDown);
-    on(ref.current, 'touchstart', onTouchStart);
+    ref.current.addEventListener('mousedown', onMouseDown);
+    ref.current.addEventListener('touchstart', onTouchStart);
 
     return () => {
-      off(ref.current, 'mousedown', onMouseDown);
-      off(ref.current, 'touchstart', onTouchStart);
+      ref.current.removeEventListener('mousedown', onMouseDown);
+      ref.current.removeEventListener('touchstart', onTouchStart);
     };
   }, [ref]);
 
