@@ -4,3 +4,7 @@ export { large } from './large';
 export { configurator } from './configurator';
 export { itemComponent } from './itemComponent';
 export { clearable } from './clearable';
+export { animations } from './animations';
+export { validation } from './validation';
+export { disabled } from './disabled';
+export { icon } from './icon';

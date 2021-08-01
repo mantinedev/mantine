@@ -162,6 +162,31 @@ Based on this data shape you can create custom `filter` function and `itemCompon
 
 <Demo data={SelectDemos.itemComponent} />
 
+## Animations
+
+By default dropdown animations are turned off to increase responsiveness.
+You can enable them by setting optional props:
+
+- `transition` – premade transition name or custom transition styles object, see <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component for all available options
+- `transitionDuration` – transition duration in ms, defaults to 0
+- `transitionTimingFunction` – defaults to `theme.transitionTimingFunction`
+
+<Demo data={SelectDemos.animations} />
+
+## With icon
+
+You can use any React node as icon:
+
+<Demo data={SelectDemos.icon} />
+
+## Invalid state and error
+
+<Demo data={SelectDemos.validation} />
+
+## Disabled state
+
+<Demo data={SelectDemos.disabled} />
+
 ## Input props
 
 Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:

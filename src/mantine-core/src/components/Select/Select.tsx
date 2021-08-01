@@ -111,6 +111,7 @@ export function Select({
   nothingFound,
   clearButtonLabel,
   limit = Infinity,
+  disabled = false,
   ...others
 }: SelectProps) {
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
@@ -291,10 +292,14 @@ export function Select({
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           readOnly={!searchable}
+          disabled={disabled}
           {...getSelectRightSectionProps({
             styles: {
               ...styles,
-              input: { cursor: !searchable ? 'pointer' : undefined, ...(styles as any)?.input },
+              input: {
+                cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
+                ...(styles as any)?.input,
+              },
             },
             size,
             shouldClear: clearable && !!selectedValue,
