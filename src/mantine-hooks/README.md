@@ -47,6 +47,7 @@ npm install @mantine/hooks
 - [use-hash](https://mantine.dev/hooks/use-hash/) – get and set hash value in url
 - [use-intersection](https://mantine.dev/hooks/use-intersection/) – wrapper for IntersectionObserver API
 - [use-hotkeys](https://mantine.dev/hooks/use-hotkeys/) – subscribe to multiple hotkeys with single hook
+- [use-slider](https://mantine.dev/hooks/use-slider/) – handles slide behavior over any element
 
 ## Licence
 
