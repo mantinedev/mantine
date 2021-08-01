@@ -34,6 +34,14 @@ function Demo() {
 }
 ```
 
+## Invalid state and error
+
+<Demo data={TextInputDemos.validation} />
+
+## Disabled state
+
+<Demo data={TextInputDemos.disabled} />
+
 ## Get element ref
 
 You can get input ref with `elementRef` prop:
@@ -55,7 +63,7 @@ provide static `id` prop to prevent props mismatch:
 
 ```tsx
 <TextInput /> // -> random id generated both on client and server, props mismatch warning
-<TextInput id="my-accordion" /> // -> id is static, no mismatches
+<TextInput id="my-input" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility
