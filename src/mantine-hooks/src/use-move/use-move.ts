@@ -88,10 +88,12 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
     ref.current.addEventListener('touchstart', onTouchStart);
 
     return () => {
-      ref.current.removeEventListener('mousedown', onMouseDown);
-      ref.current.removeEventListener('touchstart', onTouchStart);
+      if (ref.current) {
+        ref.current.removeEventListener('mousedown', onMouseDown);
+        ref.current.removeEventListener('touchstart', onTouchStart);
+      }
     };
-  }, [ref]);
+  }, [ref.current]);
 
   return { ref, active };
 }

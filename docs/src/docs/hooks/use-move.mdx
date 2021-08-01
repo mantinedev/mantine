@@ -1,0 +1,32 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+title: 'use-move'
+category: 'dom'
+order: 1
+slug: /hooks/use-move/
+description: 'Handles move behavior over any element, use to build custom sliders, color pickers, etc.'
+import: "import { useMove } from '@mantine/hooks';"
+docs: 'hooks/use-move.mdx'
+source: 'mantine-hooks/src/use-move/use-move.ts'
+---
+
+import { useMoveUsage, useMoveHorizontal, useMoveVertical, useMoveColor } from '@docs/demos';
+
+## Usage
+
+<Demo data={useMoveUsage} />
+
+## Examples
+
+### Horizontal slider
+
+<Demo data={useMoveHorizontal} demoProps={{ toggle: true }} />
+
+### Vertical slider
+
+<Demo data={useMoveVertical} demoProps={{ toggle: true }} />
+
+### Color picker
+
+<Demo data={useMoveColor} demoProps={{ toggle: true }} />
