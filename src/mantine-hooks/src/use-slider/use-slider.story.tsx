@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { useSlider } from './use-slider';
 
 const Demo = () => {
-  const ref = React.useRef(null);
-  const { sliding, value } = useSlider(ref);
+  const [value, onChange] = useState(0);
+  const { ref, sliding } = useSlider({
+    value,
+    onChange,
+  });
 
   return (
     <div>

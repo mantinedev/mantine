@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const noop = () => {};
 
@@ -21,16 +21,13 @@ function off<T extends Window | Document | HTMLElement | EventTarget>(
   }
 }
 
-export interface Options {
-  onScrub: (value: number) => void;
-  onScrubStart: () => void;
-  onScrubStop: (value: number) => void;
-  reverse: boolean;
-  styles: boolean | React.CSSProperties;
-  vertical?: boolean;
+interface UseSliderOptions {
+  value: number;
+  onChange(value: number): void;
 }
 
-export function useSlider(ref: React.RefObject<HTMLElement>, options: Partial<Options> = {}) {
+export function useSlider<T extends HTMLElement = HTMLDivElement>(options: UseSliderOptions) {
+  const ref = useRef<T>();
   const mounted = useRef<boolean>(false);
   const isSliding = useRef(false);
   const valueRef = useRef(0);
@@ -45,8 +42,8 @@ export function useSlider(ref: React.RefObject<HTMLElement>, options: Partial<Op
   }, []);
 
   useEffect(() => {
-    const styles = options.styles === undefined ? true : options.styles;
-    const reverse = options.reverse === undefined ? false : options.reverse;
+    const styles = true;
+    const reverse = false;
 
     if (ref.current && styles) {
       // eslint-disable-next-line no-param-reassign
@@ -59,15 +56,12 @@ export function useSlider(ref: React.RefObject<HTMLElement>, options: Partial<Op
       frame.current = requestAnimationFrame(() => {
         if (mounted.current && ref.current) {
           const rect = ref.current.getBoundingClientRect();
-          const pos = options.vertical ? rect.top : rect.left;
-          const length = options.vertical ? rect.height : rect.width;
 
-          // Prevent returning 0 when element is hidden by CSS
-          if (!length) {
+          if (!rect.width) {
             return;
           }
 
-          let val = (clientXY - pos) / length;
+          let val = (clientXY - rect.left) / rect.width;
 
           if (val > 1) {
             val = 1;
@@ -80,7 +74,7 @@ export function useSlider(ref: React.RefObject<HTMLElement>, options: Partial<Op
           }
           setValue(val);
 
-          (options.onScrub || noop)(val);
+          (options.onChange || noop)(val);
         }
       });
     };
@@ -103,7 +97,6 @@ export function useSlider(ref: React.RefObject<HTMLElement>, options: Partial<Op
 
     const startScrubbing = () => {
       if (!isSliding.current && mounted.current) {
-        (options.onScrubStart || noop)();
         isSliding.current = true;
         setSliding(true);
         bindEvents();
@@ -112,7 +105,6 @@ export function useSlider(ref: React.RefObject<HTMLElement>, options: Partial<Op
 
     const stopScrubbing = () => {
       if (isSliding.current && mounted.current) {
-        (options.onScrubStop || noop)(valueRef.current);
         isSliding.current = false;
         setSliding(false);
         unbindEvents();
@@ -124,18 +116,14 @@ export function useSlider(ref: React.RefObject<HTMLElement>, options: Partial<Op
       onMouseMove(event);
     };
 
-    const onMouseMove = options.vertical
-      ? (event: MouseEvent) => onScrub(event.clientY)
-      : (event: MouseEvent) => onScrub(event.clientX);
+    const onMouseMove = (event: MouseEvent) => onScrub(event.clientX);
 
     const onTouchStart = (event: TouchEvent) => {
       startScrubbing();
       onTouchMove(event);
     };
 
-    const onTouchMove = options.vertical
-      ? (event: TouchEvent) => onScrub(event.changedTouches[0].clientY)
-      : (event: TouchEvent) => onScrub(event.changedTouches[0].clientX);
+    const onTouchMove = (event: TouchEvent) => onScrub(event.changedTouches[0].clientX);
 
     on(ref.current, 'mousedown', onMouseDown);
     on(ref.current, 'touchstart', onTouchStart);
@@ -144,7 +132,7 @@ export function useSlider(ref: React.RefObject<HTMLElement>, options: Partial<Op
       off(ref.current, 'mousedown', onMouseDown);
       off(ref.current, 'touchstart', onTouchStart);
     };
-  }, [ref, options.vertical]);
+  }, [ref]);
 
-  return { sliding, value };
+  return { ref, sliding };
 }
