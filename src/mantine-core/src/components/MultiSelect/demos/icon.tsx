@@ -4,12 +4,7 @@ import { MultiSelect } from '../MultiSelect';
 import { data } from './_data';
 
 const code = `
-<MultiSelect
-  data={data}
-  label="Pick hashtags"
-  placeholder="Pick all that you like"
-  icon={<HashIcon />}
-/>
+<MultiSelect icon={<HashIcon />} />
 `;
 
 function Demo() {

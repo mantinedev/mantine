@@ -1,21 +1,21 @@
 import React from 'react';
-import { TextInput } from '../TextInput';
+import { PasswordInput } from '../PasswordInput';
 
 const code = `
-<TextInput disabled />
+<PasswordInput disabled />
 `;
 
 function Demo() {
   return (
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <TextInput label="Disabled without value" placeholder="Your email" disabled />
+      <PasswordInput label="Disabled without value" placeholder="Your password" disabled />
 
-      <TextInput
+      <PasswordInput
         style={{ marginTop: 15 }}
         label="Disabled with value"
-        placeholder="Your email"
+        placeholder="Your password"
         disabled
-        value="myemail@gmail.com"
+        value="secret"
       />
     </div>
   );

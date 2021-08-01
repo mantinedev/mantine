@@ -3,12 +3,7 @@ import { HashIcon } from '@primer/octicons-react';
 import { Select } from '../Select';
 
 const code = `
-<Select
-  label="Pick a hashtag"
-  placeholder="Pick a hashtag"
-  data={['React', 'Angular', 'Svelte', 'Vue']}
-  icon={<HashIcon />}
-/>
+<Select icon={<HashIcon />} />
 `;
 
 function Demo() {

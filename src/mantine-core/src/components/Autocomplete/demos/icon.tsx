@@ -3,12 +3,7 @@ import { HashIcon } from '@primer/octicons-react';
 import { Autocomplete } from '../Autocomplete';
 
 const code = `
-<Autocomplete
-  label="Enter a hashtag"
-  placeholder="Enter a hashtag"
-  data={['React', 'Angular', 'Svelte', 'Vue']}
-  icon={<HashIcon />}
-/>
+<Autocomplete icon={<HashIcon />} />
 `;
 
 function Demo() {
