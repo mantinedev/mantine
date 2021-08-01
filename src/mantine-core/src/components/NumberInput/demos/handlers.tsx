@@ -46,7 +46,7 @@ function Demo() {
   return (
     <Group spacing={5} position="center">
       <ActionIcon
-        size={42}
+        size={36}
         variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}
         onClick={() => handlers.current.decrement()}
         style={{
@@ -67,7 +67,7 @@ function Demo() {
         styles={{ input: { width: 54, textAlign: 'center' } }}
       />
       <ActionIcon
-        size={42}
+        size={36}
         variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}
         onClick={() => handlers.current.increment()}
         style={{
