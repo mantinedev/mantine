@@ -4,11 +4,11 @@ import { useMove } from './use-move';
 
 const Demo = () => {
   const [value, onChange] = useState({ x: 0, y: 0 });
-  const { ref, sliding } = useMove(onChange);
+  const { ref, active } = useMove(onChange);
 
   return (
     <div>
-      <div style={{ color: sliding ? 'red' : 'blue', marginBottom: 10 }}>
+      <div style={{ color: active ? 'red' : 'blue', marginBottom: 10 }}>
         x: {Math.round(value.x * 100)}% – y: {Math.round(value.y * 100)}%
       </div>
       <div
