@@ -131,7 +131,7 @@ export function DatePickerBase({
   ...others
 }: DatePickerBaseProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames as any, __staticSelector);
+  const classes = useStyles({ theme, size, invalid: !!error }, classNames as any, __staticSelector);
   const _styles = mergeStyles(classes, styles as any);
   const reduceMotion = useReducedMotion();
   const uuid = useId(id);
