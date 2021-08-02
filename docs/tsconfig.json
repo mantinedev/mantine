@@ -1,5 +1,6 @@
 {
   "extends": "../tsconfig.json",
+  "include": ["src", "../configuration/types"],
   "compilerOptions": {
     "paths": {
       "@docs/demos": ["./docs/src/demos"],

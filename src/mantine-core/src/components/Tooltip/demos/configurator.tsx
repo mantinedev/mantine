@@ -4,7 +4,7 @@ import { Tooltip, TooltipProps, Group, Button } from '../../../index';
 const Wrapper = (props: TooltipProps) => (
   <div style={{ padding: 30 }}>
     <Group position="center">
-      <Tooltip data-mantine-composable opened {...props}>
+      <Tooltip opened {...props}>
         <Button variant="outline" color="gray" size="xl">
           With tooltip
         </Button>

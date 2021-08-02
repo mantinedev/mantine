@@ -1,9 +1,8 @@
 import React from 'react';
-import { GearIcon, ChatBubbleIcon, ImageIcon, MagnifyingGlassIcon } from '@modulz/radix-icons';
-import { Menu, MenuItem } from '../Menu';
-import { Divider } from '../../Divider/Divider';
+import { Menu } from '../Menu';
 import { Group } from '../../Group/Group';
 import { Button } from '../../Button/Button';
+import { menuItems } from './_menu-items';
 
 const code = `
 <Menu
@@ -20,30 +19,14 @@ const code = `
 </Menu>
 `;
 
-const iconSize = { width: 14, height: 14 };
-
 function Demo() {
   return (
     <Group position="center">
       <Menu control={<button type="button">Button control</button>} controlRefProp="ref">
-        <MenuItem icon={<GearIcon style={iconSize} />}>Settings</MenuItem>
-        <MenuItem icon={<ChatBubbleIcon style={iconSize} />}>Messages</MenuItem>
-        <MenuItem icon={<ImageIcon style={iconSize} />}>Gallery</MenuItem>
-        <MenuItem icon={<MagnifyingGlassIcon style={iconSize} />}>Search</MenuItem>
-        <Divider />
-        <MenuItem disabled>Delete my data</MenuItem>
-        <MenuItem color="red">Delete account</MenuItem>
+        {menuItems}
       </Menu>
 
-      <Menu control={<Button>Mantine Button</Button>}>
-        <MenuItem icon={<GearIcon style={iconSize} />}>Settings</MenuItem>
-        <MenuItem icon={<ChatBubbleIcon style={iconSize} />}>Messages</MenuItem>
-        <MenuItem icon={<ImageIcon style={iconSize} />}>Gallery</MenuItem>
-        <MenuItem icon={<MagnifyingGlassIcon style={iconSize} />}>Search</MenuItem>
-        <Divider />
-        <MenuItem disabled>Delete my data</MenuItem>
-        <MenuItem color="red">Delete account</MenuItem>
-      </Menu>
+      <Menu control={<Button>Mantine Button</Button>}>{menuItems}</Menu>
     </Group>
   );
 }

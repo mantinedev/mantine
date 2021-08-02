@@ -9,6 +9,9 @@ import {
   useHotkeysHook,
   useIntersectionDemo,
   useHashHook,
+  useIdleHook,
+  useFullscreenDemo,
+  useMoveUsage,
 } from '@docs/demos';
 import {
   SegmentedControlDemos,
@@ -27,6 +30,7 @@ import {
   JsonInputDemos,
   SliderDemos,
   AffixDemos,
+  MultiSelectDemos,
 } from '@demos/core';
 import {
   CalendarDemos,
@@ -40,7 +44,55 @@ import * as PrismDemos from '@demos/prism';
 
 # Changelog
 
-## 2.1.0 – August 2021
+## 2.2.0 – August 2021
+
+### New components and hooks
+
+New <GatsbyLink to="/core/multi-select/">MultiSelect</GatsbyLink> component allows you to create searchable select
+with option to customize labels and options:
+
+<Demo data={MultiSelectDemos.countries} demoProps={{ toggle: true, zIndex: 4 }} />
+
+New <GatsbyLink to="/hooks/use-idle/">use-idle</GatsbyLink> hook allows to detect if user does nothing:
+
+<Demo data={useIdleHook} demoProps={{ toggle: true }} />
+
+New <GatsbyLink to="/hooks/use-fullscreen/">use-fullscreen</GatsbyLink> hook allows to work with Fullscreen API:
+
+<Demo data={useFullscreenDemo} demoProps={{ toggle: true }} />
+
+New <GatsbyLink to="/hooks/use-move/">use-move</GatsbyLink> hook handles move behavior over any element,
+you can use it to build custom sliders, color pickers, etc.:
+
+<Demo data={useMoveUsage} demoProps={{ toggle: true }} />
+
+### Other changes
+
+- <GatsbyLink to="/core/menu/">Menu</GatsbyLink> and <GatsbyLink to="/core/radio-group/">
+    RadioGroup
+  </GatsbyLink> components now works differently with Styles API – all styles and classNames should be
+  added to root Menu/RadioGroup component instead of MenuItem/Radio
+- <GatsbyLink to="/core/card/">Card</GatsbyLink> component no longer has context styles for images and
+  dividers, use new CardSection component instead
+- @mantine/tag-picker package is deprecated – use <GatsbyLink to="/core/multi-select/">MultiSelect</GatsbyLink> instead
+- You can now customize shadow and padding in <GatsbyLink to="/core/modal/">Modal</GatsbyLink> component
+- <GatsbyLink to="/core/button/">Button</GatsbyLink> now supports compact option which reduces its height
+  and horizontal padding
+- <GatsbyLink to="/core/image/">Image</GatsbyLink> now supports adding figcaption
+- New <GatsbyLink to="/core/mark/">Mark</GatsbyLink> component – mark tag with theme styles
+- <GatsbyLink to="/core/menu/">Menu</GatsbyLink> component now supports labels in menu body and behavior
+  customization (focus trap and close on scroll)
+- 4 new premade pop-\* transitions were added to <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component
+- New <GatsbyLink to="/hooks/use-logger/">use-logger</GatsbyLink> hook will log given values each time component renders
+- <GatsbyLink to="/core/select/">Select</GatsbyLink>, <GatsbyLink to="/core/native-select/">
+    NativeSelect
+  </GatsbyLink> and <GatsbyLink to="/core/autocomplete/">Autocomplete</GatsbyLink> components now
+  support data as an array of strings
+- New <GatsbyLink to="/hooks/use-logger/">use-logger</GatsbyLink> hook – a drop in replacement for useEffect with shallow comparison instead of referential
+- <GatsbyLink to="/hooks/use-scroll-lock/">use-scroll-lock</GatsbyLink> hook now support state managing
+  inside hook
+
+## 2.1.0 – July 2021
 
 ### New hooks and components
 

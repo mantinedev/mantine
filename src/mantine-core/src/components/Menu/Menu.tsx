@@ -13,9 +13,10 @@ import { MenuIcon } from './MenuIcon';
 import { MenuBody, MenuBodyProps, MenuBodyStylesNames } from './MenuBody/MenuBody';
 import { sizes } from './MenuBody/MenuBody.styles';
 import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
+import { MenuLabel, MenuLabelProps } from './MenuLabel/MenuLabel';
 
-export { MenuBody, MenuItem };
-export type { MenuBodyProps, MenuItemProps };
+export { MenuBody, MenuItem, MenuLabel };
+export type { MenuBodyProps, MenuItemProps, MenuLabelProps };
 
 export const MENU_SIZES = sizes;
 
@@ -88,6 +89,15 @@ export interface MenuProps
 
   /** Close delay for hover trigger */
   delay?: number;
+
+  /** Menu body and items border-radius */
+  radius?: MantineNumberSize;
+
+  /** Close menu on scroll */
+  closeOnScroll?: boolean;
+
+  /** Trap focus inside menu */
+  trapFocus?: boolean;
 }
 
 const defaultControl = (
@@ -111,16 +121,19 @@ export function Menu({
   transitionDuration = 250,
   size = 'md',
   shadow = 'md',
-  transition = 'skew-up',
+  transition = 'pop-top-left',
   transitionTimingFunction,
   menuButtonLabel,
   controlRefProp = 'elementRef',
   trigger = 'click',
+  radius = 'sm',
   delay = 0,
   zIndex = 1000,
   elementRef,
   classNames,
   styles,
+  closeOnScroll = true,
+  trapFocus = true,
   onMouseLeave,
   onMouseEnter,
   onChange,
@@ -137,9 +150,7 @@ export function Menu({
     finalValue: false,
     rule: (val) => typeof val === 'boolean',
     onChange: (value) =>
-      !value
-        ? typeof onOpen === 'function' && onOpen()
-        : typeof onClose === 'function' && onClose(),
+      value ? typeof onOpen === 'function' && onOpen() : typeof onClose === 'function' && onClose(),
   });
 
   const openedRef = useRef(_opened);
@@ -162,7 +173,7 @@ export function Menu({
     window.clearTimeout(controlRefFocusTimeout.current);
   };
 
-  useWindowEvent('scroll', () => handleClose(true));
+  useWindowEvent('scroll', () => closeOnScroll && handleClose(true));
 
   const wrapperRef = useClickOutside(() => _opened && handleClose());
   const toggleMenu = () => {
@@ -198,7 +209,6 @@ export function Menu({
     'aria-expanded': _opened,
     'aria-controls': uuid,
     'aria-label': menuButtonLabel,
-    'data-mantine-menu': true,
     title: menuButtonLabel,
     [controlRefProp]: useMergedRef(controlRef, elementRef),
   });
@@ -230,6 +240,8 @@ export function Menu({
         zIndex={zIndex}
         classNames={classNames}
         styles={styles}
+        radius={radius}
+        trapFocus={trapFocus}
       >
         {children}
       </MenuBody>

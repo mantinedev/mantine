@@ -1,23 +1,18 @@
 import React from 'react';
-import { Menu, MenuProps, MenuItem } from '../Menu';
+import { Menu, MenuProps } from '../Menu';
 import { Group } from '../../Group/Group';
+import { menuItems } from './_menu-items';
 
 function Wrapper(props: MenuProps) {
   return (
     <Group position="center" style={{ height: 200 }}>
-      <Menu {...props}>
-        <MenuItem>Discard changes</MenuItem>
-        <MenuItem>Save draft</MenuItem>
-        <MenuItem color="red">Delete</MenuItem>
-      </Menu>
+      <Menu {...props}>{menuItems.slice(0, 3)}</Menu>
     </Group>
   );
 }
 
 const codeTemplate = (props: string) => `<Menu${props}>
-  <MenuItem>Discard changes</MenuItem>
-  <MenuItem>Save draft</MenuItem>
-  <MenuItem color="red">Delete</MenuItem>
+  {/* Menu items */}
 </Menu>`;
 
 export const configurator: MantineDemo = {

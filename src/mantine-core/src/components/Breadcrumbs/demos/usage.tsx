@@ -1,6 +1,6 @@
 import React from 'react';
 import { Breadcrumbs } from '../Breadcrumbs';
-import { Anchor } from '../../Text/Text';
+import { Anchor } from '../../Anchor/Anchor';
 
 const code = `
 import React from 'react';
@@ -12,9 +12,9 @@ function Demo() {
     { title: 'Mantine hooks', href: 'https://mantine.dev/hooks/getting-started' },
     { title: 'use-id', href: 'https://mantine.dev/hooks/use-id' },
   ].map((item, index) => (
-    <Text variant="link" component="a" href={item.href} key={index}>
+    <Anchor href={item.href} key={index}>
       {item.title}
-    </Text>
+    </Anchor>
   ));
 
   return (

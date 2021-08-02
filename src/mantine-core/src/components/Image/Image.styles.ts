@@ -17,6 +17,10 @@ export default createMemoStyles({
     overflow: 'hidden',
   },
 
+  figure: {
+    margin: 0,
+  },
+
   image: ({ theme, radius }: ImageStyles) => ({
     ...getFontStyles(theme),
     display: 'block',
@@ -24,6 +28,11 @@ export default createMemoStyles({
     height: '100%',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     border: 0,
+  }),
+
+  caption: ({ theme }: ImageStyles) => ({
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
+    marginTop: theme.spacing.xs / 2,
   }),
 
   placeholder: ({ theme, radius }: ImageStyles) => ({

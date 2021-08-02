@@ -15,6 +15,7 @@ interface InputStyles {
   variant: InputVariant;
   multiline: boolean;
   invalid: boolean;
+  disabled: boolean;
 }
 
 export const sizes = {
@@ -34,7 +35,7 @@ function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'the
       borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
       transition: 'border-color 100ms ease, box-shadow 100ms ease',
 
-      '&:focus': {
+      '&:focus, &:focus-within': {
         outline: 'none',
         borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 7],
       },
@@ -48,7 +49,7 @@ function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'the
       borderColor: 'transparent',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
 
-      '&:focus': {
+      '&:focus, &:focus-within': {
         outline: 'none',
         borderColor: `${
           theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 6 : 7]
@@ -63,14 +64,21 @@ function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'the
 
   if (variant === 'unstyled') {
     return {
+      borderWidth: 1,
+      borderColor: 'transparent',
+      borderStyle: 'solid',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       backgroundColor: 'transparent',
       height: 28,
-      border: 0,
       outline: 0,
 
       '&:disabled': {
         backgroundColor: 'transparent',
+
+        '&:focus, &:focus-within': {
+          outline: 'none',
+          borderColor: 'transparent',
+        },
       },
     };
   }
@@ -100,11 +108,9 @@ export default createMemoStyles({
   root: ({ radius, theme }: InputStyles) => ({
     position: 'relative',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-
-    '&, & *': { boxSizing: 'border-box' },
   }),
 
-  input: ({ theme, size, multiline, radius, variant, invalid }: InputStyles) => {
+  input: ({ theme, size, multiline, radius, variant, invalid, disabled }: InputStyles) => {
     if (variant === 'headless') {
       return {};
     }
@@ -120,6 +126,20 @@ export default createMemoStyles({
           }
         : null;
 
+    const disabledStyles = disabled
+      ? {
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+          color: theme.colors.dark[2],
+          opacity: 0.6,
+          cursor: 'not-allowed',
+
+          '&::placeholder': {
+            color: theme.colors.dark[2],
+          },
+        }
+      : null;
+
     return {
       ...getFontStyles(theme),
       ...getVariantStyles({ variant, theme }),
@@ -134,6 +154,7 @@ export default createMemoStyles({
       display: 'block',
       textAlign: 'left',
       ...sizeStyles,
+      ...disabledStyles,
 
       '&:disabled': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],

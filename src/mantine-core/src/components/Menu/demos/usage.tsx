@@ -1,39 +1,31 @@
 import React from 'react';
-import { GearIcon, ChatBubbleIcon, ImageIcon, MagnifyingGlassIcon } from '@modulz/radix-icons';
-import { Menu, MenuItem } from '../Menu';
-import { Divider } from '../../Divider/Divider';
+import { Menu } from '../Menu';
 import { Group } from '../../Group/Group';
-import { Text } from '../../Text/Text';
+import { menuItems } from './_menu-items';
 
 const code = `
 import React from 'react';
-import { Menu, MenuItem, Divider, Text } from '@mantine/core';
-import {
-  GearIcon,
-  ChatBubbleIcon,
-  ImageIcon,
-  MagnifyingGlassIcon,
-} from '@modulz/radix-icons';
+import { Menu, MenuItem, MenuLabel, Divider, Text } from '@mantine/core';
 
 function Demo() {
   return (
     <Menu>
+      <MenuLabel>Application</MenuLabel>
       <MenuItem icon={<GearIcon />}>Settings</MenuItem>
       <MenuItem icon={<ChatBubbleIcon />}>Messages</MenuItem>
       <MenuItem icon={<ImageIcon />}>Gallery</MenuItem>
       <MenuItem
         icon={<MagnifyingGlassIcon />}
-        rightSection={
-          <Text size="sm" color="gray">
-            ⌘K
-          </Text>
-        }
+        rightSection={<Text size="xs" color="gray">⌘K</Text>}
       >
         Search
       </MenuItem>
+
       <Divider />
-      <MenuItem disabled>Delete my data</MenuItem>
-      <MenuItem color="red">Delete account</MenuItem>
+
+      <MenuLabel>Danger zone</MenuLabel>
+      <MenuItem icon={<PinRightIcon />}>Transfer my data</MenuItem>,
+      <MenuItem color="red" icon={<TrashIcon />}>Delete my account</MenuItem>
     </Menu>
   );
 }
@@ -42,24 +34,7 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <Menu>
-        <MenuItem icon={<GearIcon />}>Settings</MenuItem>
-        <MenuItem icon={<ChatBubbleIcon />}>Messages</MenuItem>
-        <MenuItem icon={<ImageIcon />}>Gallery</MenuItem>
-        <MenuItem
-          icon={<MagnifyingGlassIcon />}
-          rightSection={
-            <Text size="sm" color="gray">
-              ⌘K
-            </Text>
-          }
-        >
-          Search
-        </MenuItem>
-        <Divider />
-        <MenuItem disabled>Delete my data</MenuItem>
-        <MenuItem color="red">Delete account</MenuItem>
-      </Menu>
+      <Menu>{menuItems}</Menu>
     </Group>
   );
 }

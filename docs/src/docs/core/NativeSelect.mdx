@@ -37,6 +37,20 @@ function Demo() {
 }
 ```
 
+## Invalid state and error
+
+<Demo data={NativeSelectDemos.validation} />
+
+## Disabled state
+
+<Demo data={NativeSelectDemos.disabled} />
+
+## With icon
+
+You can use any React node as icon:
+
+<Demo data={NativeSelectDemos.icon} />
+
 ## Get element ref
 
 You can get input ref by passing `elementRef` prop to NativeSelect component:
@@ -58,7 +72,7 @@ provide static `id` prop to prevent props mismatch:
 
 ```tsx
 <NativeSelect /> // -> random id generated both on client and server, props mismatch warning
-<NativeSelect id="my-accordion" /> // -> id is static, no mismatches
+<NativeSelect id="my-select" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility

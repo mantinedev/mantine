@@ -16,7 +16,7 @@ export const configurator: MantineDemo = {
       type: 'string',
       initialValue: 'I agree to sell my privacy',
     },
-    { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
+    { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'radius', type: 'size', initialValue: 'xl', defaultValue: 'xl' },
     { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },

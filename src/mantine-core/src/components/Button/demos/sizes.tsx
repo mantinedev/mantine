@@ -11,6 +11,12 @@ function Demo() {
     </Button>
   ));
 
+  const compact = MANTINE_SIZES.map((size) => (
+    <Button key={size} size={size} variant="outline" compact>
+      {size} compact size
+    </Button>
+  ));
+
   const radius = MANTINE_SIZES.map((size) => (
     <Button key={size} radius={size} variant="outline">
       {size} radius
@@ -24,6 +30,14 @@ function Demo() {
           Predefined sizes from xs to xl:
         </Text>
         <Group position="center">{sizes}</Group>
+      </div>
+      <div
+        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 40 }}
+      >
+        <Text size="lg" style={{ marginBottom: 20 }}>
+          Predefined compact sizes from xs to xl:
+        </Text>
+        <Group position="center">{compact}</Group>
       </div>
       <div
         style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 40 }}

@@ -45,7 +45,7 @@ export function Switch({
   label,
   id,
   style,
-  size = 'md',
+  size = 'sm',
   radius = 'xl',
   themeOverride,
   wrapperProps,

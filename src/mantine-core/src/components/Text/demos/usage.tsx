@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Anchor } from '../Text';
+import { Text } from '../Text';
 
 const code = `
 <Text size="xs">Extra small text</Text>
@@ -10,7 +10,6 @@ const code = `
 <Text weight={500}>Semibold</Text>
 <Text weight={700}>Bold</Text>
 <Text variant="link" component="a" href="https://mantine.dev">Link variant</Text>
-<Anchor href="https://mantine.dev">Same as above Text with link variant</Anchor>
 <Text color="red">Red text</Text>
 <Text color="blue">Blue text</Text>
 <Text color="gray">Gray text</Text>
@@ -33,7 +32,6 @@ function Demo() {
       <Text variant="link" component="a" href="https://mantine.dev">
         Link variant
       </Text>
-      <Anchor href="https://mantine.dev">Same as above Text with link variant</Anchor>
       <Text color="red">Red text</Text>
       <Text color="blue">Blue text</Text>
       <Text color="gray">Gray text</Text>

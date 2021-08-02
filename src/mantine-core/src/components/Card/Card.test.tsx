@@ -22,7 +22,11 @@ describe('@mantine/core/Card', () => {
   });
 
   it('passes padding and radius to Paper component', () => {
-    const element = shallow(<Card radius="xl" padding={29} />);
+    const element = shallow(
+      <Card radius="xl" padding={29}>
+        test-card
+      </Card>
+    );
     expect(element.find(Paper).prop('padding')).toBe(29);
     expect(element.find(Paper).prop('radius')).toBe('xl');
   });

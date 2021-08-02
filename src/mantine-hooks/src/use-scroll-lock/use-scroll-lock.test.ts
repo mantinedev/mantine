@@ -15,7 +15,7 @@ describe('@mantine/hooks/use-scroll-lock', () => {
 
   it('does not change overflow if called with false', () => {
     document.body.style.overflow = 'visible';
-    renderHook(() => useScrollLock(false));
+    renderHook(() => useScrollLock());
     expect(document.body.style.overflow).toBe('visible');
   });
 });

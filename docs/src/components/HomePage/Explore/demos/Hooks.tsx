@@ -6,13 +6,11 @@ import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 import { LinkTitle } from './LinkTitle';
 
 const lockCode = `
-import { useState } from 'react';
 import { useScrollLock } from '@mantine/hooks';
 import { Button } from '@mantine/core';
 
 function Demo() {
-  const [lockScroll, setLockScroll] = useState(false);
-  useScrollLock(lockScroll);
+  const [lockScroll, setLockScroll] = useScrollLock();
   const label = lockScroll ? 'Unlock scroll' : 'Lock scroll';
   return <Button onClick={() => setLockScroll((c) => !c)}>{label}</Button>;
 }
@@ -36,10 +34,9 @@ function Demo() {
 `.trim();
 
 export function HooksDemo() {
-  const [lockScroll, setLockScroll] = useState(false);
+  const [lockScroll, setLockScroll] = useScrollLock();
   const [opened, setOpened] = useState(false);
   const ref = useClickOutside(() => setOpened(false));
-  useScrollLock(lockScroll);
 
   return (
     <>

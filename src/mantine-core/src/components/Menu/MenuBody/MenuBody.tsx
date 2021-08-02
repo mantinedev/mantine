@@ -5,11 +5,13 @@ import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '.
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import { Divider } from '../../Divider/Divider';
+import { Text } from '../../Text/Text';
 import { MenuItem, MenuItemType } from '../MenuItem/MenuItem';
-import { MenuButton } from '../MenuButton/MenuButton';
+import { MenuLabel } from '../MenuLabel/MenuLabel';
+import { MenuButton, MenuButtonStylesNames } from '../MenuButton/MenuButton';
 import useStyles from './MenuBody.styles';
 
-export type MenuBodyStylesNames = keyof ReturnType<typeof useStyles>;
+export type MenuBodyStylesNames = keyof ReturnType<typeof useStyles> | MenuButtonStylesNames;
 
 export interface MenuBodyProps
   extends DefaultProps<MenuBodyStylesNames>,
@@ -46,16 +48,12 @@ export interface MenuBodyProps
 
   /** Menu body z-index */
   zIndex?: number;
-}
 
-function getPreviousItem(active: number, items: MenuItemType[]) {
-  for (let i = active - 1; i >= 0; i -= 1) {
-    if (!items[i].props.disabled && items[i].type === MenuItem) {
-      return i;
-    }
-  }
+  /** Body border-radius */
+  radius?: MantineNumberSize;
 
-  return active;
+  /** Trap focus inside menu */
+  trapFocus?: boolean;
 }
 
 function getNextItem(active: number, items: MenuItemType[]) {
@@ -78,6 +76,20 @@ function findInitialItem(items: MenuItemType[]) {
   return -1;
 }
 
+function getPreviousItem(active: number, items: MenuItemType[]) {
+  for (let i = active - 1; i >= 0; i -= 1) {
+    if (!items[i].props.disabled && items[i].type === MenuItem) {
+      return i;
+    }
+  }
+
+  if (!items[active] || items[active].type !== MenuItem) {
+    return findInitialItem(items);
+  }
+
+  return active;
+}
+
 export function MenuBody({
   className,
   style,
@@ -95,21 +107,24 @@ export function MenuBody({
   zIndex = 1000,
   classNames,
   styles,
+  radius,
+  trapFocus = true,
   ...others
 }: MenuBodyProps) {
   const items = React.Children.toArray(children).filter(
-    (item: MenuItemType) => item.type === MenuItem || item.type === Divider
+    (item: MenuItemType) =>
+      item.type === MenuItem || item.type === Divider || item.type === MenuLabel
   ) as MenuItemType[];
 
   const hoveredTimeout = useRef<number>();
   const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, theme }, classNames, 'menu-body');
-  const _styles = mergeStyles(classes, styles);
+  const classes = useStyles({ size, theme }, classNames as any, 'menu');
+  const _styles = mergeStyles(classes, styles as any);
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
   const [hovered, setHovered] = useState(findInitialItem(items));
-  const focusTrapRef = useFocusTrap();
+  const focusTrapRef = useFocusTrap(trapFocus);
 
   useEffect(() => {
     if (!opened) {
@@ -119,6 +134,8 @@ export function MenuBody({
     } else {
       window.clearTimeout(hoveredTimeout.current);
     }
+
+    return () => window.clearTimeout(hoveredTimeout.current);
   }, [opened]);
 
   const menuRef = useClickOutside(() => closeOnClickOutside && onClose());
@@ -130,7 +147,7 @@ export function MenuBody({
       onClose();
     }
 
-    if (code === 'Tab') {
+    if (code === 'Tab' && trapFocus) {
       event.preventDefault();
     }
 
@@ -160,8 +177,11 @@ export function MenuBody({
           {...item.props}
           key={index}
           hovered={hovered === index}
-          onHover={() => setHovered(-1)}
-          onClick={(event) => {
+          onHover={() => setHovered(index)}
+          radius={radius}
+          classNames={classNames as any}
+          styles={styles as any}
+          onClick={(event: any) => {
             if (closeOnItemClick) {
               onClose();
             }
@@ -170,9 +190,20 @@ export function MenuBody({
               item.props.onClick(event);
             }
           }}
-          elementRef={(node) => {
+          elementRef={(node: any) => {
             buttonsRefs.current[index] = node;
           }}
+        />
+      );
+    }
+
+    if (item.type === MenuLabel) {
+      return (
+        <Text
+          className={classes.label}
+          style={_styles.label}
+          {...(item.props as any)}
+          key={index}
         />
       );
     }
@@ -180,11 +211,11 @@ export function MenuBody({
     if (item.type === Divider) {
       return (
         <Divider
-          key={index}
           variant="solid"
           className={classes.divider}
           margins={theme.spacing.xs / 2}
           style={_styles.divider}
+          key={index}
         />
       );
     }
@@ -203,12 +234,14 @@ export function MenuBody({
       {(transitionStyles) => (
         <Paper
           shadow={shadow}
-          className={cx(classes.menu, className)}
-          style={{ ...style, ..._styles.menu, ...transitionStyles, zIndex }}
+          className={cx(classes.body, className)}
+          style={{ ...style, ..._styles.body, ...transitionStyles, zIndex }}
           onKeyDownCapture={handleKeyDown}
           elementRef={menuRef}
           role="menu"
           aria-orientation="vertical"
+          radius={radius}
+          onMouseLeave={() => setHovered(-1)}
           {...others}
         >
           <div ref={focusTrapRef}>{buttons}</div>

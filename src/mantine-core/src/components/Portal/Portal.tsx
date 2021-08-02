@@ -36,7 +36,7 @@ export function Portal({ children, zIndex = 1, target, className }: PortalProps)
   }
 
   return createPortal(
-    <div className={className} style={{ position: 'relative', zIndex }} data-mantine-portal>
+    <div className={className} style={{ position: 'relative', zIndex }}>
       {children}
     </div>,
     elementRef.current

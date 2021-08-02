@@ -15,10 +15,10 @@ export function Demo() {
   return (
     <Group position="center">
       <Group position="center" style={{ paddingTop: 30 }}>
-        <Tooltip data-mantine-composable label="Default arrow" withArrow opened>
+        <Tooltip label="Default arrow" withArrow opened>
           <Button variant="outline">Default arrow</Button>
         </Tooltip>
-        <Tooltip data-mantine-composable label="Arrow with size" withArrow arrowSize={3} opened>
+        <Tooltip label="Arrow with size" withArrow arrowSize={3} opened>
           <Button variant="outline">With size</Button>
         </Tooltip>
       </Group>

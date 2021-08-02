@@ -1,39 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cx from 'clsx';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineSize, mergeStyles, getSizeValue } from '../../theme';
+import { DefaultProps, MantineSize } from '../../theme';
 import { scrollIntoView } from '../../utils';
-import {
-  InputWrapper,
-  InputWrapperBaseProps,
-  InputWrapperStylesNames,
-} from '../InputWrapper/InputWrapper';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-import { Paper } from '../Paper/Paper';
-import { Text } from '../Text/Text';
-import { ChevronIcon } from '../NativeSelect/ChevronIcon';
-import { rightSectionWidth } from '../NativeSelect/NativeSelect';
-import { Transition, MantineTransition } from '../Transition/Transition';
+import { InputWrapper } from '../InputWrapper/InputWrapper';
+import { Input } from '../Input/Input';
+import { MantineTransition } from '../Transition/Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
-import useStyles from './Select.styles';
+import { getSelectRightSectionProps } from './SelectRightSection/get-select-right-section-props';
+import { SelectItems } from './SelectItems/SelectItems';
+import { SelectDropdown } from './SelectDropdown/SelectDropdown';
+import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
+import { filterData } from './filter-data/filter-data';
 
-export type SelectStylesNames =
-  | InputStylesNames
-  | InputWrapperStylesNames
-  | keyof ReturnType<typeof useStyles>;
+export type SelectStylesNames = BaseSelectStylesNames;
 
-export interface SelectItem {
-  value: string;
-  label: string;
-  [key: string]: any;
-}
-
-export interface SelectProps
-  extends DefaultProps<SelectStylesNames>,
-    InputBaseProps,
-    InputWrapperBaseProps,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange'> {
+export interface SelectProps extends DefaultProps<SelectStylesNames>, BaseSelectProps {
   /** Input size */
   size?: MantineSize;
 
@@ -41,7 +22,7 @@ export interface SelectProps
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 
   /** Select data used to renderer items in dropdown */
-  data: SelectItem[];
+  data: SelectDataItem[];
 
   /** Change item renderer */
   itemComponent?: React.FC<any>;
@@ -92,7 +73,7 @@ export interface SelectProps
   limit?: number;
 }
 
-function defaultFilter(value: string, item: SelectItem) {
+export function defaultFilter(value: string, item: SelectItem) {
   return item.label.toLowerCase().trim().includes(value.toLowerCase().trim());
 }
 
@@ -110,7 +91,7 @@ export function Select({
   value,
   defaultValue,
   onChange,
-  itemComponent: Item = DefaultItem,
+  itemComponent = DefaultItem,
   onKeyDown,
   onFocus,
   onBlur,
@@ -130,16 +111,14 @@ export function Select({
   nothingFound,
   clearButtonLabel,
   limit = Infinity,
+  disabled = false,
   ...others
 }: SelectProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames as any, 'select');
-  const _styles = mergeStyles(classes, styles as any);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
   const dropdownRef = useRef<HTMLDivElement>();
-  const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
+  const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
   const uuid = useId(id);
   const [_value, handleChange, inputMode] = useUncontrolled({
     value,
@@ -149,7 +128,11 @@ export function Select({
     rule: (val) => typeof val === 'string',
   });
 
-  const selectedValue = data.find((item) => item.value === _value);
+  const formattedData = data.map((item) =>
+    typeof item === 'string' ? { label: item, value: item } : item
+  );
+
+  const selectedValue = formattedData.find((item) => item.value === _value);
   const [inputValue, setInputValue] = useState(selectedValue?.label || '');
 
   const handleClear = () => {
@@ -161,7 +144,7 @@ export function Select({
   };
 
   useEffect(() => {
-    const newSelectedValue = data.find((item) => item.value === _value);
+    const newSelectedValue = formattedData.find((item) => item.value === _value);
     if (newSelectedValue) {
       setInputValue(newSelectedValue.label);
     } else {
@@ -179,34 +162,13 @@ export function Select({
     inputRef.current.focus();
   };
 
-  const shouldFilter = searchable && data.every((item) => item.label !== inputValue);
-  const filteredData = shouldFilter
-    ? data.filter((item) => filter(inputValue, item)).slice(0, limit)
-    : data;
-
-  const items = filteredData.map((item, index) => (
-    <Item
-      key={item.value}
-      className={cx(classes.item, {
-        [classes.hovered]: hovered === index,
-        [classes.selected]: item.value === _value,
-      })}
-      style={{ ..._styles.item, ...(hovered === index ? _styles.hovered : null) }}
-      onMouseEnter={() => setHovered(index)}
-      id={`${uuid}-${index}`}
-      role="option"
-      tabIndex={-1}
-      aria-selected={hovered === index}
-      elementRef={(node: HTMLButtonElement) => {
-        itemsRefs.current[item.value] = node;
-      }}
-      onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        handleItemSelect(item);
-      }}
-      {...item}
-    />
-  ));
+  const filteredData = filterData({
+    data: formattedData,
+    searchable,
+    limit,
+    searchValue: inputValue,
+    filter,
+  });
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     typeof onKeyDown === 'function' && onKeyDown(event);
@@ -266,7 +228,7 @@ export function Select({
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onBlur === 'function' && onBlur(event);
-    const selected = data.find((item) => item.value === _value);
+    const selected = formattedData.find((item) => item.value === _value);
     setInputValue(selected?.label || '');
     setDropdownOpened(false);
   };
@@ -283,19 +245,6 @@ export function Select({
     setHovered(0);
     setDropdownOpened(true);
   };
-
-  const shouldShowClear = clearable && !!selectedValue;
-  const rightSection = shouldShowClear ? (
-    <CloseButton
-      themeOverride={themeOverride}
-      variant="transparent"
-      aria-label={clearButtonLabel}
-      onClick={handleClear}
-      size={size}
-    />
-  ) : (
-    <ChevronIcon error={error} size={size} themeOverride={themeOverride} />
-  );
 
   return (
     <InputWrapper
@@ -314,8 +263,6 @@ export function Select({
       {...wrapperProps}
     >
       <div
-        className={classes.wrapper}
-        style={_styles.wrapper}
         role="combobox"
         aria-haspopup="listbox"
         aria-owns={`${uuid}-items`}
@@ -334,17 +281,7 @@ export function Select({
           size={size}
           onKeyDown={handleInputKeydown}
           themeOverride={themeOverride}
-          classNames={{
-            ...classNames,
-            input: cx({ [classes.notSearchable]: !searchable }, (classNames as any)?.input),
-          }}
-          styles={{
-            ...styles,
-            rightSection: {
-              ...(styles as any)?.rightSection,
-              pointerEvents: shouldShowClear ? undefined : 'none',
-            },
-          }}
+          classNames={classNames as any}
           __staticSelector="select"
           value={inputValue}
           onChange={handleInputChange}
@@ -355,37 +292,56 @@ export function Select({
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           readOnly={!searchable}
-          rightSection={rightSection}
-          rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
+          disabled={disabled}
+          {...getSelectRightSectionProps({
+            styles: {
+              ...styles,
+              input: {
+                cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
+                ...(styles as any)?.input,
+              },
+            },
+            size,
+            shouldClear: clearable && !!selectedValue,
+            themeOverride,
+            clearButtonLabel,
+            onClear: handleClear,
+            error,
+          })}
         />
 
-        <Transition
+        <SelectDropdown
+          themeOverride={themeOverride}
           mounted={dropdownOpened}
           transition={transition}
-          duration={transitionDuration}
-          timingFunction={transitionTimingFunction}
+          transitionDuration={transitionDuration}
+          transitionTimingFunction={transitionTimingFunction}
+          uuid={uuid}
+          shadow={shadow}
+          maxDropdownHeight={maxDropdownHeight}
+          classNames={classNames as any}
+          styles={styles as any}
+          size={size}
+          elementRef={dropdownRef}
+          __staticSelector="select"
         >
-          {(transitionStyles) => (
-            <Paper
-              id={`${uuid}-items`}
-              aria-labelledby={`${uuid}-label`}
-              role="listbox"
-              className={classes.dropdown}
-              shadow={shadow}
-              elementRef={dropdownRef}
-              style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
-              onMouseDown={(event) => event.preventDefault()}
-            >
-              {items.length > 0 ? (
-                items
-              ) : (
-                <Text size={size} className={classes.nothingFound} style={_styles.nothingFound}>
-                  {nothingFound}
-                </Text>
-              )}
-            </Paper>
-          )}
-        </Transition>
+          <SelectItems
+            data={filteredData}
+            hovered={hovered}
+            themeOverride={themeOverride}
+            classNames={classNames as any}
+            styles={styles as any}
+            isItemSelected={(val) => val === _value}
+            uuid={uuid}
+            __staticSelector="select"
+            onItemHover={setHovered}
+            onItemSelect={handleItemSelect}
+            itemsRefs={itemsRefs}
+            itemComponent={itemComponent}
+            size={size}
+            nothingFound={nothingFound}
+          />
+        </SelectDropdown>
       </div>
     </InputWrapper>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import { Group, Badge } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
-const code = `import React from 'react';
+const code = `
 import { Badge } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 

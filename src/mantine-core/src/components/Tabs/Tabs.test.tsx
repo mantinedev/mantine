@@ -25,7 +25,7 @@ const content = [
 
 const defaultProps = { children: content };
 
-const tabContent = (element: any) => element.render().find('[data-mantine-tab-content]').text();
+const tabContent = (element: any) => element.render().find('.mantine-tabs-body').text();
 const activateTab = (element: any, position: number) =>
   element.find(TabControl).at(position).simulate('click');
 
@@ -107,8 +107,11 @@ describe('@mantine/core/Tabs', () => {
 
     expect(tabContent(element)).toBe('test-content');
 
+    activateTab(element, 0);
+    expect(element.render().find('[role="tabpanel"]')).toHaveLength(1);
+
     activateTab(element, 1);
-    expect(element.render().find('[data-mantine-tab-content]')).toHaveLength(0);
+    expect(element.render().find('[role="tabpanel"]')).toHaveLength(0);
   });
 
   it('correctly handles initial disabled tabs with uncontrolled mode', () => {

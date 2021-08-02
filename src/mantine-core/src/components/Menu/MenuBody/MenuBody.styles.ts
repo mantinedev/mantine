@@ -13,22 +13,30 @@ export const sizes = {
   xl: 300,
 };
 
+const MENU_PADDING = 4;
+
 export default createMemoStyles({
-  menu: ({ theme, size }: MenuBodyStyles) => ({
+  body: ({ theme, size }: MenuBodyStyles) => ({
     position: 'absolute',
     width: getSizeValue({ size, sizes }),
     overflow: 'hidden',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
     border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
     }`,
-    paddingTop: theme.spacing.xs / 2,
-    paddingBottom: theme.spacing.xs / 2,
+    padding: MENU_PADDING,
   }),
 
   divider: ({ theme }: MenuBodyStyles) => ({
     borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2],
-    marginTop: theme.spacing.xs / 2,
-    marginBottom: theme.spacing.xs / 2,
+    margin: [theme.spacing.xs / 2, -MENU_PADDING],
+  }),
+
+  label: ({ theme }: MenuBodyStyles) => ({
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+    fontWeight: 500,
+    fontSize: theme.fontSizes.xs,
+    padding: [theme.spacing.xs / 2, theme.spacing.sm],
+    cursor: 'default',
   }),
 });

@@ -1,13 +1,17 @@
 import React from 'react';
-import { UnstyledButton } from '../../Button/Button';
 
-interface DefaultItemProps extends Omit<React.ComponentPropsWithoutRef<'button'>, 'value'> {
+interface DefaultItemProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'value'> {
   label: React.ReactNode;
-  elementRef: React.ForwardedRef<HTMLButtonElement>;
+  value?: string;
+  elementRef: React.ForwardedRef<HTMLDivElement>;
 }
 
-export function DefaultItem({ label, ...others }: DefaultItemProps) {
-  return <UnstyledButton {...others}>{label}</UnstyledButton>;
+export function DefaultItem({ label, value, elementRef, ...others }: DefaultItemProps) {
+  return (
+    <div ref={elementRef} {...others}>
+      {label || value}
+    </div>
+  );
 }
 
 DefaultItem.displayName = '@mantine/core/DefaultItem';

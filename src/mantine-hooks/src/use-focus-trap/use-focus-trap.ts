@@ -15,13 +15,15 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
 
   const setRef = useCallback(
     (node: HTMLElement | null) => {
-      if (restoreAria.current) {
+      if (restoreAria.current && active) {
         restoreAria.current();
       }
-      if (ref.current) {
+
+      if (ref.current && active) {
         returnFocus();
         teardownScopedFocus();
       }
+
       if (active && node) {
         setupScopedFocus(node);
         markForFocusLater();

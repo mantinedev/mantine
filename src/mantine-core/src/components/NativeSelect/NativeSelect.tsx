@@ -1,19 +1,14 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineSize, getSizeValue } from '../../theme';
+import { DefaultProps, MantineSize } from '../../theme';
 import {
   InputWrapperBaseProps,
   InputWrapper,
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-import { ChevronIcon } from './ChevronIcon';
-
-interface SelectItem {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
+import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
+import { SelectItem } from '../Select/types';
 
 export type NativeSelectStylesNames = InputStylesNames | InputWrapperStylesNames;
 
@@ -29,7 +24,7 @@ export interface NativeSelectProps
   placeholder?: string;
 
   /** Data used to render options */
-  data: SelectItem[];
+  data: (string | SelectItem)[];
 
   /** Style properties added to select element */
   inputStyle?: React.CSSProperties;
@@ -43,14 +38,6 @@ export interface NativeSelectProps
   /** Input size */
   size?: MantineSize;
 }
-
-export const rightSectionWidth = {
-  xs: 24,
-  sm: 30,
-  md: 34,
-  lg: 44,
-  xl: 54,
-};
 
 export function NativeSelect({
   id,
@@ -76,7 +63,11 @@ export function NativeSelect({
 }: NativeSelectProps) {
   const uuid = useId(id);
 
-  const options = data.map((item) => (
+  const formattedData = data.map((item) =>
+    typeof item === 'string' ? { label: item, value: item } : item
+  );
+
+  const options = formattedData.map((item) => (
     <option key={item.value} value={item.value} disabled={item.disabled}>
       {item.label}
     </option>
@@ -89,8 +80,6 @@ export function NativeSelect({
       </option>
     );
   }
-
-  const chevron = <ChevronIcon error={error} size={size} themeOverride={themeOverride} />;
 
   return (
     <InputWrapper
@@ -117,18 +106,13 @@ export function NativeSelect({
         aria-required={required}
         elementRef={elementRef}
         id={uuid}
-        rightSection={chevron}
         required={required}
         themeOverride={themeOverride}
         value={value === null ? '' : value}
-        rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
         size={size}
-        styles={{
-          ...styles,
-          rightSection: { ...(styles as any)?.rightSection, pointerEvents: 'none' },
-        }}
         classNames={classNames as any}
         __staticSelector="select"
+        {...getSelectRightSectionProps({ themeOverride, styles, shouldClear: false, size, error })}
       >
         {options}
       </Input>

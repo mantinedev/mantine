@@ -1,12 +1,10 @@
 import React from 'react';
-import { GearIcon, ChatBubbleIcon, ImageIcon, MagnifyingGlassIcon } from '@modulz/radix-icons';
-import { Menu, MenuItem } from '../Menu';
-import { Divider } from '../../Divider/Divider';
+import { Menu } from '../Menu';
 import { Group } from '../../Group/Group';
-import { Text } from '../../Text/Text';
+import { menuItems } from './_menu-items';
 
 const code = `
-<Menu trigger="hover" delay={500}>
+<Menu trigger="hover" delay={500} closeOnScroll={false}>
   {/* ... menu items */}
 </Menu>
 `;
@@ -14,22 +12,8 @@ const code = `
 function Demo() {
   return (
     <Group position="center">
-      <Menu trigger="hover" delay={500}>
-        <MenuItem icon={<GearIcon />}>Settings</MenuItem>
-        <MenuItem icon={<ChatBubbleIcon />}>Messages</MenuItem>
-        <MenuItem icon={<ImageIcon />}>Gallery</MenuItem>
-        <MenuItem
-          icon={<MagnifyingGlassIcon />}
-          rightSection={
-            <Text size="sm" color="gray">
-              ⌘K
-            </Text>
-          }
-        >
-          Search
-        </MenuItem>
-        <Divider />
-        <MenuItem color="red">Delete account</MenuItem>
+      <Menu trigger="hover" delay={500} closeOnScroll={false}>
+        {menuItems}
       </Menu>
     </Group>
   );

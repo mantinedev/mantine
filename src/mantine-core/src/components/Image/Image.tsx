@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
+import { Text } from '../Text/Text';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
 
@@ -41,6 +42,9 @@ export interface ImageProps
 
   /** Get image element ref */
   imageRef?: React.ForwardedRef<HTMLImageElement>;
+
+  /** Image figcaption, displayed bellow image */
+  caption?: React.ReactNode;
 }
 
 export function Image({
@@ -60,6 +64,7 @@ export function Image({
   elementRef,
   classNames,
   styles,
+  caption,
   ...others
 }: ImageProps) {
   const theme = useMantineTheme(themeOverride);
@@ -81,7 +86,6 @@ export function Image({
 
   return (
     <div
-      data-mantine-image
       className={cx(classes.root, className)}
       style={{ width, height, ...style, ..._styles.root }}
       ref={elementRef}
@@ -93,22 +97,36 @@ export function Image({
         </div>
       )}
 
-      <img
-        className={classes.image}
-        src={src}
-        alt={alt}
-        style={{ ..._styles.image, objectFit: fit }}
-        ref={imageRef}
-        onLoad={(event) => {
-          setLoaded(true);
-          typeof imageProps?.onLoad === 'function' && imageProps.onLoad(event);
-        }}
-        onError={(event) => {
-          setError(true);
-          typeof imageProps?.onError === 'function' && imageProps.onError(event);
-        }}
-        {...imageProps}
-      />
+      <figure className={classes.figure}>
+        <img
+          className={classes.image}
+          src={src}
+          alt={alt}
+          style={{ ..._styles.image, objectFit: fit }}
+          ref={imageRef}
+          onLoad={(event) => {
+            setLoaded(true);
+            typeof imageProps?.onLoad === 'function' && imageProps.onLoad(event);
+          }}
+          onError={(event) => {
+            setError(true);
+            typeof imageProps?.onError === 'function' && imageProps.onError(event);
+          }}
+          {...imageProps}
+        />
+
+        {!!caption && (
+          <Text
+            component="figcaption"
+            size="sm"
+            align="center"
+            className={classes.caption}
+            style={_styles.caption}
+          >
+            {caption}
+          </Text>
+        )}
+      </figure>
     </div>
   );
 }

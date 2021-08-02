@@ -47,9 +47,12 @@ export interface InputBaseProps {
 
   /** Will input have multiple lines? */
   multiline?: boolean;
+
+  /** Disabled input state */
+  disabled?: boolean;
 }
 
-export interface InputProps extends InputBaseProps, DefaultProps<typeof useStyles> {}
+export interface InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {}
 
 export function Input<
   T extends React.ElementType = 'input',
@@ -60,6 +63,7 @@ export function Input<
   className,
   invalid = false,
   required = false,
+  disabled = false,
   variant,
   icon,
   style,
@@ -90,7 +94,7 @@ export function Input<
   const theme = useMantineTheme(themeOverride);
   const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
   const classes = useStyles(
-    { radius, theme, size, multiline, variant: _variant, invalid },
+    { radius, theme, size, multiline, variant: _variant, invalid, disabled },
     classNames,
     __staticSelector
   );
@@ -108,18 +112,18 @@ export function Input<
       {...wrapperProps}
     >
       {icon && (
-        <div data-mantine-icon className={classes.icon} style={_styles.icon}>
+        <div className={classes.icon} style={_styles.icon}>
           {icon}
         </div>
       )}
 
       <Element
         {...others}
-        data-mantine-input
         ref={elementRef}
         aria-required={required}
         aria-invalid={invalid}
         className={cx({ [classes.withIcon]: icon }, classes.input)}
+        disabled={disabled}
         style={{
           paddingRight: rightSection ? rightSectionWidth : theme.spacing.md,
           ..._styles.input,
@@ -130,7 +134,6 @@ export function Input<
       {rightSection && (
         <div
           {...rightSectionProps}
-          data-mantine-input-section
           style={{ ..._styles.rightSection, width: rightSectionWidth }}
           className={classes.rightSection}
         >

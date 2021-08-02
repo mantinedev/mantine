@@ -1,6 +1,7 @@
 import React from 'react';
-import { Menu, MenuItem } from '../Menu';
+import { Menu } from '../Menu';
 import { Group } from '../../Group/Group';
+import { menuItems } from './_menu-items';
 
 const code = `
 <Menu
@@ -16,9 +17,7 @@ function Demo() {
   return (
     <Group position="center">
       <Menu transition="rotate-right" transitionDuration={100} transitionTimingFunction="ease">
-        <MenuItem>Discard changes</MenuItem>
-        <MenuItem>Save draft</MenuItem>
-        <MenuItem color="red">Delete</MenuItem>
+        {menuItems}
       </Menu>
     </Group>
   );

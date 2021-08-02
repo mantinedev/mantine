@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useDocumentTitle, randomId } from '@mantine/hooks';
 import { Group, Button } from '@mantine/core';
 
-const code = `import React, { useState } from 'react';
+const code = `
+import { useState } from 'react';
 import { useDocumentTitle, randomId } from '@mantine/hooks';
 import { Button } from '@mantine/core';
 

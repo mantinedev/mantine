@@ -7,7 +7,7 @@ import {
   itSupportsOthers,
   itSupportsRef,
 } from '@mantine/tests';
-import { Text, Anchor } from './Text';
+import { Text } from './Text';
 
 describe('@mantine/core/Text', () => {
   itRendersChildren(Text, {});
@@ -18,7 +18,6 @@ describe('@mantine/core/Text', () => {
 
   it('has correct displayName', () => {
     expect(Text.displayName).toEqual('@mantine/core/Text');
-    expect(Anchor.displayName).toEqual('@mantine/core/Anchor');
   });
 
   it('sets font-weight, test-transform and text-align based on props', () => {
@@ -34,13 +33,11 @@ describe('@mantine/core/Text', () => {
   it('accepts component from component prop', () => {
     const TestComponent = (props: any) => <span data-test-prop {...props} />;
     const withTag = shallow(<Text<'a'> component="a" href="https://mantine.dev" />);
-    const anchor = shallow(<Anchor<typeof TestComponent> component={TestComponent} />);
     const withComponent = shallow(<Text<typeof TestComponent> component={TestComponent} />);
 
     expect(withTag.type()).toBe('a');
     expect(withTag.render().attr('href')).toBe('https://mantine.dev');
     expect(withComponent.type()).toBe(TestComponent);
-    expect(anchor.dive().type()).toBe(TestComponent);
     expect(withComponent.render().attr('data-test-prop')).toBe('true');
   });
 });

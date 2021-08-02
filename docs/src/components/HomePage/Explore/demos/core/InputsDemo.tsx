@@ -78,6 +78,7 @@ export function InputsDemo() {
       <div className={classes.column}>
         <DatePicker
           label="Date picker"
+          placeholder="Pick a date"
           description="Capture date input from user"
           required
           defaultValue={new Date()}

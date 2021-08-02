@@ -1,16 +1,13 @@
 import type { MenuBodyStylesNames } from './MenuBody/MenuBody';
-import type { MenuButtonStylesNames } from './MenuButton/MenuButton';
 
 export const Menu: Record<MenuBodyStylesNames, string> = {
-  menu: 'Menu body',
+  body: 'Menu body',
   divider: 'Divider inside menu body',
-};
-
-export const MenuItem: Record<MenuButtonStylesNames, string> = {
-  root: 'Root element',
-  hovered: 'Hovered item',
-  inner: 'Wrapper around icon and body',
-  body: 'Wrapper around label and right section',
-  icon: 'Icon on the left of the label',
-  label: 'Label element',
+  label: 'Menu label wrapper (Text component)',
+  item: 'MenuItem root element',
+  itemHovered: 'MenuItem hovered modifier',
+  itemInner: 'MenuItem inner (wraps itemIcon and itemBody)',
+  itemBody: 'MenuItem body (wraps itemLabel and rightSection)',
+  itemIcon: 'MenuItem icon',
+  itemLabel: 'MenuItem label',
 };

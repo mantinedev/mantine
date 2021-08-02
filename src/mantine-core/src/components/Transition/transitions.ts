@@ -19,9 +19,19 @@ export type MantineTransitionName =
   | 'slide-left'
   | 'scale-y'
   | 'scale-x'
-  | 'scale';
+  | 'scale'
+  | 'pop-top-left'
+  | 'pop-top-right'
+  | 'pop-bottom-left'
+  | 'pop-bottom-right';
 
 export type MantineTransition = MantineTransitionName | MantineTransitionStyles;
+
+const popIn = {
+  in: { opacity: 1, transform: 'scale(1)' },
+  out: { opacity: 0, transform: 'scale(.9) translateY(10px)' },
+  transitionProperty: 'transform, opacity',
+};
 
 export const transitions: Record<MantineTransitionName, MantineTransitionStyles> = {
   fade: {
@@ -105,5 +115,25 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
     out: { opacity: 0, transform: 'translateX(-100%)' },
     common: { transformOrigin: 'right' },
     transitionProperty: 'transform, opacity',
+  },
+
+  'pop-bottom-left': {
+    ...popIn,
+    common: { transformOrigin: 'bottom left' },
+  },
+
+  'pop-bottom-right': {
+    ...popIn,
+    common: { transformOrigin: 'bottom right' },
+  },
+
+  'pop-top-left': {
+    ...popIn,
+    common: { transformOrigin: 'top left' },
+  },
+
+  'pop-top-right': {
+    ...popIn,
+    common: { transformOrigin: 'top right' },
   },
 };

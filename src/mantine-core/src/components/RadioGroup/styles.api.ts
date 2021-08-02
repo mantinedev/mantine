@@ -1,11 +1,9 @@
-import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
 import { InputWrapper } from '../InputWrapper/styles.api';
-import useStyles from './Radio/Radio.styles';
+import { RadioGroupStylesNames } from './RadioGroup';
 
-export const Radio: Record<Exclude<keyof ReturnType<typeof useStyles>, 'labelDisabled'>, string> = {
-  root: 'Root element',
-  label: 'Label element',
-  radio: 'Radio input',
+export const RadioGroup: Record<RadioGroupStylesNames, string> = {
+  radioWrapper: 'Wrapper for label and radio button',
+  label: 'Radio element',
+  radio: 'Radio button',
+  ...InputWrapper,
 };
-
-export const RadioGroup: Record<InputWrapperStylesNames, string> = InputWrapper;

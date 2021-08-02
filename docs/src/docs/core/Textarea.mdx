@@ -41,6 +41,10 @@ function Demo() {
 }
 ```
 
+## Invalid state and error
+
+<Demo data={TextareaDemos.validation} />
+
 ## Get element ref
 
 You can get input ref with `elementRef` prop:
@@ -62,7 +66,7 @@ provide static `id` prop to prevent props mismatch:
 
 ```tsx
 <Textarea /> // -> random id generated both on client and server, props mismatch warning
-<Textarea id="my-accordion" /> // -> id is static, no mismatches
+<Textarea id="my-textarea" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility

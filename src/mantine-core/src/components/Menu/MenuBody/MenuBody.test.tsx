@@ -10,6 +10,7 @@ import { Divider } from '../../Divider/Divider';
 import { Paper } from '../../Paper/Paper';
 import { MenuButton } from '../MenuButton/MenuButton';
 import { MenuItem } from '../MenuItem/MenuItem';
+import { MenuLabel } from '../MenuLabel/MenuLabel';
 import { MenuBody } from './MenuBody';
 
 const defaultProps = {
@@ -24,9 +25,9 @@ describe('@mantine/core/MenuBody', () => {
   itSupportsOthers(MenuBody, defaultProps);
   itSupportsStylesApi(
     MenuBody,
-    { ...defaultProps, children: <Divider /> },
-    ['divider'],
-    'menu-body'
+    { ...defaultProps, children: [<Divider />, <MenuLabel>label</MenuLabel>] },
+    ['divider', 'label'],
+    'menu'
   );
 
   it('has correct displayName', () => {

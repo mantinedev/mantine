@@ -55,8 +55,8 @@ describe('@mantine/core/Input', () => {
     const withIcon = shallow(<Input icon="$" />);
     const withoutIcon = shallow(<Input />);
 
-    expect(withIcon.render().find('[data-mantine-icon]').text()).toBe('$');
-    expect(withoutIcon.render().find('[data-mantine-icon]')).toHaveLength(0);
+    expect(withIcon.render().find('.mantine-input-icon').text()).toBe('$');
+    expect(withoutIcon.render().find('.mantine-input-icon')).toHaveLength(0);
   });
 
   it('sets aria-required attribute on input if required prop is true', () => {
@@ -87,8 +87,8 @@ describe('@mantine/core/Input', () => {
     const withRightSection = shallow(<Input rightSection="test-right-section" />);
     const withoutRightSection = shallow(<Input />);
 
-    expect(withoutRightSection.render().find('[data-mantine-input-section]')).toHaveLength(0);
-    expect(withRightSection.render().find('[data-mantine-input-section]').text()).toBe(
+    expect(withoutRightSection.render().find('.mantine-input-rightSection')).toHaveLength(0);
+    expect(withRightSection.render().find('.mantine-input-rightSection').text()).toBe(
       'test-right-section'
     );
   });
@@ -110,8 +110,8 @@ describe('@mantine/core/Input', () => {
     const withTag = shallow(<Input<'button'> component="button" />);
     const withComponent = shallow(<Input<typeof TestComponent> component={TestComponent} />);
 
-    expect(withTag.find('[data-mantine-input]').type()).toBe('button');
-    expect(withComponent.find('[data-mantine-input]').type()).toBe(TestComponent);
-    expect(withComponent.render().find('[data-mantine-input]').attr('data-test-prop')).toBe('true');
+    expect(withTag.find('.mantine-input-input').type()).toBe('button');
+    expect(withComponent.find('.mantine-input-input').type()).toBe(TestComponent);
+    expect(withComponent.render().find('.mantine-input-input').attr('data-test-prop')).toBe('true');
   });
 });

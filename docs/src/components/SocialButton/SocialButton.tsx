@@ -79,6 +79,7 @@ export function SocialButton({ type = 'large', service, style, ...others }: Soci
       style={style}
       label={serviceData.label}
       className={others.className}
+      transitionDuration={0}
       withArrow
       position="bottom"
       placement="end"

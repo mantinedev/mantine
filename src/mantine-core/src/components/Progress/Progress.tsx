@@ -1,7 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
+import {
+  DefaultProps,
+  useMantineTheme,
+  MantineNumberSize,
+  mergeStyles,
+  getThemeColor,
+} from '../../theme';
 import useStyles, { sizes } from './Progress.styles';
 
 export const PROGRESS_SIZES = sizes;
@@ -12,7 +18,7 @@ export interface ProgressProps
   extends DefaultProps<ProgressStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Percent of filled bar (0-100) */
-  value: number;
+  value?: number;
 
   /** Progress color from theme */
   color?: string;
@@ -25,6 +31,22 @@ export interface ProgressProps
 
   /** Adds stripes */
   striped?: boolean;
+
+  /** Replaces value if present, renders multiple sections instead of single one */
+  sections?: { value: number; color: string }[];
+}
+
+function getCumulativeSections(
+  sections: { value: number; color: string }[]
+): { value: number; color: string; accumulated: number }[] {
+  return sections.reduce(
+    (acc, section) => {
+      acc.sections.push({ ...section, accumulated: acc.accumulated });
+      acc.accumulated += section.value;
+      return acc;
+    },
+    { accumulated: 0, sections: [] }
+  ).sections;
 }
 
 export function Progress({
@@ -39,6 +61,7 @@ export function Progress({
   'aria-label': ariaLabel,
   classNames,
   styles,
+  sections,
   ...others
 }: ProgressProps) {
   const theme = useMantineTheme(themeOverride);
@@ -50,17 +73,34 @@ export function Progress({
   );
   const _styles = mergeStyles(classes, styles);
 
+  const segments = Array.isArray(sections)
+    ? getCumulativeSections(sections).map((section, index) => (
+        <div
+          key={index}
+          className={classes.bar}
+          style={{
+            ..._styles.bar,
+            width: `${section.value}%`,
+            left: `${section.accumulated}%`,
+            backgroundColor: getThemeColor({ theme, color: section.color, shade: 7 }),
+          }}
+        />
+      ))
+    : null;
+
   return (
     <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
-      <div
-        role="progressbar"
-        aria-valuemax={100}
-        aria-valuemin={0}
-        aria-valuenow={value}
-        aria-label={ariaLabel}
-        className={classes.bar}
-        style={{ ..._styles.bar, width: `${value}%` }}
-      />
+      {segments || (
+        <div
+          role="progressbar"
+          aria-valuemax={100}
+          aria-valuemin={0}
+          aria-valuenow={value}
+          aria-label={ariaLabel}
+          className={classes.bar}
+          style={{ ..._styles.bar, width: `${value}%` }}
+        />
+      )}
     </div>
   );
 }

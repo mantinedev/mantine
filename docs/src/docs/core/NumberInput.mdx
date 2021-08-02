@@ -60,7 +60,7 @@ You can use it to create custom controls:
 
 ## Controlled
 
-Unlike other Mantine inputs NumberInput does not expose input event in onChange handler, it provides value instead.
+NumberInput does not expose input event in onChange handler, it provides value instead:
 
 ```tsx
 import { useState } from 'react';
@@ -71,6 +71,22 @@ function Demo() {
   return <NumberInput value={value} onChange={(val) => setValue(val)} />;
 }
 ```
+
+## Invalid state and error
+
+<Demo data={NumberInputDemos.validation} />
+
+## Disabled state
+
+Controls to increment/decrement value are not displayed when input is disabled:
+
+<Demo data={NumberInputDemos.disabled} />
+
+## With icon
+
+You can use any React node as icon:
+
+<Demo data={NumberInputDemos.icon} />
 
 ## Get element ref
 
@@ -93,7 +109,7 @@ provide static `id` prop to prevent props mismatch:
 
 ```tsx
 <NumberInput /> // -> random id generated both on client and server, props mismatch warning
-<NumberInput id="my-accordion" /> // -> id is static, no mismatches
+<NumberInput id="my-number-input" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility

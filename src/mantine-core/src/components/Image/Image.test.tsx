@@ -33,7 +33,13 @@ describe('@mantine/core/Image', () => {
     'image',
     'with placeholder'
   );
-  itSupportsStylesApi(Image, { src: 'test.png' }, ['root', 'image'], 'image', 'with image');
+  itSupportsStylesApi(
+    Image,
+    { src: 'test.png', caption: 'test-caption' },
+    ['root', 'image', 'caption'],
+    'image',
+    'with image'
+  );
 
   it('has correct displayName', () => {
     expect(Image.displayName).toEqual('@mantine/core/Image');
@@ -59,6 +65,15 @@ describe('@mantine/core/Image', () => {
 
     expect(withPlaceholder.find('.mantine-image-placeholder')).toHaveLength(1);
     expect(withoutPlaceholder.find('.mantine-image-placeholder')).toHaveLength(0);
+  });
+
+  it('renders given caption', () => {
+    const withoutCaption = shallow(<Image src="test" />);
+    const withCaption = shallow(<Image src="test" caption="test-caption" />);
+
+    expect(withoutCaption.render().find('figcaption')).toHaveLength(0);
+    expect(withCaption.render().find('figcaption')).toHaveLength(1);
+    expect(withCaption.render().find('figcaption').text()).toBe('test-caption');
   });
 
   it('renders given placeholder if image was not loaded', () => {

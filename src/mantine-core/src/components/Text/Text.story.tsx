@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '../../theme';
-import { Text, Anchor } from './Text';
+import { Text } from './Text';
 
 const CustomComponent = ({
   emoji,
@@ -38,9 +38,6 @@ storiesOf('@mantine/core/Text', module)
       <Text transform="uppercase">uppercase</Text>
       <Text transform="lowercase">LOWERcase</Text>
       <Text component="i">italic</Text>
-      <Anchor href="https://mantine.dev" target="_blank">
-        Anchor
-      </Anchor>
     </>
   ))
   .add('Custom component', () => (

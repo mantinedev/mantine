@@ -6,6 +6,7 @@ export { ActionIcon, ACTION_ICON_SIZES } from './components/ActionIcon/ActionIco
 export { Affix } from './components/Affix/Affix';
 export { CloseButton } from './components/ActionIcon/CloseButton/CloseButton';
 export { Alert } from './components/Alert/Alert';
+export { Anchor } from './components/Anchor/Anchor';
 export { ArrowBody } from './components/ArrowBody/ArrowBody';
 export { Autocomplete } from './components/Autocomplete/Autocomplete';
 export { Avatar, AVATAR_SIZES } from './components/Avatar/Avatar';
@@ -14,7 +15,7 @@ export { Blockquote } from './components/Blockquote/Blockquote';
 export { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
 export { Burger, BURGER_SIZES } from './components/Burger/Burger';
 export { Button, UnstyledButton, BUTTON_SIZES, BUTTON_VARIANTS } from './components/Button/Button';
-export { Card } from './components/Card/Card';
+export { Card, CardSection } from './components/Card/Card';
 export { Center } from './components/Center/Center';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
 export { Code } from './components/Code/Code';
@@ -32,8 +33,10 @@ export { JsonInput } from './components/JsonInput/JsonInput';
 export { Kbd } from './components/Kbd/Kbd';
 export { Loader, LOADER_SIZES } from './components/Loader/Loader';
 export { LoadingOverlay } from './components/LoadingOverlay/LoadingOverlay';
-export { Menu, MenuItem, MenuBody, MENU_SIZES } from './components/Menu/Menu';
+export { Mark } from './components/Mark/Mark';
+export { Menu, MenuItem, MenuBody, MenuLabel, MENU_SIZES } from './components/Menu/Menu';
 export { Modal, MODAL_SIZES } from './components/Modal/Modal';
+export { MultiSelect } from './components/MultiSelect/MultiSelect';
 export { NativeSelect } from './components/NativeSelect/NativeSelect';
 export { Notification } from './components/Notification/Notification';
 export { NumberInput } from './components/NumberInput/NumberInput';
@@ -52,7 +55,7 @@ export { Spoiler } from './components/Spoiler/Spoiler';
 export { Switch, SWITCH_SIZES } from './components/Switch/Switch';
 export { Table } from './components/Table/Table';
 export { Tabs, Tab } from './components/Tabs/Tabs';
-export { Text, Anchor } from './components/Text/Text';
+export { Text } from './components/Text/Text';
 export { Textarea } from './components/Textarea/Textarea';
 export { TextInput } from './components/TextInput/TextInput';
 export { ThemeIcon, THEME_ICON_SIZES } from './components/ThemeIcon/ThemeIcon';
@@ -77,6 +80,7 @@ export type { ActionIconProps } from './components/ActionIcon/ActionIcon';
 export type { AffixProps } from './components/Affix/Affix';
 export type { CloseButtonProps } from './components/ActionIcon/CloseButton/CloseButton';
 export type { AlertProps, AlertStylesName } from './components/Alert/Alert';
+export type { AnchorProps } from './components/Anchor/Anchor';
 export type { ArrowBodyProps, ArrowBodyStylesNames } from './components/ArrowBody/ArrowBody';
 export type {
   AutocompleteProps,
@@ -92,7 +96,7 @@ export type {
 } from './components/Breadcrumbs/Breadcrumbs';
 export type { BurgerProps, BurgerStylesNames } from './components/Burger/Burger';
 export type { ButtonProps, ButtonStylesNames } from './components/Button/Button';
-export type { CardProps } from './components/Card/Card';
+export type { CardProps, CardSectionProps } from './components/Card/Card';
 export type { CenterProps } from './components/Center/Center';
 export type { CheckboxProps, CheckboxStylesNames } from './components/Checkbox/Checkbox';
 export type { CodeProps } from './components/Code/Code';
@@ -114,8 +118,18 @@ export type { JsonInputProps, JsonInputStylesNames } from './components/JsonInpu
 export type { KbdProps } from './components/Kbd/Kbd';
 export type { LoaderProps } from './components/Loader/Loader';
 export type { LoadingOverlayProps } from './components/LoadingOverlay/LoadingOverlay';
-export type { MenuProps, MenuItemProps, MenuBodyProps } from './components/Menu/Menu';
+export type { MarkProps } from './components/Mark/Mark';
+export type {
+  MenuProps,
+  MenuItemProps,
+  MenuBodyProps,
+  MenuLabelProps,
+} from './components/Menu/Menu';
 export type { ModalProps, ModalStylesNames } from './components/Modal/Modal';
+export type {
+  MultiSelectProps,
+  MultiSelectStylesNames,
+} from './components/MultiSelect/MultiSelect';
 export type {
   NativeSelectProps,
   NativeSelectStylesNames,
@@ -150,7 +164,7 @@ export type { SpoilerProps, SpoilerStylesNames } from './components/Spoiler/Spoi
 export type { SwitchProps, SwitchStylesNames } from './components/Switch/Switch';
 export type { TableProps } from './components/Table/Table';
 export type { TabsProps, TabProps, TabsStylesNames } from './components/Tabs/Tabs';
-export type { TextProps, AnchorProps } from './components/Text/Text';
+export type { TextProps } from './components/Text/Text';
 export type { TextareaProps, TextareaStylesNames } from './components/Textarea/Textarea';
 export type { TextInputProps, TextInputStylesNames } from './components/TextInput/TextInput';
 export type { ThemeIconProps } from './components/ThemeIcon/ThemeIcon';

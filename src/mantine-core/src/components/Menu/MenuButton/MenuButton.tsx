@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { ComponentPassThrough } from '../../../types';
-import { DefaultProps, mergeStyles, useMantineTheme } from '../../../theme';
+import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../../theme';
 import { MenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 
@@ -13,6 +13,7 @@ export interface MenuButtonProps extends DefaultProps<MenuButtonStylesNames>, Me
   onHover(): void;
   elementRef(node: HTMLButtonElement): void;
   component?: any;
+  radius?: MantineNumberSize;
 }
 
 export function MenuButton<T extends React.ElementType = 'button'>({
@@ -30,32 +31,33 @@ export function MenuButton<T extends React.ElementType = 'button'>({
   component: Element = 'button',
   classNames,
   styles,
+  radius,
   ...others
 }: ComponentPassThrough<T, MenuButtonProps>) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, theme }, classNames, 'menu-item');
+  const classes = useStyles({ color, theme, radius }, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
 
   return (
     <Element
       type="button"
       role="menuitem"
-      className={cx(classes.root, { [classes.hovered]: hovered }, className)}
+      className={cx(classes.item, { [classes.itemHovered]: hovered }, className)}
       onMouseEnter={() => !disabled && onHover()}
       ref={elementRef}
       disabled={disabled}
-      style={{ ...style, ..._styles.root, ...(hovered ? _styles.hovered : null) }}
+      style={{ ...style, ..._styles.item, ...(hovered ? _styles.itemHovered : null) }}
       {...others}
     >
-      <div className={classes.inner} style={_styles.inner}>
+      <div className={classes.itemInner} style={_styles.itemInner}>
         {icon && (
-          <div data-mantine-icon className={classes.icon} style={_styles.icon}>
+          <div className={classes.itemIcon} style={_styles.itemIcon}>
             {icon}
           </div>
         )}
 
-        <div className={classes.body} style={_styles.body}>
-          <div className={classes.label} style={_styles.label}>
+        <div className={classes.itemBody} style={_styles.itemBody}>
+          <div className={classes.itemLabel} style={_styles.itemLabel}>
             {children}
           </div>
           {rightSection}

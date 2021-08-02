@@ -1,9 +1,10 @@
 import React from 'react';
-import { Menu, MenuItem } from '../Menu';
+import { Menu } from '../Menu';
 import { Group } from '../../Group/Group';
+import { menuItems } from './_menu-items';
 
 const code = `
-<Menu menuPosition={{ bottom: 0, right: 0 }} transition="skew-down">
+<Menu menuPosition={{ bottom: 0, right: 0 }} transition="pop-bottom-right">
   {/* Menu items */}
 </Menu>
 `;
@@ -11,10 +12,8 @@ const code = `
 function Demo() {
   return (
     <Group position="center">
-      <Menu menuPosition={{ bottom: 0, right: 0 }} transition="skew-down">
-        <MenuItem>Discard changes</MenuItem>
-        <MenuItem>Save draft</MenuItem>
-        <MenuItem color="red">Delete</MenuItem>
+      <Menu menuPosition={{ bottom: 0, right: 0 }} transition="pop-bottom-right">
+        {menuItems}
       </Menu>
     </Group>
   );

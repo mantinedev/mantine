@@ -181,7 +181,7 @@ export function Tabs({
       </div>
 
       {content && (
-        <div data-mantine-tab-content role="tabpanel" className={classes.body} style={_styles.body}>
+        <div role="tabpanel" className={classes.body} style={_styles.body}>
           {content}
         </div>
       )}

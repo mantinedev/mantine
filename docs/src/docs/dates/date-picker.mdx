@@ -64,18 +64,6 @@ function Demo() {
 }
 ```
 
-## Input props
-
-Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
-
-<Demo data={DatePickerDemos.configurator} />
-
-## Icon and right section
-
-Like all other inputs DatePicker supports `icon` and `rightSection` props, for example, you can put date clear control in right section:
-
-<Demo data={DatePickerDemos.icon} demoProps={{ zIndex: 4 }} />
-
 ## Year and month picker
 
 You can replace calendar label with year and month selects.
@@ -169,6 +157,26 @@ To change that you can provide [dayjs](https://day.js.org/docs/en/display/format
 By default date picker can be cleared, to disable this, set `clearable` prop to `false`:
 
 <Demo data={DatePickerDemos.notClearable} />
+
+## Input props
+
+Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
+
+<Demo data={DatePickerDemos.configurator} />
+
+## Icon and right section
+
+You can use any React node as icon:
+
+<Demo data={DatePickerDemos.icon} demoProps={{ zIndex: 4 }} />
+
+## Invalid state and error
+
+<Demo data={DatePickerDemos.validation} demoProps={{ zIndex: 4 }} />
+
+## Disabled state
+
+<Demo data={DatePickerDemos.disabled} />
 
 ## Get element ref
 

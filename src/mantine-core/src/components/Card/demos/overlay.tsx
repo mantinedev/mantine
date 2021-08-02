@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image, Text, Overlay } from '../../../index';
+import { Card, CardSection, Image, Text, Overlay } from '../../../index';
 import { demoBase } from './_demo-base';
 
 const code = `
@@ -9,14 +9,12 @@ import { Card, Image, Text, Overlay } from '@mantine/core';
 function Demo() {
   return (
     <div style={{ width: 340, margin: 'auto' }}>
-      <Card shadow="sm">
-        <Image
-          src="https://images.unsplash.com/long-image-url.jpg"
-          height={160}
-          alt="Noway"
-        />
+      <Card shadow="sm" padding="xl">
+        <CardSection>
+          <Image src="./image.png" height={160} alt="Noway" />
+        </CardSection>
 
-        <Text weight={500} size="lg">
+        <Text weight={500} size="lg" style={{ marginTop: 15 }}>
           You&apos;ve won million dollars in cash
         </Text>
 
@@ -38,17 +36,19 @@ function Demo() {
 
 function Demo() {
   return (
-    <Card shadow="sm">
-      <Image
-        src="https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80"
-        height={160}
-        alt="Norway"
-      />
+    <Card shadow="sm" padding="xl">
+      <CardSection>
+        <Image
+          src="https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80"
+          height={160}
+          alt="Norway"
+        />
+      </CardSection>
 
-      <Text weight={500} size="lg">
+      <Text weight={500} size="lg" style={{ marginTop: 15 }}>
         You&apos;ve won million dollars in cash
       </Text>
-      <Text style={{ marginTop: 10 }} size="sm">
+      <Text style={{ marginTop: 7 }} size="sm">
         Please click anywhere on this card to claim your reward, this is not fraud, trust us
       </Text>
 

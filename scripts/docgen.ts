@@ -6,11 +6,11 @@ import { generateDeclarations } from './docgen/generate-declarations';
 const EXTRA_FILES_PATHS = [
   '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
   '../src/mantine-core/src/Menu/MenuItem/MenuItem.tsx',
+  '../src/mantine-core/src/Menu/MenuLabel/MenuLabel.tsx',
   '../src/mantine-core/src/RadioGroup/Radio/Radio.tsx',
   '../src/mantine-core/src/components/Tabs/Tab/Tab.tsx',
   '../src/mantine-core/src/components/Slider/Slider/Slider.tsx',
   '../src/mantine-core/src/components/Slider/RangeSlider/RangeSlider.tsx',
-  '../src/mantine-tag-picker/src/TagPickerContainer.tsx',
   '../src/mantine-prism/src/Prism.tsx',
 ];
 

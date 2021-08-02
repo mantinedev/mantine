@@ -1,0 +1,33 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+title: 'use-idle'
+category: 'state'
+order: 1
+slug: /hooks/use-idle/
+description: 'Detect if user does nothing on page'
+import: "import { useIdle } from '@mantine/hooks';"
+docs: 'hooks/use-idle.mdx'
+source: 'mantine-hooks/src/use-idle/use-idle.ts'
+---
+
+import { useIdleHook, useIdleEvents } from '@docs/demos';
+
+## Usage
+
+Hook detect if user does nothing for given time in ms:
+
+<Demo data={useIdleHook} />
+
+## Custom events
+
+By default hook will listen to keypress, mousemove, touchmove, click and scroll events to set idle status.
+To change that provide a list of events as second argument:
+
+<Demo data={useIdleEvents} />
+
+### Definition
+
+```tsx
+function useIdle(timeout: number, events?: string[]): boolean;
+```

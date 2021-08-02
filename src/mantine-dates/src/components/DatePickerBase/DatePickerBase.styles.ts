@@ -10,6 +10,7 @@ import {
 interface DatePickerBaseStyles {
   theme: MantineTheme;
   size: MantineSize;
+  invalid: boolean;
 }
 
 export default createMemoStyles({
@@ -18,9 +19,13 @@ export default createMemoStyles({
     position: 'relative',
   }),
 
-  placeholder: ({ theme, size }: DatePickerBaseStyles) => ({
+  placeholder: ({ theme, size, invalid }: DatePickerBaseStyles) => ({
     lineHeight: `${getSizeValue({ size, sizes: INPUT_SIZES }) - 2}px`,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+    color: invalid
+      ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
+      : theme.colorScheme === 'dark'
+      ? theme.colors.dark[2]
+      : theme.colors.gray[6],
   }),
 
   dropdownWrapper: {

@@ -1,14 +1,21 @@
-import { MantineTheme, getFontStyles, getThemeColor, createMemoStyles } from '../../../theme';
+import {
+  MantineTheme,
+  getFontStyles,
+  getThemeColor,
+  createMemoStyles,
+  MantineNumberSize,
+  getSizeValue,
+  hexToRgba,
+} from '../../../theme';
 
 interface MenuButtonStyles {
   theme: MantineTheme;
+  radius: MantineNumberSize;
   color: string;
 }
 
 export default createMemoStyles({
-  hovered: {},
-
-  root: ({ theme, color }: MenuButtonStyles) => ({
+  item: ({ theme, color, radius }: MenuButtonStyles) => ({
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     fontSize: theme.fontSizes.sm,
@@ -19,44 +26,47 @@ export default createMemoStyles({
     textAlign: 'left',
     display: 'inline-block',
     textDecoration: 'none',
-    height: 32,
     boxSizing: 'border-box',
-    padding: [0, theme.spacing.sm],
+    padding: [theme.spacing.xs, theme.spacing.sm],
     cursor: 'pointer',
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     color: color
       ? getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 })
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[0]
-      : theme.colors.gray[9],
+      : theme.black,
 
     '&:disabled': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
       cursor: 'not-allowed',
     },
-
-    '&$hovered:not(:disabled), &:not(:disabled):hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
-
-      '&:not(:disabled):active': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2],
-      },
-    },
   }),
 
-  inner: {
+  itemHovered: ({ theme, color }: MenuButtonStyles) => ({
+    backgroundColor: color
+      ? hexToRgba(
+          getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+          theme.colorScheme === 'dark' ? 0.2 : 1
+        )
+      : theme.colorScheme === 'dark'
+      ? hexToRgba(theme.colors.dark[3], 0.35)
+      : theme.colors.gray[0],
+  }),
+
+  itemInner: {
     display: 'flex',
     alignItems: 'center',
     height: '100%',
   },
 
-  body: {
+  itemBody: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     flex: 1,
   },
 
-  icon: ({ theme }: MenuButtonStyles) => ({
+  itemIcon: ({ theme }: MenuButtonStyles) => ({
     marginRight: theme.spacing.xs,
 
     '& *': {
@@ -64,7 +74,7 @@ export default createMemoStyles({
     },
   }),
 
-  label: {
+  itemLabel: {
     lineHeight: 1,
   },
 });

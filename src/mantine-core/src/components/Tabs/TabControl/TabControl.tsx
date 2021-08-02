@@ -17,6 +17,7 @@ export interface TabControlProps
   color?: string;
   variant?: TabsVariant;
   orientation?: 'horizontal' | 'vertical';
+  icon?: React.ReactNode;
 }
 
 export function TabControl({
@@ -31,6 +32,7 @@ export function TabControl({
   classNames,
   styles,
   orientation = 'horizontal',
+  icon: __,
   ...others
 }: TabControlProps) {
   const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
@@ -48,7 +50,6 @@ export function TabControl({
     <button
       {...others}
       {...props}
-      data-mantine-tab
       tabIndex={active ? 0 : -1}
       className={cx(
         classes.tabControl,

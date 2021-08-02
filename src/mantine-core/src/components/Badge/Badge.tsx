@@ -66,7 +66,7 @@ export function Badge<T extends React.ElementType = 'div'>({
       style={{ ...style, ..._styles.root, ..._styles[variant] }}
     >
       {leftSection && (
-        <span data-mantine-badge-left className={classes.leftSection} style={_styles.leftSection}>
+        <span className={classes.leftSection} style={_styles.leftSection}>
           {leftSection}
         </span>
       )}
@@ -76,11 +76,7 @@ export function Badge<T extends React.ElementType = 'div'>({
       </span>
 
       {rightSection && (
-        <span
-          data-mantine-badge-right
-          className={classes.rightSection}
-          style={_styles.rightSection}
-        >
+        <span className={classes.rightSection} style={_styles.rightSection}>
           {rightSection}
         </span>
       )}

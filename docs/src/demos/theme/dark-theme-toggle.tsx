@@ -4,8 +4,7 @@ import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 import { ColorSchemeContext } from '../../components/Layout/ColorScheme.context';
 import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
-const code = `import React from 'react';
-import { ActionIcon } from '@mantine/core';
+const code = `import { ActionIcon } from '@mantine/core';
 import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 import ColorSchemeContext from './ColorSchemeContext';
 

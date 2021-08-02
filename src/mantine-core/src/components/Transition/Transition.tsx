@@ -55,6 +55,11 @@ export function Transition({
 }: TransitionProps) {
   const theme = useMantineTheme(themeOverride);
   const reduceMotion = useReducedMotion();
+  const transitionDuration = reduceMotion ? 0 : duration;
+
+  if (transitionDuration === 0) {
+    return mounted ? <>{children({})}</> : null;
+  }
 
   return (
     <RTGTransition
@@ -74,7 +79,7 @@ export function Transition({
         children(
           getTransitionStyles({
             transition,
-            duration: reduceMotion ? 0 : duration,
+            duration: transitionDuration,
             state: transitionState,
             timingFunction: timingFunction || theme.transitionTimingFunction,
           })

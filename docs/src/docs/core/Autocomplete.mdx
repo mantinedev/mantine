@@ -34,6 +34,37 @@ function Demo() {
 }
 ```
 
+## Data prop
+
+Autocomplete support two different data formats:
+
+1. An array of strings – use when you do not need to customize item component
+2. An array of objects with required `value` property and any other additional properties
+
+```tsx
+// Data as an array of strings
+<Autocomplete data={['React', 'Angular', 'Svelte', 'Vue']} />
+
+// Data as an array of objects:
+// Minimal example (same as first example above)
+<Autocomplete data={[
+  { value: 'React' },
+  { value: 'Angular' },
+  { value: 'Svelte' },
+  { value: 'Vue' },
+]} />
+
+// Additional data properties for custom item component (see documentation below)
+<Autocomplete
+  itemComponent={({ value, color, email, name }) => /* Your custom item component with data properties */}
+  data={[
+    { value: 'bob@handsome.inc', color: 'red', email: 'bob@handsome.inc', name: 'Bob Handsome' },
+    { value: 'bill@outlook.com', color: 'teal', email: 'bill@outlook.com', name: 'Bill Gates' },
+    { value: 'amy@wong.cn', color: 'blue', email: 'amy@wong.cn', name: 'Amy Wong' },
+  ]}
+/>
+```
+
 ## Dynamic data
 
 `data` prop can have dynamic values:
@@ -52,13 +83,6 @@ To do so you will need to:
 `data` prop must be an array of objects with required `value` field:
 
 ```tsx
-// Minimum data for default autocomplete used in previous examples
-[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }];
-```
-
-You can add any other fields to your data:
-
-```tsx
 [
   { value: 'bob@handsome.inc', color: 'red', email: 'bob@handsome.inc', name: 'Bob Handsome' },
   { value: 'bill@outlook.com', color: 'teal', email: 'bill@outlook.com', name: 'Bill Gates' },
@@ -75,6 +99,31 @@ Based on this data shape you can create custom `filter` function and `itemCompon
 By default Autocomplete will render 5 items at a time, to change that set `limit` prop:
 
 <Demo data={AutocompleteDemos.limit} />
+
+## Animations
+
+By default dropdown animations are turned off to increase responsiveness.
+You can enable them by setting optional props:
+
+- `transition` – premade transition name or custom transition styles object, see <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component for all available options
+- `transitionDuration` – transition duration in ms, defaults to 0
+- `transitionTimingFunction` – defaults to `theme.transitionTimingFunction`
+
+<Demo data={AutocompleteDemos.animations} />
+
+## With icon
+
+You can use any React node as in icon:
+
+<Demo data={AutocompleteDemos.icon} />
+
+## Invalid state and error
+
+<Demo data={AutocompleteDemos.validation} />
+
+## Disabled state
+
+<Demo data={AutocompleteDemos.disabled} />
 
 ## Input props
 
@@ -103,7 +152,7 @@ provide static `id` prop to prevent props mismatch:
 
 ```tsx
 <Autocomplete /> // -> random id generated both on client and server, props mismatch warning
-<Autocomplete id="my-accordion" /> // -> id is static, no mismatches
+<Autocomplete id="my-autocomplete" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility

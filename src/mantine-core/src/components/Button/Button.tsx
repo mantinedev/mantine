@@ -47,6 +47,9 @@ interface ButtonBaseProps extends DefaultProps<ButtonStylesNames> {
 
   /** Set text-transform to uppercase */
   uppercase?: boolean;
+
+  /** Reduces vertical and horizontal spacing */
+  compact?: boolean;
 }
 
 export function Button<
@@ -69,6 +72,7 @@ export function Button<
   elementRef,
   themeOverride,
   uppercase = false,
+  compact = false,
   classNames,
   styles,
   ...others
@@ -77,7 +81,11 @@ export function Button<
   elementRef?: React.ForwardedRef<U>;
 }) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, color, size, fullWidth, theme }, classNames, 'button');
+  const classes = useStyles(
+    { radius, color, size, fullWidth, theme, compact },
+    classNames,
+    'button'
+  );
   const _styles = mergeStyles(classes, styles);
 
   return (

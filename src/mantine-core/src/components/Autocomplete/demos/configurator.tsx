@@ -3,16 +3,13 @@ import { Autocomplete } from '../Autocomplete';
 
 const codeTemplate = (props: string) => `<Autocomplete
  ${props}
-  data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
+  data={['React', 'Angular', 'Svelte', 'Vue']}
 />`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: (props: any) => (
-    <Autocomplete
-      data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
-      {...props}
-    />
+    <Autocomplete data={['React', 'Angular', 'Svelte', 'Vue']} {...props} />
   ),
   codeTemplate,
   configuratorProps: { multiline: true },

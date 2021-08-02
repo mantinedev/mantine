@@ -165,6 +165,7 @@ export function TimeInput({
         className={cx({ [classes.disabled]: disabled })}
         classNames={classNames as any}
         styles={styles as any}
+        disabled={disabled}
         {...others}
       >
         <div className={classes.controls} style={_styles.controls}>

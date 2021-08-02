@@ -14,6 +14,7 @@ const defaultProps = {
   lastInRange: false,
   inRange: false,
   fullWidth: false,
+  firstInMonth: false,
   size: 'sm' as const,
   elementRef: () => {},
   onKeyDown: () => {},

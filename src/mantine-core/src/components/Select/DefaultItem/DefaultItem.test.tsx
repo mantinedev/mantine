@@ -15,6 +15,11 @@ describe('@mantine/core/Autocomplete/DefaultItem', () => {
     expect(element.render().text()).toBe('test');
   });
 
+  it('renders value as children it label was not provided', () => {
+    const element = shallow(<DefaultItem {...defaultProps} value="test-value" label={null} />);
+    expect(element.render().text()).toBe('test-value');
+  });
+
   it('has correct displayName', () => {
     expect(DefaultItem.displayName).toEqual('@mantine/core/DefaultItem');
   });
