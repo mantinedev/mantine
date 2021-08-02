@@ -58,14 +58,3 @@ export function Text<T extends React.ElementType = 'div', U = HTMLDivElement>({
 }
 
 Text.displayName = '@mantine/core/Text';
-
-export function Anchor<T extends React.ElementType = 'a', U = HTMLAnchorElement>({
-  component = 'a',
-  ...others
-}: ComponentPassThrough<T, TextProps> & { elementRef?: React.ForwardedRef<U> }) {
-  return <Text component={component} variant="link" {...others} />;
-}
-
-Anchor.displayName = '@mantine/core/Anchor';
-
-export type AnchorProps = React.ComponentProps<typeof Anchor>;

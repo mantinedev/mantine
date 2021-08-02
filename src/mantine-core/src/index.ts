@@ -6,6 +6,7 @@ export { ActionIcon, ACTION_ICON_SIZES } from './components/ActionIcon/ActionIco
 export { Affix } from './components/Affix/Affix';
 export { CloseButton } from './components/ActionIcon/CloseButton/CloseButton';
 export { Alert } from './components/Alert/Alert';
+export { Anchor } from './components/Anchor/Anchor';
 export { ArrowBody } from './components/ArrowBody/ArrowBody';
 export { Autocomplete } from './components/Autocomplete/Autocomplete';
 export { Avatar, AVATAR_SIZES } from './components/Avatar/Avatar';
@@ -54,7 +55,7 @@ export { Spoiler } from './components/Spoiler/Spoiler';
 export { Switch, SWITCH_SIZES } from './components/Switch/Switch';
 export { Table } from './components/Table/Table';
 export { Tabs, Tab } from './components/Tabs/Tabs';
-export { Text, Anchor } from './components/Text/Text';
+export { Text } from './components/Text/Text';
 export { Textarea } from './components/Textarea/Textarea';
 export { TextInput } from './components/TextInput/TextInput';
 export { ThemeIcon, THEME_ICON_SIZES } from './components/ThemeIcon/ThemeIcon';
@@ -79,6 +80,7 @@ export type { ActionIconProps } from './components/ActionIcon/ActionIcon';
 export type { AffixProps } from './components/Affix/Affix';
 export type { CloseButtonProps } from './components/ActionIcon/CloseButton/CloseButton';
 export type { AlertProps, AlertStylesName } from './components/Alert/Alert';
+export type { AnchorProps } from './components/Anchor/Anchor';
 export type { ArrowBodyProps, ArrowBodyStylesNames } from './components/ArrowBody/ArrowBody';
 export type {
   AutocompleteProps,
@@ -162,7 +164,7 @@ export type { SpoilerProps, SpoilerStylesNames } from './components/Spoiler/Spoi
 export type { SwitchProps, SwitchStylesNames } from './components/Switch/Switch';
 export type { TableProps } from './components/Table/Table';
 export type { TabsProps, TabProps, TabsStylesNames } from './components/Tabs/Tabs';
-export type { TextProps, AnchorProps } from './components/Text/Text';
+export type { TextProps } from './components/Text/Text';
 export type { TextareaProps, TextareaStylesNames } from './components/Textarea/Textarea';
 export type { TextInputProps, TextInputStylesNames } from './components/TextInput/TextInput';
 export type { ThemeIconProps } from './components/ThemeIcon/ThemeIcon';

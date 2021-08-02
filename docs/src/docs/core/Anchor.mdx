@@ -6,13 +6,65 @@ order: 1
 slug: /core/anchor/
 category: 'typography'
 description: 'Display links with theme styles'
-props: ['Text']
+props: ['Anchor']
 import: "import { Anchor } from '@mantine/core';"
 source: 'mantine-core/src/components/Text/Text.tsx'
 docs: 'core/Anchor.mdx'
 styles: ['Anchor', 'single-node']
 ---
 
-import { TextDemos } from '@demos/core';
+import { AnchorDemos } from '@demos/core';
 
 ## Usage
+
+Anchor is a wrapper around <GatsbyLink to="/core/text/">Text</GatsbyLink> component with `component` prop set to `a` by default:
+
+<Demo data={AnchorDemos.usage} />
+
+## Usage with react-router and other libraries
+
+You can use Anchor with react-router Link component and other similar components by setting `component` prop:
+
+```tsx
+import { Link } from 'react-router-dom';
+import { Anchor } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Anchor component={Link} to="/react-router">
+      React router link
+    </Anchor>
+  );
+}
+```
+
+## Usage with Next Link
+
+Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
+to make Anchor and other similar components work with Next Link, create wrapper component in your components folder:
+
+```tsx
+// This component can be reused in every Mantine component which supports component pass through
+import React, { forwardRef } from 'react';
+import Link from 'next/link';
+
+export const NextLink = forwardRef(
+  (
+    { href, ...others }: React.ComponentPropsWithoutRef<typeof Link>,
+    ref: React.ForwardedRef<HTMLAnchorElement>
+  ) => (
+    <Link href={href}>
+      {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
+      <a {...others} ref={ref} />
+    </Link>
+  )
+);
+```
+
+And then pass it to Button or other component:
+
+```tsx
+<Anchor component={NextLink} href="/hello">
+  Next Link
+</Anchor>
+```
