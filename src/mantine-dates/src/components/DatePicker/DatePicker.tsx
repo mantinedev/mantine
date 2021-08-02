@@ -58,6 +58,7 @@ export function DatePicker({
   size = 'sm',
   dropdownType = 'popover',
   clearable = true,
+  disabled = false,
   clearButtonLabel,
   ...others
 }: DatePickerProps) {
@@ -105,9 +106,10 @@ export function DatePicker({
         }
         __staticSelector="date-picker"
         dropdownType={dropdownType}
-        clearable={clearable && !!_value}
+        clearable={clearable && !!_value && !disabled}
         clearButtonLabel={clearButtonLabel}
         onClear={handleClear}
+        disabled={disabled}
         {...others}
       >
         <Calendar
