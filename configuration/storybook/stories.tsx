@@ -7,7 +7,6 @@ import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 
 import * as demos from '@mantine/core/src/demos';
 import * as notificationsDemos from '@mantine/notifications/src/demos';
-import * as tagPickerDemos from '@mantine/tag-picker/src/demos';
 import * as prismDemos from '@mantine/prism/src/demos';
 import Demo from '../../docs/src/components/Demo/Demo';
 
@@ -74,17 +73,6 @@ stories.add('@mantine/notifications', () => {
     <div key={story}>
       <Title order={2}>{upperFirst(story)}</Title>
       <Demo data={notificationsDemos[story]} />
-    </div>
-  ));
-
-  return <div>{items}</div>;
-});
-
-stories.add('@mantine/tag-picker', () => {
-  const items = Object.keys(tagPickerDemos).map((story) => (
-    <div key={story}>
-      <Title order={2}>{upperFirst(story)}</Title>
-      <Demo data={tagPickerDemos[story]} />
     </div>
   ));
 

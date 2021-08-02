@@ -8,7 +8,6 @@ const PACKAGES = [
   'mantine-hooks',
   'mantine-core',
   'mantine-notifications',
-  'mantine-tag-picker',
   'mantine-prism',
   'mantine-dates',
 ];
