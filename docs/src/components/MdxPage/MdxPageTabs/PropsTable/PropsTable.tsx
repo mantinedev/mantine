@@ -10,6 +10,10 @@ interface PropsTableProps {
 export default function PropsTable({ component, query }: PropsTableProps) {
   const theme = useMantineTheme();
 
+  if (!PROPS_DATA[component]) {
+    return null;
+  }
+
   const rows = Object.keys(PROPS_DATA[component].props)
     .filter((propKey) =>
       PROPS_DATA[component].props[propKey].name.toLowerCase().includes(query.toLowerCase().trim())
