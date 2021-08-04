@@ -147,6 +147,7 @@ export function Tooltip({
         arrowSize={arrowSize}
         zIndex={zIndex}
         arrowClassName={classes.arrow}
+        forceUpdateDependencies={[color]}
       >
         <div
           className={classes.body}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { usePopper } from 'react-popper';
-import { useMergedRef } from '@mantine/hooks';
+import { useDidUpdate } from '@mantine/hooks';
 import useStyles from './Popper.styles';
 import { Portal } from '../Portal/Portal';
 import { MantineTransition } from '../Transition/Transition';
@@ -24,6 +24,21 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
   transitionDuration: number;
   transitionTimingFunction?: string;
   arrowClassName?: string;
+  forceUpdateDependencies?: any[];
+}
+
+function parsePopperPosition(position: string) {
+  if (typeof position !== 'string') {
+    return { position: 'top', placement: 'center' };
+  }
+
+  const splitted = position.split('-');
+
+  if (splitted.length === 1) {
+    return { position, placement: 'center' };
+  }
+
+  return { position: splitted[0], placement: splitted[1] };
 }
 
 export function Popper<T extends HTMLElement = HTMLDivElement>({
@@ -40,15 +55,22 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   transitionTimingFunction,
   arrowClassName,
   zIndex = 1000,
+  forceUpdateDependencies = [],
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
   const classes = useStyles({ arrowSize });
   const [popperElement, setPopperElement] = useState(null);
 
-  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+  const { styles, attributes, forceUpdate } = usePopper(referenceElement, popperElement, {
     placement: placement === 'center' ? position : `${position}-${placement}`,
     modifiers: [{ name: 'offset', options: { offset: [0, padding] } }],
   });
+
+  const parsedAttributes = parsePopperPosition(attributes.popper?.['data-popper-placement']);
+
+  useDidUpdate(() => {
+    typeof forceUpdate === 'function' && forceUpdate();
+  }, forceUpdateDependencies);
 
   return (
     <Transition
@@ -61,9 +83,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
         <div>
           <Portal zIndex={zIndex}>
             <div
-              ref={useMergedRef(setPopperElement, (node) => {
-                node?.offsetHeight;
-              })}
+              ref={setPopperElement}
               style={{ ...styles.popper, pointerEvents: 'none' }}
               {...attributes.popper}
             >
@@ -73,8 +93,8 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
                   <div
                     className={cx(
                       classes.arrow,
-                      classes[position],
-                      classes[placement],
+                      classes[parsedAttributes.placement],
+                      classes[parsedAttributes.position],
                       arrowClassName
                     )}
                   />
