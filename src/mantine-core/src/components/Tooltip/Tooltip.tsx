@@ -1,9 +1,11 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
+import { usePopper } from 'react-popper';
 import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
-import { ArrowBody, ArrowBodyPosition, ArrowBodyPlacement } from '../ArrowBody/ArrowBody';
+import { ArrowBodyPosition, ArrowBodyPlacement } from '../ArrowBody/ArrowBody';
 import { Transition, MantineTransition } from '../Transition/Transition';
+import { Portal } from '../Portal/Portal';
 import useStyles from './Tooltip.styles';
 
 export type TooltipStylesNames = keyof ReturnType<typeof useStyles>;
@@ -89,7 +91,7 @@ export function Tooltip({
   withArrow = false,
   arrowSize = 2,
   position = 'top',
-  placement = 'center',
+  placement = 'start',
   transition = 'slide-up',
   transitionDuration = 100,
   zIndex = 1000,
@@ -111,6 +113,16 @@ export function Tooltip({
   const [_opened, setOpened] = useState(false);
   const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
   const duration = useReducedMotion() ? 0 : transitionDuration;
+  const [referenceElement, setReferenceElement] = useState(null);
+  const [popperElement, setPopperElement] = useState(null);
+  const [arrowElement, setArrowElement] = useState(null);
+  const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement, {
+    placement: placement === 'center' ? position : `${position}-${placement}`,
+    modifiers: [
+      { name: 'arrow', options: { element: arrowElement } },
+      { name: 'offset', options: { offset: [0, gutter] } },
+    ],
+  });
 
   const handleOpen = () => {
     window.clearTimeout(timeoutRef.current);
@@ -134,55 +146,43 @@ export function Tooltip({
       style={{ ...style, ..._styles.root }}
       {...others}
     >
-      <Transition
-        mounted={visible}
-        transition={transition}
-        duration={duration}
-        timingFunction={transitionTimingFunction}
-      >
-        {(transitionStyles) => (
-          <div
-            className={classes.wrapper}
-            style={{ ..._styles.wrapper, ...transitionStyles, zIndex }}
+      <Portal zIndex={1000}>
+        <div
+          className={classes.wrapper}
+          style={{ ...popperStyles.popper, ..._styles.wrapper }}
+          ref={setPopperElement}
+          {...attributes.popper}
+        >
+          <div ref={setArrowElement} data-popper-arrow style={popperStyles.arrow} />
+          <Transition
+            mounted={visible}
+            transition={transition}
+            duration={duration}
+            timingFunction={transitionTimingFunction}
           >
-            <ArrowBody
-              id={tooltipId}
-              gutter={gutter}
-              position={position}
-              placement={placement}
-              withArrow={withArrow}
-              arrowSize={arrowSize}
-              role="tooltip"
-              className={classes.tooltip}
-              classNames={{ arrow: classes.arrow }}
-              styles={{ arrow: _styles.arrow }}
-              elementRef={tooltipRef}
-              style={{
-                ..._styles.tooltip,
-                zIndex,
-                width,
-                pointerEvents: allowPointerEvents ? 'all' : 'none',
-              }}
-            >
-              <div
-                className={classes.body}
-                style={{
-                  ..._styles.body,
-                  whiteSpace: wrapLines ? 'normal' : 'nowrap',
-                }}
-              >
-                {label}
+            {(transitionStyles) => (
+              <div style={{ ...transitionStyles }}>
+                <div
+                  className={classes.body}
+                  style={{
+                    ..._styles.body,
+                    whiteSpace: wrapLines ? 'normal' : 'nowrap',
+                  }}
+                >
+                  {label}
+                </div>
               </div>
-            </ArrowBody>
-          </div>
-        )}
-      </Transition>
+            )}
+          </Transition>
+        </div>
+      </Portal>
 
       <div
         onMouseEnter={handleOpen}
         onMouseLeave={handleClose}
         onFocusCapture={handleOpen}
         onBlurCapture={handleClose}
+        ref={setReferenceElement}
       >
         {children}
       </div>
