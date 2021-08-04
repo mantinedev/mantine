@@ -14,7 +14,7 @@ export const configurator: MantineDemo = {
   codeTemplate,
   configuratorProps: { multiline: true },
   configurator: [
-    { name: 'placeholder', type: 'string', initialValue: 'Pick all you line' },
+    { name: 'placeholder', type: 'string', initialValue: 'Pick all you like' },
     {
       name: 'label',
       type: 'string',
