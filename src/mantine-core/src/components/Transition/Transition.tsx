@@ -1,6 +1,5 @@
-import React from 'react';
-import { Transition as RTGTransition } from 'react-transition-group';
-import { useReducedMotion } from '@mantine/hooks';
+import React, { useState, useRef } from 'react';
+import { useReducedMotion, useDidUpdate } from '@mantine/hooks';
 import { useMantineTheme, DefaultProps } from '../../theme';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { MantineTransition, transitions } from './transitions';
@@ -26,7 +25,7 @@ export interface TransitionProps extends Omit<DefaultProps, 'className'> {
   mounted: boolean;
 
   /** Render function with transition styles argument */
-  children(styles: React.CSSProperties): React.ReactNode;
+  children(styles: React.CSSProperties): React.ReactElement<any, any>;
 
   /** Calls when exit transition ends */
   onExited?: () => void;
@@ -40,6 +39,14 @@ export interface TransitionProps extends Omit<DefaultProps, 'className'> {
   /** Calls when enter transition ends */
   onEntered?: () => void;
 }
+
+type TransitionStatus =
+  | 'entered'
+  | 'exited'
+  | 'entering'
+  | 'exiting'
+  | 'pre-exiting'
+  | 'pre-entering';
 
 export function Transition({
   transition,
@@ -56,37 +63,46 @@ export function Transition({
   const theme = useMantineTheme(themeOverride);
   const reduceMotion = useReducedMotion();
   const transitionDuration = reduceMotion ? 0 : duration;
+  const [status, setStatus] = useState<TransitionStatus>(mounted ? 'entered' : 'exited');
+  const timeoutRef = useRef<number>(-1);
+
+  const handleStateChange = (shouldMount: boolean) => {
+    const preHandler = shouldMount ? onEnter : onExit;
+    const handler = shouldMount ? onEntered : onExited;
+
+    setStatus(shouldMount ? 'pre-entering' : 'pre-exiting');
+    window.clearTimeout(timeoutRef.current);
+
+    const preStateTimeout = window.setTimeout(() => {
+      typeof preHandler === 'function' && preHandler();
+      setStatus(shouldMount ? 'entering' : 'exiting');
+    }, 10);
+
+    timeoutRef.current = window.setTimeout(() => {
+      window.clearTimeout(preStateTimeout);
+      typeof handler === 'function' && handler();
+      setStatus(shouldMount ? 'entered' : 'exited');
+    }, duration);
+  };
+
+  useDidUpdate(() => {
+    handleStateChange(mounted);
+  }, [mounted]);
 
   if (transitionDuration === 0) {
     return mounted ? <>{children({})}</> : null;
   }
 
-  return (
-    <RTGTransition
-      in={mounted}
-      timeout={duration}
-      unmountOnExit
-      mountOnEnter
-      onEnter={(node: any) => {
-        node.offsetHeight;
-        typeof onEnter === 'function' && onEnter();
-      }}
-      onExited={onExited}
-      onEntered={onEntered}
-      onExit={onExit}
-    >
-      {(transitionState) =>
-        children(
-          getTransitionStyles({
-            transition,
-            duration: transitionDuration,
-            state: transitionState as any,
-            timingFunction: timingFunction || theme.transitionTimingFunction,
-          })
-        )
-      }
-    </RTGTransition>
-  );
+  return status === 'exited'
+    ? null
+    : children(
+        getTransitionStyles({
+          transition,
+          duration: transitionDuration,
+          state: status,
+          timingFunction: timingFunction || theme.transitionTimingFunction,
+        })
+      );
 }
 
 Transition.displayName = '@mantine/core/Transition';

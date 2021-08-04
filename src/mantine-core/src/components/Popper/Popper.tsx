@@ -4,8 +4,7 @@ import { usePopper } from 'react-popper';
 import { useDidUpdate } from '@mantine/hooks';
 import useStyles from './Popper.styles';
 import { Portal } from '../Portal/Portal';
-import { MantineTransition } from '../Transition/Transition';
-import { Transition } from '../Transition/CustomTransition';
+import { Transition, MantineTransition } from '../Transition/Transition';
 
 export interface SharedPopperProps {
   position?: 'top' | 'left' | 'bottom' | 'right';
