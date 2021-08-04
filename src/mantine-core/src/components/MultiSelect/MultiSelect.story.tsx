@@ -49,6 +49,7 @@ const sizes = MANTINE_SIZES.map((size) => (
   <Group grow key={size} style={{ marginTop: 30 }} direction="column">
     <MultiSelect
       size={size}
+      variant="unstyled"
       label="Multi select"
       data={data}
       defaultValue={['react', 'ng']}

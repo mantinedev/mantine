@@ -69,8 +69,13 @@ function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'the
       borderStyle: 'solid',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       backgroundColor: 'transparent',
-      height: 28,
+      minHeight: 28,
       outline: 0,
+
+      '&:focus, &:focus-within': {
+        outline: 'none',
+        borderColor: 'transparent',
+      },
 
       '&:disabled': {
         backgroundColor: 'transparent',
@@ -119,7 +124,6 @@ export default createMemoStyles({
       variant === 'default' || variant === 'filled'
         ? {
             minHeight: getSizeValue({ size, sizes }),
-            height: multiline ? 'auto' : getSizeValue({ size, sizes }),
             paddingLeft: getSizeValue({ size, sizes }) / 3,
             paddingRight: getSizeValue({ size, sizes }) / 3,
             borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
@@ -143,6 +147,11 @@ export default createMemoStyles({
     return {
       ...getFontStyles(theme),
       ...getVariantStyles({ variant, theme }),
+      height: multiline
+        ? variant === 'unstyled'
+          ? undefined
+          : 'auto'
+        : getSizeValue({ size, sizes }),
       WebkitTapHighlightColor: 'transparent',
       lineHeight: multiline ? theme.lineHeight : `${getSizeValue({ size, sizes }) - 2}px`,
       appearance: 'none',
