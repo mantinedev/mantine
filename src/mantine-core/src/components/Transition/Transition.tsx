@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { useReducedMotion, useDidUpdate } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps } from '../../theme';
+import React from 'react';
+import { DefaultProps } from '../../theme';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
+import { useTransition } from './use-transition';
 import { MantineTransition, transitions } from './transitions';
 
 export { GroupedTransition } from './GroupedTransition';
@@ -40,14 +40,6 @@ export interface TransitionProps extends Omit<DefaultProps, 'className'> {
   onEntered?: () => void;
 }
 
-type TransitionStatus =
-  | 'entered'
-  | 'exited'
-  | 'entering'
-  | 'exiting'
-  | 'pre-exiting'
-  | 'pre-entering';
-
 export function Transition({
   transition,
   duration = 250,
@@ -60,47 +52,29 @@ export function Transition({
   onEnter,
   onExited,
 }: TransitionProps) {
-  const theme = useMantineTheme(themeOverride);
-  const reduceMotion = useReducedMotion();
-  const transitionDuration = reduceMotion ? 0 : duration;
-  const [status, setStatus] = useState<TransitionStatus>(mounted ? 'entered' : 'exited');
-  const timeoutRef = useRef<number>(-1);
-
-  const handleStateChange = (shouldMount: boolean) => {
-    const preHandler = shouldMount ? onEnter : onExit;
-    const handler = shouldMount ? onEntered : onExited;
-
-    setStatus(shouldMount ? 'pre-entering' : 'pre-exiting');
-    window.clearTimeout(timeoutRef.current);
-
-    const preStateTimeout = window.setTimeout(() => {
-      typeof preHandler === 'function' && preHandler();
-      setStatus(shouldMount ? 'entering' : 'exiting');
-    }, 10);
-
-    timeoutRef.current = window.setTimeout(() => {
-      window.clearTimeout(preStateTimeout);
-      typeof handler === 'function' && handler();
-      setStatus(shouldMount ? 'entered' : 'exited');
-    }, duration);
-  };
-
-  useDidUpdate(() => {
-    handleStateChange(mounted);
-  }, [mounted]);
+  const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
+    mounted,
+    duration,
+    themeOverride,
+    timingFunction,
+    onExit,
+    onEntered,
+    onEnter,
+    onExited,
+  });
 
   if (transitionDuration === 0) {
     return mounted ? <>{children({})}</> : null;
   }
 
-  return status === 'exited'
+  return transitionStatus === 'exited'
     ? null
     : children(
         getTransitionStyles({
           transition,
           duration: transitionDuration,
-          state: status,
-          timingFunction: timingFunction || theme.transitionTimingFunction,
+          state: transitionStatus,
+          timingFunction: transitionTimingFunction,
         })
       );
 }
