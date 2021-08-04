@@ -44,7 +44,6 @@ export default createMemoStyles({
     transform: 'rotate(45deg)',
     border: '1px solid transparent',
     zIndex: 1,
-    background: 'red',
   }),
 
   left: ({ arrowSize }: PopperStyles) => ({

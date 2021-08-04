@@ -1,24 +1,44 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { usePopper } from 'react-popper';
-import { useBooleanToggle } from '@mantine/hooks';
 import useStyles from './Popper.styles';
 import { Portal } from '../Portal/Portal';
+import { Transition, MantineTransition } from '../Transition/Transition';
 
-export interface PopperProps {
-  position: 'top' | 'left' | 'bottom' | 'right';
-  placement: 'start' | 'center' | 'end';
-  gutter: number;
-  arrowSize: number;
-  withArrow: boolean;
+export interface SharedPopperProps {
+  position?: 'top' | 'left' | 'bottom' | 'right';
+  placement?: 'start' | 'center' | 'end';
+  gutter?: number;
+  arrowSize?: number;
+  withArrow?: boolean;
 }
 
-export function Popper({ position, placement, gutter, arrowSize, withArrow }: PopperProps) {
+export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
+  referenceElement: T;
+  children: React.ReactNode;
+  mounted: boolean;
+  transition: MantineTransition;
+  transitionDuration: number;
+  transitionTimingFunction?: string;
+  arrowClassName?: string;
+}
+
+export function Popper<T extends HTMLElement = HTMLDivElement>({
+  position = 'top',
+  placement = 'center',
+  gutter = 5,
+  arrowSize = 2,
+  withArrow = false,
+  referenceElement,
+  children,
+  mounted,
+  transition,
+  transitionDuration,
+  transitionTimingFunction,
+  arrowClassName,
+}: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
   const classes = useStyles({ arrowSize });
-  const [visible, toggle] = useBooleanToggle(true);
-
-  const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
 
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
@@ -27,24 +47,32 @@ export function Popper({ position, placement, gutter, arrowSize, withArrow }: Po
   });
 
   return (
-    <>
-      <button type="button" ref={setReferenceElement} onClick={() => toggle()}>
-        Reference element
-      </button>
-
-      {visible && (
-        <Portal zIndex={1000}>
-          <div
-            ref={setPopperElement}
-            style={{ ...styles.popper, background: 'blue', color: 'white' }}
-            {...attributes.popper}
-          >
-            Popper element
-            <div className={cx(classes.arrow, classes[position], classes[placement])} />
+    <Portal zIndex={1000}>
+      <Transition
+        mounted={mounted}
+        duration={transitionDuration}
+        transition={transition}
+        timingFunction={transitionTimingFunction}
+      >
+        {(transitionStyles) => (
+          <div ref={setPopperElement} style={{ ...styles.popper }} {...attributes.popper}>
+            <div style={transitionStyles}>
+              {children}
+              {withArrow && (
+                <div
+                  className={cx(
+                    classes.arrow,
+                    classes[position],
+                    classes[placement],
+                    arrowClassName
+                  )}
+                />
+              )}
+            </div>
           </div>
-        </Portal>
-      )}
-    </>
+        )}
+      </Transition>
+    </Portal>
   );
 }
 
