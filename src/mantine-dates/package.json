@@ -17,7 +17,9 @@
     "react-jss": ">=10.1.1"
   },
   "dependencies": {
-    "clsx": "^1.1.1"
+    "clsx": "^1.1.1",
+    "@popperjs/core": "^2.9.3",
+    "react-popper": "^2.2.5"
   },
   "devDependencies": {}
 }

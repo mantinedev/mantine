@@ -99,6 +99,7 @@
   },
   "dependencies": {
     "@modulz/radix-icons": "^4.0.0",
+    "@popperjs/core": "^2.9.3",
     "@primer/octicons-react": "^14.2.1",
     "clsx": "^1.1.1",
     "dayjs": "^1.10.5",
@@ -107,6 +108,7 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-flagpack": "^0.1.1",
     "react-jss": "^10.6.0",
+    "react-popper": "^2.2.5",
     "react-router-dom": "^5.2.0",
     "react-textarea-autosize": "^8.3.2",
     "react-transition-group": "^4.4.2"
