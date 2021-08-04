@@ -80,7 +80,7 @@ export function Transition({
           getTransitionStyles({
             transition,
             duration: transitionDuration,
-            state: transitionState,
+            state: transitionState as any,
             timingFunction: timingFunction || theme.transitionTimingFunction,
           })
         )

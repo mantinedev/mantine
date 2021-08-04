@@ -33,7 +33,13 @@ export interface TransitionProps extends Omit<DefaultProps, 'className'> {
   onEntered?: () => void;
 }
 
-type TransitionStatus = 'entered' | 'exited' | 'entering' | 'exiting';
+type TransitionStatus =
+  | 'entered'
+  | 'exited'
+  | 'entering'
+  | 'exiting'
+  | 'pre-exiting'
+  | 'pre-entering';
 
 export function Transition({
   transition,
@@ -52,11 +58,18 @@ export function Transition({
   const transitionDuration = reduceMotion ? 0 : duration;
   const [status, setStatus] = useState<TransitionStatus>(mounted ? 'entered' : 'exited');
   const timeoutRef = useRef<number>(-1);
+  const elementRef = useRef(null);
 
   const handleStateChange = (shouldMount: boolean) => {
-    setStatus(shouldMount ? 'entering' : 'exiting');
+    setStatus(shouldMount ? 'pre-entering' : 'pre-exiting');
     window.clearTimeout(timeoutRef.current);
+
+    const preStateTimeout = window.setTimeout(() => {
+      setStatus(shouldMount ? 'entering' : 'exiting');
+    }, 10);
+
     timeoutRef.current = window.setTimeout(() => {
+      window.clearTimeout(preStateTimeout);
       setStatus(shouldMount ? 'entered' : 'exited');
     }, duration);
   };
@@ -65,14 +78,25 @@ export function Transition({
     handleStateChange(mounted);
   }, [mounted]);
 
+  if (transitionDuration === 0) {
+    return mounted ? <>{children({})}</> : null;
+  }
+
   return status === 'exited'
     ? null
-    : children(
-        getTransitionStyles({
-          transition,
-          duration: transitionDuration,
-          state: status,
-          timingFunction: timingFunction || theme.transitionTimingFunction,
-        })
+    : React.cloneElement(
+        children(
+          getTransitionStyles({
+            transition,
+            duration: transitionDuration,
+            state: status,
+            timingFunction: timingFunction || theme.transitionTimingFunction,
+          })
+        ),
+        {
+          ref: (node) => {
+            elementRef.current = node;
+          },
+        }
       );
 }
