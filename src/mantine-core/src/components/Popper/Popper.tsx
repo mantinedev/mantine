@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { usePopper } from 'react-popper';
+import { useMergedRef } from '@mantine/hooks';
 import useStyles from './Popper.styles';
 import { Portal } from '../Portal/Portal';
-import { Transition, MantineTransition } from '../Transition/Transition';
+import { MantineTransition } from '../Transition/Transition';
+import { Transition } from '../Transition/CustomTransition';
 
 export interface SharedPopperProps {
   position?: 'top' | 'left' | 'bottom' | 'right';
@@ -59,7 +61,9 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
         <div>
           <Portal zIndex={zIndex}>
             <div
-              ref={setPopperElement}
+              ref={useMergedRef(setPopperElement, (node) => {
+                node?.offsetHeight;
+              })}
               style={{ ...styles.popper, pointerEvents: 'none' }}
               {...attributes.popper}
             >
