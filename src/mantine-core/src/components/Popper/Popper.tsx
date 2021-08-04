@@ -11,6 +11,7 @@ export interface SharedPopperProps {
   gutter?: number;
   arrowSize?: number;
   withArrow?: boolean;
+  zIndex?: number;
 }
 
 export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
@@ -36,6 +37,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   transitionDuration,
   transitionTimingFunction,
   arrowClassName,
+  zIndex = 1000,
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
   const classes = useStyles({ arrowSize });
@@ -47,32 +49,38 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   });
 
   return (
-    <Portal zIndex={1000}>
-      <Transition
-        mounted={mounted}
-        duration={transitionDuration}
-        transition={transition}
-        timingFunction={transitionTimingFunction}
-      >
-        {(transitionStyles) => (
-          <div ref={setPopperElement} style={{ ...styles.popper }} {...attributes.popper}>
-            <div style={transitionStyles}>
-              {children}
-              {withArrow && (
-                <div
-                  className={cx(
-                    classes.arrow,
-                    classes[position],
-                    classes[placement],
-                    arrowClassName
-                  )}
-                />
-              )}
+    <Transition
+      mounted={mounted}
+      duration={transitionDuration}
+      transition={transition}
+      timingFunction={transitionTimingFunction}
+    >
+      {(transitionStyles) => (
+        <div>
+          <Portal zIndex={zIndex}>
+            <div
+              ref={setPopperElement}
+              style={{ ...styles.popper, pointerEvents: 'none' }}
+              {...attributes.popper}
+            >
+              <div style={{ opacity: 0, ...transitionStyles }}>
+                {children}
+                {withArrow && (
+                  <div
+                    className={cx(
+                      classes.arrow,
+                      classes[position],
+                      classes[placement],
+                      arrowClassName
+                    )}
+                  />
+                )}
+              </div>
             </div>
-          </div>
-        )}
-      </Transition>
-    </Portal>
+          </Portal>
+        </div>
+      )}
+    </Transition>
   );
 }
 

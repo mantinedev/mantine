@@ -25,7 +25,7 @@ function Demo() {
         referenceElement={referenceElement}
         mounted={visible}
         transition="pop-top-left"
-        transitionDuration={150}
+        transitionDuration={1000}
       >
         <div style={{ backgroundColor: 'black', color: 'white' }}>Content</div>
       </Popper>

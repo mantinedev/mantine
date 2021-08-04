@@ -1,11 +1,10 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
-import { usePopper } from 'react-popper';
 import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
 import { ArrowBodyPosition, ArrowBodyPlacement } from '../ArrowBody/ArrowBody';
-import { Transition, MantineTransition } from '../Transition/Transition';
-import { Portal } from '../Portal/Portal';
+import { MantineTransition } from '../Transition/Transition';
+import { Popper } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 
 export type TooltipStylesNames = keyof ReturnType<typeof useStyles>;
@@ -91,8 +90,8 @@ export function Tooltip({
   withArrow = false,
   arrowSize = 2,
   position = 'top',
-  placement = 'start',
-  transition = 'slide-up',
+  placement = 'center',
+  transition = 'pop-top-left',
   transitionDuration = 100,
   zIndex = 1000,
   transitionTimingFunction,
@@ -112,17 +111,7 @@ export function Tooltip({
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
   const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
-  const duration = useReducedMotion() ? 0 : transitionDuration;
   const [referenceElement, setReferenceElement] = useState(null);
-  const [popperElement, setPopperElement] = useState(null);
-  const [arrowElement, setArrowElement] = useState(null);
-  const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement, {
-    placement: placement === 'center' ? position : `${position}-${placement}`,
-    modifiers: [
-      { name: 'arrow', options: { element: arrowElement } },
-      { name: 'offset', options: { offset: [0, gutter] } },
-    ],
-  });
 
   const handleOpen = () => {
     window.clearTimeout(timeoutRef.current);
@@ -146,36 +135,31 @@ export function Tooltip({
       style={{ ...style, ..._styles.root }}
       {...others}
     >
-      <Portal zIndex={1000}>
+      <Popper
+        referenceElement={referenceElement}
+        transitionDuration={useReducedMotion() ? 0 : transitionDuration}
+        transition={transition}
+        mounted={visible}
+        position={position}
+        placement={placement}
+        gutter={gutter}
+        withArrow={withArrow}
+        arrowSize={arrowSize}
+        zIndex={zIndex}
+        arrowClassName={classes.arrow}
+      >
         <div
-          className={classes.wrapper}
-          style={{ ...popperStyles.popper, ..._styles.wrapper }}
-          ref={setPopperElement}
-          {...attributes.popper}
+          className={classes.body}
+          style={{
+            ..._styles.body,
+            pointerEvents: allowPointerEvents ? 'all' : 'none',
+            whiteSpace: wrapLines ? 'normal' : 'nowrap',
+            width,
+          }}
         >
-          <div ref={setArrowElement} data-popper-arrow style={popperStyles.arrow} />
-          <Transition
-            mounted={visible}
-            transition={transition}
-            duration={duration}
-            timingFunction={transitionTimingFunction}
-          >
-            {(transitionStyles) => (
-              <div style={{ ...transitionStyles }}>
-                <div
-                  className={classes.body}
-                  style={{
-                    ..._styles.body,
-                    whiteSpace: wrapLines ? 'normal' : 'nowrap',
-                  }}
-                >
-                  {label}
-                </div>
-              </div>
-            )}
-          </Transition>
+          {label}
         </div>
-      </Portal>
+      </Popper>
 
       <div
         onMouseEnter={handleOpen}
