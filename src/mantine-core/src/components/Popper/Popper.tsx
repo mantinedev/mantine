@@ -23,6 +23,7 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
   transitionDuration: number;
   transitionTimingFunction?: string;
   arrowClassName?: string;
+  arrowStyle?: React.CSSProperties;
   forceUpdateDependencies?: any[];
 }
 
@@ -53,6 +54,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   transitionDuration,
   transitionTimingFunction,
   arrowClassName,
+  arrowStyle,
   zIndex = 1000,
   forceUpdateDependencies = [],
 }: PopperProps<T>) {
@@ -90,6 +92,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
                 {children}
                 {withArrow && (
                   <div
+                    style={arrowStyle}
                     className={cx(
                       classes.arrow,
                       classes[parsedAttributes.placement],

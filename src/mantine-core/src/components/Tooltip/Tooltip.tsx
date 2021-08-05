@@ -147,10 +147,12 @@ export function Tooltip({
         arrowSize={arrowSize}
         zIndex={zIndex}
         arrowClassName={classes.arrow}
+        arrowStyle={_styles.arrow}
         forceUpdateDependencies={[color]}
       >
         <div
           className={classes.body}
+          ref={tooltipRef}
           style={{
             ..._styles.body,
             pointerEvents: allowPointerEvents ? 'all' : 'none',
