@@ -88,7 +88,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
               style={{ ...styles.popper, pointerEvents: 'none' }}
               {...attributes.popper}
             >
-              <div style={{ opacity: 0, ...transitionStyles }}>
+              <div style={transitionStyles}>
                 {children}
                 {withArrow && (
                   <div
