@@ -67,16 +67,18 @@ export function Transition({
     return mounted ? <>{children({})}</> : null;
   }
 
-  return transitionStatus === 'exited'
-    ? null
-    : children(
+  return transitionStatus === 'exited' ? null : (
+    <>
+      {children(
         getTransitionStyles({
           transition,
           duration: transitionDuration,
           state: transitionStatus,
           timingFunction: transitionTimingFunction,
         })
-      );
+      )}
+    </>
+  );
 }
 
 Transition.displayName = '@mantine/core/Transition';
