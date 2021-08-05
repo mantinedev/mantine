@@ -4,7 +4,21 @@ import { DefaultProps, useMantineTheme, getThemeColor } from '../../theme';
 import { ComponentPassThrough } from '../../types';
 import { Text, TextProps } from '../Text/Text';
 
-export function highlighter(value: string, highlight: string | string[], exact = false) {
+export interface HighlighterOptions {
+  noPartial?: boolean
+  caseSensitive?: boolean
+}
+
+const HIGHTLIGHTER_DEFAULTS: HighlighterOptions = {
+  caseSensitive: false,
+  noPartial: false,
+};
+
+export function highlighter(
+  value: string,
+  highlight: string | string[],
+  options: HighlighterOptions = HIGHTLIGHTER_DEFAULTS
+) {
   const shouldHighlight = Array.isArray(highlight)
     ? highlight.filter((part) => part.trim().length > 0).length > 0
     : highlight.trim() !== '';
@@ -21,9 +35,13 @@ export function highlighter(value: string, highlight: string | string[], exact =
         .map((part) => part.trim())
         .join('|');
 
-  const pattern = exact ? `\\b(${matcher})\\b` : `(${matcher})`;
+  let pattern = `(${matcher})`;
 
-  const re = new RegExp(pattern, 'gi');
+  if (options.noPartial) {
+    pattern = `\\b${pattern}\\b`;
+  }
+
+  const re = new RegExp(pattern, `g${options.caseSensitive ? '' : 'i'}`);
   return value
     .split(re)
     .map((part) => ({ chunk: part, highlighted: re.test(part) }))
@@ -41,7 +59,7 @@ export interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'
   children: string;
 
   /** Only highlight when the words are matched exactly */
-  exact?: boolean;
+  options?: HighlighterOptions
 }
 
 export function Highlight<T extends React.ElementType = 'div'>({
@@ -50,8 +68,8 @@ export function Highlight<T extends React.ElementType = 'div'>({
   component,
   themeOverride,
   highlightColor = 'yellow',
-  exact = false,
   className,
+  options = HIGHTLIGHTER_DEFAULTS,
   ...others
 }: ComponentPassThrough<T, HighlightProps>) {
   const theme = useMantineTheme(themeOverride);
@@ -61,7 +79,7 @@ export function Highlight<T extends React.ElementType = 'div'>({
     shade: theme.colorScheme === 'dark' ? 5 : 2,
   });
 
-  const highlightChunks = highlighter(children, highlight, exact);
+  const highlightChunks = highlighter(children, highlight, options);
 
   return (
     <Text

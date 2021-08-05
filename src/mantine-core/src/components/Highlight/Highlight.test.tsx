@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { itSupportsStyle, itSupportsClassName, itSupportsOthers } from '@mantine/tests';
-import { highlighter, Highlight } from './Highlight';
+import { highlighter, Highlight, HighlighterOptions } from './Highlight';
 
 describe('@mantine/core/Highlight', () => {
   itSupportsStyle(Highlight, { children: 'Hello', highlight: 'He' });
@@ -95,12 +95,13 @@ describe('@mantine/core/Highlight/highlighter', () => {
 
   it('should only highlight exact matches', () => {
     const EXACT_VALUE = 'Highlighting is the light of my days without lights';
-    expect(highlighter(EXACT_VALUE, 'light', true)).toEqual([
+    const EXACT_OPTIONS: HighlighterOptions = { noPartial: true, caseSensitive: true };
+    expect(highlighter(EXACT_VALUE, 'light', EXACT_OPTIONS)).toEqual([
       { chunk: 'Highlighting is the ', highlighted: false },
       { chunk: 'light', highlighted: true },
       { chunk: ' of my days without lights', highlighted: false },
     ]);
-    expect(highlighter(EXACT_VALUE, 'light', false)).toStrictEqual([
+    expect(highlighter(EXACT_VALUE, 'light', EXACT_OPTIONS)).toStrictEqual([
       { chunk: 'High', highlighted: false },
       { chunk: 'light', highlighted: true },
       { chunk: 'ing is the ', highlighted: false },
