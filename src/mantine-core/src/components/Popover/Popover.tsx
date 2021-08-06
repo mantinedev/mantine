@@ -9,11 +9,10 @@ import {
 } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { Text } from '../Text/Text';
+import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';
 import useStyles from './Popover.styles';
 
-export type PopoverStylesNames = keyof ReturnType<typeof useStyles>;
+export type PopoverStylesNames = keyof ReturnType<typeof useStyles> | PopoverBodyStylesNames;
 
 export interface PopoverProps
   extends DefaultProps<PopoverStylesNames>,
@@ -95,8 +94,8 @@ export function Popover({
   ...others
 }: PopoverProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, radius, spacing, shadow }, classNames, 'popover');
-  const _styles = mergeStyles(classes, styles);
+  const classes = useStyles({ theme }, classNames as any, 'popover');
+  const _styles = mergeStyles(classes, styles as any);
   const handleClose = () => typeof onClose === 'function' && onClose();
   const useClickOutsideRef = useClickOutside(() => !noClickOutside && handleClose());
   const [referenceElement, setReferenceElement] = useState(null);
@@ -134,42 +133,22 @@ export function Popover({
         arrowStyle={_styles.arrow}
         forceUpdateDependencies={[radius, shadow, spacing]}
       >
-        <div
-          role="dialog"
-          tabIndex={-1}
-          aria-labelledby={titleId}
-          aria-describedby={bodyId}
-          className={classes.wrapper}
-          style={{ ..._styles.wrapper, zIndex }}
-          ref={useMergedRef(focusTrapRef, useClickOutsideRef)}
+        <PopoverBody
+          shadow={shadow}
+          radius={radius}
+          spacing={spacing}
+          withCloseButton={withCloseButton}
+          titleId={titleId}
+          bodyId={bodyId}
+          closeButtonLabel={closeButtonLabel}
+          onClose={handleClose}
+          elementRef={useMergedRef(focusTrapRef, useClickOutsideRef)}
           onKeyDownCapture={handleKeydown}
+          classNames={classNames as any}
+          styles={styles as any}
         >
-          <div className={classes.popover}>
-            <div className={classes.body} style={_styles.body}>
-              {!!title && (
-                <div className={classes.header} style={_styles.header}>
-                  <Text size="sm" id={titleId} className={classes.title} style={_styles.title}>
-                    {title}
-                  </Text>
-                </div>
-              )}
-
-              {withCloseButton && (
-                <CloseButton
-                  themeOverride={themeOverride}
-                  size="sm"
-                  onClick={handleClose}
-                  aria-label={closeButtonLabel}
-                  className={classes.close}
-                  style={_styles.close}
-                />
-              )}
-              <div className={classes.inner} id={bodyId} style={_styles.inner}>
-                {children}
-              </div>
-            </div>
-          </div>
-        </div>
+          {children}
+        </PopoverBody>
       </Popper>
 
       <div className={classes.target} style={_styles.target} ref={setReferenceElement}>
