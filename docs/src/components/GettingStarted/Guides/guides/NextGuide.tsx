@@ -27,7 +27,7 @@ export default function App(props: AppProps) {
 
   return (
     <>
-      <JssProvider generateId={createGenerateId({ minify: true })}>
+      <JssProvider generateId={createGenerateId()}>
         <Head>
           <title>Mantine next example</title>
           <meta
@@ -59,14 +59,13 @@ import { SheetsRegistry, JssProvider, createGenerateId } from "react-jss";
 export default class _Document extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const registry = new SheetsRegistry();
-    const generateId = createGenerateId({ minify: true });
     const originalRenderPage = ctx.renderPage;
 
     ctx.renderPage = () =>
       originalRenderPage({
         enhanceApp: (App) => (props) =>
           (
-            <JssProvider registry={registry} generateId={generateId}>
+            <JssProvider registry={registry} generateId={createGenerateId()}>
               <App {...props} />
             </JssProvider>
           ),
