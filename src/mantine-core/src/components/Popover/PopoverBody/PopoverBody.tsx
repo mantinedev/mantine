@@ -52,7 +52,7 @@ export function PopoverBody({
       ref={elementRef}
       {...others}
     >
-      <div className={classes.popover}>
+      <div className={classes.popover} style={_styles.popover}>
         <div className={classes.body} style={_styles.body}>
           {!!title && (
             <div className={classes.header} style={_styles.header}>
