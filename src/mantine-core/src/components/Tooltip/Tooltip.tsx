@@ -2,15 +2,14 @@ import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
-import { ArrowBodyPosition, ArrowBodyPlacement } from '../ArrowBody/ArrowBody';
-import { MantineTransition } from '../Transition/Transition';
-import { Popper } from '../Popper/Popper';
+import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 
 export type TooltipStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface TooltipProps
   extends DefaultProps<TooltipStylesNames>,
+    SharedPopperProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** Tooltip content */
   label: React.ReactNode;
@@ -27,26 +26,11 @@ export interface TooltipProps
   /** Any color from theme.colors, defaults to gray in light color scheme and dark in dark colors scheme */
   color?: string;
 
-  /** Space between tooltip and element in px */
-  gutter?: number;
-
   /** True to disable tooltip */
   disabled?: boolean;
 
-  /** Adds arrow, arrow position depends on position and placement props */
-  withArrow?: boolean;
-
   /** Arrow size in px */
   arrowSize?: number;
-
-  /** Tooltip position relative to children */
-  position?: ArrowBodyPosition;
-
-  /** Tooltip placement relative to children */
-  placement?: ArrowBodyPlacement;
-
-  /** Tooltip z-index */
-  zIndex?: number;
 
   /** Tooltip width in px or auto */
   width?: number | 'auto';
@@ -56,15 +40,6 @@ export interface TooltipProps
 
   /** Allow pointer events on tooltip, warning: this may break some animations */
   allowPointerEvents?: boolean;
-
-  /** Customize mount/unmount transition */
-  transition?: MantineTransition;
-
-  /** Mount/unmount transition duration in ms */
-  transitionDuration?: number;
-
-  /** Mount/unmount transition timing function, defaults to theme.transitionTimingFunction */
-  transitionTimingFunction?: string;
 
   /** Get wrapper ref */
   elementRef?: React.ForwardedRef<HTMLDivElement>;

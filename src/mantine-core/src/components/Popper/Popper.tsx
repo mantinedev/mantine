@@ -7,21 +7,38 @@ import { Portal } from '../Portal/Portal';
 import { Transition, MantineTransition } from '../Transition/Transition';
 
 export interface SharedPopperProps {
+  /** Position relative to reference element */
   position?: 'top' | 'left' | 'bottom' | 'right';
+
+  /** Placement relative to reference element */
   placement?: 'start' | 'center' | 'end';
+
+  /** Spacing between element and popper in px  */
   gutter?: number;
+
+  /** Arrow size in px */
   arrowSize?: number;
+
+  /** Renders arrow if true */
   withArrow?: boolean;
+
+  /** Popper z-index */
   zIndex?: number;
+
+  /** Customize mount/unmount transition */
+  transition?: MantineTransition;
+
+  /** Mount/unmount transition duration in ms */
+  transitionDuration?: number;
+
+  /** Mount/unmount transition timing function, defaults to theme.transitionTimingFunction */
+  transitionTimingFunction?: string;
 }
 
 export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
   referenceElement: T;
   children: React.ReactNode;
   mounted: boolean;
-  transition: MantineTransition;
-  transitionDuration: number;
-  transitionTimingFunction?: string;
   arrowClassName?: string;
   arrowStyle?: React.CSSProperties;
   forceUpdateDependencies?: any[];

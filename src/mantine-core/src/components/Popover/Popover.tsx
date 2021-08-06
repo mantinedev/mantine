@@ -8,9 +8,7 @@ import {
   useMergedRef,
 } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
-import { MantineTransition } from '../Transition/Transition';
-import { Popper } from '../Popper/Popper';
-import { ArrowBodyPlacement, ArrowBodyPosition } from '../ArrowBody/ArrowBody';
+import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
 import useStyles from './Popover.styles';
@@ -19,6 +17,7 @@ export type PopoverStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface PopoverProps
   extends DefaultProps<PopoverStylesNames>,
+    SharedPopperProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Disable closing by click outside */
   noClickOutside?: boolean;
@@ -34,33 +33,6 @@ export interface PopoverProps
 
   /** True to disable popover */
   disabled?: boolean;
-
-  /** Popover placement relative to target */
-  placement?: ArrowBodyPlacement;
-
-  /** Popover position relative to target */
-  position?: ArrowBodyPosition;
-
-  /** Space between popover and target in px */
-  gutter?: number;
-
-  /** Customize mount/unmount transition */
-  transition?: MantineTransition;
-
-  /** Mount/unmount transition duration in ms */
-  transitionDuration?: number;
-
-  /** Mount/unmount transition timing function, defaults to theme.transitionTimingFunction */
-  transitionTimingFunction?: string;
-
-  /** Adds arrow, arrow position depends on position and placement props */
-  withArrow?: boolean;
-
-  /** Arrow size in px */
-  arrowSize?: number;
-
-  /** Popover z-index */
-  zIndex?: number;
 
   /** True to display popover */
   opened: boolean;
