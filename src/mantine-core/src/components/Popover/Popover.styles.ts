@@ -16,26 +16,23 @@ export default createMemoStyles({
   },
 
   wrapper: {
-    background: 'transparent',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    pointerEvents: 'none',
+    // background: 'transparent',
+    // position: 'absolute',
+    // top: 0,
+    // left: 0,
+    // right: 0,
+    // bottom: 0,
+    // pointerEvents: 'none',
   },
 
   popover: ({ theme, radius }: PopoverStyles) => ({
-    position: 'absolute',
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     pointerEvents: 'all',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   }),
 
   arrow: ({ theme }: PopoverStyles) => ({
-    border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
-    }`,
+    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     zIndex: 1,
   }),

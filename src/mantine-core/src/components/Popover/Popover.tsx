@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'clsx';
-import { useClickOutside, useFocusTrap, useId, useReducedMotion } from '@mantine/hooks';
+import {
+  useClickOutside,
+  useFocusTrap,
+  useId,
+  useReducedMotion,
+  useMergedRef,
+} from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
-import { MantineTransition, Transition } from '../Transition/Transition';
-import { ArrowBody, ArrowBodyPlacement, ArrowBodyPosition } from '../ArrowBody/ArrowBody';
+import { MantineTransition } from '../Transition/Transition';
+import { Popper } from '../Popper/Popper';
+import { ArrowBodyPlacement, ArrowBodyPosition } from '../ArrowBody/ArrowBody';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
 import useStyles from './Popover.styles';
@@ -120,8 +127,8 @@ export function Popover({
   const _styles = mergeStyles(classes, styles);
   const handleClose = () => typeof onClose === 'function' && onClose();
   const useClickOutsideRef = useClickOutside(() => !noClickOutside && handleClose());
+  const [referenceElement, setReferenceElement] = useState(null);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
-  const reduceMotion = useReducedMotion();
 
   const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!noEscape && event.nativeEvent.code === 'Escape') {
@@ -136,68 +143,64 @@ export function Popover({
   return (
     <div
       className={cx(classes.root, className)}
-      ref={useClickOutsideRef}
       id={id}
       style={{ ...style, ..._styles.root }}
       {...others}
     >
-      <Transition
-        mounted={opened && !disabled}
+      <Popper
+        referenceElement={referenceElement}
+        transitionDuration={useReducedMotion() ? 0 : transitionDuration}
         transition={transition}
-        duration={reduceMotion ? 0 : transitionDuration}
-        timingFunction={transitionTimingFunction || theme.transitionTimingFunction}
+        mounted={opened && !disabled}
+        position={position}
+        placement={placement}
+        gutter={gutter}
+        withArrow={withArrow}
+        arrowSize={arrowSize}
+        zIndex={zIndex}
+        arrowClassName={classes.arrow}
+        arrowStyle={_styles.arrow}
+        forceUpdateDependencies={[radius, shadow, spacing]}
       >
-        {(transitionStyles) => (
-          <div
-            role="dialog"
-            tabIndex={-1}
-            aria-labelledby={titleId}
-            aria-describedby={bodyId}
-            className={classes.wrapper}
-            style={{ ...transitionStyles, ..._styles.wrapper, zIndex }}
-            ref={focusTrapRef}
-            onKeyDownCapture={handleKeydown}
-          >
-            <ArrowBody
-              withArrow={withArrow}
-              arrowSize={arrowSize}
-              position={position}
-              placement={placement}
-              gutter={gutter}
-              className={classes.popover}
-              classNames={{ arrow: classes.arrow }}
-              styles={{ arrow: _styles.arrow }}
-              style={{ zIndex, ..._styles.popover }}
-            >
-              <div className={classes.body} style={_styles.body}>
-                {!!title && (
-                  <div className={classes.header} style={_styles.header}>
-                    <Text size="sm" id={titleId} className={classes.title} style={_styles.title}>
-                      {title}
-                    </Text>
-                  </div>
-                )}
-
-                {withCloseButton && (
-                  <CloseButton
-                    themeOverride={themeOverride}
-                    size="sm"
-                    onClick={handleClose}
-                    aria-label={closeButtonLabel}
-                    className={classes.close}
-                    style={_styles.close}
-                  />
-                )}
-                <div className={classes.inner} id={bodyId} style={_styles.inner}>
-                  {children}
+        <div
+          role="dialog"
+          tabIndex={-1}
+          aria-labelledby={titleId}
+          aria-describedby={bodyId}
+          className={classes.wrapper}
+          style={{ ..._styles.wrapper, zIndex }}
+          ref={useMergedRef(focusTrapRef, useClickOutsideRef)}
+          onKeyDownCapture={handleKeydown}
+        >
+          <div className={classes.popover}>
+            <div className={classes.body} style={_styles.body}>
+              {!!title && (
+                <div className={classes.header} style={_styles.header}>
+                  <Text size="sm" id={titleId} className={classes.title} style={_styles.title}>
+                    {title}
+                  </Text>
                 </div>
-              </div>
-            </ArrowBody>
-          </div>
-        )}
-      </Transition>
+              )}
 
-      <div className={classes.target} style={_styles.target}>
+              {withCloseButton && (
+                <CloseButton
+                  themeOverride={themeOverride}
+                  size="sm"
+                  onClick={handleClose}
+                  aria-label={closeButtonLabel}
+                  className={classes.close}
+                  style={_styles.close}
+                />
+              )}
+              <div className={classes.inner} id={bodyId} style={_styles.inner}>
+                {children}
+              </div>
+            </div>
+          </div>
+        </div>
+      </Popper>
+
+      <div className={classes.target} style={_styles.target} ref={setReferenceElement}>
         {target}
       </div>
     </div>
