@@ -7,7 +7,6 @@ export { Affix } from './components/Affix/Affix';
 export { CloseButton } from './components/ActionIcon/CloseButton/CloseButton';
 export { Alert } from './components/Alert/Alert';
 export { Anchor } from './components/Anchor/Anchor';
-export { ArrowBody } from './components/ArrowBody/ArrowBody';
 export { Autocomplete } from './components/Autocomplete/Autocomplete';
 export { Avatar, AVATAR_SIZES } from './components/Avatar/Avatar';
 export { Badge, BADGE_SIZES, BADGE_VARIANTS } from './components/Badge/Badge';
@@ -81,7 +80,6 @@ export type { AffixProps } from './components/Affix/Affix';
 export type { CloseButtonProps } from './components/ActionIcon/CloseButton/CloseButton';
 export type { AlertProps, AlertStylesName } from './components/Alert/Alert';
 export type { AnchorProps } from './components/Anchor/Anchor';
-export type { ArrowBodyProps, ArrowBodyStylesNames } from './components/ArrowBody/ArrowBody';
 export type {
   AutocompleteProps,
   AutocompleteStylesNames,
