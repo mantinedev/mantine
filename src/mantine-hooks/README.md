@@ -51,4 +51,4 @@ npm install @mantine/hooks
 
 ## Licence
 
-All Mantine packages have MIT licence. All Mantine dependencies also have MIT licence, except react-transition-group package which has BSD-3-Clause license.
+All Mantine packages have MIT licence. All Mantine dependencies also have MIT licence.
