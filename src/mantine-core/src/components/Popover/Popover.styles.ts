@@ -15,15 +15,7 @@ export default createMemoStyles({
     display: 'inline-block',
   },
 
-  wrapper: {
-    // background: 'transparent',
-    // position: 'absolute',
-    // top: 0,
-    // left: 0,
-    // right: 0,
-    // bottom: 0,
-    // pointerEvents: 'none',
-  },
+  wrapper: {},
 
   popover: ({ theme, radius }: PopoverStyles) => ({
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
@@ -34,7 +26,6 @@ export default createMemoStyles({
   arrow: ({ theme }: PopoverStyles) => ({
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-    zIndex: 1,
   }),
 
   body: ({ theme, radius, shadow }: PopoverStyles) => ({

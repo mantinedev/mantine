@@ -12,11 +12,11 @@ function Demo() {
       opened={opened}
       onClose={() => setOpened(false)}
       position="bottom"
-      placement="center"
+      placement="start"
       withArrow
       noFocusTrap
       noEscape
-      transition="slide-up"
+      transition="pop-top-left"
       styles={{ body: { width: 260, pointerEvents: 'none' } }}
       target={
         <Badge onMouseEnter={() => setOpened(true)} onMouseLeave={() => setOpened(false)}>
@@ -47,12 +47,12 @@ function Demo() {
           opened={opened}
           onClose={() => setOpened(false)}
           position="bottom"
-          placement="center"
+          placement="start"
           withArrow
           noFocusTrap
           noEscape
           styles={{ body: { width: 260, pointerEvents: 'none' } }}
-          transition="slide-up"
+          transition="pop-top-left"
           target={
             <Badge onMouseEnter={() => setOpened(true)} onMouseLeave={() => setOpened(false)}>
               Hover badge to see popover
