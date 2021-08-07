@@ -3,7 +3,6 @@ import cx from 'clsx';
 import { useMove } from '@mantine/hooks';
 import { DefaultProps, mergeStyles } from '../../../theme';
 import { Thumb } from '../Thumb/Thumb';
-import { hsvaToHsl } from '../converters/hsva-to-hsl';
 import { HsvaColor } from '../types';
 import useStyles from './Hue.styles';
 
@@ -12,13 +11,11 @@ export type HueStylesNames = keyof ReturnType<typeof useStyles>;
 interface HueProps extends DefaultProps<HueStylesNames> {
   value: HsvaColor;
   onChange(color: HsvaColor): void;
-  thumbSize?: number;
 }
 
 export function Hue({
   value,
   onChange,
-  thumbSize = 24,
   themeOverride,
   classNames,
   styles,
@@ -36,13 +33,8 @@ export function Hue({
 
   return (
     <div ref={ref} className={cx(classes.hue, className)} style={{ ..._styles.hue, ...style }}>
-      <Thumb
-        color={hsvaToHsl({ ...value, s: 100, v: 100 })}
-        size={thumbSize}
-        themeOverride={themeOverride}
-        position={position}
-        style={{ top: 'calc(50% - 12px)' }}
-      />
+      <div className={classes.hueOverlay} />
+      <Thumb themeOverride={themeOverride} position={position} type="slider" />
     </div>
   );
 }

@@ -17,7 +17,7 @@ export function ColorPicker({ value, onChange }: ColorPickerProps) {
     <div style={{ width: 200 }}>
       <Saturation value={value} onChange={onChange} />
       <Hue value={value} onChange={onChange} style={{ marginTop: 10 }} />
-      <Alpha value={value} onChange={onChange} style={{ marginTop: 10 }} />
+      <Alpha value={value} onChange={onChange} style={{ marginTop: 4 }} />
     </div>
   );
 }

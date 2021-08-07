@@ -12,13 +12,11 @@ export type AlphaStylesNames = keyof ReturnType<typeof useStyles>;
 interface AlphaProps extends DefaultProps<AlphaStylesNames> {
   value: HsvaColor;
   onChange(color: HsvaColor): void;
-  thumbSize?: number;
 }
 
 export function Alpha({
   value,
   onChange,
-  thumbSize = 24,
   themeOverride,
   classNames,
   styles,
@@ -50,13 +48,7 @@ export function Alpha({
           })})`,
         }}
       />
-      <Thumb
-        color={hsvaToHsl(value)}
-        size={thumbSize}
-        themeOverride={themeOverride}
-        position={position}
-        style={{ top: 'calc(50% - 12px)' }}
-      />
+      <Thumb themeOverride={themeOverride} position={position} type="slider" />
     </div>
   );
 }

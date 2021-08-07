@@ -1,48 +1,28 @@
 import React from 'react';
-import cx from 'clsx';
 import { useMantineTheme, DefaultProps, mergeStyles } from '../../../theme';
 import useStyles from './Thumb.styles';
 
 export type ThumbStylesNames = keyof ReturnType<typeof useStyles>;
 
 interface ThumbProps extends DefaultProps<ThumbStylesNames> {
-  color: string;
-  size: number;
   position: { x: number; y: number };
-  style?: React.CSSProperties;
+  type: 'slider' | 'move';
 }
 
-export function Thumb({
-  color,
-  size,
-  position,
-  themeOverride,
-  style,
-  styles,
-  classNames,
-}: ThumbProps) {
+export function Thumb({ position, type, themeOverride, styles, classNames }: ThumbProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'color-input');
+  const classes = useStyles({ theme, type }, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
 
   return (
     <div
       className={classes.thumb}
       style={{
-        left: `calc(${position.x * 100}% - ${size / 2}px)`,
-        top: `calc(${position.y * 100}% - ${size / 2}px)`,
-        width: size,
-        height: size,
-        borderRadius: size,
-        ...style,
+        ..._styles.thumb,
+        left: `calc(${position.x * 100}% - ${type === 'slider' ? 3 : 6}px)`,
+        top: type === 'slider' ? 1 : `calc(${position.y * 100}% - 6px)`,
       }}
-    >
-      <div className={cx(classes.thumbOverlay, classes.thumbCheckers)} />
-      <div
-        className={classes.thumbOverlay}
-        style={{ ..._styles.thumbOverlay, backgroundColor: color }}
-      />
-    </div>
+    />
   );
 }
 

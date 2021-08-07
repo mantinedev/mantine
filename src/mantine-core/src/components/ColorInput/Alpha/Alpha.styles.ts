@@ -3,19 +3,19 @@ import { createMemoStyles } from '../../../theme';
 export default createMemoStyles({
   alpha: {
     position: 'relative',
-    height: 12,
-    borderRadius: 8,
+    height: 10,
     boxSizing: 'border-box',
+    marginLeft: 4,
+    marginRight: 4,
   },
 
   alphaOverlay: {
     position: 'absolute',
     top: 0,
-    left: 0,
-    right: 0,
+    left: -4,
+    right: -4,
     bottom: 0,
-    height: 12,
-    borderRadius: 12,
+    borderRadius: 1,
   },
 
   alphaBackground: {
