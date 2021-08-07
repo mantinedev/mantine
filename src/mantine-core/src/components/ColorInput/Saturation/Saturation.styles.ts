@@ -3,7 +3,7 @@ import { createMemoStyles } from '../../../theme';
 export default createMemoStyles({
   saturation: {
     position: 'relative',
-    height: 200,
+    height: 140,
   },
 
   saturationOverlay: {

@@ -14,10 +14,10 @@ interface ColorPickerProps extends DefaultProps<ColorPickerStylesNames> {
 
 export function ColorPicker({ value, onChange }: ColorPickerProps) {
   return (
-    <div>
+    <div style={{ width: 200 }}>
       <Saturation value={value} onChange={onChange} />
-      <Hue value={value} onChange={onChange} />
-      <Alpha value={value} onChange={onChange} />
+      <Hue value={value} onChange={onChange} style={{ marginTop: 10 }} />
+      <Alpha value={value} onChange={onChange} style={{ marginTop: 10 }} />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import cx from 'clsx';
 import { useMove } from '@mantine/hooks';
 import { DefaultProps, mergeStyles } from '../../../theme';
 import { Thumb } from '../Thumb/Thumb';
@@ -21,6 +22,8 @@ export function Hue({
   themeOverride,
   classNames,
   styles,
+  className,
+  style,
 }: HueProps) {
   const classes = useStyles(null, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
@@ -32,7 +35,7 @@ export function Hue({
   });
 
   return (
-    <div ref={ref} className={classes.hue} style={_styles.hue}>
+    <div ref={ref} className={cx(classes.hue, className)} style={{ ..._styles.hue, ...style }}>
       <Thumb
         color={hsvaToHsl({ ...value, s: 100, v: 100 })}
         size={thumbSize}

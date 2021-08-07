@@ -22,6 +22,8 @@ export function Alpha({
   themeOverride,
   classNames,
   styles,
+  style,
+  className,
 }: AlphaProps) {
   const classes = useStyles(null, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
@@ -33,7 +35,7 @@ export function Alpha({
   });
 
   return (
-    <div ref={ref} className={classes.alpha} style={_styles.alpha}>
+    <div ref={ref} className={cx(classes.alpha, className)} style={{ ..._styles.alpha, ...style }}>
       <div
         className={cx(classes.alphaBackground, classes.alphaOverlay)}
         style={{ ..._styles.alphaBackground, ..._styles.alphaOverlay }}
