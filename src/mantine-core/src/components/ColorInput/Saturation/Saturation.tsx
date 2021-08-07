@@ -3,7 +3,8 @@ import { useMove } from '@mantine/hooks';
 import { useMantineTheme, DefaultProps, mergeStyles } from '../../../theme';
 import { HsvaColor } from '../types';
 import { hsvaToHsl } from '../converters/hsva-to-hsl';
-import useStyles, { THUMB_SIZE } from './Saturation.styles';
+import { Thumb } from '../Thumb/Thumb';
+import useStyles from './Saturation.styles';
 
 export type SaturationStylesNames = keyof ReturnType<typeof useStyles>;
 
@@ -51,16 +52,7 @@ export function Saturation({
         }}
       />
 
-      <div
-        className={classes.saturationThumb}
-        style={{
-          ..._styles.saturationThumb,
-          position: 'absolute',
-          backgroundColor: hsvaToHsl(value),
-          left: `calc(${position.x * 100}% - ${THUMB_SIZE / 2}px)`,
-          top: `calc(${position.y * 100}% - ${THUMB_SIZE / 2}px)`,
-        }}
-      />
+      <Thumb color={hsvaToHsl(value)} size={12} themeOverride={themeOverride} position={position} />
     </div>
   );
 }
