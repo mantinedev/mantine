@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { Saturation } from './Saturation/Saturation';
 import { Hue } from './Hue/Hue';
 import { Alpha } from './Alpha/Alpha';
+import { ColorPicker } from './ColorPicker/ColorPicker';
 import { ColorInput } from './ColorInput';
 
 function SaturationWrapper() {
@@ -20,6 +21,11 @@ function AlphaWrapper() {
   return <Alpha value={value} onChange={onChange} />;
 }
 
+function ColorPickerWrapper() {
+  const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 1 });
+  return <ColorPicker value={value} onChange={onChange} />;
+}
+
 storiesOf('@mantine/core/ColorInput', module)
   .add('Saturation', () => (
     <div style={{ padding: 40 }}>
@@ -34,6 +40,11 @@ storiesOf('@mantine/core/ColorInput', module)
   .add('Alpha', () => (
     <div style={{ padding: 40 }}>
       <AlphaWrapper />
+    </div>
+  ))
+  .add('ColorPicker', () => (
+    <div style={{ padding: 40 }}>
+      <ColorPickerWrapper />
     </div>
   ))
   .add('Input', () => (

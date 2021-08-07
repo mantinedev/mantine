@@ -1,14 +1,14 @@
 import { createMemoStyles } from '../../../theme';
 
 export default createMemoStyles({
-  hue: {
+  alpha: {
     position: 'relative',
     height: 12,
     borderRadius: 8,
     boxSizing: 'border-box',
   },
 
-  overlay: {
+  alphaOverlay: {
     position: 'absolute',
     top: 0,
     left: 0,

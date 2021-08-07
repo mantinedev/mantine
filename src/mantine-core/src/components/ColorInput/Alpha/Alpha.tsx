@@ -33,11 +33,15 @@ export function Alpha({
   });
 
   return (
-    <div ref={ref} className={classes.hue} style={_styles.hue}>
-      <div className={cx(classes.alphaBackground, classes.overlay)} />
+    <div ref={ref} className={classes.alpha} style={_styles.alpha}>
       <div
-        className={classes.overlay}
+        className={cx(classes.alphaBackground, classes.alphaOverlay)}
+        style={{ ..._styles.alphaBackground, ..._styles.alphaOverlay }}
+      />
+      <div
+        className={classes.alphaOverlay}
         style={{
+          ..._styles.alphaOverlay,
           backgroundImage: `linear-gradient(90deg, ${hsvaToHsl({ ...value, a: 0 })}, ${hsvaToHsl({
             ...value,
             a: 1,
