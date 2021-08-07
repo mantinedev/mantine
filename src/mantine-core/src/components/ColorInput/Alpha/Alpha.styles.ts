@@ -3,7 +3,7 @@ import { createMemoStyles } from '../../../theme';
 export default createMemoStyles({
   hue: {
     position: 'relative',
-    height: 8,
+    height: 12,
     borderRadius: 8,
     boxSizing: 'border-box',
   },

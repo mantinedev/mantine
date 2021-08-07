@@ -16,7 +16,7 @@ function HueWrapper() {
 }
 
 function AlphaWrapper() {
-  const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 1 });
+  const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 0.5 });
   return <Alpha value={value} onChange={onChange} />;
 }
 
