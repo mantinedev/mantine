@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMove } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, mergeStyles } from '../../../theme';
+import { DefaultProps, mergeStyles } from '../../../theme';
 import { HsvaColor } from '../types';
 import { hsvaToHsl } from '../converters/hsva-to-hsl';
 import { Thumb } from '../Thumb/Thumb';
@@ -11,17 +11,18 @@ export type SaturationStylesNames = keyof ReturnType<typeof useStyles>;
 interface SaturationProps extends DefaultProps<SaturationStylesNames> {
   value: HsvaColor;
   onChange(color: HsvaColor): void;
+  thumbSize?: number;
 }
 
 export function Saturation({
   value,
   onChange,
+  thumbSize = 12,
   themeOverride,
   classNames,
   styles,
 }: SaturationProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'color-input');
+  const classes = useStyles(null, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ x: value.s / 100, y: value.v / 100 });
 
@@ -52,7 +53,12 @@ export function Saturation({
         }}
       />
 
-      <Thumb color={hsvaToHsl(value)} size={12} themeOverride={themeOverride} position={position} />
+      <Thumb
+        color={hsvaToHsl(value)}
+        size={thumbSize}
+        themeOverride={themeOverride}
+        position={position}
+      />
     </div>
   );
 }

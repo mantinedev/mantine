@@ -1,10 +1,4 @@
-import { createMemoStyles, MantineTheme } from '../../../theme';
-
-interface SaturationStyles {
-  theme: MantineTheme;
-}
-
-export const THUMB_SIZE = 12;
+import { createMemoStyles } from '../../../theme';
 
 export default createMemoStyles({
   saturationWrapper: {
@@ -19,12 +13,4 @@ export default createMemoStyles({
     right: 0,
     bottom: 0,
   },
-
-  saturationThumb: ({ theme }: SaturationStyles) => ({
-    border: `2px solid ${theme.white}`,
-    width: THUMB_SIZE,
-    height: THUMB_SIZE,
-    borderRadius: THUMB_SIZE,
-    boxShadow: theme.shadows.sm,
-  }),
 });
