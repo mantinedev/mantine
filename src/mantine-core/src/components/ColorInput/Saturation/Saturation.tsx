@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useMove } from '@mantine/hooks';
 import { DefaultProps, mergeStyles } from '../../../theme';
 import { HsvaColor } from '../types';
@@ -25,9 +25,14 @@ export function Saturation({
   const classes = useStyles(null, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ x: value.s / 100, y: value.v / 100 });
+  const refValue = useRef(value);
+
+  useEffect(() => {
+    refValue.current = value;
+  }, [value]);
 
   const { ref } = useMove(({ x, y }) => {
-    onChange({ ...value, s: Math.round(x * 100), v: Math.round((1 - y) * 100) });
+    onChange({ ...refValue.current, s: Math.round(x * 100), v: Math.round((1 - y) * 100) });
     setPosition({ x, y });
   });
 
