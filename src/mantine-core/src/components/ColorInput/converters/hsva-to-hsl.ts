@@ -1,6 +1,6 @@
 import { HsvaColor } from '../types';
 
-export function hsvaToHsl({ h, s, v }: HsvaColor) {
+export function hsvaToHsl({ h, s, v, a }: HsvaColor) {
   const hh = ((200 - s) * v) / 100;
 
   const result = {
@@ -9,5 +9,5 @@ export function hsvaToHsl({ h, s, v }: HsvaColor) {
     l: Math.round(hh / 2),
   };
 
-  return `hsl(${result.h}, ${result.s}%, ${result.l}%)`;
+  return `hsl(${result.h}, ${result.s}%, ${result.l}%, ${a})`;
 }
