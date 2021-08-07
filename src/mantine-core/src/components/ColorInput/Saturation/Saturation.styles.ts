@@ -1,7 +1,7 @@
 import { createMemoStyles } from '../../../theme';
 
 export default createMemoStyles({
-  saturationWrapper: {
+  saturation: {
     position: 'relative',
     height: 200,
   },

@@ -33,9 +33,9 @@ export function Saturation({
 
   return (
     <div
-      className={classes.saturationWrapper}
+      className={classes.saturation}
       ref={ref}
-      style={{ ..._styles.saturationWrapper, backgroundColor: `hsl(${value.h}, 100%, 50%)` }}
+      style={{ ..._styles.saturation, backgroundColor: `hsl(${value.h}, 100%, 50%)` }}
     >
       <div
         className={classes.saturationOverlay}

@@ -6,14 +6,16 @@ interface ThumbProps {
   size: number;
   position: { x: number; y: number };
   themeOverride: MantineThemeOverride;
+  style?: React.CSSProperties;
 }
 
-export function Thumb({ color, size, position, themeOverride }: ThumbProps) {
+export function Thumb({ color, size, position, themeOverride, style }: ThumbProps) {
   const theme = useMantineTheme(themeOverride);
 
   return (
     <div
       style={{
+        boxSizing: 'border-box',
         position: 'absolute',
         backgroundColor: color,
         left: `calc(${position.x * 100}% - ${size / 2}px)`,
@@ -23,6 +25,7 @@ export function Thumb({ color, size, position, themeOverride }: ThumbProps) {
         height: size,
         borderRadius: size,
         boxShadow: theme.shadows.sm,
+        ...style,
       }}
     />
   );
