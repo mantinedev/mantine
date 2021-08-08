@@ -5,7 +5,7 @@ import { ColorSwatch } from '../ColorSwatch';
 import { Group } from '../../Group/Group';
 
 const code = `
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CheckIcon } from '@modulz/radix-icons';
 import { ColorSwatch, Group, useMantineTheme } from '@mantine/core';
 

@@ -20,7 +20,7 @@ describe('@mantine/core/ColorSwatch', () => {
 
   it('sets correct background-color based on color property', () => {
     const element = shallow(<ColorSwatch color="red" />).render();
-    expect(element.css('background-color')).toBe('red');
+    expect(element.find('.mantine-color-swatch-colorOverlay').css('background-color')).toBe('red');
   });
 
   it('allows size and color props override with style property', () => {

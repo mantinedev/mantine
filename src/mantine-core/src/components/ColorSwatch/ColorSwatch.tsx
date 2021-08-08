@@ -23,19 +23,28 @@ export function ColorSwatch<T extends React.ElementType = 'div', U = HTMLDivElem
   radius = 25,
   className,
   themeOverride,
+  children,
   ...others
 }: ComponentPassThrough<T, ColorSwatchProps> & {
   /** Get element ref */
   elementRef?: React.ForwardedRef<U>;
 }) {
-  const classes = useStyles({ radius, theme: useMantineTheme(themeOverride) });
+  const classes = useStyles(
+    { radius, theme: useMantineTheme(themeOverride) },
+    null,
+    'color-swatch'
+  );
 
   return (
     <Element
       className={cx(classes.colorSwatch, className)}
-      style={{ width: size, height: size, backgroundColor: color, ...style }}
+      style={{ width: size, height: size, ...style }}
       {...others}
-    />
+    >
+      <div className={classes.alphaOverlay} />
+      <div className={classes.colorOverlay} style={{ backgroundColor: color }} />
+      <div className={classes.children}>{children}</div>
+    </Element>
   );
 }
 
