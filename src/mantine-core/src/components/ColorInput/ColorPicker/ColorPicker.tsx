@@ -4,6 +4,7 @@ import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
 import { Hue, HueStylesNames } from '../Hue/Hue';
 import { Alpha, AlphaStylesNames } from '../Alpha/Alpha';
 import { Saturation, SaturationStylesNames } from '../Saturation/Saturation';
+import { Swatches } from '../Swatches/Swatches';
 import { HsvaColor } from '../types';
 import { hsvaToHsl } from '../converters/hsva-to-hsl';
 import useStyles from './ColorPicker.styles';
@@ -18,6 +19,7 @@ interface ColorPickerProps extends DefaultProps<ColorPickerStylesNames> {
   value: HsvaColor;
   onChange(color: HsvaColor): void;
   withAlpha?: boolean;
+  swatches?: string[];
 }
 
 export function ColorPicker({
@@ -27,6 +29,7 @@ export function ColorPicker({
   styles,
   themeOverride,
   withAlpha = false,
+  swatches,
 }: ColorPickerProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames as any, 'color-input');
@@ -72,6 +75,7 @@ export function ColorPicker({
           </ColorSwatch>
         )}
       </div>
+      {Array.isArray(swatches) && <Swatches data={swatches} />}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Saturation } from './Saturation/Saturation';
+import { DEFAULT_THEME } from '../../theme';
 import { Hue } from './Hue/Hue';
 import { Alpha } from './Alpha/Alpha';
 import { ColorPicker } from './ColorPicker/ColorPicker';
@@ -31,7 +32,14 @@ function ColorPickerWrapper() {
   const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 1 });
   const handleChange = (val: Partial<typeof value>) =>
     onChange((current) => ({ ...current, ...val }));
-  return <ColorPicker value={value} onChange={handleChange} withAlpha />;
+  return (
+    <ColorPicker
+      value={value}
+      onChange={handleChange}
+      withAlpha
+      swatches={[...DEFAULT_THEME.colors.red, ...DEFAULT_THEME.colors.blue.slice(0, 4)]}
+    />
+  );
 }
 
 storiesOf('@mantine/core/ColorInput', module)
