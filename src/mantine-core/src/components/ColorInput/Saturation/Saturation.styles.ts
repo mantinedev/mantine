@@ -1,19 +1,23 @@
-import { createMemoStyles } from '../../../theme';
+import { createMemoStyles, MantineTheme } from '../../../theme';
+
+interface SaturationStyles {
+  theme: MantineTheme;
+}
 
 export default createMemoStyles({
-  saturation: {
+  saturation: ({ theme }: SaturationStyles) => ({
     position: 'relative',
     height: 120,
-    borderRadius: 1,
+    borderRadius: theme.radius.sm,
     margin: 7,
-  },
+  }),
 
-  saturationOverlay: {
+  saturationOverlay: ({ theme }: SaturationStyles) => ({
     position: 'absolute',
-    borderRadius: 1,
+    borderRadius: theme.radius.sm,
     top: -7,
     left: -7,
     right: -7,
     bottom: -7,
-  },
+  }),
 });

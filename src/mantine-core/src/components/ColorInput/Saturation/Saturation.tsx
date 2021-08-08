@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMove } from '@mantine/hooks';
-import { DefaultProps, mergeStyles } from '../../../theme';
+import { DefaultProps, mergeStyles, useMantineTheme } from '../../../theme';
 import { HsvaColor } from '../types';
 import { Thumb } from '../Thumb/Thumb';
 import useStyles from './Saturation.styles';
@@ -19,7 +19,8 @@ export function Saturation({
   classNames,
   styles,
 }: SaturationProps) {
-  const classes = useStyles(null, classNames, 'color-input');
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme }, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ x: value.s / 100, y: value.v / 100 });
 
