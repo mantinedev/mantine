@@ -11,7 +11,7 @@ export type AlphaStylesNames = keyof ReturnType<typeof useStyles>;
 
 interface AlphaProps extends DefaultProps<AlphaStylesNames> {
   value: HsvaColor;
-  onChange(color: HsvaColor): void;
+  onChange(color: Partial<HsvaColor>): void;
 }
 
 export function Alpha({
@@ -28,7 +28,7 @@ export function Alpha({
   const [position, setPosition] = useState({ y: 0, x: value.a });
 
   const { ref } = useMove(({ x }) => {
-    onChange({ ...value, a: x });
+    onChange({ a: x });
     setPosition({ x, y: 0 });
   });
 

@@ -8,22 +8,30 @@ import { ColorInput } from './ColorInput';
 
 function SaturationWrapper() {
   const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 1 });
-  return <Saturation value={value} onChange={onChange} />;
+  const handleChange = (val: Partial<typeof value>) =>
+    onChange((current) => ({ ...current, ...val }));
+  return <Saturation value={value} onChange={handleChange} />;
 }
 
 function HueWrapper() {
   const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 1 });
-  return <Hue value={value} onChange={onChange} />;
+  const handleChange = (val: Partial<typeof value>) =>
+    onChange((current) => ({ ...current, ...val }));
+  return <Hue value={value} onChange={handleChange} />;
 }
 
 function AlphaWrapper() {
   const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 0.5 });
-  return <Alpha value={value} onChange={onChange} />;
+  const handleChange = (val: Partial<typeof value>) =>
+    onChange((current) => ({ ...current, ...val }));
+  return <Alpha value={value} onChange={handleChange} />;
 }
 
 function ColorPickerWrapper() {
   const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 1 });
-  return <ColorPicker value={value} onChange={onChange} />;
+  const handleChange = (val: Partial<typeof value>) =>
+    onChange((current) => ({ ...current, ...val }));
+  return <ColorPicker value={value} onChange={handleChange} />;
 }
 
 storiesOf('@mantine/core/ColorInput', module)

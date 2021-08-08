@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cx from 'clsx';
 import { useMove } from '@mantine/hooks';
 import { DefaultProps, mergeStyles } from '../../../theme';
@@ -10,7 +10,7 @@ export type HueStylesNames = keyof ReturnType<typeof useStyles>;
 
 interface HueProps extends DefaultProps<HueStylesNames> {
   value: HsvaColor;
-  onChange(color: HsvaColor): void;
+  onChange(color: Partial<HsvaColor>): void;
 }
 
 export function Hue({
@@ -26,8 +26,12 @@ export function Hue({
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ y: 0, x: value.h / 360 });
 
+  useEffect(() => {
+    setPosition({ y: 0, x: value.h / 360 });
+  }, [value]);
+
   const { ref } = useMove(({ x }) => {
-    onChange({ ...value, h: Math.round(x * 360) });
+    onChange({ h: Math.round(x * 360) });
     setPosition({ x, y: 0 });
   });
 
