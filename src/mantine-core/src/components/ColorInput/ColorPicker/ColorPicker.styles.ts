@@ -28,6 +28,9 @@ export default createMemoStyles({
 
   sliders: ({ theme }: ColorPickerStyles) => ({
     flex: 1,
-    marginRight: theme.spacing.xs,
+
+    '&:not(:only-child)': {
+      marginRight: theme.spacing.xs,
+    },
   }),
 });

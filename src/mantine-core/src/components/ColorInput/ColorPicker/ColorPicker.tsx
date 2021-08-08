@@ -17,6 +17,7 @@ export type ColorPickerStylesNames =
 interface ColorPickerProps extends DefaultProps<ColorPickerStylesNames> {
   value: HsvaColor;
   onChange(color: HsvaColor): void;
+  withAlpha?: boolean;
 }
 
 export function ColorPicker({
@@ -25,6 +26,7 @@ export function ColorPicker({
   classNames,
   styles,
   themeOverride,
+  withAlpha = false,
 }: ColorPickerProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames as any, 'color-input');
@@ -51,20 +53,24 @@ export function ColorPicker({
             styles={styles as any}
             classNames={classNames as any}
           />
-          <Alpha
-            value={value}
-            onChange={onChange}
-            className={classes.slider}
-            themeOverride={themeOverride}
-            styles={styles as any}
-            classNames={classNames as any}
-            style={_styles.slider}
-          />
+          {withAlpha && (
+            <Alpha
+              value={value}
+              onChange={onChange}
+              className={classes.slider}
+              themeOverride={themeOverride}
+              styles={styles as any}
+              classNames={classNames as any}
+              style={_styles.slider}
+            />
+          )}
         </div>
 
-        <ColorSwatch color={hsvaToHsl(value)} radius="sm" themeOverride={themeOverride} size={34}>
-          <div className={classes.swatchShadow} style={_styles.swatchShadow} />
-        </ColorSwatch>
+        {withAlpha && (
+          <ColorSwatch color={hsvaToHsl(value)} radius="sm" themeOverride={themeOverride} size={34}>
+            <div className={classes.swatchShadow} style={_styles.swatchShadow} />
+          </ColorSwatch>
+        )}
       </div>
     </div>
   );

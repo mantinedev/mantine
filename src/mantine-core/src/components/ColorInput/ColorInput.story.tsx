@@ -31,7 +31,7 @@ function ColorPickerWrapper() {
   const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 1 });
   const handleChange = (val: Partial<typeof value>) =>
     onChange((current) => ({ ...current, ...val }));
-  return <ColorPicker value={value} onChange={handleChange} />;
+  return <ColorPicker value={value} onChange={handleChange} withAlpha />;
 }
 
 storiesOf('@mantine/core/ColorInput', module)
