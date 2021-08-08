@@ -48,7 +48,7 @@ export function Alpha({
           })})`,
         }}
       />
-      <Thumb themeOverride={themeOverride} position={position} type="slider" />
+      <Thumb themeOverride={themeOverride} position={position} style={{ top: 1 }} />
     </div>
   );
 }

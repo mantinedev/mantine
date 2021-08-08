@@ -55,7 +55,7 @@ export function Saturation({
         }}
       />
 
-      <Thumb themeOverride={themeOverride} position={position} type="move" />
+      <Thumb themeOverride={themeOverride} position={position} />
     </div>
   );
 }

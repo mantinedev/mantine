@@ -34,7 +34,7 @@ export function Hue({
   return (
     <div ref={ref} className={cx(classes.hue, className)} style={{ ..._styles.hue, ...style }}>
       <div className={classes.hueOverlay} />
-      <Thumb themeOverride={themeOverride} position={position} type="slider" />
+      <Thumb themeOverride={themeOverride} position={position} style={{ top: 1 }} />
     </div>
   );
 }

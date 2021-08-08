@@ -6,12 +6,11 @@ export type ThumbStylesNames = keyof ReturnType<typeof useStyles>;
 
 interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   position: { x: number; y: number };
-  type: 'slider' | 'move';
 }
 
-export function Thumb({ position, type, themeOverride, styles, classNames }: ThumbProps) {
+export function Thumb({ position, themeOverride, styles, classNames, style }: ThumbProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, type }, classNames, 'color-input');
+  const classes = useStyles({ theme }, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
 
   return (
@@ -19,8 +18,9 @@ export function Thumb({ position, type, themeOverride, styles, classNames }: Thu
       className={classes.thumb}
       style={{
         ..._styles.thumb,
-        left: `calc(${position.x * 100}% - ${type === 'slider' ? 3 : 6}px)`,
-        top: type === 'slider' ? 1 : `calc(${position.y * 100}% - 6px)`,
+        left: `calc(${position.x * 100}% - 6px)`,
+        top: `calc(${position.y * 100}% - 6px)`,
+        ...style,
       }}
     />
   );
