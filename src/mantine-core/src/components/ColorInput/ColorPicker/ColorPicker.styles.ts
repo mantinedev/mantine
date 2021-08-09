@@ -33,4 +33,8 @@ export default createMemoStyles({
       marginRight: theme.spacing.xs,
     },
   }),
+
+  swatch: {
+    cursor: 'pointer',
+  },
 });

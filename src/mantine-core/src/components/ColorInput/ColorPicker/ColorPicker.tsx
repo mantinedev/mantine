@@ -75,7 +75,8 @@ export function ColorPicker({
           </ColorSwatch>
         )}
       </div>
-      {Array.isArray(swatches) && <Swatches data={swatches} />}
+
+      {Array.isArray(swatches) && <Swatches data={swatches} onSelect={onChange} />}
     </div>
   );
 }

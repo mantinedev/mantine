@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import cx from 'clsx';
-import { useMove } from '@mantine/hooks';
+import { useMove, useDidUpdate } from '@mantine/hooks';
 import { DefaultProps, mergeStyles } from '../../../theme';
 import { Thumb } from '../Thumb/Thumb';
 import { HsvaColor } from '../types';
@@ -25,15 +25,11 @@ export function Hue({
   const classes = useStyles(null, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ y: 0, x: value.h / 360 });
+  const { ref } = useMove(({ x }) => onChange({ h: Math.round(x * 360) }));
 
-  useEffect(() => {
+  useDidUpdate(() => {
     setPosition({ y: 0, x: value.h / 360 });
-  }, [value]);
-
-  const { ref } = useMove(({ x }) => {
-    onChange({ h: Math.round(x * 360) });
-    setPosition({ x, y: 0 });
-  });
+  }, [value.h]);
 
   return (
     <div ref={ref} className={cx(classes.hue, className)} style={{ ..._styles.hue, ...style }}>
