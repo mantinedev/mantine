@@ -6,7 +6,7 @@ import { Alpha, AlphaStylesNames } from '../Alpha/Alpha';
 import { Saturation, SaturationStylesNames } from '../Saturation/Saturation';
 import { Swatches } from '../Swatches/Swatches';
 import { HsvaColor } from '../types';
-import { hsvaToHsl } from '../converters/hsva-to-hsl';
+import { convertHsvaTo } from '../converters';
 import useStyles from './ColorPicker.styles';
 
 export type ColorPickerStylesNames =
@@ -70,7 +70,12 @@ export function ColorPicker({
         </div>
 
         {withAlpha && (
-          <ColorSwatch color={hsvaToHsl(value)} radius="sm" themeOverride={themeOverride} size={34}>
+          <ColorSwatch
+            color={convertHsvaTo('rgba', value)}
+            radius="sm"
+            themeOverride={themeOverride}
+            size={34}
+          >
             <div className={classes.swatchShadow} style={_styles.swatchShadow} />
           </ColorSwatch>
         )}

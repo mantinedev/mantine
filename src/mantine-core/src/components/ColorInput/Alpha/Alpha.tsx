@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { useMove, useDidUpdate } from '@mantine/hooks';
 import { DefaultProps, mergeStyles } from '../../../theme';
 import { Thumb } from '../Thumb/Thumb';
-import { hsvaToHsl } from '../converters/hsva-to-hsl';
+import { convertHsvaTo } from '../converters';
 import { HsvaColor } from '../types';
 import useStyles from './Alpha.styles';
 
@@ -43,7 +43,10 @@ export function Alpha({
         className={classes.alphaOverlay}
         style={{
           ..._styles.alphaOverlay,
-          backgroundImage: `linear-gradient(90deg, ${hsvaToHsl({ ...value, a: 0 })}, ${hsvaToHsl({
+          backgroundImage: `linear-gradient(90deg, ${convertHsvaTo('rgba', {
+            ...value,
+            a: 0,
+          })}, ${convertHsvaTo('rgba', {
             ...value,
             a: 1,
           })})`,

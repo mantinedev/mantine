@@ -1,4 +1,4 @@
-import { HsvaColor, RgbaColor } from '../types';
+import { HsvaColor, RgbaColor, ColorFormat } from '../types';
 
 export function round(number: number, digits = 0, base = 10 ** digits) {
   return Math.round(base * number) / base;
@@ -101,15 +101,15 @@ export function parseRgba(color: string): HsvaColor {
   });
 }
 
-const VALIDATION_REGEXP = {
+const VALIDATION_REGEXP: Record<ColorFormat, RegExp> = {
   hex: /^#?([0-9A-F]{3}){1,2}$/i,
   rgb: /^rgb[(](?:\s*0*(?:\d\d?(?:\.\d+)?(?:\s*%)?|\.\d+\s*%|100(?:\.0*)?\s*%|(?:1\d\d|2[0-4]\d|25[0-5])(?:\.\d+)?)\s*(?:,(?![)])|(?=[)]))){3}[)]$/i,
   rgba: /^^rgba[(](?:\s*0*(?:\d\d?(?:\.\d+)?(?:\s*%)?|\.\d+\s*%|100(?:\.0*)?\s*%|(?:1\d\d|2[0-4]\d|25[0-5])(?:\.\d+)?)\s*,){3}\s*0*(?:\.\d+|1(?:\.0*)?)\s*[)]$/i,
   hsl: /^hsl[(]\s*0*(?:[12]?\d{1,2}|3(?:[0-5]\d|60))\s*(?:\s*,\s*0*(?:\d\d?(?:\.\d+)?\s*%|\.\d+\s*%|100(?:\.0*)?\s*%)){2}\s*[)]$/i,
   hsla: /^hsla[(]\s*0*(?:[12]?\d{1,2}|3(?:[0-5]\d|60))\s*(?:\s*,\s*0*(?:\d\d?(?:\.\d+)?\s*%|\.\d+\s*%|100(?:\.0*)?\s*%)){2}\s*,\s*0*(?:\.\d+|1(?:\.0*)?)\s*[)]$/i,
-} as const;
+};
 
-const CONVERTERS: Record<keyof typeof VALIDATION_REGEXP, (color: string) => HsvaColor> = {
+const CONVERTERS: Record<ColorFormat, (color: string) => HsvaColor> = {
   hex: parseHex,
   rgb: parseRgba,
   rgba: parseRgba,
