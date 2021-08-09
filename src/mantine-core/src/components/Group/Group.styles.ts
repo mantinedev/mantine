@@ -8,7 +8,7 @@ interface GroupStyles {
   noWrap: boolean;
   grow: boolean;
   spacing: MantineNumberSize;
-  gutter: boolean,
+  withGutter: boolean,
   direction: 'row' | 'column';
   theme: MantineTheme;
   align: React.CSSProperties['alignItems'];
@@ -30,14 +30,14 @@ export default createMemoStyles({
     theme,
     grow,
     align,
-    gutter }: GroupStyles) => ({
+    withGutter }: GroupStyles) => ({
       display: 'flex',
       flexDirection: direction,
       alignItems: align || (direction === 'row' ? 'center' : grow ? 'stretch' : POSITIONS[position]),
       flexWrap: noWrap ? 'nowrap' : 'wrap',
       justifyContent: direction === 'row' && POSITIONS[position],
       margin: (-1 * getSizeValue({ size: spacing, sizes: theme.spacing })) / 2,
-      padding: gutter
+      padding: withGutter
         ? getSizeValue({ size: spacing, sizes: theme.spacing }) / 2
         : 0,
   }),

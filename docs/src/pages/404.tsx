@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
-import { Button, Group } from '@mantine/core';
+import { Button, Container, Group } from '@mantine/core';
 import {
   StarFilledIcon,
   TwitterLogoIcon,
@@ -16,7 +16,7 @@ function PageNotFound() {
   return (
     <>
       <Head title="404" disableTitleTemplate />
-      <div style={{ marginLeft: '20px' }}>
+      <Container fluid>
         <P>
           <H1>Congratulations!</H1>
           You've found a completely secret place on Mantine website. Unfortunately,
@@ -66,7 +66,7 @@ function PageNotFound() {
             Subscribe to monthly newsletter
           </Button>
         </Group>
-      </div>
+      </Container>
     </>
   );
 }

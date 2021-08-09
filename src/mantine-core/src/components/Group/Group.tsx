@@ -27,7 +27,7 @@ export interface GroupProps
   align?: React.CSSProperties['alignItems'];
 
   /** Defines padding for the root component */
-  gutter?: boolean;
+  withGutter?: boolean;
 }
 
 export type { GroupPosition };
@@ -42,7 +42,7 @@ export function Group({
   grow = false,
   spacing = 'md',
   direction = 'row',
-  gutter = false,
+  withGutter = false,
   themeOverride,
   classNames,
   styles,
@@ -60,7 +60,7 @@ export function Group({
       position,
       direction,
       count,
-      gutter,
+      withGutter,
     },
     classNames,
     'group'

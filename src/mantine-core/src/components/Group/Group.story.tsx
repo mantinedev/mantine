@@ -69,7 +69,7 @@ storiesOf('@mantine/core/Group', module)
         <Button>Button 2</Button>
       </Group>
       <h5>With Gutter</h5>
-      <Group gutter>
+      <Group withGutter>
         <Button>Button 1</Button>
         <Button>Button 2</Button>
       </Group>
