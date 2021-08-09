@@ -60,4 +60,18 @@ storiesOf('@mantine/core/Group', module)
         <button type="button">Hello</button>
       </Group>
     </div>
+  ))
+  .add('Disable Gutter', () => (
+    <>
+      <h5>Without Gutter</h5>
+      <Group>
+        <Button>Button 1</Button>
+        <Button>Button 2</Button>
+      </Group>
+      <h5>With Gutter</h5>
+      <Group gutter>
+        <Button>Button 1</Button>
+        <Button>Button 2</Button>
+      </Group>
+    </>
   ));
