@@ -70,6 +70,8 @@ export function ColorInput({
   transition = 'pop-top-left',
   transitionDuration = 0,
   transitionTimingFunction,
+  className,
+  style,
   ...others
 }: ColorInputProps) {
   const theme = useMantineTheme(themeOverride);
@@ -113,6 +115,8 @@ export function ColorInput({
       classNames={classNames as any}
       styles={styles as any}
       size={size}
+      className={className}
+      style={style}
       {...wrapperProps}
     >
       <div ref={setReferenceElement}>
@@ -126,6 +130,11 @@ export function ColorInput({
           onChange={(event) => setValue(event.currentTarget.value)}
           icon={<ColorSwatch color={_value} size={18} />}
           readOnly={disallowInput}
+          classNames={classNames as any}
+          styles={{
+            ...(styles as any),
+            input: { ...(styles as any)?.input, cursor: disallowInput ? 'pointer' : undefined },
+          }}
         />
       </div>
 
