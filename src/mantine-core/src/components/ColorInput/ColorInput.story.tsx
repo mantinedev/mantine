@@ -71,7 +71,7 @@ storiesOf('@mantine/core/ColorInput', module)
     </div>
   ))
   .add('Input', () => (
-    <div style={{ padding: 40 }}>
-      <ColorInput />
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <ColorInput label="Color input" placeholder="Pick color" />
     </div>
   ));
