@@ -1,7 +1,7 @@
 import React from 'react';
 import { chunk } from '../../../utils';
 import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
-import { Group } from '../../Group/Group';
+import { Grid, Col } from '../../Grid/Grid';
 import { parseColor } from '../converters/parsers';
 import { HsvaColor } from '../types';
 
@@ -13,23 +13,25 @@ interface SwatchesProps {
 export function Swatches({ data, onSelect }: SwatchesProps) {
   const colors = chunk(10, data).map((group, groupIndex) => {
     const items = group.map((color, index) => (
-      <ColorSwatch
-        component="button"
-        type="button"
-        color={color}
-        key={index}
-        size={16}
-        radius="sm"
-        onClick={() => onSelect(parseColor(color))}
-        style={{ cursor: 'pointer' }}
-        aria-label={color}
-      />
+      <Col span={1}>
+        <ColorSwatch
+          component="button"
+          type="button"
+          color={color}
+          key={index}
+          size={16}
+          radius="sm"
+          onClick={() => onSelect(parseColor(color))}
+          style={{ cursor: 'pointer' }}
+          aria-label={color}
+        />
+      </Col>
     ));
 
     return (
-      <Group spacing={4.45} key={groupIndex} style={{ marginTop: 5 }}>
+      <Grid key={groupIndex} style={{ marginTop: 0 }} columns={10} gutter={4.5}>
         {items}
-      </Group>
+      </Grid>
     );
   });
 
