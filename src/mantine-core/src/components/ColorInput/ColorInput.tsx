@@ -84,7 +84,7 @@ export function ColorInput({
     value,
     defaultValue,
     finalValue: '',
-    rule: (val) => isColorValid(val),
+    rule: (val) => !!val && val.trim().length > 0,
     onChange,
   });
 
