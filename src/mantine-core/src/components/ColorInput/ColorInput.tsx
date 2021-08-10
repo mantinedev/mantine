@@ -9,6 +9,7 @@ import {
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { Popper } from '../Popper/Popper';
+import { MantineTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
 import { ColorPicker } from './ColorPicker/ColorPicker';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
@@ -35,6 +36,18 @@ export interface ColorInputProps
 
   /** Color format */
   format?: 'hex' | 'rgba' | 'rgb' | 'hsl' | 'hsla';
+
+  /** Disallow free input */
+  disallowInput?: boolean;
+
+  /** Dropdown transition name or object */
+  transition?: MantineTransition;
+
+  /** Dropdown appear/disappear transition duration in ms */
+  transitionDuration?: number;
+
+  /** Dropdown transition timing function, defaults to theme.transitionTimingFunction */
+  transitionTimingFunction?: string;
 }
 
 export function ColorInput({
@@ -53,6 +66,10 @@ export function ColorInput({
   classNames,
   styles,
   themeOverride,
+  disallowInput = false,
+  transition = 'pop-top-left',
+  transitionDuration = 0,
+  transitionTimingFunction,
   ...others
 }: ColorInputProps) {
   const theme = useMantineTheme(themeOverride);
@@ -108,13 +125,15 @@ export function ColorInput({
           value={_value}
           onChange={(event) => setValue(event.currentTarget.value)}
           icon={<ColorSwatch color={_value} size={18} />}
+          readOnly={disallowInput}
         />
       </div>
 
       <Popper
         referenceElement={referenceElement}
-        transitionDuration={useReducedMotion() ? 0 : 150}
-        transition="pop-top-left"
+        transitionDuration={useReducedMotion() ? 0 : transitionDuration}
+        transitionTimingFunction={transitionTimingFunction}
+        transition={transition}
         mounted={dropdownOpened}
         position="bottom"
         placement="start"
