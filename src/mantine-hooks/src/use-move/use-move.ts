@@ -2,13 +2,18 @@
 import { useEffect, useState, useRef } from 'react';
 import { clamp } from '../utils';
 
-interface UseMoveValue {
+export interface UseMovePosition {
   x: number;
   y: number;
 }
 
+export const clampUseMovePosition = (position: UseMovePosition) => ({
+  x: clamp({ min: 0, max: 1, value: position.x }),
+  y: clamp({ min: 0, max: 1, value: position.y }),
+});
+
 export function useMove<T extends HTMLElement = HTMLDivElement>(
-  onChange: (value: UseMoveValue) => void
+  onChange: (value: UseMovePosition) => void
 ) {
   const ref = useRef<T>();
   const mounted = useRef<boolean>(false);
@@ -21,7 +26,7 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
   }, []);
 
   useEffect(() => {
-    const onScrub = ({ x, y }: UseMoveValue) => {
+    const onScrub = ({ x, y }: UseMovePosition) => {
       cancelAnimationFrame(frame.current);
 
       frame.current = requestAnimationFrame(() => {
