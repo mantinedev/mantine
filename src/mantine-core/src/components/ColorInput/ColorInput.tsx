@@ -46,6 +46,8 @@ export function ColorInput({
   size = 'sm',
   format = 'hex',
   onChange,
+  onFocus,
+  onBlur,
   value,
   defaultValue,
   classNames,
@@ -57,6 +59,7 @@ export function ColorInput({
   const classes = useStyles({ theme }, classNames as any, 'color-input');
   const _styles = mergeStyles(classes, styles as any);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
+  const [dropdownOpened, setDropdownOpened] = useState(false);
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -74,6 +77,16 @@ export function ColorInput({
     });
   };
 
+  const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    typeof onFocus === 'function' && onFocus(event);
+    setDropdownOpened(true);
+  };
+
+  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    typeof onBlur === 'function' && onBlur(event);
+    setDropdownOpened(false);
+  };
+
   return (
     <InputWrapper
       label={label}
@@ -88,6 +101,8 @@ export function ColorInput({
       <div ref={setReferenceElement}>
         <Input<'input'>
           {...others}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
           spellCheck={false}
           size={size}
           value={_value}
@@ -100,7 +115,7 @@ export function ColorInput({
         referenceElement={referenceElement}
         transitionDuration={useReducedMotion() ? 0 : 150}
         transition="pop-top-left"
-        mounted
+        mounted={dropdownOpened}
         position="bottom"
         placement="start"
         gutter={5}
@@ -111,7 +126,12 @@ export function ColorInput({
         arrowStyle={{ ..._styles.arrow, left: 15 }}
       >
         <div style={{ pointerEvents: 'all' }}>
-          <Paper shadow="sm" padding="sm" className={classes.dropdownBody}>
+          <Paper
+            shadow="sm"
+            padding="sm"
+            className={classes.dropdownBody}
+            onMouseDown={(event) => event.preventDefault()}
+          >
             <ColorPicker
               value={parsed}
               onChange={handleParsedChange}
