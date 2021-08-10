@@ -8,6 +8,7 @@ interface GroupStyles {
   noWrap: boolean;
   grow: boolean;
   spacing: MantineNumberSize;
+  withGutter: boolean,
   direction: 'row' | 'column';
   theme: MantineTheme;
   align: React.CSSProperties['alignItems'];
@@ -22,13 +23,23 @@ const POSITIONS = {
 };
 
 export default createMemoStyles({
-  root: ({ spacing, position, noWrap, direction, theme, grow, align }: GroupStyles) => ({
-    display: 'flex',
-    flexDirection: direction,
-    alignItems: align || (direction === 'row' ? 'center' : grow ? 'stretch' : POSITIONS[position]),
-    flexWrap: noWrap ? 'nowrap' : 'wrap',
-    justifyContent: direction === 'row' && POSITIONS[position],
-    margin: (-1 * getSizeValue({ size: spacing, sizes: theme.spacing })) / 2,
+  root: ({ spacing,
+    position,
+    noWrap,
+    direction,
+    theme,
+    grow,
+    align,
+    withGutter }: GroupStyles) => ({
+      display: 'flex',
+      flexDirection: direction,
+      alignItems: align || (direction === 'row' ? 'center' : grow ? 'stretch' : POSITIONS[position]),
+      flexWrap: noWrap ? 'nowrap' : 'wrap',
+      justifyContent: direction === 'row' && POSITIONS[position],
+      margin: (-1 * getSizeValue({ size: spacing, sizes: theme.spacing })) / 2,
+      padding: withGutter
+        ? getSizeValue({ size: spacing, sizes: theme.spacing }) / 2
+        : 0,
   }),
 
   child: ({ grow, spacing, theme, count, direction }: GroupStyles) => ({
