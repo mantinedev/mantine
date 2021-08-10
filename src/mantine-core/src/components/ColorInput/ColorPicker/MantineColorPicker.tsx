@@ -7,22 +7,22 @@ import { Saturation, SaturationStylesNames } from '../Saturation/Saturation';
 import { Swatches } from '../Swatches/Swatches';
 import { HsvaColor } from '../types';
 import { convertHsvaTo } from '../converters';
-import useStyles from './ColorPicker.styles';
+import useStyles from './MantineColorPicker.styles';
 
-export type ColorPickerStylesNames =
+export type MantineColorPickerStylesNames =
   | keyof ReturnType<typeof useStyles>
   | HueStylesNames
   | AlphaStylesNames
   | SaturationStylesNames;
 
-interface ColorPickerProps extends DefaultProps<ColorPickerStylesNames> {
+interface MantineColorPickerProps extends DefaultProps<MantineColorPickerStylesNames> {
   value: HsvaColor;
   onChange(color: HsvaColor): void;
   withAlpha?: boolean;
   swatches?: string[];
 }
 
-export function ColorPicker({
+export function MantineColorPicker({
   value,
   onChange,
   classNames,
@@ -30,7 +30,7 @@ export function ColorPicker({
   themeOverride,
   withAlpha = false,
   swatches,
-}: ColorPickerProps) {
+}: MantineColorPickerProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames as any, 'color-input');
   const _styles = mergeStyles(classes, styles as any);
@@ -84,4 +84,4 @@ export function ColorPicker({
   );
 }
 
-ColorPicker.displayName = '@mantine/core/ColorPicker';
+MantineColorPicker.displayName = '@mantine/core/MantineColorPicker';

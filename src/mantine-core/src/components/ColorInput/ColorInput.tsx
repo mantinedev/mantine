@@ -11,7 +11,7 @@ import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { Popper } from '../Popper/Popper';
 import { MantineTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
-import { ColorPicker } from './ColorPicker/ColorPicker';
+import { MantineColorPicker } from './ColorPicker/MantineColorPicker';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import useStyles from './ColorInput.styles';
 
@@ -181,7 +181,7 @@ export function ColorInput({
             className={classes.dropdownBody}
             onMouseDown={(event) => event.preventDefault()}
           >
-            <ColorPicker
+            <MantineColorPicker
               value={parsed}
               onChange={handleParsedChange}
               withAlpha={format === 'rgba' || format === 'hsla'}

@@ -5,9 +5,8 @@ import { DEFAULT_THEME } from '../../theme';
 import { Text } from '../Text/Text';
 import { Hue } from './Hue/Hue';
 import { Alpha } from './Alpha/Alpha';
-import { ColorPicker } from './ColorPicker/ColorPicker';
-import { convertHsvaTo } from './converters';
 import { ColorInput } from './ColorInput';
+import { ColorPicker } from './ColorPicker';
 
 function SaturationWrapper() {
   const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 1 });
@@ -31,20 +30,19 @@ function AlphaWrapper() {
 }
 
 function ColorPickerWrapper() {
-  const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 1 });
-  const handleChange = (val: Partial<typeof value>) =>
-    onChange((current) => ({ ...current, ...val }));
+  const [value, onChange] = useState('rgba(58, 161, 156, 0.48)');
   return (
     <>
       <ColorPicker
         value={value}
-        onChange={handleChange}
-        withAlpha
+        onChange={onChange}
+        format="rgba"
         swatches={[...DEFAULT_THEME.colors.red, ...DEFAULT_THEME.colors.blue.slice(0, 4)]}
       />
-      <Text>RGBA: {convertHsvaTo('rgba', value)}</Text>
-      <Text>HEX: {convertHsvaTo('hex', value)}</Text>
-      <Text>HSLA: {convertHsvaTo('hsla', value)}</Text>
+      <Text>Value: {value}</Text>
+      <button type="button" onClick={() => onChange('rgba(242, 165, 201, 0.54)')}>
+        Set value
+      </button>
     </>
   );
 }
