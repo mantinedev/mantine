@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useUncontrolled, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '../../theme';
 import {
@@ -79,11 +79,12 @@ export function ColorInput({
   const _styles = mergeStyles(classes, styles as any);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const [dropdownOpened, setDropdownOpened] = useState(false);
+  const [lastValidValue, setLastValidValue] = useState('');
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
     finalValue: '',
-    rule: (val) => isColorValid(format, val),
+    rule: (val) => isColorValid(val),
     onChange,
   });
 
@@ -104,7 +105,15 @@ export function ColorInput({
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onBlur === 'function' && onBlur(event);
     setDropdownOpened(false);
+    setValue(lastValidValue);
   };
+
+  useEffect(() => {
+    if (isColorValid(_value)) {
+      setParsed(parseColor(_value));
+      setLastValidValue(_value);
+    }
+  }, [_value]);
 
   return (
     <InputWrapper

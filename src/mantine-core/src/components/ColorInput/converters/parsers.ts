@@ -117,9 +117,12 @@ const CONVERTERS: Record<ColorFormat, (color: string) => HsvaColor> = {
   hsla: parseHsla,
 };
 
-export function isColorValid(format: ColorFormat, color: string) {
-  if (format in VALIDATION_REGEXP) {
-    return VALIDATION_REGEXP[format].test(color);
+export function isColorValid(color: string) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [, regexp] of Object.entries(VALIDATION_REGEXP)) {
+    if (regexp.test(color)) {
+      return true;
+    }
   }
 
   return false;
