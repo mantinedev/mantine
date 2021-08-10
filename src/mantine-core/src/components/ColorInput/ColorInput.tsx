@@ -99,6 +99,7 @@ export function ColorInput({
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onFocus === 'function' && onFocus(event);
+    setParsed(parseColor(_value));
     setDropdownOpened(true);
   };
 
@@ -108,9 +109,16 @@ export function ColorInput({
     setValue(lastValidValue);
   };
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (isColorValid(event.currentTarget.value)) {
+      setParsed(parseColor(event.currentTarget.value));
+    }
+
+    setValue(event.currentTarget.value);
+  };
+
   useEffect(() => {
     if (isColorValid(_value)) {
-      setParsed(parseColor(_value));
       setLastValidValue(_value);
     }
   }, [_value]);
@@ -136,7 +144,7 @@ export function ColorInput({
           spellCheck={false}
           size={size}
           value={_value}
-          onChange={(event) => setValue(event.currentTarget.value)}
+          onChange={handleInputChange}
           icon={<ColorSwatch color={_value} size={18} />}
           readOnly={disallowInput}
           classNames={classNames as any}

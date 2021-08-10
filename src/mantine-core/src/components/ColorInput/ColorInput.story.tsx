@@ -49,6 +49,25 @@ function ColorPickerWrapper() {
   );
 }
 
+function ControlledInput() {
+  const [value, setValue] = useState('rgba(84, 37, 186, 0.81)');
+  return (
+    <div style={{ marginTop: 15 }}>
+      <ColorInput
+        label="Controlled input"
+        placeholder="Pick color"
+        format="rgba"
+        value={value}
+        onChange={setValue}
+      />
+
+      <button type="button" onClick={() => setValue('rgba(242, 165, 201, 0.54)')}>
+        Set value
+      </button>
+    </div>
+  );
+}
+
 storiesOf('@mantine/core/ColorInput', module)
   .add('Saturation', () => (
     <div style={{ padding: 40 }}>
@@ -80,5 +99,6 @@ storiesOf('@mantine/core/ColorInput', module)
         disallowInput
         style={{ marginTop: 15 }}
       />
+      <ControlledInput />
     </div>
   ));
