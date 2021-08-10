@@ -41,9 +41,10 @@ export function ColorSwatch<T extends React.ElementType = 'div', U = HTMLDivElem
       style={{ width: size, height: size, ...style }}
       {...others}
     >
-      <div className={classes.alphaOverlay} />
-      <div className={classes.colorOverlay} style={{ backgroundColor: color }} />
-      <div className={classes.children}>{children}</div>
+      <div className={cx(classes.alphaOverlay, classes.overlay)} />
+      <div className={cx(classes.shadowOverlay, classes.overlay)} />
+      <div className={classes.overlay} style={{ backgroundColor: color }} />
+      <div className={cx(classes.children, classes.overlay)}>{children}</div>
     </Element>
   );
 }

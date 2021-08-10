@@ -75,9 +75,7 @@ export function ColorPicker({
             radius="sm"
             themeOverride={themeOverride}
             size={34}
-          >
-            <div className={classes.swatchShadow} style={_styles.swatchShadow} />
-          </ColorSwatch>
+          />
         )}
       </div>
 
