@@ -9,7 +9,7 @@ import MdxTitle from './MdxTitle/MdxTitle';
 
 const h = (order: 1 | 2 | 3 | 4 | 5 | 6) => (props: any) => <MdxTitle order={order} {...props} />;
 
-const components = {
+export const components = {
   GatsbyLink,
   DataTable,
   Demo,
