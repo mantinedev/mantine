@@ -1,5 +1,5 @@
-import React from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import React, { useState } from 'react';
+import { useUncontrolled, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, MantineSize } from '../../theme';
 import {
   InputWrapper,
@@ -7,7 +7,9 @@ import {
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-import { isColorValid, parseColor } from './converters';
+import { Popper } from '../Popper/Popper';
+import { ColorPicker } from './ColorPicker/ColorPicker';
+import { convertHsvaTo, isColorValid, parseColor } from './converters';
 
 export type ColorInputStylesNames = InputWrapperStylesNames | InputStylesNames;
 
@@ -47,15 +49,23 @@ export function ColorInput({
   styles,
   ...others
 }: ColorInputProps) {
+  const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
-    finalValue: '#000',
+    finalValue: '',
     rule: (val) => isColorValid(format, val),
     onChange,
   });
 
-  const parsed = parseColor(_value);
+  const [parsed, setParsed] = useState(parseColor(_value));
+  const handleParsedChange = (val: Partial<typeof parsed>) => {
+    setParsed((current) => {
+      const nextValue = { ...current, ...val };
+      setValue(convertHsvaTo(format, nextValue));
+      return nextValue;
+    });
+  };
 
   return (
     <InputWrapper
@@ -68,13 +78,35 @@ export function ColorInput({
       size={size}
       {...wrapperProps}
     >
-      <Input<'input'>
-        {...others}
-        spellCheck={false}
-        size={size}
-        value={_value}
-        onChange={(event) => setValue(event.currentTarget.value)}
-      />
+      <div ref={setReferenceElement}>
+        <Input<'input'>
+          {...others}
+          spellCheck={false}
+          size={size}
+          value={_value}
+          onChange={(event) => setValue(event.currentTarget.value)}
+        />
+      </div>
+
+      <Popper
+        referenceElement={referenceElement}
+        transitionDuration={useReducedMotion() ? 0 : 150}
+        transition="pop-top-left"
+        mounted
+        position="bottom"
+        placement="start"
+        gutter={5}
+        withArrow
+        arrowSize={3}
+        zIndex={100}
+        // arrowClassName={classes.arrow}
+        // arrowStyle={_styles.arrow}
+        // forceUpdateDependencies={[color]}
+      >
+        <div style={{ pointerEvents: 'all' }}>
+          <ColorPicker value={parsed} onChange={handleParsedChange} withAlpha />
+        </div>
+      </Popper>
     </InputWrapper>
   );
 }
