@@ -59,6 +59,7 @@ function ControlledInput() {
         format="rgba"
         value={value}
         onChange={setValue}
+        swatches={Object.keys(DEFAULT_THEME.colors).map((color) => DEFAULT_THEME.colors[color][6])}
       />
 
       <button type="button" onClick={() => setValue('rgba(242, 165, 201, 0.54)')}>

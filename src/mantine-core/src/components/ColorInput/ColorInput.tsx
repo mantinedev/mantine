@@ -48,6 +48,9 @@ export interface ColorInputProps
 
   /** Dropdown transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
+
+  /** Predefined color swatches */
+  swatches?: string[];
 }
 
 export function ColorInput({
@@ -72,6 +75,7 @@ export function ColorInput({
   transitionTimingFunction,
   className,
   style,
+  swatches,
   ...others
 }: ColorInputProps) {
   const theme = useMantineTheme(themeOverride);
@@ -181,6 +185,7 @@ export function ColorInput({
               value={parsed}
               onChange={handleParsedChange}
               withAlpha={format === 'rgba' || format === 'hsla'}
+              swatches={swatches}
             />
           </Paper>
         </div>
