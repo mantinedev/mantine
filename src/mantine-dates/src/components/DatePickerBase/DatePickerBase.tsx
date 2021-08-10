@@ -113,7 +113,7 @@ export function DatePickerBase({
   description,
   placeholder,
   shadow = 'sm',
-  transition = 'rotate-right',
+  transition = 'pop-top-left',
   transitionDuration = 200,
   transitionTimingFunction,
   elementRef,
