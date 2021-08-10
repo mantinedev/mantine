@@ -43,7 +43,7 @@ export function hsvaToHsl({ h, s, v, a }: HsvaColor) {
     return `hsl(${result.h}, ${result.s}%, ${result.l}%)`;
   }
 
-  return `hsla(${result.h}, ${result.s}%, ${result.l}%, ${a})`;
+  return `hsla(${result.h}, ${result.s}%, ${result.l}%, ${round(a, 2)})`;
 }
 
 function formatHexPart(number: number) {

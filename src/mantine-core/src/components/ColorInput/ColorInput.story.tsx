@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Saturation } from './Saturation/Saturation';
 import { DEFAULT_THEME } from '../../theme';
+import { Text } from '../Text/Text';
 import { Hue } from './Hue/Hue';
 import { Alpha } from './Alpha/Alpha';
 import { ColorPicker } from './ColorPicker/ColorPicker';
+import { convertHsvaTo } from './converters';
 import { ColorInput } from './ColorInput';
 
 function SaturationWrapper() {
@@ -33,12 +35,17 @@ function ColorPickerWrapper() {
   const handleChange = (val: Partial<typeof value>) =>
     onChange((current) => ({ ...current, ...val }));
   return (
-    <ColorPicker
-      value={value}
-      onChange={handleChange}
-      withAlpha
-      swatches={[...DEFAULT_THEME.colors.red, ...DEFAULT_THEME.colors.blue.slice(0, 4)]}
-    />
+    <>
+      <ColorPicker
+        value={value}
+        onChange={handleChange}
+        withAlpha
+        swatches={[...DEFAULT_THEME.colors.red, ...DEFAULT_THEME.colors.blue.slice(0, 4)]}
+      />
+      <Text>RGBA: {convertHsvaTo('rgba', value)}</Text>
+      <Text>HEX: {convertHsvaTo('hex', value)}</Text>
+      <Text>HSLA: {convertHsvaTo('hsla', value)}</Text>
+    </>
   );
 }
 
