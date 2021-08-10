@@ -22,6 +22,7 @@ export function Swatches({ data, onSelect }: SwatchesProps) {
         radius="sm"
         onClick={() => onSelect(parseColor(color))}
         style={{ cursor: 'pointer' }}
+        aria-label={color}
       />
     ));
 

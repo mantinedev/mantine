@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useMove, clamp } from '@mantine/hooks';
+import { useMove, clampUseMovePosition, UseMovePosition } from '@mantine/hooks';
 import { DefaultProps, mergeStyles, useMantineTheme } from '../../../theme';
 import { HsvaColor } from '../types';
 import { Thumb } from '../Thumb/Thumb';
@@ -8,24 +8,16 @@ import { convertHsvaTo } from '../converters';
 
 export type SaturationStylesNames = keyof ReturnType<typeof useStyles>;
 
-interface Position {
-  x: number;
-  y: number;
-}
-
 interface SaturationProps extends DefaultProps<SaturationStylesNames> {
   value: HsvaColor;
   onChange(color: Partial<HsvaColor>): void;
+  saturationLabel?: string;
 }
-
-const clampPosition = (position: Position) => ({
-  x: clamp({ min: 0, max: 1, value: position.x }),
-  y: clamp({ min: 0, max: 1, value: position.y }),
-});
 
 export function Saturation({
   value,
   onChange,
+  saturationLabel,
   themeOverride,
   classNames,
   styles,
@@ -43,9 +35,9 @@ export function Saturation({
     setPosition({ x: value.s / 100, y: 1 - value.v / 100 });
   }, [value.s, value.v]);
 
-  const handleArrow = (event: React.KeyboardEvent<HTMLDivElement>, pos: Position) => {
+  const handleArrow = (event: React.KeyboardEvent<HTMLDivElement>, pos: UseMovePosition) => {
     event.preventDefault();
-    const _position = clampPosition(pos);
+    const _position = clampUseMovePosition(pos);
     onChange({ s: Math.round(_position.x * 100), v: Math.round((1 - _position.y) * 100) });
   };
 
@@ -80,6 +72,7 @@ export function Saturation({
       style={{ ..._styles.saturation }}
       // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
       role="slider"
+      aria-label={saturationLabel}
       aria-valuetext={convertHsvaTo('rgba', value)}
       tabIndex={0}
       onKeyDown={handleKeyDown}
