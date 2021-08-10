@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { useUncontrolled, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, MantineSize } from '../../theme';
+import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '../../theme';
 import {
   InputWrapper,
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
+import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { Popper } from '../Popper/Popper';
+import { Paper } from '../Paper/Paper';
 import { ColorPicker } from './ColorPicker/ColorPicker';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
+import useStyles from './ColorInput.styles';
 
 export type ColorInputStylesNames = InputWrapperStylesNames | InputStylesNames;
 
@@ -47,8 +50,12 @@ export function ColorInput({
   defaultValue,
   classNames,
   styles,
+  themeOverride,
   ...others
 }: ColorInputProps) {
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme }, classNames as any, 'color-input');
+  const _styles = mergeStyles(classes, styles as any);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const [_value, setValue] = useUncontrolled({
     value,
@@ -85,6 +92,7 @@ export function ColorInput({
           size={size}
           value={_value}
           onChange={(event) => setValue(event.currentTarget.value)}
+          icon={<ColorSwatch color={_value} size={18} />}
         />
       </div>
 
@@ -99,12 +107,17 @@ export function ColorInput({
         withArrow
         arrowSize={3}
         zIndex={100}
-        // arrowClassName={classes.arrow}
-        // arrowStyle={_styles.arrow}
-        // forceUpdateDependencies={[color]}
+        arrowClassName={classes.arrow}
+        arrowStyle={{ ..._styles.arrow, left: 15 }}
       >
         <div style={{ pointerEvents: 'all' }}>
-          <ColorPicker value={parsed} onChange={handleParsedChange} withAlpha />
+          <Paper shadow="sm" padding="sm" className={classes.dropdownBody}>
+            <ColorPicker
+              value={parsed}
+              onChange={handleParsedChange}
+              withAlpha={format === 'rgba' || format === 'hsla'}
+            />
+          </Paper>
         </div>
       </Popper>
     </InputWrapper>
