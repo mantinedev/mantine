@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { MantineColorPicker } from './ColorPicker/MantineColorPicker';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
@@ -22,7 +22,7 @@ interface ColorPickerProps {
 }
 
 export function ColorPicker({ value, defaultValue, onChange, format, swatches }: ColorPickerProps) {
-  const skipRef = useRef(false);
+  const [shouldSkip, setShouldSkip] = useState(false);
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -34,17 +34,19 @@ export function ColorPicker({ value, defaultValue, onChange, format, swatches }:
   const [parsed, setParsed] = useState(parseColor(_value));
 
   const handleChange = (color: Partial<HsvaColor>) => {
-    skipRef.current = true;
+    // This is required for useEffect to work, it's dirty but works fine
+    setShouldSkip(true);
+    Promise.resolve().then(() => setShouldSkip(false));
+
     setParsed((current) => {
       const next = { ...current, ...color };
       setValue(convertHsvaTo(format, next));
       return next;
     });
-    skipRef.current = false;
   };
 
   useEffect(() => {
-    if (isColorValid(value) && !skipRef.current) {
+    if (isColorValid(value) && !shouldSkip) {
       setParsed(parseColor(value));
     }
   }, [value]);
