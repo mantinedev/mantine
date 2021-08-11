@@ -31,6 +31,7 @@ export default createMemoStyles({
 
   sliderOverlay: ({ size }: HueStyles) => ({
     position: 'absolute',
+    boxSizing: 'border-box',
     top: 0,
     bottom: 0,
     left: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,

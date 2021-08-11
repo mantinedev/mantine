@@ -18,6 +18,7 @@ export default createMemoStyles({
   saturationThumb: {},
 
   saturation: ({ theme, size }: SaturationStyles) => ({
+    boxSizing: 'border-box',
     position: 'relative',
     height: getSizeValue({ size, sizes: SATURATION_HEIGHTS }),
     borderRadius: theme.radius.sm,
@@ -38,6 +39,7 @@ export default createMemoStyles({
 
   saturationOverlay: ({ theme, size }: SaturationStyles) => ({
     position: 'absolute',
+    boxSizing: 'border-box',
     borderRadius: theme.radius.sm,
     top: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,
     left: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,

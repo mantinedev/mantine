@@ -14,6 +14,7 @@ export default createMemoStyles({
   }),
 
   group: {
+    boxSizing: 'border-box',
     marginLeft: -2,
     marginRight: -2,
     display: 'flex',
