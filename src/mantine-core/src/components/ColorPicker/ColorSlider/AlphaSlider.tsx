@@ -1,21 +1,18 @@
 import React from 'react';
-import { ColorSlider } from './ColorSlider';
+import { ColorSlider, BaseColorSliderProps } from './ColorSlider';
 
-export interface AlphaSliderProps {
-  value: number;
-  onChange(value: number): void;
-  'aria-label'?: string;
+export interface AlphaSliderProps extends BaseColorSliderProps {
   color: string;
 }
 
-export function AlphaSlider({ value, onChange, 'aria-label': ariaLabel, color }: AlphaSliderProps) {
+export function AlphaSlider({ value, onChange, color, ...others }: AlphaSliderProps) {
   return (
     <ColorSlider
+      {...others}
       value={value}
       onChange={onChange}
       maxValue={1}
-      label={ariaLabel}
-      shouldRound={false}
+      round={false}
       overlays={[
         {
           backgroundImage:

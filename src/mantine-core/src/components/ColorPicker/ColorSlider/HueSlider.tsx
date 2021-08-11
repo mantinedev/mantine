@@ -1,20 +1,14 @@
 import React from 'react';
-import { ColorSlider } from './ColorSlider';
+import { ColorSlider, BaseColorSliderProps } from './ColorSlider';
 
-export interface HueSliderProps {
-  value: number;
-  onChange(value: number): void;
-  'aria-label'?: string;
-}
-
-export function HueSlider({ value, onChange, 'aria-label': ariaLabel }: HueSliderProps) {
+export function HueSlider({ value, onChange, ...others }: BaseColorSliderProps) {
   return (
     <ColorSlider
+      {...others}
       value={value}
       onChange={onChange}
       maxValue={360}
-      label={ariaLabel}
-      shouldRound
+      round
       overlays={[
         {
           backgroundImage:

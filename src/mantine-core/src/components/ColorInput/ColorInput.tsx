@@ -11,8 +11,8 @@ import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { Popper } from '../Popper/Popper';
 import { MantineTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
-import { MantineColorPicker } from './ColorPicker/MantineColorPicker';
-import { convertHsvaTo, isColorValid, parseColor } from './converters';
+import { ColorPicker } from '../ColorPicker/ColorPicker';
+import { isColorValid } from '../ColorPicker/converters';
 import useStyles from './ColorInput.styles';
 
 export type ColorInputStylesNames = InputWrapperStylesNames | InputStylesNames;
@@ -92,18 +92,8 @@ export function ColorInput({
     onChange,
   });
 
-  const [parsed, setParsed] = useState(parseColor(_value));
-  const handleParsedChange = (val: Partial<typeof parsed>) => {
-    setParsed((current) => {
-      const nextValue = { ...current, ...val };
-      setValue(convertHsvaTo(format, nextValue));
-      return nextValue;
-    });
-  };
-
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onFocus === 'function' && onFocus(event);
-    setParsed(parseColor(_value));
     setDropdownOpened(true);
   };
 
@@ -111,14 +101,6 @@ export function ColorInput({
     typeof onBlur === 'function' && onBlur(event);
     setDropdownOpened(false);
     setValue(lastValidValue);
-  };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (isColorValid(event.currentTarget.value)) {
-      setParsed(parseColor(event.currentTarget.value));
-    }
-
-    setValue(event.currentTarget.value);
   };
 
   useEffect(() => {
@@ -148,7 +130,7 @@ export function ColorInput({
           spellCheck={false}
           size={size}
           value={_value}
-          onChange={handleInputChange}
+          onChange={(event) => setValue(event.currentTarget.value)}
           icon={<ColorSwatch color={_value} size={18} />}
           readOnly={disallowInput}
           classNames={classNames as any}
@@ -181,12 +163,7 @@ export function ColorInput({
             className={classes.dropdownBody}
             onMouseDown={(event) => event.preventDefault()}
           >
-            <MantineColorPicker
-              value={parsed}
-              onChange={handleParsedChange}
-              withAlpha={format === 'rgba' || format === 'hsla'}
-              swatches={swatches}
-            />
+            <ColorPicker value={_value} onChange={setValue} format={format} swatches={swatches} />
           </Paper>
         </div>
       </Popper>

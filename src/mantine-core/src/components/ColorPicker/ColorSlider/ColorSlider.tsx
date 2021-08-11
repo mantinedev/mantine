@@ -7,23 +7,24 @@ import useStyles from './ColorSlider.styles';
 
 export type ColorSliderStylesNames = keyof ReturnType<typeof useStyles>;
 
-interface ColorSliderProps
+export interface BaseColorSliderProps
   extends DefaultProps<ColorSliderStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   value: number;
   onChange(value: number): void;
+}
+
+interface ColorSliderProps extends BaseColorSliderProps {
   maxValue: number;
-  label?: string;
   overlays: React.CSSProperties[];
-  shouldRound: boolean;
+  round: boolean;
 }
 
 export function ColorSlider({
   value,
   onChange,
   maxValue,
-  label,
-  shouldRound,
+  round,
   overlays,
   themeOverride,
   classNames,
@@ -36,8 +37,7 @@ export function ColorSlider({
   const classes = useStyles({ theme }, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ y: 0, x: value / maxValue });
-  const getChangeValue = (val: number) =>
-    shouldRound ? Math.round(val * maxValue) : val * maxValue;
+  const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);
   const { ref } = useMove(({ x }) => onChange(getChangeValue(x)));
 
   useDidUpdate(() => {
@@ -75,7 +75,6 @@ export function ColorSlider({
       className={cx(classes.slider, className)}
       style={{ ..._styles.slider, ...style }}
       role="slider"
-      aria-label={label}
       aria-valuenow={value}
       aria-valuemax={maxValue}
       aria-valuemin={0}

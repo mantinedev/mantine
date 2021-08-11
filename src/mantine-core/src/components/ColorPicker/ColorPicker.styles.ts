@@ -1,4 +1,4 @@
-import { createMemoStyles, MantineTheme } from '../../../theme';
+import { createMemoStyles, MantineTheme } from '../../theme';
 
 interface ColorPickerStyles {
   theme: MantineTheme;
