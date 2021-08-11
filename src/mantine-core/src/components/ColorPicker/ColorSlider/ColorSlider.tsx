@@ -20,6 +20,7 @@ interface ColorSliderProps extends BaseColorSliderProps {
   overlays: React.CSSProperties[];
   round: boolean;
   thumbColor?: string;
+  __staticSelector?: string;
 }
 
 export function ColorSlider({
@@ -29,6 +30,7 @@ export function ColorSlider({
   round,
   size,
   thumbColor = 'transparent',
+  __staticSelector = 'color-slider',
   overlays,
   themeOverride,
   classNames,
@@ -38,7 +40,7 @@ export function ColorSlider({
   ...others
 }: ColorSliderProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'color-input');
+  const classes = useStyles({ theme, size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ y: 0, x: value / maxValue });
   const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);
