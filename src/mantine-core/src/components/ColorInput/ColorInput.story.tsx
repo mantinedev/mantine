@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { Saturation } from './Saturation/Saturation';
 import { DEFAULT_THEME } from '../../theme';
 import { Text } from '../Text/Text';
-import { Hue } from './Hue/Hue';
-import { Alpha } from './Alpha/Alpha';
+import { HueSlider } from './ColorSlider/HueSlider';
+import { AlphaSlider } from './ColorSlider/AlphaSlider';
 import { ColorInput } from './ColorInput';
 import { ColorPicker } from './ColorPicker';
 
@@ -16,17 +16,13 @@ function SaturationWrapper() {
 }
 
 function HueWrapper() {
-  const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 1 });
-  const handleChange = (val: Partial<typeof value>) =>
-    onChange((current) => ({ ...current, ...val }));
-  return <Hue value={value} onChange={handleChange} />;
+  const [value, onChange] = useState(90);
+  return <HueSlider value={value} onChange={onChange} />;
 }
 
 function AlphaWrapper() {
-  const [value, onChange] = useState({ h: 90, v: 50, s: 50, a: 0.5 });
-  const handleChange = (val: Partial<typeof value>) =>
-    onChange((current) => ({ ...current, ...val }));
-  return <Alpha value={value} onChange={handleChange} />;
+  const [value, onChange] = useState(0.5);
+  return <AlphaSlider value={value} onChange={onChange} color="#FECD89" />;
 }
 
 function ColorPickerWrapper() {
