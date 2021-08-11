@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useUncontrolled, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '../../theme';
+import { DefaultProps, getSizeValue, MantineSize, mergeStyles, useMantineTheme } from '../../theme';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -52,6 +52,14 @@ export interface ColorInputProps
   /** Predefined color swatches */
   swatches?: string[];
 }
+
+const SWATCH_SIZES = {
+  xs: 14,
+  sm: 18,
+  md: 24,
+  lg: 32,
+  xl: 40,
+};
 
 export function ColorInput({
   label,
@@ -131,7 +139,7 @@ export function ColorInput({
           size={size}
           value={_value}
           onChange={(event) => setValue(event.currentTarget.value)}
-          icon={<ColorSwatch color={_value} size={18} />}
+          icon={<ColorSwatch color={_value} size={getSizeValue({ size, sizes: SWATCH_SIZES })} />}
           readOnly={disallowInput}
           classNames={classNames as any}
           styles={{
@@ -159,11 +167,17 @@ export function ColorInput({
         <div style={{ pointerEvents: 'all' }}>
           <Paper
             shadow="sm"
-            padding="sm"
+            padding={size}
             className={classes.dropdownBody}
             onMouseDown={(event) => event.preventDefault()}
           >
-            <ColorPicker value={_value} onChange={setValue} format={format} swatches={swatches} />
+            <ColorPicker
+              value={_value}
+              onChange={setValue}
+              format={format}
+              swatches={swatches}
+              size={size}
+            />
           </Paper>
         </div>
       </Popper>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import cx from 'clsx';
 import { useUncontrolled } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, mergeStyles, MantineSize } from '../../theme';
+import { useMantineTheme, DefaultProps, mergeStyles, MantineSize, getSizeValue } from '../../theme';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { ColorSliderStylesNames } from './ColorSlider/ColorSlider';
@@ -33,6 +33,14 @@ interface ColorPickerProps extends DefaultProps<ColorPickerStylesNames> {
   /** Predefined component size */
   size?: MantineSize;
 }
+
+const SWATCH_SIZES = {
+  xs: 26,
+  sm: 34,
+  md: 42,
+  lg: 50,
+  xl: 54,
+};
 
 export function ColorPicker({
   value,
@@ -118,7 +126,12 @@ export function ColorPicker({
         </div>
 
         {withAlpha && (
-          <ColorSwatch color={_value} radius="sm" themeOverride={themeOverride} size={34} />
+          <ColorSwatch
+            color={_value}
+            radius="sm"
+            themeOverride={themeOverride}
+            size={getSizeValue({ size, sizes: SWATCH_SIZES })}
+          />
         )}
       </div>
 
