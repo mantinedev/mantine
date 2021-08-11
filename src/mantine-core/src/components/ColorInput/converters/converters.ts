@@ -20,17 +20,17 @@ export function hsvaToRgbaObject({ h, s, v, a }: HsvaColor): RgbaColor {
   };
 }
 
-export function hsvaToRgba(color: HsvaColor) {
+export function hsvaToRgba(color: HsvaColor, includeAlpha: boolean) {
   const { r, g, b, a } = hsvaToRgbaObject(color);
 
-  if (a === 1) {
+  if (!includeAlpha) {
     return `rgb(${r}, ${g}, ${b})`;
   }
 
   return `rgba(${r}, ${g}, ${b}, ${round(a, 2)})`;
 }
 
-export function hsvaToHsl({ h, s, v, a }: HsvaColor) {
+export function hsvaToHsl({ h, s, v, a }: HsvaColor, includeAlpha: boolean) {
   const hh = ((200 - s) * v) / 100;
 
   const result = {
@@ -39,7 +39,7 @@ export function hsvaToHsl({ h, s, v, a }: HsvaColor) {
     l: Math.round(hh / 2),
   };
 
-  if (a === 1) {
+  if (!includeAlpha) {
     return `hsl(${result.h}, ${result.s}%, ${result.l}%)`;
   }
 
@@ -58,10 +58,10 @@ export function hsvaToHex(color: HsvaColor) {
 
 const CONVERTERS: Record<ColorFormat, (color: HsvaColor) => string> = {
   hex: hsvaToHex,
-  rgb: hsvaToRgba,
-  rgba: hsvaToRgba,
-  hsl: hsvaToHsl,
-  hsla: hsvaToHsl,
+  rgb: (color) => hsvaToRgba(color, false),
+  rgba: (color) => hsvaToRgba(color, true),
+  hsl: (color) => hsvaToHsl(color, false),
+  hsla: (color) => hsvaToHsl(color, true),
 };
 
 export function convertHsvaTo(format: ColorFormat, color: HsvaColor) {
