@@ -5,12 +5,15 @@ import { useMantineTheme, DefaultProps, mergeStyles, MantineSize, getSizeValue }
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { ColorSliderStylesNames } from './ColorSlider/ColorSlider';
-import { HueSlider } from './ColorSlider/HueSlider';
-import { AlphaSlider } from './ColorSlider/AlphaSlider';
+import { HueSlider, HueSliderProps } from './HueSlider/HueSlider';
+import { AlphaSlider, AlphaSliderProps } from './AlphaSlider/AlphaSlider';
 import { Saturation } from './Saturation/Saturation';
 import { Swatches } from './Swatches/Swatches';
 import { HsvaColor } from './types';
 import useStyles from './ColorPicker.styles';
+
+export { HueSlider, AlphaSlider };
+export type { HueSliderProps, AlphaSliderProps };
 
 export type ColorPickerStylesNames = keyof ReturnType<typeof useStyles> | ColorSliderStylesNames;
 
@@ -37,7 +40,7 @@ export interface ColorPickerBaseProps {
   size?: MantineSize;
 }
 
-interface ColorPickerProps
+export interface ColorPickerProps
   extends DefaultProps<ColorPickerStylesNames>,
     ColorPickerBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {}

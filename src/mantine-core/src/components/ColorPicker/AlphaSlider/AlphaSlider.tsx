@@ -1,5 +1,5 @@
 import React from 'react';
-import { ColorSlider, BaseColorSliderProps } from './ColorSlider';
+import { ColorSlider, BaseColorSliderProps } from '../ColorSlider/ColorSlider';
 
 export interface AlphaSliderProps extends BaseColorSliderProps {
   color: string;

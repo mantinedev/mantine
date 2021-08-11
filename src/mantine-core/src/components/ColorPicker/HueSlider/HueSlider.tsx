@@ -1,7 +1,9 @@
 import React from 'react';
-import { ColorSlider, BaseColorSliderProps } from './ColorSlider';
+import { ColorSlider, BaseColorSliderProps } from '../ColorSlider/ColorSlider';
 
-export function HueSlider({ value, onChange, ...others }: BaseColorSliderProps) {
+export type HueSliderProps = BaseColorSliderProps;
+
+export function HueSlider({ value, onChange, ...others }: HueSliderProps) {
   return (
     <ColorSlider
       {...others}
