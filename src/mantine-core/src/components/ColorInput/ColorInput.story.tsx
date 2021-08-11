@@ -36,7 +36,7 @@ function ControlledInput() {
 storiesOf('@mantine/core/ColorInput', module)
   .add('General usage', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <ColorInput label="Color input" placeholder="Pick color" format="rgba" />
+      <ColorInput label="Color input" placeholder="Pick color" format="hsla" />
       <ColorInput
         label="Disallow input"
         placeholder="Pick color"

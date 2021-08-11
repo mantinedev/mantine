@@ -19,6 +19,7 @@ interface ColorSliderProps extends BaseColorSliderProps {
   maxValue: number;
   overlays: React.CSSProperties[];
   round: boolean;
+  thumbColor?: string;
 }
 
 export function ColorSlider({
@@ -27,6 +28,7 @@ export function ColorSlider({
   maxValue,
   round,
   size,
+  thumbColor = 'transparent',
   overlays,
   themeOverride,
   classNames,
@@ -88,7 +90,7 @@ export function ColorSlider({
       <Thumb
         themeOverride={themeOverride}
         position={position}
-        style={{ top: 1 }}
+        style={{ top: 1, backgroundColor: thumbColor }}
         className={classes.sliderThumb}
         size={size}
       />

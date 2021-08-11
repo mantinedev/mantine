@@ -8,6 +8,7 @@ export function HueSlider({ value, onChange, ...others }: BaseColorSliderProps) 
       value={value}
       onChange={onChange}
       maxValue={360}
+      thumbColor={`hsl(${value}, 100%, 50%)`}
       round
       overlays={[
         {

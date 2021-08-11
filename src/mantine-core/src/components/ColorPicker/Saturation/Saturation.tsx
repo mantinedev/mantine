@@ -13,12 +13,14 @@ interface SaturationProps extends DefaultProps<SaturationStylesNames> {
   onChange(color: Partial<HsvaColor>): void;
   saturationLabel?: string;
   size: MantineSize;
+  color: string;
 }
 
 export function Saturation({
   value,
   onChange,
   size,
+  color,
   saturationLabel,
   themeOverride,
   classNames,
@@ -104,6 +106,7 @@ export function Saturation({
         themeOverride={themeOverride}
         position={position}
         className={classes.saturationThumb}
+        style={{ backgroundColor: color }}
         size={size}
       />
     </div>

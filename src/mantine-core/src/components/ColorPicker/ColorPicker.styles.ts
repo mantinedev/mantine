@@ -18,9 +18,9 @@ export default createMemoStyles({
     width: getSizeValue({ size, sizes }),
   }),
 
-  body: ({ theme }: ColorPickerStyles) => ({
+  body: ({ theme, size }: ColorPickerStyles) => ({
     display: 'flex',
-    paddingTop: theme.spacing.sm,
+    paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
   }),
 
   sliders: ({ theme }: ColorPickerStyles) => ({

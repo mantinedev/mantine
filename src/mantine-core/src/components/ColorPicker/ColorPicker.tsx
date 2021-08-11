@@ -94,6 +94,7 @@ export function ColorPicker({
       <Saturation
         value={parsed}
         onChange={handleChange}
+        color={_value}
         themeOverride={themeOverride}
         styles={styles as any}
         classNames={classNames as any}
