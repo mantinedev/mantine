@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { useMove, clampUseMovePosition, useDidUpdate, UseMovePosition } from '@mantine/hooks';
-import { DefaultProps, mergeStyles, useMantineTheme } from '../../../theme';
+import { DefaultProps, mergeStyles, useMantineTheme, MantineSize } from '../../../theme';
 import { Thumb } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
 
@@ -12,6 +12,7 @@ export interface BaseColorSliderProps
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   value: number;
   onChange(value: number): void;
+  size: MantineSize;
 }
 
 interface ColorSliderProps extends BaseColorSliderProps {
@@ -25,6 +26,7 @@ export function ColorSlider({
   onChange,
   maxValue,
   round,
+  size,
   overlays,
   themeOverride,
   classNames,
@@ -34,7 +36,7 @@ export function ColorSlider({
   ...others
 }: ColorSliderProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'color-input');
+  const classes = useStyles({ theme, size }, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ y: 0, x: value / maxValue });
   const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);
@@ -88,6 +90,7 @@ export function ColorSlider({
         position={position}
         style={{ top: 1 }}
         className={classes.sliderThumb}
+        size={size}
       />
     </div>
   );

@@ -1,18 +1,20 @@
-import { createMemoStyles, MantineTheme } from '../../../theme';
+import { createMemoStyles, getSizeValue, MantineSize, MantineTheme } from '../../../theme';
+import { THUMB_SIZES } from '../Thumb/Thumb.styles';
 
 interface HueStyles {
   theme: MantineTheme;
+  size: MantineSize;
 }
 
 export default createMemoStyles({
   sliderThumb: {},
 
-  slider: ({ theme }: HueStyles) => ({
+  slider: ({ theme, size }: HueStyles) => ({
     position: 'relative',
-    height: 14,
+    height: getSizeValue({ size, sizes: THUMB_SIZES }) + 2,
     boxSizing: 'border-box',
-    marginLeft: 7,
-    marginRight: 7,
+    marginLeft: getSizeValue({ size, sizes: THUMB_SIZES }) / 2,
+    marginRight: getSizeValue({ size, sizes: THUMB_SIZES }) / 2,
     outline: 0,
 
     '&:focus $sliderThumb': {
@@ -27,12 +29,12 @@ export default createMemoStyles({
     },
   }),
 
-  sliderOverlay: {
+  sliderOverlay: ({ size }: HueStyles) => ({
     position: 'absolute',
     top: 0,
     bottom: 0,
-    left: -7,
-    right: -7,
-    borderRadius: 10,
-  },
+    left: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,
+    right: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,
+    borderRadius: 1000,
+  }),
 });

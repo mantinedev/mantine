@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import cx from 'clsx';
 import { useUncontrolled } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, mergeStyles } from '../../theme';
+import { useMantineTheme, DefaultProps, mergeStyles, MantineSize } from '../../theme';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { ColorSliderStylesNames } from './ColorSlider/ColorSlider';
@@ -28,6 +29,9 @@ interface ColorPickerProps extends DefaultProps<ColorPickerStylesNames> {
 
   /** Predefined colors */
   swatches?: string[];
+
+  /** Predefined component size */
+  size?: MantineSize;
 }
 
 export function ColorPicker({
@@ -36,13 +40,15 @@ export function ColorPicker({
   onChange,
   format,
   swatches,
+  size = 'sm',
   themeOverride,
+  className,
   styles,
   classNames,
   ...others
 }: ColorPickerProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames as any, 'color-picker');
+  const classes = useStyles({ theme, size }, classNames as any, 'color-picker');
   const _styles = mergeStyles(classes, styles as any);
   const withAlpha = format === 'rgba' || format === 'hsla';
 
@@ -76,13 +82,14 @@ export function ColorPicker({
   }, [value]);
 
   return (
-    <div style={{ width: 200 }} {...others}>
+    <div className={cx(classes.root, className)} {...others}>
       <Saturation
         value={parsed}
         onChange={handleChange}
         themeOverride={themeOverride}
         styles={styles as any}
         classNames={classNames as any}
+        size={size}
       />
 
       <div className={classes.body} style={_styles.body}>
@@ -90,6 +97,7 @@ export function ColorPicker({
           <HueSlider
             value={parsed.h}
             onChange={(h) => handleChange({ h })}
+            size={size}
             themeOverride={themeOverride}
             styles={styles as any}
             classNames={classNames as any}
@@ -99,7 +107,8 @@ export function ColorPicker({
             <AlphaSlider
               value={parsed.a}
               onChange={(a) => handleChange({ a })}
-              color={_value}
+              size={size}
+              color={convertHsvaTo('hex', parsed)}
               style={{ marginTop: 6 }}
               themeOverride={themeOverride}
               styles={styles as any}

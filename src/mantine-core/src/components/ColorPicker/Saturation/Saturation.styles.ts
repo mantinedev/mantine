@@ -1,17 +1,27 @@
-import { createMemoStyles, MantineTheme } from '../../../theme';
+import { createMemoStyles, MantineSize, MantineTheme, getSizeValue } from '../../../theme';
+import { THUMB_SIZES } from '../Thumb/Thumb.styles';
 
 interface SaturationStyles {
   theme: MantineTheme;
+  size: MantineSize;
 }
+
+const SATURATION_HEIGHTS = {
+  xs: 100,
+  sm: 110,
+  md: 120,
+  lg: 140,
+  xl: 160,
+};
 
 export default createMemoStyles({
   saturationThumb: {},
 
-  saturation: ({ theme }: SaturationStyles) => ({
+  saturation: ({ theme, size }: SaturationStyles) => ({
     position: 'relative',
-    height: 120,
+    height: getSizeValue({ size, sizes: SATURATION_HEIGHTS }),
     borderRadius: theme.radius.sm,
-    margin: 7,
+    margin: getSizeValue({ size, sizes: THUMB_SIZES }) / 2,
     WebkitTapHighlightColor: 'transparent',
 
     '&:focus $saturationThumb': {
@@ -26,12 +36,12 @@ export default createMemoStyles({
     },
   }),
 
-  saturationOverlay: ({ theme }: SaturationStyles) => ({
+  saturationOverlay: ({ theme, size }: SaturationStyles) => ({
     position: 'absolute',
     borderRadius: theme.radius.sm,
-    top: -7,
-    left: -7,
-    right: -7,
-    bottom: -7,
+    top: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,
+    left: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,
+    right: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,
+    bottom: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,
   }),
 });

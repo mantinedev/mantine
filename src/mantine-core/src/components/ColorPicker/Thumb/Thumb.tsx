@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, mergeStyles } from '../../../theme';
-import useStyles from './Thumb.styles';
+import { useMantineTheme, DefaultProps, mergeStyles, MantineSize } from '../../../theme';
+import useStyles, { THUMB_SIZES } from './Thumb.styles';
 
 export type ThumbStylesNames = keyof ReturnType<typeof useStyles>;
 
@@ -12,6 +12,7 @@ interface Position {
 
 interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   position: Position;
+  size: MantineSize;
 }
 
 export function Thumb({
@@ -21,9 +22,10 @@ export function Thumb({
   styles,
   classNames,
   style,
+  size,
 }: ThumbProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'color-input');
+  const classes = useStyles({ theme, size }, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
 
   return (
@@ -31,8 +33,8 @@ export function Thumb({
       className={cx(classes.thumb, className)}
       style={{
         ..._styles.thumb,
-        left: `calc(${position.x * 100}% - 6px)`,
-        top: `calc(${position.y * 100}% - 6px)`,
+        left: `calc(${position.x * 100}% - ${THUMB_SIZES[size] / 2}px)`,
+        top: `calc(${position.y * 100}% - ${THUMB_SIZES[size] / 2}px)`,
         ...style,
       }}
     />

@@ -8,7 +8,7 @@ const sizes = MANTINE_SIZES.map((size) => (
     key={size}
     format="rgba"
     swatches={Object.keys(DEFAULT_THEME.colors).map((color) => DEFAULT_THEME.colors[color][6])}
-    // size={size}
+    size={size}
     style={{ marginTop: 20 }}
   />
 ));
