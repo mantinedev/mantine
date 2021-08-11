@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { DefaultProps, mergeStyles, useMantineTheme } from '../../../theme';
 import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
-import { Hue, HueStylesNames } from '../Hue/Hue';
-import { Alpha, AlphaStylesNames } from '../Alpha/Alpha';
+import { HueSlider } from '../ColorSlider/HueSlider';
+import { AlphaSlider } from '../ColorSlider/AlphaSlider';
 import { Saturation, SaturationStylesNames } from '../Saturation/Saturation';
 import { Swatches } from '../Swatches/Swatches';
 import { HsvaColor } from '../types';
@@ -11,8 +11,6 @@ import useStyles from './MantineColorPicker.styles';
 
 export type MantineColorPickerStylesNames =
   | keyof ReturnType<typeof useStyles>
-  | HueStylesNames
-  | AlphaStylesNames
   | SaturationStylesNames;
 
 interface MantineColorPickerProps extends DefaultProps<MantineColorPickerStylesNames> {
@@ -31,9 +29,14 @@ export function MantineColorPicker({
   withAlpha = false,
   swatches,
 }: MantineColorPickerProps) {
+  const refValue = useRef(value);
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames as any, 'color-input');
   const _styles = mergeStyles(classes, styles as any);
+
+  useEffect(() => {
+    refValue.current = value;
+  }, [value]);
 
   return (
     <div style={{ width: 200 }}>
@@ -47,24 +50,19 @@ export function MantineColorPicker({
 
       <div className={classes.body} style={_styles.body}>
         <div className={classes.sliders} style={_styles.sliders}>
-          <Hue
-            value={value}
-            onChange={onChange}
-            className={classes.slider}
-            style={_styles.slider}
-            themeOverride={themeOverride}
-            styles={styles as any}
-            classNames={classNames as any}
+          <HueSlider
+            value={value.h}
+            onChange={(h) => onChange({ ...refValue.current, h })}
+            // themeOverride={themeOverride}
+            // styles={styles as any}
+            // classNames={classNames as any}
           />
+
           {withAlpha && (
-            <Alpha
-              value={value}
-              onChange={onChange}
-              className={classes.slider}
-              themeOverride={themeOverride}
-              styles={styles as any}
-              classNames={classNames as any}
-              style={_styles.slider}
+            <AlphaSlider
+              value={value.a}
+              onChange={(a) => onChange({ ...refValue.current, a })}
+              color={convertHsvaTo('hex', value)}
             />
           )}
         </div>

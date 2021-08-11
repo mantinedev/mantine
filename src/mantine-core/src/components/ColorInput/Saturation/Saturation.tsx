@@ -81,6 +81,7 @@ export function Saturation({
         className={classes.saturationOverlay}
         style={{ backgroundColor: `hsl(${value.h}, 100%, 50%)` }}
       />
+
       <div
         className={classes.saturationOverlay}
         style={{

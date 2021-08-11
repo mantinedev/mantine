@@ -7,7 +7,9 @@ import useStyles from './ColorSlider.styles';
 
 export type ColorSliderStylesNames = keyof ReturnType<typeof useStyles>;
 
-interface ColorSliderProps extends DefaultProps<ColorSliderStylesNames> {
+interface ColorSliderProps
+  extends DefaultProps<ColorSliderStylesNames>,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   value: number;
   onChange(value: number): void;
   maxValue: number;
@@ -28,6 +30,7 @@ export function ColorSlider({
   styles,
   className,
   style,
+  ...others
 }: ColorSliderProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames, 'color-input');
@@ -67,6 +70,7 @@ export function ColorSlider({
 
   return (
     <div
+      {...others}
       ref={ref}
       className={cx(classes.slider, className)}
       style={{ ..._styles.slider, ...style }}
