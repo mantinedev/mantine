@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useUncontrolled, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, getSizeValue, MantineSize, mergeStyles, useMantineTheme } from '../../theme';
+import { DefaultProps, getSizeValue, mergeStyles, useMantineTheme } from '../../theme';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -11,7 +11,7 @@ import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { Popper } from '../Popper/Popper';
 import { MantineTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
-import { ColorPicker } from '../ColorPicker/ColorPicker';
+import { ColorPicker, ColorPickerBaseProps } from '../ColorPicker/ColorPicker';
 import { isColorValid } from '../ColorPicker/converters';
 import useStyles from './ColorInput.styles';
 
@@ -20,23 +20,9 @@ export type ColorInputStylesNames = InputWrapperStylesNames | InputStylesNames;
 export interface ColorInputProps
   extends InputWrapperBaseProps,
     InputBaseProps,
+    ColorPickerBaseProps,
     DefaultProps<ColorInputStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange'> {
-  /** Input size */
-  size?: MantineSize;
-
-  /** Value for controlled input */
-  value?: string;
-
-  /** Default value for uncontrolled input */
-  defaultValue?: string;
-
-  /** Called when value changes */
-  onChange?(color: string): void;
-
-  /** Color format */
-  format?: 'hex' | 'rgba' | 'rgb' | 'hsl' | 'hsla';
-
+    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange' | 'defaultValue' | 'value'> {
   /** Disallow free input */
   disallowInput?: boolean;
 
@@ -48,9 +34,6 @@ export interface ColorInputProps
 
   /** Dropdown transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
-
-  /** Predefined color swatches */
-  swatches?: string[];
 }
 
 const SWATCH_SIZES = {

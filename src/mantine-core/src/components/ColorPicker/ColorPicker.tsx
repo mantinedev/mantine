@@ -14,7 +14,7 @@ import useStyles from './ColorPicker.styles';
 
 export type ColorPickerStylesNames = keyof ReturnType<typeof useStyles> | ColorSliderStylesNames;
 
-interface ColorPickerProps extends DefaultProps<ColorPickerStylesNames> {
+export interface ColorPickerBaseProps {
   /** Controlled component value */
   value?: string;
 
@@ -30,9 +30,17 @@ interface ColorPickerProps extends DefaultProps<ColorPickerStylesNames> {
   /** Predefined colors */
   swatches?: string[];
 
+  /** Number of swatches displayed in one row */
+  swatchesPerRow?: number;
+
   /** Predefined component size */
   size?: MantineSize;
 }
+
+interface ColorPickerProps
+  extends DefaultProps<ColorPickerStylesNames>,
+    ColorPickerBaseProps,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {}
 
 const SWATCH_SIZES = {
   xs: 26,
@@ -48,6 +56,7 @@ export function ColorPicker({
   onChange,
   format,
   swatches,
+  swatchesPerRow = 10,
   size = 'sm',
   themeOverride,
   className,
@@ -137,7 +146,12 @@ export function ColorPicker({
       </div>
 
       {Array.isArray(swatches) && (
-        <Swatches data={swatches} onSelect={handleChange} style={{ marginTop: 5 }} />
+        <Swatches
+          data={swatches}
+          onSelect={handleChange}
+          style={{ marginTop: 5 }}
+          swatchesPerRow={swatchesPerRow}
+        />
       )}
     </div>
   );
