@@ -5,7 +5,7 @@ import { DefaultProps, mergeStyles, useMantineTheme, MantineSize } from '../../.
 import { Thumb } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
 
-export type ColorSliderStylesNames = keyof ReturnType<typeof useStyles>;
+export type ColorSliderStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'sliderThumb'>;
 
 export interface BaseColorSliderProps
   extends DefaultProps<ColorSliderStylesNames>,
@@ -71,7 +71,11 @@ export function ColorSlider({
   };
 
   const layers = overlays.map((overlay, index) => (
-    <div className={classes.sliderOverlay} style={overlay} key={index} />
+    <div
+      className={classes.sliderOverlay}
+      style={{ ..._styles.sliderOverlay, ...overlay }}
+      key={index}
+    />
   ));
 
   return (
