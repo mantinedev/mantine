@@ -9,11 +9,14 @@ import {
 interface ColorSwatchStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
+  size: number;
 }
 
 export default createMemoStyles({
-  colorSwatch: ({ theme, radius }: ColorSwatchStyles) => ({
+  colorSwatch: ({ theme, size, radius }: ColorSwatchStyles) => ({
     ...getFocusStyles(theme),
+    width: size,
+    height: size,
     WebkitTapHighlightColor: 'transparent',
     border: 0,
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),

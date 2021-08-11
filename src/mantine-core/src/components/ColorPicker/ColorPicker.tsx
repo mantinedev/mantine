@@ -39,6 +39,7 @@ export function ColorPicker({
   themeOverride,
   styles,
   classNames,
+  ...others
 }: ColorPickerProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames as any, 'color-picker');
@@ -75,7 +76,7 @@ export function ColorPicker({
   }, [value]);
 
   return (
-    <div style={{ width: 200 }}>
+    <div style={{ width: 200 }} {...others}>
       <Saturation
         value={parsed}
         onChange={handleChange}
@@ -112,7 +113,9 @@ export function ColorPicker({
         )}
       </div>
 
-      {Array.isArray(swatches) && <Swatches data={swatches} onSelect={handleChange} />}
+      {Array.isArray(swatches) && (
+        <Swatches data={swatches} onSelect={handleChange} style={{ marginTop: 5 }} />
+      )}
     </div>
   );
 }

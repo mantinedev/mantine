@@ -1,41 +1,37 @@
 import React from 'react';
-import { chunk } from '../../../utils';
 import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
-import { Grid, Col } from '../../Grid/Grid';
 import { parseColor } from '../converters/parsers';
 import { HsvaColor } from '../types';
+import useStyles from './Swatches.styles';
 
-interface SwatchesProps {
+interface SwatchesProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onSelect'> {
   data: string[];
   onSelect(color: HsvaColor): void;
+  swatchesPerRow?: number;
 }
 
-export function Swatches({ data, onSelect }: SwatchesProps) {
-  const colors = chunk(10, data).map((group, groupIndex) => {
-    const items = group.map((color, index) => (
-      <Col span={1}>
-        <ColorSwatch
-          component="button"
-          type="button"
-          color={color}
-          key={index}
-          size={16}
-          radius="sm"
-          onClick={() => onSelect(parseColor(color))}
-          style={{ cursor: 'pointer' }}
-          aria-label={color}
-        />
-      </Col>
-    ));
+export function Swatches({ data, onSelect, swatchesPerRow = 10, ...others }: SwatchesProps) {
+  const classes = useStyles({ swatchesPerRow });
 
-    return (
-      <Grid key={groupIndex} style={{ marginTop: 0 }} columns={10} gutter={4.5}>
-        {items}
-      </Grid>
-    );
-  });
+  const colors = data.map((color, index) => (
+    <ColorSwatch
+      className={classes.swatch}
+      component="button"
+      type="button"
+      color={color}
+      key={index}
+      radius="sm"
+      onClick={() => onSelect(parseColor(color))}
+      style={{ cursor: 'pointer' }}
+      aria-label={color}
+    />
+  ));
 
-  return <>{colors}</>;
+  return (
+    <div className={classes.group} {...others}>
+      {colors}
+    </div>
+  );
 }
 
 Swatches.displayName = '@mantine/core/Swatches';
