@@ -14,6 +14,7 @@ export * as CardDemos from './components/Card/demos';
 export * as CenterDemos from './components/Center/demos';
 export * as CheckboxDemos from './components/Checkbox/demos';
 export * as CodeDemos from './components/Code/demos';
+export * as ColorInputDemos from './components/ColorInput/demos';
 export * as ColorPickerDemos from './components/ColorPicker/demos';
 export * as ColorSwatchDemos from './components/ColorSwatch/demos';
 export * as ContainerDemos from './components/Container/demos';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useUncontrolled, useReducedMotion } from '@mantine/hooks';
+import { useUncontrolled, useReducedMotion, useDidUpdate } from '@mantine/hooks';
 import { DefaultProps, getSizeValue, mergeStyles, useMantineTheme } from '../../theme';
 import {
   InputWrapper,
@@ -12,7 +12,7 @@ import { Popper } from '../Popper/Popper';
 import { MantineTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
 import { ColorPicker, ColorPickerBaseProps } from '../ColorPicker/ColorPicker';
-import { isColorValid } from '../ColorPicker/converters';
+import { convertHsvaTo, isColorValid, parseColor } from '../ColorPicker/converters';
 import useStyles from './ColorInput.styles';
 
 export type ColorInputStylesNames = InputWrapperStylesNames | InputStylesNames;
@@ -25,6 +25,9 @@ export interface ColorInputProps
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange' | 'defaultValue' | 'value'> {
   /** Disallow free input */
   disallowInput?: boolean;
+
+  /** call onChange with last valid value onBlur */
+  fixOnBlur?: boolean;
 
   /** Dropdown transition name or object */
   transition?: MantineTransition;
@@ -69,6 +72,7 @@ export function ColorInput({
   styles,
   themeOverride,
   disallowInput = false,
+  fixOnBlur = true,
   transition = 'pop-top-left',
   transitionDuration = 0,
   transitionTimingFunction,
@@ -99,7 +103,7 @@ export function ColorInput({
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onBlur === 'function' && onBlur(event);
     setDropdownOpened(false);
-    setValue(lastValidValue);
+    fixOnBlur && setValue(lastValidValue);
   };
 
   useEffect(() => {
@@ -107,6 +111,12 @@ export function ColorInput({
       setLastValidValue(_value);
     }
   }, [_value]);
+
+  useDidUpdate(() => {
+    if (isColorValid(_value)) {
+      setValue(convertHsvaTo(format, parseColor(_value)));
+    }
+  }, [format]);
 
   return (
     <InputWrapper
@@ -130,7 +140,12 @@ export function ColorInput({
           size={size}
           value={_value}
           onChange={(event) => setValue(event.currentTarget.value)}
-          icon={<ColorSwatch color={_value} size={getSizeValue({ size, sizes: SWATCH_SIZES })} />}
+          icon={
+            <ColorSwatch
+              color={isColorValid(_value) ? _value : '#fff'}
+              size={getSizeValue({ size, sizes: SWATCH_SIZES })}
+            />
+          }
           readOnly={disallowInput}
           classNames={classNames as any}
           styles={{
