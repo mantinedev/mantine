@@ -13,7 +13,7 @@ docs: 'core/ColorInput.mdx'
 styles: ['ColorInput']
 ---
 
-import { ColorInputDemos } from '@demos/core';
+import { ColorInputDemos, ColorPickerDemos } from '@demos/core';
 
 ## Usage
 
@@ -23,6 +23,24 @@ import { ColorInputDemos } from '@demos/core';
 
 <Demo data={ColorInputDemos.formatsConfigurator} />
 
+## With swatches
+
+<Demo data={ColorInputDemos.swatches} />
+
+<Demo data={ColorPickerDemos.swatchesConfigurator} />
+
+## Disable free input
+
+<Demo data={ColorInputDemos.readOnly} />
+
 ## Input props
 
 <Demo data={ColorInputDemos.inputConfigurator} />
+
+## Disabled state
+
+<Demo data={ColorInputDemos.disabled} />
+
+## Validation state and error
+
+<Demo data={ColorInputDemos.validation} />
