@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMantineTheme } from '../../../theme';
 import { ColorSlider, BaseColorSliderProps } from '../ColorSlider/ColorSlider';
 import { round } from '../converters/parsers';
 
@@ -6,18 +7,29 @@ export interface AlphaSliderProps extends BaseColorSliderProps {
   color: string;
 }
 
-export function AlphaSlider({ value, onChange, color, ...others }: AlphaSliderProps) {
+export function AlphaSlider({
+  value,
+  onChange,
+  color,
+  themeOverride,
+  ...others
+}: AlphaSliderProps) {
+  const theme = useMantineTheme(themeOverride);
+  const _color = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3];
+
   return (
     <ColorSlider
       {...others}
+      themeOverride={themeOverride}
       value={value}
       onChange={(val) => onChange(round(val, 2))}
       maxValue={1}
       round={false}
       overlays={[
         {
-          backgroundImage:
-            'linear-gradient(45deg, #eee 25%, transparent 25%), linear-gradient(-45deg, #eee 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #eee 75%), linear-gradient(-45deg, #fff 75%, #eee 75%)',
+          backgroundImage: `linear-gradient(45deg, ${_color} 25%, transparent 25%), linear-gradient(-45deg, ${_color} 25%, transparent 25%), linear-gradient(45deg, transparent 75%, ${_color} 75%), linear-gradient(-45deg, ${
+            theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white
+          } 75%, ${_color} 75%)`,
           backgroundSize: '8px 8px',
           backgroundPosition: '0 0, 0 4px, 4px -4px, -4px 0px',
         },
