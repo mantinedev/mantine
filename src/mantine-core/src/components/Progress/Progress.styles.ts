@@ -50,7 +50,7 @@ export default createMemoStyles({
       borderBottomRightRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     },
 
-    '&:fist-child': {
+    '&:first-child': {
       borderTopLeftRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       borderBottomLeftRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     },
