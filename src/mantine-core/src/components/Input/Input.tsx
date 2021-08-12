@@ -42,9 +42,6 @@ export interface InputBaseProps {
   /** Defines input appearance, defaults to default in light color scheme and filled in dark */
   variant?: 'default' | 'filled' | 'unstyled' | 'headless';
 
-  /** Static css selector base */
-  __staticSelector?: string;
-
   /** Will input have multiple lines? */
   multiline?: boolean;
 
@@ -52,7 +49,10 @@ export interface InputBaseProps {
   disabled?: boolean;
 }
 
-export interface InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {}
+export interface InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {
+  /** Static css selector base */
+  __staticSelector?: string;
+}
 
 export function Input<
   T extends React.ElementType = 'input',

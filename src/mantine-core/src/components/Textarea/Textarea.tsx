@@ -36,6 +36,9 @@ export interface TextareaProps
 
   /** Input size */
   size?: MantineSize;
+
+  /** Static selectors base */
+  __staticSelector?: string;
 }
 
 export function Textarea({
