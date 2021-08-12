@@ -140,6 +140,7 @@ export function ColorInput({
           size={size}
           value={_value}
           onChange={(event) => setValue(event.currentTarget.value)}
+          invalid={!!error}
           icon={
             <ColorSwatch
               color={isColorValid(_value) ? _value : '#fff'}
