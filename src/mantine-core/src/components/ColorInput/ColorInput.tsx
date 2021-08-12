@@ -37,11 +37,19 @@ export interface ColorInputProps
 }
 
 const SWATCH_SIZES = {
-  xs: 14,
+  xs: 16,
   sm: 18,
-  md: 24,
-  lg: 32,
-  xl: 40,
+  md: 22,
+  lg: 28,
+  xl: 36,
+};
+
+const ARROW_OFFSET = {
+  xs: 12,
+  sm: 15,
+  md: 17,
+  lg: 21,
+  xl: 25,
 };
 
 export function ColorInput({
@@ -145,7 +153,7 @@ export function ColorInput({
         arrowSize={3}
         zIndex={100}
         arrowClassName={classes.arrow}
-        arrowStyle={{ ..._styles.arrow, left: 15 }}
+        arrowStyle={{ ..._styles.arrow, left: getSizeValue({ size, sizes: ARROW_OFFSET }) }}
       >
         <div style={{ pointerEvents: 'all' }}>
           <Paper
