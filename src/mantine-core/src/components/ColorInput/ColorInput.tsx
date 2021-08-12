@@ -29,6 +29,9 @@ export interface ColorInputProps
   /** call onChange with last valid value onBlur */
   fixOnBlur?: boolean;
 
+  /** Dropdown element z-index */
+  dropdownZIndex?: number;
+
   /** Dropdown transition name or object */
   transition?: MantineTransition;
 
@@ -74,6 +77,7 @@ export function ColorInput({
   disallowInput = false,
   fixOnBlur = true,
   transition = 'pop-top-left',
+  dropdownZIndex = 1,
   transitionDuration = 0,
   transitionTimingFunction,
   className,
@@ -167,7 +171,7 @@ export function ColorInput({
         gutter={5}
         withArrow
         arrowSize={3}
-        zIndex={100}
+        zIndex={dropdownZIndex}
         arrowClassName={classes.arrow}
         arrowStyle={{ ..._styles.arrow, left: getSizeValue({ size, sizes: ARROW_OFFSET }) }}
       >
