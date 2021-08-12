@@ -1,5 +1,6 @@
 import React from 'react';
 import { ColorSlider, BaseColorSliderProps } from '../ColorSlider/ColorSlider';
+import { round } from '../converters/parsers';
 
 export interface AlphaSliderProps extends BaseColorSliderProps {
   color: string;
@@ -10,7 +11,7 @@ export function AlphaSlider({ value, onChange, color, ...others }: AlphaSliderPr
     <ColorSlider
       {...others}
       value={value}
-      onChange={onChange}
+      onChange={(val) => onChange(round(val, 2))}
       maxValue={1}
       round={false}
       overlays={[

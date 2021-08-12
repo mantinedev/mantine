@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
-import { useUncontrolled } from '@mantine/hooks';
+import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import { useMantineTheme, DefaultProps, mergeStyles, MantineSize, getSizeValue } from '../../theme';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
@@ -70,6 +70,7 @@ export function ColorPicker({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, size }, classNames as any, 'color-picker');
   const _styles = mergeStyles(classes, styles as any);
+  const formatRef = useRef(format);
   const withAlpha = format === 'rgba' || format === 'hsla';
 
   const [shouldSkip, setShouldSkip] = useState(false);
@@ -90,7 +91,7 @@ export function ColorPicker({
 
     setParsed((current) => {
       const next = { ...current, ...color };
-      setValue(convertHsvaTo(format, next));
+      setValue(convertHsvaTo(formatRef.current, next));
       return next;
     });
   };
@@ -100,6 +101,11 @@ export function ColorPicker({
       setParsed(parseColor(value));
     }
   }, [value]);
+
+  useDidUpdate(() => {
+    formatRef.current = format;
+    setValue(convertHsvaTo(format, parsed));
+  }, [format]);
 
   return (
     <div className={cx(classes.root, className)} {...others}>
