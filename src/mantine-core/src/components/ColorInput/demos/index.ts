@@ -5,3 +5,4 @@ export { swatches } from './swatches';
 export { disabled } from './disabled';
 export { readOnly } from './readOnly';
 export { validation } from './validation';
+export { icon } from './icon';

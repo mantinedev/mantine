@@ -32,6 +32,9 @@ export interface ColorInputProps
   /** Dropdown element z-index */
   dropdownZIndex?: number;
 
+  /** Display swatch with color preview on the left side of input */
+  withPreview?: boolean;
+
   /** Dropdown transition name or object */
   transition?: MantineTransition;
 
@@ -76,6 +79,8 @@ export function ColorInput({
   themeOverride,
   disallowInput = false,
   fixOnBlur = true,
+  withPreview = true,
+  icon,
   transition = 'pop-top-left',
   dropdownZIndex = 1,
   transitionDuration = 0,
@@ -146,10 +151,13 @@ export function ColorInput({
           onChange={(event) => setValue(event.currentTarget.value)}
           invalid={!!error}
           icon={
-            <ColorSwatch
-              color={isColorValid(_value) ? _value : '#fff'}
-              size={getSizeValue({ size, sizes: SWATCH_SIZES })}
-            />
+            icon ||
+            (withPreview ? (
+              <ColorSwatch
+                color={isColorValid(_value) ? _value : '#fff'}
+                size={getSizeValue({ size, sizes: SWATCH_SIZES })}
+              />
+            ) : null)
           }
           readOnly={disallowInput}
           classNames={classNames as any}
