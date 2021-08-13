@@ -3,7 +3,7 @@ import Flag from 'react-flagpack';
 import { useMantineTheme } from '../../../theme';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import { countriesData } from './_countries-data';
-import { MultiSelect } from '../MultiSelect';
+import { MultiSelect, MultiSelectProps } from '../MultiSelect';
 
 const code = `
 import Flag from 'react-flagpack';
@@ -104,7 +104,7 @@ function Item({ label, value, elementRef, ...others }: any) {
   );
 }
 
-export function CountriesSelect() {
+export function CountriesSelect(props: Partial<MultiSelectProps>) {
   return (
     <MultiSelect
       data={countriesData}
@@ -115,6 +115,7 @@ export function CountriesSelect() {
       defaultValue={['US', 'DE']}
       placeholder="Pick countries"
       label="Which countries you visited last year?"
+      {...props}
     />
   );
 }
