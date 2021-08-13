@@ -29,10 +29,10 @@ export const sizes = {
 function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'theme'>) {
   if (variant === 'default') {
     return {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
       borderWidth: 1,
       borderStyle: 'solid',
-      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4],
       transition: 'border-color 100ms ease, box-shadow 100ms ease',
 
       '&:focus, &:focus-within': {
@@ -54,10 +54,6 @@ function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'the
         borderColor: `${
           theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 5]
         } !important`,
-      },
-
-      '&::placeholder': {
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
       },
     };
   }
@@ -179,7 +175,7 @@ export default createMemoStyles({
       '&::placeholder': {
         opacity: 1,
         userSelect: 'none',
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
       },
 
       '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration':
