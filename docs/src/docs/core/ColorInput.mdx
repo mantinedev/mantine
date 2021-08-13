@@ -19,31 +19,63 @@ import { ColorInputDemos, ColorPickerDemos } from '@demos/core';
 
 <Demo data={ColorInputDemos.usage} />
 
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { ColorInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <ColorInput value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+}
+```
+
 ## Formats
+
+Component supports hex, rgb, rgba, hsl and hsla color formats.
+Slider to change opacity is displayed only for rgba and hsla formats:
 
 <Demo data={ColorInputDemos.formatsConfigurator} />
 
+## Disable free input
+
+To disable free input set `disallowInput` prop:
+
+<Demo data={ColorInputDemos.readOnly} />
+
 ## With swatches
+
+You can add any amount of predefined color swatches:
 
 <Demo data={ColorInputDemos.swatches} />
 
+By default there will be 10 swatches per row, you can change this with `swatchesPerRow` prop,
+like in <GatsbyLink to="/core/color-picker/">ColorPicker</GatsbyLink> component:
+
 <Demo data={ColorPickerDemos.swatchesConfigurator} />
+
+If you need to restrict color picking to certain colors – disable color picker and disallow free input:
 
 <Demo data={ColorInputDemos.swatchesOnly} />
 
 ## Remove or replace preview
 
+By default color preview will be rendered on the left side of the input,
+you can remove it (`withPreview={false}` prop) or replace with any React node (`icon` prop):
+
 <Demo data={ColorInputDemos.icon} />
 
-## Disable free input
-
-<Demo data={ColorInputDemos.readOnly} />
-
 ## Input props
+
+Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
 
 <Demo data={ColorInputDemos.inputConfigurator} />
 
 ## Right section
+
+Like most other inputs ColorInput supports right section,
+for example, you can add random color button there:
 
 <Demo data={ColorInputDemos.rightSection} />
 
@@ -54,3 +86,37 @@ import { ColorInputDemos, ColorPickerDemos } from '@demos/core';
 ## Validation state and error
 
 <Demo data={ColorInputDemos.validation} />
+
+## Get element ref
+
+You can get input ref with `elementRef` prop:
+
+```tsx
+import { useRef } from 'react';
+import { ColorInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef(null);
+  return <ColorInput elementRef={ref} />;
+}
+```
+
+## Server side rendering
+
+Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<ColorInput /> // -> random id generated both on client and server, props mismatch warning
+<ColorInput id="my-input" /> // -> id is static, no mismatches
+```
+
+## Accessibility
+
+Provide `aria-label` in case you use component without label for screen reader support:
+
+```tsx
+<ColorInput label="My input" />; // -> ok, input and label is connected
+<ColorInput />; // not ok, input is not labeled
+<ColorInput aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
+```
