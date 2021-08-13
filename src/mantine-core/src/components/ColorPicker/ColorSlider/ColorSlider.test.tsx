@@ -5,10 +5,8 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsStyle,
-  itSupportsStylesApi,
 } from '@mantine/tests';
 import { ColorSlider } from './ColorSlider';
-import { ColorSlider as ColorSliderStylesApi } from './styles.api';
 import { Thumb } from '../Thumb/Thumb';
 
 const defaultProps = {
@@ -25,12 +23,6 @@ describe('@mantine/core/ColorSlider', () => {
   itSupportsOthers(ColorSlider, defaultProps);
   itSupportsStyle(ColorSlider, defaultProps);
   itSupportsRef(ColorSlider, defaultProps, HTMLDivElement, 'elementRef');
-  itSupportsStylesApi(
-    ColorSlider,
-    defaultProps,
-    Object.keys(ColorSliderStylesApi).filter((key) => key !== 'slider'),
-    'color-slider'
-  );
 
   it('provides thumbColor and size to Thumb component', () => {
     const element = shallow(<ColorSlider {...defaultProps} thumbColor="#FEFCDE" size="xl" />);
