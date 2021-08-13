@@ -127,12 +127,14 @@ export function Tabs({
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if (event.nativeEvent.code === nextTabCode) {
+      event.preventDefault();
       const nextTab = getNextTab(activeTab, tabs);
       handleActiveTabChange(nextTab);
       controlRefs.current[nextTab].focus();
     }
 
     if (event.nativeEvent.code === previousTabCode) {
+      event.preventDefault();
       const previousTab = getPreviousTab(activeTab, tabs);
       handleActiveTabChange(previousTab);
       controlRefs.current[previousTab].focus();

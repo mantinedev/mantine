@@ -5,6 +5,7 @@ import {
   MantineNumberSize,
   getFontStyles,
   getThemeColor,
+  getSharedColorScheme,
 } from '../../theme';
 
 export const sizes = {
@@ -39,23 +40,27 @@ export default createMemoStyles({
     height: '100%',
   },
 
-  placeholder: ({ theme, size, color }: AvatarStyles) => ({
-    ...getFontStyles(theme),
-    fontSize: getSizeValue({ size, sizes }) / 2.5,
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 0 : 9 }),
-    fontWeight: 700,
-    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%',
-    userSelect: 'none',
-  }),
+  placeholder: ({ theme, size, color }: AvatarStyles) => {
+    const colors = getSharedColorScheme({ theme, color, variant: 'filled' });
+
+    return {
+      ...getFontStyles(theme),
+      fontSize: getSizeValue({ size, sizes }) / 2.5,
+      color: colors.color,
+      fontWeight: 700,
+      backgroundColor: colors.background,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      height: '100%',
+      userSelect: 'none',
+    };
+  },
 
   placeholderIcon: ({ theme, color }: AvatarStyles) => ({
     width: '70%',
     height: '70%',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 0 : 6 }),
+    color: getThemeColor({ theme, color, shade: 0 }),
   }),
 });

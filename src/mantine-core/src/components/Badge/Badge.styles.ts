@@ -7,7 +7,7 @@ import {
   getThemeColor,
   getFocusStyles,
   getSizeValue,
-  hexToRgba,
+  getSharedColorScheme,
 } from '../../theme';
 
 interface BadgeStyles {
@@ -96,29 +96,34 @@ export default createMemoStyles({
     };
   },
 
-  light: ({ theme, color }: BadgeStyles) => ({
-    backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
-      theme.colorScheme === 'dark' ? 0.3 : 1
-    ),
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
-  }),
+  light: ({ theme, color }: BadgeStyles) => {
+    const colors = getSharedColorScheme({ color, theme, variant: 'light' });
 
-  filled: ({ theme, color }: BadgeStyles) => ({
-    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
-    color: theme.white,
-    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
-  }),
+    return {
+      backgroundColor: colors.background,
+      color: colors.color,
+    };
+  },
 
-  outline: ({ theme, color }: BadgeStyles) => ({
-    backgroundColor: 'transparent',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
-    border: `1px solid ${getThemeColor({
-      theme,
-      color,
-      shade: theme.colorScheme === 'dark' ? 4 : 7,
-    })}`,
-  }),
+  filled: ({ theme, color }: BadgeStyles) => {
+    const colors = getSharedColorScheme({ theme, color, variant: 'filled' });
+
+    return {
+      backgroundColor: colors.background,
+      color: colors.color,
+      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
+    };
+  },
+
+  outline: ({ theme, color }: BadgeStyles) => {
+    const colors = getSharedColorScheme({ theme, color, variant: 'outline' });
+
+    return {
+      backgroundColor: colors.background,
+      color: colors.color,
+      border: `1px solid ${colors.border}`,
+    };
+  },
 
   dot: ({ theme, color, size }: BadgeStyles) => {
     const dotSize = getSizeValue({ size, sizes: dotSizes });

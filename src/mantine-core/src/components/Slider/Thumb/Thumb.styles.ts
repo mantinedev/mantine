@@ -18,7 +18,7 @@ export default createMemoStyles({
   label: ({ theme, color }: ThumbStyles) => ({
     position: 'absolute',
     top: -32,
-    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
+    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
     fontSize: theme.fontSizes.xs,
     color: theme.white,
     padding: theme.spacing.xs / 2,

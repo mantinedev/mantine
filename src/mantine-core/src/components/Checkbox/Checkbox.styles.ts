@@ -61,8 +61,8 @@ export default createMemoStyles({
     transition: `border-color ${transitionDuration}ms ease, background-color ${transitionDuration}ms ease`,
 
     '&:checked': {
-      backgroundColor: getThemeColor({ theme, color, shade: 7 }),
-      borderColor: getThemeColor({ theme, color, shade: 7 }),
+      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+      borderColor: getThemeColor({ theme, color, shade: 6 }),
 
       '& + $icon': {
         opacity: 1,

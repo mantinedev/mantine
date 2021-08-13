@@ -43,11 +43,11 @@ export default createMemoStyles({
     [orientation === 'horizontal' ? 'borderBottom' : 'borderRight']: '2px solid transparent',
 
     '&$tabActive': {
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 6 : 7 }),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
       [orientation === 'horizontal' ? 'borderBottomColor' : 'borderRightColor']: getThemeColor({
         theme,
         color,
-        shade: theme.colorScheme === 'dark' ? 6 : 7,
+        shade: theme.colorScheme === 'dark' ? 4 : 7,
       }),
     },
   }),
@@ -76,7 +76,7 @@ export default createMemoStyles({
 
     '&$tabActive': {
       color: theme.white,
-      background: getThemeColor({ theme, color, shade: 7 }),
+      background: getThemeColor({ theme, color, shade: 6 }),
     },
   }),
 

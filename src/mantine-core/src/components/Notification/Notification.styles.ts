@@ -42,12 +42,12 @@ export default createMemoStyles({
       backgroundColor: getThemeColor({
         theme,
         color,
-        shade: 6,
+        shade: theme.colorScheme === 'dark' ? 6 : 7,
       }),
     },
 
     '& $icon': {
-      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+      backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 6 : 7 }),
       color: theme.white,
     },
   }),
