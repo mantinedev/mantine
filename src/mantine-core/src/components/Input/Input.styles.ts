@@ -37,7 +37,7 @@ function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'the
 
       '&:focus, &:focus-within': {
         outline: 'none',
-        borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 7],
+        borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 5],
       },
     };
   }
@@ -52,7 +52,7 @@ function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'the
       '&:focus, &:focus-within': {
         outline: 'none',
         borderColor: `${
-          theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 6 : 7]
+          theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 5]
         } !important`,
       },
 
