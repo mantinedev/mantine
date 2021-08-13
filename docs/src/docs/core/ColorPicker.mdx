@@ -21,24 +21,51 @@ import { ColorPickerDemos } from '@demos/core';
 
 ## Color format
 
+Component supports hex, rgb, rgba, hsl and hsla color formats.
+Slider to change opacity is displayed only for rgba and hsla formats:
+
 <Demo data={ColorPickerDemos.formatsConfigurator} />
 
 ## With swatches
 
+You can add any amount of predefined color swatches:
+
 <Demo data={ColorPickerDemos.swatches} />
 
+By default there will be 10 swatches per row, you can change this with `swatchesPerRow` prop:
+
 <Demo data={ColorPickerDemos.swatchesConfigurator} />
+
+To display swatches without picker set `withPicker={false}` and `fullWidth` props:
 
 <Demo data={ColorPickerDemos.swatchesOnly} />
 
 ## Size
 
+Component has 5 predefined sizes: xs, sm, md, lg and xl:
+
 <Demo data={ColorPickerDemos.sizeConfigurator} />
 
 ## AlphaSlider
+
+You can import and use AlphaSlider and HueSlider components outside of ColorPicker:
 
 <Demo data={ColorPickerDemos.alphaConfigurator} />
 
 ## HueSlider
 
 <Demo data={ColorPickerDemos.hueConfigurator} />
+
+## Accessibility and usability
+
+ColorPicker, AlphaSlider and HueSlider components are accessible by default:
+
+- Saturation, hue and alpha sliders afe focusable
+- When user uses mouse to interact with slider, focus is moved on slider
+- All values can be changed with arrows
+
+To make component visible for screen readers provide following props:
+
+```tsx
+<ColorPicker saturationLabel="Saturation" hueLabel="Hue" alphaLabel="Alpha" />
+```
