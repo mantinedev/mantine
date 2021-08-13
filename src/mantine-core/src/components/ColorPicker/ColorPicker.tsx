@@ -30,6 +30,9 @@ export interface ColorPickerBaseProps {
   /** Color format */
   format?: 'hex' | 'rgba' | 'rgb' | 'hsl' | 'hsla';
 
+  /** Set to false to display swatches only */
+  withPicker?: boolean;
+
   /** Predefined colors */
   swatches?: string[];
 
@@ -43,7 +46,10 @@ export interface ColorPickerBaseProps {
 export interface ColorPickerProps
   extends DefaultProps<ColorPickerStylesNames>,
     ColorPickerBaseProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {}
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {
+  /** Force picker to take 100% width of its container */
+  fullWidth?: boolean;
+}
 
 const SWATCH_SIZES = {
   xs: 26,
@@ -61,6 +67,8 @@ export function ColorPicker({
   swatches,
   swatchesPerRow = 10,
   size = 'sm',
+  withPicker = true,
+  fullWidth = false,
   themeOverride,
   className,
   styles,
@@ -68,7 +76,7 @@ export function ColorPicker({
   ...others
 }: ColorPickerProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames as any, 'color-picker');
+  const classes = useStyles({ theme, size, fullWidth }, classNames as any, 'color-picker');
   const _styles = mergeStyles(classes, styles as any);
   const formatRef = useRef(format);
   const withAlpha = format === 'rgba' || format === 'hsla';
@@ -109,50 +117,54 @@ export function ColorPicker({
 
   return (
     <div className={cx(classes.root, className)} {...others}>
-      <Saturation
-        value={parsed}
-        onChange={handleChange}
-        color={_value}
-        themeOverride={themeOverride}
-        styles={styles as any}
-        classNames={classNames as any}
-        size={size}
-      />
-
-      <div className={classes.body} style={_styles.body}>
-        <div className={classes.sliders} style={_styles.sliders}>
-          <HueSlider
-            value={parsed.h}
-            onChange={(h) => handleChange({ h })}
-            size={size}
+      {withPicker && (
+        <>
+          <Saturation
+            value={parsed}
+            onChange={handleChange}
+            color={_value}
             themeOverride={themeOverride}
             styles={styles as any}
             classNames={classNames as any}
+            size={size}
           />
 
-          {withAlpha && (
-            <AlphaSlider
-              value={parsed.a}
-              onChange={(a) => handleChange({ a })}
-              size={size}
-              color={convertHsvaTo('hex', parsed)}
-              style={{ marginTop: 6 }}
-              themeOverride={themeOverride}
-              styles={styles as any}
-              classNames={classNames as any}
-            />
-          )}
-        </div>
+          <div className={classes.body} style={_styles.body}>
+            <div className={classes.sliders} style={_styles.sliders}>
+              <HueSlider
+                value={parsed.h}
+                onChange={(h) => handleChange({ h })}
+                size={size}
+                themeOverride={themeOverride}
+                styles={styles as any}
+                classNames={classNames as any}
+              />
 
-        {withAlpha && (
-          <ColorSwatch
-            color={_value}
-            radius="sm"
-            themeOverride={themeOverride}
-            size={getSizeValue({ size, sizes: SWATCH_SIZES })}
-          />
-        )}
-      </div>
+              {withAlpha && (
+                <AlphaSlider
+                  value={parsed.a}
+                  onChange={(a) => handleChange({ a })}
+                  size={size}
+                  color={convertHsvaTo('hex', parsed)}
+                  style={{ marginTop: 6 }}
+                  themeOverride={themeOverride}
+                  styles={styles as any}
+                  classNames={classNames as any}
+                />
+              )}
+            </div>
+
+            {withAlpha && (
+              <ColorSwatch
+                color={_value}
+                radius="sm"
+                themeOverride={themeOverride}
+                size={getSizeValue({ size, sizes: SWATCH_SIZES })}
+              />
+            )}
+          </div>
+        </>
+      )}
 
       {Array.isArray(swatches) && (
         <Swatches

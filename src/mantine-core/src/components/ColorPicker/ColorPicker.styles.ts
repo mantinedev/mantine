@@ -3,6 +3,7 @@ import { createMemoStyles, getSizeValue, MantineSize, MantineTheme } from '../..
 interface ColorPickerStyles {
   theme: MantineTheme;
   size: MantineSize;
+  fullWidth: boolean;
 }
 
 export const sizes = {
@@ -14,9 +15,9 @@ export const sizes = {
 };
 
 export default createMemoStyles({
-  root: ({ size }: ColorPickerStyles) => ({
+  root: ({ size, fullWidth }: ColorPickerStyles) => ({
     boxSizing: 'border-box',
-    width: getSizeValue({ size, sizes }),
+    width: fullWidth ? '100%' : getSizeValue({ size, sizes }),
     padding: 1,
   }),
 
