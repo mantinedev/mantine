@@ -94,8 +94,8 @@ export function Popover({
   ...others
 }: PopoverProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames as any, 'popover');
-  const _styles = mergeStyles(classes, styles as any);
+  const classes = useStyles({ theme }, classNames, 'popover');
+  const _styles = mergeStyles(classes, styles);
   const handleClose = () => typeof onClose === 'function' && onClose();
   const useClickOutsideRef = useClickOutside(() => !noClickOutside && handleClose());
   const [referenceElement, setReferenceElement] = useState(null);
@@ -144,8 +144,8 @@ export function Popover({
           onClose={handleClose}
           elementRef={useMergedRef(focusTrapRef, useClickOutsideRef)}
           onKeyDownCapture={handleKeydown}
-          classNames={classNames as any}
-          styles={styles as any}
+          classNames={classNames}
+          styles={styles}
         >
           {children}
         </PopoverBody>

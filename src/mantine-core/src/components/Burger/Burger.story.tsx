@@ -6,7 +6,7 @@ import { WrappedBurger } from './demos/WrappedBurger';
 const getThemes = (props?: any) =>
   ['#fff', '#fe6734'].map((color) => <WrappedBurger key={color} color={color} {...props} />);
 
-const sizes = (['xs', 'sm', 'md', 'lg', 'xl', 80, 120] as any).map((size) => (
+const sizes = (['xs', 'sm', 'md', 'lg', 'xl', 80, 120] as const).map((size) => (
   <WrappedBurger size={size} key={size} />
 ));
 

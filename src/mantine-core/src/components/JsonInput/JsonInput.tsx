@@ -76,7 +76,7 @@ export function JsonInput({
       styles={{
         ...styles,
         input: {
-          ...(styles as any)?.input,
+          ...styles?.input,
           fontFamily: theme.fontFamilyMonospace,
         },
       }}

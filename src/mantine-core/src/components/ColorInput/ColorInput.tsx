@@ -15,7 +15,10 @@ import { ColorPicker, ColorPickerBaseProps } from '../ColorPicker/ColorPicker';
 import { convertHsvaTo, isColorValid, parseColor } from '../ColorPicker/converters';
 import useStyles from './ColorInput.styles';
 
-export type ColorInputStylesNames = InputWrapperStylesNames | InputStylesNames;
+export type ColorInputStylesNames =
+  | InputWrapperStylesNames
+  | InputStylesNames
+  | keyof ReturnType<typeof useStyles>;
 
 export interface ColorInputProps
   extends InputWrapperBaseProps,
@@ -93,8 +96,8 @@ export function ColorInput({
   ...others
 }: ColorInputProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames as any, 'color-input');
-  const _styles = mergeStyles(classes, styles as any);
+  const classes = useStyles({ theme }, classNames, 'color-input');
+  const _styles = mergeStyles(classes, styles);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const [lastValidValue, setLastValidValue] = useState('');
@@ -135,8 +138,8 @@ export function ColorInput({
       description={description}
       error={error}
       required={required}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
       size={size}
       className={className}
       style={style}
@@ -162,10 +165,10 @@ export function ColorInput({
             ) : null)
           }
           readOnly={disallowInput}
-          classNames={classNames as any}
+          classNames={classNames}
           styles={{
-            ...(styles as any),
-            input: { ...(styles as any)?.input, cursor: disallowInput ? 'pointer' : undefined },
+            ...styles,
+            input: { ...styles?.input, cursor: disallowInput ? 'pointer' : undefined },
           }}
         />
       </div>

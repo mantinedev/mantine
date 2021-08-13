@@ -131,8 +131,8 @@ export function DatePickerBase({
   ...others
 }: DatePickerBaseProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size, invalid: !!error }, classNames as any, __staticSelector);
-  const _styles = mergeStyles(classes, styles as any);
+  const classes = useStyles({ theme, size, invalid: !!error }, classNames, __staticSelector);
+  const _styles = mergeStyles(classes, styles);
   const reduceMotion = useReducedMotion();
   const uuid = useId(id);
 
@@ -170,8 +170,8 @@ export function DatePickerBase({
       className={className}
       style={style}
       themeOverride={themeOverride}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
       size={size}
       __staticSelector={__staticSelector}
       {...wrapperProps}
@@ -182,8 +182,8 @@ export function DatePickerBase({
             themeOverride={themeOverride}
             component="button"
             type="button"
-            classNames={classNames as any}
-            styles={styles as any}
+            classNames={classNames}
+            styles={styles}
             onClick={() => setDropdownOpened(!dropdownOpened)}
             id={uuid}
             elementRef={useMergedRef(elementRef, inputRef)}

@@ -84,8 +84,8 @@ export function ColorPicker({
   ...others
 }: ColorPickerProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size, fullWidth }, classNames as any, 'color-picker');
-  const _styles = mergeStyles(classes, styles as any);
+  const classes = useStyles({ theme, size, fullWidth }, classNames, 'color-picker');
+  const _styles = mergeStyles(classes, styles);
   const formatRef = useRef(format);
   const withAlpha = format === 'rgba' || format === 'hsla';
 
@@ -132,8 +132,8 @@ export function ColorPicker({
             onChange={handleChange}
             color={_value}
             themeOverride={themeOverride}
-            styles={styles as any}
-            classNames={classNames as any}
+            styles={styles}
+            classNames={classNames}
             size={size}
             focusable={focusable}
           />
@@ -158,8 +158,8 @@ export function ColorPicker({
                   color={convertHsvaTo('hex', parsed)}
                   style={{ marginTop: 6 }}
                   themeOverride={themeOverride}
-                  styles={styles as any}
-                  classNames={classNames as any}
+                  styles={styles}
+                  classNames={classNames}
                   focusable={focusable}
                 />
               )}
@@ -184,8 +184,8 @@ export function ColorPicker({
           style={{ marginTop: 5 }}
           swatchesPerRow={swatchesPerRow}
           focusable={focusable}
-          classNames={classNames as any}
-          styles={styles as any}
+          classNames={classNames}
+          styles={styles}
         />
       )}
     </div>

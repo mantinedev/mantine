@@ -119,8 +119,8 @@ export function MenuBody({
   const hoveredTimeout = useRef<number>();
   const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, theme }, classNames as any, 'menu');
-  const _styles = mergeStyles(classes, styles as any);
+  const classes = useStyles({ size, theme }, classNames, 'menu');
+  const _styles = mergeStyles(classes, styles);
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
   const [hovered, setHovered] = useState(findInitialItem(items));
@@ -173,15 +173,15 @@ export function MenuBody({
   const buttons = items.map((item, index) => {
     if (item.type === MenuItem) {
       return (
-        <MenuButton
+        <MenuButton<'button'>
           {...item.props}
           key={index}
           hovered={hovered === index}
           onHover={() => setHovered(index)}
           radius={radius}
-          classNames={classNames as any}
-          styles={styles as any}
-          onClick={(event: any) => {
+          classNames={classNames}
+          styles={styles}
+          onClick={(event) => {
             if (closeOnItemClick) {
               onClose();
             }
@@ -190,7 +190,7 @@ export function MenuBody({
               item.props.onClick(event);
             }
           }}
-          elementRef={(node: any) => {
+          elementRef={(node) => {
             buttonsRefs.current[index] = node;
           }}
         />
@@ -200,10 +200,10 @@ export function MenuBody({
     if (item.type === MenuLabel) {
       return (
         <Text
+          key={index}
           className={classes.label}
           style={_styles.label}
           {...(item.props as any)}
-          key={index}
         />
       );
     }

@@ -84,8 +84,8 @@ export function CalendarHeader({
 
       <CalendarLabel
         locale={locale}
-        classNames={classNames as any}
-        styles={styles as any}
+        classNames={classNames}
+        styles={styles}
         withSelect={withSelect}
         yearsRange={yearsRange}
         value={month}

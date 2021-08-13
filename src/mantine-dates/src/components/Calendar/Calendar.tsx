@@ -132,8 +132,8 @@ export function Calendar({
         minDate={minDate}
         maxDate={maxDate}
         excludeDate={excludeDate}
-        classNames={classNames as any}
-        styles={styles as any}
+        classNames={classNames}
+        styles={styles}
         fullWidth={fullWidth}
         size={size}
         locale={locale}

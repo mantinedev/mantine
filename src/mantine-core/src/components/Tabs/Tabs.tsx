@@ -103,8 +103,8 @@ export function Tabs({
   ...others
 }: TabsProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, tabPadding, orientation }, classNames as any, 'tabs');
-  const _styles = mergeStyles(classes, styles as any);
+  const classes = useStyles({ theme, tabPadding, orientation }, classNames, 'tabs');
+  const _styles = mergeStyles(classes, styles);
 
   const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
 
@@ -153,8 +153,8 @@ export function Tabs({
         controlRefs.current[index] = node;
       }}
       onClick={() => activeTab !== index && handleActiveTabChange(index)}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
     />
   ));
 

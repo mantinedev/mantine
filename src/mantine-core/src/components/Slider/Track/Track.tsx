@@ -1,9 +1,9 @@
 import React from 'react';
 import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../../theme';
-import { Marks } from '../Marks/Marks';
+import { Marks, MarksStylesNames } from '../Marks/Marks';
 import useStyles from './Track.styles';
 
-export type TrackStylesNames = keyof ReturnType<typeof useStyles>;
+export type TrackStylesNames = keyof ReturnType<typeof useStyles> | MarksStylesNames;
 
 interface TrackProps extends DefaultProps<TrackStylesNames> {
   filled: number;
@@ -50,8 +50,8 @@ export function Track({
         color={color}
         offset={offset}
         themeOverride={themeOverride}
-        classNames={classNames as any}
-        styles={styles as any}
+        classNames={classNames}
+        styles={styles}
       />
     </div>
   );

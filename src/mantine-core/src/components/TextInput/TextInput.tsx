@@ -69,8 +69,8 @@ export function TextInput({
       className={className}
       style={style}
       themeOverride={themeOverride}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
       __staticSelector={__staticSelector}
       {...wrapperProps}
     >
@@ -84,8 +84,8 @@ export function TextInput({
         icon={icon}
         size={size}
         themeOverride={themeOverride}
-        classNames={classNames as any}
-        styles={styles as any}
+        classNames={classNames}
+        styles={styles}
         __staticSelector={__staticSelector}
       />
     </InputWrapper>

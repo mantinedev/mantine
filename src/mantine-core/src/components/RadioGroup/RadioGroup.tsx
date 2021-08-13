@@ -94,8 +94,8 @@ export function RadioGroup({
       labelElement="div"
       size={size}
       __staticSelector="radio-group"
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
       {...others}
     >
       <Group

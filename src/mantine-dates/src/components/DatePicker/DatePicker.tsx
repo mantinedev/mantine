@@ -113,8 +113,8 @@ export function DatePicker({
         {...others}
       >
         <Calendar
-          classNames={classNames as any}
-          styles={styles as any}
+          classNames={classNames}
+          styles={styles}
           locale={locale}
           themeOverride={themeOverride}
           nextMonthLabel={nextMonthLabel}

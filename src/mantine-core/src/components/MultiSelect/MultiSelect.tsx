@@ -155,12 +155,8 @@ export function MultiSelect({
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles(
-    { theme, size, variant, invalid: !!error },
-    classNames as any,
-    'multi-select'
-  );
-  const _styles = mergeStyles(classes, styles as any);
+  const classes = useStyles({ theme, size, variant, invalid: !!error }, classNames, 'multi-select');
+  const _styles = mergeStyles(classes, styles);
   const dropdownRef = useRef<HTMLDivElement>();
   const inputRef = useRef<HTMLInputElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
@@ -288,8 +284,8 @@ export function MultiSelect({
         key={item.value}
         themeOverride={themeOverride}
         size={size}
-        styles={styles as any}
-        classNames={classNames as any}
+        styles={styles}
+        classNames={classNames}
         radius={radius}
       />
     ));
@@ -315,8 +311,8 @@ export function MultiSelect({
       className={className}
       style={style}
       themeOverride={themeOverride}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
       __staticSelector="multi-select"
       {...wrapperProps}
     >
@@ -334,7 +330,7 @@ export function MultiSelect({
         <Input<'div'>
           __staticSelector="multi-select"
           style={{ overflow: 'hidden' }}
-          classNames={classNames as any}
+          classNames={classNames}
           component="div"
           multiline
           size={size}
@@ -352,7 +348,7 @@ export function MultiSelect({
             styles: {
               ...styles,
               input: {
-                ...(styles as any)?.input,
+                ...styles?.input,
                 cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
               },
             },
@@ -400,8 +396,8 @@ export function MultiSelect({
           uuid={uuid}
           shadow={shadow}
           maxDropdownHeight={maxDropdownHeight}
-          classNames={classNames as any}
-          styles={styles as any}
+          classNames={classNames}
+          styles={styles}
           size={size}
           elementRef={dropdownRef}
           __staticSelector="multi-select"
@@ -410,8 +406,8 @@ export function MultiSelect({
             data={filteredData}
             hovered={hovered}
             themeOverride={themeOverride}
-            classNames={classNames as any}
-            styles={styles as any}
+            classNames={classNames}
+            styles={styles}
             uuid={uuid}
             __staticSelector="multi-select"
             onItemHover={setHovered}

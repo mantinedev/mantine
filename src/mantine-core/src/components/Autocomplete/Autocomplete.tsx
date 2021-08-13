@@ -116,8 +116,8 @@ export function Autocomplete({
   ...others
 }: AutocompleteProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames as any, 'autocomplete');
-  const _styles = mergeStyles(classes, styles as any);
+  const classes = useStyles({ theme, size }, classNames, 'autocomplete');
+  const _styles = mergeStyles(classes, styles);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
@@ -189,7 +189,7 @@ export function Autocomplete({
     setDropdownOpened(false);
   };
 
-  const handleInputClick = (event: any) => {
+  const handleInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     typeof onClick === 'function' && onClick(event);
     setDropdownOpened(true);
   };
@@ -207,8 +207,8 @@ export function Autocomplete({
       className={className}
       style={style}
       themeOverride={themeOverride}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
       __staticSelector="autocomplete"
       {...wrapperProps}
     >
@@ -233,8 +233,8 @@ export function Autocomplete({
           size={size}
           onKeyDown={handleInputKeydown}
           themeOverride={themeOverride}
-          classNames={classNames as any}
-          styles={styles as any}
+          classNames={classNames}
+          styles={styles}
           __staticSelector="autocomplete"
           value={_value}
           onChange={(event) => {
@@ -258,8 +258,8 @@ export function Autocomplete({
           uuid={uuid}
           shadow={shadow}
           maxDropdownHeight="auto"
-          classNames={classNames as any}
-          styles={styles as any}
+          classNames={classNames}
+          styles={styles}
           size={size}
           __staticSelector="autocomplete"
         >
@@ -267,8 +267,8 @@ export function Autocomplete({
             data={filteredData}
             hovered={hovered}
             themeOverride={themeOverride}
-            classNames={classNames as any}
-            styles={styles as any}
+            classNames={classNames}
+            styles={styles}
             uuid={uuid}
             __staticSelector="autocomplete"
             onItemHover={setHovered}

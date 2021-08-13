@@ -257,8 +257,8 @@ export function Select({
       className={className}
       style={style}
       themeOverride={themeOverride}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
       __staticSelector="select"
       {...wrapperProps}
     >
@@ -281,7 +281,7 @@ export function Select({
           size={size}
           onKeyDown={handleInputKeydown}
           themeOverride={themeOverride}
-          classNames={classNames as any}
+          classNames={classNames}
           __staticSelector="select"
           value={inputValue}
           onChange={handleInputChange}
@@ -298,7 +298,7 @@ export function Select({
               ...styles,
               input: {
                 cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
-                ...(styles as any)?.input,
+                ...styles?.input,
               },
             },
             size,
@@ -319,8 +319,8 @@ export function Select({
           uuid={uuid}
           shadow={shadow}
           maxDropdownHeight={maxDropdownHeight}
-          classNames={classNames as any}
-          styles={styles as any}
+          classNames={classNames}
+          styles={styles}
           size={size}
           elementRef={dropdownRef}
           __staticSelector="select"
@@ -329,8 +329,8 @@ export function Select({
             data={filteredData}
             hovered={hovered}
             themeOverride={themeOverride}
-            classNames={classNames as any}
-            styles={styles as any}
+            classNames={classNames}
+            styles={styles}
             isItemSelected={(val) => val === _value}
             uuid={uuid}
             __staticSelector="select"

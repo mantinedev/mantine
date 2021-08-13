@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MantineProvider } from '../../theme';
+import { DEFAULT_THEME, MantineProvider, MANTINE_SIZES } from '../../theme';
 import { Switch } from './Switch';
 
 function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' | 'onChange'>) {
@@ -14,7 +14,7 @@ function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' 
   );
 }
 
-const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as any[]).map((size) => (
+const sizes = MANTINE_SIZES.map((size) => (
   <Switch color="blue" key={size} size={size} label={`Switch ${size}`} style={{ marginTop: 15 }} />
 ));
 

@@ -85,8 +85,8 @@ export function NumberInput({
   ...others
 }: NumberInputProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, radius, size }, classNames as any, 'number-input');
-  const _styles = mergeStyles(classes, styles as any);
+  const classes = useStyles({ theme, radius, size }, classNames, 'number-input');
+  const _styles = mergeStyles(classes, styles);
   const [focused, setFocused] = useState(false);
   const [_value, setValue] = useState(
     typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : 0
@@ -208,8 +208,8 @@ export function NumberInput({
       min={min}
       step={step}
       size={size}
-      styles={styles as any}
-      classNames={classNames as any}
+      styles={styles}
+      classNames={classNames}
       __staticSelector="number-input"
     />
   );

@@ -12,7 +12,7 @@ const transparent = Object.keys(DEFAULT_THEME.colors).map((theme) => (
   <ColorSwatch color={hexToRgba(DEFAULT_THEME.colors[theme][5], 0.5)} key={theme} size={20} />
 ));
 
-const radiuses = ([0, 'xs', 'sm', 'md', 'lg', 'xl', 1000] as any[]).map((radius) => (
+const radiuses = ([0, 'xs', 'sm', 'md', 'lg', 'xl', 1000] as const).map((radius) => (
   <ColorSwatch color={DEFAULT_THEME.colors.blue[5]} key={radius} radius={radius} size={100} />
 ));
 

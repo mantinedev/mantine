@@ -202,8 +202,8 @@ export function Slider({
       onMouseUpCapture={() => setDragging(false)}
       onKeyDownCapture={handleTrackKeydownCapture}
       themeOverride={themeOverride}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
     >
       <Track
         offset={0}
@@ -217,8 +217,8 @@ export function Slider({
         value={_value}
         themeOverride={themeOverride}
         onChange={setValue}
-        styles={styles as any}
-        classNames={classNames as any}
+        styles={styles}
+        classNames={classNames}
       >
         <Thumb
           max={max}
@@ -236,8 +236,8 @@ export function Slider({
           labelTransitionTimingFunction={labelTransitionTimingFunction}
           labelAlwaysOn={labelAlwaysOn}
           themeOverride={themeOverride}
-          classNames={classNames as any}
-          styles={styles as any}
+          classNames={classNames}
+          styles={styles}
           thumbLabel={thumbLabel}
         />
       </Track>
