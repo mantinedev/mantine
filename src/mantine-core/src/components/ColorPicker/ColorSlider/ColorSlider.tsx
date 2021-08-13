@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
-import { useMove, clampUseMovePosition, useDidUpdate, UseMovePosition } from '@mantine/hooks';
+import {
+  useMove,
+  clampUseMovePosition,
+  useDidUpdate,
+  UseMovePosition,
+  useMergedRef,
+} from '@mantine/hooks';
 import { DefaultProps, mergeStyles, useMantineTheme, MantineSize } from '../../../theme';
 import { Thumb } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
@@ -14,6 +20,7 @@ export interface BaseColorSliderProps
   onChange(value: number): void;
   size: MantineSize;
   focusable?: boolean;
+  elementRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
 interface ColorSliderProps extends BaseColorSliderProps {
@@ -33,6 +40,7 @@ export function ColorSlider({
   thumbColor = 'transparent',
   __staticSelector = 'color-slider',
   focusable = true,
+  elementRef,
   overlays,
   themeOverride,
   classNames,
@@ -83,7 +91,7 @@ export function ColorSlider({
   return (
     <div
       {...others}
-      ref={ref}
+      ref={useMergedRef(ref, elementRef)}
       className={cx(classes.slider, className)}
       style={{ ..._styles.slider, ...style }}
       role="slider"

@@ -5,6 +5,7 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
+  itSupportsRef,
 } from '@mantine/tests';
 import { AlphaSlider } from './AlphaSlider';
 
@@ -20,6 +21,7 @@ describe('@mantine/core/AlphaSlider', () => {
   itSupportsClassName(AlphaSlider, defaultProps);
   itSupportsOthers(AlphaSlider, defaultProps);
   itSupportsStyle(AlphaSlider, defaultProps);
+  itSupportsRef(AlphaSlider, defaultProps, HTMLDivElement, 'elementRef');
 
   it('has correct displayName', () => {
     expect(AlphaSlider.displayName).toEqual('@mantine/core/AlphaSlider');

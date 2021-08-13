@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import {
   itSupportsClassName,
   itSupportsOthers,
+  itSupportsRef,
   itSupportsStyle,
   itSupportsStylesApi,
 } from '@mantine/tests';
@@ -23,6 +24,7 @@ describe('@mantine/core/ColorSlider', () => {
   itSupportsClassName(ColorSlider, defaultProps);
   itSupportsOthers(ColorSlider, defaultProps);
   itSupportsStyle(ColorSlider, defaultProps);
+  itSupportsRef(ColorSlider, defaultProps, HTMLDivElement, 'elementRef');
   itSupportsStylesApi(
     ColorSlider,
     defaultProps,
