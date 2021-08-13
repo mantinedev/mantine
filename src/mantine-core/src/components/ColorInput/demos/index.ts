@@ -7,3 +7,4 @@ export { readOnly } from './readOnly';
 export { validation } from './validation';
 export { icon } from './icon';
 export { swatchesOnly } from './swatchesOnly';
+export { rightSection } from './rightSection';
