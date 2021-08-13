@@ -9,7 +9,7 @@ import useStyles from './TabControl.styles';
 export type TabControlStylesNames = Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>;
 
 export interface TabControlProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<TabControlStylesNames>,
     React.ComponentPropsWithoutRef<'button'> {
   active: boolean;
   elementRef(node: HTMLButtonElement): void;

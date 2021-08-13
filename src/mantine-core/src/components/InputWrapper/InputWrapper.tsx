@@ -30,7 +30,7 @@ export interface InputWrapperBaseProps {
 }
 
 export interface InputWrapperProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<InputWrapperStylesNames>,
     InputWrapperBaseProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** Input that should be wrapped */
