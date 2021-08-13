@@ -80,6 +80,8 @@ export function ColorInput({
   disallowInput = false,
   fixOnBlur = true,
   withPreview = true,
+  swatchesPerRow = 10,
+  withPicker = true,
   icon,
   transition = 'pop-top-left',
   dropdownZIndex = 1,
@@ -195,6 +197,8 @@ export function ColorInput({
               onChange={setValue}
               format={format}
               swatches={swatches}
+              swatchesPerRow={swatchesPerRow}
+              withPicker={withPicker}
               size={size}
             />
           </Paper>
