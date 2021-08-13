@@ -9,6 +9,7 @@ export { hexToRgba } from './utils/hex-to-rgba/hex-to-rgba';
 export { mergeClassNames } from './utils/merge-class-names/merge-class-names';
 export { mergeStyles } from './utils/merge-styles/merge-styles';
 export { omitStyles } from './utils/omit-styles/omit-styles';
+export { getSharedColorScheme } from './utils/get-shared-color-scheme/get-shared-color-scheme';
 
 export { MantineProvider } from './MantineProvider/MantineProvider';
 export { NormalizeCSS } from './NormalizeCSS';
