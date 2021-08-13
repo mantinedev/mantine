@@ -6,7 +6,10 @@ import { Thumb } from '../Thumb/Thumb';
 import useStyles from './Saturation.styles';
 import { convertHsvaTo } from '../converters';
 
-export type SaturationStylesNames = keyof ReturnType<typeof useStyles>;
+export type SaturationStylesNames = Exclude<
+  keyof ReturnType<typeof useStyles>,
+  'saturationOverlay' | 'saturationThumb'
+>;
 
 interface SaturationProps extends DefaultProps<SaturationStylesNames> {
   value: HsvaColor;

@@ -15,6 +15,8 @@ export const sizes = {
 };
 
 export default createMemoStyles({
+  preview: {},
+
   root: ({ size, fullWidth }: ColorPickerStyles) => ({
     boxSizing: 'border-box',
     width: fullWidth ? '100%' : getSizeValue({ size, sizes }),

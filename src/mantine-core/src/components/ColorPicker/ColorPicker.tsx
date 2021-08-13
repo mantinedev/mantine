@@ -9,6 +9,7 @@ import { HueSlider, HueSliderProps } from './HueSlider/HueSlider';
 import { AlphaSlider, AlphaSliderProps } from './AlphaSlider/AlphaSlider';
 import { Saturation, SaturationStylesNames } from './Saturation/Saturation';
 import { Swatches, SwatchesStylesNames } from './Swatches/Swatches';
+import { ThumbStylesNames } from './Thumb/Thumb';
 import { HsvaColor } from './types';
 import useStyles from './ColorPicker.styles';
 
@@ -19,7 +20,8 @@ export type ColorPickerStylesNames =
   | keyof ReturnType<typeof useStyles>
   | ColorSliderStylesNames
   | SwatchesStylesNames
-  | SaturationStylesNames;
+  | SaturationStylesNames
+  | ThumbStylesNames;
 
 export interface ColorPickerBaseProps {
   /** Controlled component value */
@@ -171,6 +173,8 @@ export function ColorPicker({
                 radius="sm"
                 themeOverride={themeOverride}
                 size={getSizeValue({ size, sizes: SWATCH_SIZES })}
+                className={classes.preview}
+                style={_styles.preview}
               />
             )}
           </div>
