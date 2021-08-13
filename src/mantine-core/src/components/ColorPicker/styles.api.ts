@@ -10,5 +10,5 @@ export const ColorPicker: Record<ColorPickerStylesNames, string> = {
   thumb: 'Hue, alpha and saturation sliders thumbs',
   saturation: 'Saturation slider',
   swatch: 'ColorSwatch component in swatches list',
-  swatchesGroup: 'Wrapper around all swatches',
+  swatches: 'Wrapper around all swatches',
 };

@@ -13,6 +13,7 @@ interface Position {
 interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   position: Position;
   size: MantineSize;
+  __staticSelector: string;
 }
 
 export function Thumb({
@@ -23,9 +24,10 @@ export function Thumb({
   classNames,
   style,
   size,
+  __staticSelector,
 }: ThumbProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'color-input');
+  const classes = useStyles({ theme, size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return (

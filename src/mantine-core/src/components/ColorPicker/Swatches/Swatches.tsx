@@ -24,6 +24,7 @@ export function Swatches({
   focusable = true,
   classNames,
   styles,
+  style,
   __staticSelector = 'color-picker',
   ...others
 }: SwatchesProps) {
@@ -46,7 +47,7 @@ export function Swatches({
   ));
 
   return (
-    <div className={classes.swatchesGroup} style={_styles.swatchesGroup} {...others}>
+    <div className={classes.swatches} style={{ ...style, ..._styles.swatches }} {...others}>
       {colors}
     </div>
   );

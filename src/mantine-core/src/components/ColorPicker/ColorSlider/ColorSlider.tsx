@@ -8,10 +8,12 @@ import {
   useMergedRef,
 } from '@mantine/hooks';
 import { DefaultProps, mergeStyles, useMantineTheme, MantineSize } from '../../../theme';
-import { Thumb } from '../Thumb/Thumb';
+import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
 
-export type ColorSliderStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'sliderThumb'>;
+export type ColorSliderStylesNames =
+  | Exclude<keyof ReturnType<typeof useStyles>, 'sliderThumb'>
+  | ThumbStylesNames;
 
 export interface BaseColorSliderProps
   extends DefaultProps<ColorSliderStylesNames>,
@@ -21,6 +23,7 @@ export interface BaseColorSliderProps
   size: MantineSize;
   focusable?: boolean;
   elementRef?: React.ForwardedRef<HTMLDivElement>;
+  __staticSelector?: string;
 }
 
 interface ColorSliderProps extends BaseColorSliderProps {
@@ -28,7 +31,6 @@ interface ColorSliderProps extends BaseColorSliderProps {
   overlays: React.CSSProperties[];
   round: boolean;
   thumbColor?: string;
-  __staticSelector?: string;
 }
 
 export function ColorSlider({
@@ -104,6 +106,9 @@ export function ColorSlider({
       {layers}
 
       <Thumb
+        __staticSelector={__staticSelector}
+        classNames={classNames}
+        styles={styles}
         themeOverride={themeOverride}
         position={position}
         style={{ top: 1, backgroundColor: thumbColor }}

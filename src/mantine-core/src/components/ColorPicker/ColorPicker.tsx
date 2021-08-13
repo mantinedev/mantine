@@ -58,6 +58,9 @@ export interface ColorPickerProps
 
   /** Should interactive elements be focusable */
   focusable?: boolean;
+
+  /** Static selector base */
+  __staticSelector?: string;
 }
 
 const SWATCH_SIZES = {
@@ -79,14 +82,16 @@ export function ColorPicker({
   withPicker = true,
   fullWidth = false,
   focusable = true,
+  __staticSelector = 'color-picker',
   themeOverride,
   className,
+  style,
   styles,
   classNames,
   ...others
 }: ColorPickerProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size, fullWidth }, classNames, 'color-picker');
+  const classes = useStyles({ theme, size, fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const formatRef = useRef(format);
   const withAlpha = format === 'rgba' || format === 'hsla';
@@ -126,7 +131,7 @@ export function ColorPicker({
   }, [format]);
 
   return (
-    <div className={cx(classes.root, className)} {...others}>
+    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       {withPicker && (
         <>
           <Saturation
@@ -138,6 +143,7 @@ export function ColorPicker({
             classNames={classNames}
             size={size}
             focusable={focusable}
+            __staticSelector={__staticSelector}
           />
 
           <div className={classes.body} style={_styles.body}>
@@ -150,6 +156,7 @@ export function ColorPicker({
                 styles={styles}
                 classNames={classNames}
                 focusable={focusable}
+                __staticSelector={__staticSelector}
               />
 
               {withAlpha && (
@@ -163,6 +170,7 @@ export function ColorPicker({
                   styles={styles}
                   classNames={classNames}
                   focusable={focusable}
+                  __staticSelector={__staticSelector}
                 />
               )}
             </div>
@@ -190,6 +198,7 @@ export function ColorPicker({
           focusable={focusable}
           classNames={classNames}
           styles={styles}
+          __staticSelector={__staticSelector}
         />
       )}
     </div>
