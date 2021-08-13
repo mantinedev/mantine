@@ -15,7 +15,7 @@ function Demo() {
       <Autocomplete
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Your favorite frameworks/libraries"
-        placeholder="Pick all that you like"
+        placeholder="Pick one that you like"
         error
       />
 
@@ -23,7 +23,7 @@ function Demo() {
         style={{ marginTop: 15 }}
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Your favorite frameworks/libraries"
-        placeholder="Pick all that you like"
+        placeholder="Pick one that you like"
         error="Pick at least one item"
       />
     </div>
