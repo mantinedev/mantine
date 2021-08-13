@@ -80,9 +80,9 @@ export function Saturation({
       className={classes.saturation}
       ref={ref}
       style={{ ..._styles.saturation }}
-      // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
       role="slider"
       aria-label={saturationLabel}
+      aria-valuenow={position.x}
       aria-valuetext={convertHsvaTo('rgba', value)}
       tabIndex={focusable ? 0 : -1}
       onKeyDown={handleKeyDown}

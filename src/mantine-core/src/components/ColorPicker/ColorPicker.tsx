@@ -61,6 +61,15 @@ export interface ColorPickerProps
 
   /** Static selector base */
   __staticSelector?: string;
+
+  /** Saturation slider aria-label */
+  saturationLabel?: string;
+
+  /** Hue slider aria-label */
+  hueLabel?: string;
+
+  /** Alpha slider aria-label */
+  alphaLabel?: string;
 }
 
 const SWATCH_SIZES = {
@@ -83,6 +92,9 @@ export function ColorPicker({
   fullWidth = false,
   focusable = true,
   __staticSelector = 'color-picker',
+  saturationLabel,
+  hueLabel,
+  alphaLabel,
   themeOverride,
   className,
   style,
@@ -143,6 +155,7 @@ export function ColorPicker({
             classNames={classNames}
             size={size}
             focusable={focusable}
+            saturationLabel={saturationLabel}
             __staticSelector={__staticSelector}
           />
 
@@ -156,6 +169,7 @@ export function ColorPicker({
                 styles={styles}
                 classNames={classNames}
                 focusable={focusable}
+                aria-label={hueLabel}
                 __staticSelector={__staticSelector}
               />
 
@@ -170,6 +184,7 @@ export function ColorPicker({
                   styles={styles}
                   classNames={classNames}
                   focusable={focusable}
+                  aria-label={alphaLabel}
                   __staticSelector={__staticSelector}
                 />
               )}

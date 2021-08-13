@@ -1,10 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  checkAccessibility,
 } from '@mantine/tests';
 import { DEFAULT_THEME } from '../../theme';
 import { ColorPicker } from './ColorPicker';
@@ -25,6 +26,18 @@ describe('@mantine/core/ColorPicker', () => {
     Object.keys(ColorPickerStylesApi),
     'color-picker'
   );
+
+  checkAccessibility([
+    mount(
+      <ColorPicker
+        swatches={swatches}
+        format="rgba"
+        saturationLabel="Saturation"
+        alphaLabel="Alpha"
+        hueLabel="Hue"
+      />
+    ),
+  ]);
 
   it('renders swatches list based on prop', () => {
     const withSwatches = shallow(<ColorPicker swatches={swatches} />);
