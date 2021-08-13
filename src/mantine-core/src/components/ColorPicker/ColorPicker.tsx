@@ -49,6 +49,9 @@ export interface ColorPickerProps
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {
   /** Force picker to take 100% width of its container */
   fullWidth?: boolean;
+
+  /** Should interactive elements be focusable */
+  focusable?: boolean;
 }
 
 const SWATCH_SIZES = {
@@ -69,6 +72,7 @@ export function ColorPicker({
   size = 'sm',
   withPicker = true,
   fullWidth = false,
+  focusable = true,
   themeOverride,
   className,
   styles,
@@ -127,6 +131,7 @@ export function ColorPicker({
             styles={styles as any}
             classNames={classNames as any}
             size={size}
+            focusable={focusable}
           />
 
           <div className={classes.body} style={_styles.body}>
@@ -138,6 +143,7 @@ export function ColorPicker({
                 themeOverride={themeOverride}
                 styles={styles as any}
                 classNames={classNames as any}
+                focusable={focusable}
               />
 
               {withAlpha && (
@@ -150,6 +156,7 @@ export function ColorPicker({
                   themeOverride={themeOverride}
                   styles={styles as any}
                   classNames={classNames as any}
+                  focusable={focusable}
                 />
               )}
             </div>
@@ -172,6 +179,7 @@ export function ColorPicker({
           onSelect={handleChange}
           style={{ marginTop: 5 }}
           swatchesPerRow={swatchesPerRow}
+          focusable={focusable}
         />
       )}
     </div>

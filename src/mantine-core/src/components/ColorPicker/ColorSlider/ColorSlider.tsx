@@ -13,6 +13,7 @@ export interface BaseColorSliderProps
   value: number;
   onChange(value: number): void;
   size: MantineSize;
+  focusable?: boolean;
 }
 
 interface ColorSliderProps extends BaseColorSliderProps {
@@ -31,6 +32,7 @@ export function ColorSlider({
   size,
   thumbColor = 'transparent',
   __staticSelector = 'color-slider',
+  focusable = true,
   overlays,
   themeOverride,
   classNames,
@@ -88,7 +90,7 @@ export function ColorSlider({
       aria-valuenow={value}
       aria-valuemax={maxValue}
       aria-valuemin={0}
-      tabIndex={0}
+      tabIndex={focusable ? 0 : -1}
       onKeyDown={handleKeyDown}
     >
       {layers}

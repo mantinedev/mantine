@@ -13,6 +13,7 @@ interface SwatchesProps
   data: string[];
   onSelect(color: HsvaColor): void;
   swatchesPerRow?: number;
+  focusable?: boolean;
   __staticSelector?: string;
 }
 
@@ -20,6 +21,7 @@ export function Swatches({
   data,
   onSelect,
   swatchesPerRow = 10,
+  focusable = true,
   classNames,
   styles,
   __staticSelector = 'color-picker',
@@ -39,6 +41,7 @@ export function Swatches({
       onClick={() => onSelect(parseColor(color))}
       style={{ cursor: 'pointer', ..._styles.swatch }}
       aria-label={color}
+      tabIndex={focusable ? 0 : -1}
     />
   ));
 

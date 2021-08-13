@@ -14,11 +14,13 @@ interface SaturationProps extends DefaultProps<SaturationStylesNames> {
   saturationLabel?: string;
   size: MantineSize;
   color: string;
+  focusable?: boolean;
 }
 
 export function Saturation({
   value,
   onChange,
+  focusable = true,
   size,
   color,
   saturationLabel,
@@ -78,7 +80,7 @@ export function Saturation({
       role="slider"
       aria-label={saturationLabel}
       aria-valuetext={convertHsvaTo('rgba', value)}
-      tabIndex={0}
+      tabIndex={focusable ? 0 : -1}
       onKeyDown={handleKeyDown}
     >
       <div

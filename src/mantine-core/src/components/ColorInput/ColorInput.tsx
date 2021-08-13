@@ -200,6 +200,7 @@ export function ColorInput({
               swatchesPerRow={swatchesPerRow}
               withPicker={withPicker}
               size={size}
+              focusable={false}
             />
           </Paper>
         </div>
