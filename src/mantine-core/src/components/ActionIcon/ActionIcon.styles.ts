@@ -6,7 +6,7 @@ import {
   getFocusStyles,
   getThemeColor,
   createMemoStyles,
-  hexToRgba,
+  getSharedColorScheme,
 } from '../../theme';
 
 interface ActionIconStyles {
@@ -25,42 +25,40 @@ export const sizes = {
 };
 
 export default createMemoStyles({
-  filled: ({ theme, color }: ActionIconStyles) => ({
-    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
-    color: theme.white,
-    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
+  filled: ({ theme, color }: ActionIconStyles) => {
+    const colors = getSharedColorScheme({ theme, color, variant: 'filled' });
 
-    '&:disabled': {
-      backgroundColor: getThemeColor({
-        theme,
-        color: 'gray',
-        shade: theme.colorScheme === 'dark' ? 8 : 1,
-      }),
-    },
-  }),
+    return {
+      backgroundColor: colors.background,
+      color: colors.color,
+      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
 
-  light: ({ theme, color }: ActionIconStyles) => ({
-    backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
-      theme.colorScheme === 'dark' ? 0.3 : 1
-    ),
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
+      '&:disabled': {
+        backgroundColor: getThemeColor({
+          theme,
+          color: 'gray',
+          shade: theme.colorScheme === 'dark' ? 8 : 1,
+        }),
+      },
+    };
+  },
 
-    '&:not(:disabled):hover': {
-      backgroundColor: hexToRgba(
-        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 1 }),
-        theme.colorScheme === 'dark' ? 0.65 : 1
-      ),
-    },
+  light: ({ theme, color }: ActionIconStyles) => {
+    const colors = getSharedColorScheme({ theme, color, variant: 'light' });
 
-    '&:disabled': {
-      backgroundColor: getThemeColor({
-        theme,
-        color: 'gray',
-        shade: theme.colorScheme === 'dark' ? 8 : 1,
-      }),
-    },
-  }),
+    return {
+      backgroundColor: colors.background,
+      color: colors.color,
+
+      '&:disabled': {
+        backgroundColor: getThemeColor({
+          theme,
+          color: 'gray',
+          shade: theme.colorScheme === 'dark' ? 8 : 1,
+        }),
+      },
+    };
+  },
 
   hover: ({ theme, color }: ActionIconStyles) => ({
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
@@ -110,24 +108,17 @@ export default createMemoStyles({
     },
   }),
 
-  outline: ({ theme, color }: ActionIconStyles) => ({
-    backgroundColor: 'transparent',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
-    border: `1px solid ${getThemeColor({
-      theme,
-      color,
-      shade: theme.colorScheme === 'dark' ? 4 : 7,
-    })}`,
+  outline: ({ theme, color }: ActionIconStyles) => {
+    const colors = getSharedColorScheme({ theme, color, variant: 'outline' });
 
-    '&:not(:disabled):hover': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[8]
-          : getThemeColor({ theme, color, shade: 0 }),
-    },
+    return {
+      backgroundColor: colors.background,
+      color: colors.color,
+      border: `1px solid ${colors.border}`,
 
-    '&:disabled': {
-      borderColor: theme.colors.gray[theme.colorScheme === 'dark' ? 7 : 3],
-    },
-  }),
+      '&:disabled': {
+        borderColor: theme.colors.gray[theme.colorScheme === 'dark' ? 7 : 3],
+      },
+    };
+  },
 });

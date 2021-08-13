@@ -4,8 +4,8 @@ import {
   MantineNumberSize,
   getSizeValue,
   getThemeColor,
-  hexToRgba,
   getFontStyles,
+  getSharedColorScheme,
 } from '../../theme';
 
 interface ThemeIconStyles {
@@ -24,19 +24,24 @@ export const sizes = {
 };
 
 export default createMemoStyles({
-  light: ({ theme, color }: ThemeIconStyles) => ({
-    backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
-      theme.colorScheme === 'dark' ? 0.3 : 1
-    ),
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
-  }),
+  light: ({ theme, color }: ThemeIconStyles) => {
+    const colors = getSharedColorScheme({ theme, color, variant: 'light' });
 
-  filled: ({ theme, color }: ThemeIconStyles) => ({
-    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
-    color: theme.white,
-    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
-  }),
+    return {
+      backgroundColor: colors.background,
+      color: colors.color,
+    };
+  },
+
+  filled: ({ theme, color }: ThemeIconStyles) => {
+    const colors = getSharedColorScheme({ theme, color, variant: 'filled' });
+
+    return {
+      backgroundColor: colors.background,
+      color: colors.color,
+      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
+    };
+  },
 
   root: ({ theme, size, radius }: ThemeIconStyles) => {
     const iconSize = getSizeValue({ size, sizes });

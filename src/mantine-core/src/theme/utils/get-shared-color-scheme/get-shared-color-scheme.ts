@@ -18,17 +18,20 @@ export function getSharedColorScheme({ color, theme, variant }: GetSharedColorSc
       border: 'transparent',
       background: hexToRgba(
         getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
-        theme.colorScheme === 'dark' ? 0.3 : 1
+        theme.colorScheme === 'dark' ? 0.35 : 1
       ),
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 2 : 9 }),
     };
   }
 
   if (variant === 'outline') {
     return {
-      border: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
+      border: hexToRgba(
+        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
+        0.65
+      ),
       background: 'transparent',
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
     };
   }
 

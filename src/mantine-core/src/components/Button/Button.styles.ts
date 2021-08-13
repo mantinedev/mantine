@@ -214,7 +214,7 @@ export default createMemoStyles({
     backgroundColor: 'transparent',
     border: 0,
     display: 'inline-block',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
     cursor: 'pointer',
     height: 'auto',
     lineHeight: theme.lineHeight,
