@@ -13,7 +13,7 @@ export default createMemoStyles({
     boxSizing: 'content-box',
   }),
 
-  group: {
+  swatchesGroup: {
     boxSizing: 'border-box',
     marginLeft: -2,
     marginRight: -2,

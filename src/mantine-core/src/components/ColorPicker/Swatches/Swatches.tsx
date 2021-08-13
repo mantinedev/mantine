@@ -1,17 +1,32 @@
 import React from 'react';
+import { DefaultProps, mergeStyles } from '../../../theme';
 import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
 import { parseColor } from '../converters/parsers';
 import { HsvaColor } from '../types';
 import useStyles from './Swatches.styles';
 
-interface SwatchesProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onSelect'> {
+export type SwatchesStylesNames = keyof ReturnType<typeof useStyles>;
+
+interface SwatchesProps
+  extends DefaultProps<SwatchesStylesNames>,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'onSelect'> {
   data: string[];
   onSelect(color: HsvaColor): void;
   swatchesPerRow?: number;
+  __staticSelector?: string;
 }
 
-export function Swatches({ data, onSelect, swatchesPerRow = 10, ...others }: SwatchesProps) {
-  const classes = useStyles({ swatchesPerRow });
+export function Swatches({
+  data,
+  onSelect,
+  swatchesPerRow = 10,
+  classNames,
+  styles,
+  __staticSelector = 'color-picker',
+  ...others
+}: SwatchesProps) {
+  const classes = useStyles({ swatchesPerRow }, classNames, __staticSelector);
+  const _styles = mergeStyles(classes, styles);
 
   const colors = data.map((color, index) => (
     <ColorSwatch
@@ -22,13 +37,13 @@ export function Swatches({ data, onSelect, swatchesPerRow = 10, ...others }: Swa
       key={index}
       radius="sm"
       onClick={() => onSelect(parseColor(color))}
-      style={{ cursor: 'pointer' }}
+      style={{ cursor: 'pointer', ..._styles.swatch }}
       aria-label={color}
     />
   ));
 
   return (
-    <div className={classes.group} {...others}>
+    <div className={classes.swatchesGroup} style={_styles.swatchesGroup} {...others}>
       {colors}
     </div>
   );
