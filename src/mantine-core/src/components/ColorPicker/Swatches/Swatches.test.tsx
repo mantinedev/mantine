@@ -21,6 +21,13 @@ describe('@mantine/core/Swatches', () => {
     expect(spy).toHaveBeenCalledWith(parseColor(defaultProps.data[4]));
   });
 
+  it('sets swatch tabIndex to -1 if component is not focusable', () => {
+    const focusable = shallow(<Swatches {...defaultProps} focusable />);
+    const notFocusable = shallow(<Swatches {...defaultProps} focusable={false} />);
+    expect(focusable.find(ColorSwatch).at(0).prop('tabIndex')).toBe(0);
+    expect(notFocusable.find(ColorSwatch).at(0).prop('tabIndex')).toBe(-1);
+  });
+
   it('has correct displayName', () => {
     expect(Swatches.displayName).toEqual('@mantine/core/Swatches');
   });
