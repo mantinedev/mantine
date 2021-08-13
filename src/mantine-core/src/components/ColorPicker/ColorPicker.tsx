@@ -145,8 +145,8 @@ export function ColorPicker({
                 onChange={(h) => handleChange({ h })}
                 size={size}
                 themeOverride={themeOverride}
-                styles={styles as any}
-                classNames={classNames as any}
+                styles={styles}
+                classNames={classNames}
                 focusable={focusable}
               />
 

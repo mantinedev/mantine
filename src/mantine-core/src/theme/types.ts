@@ -60,18 +60,10 @@ export interface InternalMantineTheme extends MantineTheme {
 
 export type MantineThemeOverride = DeepPartial<MantineTheme>;
 
-export interface DefaultProps<T = any> {
+export interface DefaultProps<T extends string = never> {
   className?: string;
   style?: CSSProperties;
   readonly themeOverride?: MantineThemeOverride;
-  classNames?: T extends (...args: any) => any
-    ? Partial<ReturnType<T>>
-    : T extends string
-    ? Record<T, string>
-    : never;
-  styles?: T extends (...args: any) => any
-    ? Partial<Record<keyof ReturnType<T>, CSSProperties>>
-    : T extends string
-    ? Record<T, CSSProperties>
-    : never;
+  classNames?: Partial<Record<T, string>>;
+  styles?: Partial<Record<T, CSSProperties>>;
 }
