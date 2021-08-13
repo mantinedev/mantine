@@ -20,9 +20,9 @@ export default createMemoStyles({
     position: 'absolute',
     width: getSizeValue({ size, sizes }),
     overflow: 'hidden',
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
+      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
     padding: MENU_PADDING,
   }),
