@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useUncontrolled, useReducedMotion, useDidUpdate } from '@mantine/hooks';
+import { useUncontrolled, useReducedMotion, useDidUpdate, useId } from '@mantine/hooks';
 import { DefaultProps, getSizeValue, mergeStyles, useMantineTheme } from '../../theme';
 import {
   InputWrapper,
@@ -11,13 +11,18 @@ import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { Popper } from '../Popper/Popper';
 import { MantineTransition } from '../Transition/Transition';
 import { Paper } from '../Paper/Paper';
-import { ColorPicker, ColorPickerBaseProps } from '../ColorPicker/ColorPicker';
+import {
+  ColorPicker,
+  ColorPickerBaseProps,
+  ColorPickerStylesNames,
+} from '../ColorPicker/ColorPicker';
 import { convertHsvaTo, isColorValid, parseColor } from '../ColorPicker/converters';
 import useStyles from './ColorInput.styles';
 
 export type ColorInputStylesNames =
   | InputWrapperStylesNames
   | InputStylesNames
+  | ColorPickerStylesNames
   | keyof ReturnType<typeof useStyles>;
 
 export interface ColorInputProps
@@ -87,6 +92,7 @@ export function ColorInput({
   withPicker = true,
   icon,
   transition = 'pop-top-left',
+  id,
   dropdownZIndex = 1,
   transitionDuration = 0,
   transitionTimingFunction,
@@ -98,6 +104,7 @@ export function ColorInput({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
+  const uuid = useId(id);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const [lastValidValue, setLastValidValue] = useState('');
@@ -141,13 +148,17 @@ export function ColorInput({
       classNames={classNames}
       styles={styles}
       size={size}
+      id={uuid}
       className={className}
       style={style}
+      __staticSelector="color-input"
       {...wrapperProps}
     >
       <div ref={setReferenceElement}>
         <Input<'input'>
           {...others}
+          __staticSelector="color-input"
+          id={uuid}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           spellCheck={false}
@@ -155,6 +166,7 @@ export function ColorInput({
           value={_value}
           onChange={(event) => setValue(event.currentTarget.value)}
           invalid={!!error}
+          required={required}
           icon={
             icon ||
             (withPreview ? (
@@ -196,6 +208,7 @@ export function ColorInput({
             onMouseDown={(event) => event.preventDefault()}
           >
             <ColorPicker
+              __staticSelector="color-input"
               value={_value}
               onChange={setValue}
               format={format}
