@@ -7,15 +7,19 @@ import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { ColorSliderStylesNames } from './ColorSlider/ColorSlider';
 import { HueSlider, HueSliderProps } from './HueSlider/HueSlider';
 import { AlphaSlider, AlphaSliderProps } from './AlphaSlider/AlphaSlider';
-import { Saturation } from './Saturation/Saturation';
-import { Swatches } from './Swatches/Swatches';
+import { Saturation, SaturationStylesNames } from './Saturation/Saturation';
+import { Swatches, SwatchesStylesNames } from './Swatches/Swatches';
 import { HsvaColor } from './types';
 import useStyles from './ColorPicker.styles';
 
 export { HueSlider, AlphaSlider };
 export type { HueSliderProps, AlphaSliderProps };
 
-export type ColorPickerStylesNames = keyof ReturnType<typeof useStyles> | ColorSliderStylesNames;
+export type ColorPickerStylesNames =
+  | keyof ReturnType<typeof useStyles>
+  | ColorSliderStylesNames
+  | SwatchesStylesNames
+  | SaturationStylesNames;
 
 export interface ColorPickerBaseProps {
   /** Controlled component value */
@@ -180,6 +184,8 @@ export function ColorPicker({
           style={{ marginTop: 5 }}
           swatchesPerRow={swatchesPerRow}
           focusable={focusable}
+          classNames={classNames as any}
+          styles={styles as any}
         />
       )}
     </div>
