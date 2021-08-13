@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, InputWrapper, useMantineTheme, ColorSwatch, hexToRgba } from '@mantine/core';
+import { Group, InputWrapper, useMantineTheme, ColorSwatch } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import { CheckIcon } from '@modulz/radix-icons';
 
@@ -14,11 +14,7 @@ export function ColorControl({ value, label, onChange, ...others }: ColorControl
 
   const colors = Object.keys(theme.colors).map((color) => (
     <ColorSwatch
-      color={
-        theme.colorScheme === 'dark'
-          ? hexToRgba(theme.colors[color][7], 0.75)
-          : theme.colors[color][5]
-      }
+      color={theme.colorScheme === 'dark' ? theme.colors[color][7] : theme.colors[color][5]}
       component="button"
       key={color}
       onClick={() => onChange(color)}
