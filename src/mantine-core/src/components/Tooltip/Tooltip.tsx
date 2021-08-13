@@ -49,6 +49,9 @@ export interface TooltipProps
 
   /** Tooltip id to bind aria-describedby */
   tooltipId?: string;
+
+  /** useEffect dependencies to force update tooltip position */
+  positionDependencies?: any[];
 }
 
 export function Tooltip({
@@ -73,6 +76,7 @@ export function Tooltip({
   width = 'auto',
   wrapLines = false,
   allowPointerEvents = false,
+  positionDependencies = [],
   elementRef,
   tooltipRef,
   tooltipId,
@@ -123,7 +127,7 @@ export function Tooltip({
         zIndex={zIndex}
         arrowClassName={classes.arrow}
         arrowStyle={_styles.arrow}
-        forceUpdateDependencies={[color]}
+        forceUpdateDependencies={[color, ...positionDependencies]}
       >
         <div
           className={classes.body}
