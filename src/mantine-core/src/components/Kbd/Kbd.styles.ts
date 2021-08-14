@@ -10,7 +10,7 @@ export default createMemoStyles({
     fontFamily: theme.fontFamilyMonospace,
     fontSize: theme.fontSizes.xs,
     fontWeight: 700,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
     padding: [3, theme.spacing.xs / 2],
     borderRadius: theme.radius.sm,
