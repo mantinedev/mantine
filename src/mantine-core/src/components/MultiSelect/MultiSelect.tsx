@@ -398,7 +398,6 @@ export function MultiSelect({
           maxDropdownHeight={maxDropdownHeight}
           classNames={classNames}
           styles={styles}
-          size={size}
           elementRef={dropdownRef}
           __staticSelector="multi-select"
         >

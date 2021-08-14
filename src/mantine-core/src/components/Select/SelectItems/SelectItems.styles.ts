@@ -7,6 +7,7 @@ interface SelectItemsStyles {
 
 export default createMemoStyles({
   item: ({ theme, size }: SelectItemsStyles) => ({
+    boxSizing: 'border-box',
     textAlign: 'left',
     width: '100%',
     padding: [
@@ -16,6 +17,7 @@ export default createMemoStyles({
     cursor: 'pointer',
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    borderRadius: theme.radius.sm,
   }),
 
   selected: ({ theme }: SelectItemsStyles) => ({
@@ -29,6 +31,7 @@ export default createMemoStyles({
   }),
 
   nothingFound: ({ theme, size }: SelectItemsStyles) => ({
+    boxSizing: 'border-box',
     color: theme.colors.gray[6],
     paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
     paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,

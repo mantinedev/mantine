@@ -260,7 +260,6 @@ export function Autocomplete({
           maxDropdownHeight="auto"
           classNames={classNames}
           styles={styles}
-          size={size}
           __staticSelector="autocomplete"
         >
           <SelectItems

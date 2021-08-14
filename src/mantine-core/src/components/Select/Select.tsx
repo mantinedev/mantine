@@ -321,7 +321,6 @@ export function Select({
           maxDropdownHeight={maxDropdownHeight}
           classNames={classNames}
           styles={styles}
-          size={size}
           elementRef={dropdownRef}
           __staticSelector="select"
         >

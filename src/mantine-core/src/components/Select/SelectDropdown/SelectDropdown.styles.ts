@@ -1,12 +1,12 @@
-import { createMemoStyles, getSizeValue, MantineTheme, MantineSize } from '../../../theme';
+import { createMemoStyles, MantineTheme } from '../../../theme';
 
 interface SelectDropdownStyles {
   theme: MantineTheme;
-  size: MantineSize;
 }
 
 export default createMemoStyles({
-  dropdown: ({ theme, size }: SelectDropdownStyles) => ({
+  dropdown: ({ theme }: SelectDropdownStyles) => ({
+    boxSizing: 'border-box',
     position: 'absolute',
     zIndex: 1,
     top: theme.spacing.xs / 2,
@@ -16,8 +16,7 @@ export default createMemoStyles({
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
-    paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
-    paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    padding: 4,
     overflowY: 'auto',
   }),
 });
