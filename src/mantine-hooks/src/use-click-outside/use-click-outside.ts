@@ -2,13 +2,17 @@ import { useEffect, useRef } from 'react';
 
 export function useClickOutside<T extends HTMLElement = any>(
   handler: () => void,
-  events = ['mousedown', 'touchstart']
+  events = ['mousedown', 'touchstart'],
+  nodes?: HTMLElement[]
 ) {
   const ref = useRef<T>();
 
   useEffect(() => {
     const listener = (event: any) => {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (Array.isArray(nodes)) {
+        const shouldTrigger = nodes.every((node) => !!node && !node.contains(event.target));
+        shouldTrigger && handler();
+      } else if (ref.current && !ref.current.contains(event.target)) {
         handler();
       }
     };
