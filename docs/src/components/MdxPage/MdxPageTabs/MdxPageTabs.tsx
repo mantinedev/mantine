@@ -63,7 +63,7 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
         {hasProps && (
           <Tab label={mobile ? 'Props' : 'Component props'} className={classes.tab}>
             <div
-              style={{ maxWidth: 1080, margin: 'auto', marginTop: 24 }}
+              style={{ maxWidth: 1178, marginLeft: 'auto', marginRight: 'auto', marginTop: 24 }}
               className={classes.tabContent}
             >
               <TextInput
@@ -81,7 +81,7 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
         {hasStyles && (
           <Tab label={mobile ? 'Styles' : 'Styles API'} className={classes.tab}>
             <div
-              style={{ maxWidth: 1080, margin: 'auto', marginTop: 24 }}
+              style={{ maxWidth: 1178, marginLeft: 'auto', marginRight: 'auto', marginTop: 24 }}
               className={classes.tabContent}
             >
               <StylesApi components={frontmatter.styles} />
