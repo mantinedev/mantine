@@ -32,7 +32,6 @@ export default createUseStyles(
       borderRadius: theme.radius.sm,
       margin: theme.spacing.md / 2,
       cursor: 'pointer',
-      transition: 'border-color 100ms ease',
 
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],

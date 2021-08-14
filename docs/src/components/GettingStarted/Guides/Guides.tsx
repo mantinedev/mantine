@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { CheckIcon } from '@modulz/radix-icons';
-import { Text, Title, ThemeIcon, Transition } from '@mantine/core';
+import { Text, Title, ThemeIcon } from '@mantine/core';
 import { GUIDES_DATA } from './data';
 import { CraGuide } from './guides/CraGuide';
 import { NextGuide } from './guides/NextGuide';
@@ -34,13 +34,12 @@ export function Guides({ dependencies }: GuidesProps) {
       key={guide.id}
       onClick={() => setSelected(guide.id)}
     >
-      <Transition transition="rotate-right" mounted={selected === guide.id} duration={100}>
-        {(transitionStyles) => (
-          <ThemeIcon className={classes.checked} radius={0} style={transitionStyles}>
-            <CheckIcon />
-          </ThemeIcon>
-        )}
-      </Transition>
+      {selected === guide.id && (
+        <ThemeIcon className={classes.checked} radius={0}>
+          <CheckIcon />
+        </ThemeIcon>
+      )}
+
       <guide.icon />
       <Text className={classes.controlTitle}>{guide.title}</Text>
     </button>
