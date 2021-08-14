@@ -75,7 +75,7 @@ export default createMemoStyles({
     },
 
     '&$selected:not(:disabled)': {
-      backgroundColor: theme.colors[theme.primaryColor][7],
+      backgroundColor: theme.colors[theme.primaryColor][6],
       color: theme.white,
     },
 

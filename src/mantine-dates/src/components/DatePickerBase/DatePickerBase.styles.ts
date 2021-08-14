@@ -17,6 +17,7 @@ export default createMemoStyles({
   wrapper: ({ theme }: DatePickerBaseStyles) => ({
     ...getFontStyles(theme),
     position: 'relative',
+    cursor: 'pointer',
   }),
 
   placeholder: ({ theme, size, invalid }: DatePickerBaseStyles) => ({
@@ -30,7 +31,11 @@ export default createMemoStyles({
 
   dropdownWrapper: {
     position: 'relative',
-    zIndex: 4,
+    pointerEvents: 'all',
+  },
+
+  input: {
+    cursor: 'pointer',
   },
 
   dropdown: ({ theme }: DatePickerBaseStyles) => ({

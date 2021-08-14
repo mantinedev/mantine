@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   DefaultProps,
   useMantineTheme,
@@ -9,7 +9,7 @@ import {
   InputBaseProps,
   InputWrapperBaseProps,
   Paper,
-  Transition,
+  Popper,
   MantineTransition,
   InputStylesNames,
   InputWrapperStylesNames,
@@ -80,6 +80,9 @@ export interface DatePickerBaseSharedProps
 
   /** aria-label for clear button */
   clearButtonLabel?: string;
+
+  /** useEffect dependencies to force update tooltip position */
+  positionDependencies?: any[];
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -128,12 +131,13 @@ export function DatePickerBase({
   clearable = true,
   clearButtonLabel,
   onClear,
+  positionDependencies = [],
   ...others
 }: DatePickerBaseProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, size, invalid: !!error }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
-  const reduceMotion = useReducedMotion();
+  const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const uuid = useId(id);
 
   const focusTrapRef = useFocusTrap();
@@ -176,14 +180,14 @@ export function DatePickerBase({
       __staticSelector={__staticSelector}
       {...wrapperProps}
     >
-      <div ref={clickOutsideRef}>
-        <div className={classes.wrapper} style={_styles.wrapper}>
+      <div>
+        <div className={classes.wrapper} style={_styles.wrapper} ref={setReferenceElement}>
           <Input
             themeOverride={themeOverride}
             component="button"
             type="button"
             classNames={classNames}
-            styles={styles}
+            styles={{ ...styles, input: { ...styles?.input, cursor: 'pointer' } }}
             onClick={() => setDropdownOpened(!dropdownOpened)}
             id={uuid}
             elementRef={useMergedRef(elementRef, inputRef)}
@@ -203,25 +207,31 @@ export function DatePickerBase({
         </div>
 
         {dropdownType === 'popover' ? (
-          <Transition
-            mounted={dropdownOpened}
+          <Popper
+            referenceElement={referenceElement}
+            transitionDuration={useReducedMotion() ? 0 : transitionDuration}
+            transitionTimingFunction={transitionTimingFunction}
+            forceUpdateDependencies={positionDependencies}
             transition={transition}
-            duration={reduceMotion ? 0 : transitionDuration}
-            timingFunction={transitionTimingFunction}
+            mounted={dropdownOpened}
+            position="bottom"
+            placement="start"
+            gutter={0}
+            withArrow
+            arrowSize={3}
+            zIndex={3}
           >
-            {(transitionStyles) => (
-              <div
-                className={classes.dropdownWrapper}
-                style={{ ..._styles.dropdownWrapper, ...transitionStyles }}
-                ref={focusTrapRef}
-                onKeyDownCapture={closeOnEscape}
-              >
-                <Paper className={classes.dropdown} style={_styles.dropdown} shadow={shadow}>
-                  {children}
-                </Paper>
-              </div>
-            )}
-          </Transition>
+            <div
+              className={classes.dropdownWrapper}
+              style={_styles.dropdownWrapper}
+              ref={useMergedRef(focusTrapRef, clickOutsideRef)}
+              onKeyDownCapture={closeOnEscape}
+            >
+              <Paper className={classes.dropdown} style={_styles.dropdown} shadow={shadow}>
+                {children}
+              </Paper>
+            </div>
+          </Popper>
         ) : (
           <Modal opened={dropdownOpened} onClose={closeDropdown} hideCloseButton>
             {children}
