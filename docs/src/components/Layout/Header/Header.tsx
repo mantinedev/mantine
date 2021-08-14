@@ -4,8 +4,9 @@ import corePackageJson from '../../../../package.json';
 import { getDocsData } from '../get-docs-data';
 import Search from './Search/Search';
 import { ColorSchemeToggle } from './ColorSchemeToggle/ColorSchemeToggle';
+import { SourceCode } from './SourceCode/SourceCode';
+import { Discord } from './Discord/Discord';
 import { Logo } from '../../Logo/Logo';
-import { SocialButton } from '../../SocialButton/SocialButton';
 import useStyles from './Header.styles';
 
 interface HeaderProps {
@@ -54,18 +55,12 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
         <div />
       </div>
 
-      <div className={classes.links}>
+      <Group className={classes.links} spacing="xs">
         <Search data={data} isMacOS={isMacOS} />
-
-        <Group spacing="xs">
-          <SocialButton type="small" service="github" />
-          <SocialButton type="small" service="discord" />
-          <SocialButton type="small" service="twitter" />
-          <SocialButton type="small" service="email" />
-        </Group>
-
+        <Discord />
+        <SourceCode />
         <ColorSchemeToggle />
-      </div>
+      </Group>
     </div>
   );
 }

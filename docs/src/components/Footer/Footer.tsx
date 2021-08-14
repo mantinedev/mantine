@@ -64,8 +64,8 @@ export function Footer({ withNavbar }: FooterProps) {
                 </a>
               </Text>
               <div className={classes.social}>
-                <SocialButton type="large" service="discord" className={classes.socialButton} />
-                <SocialButton type="large" service="twitter" className={classes.socialButton} />
+                <SocialButton service="discord" className={classes.socialButton} />
+                <SocialButton service="twitter" className={classes.socialButton} />
               </div>
             </Group>
           </div>

@@ -6,8 +6,12 @@ export default createUseStyles(
     wrapper: {
       flex: 1,
       maxWidth: 480,
-      marginRight: theme.spacing.md,
+      paddingRight: theme.spacing.xl,
       position: 'relative',
+
+      '@media (max-width: 980px)': {
+        display: 'none',
+      },
     },
 
     shortcut: {

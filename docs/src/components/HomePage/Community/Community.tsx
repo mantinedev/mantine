@@ -17,9 +17,9 @@ export function Community() {
           features and releases
         </Text>
         <Group style={{ marginTop: 30 }}>
-          <SocialButton type="large" service="discord" />
-          <SocialButton type="large" service="twitter" />
-          <SocialButton type="large" service="email" />
+          <SocialButton service="discord" />
+          <SocialButton service="twitter" />
+          <SocialButton service="email" />
         </Group>
       </Container>
     </div>

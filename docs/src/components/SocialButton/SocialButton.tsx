@@ -1,12 +1,11 @@
 import React from 'react';
-import { Button, Tooltip, ActionIcon, DEFAULT_THEME } from '@mantine/core';
+import { Button, DEFAULT_THEME } from '@mantine/core';
 import { MarkGithubIcon } from '@primer/octicons-react';
 import { TwitterIcon } from './TwitterIcon';
 import { DiscordIcon } from './DiscordIcon';
 import { MailIcon } from './MailIcon';
 
-interface SocialButtonProps extends Omit<React.ComponentProps<'button'>, 'type'> {
-  type?: 'small' | 'large';
+interface SocialButtonProps extends React.ComponentProps<'button'> {
   service: 'github' | 'twitter' | 'discord' | 'email' | 'tg';
 }
 
@@ -47,52 +46,28 @@ const data = {
   },
 };
 
-export function SocialButton({ type = 'large', service, style, ...others }: SocialButtonProps) {
+export function SocialButton({ service, style, ...others }: SocialButtonProps) {
   const serviceData = data[service];
 
-  if (type === 'large') {
-    return (
-      <Button
-        component="a"
-        target="_blank"
-        rel="noopener noreferrer"
-        href={serviceData.link}
-        leftIcon={serviceData.icon && <serviceData.icon style={{ width: 14, marginRight: 5 }} />}
-        style={{
-          ...style,
-          backgroundColor: serviceData.color,
-          textShadow: 'unset',
-          border: 0,
-          height: 42,
-          paddingLeft: 20,
-          paddingRight: 20,
-        }}
-        {...others}
-      >
-        {serviceData.label}
-      </Button>
-    );
-  }
-
   return (
-    <Tooltip
-      style={style}
-      label={serviceData.label}
-      className={others.className}
-      transitionDuration={0}
-      withArrow
-      position="bottom"
-      placement="end"
+    <Button
+      component="a"
+      target="_blank"
+      rel="noopener noreferrer"
+      href={serviceData.link}
+      leftIcon={serviceData.icon && <serviceData.icon style={{ width: 14, marginRight: 5 }} />}
+      style={{
+        ...style,
+        backgroundColor: serviceData.color,
+        textShadow: 'unset',
+        border: 0,
+        height: 42,
+        paddingLeft: 20,
+        paddingRight: 20,
+      }}
+      {...others}
     >
-      <ActionIcon
-        style={{ ...style, backgroundColor: serviceData.color, color: '#fff' }}
-        component="a"
-        target="_blank"
-        rel="noopener noreferrer"
-        href={serviceData.link}
-      >
-        <serviceData.icon style={{ width: 14, height: 14 }} />
-      </ActionIcon>
-    </Tooltip>
+      {serviceData.label}
+    </Button>
   );
 }
