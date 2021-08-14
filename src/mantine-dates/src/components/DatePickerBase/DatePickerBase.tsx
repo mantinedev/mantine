@@ -146,6 +146,8 @@ export function DatePickerBase({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, size, invalid: !!error }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
+  const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
+  const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const uuid = useId(id);
 
@@ -159,7 +161,12 @@ export function DatePickerBase({
   };
   const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
     event.nativeEvent.code === 'Escape' && closeDropdown();
-  const clickOutsideRef = useClickOutside(() => dropdownType === 'popover' && closeDropdown());
+
+  useClickOutside(
+    () => dropdownType === 'popover' && closeDropdown(),
+    ['touchstart', 'mousedown'],
+    [dropdownElement, rootElement]
+  );
 
   useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
 
@@ -189,7 +196,7 @@ export function DatePickerBase({
       __staticSelector={__staticSelector}
       {...wrapperProps}
     >
-      <div>
+      <div ref={setRootElement}>
         <div className={classes.wrapper} style={_styles.wrapper} ref={setReferenceElement}>
           <Input
             themeOverride={themeOverride}
@@ -234,7 +241,7 @@ export function DatePickerBase({
             <div
               className={classes.dropdownWrapper}
               style={_styles.dropdownWrapper}
-              ref={useMergedRef(focusTrapRef, clickOutsideRef)}
+              ref={useMergedRef(focusTrapRef, setDropdownElement)}
               onKeyDownCapture={closeOnEscape}
             >
               <Paper className={classes.dropdown} style={_styles.dropdown} shadow={shadow}>
