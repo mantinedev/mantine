@@ -73,7 +73,7 @@ export function Popover({
   title,
   onClose,
   opened,
-  zIndex = 1000,
+  zIndex = 1,
   arrowSize = 4,
   withArrow = false,
   transition = 'fade',
