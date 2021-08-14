@@ -4,7 +4,6 @@ import {
   getSizeValue,
   MantineNumberSize,
   getFontStyles,
-  getThemeColor,
   getSharedColorScheme,
 } from '../../theme';
 
@@ -41,7 +40,7 @@ export default createMemoStyles({
   },
 
   placeholder: ({ theme, size, color }: AvatarStyles) => {
-    const colors = getSharedColorScheme({ theme, color, variant: 'filled' });
+    const colors = getSharedColorScheme({ theme, color, variant: 'light' });
 
     return {
       ...getFontStyles(theme),
@@ -61,6 +60,6 @@ export default createMemoStyles({
   placeholderIcon: ({ theme, color }: AvatarStyles) => ({
     width: '70%',
     height: '70%',
-    color: getThemeColor({ theme, color, shade: 0 }),
+    color: getSharedColorScheme({ theme, color, variant: 'light' }).color,
   }),
 });
