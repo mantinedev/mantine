@@ -7,17 +7,21 @@ export default createUseStyles(
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center',
-      padding: [theme.spacing.xs, 0],
+      justifyContent: 'space-between',
       borderRadius: 1000,
+      paddingLeft: theme.spacing.sm,
+      paddingRight: 4,
       marginLeft: theme.spacing.md,
-      width: 150,
+      width: 140,
       height: INPUT_SIZES.sm,
     },
 
-    icon: {
-      color: theme.colorScheme === 'dark' ? theme.colors.yellow[5] : theme.colors.blue[6],
-      marginRight: theme.spacing.xs,
+    iconWrapper: {
+      height: 28,
+      width: 28,
+      borderRadius: 28,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.yellow[4] : theme.colors.dark[4],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.yellow[4],
     },
 
     value: {
