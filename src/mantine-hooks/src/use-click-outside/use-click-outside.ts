@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react';
 
+const DEFAULT_EVENTS = ['mousedown', 'touchstart'];
+
 export function useClickOutside<T extends HTMLElement = any>(
   handler: () => void,
-  events = ['mousedown', 'touchstart'],
+  events?: string[] | null,
   nodes?: HTMLElement[]
 ) {
   const ref = useRef<T>();
@@ -17,10 +19,10 @@ export function useClickOutside<T extends HTMLElement = any>(
       }
     };
 
-    events.forEach((fn) => document.addEventListener(fn, listener));
+    (events || DEFAULT_EVENTS).forEach((fn) => document.addEventListener(fn, listener));
 
     return () => {
-      events.forEach((fn) => document.removeEventListener(fn, listener));
+      (events || DEFAULT_EVENTS).forEach((fn) => document.removeEventListener(fn, listener));
     };
   }, [ref, handler]);
 

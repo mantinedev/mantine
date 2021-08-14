@@ -43,6 +43,35 @@ you can change these events by passing an array of events as second argument:
 
 <UseClickOutsideDemo events={['mouseup', 'touchend']} />
 
+## Multiple nodes
+
+In some cases you may want to trigger outside click event for multiple nodes, for example, when dropdown renders in portal.
+To do so provide third argument with an array of nodes which should not trigger outside click event:
+
+```tsx
+// Will work only with useState, not useRef
+import { useState } from 'react';
+import { useClickOutside } from '@mantine/hooks';
+import { Portal } from '@mantine/core';
+
+function Demo() {
+  const [dropdown, setDropdown] = useState(null);
+  const [control, setControl] = useState(null);
+
+  useClickOutside(() => console.log('outside'), null, [control, dropdown]);
+
+  return (
+    // We cannot use root element ref as it does not contain dropdown
+    <div>
+      <div ref={setControl}>Control</div>
+      <Portal>
+        <div ref={setDropdown}>Dropdown</div>
+      </Portal>
+    </div>
+  );
+}
+```
+
 ## TypeScript
 
 ### Definition

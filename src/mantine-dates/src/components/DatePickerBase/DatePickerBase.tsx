@@ -162,11 +162,10 @@ export function DatePickerBase({
   const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
     event.nativeEvent.code === 'Escape' && closeDropdown();
 
-  useClickOutside(
-    () => dropdownType === 'popover' && closeDropdown(),
-    ['touchstart', 'mousedown'],
-    [dropdownElement, rootElement]
-  );
+  useClickOutside(() => dropdownType === 'popover' && closeDropdown(), null, [
+    dropdownElement,
+    rootElement,
+  ]);
 
   useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
 
