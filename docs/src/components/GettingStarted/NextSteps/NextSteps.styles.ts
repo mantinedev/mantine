@@ -10,6 +10,7 @@ export default createUseStyles(
 
     link: {
       ...getFocusStyles(theme),
+      boxSizing: 'border-box',
       padding: theme.spacing.md,
       borderRadius: theme.radius.sm,
       border: `1px solid ${

@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/core';
+import { theming, INPUT_SIZES } from '@mantine/core';
 
 export default createUseStyles(
   (theme) => ({
@@ -12,6 +12,7 @@ export default createUseStyles(
       borderRadius: 1000,
       marginLeft: theme.spacing.md,
       width: 150,
+      height: INPUT_SIZES.sm,
     },
 
     icon: {
