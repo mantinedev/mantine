@@ -45,6 +45,7 @@ export { Overlay } from './components/Overlay/Overlay';
 export { Paper } from './components/Paper/Paper';
 export { PasswordInput } from './components/PasswordInput/PasswordInput';
 export { Popover } from './components/Popover/Popover';
+export { Popper } from './components/Popper/Popper';
 export { Portal } from './components/Portal/Portal';
 export { Progress, PROGRESS_SIZES } from './components/Progress/Progress';
 export { RadioGroup, Radio, RADIO_SIZES } from './components/RadioGroup/RadioGroup';
@@ -156,6 +157,7 @@ export type {
   PasswordInputStylesNames,
 } from './components/PasswordInput/PasswordInput';
 export type { PopoverProps, PopoverStylesNames } from './components/Popover/Popover';
+export type { PopperProps } from './components/Popper/Popper';
 export type { PortalProps } from './components/Portal/Portal';
 export type { ProgressProps, ProgressStylesNames } from './components/Progress/Progress';
 export type { RadioGroupProps, RadioProps } from './components/RadioGroup/RadioGroup';
