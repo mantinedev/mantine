@@ -102,7 +102,6 @@ export function InputWrapper({
           {...descriptionProps}
           themeOverride={themeOverride}
           color="gray"
-          size={size}
           className={classes.description}
           style={_styles.description}
         >
