@@ -16,6 +16,7 @@ import {
   MantineSize,
   Modal,
   CloseButton,
+  getSizeValue,
 } from '@mantine/core';
 import {
   useId,
@@ -101,6 +102,14 @@ export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
   /** Called when clear button in clicked */
   onClear(): void;
 }
+
+const RIGHT_SECTION_WIDTH = {
+  xs: 24,
+  sm: 30,
+  md: 34,
+  lg: 40,
+  xl: 44,
+};
 
 export function DatePickerBase({
   themeOverride,
@@ -196,6 +205,7 @@ export function DatePickerBase({
             required={required}
             invalid={!!error}
             rightSection={rightSection}
+            rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
             {...others}
           >
             {inputLabel || (

@@ -24,6 +24,7 @@ const sizes = MANTINE_SIZES.map((size) => (
     size={size}
     key={size}
     style={{ marginTop: 30 }}
+    defaultValue={new Date()}
     withSelect
     label="This is label"
     description="This is description"
