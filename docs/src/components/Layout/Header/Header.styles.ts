@@ -99,10 +99,6 @@ export default createUseStyles(
       fontWeight: 700,
       textDecoration: 'none',
     },
-
-    themeToggle: {
-      marginLeft: theme.spacing.xs,
-    },
   }),
   { theming }
 );

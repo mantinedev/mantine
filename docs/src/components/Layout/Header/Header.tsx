@@ -1,10 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Burger, Code, ActionIcon, Tooltip, Group } from '@mantine/core';
-import { SunIcon, MoonIcon } from '@modulz/radix-icons';
+import React, { useState, useEffect } from 'react';
+import { Burger, Code, Group } from '@mantine/core';
 import corePackageJson from '../../../../package.json';
 import { getDocsData } from '../get-docs-data';
-import { ColorSchemeContext } from '../ColorScheme.context';
 import Search from './Search/Search';
+import { ColorSchemeToggle } from './ColorSchemeToggle/ColorSchemeToggle';
 import { Logo } from '../../Logo/Logo';
 import { SocialButton } from '../../SocialButton/SocialButton';
 import useStyles from './Header.styles';
@@ -26,8 +25,6 @@ function isMac() {
 export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps) {
   const classes = useStyles();
   const [isMacOS, setIsMacOS] = useState(true);
-  const colorSchemeContext = useContext(ColorSchemeContext);
-  const dark = colorSchemeContext.colorScheme === 'dark';
   const burgerTitle = navbarOpened ? 'Open navigation' : 'Hide navigation';
 
   useEffect(() => {
@@ -67,28 +64,7 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
           <SocialButton type="small" service="email" />
         </Group>
 
-        <Tooltip
-          label={`Toggle color scheme: ${isMacOS ? '⌘' : 'Ctrl'} + J`}
-          transition="fade"
-          withArrow
-          position="bottom"
-          placement="end"
-          style={{ marginLeft: 20 }}
-        >
-          <ActionIcon
-            aria-label="Toggle theme"
-            className={classes.themeToggle}
-            variant="outline"
-            color={dark ? 'yellow' : 'blue'}
-            onClick={() => colorSchemeContext.onChange(dark ? 'light' : 'dark')}
-          >
-            {dark ? (
-              <SunIcon style={{ width: 18, height: 18 }} />
-            ) : (
-              <MoonIcon style={{ width: 18, height: 18 }} />
-            )}
-          </ActionIcon>
-        </Tooltip>
+        <ColorSchemeToggle />
       </div>
     </div>
   );
