@@ -115,7 +115,6 @@ export function InputWrapper({
         <Text
           {...errorProps}
           themeOverride={themeOverride}
-          color="red"
           size={size}
           className={classes.error}
           style={_styles.error}
