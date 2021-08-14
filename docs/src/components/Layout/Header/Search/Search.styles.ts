@@ -24,6 +24,7 @@ export default createUseStyles(
     },
 
     kbdEnter: {
+      boxSizing: 'border-box',
       width: 40,
     },
 
