@@ -79,7 +79,8 @@ function Demo() {
 ```tsx
 function useClickOutside<T extends HTMLElement = any>(
   handler: () => void,
-  events: string[] = ['mousedown', 'touchstart']
+  events?: string[] | null,
+  nodes?: HTMLElement[]
 ): React.MutableRefObject<T>;
 ```
 
