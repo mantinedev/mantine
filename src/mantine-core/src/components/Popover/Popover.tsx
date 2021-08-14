@@ -59,6 +59,9 @@ export interface PopoverProps
 
   /** aria-label for close button */
   closeButtonLabel?: string;
+
+  /** useEffect dependencies to force update tooltip position */
+  positionDependencies?: any[];
 }
 
 export function Popover({
@@ -88,6 +91,7 @@ export function Popover({
   spacing = 'md',
   shadow = 'sm',
   closeButtonLabel,
+  positionDependencies = [],
   id,
   classNames,
   styles,
@@ -131,7 +135,7 @@ export function Popover({
         zIndex={zIndex}
         arrowClassName={classes.arrow}
         arrowStyle={_styles.arrow}
-        forceUpdateDependencies={[radius, shadow, spacing]}
+        forceUpdateDependencies={[radius, shadow, spacing, ...positionDependencies]}
       >
         <PopoverBody
           shadow={shadow}
