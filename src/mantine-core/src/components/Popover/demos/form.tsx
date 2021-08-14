@@ -35,10 +35,6 @@ interface UserEditFormProps {
 
 function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) {
   const isMobile = useMediaQuery('(max-width: 755px');
-  const theme = useMantineTheme();
-  const inputStyles = {
-    input: { backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] }
-  };
 
   const form = useForm({
     initialValues,
@@ -58,7 +54,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         value={form.values.name}
         onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
         error={form.errors.name}
-        styles={inputStyles}
+        variant="default"
       />
 
       <TextInput
@@ -69,7 +65,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         value={form.values.email}
         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
         error={form.errors.email}
-        styles={inputStyles}
+        variant="default"
       />
 
       <Group position="apart" style={{ marginTop: 15 }}>
@@ -160,10 +156,6 @@ interface UserEditFormProps {
 
 function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) {
   const isMobile = useMediaQuery('(max-width: 755px');
-  const theme = useMantineTheme();
-  const inputStyles = {
-    input: { backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7] },
-  };
 
   const form = useForm({
     initialValues,
@@ -184,18 +176,18 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         value={form.values.name}
         onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
         error={form.errors.name}
-        styles={inputStyles}
+        variant="default"
       />
 
       <TextInput
         required
         label="Email"
         placeholder="Email"
+        variant="default"
         style={{ minWidth: isMobile ? 220 : 300, marginTop: 15 }}
         value={form.values.email}
         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
         error={form.errors.email}
-        styles={inputStyles}
       />
 
       <Group position="apart" style={{ marginTop: 15 }}>
