@@ -36,11 +36,22 @@ export interface SharedPopperProps {
 }
 
 export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
+  /** Element at which popper should be attached */
   referenceElement: T;
+
+  /** Popper content */
   children: React.ReactNode;
+
+  /** True to show popper, false to hide */
   mounted: boolean;
+
+  /** Arrow class name */
   arrowClassName?: string;
+
+  /** Arrow inline styles */
   arrowStyle?: React.CSSProperties;
+
+  /** useEffect dependencies to force update popper position */
   forceUpdateDependencies?: any[];
 }
 

@@ -41,6 +41,7 @@ export * as OverlayDemos from './components/Overlay/demos';
 export * as PaperDemos from './components/Paper/demos';
 export * as PasswordInputDemos from './components/PasswordInput/demos';
 export * as PopoverDemos from './components/Popover/demos';
+export * as PopperDemos from './components/Popper/demos';
 export * as ProgressDemos from './components/Progress/demos';
 export * as RadioGroupDemos from './components/RadioGroup/demos';
 export * as RingProgressDemos from './components/RingProgress/demos';
