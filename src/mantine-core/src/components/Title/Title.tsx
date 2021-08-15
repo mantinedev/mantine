@@ -19,7 +19,7 @@ export function Title({
   align,
   style,
   ...others
-}: TitleProps) {
+}: TitleProps): JSX.Element {
   if (![1, 2, 3, 4, 5, 6].includes(order)) {
     return null;
   }
