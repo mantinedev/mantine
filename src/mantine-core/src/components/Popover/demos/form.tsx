@@ -128,7 +128,7 @@ export function EditUserPopover() {
         target={
           <ActionIcon
             variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
-            onClick={() => setOpened(true)}
+            onClick={() => setOpened((o) => !o)}
           >
             <Pencil2Icon />
           </ActionIcon>
@@ -249,7 +249,7 @@ export function Demo() {
         target={
           <ActionIcon
             variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
-            onClick={() => setOpened(true)}
+            onClick={() => setOpened((o) => !o)}
           >
             <Pencil2Icon />
           </ActionIcon>

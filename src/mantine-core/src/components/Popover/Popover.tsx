@@ -101,9 +101,12 @@ export function Popover({
   const classes = useStyles({ theme }, classNames, 'popover');
   const _styles = mergeStyles(classes, styles);
   const handleClose = () => typeof onClose === 'function' && onClose();
-  const useClickOutsideRef = useClickOutside(() => !noClickOutside && handleClose());
   const [referenceElement, setReferenceElement] = useState(null);
+  const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
+  const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
+
+  useClickOutside(() => !noClickOutside && handleClose(), null, [rootElement, dropdownElement]);
 
   const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!noEscape && event.nativeEvent.code === 'Escape') {
@@ -120,6 +123,7 @@ export function Popover({
       className={cx(classes.root, className)}
       id={id}
       style={{ ...style, ..._styles.root }}
+      ref={setRootElement}
       {...others}
     >
       <Popper
@@ -146,7 +150,7 @@ export function Popover({
           bodyId={bodyId}
           closeButtonLabel={closeButtonLabel}
           onClose={handleClose}
-          elementRef={useMergedRef(focusTrapRef, useClickOutsideRef)}
+          elementRef={useMergedRef(focusTrapRef, setDropdownElement)}
           onKeyDownCapture={handleKeydown}
           classNames={classNames}
           styles={styles}
