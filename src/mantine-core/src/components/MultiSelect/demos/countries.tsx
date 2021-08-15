@@ -37,7 +37,7 @@ function Value({ value, label, onRemove, themeOverride, classNames, ...others })
 function Item({ label, value, elementRef, ...others }) {
   return (
     <div ref={elementRef} {...others}>
-      <div style={{ display: 'flex', cursor: 'default' }}>
+      <div style={{ display: 'flex' }}>
         <div style={{ marginRight: 10 }}>
           <Flag code={value} size="S" />
         </div>
@@ -94,7 +94,7 @@ function Value({ value, label, onRemove, themeOverride, classNames, ...others }:
 function Item({ label, value, elementRef, ...others }: any) {
   return (
     <div ref={elementRef} {...others}>
-      <div style={{ display: 'flex', cursor: 'default' }}>
+      <div style={{ display: 'flex' }}>
         <div style={{ marginRight: 10 }}>
           <Flag code={value} size="S" />
         </div>
