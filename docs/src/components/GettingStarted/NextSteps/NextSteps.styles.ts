@@ -5,7 +5,10 @@ export default createUseStyles(
   (theme) => ({
     links: {
       display: 'flex',
+      flexWrap: 'wrap',
       marginTop: theme.spacing.md,
+      marginLeft: -theme.spacing.md / 2,
+      marginRight: -theme.spacing.md / 2,
     },
 
     link: {
@@ -18,6 +21,14 @@ export default createUseStyles(
       }`,
       textDecoration: 'none',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+      margin: theme.spacing.md / 2,
+      maxWidth: `calc(33.33333% - ${theme.spacing.md}px)`,
+      width: `calc(33.33333% - ${theme.spacing.md}px)`,
+
+      '@media (max-width: 1100px)': {
+        maxWidth: `calc(100% - ${theme.spacing.md}px)`,
+        width: `calc(100% - ${theme.spacing.md}px)`,
+      },
 
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
