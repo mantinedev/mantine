@@ -89,15 +89,4 @@ describe('@mantine/core/MenuBody', () => {
 
     expect(spy).toHaveBeenCalledTimes(1);
   });
-
-  it('sets given z-index to Paper', () => {
-    const element = mount(
-      <MenuBody {...defaultProps} zIndex={563}>
-        <MenuItem>test-1</MenuItem>
-        <MenuItem>test-2</MenuItem>
-        <MenuItem>test-3</MenuItem>
-      </MenuBody>
-    );
-    expect(element.find(Paper).prop('style').zIndex).toBe(563);
-  });
 });

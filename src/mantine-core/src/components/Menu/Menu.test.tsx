@@ -6,13 +6,11 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsRef,
-  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Divider } from '../Divider/Divider';
 import { Button } from '../Button/Button';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
-import { Menu, MenuBody, MenuItem, MenuLabel } from './Menu';
-import { Menu as MenuStylesApi } from './styles.api';
+import { Menu, MenuBody, MenuItem } from './Menu';
 
 const defaultProps = {
   opened: true,
@@ -36,22 +34,6 @@ describe('@mantine/core/Menu', () => {
   itSupportsStyle(Menu, defaultProps);
   itSupportsOthers(Menu, defaultProps);
   itSupportsRef(Menu, defaultProps, HTMLButtonElement, 'elementRef');
-  itSupportsStylesApi(
-    Menu,
-    {
-      ...defaultProps,
-      children: [
-        <Divider key="1" />,
-        <MenuLabel key="2">label</MenuLabel>,
-        <MenuItem key="3" icon="$">
-          item
-        </MenuItem>,
-      ],
-    },
-    Object.keys(MenuStylesApi),
-    'menu'
-  );
-
   it('has correct displayName', () => {
     expect(Menu.displayName).toEqual('@mantine/core/Menu');
   });
@@ -124,17 +106,5 @@ describe('@mantine/core/Menu', () => {
 
     expect(element.find(ActionIcon).prop('aria-controls')).toBe('test-id');
     expect(element.find(MenuBody).prop('id')).toBe('test-id');
-  });
-
-  it('passes zIndex to MenuBody', () => {
-    const element = shallow(
-      <Menu menuId="test-id" zIndex={785}>
-        <MenuItem>test-item</MenuItem>
-        <MenuItem>test-item</MenuItem>
-        <MenuItem>test-item</MenuItem>
-      </Menu>
-    );
-
-    expect(element.find(MenuBody).prop('zIndex')).toBe(785);
   });
 });
