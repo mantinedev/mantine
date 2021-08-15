@@ -19,7 +19,9 @@ function Controlled() {
 storiesOf('@mantine/core/Menu', module)
   .add('General Usage', () => (
     <div style={{ padding: 60 }}>
-      <Menu>{menuItems}</Menu>
+      <Menu position="right" withArrow>
+        {menuItems}
+      </Menu>
     </div>
   ))
   .add('Controlled', () => (
@@ -30,7 +32,7 @@ storiesOf('@mantine/core/Menu', module)
   .add('Dark theme', () => (
     <MantineProvider theme={{ colorScheme: 'dark' }}>
       <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-        <Menu menuPosition={{ top: 36, left: 0 }}>
+        <Menu>
           <MenuItem icon={<GearIcon style={{ width: 12, height: 12 }} />}>Settings</MenuItem>
           <MenuItem disabled icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
             Disabled

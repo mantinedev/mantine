@@ -1,34 +1,32 @@
-import React, { useRef, cloneElement } from 'react';
+import React, { useState, useRef, cloneElement } from 'react';
 import {
   useId,
   useClickOutside,
   useMergedRef,
   useWindowEvent,
   useUncontrolled,
+  useReducedMotion,
 } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize } from '../../theme';
+import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
-import { MantineTransition } from '../Transition/Transition';
+import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { MenuIcon } from './MenuIcon';
 import { MenuBody, MenuBodyProps, MenuBodyStylesNames } from './MenuBody/MenuBody';
 import { sizes } from './MenuBody/MenuBody.styles';
 import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
 import { MenuLabel, MenuLabelProps } from './MenuLabel/MenuLabel';
+import useStyles from './Menu.styles';
 
 export { MenuBody, MenuItem, MenuLabel };
 export type { MenuBodyProps, MenuItemProps, MenuLabelProps };
 
+export type MenuStylesNames = keyof ReturnType<typeof useStyles> | MenuBodyStylesNames;
+
 export const MENU_SIZES = sizes;
 
-interface MenuPosition {
-  top?: React.CSSProperties['top'];
-  bottom?: React.CSSProperties['bottom'];
-  left?: React.CSSProperties['left'];
-  right?: React.CSSProperties['right'];
-}
-
 export interface MenuProps
-  extends DefaultProps<MenuBodyStylesNames>,
+  extends DefaultProps<MenuStylesNames>,
+    SharedPopperProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** <MenuItem /> and <Divider /> components only, children are passed to MenuBody component  */
   children: React.ReactNode;
@@ -51,15 +49,6 @@ export interface MenuProps
   /** MenuBody component props */
   menuBodyProps?: Record<string, any>;
 
-  /** Transition styles */
-  transition?: MantineTransition;
-
-  /** Transitions duration in ms */
-  transitionDuration?: number;
-
-  /** Transition timing function */
-  transitionTimingFunction?: string;
-
   /** Predefined menu width or number for width in px */
   size?: MantineNumberSize;
 
@@ -71,9 +60,6 @@ export interface MenuProps
 
   /** Id attribute of menu */
   menuId?: string;
-
-  /** Menu dropdown position */
-  menuPosition?: MenuPosition;
 
   /** Control prop to get element ref */
   controlRefProp?: string;
@@ -113,7 +99,6 @@ export function Menu({
   onOpen,
   opened,
   themeOverride,
-  menuPosition = { top: 0, left: 0 },
   style,
   menuId,
   menuBodyProps = {},
@@ -121,6 +106,10 @@ export function Menu({
   transitionDuration = 250,
   size = 'md',
   shadow = 'md',
+  position = 'bottom',
+  placement = 'start',
+  gutter = 5,
+  withArrow = false,
   transition = 'pop-top-left',
   transitionTimingFunction,
   menuButtonLabel,
@@ -128,7 +117,7 @@ export function Menu({
   trigger = 'click',
   radius = 'sm',
   delay = 0,
-  zIndex = 1000,
+  zIndex = 1,
   elementRef,
   classNames,
   styles,
@@ -139,9 +128,13 @@ export function Menu({
   onChange,
   ...others
 }: MenuProps) {
+  const theme = useMantineTheme(themeOverride);
+  const classes = useStyles({ theme }, classNames, 'menu');
+  const _styles = mergeStyles(classes, styles);
   const controlRefFocusTimeout = useRef<number>();
   const delayTimeout = useRef<number>();
-  const controlRef = useRef<HTMLButtonElement>(null);
+  const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
+  const _transitionDuration = useReducedMotion() ? 0 : transitionDuration;
   const uuid = useId(menuId);
 
   const [_opened, setOpened] = useUncontrolled({
@@ -161,7 +154,7 @@ export function Menu({
       setOpened(false);
       if (trigger === 'click') {
         controlRefFocusTimeout.current = window.setTimeout(() => {
-          !scroll && typeof controlRef.current?.focus === 'function' && controlRef.current.focus();
+          !scroll && typeof referenceElement?.focus === 'function' && referenceElement.focus();
         }, transitionDuration + 10);
       }
     }
@@ -210,7 +203,7 @@ export function Menu({
     'aria-controls': uuid,
     'aria-label': menuButtonLabel,
     title: menuButtonLabel,
-    [controlRefProp]: useMergedRef(controlRef, elementRef),
+    [controlRefProp]: useMergedRef(setReferenceElement, elementRef),
   });
 
   return (
@@ -223,28 +216,39 @@ export function Menu({
     >
       {menuControl}
 
-      <MenuBody
-        {...menuBodyProps}
-        opened={_opened}
-        onClose={handleClose}
-        id={uuid}
-        themeOverride={themeOverride}
-        closeOnClickOutside={false}
-        closeOnItemClick={closeOnItemClick}
-        style={{ ...menuBodyProps.style, ...menuPosition }}
-        transitionDuration={transitionDuration}
-        transition={transition}
+      <Popper
+        referenceElement={referenceElement}
+        transitionDuration={_transitionDuration}
         transitionTimingFunction={transitionTimingFunction}
-        size={size}
-        shadow={shadow}
+        transition={transition}
+        mounted={_opened}
+        position={position}
+        placement={placement}
+        gutter={gutter}
+        withArrow={withArrow}
+        arrowSize={3}
         zIndex={zIndex}
-        classNames={classNames}
-        styles={styles}
-        radius={radius}
-        trapFocus={trapFocus}
+        arrowClassName={classes.arrow}
+        arrowStyle={_styles.arrow}
       >
-        {children}
-      </MenuBody>
+        <MenuBody
+          {...menuBodyProps}
+          opened={_opened}
+          onClose={handleClose}
+          id={uuid}
+          themeOverride={themeOverride}
+          closeOnItemClick={closeOnItemClick}
+          size={size}
+          shadow={shadow}
+          classNames={classNames}
+          styles={styles}
+          radius={radius}
+          trapFocus={trigger !== 'hover' && trapFocus}
+          transitionDuration={_transitionDuration}
+        >
+          {children}
+        </MenuBody>
+      </Popper>
     </div>
   );
 }
