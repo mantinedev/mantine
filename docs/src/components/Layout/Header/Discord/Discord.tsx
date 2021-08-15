@@ -8,11 +8,7 @@ export function Discord({ className, ...others }: React.ComponentProps<'a'>) {
   const classes = useStyles();
 
   return (
-    <a
-      className={cx(classes.wrapper, className)}
-      href="https://github.com/mantinedev/mantine"
-      {...others}
-    >
+    <a className={cx(classes.wrapper, className)} href="https://discord.gg/eUZpPbpxb4" {...others}>
       <Text size="sm">Discord</Text>
       <Center className={classes.icon}>
         <DiscordIcon style={{ width: 18, height: 18 }} />
