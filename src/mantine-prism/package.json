@@ -1,7 +1,7 @@
 {
   "name": "@mantine/prism",
   "description": "Code highlight with Mantine theme",
-  "version": "2.3.0-alpha.0",
+  "version": "2.3.0",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "browser": "lib/index.umd.js",
@@ -16,8 +16,8 @@
     "directory": "src/mantine-prism"
   },
   "peerDependencies": {
-    "@mantine/core": "2.3.0-alpha.0",
-    "@mantine/hooks": "2.3.0-alpha.0",
+    "@mantine/core": "2.3.0",
+    "@mantine/hooks": "2.3.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "react-jss": ">=10.1.1"

@@ -1,6 +1,6 @@
 {
   "name": "@mantine/hooks",
-  "version": "2.3.0-alpha.0",
+  "version": "2.3.0",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "browser": "lib/index.umd.js",
