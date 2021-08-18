@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useRef } from 'react';
 import { navigate } from 'gatsby';
 import { Kbd, Autocomplete } from '@mantine/core';

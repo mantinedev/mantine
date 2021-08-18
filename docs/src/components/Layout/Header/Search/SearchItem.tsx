@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react';
 import { Text, Highlight } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
