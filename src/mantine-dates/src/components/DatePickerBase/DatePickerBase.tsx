@@ -84,6 +84,9 @@ export interface DatePickerBaseSharedProps
 
   /** useEffect dependencies to force update tooltip position */
   positionDependencies?: any[];
+
+  /** Popper zIndex */
+  zIndex?: number;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -141,6 +144,7 @@ export function DatePickerBase({
   clearButtonLabel,
   onClear,
   positionDependencies = [],
+  zIndex = 3,
   ...others
 }: DatePickerBaseProps) {
   const theme = useMantineTheme(themeOverride);
@@ -235,7 +239,7 @@ export function DatePickerBase({
             gutter={0}
             withArrow
             arrowSize={3}
-            zIndex={3}
+            zIndex={zIndex}
           >
             <div
               className={classes.dropdownWrapper}
