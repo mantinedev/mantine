@@ -55,10 +55,10 @@ export default function Search({ data, isMacOS }: SearchProps) {
   const closeDropdown = () => setDropdownOpened(false);
   const inputRef = useRef<HTMLInputElement>();
   const pagesRef = useRef<AutocompleteItem[]>(constructPages(data));
-  const [filteredPages, setFilteredPages] = useState(filterPages(query, pagesRef.current));
+  const filteredPages = filterPages(query, pagesRef.current);
 
   const handleSubmit = (item: any) => {
-    setQuery(() => '');
+    setQuery(null);
     navigate(item.slug);
     closeDropdown();
   };
@@ -73,15 +73,14 @@ export default function Search({ data, isMacOS }: SearchProps) {
       setQuery('');
       closeDropdown();
     }
+    if (event.nativeEvent.code === 'Enter') {
+      setQuery('');
+    }
   };
 
   const handleFocus = () => {
     setDropdownOpened(true);
   };
-
-  useShallowEffect(() => {
-    setFilteredPages(filterPages(query, pagesRef.current));
-  }, [query, filteredPages]);
 
   useShallowEffect(() => {
     pagesRef.current = constructPages(data);

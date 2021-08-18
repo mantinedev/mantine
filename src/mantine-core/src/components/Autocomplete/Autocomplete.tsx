@@ -116,7 +116,7 @@ export function Autocomplete({
   classNames,
   styles,
   filter = defaultFilter,
-  nothingFound = 'No Result',
+  nothingFound = 'No Results',
   ...others
 }: AutocompleteProps) {
   const theme = useMantineTheme(themeOverride);
