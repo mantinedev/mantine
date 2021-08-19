@@ -171,6 +171,11 @@ export function MenuBody({
           classNames={classNames}
           styles={styles}
           onClick={(event) => {
+            if (!closeOnItemClick) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+
             if (closeOnItemClick) {
               onClose();
             }

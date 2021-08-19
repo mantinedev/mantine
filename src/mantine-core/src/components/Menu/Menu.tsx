@@ -168,7 +168,7 @@ export function Menu({
 
   useWindowEvent('scroll', () => closeOnScroll && handleClose(true));
 
-  const wrapperRef = useClickOutside(() => _opened && handleClose());
+  const wrapperRef = useClickOutside(() => _opened && handleClose(), ['click', 'touchstart']);
   const toggleMenu = () => {
     _opened ? handleClose() : handleOpen();
   };
