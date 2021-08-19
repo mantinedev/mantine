@@ -98,7 +98,6 @@ export function MantineModal({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ size, overflow, theme }, classNames, 'modal');
   const _styles = mergeStyles(classes, styles);
-  // const clickOutsideRef = useClickOutside(onClose);
   const [modalBodyElement, setModalBodyElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap();
   const duration = reduceMotion ? 1 : transitionDuration;
