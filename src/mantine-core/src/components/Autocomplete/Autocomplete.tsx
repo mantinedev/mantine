@@ -137,7 +137,7 @@ export function Autocomplete({
   const handleItemClick = (item: AutocompleteItem) => {
     typeof onItemSubmit === 'function' && onItemSubmit(item);
     handleChange(item.value);
-    setDropdownOpened(false);
+    setTimeout(() => setDropdownOpened(false));
     inputRef.current.focus();
   };
 
