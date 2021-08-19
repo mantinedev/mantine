@@ -225,6 +225,7 @@ export function Autocomplete({
       >
         <Input<'input'>
           {...others}
+          data-mantine-stop-propagation={dropdownOpened}
           required={required}
           elementRef={useMergedRef(elementRef, inputRef)}
           id={uuid}

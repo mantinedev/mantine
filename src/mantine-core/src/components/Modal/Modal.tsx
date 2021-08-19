@@ -131,7 +131,11 @@ export function MantineModal({
         >
           <div
             className={classes.inner}
-            onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}
+            onKeyDownCapture={(event) => {
+              const shouldTrigger =
+                (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
+              shouldTrigger && event.nativeEvent.code === 'Escape' && onClose();
+            }}
             style={{ zIndex: zIndex + 1, ..._styles.inner }}
             ref={focusTrapRef}
           >

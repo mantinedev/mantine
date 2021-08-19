@@ -158,7 +158,7 @@ export function Select({
     if (inputMode === 'uncontrolled') {
       setInputValue(item.label);
     }
-    setDropdownOpened(false);
+    setTimeout(() => setDropdownOpened(false));
     inputRef.current.focus();
   };
 

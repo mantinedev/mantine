@@ -4,7 +4,10 @@ import { AuthenticationForm } from '../../../demos';
 import { DEFAULT_THEME, MantineProvider } from '../../theme';
 import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
+import { Select } from '../Select/Select';
+import { Autocomplete } from '../Autocomplete/Autocomplete';
 import { Modal } from './Modal';
+import { MultiSelect } from '../MultiSelect/MultiSelect';
 
 function WrappedModal(props: Omit<React.ComponentProps<typeof Modal>, 'opened' | 'onClose'>) {
   const [opened, setOpened] = useState(true);
@@ -49,6 +52,13 @@ storiesOf('@mantine/core/Modal', module)
   .add('Custom modal width', () => (
     <WrappedModal title="Authentication form" size="xs">
       <AuthenticationForm noPadding noShadow />
+    </WrappedModal>
+  ))
+  .add('With select', () => (
+    <WrappedModal>
+      <Select data={['react', 'ng']} />
+      <Autocomplete data={['react', 'ng']} />
+      <MultiSelect data={['react', 'ng']} />
     </WrappedModal>
   ))
   .add('Dark theme', () => (
