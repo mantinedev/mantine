@@ -293,6 +293,7 @@ export function Select({
           onBlur={handleInputBlur}
           readOnly={!searchable}
           disabled={disabled}
+          data-mantine-stop-propagation={dropdownOpened}
           {...getSelectRightSectionProps({
             styles: {
               ...styles,

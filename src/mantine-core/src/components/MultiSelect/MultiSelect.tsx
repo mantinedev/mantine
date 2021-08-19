@@ -384,6 +384,7 @@ export function MultiSelect({
               readOnly={!searchable}
               placeholder={_value.length === 0 ? placeholder : undefined}
               disabled={disabled}
+              data-mantine-stop-propagation={dropdownOpened}
               {...others}
             />
           </div>
