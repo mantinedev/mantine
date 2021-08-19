@@ -116,13 +116,13 @@ export function Popover({
     }
   };
 
-  useEffect(() => {
-    clickOutsideRegister('node-2', dropdownElement);
-  }, [dropdownElement]);
-
   const uuid = useId(id);
   const titleId = `${uuid}-title`;
   const bodyId = `${uuid}-body`;
+
+  useEffect(() => {
+    clickOutsideRegister(`${uuid}-dropdown`, dropdownElement);
+  }, [dropdownElement]);
 
   return (
     <div

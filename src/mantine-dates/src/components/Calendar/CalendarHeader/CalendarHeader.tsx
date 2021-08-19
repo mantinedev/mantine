@@ -78,6 +78,7 @@ export function CalendarHeader({
         disabled={previousMonthDisabled}
         themeOverride={themeOverride}
         size={iconButtonSize}
+        data-mantine-stop-propagation
       >
         <ArrowIcon direction="left" width={iconSize} height={iconSize} />
       </ActionIcon>
@@ -104,6 +105,7 @@ export function CalendarHeader({
         disabled={nextMonthDisabled}
         themeOverride={themeOverride}
         size={iconButtonSize}
+        data-mantine-stop-propagation
       >
         <ArrowIcon direction="right" width={iconSize} height={iconSize} />
       </ActionIcon>
