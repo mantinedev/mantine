@@ -12,7 +12,7 @@ describe('@mantine/dates/create-time-handler', () => {
       nextRef: ref as any,
     });
 
-    handler('test');
+    handler('test', true);
 
     expect(spy).toHaveBeenCalledTimes(0);
   });
@@ -28,7 +28,7 @@ describe('@mantine/dates/create-time-handler', () => {
       nextRef: ref as any,
     });
 
-    handler('6');
+    handler('6', true);
 
     expect(spy).toHaveBeenCalledWith('06');
     expect(ref.current.focus).toHaveBeenCalledTimes(1);
@@ -46,7 +46,7 @@ describe('@mantine/dates/create-time-handler', () => {
       nextRef: ref as any,
     });
 
-    handler('4');
+    handler('4', true);
 
     expect(spy).toHaveBeenCalledWith('4');
     expect(ref.current.focus).toHaveBeenCalledTimes(0);
