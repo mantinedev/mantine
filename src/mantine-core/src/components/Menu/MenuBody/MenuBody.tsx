@@ -51,6 +51,9 @@ export interface MenuBodyProps
 
   /** Trap focus inside menu */
   trapFocus?: boolean;
+
+  /** Get body ref */
+  elementRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
 function getNextItem(active: number, items: MenuItemType[]) {
@@ -102,6 +105,7 @@ export function MenuBody({
   styles,
   radius,
   trapFocus = true,
+  elementRef,
   ...others
 }: MenuBodyProps) {
   const items = React.Children.toArray(children).filter(
@@ -222,6 +226,7 @@ export function MenuBody({
       aria-orientation="vertical"
       radius={radius}
       onMouseLeave={() => setHovered(-1)}
+      elementRef={elementRef}
       {...others}
     >
       <div ref={focusTrapRef}>{buttons}</div>

@@ -19,7 +19,7 @@ function Controlled() {
 storiesOf('@mantine/core/Menu', module)
   .add('General Usage', () => (
     <div style={{ padding: 60 }}>
-      <Menu position="right" withArrow>
+      <Menu position="right" withArrow closeOnItemClick>
         {menuItems}
       </Menu>
     </div>

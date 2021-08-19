@@ -134,6 +134,8 @@ export function Menu({
   const controlRefFocusTimeout = useRef<number>();
   const delayTimeout = useRef<number>();
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
+  const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
+  const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const _transitionDuration = useReducedMotion() ? 0 : transitionDuration;
   const uuid = useId(menuId);
 
@@ -168,7 +170,8 @@ export function Menu({
 
   useWindowEvent('scroll', () => closeOnScroll && handleClose(true));
 
-  const wrapperRef = useClickOutside(() => _opened && handleClose());
+  useClickOutside(() => _opened && handleClose(), null, [dropdownElement, wrapperElement]);
+
   const toggleMenu = () => {
     _opened ? handleClose() : handleOpen();
   };
@@ -208,7 +211,7 @@ export function Menu({
 
   return (
     <div
-      ref={wrapperRef}
+      ref={setWrapperElement}
       style={{ display: 'inline-block', position: 'relative', ...style }}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
@@ -245,6 +248,7 @@ export function Menu({
           radius={radius}
           trapFocus={trigger !== 'hover' && trapFocus}
           transitionDuration={_transitionDuration}
+          elementRef={setDropdownElement}
         >
           {children}
         </MenuBody>
