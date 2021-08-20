@@ -181,7 +181,6 @@ export function Autocomplete({
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onFocus === 'function' && onFocus(event);
-    setDropdownOpened(true);
   };
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -191,7 +190,7 @@ export function Autocomplete({
 
   const handleInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     typeof onClick === 'function' && onClick(event);
-    setDropdownOpened(true);
+    setDropdownOpened(o => !o);
   };
 
   const shouldRenderDropdown = dropdownOpened && filteredData.length > 0;
