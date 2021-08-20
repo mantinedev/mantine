@@ -12,15 +12,15 @@ import { JsonInputDemo, ColorInputDemo } from '@docs/demos';
 
 @mantine/core and @mantine/hooks come with all utilities that you need to build custom inputs.
 These examples with provide a reference on how to enhance existing components with extra logic to fit your needs
-and how to use mantine packages to create completely new accessible inputs based on <GatsbyLink to="/core/input/">Input</GatsbyLink>
-and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components.
+and how to use mantine packages to create completely new accessible inputs based on [Input](/core/input/)
+and [InputWrapper](/core/input-wrapper/) components.
 
 ## Wrapped Textarea
 
 First option to create custom input is to enhance existing Mantine component with extra logic and styles.
 In this example we will build JsonInput component that adds additional styles and validation logic to Textarea.
 
-JsonInput uses autosize variant of <GatsbyLink to="/core/textarea/">Textarea</GatsbyLink>
+JsonInput uses autosize variant of [Textarea](/core/textarea/)
 component, which accepts json, validates and formats it.
 
 <JsonInputDemo />
@@ -36,14 +36,14 @@ component, which accepts json, validates and formats it.
 Second option to create custom input is to build everything from scratch.
 In this example we will utilize Mantine components and hooks to create accessible color picker component.
 
-ColorInput is a custom input built with <GatsbyLink to="/core/input/">Input</GatsbyLink>
-and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components.
+ColorInput is a custom input built with [Input](/core/input/)
+and [InputWrapper](/core/input-wrapper/) components.
 
 <ColorInputDemo />
 
 ### Input
 
-For this input we will use <GatsbyLink to="/core/input/">Input</GatsbyLink> as button,
+For this input we will use [Input](/core/input/) as button,
 as we do not want to allow any free user input. We will also grab button ref for future focus management:
 
 ```tsx
@@ -70,8 +70,8 @@ as we do not want to allow any free user input. We will also grab button ref for
 ### InputWrapper
 
 To give ColorInput component the same label, description and error props as in other Mantine inputs,
-we will wrap it with <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink>
-and ensure that label is connected to input with <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook:
+we will wrap it with [InputWrapper](/core/input-wrapper/)
+and ensure that label is connected to input with [use-id](/hooks/use-id/) hook:
 
 ```tsx
 // if input receives id from props, this id will be used,
@@ -87,8 +87,8 @@ const uuid = useId(id);
 
 ### Dropdown
 
-Dropdown is built with <GatsbyLink to="/core/paper/">Paper</GatsbyLink>
-and <GatsbyLink to="/core/color-swatch/">ColorSwatch</GatsbyLink> components.
+Dropdown is built with [Paper](/core/paper/)
+and [ColorSwatch](/core/color-swatch/) components.
 
 ```tsx
 // Colors generated from data prop
@@ -126,9 +126,9 @@ const dropdown = (
 ### Click outside and focus trap
 
 When dropdown is opened usually it is a good idea to trap focus inside
-and close it with outside clicks. To implement this use <GatsbyLink to="/hooks/use-click-outside/">use-click-outside</GatsbyLink>
-and <GatsbyLink to="/hooks/use-focus-trap/">use-focus-trap</GatsbyLink>.
-Both hooks return ref that should be passed to dropdown, to combine them use <GatsbyLink to="/hooks/use-merged-ref/">use-merged-ref</GatsbyLink>
+and close it with outside clicks. To implement this use [use-click-outside](/hooks/use-click-outside/)
+and [use-focus-trap](/hooks/use-focus-trap/).
+Both hooks return ref that should be passed to dropdown, to combine them use [use-merged-ref](/hooks/use-merged-ref/)
 hook:
 
 ```tsx
@@ -142,7 +142,7 @@ const dropdownRef = useMergedRef(focusTrapRef, clickOutsideRef);
 
 ### Animations
 
-To animate dropdown presence we will use <GatsbyLink to="/core/transition/">Transition</GatsbyLink>
+To animate dropdown presence we will use [Transition](/core/transition/)
 component, it has some premade transitions, for this example `skew-up` will do the job:
 
 ```tsx

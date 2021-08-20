@@ -22,6 +22,7 @@ export const components = {
   inlineCode: (props: any) => <Code {...props} />,
   a: ({ href, children }: { href: string; children: string }) => {
     const replaced = href.replace('https://mantine.dev', '');
+
     if (!replaced.startsWith('http') && replaced.trim().length > 0) {
       return <GatsbyLink to={href.replace('https://mantine.dev', '')}>{children}</GatsbyLink>;
     }

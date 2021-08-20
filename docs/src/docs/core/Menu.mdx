@@ -52,12 +52,12 @@ In this case menu will use `onMouseEnter` and `onFocus` events instead of `onCli
 
 ## MenuItem component
 
-You can use <GatsbyLink to="/core/divider/">Divider</GatsbyLink> (renders horizontal line) and MenuItem components inside Menu.
+You can use [Divider](/core/divider/) (renders horizontal line) and MenuItem components inside Menu.
 MenuItem renders button and accepts props:
 
 - **icon** – icon on the left
 - **children** – item label
-- **rightSection** – any element, rendered on the right, for example, <GatsbyLink to="/core/badge/">Badge</GatsbyLink> or keyboard shortcut
+- **rightSection** – any element, rendered on the right, for example, [Badge](/core/badge/) or keyboard shortcut
 - **...others** – MenuItem produces button element, all other props will be spread to it, for example, `onClick`, `style`, `className`
 
 ```tsx
@@ -76,7 +76,7 @@ MenuItem renders button and accepts props:
 
 ## Custom control
 
-By default menu button uses <GatsbyLink to="/core/action-icon/">ActionIcon</GatsbyLink> with horizontal dots.
+By default menu button uses [ActionIcon](/core/action-icon/) with horizontal dots.
 You can change it by setting `control` and `controlRefProp` props:
 
 <Demo data={MenuDemos.controls} />
@@ -87,27 +87,27 @@ For regular html element it will be `controlRefProp="ref"`
 
 ## Change menu position
 
-Menu is rendered inside <GatsbyLink to="/core/portal/">Portal</GatsbyLink> and its position is controlled with the following props:
+Menu is rendered inside [Portal](/core/portal/) and its position is controlled with the following props:
 
 - `position` – left, right, bottom, top
 - `placement` – start, center, end
 - `gutter` – spacing between menu body and target element in px
 - `withArrow` – displays arrow, arrow position is calculated by `position` and `placement` props
 
-Note that in most cases you will need to change <GatsbyLink to="/core/transition/">transition</GatsbyLink> to match your position:
+Note that in most cases you will need to change [Transition](/core/transition/) to match your position:
 
 <Demo data={MenuDemos.positionConfigurator} />
 
 ## Change transition
 
-Menu is built with <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component.
+Menu is built with [Transition](/core/transition/) component.
 You can customize transition, timing function and duration:
 
 <Demo data={MenuDemos.transitions} />
 
 ## Size and shadow
 
-You can use predefined shadows defined in <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.shadows</GatsbyLink> or your own:
+You can use predefined shadows defined in [theme.shadows](/theming/extend-theme/#spacing-radius-and-shadows) or your own:
 
 ```tsx
 <Menu shadow="sm" /> // -> predefined small shadow
@@ -223,7 +223,7 @@ const items = [
 
 ## Add your styles with styles API
 
-You can customize add styles to any part of Menu with <GatsbyLink to="/theming/styles-api/">Styles API</GatsbyLink>,
+You can customize add styles to any part of Menu with [Styles API](/theming/styles-api/),
 for example, change hovered item color:
 
 <Demo data={MenuDemos.stylesApi} />
@@ -244,7 +244,7 @@ function Demo() {
 
 ## Server side rendering
 
-Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
 provide static `menuId` prop to prevent props mismatch:
 
 ```tsx

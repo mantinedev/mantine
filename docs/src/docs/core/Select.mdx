@@ -18,7 +18,7 @@ import { SelectDemos } from '@demos/core';
 ## Usage
 
 Select component allows user to pick one option from the given `data`,
-use this component when you need to create custom value selection which is not possible with <GatsbyLink to="/core/native-select/">NativeSelect</GatsbyLink>:
+use this component when you need to create custom value selection which is not possible with [NativeSelect](/core/native-select/):
 
 <Demo data={SelectDemos.itemComponent} demoProps={{ toggle: true, zIndex: 4 }} />
 
@@ -167,7 +167,7 @@ Based on this data shape you can create custom `filter` function and `itemCompon
 By default dropdown animations are turned off to increase responsiveness.
 You can enable them by setting optional props:
 
-- `transition` – premade transition name or custom transition styles object, see <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component for all available options
+- `transition` – premade transition name or custom transition styles object, see [Transition](/core/transition/) component for all available options
 - `transitionDuration` – transition duration in ms, defaults to 0
 - `transitionTimingFunction` – defaults to `theme.transitionTimingFunction`
 
@@ -189,7 +189,7 @@ You can use any React node as icon:
 
 ## Input props
 
-Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
+Component supports all props from [Input](/core/input/) and [InputWrapper](/core/input-wrapper/) components:
 
 <Demo data={SelectDemos.configurator} />
 
@@ -209,7 +209,7 @@ function Demo() {
 
 ## Server side rendering
 
-Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
 provide static `id` prop to prevent props mismatch:
 
 ```tsx

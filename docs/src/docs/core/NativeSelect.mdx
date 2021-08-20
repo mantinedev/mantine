@@ -18,10 +18,10 @@ import { NativeSelectDemos } from '@demos/core';
 ## Usage
 
 Use select when you need to capture user feedback limited to certain options.
-If you only have 2-5 options consider using <GatsbyLink to="/core/radio-group/">RadioGroup</GatsbyLink> instead of select,
+If you only have 2-5 options consider using [RadioGroup](/core/radio-group/) instead of select,
 as it provides better UX for smaller data sets.
 
-Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> (except for `rightSection`) and <GatsbyLink to="/core/input-wrapper">InputWrapper</GatsbyLink> components.
+Component supports all props from [Input](/core/input/) (except for `rightSection`) and [InputWrapper](/core/input-wrapper/) components.
 
 <Demo data={NativeSelectDemos.configurator} />
 
@@ -67,7 +67,7 @@ function Demo() {
 
 ## Server side rendering
 
-Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
 provide static `id` prop to prevent props mismatch:
 
 ```tsx

@@ -53,7 +53,7 @@ New <GatsbyLink to="/core/popper/">Popper</GatsbyLink> component – wrapper for
 
 <Demo data={PopperDemos.configurator} />
 
-New <GatsbyLink to="/core/color-picker/">ColorPicker</GatsbyLink> component:
+New [ColorPicker](/core/color-picker/) component:
 
 <Demo data={ColorPickerDemos.usage} demoProps={{ toggle: true }} />
 
@@ -85,24 +85,24 @@ you can use it to build custom sliders, color pickers, etc.:
 
 ### Other changes
 
-- <GatsbyLink to="/core/menu/">Menu</GatsbyLink> and <GatsbyLink to="/core/radio-group/">
-    RadioGroup
-  </GatsbyLink> components now works differently with Styles API – all styles and classNames should be
-  added to root Menu/RadioGroup component instead of MenuItem/Radio
+- [Menu](/core/menu/) and <GatsbyLink to="/core/radio-group/">
+  RadioGroup
+    </GatsbyLink> components now works differently with Styles API – all styles and classNames should be
+added to root Menu/RadioGroup component instead of MenuItem/Radio
 - <GatsbyLink to="/core/card/">Card</GatsbyLink> component no longer has context styles for images and
   dividers, use new CardSection component instead
 - @mantine/tag-picker package is deprecated – use <GatsbyLink to="/core/multi-select/">MultiSelect</GatsbyLink> instead
-- You can now customize shadow and padding in <GatsbyLink to="/core/modal/">Modal</GatsbyLink> component
-- <GatsbyLink to="/core/button/">Button</GatsbyLink> now supports compact option which reduces its height
+- You can now customize shadow and padding in [Modal](/core/modal/) component
+- [Button](/core/button/) now supports compact option which reduces its height
   and horizontal padding
 - <GatsbyLink to="/core/image/">Image</GatsbyLink> now supports adding figcaption
 - New <GatsbyLink to="/core/mark/">Mark</GatsbyLink> component – mark tag with theme styles
-- <GatsbyLink to="/core/menu/">Menu</GatsbyLink> component now supports labels in menu body and behavior
+- [Menu](/core/menu/) component now supports labels in menu body and behavior
   customization (focus trap and close on scroll)
-- 4 new premade pop-\* transitions were added to <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component
+- 4 new premade pop-\* transitions were added to [Transition](/core/transition/) component
 - New <GatsbyLink to="/hooks/use-logger/">use-logger</GatsbyLink> hook will log given values each time component renders
-- <GatsbyLink to="/core/select/">Select</GatsbyLink>, <GatsbyLink to="/core/native-select/">
-    NativeSelect
+- [Select](/core/select/), <GatsbyLink to="/core/native-select/">
+  NativeSelect
   </GatsbyLink> and <GatsbyLink to="/core/autocomplete/">Autocomplete</GatsbyLink> components now
   support data as an array of strings
 - New <GatsbyLink to="/hooks/use-shallow-effect/">use-shallow-effect</GatsbyLink> hook – a drop in replacement for useEffect with shallow comparison instead of referential
@@ -129,10 +129,10 @@ Get and set hash in url with new <GatsbyLink to="/hooks/use-hash/">use-hash</Gat
 
 ### Other new features
 
-- <GatsbyLink to="/core/highlight/">Highlight</GatsbyLink> component now supports multiple substrings
+- [Highlight](/core/highlight/) component now supports multiple substrings
   highlight and highlighting of the same string multiple times
-- <GatsbyLink to="/core/tabs/">Tabs</GatsbyLink> component now supports vertical orientation
-- <GatsbyLink to="/core/input/">Input</GatsbyLink> and all other components that use it (Select, Textarea,
+- [Tabs](/core/tabs/) component now supports vertical orientation
+- [Input](/core/input/) and all other components that use it (Select, Textarea,
   TextInput, Autocomplete, etc.) now supports headless variant without Mantine styles to help you create
   your own custom input styles with Styles API
 
@@ -140,7 +140,7 @@ Get and set hash in url with new <GatsbyLink to="/hooks/use-hash/">use-hash</Gat
 
 ### Breaking changes
 
-- All inputs no longer support `inputStyle` and `inputClassName` props, this feature was replaced by <GatsbyLink to="/theming/styles-api/">Styles API</GatsbyLink>
+- All inputs no longer support `inputStyle` and `inputClassName` props, this feature was replaced by [Styles API](/theming/styles-api/)
 - <GatsbyLink to="/core/burger/">Burger</GatsbyLink> component no longer uses colors from theme, use
   hex color value instead
 - Select component was renamed to <GatsbyLink to="/core/native-select">NativeSelect</GatsbyLink>
@@ -150,7 +150,7 @@ Get and set hash in url with new <GatsbyLink to="/hooks/use-hash/">use-hash</Gat
 ### New theming options
 
 - @mantine/core package now exports <GatsbyLink to="/theming/global-styles/">GlobalStyles and NormalizeCSS</GatsbyLink> components to include global styles
-- New <GatsbyLink to="/theming/styles-api/">Styles API</GatsbyLink> allows you to style any part of Mantine components with inline styles or classes
+- New [Styles API](/theming/styles-api/) allows you to style any part of Mantine components with inline styles or classes
 
 <Demo data={TabsDemos.stylesApi} />
 
@@ -162,32 +162,32 @@ pickers and calendars:
 <br />
 <br />
 
-<GatsbyLink to="/dates/date-picker/">DatePicker</GatsbyLink> allows you to capture dates without free
+[DatePicker](/dates/date-picker/) allows you to capture dates without free
 user input. Component supports the same props as any other input from @mantine/core library and can be
 used in forms:
 
 <Demo data={DatePickerDemos.usage} demoProps={{ toggle: true, zIndex: 5 }} />
 
-<GatsbyLink to="/dates/date-range-picker/">DateRangePicker</GatsbyLink> allows you to capture dates range
+[DateRangePicker](/dates/date-range-picker/) allows you to capture dates range
 from user:
 
 <Demo data={DateRangePickerDemos.usage} demoProps={{ toggle: true, zIndex: 4 }} />
 
-<GatsbyLink to="/dates/time-input/">TimeInput</GatsbyLink> component allows to capture time input from
+[TimeInput](/dates/time-input/) component allows to capture time input from
 user:
 
 <Demo data={TimeInputDemos.usage} demoProps={{ toggle: true }} />
 
-<GatsbyLink to="/dates/calendar/">Calendar</GatsbyLink> component allows you to capture date input fom
+[Calendar](/dates/calendar/) component allows you to capture date input fom
 user or display events:
 
 <Demo data={CalendarDemos.usage} demoProps={{ toggle: true }} />
 
-Capture dates range input with <GatsbyLink to="/dates/range-calendar/">RangeCalendar</GatsbyLink> component:
+Capture dates range input with [RangeCalendar](/dates/range-calendar/) component:
 
 <Demo data={RangeCalendarDemos.usage} demoProps={{ toggle: true }} />
 
-<GatsbyLink to="/dates/month/">Month</GatsbyLink> component displays given month, it is the most basic
+[Month](/dates/month/) component displays given month, it is the most basic
 component which is used in all other components. You can use it to create your own date pickers and calendars
 if Mantine components do not fit your requirements:
 
@@ -195,18 +195,18 @@ if Mantine components do not fit your requirements:
 
 ### @mantine/prism package
 
-<GatsbyLink to="/others/prism/">@mantine/prism</GatsbyLink> is a new package that allows you to highlight
+[@mantine/prism](/others/prism/) is a new package that allows you to highlight
 code with your theme colors just like in Mantine docs:
 
 <Demo data={PrismDemos.usage} demoProps={{ toggle: true }} />
 
 ### New @mantine/core components
 
-<GatsbyLink to="/core/accordion/">Accordion</GatsbyLink> component:
+[Accordion](/core/accordion/) component:
 
 <Demo data={AccordionDemos.label} demoProps={{ toggle: true }} />
 
-<GatsbyLink to="/core/select/">Select</GatsbyLink> component:
+[Select](/core/select/) component:
 
 <Demo data={SelectDemos.itemComponent} demoProps={{ toggle: true, zIndex: 5 }} />
 
@@ -228,14 +228,14 @@ code with your theme colors just like in Mantine docs:
 
 ### @mantine/core changes
 
-- <GatsbyLink to="/core/tabs/">Tabs</GatsbyLink> component now supports unstyled and pills variants
+- [Tabs](/core/tabs/) component now supports unstyled and pills variants
 - All inputs now support `size` prop
-- <GatsbyLink to="/core/drawer/">Drawer</GatsbyLink> component now support title and close button
-- <GatsbyLink to="/core/tooltip/">Tooltip</GatsbyLink> component now displays tooltip on focus by default
-- <GatsbyLink to="/core/menu/">Menu</GatsbyLink> component now closes on scroll to prevent incorrect
+- [Drawer](/core/drawer/) component now support title and close button
+- [Tooltip](/core/tooltip/) component now displays tooltip on focus by default
+- [Menu](/core/menu/) component now closes on scroll to prevent incorrect
   focus handling
-- <GatsbyLink to="/core/menu/">Menu</GatsbyLink> component now supports hover trigger
-- 3 new premade transitions were added to <GatsbyLink to="/core/transition/">Transition</GatsbyLink>: scale-y, scale-x and scale
+- [Menu](/core/menu/) component now supports hover trigger
+- 3 new premade transitions were added to [Transition](/core/transition/): scale-y, scale-x and scale
 - @mantine/core now exports new <GatsbyLink to="/core/button/#unstyled-button">UnstyledButton</GatsbyLink> component that can be used to create custom buttons
 
 ### New @mantine/hooks hooks
