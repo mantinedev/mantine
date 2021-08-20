@@ -52,6 +52,14 @@ export const DEFAULT_THEME: MantineTheme = {
     xl: 24,
   },
 
+  breakpoints: {
+    xs: 576,
+    sm: 768,
+    md: 992,
+    lg: 1200,
+    xl: 1400,
+  },
+
   headings: {
     fontFamily:
       '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',

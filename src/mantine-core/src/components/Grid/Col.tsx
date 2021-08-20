@@ -8,11 +8,18 @@ export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   offset?: number;
   gutter?: MantineNumberSize;
   grow?: boolean;
+  xs?: number;
+  sm?: number;
+  md?: number;
+  lg?: number;
+  xl?: number;
 }
 
 export function isValidSpan(span: number) {
   return typeof span === 'number' && span > 0 && span % 1 === 0;
 }
+
+const sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
 
 export function Col({
   themeOverride,
@@ -21,11 +28,17 @@ export function Col({
   gutter,
   offset = 0,
   grow,
+  xs,
+  sm,
+  md,
+  lg,
+  xl,
   style,
   columns,
   className,
   ...others
 }: ColProps) {
+  const breakpoints = { xs, sm, md, lg, xl };
   const theme = useMantineTheme(themeOverride);
   const spacing = getSizeValue({ size: gutter, sizes: theme.spacing });
 
@@ -33,13 +46,11 @@ export function Col({
     return null;
   }
 
-  const columnWidth = `calc(${100 / (columns / span)}% - ${spacing}px)`;
+  let styles: React.CSSProperties = {};
 
-  const styles: React.CSSProperties = {
+  styles = {
     ...style,
     boxSizing: 'border-box',
-    flex: `${grow ? '1' : '0'} 0 ${columnWidth}`,
-    maxWidth: grow ? 'unset' : columnWidth,
     margin: spacing / 2,
   };
 
@@ -47,10 +58,55 @@ export function Col({
     styles.marginLeft = `calc(${100 / (columns / offset)}% + ${spacing / 2}px)`;
   }
 
+  const getColumnWidth = (colSpan) => `calc(${100 / (columns / colSpan)}% - ${spacing}px)`;
+
+  let sizeClassObj = {
+    [`mantine-col-${span}`]: span !== undefined,
+  };
+
+  sizes.forEach((size) => {
+    const propSize = breakpoints[size];
+    if (!isValidSpan(breakpoints[size])) {
+      return null;
+    }
+    sizeClassObj = {
+      ...sizeClassObj,
+      [`mantine-col-${size}-${propSize}`]: propSize !== undefined,
+    };
+    return true;
+  });
+
   return (
-    <div style={styles} className={cx('mantine-col', className)} {...others}>
-      {children}
-    </div>
+    <>
+      <style>
+        {`
+          .mantine-col-${span} {
+            flex: ${grow ? '1' : '0'} 0 ${getColumnWidth(span)};
+            max-width: ${grow ? 'unset' : getColumnWidth(span)};
+          }
+        `}
+      </style>
+      {sizes.map((size) => {
+        if (!isValidSpan(breakpoints[size])) {
+          return null;
+        }
+        return (
+          <style>
+            {`
+                @media (min-width: ${theme.breakpoints[size]}px) {
+                  .mantine-col-${size}-${breakpoints[size]} {
+                    flex: ${grow ? '1' : '0'} 0 ${getColumnWidth(breakpoints[size])};
+                    max-width: ${grow ? 'unset' : getColumnWidth(breakpoints[size])};
+                  }
+                }
+              `}
+          </style>
+        );
+      })}
+      <div style={styles} className={cx('mantine-col', className, sizeClassObj)} {...others}>
+        {children}
+      </div>
+    </>
   );
 }
 
