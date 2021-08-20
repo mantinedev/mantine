@@ -1,4 +1,4 @@
-import { RocketIcon, GitHubLogoIcon, ArchiveIcon } from '@modulz/radix-icons';
+import { RocketIcon, GitHubLogoIcon } from '@modulz/radix-icons';
 import { DEFAULT_THEME } from '@mantine/core';
 
 export default [
@@ -7,12 +7,6 @@ export default [
     label: 'Getting Started',
     theme: DEFAULT_THEME.colors.blue[6],
     icon: RocketIcon,
-  },
-  {
-    to: '/pages/changelog/',
-    label: 'Changelog',
-    theme: DEFAULT_THEME.colors.teal[6],
-    icon: ArchiveIcon,
   },
   { to: '/contribute/', label: 'Contribute', theme: '#000', icon: GitHubLogoIcon },
 ];
