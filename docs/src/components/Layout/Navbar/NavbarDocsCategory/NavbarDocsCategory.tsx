@@ -14,7 +14,7 @@ interface NavbarDocsCategoryProps {
 
 export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCategoryProps) {
   const classes = useStyles();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(group.group === 'changelog');
   const activeCoreItemRef = useRef(null);
   const location = useLocation();
 
