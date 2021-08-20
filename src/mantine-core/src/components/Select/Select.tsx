@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect, useRef } from 'react';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, MantineSize } from '../../theme';
@@ -144,6 +145,10 @@ export function Select({
   };
 
   useEffect(() => {
+    console.log(dropdownOpened);
+  });
+
+  useEffect(() => {
     const newSelectedValue = formattedData.find((item) => item.value === _value);
     if (newSelectedValue) {
       setInputValue(newSelectedValue.label);
@@ -223,7 +228,6 @@ export function Select({
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onFocus === 'function' && onFocus(event);
-    setDropdownOpened(true);
   };
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -288,7 +292,7 @@ export function Select({
           aria-autocomplete="list"
           aria-controls={dropdownOpened ? `${uuid}-items` : null}
           aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
-          onClick={() => setDropdownOpened(true)}
+          onClick={() => dropdownOpened ? setDropdownOpened(false) : setDropdownOpened(true)}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           readOnly={!searchable}
