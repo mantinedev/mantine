@@ -69,6 +69,8 @@ interface Frontmatter {
   order: number;
   slug: string;
   category: string;
+  release: string;
+  date: string;
 }
 
 interface MdxPage {

@@ -41,6 +41,8 @@ export const query = graphql`
         pageTitle
         license
         styles
+        release
+        date
       }
       body
     }
