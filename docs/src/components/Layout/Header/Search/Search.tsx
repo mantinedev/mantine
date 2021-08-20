@@ -57,8 +57,8 @@ export default function Search({ data, isMacOS }: SearchProps) {
   const pagesRef = useRef<AutocompleteItem[]>(constructPages(data));
   const filteredPages = filterPages(query, pagesRef.current);
 
-  const handleSubmit = (item: any) => {
-    setQuery(null);
+  const handleSubmit = (item) => {
+    setQuery('');
     navigate(item.slug);
     closeDropdown();
   };

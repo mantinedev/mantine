@@ -139,8 +139,8 @@ export function Autocomplete({
   }, [_value]);
 
   const handleItemClick = (item: AutocompleteItem) => {
-    typeof onItemSubmit === 'function' && onItemSubmit(item);
     handleChange(item.value);
+    typeof onItemSubmit === 'function' && onItemSubmit(item);
     setDropdownOpened(false);
     inputRef.current.focus();
   };
@@ -167,9 +167,9 @@ export function Autocomplete({
       case 'Enter': {
         if (filteredData[hovered] && dropdownOpened) {
           event.preventDefault();
+          handleChange(filteredData[hovered].value);
           typeof onItemSubmit === 'function' && onItemSubmit(filteredData[hovered]);
           setDropdownOpened(false);
-          handleChange(filteredData[hovered].value);
         }
         break;
       }
