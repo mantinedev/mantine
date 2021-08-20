@@ -4,7 +4,31 @@ import { AuthenticationForm } from '../../../demos';
 import { DEFAULT_THEME, MantineProvider } from '../../theme';
 import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
+import { Select } from '../Select/Select';
+import { Autocomplete } from '../Autocomplete/Autocomplete';
+import { Popover } from '../Popover/Popover';
+import { Menu, MenuItem } from '../Menu/Menu';
 import { Modal } from './Modal';
+import { MultiSelect } from '../MultiSelect/MultiSelect';
+
+function PopoverWrapper() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <Popover
+      opened={opened}
+      onClose={() => setOpened(false)}
+      target={<Button onClick={() => setOpened((o) => !o)}>Toggle popover</Button>}
+      styles={{ body: { width: 260 } }}
+      position="bottom"
+      withArrow
+      zIndex={1000}
+    >
+      <div style={{ display: 'flex' }}>
+        <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>
+      </div>
+    </Popover>
+  );
+}
 
 function WrappedModal(props: Omit<React.ComponentProps<typeof Modal>, 'opened' | 'onClose'>) {
   const [opened, setOpened] = useState(true);
@@ -49,6 +73,17 @@ storiesOf('@mantine/core/Modal', module)
   .add('Custom modal width', () => (
     <WrappedModal title="Authentication form" size="xs">
       <AuthenticationForm noPadding noShadow />
+    </WrappedModal>
+  ))
+  .add('With select', () => (
+    <WrappedModal>
+      <Select data={['react', 'ng']} />
+      <Autocomplete data={['react', 'ng']} />
+      <MultiSelect data={['react', 'ng']} />
+      <PopoverWrapper />
+      <Menu zIndex={1000}>
+        <MenuItem>Hello</MenuItem>
+      </Menu>
     </WrappedModal>
   ))
   .add('Dark theme', () => (

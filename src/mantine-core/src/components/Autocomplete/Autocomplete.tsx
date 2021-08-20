@@ -141,7 +141,7 @@ export function Autocomplete({
   const handleItemClick = (item: AutocompleteItem) => {
     handleChange(item.value);
     typeof onItemSubmit === 'function' && onItemSubmit(item);
-    setDropdownOpened(false);
+    setTimeout(() => setDropdownOpened(false));
     inputRef.current.focus();
   };
 
@@ -228,6 +228,7 @@ export function Autocomplete({
       >
         <Input<'input'>
           {...others}
+          data-mantine-stop-propagation={dropdownOpened}
           required={required}
           elementRef={useMergedRef(elementRef, inputRef)}
           id={uuid}

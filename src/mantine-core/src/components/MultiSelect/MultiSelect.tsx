@@ -211,16 +211,18 @@ export function MultiSelect({
   });
 
   const handleItemSelect = (item: SelectItem) => {
-    clearSearchOnChange && handleSearchChange('');
+    setTimeout(() => {
+      clearSearchOnChange && handleSearchChange('');
 
-    if (_value.includes(item.value)) {
-      handleValueRemove(item.value);
-    } else {
-      setValue([..._value, item.value]);
-      if (hovered === filteredData.length - 1) {
-        setHovered(filteredData.length - 2);
+      if (_value.includes(item.value)) {
+        handleValueRemove(item.value);
+      } else {
+        setValue([..._value, item.value]);
+        if (hovered === filteredData.length - 1) {
+          setHovered(filteredData.length - 2);
+        }
       }
-    }
+    });
   };
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -382,6 +384,7 @@ export function MultiSelect({
               readOnly={!searchable}
               placeholder={_value.length === 0 ? placeholder : undefined}
               disabled={disabled}
+              data-mantine-stop-propagation={dropdownOpened}
               {...others}
             />
           </div>

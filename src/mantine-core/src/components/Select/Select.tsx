@@ -158,7 +158,7 @@ export function Select({
     if (inputMode === 'uncontrolled') {
       setInputValue(item.label);
     }
-    setDropdownOpened(false);
+    setTimeout(() => setDropdownOpened(false));
     inputRef.current.focus();
   };
 
@@ -293,6 +293,7 @@ export function Select({
           onBlur={handleInputBlur}
           readOnly={!searchable}
           disabled={disabled}
+          data-mantine-stop-propagation={dropdownOpened}
           {...getSelectRightSectionProps({
             styles: {
               ...styles,
