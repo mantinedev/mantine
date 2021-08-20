@@ -8,20 +8,20 @@ storiesOf('@mantine/core/Grid', module)
     <div style={{ padding: 40 }}>
       <div style={{ background: 'blue' }}>
         <Grid gutter="xl" align="center">
-          <Col xs={6} lg={3} md={4} sm={6} span={12}>
+          <Col sm={4} lg={6} span={12}>
             <Card shadow="md">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto illo pariatur
               veritatis, nemo rem numquam eligendi rerum ex laudantium accusamus quisquam aliquid
               recusandae, provident cumque voluptas, iste consequatur repellendus maiores.
             </Card>
           </Col>
-          <Col lg={3} md={2} sm={6} xs={6} span={12} style={{ backgroundColor: 'red' }}>
+          <Col sm={4} lg={6} span={12} style={{ backgroundColor: 'red' }}>
             <Card shadow="md">2</Card>
           </Col>
-          <Col lg={3} md={2} sm={6} span={12} style={{ backgroundColor: 'red' }}>
+          <Col sm={4} lg={6} span={12} style={{ backgroundColor: 'red' }}>
             <Card shadow="md">3</Card>
           </Col>
-          <Col lg={3} md={2} sm={6} span={12} style={{ backgroundColor: 'red' }}>
+          <Col sm={12} lg={6} span={12} style={{ backgroundColor: 'red' }}>
             <Card shadow="md">4</Card>
           </Col>
         </Grid>

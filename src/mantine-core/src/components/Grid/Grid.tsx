@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, useMantineTheme, getSizeValue } from '../../theme';
-import { Col, ColProps } from './Col';
+import { Col, ColProps, breakpoints, getColumnWidth } from './Col';
 
 export { Col };
 export type { ColProps };
@@ -45,21 +45,55 @@ export function Grid({
     React.cloneElement(col, { gutter, grow, columns, key: index })
   );
 
+  const columnSizes = [];
+  for (let index = 0; index < columns; index += 1) {
+    columnSizes.push(index + 1);
+  }
+
+  const createStyles = () => {
+    let mediaQueries = '';
+    let baseStyles = '';
+    columnSizes.forEach((columnSpan) => {
+       baseStyles = `${baseStyles} .mantine-col-${columnSpan} {
+          flex:${grow ? '1' : '0'} 0 ${getColumnWidth(columnSpan, columns, spacing)};
+          max-width:  ${grow ? 'unset' : getColumnWidth(columnSpan, columns, spacing)};
+        }`;
+    });
+
+    breakpoints.forEach((breakpoint) => {
+      let colStyles = '';
+      columnSizes.forEach((columnSpan) => {
+        colStyles = `${colStyles} .mantine-col-${breakpoint}-${columnSpan} {
+          flex:${grow ? '1' : '0'} 0 ${getColumnWidth(columnSpan, columns, spacing)};
+          max-width:  ${grow ? 'unset' : getColumnWidth(columnSpan, columns, spacing)};
+        }`;
+      });
+       mediaQueries = `${mediaQueries} @media (min-width: ${theme.breakpoints[breakpoint]}px) { ${colStyles} }`;
+    });
+    mediaQueries = `${baseStyles} ${mediaQueries}`;
+    return mediaQueries;
+  };
+
   return (
-    <div
-      style={{
-        margin: -spacing / 2,
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: justify,
-        alignItems: align,
-        ...style,
-      }}
-      className={cx('mantine-grid', className)}
-      {...others}
-    >
-      {cols}
-    </div>
+    <>
+      <style>
+        {createStyles()}
+      </style>
+      <div
+        style={{
+          margin: -spacing / 2,
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: justify,
+          alignItems: align,
+          ...style,
+        }}
+        className={cx('mantine-grid', className)}
+        {...others}
+      >
+        {cols}
+      </div>
+    </>
   );
 }
 
