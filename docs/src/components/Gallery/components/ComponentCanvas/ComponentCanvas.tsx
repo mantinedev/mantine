@@ -73,7 +73,15 @@ export function ComponentCanvas(props: GalleryComponent) {
       <div className={cx(classes.body, { [classes.bodyWithCode]: state === 'code' })}>
         {state === 'preview' ? (
           <div className={classes.preview}>
-            <Component />
+            <div
+              style={{
+                maxWidth: props.attributes.canvas?.maxWidth || '100%',
+                marginLeft: props.attributes.canvas?.center ? 'auto' : 'unset',
+                marginRight: props.attributes.canvas?.center ? 'auto' : 'unset',
+              }}
+            >
+              <Component />
+            </div>
           </div>
         ) : (
           <Prism language="tsx" className={classes.code}>
