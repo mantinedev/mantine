@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { Card, CardSection, Text, Image, Overlay } from '@mantine/core';
+import { Card, CardSection, Text, Image, Overlay, useMantineTheme } from '@mantine/core';
 import images from './images';
 import useStyles from './CategoryCard.styles';
 
@@ -13,11 +13,12 @@ export interface CategoryCardProps {
 
 export function CategoryCard({ name, url, count, category }: CategoryCardProps) {
   const classes = useStyles();
+  const theme = useMantineTheme();
 
   return (
     <Card className={classes.card} radius="md">
-      <CardSection>
-        <Image src={images[category]} />
+      <CardSection className={classes.imageWrapper}>
+        <Image src={images[category][theme.colorScheme]} />
       </CardSection>
 
       <Text className={classes.title}>{name}</Text>

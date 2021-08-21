@@ -20,6 +20,10 @@ export default createUseStyles(
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
       marginTop: 2,
     },
+
+    imageWrapper: {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+    },
   }),
   { theming }
 );
