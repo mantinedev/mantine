@@ -1,0 +1,9 @@
+{
+  "title": "Multiple countries select",
+  "category": "forms",
+  "dependencies": ["/core/multi-select/", "/core/action-icon", "react-flagpack"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 360
+  }
+}

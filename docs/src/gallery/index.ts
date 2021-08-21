@@ -1,1 +1,1 @@
-export { CountrySelect } from './CountrySelect/CountrySelect';
+export { CountriesSelect } from './CountriesSelect/CountriesSelect';

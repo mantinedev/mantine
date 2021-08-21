@@ -1,9 +1,0 @@
-{
-  "title": "Countries multi select",
-  "category": "forms",
-  "dependencies": ["/core/multi-select/"],
-  "canvas": {
-    "center": true,
-    "maxWidth": 360
-  }
-}
