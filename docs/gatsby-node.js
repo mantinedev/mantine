@@ -11,20 +11,29 @@ const convertCase = (string) => {
 
 const GALLERY_CATEGORIES = [{ slug: 'forms', name: 'Forms and inputs' }];
 
+const getCategory = (slug) => {
+  return GALLERY_CATEGORIES.find((cat) => cat.slug === slug) || {};
+};
+
 exports.createPages = async function ({ actions }) {
   const paths = await fsp.readdir('./src/gallery');
   const components = paths
     .map((componentName) => {
       if (fs.lstatSync(`./src/gallery/${componentName}`).isDirectory()) {
         const code = fs.readFileSync(`./src/gallery/${componentName}/${componentName}.tsx`, 'utf8');
+        const attributes = require(`./src/gallery/${componentName}/attributes.json`);
+        const galleryCategory = getCategory(attributes.category);
+        const category = {
+          name: galleryCategory.name,
+          path: `/gallery/category/${attributes.category}/`,
+        };
 
         return {
           _component: componentName,
-          attributes: {
-            code,
-            url: `/gallery/component/${convertCase(componentName)}`,
-            ...require(`./src/gallery/${componentName}/attributes.json`),
-          },
+          code,
+          category,
+          url: `/gallery/component/${convertCase(componentName)}`,
+          attributes: attributes,
         };
       }
 
@@ -43,7 +52,7 @@ exports.createPages = async function ({ actions }) {
 
   components.forEach((component) => {
     actions.createPage({
-      path: component.attributes.url,
+      path: component.url,
       component: require.resolve('./src/components/Gallery/GalleryComponentPage.tsx'),
       context: component,
     });
@@ -54,7 +63,7 @@ exports.createPages = async function ({ actions }) {
       path: `/gallery/category/${category}/`,
       component: require.resolve('./src/components/Gallery/GalleryCategoryPage.tsx'),
       context: {
-        category,
+        category: getCategory(category),
         components: categories[category],
       },
     });
