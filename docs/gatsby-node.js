@@ -9,6 +9,8 @@ const convertCase = (string) => {
   return splitted.join('-');
 };
 
+const GALLERY_CATEGORIES = [{ slug: 'forms', name: 'Forms and inputs' }];
+
 exports.createPages = async function ({ actions }) {
   const paths = await fsp.readdir('./src/gallery');
   const components = paths
@@ -61,5 +63,13 @@ exports.createPages = async function ({ actions }) {
   actions.createPage({
     path: '/gallery/',
     component: require.resolve('./src/components/Gallery/Gallery.tsx'),
+    context: {
+      categories: GALLERY_CATEGORIES.map((category) => ({
+        category: category.slug,
+        name: category.name,
+        count: categories[category.slug].length,
+        url: `/gallery/category/${category.slug}/`,
+      })),
+    },
   });
 };
