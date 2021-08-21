@@ -1,16 +1,57 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
-import { EyeOpenIcon, CodeIcon, ExternalLinkIcon, GitHubLogoIcon } from '@modulz/radix-icons';
+import { Link } from 'gatsby';
+import {
+  EyeOpenIcon,
+  CodeIcon,
+  ExternalLinkIcon,
+  GitHubLogoIcon,
+  InfoCircledIcon,
+} from '@modulz/radix-icons';
 import { Prism } from '@mantine/prism';
-import { SegmentedControl, Center, Text, ActionIcon, Group } from '@mantine/core';
+import {
+  SegmentedControl,
+  Center,
+  Text,
+  ActionIcon,
+  Group,
+  MenuItem,
+  Menu,
+  MenuLabel,
+} from '@mantine/core';
+import { upperFirst } from '@mantine/hooks';
 import * as GalleryComponents from '../../../../gallery';
 import { GalleryComponent } from '../../types';
+import { MantineIcon } from './icons/MantineIcon';
+import { NpmIcon } from './icons/NpmIcon';
 import useStyles from './ComponentCanvas.styles';
 
 export function ComponentCanvas(props: GalleryComponent) {
   const [state, setState] = useState('preview');
   const classes = useStyles();
   const Component = GalleryComponents[props._component];
+
+  const dependencies = props.attributes.dependencies.map((dependency) => {
+    if (dependency.trim().startsWith('/')) {
+      const componentName = dependency.split('/')[2].split('-').map(upperFirst).join('');
+      return (
+        <MenuItem component={Link} to={dependency} icon={<MantineIcon />}>
+          {componentName}
+        </MenuItem>
+      );
+    }
+
+    return (
+      <MenuItem
+        component="a"
+        href={`https://www.npmjs.com/package/${dependency}`}
+        target="_blank"
+        icon={<NpmIcon />}
+      >
+        {dependency}
+      </MenuItem>
+    );
+  });
 
   return (
     <div className={classes.canvas}>
@@ -42,8 +83,23 @@ export function ComponentCanvas(props: GalleryComponent) {
           >
             <GitHubLogoIcon style={{ width: 14, height: 14 }} />
           </ActionIcon>
-        </Group>
 
+          <Menu
+            withArrow
+            placement="end"
+            position="bottom"
+            transition="pop-top-right"
+            transitionDuration={100}
+            control={
+              <ActionIcon className={classes.action} title="Component dependencies">
+                <InfoCircledIcon style={{ width: 14, height: 14 }} />
+              </ActionIcon>
+            }
+          >
+            <MenuLabel>Component dependencies</MenuLabel>
+            {dependencies}
+          </Menu>
+        </Group>
         <SegmentedControl
           value={state}
           onChange={setState}
