@@ -13,6 +13,7 @@ interface HeaderProps {
   data: ReturnType<typeof getDocsData>;
   navbarOpened: boolean;
   toggleNavbar(): void;
+  shouldRenderSearch: boolean;
 }
 
 function isMac() {
@@ -23,7 +24,12 @@ function isMac() {
   return false;
 }
 
-export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps) {
+export default function Header({
+  data,
+  navbarOpened,
+  toggleNavbar,
+  shouldRenderSearch,
+}: HeaderProps) {
   const classes = useStyles();
   const [isMacOS, setIsMacOS] = useState(true);
   const burgerTitle = navbarOpened ? 'Open navigation' : 'Hide navigation';
@@ -56,7 +62,7 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
       </div>
 
       <Group className={classes.links} spacing="xs">
-        <Search data={data} isMacOS={isMacOS} />
+        {shouldRenderSearch && <Search data={data} isMacOS={isMacOS} />}
         <Discord />
         <SourceCode />
         <ColorSchemeToggle />

@@ -7,7 +7,7 @@ import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
 import { NAVBAR_BREAKPOINT } from './Navbar/Navbar.styles';
-import { EXCLUDE_LAYOUT_PATHS } from '../../settings';
+import { shouldExcludeNavbar, shouldExcludeSearch } from '../../settings/exclude-layout';
 import { getDocsData } from './get-docs-data';
 import useStyles from './Layout.styles';
 
@@ -43,7 +43,8 @@ export function LayoutInner({ children, location }: LayoutProps) {
   const [navbarOpened, setNavbarState] = useState(false);
   const data = getDocsData(useStaticQuery(query));
   const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);
-  const shouldRenderNavbar = !EXCLUDE_LAYOUT_PATHS.includes(location.pathname) || navbarCollapsed;
+  const shouldRenderNavbar = !shouldExcludeNavbar(location.pathname) || navbarCollapsed;
+  const shouldRenderSearch = !shouldExcludeSearch(location.pathname);
 
   return (
     <div className={cx({ [classes.withNavbar]: shouldRenderNavbar })}>
@@ -51,6 +52,7 @@ export function LayoutInner({ children, location }: LayoutProps) {
         data={data}
         navbarOpened={navbarOpened}
         toggleNavbar={() => setNavbarState((o) => !o)}
+        shouldRenderSearch={shouldRenderSearch}
       />
 
       {shouldRenderNavbar && (
