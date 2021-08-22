@@ -3,6 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme } from '../../theme';
 import { Paper } from '../Paper/Paper';
 import { CardSection, CardSectionProps } from './CardSection/CardSection';
+import { ComponentPassThrough } from '../../types';
 import useStyles from './Card.styles';
 
 export { CardSection };
@@ -13,14 +14,15 @@ export interface CardProps extends DefaultProps, React.ComponentPropsWithoutRef<
   children: React.ReactNode;
 }
 
-export function Card({
+export function Card<T extends React.ElementType = 'div'>({
+  component = 'div',
   className,
   themeOverride,
   padding = 'md',
   radius = 'sm',
   children,
   ...others
-}: CardProps) {
+}: ComponentPassThrough<T, CardProps>) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, null, 'card');
 
@@ -33,7 +35,13 @@ export function Card({
   });
 
   return (
-    <Paper className={cx(classes.card, className)} radius={radius} padding={padding} {...others}>
+    <Paper
+      className={cx(classes.card, className)}
+      radius={radius}
+      padding={padding}
+      component={component}
+      {...others}
+    >
       {content}
     </Paper>
   );

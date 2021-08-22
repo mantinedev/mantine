@@ -1,9 +1,10 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../theme';
+import { ComponentPassThrough } from '../../types';
 import useStyles from './Paper.styles';
 
-export interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface PaperProps extends DefaultProps {
   /** Predefined padding value from theme.spacing or number for padding in px */
   padding?: MantineNumberSize;
 
@@ -17,7 +18,8 @@ export interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef
   elementRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
-export function Paper({
+export function Paper<T extends React.ElementType = 'div'>({
+  component: Element = 'div',
   className,
   children,
   padding = 0,
@@ -26,14 +28,14 @@ export function Paper({
   themeOverride,
   elementRef,
   ...others
-}: PaperProps) {
+}: ComponentPassThrough<T, PaperProps>) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ radius, shadow, padding, theme }, null, 'paper');
 
   return (
-    <div className={cx(classes.paper, className)} ref={elementRef} {...others}>
+    <Element className={cx(classes.paper, className)} ref={elementRef} {...others}>
       {children}
-    </div>
+    </Element>
   );
 }
 

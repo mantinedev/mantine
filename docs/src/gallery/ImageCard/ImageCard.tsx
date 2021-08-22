@@ -5,10 +5,6 @@ import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles(
   (theme) => ({
-    link: {
-      textDecoration: 'none',
-    },
-
     card: {
       position: 'relative',
       height: 280,
@@ -76,40 +72,46 @@ export function ImageCard({ image, title, author, views, comments, link }: Image
   const classes = useStyles();
 
   return (
-    <a className={classes.link} href={link} target="_blank" rel="noreferrer">
-      <Card padding="lg" shadow="lg" className={classes.card} radius="md">
-        <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
-        <div className={classes.overlay} />
+    <Card
+      padding="lg"
+      shadow="lg"
+      className={classes.card}
+      radius="md"
+      component="a"
+      href={link}
+      target="_blank"
+    >
+      <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
+      <div className={classes.overlay} />
 
-        <div className={classes.content}>
-          <div>
-            <Text size="lg" className={classes.title} weight={500}>
-              {title}
+      <div className={classes.content}>
+        <div>
+          <Text size="lg" className={classes.title} weight={500}>
+            {title}
+          </Text>
+
+          <Group className={classes.body} position="apart">
+            <Text size="sm" className={classes.bodyText}>
+              {author}
             </Text>
 
-            <Group className={classes.body} position="apart">
-              <Text size="sm" className={classes.bodyText}>
-                {author}
-              </Text>
-
-              <Group spacing="lg" style={{ marginRight: 0 }}>
-                <Center>
-                  <EyeOpenIcon style={{ marginRight: 7, width: 12, height: 12 }} />
-                  <Text size="sm" className={classes.bodyText}>
-                    {views}
-                  </Text>
-                </Center>
-                <Center>
-                  <ChatBubbleIcon style={{ marginRight: 7, width: 12, height: 12 }} />
-                  <Text size="sm" className={classes.bodyText}>
-                    {comments}
-                  </Text>
-                </Center>
-              </Group>
+            <Group spacing="lg" style={{ marginRight: 0 }}>
+              <Center>
+                <EyeOpenIcon style={{ marginRight: 7, width: 12, height: 12 }} />
+                <Text size="sm" className={classes.bodyText}>
+                  {views}
+                </Text>
+              </Center>
+              <Center>
+                <ChatBubbleIcon style={{ marginRight: 7, width: 12, height: 12 }} />
+                <Text size="sm" className={classes.bodyText}>
+                  {comments}
+                </Text>
+              </Center>
             </Group>
-          </div>
+          </Group>
         </div>
-      </Card>
-    </a>
+      </div>
+    </Card>
   );
 }
