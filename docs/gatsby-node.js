@@ -9,7 +9,10 @@ const convertCase = (string) => {
   return splitted.join('-');
 };
 
-const GALLERY_CATEGORIES = [{ slug: 'forms', name: 'Forms and inputs' }];
+const GALLERY_CATEGORIES = [
+  { slug: 'forms', name: 'Forms and inputs' },
+  { slug: 'cards', name: 'Cards' },
+];
 
 const getCategory = (slug) => {
   return GALLERY_CATEGORIES.find((cat) => cat.slug === slug) || {};

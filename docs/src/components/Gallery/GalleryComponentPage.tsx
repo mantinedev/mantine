@@ -12,7 +12,7 @@ export default function GalleryComponentPage({ pageContext }: GalleryComponentPa
   return (
     <div style={{ paddingTop: 22 }}>
       <GalleryPreview canvas={pageContext.attributes.canvas} withSpacing>
-        <Component />
+        <Component {...pageContext.attributes.props} />
       </GalleryPreview>
     </div>
   );

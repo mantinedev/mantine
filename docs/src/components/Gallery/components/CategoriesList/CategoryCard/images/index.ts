@@ -3,4 +3,5 @@ import formsLight from './forms-light.svg';
 
 export default {
   forms: { light: formsLight, dark: formsDark },
+  cards: {},
 };

@@ -131,7 +131,7 @@ export function ComponentCanvas(props: GalleryComponent) {
         {state === 'preview' ? (
           <div className={classes.preview}>
             <GalleryPreview canvas={props.attributes.canvas}>
-              <Component />
+              <Component {...props.attributes.props} />
             </GalleryPreview>
           </div>
         ) : (
