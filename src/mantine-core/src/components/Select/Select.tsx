@@ -224,7 +224,6 @@ export function Select({
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onFocus === 'function' && onFocus(event);
-    setDropdownOpened(true);
   };
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -289,7 +288,7 @@ export function Select({
           aria-autocomplete="list"
           aria-controls={dropdownOpened ? `${uuid}-items` : null}
           aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
-          onClick={() => setDropdownOpened(true)}
+          onClick={() => setDropdownOpened(o => !o)}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           readOnly={!searchable}
