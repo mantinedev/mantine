@@ -136,6 +136,7 @@ export type { ModalProps, ModalStylesNames } from './components/Modal/Modal';
 export type {
   MultiSelectProps,
   MultiSelectStylesNames,
+  MultiSelectValueProps,
 } from './components/MultiSelect/MultiSelect';
 export type {
   NativeSelectProps,
@@ -166,7 +167,7 @@ export type {
   SegmentedControlProps,
   SegmentedControlStylesNames,
 } from './components/SegmentedControl/SegmentedControl';
-export type { SelectProps, SelectStylesNames } from './components/Select/Select';
+export type { SelectProps, SelectStylesNames, SelectItemProps } from './components/Select/Select';
 export type { SliderProps, RangeSliderProps, SliderStylesNames } from './components/Slider';
 export type { SpoilerProps, SpoilerStylesNames } from './components/Spoiler/Spoiler';
 export type { SwitchProps, SwitchStylesNames } from './components/Switch/Switch';

@@ -5,7 +5,7 @@ import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { MantineTransition } from '../Transition/Transition';
-import { DefaultItem } from './DefaultItem/DefaultItem';
+import { DefaultItem, SelectItemProps } from './DefaultItem/DefaultItem';
 import { getSelectRightSectionProps } from './SelectRightSection/get-select-right-section-props';
 import { SelectItems } from './SelectItems/SelectItems';
 import { SelectDropdown } from './SelectDropdown/SelectDropdown';
@@ -13,6 +13,7 @@ import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } fr
 import { filterData } from './filter-data/filter-data';
 
 export type SelectStylesNames = BaseSelectStylesNames;
+export type { SelectItemProps };
 
 export interface SelectProps extends DefaultProps<SelectStylesNames>, BaseSelectProps {
   /** Input size */

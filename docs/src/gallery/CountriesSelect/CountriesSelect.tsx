@@ -1,9 +1,22 @@
 import React from 'react';
 import Flag from 'react-flagpack';
-import { useMantineTheme, CloseButton, MultiSelect } from '@mantine/core';
+import {
+  useMantineTheme,
+  CloseButton,
+  MultiSelect,
+  MultiSelectValueProps,
+  SelectItemProps,
+} from '@mantine/core';
 import { countriesData } from './countries-data';
 
-function Value({ value, label, onRemove, themeOverride, classNames, ...others }: any) {
+function Value({
+  value,
+  label,
+  onRemove,
+  themeOverride,
+  classNames,
+  ...others
+}: MultiSelectValueProps & { value: string }) {
   const theme = useMantineTheme(themeOverride);
 
   return (
@@ -31,7 +44,7 @@ function Value({ value, label, onRemove, themeOverride, classNames, ...others }:
   );
 }
 
-function Item({ label, value, elementRef, ...others }: any) {
+function Item({ label, value, elementRef, ...others }: SelectItemProps) {
   return (
     <div ref={elementRef} {...others}>
       <div style={{ display: 'flex' }}>
