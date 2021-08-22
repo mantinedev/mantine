@@ -12,7 +12,7 @@ const useStyles = createUseStyles(
     card: {
       position: 'relative',
       height: 280,
-      backgroundColor: 'red',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
 
       '&:hover $image': {
         transform: 'scale(1.03)',
