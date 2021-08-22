@@ -21,6 +21,7 @@ import {
 } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import * as GalleryComponents from '../../../../gallery';
+import { GalleryPreview } from '../GalleryPreview/GalleryPreview';
 import { GalleryComponent } from '../../types';
 import { MantineIcon } from './icons/MantineIcon';
 import { NpmIcon } from './icons/NpmIcon';
@@ -129,15 +130,9 @@ export function ComponentCanvas(props: GalleryComponent) {
       <div className={cx(classes.body, { [classes.bodyWithCode]: state === 'code' })}>
         {state === 'preview' ? (
           <div className={classes.preview}>
-            <div
-              style={{
-                maxWidth: props.attributes.canvas?.maxWidth || '100%',
-                marginLeft: props.attributes.canvas?.center ? 'auto' : 'unset',
-                marginRight: props.attributes.canvas?.center ? 'auto' : 'unset',
-              }}
-            >
+            <GalleryPreview canvas={props.attributes.canvas}>
               <Component />
-            </div>
+            </GalleryPreview>
           </div>
         ) : (
           <Prism language="tsx" className={classes.code}>

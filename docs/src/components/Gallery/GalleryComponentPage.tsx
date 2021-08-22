@@ -1,5 +1,6 @@
 import React from 'react';
 import * as GalleryComponents from '../../gallery';
+import { GalleryPreview } from './components/GalleryPreview/GalleryPreview';
 import { GalleryComponent } from './types';
 
 interface GalleryComponentPageProps {
@@ -10,16 +11,9 @@ export default function GalleryComponentPage({ pageContext }: GalleryComponentPa
   const Component = GalleryComponents[pageContext._component];
   return (
     <div style={{ paddingTop: 22 }}>
-      <div
-        style={{
-          paddingTop: pageContext.attributes.canvas?.maxWidth ? 40 : 0,
-          maxWidth: pageContext.attributes.canvas?.maxWidth || '100%',
-          marginLeft: pageContext.attributes.canvas?.center ? 'auto' : 'unset',
-          marginRight: pageContext.attributes.canvas?.center ? 'auto' : 'unset',
-        }}
-      >
+      <GalleryPreview canvas={pageContext.attributes.canvas} withSpacing>
         <Component />
-      </div>
+      </GalleryPreview>
     </div>
   );
 }
