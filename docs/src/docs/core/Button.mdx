@@ -160,6 +160,7 @@ You need to pass additional types to use custom component with TypeScript
 in case you need full type coverage for events and `elementRef`:
 
 ```tsx
+// With element
 <Button<'button', HTMLButtonElement>
   component="button"
   onClick={(event) => console.log(event)}
@@ -168,6 +169,7 @@ in case you need full type coverage for events and `elementRef`:
   }}
 />
 
+// With component
 <Button<typeof Link, HTMLAnchorElement>
   component={Link}
   onClick={(event) => console.log(event)}

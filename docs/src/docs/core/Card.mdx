@@ -64,13 +64,52 @@ Note that Card relies on mapping direct children and you cannot use fragments or
 </Card>
 ```
 
-## Link overlay
+## Custom root element
 
-Use [Overlay](/core/overlay/) component with 0 opacity
-to create link overlay. Note that, card context styles (negative margins and border-radius) rely on `:fist-child` and `:last-child`,
-if you need preserve them, do not put overlay as first or last element.
+You can set `component` prop on Card to use provide custom root element,
+for example, you can make whole card a link:
 
-<Demo data={CardDemos.overlay} />
+<Demo data={CardDemos.link} />
+
+You can also use React component instead of an element, for example, Link from react-router-dom:
+
+```tsx
+import { Link } from 'react-router-dom';
+import { Card } from '@mantine/core';
+
+function Demo() {
+  return <Card component={Link} to="/my-route/" />;
+}
+```
+
+## Usage with Next Link
+
+Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
+to make Card and other similar components work with Next Link, create wrapper component in your components folder:
+
+```tsx
+// This component can be reused in every Mantine component which supports component pass through
+import React, { forwardRef } from 'react';
+import Link from 'next/link';
+
+export const NextLink = forwardRef(
+  (
+    { href, ...others }: React.ComponentPropsWithoutRef<typeof Link>,
+    ref: React.ForwardedRef<HTMLAnchorElement>
+  ) => (
+    <Link href={href}>
+      {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
+      <a {...others} ref={ref} />
+    </Link>
+  )
+);
+```
+
+And then pass it to Card or other component:
+
+```tsx
+<Card component={NextLink} href="/hello" />
+```
 
 ## Get element ref
 
@@ -84,4 +123,29 @@ function Demo() {
   const ref = useRef();
   return <Card elementRef={ref} />;
 }
+```
+
+## TypeScript
+
+You need to pass additional types to use custom component with TypeScript
+in case you need full type coverage for events and `elementRef`:
+
+```tsx
+// With element
+<Card<'a', HTMLAnchorElement>
+  component="a"
+  onClick={(event) => console.log(event)}
+  elementRef={(node) => {
+    window.myRef = node;
+  }}
+/>
+
+// With component
+<Card<typeof Link, HTMLAnchorElement>
+  component={Link}
+  onClick={(event) => console.log(event)}
+  elementRef={(node) => {
+    window.myRef = node;
+  }}
+/>
 ```

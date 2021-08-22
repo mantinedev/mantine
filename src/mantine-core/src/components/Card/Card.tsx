@@ -1,7 +1,7 @@
 import React, { Children, cloneElement } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '../../theme';
-import { Paper } from '../Paper/Paper';
+import { useMantineTheme } from '../../theme';
+import { Paper, PaperProps } from '../Paper/Paper';
 import { CardSection, CardSectionProps } from './CardSection/CardSection';
 import { ComponentPassThrough } from '../../types';
 import useStyles from './Card.styles';
@@ -9,12 +9,12 @@ import useStyles from './Card.styles';
 export { CardSection };
 export type { CardSectionProps };
 
-export interface CardProps extends DefaultProps, React.ComponentPropsWithoutRef<typeof Paper> {
+export interface CardProps extends PaperProps {
   /** Card content */
   children: React.ReactNode;
 }
 
-export function Card<T extends React.ElementType = 'div'>({
+export function Card<T extends React.ElementType = 'div', U extends HTMLElement = HTMLDivElement>({
   component = 'div',
   className,
   themeOverride,
@@ -22,7 +22,10 @@ export function Card<T extends React.ElementType = 'div'>({
   radius = 'sm',
   children,
   ...others
-}: ComponentPassThrough<T, CardProps>) {
+}: ComponentPassThrough<T, CardProps> & {
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<U>;
+}) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, null, 'card');
 

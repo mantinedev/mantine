@@ -13,12 +13,9 @@ export interface PaperProps extends DefaultProps {
 
   /** Predefined border-radius value from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
-export function Paper<T extends React.ElementType = 'div'>({
+export function Paper<T extends React.ElementType = 'div', U extends HTMLElement = HTMLDivElement>({
   component: Element = 'div',
   className,
   children,
@@ -28,7 +25,10 @@ export function Paper<T extends React.ElementType = 'div'>({
   themeOverride,
   elementRef,
   ...others
-}: ComponentPassThrough<T, PaperProps>) {
+}: ComponentPassThrough<T, PaperProps> & {
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<U>;
+}) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ radius, shadow, padding, theme }, null, 'paper');
 
