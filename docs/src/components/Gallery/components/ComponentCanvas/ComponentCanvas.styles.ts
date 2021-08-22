@@ -9,6 +9,10 @@ export default createUseStyles(
         theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
       }`,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+
+      '& + &': {
+        marginTop: theme.spacing.xl * 2,
+      },
     },
 
     header: {
