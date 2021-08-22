@@ -1,0 +1,8 @@
+{
+  "title": "Social buttons",
+  "category": "forms",
+  "dependencies": ["/core/button/"],
+  "canvas": {
+    "center": true
+  }
+}

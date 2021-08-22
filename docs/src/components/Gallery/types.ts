@@ -4,7 +4,7 @@ export interface GalleryPageCategory {
 }
 
 export interface GalleryCanvasAttributes {
-  canvas: { center: boolean; maxWidth: number };
+  canvas: { center: boolean; maxWidth?: number };
   category: string;
   dependencies: string[];
   title: string;
