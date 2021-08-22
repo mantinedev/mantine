@@ -17,8 +17,21 @@ describe('@mantine/core/Card', () => {
   itRendersChildren(Card, {});
   itSupportsStyle(Card, {});
 
-  it('has correct displayName', () => {
-    expect(Card.displayName).toEqual('@mantine/core/Card');
+  it('accepts component from component prop', () => {
+    const TestComponent = (props: any) => <span data-test-prop {...props} />;
+    const withTag = shallow(
+      <Card<'a'> component="a" href="https://mantine.dev">
+        Card
+      </Card>
+    );
+    const withComponent = shallow(
+      <Card<typeof TestComponent> component={TestComponent}>Card</Card>
+    );
+
+    expect(withTag.dive().type()).toBe('a');
+    expect(withTag.render().attr('href')).toBe('https://mantine.dev');
+    expect(withComponent.dive().type()).toBe(TestComponent);
+    expect(withComponent.render().attr('data-test-prop')).toBe('true');
   });
 
   it('passes padding and radius to Paper component', () => {
@@ -29,5 +42,9 @@ describe('@mantine/core/Card', () => {
     );
     expect(element.find(Paper).prop('padding')).toBe(29);
     expect(element.find(Paper).prop('radius')).toBe('xl');
+  });
+
+  it('has correct displayName', () => {
+    expect(Card.displayName).toEqual('@mantine/core/Card');
   });
 });
