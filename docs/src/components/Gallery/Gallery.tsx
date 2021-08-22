@@ -12,7 +12,7 @@ interface GalleryProps {
 export default function Gallery({ pageContext }: GalleryProps) {
   return (
     <>
-      <Head title="Gallery" description="100+ responsive components premade with Mantine" />
+      <Head title="Gallery" description="100+ premade responsive components" />
       <GalleryPage>
         <CategoriesList categories={pageContext.categories} />
       </GalleryPage>

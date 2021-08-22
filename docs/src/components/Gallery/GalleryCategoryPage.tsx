@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from '@mantine/core';
+import Head from '../Head/Head';
 import { GalleryPage } from './components/GalleryPage/GalleryPage';
 import { ComponentCanvas } from './components/ComponentCanvas/ComponentCanvas';
 import { GalleryPageCategory, GalleryComponent } from './types';
@@ -17,8 +18,11 @@ export default function GalleryCategoryPage({ pageContext }: GalleryCategoryPage
   ));
 
   return (
-    <GalleryPage>
-      <Container style={{ paddingTop: 40 }}>{canvases}</Container>
-    </GalleryPage>
+    <>
+      <Head title={pageContext.category.name} />
+      <GalleryPage>
+        <Container style={{ paddingTop: 40 }}>{canvases}</Container>
+      </GalleryPage>
+    </>
   );
 }
