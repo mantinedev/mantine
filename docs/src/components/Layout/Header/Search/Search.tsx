@@ -1,18 +1,22 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
 import { navigate } from 'gatsby';
-import { TextInput, Kbd, Text, Paper, Highlight } from '@mantine/core';
-import { useClickOutside, useWindowEvent, upperFirst } from '@mantine/hooks';
+import { Kbd, Autocomplete } from '@mantine/core';
+import { useShallowEffect, useWindowEvent } from '@mantine/hooks';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { getDocsData } from '../../get-docs-data';
 import useStyles from './Search.styles';
+import SearchItem from './SearchItem';
+
+export interface AutocompleteItem extends Frontmatter {
+  value: string;
+}
 
 interface SearchProps {
   data: ReturnType<typeof getDocsData>;
   isMacOS: boolean;
 }
 
-function filterData(query: string, data: ReturnType<typeof getDocsData>) {
+function constructPages(data: ReturnType<typeof getDocsData>): AutocompleteItem[] {
   const pages = data.reduce((acc, part) => {
     if (!part || !Array.isArray(part.groups)) {
       return acc;
@@ -31,54 +35,56 @@ function filterData(query: string, data: ReturnType<typeof getDocsData>) {
       });
 
     return acc;
-  }, []);
+  }, []) as AutocompleteItem[];
 
+  return pages.map((page) => ({
+    value: page.title,
+    ...page,
+  }));
+}
+
+function filterPages(query: string, pages: AutocompleteItem[]) {
   return pages
-    .filter((page) => page.title.toLowerCase().includes(query.trim().toLowerCase()))
-    .slice(0, 10);
+          .filter((page) => page.title.toLowerCase().includes(query.trim().toLocaleLowerCase()));
 }
 
 export default function Search({ data, isMacOS }: SearchProps) {
   const classes = useStyles();
   const [query, setQuery] = useState('');
-  const [hovered, setHovered] = useState(0);
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const closeDropdown = () => setDropdownOpened(false);
-  const dropdownRef = useClickOutside(closeDropdown);
   const inputRef = useRef<HTMLInputElement>();
-  const filteredData = filterData(query, data);
-  const handleSubmit = (to: string) => {
-    navigate(to);
-    closeDropdown();
+  const pagesRef = useRef<AutocompleteItem[]>(constructPages(data));
+  const filteredPages = filterPages(query, pagesRef.current);
+
+  const handleSubmit = (item) => {
     setQuery('');
+    navigate(item.slug);
+    closeDropdown();
   };
 
-  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleQueryChange = (value: string) => {
     setDropdownOpened(true);
-    setQuery(event.currentTarget.value);
-    setHovered(0);
+    setQuery(value);
   };
 
-  const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.nativeEvent.code === 'ArrowDown') {
-      event.preventDefault();
-      setHovered((current) => (current < filteredData.length - 1 ? current + 1 : current));
-    }
-
-    if (event.nativeEvent.code === 'ArrowUp') {
-      event.preventDefault();
-      setHovered((current) => (current > 0 ? current - 1 : current));
-    }
-
-    if (event.nativeEvent.code === 'Enter' && filteredData[hovered]) {
-      handleSubmit(filteredData[hovered].slug);
-    }
-
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.nativeEvent.code === 'Escape') {
       setQuery('');
-      setDropdownOpened(false);
+      closeDropdown();
+    }
+    if (event.nativeEvent.code === 'Enter') {
+      setQuery('');
     }
   };
+
+  const handleFocus = () => {
+    setDropdownOpened(true);
+  };
+
+  useShallowEffect(() => {
+    pagesRef.current = constructPages(data);
+  }, [data]);
 
   useWindowEvent('keydown', (event) => {
     if (event.code === 'KeyK' && (event.ctrlKey || event.metaKey)) {
@@ -87,24 +93,9 @@ export default function Search({ data, isMacOS }: SearchProps) {
     }
   });
 
-  const items = filteredData.map((item, index) => (
-    <button
-      type="button"
-      key={item.slug}
-      onMouseDown={() => handleSubmit(item.slug)}
-      className={cx(classes.item, { [classes.itemHovered]: hovered === index })}
-      tabIndex={-1}
-    >
-      <Highlight highlight={query}>{item.title}</Highlight>
-      <Text color="gray" size="sm" className={classes.package}>
-        {item.package ? item.package.replace('mantine-', '@mantine/') : upperFirst(item.group)}
-      </Text>
-    </button>
-  ));
-
   const rightSection = dropdownOpened ? (
     <div className={classes.shortcut}>
-      <Kbd className={classes.kbdEnter}>↵</Kbd>
+      <Kbd className={classes.kbdEnter}> ↵ </Kbd>
     </div>
   ) : (
     <div className={classes.shortcut}>
@@ -115,32 +106,43 @@ export default function Search({ data, isMacOS }: SearchProps) {
 
   return (
     <div className={classes.wrapper} onBlurCapture={closeDropdown}>
-      <TextInput
+      <Autocomplete
         className={classes.input}
+        data={filteredPages}
         elementRef={inputRef}
         value={query}
+        itemComponent={({ slug, title, package: mantinePackage, group, ...others }) =>
+          <SearchItem
+            query={query}
+            slug={slug}
+            title={title}
+            mantinePackage={mantinePackage}
+            group={group}
+            {...others}
+          />}
+        onFocus={handleFocus}
         onChange={handleQueryChange}
+        onKeyDown={handleKeyDown}
         placeholder="Search"
         icon={<MagnifyingGlassIcon />}
         rightSection={rightSection}
         rightSectionWidth={isMacOS ? 50 : 72}
-        styles={{ rightSection: { pointerEvents: 'none' } }}
-        onFocus={() => setDropdownOpened(true)}
-        onKeyDown={handleInputKeydown}
+        classNames={{
+          hovered: classes.itemHovered,
+          item: classes.item,
+        }}
+        styles={{ rightSection:
+          {
+            pointerEvents: 'none',
+          },
+          dropdown: {
+            padding: '0px',
+          },
+        }}
+        limit={10}
+        onItemSubmit={handleSubmit}
+        nothingFound="Nothing Found"
       />
-
-      {dropdownOpened && (
-        <Paper className={classes.dropdown} shadow="md" elementRef={dropdownRef}>
-          <div className={classes.dropdownBody}>
-            {items}
-            {filteredData.length === 0 && (
-              <Text color="gray" size="sm" align="center">
-                Nothing found
-              </Text>
-            )}
-          </div>
-        </Paper>
-      )}
     </div>
   );
 }

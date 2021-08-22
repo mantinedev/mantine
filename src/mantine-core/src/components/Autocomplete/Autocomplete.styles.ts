@@ -24,4 +24,12 @@ export default createMemoStyles({
   hovered: ({ theme }: AutocompleteStyles) => ({
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
   }),
+
+  nothingFound: ({ theme, size }: AutocompleteStyles) => ({
+    boxSizing: 'border-box',
+    color: theme.colors.gray[6],
+    paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    textAlign: 'center',
+  }),
 });
