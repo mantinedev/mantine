@@ -44,8 +44,9 @@ function constructPages(data: ReturnType<typeof getDocsData>): AutocompleteItem[
 }
 
 function filterPages(query: string, pages: AutocompleteItem[]) {
-  return pages
-          .filter((page) => page.title.toLowerCase().includes(query.trim().toLocaleLowerCase()));
+  return pages.filter((page) =>
+    page.title.toLowerCase().includes(query.trim().toLocaleLowerCase())
+  );
 }
 
 export default function Search({ data, isMacOS }: SearchProps) {
@@ -111,7 +112,7 @@ export default function Search({ data, isMacOS }: SearchProps) {
         data={filteredPages}
         elementRef={inputRef}
         value={query}
-        itemComponent={({ slug, title, package: mantinePackage, group, ...others }) =>
+        itemComponent={({ slug, title, package: mantinePackage, group, ...others }) => (
           <SearchItem
             query={query}
             slug={slug}
@@ -119,7 +120,8 @@ export default function Search({ data, isMacOS }: SearchProps) {
             mantinePackage={mantinePackage}
             group={group}
             {...others}
-          />}
+          />
+        )}
         onFocus={handleFocus}
         onChange={handleQueryChange}
         onKeyDown={handleKeyDown}
@@ -131,8 +133,8 @@ export default function Search({ data, isMacOS }: SearchProps) {
           hovered: classes.itemHovered,
           item: classes.item,
         }}
-        styles={{ rightSection:
-          {
+        styles={{
+          rightSection: {
             pointerEvents: 'none',
           },
           dropdown: {
@@ -141,7 +143,6 @@ export default function Search({ data, isMacOS }: SearchProps) {
         }}
         limit={10}
         onItemSubmit={handleSubmit}
-        nothingFound="Nothing Found"
       />
     </div>
   );

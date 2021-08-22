@@ -62,7 +62,9 @@ export default function Header({
       </div>
 
       <Group className={classes.links} spacing="xs">
-        {shouldRenderSearch && <Search data={data} isMacOS={isMacOS} />}
+        {shouldRenderSearch && (
+          <Search data={data.filter((group) => group.group !== 'changelog')} isMacOS={isMacOS} />
+        )}
         <Discord />
         <SourceCode />
         <ColorSchemeToggle />

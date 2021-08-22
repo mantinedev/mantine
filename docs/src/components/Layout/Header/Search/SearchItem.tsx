@@ -9,7 +9,7 @@ interface SearchItemProps {
   mantinePackage: string;
   group: string;
   query: string;
-  elementRef?:any;
+  elementRef?: any;
 }
 
 export default function SearchItem({
@@ -20,16 +20,10 @@ export default function SearchItem({
   query,
   elementRef,
   ...others
-  }: SearchItemProps) {
+}: SearchItemProps) {
   const classes = useStyles();
   return (
-    <button
-      type="button"
-      key={slug}
-      tabIndex={-1}
-      ref={elementRef}
-      {...others}
-    >
+    <button type="button" key={slug} tabIndex={-1} ref={elementRef} {...others}>
       <Highlight highlight={query}>{title}</Highlight>
       <Text color="gray" size="sm" className={classes.package}>
         {mantinePackage ? mantinePackage.replace('mantine-', '@mantine/') : upperFirst(group)}
