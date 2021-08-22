@@ -73,7 +73,10 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
   );
 
   useEffect(() => {
-    if (!active) return undefined;
+    if (!active) {
+      return undefined;
+    }
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Tab' && ref.current) {
         scopeTab(ref.current, event);
