@@ -18,7 +18,7 @@ export function CategoryCard({ name, url, count, category }: CategoryCardProps) 
   return (
     <Card className={classes.card} radius="md">
       <CardSection className={classes.imageWrapper}>
-        <Image src={images[category][theme.colorScheme]} />
+        <Image className={classes.image} src={images[category][theme.colorScheme]} />
       </CardSection>
 
       <Text className={classes.title}>{name}</Text>
