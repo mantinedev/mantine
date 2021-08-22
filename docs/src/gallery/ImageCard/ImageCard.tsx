@@ -5,6 +5,10 @@ import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles(
   (theme) => ({
+    link: {
+      textDecoration: 'none',
+    },
+
     card: {
       position: 'relative',
       height: 280,
@@ -72,7 +76,7 @@ export function ImageCard({ image, title, author, views, comments, link }: Image
   const classes = useStyles();
 
   return (
-    <a href={link} target="_blank" rel="noreferrer">
+    <a className={classes.link} href={link} target="_blank" rel="noreferrer">
       <Card padding="lg" shadow="lg" className={classes.card} radius="md">
         <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
         <div className={classes.overlay} />
