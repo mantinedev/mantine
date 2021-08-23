@@ -55,38 +55,24 @@ import { Slider, theming } from '@mantine/core';
 const useStyles = createUseStyles(
   (theme) => ({
     track: {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.blue[1],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
     },
-
-    label: {
-      fontSize: 16,
-      bottom: -36,
-      top: 'unset',
-    },
-
     mark: {
-      width: 2,
-      borderRadius: 0,
-      transform: 'translateX(-2px)',
-      borderColor: theme.colors.blue[3],
+      width: 6,
+      height: 6,
+      borderRadius: 6,
+      transform: 'translateX(-3px) translateY(-2px)',
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
     },
-
-    markLabel: {
-      fontSize: theme.fontSizes.xs,
-      marginBottom: 5,
-      marginTop: 0,
+    markFilled: {
+      borderColor: theme.colors.blue[6],
     },
-
-    markWrapper: {
-      display: 'flex',
-      flexDirection: 'column-reverse',
-      top: 'unset',
-      bottom: 0,
-    },
-
+    markLabel: { fontSize: theme.fontSizes.xs, marginBottom: 5, marginTop: 0 },
     thumb: {
+      height: 16,
+      width: 16,
       backgroundColor: theme.white,
-      border: `1px solid ${theme.colors.gray[3]}`,
+      borderWidth: 1,
       boxShadow: theme.shadows.sm,
     },
   }),
@@ -101,6 +87,7 @@ function MyCustomSlider() {
         track: classes.track,
         label: classes.label,
         mark: classes.mark,
+        markFilled: classes.markFilled,
         markLabel: classes.markLabel,
         markWrapper: classes.markWrapper,
         thumb: classes.thumb,
