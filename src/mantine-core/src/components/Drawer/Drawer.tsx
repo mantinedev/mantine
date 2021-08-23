@@ -170,7 +170,7 @@ export function MantineDrawer({
             onClickOutside={() => !noCloseOnClickOutside && onClose()}
             componentNodes={[drawerBodyElement]}
           >
-            <Paper
+            <Paper<'div', HTMLDivElement>
               className={cx(classes.drawer, className)}
               elementRef={useMergedRef(focusTrapRef, setDrawerBodyElement)}
               style={{ ...transitionStyles.drawer, ..._styles.drawer, zIndex: zIndex + 1 }}

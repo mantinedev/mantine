@@ -138,7 +138,7 @@ export function MantineModal({
               onClickOutside={() => onClose()}
               componentNodes={[modalBodyElement]}
             >
-              <Paper
+              <Paper<'div', HTMLDivElement>
                 themeOverride={themeOverride}
                 className={classes.modal}
                 shadow={shadow}
