@@ -41,7 +41,10 @@ export function Text<T extends React.ElementType = 'div', U = HTMLDivElement>({
   themeOverride,
   elementRef,
   ...others
-}: ComponentPassThrough<T, TextProps> & { elementRef?: React.ForwardedRef<U> }) {
+}: ComponentPassThrough<T, TextProps> & {
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<U>;
+}): JSX.Element {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ variant, color, size, theme }, null, 'text');
 
