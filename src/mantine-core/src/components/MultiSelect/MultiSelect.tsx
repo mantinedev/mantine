@@ -192,7 +192,6 @@ export function MultiSelect({
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onFocus === 'function' && onFocus(event);
-    setDropdownOpened(true);
   };
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -344,6 +343,7 @@ export function MultiSelect({
           icon={icon}
           onMouseDown={(event) => {
             event.preventDefault();
+            !disabled && setDropdownOpened(o => !o);
             inputRef.current?.focus();
           }}
           {...getSelectRightSectionProps({
