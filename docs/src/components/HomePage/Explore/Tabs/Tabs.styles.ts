@@ -8,7 +8,7 @@ export default createUseStyles(
       position: 'sticky',
       top: 60,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-      zIndex: 1,
+      zIndex: 10,
       [BREAKPOINT]: {
         display: 'flex',
         overflowX: 'scroll',
