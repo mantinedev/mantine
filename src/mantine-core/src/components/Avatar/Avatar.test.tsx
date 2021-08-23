@@ -29,10 +29,6 @@ describe('@mantine/core/Avatar', () => {
   itSupportsOthers(Avatar, { src: img });
   itSupportsStyle(Avatar, { src: img });
 
-  it('has correct displayName', () => {
-    expect(Avatar.displayName).toEqual('@mantine/core/Avatar');
-  });
-
   it('passes src and alt to image', () => {
     const element = shallow(<Avatar src={img} alt="test-alt" />)
       .render()
@@ -59,5 +55,20 @@ describe('@mantine/core/Avatar', () => {
     expect(element.render().find('.mantine-avatar-placeholder').find('.test').text()).toBe(
       'test-placeholder'
     );
+  });
+
+  it('accepts component from component prop', () => {
+    const TestComponent = (props: any) => <span data-test-prop {...props} />;
+    const withTag = shallow(<Avatar<'a'> component="a" href="https://mantine.dev" />);
+    const withComponent = shallow(<Avatar<typeof TestComponent> component={TestComponent} />);
+
+    expect(withTag.type()).toBe('a');
+    expect(withTag.render().attr('href')).toBe('https://mantine.dev');
+    expect(withComponent.type()).toBe(TestComponent);
+    expect(withComponent.render().attr('data-test-prop')).toBe('true');
+  });
+
+  it('has correct displayName', () => {
+    expect(Avatar.displayName).toEqual('@mantine/core/Avatar');
   });
 });

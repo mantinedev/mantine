@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineNumberSize, mergeStyles } from '../../theme';
+import { ComponentPassThrough } from '../../types';
 import { PlaceholderIcon } from './PlaceholderIcon';
 import useStyles, { sizes } from './Avatar.styles';
 
@@ -27,7 +28,8 @@ export interface AvatarProps
   color?: string;
 }
 
-export function Avatar({
+export function Avatar<T extends React.ElementType = 'div', U = HTMLDivElement>({
+  component: Element = 'div',
   className,
   style,
   size = 'md',
@@ -40,7 +42,10 @@ export function Avatar({
   classNames,
   styles,
   ...others
-}: AvatarProps) {
+}: ComponentPassThrough<T, AvatarProps> & {
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<U>;
+}) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ color, radius, size, theme }, classNames, 'avatar');
   const _styles = mergeStyles(classes, styles);
@@ -51,7 +56,11 @@ export function Avatar({
   }, [src]);
 
   return (
-    <div {...others} className={cx(classes.root, className)} style={{ ..._styles.root, ...style }}>
+    <Element
+      {...others}
+      className={cx(classes.root, className)}
+      style={{ ..._styles.root, ...style }}
+    >
       {error ? (
         <div className={classes.placeholder} title={alt} style={_styles.placeholder}>
           {children || (
@@ -67,7 +76,7 @@ export function Avatar({
           style={_styles.image}
         />
       )}
-    </div>
+    </Element>
   );
 }
 
