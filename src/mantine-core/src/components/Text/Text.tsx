@@ -1,13 +1,9 @@
 import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, MantineSize } from '../../theme';
-import { ComponentPassThrough } from '../../types';
 import useStyles from './Text.styles';
 
-export interface TextProps extends DefaultProps {
-  /** Text itself */
-  children?: React.ReactNode;
-
+export interface SharedTextProps extends DefaultProps {
   /** Predefined font-size from theme.fontSizes */
   size?: MantineSize;
 
@@ -27,9 +23,20 @@ export interface TextProps extends DefaultProps {
   variant?: 'text' | 'link';
 }
 
-export function Text<T extends React.ElementType = 'div', U = HTMLDivElement>({
+interface _TextProps<C extends React.ElementType, R extends HTMLElement> extends SharedTextProps {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+}
+
+export type TextProps<C extends React.ElementType, R extends HTMLElement> = _TextProps<C, R> &
+  Omit<React.ComponentPropsWithoutRef<C>, keyof SharedTextProps>;
+
+export function Text<C extends React.ElementType = 'div', R extends HTMLElement = HTMLDivElement>({
   className,
-  component = 'div',
+  component,
   children,
   size = 'md',
   weight,
@@ -41,15 +48,13 @@ export function Text<T extends React.ElementType = 'div', U = HTMLDivElement>({
   themeOverride,
   elementRef,
   ...others
-}: ComponentPassThrough<T, TextProps> & {
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<U>;
-}): JSX.Element {
+}: TextProps<C, R>): JSX.Element {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ variant, color, size, theme }, null, 'text');
+  const Element = component || 'div';
 
   return React.createElement(
-    component,
+    Element,
     {
       className: cx(classes.root, className),
       style: { fontWeight: weight, textTransform: transform, textAlign: align, ...style },
