@@ -9,8 +9,10 @@ interface _AnchorProps<C extends React.ElementType, R extends HTMLElement> exten
   elementRef?: React.ForwardedRef<R>;
 }
 
-export type AnchorProps<C extends React.ElementType, R extends HTMLElement> = _AnchorProps<C, R> &
-  Omit<React.ComponentPropsWithoutRef<C>, keyof SharedTextProps>;
+export type AnchorProps<
+  C extends React.ElementType = 'a',
+  R extends HTMLElement = HTMLAnchorElement
+> = _AnchorProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof SharedTextProps>;
 
 export function Anchor<
   C extends React.ElementType = 'a',

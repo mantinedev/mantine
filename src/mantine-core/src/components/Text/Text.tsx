@@ -31,8 +31,10 @@ interface _TextProps<C extends React.ElementType, R extends HTMLElement> extends
   elementRef?: React.ForwardedRef<R>;
 }
 
-export type TextProps<C extends React.ElementType, R extends HTMLElement> = _TextProps<C, R> &
-  Omit<React.ComponentPropsWithoutRef<C>, keyof SharedTextProps>;
+export type TextProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _TextProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof SharedTextProps>;
 
 export function Text<C extends React.ElementType = 'div', R extends HTMLElement = HTMLDivElement>({
   className,

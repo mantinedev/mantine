@@ -32,8 +32,10 @@ interface _AvatarProps<C extends React.ElementType, R extends HTMLElement>
   color?: string;
 }
 
-export type AvatarProps<C extends React.ElementType, R extends HTMLElement> = _AvatarProps<C, R> &
-  Omit<React.ComponentPropsWithoutRef<C>, keyof _AvatarProps<C, R>>;
+export type AvatarProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _AvatarProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _AvatarProps<C, R>>;
 
 export function Avatar<
   C extends React.ElementType = 'div',

@@ -47,11 +47,10 @@ interface _HighlightProps<C extends React.ElementType, R extends HTMLElement>
   children: string;
 }
 
-export type HighlightProps<C extends React.ElementType, R extends HTMLElement> = _HighlightProps<
-  C,
-  R
-> &
-  Omit<React.ComponentPropsWithoutRef<C>, keyof _HighlightProps<C, R>>;
+export type HighlightProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _HighlightProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _HighlightProps<C, R>>;
 
 export function Highlight<
   C extends React.ElementType = 'div',

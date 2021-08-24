@@ -29,11 +29,10 @@ interface _ActionIconProps<C extends React.ElementType, R extends HTMLElement>
   size?: MantineNumberSize;
 }
 
-export type ActionIconProps<C extends React.ElementType, R extends HTMLElement> = _ActionIconProps<
-  C,
-  R
-> &
-  Omit<React.ComponentPropsWithoutRef<C>, keyof _ActionIconProps<C, R>>;
+export type ActionIconProps<
+  C extends React.ElementType = 'button',
+  R extends HTMLElement = HTMLButtonElement
+> = _ActionIconProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _ActionIconProps<C, R>>;
 
 export function ActionIcon<
   C extends React.ElementType = 'button',
