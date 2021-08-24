@@ -7,6 +7,7 @@ import { Text } from '../Text/Text';
 import { Select } from '../Select/Select';
 import { Autocomplete } from '../Autocomplete/Autocomplete';
 import { Popover } from '../Popover/Popover';
+import { ColorInput } from '../ColorInput/ColorInput';
 import { Menu, MenuItem } from '../Menu/Menu';
 import { Modal } from './Modal';
 import { MultiSelect } from '../MultiSelect/MultiSelect';
@@ -81,6 +82,7 @@ storiesOf('@mantine/core/Modal', module)
       <Autocomplete data={['react', 'ng']} />
       <MultiSelect data={['react', 'ng']} />
       <PopoverWrapper />
+      <ColorInput dropdownZIndex={1000} />
       <Menu zIndex={1000}>
         <MenuItem>Hello</MenuItem>
       </Menu>
