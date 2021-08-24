@@ -144,6 +144,17 @@ function Demo() {
 }
 ```
 
+To use `elementRef` with custom component in TypeScript you will need to specify generic types:
+
+```tsx
+// Simple variant with function ref – specify type on node itself:
+<ActionIcon component="a" elementRef={(node: HTMLAnchorElement) => {}} />;
+
+// Variant with ref object – provide generic arguments:
+const myRef = useRef<HTMLAnchorElement>();
+<ActionIcon<'a', HTMLAnchorElement> component="a" elementRef={myRef} />;
+```
+
 ## Close button
 
 CloseButton is a premade ActionIcon with close icon, it is used in all other components: [Popover](/core/popover/), [Modal](/core/modal/), [Notification](/core/Notification/), etc.
