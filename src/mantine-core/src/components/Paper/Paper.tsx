@@ -3,13 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../theme';
 import useStyles from './Paper.styles';
 
-interface _PaperProps<C extends React.ElementType, R extends HTMLElement> extends DefaultProps {
-  /** Root element or custom component */
-  component?: C;
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<R>;
-
+export interface SharedPaperProps extends DefaultProps {
   /** Predefined padding value from theme.spacing or number for padding in px */
   padding?: MantineNumberSize;
 
@@ -18,6 +12,14 @@ interface _PaperProps<C extends React.ElementType, R extends HTMLElement> extend
 
   /** Predefined border-radius value from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;
+}
+
+interface _PaperProps<C extends React.ElementType, R extends HTMLElement> extends SharedPaperProps {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
 }
 
 export type PaperProps<

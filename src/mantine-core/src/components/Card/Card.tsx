@@ -1,31 +1,38 @@
 import React, { Children, cloneElement } from 'react';
 import cx from 'clsx';
 import { useMantineTheme } from '../../theme';
-import { Paper, PaperProps } from '../Paper/Paper';
+import { Paper, SharedPaperProps } from '../Paper/Paper';
 import { CardSection, CardSectionProps } from './CardSection/CardSection';
-import { ComponentPassThrough } from '../../types';
 import useStyles from './Card.styles';
 
 export { CardSection };
 export type { CardSectionProps };
 
-export interface CardProps extends PaperProps {
+interface _CardProps<C extends React.ElementType, R extends HTMLElement> extends SharedPaperProps {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+
   /** Card content */
   children: React.ReactNode;
 }
 
-export function Card<T extends React.ElementType = 'div', U extends HTMLElement = HTMLDivElement>({
-  component = 'div',
+export type CardProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _CardProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _CardProps<C, R>>;
+
+export function Card<C extends React.ElementType = 'div', R extends HTMLElement = HTMLDivElement>({
+  component,
   className,
   themeOverride,
   padding = 'md',
   radius = 'sm',
   children,
   ...others
-}: ComponentPassThrough<T, CardProps> & {
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<U>;
-}) {
+}: CardProps<C, R>) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, null, 'card');
 
@@ -38,13 +45,7 @@ export function Card<T extends React.ElementType = 'div', U extends HTMLElement 
   });
 
   return (
-    <Paper
-      className={cx(classes.card, className)}
-      radius={radius}
-      padding={padding}
-      component={component}
-      {...others}
-    >
+    <Paper className={cx(classes.card, className)} radius={radius} padding={padding} {...others}>
       {content}
     </Paper>
   );
