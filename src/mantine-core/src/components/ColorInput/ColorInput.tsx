@@ -17,6 +17,7 @@ import {
   ColorPickerStylesNames,
 } from '../ColorPicker/ColorPicker';
 import { convertHsvaTo, isColorValid, parseColor } from '../ColorPicker/converters';
+import { useClickOutsideRegister } from '../../utils';
 import useStyles from './ColorInput.styles';
 
 export type ColorInputStylesNames =
@@ -105,9 +106,11 @@ export function ColorInput({
   const classes = useStyles({ theme }, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);
+  const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const [lastValidValue, setLastValidValue] = useState('');
+  const clickOutsideRegister = useClickOutsideRegister();
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -126,6 +129,10 @@ export function ColorInput({
     setDropdownOpened(false);
     fixOnBlur && setValue(lastValidValue);
   };
+
+  useEffect(() => {
+    clickOutsideRegister(`${uuid}-dropdown`, dropdownElement);
+  }, [dropdownElement]);
 
   useEffect(() => {
     if (isColorValid(_value)) {
@@ -200,7 +207,7 @@ export function ColorInput({
         arrowClassName={classes.arrow}
         arrowStyle={{ ..._styles.arrow, left: getSizeValue({ size, sizes: ARROW_OFFSET }) }}
       >
-        <div style={{ pointerEvents: 'all' }}>
+        <div style={{ pointerEvents: 'all' }} ref={setDropdownElement}>
           <Paper
             shadow="sm"
             padding={size}

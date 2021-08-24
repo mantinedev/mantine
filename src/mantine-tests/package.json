@@ -1,7 +1,7 @@
 {
   "name": "@mantine/tests",
   "private": true,
-  "version": "2.3.1",
+  "version": "2.3.2",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "browser": "lib/index.umd.js",
