@@ -1,8 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
-import { ComponentPassThrough } from '../../types';
 
-export interface OverlayProps {
+interface _OverlayProps<C extends React.ElementType, R extends HTMLElement> {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+
   /** Overlay opacity */
   opacity?: React.CSSProperties['opacity'];
 
@@ -13,18 +18,30 @@ export interface OverlayProps {
   zIndex?: React.CSSProperties['zIndex'];
 }
 
-export function Overlay<T extends React.ElementType = 'div'>({
+export type OverlayProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _OverlayProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _OverlayProps<C, R>>;
+
+export function Overlay<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+>({
   className,
   style,
   opacity = 0.6,
   color = '#fff',
   zIndex = 1000,
-  component: Element = 'div',
+  component,
+  elementRef,
   ...others
-}: ComponentPassThrough<T, OverlayProps>) {
+}: OverlayProps<C, R>) {
+  const Element = component || 'div';
+
   return (
     <Element
       className={cx('mantine-overlay', className)}
+      ref={elementRef as any}
       style={{
         opacity,
         backgroundColor: color,
