@@ -1,10 +1,18 @@
 import React from 'react';
 import cx from 'clsx';
-import { ComponentPassThrough } from '../../types';
 import { useMantineTheme, DefaultProps, MantineNumberSize } from '../../theme';
 import useStyles, { sizes } from './ActionIcon.styles';
 
-export interface ActionIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
+export const ACTION_ICON_SIZES = sizes;
+
+interface _ActionIconProps<C extends React.ElementType, R extends HTMLElement>
+  extends DefaultProps {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+
   /** Icon rendered inside button */
   children: React.ReactNode;
 
@@ -19,14 +27,18 @@ export interface ActionIconProps extends DefaultProps, React.ComponentPropsWitho
 
   /** Predefined icon size or number to set width and height in px */
   size?: MantineNumberSize;
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
-export const ACTION_ICON_SIZES = sizes;
+export type ActionIconProps<C extends React.ElementType, R extends HTMLElement> = _ActionIconProps<
+  C,
+  R
+> &
+  Omit<React.ComponentPropsWithoutRef<C>, keyof _ActionIconProps<C, R>>;
 
-export function ActionIcon<T extends React.ElementType = 'button', U = HTMLButtonElement>({
+export function ActionIcon<
+  C extends React.ElementType = 'button',
+  R extends HTMLElement = HTMLButtonElement
+>({
   className,
   color = 'gray',
   children,
@@ -35,18 +47,19 @@ export function ActionIcon<T extends React.ElementType = 'button', U = HTMLButto
   variant = 'hover',
   themeOverride,
   elementRef,
-  component: Element = 'button',
+  component,
   ...others
-}: ComponentPassThrough<T, ActionIconProps> & { elementRef?: React.ForwardedRef<U> }) {
+}: ActionIconProps<C, R>) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ size, radius, color, theme }, null, 'action-icon');
+  const Element = component || 'button';
 
   return (
     <Element
       {...others}
       className={cx(classes.root, classes[variant], className)}
       type="button"
-      ref={elementRef}
+      ref={elementRef as any}
     >
       {children}
     </Element>
