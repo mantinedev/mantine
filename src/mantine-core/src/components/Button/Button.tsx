@@ -10,7 +10,6 @@ import {
   MantineNumberSize,
   mergeStyles,
 } from '../../theme';
-import { ComponentPassThrough } from '../../types';
 import useStyles, { heights } from './Button.styles';
 
 export { UnstyledButton } from './UnstyledButton/UnstyledButton';
@@ -20,7 +19,14 @@ export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light'];
 export type ButtonVariant = 'link' | 'filled' | 'outline' | 'light';
 export type ButtonStylesNames = Exclude<keyof ReturnType<typeof useStyles>, ButtonVariant>;
 
-interface ButtonBaseProps extends DefaultProps<ButtonStylesNames> {
+interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
+  extends DefaultProps<ButtonStylesNames> {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+
   /** Predefined button size */
   size?: MantineSize;
 
@@ -52,9 +58,14 @@ interface ButtonBaseProps extends DefaultProps<ButtonStylesNames> {
   compact?: boolean;
 }
 
+export type ButtonProps<
+  C extends React.ElementType = 'button',
+  R extends HTMLElement = HTMLButtonElement
+> = _ButtonProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _ButtonProps<C, R>>;
+
 export function Button<
-  T extends React.ElementType = 'button',
-  U extends HTMLElement = HTMLButtonElement
+  C extends React.ElementType = 'button',
+  R extends HTMLElement = HTMLButtonElement
 >({
   className,
   style,
@@ -68,7 +79,7 @@ export function Button<
   fullWidth = false,
   variant = 'filled',
   radius = 'sm',
-  component: Element = 'button',
+  component,
   elementRef,
   themeOverride,
   uppercase = false,
@@ -76,10 +87,7 @@ export function Button<
   classNames,
   styles,
   ...others
-}: ComponentPassThrough<T, ButtonBaseProps> & {
-  /** Get root element ref */
-  elementRef?: React.ForwardedRef<U>;
-}) {
+}: ButtonProps<C, R>) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles(
     { radius, color, size, fullWidth, theme, compact },
@@ -87,6 +95,7 @@ export function Button<
     'button'
   );
   const _styles = mergeStyles(classes, styles);
+  const Element = component || 'button';
 
   return (
     <Element
@@ -94,7 +103,7 @@ export function Button<
       className={cx(classes.root, classes[variant], className)}
       type={type}
       disabled={disabled}
-      ref={elementRef}
+      ref={elementRef as any}
       onTouchStart={() => {}}
       style={{ ...style, ..._styles.root }}
     >
@@ -129,5 +138,3 @@ export function Button<
 }
 
 Button.displayName = '@mantine/core/Button';
-
-export type ButtonProps = React.ComponentProps<typeof Button>;
