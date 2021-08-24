@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Avatar } from './Avatar';
 
@@ -28,6 +29,7 @@ describe('@mantine/core/Avatar', () => {
   itSupportsClassName(Avatar, { src: img });
   itSupportsOthers(Avatar, { src: img });
   itSupportsStyle(Avatar, { src: img });
+  itSupportsRef(Avatar, { src: img }, HTMLDivElement, 'elementRef');
 
   it('passes src and alt to image', () => {
     const element = shallow(<Avatar src={img} alt="test-alt" />)
