@@ -20,7 +20,11 @@ export function FacebookButton(props: ButtonProps) {
   );
 }
 
-export function TwitterButton(props: ButtonProps) {
+// Generic arguments are used to support custom component in TypeScript
+export function TwitterButton<
+  C extends React.ElementType = 'button',
+  R extends HTMLElement = HTMLButtonElement
+>(props: ButtonProps<C, R>) {
   return (
     <Button
       leftIcon={<TwitterLogoIcon />}
@@ -61,7 +65,11 @@ export function SocialButtons() {
     <Group position="center" withGutter>
       <FacebookButton>Sign in with Facebook</FacebookButton>
       <GithubButton>View on GitHub</GithubButton>
-      <TwitterButton component="a" href="https://twitter.com/mantinedev" target="_blank">
+      <TwitterButton<'a', HTMLAnchorElement>
+        component="a"
+        href="https://twitter.com/mantinedev"
+        target="_blank"
+      >
         Follow on Twitter
       </TwitterButton>
     </Group>
