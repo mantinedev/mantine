@@ -70,8 +70,6 @@ export {
 } from './components/Transition/Transition';
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
-export type { ComponentPassThrough } from './types';
-
 // Types are exported separately due to build issue: bundled types were not included with regular export
 export type {
   AccordionProps,
