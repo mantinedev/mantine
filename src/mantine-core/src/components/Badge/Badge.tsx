@@ -1,6 +1,5 @@
 import React from 'react';
 import cx from 'clsx';
-import { ComponentPassThrough } from '../../types';
 import {
   useMantineTheme,
   DefaultProps,
@@ -15,7 +14,14 @@ export const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot'] as const;
 export type BadgeVariant = typeof BADGE_VARIANTS[number];
 export type BadgeStylesNames = Exclude<keyof ReturnType<typeof useStyles>, BadgeVariant>;
 
-export interface BadgeProps extends DefaultProps<BadgeStylesNames> {
+interface _BadgeProps<C extends React.ElementType, R extends HTMLElement>
+  extends DefaultProps<BadgeStylesNames> {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+
   /** Badge color from theme */
   color?: string;
 
@@ -38,11 +44,17 @@ export interface BadgeProps extends DefaultProps<BadgeStylesNames> {
   rightSection?: React.ReactNode;
 }
 
-export function Badge<T extends React.ElementType = 'div'>({
-  component: Component = 'div',
+export type BadgeProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _BadgeProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _BadgeProps<C, R>>;
+
+export function Badge<C extends React.ElementType = 'div', R extends HTMLElement = HTMLDivElement>({
+  component,
   className,
   style,
   color,
+  elementRef,
   variant = 'light',
   fullWidth,
   children,
@@ -54,16 +66,18 @@ export function Badge<T extends React.ElementType = 'div'>({
   classNames,
   styles,
   ...others
-}: ComponentPassThrough<T, BadgeProps>) {
+}: BadgeProps<C, R>) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ size, fullWidth, color, radius, theme }, classNames, 'badge');
   const _styles = mergeStyles(classes, styles);
+  const Element = component || 'div';
 
   return (
-    <Component
+    <Element
       {...others}
       className={cx(classes.root, classes[variant], className)}
       style={{ ...style, ..._styles.root, ..._styles[variant] }}
+      ref={elementRef as any}
     >
       {leftSection && (
         <span className={classes.leftSection} style={_styles.leftSection}>
@@ -80,7 +94,7 @@ export function Badge<T extends React.ElementType = 'div'>({
           {rightSection}
         </span>
       )}
-    </Component>
+    </Element>
   );
 }
 
