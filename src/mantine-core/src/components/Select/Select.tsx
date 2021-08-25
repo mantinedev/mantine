@@ -72,6 +72,9 @@ export interface SelectProps extends DefaultProps<SelectStylesNames>, BaseSelect
 
   /** Limit amount of items displayed at a time for searchable select */
   limit?: number;
+
+  /** Called each time search value changes */
+  onSearchChange?(query: string): void;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -113,6 +116,7 @@ export function Select({
   clearButtonLabel,
   limit = Infinity,
   disabled = false,
+  onSearchChange,
   ...others
 }: SelectProps) {
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
@@ -136,10 +140,17 @@ export function Select({
   const selectedValue = formattedData.find((item) => item.value === _value);
   const [inputValue, setInputValue] = useState(selectedValue?.label || '');
 
+  const handleSearchChange = (val: string) => {
+    setInputValue(val);
+    if (searchable && typeof onSearchChange === 'function') {
+      onSearchChange(val);
+    }
+  };
+
   const handleClear = () => {
     handleChange(null);
     if (inputMode === 'uncontrolled') {
-      setInputValue('');
+      handleSearchChange('');
     }
     inputRef.current?.focus();
   };
@@ -147,9 +158,9 @@ export function Select({
   useEffect(() => {
     const newSelectedValue = formattedData.find((item) => item.value === _value);
     if (newSelectedValue) {
-      setInputValue(newSelectedValue.label);
+      handleSearchChange(newSelectedValue.label);
     } else {
-      setInputValue('');
+      handleSearchChange('');
     }
   }, [_value]);
 
@@ -157,7 +168,7 @@ export function Select({
     handleChange(item.value);
     setHovered(-1);
     if (inputMode === 'uncontrolled') {
-      setInputValue(item.label);
+      handleSearchChange(item.label);
     }
     setTimeout(() => setDropdownOpened(false));
     inputRef.current.focus();
@@ -229,7 +240,7 @@ export function Select({
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onBlur === 'function' && onBlur(event);
     const selected = formattedData.find((item) => item.value === _value);
-    setInputValue(selected?.label || '');
+    handleSearchChange(selected?.label || '');
     setDropdownOpened(false);
   };
 
@@ -237,10 +248,10 @@ export function Select({
     if (clearable && event.currentTarget.value === '') {
       handleChange(null);
       if (inputMode === 'uncontrolled') {
-        setInputValue('');
+        handleSearchChange('');
       }
     } else {
-      setInputValue(event.currentTarget.value);
+      handleSearchChange(event.currentTarget.value);
     }
     setHovered(0);
     setDropdownOpened(true);
@@ -288,7 +299,7 @@ export function Select({
           aria-autocomplete="list"
           aria-controls={dropdownOpened ? `${uuid}-items` : null}
           aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
-          onClick={() => setDropdownOpened(o => !o)}
+          onClick={() => setDropdownOpened((o) => !o)}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           readOnly={!searchable}
