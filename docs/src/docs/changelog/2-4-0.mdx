@@ -7,12 +7,16 @@ release: https://github.com/mantinedev/mantine/releases/tag/2.4.0
 date: 'September 8th, 2021'
 ---
 
-import { TextDemos } from '@demos/core';
+import { TextDemos, AlertDemos } from '@demos/core';
 
-## New components and features
+## New features
+
+[Alert](https://mantine.dev/core/alert/) component was redesigned, it now supports icon and close button:
+
+<Demo data={AlertDemos.usage} demoProps={{ toggle: true }} />
 
 [Text](https://mantine.dev/core/text/) component now supports setting [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
-via prop:
+via prop to limit amount of lines:
 
 <Demo data={TextDemos.linesConfigurator} />
 

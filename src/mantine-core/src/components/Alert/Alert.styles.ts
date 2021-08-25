@@ -5,42 +5,42 @@ interface AlertStyles {
   theme: MantineTheme;
 }
 
-const LINE_WIDTH = 6;
-
 export default createMemoStyles({
   root: ({ color, theme }: AlertStyles) => ({
     position: 'relative',
-    padding: [theme.spacing.xs, theme.spacing.md],
-    paddingLeft: theme.spacing.md + 6,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-    border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
-    }`,
-
-    '&::before': {
-      content: '""',
-      display: 'block',
-      position: 'absolute',
-      top: 4,
-      bottom: 4,
-      left: 4,
-      width: LINE_WIDTH,
-      borderRadius: LINE_WIDTH,
-      backgroundColor: getThemeColor({
-        theme,
-        color,
-        shade: theme.colorScheme === 'dark' ? 6 : 7,
-      }),
-    },
+    padding: [theme.spacing.sm, theme.spacing.md],
+    borderRadius: theme.radius.sm,
+    backgroundColor:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[5]
+        : getThemeColor({ theme, color, shade: 0 }),
   }),
 
   title: ({ color, theme }: AlertStyles) => ({
     boxSizing: 'border-box',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 6 : 7 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
     margin: 0,
-    marginBottom: theme.spacing.xs / 2,
+    marginBottom: 7,
     textOverflow: 'ellipsis',
     overflow: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    lineHeight: 1,
+  }),
+
+  icon: ({ theme }: AlertStyles) => ({
+    marginRight: theme.spacing.xs / 2,
+    lineHeight: 1,
+    width: 20,
+    height: 20,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+
+    '& svg': {
+      display: 'block',
+    },
   }),
 
   body: ({ theme }: AlertStyles) => ({

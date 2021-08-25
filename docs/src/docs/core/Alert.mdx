@@ -31,9 +31,9 @@ Alert is designed to be static, if you need more dynamic variant use [Notificati
 You can use any color defined in [theme.colors](/theming/extend-theme/#default-colors).
 By default Alert will have `theme.primaryColor` color:
 
-```tsx
-<Alert /> // -> theme.primaryColor (defaults to blue)
-<Alert color="red" /> // -> red color
-```
-
 <Demo data={AlertDemos.configurator} />
+
+## Accessibility
+
+- Root element role set to `alert`
+- Set `closeButtonLabel` prop to make close button visible for screen readers
