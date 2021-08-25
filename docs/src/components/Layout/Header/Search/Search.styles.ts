@@ -9,7 +9,7 @@ export default createUseStyles(
       paddingRight: theme.spacing.xl,
       position: 'relative',
 
-      '@media (max-width: 980px)': {
+      '@media (max-width: 760px)': {
         display: 'none',
       },
     },

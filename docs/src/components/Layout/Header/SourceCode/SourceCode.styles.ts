@@ -1,6 +1,5 @@
 import { createUseStyles } from 'react-jss';
 import { theming, INPUT_SIZES } from '@mantine/core';
-import { HEADER_BREAKPOINT } from '../Header.styles';
 
 export default createUseStyles(
   (theme) => ({
@@ -16,7 +15,7 @@ export default createUseStyles(
       height: INPUT_SIZES.sm,
       textDecoration: 'none',
 
-      [`@media (max-width: ${HEADER_BREAKPOINT}px)`]: {
+      '@media (max-width: 980px)': {
         display: 'none',
       },
     },
