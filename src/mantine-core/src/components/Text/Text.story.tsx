@@ -46,7 +46,15 @@ storiesOf('@mantine/core/Text', module)
     </Text>
   ))
   .add('Multiline', () => (
-    <Text style={{ padding: 20 }}>
+    <Text
+      style={{
+        maxWidth: 300,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: 20,
+      }}
+      lineClamp={4}
+    >
       Multiline: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque commodi
       perferendis velit itaque. Harum magnam voluptas molestias a dolore atque hic. Repudiandae
       aliquam et hic aut ducimus debitis voluptatem cumque veniam aliquid commodi, ratione quae iste

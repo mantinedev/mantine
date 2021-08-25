@@ -11,6 +11,7 @@ interface TextStyles {
   color: string;
   variant: 'text' | 'link';
   size: MantineSize;
+  lineClamp: number;
 }
 
 function getTextColor({ theme, color, variant }: Partial<TextStyles>) {
@@ -27,10 +28,25 @@ function getTextColor({ theme, color, variant }: Partial<TextStyles>) {
     : theme.black;
 }
 
+function getLineClamp(lineClamp: number): React.CSSProperties {
+  if (typeof lineClamp === 'number') {
+    return {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      display: '-webkit-box',
+      WebkitLineClamp: lineClamp,
+      WebkitBoxOrient: 'vertical',
+    };
+  }
+
+  return null;
+}
+
 export default createMemoStyles({
-  root: ({ theme, color, variant, size }: TextStyles) => ({
+  root: ({ theme, color, variant, size, lineClamp }: TextStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    ...getLineClamp(lineClamp),
     color: getTextColor({ color, theme, variant }),
     fontSize: theme.fontSizes[size],
     lineHeight: theme.lineHeight,

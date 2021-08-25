@@ -21,6 +21,9 @@ export interface SharedTextProps extends DefaultProps {
 
   /** Link or text variant */
   variant?: 'text' | 'link';
+
+  /** CSS -webkit-line-clamp property */
+  lineClamp?: number;
 }
 
 interface _TextProps<C extends React.ElementType, R extends HTMLElement> extends SharedTextProps {
@@ -47,12 +50,13 @@ export function Text<C extends React.ElementType = 'div', R extends HTMLElement 
   color,
   align,
   variant = 'text',
+  lineClamp,
   themeOverride,
   elementRef,
   ...others
 }: TextProps<C, R>): JSX.Element {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ variant, color, size, theme }, null, 'text');
+  const classes = useStyles({ variant, color, size, theme, lineClamp }, null, 'text');
   const Element = component || 'div';
 
   return React.createElement(

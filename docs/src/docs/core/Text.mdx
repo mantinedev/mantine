@@ -34,6 +34,13 @@ Text supports special `dimmed` value in `color` prop. It sets color to `theme.co
 
 <Demo data={TextDemos.dimmed} />
 
+## Line clamp
+
+You can specify maximum amount of lines with `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
+CSS property ([caniuse](https://caniuse.com/css-line-clamp)). Note that you cannot set `padding-bottom` on text element:
+
+<Demo data={TextDemos.linesConfigurator} />
+
 ## Custom component
 
 By default text is rendered in div element, you can change it by setting `component` prop:
