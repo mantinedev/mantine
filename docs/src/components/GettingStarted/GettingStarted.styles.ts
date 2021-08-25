@@ -13,6 +13,8 @@ export default createUseStyles(
     container: {
       paddingTop: 50,
       paddingBottom: 50,
+      paddingLeft: theme.spacing.xl,
+      paddingRight: theme.spacing.xl,
     },
   }),
   { theming }
