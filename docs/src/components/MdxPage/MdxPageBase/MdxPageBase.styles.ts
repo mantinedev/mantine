@@ -4,7 +4,7 @@ import { theming } from '@mantine/core';
 export default createUseStyles(
   (theme) => ({
     content: {
-      minHeight: 'calc(100vh - 470px)',
+      minHeight: 'calc(100vh - 350px)',
       position: 'relative',
       zIndex: 1,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
