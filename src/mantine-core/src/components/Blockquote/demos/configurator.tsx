@@ -18,7 +18,7 @@ export const configurator: MantineDemo = {
   component: Wrapper,
   codeTemplate,
   configurator: [
-    { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
+    { name: 'color', type: 'color', initialValue: 'gray', defaultValue: 'gray' },
     { name: 'cite', type: 'string', initialValue: '– Forrest Gump' },
     {
       name: 'children',
