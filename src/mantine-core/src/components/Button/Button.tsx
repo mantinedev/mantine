@@ -9,10 +9,21 @@ import {
   MantineSize,
   MantineNumberSize,
   mergeStyles,
+  getSizeValue,
+  getSharedColorScheme,
 } from '../../theme';
 import useStyles, { heights } from './Button.styles';
+import { Loader } from '../Loader/Loader';
 
 export { UnstyledButton } from './UnstyledButton/UnstyledButton';
+
+const LOADER_SIZES = {
+  xs: 12,
+  sm: 14,
+  md: 16,
+  lg: 18,
+  xl: 20,
+};
 
 export const BUTTON_SIZES = heights;
 export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light'];
@@ -56,6 +67,15 @@ interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
 
   /** Reduces vertical and horizontal spacing */
   compact?: boolean;
+
+  /** Indicate loading state */
+  loading?: boolean;
+
+  /** Props spread to Loader component */
+  loaderProps?: Record<string, any>;
+
+  /** Loader position relative to button label */
+  loaderPosition?: 'left' | 'right';
 }
 
 export type ButtonProps<
@@ -84,11 +104,19 @@ export function Button<
   themeOverride,
   uppercase = false,
   compact = false,
+  loading = false,
+  loaderPosition = 'left',
+  loaderProps,
   classNames,
   styles,
   ...others
 }: ButtonProps<C, R>) {
   const theme = useMantineTheme(themeOverride);
+  const colors = getSharedColorScheme({
+    color,
+    theme,
+    variant: variant === 'link' ? 'light' : variant,
+  });
   const classes = useStyles(
     { radius, color, size, fullWidth, theme, compact },
     classNames,
@@ -96,24 +124,31 @@ export function Button<
   );
   const _styles = mergeStyles(classes, styles);
   const Element = component || 'button';
+  const loader = (
+    <Loader
+      color={colors.color}
+      size={getSizeValue({ size, sizes: LOADER_SIZES })}
+      {...loaderProps}
+    />
+  );
 
   return (
     <Element
       {...others}
-      className={cx(classes.root, classes[variant], className)}
+      className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
       type={type}
-      disabled={disabled}
+      disabled={disabled || loading}
       ref={elementRef as any}
       onTouchStart={() => {}}
       style={{ ...style, ..._styles.root }}
     >
       <div className={classes.inner} style={_styles.inner}>
-        {leftIcon && (
+        {(leftIcon || (loading && loaderPosition === 'left')) && (
           <span
             className={cx(classes.icon, classes.leftIcon)}
             style={{ ..._styles.icon, ..._styles.leftIcon }}
           >
-            {leftIcon}
+            {loading && loaderPosition === 'left' ? loader : leftIcon}
           </span>
         )}
 
@@ -124,12 +159,12 @@ export function Button<
           {children}
         </span>
 
-        {rightIcon && (
+        {(rightIcon || (loading && loaderPosition === 'right')) && (
           <span
             className={cx(classes.icon, classes.rightIcon)}
             style={{ ..._styles.icon, ..._styles.rightIcon }}
           >
-            {rightIcon}
+            {loading && loaderPosition === 'right' ? loader : rightIcon}
           </span>
         )}
       </div>

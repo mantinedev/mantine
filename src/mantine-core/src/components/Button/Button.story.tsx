@@ -112,6 +112,11 @@ storiesOf('@mantine/core/Button', module)
       </Button>
     </div>
   ))
+  .add('Loading', () => (
+    <div style={{ padding: 40 }}>
+      <Button loading>Loading</Button>
+    </div>
+  ))
   .add('React router', () => (
     <MemoryRouter>
       <Group style={{ padding: 20 }}>

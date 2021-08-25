@@ -9,6 +9,7 @@ import {
   getThemeColor,
   MantineSizes,
   getSharedColorScheme,
+  hexToRgba,
 } from '../../theme';
 import { INPUT_SIZES } from '../Input/Input';
 
@@ -92,6 +93,23 @@ const getWidthStyles = (fullWidth: boolean) => ({
 });
 
 export default createMemoStyles({
+  loading: (props: ButtonStylesProps) => ({
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      top: -1,
+      left: -1,
+      right: -1,
+      bottom: -1,
+      backgroundColor:
+        props.theme.colorScheme === 'dark'
+          ? hexToRgba(props.theme.colors.dark[7], 0.5)
+          : 'rgba(255, 255, 255, .5)',
+      borderRadius: getSizeValue({ size: props.radius, sizes: props.theme.radius }) - 1,
+      cursor: 'not-allowed',
+    },
+  }),
+
   icon: {
     display: 'flex',
     alignItems: 'center',
@@ -126,6 +144,8 @@ export default createMemoStyles({
     ...getFontStyles(props.theme),
     ...getFocusStyles(props.theme),
     ...getWidthStyles(props.fullWidth),
+    position: 'relative',
+    lineHeight: 1,
     fontSize: getSizeValue({ size: props.size, sizes: props.theme.fontSizes }),
     WebkitTapHighlightColor: 'transparent',
     userSelect: 'none',
@@ -150,7 +170,7 @@ export default createMemoStyles({
         transform: 'translateY(1px)',
       },
 
-      '&:disabled': {
+      '&:disabled:not($loading)': {
         borderColor: 'transparent',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
         color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
@@ -173,7 +193,7 @@ export default createMemoStyles({
         transform: 'translateY(1px)',
       },
 
-      '&:disabled': {
+      '&:disabled:not($loading)': {
         borderColor: 'transparent',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
         color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
@@ -198,7 +218,7 @@ export default createMemoStyles({
         transform: 'translateY(1px)',
       },
 
-      '&:disabled': {
+      '&:disabled:disabled:not($loading)': {
         borderColor: 'transparent',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
         color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],

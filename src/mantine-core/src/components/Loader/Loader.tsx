@@ -50,7 +50,11 @@ export function Loader({
   return (
     <Component
       size={getSizeValue({ size, sizes: LOADER_SIZES })}
-      color={getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 })}
+      color={
+        color in theme.colors
+          ? getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 })
+          : color
+      }
       role="presentation"
       className={cx('mantine-loader', className)}
       {...others}

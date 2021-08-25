@@ -34,6 +34,19 @@ Default Button color is `theme.primaryColor`, to change color and variant pass `
 <Button variant="link" color="indigo" /> // indigo link button
 ```
 
+## Loading state
+
+Button supports loading state. In this state [Loader](/core/loader/) component replaces left or right icon,
+button becomes disabled and white or dark overlay is added.
+
+You can control loading state and [Loader](/core/loader/) component with following props:
+
+- `loading` – enable loading state
+- `loaderPosition` – Loader position relative to button label, either right or left
+- `loaderProps` – props spread to Loader component, you can choose loader type, size and any other [supported](/core/loader/) prop
+
+<Demo data={ButtonDemos.loadingConfigurator} />
+
 ## Customize
 
 You can change styles of any element in button component with [Styles API](/theming/styles-api/) to match your design requirements:
