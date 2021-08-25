@@ -96,8 +96,8 @@ export function Month({
   ...others
 }: MonthProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, fullWidth }, classNames as any, __staticSelector);
-  const _styles = mergeStyles(classes, styles as any);
+  const classes = useStyles({ theme, fullWidth }, classNames, __staticSelector);
+  const _styles = mergeStyles(classes, styles);
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
 
@@ -198,8 +198,8 @@ export function Month({
             themeOverride={themeOverride}
             className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
             style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
-            styles={styles as any}
-            classNames={classNames as any}
+            styles={styles}
+            classNames={classNames}
             disabled={dayProps.disabled}
             __staticSelector={__staticSelector}
             onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}

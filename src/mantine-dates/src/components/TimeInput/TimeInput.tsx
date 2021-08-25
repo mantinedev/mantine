@@ -89,8 +89,8 @@ export function TimeInput({
   ...others
 }: TimeInputProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames as any, 'time-input');
-  const _styles = mergeStyles(classes, styles as any);
+  const classes = useStyles({ theme, size }, classNames, 'time-input');
+  const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);
 
   const [_value, handleChange] = useUncontrolled({
@@ -147,8 +147,8 @@ export function TimeInput({
       className={className}
       style={style}
       themeOverride={themeOverride}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
       size={size}
       __staticSelector="time-input"
       id={uuid}
@@ -163,8 +163,8 @@ export function TimeInput({
         onClick={() => hoursRef.current.focus()}
         size={size}
         className={cx({ [classes.disabled]: disabled })}
-        classNames={classNames as any}
-        styles={styles as any}
+        classNames={classNames}
+        styles={styles}
         disabled={disabled}
         {...others}
       >

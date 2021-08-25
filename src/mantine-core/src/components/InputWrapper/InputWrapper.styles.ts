@@ -31,13 +31,16 @@ export default createMemoStyles({
   error: ({ theme }: InputWrapperStyles) => ({
     marginTop: theme.spacing.xs / 2,
     wordBreak: 'break-word',
+    color: theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7],
   }),
 
-  description: ({ theme }: InputWrapperStyles) => ({
+  description: ({ theme, size }: InputWrapperStyles) => ({
     marginTop: -3,
-    marginBottom: 5,
+    marginBottom: 7,
     wordBreak: 'break-word',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+    fontSize: getSizeValue({ size, sizes: theme.fontSizes }) - 2,
+    lineHeight: 1.2,
   }),
 
   required: ({ theme }: InputWrapperStyles) => ({

@@ -4,7 +4,7 @@ import { theming, MantineTheme, getFocusStyles } from '@mantine/core';
 import { NAVBAR_BREAKPOINT } from '../Navbar/Navbar.styles';
 
 export const HEADER_HEIGHT = 60;
-export const HEADER_BREAKPOINT = 960;
+export const HEADER_BREAKPOINT = 860;
 
 export default createUseStyles(
   (theme: MantineTheme) => ({
@@ -39,24 +39,25 @@ export default createUseStyles(
       alignItems: 'center',
       justifyContent: 'flex-end',
       paddingRight: theme.spacing.md,
-
-      [`@media (max-width: ${HEADER_BREAKPOINT}px)`]: {
-        display: 'none',
-      },
     },
 
     mainSection: {
       [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
-        width: '100%',
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'relative',
+        pointerEvents: 'none',
       },
     },
 
     burger: {
       display: 'none',
+      pointerEvents: 'all',
 
       [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
         display: 'block',
@@ -66,42 +67,20 @@ export default createUseStyles(
       },
     },
 
-    link: {
-      ...getFocusStyles(theme),
-      outline: 0,
-      display: 'flex',
-      alignItems: 'center',
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
-      textDecoration: 'none',
-      borderRadius: theme.radius.sm,
-      padding: [4, theme.spacing.md],
-      height: 36,
-      boxSizing: 'border-box',
-
-      '&:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
-      },
-    },
-
-    linkLabel: {
-      fontSize: theme.fontSizes.sm,
-      lineHeight: 1,
-      marginLeft: theme.spacing.xs,
-    },
-
     logoWrapper: {
       display: 'flex',
       alignItems: 'center',
+      pointerEvents: 'all',
     },
 
     version: {
       ...getFocusStyles(theme),
       fontWeight: 700,
       textDecoration: 'none',
-    },
 
-    themeToggle: {
-      marginLeft: theme.spacing.xs,
+      [`@media (max-width: ${HEADER_BREAKPOINT}px)`]: {
+        display: 'none',
+      },
     },
   }),
   { theming }

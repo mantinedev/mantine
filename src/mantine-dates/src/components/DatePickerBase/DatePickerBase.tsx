@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   DefaultProps,
   useMantineTheme,
@@ -9,13 +9,15 @@ import {
   InputBaseProps,
   InputWrapperBaseProps,
   Paper,
-  Transition,
+  Popper,
   MantineTransition,
   InputStylesNames,
   InputWrapperStylesNames,
   MantineSize,
   Modal,
   CloseButton,
+  getSizeValue,
+  useClickOutsideRegister,
 } from '@mantine/core';
 import {
   useId,
@@ -80,6 +82,12 @@ export interface DatePickerBaseSharedProps
 
   /** aria-label for clear button */
   clearButtonLabel?: string;
+
+  /** useEffect dependencies to force update tooltip position */
+  positionDependencies?: any[];
+
+  /** Popper zIndex */
+  zIndex?: number;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -99,6 +107,14 @@ export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
   onClear(): void;
 }
 
+const RIGHT_SECTION_WIDTH = {
+  xs: 24,
+  sm: 30,
+  md: 34,
+  lg: 40,
+  xl: 44,
+};
+
 export function DatePickerBase({
   themeOverride,
   classNames,
@@ -113,7 +129,7 @@ export function DatePickerBase({
   description,
   placeholder,
   shadow = 'sm',
-  transition = 'rotate-right',
+  transition = 'pop-top-left',
   transitionDuration = 200,
   transitionTimingFunction,
   elementRef,
@@ -128,13 +144,18 @@ export function DatePickerBase({
   clearable = true,
   clearButtonLabel,
   onClear,
+  positionDependencies = [],
+  zIndex = 3,
   ...others
 }: DatePickerBaseProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size, invalid: !!error }, classNames as any, __staticSelector);
-  const _styles = mergeStyles(classes, styles as any);
-  const reduceMotion = useReducedMotion();
+  const classes = useStyles({ theme, size, invalid: !!error }, classNames, __staticSelector);
+  const _styles = mergeStyles(classes, styles);
+  const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
+  const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
+  const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const uuid = useId(id);
+  const clickOutsideRegister = useClickOutsideRegister();
 
   const focusTrapRef = useFocusTrap();
   const inputRef = useRef<HTMLButtonElement>();
@@ -146,9 +167,17 @@ export function DatePickerBase({
   };
   const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
     event.nativeEvent.code === 'Escape' && closeDropdown();
-  const clickOutsideRef = useClickOutside(() => dropdownType === 'popover' && closeDropdown());
+
+  useClickOutside(() => dropdownType === 'popover' && closeDropdown(), null, [
+    dropdownElement,
+    rootElement,
+  ]);
 
   useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
+
+  useEffect(() => {
+    clickOutsideRegister(`${uuid}-dropdown`, dropdownElement);
+  }, [dropdownElement]);
 
   const rightSection = clearable ? (
     <CloseButton
@@ -170,20 +199,20 @@ export function DatePickerBase({
       className={className}
       style={style}
       themeOverride={themeOverride}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
       size={size}
       __staticSelector={__staticSelector}
       {...wrapperProps}
     >
-      <div ref={clickOutsideRef}>
-        <div className={classes.wrapper} style={_styles.wrapper}>
+      <div ref={setRootElement}>
+        <div className={classes.wrapper} style={_styles.wrapper} ref={setReferenceElement}>
           <Input
             themeOverride={themeOverride}
             component="button"
             type="button"
-            classNames={classNames as any}
-            styles={styles as any}
+            classNames={classNames}
+            styles={{ ...styles, input: { ...styles?.input, cursor: 'pointer' } }}
             onClick={() => setDropdownOpened(!dropdownOpened)}
             id={uuid}
             elementRef={useMergedRef(elementRef, inputRef)}
@@ -192,6 +221,7 @@ export function DatePickerBase({
             required={required}
             invalid={!!error}
             rightSection={rightSection}
+            rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
             {...others}
           >
             {inputLabel || (
@@ -203,25 +233,32 @@ export function DatePickerBase({
         </div>
 
         {dropdownType === 'popover' ? (
-          <Transition
-            mounted={dropdownOpened}
+          <Popper
+            referenceElement={referenceElement}
+            transitionDuration={useReducedMotion() ? 0 : transitionDuration}
+            transitionTimingFunction={transitionTimingFunction}
+            forceUpdateDependencies={positionDependencies}
             transition={transition}
-            duration={reduceMotion ? 0 : transitionDuration}
-            timingFunction={transitionTimingFunction}
+            mounted={dropdownOpened}
+            position="bottom"
+            placement="start"
+            gutter={0}
+            withArrow
+            arrowSize={3}
+            zIndex={zIndex}
           >
-            {(transitionStyles) => (
-              <div
-                className={classes.dropdownWrapper}
-                style={{ ..._styles.dropdownWrapper, ...transitionStyles }}
-                ref={focusTrapRef}
-                onKeyDownCapture={closeOnEscape}
-              >
-                <Paper className={classes.dropdown} style={_styles.dropdown} shadow={shadow}>
-                  {children}
-                </Paper>
-              </div>
-            )}
-          </Transition>
+            <div
+              className={classes.dropdownWrapper}
+              style={_styles.dropdownWrapper}
+              ref={useMergedRef(focusTrapRef, setDropdownElement)}
+              data-mantine-stop-propagation={dropdownType === 'popover' && dropdownOpened}
+              onKeyDownCapture={closeOnEscape}
+            >
+              <Paper className={classes.dropdown} style={_styles.dropdown} shadow={shadow}>
+                {children}
+              </Paper>
+            </div>
+          </Popper>
         ) : (
           <Modal opened={dropdownOpened} onClose={closeDropdown} hideCloseButton>
             {children}

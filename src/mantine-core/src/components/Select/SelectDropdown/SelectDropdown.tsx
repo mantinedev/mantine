@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme, DefaultProps, MantineSize, mergeStyles } from '../../../theme';
+import { useMantineTheme, DefaultProps, mergeStyles } from '../../../theme';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import useStyles from './SelectDropdown.styles';
@@ -16,7 +16,6 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   maxDropdownHeight?: number | string;
   children: React.ReactNode;
   __staticSelector: string;
-  size: MantineSize;
   elementRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
@@ -32,12 +31,11 @@ export function SelectDropdown({
   children,
   classNames,
   styles,
-  size,
   elementRef,
   __staticSelector,
 }: SelectDropdownProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, __staticSelector);
+  const classes = useStyles({ theme }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return (

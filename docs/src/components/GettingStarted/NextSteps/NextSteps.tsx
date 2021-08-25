@@ -30,9 +30,7 @@ export function NextSteps() {
   return (
     <div className={classes.wrapper}>
       <Title>Next steps</Title>
-      <Group className={classes.links} grow align="stretch">
-        {items}
-      </Group>
+      <div className={classes.links}>{items}</div>
     </div>
   );
 }

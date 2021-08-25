@@ -12,15 +12,11 @@ describe('@mantine/core/ColorSwatch', () => {
     expect(ColorSwatch.displayName).toEqual('@mantine/core/ColorSwatch');
   });
 
-  it('sets correct width, height and border-radius based on size property', () => {
-    const element = shallow(<ColorSwatch size={51} color="red" />).render();
-    expect(element.css('width')).toBe('51px');
-    expect(element.css('height')).toBe('51px');
-  });
-
   it('sets correct background-color based on color property', () => {
-    const element = shallow(<ColorSwatch color="red" />).render();
-    expect(element.css('background-color')).toBe('red');
+    const element = shallow(<ColorSwatch color="red" />);
+    expect(
+      element.find('.mantine-color-swatch-overlay').at(2).render().css('background-color')
+    ).toBe('red');
   });
 
   it('allows size and color props override with style property', () => {

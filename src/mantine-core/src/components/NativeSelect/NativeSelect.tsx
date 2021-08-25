@@ -93,8 +93,8 @@ export function NativeSelect({
       themeOverride={themeOverride}
       description={description}
       size={size}
-      styles={styles as any}
-      classNames={classNames as any}
+      styles={styles}
+      classNames={classNames}
       __staticSelector="select"
     >
       <Input<'select', HTMLSelectElement>
@@ -110,7 +110,7 @@ export function NativeSelect({
         themeOverride={themeOverride}
         value={value === null ? '' : value}
         size={size}
-        classNames={classNames as any}
+        classNames={classNames}
         __staticSelector="select"
         {...getSelectRightSectionProps({ themeOverride, styles, shouldClear: false, size, error })}
       >

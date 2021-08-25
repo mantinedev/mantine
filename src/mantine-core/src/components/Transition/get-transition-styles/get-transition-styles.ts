@@ -1,4 +1,3 @@
-import { TransitionStatus } from 'react-transition-group';
 import { MantineTransition, transitions } from '../transitions';
 
 const transitionStatuses = {
@@ -6,6 +5,8 @@ const transitionStatuses = {
   entered: 'in',
   exiting: 'out',
   exited: 'out',
+  'pre-exiting': 'out',
+  'pre-entering': 'out',
 } as const;
 
 export function getTransitionStyles({
@@ -15,7 +16,7 @@ export function getTransitionStyles({
   timingFunction,
 }: {
   transition: MantineTransition;
-  state: TransitionStatus;
+  state: keyof typeof transitionStatuses;
   duration: number;
   timingFunction: React.CSSProperties['transitionTimingFunction'];
 }): React.CSSProperties {

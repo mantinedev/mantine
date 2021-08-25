@@ -78,14 +78,15 @@ export function CalendarHeader({
         disabled={previousMonthDisabled}
         themeOverride={themeOverride}
         size={iconButtonSize}
+        data-mantine-stop-propagation
       >
         <ArrowIcon direction="left" width={iconSize} height={iconSize} />
       </ActionIcon>
 
       <CalendarLabel
         locale={locale}
-        classNames={classNames as any}
-        styles={styles as any}
+        classNames={classNames}
+        styles={styles}
         withSelect={withSelect}
         yearsRange={yearsRange}
         value={month}
@@ -104,6 +105,7 @@ export function CalendarHeader({
         disabled={nextMonthDisabled}
         themeOverride={themeOverride}
         size={iconButtonSize}
+        data-mantine-stop-propagation
       >
         <ArrowIcon direction="right" width={iconSize} height={iconSize} />
       </ActionIcon>

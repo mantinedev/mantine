@@ -2,14 +2,14 @@ import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
-import { ArrowBody, ArrowBodyPosition, ArrowBodyPlacement } from '../ArrowBody/ArrowBody';
-import { Transition, MantineTransition } from '../Transition/Transition';
+import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 
 export type TooltipStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface TooltipProps
   extends DefaultProps<TooltipStylesNames>,
+    SharedPopperProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** Tooltip content */
   label: React.ReactNode;
@@ -26,26 +26,11 @@ export interface TooltipProps
   /** Any color from theme.colors, defaults to gray in light color scheme and dark in dark colors scheme */
   color?: string;
 
-  /** Space between tooltip and element in px */
-  gutter?: number;
-
   /** True to disable tooltip */
   disabled?: boolean;
 
-  /** Adds arrow, arrow position depends on position and placement props */
-  withArrow?: boolean;
-
   /** Arrow size in px */
   arrowSize?: number;
-
-  /** Tooltip position relative to children */
-  position?: ArrowBodyPosition;
-
-  /** Tooltip placement relative to children */
-  placement?: ArrowBodyPlacement;
-
-  /** Tooltip z-index */
-  zIndex?: number;
 
   /** Tooltip width in px or auto */
   width?: number | 'auto';
@@ -56,15 +41,6 @@ export interface TooltipProps
   /** Allow pointer events on tooltip, warning: this may break some animations */
   allowPointerEvents?: boolean;
 
-  /** Customize mount/unmount transition */
-  transition?: MantineTransition;
-
-  /** Mount/unmount transition duration in ms */
-  transitionDuration?: number;
-
-  /** Mount/unmount transition timing function, defaults to theme.transitionTimingFunction */
-  transitionTimingFunction?: string;
-
   /** Get wrapper ref */
   elementRef?: React.ForwardedRef<HTMLDivElement>;
 
@@ -73,6 +49,9 @@ export interface TooltipProps
 
   /** Tooltip id to bind aria-describedby */
   tooltipId?: string;
+
+  /** useEffect dependencies to force update tooltip position */
+  positionDependencies?: any[];
 }
 
 export function Tooltip({
@@ -90,13 +69,14 @@ export function Tooltip({
   arrowSize = 2,
   position = 'top',
   placement = 'center',
-  transition = 'slide-up',
+  transition = 'pop-top-left',
   transitionDuration = 100,
   zIndex = 1000,
   transitionTimingFunction,
   width = 'auto',
   wrapLines = false,
   allowPointerEvents = false,
+  positionDependencies = [],
   elementRef,
   tooltipRef,
   tooltipId,
@@ -110,7 +90,7 @@ export function Tooltip({
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
   const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
-  const duration = useReducedMotion() ? 0 : transitionDuration;
+  const [referenceElement, setReferenceElement] = useState(null);
 
   const handleOpen = () => {
     window.clearTimeout(timeoutRef.current);
@@ -134,55 +114,41 @@ export function Tooltip({
       style={{ ...style, ..._styles.root }}
       {...others}
     >
-      <Transition
-        mounted={visible}
+      <Popper
+        referenceElement={referenceElement}
+        transitionDuration={useReducedMotion() ? 0 : transitionDuration}
         transition={transition}
-        duration={duration}
-        timingFunction={transitionTimingFunction}
+        mounted={visible}
+        position={position}
+        placement={placement}
+        gutter={gutter}
+        withArrow={withArrow}
+        arrowSize={arrowSize}
+        zIndex={zIndex}
+        arrowClassName={classes.arrow}
+        arrowStyle={_styles.arrow}
+        forceUpdateDependencies={[color, ...positionDependencies]}
       >
-        {(transitionStyles) => (
-          <div
-            className={classes.wrapper}
-            style={{ ..._styles.wrapper, ...transitionStyles, zIndex }}
-          >
-            <ArrowBody
-              id={tooltipId}
-              gutter={gutter}
-              position={position}
-              placement={placement}
-              withArrow={withArrow}
-              arrowSize={arrowSize}
-              role="tooltip"
-              className={classes.tooltip}
-              classNames={{ arrow: classes.arrow }}
-              styles={{ arrow: _styles.arrow }}
-              elementRef={tooltipRef}
-              style={{
-                ..._styles.tooltip,
-                zIndex,
-                width,
-                pointerEvents: allowPointerEvents ? 'all' : 'none',
-              }}
-            >
-              <div
-                className={classes.body}
-                style={{
-                  ..._styles.body,
-                  whiteSpace: wrapLines ? 'normal' : 'nowrap',
-                }}
-              >
-                {label}
-              </div>
-            </ArrowBody>
-          </div>
-        )}
-      </Transition>
+        <div
+          className={classes.body}
+          ref={tooltipRef}
+          style={{
+            ..._styles.body,
+            pointerEvents: allowPointerEvents ? 'all' : 'none',
+            whiteSpace: wrapLines ? 'normal' : 'nowrap',
+            width,
+          }}
+        >
+          {label}
+        </div>
+      </Popper>
 
       <div
         onMouseEnter={handleOpen}
         onMouseLeave={handleClose}
         onFocusCapture={handleOpen}
         onBlurCapture={handleClose}
+        ref={setReferenceElement}
       >
         {children}
       </div>

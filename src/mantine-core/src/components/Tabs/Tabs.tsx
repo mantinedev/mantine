@@ -103,8 +103,8 @@ export function Tabs({
   ...others
 }: TabsProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, tabPadding, orientation }, classNames as any, 'tabs');
-  const _styles = mergeStyles(classes, styles as any);
+  const classes = useStyles({ theme, tabPadding, orientation }, classNames, 'tabs');
+  const _styles = mergeStyles(classes, styles);
 
   const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
 
@@ -127,12 +127,14 @@ export function Tabs({
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if (event.nativeEvent.code === nextTabCode) {
+      event.preventDefault();
       const nextTab = getNextTab(activeTab, tabs);
       handleActiveTabChange(nextTab);
       controlRefs.current[nextTab].focus();
     }
 
     if (event.nativeEvent.code === previousTabCode) {
+      event.preventDefault();
       const previousTab = getPreviousTab(activeTab, tabs);
       handleActiveTabChange(previousTab);
       controlRefs.current[previousTab].focus();
@@ -153,8 +155,8 @@ export function Tabs({
         controlRefs.current[index] = node;
       }}
       onClick={() => activeTab !== index && handleActiveTabChange(index)}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
     />
   ));
 

@@ -158,7 +158,7 @@ export function Select({
     if (inputMode === 'uncontrolled') {
       setInputValue(item.label);
     }
-    setDropdownOpened(false);
+    setTimeout(() => setDropdownOpened(false));
     inputRef.current.focus();
   };
 
@@ -257,8 +257,8 @@ export function Select({
       className={className}
       style={style}
       themeOverride={themeOverride}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
       __staticSelector="select"
       {...wrapperProps}
     >
@@ -281,7 +281,7 @@ export function Select({
           size={size}
           onKeyDown={handleInputKeydown}
           themeOverride={themeOverride}
-          classNames={classNames as any}
+          classNames={classNames}
           __staticSelector="select"
           value={inputValue}
           onChange={handleInputChange}
@@ -293,12 +293,13 @@ export function Select({
           onBlur={handleInputBlur}
           readOnly={!searchable}
           disabled={disabled}
+          data-mantine-stop-propagation={dropdownOpened}
           {...getSelectRightSectionProps({
             styles: {
               ...styles,
               input: {
                 cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
-                ...(styles as any)?.input,
+                ...styles?.input,
               },
             },
             size,
@@ -319,9 +320,8 @@ export function Select({
           uuid={uuid}
           shadow={shadow}
           maxDropdownHeight={maxDropdownHeight}
-          classNames={classNames as any}
-          styles={styles as any}
-          size={size}
+          classNames={classNames}
+          styles={styles}
           elementRef={dropdownRef}
           __staticSelector="select"
         >
@@ -329,8 +329,8 @@ export function Select({
             data={filteredData}
             hovered={hovered}
             themeOverride={themeOverride}
-            classNames={classNames as any}
-            styles={styles as any}
+            classNames={classNames}
+            styles={styles}
             isItemSelected={(val) => val === _value}
             uuid={uuid}
             __staticSelector="select"

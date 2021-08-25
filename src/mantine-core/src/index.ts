@@ -7,7 +7,6 @@ export { Affix } from './components/Affix/Affix';
 export { CloseButton } from './components/ActionIcon/CloseButton/CloseButton';
 export { Alert } from './components/Alert/Alert';
 export { Anchor } from './components/Anchor/Anchor';
-export { ArrowBody } from './components/ArrowBody/ArrowBody';
 export { Autocomplete } from './components/Autocomplete/Autocomplete';
 export { Avatar, AVATAR_SIZES } from './components/Avatar/Avatar';
 export { Badge, BADGE_SIZES, BADGE_VARIANTS } from './components/Badge/Badge';
@@ -19,6 +18,8 @@ export { Card, CardSection } from './components/Card/Card';
 export { Center } from './components/Center/Center';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
 export { Code } from './components/Code/Code';
+export { ColorInput } from './components/ColorInput/ColorInput';
+export { ColorPicker, AlphaSlider, HueSlider } from './components/ColorPicker/ColorPicker';
 export { ColorSwatch } from './components/ColorSwatch/ColorSwatch';
 export { Container, CONTAINER_SIZES } from './components/Container/Container';
 export { Drawer, DRAWER_SIZES } from './components/Drawer/Drawer';
@@ -44,6 +45,7 @@ export { Overlay } from './components/Overlay/Overlay';
 export { Paper } from './components/Paper/Paper';
 export { PasswordInput } from './components/PasswordInput/PasswordInput';
 export { Popover } from './components/Popover/Popover';
+export { Popper } from './components/Popper/Popper';
 export { Portal } from './components/Portal/Portal';
 export { Progress, PROGRESS_SIZES } from './components/Progress/Progress';
 export { RadioGroup, Radio, RADIO_SIZES } from './components/RadioGroup/RadioGroup';
@@ -81,7 +83,6 @@ export type { AffixProps } from './components/Affix/Affix';
 export type { CloseButtonProps } from './components/ActionIcon/CloseButton/CloseButton';
 export type { AlertProps, AlertStylesName } from './components/Alert/Alert';
 export type { AnchorProps } from './components/Anchor/Anchor';
-export type { ArrowBodyProps, ArrowBodyStylesNames } from './components/ArrowBody/ArrowBody';
 export type {
   AutocompleteProps,
   AutocompleteStylesNames,
@@ -100,6 +101,12 @@ export type { CardProps, CardSectionProps } from './components/Card/Card';
 export type { CenterProps } from './components/Center/Center';
 export type { CheckboxProps, CheckboxStylesNames } from './components/Checkbox/Checkbox';
 export type { CodeProps } from './components/Code/Code';
+export type { ColorInputProps } from './components/ColorInput/ColorInput';
+export type {
+  AlphaSliderProps,
+  HueSliderProps,
+  ColorPickerProps,
+} from './components/ColorPicker/ColorPicker';
 export type { ColorSwatchProps } from './components/ColorSwatch/ColorSwatch';
 export type { ContainerProps } from './components/Container/Container';
 export type { DividerProps, DividerStylesNames } from './components/Divider/Divider';
@@ -150,6 +157,7 @@ export type {
   PasswordInputStylesNames,
 } from './components/PasswordInput/PasswordInput';
 export type { PopoverProps, PopoverStylesNames } from './components/Popover/Popover';
+export type { PopperProps } from './components/Popper/Popper';
 export type { PortalProps } from './components/Portal/Portal';
 export type { ProgressProps, ProgressStylesNames } from './components/Progress/Progress';
 export type { RadioGroupProps, RadioProps } from './components/RadioGroup/RadioGroup';

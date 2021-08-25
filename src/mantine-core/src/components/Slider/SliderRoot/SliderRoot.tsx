@@ -24,7 +24,7 @@ export function SliderRoot({
   ...others
 }: SliderRootProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames as any, 'slider');
+  const classes = useStyles({ theme, size }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
 
   return (

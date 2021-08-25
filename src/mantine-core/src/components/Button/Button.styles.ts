@@ -8,7 +8,7 @@ import {
   getFocusStyles,
   getThemeColor,
   MantineSizes,
-  hexToRgba,
+  getSharedColorScheme,
 } from '../../theme';
 import { INPUT_SIZES } from '../Input/Input';
 
@@ -136,72 +136,77 @@ export default createMemoStyles({
     WebkitAppearance: 'none',
   }),
 
-  outline: ({ color, radius, theme }: ButtonStylesProps) => ({
-    backgroundColor: 'transparent',
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-    fontWeight: 600,
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
-    border: `1px solid ${getThemeColor({
-      theme,
-      color,
-      shade: theme.colorScheme === 'dark' ? 4 : 7,
-    })}`,
+  outline: ({ color, radius, theme }: ButtonStylesProps) => {
+    const colors = getSharedColorScheme({ color, theme, variant: 'outline' });
 
-    '&:not(:disabled):active': {
-      transform: 'translateY(1px)',
-    },
+    return {
+      backgroundColor: colors.background,
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      fontWeight: 600,
+      color: colors.color,
+      border: `1px solid ${colors.border}`,
 
-    '&:disabled': {
-      borderColor: 'transparent',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-      cursor: 'not-allowed',
-    },
-  }),
+      '&:not(:disabled):active': {
+        transform: 'translateY(1px)',
+      },
 
-  light: ({ color, radius, theme }: ButtonStylesProps) => ({
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-    fontWeight: 600,
-    border: '1px solid transparent',
-    backgroundColor: hexToRgba(
-      getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
-      theme.colorScheme === 'dark' ? 0.3 : 1
-    ),
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
+      '&:disabled': {
+        borderColor: 'transparent',
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
+        cursor: 'not-allowed',
+      },
+    };
+  },
 
-    '&:not(:disabled):active': {
-      transform: 'translateY(1px)',
-    },
+  light: ({ color, radius, theme }: ButtonStylesProps) => {
+    const colors = getSharedColorScheme({ color, theme, variant: 'light' });
 
-    '&:disabled': {
-      borderColor: 'transparent',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-      textShadow: 'none',
-      cursor: 'not-allowed',
-    },
-  }),
+    return {
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      fontWeight: 600,
+      border: `1px solid ${colors.border}`,
+      backgroundColor: colors.background,
+      color: colors.color,
 
-  filled: ({ color, radius, theme }: ButtonStylesProps) => ({
-    border: '1px solid transparent',
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-    fontWeight: 600,
-    backgroundColor: getThemeColor({ theme, color, shade: 7 }),
-    color: theme.white,
-    textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
+      '&:not(:disabled):active': {
+        transform: 'translateY(1px)',
+      },
 
-    '&:not(:disabled):active': {
-      transform: 'translateY(1px)',
-    },
+      '&:disabled': {
+        borderColor: 'transparent',
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
+        textShadow: 'none',
+        cursor: 'not-allowed',
+      },
+    };
+  },
 
-    '&:disabled': {
-      borderColor: 'transparent',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-      textShadow: 'none',
-      cursor: 'not-allowed',
-    },
-  }),
+  filled: ({ color, radius, theme }: ButtonStylesProps) => {
+    const colors = getSharedColorScheme({ color, theme, variant: 'filled' });
+
+    return {
+      border: `1px solid ${colors.border}`,
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      fontWeight: 600,
+      backgroundColor: colors.background,
+      color: colors.color,
+      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
+
+      '&:not(:disabled):active': {
+        transform: 'translateY(1px)',
+      },
+
+      '&:disabled': {
+        borderColor: 'transparent',
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
+        textShadow: 'none',
+        cursor: 'not-allowed',
+      },
+    };
+  },
 
   link: ({ color, radius, theme }: ButtonStylesProps) => ({
     padding: 0,
@@ -209,7 +214,7 @@ export default createMemoStyles({
     backgroundColor: 'transparent',
     border: 0,
     display: 'inline-block',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
     cursor: 'pointer',
     height: 'auto',
     lineHeight: theme.lineHeight,

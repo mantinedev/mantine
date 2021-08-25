@@ -17,6 +17,7 @@ export default createMemoStyles({
   wrapper: ({ theme }: DatePickerBaseStyles) => ({
     ...getFontStyles(theme),
     position: 'relative',
+    cursor: 'pointer',
   }),
 
   placeholder: ({ theme, size, invalid }: DatePickerBaseStyles) => ({
@@ -24,22 +25,26 @@ export default createMemoStyles({
     color: invalid
       ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
       : theme.colorScheme === 'dark'
-      ? theme.colors.dark[2]
-      : theme.colors.gray[6],
+      ? theme.colors.dark[3]
+      : theme.colors.gray[5],
   }),
 
   dropdownWrapper: {
     position: 'relative',
-    zIndex: 4,
+    pointerEvents: 'all',
+  },
+
+  input: {
+    cursor: 'pointer',
   },
 
   dropdown: ({ theme }: DatePickerBaseStyles) => ({
     position: 'absolute',
     left: 0,
     top: theme.spacing.xs,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
     zIndex: 4,
     padding: [theme.spacing.md, theme.spacing.xs],
@@ -51,12 +56,12 @@ export default createMemoStyles({
       height: 8,
       width: 8,
       transform: 'rotate(45deg)',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       borderTop: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
       }`,
       borderLeft: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
       }`,
     },
   }),

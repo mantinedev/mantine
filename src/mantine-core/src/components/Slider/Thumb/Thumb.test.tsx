@@ -15,7 +15,7 @@ const defaultProps = {
   onMouseDown: () => {},
   color: 'blue',
   size: 10,
-  labelTransition: 'skew-up' as any,
+  labelTransition: 'skew-up' as const,
   labelTransitionDuration: 150,
   labelTransitionTimingFunction: 'ease',
   labelAlwaysOn: true,

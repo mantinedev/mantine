@@ -10,7 +10,7 @@ export const CHECKBOX_SIZES = sizes;
 export type CheckboxStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface CheckboxProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<CheckboxStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
   /** Checkbox checked and indeterminate state color from theme, defaults to theme.primaryColor */
   color?: string;

@@ -95,7 +95,7 @@ export function Contribute() {
 
           <Text>Sounds interesting? Let&apos;s contact and discuss all details:</Text>
           <Group style={{ marginTop: 10 }}>
-            <SocialButton type="large" service="tg" />
+            <SocialButton service="tg" />
             <Button
               style={{ height: 42, paddingLeft: 20, paddingRight: 20 }}
               onClick={() => clipboard.copy('rtivital@gmail.com')}

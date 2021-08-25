@@ -3,7 +3,7 @@ import Flag from 'react-flagpack';
 import { useMantineTheme } from '../../../theme';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import { countriesData } from './_countries-data';
-import { MultiSelect } from '../MultiSelect';
+import { MultiSelect, MultiSelectProps } from '../MultiSelect';
 
 const code = `
 import Flag from 'react-flagpack';
@@ -37,7 +37,7 @@ function Value({ value, label, onRemove, themeOverride, classNames, ...others })
 function Item({ label, value, elementRef, ...others }) {
   return (
     <div ref={elementRef} {...others}>
-      <div style={{ display: 'flex', cursor: 'default' }}>
+      <div style={{ display: 'flex' }}>
         <div style={{ marginRight: 10 }}>
           <Flag code={value} size="S" />
         </div>
@@ -94,7 +94,7 @@ function Value({ value, label, onRemove, themeOverride, classNames, ...others }:
 function Item({ label, value, elementRef, ...others }: any) {
   return (
     <div ref={elementRef} {...others}>
-      <div style={{ display: 'flex', cursor: 'default' }}>
+      <div style={{ display: 'flex' }}>
         <div style={{ marginRight: 10 }}>
           <Flag code={value} size="S" />
         </div>
@@ -104,7 +104,7 @@ function Item({ label, value, elementRef, ...others }: any) {
   );
 }
 
-export function CountriesSelect() {
+export function CountriesSelect(props: Partial<MultiSelectProps>) {
   return (
     <MultiSelect
       data={countriesData}
@@ -115,6 +115,7 @@ export function CountriesSelect() {
       defaultValue={['US', 'DE']}
       placeholder="Pick countries"
       label="Which countries you visited last year?"
+      {...props}
     />
   );
 }

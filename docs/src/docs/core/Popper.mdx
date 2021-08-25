@@ -1,0 +1,102 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Popper
+order: 1
+slug: /core/popper/
+category: 'misc'
+description: 'Render dropdown in portal with popper.js'
+props: ['Popper']
+import: "import { Popper } from '@mantine/core';"
+source: 'mantine-core/src/components/Popper/Popper.tsx'
+docs: 'core/Popper.mdx'
+---
+
+import { PopperDemos, TooltipDemos } from '@demos/core';
+
+## Usage
+
+Popper is an utility component used under the hood in <GatsbyLink to="/core/menu/">Menu</GatsbyLink>, <GatsbyLink to="/core/popover/">Popover</GatsbyLink>, <GatsbyLink to="/core/tooltip/">Tooltip</GatsbyLink>
+and other Mantine components. You can use it to create your own dropdowns and popovers if Mantine components do not meet your requirements.
+
+To start using Popper add following required props first:
+
+- `referenceElement` – element based on which popper will be positioned
+- `children` – popper content, any React node
+- `mounted` – current popper opened state: true to display, false to hide
+
+```tsx
+import { useState } from 'react';
+import { Popper } from '@mantine/core';
+
+function Demo() {
+  // useState is required to store element ref, useRef won't work
+  const [referenceElement, setReferenceElement] = useState(null);
+
+  return (
+    <div>
+      {/* Based on this button popper will be positioned */}
+      <button ref={referenceElement}>Reference element</button>
+      {/*
+       * Popper is rendered inside Portal, it will be added
+       * outside of current rendering context – before closing body tag
+       */}
+      <Popper referenceElement={referenceElement} mounted>
+        <div>Popper content</div>
+      </Popper>
+    </div>
+  );
+}
+```
+
+## Position
+
+Popper position is controlled by these props:
+
+- `position` – left, right, bottom, top
+- `placement` – start, center, end
+- `gutter` – spacing between reference and dropdown elements in px
+- `withArrow` – displays arrow, arrow position is calculated by `position` and `placement` props
+- `arrowSize` – arrow size in px
+
+<Demo data={PopperDemos.configurator} />
+
+## Transitions
+
+Popper uses <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component to animate presence.
+You can choose one of premade transitions or create your own. All premade transitions demo
+(<GatsbyLink to="/core/tooltip/">Tooltip</GatsbyLink> component which uses Popper):
+
+<Demo data={TooltipDemos.transitions} />
+
+You can control Popper transition with following props:
+
+- `transition` – premade transition name or custom transition styles object
+- `transitionDuration` – transition duration in ms, defaults to 0
+- `transitionTimingFunction` – defaults to `theme.transitionTimingFunction`
+
+```tsx
+<Popper
+  transition="rotate-left"
+  transitionDuration={150}
+  transitionTimingFunction="ease"
+  {...otherProps}
+/>
+```
+
+## Force position update
+
+In some cases Popper position will get outdated since it is rendered in <GatsbyLink to="/core/portal/">Portal</GatsbyLink>
+Popper does not know about layout changes. To force position update provide an array of dependencies which trigger layout updates:
+
+```tsx
+<Popper forceUpdateDependencies={[firstDependency, secondDependency]} {...otherProps} />
+```
+
+## z-index
+
+By default Popper has `z-index: 1`, you can change that with `zIndex` prop:
+
+```tsx
+<Popper zIndex={100} {...otherProps} />
+```

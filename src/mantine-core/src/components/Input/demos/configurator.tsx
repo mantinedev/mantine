@@ -7,9 +7,26 @@ const codeTemplate = (props: string) => `<Input
  ${props}
 />`;
 
+const iconSizes = {
+  xs: 14,
+  sm: 16,
+  md: 18,
+  lg: 22,
+  xl: 24,
+};
+
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: (props: any) => <Input icon={<EnvelopeClosedIcon />} {...props} />,
+  component: (props: any) => (
+    <Input
+      icon={
+        <EnvelopeClosedIcon
+          style={{ width: iconSizes[props.size], height: iconSizes[props.size] }}
+        />
+      }
+      {...props}
+    />
+  ),
   codeTemplate,
   configuratorProps: { multiline: true },
   configurator: [

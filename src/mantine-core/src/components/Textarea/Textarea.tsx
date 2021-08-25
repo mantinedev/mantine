@@ -36,6 +36,9 @@ export interface TextareaProps
 
   /** Input size */
   size?: MantineSize;
+
+  /** Static selectors base */
+  __staticSelector?: string;
 }
 
 export function Textarea({
@@ -60,15 +63,15 @@ export function Textarea({
 }: TextareaProps) {
   const uuid = useId(id);
   const theme = useMantineTheme(themeOverride);
-  const _styles = styles as any;
+
   const inputStyles = {
-    ..._styles,
+    ...styles,
     input: {
       paddingTop: theme.spacing.xs,
       paddingBottom: theme.spacing.xs,
-      ..._styles?.input,
+      ...styles?.input,
     },
-  } as any;
+  };
 
   return (
     <InputWrapper
@@ -79,8 +82,8 @@ export function Textarea({
       required={required}
       style={style}
       className={className}
-      classNames={classNames as any}
-      styles={styles as any}
+      classNames={classNames}
+      styles={styles}
       size={size}
       __staticSelector={__staticSelector}
       {...wrapperProps}
@@ -94,7 +97,7 @@ export function Textarea({
           minRows={minRows}
           id={uuid}
           elementRef={elementRef}
-          classNames={classNames as any}
+          classNames={classNames}
           styles={inputStyles}
           size={size}
           multiline
@@ -108,7 +111,7 @@ export function Textarea({
           invalid={!!error}
           rows={minRows}
           elementRef={elementRef}
-          classNames={classNames as any}
+          classNames={classNames}
           styles={inputStyles}
           size={size}
           __staticSelector={__staticSelector}

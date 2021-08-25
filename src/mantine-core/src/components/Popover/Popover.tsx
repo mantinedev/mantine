@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import cx from 'clsx';
-import { useClickOutside, useFocusTrap, useId, useReducedMotion } from '@mantine/hooks';
+import {
+  useClickOutside,
+  useFocusTrap,
+  useId,
+  useReducedMotion,
+  useMergedRef,
+} from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
-import { MantineTransition, Transition } from '../Transition/Transition';
-import { ArrowBody, ArrowBodyPlacement, ArrowBodyPosition } from '../ArrowBody/ArrowBody';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { Text } from '../Text/Text';
+import { useClickOutsideRegister } from '../../utils';
+import { Popper, SharedPopperProps } from '../Popper/Popper';
+import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';
 import useStyles from './Popover.styles';
 
-export type PopoverStylesNames = keyof ReturnType<typeof useStyles>;
+export type PopoverStylesNames = keyof ReturnType<typeof useStyles> | PopoverBodyStylesNames;
 
 export interface PopoverProps
   extends DefaultProps<PopoverStylesNames>,
+    SharedPopperProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Disable closing by click outside */
   noClickOutside?: boolean;
@@ -27,33 +33,6 @@ export interface PopoverProps
 
   /** True to disable popover */
   disabled?: boolean;
-
-  /** Popover placement relative to target */
-  placement?: ArrowBodyPlacement;
-
-  /** Popover position relative to target */
-  position?: ArrowBodyPosition;
-
-  /** Space between popover and target in px */
-  gutter?: number;
-
-  /** Customize mount/unmount transition */
-  transition?: MantineTransition;
-
-  /** Mount/unmount transition duration in ms */
-  transitionDuration?: number;
-
-  /** Mount/unmount transition timing function, defaults to theme.transitionTimingFunction */
-  transitionTimingFunction?: string;
-
-  /** Adds arrow, arrow position depends on position and placement props */
-  withArrow?: boolean;
-
-  /** Arrow size in px */
-  arrowSize?: number;
-
-  /** Popover z-index */
-  zIndex?: number;
 
   /** True to display popover */
   opened: boolean;
@@ -81,6 +60,9 @@ export interface PopoverProps
 
   /** aria-label for close button */
   closeButtonLabel?: string;
+
+  /** useEffect dependencies to force update tooltip position */
+  positionDependencies?: any[];
 }
 
 export function Popover({
@@ -92,7 +74,7 @@ export function Popover({
   title,
   onClose,
   opened,
-  zIndex = 1000,
+  zIndex = 1,
   arrowSize = 4,
   withArrow = false,
   transition = 'fade',
@@ -110,18 +92,23 @@ export function Popover({
   spacing = 'md',
   shadow = 'sm',
   closeButtonLabel,
+  positionDependencies = [],
   id,
   classNames,
   styles,
   ...others
 }: PopoverProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, radius, spacing, shadow }, classNames, 'popover');
+  const classes = useStyles({ theme }, classNames, 'popover');
   const _styles = mergeStyles(classes, styles);
   const handleClose = () => typeof onClose === 'function' && onClose();
-  const useClickOutsideRef = useClickOutside(() => !noClickOutside && handleClose());
+  const [referenceElement, setReferenceElement] = useState(null);
+  const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
+  const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
-  const reduceMotion = useReducedMotion();
+  const clickOutsideRegister = useClickOutsideRegister();
+
+  useClickOutside(() => !noClickOutside && handleClose(), null, [rootElement, dropdownElement]);
 
   const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!noEscape && event.nativeEvent.code === 'Escape') {
@@ -133,71 +120,52 @@ export function Popover({
   const titleId = `${uuid}-title`;
   const bodyId = `${uuid}-body`;
 
+  useEffect(() => {
+    clickOutsideRegister(`${uuid}-dropdown`, dropdownElement);
+  }, [dropdownElement]);
+
   return (
     <div
       className={cx(classes.root, className)}
-      ref={useClickOutsideRef}
       id={id}
       style={{ ...style, ..._styles.root }}
+      ref={setRootElement}
       {...others}
     >
-      <Transition
-        mounted={opened && !disabled}
+      <Popper
+        referenceElement={referenceElement}
+        transitionDuration={useReducedMotion() ? 0 : transitionDuration}
         transition={transition}
-        duration={reduceMotion ? 0 : transitionDuration}
-        timingFunction={transitionTimingFunction || theme.transitionTimingFunction}
+        mounted={opened && !disabled}
+        position={position}
+        placement={placement}
+        gutter={gutter}
+        withArrow={withArrow}
+        arrowSize={arrowSize}
+        zIndex={zIndex}
+        arrowClassName={classes.arrow}
+        arrowStyle={_styles.arrow}
+        forceUpdateDependencies={[radius, shadow, spacing, ...positionDependencies]}
       >
-        {(transitionStyles) => (
-          <div
-            role="dialog"
-            tabIndex={-1}
-            aria-labelledby={titleId}
-            aria-describedby={bodyId}
-            className={classes.wrapper}
-            style={{ ...transitionStyles, ..._styles.wrapper, zIndex }}
-            ref={focusTrapRef}
-            onKeyDownCapture={handleKeydown}
-          >
-            <ArrowBody
-              withArrow={withArrow}
-              arrowSize={arrowSize}
-              position={position}
-              placement={placement}
-              gutter={gutter}
-              className={classes.popover}
-              classNames={{ arrow: classes.arrow }}
-              styles={{ arrow: _styles.arrow }}
-              style={{ zIndex, ..._styles.popover }}
-            >
-              <div className={classes.body} style={_styles.body}>
-                {!!title && (
-                  <div className={classes.header} style={_styles.header}>
-                    <Text size="sm" id={titleId} className={classes.title} style={_styles.title}>
-                      {title}
-                    </Text>
-                  </div>
-                )}
+        <PopoverBody
+          shadow={shadow}
+          radius={radius}
+          spacing={spacing}
+          withCloseButton={withCloseButton}
+          titleId={titleId}
+          bodyId={bodyId}
+          closeButtonLabel={closeButtonLabel}
+          onClose={handleClose}
+          elementRef={useMergedRef(focusTrapRef, setDropdownElement)}
+          onKeyDownCapture={handleKeydown}
+          classNames={classNames}
+          styles={styles}
+        >
+          {children}
+        </PopoverBody>
+      </Popper>
 
-                {withCloseButton && (
-                  <CloseButton
-                    themeOverride={themeOverride}
-                    size="sm"
-                    onClick={handleClose}
-                    aria-label={closeButtonLabel}
-                    className={classes.close}
-                    style={_styles.close}
-                  />
-                )}
-                <div className={classes.inner} id={bodyId} style={_styles.inner}>
-                  {children}
-                </div>
-              </div>
-            </ArrowBody>
-          </div>
-        )}
-      </Transition>
-
-      <div className={classes.target} style={_styles.target}>
+      <div className={classes.target} style={_styles.target} ref={setReferenceElement}>
         {target}
       </div>
     </div>

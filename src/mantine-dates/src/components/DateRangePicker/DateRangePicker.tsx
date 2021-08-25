@@ -127,8 +127,8 @@ export function DateRangePicker({
         {...others}
       >
         <RangeCalendar
-          classNames={classNames as any}
-          styles={styles as any}
+          classNames={classNames}
+          styles={styles}
           locale={locale}
           themeOverride={themeOverride}
           nextMonthLabel={nextMonthLabel}

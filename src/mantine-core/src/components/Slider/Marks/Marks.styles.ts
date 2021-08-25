@@ -36,7 +36,7 @@ export default createMemoStyles({
   },
 
   markFilled: ({ theme, color }: MarksStyles) => ({
-    borderColor: getThemeColor({ theme, color, shade: 7 }),
+    borderColor: getThemeColor({ theme, color, shade: 6 }),
   }),
 
   markLabel: ({ theme }: MarksStyles) => ({

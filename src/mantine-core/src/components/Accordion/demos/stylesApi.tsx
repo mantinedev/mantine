@@ -14,7 +14,7 @@ const useStyles = createUseStyles(
     },
 
     item: {
-      border: \`1px solid \${theme.colors.gray[4]}\`,
+      border: \`1px solid \${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]}\`,
 
       '&:first-of-type': {
         borderTopRightRadius: theme.radius.sm,
@@ -22,7 +22,7 @@ const useStyles = createUseStyles(
       },
 
       '&:last-of-type': {
-        borderColor: theme.colors.gray[4],
+        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
         borderBottomRightRadius: theme.radius.sm,
         borderBottomLeftRadius: theme.radius.sm,
       },
@@ -34,8 +34,8 @@ const useStyles = createUseStyles(
 
     itemOpened: {
       '& $control': {
-        backgroundColor: theme.colors.blue[0],
-        color: theme.colors.blue[9],
+        backgroundColor: theme.colors.blue[theme.colorScheme === 'dark' ? 9 : 0],
+        color: theme.colorScheme === 'dark' ? theme.white : theme.colors.blue[9],
       },
     },
 
@@ -79,7 +79,9 @@ const useStyles = createUseStyles(
     },
 
     item: {
-      border: `1px solid ${theme.colors.gray[4]}`,
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+      }`,
 
       '&:first-of-type': {
         borderTopRightRadius: theme.radius.sm,
@@ -87,7 +89,7 @@ const useStyles = createUseStyles(
       },
 
       '&:last-of-type': {
-        borderColor: theme.colors.gray[4],
+        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
         borderBottomRightRadius: theme.radius.sm,
         borderBottomLeftRadius: theme.radius.sm,
       },
@@ -99,8 +101,8 @@ const useStyles = createUseStyles(
 
     itemOpened: {
       '& $control': {
-        backgroundColor: theme.colors.blue[0],
-        color: theme.colors.blue[9],
+        backgroundColor: theme.colors.blue[theme.colorScheme === 'dark' ? 9 : 0],
+        color: theme.colorScheme === 'dark' ? theme.white : theme.colors.blue[9],
       },
     },
 

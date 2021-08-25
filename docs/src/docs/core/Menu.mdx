@@ -87,10 +87,16 @@ For regular html element it will be `controlRefProp="ref"`
 
 ## Change menu position
 
-Menu position defaults to `{ top: 0, left: 0 }` and is set with object which contains optional top, left, bottom and right properties.
+Menu is rendered inside <GatsbyLink to="/core/portal/">Portal</GatsbyLink> and its position is controlled with the following props:
+
+- `position` – left, right, bottom, top
+- `placement` – start, center, end
+- `gutter` – spacing between menu body and target element in px
+- `withArrow` – displays arrow, arrow position is calculated by `position` and `placement` props
+
 Note that in most cases you will need to change <GatsbyLink to="/core/transition/">transition</GatsbyLink> to match your position:
 
-<Demo data={MenuDemos.positions} />
+<Demo data={MenuDemos.positionConfigurator} />
 
 ## Change transition
 

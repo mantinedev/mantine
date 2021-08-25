@@ -1,6 +1,6 @@
-import type { MenuBodyStylesNames } from './MenuBody/MenuBody';
+import type { MenuStylesNames } from './Menu';
 
-export const Menu: Record<MenuBodyStylesNames, string> = {
+export const Menu: Record<MenuStylesNames, string> = {
   body: 'Menu body',
   divider: 'Divider inside menu body',
   label: 'Menu label wrapper (Text component)',
@@ -10,4 +10,5 @@ export const Menu: Record<MenuBodyStylesNames, string> = {
   itemBody: 'MenuItem body (wraps itemLabel and rightSection)',
   itemIcon: 'MenuItem icon',
   itemLabel: 'MenuItem label',
+  arrow: 'Dropdown arrow',
 };

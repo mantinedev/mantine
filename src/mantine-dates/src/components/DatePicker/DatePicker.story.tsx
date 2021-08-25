@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES, Group } from '@mantine/core';
+import { MANTINE_SIZES, Group, Modal, Button } from '@mantine/core';
 import dayjs from 'dayjs';
 import { DatePicker } from './DatePicker';
+
+function WrappedModal(props: Omit<React.ComponentProps<typeof Modal>, 'opened' | 'onClose'>) {
+  const [opened, setOpened] = useState(true);
+
+  return (
+    <div style={{ padding: 50 }}>
+      <Button onClick={() => setOpened(true)}>Open Modal</Button>
+      <Modal opened={opened} onClose={() => setOpened(false)} {...props} />
+    </div>
+  );
+}
 
 function Controlled() {
   const [value, onChange] = useState(new Date());
@@ -24,6 +35,7 @@ const sizes = MANTINE_SIZES.map((size) => (
     size={size}
     key={size}
     style={{ marginTop: 30 }}
+    defaultValue={new Date()}
     withSelect
     label="This is label"
     description="This is description"
@@ -57,6 +69,11 @@ storiesOf('@mantine/dates/DatePicker', module)
         <DatePicker label="Second" />
       </Group>
     </div>
+  ))
+  .add('Within Modal', () => (
+    <WrappedModal>
+      <DatePicker placeholder="Pick date" label="Date picker" zIndex={1000} />
+    </WrappedModal>
   ))
   .add('In modal', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>

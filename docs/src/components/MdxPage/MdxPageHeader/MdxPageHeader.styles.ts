@@ -1,6 +1,6 @@
 import { createUseStyles } from 'react-jss';
 import { theming } from '@mantine/core';
-import { BREAKPOINT, CONTENT_WIDTH, TABLE_OF_CONTENTS_WIDTH } from '../settings';
+import { BREAKPOINT } from '../settings';
 
 export default createUseStyles(
   (theme) => ({
@@ -19,9 +19,9 @@ export default createUseStyles(
 
     header: {
       paddingTop: 50,
-      maxWidth: CONTENT_WIDTH + 2,
-      margin: 'auto',
-      paddingRight: TABLE_OF_CONTENTS_WIDTH,
+      maxWidth: 1082,
+      marginLeft: 'auto',
+      marginRight: 'auto',
       paddingBottom: theme.spacing.xl * 1.5,
 
       [`@media (max-width: ${BREAKPOINT}px)`]: {

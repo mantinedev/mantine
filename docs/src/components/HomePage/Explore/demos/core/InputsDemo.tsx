@@ -16,8 +16,10 @@ import {
   RadioGroup,
   Radio,
   Autocomplete,
+  ColorInput,
 } from '@mantine/core';
 import { CustomSelectDemo } from '@mantine/core/src/components/Select/demos/itemComponent';
+import { CountriesSelect } from '@mantine/core/src/components/MultiSelect/demos/countries';
 import { DatePicker, TimeInput, DateRangePicker } from '@mantine/dates';
 import { BREAKPOINT } from '../../Explore.styles';
 
@@ -79,7 +81,6 @@ export function InputsDemo() {
         <DatePicker
           label="Date picker"
           placeholder="Pick a date"
-          description="Capture date input from user"
           required
           defaultValue={new Date()}
           inputFormat="MMMM D, YYYY"
@@ -87,22 +88,15 @@ export function InputsDemo() {
 
         <DateRangePicker
           label="Date range picker"
-          description="Capture dates range from user"
           placeholder="Pick dates range"
           style={{ marginTop: 15 }}
         />
 
-        <TextInput
-          style={{ marginTop: 15 }}
-          label="Text input"
-          placeholder="General text input"
-          description="Use text input to capture string data from user"
-        />
+        <TextInput style={{ marginTop: 15 }} label="Text input" placeholder="General text input" />
 
         <NativeSelect
           style={{ marginTop: 15 }}
           label="Native select"
-          description="HTML select element wrapper"
           data={[
             { value: 'react', label: 'React' },
             { value: 'vue', label: 'Vue' },
@@ -110,6 +104,8 @@ export function InputsDemo() {
             { value: 'svelte', label: 'Svelte' },
           ]}
         />
+
+        <CountriesSelect label="Multi select" style={{ marginTop: 15 }} defaultValue={[]} />
 
         <TextInput
           style={{ marginTop: 15 }}
@@ -131,31 +127,24 @@ export function InputsDemo() {
       </div>
 
       <div className={classes.column}>
-        <TimeInput
-          label="Time input"
-          description="Capture time from user"
-          defaultValue={new Date()}
-        />
+        <TimeInput label="Time input" defaultValue={new Date()} />
 
-        <CustomSelectDemo
-          label="Custom select"
-          description="Custom select with any component as item"
-          style={{ marginTop: 15 }}
-        />
+        <CustomSelectDemo label="Custom select" style={{ marginTop: 15 }} />
 
         <Autocomplete
           label="Autocomplete"
-          description="Use to create search or propose options"
           placeholder="Your favorite library/framework"
           styles={{ dropdown: { zIndex: 4 } }}
           style={{ marginTop: 15 }}
           data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
         />
 
-        <NumberInput
-          label="Number input"
-          description="Enter your age"
-          defaultValue={18}
+        <NumberInput label="Number input" defaultValue={18} style={{ marginTop: 15 }} />
+
+        <ColorInput
+          label="Color input"
+          defaultValue="rgba(97, 168, 255, 0.88)"
+          format="rgba"
           style={{ marginTop: 15 }}
         />
 

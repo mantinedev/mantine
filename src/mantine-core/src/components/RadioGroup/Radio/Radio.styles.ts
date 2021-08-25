@@ -50,8 +50,8 @@ export default createMemoStyles({
     justifyContent: 'center',
 
     '&:checked': {
-      background: getThemeColor({ theme, color, shade: 7 }),
-      borderColor: getThemeColor({ theme, color, shade: 7 }),
+      background: getThemeColor({ theme, color, shade: 6 }),
+      borderColor: getThemeColor({ theme, color, shade: 6 }),
 
       '&::before': {
         content: '""',

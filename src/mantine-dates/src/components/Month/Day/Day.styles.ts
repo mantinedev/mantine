@@ -53,7 +53,7 @@ export default createMemoStyles({
     },
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
     },
 
     '&$weekend:not(:disabled)': {
@@ -75,7 +75,7 @@ export default createMemoStyles({
     },
 
     '&$selected:not(:disabled)': {
-      backgroundColor: theme.colors[theme.primaryColor][7],
+      backgroundColor: theme.colors[theme.primaryColor][6],
       color: theme.white,
     },
 

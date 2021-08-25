@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Text, Group, Button } from '@mantine/core';
 import cx from 'clsx';
-import { ArrowRightIcon } from '@modulz/radix-icons';
 import { Logo } from '../Logo/Logo';
 import { SocialButton } from '../SocialButton/SocialButton';
 import { LinksGroup } from './LinksGroup/LinksGroup';
@@ -49,7 +48,6 @@ export function Footer({ withNavbar }: FooterProps) {
                   variant="outline"
                   color="gray"
                   size="sm"
-                  rightIcon={<ArrowRightIcon width={10} height={10} />}
                 >
                   Leave feedback
                 </Button>
@@ -66,8 +64,8 @@ export function Footer({ withNavbar }: FooterProps) {
                 </a>
               </Text>
               <div className={classes.social}>
-                <SocialButton type="large" service="discord" className={classes.socialButton} />
-                <SocialButton type="large" service="twitter" className={classes.socialButton} />
+                <SocialButton service="discord" className={classes.socialButton} />
+                <SocialButton service="twitter" className={classes.socialButton} />
               </div>
             </Group>
           </div>

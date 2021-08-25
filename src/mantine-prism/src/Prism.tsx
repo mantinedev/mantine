@@ -15,8 +15,10 @@ import { CopyIcon } from './CopyIcon';
 import { getPrismTheme } from './prism-theme';
 import useStyles from './Prism.styles';
 
+export type PrismStylesNames = keyof ReturnType<typeof useStyles>;
+
 export interface PrismProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<PrismStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Code which will be highlighted */
   children: string;

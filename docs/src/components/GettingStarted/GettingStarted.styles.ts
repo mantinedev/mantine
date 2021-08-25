@@ -11,7 +11,8 @@ export default createUseStyles(
     },
 
     container: {
-      padding: [80, 40],
+      paddingTop: 50,
+      paddingBottom: 50,
     },
   }),
   { theming }

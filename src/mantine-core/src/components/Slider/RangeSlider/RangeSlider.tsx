@@ -287,8 +287,8 @@ export function RangeSlider({
     labelAlwaysOn,
     themeOverride,
     onBlur: () => setFocused(-1),
-    classNames: classNames as any,
-    styles: styles as any,
+    classNames,
+    styles,
   };
 
   return (
@@ -304,8 +304,8 @@ export function RangeSlider({
       onMouseUpCapture={() => setDragging(-1)}
       onKeyDownCapture={handleTrackKeydownCapture}
       themeOverride={themeOverride}
-      styles={styles as any}
-      classNames={classNames as any}
+      styles={styles}
+      classNames={classNames}
     >
       <Track
         offset={positions[0]}
@@ -318,8 +318,8 @@ export function RangeSlider({
         max={max}
         value={_value[1]}
         themeOverride={themeOverride}
-        styles={styles as any}
-        classNames={classNames as any}
+        styles={styles}
+        classNames={classNames}
         onChange={(val) => {
           const nearestValue = Math.abs(_value[0] - val) > Math.abs(_value[1] - val) ? 1 : 0;
           const clone: Value = [..._value];

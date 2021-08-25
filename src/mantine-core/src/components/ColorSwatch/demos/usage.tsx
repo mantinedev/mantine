@@ -4,7 +4,6 @@ import { ColorSwatch } from '../ColorSwatch';
 import { Group } from '../../Group/Group';
 
 const code = `
-import React from 'react';
 import { ColorSwatch, Group, useMantineTheme } from '@mantine/core';
 
 function Demo() {

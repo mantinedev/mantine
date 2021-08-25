@@ -1,8 +1,8 @@
 import React from 'react';
-import { Transition } from 'react-transition-group';
-import { DefaultProps, useMantineTheme } from '../../theme';
-import { MantineTransition } from './transitions';
+import { DefaultProps } from '../../theme';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
+import { useTransition } from './use-transition';
+import { MantineTransition } from './transitions';
 
 interface GroupedTransitionItem {
   duration: number;
@@ -14,50 +14,74 @@ export interface GroupedTransitionProps extends Omit<DefaultProps, 'className'> 
   /** Transitions group */
   transitions: Record<string, GroupedTransitionItem>;
 
-  /** When true, component will ne mounted */
+  /** Render function with transition group styles argument */
+  children(styles: Record<string, React.CSSProperties>): React.ReactElement<any, any>;
+
+  /** Transition duration in ms */
+  duration?: number;
+
+  /** Transition timing function, defaults to theme.transitionTimingFunction */
+  timingFunction?: string;
+
+  /** When true, component will be mounted */
   mounted: boolean;
 
-  /** Render function with transition group styles argument */
-  children(styles: Record<string, React.CSSProperties>): React.ReactNode;
+  /** Calls when exit transition ends */
+  onExited?: () => void;
+
+  /** Calls when exit transition starts */
+  onExit?: () => void;
+
+  /** Calls when enter transition starts */
+  onEnter?: () => void;
+
+  /** Calls when enter transition ends */
+  onEntered?: () => void;
 }
 
 export function GroupedTransition({
   transitions,
+  duration = 250,
   mounted,
   children,
   themeOverride,
+  timingFunction,
+  onExit,
+  onEntered,
+  onEnter,
+  onExited,
 }: GroupedTransitionProps) {
-  const theme = useMantineTheme(themeOverride);
+  const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
+    mounted,
+    duration,
+    themeOverride,
+    timingFunction,
+    onExit,
+    onEntered,
+    onEnter,
+    onExited,
+  });
 
-  const duration = Math.max(
-    ...Object.keys(transitions).map((transition) => transitions[transition].duration)
-  );
+  if (transitionDuration === 0) {
+    return mounted ? <>{children({})}</> : null;
+  }
 
-  return (
-    <Transition
-      in={mounted}
-      timeout={duration}
-      unmountOnExit
-      mountOnEnter
-      onEnter={(node: any) => node.offsetHeight}
-    >
-      {(transitionState) => {
-        const transitionsStyles = Object.keys(transitions).reduce((acc, transition) => {
-          acc[transition] = getTransitionStyles({
-            duration: transitions[transition].duration,
-            transition: transitions[transition].transition,
-            timingFunction:
-              transitions[transition].timingFunction || theme.transitionTimingFunction,
-            state: transitionState,
-          });
+  if (transitionStatus === 'exited') {
+    return null;
+  }
 
-          return acc;
-        }, {});
+  const transitionsStyles = Object.keys(transitions).reduce((acc, transition) => {
+    acc[transition] = getTransitionStyles({
+      duration: transitions[transition].duration,
+      transition: transitions[transition].transition,
+      timingFunction: transitions[transition].timingFunction || transitionTimingFunction,
+      state: transitionStatus,
+    });
 
-        return children(transitionsStyles);
-      }}
-    </Transition>
-  );
+    return acc;
+  }, {});
+
+  return <>{children(transitionsStyles)}</>;
 }
 
 GroupedTransition.displayName = '@mantine/core/GroupedTransition';

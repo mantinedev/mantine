@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { validateJson } from './validate-json/validate-json';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps, getSizeValue, useMantineTheme } from '../../theme';
 import { Textarea, TextareaProps, TextareaStylesNames } from '../Textarea/Textarea';
 
 export type JsonInputStylesNames = TextareaStylesNames;
@@ -34,6 +34,7 @@ export function JsonInput({
   error,
   styles,
   formatOnBlur = false,
+  size = 'sm',
   validationError,
   themeOverride,
   ...others
@@ -76,8 +77,9 @@ export function JsonInput({
       styles={{
         ...styles,
         input: {
-          ...(styles as any)?.input,
+          ...styles?.input,
           fontFamily: theme.fontFamilyMonospace,
+          fontSize: getSizeValue({ size, sizes: theme.fontSizes }) - 2,
         },
       }}
       {...others}

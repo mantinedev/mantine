@@ -1,8 +1,7 @@
 import React from 'react';
-import { Transition as RTGTransition } from 'react-transition-group';
-import { useReducedMotion } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps } from '../../theme';
+import { DefaultProps } from '../../theme';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
+import { useTransition } from './use-transition';
 import { MantineTransition, transitions } from './transitions';
 
 export { GroupedTransition } from './GroupedTransition';
@@ -26,7 +25,7 @@ export interface TransitionProps extends Omit<DefaultProps, 'className'> {
   mounted: boolean;
 
   /** Render function with transition styles argument */
-  children(styles: React.CSSProperties): React.ReactNode;
+  children(styles: React.CSSProperties): React.ReactElement<any, any>;
 
   /** Calls when exit transition ends */
   onExited?: () => void;
@@ -53,39 +52,32 @@ export function Transition({
   onEnter,
   onExited,
 }: TransitionProps) {
-  const theme = useMantineTheme(themeOverride);
-  const reduceMotion = useReducedMotion();
-  const transitionDuration = reduceMotion ? 0 : duration;
+  const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
+    mounted,
+    duration,
+    themeOverride,
+    timingFunction,
+    onExit,
+    onEntered,
+    onEnter,
+    onExited,
+  });
 
   if (transitionDuration === 0) {
     return mounted ? <>{children({})}</> : null;
   }
 
-  return (
-    <RTGTransition
-      in={mounted}
-      timeout={duration}
-      unmountOnExit
-      mountOnEnter
-      onEnter={(node: any) => {
-        node.offsetHeight;
-        typeof onEnter === 'function' && onEnter();
-      }}
-      onExited={onExited}
-      onEntered={onEntered}
-      onExit={onExit}
-    >
-      {(transitionState) =>
-        children(
-          getTransitionStyles({
-            transition,
-            duration: transitionDuration,
-            state: transitionState,
-            timingFunction: timingFunction || theme.transitionTimingFunction,
-          })
-        )
-      }
-    </RTGTransition>
+  return transitionStatus === 'exited' ? null : (
+    <>
+      {children(
+        getTransitionStyles({
+          transition,
+          duration: transitionDuration,
+          state: transitionStatus,
+          timingFunction: transitionTimingFunction,
+        })
+      )}
+    </>
   );
 }
 

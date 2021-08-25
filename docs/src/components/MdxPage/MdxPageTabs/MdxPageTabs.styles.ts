@@ -10,18 +10,28 @@ import {
 
 export default createUseStyles(
   (theme) => ({
-    tabs: {},
+    tabs: {
+      boxSizing: 'border-box',
+    },
 
     tabsWrapper: {
       background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2],
+      paddingLeft: theme.spacing.xl * 2,
+
+      [`@media (max-width: ${BREAKPOINT}px)`]: {
+        paddingLeft: theme.spacing.xl,
+      },
+
+      [`@media (min-width: ${1380}px)`]: {
+        paddingLeft: 0,
+      },
     },
 
     tabsList: {
-      paddingRight: 378, // I do not know how this value is calculated
-      maxWidth: CONTENT_WIDTH - 20,
-      marginLeft: 'auto !important',
-      marginRight: 'auto !important',
+      maxWidth: 1082,
+      marginLeft: 'auto',
+      marginRight: 'auto',
       borderBottom: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
       }`,
@@ -48,13 +58,13 @@ export default createUseStyles(
         height: TAB_HEIGHT_MOBILE,
       },
 
-      '&:first-of-type': {
-        marginLeft: theme.spacing.xl * 2,
+      // '&:first-of-type': {
+      //   marginLeft: theme.spacing.xl * 2,
 
-        [`@media (max-width: ${BREAKPOINT}px)`]: {
-          marginLeft: theme.spacing.xl,
-        },
-      },
+      //   [`@media (max-width: ${BREAKPOINT}px)`]: {
+      //     marginLeft: theme.spacing.xl,
+      //   },
+      // },
     },
 
     tabContent: {

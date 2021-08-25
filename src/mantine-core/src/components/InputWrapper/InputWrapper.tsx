@@ -30,7 +30,7 @@ export interface InputWrapperBaseProps {
 }
 
 export interface InputWrapperProps
-  extends DefaultProps<typeof useStyles>,
+  extends DefaultProps<InputWrapperStylesNames>,
     InputWrapperBaseProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** Input that should be wrapped */
@@ -102,7 +102,6 @@ export function InputWrapper({
           {...descriptionProps}
           themeOverride={themeOverride}
           color="gray"
-          size={size}
           className={classes.description}
           style={_styles.description}
         >
@@ -116,7 +115,6 @@ export function InputWrapper({
         <Text
           {...errorProps}
           themeOverride={themeOverride}
-          color="red"
           size={size}
           className={classes.error}
           style={_styles.error}

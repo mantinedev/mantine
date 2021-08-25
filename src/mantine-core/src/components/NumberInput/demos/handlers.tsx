@@ -51,7 +51,9 @@ function Demo() {
         onClick={() => handlers.current.decrement()}
         style={{
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+          borderColor: theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[4],
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+          transitionDuration: '0ms',
         }}
       >
         –
@@ -72,7 +74,9 @@ function Demo() {
         onClick={() => handlers.current.increment()}
         style={{
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+          borderColor: theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[4],
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+          transitionDuration: '0ms',
         }}
       >
         +

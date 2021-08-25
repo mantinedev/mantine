@@ -29,14 +29,14 @@ export default createMemoStyles({
       backgroundColor: getThemeColor({
         theme,
         color,
-        shade: 6,
+        shade: theme.colorScheme === 'dark' ? 6 : 7,
       }),
     },
   }),
 
   title: ({ color, theme }: AlertStyles) => ({
     boxSizing: 'border-box',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 6 : 7 }),
     margin: 0,
     marginBottom: theme.spacing.xs / 2,
     textOverflow: 'ellipsis',

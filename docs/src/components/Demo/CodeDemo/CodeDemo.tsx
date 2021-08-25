@@ -54,9 +54,10 @@ export default function CodeDemo({
               withArrow
               arrowSize={4}
               gutter={8}
+              positionDependencies={[visible]}
             >
               <ActionIcon
-                variant={theme.colorScheme === 'dark' ? 'hover' : 'outline'}
+                variant="hover"
                 onClick={() => setVisible((v) => !v)}
                 aria-label="Toggle code"
               >

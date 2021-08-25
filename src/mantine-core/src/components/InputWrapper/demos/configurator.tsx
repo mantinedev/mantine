@@ -3,9 +3,9 @@ import { InputWrapper, InputWrapperProps, Input } from '../../../index';
 
 function Wrapper(props: InputWrapperProps) {
   return (
-    <div style={{ maxWidth: 300, margin: 'auto' }}>
+    <div style={{ maxWidth: 440, marginLeft: 'auto', marginRight: 'auto' }}>
       <InputWrapper id="input-demo" {...props}>
-        <Input id="input-demo" placeholder="Your email" />
+        <Input id="input-demo" placeholder="Your email" size={props.size} />
       </InputWrapper>
     </div>
   );
@@ -44,6 +44,12 @@ export const configurator: MantineDemo = {
       name: 'error',
       type: 'string',
       initialValue: 'Your credit card expired',
+    },
+    {
+      name: 'size',
+      type: 'size',
+      initialValue: 'sm',
+      defaultValue: 'sm',
     },
   ],
 };

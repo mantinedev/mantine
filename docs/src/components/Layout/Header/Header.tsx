@@ -1,12 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Burger, Code, ActionIcon, Tooltip, Group } from '@mantine/core';
-import { SunIcon, MoonIcon } from '@modulz/radix-icons';
+import React, { useState, useEffect } from 'react';
+import { Burger, Code, Group } from '@mantine/core';
 import corePackageJson from '../../../../package.json';
 import { getDocsData } from '../get-docs-data';
-import { ColorSchemeContext } from '../ColorScheme.context';
 import Search from './Search/Search';
+import { ColorSchemeToggle } from './ColorSchemeToggle/ColorSchemeToggle';
+import { SourceCode } from './SourceCode/SourceCode';
+import { Discord } from './Discord/Discord';
 import { Logo } from '../../Logo/Logo';
-import { SocialButton } from '../../SocialButton/SocialButton';
 import useStyles from './Header.styles';
 
 interface HeaderProps {
@@ -26,8 +26,6 @@ function isMac() {
 export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps) {
   const classes = useStyles();
   const [isMacOS, setIsMacOS] = useState(true);
-  const colorSchemeContext = useContext(ColorSchemeContext);
-  const dark = colorSchemeContext.colorScheme === 'dark';
   const burgerTitle = navbarOpened ? 'Open navigation' : 'Hide navigation';
 
   useEffect(() => {
@@ -57,39 +55,12 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
         <div />
       </div>
 
-      <div className={classes.links}>
+      <Group className={classes.links} spacing="xs">
         <Search data={data} isMacOS={isMacOS} />
-
-        <Group spacing="xs">
-          <SocialButton type="small" service="github" />
-          <SocialButton type="small" service="discord" />
-          <SocialButton type="small" service="twitter" />
-          <SocialButton type="small" service="email" />
-        </Group>
-
-        <Tooltip
-          label={`Toggle color scheme: ${isMacOS ? '⌘' : 'Ctrl'} + J`}
-          transition="fade"
-          withArrow
-          position="bottom"
-          placement="end"
-          style={{ marginLeft: 20 }}
-        >
-          <ActionIcon
-            aria-label="Toggle theme"
-            className={classes.themeToggle}
-            variant="outline"
-            color={dark ? 'yellow' : 'blue'}
-            onClick={() => colorSchemeContext.onChange(dark ? 'light' : 'dark')}
-          >
-            {dark ? (
-              <SunIcon style={{ width: 18, height: 18 }} />
-            ) : (
-              <MoonIcon style={{ width: 18, height: 18 }} />
-            )}
-          </ActionIcon>
-        </Tooltip>
-      </div>
+        <Discord />
+        <SourceCode />
+        <ColorSchemeToggle />
+      </Group>
     </div>
   );
 }

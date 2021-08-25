@@ -17,7 +17,7 @@ export { useListState } from './use-list-state/use-list-state';
 export { useLocalStorageValue } from './use-local-storage-value/use-local-storage-value';
 export { useMediaQuery } from './use-media-query/use-media-query';
 export { useMergedRef } from './use-merged-ref/use-merged-ref';
-export { useMove } from './use-move/use-move';
+export { useMove, clampUseMovePosition } from './use-move/use-move';
 export { useQueue } from './use-queue/use-queue';
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion';
 export { useScrollLock } from './use-scroll-lock/use-scroll-lock';
@@ -31,3 +31,5 @@ export { useHash } from './use-hash/use-hash';
 export { useHotkeys, getHotkeyHandler } from './use-hotkey/use-hotkeys';
 export { useFullscreen } from './use-fullscreen/use-fullscreen';
 export { useLogger } from './use-logger/use-logger';
+
+export type { UseMovePosition } from './use-move/use-move';

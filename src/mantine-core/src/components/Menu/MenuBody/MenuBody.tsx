@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import cx from 'clsx';
-import { useReducedMotion, useClickOutside, useFocusTrap } from '@mantine/hooks';
+import { useFocusTrap } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../../theme';
-import { Transition, MantineTransition } from '../../Transition/Transition';
+import { MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import { Divider } from '../../Divider/Divider';
 import { Text } from '../../Text/Text';
@@ -46,14 +46,14 @@ export interface MenuBodyProps
   /** Should menu close on item click */
   closeOnItemClick?: boolean;
 
-  /** Menu body z-index */
-  zIndex?: number;
-
   /** Body border-radius */
   radius?: MantineNumberSize;
 
   /** Trap focus inside menu */
   trapFocus?: boolean;
+
+  /** Get body ref */
+  elementRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
 function getNextItem(active: number, items: MenuItemType[]) {
@@ -96,19 +96,16 @@ export function MenuBody({
   themeOverride,
   opened,
   onClose,
-  transition = 'skew-up',
-  transitionDuration = 250,
-  transitionTimingFunction,
   children,
   size = 'md',
   shadow = 'md',
-  closeOnClickOutside = true,
   closeOnItemClick = true,
-  zIndex = 1000,
+  transitionDuration = 150,
   classNames,
   styles,
   radius,
   trapFocus = true,
+  elementRef,
   ...others
 }: MenuBodyProps) {
   const items = React.Children.toArray(children).filter(
@@ -119,10 +116,8 @@ export function MenuBody({
   const hoveredTimeout = useRef<number>();
   const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, theme }, classNames as any, 'menu');
-  const _styles = mergeStyles(classes, styles as any);
-  const reduceMotion = useReducedMotion();
-  const duration = reduceMotion ? 0 : transitionDuration;
+  const classes = useStyles({ size, theme }, classNames, 'menu');
+  const _styles = mergeStyles(classes, styles);
   const [hovered, setHovered] = useState(findInitialItem(items));
   const focusTrapRef = useFocusTrap(trapFocus);
 
@@ -130,15 +125,13 @@ export function MenuBody({
     if (!opened) {
       hoveredTimeout.current = window.setTimeout(() => {
         setHovered(findInitialItem(items));
-      }, duration);
+      }, transitionDuration);
     } else {
       window.clearTimeout(hoveredTimeout.current);
     }
 
     return () => window.clearTimeout(hoveredTimeout.current);
   }, [opened]);
-
-  const menuRef = useClickOutside(() => closeOnClickOutside && onClose());
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { code } = event.nativeEvent;
@@ -173,15 +166,15 @@ export function MenuBody({
   const buttons = items.map((item, index) => {
     if (item.type === MenuItem) {
       return (
-        <MenuButton
+        <MenuButton<'button'>
           {...item.props}
           key={index}
           hovered={hovered === index}
           onHover={() => setHovered(index)}
           radius={radius}
-          classNames={classNames as any}
-          styles={styles as any}
-          onClick={(event: any) => {
+          classNames={classNames}
+          styles={styles}
+          onClick={(event) => {
             if (closeOnItemClick) {
               onClose();
             }
@@ -190,7 +183,7 @@ export function MenuBody({
               item.props.onClick(event);
             }
           }}
-          elementRef={(node: any) => {
+          elementRef={(node) => {
             buttonsRefs.current[index] = node;
           }}
         />
@@ -200,10 +193,10 @@ export function MenuBody({
     if (item.type === MenuLabel) {
       return (
         <Text
+          key={index}
           className={classes.label}
           style={_styles.label}
           {...(item.props as any)}
-          key={index}
         />
       );
     }
@@ -224,30 +217,20 @@ export function MenuBody({
   });
 
   return (
-    <Transition
-      mounted={opened}
-      duration={duration}
-      transition={transition}
-      timingFunction={transitionTimingFunction}
-      themeOverride={themeOverride}
+    <Paper
+      shadow={shadow}
+      className={cx(classes.body, className)}
+      style={{ ...style, ..._styles.body }}
+      onKeyDownCapture={handleKeyDown}
+      role="menu"
+      aria-orientation="vertical"
+      radius={radius}
+      onMouseLeave={() => setHovered(-1)}
+      elementRef={elementRef}
+      {...others}
     >
-      {(transitionStyles) => (
-        <Paper
-          shadow={shadow}
-          className={cx(classes.body, className)}
-          style={{ ...style, ..._styles.body, ...transitionStyles, zIndex }}
-          onKeyDownCapture={handleKeyDown}
-          elementRef={menuRef}
-          role="menu"
-          aria-orientation="vertical"
-          radius={radius}
-          onMouseLeave={() => setHovered(-1)}
-          {...others}
-        >
-          <div ref={focusTrapRef}>{buttons}</div>
-        </Paper>
-      )}
-    </Transition>
+      <div ref={focusTrapRef}>{buttons}</div>
+    </Paper>
   );
 }
 

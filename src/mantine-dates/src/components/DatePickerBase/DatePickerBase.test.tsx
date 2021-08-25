@@ -1,11 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {
-  itRendersChildren,
-  itSupportsClassName,
-  itSupportsRef,
-  itSupportsStyle,
-} from '@mantine/tests';
+import { itSupportsClassName, itSupportsRef, itSupportsStyle } from '@mantine/tests';
 import { Input, InputWrapper, Modal } from '@mantine/core';
 import { DatePickerBase } from './DatePickerBase';
 
@@ -25,7 +20,6 @@ const defaultProps = {
 describe('@mantine/dates/DatePickerBase', () => {
   itSupportsClassName(DatePickerBase, defaultProps);
   itSupportsStyle(DatePickerBase, defaultProps);
-  itRendersChildren(DatePickerBase, defaultProps);
   itSupportsRef(DatePickerBase, defaultProps, HTMLButtonElement, 'elementRef');
 
   it('passes __staticSelector prop to InputWrapper and Input components', () => {
