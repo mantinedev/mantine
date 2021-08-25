@@ -19,5 +19,16 @@ export const configurator: MantineDemo = {
   configurator: [
     { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
     { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
+    {
+      name: 'variant',
+      type: 'select',
+      initialValue: 'oval',
+      defaultValue: 'oval',
+      data: [
+        { value: 'oval', label: 'Oval' },
+        { value: 'bars', label: 'Bars' },
+        { value: 'dots', label: 'Dots' },
+      ],
+    },
   ],
 };

@@ -7,6 +7,15 @@ import {
   getThemeColor,
   getSizeValue,
 } from '../../theme';
+import { Bars } from './loaders/Bars';
+import { Oval } from './loaders/Oval';
+import { Dots } from './loaders/Dots';
+
+const LOADERS = {
+  bars: Bars,
+  oval: Oval,
+  dots: Dots,
+};
 
 export const LOADER_SIZES = {
   xs: 18,
@@ -22,112 +31,30 @@ export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRe
 
   /** Loader color from theme */
   color?: string;
+
+  /** Loader appearance */
+  variant?: 'bars' | 'oval' | 'dots';
 }
 
-export function Loader({ size = 'md', color, themeOverride, className, ...others }: LoaderProps) {
+export function Loader({
+  size = 'md',
+  color,
+  themeOverride,
+  className,
+  variant = 'oval',
+  ...others
+}: LoaderProps) {
   const theme = useMantineTheme(themeOverride);
+  const Component = LOADERS[variant] || LOADERS.bars;
 
   return (
-    <svg
-      width={`${getSizeValue({ size, sizes: LOADER_SIZES })}px`}
-      fill={getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 })}
-      viewBox="0 0 135 140"
-      xmlns="http://www.w3.org/2000/svg"
+    <Component
+      size={getSizeValue({ size, sizes: LOADER_SIZES })}
+      color={getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 })}
       role="presentation"
       className={cx('mantine-loader', className)}
       {...others}
-    >
-      <rect y="10" width="15" height="120" rx="6">
-        <animate
-          attributeName="height"
-          begin="0.5s"
-          dur="1s"
-          values="120;110;100;90;80;70;60;50;40;140;120"
-          calcMode="linear"
-          repeatCount="indefinite"
-        />
-        <animate
-          attributeName="y"
-          begin="0.5s"
-          dur="1s"
-          values="10;15;20;25;30;35;40;45;50;0;10"
-          calcMode="linear"
-          repeatCount="indefinite"
-        />
-      </rect>
-      <rect x="30" y="10" width="15" height="120" rx="6">
-        <animate
-          attributeName="height"
-          begin="0.25s"
-          dur="1s"
-          values="120;110;100;90;80;70;60;50;40;140;120"
-          calcMode="linear"
-          repeatCount="indefinite"
-        />
-        <animate
-          attributeName="y"
-          begin="0.25s"
-          dur="1s"
-          values="10;15;20;25;30;35;40;45;50;0;10"
-          calcMode="linear"
-          repeatCount="indefinite"
-        />
-      </rect>
-      <rect x="60" width="15" height="140" rx="6">
-        <animate
-          attributeName="height"
-          begin="0s"
-          dur="1s"
-          values="120;110;100;90;80;70;60;50;40;140;120"
-          calcMode="linear"
-          repeatCount="indefinite"
-        />
-        <animate
-          attributeName="y"
-          begin="0s"
-          dur="1s"
-          values="10;15;20;25;30;35;40;45;50;0;10"
-          calcMode="linear"
-          repeatCount="indefinite"
-        />
-      </rect>
-      <rect x="90" y="10" width="15" height="120" rx="6">
-        <animate
-          attributeName="height"
-          begin="0.25s"
-          dur="1s"
-          values="120;110;100;90;80;70;60;50;40;140;120"
-          calcMode="linear"
-          repeatCount="indefinite"
-        />
-        <animate
-          attributeName="y"
-          begin="0.25s"
-          dur="1s"
-          values="10;15;20;25;30;35;40;45;50;0;10"
-          calcMode="linear"
-          repeatCount="indefinite"
-        />
-      </rect>
-      <rect x="120" y="10" width="15" height="120" rx="6">
-        <animate
-          attributeName="height"
-          begin="0.5s"
-          dur="1s"
-          values="120;110;100;90;80;70;60;50;40;140;120"
-          calcMode="linear"
-          repeatCount="indefinite"
-        />
-        <animate
-          attributeName="y"
-          begin="0.5s"
-          dur="1s"
-          values="10;15;20;25;30;35;40;45;50;0;10"
-          calcMode="linear"
-          repeatCount="indefinite"
-        />
-      </rect>
-    </svg>
+    />
   );
 }
 
