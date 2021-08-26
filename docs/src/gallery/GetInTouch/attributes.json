@@ -1,6 +1,7 @@
 {
-  "title": "Get in touch form",
+  "title": "Contact form",
   "category": "forms",
+  "responsive": true,
   "dependencies": ["/core/paper/", "/core/text-input/", "/core/textarea/"],
   "canvas": {
     "center": true,

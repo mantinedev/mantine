@@ -18,6 +18,7 @@ import {
   MenuItem,
   Menu,
   MenuLabel,
+  Badge,
 } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import * as GalleryComponents from '../../../../gallery';
@@ -100,6 +101,7 @@ export function ComponentCanvas(props: GalleryComponent) {
             <MenuLabel>Component dependencies</MenuLabel>
             {dependencies}
           </Menu>
+          {props.attributes.responsive && <Badge>Responsive</Badge>}
         </Group>
         <SegmentedControl
           value={state}
