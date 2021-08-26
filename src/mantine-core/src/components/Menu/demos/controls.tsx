@@ -12,9 +12,7 @@ const code = `
   {/* Menu items */}
 </Menu>
 
-<Menu
-  control={<Button>Mantine Button</Button>}
->
+<Menu control={<Button>Mantine Button</Button>}>
   {/* Menu items */}
 </Menu>
 `;

@@ -263,4 +263,7 @@ export function Menu({
   );
 }
 
+Menu.Item = MenuItem;
+Menu.Label = MenuLabel;
+
 Menu.displayName = '@mantine/core/Menu';
