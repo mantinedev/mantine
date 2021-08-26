@@ -51,4 +51,6 @@ export function Card<C extends React.ElementType = 'div', R extends HTMLElement 
   );
 }
 
+Card.Section = CardSection;
+
 Card.displayName = '@mantine/core/Card';

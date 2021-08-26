@@ -18,15 +18,15 @@ import { CardDemos } from '@demos/core';
 ## Usage
 
 Card component is a wrapper around [Paper](/core/paper/) component
-with context styles for CardSection component.
+with context styles for Card.Section component.
 Combine Card component with other Mantine components to create cards with your design requirements:
 
 <Demo data={CardDemos.usage} />
 
-## CardSection
+## Card.Section
 
-CardSection is a special component that is used to remove Card padding from its children while other elements still have horizontal spacing.
-CardSection works the following way:
+Card.Section is a special component that is used to remove Card padding from its children while other elements still have horizontal spacing.
+Card.Section works the following way:
 
 - It component is a first child in Card then it has negative top, left and right margins
 - If it is a last child in Card then it has negative bottom, left and right margins
@@ -35,32 +35,32 @@ CardSection works the following way:
 ```tsx
 <Card padding="xl">
   {/* top, right, left margins are negative – -1 * theme.spacing.xl */}
-  <CardSection>First section</CardSection>
+  <Card.Section>First section</Card.Section>
 
-  {/* Content that is not inside CardSection will have theme.spacing.xl spacing on all sides relative to Card */}
+  {/* Content that is not inside Card.Section will have theme.spacing.xl spacing on all sides relative to Card */}
   <Text>Some other content</Text>
 
   {/* right, left margins are negative – -1 * theme.spacing.xl */}
-  <CardSection>Middle section</CardSection>
+  <Card.Section>Middle section</Card.Section>
 
   {/* bottom, right, left margins are negative – -1 * theme.spacing.xl */}
-  <CardSection>Last section</CardSection>
+  <Card.Section>Last section</Card.Section>
 </Card>
 ```
 
-Note that Card relies on mapping direct children and you cannot use fragments or others wrappers for CardSection:
+Note that Card relies on mapping direct children and you cannot use fragments or others wrappers for Card.Section:
 
 ```tsx
 <Card padding="xl">
   <div>
-    <CardSection>Won't work</CardSection>
+    <Card.Section>Won't work</Card.Section>
   </div>
 
   <>
-    <CardSection>Won't work either</CardSection>
+    <Card.Section>Won't work either</Card.Section>
   </>
 
-  <CardSection>Works fine</CardSection>
+  <Card.Section>Works fine</Card.Section>
 </Card>
 ```
 
