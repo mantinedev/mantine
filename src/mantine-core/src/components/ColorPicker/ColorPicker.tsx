@@ -106,6 +106,7 @@ export function ColorPicker({
   const classes = useStyles({ theme, size, fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const formatRef = useRef(format);
+  const valueRef = useRef<string>(null);
   const withAlpha = format === 'rgba' || format === 'hsla';
 
   const [shouldSkip, setShouldSkip] = useState(false);
@@ -126,9 +127,11 @@ export function ColorPicker({
 
     setParsed((current) => {
       const next = { ...current, ...color };
-      setValue(convertHsvaTo(formatRef.current, next));
+      valueRef.current = convertHsvaTo(formatRef.current, next);
       return next;
     });
+
+    setValue(valueRef.current);
   };
 
   useEffect(() => {
