@@ -1,0 +1,9 @@
+{
+  "title": "Get in touch form",
+  "category": "forms",
+  "dependencies": ["/core/paper/", "/core/text-input/", "/core/textarea/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 800
+  }
+}
