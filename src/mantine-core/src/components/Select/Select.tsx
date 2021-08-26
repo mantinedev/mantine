@@ -117,6 +117,8 @@ export function Select({
   limit = Infinity,
   disabled = false,
   onSearchChange,
+  rightSection,
+  rightSectionWidth,
   ...others
 }: SelectProps) {
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
@@ -306,6 +308,8 @@ export function Select({
           disabled={disabled}
           data-mantine-stop-propagation={dropdownOpened}
           {...getSelectRightSectionProps({
+            rightSection,
+            rightSectionWidth,
             styles: {
               ...styles,
               input: {

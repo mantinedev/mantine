@@ -18,5 +18,5 @@ export type BaseSelectStylesNames =
   | SelectDropdownStylesNames;
 
 export type BaseSelectProps = InputWrapperBaseProps &
-  Omit<InputBaseProps, 'rightSection' | 'rightSectionProps' | 'rightSectionWidth'> &
+  InputBaseProps &
   Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange' | 'size'>;
