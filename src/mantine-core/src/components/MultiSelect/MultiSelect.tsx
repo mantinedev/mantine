@@ -158,6 +158,8 @@ export function MultiSelect({
   radius = 'sm',
   elementRef,
   icon,
+  rightSection,
+  rightSectionWidth,
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -349,10 +351,12 @@ export function MultiSelect({
           icon={icon}
           onMouseDown={(event) => {
             event.preventDefault();
-            !disabled && setDropdownOpened(o => !o);
+            !disabled && setDropdownOpened((o) => !o);
             inputRef.current?.focus();
           }}
           {...getSelectRightSectionProps({
+            rightSection,
+            rightSectionWidth,
             styles: {
               ...styles,
               input: {
