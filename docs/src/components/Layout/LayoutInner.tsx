@@ -7,7 +7,7 @@ import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
 import { NAVBAR_BREAKPOINT } from './Navbar/Navbar.styles';
-import { shouldExcludeNavbar, shouldExcludeSearch } from '../../settings/exclude-layout';
+import { shouldExcludeNavbar, shouldExcludeHeader } from '../../settings/exclude-layout';
 import { getDocsData } from './get-docs-data';
 import useStyles from './Layout.styles';
 
@@ -44,16 +44,17 @@ export function LayoutInner({ children, location }: LayoutProps) {
   const data = getDocsData(useStaticQuery(query));
   const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);
   const shouldRenderNavbar = !shouldExcludeNavbar(location.pathname) || navbarCollapsed;
-  const shouldRenderSearch = !shouldExcludeSearch(location.pathname);
+  const shouldRenderHeader = !shouldExcludeHeader(location.pathname);
 
   return (
     <div className={cx({ [classes.withNavbar]: shouldRenderNavbar })}>
-      <Header
-        data={data}
-        navbarOpened={navbarOpened}
-        toggleNavbar={() => setNavbarState((o) => !o)}
-        shouldRenderSearch={shouldRenderSearch}
-      />
+      {shouldRenderHeader && (
+        <Header
+          data={data}
+          navbarOpened={navbarOpened}
+          toggleNavbar={() => setNavbarState((o) => !o)}
+        />
+      )}
 
       {shouldRenderNavbar && (
         <Navbar data={data} opened={navbarOpened} onClose={() => setNavbarState(false)} />
