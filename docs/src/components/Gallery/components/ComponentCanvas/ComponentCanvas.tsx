@@ -42,7 +42,7 @@ export function ComponentCanvas(props: GalleryComponent & { zIndex: number }) {
     if (dependency.trim().startsWith('/')) {
       const componentName = dependency.split('/')[2].split('-').map(upperFirst).join('');
       return (
-        <MenuItem component={Link} to={dependency} icon={<MantineIcon />}>
+        <MenuItem component={Link} to={dependency} icon={<MantineIcon />} key={dependency}>
           {componentName}
         </MenuItem>
       );
@@ -53,6 +53,7 @@ export function ComponentCanvas(props: GalleryComponent & { zIndex: number }) {
         component="a"
         href={`https://www.npmjs.com/package/${dependency}`}
         target="_blank"
+        key={dependency}
         icon={<NpmIcon />}
       >
         {dependency}
