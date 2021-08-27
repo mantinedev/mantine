@@ -19,7 +19,11 @@ const useStyles = createUseStyles(
     wrapper: {
       display: 'flex',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-      borderRadius: theme.radius.md,
+      borderRadius: theme.radius.lg,
+      padding: theme.spacing.sm,
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+      }`,
 
       [BREAKPOINT]: {
         flexDirection: 'column',
@@ -27,27 +31,19 @@ const useStyles = createUseStyles(
     },
 
     form: {
-      marginTop: -4,
       boxSizing: 'border-box',
       flex: 1,
-      padding: [theme.spacing.xl, theme.spacing.xl * 2],
-      border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
-      }`,
+      padding: theme.spacing.xl,
+      paddingLeft: theme.spacing.xl * 2,
       borderLeft: 0,
-      borderTopRightRadius: theme.radius.md,
-      borderBottomRightRadius: theme.radius.md,
 
       [BREAKPOINT]: {
-        borderTopRightRadius: 0,
-        borderTop: 0,
-        borderLeft: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
-        }`,
-        borderBottomRightRadius: theme.radius.md,
-        borderBottomLeftRadius: theme.radius.md,
-        padding: [theme.spacing.xl, theme.spacing.xl],
+        paddingLeft: theme.spacing.xl,
       },
+    },
+
+    fields: {
+      marginTop: -12,
     },
 
     field: {
@@ -59,21 +55,17 @@ const useStyles = createUseStyles(
     contacts: {
       boxSizing: 'border-box',
       position: 'relative',
-      borderTopLeftRadius: theme.radius.md,
-      borderBottomLeftRadius: theme.radius.md,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.blue[7],
+      borderRadius: theme.radius.lg,
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.colors[theme.primaryColor][9]
+          : theme.colors[theme.primaryColor][7],
       border: '1px solid transparent',
       padding: theme.spacing.xl,
       flex: '0 0 280px',
 
       '& *': {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.white,
-      },
-
-      [BREAKPOINT]: {
-        borderTopLeftRadius: theme.radius.md,
-        borderTopRightRadius: theme.radius.md,
-        borderBottomLeftRadius: 0,
       },
     },
 
@@ -118,7 +110,7 @@ export function GetInTouch() {
   const classes = useStyles();
 
   return (
-    <Paper shadow="md" radius="md">
+    <Paper shadow="md" radius="lg">
       <div className={classes.wrapper}>
         <div className={classes.contacts}>
           <Text size="lg" weight={700} className={classes.title}>
@@ -138,23 +130,25 @@ export function GetInTouch() {
             Get in touch
           </Text>
 
-          <Group grow className={classes.field}>
-            <TextInput label="Your name" placeholder="Your name" />
-            <TextInput label="Your email" placeholder="hello@mantine.dev" required />
-          </Group>
+          <div className={classes.fields}>
+            <Group grow className={classes.field}>
+              <TextInput label="Your name" placeholder="Your name" />
+              <TextInput label="Your email" placeholder="hello@mantine.dev" required />
+            </Group>
 
-          <TextInput className={classes.field} label="Subject" placeholder="Subject" required />
+            <TextInput className={classes.field} label="Subject" placeholder="Subject" required />
 
-          <Textarea
-            className={classes.field}
-            label="Your message"
-            placeholder="Please include all relevant information"
-            minRows={3}
-          />
+            <Textarea
+              className={classes.field}
+              label="Your message"
+              placeholder="Please include all relevant information"
+              minRows={3}
+            />
 
-          <Group position="right" className={classes.field}>
-            <Button type="submit">Send message</Button>
-          </Group>
+            <Group position="right" className={classes.field}>
+              <Button type="submit">Send message</Button>
+            </Group>
+          </div>
         </form>
       </div>
     </Paper>
