@@ -45,7 +45,13 @@ export function Card<C extends React.ElementType = 'div', R extends HTMLElement 
   });
 
   return (
-    <Paper className={cx(classes.card, className)} radius={radius} padding={padding} {...others}>
+    <Paper
+      className={cx(classes.card, className)}
+      radius={radius}
+      padding={padding}
+      component={component as any}
+      {...others}
+    >
       {content}
     </Paper>
   );
