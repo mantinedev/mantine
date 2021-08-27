@@ -9,6 +9,7 @@ interface PaperStyles {
 
 export default createMemoStyles({
   paper: ({ theme, radius, shadow, padding }: PaperStyles) => ({
+    WebkitTapHighlightColor: 'transparent',
     display: 'block',
     textDecoration: 'none',
     color: theme.black,

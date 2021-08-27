@@ -24,6 +24,7 @@ interface AvatarStyles {
 
 export default createMemoStyles({
   root: ({ size, radius, theme }: AvatarStyles) => ({
+    WebkitTapHighlightColor: 'transparent',
     boxSizing: 'border-box',
     position: 'relative',
     userSelect: 'none',
