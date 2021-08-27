@@ -1,3 +1,4 @@
+export { ArticleCard } from './ArticleCard/ArticleCard';
 export { CheckboxCard } from './CheckboxCard/CheckboxCard';
 export { CountriesSelect } from './CountriesSelect/CountriesSelect';
 export { GetInTouch } from './GetInTouch/GetInTouch';
