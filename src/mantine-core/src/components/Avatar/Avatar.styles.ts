@@ -5,6 +5,7 @@ import {
   MantineNumberSize,
   getFontStyles,
   getSharedColorScheme,
+  getFocusStyles,
 } from '../../theme';
 
 export const sizes = {
@@ -24,6 +25,7 @@ interface AvatarStyles {
 
 export default createMemoStyles({
   root: ({ size, radius, theme }: AvatarStyles) => ({
+    ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     boxSizing: 'border-box',
     position: 'relative',

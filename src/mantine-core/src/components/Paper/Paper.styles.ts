@@ -1,4 +1,10 @@
-import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  MantineNumberSize,
+  getSizeValue,
+  getFocusStyles,
+} from '../../theme';
 
 interface PaperStyles {
   theme: MantineTheme;
@@ -9,6 +15,7 @@ interface PaperStyles {
 
 export default createMemoStyles({
   paper: ({ theme, radius, shadow, padding }: PaperStyles) => ({
+    ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     display: 'block',
     textDecoration: 'none',
