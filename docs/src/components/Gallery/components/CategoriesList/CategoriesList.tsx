@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from '@mantine/core';
 import { CategoryCard, CategoryCardProps } from './CategoryCard/CategoryCard';
+import useStyles from './CategoriesList.styles';
 
 export type { CategoryCardProps };
 
@@ -9,7 +10,14 @@ interface CategoriesListProps {
 }
 
 export function CategoriesList({ categories }: CategoriesListProps) {
-  const cards = categories.map((category) => <CategoryCard key={category.url} {...category} />);
+  const classes = useStyles();
+  const cards = categories.map((category) => (
+    <CategoryCard className={classes.card} key={category.url} {...category} />
+  ));
 
-  return <Container style={{ paddingTop: 20 }}>{cards}</Container>;
+  return (
+    <Container style={{ paddingTop: 20 }}>
+      <div className={classes.cards}>{cards}</div>
+    </Container>
+  );
 }

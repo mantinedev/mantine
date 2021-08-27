@@ -5,7 +5,6 @@ export default createUseStyles(
   (theme) => ({
     card: {
       position: 'relative',
-      maxWidth: 300,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
