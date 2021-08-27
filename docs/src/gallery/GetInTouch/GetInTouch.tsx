@@ -27,11 +27,12 @@ const useStyles = createUseStyles(
     },
 
     form: {
+      marginTop: -4,
       boxSizing: 'border-box',
       flex: 1,
       padding: [theme.spacing.xl, theme.spacing.xl * 2],
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
       }`,
       borderLeft: 0,
       borderTopRightRadius: theme.radius.md,
@@ -41,7 +42,7 @@ const useStyles = createUseStyles(
         borderTopRightRadius: 0,
         borderTop: 0,
         borderLeft: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
+          theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
         }`,
         borderBottomRightRadius: theme.radius.md,
         borderBottomLeftRadius: theme.radius.md,
@@ -60,7 +61,7 @@ const useStyles = createUseStyles(
       position: 'relative',
       borderTopLeftRadius: theme.radius.md,
       borderBottomLeftRadius: theme.radius.md,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.blue[7],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.blue[7],
       border: '1px solid transparent',
       padding: theme.spacing.xl,
       flex: '0 0 280px',
@@ -102,7 +103,7 @@ function Contact({
         <Text
           size="xs"
           style={{
-            color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.blue[0],
+            color: theme.colors.blue[0],
           }}
         >
           {title}
@@ -126,7 +127,7 @@ export function GetInTouch() {
 
           <Group direction="column" spacing="xl">
             <Contact title="Email" description="hello@mantine.dev" icon={AtSign} />
-            <Contact title="Phone" description="8 (800) 335 35 35" icon={Phone} />
+            <Contact title="Phone" description="+49 (800) 335 35 35" icon={Phone} />
             <Contact title="Address" description="844 Morris Park avenue" icon={MapPin} />
             <Contact title="Working hours" description="8 a.m. – 11 p.m." icon={Sun} />
           </Group>
