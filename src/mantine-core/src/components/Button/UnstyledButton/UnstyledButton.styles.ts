@@ -15,5 +15,6 @@ export default createUseStyles({
     appearance: 'none',
     fontSize: theme.fontSizes.md,
     backgroundColor: 'transparent',
+    textAlign: 'left',
   }),
 });

@@ -1,3 +1,4 @@
+export { CheckboxCard } from './CheckboxCard/CheckboxCard';
 export { CountriesSelect } from './CountriesSelect/CountriesSelect';
 export { GetInTouch } from './GetInTouch/GetInTouch';
 export { ImageCard } from './ImageCard/ImageCard';

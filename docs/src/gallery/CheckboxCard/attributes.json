@@ -1,0 +1,18 @@
+{
+  "title": "Card with checkbox",
+  "category": "cards",
+  "dependencies": [
+    "/core/card/",
+    "/core/checkbox/",
+    "/core/text/",
+    "/core/button/#unstyled-button"
+  ],
+  "props": {
+    "title": "@mantine/core",
+    "description": "Core components library: inputs, buttons, overlays, etc."
+  },
+  "canvas": {
+    "center": true,
+    "maxWidth": 400
+  }
+}
