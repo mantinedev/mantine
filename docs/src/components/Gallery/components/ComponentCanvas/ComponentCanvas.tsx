@@ -19,17 +19,22 @@ import {
   Menu,
   MenuLabel,
   Badge,
+  MantineProvider,
+  useMantineTheme,
 } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import * as GalleryComponents from '../../../../gallery';
 import { GalleryPreview } from '../GalleryPreview/GalleryPreview';
 import { GalleryComponent } from '../../types';
+import { ColorControl } from './ColorControl/ColorControl';
 import { MantineIcon } from './icons/MantineIcon';
 import { NpmIcon } from './icons/NpmIcon';
 import useStyles from './ComponentCanvas.styles';
 
 export function ComponentCanvas(props: GalleryComponent) {
   const [state, setState] = useState('preview');
+  const [primaryColor, setPrimaryColor] = useState('blue');
+  const theme = useMantineTheme();
   const classes = useStyles();
   const Component = GalleryComponents[props._component];
 
@@ -103,37 +108,45 @@ export function ComponentCanvas(props: GalleryComponent) {
           </Menu>
           {props.attributes.responsive && <Badge>Responsive</Badge>}
         </Group>
-        <SegmentedControl
-          value={state}
-          onChange={setState}
-          data={[
-            {
-              value: 'preview',
-              label: (
-                <Center>
-                  <EyeOpenIcon />
-                  <div className={classes.controlLabel}>Preview</div>
-                </Center>
-              ),
-            },
-            {
-              value: 'code',
-              label: (
-                <Center>
-                  <CodeIcon />
-                  <div className={classes.controlLabel}>Code</div>
-                </Center>
-              ),
-            },
-          ]}
-        />
+
+        <Group>
+          {props.attributes.withColor && (
+            <ColorControl onChange={setPrimaryColor} value={primaryColor} />
+          )}
+          <SegmentedControl
+            value={state}
+            onChange={setState}
+            data={[
+              {
+                value: 'preview',
+                label: (
+                  <Center>
+                    <EyeOpenIcon />
+                    <div className={classes.controlLabel}>Preview</div>
+                  </Center>
+                ),
+              },
+              {
+                value: 'code',
+                label: (
+                  <Center>
+                    <CodeIcon />
+                    <div className={classes.controlLabel}>Code</div>
+                  </Center>
+                ),
+              },
+            ]}
+          />
+        </Group>
       </div>
 
       <div className={cx(classes.body, { [classes.bodyWithCode]: state === 'code' })}>
         {state === 'preview' ? (
           <div className={classes.preview}>
             <GalleryPreview canvas={props.attributes.canvas}>
-              <Component {...props.attributes.props} />
+              <MantineProvider theme={{ primaryColor, colorScheme: theme.colorScheme }}>
+                <Component {...props.attributes.props} />
+              </MantineProvider>
             </GalleryPreview>
           </div>
         ) : (

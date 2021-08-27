@@ -2,6 +2,7 @@
   "title": "Contact form",
   "category": "forms",
   "responsive": true,
+  "withColor": true,
   "dependencies": [
     "/core/paper/",
     "/core/text-input/",

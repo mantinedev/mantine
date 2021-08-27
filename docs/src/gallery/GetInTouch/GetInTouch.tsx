@@ -20,7 +20,7 @@ const useStyles = createUseStyles(
       display: 'flex',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
       borderRadius: theme.radius.lg,
-      padding: theme.spacing.sm,
+      padding: 4,
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
       }`,
@@ -55,7 +55,7 @@ const useStyles = createUseStyles(
     contacts: {
       boxSizing: 'border-box',
       position: 'relative',
-      borderRadius: theme.radius.lg,
+      borderRadius: theme.radius.lg - 2,
       backgroundColor:
         theme.colorScheme === 'dark'
           ? theme.colors[theme.primaryColor][9]
