@@ -47,7 +47,12 @@ export function LayoutInner({ children, location }: LayoutProps) {
   const shouldRenderHeader = !shouldExcludeHeader(location.pathname);
 
   return (
-    <div className={cx({ [classes.withNavbar]: shouldRenderNavbar })}>
+    <div
+      className={cx({
+        [classes.withNavbar]: shouldRenderNavbar,
+        [classes.withoutHeader]: !shouldRenderHeader,
+      })}
+    >
       {shouldRenderHeader && (
         <Header
           data={data}

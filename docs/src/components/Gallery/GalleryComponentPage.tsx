@@ -12,15 +12,11 @@ interface GalleryComponentPageProps {
 export default function GalleryComponentPage({ pageContext }: GalleryComponentPageProps) {
   const theme = useMantineTheme();
   const Component = GalleryComponents[pageContext._component];
+
   return (
     <>
       <Head title={pageContext.attributes.title} />
-      <div
-        style={{
-          paddingTop: 22,
-          padding: pageContext.attributes.canvas.maxWidth ? theme.spacing.sm : 0,
-        }}
-      >
+      <div style={{ padding: pageContext.attributes.canvas.maxWidth ? theme.spacing.sm : 0 }}>
         <GalleryPreview
           canvas={pageContext.attributes.canvas}
           withSpacing={!!pageContext.attributes.canvas.maxWidth}
