@@ -14,8 +14,12 @@ interface GalleryCategoryPageProps {
 }
 
 export default function GalleryCategoryPage({ pageContext }: GalleryCategoryPageProps) {
-  const canvases = pageContext.components.map((component) => (
-    <ComponentCanvas {...component} key={component.url} />
+  const canvases = pageContext.components.map((component, index) => (
+    <ComponentCanvas
+      {...component}
+      key={component.url}
+      zIndex={pageContext.components.length - index}
+    />
   ));
 
   return (

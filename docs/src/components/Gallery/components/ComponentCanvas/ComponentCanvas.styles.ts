@@ -1,6 +1,8 @@
 import { createUseStyles } from 'react-jss';
 import { theming } from '@mantine/core';
 
+const BREAKPOINT = '@media (max-width: 755px)';
+
 export default createUseStyles(
   (theme) => ({
     canvas: {
@@ -23,6 +25,18 @@ export default createUseStyles(
       borderBottom: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
       }`,
+
+      [BREAKPOINT]: {
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+      },
+    },
+
+    controls: {
+      flexDirection: 'row-reverse',
+      [BREAKPOINT]: {
+        marginTop: 0,
+      },
     },
 
     controlLabel: {
@@ -34,6 +48,10 @@ export default createUseStyles(
       padding: [theme.spacing.xs, theme.spacing.md],
       borderBottomRightRadius: theme.radius.md - 1,
       borderBottomLeftRadius: theme.radius.md - 1,
+
+      [BREAKPOINT]: {
+        padding: 0,
+      },
     },
 
     bodyWithCode: {
@@ -52,6 +70,13 @@ export default createUseStyles(
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       padding: theme.spacing.md,
       borderRadius: theme.radius.md,
+      position: 'relative',
+
+      [BREAKPOINT]: {
+        padding: theme.spacing.xs,
+        borderTopRightRadius: 0,
+        borderTopLeftRadius: 0,
+      },
     },
 
     action: {
@@ -59,6 +84,12 @@ export default createUseStyles(
 
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
+      },
+    },
+
+    actions: {
+      [BREAKPOINT]: {
+        display: 'none',
       },
     },
   }),

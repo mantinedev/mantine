@@ -31,7 +31,7 @@ import { MantineIcon } from './icons/MantineIcon';
 import { NpmIcon } from './icons/NpmIcon';
 import useStyles from './ComponentCanvas.styles';
 
-export function ComponentCanvas(props: GalleryComponent) {
+export function ComponentCanvas(props: GalleryComponent & { zIndex: number }) {
   const [state, setState] = useState('preview');
   const [primaryColor, setPrimaryColor] = useState('blue');
   const theme = useMantineTheme();
@@ -63,53 +63,55 @@ export function ComponentCanvas(props: GalleryComponent) {
   return (
     <div className={classes.canvas}>
       <div className={classes.header}>
-        <Group spacing="xs">
+        <Group>
           <Text weight={500} style={{ marginRight: 15 }}>
             {props.attributes.title}
           </Text>
 
-          <ActionIcon
-            variant="outline"
-            className={classes.action}
-            title="View component in isolation"
-            component="a"
-            href={props.url}
-            target="_blank"
-          >
-            <ExternalLinkIcon style={{ width: 14, height: 14 }} />
-          </ActionIcon>
+          <Group spacing="xs" className={classes.actions}>
+            <ActionIcon
+              variant="outline"
+              className={classes.action}
+              title="View component in isolation"
+              component="a"
+              href={props.url}
+              target="_blank"
+            >
+              <ExternalLinkIcon style={{ width: 14, height: 14 }} />
+            </ActionIcon>
 
-          <ActionIcon
-            variant="outline"
-            className={classes.action}
-            title="View source on github"
-            component="a"
-            href={`https://github.com/mantinedev/mantine/tree/master/docs/src/gallery/${props._component}/${props._component}.tsx`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <GitHubLogoIcon style={{ width: 14, height: 14 }} />
-          </ActionIcon>
+            <ActionIcon
+              variant="outline"
+              className={classes.action}
+              title="View source on github"
+              component="a"
+              href={`https://github.com/mantinedev/mantine/tree/master/docs/src/gallery/${props._component}/${props._component}.tsx`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <GitHubLogoIcon style={{ width: 14, height: 14 }} />
+            </ActionIcon>
 
-          <Menu
-            withArrow
-            placement="end"
-            position="bottom"
-            transition="pop-top-right"
-            transitionDuration={100}
-            control={
-              <ActionIcon className={classes.action} title="Component dependencies">
-                <InfoCircledIcon style={{ width: 14, height: 14 }} />
-              </ActionIcon>
-            }
-          >
-            <MenuLabel>Component dependencies</MenuLabel>
-            {dependencies}
-          </Menu>
-          {props.attributes.responsive && <Badge>Responsive</Badge>}
+            <Menu
+              withArrow
+              placement="end"
+              position="bottom"
+              transition="pop-top-right"
+              transitionDuration={100}
+              control={
+                <ActionIcon className={classes.action} title="Component dependencies">
+                  <InfoCircledIcon style={{ width: 14, height: 14 }} />
+                </ActionIcon>
+              }
+            >
+              <MenuLabel>Component dependencies</MenuLabel>
+              {dependencies}
+            </Menu>
+            {props.attributes.responsive && <Badge>Responsive</Badge>}
+          </Group>
         </Group>
 
-        <Group>
+        <Group className={classes.controls}>
           {props.attributes.withColor && (
             <ColorControl onChange={setPrimaryColor} value={primaryColor} />
           )}
@@ -142,7 +144,7 @@ export function ComponentCanvas(props: GalleryComponent) {
 
       <div className={cx(classes.body, { [classes.bodyWithCode]: state === 'code' })}>
         {state === 'preview' ? (
-          <div className={classes.preview}>
+          <div className={classes.preview} style={{ zIndex: props.zIndex }}>
             <GalleryPreview canvas={props.attributes.canvas}>
               <MantineProvider theme={{ primaryColor, colorScheme: theme.colorScheme }}>
                 <Component {...props.attributes.props} />
