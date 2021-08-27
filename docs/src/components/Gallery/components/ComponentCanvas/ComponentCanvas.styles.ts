@@ -33,9 +33,9 @@ export default createUseStyles(
     },
 
     controls: {
-      flexDirection: 'row-reverse',
       [BREAKPOINT]: {
         marginTop: 0,
+        flexDirection: 'row-reverse',
       },
     },
 

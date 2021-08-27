@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'clsx';
 import { createUseStyles } from 'react-jss';
 import { Sun, Phone, MapPin, AtSign } from 'react-feather';
 import {
@@ -38,12 +39,34 @@ const useStyles = createUseStyles(
       borderLeft: 0,
 
       [BREAKPOINT]: {
-        paddingLeft: theme.spacing.xl,
+        padding: theme.spacing.md,
+        paddingLeft: theme.spacing.md,
       },
     },
 
     fields: {
       marginTop: -12,
+    },
+
+    fieldInput: {
+      flex: 1,
+
+      '& + &': {
+        marginLeft: theme.spacing.md,
+
+        [BREAKPOINT]: {
+          marginLeft: 0,
+          marginTop: theme.spacing.md,
+        },
+      },
+    },
+
+    fieldsGroup: {
+      display: 'flex',
+
+      [BREAKPOINT]: {
+        flexDirection: 'column',
+      },
     },
 
     field: {
@@ -67,10 +90,18 @@ const useStyles = createUseStyles(
       '& *': {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.white,
       },
+
+      [BREAKPOINT]: {
+        paddingLeft: theme.spacing.md,
+      },
     },
 
     title: {
       marginBottom: theme.spacing.xl * 1.5,
+
+      [BREAKPOINT]: {
+        marginBottom: theme.spacing.xl,
+      },
     },
   }),
   { theming }
@@ -131,10 +162,15 @@ export function GetInTouch() {
           </Text>
 
           <div className={classes.fields}>
-            <Group grow className={classes.field}>
-              <TextInput label="Your name" placeholder="Your name" />
-              <TextInput label="Your email" placeholder="hello@mantine.dev" required />
-            </Group>
+            <div className={cx(classes.field, classes.fieldsGroup)}>
+              <TextInput className={classes.fieldInput} label="Your name" placeholder="Your name" />
+              <TextInput
+                className={classes.fieldInput}
+                label="Your email"
+                placeholder="hello@mantine.dev"
+                required
+              />
+            </div>
 
             <TextInput className={classes.field} label="Subject" placeholder="Subject" required />
 
