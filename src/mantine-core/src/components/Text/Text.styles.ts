@@ -12,6 +12,7 @@ interface TextStyles {
   variant: 'text' | 'link';
   size: MantineSize;
   lineClamp: number;
+  inline: boolean;
 }
 
 function getTextColor({ theme, color, variant }: Partial<TextStyles>) {
@@ -43,13 +44,13 @@ function getLineClamp(lineClamp: number): React.CSSProperties {
 }
 
 export default createMemoStyles({
-  root: ({ theme, color, variant, size, lineClamp }: TextStyles) => ({
+  root: ({ theme, color, variant, size, lineClamp, inline }: TextStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     ...getLineClamp(lineClamp),
     color: getTextColor({ color, theme, variant }),
     fontSize: theme.fontSizes[size],
-    lineHeight: theme.lineHeight,
+    lineHeight: inline ? 1 : theme.lineHeight,
     textDecoration: 'none',
     WebkitTapHighlightColor: 'transparent',
 

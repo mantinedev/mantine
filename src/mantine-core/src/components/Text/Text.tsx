@@ -24,6 +24,9 @@ export interface SharedTextProps extends DefaultProps {
 
   /** CSS -webkit-line-clamp property */
   lineClamp?: number;
+
+  /** Sets line-height to 1 for centering */
+  inline?: boolean;
 }
 
 interface _TextProps<C extends React.ElementType, R extends HTMLElement> extends SharedTextProps {
@@ -53,10 +56,11 @@ export function Text<C extends React.ElementType = 'div', R extends HTMLElement 
   lineClamp,
   themeOverride,
   elementRef,
+  inline = false,
   ...others
 }: TextProps<C, R>): JSX.Element {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ variant, color, size, theme, lineClamp }, null, 'text');
+  const classes = useStyles({ variant, color, size, theme, lineClamp, inline }, null, 'text');
   const Element = component || 'div';
 
   return React.createElement(
