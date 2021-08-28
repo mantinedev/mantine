@@ -78,7 +78,11 @@ export function ArticleCard({
         </a>
       </Card.Section>
 
-      <Badge className={classes.rating} variant="gradient" gradient={{ from: 'blue', to: 'cyan' }}>
+      <Badge
+        className={classes.rating}
+        variant="gradient"
+        gradient={{ from: 'indigo', to: 'cyan' }}
+      >
         {rating}
       </Badge>
 
