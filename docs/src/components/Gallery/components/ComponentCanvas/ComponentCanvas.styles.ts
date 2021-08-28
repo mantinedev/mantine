@@ -32,7 +32,9 @@ export default createUseStyles(
       padding: 0,
 
       '& $preview': {
-        padding: 0,
+        padding: 4,
+        borderTopRightRadius: 0,
+        borderTopLeftRadius: 0,
       },
     },
 
