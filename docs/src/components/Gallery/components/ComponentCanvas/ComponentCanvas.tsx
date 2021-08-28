@@ -25,7 +25,12 @@ export function ComponentCanvas(props: GalleryComponent & { zIndex: number }) {
         onPrimaryColorChange={setPrimaryColor}
       />
 
-      <div className={cx(classes.body, { [classes.bodyWithCode]: state === 'code' })}>
+      <div
+        className={cx(classes.body, {
+          [classes.bodyWithCode]: state === 'code',
+          [classes.bodyRaw]: !props.attributes.canvas.center,
+        })}
+      >
         {state === 'preview' ? (
           <div className={classes.preview} style={{ zIndex: props.zIndex }}>
             <GalleryPreview canvas={props.attributes.canvas}>

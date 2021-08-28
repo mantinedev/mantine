@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { MarkGithubIcon } from '@primer/octicons-react';
+import { GitHubLogoIcon } from '@modulz/radix-icons';
 import { createUseStyles } from 'react-jss';
 import { theming, Container, Text, Button, Group, useMantineTheme } from '@mantine/core';
 
@@ -73,7 +73,7 @@ const useStyles = createUseStyles(
     githubControl: {
       borderWidth: 2,
       borderColor: theme.colorScheme === 'dark' ? 'transparent' : theme.colors.dark[9],
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : 'transparent',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : 'transparent',
     },
   }),
   { theming }
@@ -116,7 +116,7 @@ export function HeroTitle() {
             variant="outline"
             className={cx(classes.control, classes.githubControl)}
             color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
-            leftIcon={<MarkGithubIcon size={18} />}
+            leftIcon={<GitHubLogoIcon style={{ width: 20, height: 20 }} />}
             styles={{ leftIcon: { marginRight: 12 } }}
           >
             Github

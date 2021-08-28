@@ -28,6 +28,14 @@ export default createUseStyles(
       },
     },
 
+    bodyRaw: {
+      padding: 0,
+
+      '& $preview': {
+        padding: 0,
+      },
+    },
+
     bodyWithCode: {
       padding: 0,
       backgroundColor: theme.white,

@@ -1,6 +1,7 @@
 {
   "title": "Hero section with gradient",
   "category": "hero",
+  "responsive": true,
   "dependencies": [
     "/core/text/",
     "/core/button/",
