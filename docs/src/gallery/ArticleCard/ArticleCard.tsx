@@ -74,7 +74,7 @@ export function ArticleCard({
     <Card shadow="sm" className={cx(classes.card, className)} {...others}>
       <Card.Section>
         <a href={link} target="_blank" rel="noreferrer">
-          <Image src={image} />
+          <Image src={image} height={180} />
         </a>
       </Card.Section>
 
