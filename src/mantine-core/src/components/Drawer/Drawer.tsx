@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import cx from 'clsx';
-import { useScrollLock, useMergedRef, useReducedMotion, useFocusTrap } from '@mantine/hooks';
+import {
+  useScrollLock,
+  useMergedRef,
+  useReducedMotion,
+  useFocusTrap,
+  useFocusReturn,
+} from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
 import { ClickOutsideProvider } from '../../utils';
 import { Paper } from '../Paper/Paper';
@@ -145,6 +151,8 @@ export function MantineDrawer({
       return () => window.removeEventListener('keydown', closeOnEscape);
     }
   }, [noFocusTrap]);
+
+  useFocusReturn({ opened, transitionDuration });
 
   return (
     <GroupedTransition
