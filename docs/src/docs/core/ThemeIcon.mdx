@@ -33,6 +33,17 @@ default color is [theme.primaryColor](/theming/extend-theme/#primary-color):
 
 <Demo data={ThemeIconDemos.colors} />
 
+## Gradient variant
+
+To use gradient as ThemeIcon background:
+
+- set `variant` to `gradient`
+- set `gradient` to `{ from: 'color-from', to: 'color-to', deg: 135 }`, where
+  - `color-from` and `color-to` are color from `theme.colors`
+  - `deg` is linear gradient deg
+
+<Demo data={ThemeIconDemos.gradient} />
+
 ## Size
 
 Note that component **does not control icon size** and you need to specify it manually on icon component for better fit.

@@ -17,6 +17,19 @@ storiesOf('@mantine/core/ThemeIcon', module)
   .add('Light variant', () => (
     <Group style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</Group>
   ))
+  .add('Gradient', () => (
+    <Group>
+      <ThemeIcon variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>
+        <RocketIcon style={{ width: 20, height: 20 }} />
+      </ThemeIcon>
+      <ThemeIcon variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 90 }}>
+        <RocketIcon style={{ width: 20, height: 20 }} />
+      </ThemeIcon>
+      <ThemeIcon variant="gradient" gradient={{ from: 'teal', to: 'cyan', deg: 180 }}>
+        <RocketIcon style={{ width: 20, height: 20 }} />
+      </ThemeIcon>
+    </Group>
+  ))
   .add('Dark theme', () => (
     <MantineProvider theme={{ colorScheme: 'dark' }}>
       <div

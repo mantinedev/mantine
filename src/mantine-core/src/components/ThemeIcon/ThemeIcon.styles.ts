@@ -13,6 +13,9 @@ interface ThemeIconStyles {
   color: string;
   size: MantineNumberSize;
   radius: MantineNumberSize;
+  gradientFrom: string;
+  gradientTo: string;
+  gradientDeg: number;
 }
 
 export const sizes = {
@@ -40,6 +43,20 @@ export default createMemoStyles({
       backgroundColor: colors.background,
       color: colors.color,
       textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
+    };
+  },
+
+  gradient: ({ theme, gradientDeg, gradientTo, gradientFrom }: ThemeIconStyles) => {
+    const colors = getSharedColorScheme({
+      theme,
+      variant: 'gradient',
+      gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
+    });
+
+    return {
+      backgroundImage: colors.background,
+      color: colors.color,
+      border: 0,
     };
   },
 
