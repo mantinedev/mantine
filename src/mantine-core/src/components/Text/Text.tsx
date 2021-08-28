@@ -28,6 +28,9 @@ export interface SharedTextProps extends DefaultProps {
   /** Sets line-height to 1 for centering */
   inline?: boolean;
 
+  /** Inherit font properties from parent element */
+  inherit?: boolean;
+
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
 }
@@ -61,6 +64,7 @@ export function Text<C extends React.ElementType = 'div', R extends HTMLElement 
   elementRef,
   gradient = { from: 'blue', to: 'cyan', deg: 45 },
   inline = false,
+  inherit = false,
   ...others
 }: TextProps<C, R>): JSX.Element {
   const theme = useMantineTheme(themeOverride);
@@ -72,6 +76,7 @@ export function Text<C extends React.ElementType = 'div', R extends HTMLElement 
       theme,
       lineClamp,
       inline,
+      inherit,
       gradientFrom: gradient.from,
       gradientTo: gradient.to,
       gradientDeg: gradient.deg,
@@ -85,7 +90,12 @@ export function Text<C extends React.ElementType = 'div', R extends HTMLElement 
     Element,
     {
       className: cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className),
-      style: { fontWeight: weight, textTransform: transform, textAlign: align, ...style },
+      style: {
+        fontWeight: inherit ? 'inherit' : weight,
+        textTransform: transform,
+        textAlign: align,
+        ...style,
+      },
       ref: elementRef,
       ...others,
     },

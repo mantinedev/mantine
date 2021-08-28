@@ -14,6 +14,7 @@ interface TextStyles {
   size: MantineSize;
   lineClamp: number;
   inline: boolean;
+  inherit: boolean;
   gradientFrom: string;
   gradientTo: string;
   gradientDeg: number;
@@ -48,13 +49,14 @@ function getLineClamp(lineClamp: number): React.CSSProperties {
 }
 
 export default createMemoStyles({
-  root: ({ theme, color, variant, size, lineClamp, inline }: TextStyles) => ({
+  root: ({ theme, color, variant, size, lineClamp, inline, inherit }: TextStyles) => ({
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     ...getLineClamp(lineClamp),
     color: getTextColor({ color, theme, variant }),
-    fontSize: theme.fontSizes[size],
-    lineHeight: inline ? 1 : theme.lineHeight,
+    fontFamily: inherit ? 'inherit' : theme.fontFamily,
+    fontSize: inherit ? 'inherit' : theme.fontSizes[size],
+    lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
     textDecoration: 'none',
     WebkitTapHighlightColor: 'transparent',
 
