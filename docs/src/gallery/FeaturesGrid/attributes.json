@@ -2,6 +2,7 @@
   "title": "Features with monotone icons",
   "category": "features",
   "responsive": true,
+  "withColor": true,
   "dependencies": ["/core/theme-icon/", "/core/title/", "/core/text/", "@modulz/radix-icons"],
   "props": {
     "title": "Integrate effortlessly with any technology stack",
