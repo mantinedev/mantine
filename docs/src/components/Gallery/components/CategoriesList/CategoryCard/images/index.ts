@@ -7,4 +7,5 @@ import cardsDark from './cards-dark.svg';
 export default {
   forms: { light: formsLight, dark: formsDark },
   cards: { light: cardsLight, dark: cardsDark },
+  hero: {},
 };

@@ -11,7 +11,6 @@ const useStyles = createUseStyles(
     wrapper: {
       position: 'relative',
       boxSizing: 'border-box',
-      marginTop: 25,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
     },
 
