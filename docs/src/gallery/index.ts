@@ -10,3 +10,6 @@ export { SocialButtons } from './SocialButtons/SocialButtons';
 
 // Hero
 export { HeroTitle } from './HeroTitle/HeroTitle';
+
+// Features
+export { FeaturesGrid } from './FeaturesGrid/FeaturesGrid';
