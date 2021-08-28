@@ -6,6 +6,7 @@ import {
   MantineSize,
   MantineNumberSize,
   mergeStyles,
+  MantineGradient,
 } from '../../theme';
 import useStyles, { heights } from './Badge.styles';
 
@@ -26,7 +27,10 @@ interface _BadgeProps<C extends React.ElementType, R extends HTMLElement>
   color?: string;
 
   /** Controls badge background, color and border styles */
-  variant?: 'light' | 'filled' | 'outline' | 'dot';
+  variant?: 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
+
+  /** Controls gradient settings in gradient variant only */
+  gradient?: MantineGradient;
 
   /** Defines badge height and font-size */
   size?: MantineSize;
@@ -63,12 +67,26 @@ export function Badge<C extends React.ElementType = 'div', R extends HTMLElement
   leftSection,
   rightSection,
   radius = 'xl',
+  gradient = { from: 'indigo', to: 'cyan', deg: 45 },
   classNames,
   styles,
   ...others
 }: BadgeProps<C, R>) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, fullWidth, color, radius, theme }, classNames, 'badge');
+  const classes = useStyles(
+    {
+      size,
+      fullWidth,
+      color,
+      radius,
+      theme,
+      gradientFrom: gradient.from,
+      gradientTo: gradient.to,
+      gradientDeg: gradient.deg,
+    },
+    classNames,
+    'badge'
+  );
   const _styles = mergeStyles(classes, styles);
   const Element = component || 'div';
 
