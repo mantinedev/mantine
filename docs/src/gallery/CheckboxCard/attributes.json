@@ -1,6 +1,6 @@
 {
   "title": "Card with checkbox",
-  "category": "cards",
+  "category": "forms",
   "dependencies": [
     "/core/card/",
     "/core/checkbox/",
