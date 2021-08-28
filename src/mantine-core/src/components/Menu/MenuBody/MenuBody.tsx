@@ -174,6 +174,7 @@ export function MenuBody({
           radius={radius}
           classNames={classNames}
           styles={styles}
+          onMouseLeave={() => setHovered(-1)}
           onClick={(event) => {
             if (closeOnItemClick) {
               onClose();
