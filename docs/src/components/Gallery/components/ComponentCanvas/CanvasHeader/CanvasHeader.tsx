@@ -34,7 +34,10 @@ export function CanvasHeader({
   const classes = useStyles();
   const dependencies = attributes.dependencies.map((dependency) => {
     if (dependency.trim().startsWith('/')) {
-      const componentName = dependency.split('/')[2].split('-').map(upperFirst).join('');
+      const componentName = dependency.startsWith('/hooks/')
+        ? dependency.split('/')[2]
+        : dependency.split('/')[2].split('-').map(upperFirst).join('');
+
       return (
         <Menu.Item component={Link} to={dependency} icon={<MantineIcon />} key={dependency}>
           {componentName}
