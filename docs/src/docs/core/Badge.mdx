@@ -28,6 +28,17 @@ Note that not all colors in some variants are compatible with dark theme:
 
 <Demo data={BadgeDemos.colors} />
 
+## Gradient variant
+
+To use gradient as Badge background:
+
+- set `variant` to `gradient`
+- set `gradient` to `{ from: 'color-from', to: 'color-to', deg: 135 }`, where
+  - `color-from` and `color-to` are color from `theme.colors`
+  - `deg` is linear gradient deg
+
+<Demo data={BadgeDemos.gradient} />
+
 ## Size and radius
 
 Control badge font-size, height and padding with `size` and border-radius with `radius`.
