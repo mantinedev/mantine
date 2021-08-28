@@ -25,9 +25,6 @@ const useStyles = createUseStyles(
       position: 'absolute',
       top: theme.spacing.xs,
       right: theme.spacing.xs + 2,
-      backgroundImage: `linear-gradient(45deg, ${theme.colors.indigo[6]} 0%, ${theme.colors.cyan[6]} 90%)`,
-      borderWidth: 0,
-      textShadow: 'none',
       pointerEvents: 'none',
     },
 
@@ -81,7 +78,7 @@ export function ArticleCard({
         </a>
       </Card.Section>
 
-      <Badge className={classes.rating} variant="filled">
+      <Badge className={classes.rating} variant="gradient" gradient={{ from: 'blue', to: 'cyan' }}>
         {rating}
       </Badge>
 
