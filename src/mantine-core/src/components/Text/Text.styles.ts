@@ -4,15 +4,19 @@ import {
   MantineSize,
   getFocusStyles,
   getFontStyles,
+  getSharedColorScheme,
 } from '../../theme';
 
 interface TextStyles {
   theme: MantineTheme;
   color: string;
-  variant: 'text' | 'link';
+  variant: 'text' | 'link' | 'gradient';
   size: MantineSize;
   lineClamp: number;
   inline: boolean;
+  gradientFrom: string;
+  gradientTo: string;
+  gradientDeg: number;
 }
 
 function getTextColor({ theme, color, variant }: Partial<TextStyles>) {
@@ -58,4 +62,18 @@ export default createMemoStyles({
       textDecoration: variant === 'link' ? 'underline' : 'none',
     },
   }),
+
+  gradient: ({ theme, gradientDeg, gradientTo, gradientFrom }: TextStyles) => {
+    const colors = getSharedColorScheme({
+      theme,
+      variant: 'gradient',
+      gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
+    });
+
+    return {
+      backgroundImage: colors.background,
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+    };
+  },
 });

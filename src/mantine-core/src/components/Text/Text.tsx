@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineSize } from '../../theme';
+import { useMantineTheme, DefaultProps, MantineSize, MantineGradient } from '../../theme';
 import useStyles from './Text.styles';
 
 export interface SharedTextProps extends DefaultProps {
@@ -20,13 +20,16 @@ export interface SharedTextProps extends DefaultProps {
   align?: 'left' | 'center' | 'right';
 
   /** Link or text variant */
-  variant?: 'text' | 'link';
+  variant?: 'text' | 'link' | 'gradient';
 
   /** CSS -webkit-line-clamp property */
   lineClamp?: number;
 
   /** Sets line-height to 1 for centering */
   inline?: boolean;
+
+  /** Controls gradient settings in gradient variant only */
+  gradient?: MantineGradient;
 }
 
 interface _TextProps<C extends React.ElementType, R extends HTMLElement> extends SharedTextProps {
@@ -56,17 +59,32 @@ export function Text<C extends React.ElementType = 'div', R extends HTMLElement 
   lineClamp,
   themeOverride,
   elementRef,
+  gradient = { from: 'blue', to: 'cyan', deg: 45 },
   inline = false,
   ...others
 }: TextProps<C, R>): JSX.Element {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ variant, color, size, theme, lineClamp, inline }, null, 'text');
+  const classes = useStyles(
+    {
+      variant,
+      color,
+      size,
+      theme,
+      lineClamp,
+      inline,
+      gradientFrom: gradient.from,
+      gradientTo: gradient.to,
+      gradientDeg: gradient.deg,
+    },
+    null,
+    'text'
+  );
   const Element = component || 'div';
 
   return React.createElement(
     Element,
     {
-      className: cx(classes.root, className),
+      className: cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className),
       style: { fontWeight: weight, textTransform: transform, textAlign: align, ...style },
       ref: elementRef,
       ...others,

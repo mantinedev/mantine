@@ -45,6 +45,7 @@ storiesOf('@mantine/core/Text', module)
       Custom component
     </Text>
   ))
+  .add('Gradient', () => <Text variant="gradient">Custom component</Text>)
   .add('Multiline', () => (
     <Text
       style={{

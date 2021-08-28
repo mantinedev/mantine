@@ -34,6 +34,17 @@ Text supports special `dimmed` value in `color` prop. It sets color to `theme.co
 
 <Demo data={TextDemos.dimmed} />
 
+## Gradient variant
+
+To use gradient as Text color:
+
+- set `variant` to `gradient`
+- set `gradient` to `{ from: 'color-from', to: 'color-to', deg: 135 }`, where
+  - `color-from` and `color-to` are color from `theme.colors`
+  - `deg` is linear gradient deg
+
+<Demo data={TextDemos.gradient} />
+
 ## Line clamp
 
 You can specify maximum amount of lines with `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
