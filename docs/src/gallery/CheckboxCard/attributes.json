@@ -5,7 +5,8 @@
     "/core/card/",
     "/core/checkbox/",
     "/core/text/",
-    "/core/button/#unstyled-button"
+    "/core/button/#unstyled-button",
+    "/hooks/use-uncontrolled/"
   ],
   "props": {
     "title": "@mantine/core",
