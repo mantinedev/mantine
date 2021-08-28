@@ -1,4 +1,5 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
+import { useDidUpdate } from '../use-did-update/use-did-update';
 
 interface UseFocusReturn {
   opened: boolean;
@@ -11,13 +12,23 @@ interface UseFocusReturn {
 export function useFocusReturn({ opened, transitionDuration }: UseFocusReturn) {
   const returnFocus = useRef<HTMLElement>();
 
-  useEffect(() => {
+  useDidUpdate(() => {
+    let timeout = -1;
+
     if (opened) {
       returnFocus.current = document.activeElement as HTMLElement;
     } else {
-      setTimeout(() => {
-        returnFocus.current?.focus();
+      timeout = window.setTimeout(() => {
+        if (
+          returnFocus.current &&
+          'focus' in returnFocus.current &&
+          typeof returnFocus.current.focus === 'function'
+        ) {
+          returnFocus.current?.focus();
+        }
       }, transitionDuration + 10);
     }
+
+    return () => window.clearTimeout(timeout);
   }, [opened]);
 }
