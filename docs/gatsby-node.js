@@ -13,6 +13,7 @@ const GALLERY_CATEGORIES = [
   { slug: 'forms', name: 'Forms and inputs' },
   { slug: 'cards', name: 'Cards' },
   { slug: 'hero', name: 'Hero headers' },
+  { slug: 'features', name: 'Features section' },
 ];
 
 const getCategory = (slug) => {

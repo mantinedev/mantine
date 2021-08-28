@@ -11,4 +11,5 @@ export default {
   forms: { light: formsLight, dark: formsDark },
   cards: { light: cardsLight, dark: cardsDark },
   hero: { light: heroLight, dark: heroDark },
+  features: {},
 };
