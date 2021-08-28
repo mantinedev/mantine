@@ -50,9 +50,9 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
 
   if (variant === 'gradient') {
     const merged = {
-      from: gradient.from || DEFAULT_GRADIENT.from,
-      to: gradient.to || DEFAULT_GRADIENT.to,
-      deg: gradient.deg || DEFAULT_GRADIENT.deg,
+      from: gradient?.from || DEFAULT_GRADIENT.from,
+      to: gradient?.to || DEFAULT_GRADIENT.to,
+      deg: gradient?.deg || DEFAULT_GRADIENT.deg,
     };
 
     return {

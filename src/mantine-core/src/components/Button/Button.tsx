@@ -11,6 +11,7 @@ import {
   mergeStyles,
   getSizeValue,
   getSharedColorScheme,
+  MantineGradient,
 } from '../../theme';
 import useStyles, { heights } from './Button.styles';
 import { Loader } from '../Loader/Loader';
@@ -27,7 +28,7 @@ const LOADER_SIZES = {
 
 export const BUTTON_SIZES = heights;
 export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light'];
-export type ButtonVariant = 'link' | 'filled' | 'outline' | 'light';
+export type ButtonVariant = 'link' | 'filled' | 'outline' | 'light' | 'gradient';
 export type ButtonStylesNames = Exclude<keyof ReturnType<typeof useStyles>, ButtonVariant>;
 
 interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
@@ -60,7 +61,10 @@ interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
   radius?: MantineNumberSize;
 
   /** Controls button appearance */
-  variant?: 'link' | 'filled' | 'outline' | 'light';
+  variant?: 'link' | 'filled' | 'outline' | 'light' | 'gradient';
+
+  /** Controls gradient settings in gradient variant only */
+  gradient?: MantineGradient;
 
   /** Set text-transform to uppercase */
   uppercase?: boolean;
@@ -107,6 +111,7 @@ export function Button<
   loading = false,
   loaderPosition = 'left',
   loaderProps,
+  gradient = { from: 'blue', to: 'cyan', deg: 45 },
   classNames,
   styles,
   ...others
@@ -118,7 +123,17 @@ export function Button<
     variant: variant === 'link' ? 'light' : variant,
   });
   const classes = useStyles(
-    { radius, color, size, fullWidth, theme, compact },
+    {
+      radius,
+      color,
+      size,
+      fullWidth,
+      theme,
+      compact,
+      gradientFrom: gradient.from,
+      gradientTo: gradient.to,
+      gradientDeg: gradient.deg,
+    },
     classNames,
     'button'
   );

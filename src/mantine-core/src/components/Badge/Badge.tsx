@@ -67,7 +67,7 @@ export function Badge<C extends React.ElementType = 'div', R extends HTMLElement
   leftSection,
   rightSection,
   radius = 'xl',
-  gradient = { from: 'indigo', to: 'cyan', deg: 45 },
+  gradient = { from: 'blue', to: 'cyan', deg: 45 },
   classNames,
   styles,
   ...others

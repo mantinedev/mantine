@@ -20,6 +20,9 @@ interface ButtonStylesProps {
   theme: MantineTheme;
   fullWidth: boolean;
   compact: boolean;
+  gradientFrom: string;
+  gradientTo: string;
+  gradientDeg: number;
 }
 
 const sizes = {
@@ -223,6 +226,32 @@ export default createMemoStyles({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
         color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
         textShadow: 'none',
+        cursor: 'not-allowed',
+      },
+    };
+  },
+
+  gradient: ({ radius, theme, gradientDeg, gradientFrom, gradientTo }: ButtonStylesProps) => {
+    const colors = getSharedColorScheme({
+      theme,
+      variant: 'gradient',
+      gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
+    });
+
+    return {
+      border: 0,
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      fontWeight: 600,
+      backgroundImage: colors.background,
+      color: colors.color,
+
+      '&:not(:disabled):active': {
+        transform: 'translateY(1px)',
+      },
+
+      '&:disabled:disabled:not($loading)': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
         cursor: 'not-allowed',
       },
     };
