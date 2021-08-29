@@ -15,6 +15,7 @@ import { Alert as AlertStylesApi } from './styles.api';
 const defaultProps = {
   title: 'test-title',
   children: 'test-alert',
+  icon: '$',
 };
 
 describe('@mantine/core/Alert', () => {

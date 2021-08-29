@@ -29,7 +29,10 @@ const LOADER_SIZES = {
 export const BUTTON_SIZES = heights;
 export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light'];
 export type ButtonVariant = 'link' | 'filled' | 'outline' | 'light' | 'gradient';
-export type ButtonStylesNames = Exclude<keyof ReturnType<typeof useStyles>, ButtonVariant>;
+export type ButtonStylesNames = Exclude<
+  keyof ReturnType<typeof useStyles>,
+  ButtonVariant | 'loading'
+>;
 
 interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
   extends DefaultProps<ButtonStylesNames> {

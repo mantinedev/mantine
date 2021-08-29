@@ -61,7 +61,11 @@ export function Alert({
           size="sm"
         >
           <Center>
-            {icon && <div className={classes.icon}>{icon}</div>}
+            {icon && (
+              <div className={classes.icon} style={_styles.icon}>
+                {icon}
+              </div>
+            )}
             <span>{title}</span>
           </Center>
           {withCloseButton && <CloseButton variant="transparent" size={16} iconSize={16} />}
