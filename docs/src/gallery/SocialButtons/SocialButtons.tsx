@@ -1,7 +1,8 @@
 import React from 'react';
-import { TwitterLogoIcon, GitHubLogoIcon } from '@modulz/radix-icons';
+import { GitHubLogoIcon } from '@modulz/radix-icons';
 import { Button, ButtonProps, Group, useMantineTheme } from '@mantine/core';
 import { GoogleIcon } from './GoogleIcon';
+import { TwitterIcon } from './TwitterIcon';
 
 export function GoogleButton(props: ButtonProps) {
   const theme = useMantineTheme();
@@ -50,7 +51,7 @@ export function TwitterButton<
 >(props: ButtonProps<C, R>) {
   return (
     <Button
-      leftIcon={<TwitterLogoIcon />}
+      leftIcon={<TwitterIcon />}
       styles={{
         root: {
           backgroundColor: '#1B91DA',

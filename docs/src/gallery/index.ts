@@ -3,6 +3,7 @@ export { ArticleCard } from './ArticleCard/ArticleCard';
 export { ImageCard } from './ImageCard/ImageCard';
 
 // Forms
+export { AuthenticationForm } from './AuthenticationForm/AuthenticationForm';
 export { CheckboxCard } from './CheckboxCard/CheckboxCard';
 export { CountriesSelect } from './CountriesSelect/CountriesSelect';
 export { GetInTouch } from './GetInTouch/GetInTouch';
