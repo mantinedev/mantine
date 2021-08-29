@@ -1,6 +1,29 @@
 import React from 'react';
 import { TwitterLogoIcon, GitHubLogoIcon } from '@modulz/radix-icons';
-import { Button, ButtonProps, Group } from '@mantine/core';
+import { Button, ButtonProps, Group, useMantineTheme } from '@mantine/core';
+import { GoogleIcon } from './GoogleIcon';
+
+export function GoogleButton(props: ButtonProps) {
+  const theme = useMantineTheme();
+  return (
+    <Button
+      leftIcon={<GoogleIcon />}
+      variant="outline"
+      color="gray"
+      styles={{
+        root: {
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+          borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
+        },
+        label: {
+          textShadow: 'none',
+        },
+      }}
+      {...props}
+    />
+  );
+}
 
 export function FacebookButton(props: ButtonProps) {
   return (
@@ -63,6 +86,7 @@ export function GithubButton(props: ButtonProps) {
 export function SocialButtons() {
   return (
     <Group position="center" withGutter>
+      <GoogleButton>Continue with Google</GoogleButton>
       <FacebookButton>Sign in with Facebook</FacebookButton>
       <GithubButton>View on GitHub</GithubButton>
       <TwitterButton<'a', HTMLAnchorElement>
