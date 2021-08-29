@@ -52,6 +52,7 @@ export { RadioGroup, Radio, RADIO_SIZES } from './components/RadioGroup/RadioGro
 export { RingProgress } from './components/RingProgress/RingProgress';
 export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
 export { Select } from './components/Select/Select';
+export { SimpleGrid } from './components/SimpleGrid/SimpleGrid';
 export { Slider, RangeSlider, SLIDER_SIZES } from './components/Slider';
 export { Spoiler } from './components/Spoiler/Spoiler';
 export { Switch, SWITCH_SIZES } from './components/Switch/Switch';
@@ -166,6 +167,7 @@ export type {
   SegmentedControlStylesNames,
 } from './components/SegmentedControl/SegmentedControl';
 export type { SelectProps, SelectStylesNames, SelectItemProps } from './components/Select/Select';
+export type { SimpleGridProps } from './components/SimpleGrid/SimpleGrid';
 export type { SliderProps, RangeSliderProps, SliderStylesNames } from './components/Slider';
 export type { SpoilerProps, SpoilerStylesNames } from './components/Spoiler/Spoiler';
 export type { SwitchProps, SwitchStylesNames } from './components/Switch/Switch';
