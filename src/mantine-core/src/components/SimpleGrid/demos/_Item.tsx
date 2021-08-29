@@ -28,4 +28,4 @@ export function GridItem(props: React.ComponentPropsWithoutRef<'div'>) {
 
 export const defaultItems = Array(5)
   .fill(0)
-  .map((_, index) => <GridItem key={index}>{index}</GridItem>);
+  .map((_, index) => <GridItem key={index}>{index + 1}</GridItem>);
