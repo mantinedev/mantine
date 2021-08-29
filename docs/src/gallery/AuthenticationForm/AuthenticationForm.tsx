@@ -15,7 +15,7 @@ import { GoogleButton, TwitterButton } from '../SocialButtons/SocialButtons';
 
 export function AuthenticationForm(props: PaperProps<'div', HTMLDivElement>) {
   const theme = useMantineTheme();
-  const [type, toggle] = useToggle<'login' | 'register'>('register', ['login', 'register']);
+  const [type, toggle] = useToggle('login', ['login', 'register']);
   const form = useForm({
     initialValues: {
       email: '',
@@ -35,10 +35,13 @@ export function AuthenticationForm(props: PaperProps<'div', HTMLDivElement>) {
       radius="md"
       padding="xl"
       {...props}
-      style={{ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white }}
+      style={{
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+        ...props.style,
+      }}
     >
-      <Text size="lg" weight={500} align="center">
-        Continue with
+      <Text size="lg" weight={500}>
+        Welcome to Mantine, {type} with
       </Text>
 
       <Group grow style={{ marginTop: 5, marginBottom: 15 }}>
@@ -46,7 +49,7 @@ export function AuthenticationForm(props: PaperProps<'div', HTMLDivElement>) {
         <TwitterButton>Twitter</TwitterButton>
       </Group>
 
-      <Divider label={`Or ${type} with email`} labelPosition="center" />
+      <Divider label="Or continue with email" labelPosition="center" />
 
       <form onSubmit={form.onSubmit(() => {})}>
         <Group direction="column" grow style={{ marginTop: 5 }}>

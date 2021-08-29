@@ -49,16 +49,19 @@ export function TwitterButton<
   C extends React.ElementType = 'button',
   R extends HTMLElement = HTMLButtonElement
 >(props: ButtonProps<C, R>) {
+  const theme = useMantineTheme();
   return (
     <Button
       leftIcon={<TwitterIcon />}
+      variant="outline"
       styles={{
         root: {
-          backgroundColor: '#1B91DA',
-          color: '#fff',
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
+          borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         },
         label: {
-          textShadow: '1px 1px 0 #1a7fbd',
+          textShadow: 'none',
         },
       }}
       {...props}
@@ -88,8 +91,6 @@ export function SocialButtons() {
   return (
     <Group position="center" withGutter>
       <GoogleButton>Continue with Google</GoogleButton>
-      <FacebookButton>Sign in with Facebook</FacebookButton>
-      <GithubButton>View on GitHub</GithubButton>
       <TwitterButton<'a', HTMLAnchorElement>
         component="a"
         href="https://twitter.com/mantinedev"
@@ -97,6 +98,8 @@ export function SocialButtons() {
       >
         Follow on Twitter
       </TwitterButton>
+      <FacebookButton>Sign in with Facebook</FacebookButton>
+      <GithubButton>View on GitHub</GithubButton>
     </Group>
   );
 }
