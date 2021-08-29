@@ -75,6 +75,7 @@ export function SimpleGrid({
 
   return (
     <>
+      {/* Usage of style tag is required due to bug in jss which does not allow to implement this */}
       <style>{queries}</style>
       <div className={cx(gridClassName, className)} id={id} {...others}>
         {columns}

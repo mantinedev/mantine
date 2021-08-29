@@ -17,8 +17,59 @@ import { SimpleGridDemos } from '@demos/core';
 
 ## Usage
 
+SimpleGrid is a simple flexbox container where each child is treated as column.
+Each column take equal amount of space and unlike [Grid](/core/grid/) component you do not control column span,
+instead you specify amount of columns per row:
+
 <Demo data={SimpleGridDemos.configurator} />
 
 ## Breakpoints
 
+Provide an array to `breakpoints` prop to define responsive behavior:
+
+- `maxWidth` – max-width at which media query will work
+- `cols` – amount of columns per row at given max-width
+- `spacing` – optional spacing at given max-width, if not provided spacing from component prop will be used instead
+
+Resize browser to see breakpoints behavior:
+
 <Demo data={SimpleGridDemos.breakpoints} />
+
+In this example:
+
+- If screen width is more than 980px then component `cols` and `spacing` is used – 4 columns, lg spacing
+- screen width < 980px and > 755px – cols = 3, spacing = sm
+- screen width < 755px and > 680px – cols = 2, spacing = sm
+- screen width < 680px – cols = 1, spacing = sm
+
+## Spacing
+
+You can use either `theme.spacing` value or number value for spacing in px:
+
+```tsx
+// xl spacing from theme.spacing
+<SimpleGrid spacing="xl" />;
+
+// 12px spacing
+<SimpleGrid spacing={12} />;
+```
+
+Spacing also works in `breakpoints`:
+
+```tsx
+// xl spacing from theme.spacing
+<SimpleGrid breakpoints={[{ maxWidth: 755, cols: 2, spacing: 'xl' }]} />;
+
+// 12px spacing
+<SimpleGrid breakpoints={[{ maxWidth: 755, cols: 2, spacing: 12 }]} />;
+```
+
+## Server side rendering
+
+Component uses [use-id](/hooks/use-id/) hook to generate unique classes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<SimpleGrid /> // -> random id generated both on client and server, props mismatch warning
+<SimpleGrid id="my-grid" /> // -> id is static, no mismatches
+```

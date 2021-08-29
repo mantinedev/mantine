@@ -25,6 +25,7 @@ function Demo() {
     <SimpleGrid
       cols={4}
       spacing="lg"
+      id="grid-breakpoints"
       breakpoints={[
         { maxWidth: 980, cols: 3, spacing: 'md' },
         { maxWidth: 755, cols: 2, spacing: 'sm' },

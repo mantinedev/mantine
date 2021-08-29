@@ -3,7 +3,11 @@ import { SimpleGrid, SimpleGridProps } from '../SimpleGrid';
 import { defaultItems } from './_Item';
 
 function Wrapper(props: SimpleGridProps) {
-  return <SimpleGrid {...props}>{defaultItems}</SimpleGrid>;
+  return (
+    <SimpleGrid {...props} id="grid-configurator">
+      {defaultItems}
+    </SimpleGrid>
+  );
 }
 
 const codeTemplate = (props: string) => `<SimpleGrid${props}>
