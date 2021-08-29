@@ -7,9 +7,12 @@ import cardsDark from './cards-dark.svg';
 import heroLight from './hero-light.svg';
 import heroDark from './hero-dark.svg';
 
+import featuresLight from './features-light.svg';
+import featuresDark from './features-dark.svg';
+
 export default {
   forms: { light: formsLight, dark: formsDark },
   cards: { light: cardsLight, dark: cardsDark },
   hero: { light: heroLight, dark: heroDark },
-  features: {},
+  features: { light: featuresLight, dark: featuresDark },
 };
