@@ -14,11 +14,24 @@ interface SimpleGridStyles {
 }
 
 export default createMemoStyles({
-  grid: ({ theme, spacing }: SimpleGridStyles) => ({
-    display: 'flex',
-    flexWrap: 'wrap',
-    margin: -getSizeValue({ size: spacing, sizes: theme.spacing }),
-  }),
+  grid: ({ theme, spacing, breakpoints }: SimpleGridStyles) => {
+    const queries = breakpoints.reduce((acc, query) => {
+      acc[`@media (max-width: ${query.maxWidth}px)`] = {
+        margin: -getSizeValue({ size: query.spacing || spacing, sizes: theme.spacing }) / 2,
+      };
+
+      return acc;
+    }, {});
+
+    return {
+      boxSizing: 'border-box',
+      display: 'flex',
+      flexWrap: 'wrap',
+      margin: -getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
+
+      ...queries,
+    };
+  },
 
   col: ({ theme, spacing, breakpoints }: SimpleGridStyles) => {
     const queries = breakpoints.reduce((acc, query) => {
@@ -33,6 +46,7 @@ export default createMemoStyles({
     }, {});
 
     return {
+      boxSizing: 'border-box',
       margin: getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
       width: '100%',
       maxWidth: `calc(33.333333% - ${theme.spacing.md}px)`,
