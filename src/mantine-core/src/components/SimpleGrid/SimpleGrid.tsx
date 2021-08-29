@@ -1,7 +1,13 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../theme';
-import useStyles, { GridBreakpoint } from './SimpleGrid.styles';
+import { useId } from '@mantine/hooks';
+import { DefaultProps, MantineNumberSize, useMantineTheme, getSizeValue } from '../../theme';
+
+interface GridBreakpoint {
+  maxWidth: number;
+  cols: number;
+  spacing?: MantineNumberSize;
+}
 
 export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Breakpoints data to change items per row and spacing based on max-width */
@@ -18,27 +24,62 @@ export function SimpleGrid({
   className,
   breakpoints = [],
   cols,
+  id,
   spacing = 'md',
   themeOverride,
   children,
   ...others
 }: SimpleGridProps) {
+  const uuid = useId(id);
   const theme = useMantineTheme(themeOverride);
   const sortedBreakpoints = [...breakpoints].sort((a, b) => b.maxWidth - a.maxWidth);
-  const classes = useStyles(
-    { theme, breakpoints: sortedBreakpoints, cols, spacing },
-    null,
-    'simple-grid'
-  );
+  const gridClassName = `grid-${uuid}`;
+  const colClassName = `col-${uuid}`;
 
   const columns = (Children.toArray(children) as React.ReactElement[]).map((column) =>
-    React.cloneElement(column, { className: cx(classes.col, column.props.className) })
+    React.cloneElement(column, { className: cx(colClassName, column.props.className) })
   );
 
+  const baseSpacing = getSizeValue({ size: spacing, sizes: theme.spacing });
+  const baseStyles = `
+    .${gridClassName} {
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+      margin: ${-baseSpacing / 2}px;
+    }
+
+    .${colClassName} {
+      box-sizing: border-box;
+      width: 100%;
+      margin: ${baseSpacing / 2}px;
+      max-width: calc(${100 / cols}% - ${baseSpacing}px);
+    }
+  `;
+
+  const queries = sortedBreakpoints.reduce((acc, query) => {
+    const querySpacing = getSizeValue({ size: query.spacing || spacing, sizes: theme.spacing });
+    return `${acc}
+      @media (max-width: ${query.maxWidth}px) {
+        .${gridClassName} {
+          margin: ${-querySpacing / 2}px;
+        }
+
+        .${colClassName} {
+          margin: ${querySpacing / 2}px;
+          max-width: calc(${100 / query.cols}% - ${querySpacing}px);
+        }
+      }
+    `;
+  }, baseStyles);
+
   return (
-    <div className={cx(classes.grid, className)} {...others}>
-      {columns}
-    </div>
+    <>
+      <style>{queries}</style>
+      <div className={cx(gridClassName, className)} id={id} {...others}>
+        {columns}
+      </div>
+    </>
   );
 }
 
