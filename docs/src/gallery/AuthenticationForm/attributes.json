@@ -9,7 +9,9 @@
     "/core/text/",
     "/core/button/",
     "/core/group/",
-    "react-feather"
+    "/core/divider/",
+    "/hooks/use-form/",
+    "/hooks/use-toggle/"
   ],
   "canvas": {
     "center": true,
