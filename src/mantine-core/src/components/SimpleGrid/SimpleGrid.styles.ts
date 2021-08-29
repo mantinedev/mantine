@@ -33,7 +33,7 @@ export default createMemoStyles({
     };
   },
 
-  col: ({ theme, spacing, breakpoints }: SimpleGridStyles) => {
+  col: ({ theme, spacing, breakpoints, cols }: SimpleGridStyles) => {
     const queries = breakpoints.reduce((acc, query) => {
       const querySpacing = getSizeValue({ size: query.spacing || spacing, sizes: theme.spacing });
 
@@ -49,7 +49,7 @@ export default createMemoStyles({
       boxSizing: 'border-box',
       margin: getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
       width: '100%',
-      maxWidth: `calc(33.333333% - ${theme.spacing.md}px)`,
+      maxWidth: `calc(${100 / cols}% - ${theme.spacing.md}px)`,
 
       ...queries,
     };
