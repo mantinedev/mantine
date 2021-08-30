@@ -8,9 +8,9 @@ import { DateRangePicker } from '@mantine/dates';
 const useStyles = createUseStyles(
   (theme) => ({
     wrapper: {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
       }`,
     },
 
@@ -66,13 +66,20 @@ export function InlineForm(props: PaperProps) {
   const classes = useStyles();
 
   return (
-    <Paper shadow="md" padding="sm" {...props} className={cx(classes.wrapper, props.className)}>
+    <Paper
+      shadow="md"
+      padding="lg"
+      radius="md"
+      {...props}
+      className={cx(classes.wrapper, props.className)}
+    >
       <div className={classes.fields}>
         <Autocomplete
           data={['Australia', 'United Kingdom', 'Germany', 'Russia', 'Canada']}
           className={cx(classes.field, classes.destinationField)}
           placeholder="Destination country"
           label="Destination"
+          variant="default"
         />
         <DateRangePicker
           className={classes.field}
@@ -81,6 +88,7 @@ export function InlineForm(props: PaperProps) {
           minDate={new Date()}
           initialMonth={dayjs(new Date()).add(1, 'month').toDate()}
           inputFormat="MMMM D"
+          variant="default"
         />
         <NumberInput
           className={cx(classes.field, classes.budgetField)}
@@ -89,6 +97,7 @@ export function InlineForm(props: PaperProps) {
           step={50}
           defaultValue={500}
           hideControls
+          variant="default"
         />
 
         <Button className={classes.control}>Search</Button>

@@ -1,9 +1,14 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { theming, Title, Text } from '@mantine/core';
+import { InlineForm } from '../InlineForm/InlineForm';
 
 const useStyles = createUseStyles(
   (theme) => ({
+    wrapper: {
+      paddingBottom: 80,
+    },
+
     imageSection: {
       '& *': {
         color: theme.white,
@@ -47,6 +52,15 @@ const useStyles = createUseStyles(
       zIndex: 0,
       backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 5%, #000000 95%)',
     },
+
+    form: {
+      position: 'relative',
+      maxWidth: 820,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      zIndex: 2,
+      marginTop: -50,
+    },
   }),
   { theming }
 );
@@ -55,7 +69,7 @@ export function HeroForm() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.wrapper}>
       <div className={classes.imageSection}>
         <div className={classes.body}>
           <Text className={classes.subheader}>Welcome to</Text>
@@ -64,6 +78,8 @@ export function HeroForm() {
         </div>
         <div className={classes.overlay} />
       </div>
+
+      <InlineForm className={classes.form} />
     </div>
   );
 }
