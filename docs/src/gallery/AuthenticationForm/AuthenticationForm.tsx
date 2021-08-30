@@ -45,8 +45,8 @@ export function AuthenticationForm(props: PaperProps<'div', HTMLDivElement>) {
       </Text>
 
       <Group grow style={{ marginTop: 5, marginBottom: 15 }}>
-        <GoogleButton>Google</GoogleButton>
-        <TwitterButton>Twitter</TwitterButton>
+        <GoogleButton radius="xl">Google</GoogleButton>
+        <TwitterButton radius="xl">Twitter</TwitterButton>
       </Group>
 
       <Divider label="Or continue with email" labelPosition="center" />
