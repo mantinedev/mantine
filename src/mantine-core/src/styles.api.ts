@@ -8,7 +8,6 @@ export * from './components/Breadcrumbs/styles.api';
 export * from './components/Burger/styles.api';
 export * from './components/Button/styles.api';
 export * from './components/Checkbox/styles.api';
-export * from './components/Collapse/styles.api';
 export * from './components/ColorInput/styles.api';
 export * from './components/ColorPicker/styles.api';
 export * from './components/Divider/styles.api';

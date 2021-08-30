@@ -4,12 +4,10 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   itRendersChildren,
   checkAccessibility,
 } from '@mantine/tests';
 import { Collapse } from './Collapse';
-import { Collapse as CollapseStylesApi } from './styles.api';
 
 const defaultProps = {
   in: false,
@@ -21,7 +19,6 @@ describe('@mantine/core/Collapse', () => {
   itSupportsClassName(Collapse, defaultProps);
   itSupportsOthers(Collapse, defaultProps);
   itSupportsStyle(Collapse, defaultProps);
-  itSupportsStylesApi(Collapse, defaultProps, Object.keys(CollapseStylesApi), 'collapse');
   checkAccessibility([mount(<Collapse {...defaultProps} />)]);
 
   it('has correct displayName', () => {

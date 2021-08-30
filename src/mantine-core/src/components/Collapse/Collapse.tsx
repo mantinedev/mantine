@@ -1,15 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import type { TransitionEvent } from 'react';
 import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
-import cx from 'clsx';
 
-import { useMantineTheme, DefaultProps, mergeStyles } from '../../theme';
-import useStyles from './Collapse.styles';
-
-export type CollapseStylesNames = keyof ReturnType<typeof useStyles>;
+import { useMantineTheme } from '../../theme';
 
 export interface CollapseProps
-  extends DefaultProps<CollapseStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** Any valid JSX Element */
   children: React.ReactNode;
 
@@ -31,56 +27,58 @@ export function Collapse({
   in: isOpened,
   transitionDuration = 300,
   transitionTimingFunction,
-  themeOverride,
   className,
-  classNames,
   style,
-  styles,
   onTransitionEnd,
   ...others
 }: CollapseProps) {
   const forceUpdate = useForceUpdate();
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
-  const collapseRef = useRef<HTMLDivElement>(null);
 
-  const classes = useStyles(
-    {
-      theme,
-      transitionDuration: reduceMotion ? 0 : transitionDuration,
-      transitionTimingFunction,
-    },
-    classNames,
-    'collapse'
-  );
-  const _styles = mergeStyles(classes, styles);
-  const [rect, setRect] = useState<HTMLDivElement>(null);
+  const collapseRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const [height, setHeight] = useState<`${number}px` | 'auto'>('auto');
 
   useWindowEvent('resize', forceUpdate);
 
-  const handleTransitionEnd = (e) => {
-    if (onTransitionEnd && e.propertyName === 'height') {
+  const handleTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
+    if (onTransitionEnd && event.propertyName === 'height') {
       onTransitionEnd();
     }
   };
 
+  useEffect(() => {
+    const content = contentRef?.current;
+
+    if (content) {
+      const { height: boundingHeight } = content.getBoundingClientRect();
+
+      setHeight(`${boundingHeight}px`);
+    }
+  }, [children]);
+
   return (
       <div
-        className={cx(classes.root, className)}
+        className={className}
         role="region"
         ref={collapseRef}
         onTransitionEnd={handleTransitionEnd}
         style={{
-          ..._styles.root,
           ...style,
-          height: isOpened ? (rect ? `${rect.getBoundingClientRect().height}px` : 'auto') : '0px',
+          overflow: 'hidden',
+          transition: `height ${reduceMotion ? 0 : transitionDuration}ms ${transitionTimingFunction || theme.transitionTimingFunction}`,
+          height: isOpened ? height : '0px',
         }}
         {...others}
       >
         <div
-          className={classes.content}
-          style={{ ..._styles.content, opacity: isOpened ? 1 : 0 }}
-          ref={(node) => setRect(node)}
+          style={{
+            opacity: isOpened ? 1 : 0,
+            transition: `opacity ${reduceMotion ? 0 : transitionDuration}ms ${transitionTimingFunction || theme.transitionTimingFunction}`,
+          }}
+          ref={contentRef}
         >
           {children}
         </div>
