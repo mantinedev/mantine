@@ -12,6 +12,8 @@ export function ColWrapper(props: ColProps) {
     >
       <div
         style={{
+          minHeight: props.style?.minHeight ? props.style.minHeight : null,
+          height: '100%',
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.blue[0],
           padding: theme.spacing.md,
