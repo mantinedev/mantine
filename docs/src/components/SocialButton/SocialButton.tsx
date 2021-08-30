@@ -5,7 +5,7 @@ import { TwitterIcon } from './TwitterIcon';
 import { DiscordIcon } from './DiscordIcon';
 import { MailIcon } from './MailIcon';
 
-interface SocialButtonProps extends React.ComponentProps<'button'> {
+interface SocialButtonProps extends Omit<React.ComponentPropsWithoutRef<'a'>, 'type'> {
   service: 'github' | 'twitter' | 'discord' | 'email' | 'tg';
 }
 

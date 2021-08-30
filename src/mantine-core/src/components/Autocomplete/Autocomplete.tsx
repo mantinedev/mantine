@@ -76,6 +76,9 @@ export interface AutocompleteProps
 
   /** Function based on which items in dropdown are filtered */
   filter?(value: string, item: AutocompleteItem): boolean;
+
+  /**Default message to be displayed on zero search results  */
+  nothingFound?: string;
 }
 
 export function defaultFilter(value: string, item: AutocompleteItem) {
@@ -113,6 +116,7 @@ export function Autocomplete({
   classNames,
   styles,
   filter = defaultFilter,
+  nothingFound = 'No Results',
   ...others
 }: AutocompleteProps) {
   const theme = useMantineTheme(themeOverride);
@@ -135,9 +139,9 @@ export function Autocomplete({
   }, [_value]);
 
   const handleItemClick = (item: AutocompleteItem) => {
-    typeof onItemSubmit === 'function' && onItemSubmit(item);
     handleChange(item.value);
-    setDropdownOpened(false);
+    typeof onItemSubmit === 'function' && onItemSubmit(item);
+    setTimeout(() => setDropdownOpened(false));
     inputRef.current.focus();
   };
 
@@ -163,9 +167,9 @@ export function Autocomplete({
       case 'Enter': {
         if (filteredData[hovered] && dropdownOpened) {
           event.preventDefault();
+          handleChange(filteredData[hovered].value);
           typeof onItemSubmit === 'function' && onItemSubmit(filteredData[hovered]);
           setDropdownOpened(false);
-          handleChange(filteredData[hovered].value);
         }
         break;
       }
@@ -181,7 +185,6 @@ export function Autocomplete({
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onFocus === 'function' && onFocus(event);
-    setDropdownOpened(true);
   };
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -191,11 +194,10 @@ export function Autocomplete({
 
   const handleInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     typeof onClick === 'function' && onClick(event);
-    setDropdownOpened(true);
+    setDropdownOpened(o => !o);
   };
 
   const shouldRenderDropdown = dropdownOpened && filteredData.length > 0;
-
   return (
     <InputWrapper
       required={required}
@@ -225,6 +227,7 @@ export function Autocomplete({
       >
         <Input<'input'>
           {...others}
+          data-mantine-stop-propagation={dropdownOpened}
           required={required}
           elementRef={useMergedRef(elementRef, inputRef)}
           id={uuid}
@@ -251,7 +254,7 @@ export function Autocomplete({
 
         <SelectDropdown
           themeOverride={themeOverride}
-          mounted={shouldRenderDropdown}
+          mounted={dropdownOpened}
           transition={transition}
           transitionDuration={transitionDuration}
           transitionTimingFunction={transitionTimingFunction}
@@ -274,6 +277,7 @@ export function Autocomplete({
             onItemSelect={handleItemClick}
             itemComponent={itemComponent}
             size={size}
+            nothingFound={nothingFound}
           />
         </SelectDropdown>
       </div>

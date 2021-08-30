@@ -52,6 +52,7 @@ export { RadioGroup, Radio, RADIO_SIZES } from './components/RadioGroup/RadioGro
 export { RingProgress } from './components/RingProgress/RingProgress';
 export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
 export { Select } from './components/Select/Select';
+export { SimpleGrid } from './components/SimpleGrid/SimpleGrid';
 export { Slider, RangeSlider, SLIDER_SIZES } from './components/Slider';
 export { Spoiler } from './components/Spoiler/Spoiler';
 export { Switch, SWITCH_SIZES } from './components/Switch/Switch';
@@ -69,8 +70,6 @@ export {
   AVAILABLE_TRANSITIONS,
 } from './components/Transition/Transition';
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
-
-export type { ComponentPassThrough } from './types';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
 export type {
@@ -136,6 +135,7 @@ export type { ModalProps, ModalStylesNames } from './components/Modal/Modal';
 export type {
   MultiSelectProps,
   MultiSelectStylesNames,
+  MultiSelectValueProps,
 } from './components/MultiSelect/MultiSelect';
 export type {
   NativeSelectProps,
@@ -166,7 +166,8 @@ export type {
   SegmentedControlProps,
   SegmentedControlStylesNames,
 } from './components/SegmentedControl/SegmentedControl';
-export type { SelectProps, SelectStylesNames } from './components/Select/Select';
+export type { SelectProps, SelectStylesNames, SelectItemProps } from './components/Select/Select';
+export type { SimpleGridProps } from './components/SimpleGrid/SimpleGrid';
 export type { SliderProps, RangeSliderProps, SliderStylesNames } from './components/Slider';
 export type { SpoilerProps, SpoilerStylesNames } from './components/Spoiler/Spoiler';
 export type { SwitchProps, SwitchStylesNames } from './components/Switch/Switch';

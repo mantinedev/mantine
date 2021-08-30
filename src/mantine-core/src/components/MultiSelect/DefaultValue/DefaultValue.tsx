@@ -12,7 +12,7 @@ import useStyles from './DefaultValue.styles';
 
 export type DefaultValueStylesNames = keyof ReturnType<typeof useStyles>;
 
-interface DefaultValueProps
+export interface MultiSelectValueProps
   extends DefaultProps<DefaultValueStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   label: string;
@@ -42,7 +42,7 @@ export function DefaultValue({
   size,
   radius,
   ...others
-}: DefaultValueProps) {
+}: MultiSelectValueProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, size, disabled, radius }, classNames, 'multi-select');
   const _styles = mergeStyles(classes, styles);

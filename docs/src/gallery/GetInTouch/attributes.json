@@ -1,0 +1,19 @@
+{
+  "title": "Contact form",
+  "category": "forms",
+  "responsive": true,
+  "withColor": true,
+  "dependencies": [
+    "/core/paper/",
+    "/core/text-input/",
+    "/core/textarea/",
+    "/core/text/",
+    "/core/button/",
+    "/core/group/",
+    "react-feather"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 800
+  }
+}

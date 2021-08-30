@@ -1,4 +1,5 @@
 import React from 'react';
+import { XCircleFillIcon } from '@primer/octicons-react';
 import { demoBase } from './_demo-base';
 import { Alert } from '../Alert';
 import { Text } from '../../Text/Text';
@@ -8,7 +9,13 @@ import { Alert, Text } from '@mantine/core';
 
 function Demo() {
   return (
-    <Alert color="red" title="Something went wrong">
+    <Alert
+      color="red"
+      title="Something went wrong"
+      icon={<XCircleFillIcon size={16} />}
+      withCloseButton
+      closeButtonLabel="Dismiss"
+    >
       Application crashed, try refreshing the page,
       if it does not help please contact our support
 
@@ -24,7 +31,13 @@ function Demo() {
 
 function Demo() {
   return (
-    <Alert color="red" title="Something went wrong">
+    <Alert
+      color="red"
+      title="Something went wrong"
+      icon={<XCircleFillIcon size={16} />}
+      withCloseButton
+      closeButtonLabel="Dismiss"
+    >
       Application crashed, try refreshing the page, if it does not help please contact our support
       <br />
       <br />

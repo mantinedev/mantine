@@ -6,7 +6,11 @@ import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { MantineTransition } from '../Transition/Transition';
-import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
+import {
+  DefaultValue,
+  DefaultValueStylesNames,
+  MultiSelectValueProps,
+} from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
@@ -19,6 +23,8 @@ import {
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { SelectDropdown } from '../Select/SelectDropdown/SelectDropdown';
 import useStyles from './MultiSelect.styles';
+
+export type { MultiSelectValueProps };
 
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
@@ -152,6 +158,8 @@ export function MultiSelect({
   radius = 'sm',
   elementRef,
   icon,
+  rightSection,
+  rightSectionWidth,
   ...others
 }: MultiSelectProps) {
   const theme = useMantineTheme(themeOverride);
@@ -192,7 +200,6 @@ export function MultiSelect({
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onFocus === 'function' && onFocus(event);
-    setDropdownOpened(true);
   };
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -211,16 +218,18 @@ export function MultiSelect({
   });
 
   const handleItemSelect = (item: SelectItem) => {
-    clearSearchOnChange && handleSearchChange('');
+    setTimeout(() => {
+      clearSearchOnChange && handleSearchChange('');
 
-    if (_value.includes(item.value)) {
-      handleValueRemove(item.value);
-    } else {
-      setValue([..._value, item.value]);
-      if (hovered === filteredData.length - 1) {
-        setHovered(filteredData.length - 2);
+      if (_value.includes(item.value)) {
+        handleValueRemove(item.value);
+      } else {
+        setValue([..._value, item.value]);
+        if (hovered === filteredData.length - 1) {
+          setHovered(filteredData.length - 2);
+        }
       }
-    }
+    });
   };
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -342,9 +351,12 @@ export function MultiSelect({
           icon={icon}
           onMouseDown={(event) => {
             event.preventDefault();
+            !disabled && setDropdownOpened((o) => !o);
             inputRef.current?.focus();
           }}
           {...getSelectRightSectionProps({
+            rightSection,
+            rightSectionWidth,
             styles: {
               ...styles,
               input: {
@@ -382,6 +394,7 @@ export function MultiSelect({
               readOnly={!searchable}
               placeholder={_value.length === 0 ? placeholder : undefined}
               disabled={disabled}
+              data-mantine-stop-propagation={dropdownOpened}
               {...others}
             />
           </div>

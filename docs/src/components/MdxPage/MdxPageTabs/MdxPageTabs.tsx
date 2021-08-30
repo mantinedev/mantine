@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Title, TextInput } from '@mantine/core';
+import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { useMediaQuery } from '@mantine/hooks';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import TableOfContents from '../TableOfContents/TableOfContents';
@@ -68,7 +69,8 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
             >
               <TextInput
                 autoFocus
-                placeholder="Search Props"
+                icon={<MagnifyingGlassIcon />}
+                placeholder="Search props"
                 style={{ marginBottom: 20 }}
                 value={query}
                 onChange={(event) => setQuery(event.currentTarget.value)}

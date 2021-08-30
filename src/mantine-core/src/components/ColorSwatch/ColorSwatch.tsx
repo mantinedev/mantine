@@ -1,10 +1,16 @@
 import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../theme';
-import { ComponentPassThrough } from '../../types';
 import useStyles from './ColorSwatch.styles';
 
-export interface ColorSwatchProps extends DefaultProps {
+interface _ColorSwatchProps<C extends React.ElementType, R extends HTMLElement>
+  extends DefaultProps {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+
   /** Swatch color value in any css valid format (hex, rgb, etc.) */
   color: string;
 
@@ -15,8 +21,17 @@ export interface ColorSwatchProps extends DefaultProps {
   radius?: MantineNumberSize;
 }
 
-export function ColorSwatch<T extends React.ElementType = 'div', U = HTMLDivElement>({
-  component: Element = 'div',
+export type ColorSwatchProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _ColorSwatchProps<C, R> &
+  Omit<React.ComponentPropsWithoutRef<C>, keyof _ColorSwatchProps<C, R>>;
+
+export function ColorSwatch<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+>({
+  component,
   color,
   size = 25,
   radius = 25,
@@ -24,15 +39,14 @@ export function ColorSwatch<T extends React.ElementType = 'div', U = HTMLDivElem
   themeOverride,
   children,
   ...others
-}: ComponentPassThrough<T, ColorSwatchProps> & {
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<U>;
-}) {
+}: ColorSwatchProps<C, R>) {
   const classes = useStyles(
     { radius, size, theme: useMantineTheme(themeOverride) },
     null,
     'color-swatch'
   );
+
+  const Element = component || 'div';
 
   return (
     <Element className={cx(classes.colorSwatch, className)} {...others}>

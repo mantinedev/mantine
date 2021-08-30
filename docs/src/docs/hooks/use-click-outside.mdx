@@ -19,10 +19,11 @@ import { UseClickOutsideDemo } from '@docs/demos';
 
 ## API
 
-Hook accepts 2 arguments:
+Hook accepts 3 arguments:
 
 - `handler` – function that will be called on outside click
 - `events` – optional list of events that indicate outside click
+- `nodes` - optional list of nodes that should not trigger outside click event
 
 Hook returns React ref object that should be passed to element on which outside clicks should be captured.
 

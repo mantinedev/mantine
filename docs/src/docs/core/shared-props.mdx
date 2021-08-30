@@ -13,7 +13,7 @@ This guide will help you understand how to change these properties.
 
 ## Colors
 
-Mantine components work with colors defined in <GatsbyLink to="/theming/extend-theme/#default-colors">theme.colors</GatsbyLink>.
+Mantine components work with colors defined in [theme.colors](/theming/extend-theme/#default-colors).
 `theme.colors` is an object that contains an array of 10 shades per each color. To use predefined colors in components set `color` prop:
 
 ```tsx
@@ -21,7 +21,7 @@ Mantine components work with colors defined in <GatsbyLink to="/theming/extend-t
 <Button color="violet" />
 ```
 
-To add your own colors use <GatsbyLink to="/theming/theming-context/">MantineProvider</GatsbyLink>:
+To add your own colors use [MantineProvider](/theming/theming-context/):
 
 ```tsx
 // Theme is deeply merged with default theme
@@ -60,14 +60,14 @@ in some components where size is associated with only one value, you can set it 
 
 ## Spacing and padding
 
-Components that have padding get values from <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.spacing</GatsbyLink>,
+Components that have padding get values from [theme.spacing](/theming/extend-theme/#spacing-radius-and-shadows),
 default values are:
 
 ```tsx
 { xs: 10, sm: 12, md: 16, lg: 20, xl: 24 }
 ```
 
-To change these values set `spacing` property on <GatsbyLink to="/theming/extend-theme/">theme</GatsbyLink>:
+To change these values set `spacing` property on [theme](/theming/extend-theme/):
 
 ```tsx
 <MantineProvider theme={{ spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 } }}>
@@ -87,7 +87,7 @@ Later when you use Mantine components you can reference these values in `spacing
 
 ## Shadows
 
-Components that use box-shadow property get values from <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.shadows</GatsbyLink>,
+Components that use box-shadow property get values from [theme.shadows](/theming/extend-theme/#spacing-radius-and-shadows),
 default values are:
 
 ```tsx
@@ -100,7 +100,7 @@ default values are:
 }
 ```
 
-To change these values set `shadows` property on <GatsbyLink to="/theming/extend-theme/">theme</GatsbyLink>:
+To change these values set `shadows` property on [theme](/theming/extend-theme/):
 
 ```tsx
 <MantineProvider
@@ -127,14 +127,14 @@ Later when you use Mantine components you can reference these values in `shadow`
 
 ## Radius
 
-Components that use border-radius property get values from <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.radius</GatsbyLink>,
+Components that use border-radius property get values from [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows),
 default values are:
 
 ```tsx
 { xs: 2, sm: 4, md: 8, lg: 16, xl: 32 }
 ```
 
-To change these values set `radius` property on <GatsbyLink to="/theming/extend-theme/">theme</GatsbyLink>:
+To change these values set `radius` property on [theme](/theming/extend-theme/):
 
 ```tsx
 <MantineProvider theme={{ radius: { xs: 3, sm: 6, md: 9, lg: 12, xl: 15 } }}>

@@ -15,6 +15,9 @@ interface BadgeStyles {
   theme: MantineTheme;
   size: MantineSize;
   radius: MantineNumberSize;
+  gradientFrom: string;
+  gradientTo: string;
+  gradientDeg: number;
   fullWidth: boolean;
 }
 
@@ -122,6 +125,19 @@ export default createMemoStyles({
       backgroundColor: colors.background,
       color: colors.color,
       border: `1px solid ${colors.border}`,
+    };
+  },
+
+  gradient: ({ theme, gradientDeg, gradientTo, gradientFrom }: BadgeStyles) => {
+    const colors = getSharedColorScheme({
+      theme,
+      variant: 'gradient',
+      gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
+    });
+    return {
+      backgroundImage: colors.background,
+      color: colors.color,
+      border: 0,
     };
   },
 

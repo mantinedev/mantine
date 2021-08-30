@@ -20,7 +20,19 @@ export const components = {
   h5: h(5),
   h6: h(6),
   inlineCode: (props: any) => <Code {...props} />,
-  a: (props: any) => <Text<'a'> component="a" variant="link" {...props} />,
+  a: ({ href, children }: { href: string; children: string }) => {
+    const replaced = href.replace('https://mantine.dev', '');
+
+    if (!replaced.startsWith('http') && replaced.trim().length > 0) {
+      return <GatsbyLink to={href.replace('https://mantine.dev', '')}>{children}</GatsbyLink>;
+    }
+
+    return (
+      <Text component="a" variant="link" href={href}>
+        {children}
+      </Text>
+    );
+  },
   p: (props: any) => <p {...props} style={{ lineHeight: 1.6 }} />,
   ul: (props: any) => (
     <ul {...props} style={{ lineHeight: 1.4, marginBottom: 20, marginTop: 10 }} />

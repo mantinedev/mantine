@@ -105,4 +105,6 @@ export function Accordion({
   return <div {...others}>{controls}</div>;
 }
 
+Accordion.Item = AccordionItem;
+
 Accordion.displayName = '@mantine/core/Accordion';

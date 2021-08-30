@@ -1,22 +1,41 @@
 import React from 'react';
 import cx from 'clsx';
-import { ComponentPassThrough } from '../../../types';
-import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../../theme';
-import { MenuItemProps } from '../MenuItem/MenuItem';
+import { MantineNumberSize, mergeStyles, useMantineTheme } from '../../../theme';
+import { SharedMenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 
 export type MenuButtonStylesNames = keyof ReturnType<typeof useStyles>;
 
-export interface MenuButtonProps extends DefaultProps<MenuButtonStylesNames>, MenuItemProps {
+interface _MenuButtonProps<C extends React.ElementType, R extends HTMLElement>
+  extends SharedMenuItemProps {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+
+  /** Menu item label */
   children: React.ReactNode;
+
+  /** Is item hovered */
   hovered: boolean;
+
+  /** Called when item is hovered */
   onHover(): void;
-  elementRef(node: HTMLButtonElement): void;
-  component?: any;
+
+  /** Border radius */
   radius?: MantineNumberSize;
 }
 
-export function MenuButton<T extends React.ElementType = 'button'>({
+export type MenuButtonProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _MenuButtonProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _MenuButtonProps<C, R>>;
+
+export function MenuButton<
+  C extends React.ElementType = 'button',
+  R extends HTMLElement = HTMLButtonElement
+>({
   className,
   style,
   children,
@@ -28,15 +47,16 @@ export function MenuButton<T extends React.ElementType = 'button'>({
   color,
   disabled,
   rightSection,
-  component: Element = 'button',
+  component,
   classNames,
   styles,
   radius,
   ...others
-}: ComponentPassThrough<T, MenuButtonProps>) {
+}: MenuButtonProps<C, R>) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ color, theme, radius }, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
+  const Element = component || 'button';
 
   return (
     <Element
@@ -44,7 +64,7 @@ export function MenuButton<T extends React.ElementType = 'button'>({
       role="menuitem"
       className={cx(classes.item, { [classes.itemHovered]: hovered }, className)}
       onMouseEnter={() => !disabled && onHover()}
-      ref={elementRef}
+      ref={elementRef as any}
       disabled={disabled}
       style={{ ...style, ..._styles.item, ...(hovered ? _styles.itemHovered : null) }}
       {...others}

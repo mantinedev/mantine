@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { Title, Text } from '@mantine/core';
-import { MarkGithubIcon, PencilIcon, LawIcon } from '@primer/octicons-react';
+import { MarkGithubIcon, PencilIcon, LawIcon, CalendarIcon } from '@primer/octicons-react';
 import { ImportStatement } from './ImportStatement/ImportStatement';
 import { BundleSize } from './BundleSize/BundleSize';
 import { NpmIcon } from './NpmIcon';
@@ -18,7 +18,7 @@ export function MdxPageHeader({ frontmatter }: MdxPage) {
   const hasTabs = Array.isArray(frontmatter.props);
   const hasLinks = !!(frontmatter.import || frontmatter.source || frontmatter.installation);
 
-  if (!hasLinks && !hasTabs) {
+  if (!hasLinks && !hasTabs && !frontmatter.release) {
     return null;
   }
 
@@ -40,6 +40,26 @@ export function MdxPageHeader({ frontmatter }: MdxPage) {
             link={`${SOURCE_BASE}/${frontmatter.source}`}
           >
             View source code
+          </LinkItem>
+        )}
+
+        {frontmatter.release && (
+          <LinkItem
+            label="Source code"
+            icon={<MarkGithubIcon size={14} />}
+            link={frontmatter.release}
+          >
+            Release on GitHub
+          </LinkItem>
+        )}
+
+        {frontmatter.date && (
+          <LinkItem
+            label="Release date"
+            icon={<CalendarIcon size={14} />}
+            link={frontmatter.release}
+          >
+            {frontmatter.date}
           </LinkItem>
         )}
 

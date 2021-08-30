@@ -15,7 +15,7 @@ export type NativeSelectStylesNames = InputStylesNames | InputWrapperStylesNames
 export interface NativeSelectProps
   extends DefaultProps<NativeSelectStylesNames>,
     InputWrapperBaseProps,
-    Omit<InputBaseProps, 'rightSection' | 'rightSectionWidth' | 'rightSectionProps'>,
+    InputBaseProps,
     Omit<React.ComponentPropsWithoutRef<'select'>, 'size'> {
   /** id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
@@ -59,6 +59,8 @@ export function NativeSelect({
   classNames,
   styles,
   size = 'sm',
+  rightSection,
+  rightSectionWidth,
   ...others
 }: NativeSelectProps) {
   const uuid = useId(id);
@@ -112,7 +114,15 @@ export function NativeSelect({
         size={size}
         classNames={classNames}
         __staticSelector="select"
-        {...getSelectRightSectionProps({ themeOverride, styles, shouldClear: false, size, error })}
+        {...getSelectRightSectionProps({
+          rightSection,
+          rightSectionWidth,
+          themeOverride,
+          styles,
+          shouldClear: false,
+          size,
+          error,
+        })}
       >
         {options}
       </Input>

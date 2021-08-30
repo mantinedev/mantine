@@ -1,4 +1,5 @@
 export * from './types';
+export type { MantineGradient } from './utils/get-shared-color-scheme/get-shared-color-scheme';
 
 export { createMemoStyles } from './create-memo-styles';
 export { getThemeColor } from './utils/get-theme-color/get-theme-color';

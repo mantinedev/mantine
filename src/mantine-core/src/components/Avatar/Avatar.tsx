@@ -8,9 +8,14 @@ export const AVATAR_SIZES = sizes;
 
 export type AvatarStylesNames = keyof ReturnType<typeof useStyles>;
 
-export interface AvatarProps
-  extends DefaultProps<AvatarStylesNames>,
-    React.ComponentPropsWithoutRef<'div'> {
+interface _AvatarProps<C extends React.ElementType, R extends HTMLElement>
+  extends DefaultProps<AvatarStylesNames> {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+
   /** Image url */
   src?: string;
 
@@ -27,7 +32,16 @@ export interface AvatarProps
   color?: string;
 }
 
-export function Avatar({
+export type AvatarProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _AvatarProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _AvatarProps<C, R>>;
+
+export function Avatar<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+>({
+  component,
   className,
   style,
   size = 'md',
@@ -39,19 +53,26 @@ export function Avatar({
   themeOverride,
   classNames,
   styles,
+  elementRef,
   ...others
-}: AvatarProps) {
+}: AvatarProps<C, R>) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ color, radius, size, theme }, classNames, 'avatar');
   const _styles = mergeStyles(classes, styles);
   const [error, setError] = useState(!src);
+  const Element = component || 'div';
 
   useEffect(() => {
     !src ? setError(true) : setError(false);
   }, [src]);
 
   return (
-    <div {...others} className={cx(classes.root, className)} style={{ ..._styles.root, ...style }}>
+    <Element
+      {...others}
+      className={cx(classes.root, className)}
+      style={{ ..._styles.root, ...style }}
+      ref={elementRef as any}
+    >
       {error ? (
         <div className={classes.placeholder} title={alt} style={_styles.placeholder}>
           {children || (
@@ -67,7 +88,7 @@ export function Avatar({
           style={_styles.image}
         />
       )}
-    </div>
+    </Element>
   );
 }
 

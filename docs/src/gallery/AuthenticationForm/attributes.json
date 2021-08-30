@@ -1,0 +1,20 @@
+{
+  "title": "Authentication form",
+  "category": "forms",
+  "withColor": true,
+  "dependencies": [
+    "/core/paper/",
+    "/core/text-input/",
+    "/core/password-input/",
+    "/core/text/",
+    "/core/button/",
+    "/core/group/",
+    "/core/divider/",
+    "/hooks/use-form/",
+    "/hooks/use-toggle/"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

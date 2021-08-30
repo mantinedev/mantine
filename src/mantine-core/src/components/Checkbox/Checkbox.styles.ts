@@ -16,6 +16,14 @@ export const sizes = {
   xl: 34,
 };
 
+const iconSizes = {
+  xs: 8,
+  sm: 10,
+  md: 14,
+  lg: 16,
+  xl: 20,
+};
+
 interface CheckboxStyles {
   theme: MantineTheme;
   size: MantineSize;
@@ -81,14 +89,13 @@ export default createMemoStyles({
     },
   }),
 
-  icon: ({ theme, transitionDuration }: CheckboxStyles) => ({
+  icon: ({ theme, transitionDuration, size }: CheckboxStyles) => ({
     color: theme.white,
     transform: 'translateY(5px) scale(0.5)',
     opacity: 0,
     transition: `opacity ${transitionDuration}ms ease, transform ${transitionDuration}ms ease`,
     pointerEvents: 'none',
-    width: '80%',
-    height: '80%',
+    width: getSizeValue({ size, sizes: iconSizes }),
     position: 'absolute',
     zIndex: 1,
     top: 0,

@@ -9,7 +9,7 @@ interface TimeFieldProps
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 
   /** Called with onChange event */
-  onChange(value: string): void;
+  onChange(value: string, triggerShift: boolean): void;
 
   /** Called when input loses focus, used to format value */
   setValue(value: string): void;
@@ -33,6 +33,7 @@ export function TimeField({
   withSeparator = false,
   size = 'sm',
   max,
+  value,
   ...others
 }: TimeFieldProps) {
   const inputRef = useRef<HTMLInputElement>();
@@ -55,12 +56,26 @@ export function TimeField({
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.nativeEvent.code === 'ArrowUp') {
       event.preventDefault();
-      setValue(padTime(clamp({ value: parseInt(event.currentTarget.value, 10) + 1, max, min: 0 })));
+      const padded = padTime(
+        clamp({ value: parseInt(event.currentTarget.value, 10) + 1, max, min: 0 })
+      );
+
+      if (value !== padded) {
+        setValue(padded);
+        onChange(padded, false);
+      }
     }
 
     if (event.nativeEvent.code === 'ArrowDown') {
       event.preventDefault();
-      setValue(padTime(clamp({ value: parseInt(event.currentTarget.value, 10) - 1, max, min: 0 })));
+      const padded = padTime(
+        clamp({ value: parseInt(event.currentTarget.value, 10) - 1, max, min: 0 })
+      );
+
+      if (value !== padded) {
+        setValue(padded);
+        onChange(padded, false);
+      }
     }
   };
 
@@ -69,11 +84,12 @@ export function TimeField({
       <input
         type="text"
         ref={useMergedRef(inputRef, elementRef)}
-        onChange={(event) => onChange(event.currentTarget.value)}
+        onChange={(event) => onChange(event.currentTarget.value, true)}
         onClick={handleClick}
         onFocus={handleFocus}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
+        value={value}
         {...others}
       />
 

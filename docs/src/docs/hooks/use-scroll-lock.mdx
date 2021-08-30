@@ -43,8 +43,8 @@ When component is unmounted, scroll lock is automatically removed:
 
 <Demo data={useScrollLockHook} />
 
-use-scroll-lock is used in some components in <GatsbyLink to="/core/getting-started/">@mantine/core</GatsbyLink>,
-example with <GatsbyLink to="/core/modal/">Modal</GatsbyLink> component:
+use-scroll-lock is used in some components in @mantine/core,
+example with [Modal](/core/modal/) component:
 
 <Demo data={ModalDemos.usage} />
 
@@ -53,5 +53,5 @@ example with <GatsbyLink to="/core/modal/">Modal</GatsbyLink> component:
 ```tsx
 function useScrollLock(
   lock?: boolean
-): readonly [boolean, React.Dispatch<React.SetStateAction<boolean>>]
+): readonly [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 ```

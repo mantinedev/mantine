@@ -1,11 +1,8 @@
 import React from 'react';
-import { ComponentPassThrough } from '../../../types';
 import { DefaultProps } from '../../../theme';
 import type { MenuButtonStylesNames } from '../MenuButton/MenuButton';
 
-export interface MenuItemProps
-  extends DefaultProps<MenuButtonStylesNames>,
-    React.ComponentPropsWithoutRef<'button'> {
+export interface SharedMenuItemProps extends DefaultProps<MenuButtonStylesNames> {
   /** Item label */
   children: React.ReactNode;
 
@@ -19,16 +16,33 @@ export interface MenuItemProps
   rightSection?: React.ReactNode;
 }
 
+interface _MenuItemProps<C extends React.ElementType, R extends HTMLElement>
+  extends SharedMenuItemProps {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+}
+
+export type MenuItemProps<
+  C extends React.ElementType = 'button',
+  R extends HTMLElement = HTMLButtonElement
+> = _MenuItemProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _MenuItemProps<C, R>>;
+
 export interface MenuItemType {
   type: any;
   props: MenuItemProps;
   ref?: React.RefObject<HTMLButtonElement> | ((instance: HTMLButtonElement) => void);
 }
 
-export function MenuItem<T extends React.ElementType = 'button'>(
+export function MenuItem<
+  C extends React.ElementType = 'button',
+  R extends HTMLElement = HTMLButtonElement
+>(
   // Props should be kept for ts integration
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  props: ComponentPassThrough<T, MenuItemProps>
+  props: MenuItemProps<C, R>
 ) {
   return null;
 }

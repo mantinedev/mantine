@@ -6,9 +6,7 @@ function hidden(element: HTMLElement) {
     return false;
   }
 
-  return (
-    (element.offsetWidth <= 0 && element.offsetHeight <= 0) || element.style.display === 'none'
-  );
+  return element.style.display === 'none';
 }
 
 function visible(element: HTMLElement) {

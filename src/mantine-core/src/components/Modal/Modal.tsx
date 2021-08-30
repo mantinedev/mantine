@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cx from 'clsx';
 import {
-  useClickOutside,
   useReducedMotion,
   useId,
   useScrollLock,
   useFocusTrap,
+  useFocusReturn,
 } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
@@ -14,6 +14,7 @@ import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { Portal } from '../Portal/Portal';
 import { GroupedTransition, MantineTransition } from '../Transition/Transition';
+import { ClickOutsideProvider } from '../../utils';
 import useStyles, { sizes } from './Modal.styles';
 
 export const MODAL_SIZES = sizes;
@@ -103,7 +104,7 @@ export function MantineModal({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ size, overflow, theme }, classNames, 'modal');
   const _styles = mergeStyles(classes, styles);
-  const clickOutsideRef = useClickOutside(onClose);
+  const [modalBodyElement, setModalBodyElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap();
   const duration = reduceMotion ? 1 : transitionDuration;
   const _overlayOpacity =
@@ -114,6 +115,8 @@ export function MantineModal({
       : 0.75;
 
   useScrollLock(opened);
+
+  useFocusReturn({ opened, transitionDuration });
 
   return (
     <GroupedTransition
@@ -131,49 +134,58 @@ export function MantineModal({
         >
           <div
             className={classes.inner}
-            onKeyDownCapture={(event) => event.nativeEvent.code === 'Escape' && onClose()}
+            onKeyDownCapture={(event) => {
+              const shouldTrigger =
+                (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
+              shouldTrigger && event.nativeEvent.code === 'Escape' && onClose();
+            }}
             style={{ zIndex: zIndex + 1, ..._styles.inner }}
             ref={focusTrapRef}
           >
-            <Paper
-              themeOverride={themeOverride}
-              className={classes.modal}
-              shadow={shadow}
-              padding={padding}
-              role="dialog"
-              aria-labelledby={titleId}
-              aria-describedby={bodyId}
-              aria-modal
-              style={{ ..._styles.modal, ...transitionStyles.modal }}
-              elementRef={clickOutsideRef}
-              tabIndex={-1}
+            <ClickOutsideProvider
+              onClickOutside={() => onClose()}
+              componentNodes={[modalBodyElement]}
             >
-              {(title || !hideCloseButton) && (
-                <div className={classes.header} style={_styles.header}>
-                  <Text
-                    id={titleId}
-                    className={classes.title}
-                    style={_styles.title}
-                    themeOverride={themeOverride}
-                  >
-                    {title}
-                  </Text>
-
-                  {!hideCloseButton && (
-                    <CloseButton
-                      iconSize={16}
-                      onClick={onClose}
-                      aria-label={closeButtonLabel}
+              <Paper<'div', HTMLDivElement>
+                themeOverride={themeOverride}
+                className={classes.modal}
+                shadow={shadow}
+                padding={padding}
+                role="dialog"
+                aria-labelledby={titleId}
+                aria-describedby={bodyId}
+                aria-modal
+                style={{ ..._styles.modal, ...transitionStyles.modal }}
+                elementRef={setModalBodyElement}
+                tabIndex={-1}
+              >
+                {(title || !hideCloseButton) && (
+                  <div className={classes.header} style={_styles.header}>
+                    <Text
+                      id={titleId}
+                      className={classes.title}
+                      style={_styles.title}
                       themeOverride={themeOverride}
-                    />
-                  )}
-                </div>
-              )}
+                    >
+                      {title}
+                    </Text>
 
-              <div id={bodyId} className={classes.body} style={_styles.body}>
-                {children}
-              </div>
-            </Paper>
+                    {!hideCloseButton && (
+                      <CloseButton
+                        iconSize={16}
+                        onClick={onClose}
+                        aria-label={closeButtonLabel}
+                        themeOverride={themeOverride}
+                      />
+                    )}
+                  </div>
+                )}
+
+                <div id={bodyId} className={classes.body} style={_styles.body}>
+                  {children}
+                </div>
+              </Paper>
+            </ClickOutsideProvider>
           </div>
 
           <div style={transitionStyles.overlay}>

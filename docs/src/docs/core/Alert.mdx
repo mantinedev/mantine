@@ -18,7 +18,7 @@ import { AlertDemos } from '@demos/core';
 ## Usage
 
 Use Alert to attract user attention with important message.
-Alert is designed to be static, if you need more dynamic variant use <GatsbyLink to="/core/notification/">Notification</GatsbyLink> component.
+Alert is designed to be static, if you need more dynamic variant use [Notification](/core/notification/) component.
 
 <Demo data={AlertDemos.usage} />
 
@@ -28,12 +28,12 @@ Alert is designed to be static, if you need more dynamic variant use <GatsbyLink
 
 ## Color
 
-You can use any color defined in <GatsbyLink to="/theming/extend-theme/#default-colors">theme.colors</GatsbyLink>.
+You can use any color defined in [theme.colors](/theming/extend-theme/#default-colors).
 By default Alert will have `theme.primaryColor` color:
 
-```tsx
-<Alert /> // -> theme.primaryColor (defaults to blue)
-<Alert color="red" /> // -> red color
-```
-
 <Demo data={AlertDemos.configurator} />
+
+## Accessibility
+
+- Root element role set to `alert`
+- Set `closeButtonLabel` prop to make close button visible for screen readers

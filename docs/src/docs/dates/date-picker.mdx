@@ -52,7 +52,7 @@ Default variant is `popover`, set it to `modal` to display calendar in modal:
 <Demo data={DatePickerDemos.modal} />
 
 In most cases you would want to switch to modal when certain breakpoint is reached.
-To implement this use <GatsbyLink to="/hooks/use-media-query/">use-media-query</GatsbyLink> hook:
+To implement this use [use-media-query](/hooks/use-media-query/) hook:
 
 ```tsx
 import { useMediaQuery } from '@mantine/hooks';
@@ -160,7 +160,7 @@ By default date picker can be cleared, to disable this, set `clearable` prop to 
 
 ## Input props
 
-Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
+Component supports all props from [Input](/core/input/) and [InputWrapper](/core/input-wrapper/) components:
 
 <Demo data={DatePickerDemos.configurator} />
 
@@ -194,7 +194,7 @@ function Demo() {
 
 ## Server side rendering
 
-Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
 provide static `id` prop to prevent props mismatch:
 
 ```tsx

@@ -6,20 +6,14 @@ interface BlockquoteStyles {
 }
 
 export default createMemoStyles({
-  root: ({ theme, color }: BlockquoteStyles) => ({
+  root: ({ theme }: BlockquoteStyles) => ({
     ...getFontStyles(theme),
     fontSize: theme.fontSizes.lg,
     lineHeight: theme.lineHeight,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     margin: 0,
     borderTopRightRadius: theme.radius.sm,
     borderBottomRightRadius: theme.radius.sm,
-    borderLeft: `3px solid ${getThemeColor({
-      theme,
-      color,
-      shade: 6,
-    })}`,
     padding: [theme.spacing.md, theme.spacing.lg],
   }),
 
@@ -35,7 +29,7 @@ export default createMemoStyles({
 
   icon: ({ theme, color }: BlockquoteStyles) => ({
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 6 : 7 }),
-    marginRight: theme.spacing.md,
+    marginRight: theme.spacing.lg,
     marginTop: 2,
     width: 22,
   }),

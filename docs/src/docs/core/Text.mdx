@@ -7,7 +7,7 @@ slug: /core/text/
 category: 'typography'
 description: 'Render text and links with theme styles'
 props: ['Text']
-import: "import { Text, Anchor } from '@mantine/core';"
+import: "import { Text } from '@mantine/core';"
 source: 'mantine-core/src/components/Text/Text.tsx'
 docs: 'core/Text.mdx'
 styles: ['Text', 'single-node']
@@ -24,9 +24,37 @@ Use Text component to render text and links with theme styles. Control Text styl
 - **weight** – font-weight property – 500, 700, bold, semibold, etc.
 - **transform** – text-transform property – uppercase, lowercase, capitalize
 - **align** – text-align property
-- **variant** – text or link predefined styles (Anchor component has `variant="link"` by default)
+- **variant** – text or link predefined styles
 
 <Demo data={TextDemos.usage} />
+
+## Dimmed
+
+Text supports special `dimmed` value in `color` prop. It sets color to `theme.colors.dark[2]` in dark theme and to `theme.colors.gray[6]` in light:
+
+<Demo data={TextDemos.dimmed} />
+
+## Gradient variant
+
+To use gradient as Text color:
+
+- set `variant` to `gradient`
+- set `gradient` to `{ from: 'color-from', to: 'color-to', deg: 135 }`, where
+  - `color-from` and `color-to` are color from `theme.colors`
+  - `deg` is linear gradient deg
+
+<Demo data={TextDemos.gradient} />
+
+## Line clamp
+
+You can specify maximum amount of lines with `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
+CSS property ([caniuse](https://caniuse.com/css-line-clamp)). Note that you cannot set `padding-bottom` on text element:
+
+<Demo data={TextDemos.linesConfigurator} />
+
+Line clamp can also be used with any children (not only strings), for example with [TypographyStylesProvider](/core/typography-styles-provider/):
+
+<Demo data={TextDemos.lineClamp} />
 
 ## Custom component
 

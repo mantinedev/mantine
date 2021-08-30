@@ -1,4 +1,4 @@
-import React, { useState, useRef, cloneElement } from 'react';
+import React, { useState, useRef, cloneElement, useEffect } from 'react';
 import {
   useId,
   useClickOutside,
@@ -10,6 +10,7 @@ import {
 import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
+import { useClickOutsideRegister } from '../../utils';
 import { MenuIcon } from './MenuIcon';
 import { MenuBody, MenuBodyProps, MenuBodyStylesNames } from './MenuBody/MenuBody';
 import { sizes } from './MenuBody/MenuBody.styles';
@@ -134,7 +135,10 @@ export function Menu({
   const controlRefFocusTimeout = useRef<number>();
   const delayTimeout = useRef<number>();
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
+  const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
+  const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const _transitionDuration = useReducedMotion() ? 0 : transitionDuration;
+  const clickOutsideRegister = useClickOutsideRegister();
   const uuid = useId(menuId);
 
   const [_opened, setOpened] = useUncontrolled({
@@ -168,7 +172,12 @@ export function Menu({
 
   useWindowEvent('scroll', () => closeOnScroll && handleClose(true));
 
-  const wrapperRef = useClickOutside(() => _opened && handleClose());
+  useClickOutside(() => _opened && handleClose(), null, [dropdownElement, wrapperElement]);
+
+  useEffect(() => {
+    clickOutsideRegister(`${uuid}-menu`, dropdownElement);
+  }, [dropdownElement]);
+
   const toggleMenu = () => {
     _opened ? handleClose() : handleOpen();
   };
@@ -208,7 +217,7 @@ export function Menu({
 
   return (
     <div
-      ref={wrapperRef}
+      ref={setWrapperElement}
       style={{ display: 'inline-block', position: 'relative', ...style }}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
@@ -245,6 +254,7 @@ export function Menu({
           radius={radius}
           trapFocus={trigger !== 'hover' && trapFocus}
           transitionDuration={_transitionDuration}
+          elementRef={setDropdownElement}
         >
           {children}
         </MenuBody>
@@ -252,5 +262,8 @@ export function Menu({
     </div>
   );
 }
+
+Menu.Item = MenuItem;
+Menu.Label = MenuLabel;
 
 Menu.displayName = '@mantine/core/Menu';

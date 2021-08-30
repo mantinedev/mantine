@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../theme';
 import useStyles from './Paper.styles';
 
-export interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface SharedPaperProps extends DefaultProps {
   /** Predefined padding value from theme.spacing or number for padding in px */
   padding?: MantineNumberSize;
 
@@ -12,12 +12,23 @@ export interface PaperProps extends DefaultProps, React.ComponentPropsWithoutRef
 
   /** Predefined border-radius value from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
-export function Paper({
+interface _PaperProps<C extends React.ElementType, R extends HTMLElement> extends SharedPaperProps {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+}
+
+export type PaperProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _PaperProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _PaperProps<C, R>>;
+
+export function Paper<C extends React.ElementType = 'div', R extends HTMLElement = HTMLDivElement>({
+  component,
   className,
   children,
   padding = 0,
@@ -26,14 +37,15 @@ export function Paper({
   themeOverride,
   elementRef,
   ...others
-}: PaperProps) {
+}: PaperProps<C, R>) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ radius, shadow, padding, theme }, null, 'paper');
+  const Element = component || 'div';
 
   return (
-    <div className={cx(classes.paper, className)} ref={elementRef} {...others}>
+    <Element className={cx(classes.paper, className)} ref={elementRef as any} {...others}>
       {children}
-    </div>
+    </Element>
   );
 }
 

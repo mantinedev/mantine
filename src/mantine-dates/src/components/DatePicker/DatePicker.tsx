@@ -23,7 +23,7 @@ export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<Calenda
   /** Control initial dropdown opened state */
   initiallyOpened?: boolean;
 
-  /** Input name, useful fon uncontrolled variant to capture data with native form */
+  /** Input name, useful for uncontrolled variant to capture data with native form */
   name?: string;
 }
 

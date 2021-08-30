@@ -9,7 +9,7 @@ export type BlockquoteStylesNames = keyof ReturnType<typeof useStyles>;
 export interface BlockquoteProps
   extends DefaultProps<BlockquoteStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'blockquote'>, 'cite'> {
-  /** Border and icon color from theme */
+  /** Icon color from theme */
   color?: string;
 
   /** Icon, defaults to quote icon */
@@ -24,7 +24,7 @@ const defaultIcon = <QuoteIcon />;
 export function Blockquote({
   className,
   style,
-  color,
+  color = 'gray',
   icon = defaultIcon,
   cite,
   children,

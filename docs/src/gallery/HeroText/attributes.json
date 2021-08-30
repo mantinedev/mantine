@@ -1,0 +1,17 @@
+{
+  "title": "Hero section with gradient",
+  "category": "hero",
+  "responsive": true,
+  "withColor": true,
+  "dependencies": [
+    "/core/text/",
+    "/core/title/",
+    "/core/button/",
+    "/core/container/",
+    "/core/group/",
+    "@modulz/radix-icons"
+  ],
+  "canvas": {
+    "center": false
+  }
+}

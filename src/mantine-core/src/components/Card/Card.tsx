@@ -1,26 +1,38 @@
 import React, { Children, cloneElement } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '../../theme';
-import { Paper } from '../Paper/Paper';
+import { useMantineTheme } from '../../theme';
+import { Paper, SharedPaperProps } from '../Paper/Paper';
 import { CardSection, CardSectionProps } from './CardSection/CardSection';
 import useStyles from './Card.styles';
 
 export { CardSection };
 export type { CardSectionProps };
 
-export interface CardProps extends DefaultProps, React.ComponentPropsWithoutRef<typeof Paper> {
+interface _CardProps<C extends React.ElementType, R extends HTMLElement> extends SharedPaperProps {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+
   /** Card content */
   children: React.ReactNode;
 }
 
-export function Card({
+export type CardProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _CardProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _CardProps<C, R>>;
+
+export function Card<C extends React.ElementType = 'div', R extends HTMLElement = HTMLDivElement>({
+  component,
   className,
   themeOverride,
   padding = 'md',
   radius = 'sm',
   children,
   ...others
-}: CardProps) {
+}: CardProps<C, R>) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, null, 'card');
 
@@ -33,10 +45,18 @@ export function Card({
   });
 
   return (
-    <Paper className={cx(classes.card, className)} radius={radius} padding={padding} {...others}>
+    <Paper
+      className={cx(classes.card, className)}
+      radius={radius}
+      padding={padding}
+      component={component as any}
+      {...others}
+    >
       {content}
     </Paper>
   );
 }
+
+Card.Section = CardSection;
 
 Card.displayName = '@mantine/core/Card';

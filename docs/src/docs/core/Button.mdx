@@ -34,9 +34,33 @@ Default Button color is `theme.primaryColor`, to change color and variant pass `
 <Button variant="link" color="indigo" /> // indigo link button
 ```
 
+## Gradient variant
+
+To use gradient as Button background:
+
+- set `variant` to `gradient`
+- set `gradient` to `{ from: 'color-from', to: 'color-to', deg: 135 }`, where
+  - `color-from` and `color-to` are color from `theme.colors`
+  - `deg` is linear gradient deg
+
+<Demo data={ButtonDemos.gradient} />
+
+## Loading state
+
+Button supports loading state. In this state [Loader](/core/loader/) component replaces left or right icon,
+button becomes disabled and white or dark overlay is added.
+
+You can control loading state and [Loader](/core/loader/) component with following props:
+
+- `loading` – enable loading state
+- `loaderPosition` – Loader position relative to button label, either right or left
+- `loaderProps` – props spread to Loader component, you can choose loader type, size and any other [supported](/core/loader/) prop
+
+<Demo data={ButtonDemos.loadingConfigurator} />
+
 ## Customize
 
-You can change styles of any element in button component with <GatsbyLink to="/theming/styles-api/">Styles API</GatsbyLink> to match your design requirements:
+You can change styles of any element in button component with [Styles API](/theming/styles-api/) to match your design requirements:
 
 <Demo data={ButtonDemos.customize} />
 
@@ -160,6 +184,7 @@ You need to pass additional types to use custom component with TypeScript
 in case you need full type coverage for events and `elementRef`:
 
 ```tsx
+// With element
 <Button<'button', HTMLButtonElement>
   component="button"
   onClick={(event) => console.log(event)}
@@ -168,6 +193,7 @@ in case you need full type coverage for events and `elementRef`:
   }}
 />
 
+// With component
 <Button<typeof Link, HTMLAnchorElement>
   component={Link}
   onClick={(event) => console.log(event)}

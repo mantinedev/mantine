@@ -1,2 +1,2 @@
 export { usage } from './usage';
-export { overlay } from './overlay';
+export { link } from './link';

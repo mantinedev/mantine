@@ -56,7 +56,7 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
       </div>
 
       <Group className={classes.links} spacing="xs">
-        <Search data={data} isMacOS={isMacOS} />
+        <Search data={data.filter((group) => group.group !== 'changelog')} isMacOS={isMacOS} />
         <Discord />
         <SourceCode />
         <ColorSchemeToggle />

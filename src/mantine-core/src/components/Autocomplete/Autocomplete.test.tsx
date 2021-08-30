@@ -43,7 +43,7 @@ describe('@mantine/core/Autocomplete', () => {
       description: 'test-description',
       required: true,
     },
-    Object.keys(AutocompleteStylesApi).filter((key) => key !== 'hovered'),
+    Object.keys(AutocompleteStylesApi).filter((key) => key !== 'hovered' && key !== 'nothingFound'),
     'autocomplete'
   );
 

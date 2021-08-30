@@ -14,12 +14,12 @@ describe('@mantine/core/Loader', () => {
   });
 
   it('sets svg width based on size prop', () => {
-    const element = shallow(<Loader size={41} />);
+    const element = shallow(<Loader size={41} variant="bars" />);
     expect(element.render().attr('width')).toBe('41px');
   });
 
   it('sets svg fill based on color prop', () => {
-    const element = shallow(<Loader color="yellow" />);
+    const element = shallow(<Loader color="yellow" variant="bars" />);
     expect(element.render().attr('fill')).toBe(DEFAULT_THEME.colors.yellow[6]);
   });
 });
