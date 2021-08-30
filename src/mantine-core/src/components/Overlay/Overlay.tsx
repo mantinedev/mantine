@@ -14,6 +14,9 @@ interface _OverlayProps<C extends React.ElementType, R extends HTMLElement> {
   /** Overlay background-color */
   color?: React.CSSProperties['backgroundColor'];
 
+  /** Use gradient instead of background-color */
+  gradient?: string;
+
   /** Overlay z-index */
   zIndex?: React.CSSProperties['zIndex'];
 }
@@ -31,6 +34,7 @@ export function Overlay<
   style,
   opacity = 0.6,
   color = '#fff',
+  gradient,
   zIndex = 1000,
   component,
   elementRef,
@@ -38,13 +42,15 @@ export function Overlay<
 }: OverlayProps<C, R>) {
   const Element = component || 'div';
 
+  const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
+
   return (
     <Element
       className={cx('mantine-overlay', className)}
       ref={elementRef as any}
       style={{
+        ...background,
         opacity,
-        backgroundColor: color,
         position: 'absolute',
         top: 0,
         bottom: 0,
