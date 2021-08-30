@@ -5,6 +5,7 @@
   "withColor": true,
   "dependencies": [
     "/core/text/",
+    "/core/title/",
     "/core/button/",
     "/core/container/",
     "/core/group/",

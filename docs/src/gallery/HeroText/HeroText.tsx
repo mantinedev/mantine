@@ -6,12 +6,12 @@ import { Dots } from './Dots';
 const useStyles = createUseStyles(
   (theme) => ({
     wrapper: {
+      position: 'relative',
       paddingTop: 120,
       paddingBottom: 80,
-      position: 'relative',
     },
 
-    container: {
+    inner: {
       position: 'relative',
       zIndex: 1,
     },
@@ -74,13 +74,13 @@ export function HeroText() {
   const classes = useStyles();
   const theme = useMantineTheme();
   return (
-    <div className={classes.wrapper}>
+    <Container className={classes.wrapper} size={1400}>
       <Dots className={classes.dots} style={{ left: 0, top: 0 }} />
       <Dots className={classes.dots} style={{ left: 60, top: 0 }} />
       <Dots className={classes.dots} style={{ left: 0, top: 140 }} />
       <Dots className={classes.dots} style={{ right: 0, top: 60 }} />
 
-      <Container className={classes.container}>
+      <div className={classes.inner}>
         <Title align="center" className={classes.title}>
           Automated AI code reviews for{' '}
           <Text component="span" color={theme.primaryColor} inherit>
@@ -103,7 +103,7 @@ export function HeroText() {
             Live demo
           </Button>
         </div>
-      </Container>
-    </div>
+      </div>
+    </Container>
   );
 }
