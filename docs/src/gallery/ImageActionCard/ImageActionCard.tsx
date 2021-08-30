@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { createUseStyles } from 'react-jss';
-import { theming, Card, Overlay, CardProps, Button, Text } from '@mantine/core';
+import { theming, Card, Overlay, CardProps, Button, Text, useMantineTheme } from '@mantine/core';
 
 const useStyles = createUseStyles(
   (theme) => ({
@@ -39,10 +39,6 @@ const useStyles = createUseStyles(
       color: theme.white,
       maxWidth: 220,
     },
-
-    overlay: {
-      backgroundImage: `linear-gradient(105deg, ${theme.black} 20%, #312f2f 50%, ${theme.colors.gray[4]} 100%)`,
-    },
   }),
   { theming }
 );
@@ -68,6 +64,7 @@ export function ImageActionCard({
 }: ImageActionCardProps &
   Omit<CardProps<'div', HTMLDivElement>, keyof ImageActionCardProps | 'children'>) {
   const classes = useStyles();
+  const theme = useMantineTheme();
 
   return (
     <Card
@@ -76,7 +73,11 @@ export function ImageActionCard({
       style={{ backgroundImage: `url(${image})`, ...style }}
       className={cx(classes.card, className)}
     >
-      <Overlay color="transparent" opacity={0.55} zIndex={0} className={classes.overlay} />
+      <Overlay
+        gradient={`linear-gradient(105deg, ${theme.black} 20%, #312f2f 50%, ${theme.colors.gray[4]} 100%)`}
+        opacity={0.55}
+        zIndex={0}
+      />
 
       <div className={classes.content}>
         <Text size="lg" weight={700} className={classes.title}>
