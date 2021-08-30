@@ -1,7 +1,9 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
+import { useId } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme, getSizeValue } from '../../theme';
-import { Col, ColProps, breakpoints, getColumnWidth } from './Col';
+import { Col, ColProps, breakpoints } from './Col';
+import { getResponsiveStyles } from './get-responsive-styles';
 
 export { Col };
 export type { ColProps };
@@ -36,13 +38,15 @@ export function Grid({
   style,
   columns = 12,
   className,
+  id,
   ...others
 }: GridProps) {
+  const uuid = useId(id);
   const theme = useMantineTheme(themeOverride);
   const spacing = getSizeValue({ size: gutter, sizes: theme.spacing });
 
   const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
-    React.cloneElement(col, { gutter, grow, columns, key: index })
+    React.cloneElement(col, { gutter, grow, columns, key: index, id: uuid })
   );
 
   let styles: React.CSSProperties = {};
@@ -56,40 +60,9 @@ export function Grid({
     ...style,
   };
 
-  const columnSizes = [];
-  for (let index = 0; index < columns; index += 1) {
-    columnSizes.push(index + 1);
-  }
-
-  const createStyles = () => {
-    let mediaQueries = '';
-    let baseStyles = '';
-    columnSizes.forEach((columnSpan) => {
-      baseStyles = `${baseStyles} .mantine-col-${columnSpan} {
-          flex-basis: ${getColumnWidth(columnSpan, columns)};
-          flex-shrink: 0;
-          max-width:  ${grow ? 'unset' : getColumnWidth(columnSpan, columns)};
-        }`;
-    });
-
-    breakpoints.forEach((breakpoint) => {
-      let colStyles = '';
-      columnSizes.forEach((columnSpan) => {
-        colStyles = `${colStyles} .mantine-col-${breakpoint}-${columnSpan} {
-          flex-basis: ${getColumnWidth(columnSpan, columns)};
-          flex-shrink: 0;
-          max-width:  ${grow ? 'unset' : getColumnWidth(columnSpan, columns)};
-        }`;
-      });
-      mediaQueries = `${mediaQueries} @media (min-width: ${theme.breakpoints[breakpoint]}px) { ${colStyles} }`;
-    });
-    mediaQueries = `${baseStyles} ${mediaQueries}`;
-    return mediaQueries;
-  };
-
   return (
     <div style={styles} className={cx('mantine-grid', className)} {...others}>
-      <style>{createStyles()}</style>
+      <style>{getResponsiveStyles({ uuid, breakpoints, columns, grow, theme })}</style>
       {cols}
     </div>
   );

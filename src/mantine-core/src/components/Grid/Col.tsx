@@ -21,7 +21,7 @@ export function isValidSpan(span: number) {
 
 export const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
-export const getColumnWidth = (colSpan, columns) => `calc(${100 / (columns / colSpan)}% )`;
+export const getColumnWidth = (colSpan, columns) => `${100 / (columns / colSpan)}%`;
 
 export function Col({
   themeOverride,
@@ -38,6 +38,7 @@ export function Col({
   style,
   columns,
   className,
+  id,
   ...others
 }: ColProps) {
   const breakpointValues = { xs, sm, md, lg, xl };
@@ -58,11 +59,11 @@ export function Col({
   };
 
   if (isValidSpan(offset)) {
-    styles.marginLeft = `calc(${100 / (columns / offset)}%)`;
+    styles.marginLeft = `${100 / (columns / offset)}%`;
   }
 
   let sizeClassObj = {
-    [`mantine-col-${span}`]: span !== undefined,
+    [`${id}-col-${span}`]: span !== undefined,
   };
 
   breakpoints.forEach((size) => {
@@ -72,7 +73,7 @@ export function Col({
     }
     sizeClassObj = {
       ...sizeClassObj,
-      [`mantine-col-${size}-${propSize}`]: propSize !== undefined,
+      [`${id}-col-${size}-${propSize}`]: propSize !== undefined,
     };
     return true;
   });

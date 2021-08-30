@@ -7,19 +7,25 @@ export function ColWrapper(props: ColProps) {
     <Col
       {...props}
       style={{
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.blue[0],
-        padding: theme.spacing.md,
         ...props.style,
       }}
     >
-      <Text
-        color={theme.colorScheme === 'dark' ? 'gray' : 'blue'}
-        size="xl"
-        weight={700}
-        align="center"
+      <div
+        style={{
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.blue[0],
+          padding: theme.spacing.md,
+        }}
       >
-        {props.children}
-      </Text>
+        <Text
+          color={theme.colorScheme === 'dark' ? 'gray' : 'blue'}
+          size="xl"
+          weight={700}
+          align="center"
+        >
+          {props.children}
+        </Text>
+      </div>
     </Col>
   );
 }
