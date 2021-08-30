@@ -7,6 +7,7 @@ export { AuthenticationForm } from './AuthenticationForm/AuthenticationForm';
 export { CheckboxCard } from './CheckboxCard/CheckboxCard';
 export { CountriesSelect } from './CountriesSelect/CountriesSelect';
 export { GetInTouch } from './GetInTouch/GetInTouch';
+export { InlineForm } from './InlineForm/InlineForm';
 export { SocialButtons } from './SocialButtons/SocialButtons';
 
 // Hero

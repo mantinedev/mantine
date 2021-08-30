@@ -1,0 +1,17 @@
+{
+  "title": "Inline form",
+  "category": "forms",
+  "responsive": true,
+  "withColor": true,
+  "dependencies": [
+    "/core/paper/",
+    "/core/autocomplete/",
+    "/dates/date-picker/",
+    "/core/number-input/",
+    "/core/button/"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 820
+  }
+}
