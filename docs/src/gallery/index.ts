@@ -10,6 +10,7 @@ export { GetInTouch } from './GetInTouch/GetInTouch';
 export { SocialButtons } from './SocialButtons/SocialButtons';
 
 // Hero
+export { HeroForm } from './HeroForm/HeroForm';
 export { HeroImageBackground } from './HeroImageBackground/HeroImageBackground';
 export { HeroText } from './HeroText/HeroText';
 export { HeroTitle } from './HeroTitle/HeroTitle';
