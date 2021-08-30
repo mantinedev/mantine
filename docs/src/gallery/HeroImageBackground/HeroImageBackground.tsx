@@ -68,6 +68,9 @@ const useStyles = createUseStyles(
     },
 
     control: {
+      height: 42,
+      fontSize: theme.fontSizes.md,
+
       '& + &': {
         marginLeft: theme.spacing.md,
       },
@@ -87,7 +90,7 @@ const useStyles = createUseStyles(
     },
 
     controlPrimary: {
-      color: theme.colors[theme.primaryColor][7],
+      color: theme.colors[theme.primaryColor][8],
       backgroundColor: theme.white,
       textShadow: 'none',
     },
