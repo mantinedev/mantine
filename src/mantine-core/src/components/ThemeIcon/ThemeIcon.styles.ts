@@ -71,6 +71,8 @@ export default createMemoStyles({
       boxSizing: 'border-box',
       width: iconSize,
       height: iconSize,
+      minWidth: iconSize,
+      minHeight: iconSize,
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     };
   },
