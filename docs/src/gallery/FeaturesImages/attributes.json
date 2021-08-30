@@ -1,0 +1,43 @@
+{
+  "title": "Features with image icons",
+  "category": "features",
+  "responsive": true,
+  "withColor": true,
+  "dependencies": [
+    "/core/theme-icon/",
+    "/core/title/",
+    "/core/text/",
+    "/core/container/",
+    "/core/simple-grid/",
+    "/core/image/"
+  ],
+  "props": {
+    "supTitle": "Use cases",
+    "description": "GreatAudit is completely flexible to your company’s specific needs. It can be used for any type of secure file exchange and communication between companies and their clients.",
+    "data": [
+      {
+        "image": "auditors",
+        "title": "Auditors",
+        "description": "Prepare EoY audits, special audits, or due diligence cases"
+      },
+      {
+        "image": "lawyers",
+        "title": "Lawyers",
+        "description": "Exchange confidential case files and related information"
+      },
+      {
+        "image": "accountants",
+        "title": "Accountants",
+        "description": "Gather financial information to complete tax returns"
+      },
+      {
+        "image": "others",
+        "title": "Others",
+        "description": "Request any files and information from your clients."
+      }
+    ]
+  },
+  "canvas": {
+    "center": false
+  }
+}
