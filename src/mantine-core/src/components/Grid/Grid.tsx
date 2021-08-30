@@ -65,7 +65,7 @@ export function Grid({
     let mediaQueries = '';
     let baseStyles = '';
     columnSizes.forEach((columnSpan) => {
-       baseStyles = `${baseStyles} .mantine-col-${columnSpan} {
+      baseStyles = `${baseStyles} .mantine-col-${columnSpan} {
           flex-basis: ${getColumnWidth(columnSpan, columns)};
           flex-shrink: 0;
           max-width:  ${grow ? 'unset' : getColumnWidth(columnSpan, columns)};
@@ -81,19 +81,17 @@ export function Grid({
           max-width:  ${grow ? 'unset' : getColumnWidth(columnSpan, columns)};
         }`;
       });
-       mediaQueries = `${mediaQueries} @media (min-width: ${theme.breakpoints[breakpoint]}px) { ${colStyles} }`;
+      mediaQueries = `${mediaQueries} @media (min-width: ${theme.breakpoints[breakpoint]}px) { ${colStyles} }`;
     });
     mediaQueries = `${baseStyles} ${mediaQueries}`;
     return mediaQueries;
   };
 
   return (
-    <>
+    <div style={styles} className={cx('mantine-grid', className)} {...others}>
       <style>{createStyles()}</style>
-      <div style={styles} className={cx('mantine-grid', className)} {...others}>
-        {cols}
-      </div>
-    </>
+      {cols}
+    </div>
   );
 }
 
