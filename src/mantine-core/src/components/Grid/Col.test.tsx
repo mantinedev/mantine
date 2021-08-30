@@ -51,14 +51,14 @@ describe('@mantine/core/Col', () => {
     expect(element.prop('className')).toContain('mantine-col-2');
   });
 
-  it('sets correct margin based on gutter', () => {
+  it('sets correct padding based on gutter', () => {
     const element = shallow(<Col {...defaultProps} gutter={42} />);
-    expect(element.prop('style').margin).toBe(21);
+    expect(element.prop('style').padding).toBe(21);
   });
 
   it('sets margin-left based on offset prop', () => {
     const element = shallow(<Col {...defaultProps} columns={10} gutter={40} offset={2} />);
-    expect(element.prop('style').marginLeft).toBe('calc(20% + 20px)');
+    expect(element.prop('style').marginLeft).toBe('calc(20%)');
   });
 
   it('has correct displayName', () => {
