@@ -15,13 +15,13 @@ storiesOf('@mantine/core/Grid', module)
               recusandae, provident cumque voluptas, iste consequatur repellendus maiores.
             </Card>
           </Col>
-          <Col sm={4} lg={6} span={12} style={{ backgroundColor: 'red' }}>
+          <Col sm={4} lg={6} span={12}>
             <Card shadow="md">2</Card>
           </Col>
-          <Col sm={4} lg={6} span={12} style={{ backgroundColor: 'red' }}>
+          <Col sm={4} lg={6} span={12}>
             <Card shadow="md">3</Card>
           </Col>
-          <Col sm={12} lg={6} span={12} style={{ backgroundColor: 'red' }}>
+          <Col sm={12} lg={6} span={12}>
             <Card shadow="md">4</Card>
           </Col>
         </Grid>
@@ -32,7 +32,7 @@ storiesOf('@mantine/core/Grid', module)
     <div style={{ padding: 40 }}>
       <div style={{ background: 'blue' }}>
         <Grid gutter="xl" align="center">
-          <Col span={10} style={{ backgroundColor: 'red' }}>
+          <Col span={10}>
             <Card shadow="md">2</Card>
           </Col>
           <Col span={2}>

@@ -21,8 +21,7 @@ export function isValidSpan(span: number) {
 
 export const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
-export const getColumnWidth = (colSpan, columns, spacing) =>
-  `calc(${100 / (columns / colSpan)}% - ${spacing}px)`;
+export const getColumnWidth = (colSpan, columns) => `calc(${100 / (columns / colSpan)}% )`;
 
 export function Col({
   themeOverride,
@@ -50,15 +49,16 @@ export function Col({
   }
 
   let styles: React.CSSProperties = {};
-
   styles = {
     ...style,
     boxSizing: 'border-box',
-    margin: spacing / 2,
+    flexGrow: grow ? 1 : 0,
+    maxWidth: grow ? 'unset' : null,
+    padding: spacing / 2,
   };
 
   if (isValidSpan(offset)) {
-    styles.marginLeft = `calc(${100 / (columns / offset)}% + ${spacing / 2}px)`;
+    styles.marginLeft = `calc(${100 / (columns / offset)}%)`;
   }
 
   let sizeClassObj = {

@@ -45,6 +45,17 @@ export function Grid({
     React.cloneElement(col, { gutter, grow, columns, key: index })
   );
 
+  let styles: React.CSSProperties = {};
+
+  styles = {
+    margin: -spacing / 2,
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: justify,
+    alignItems: align,
+    ...style,
+  };
+
   const columnSizes = [];
   for (let index = 0; index < columns; index += 1) {
     columnSizes.push(index + 1);
@@ -55,8 +66,9 @@ export function Grid({
     let baseStyles = '';
     columnSizes.forEach((columnSpan) => {
        baseStyles = `${baseStyles} .mantine-col-${columnSpan} {
-          flex:${grow ? '1' : '0'} 0 ${getColumnWidth(columnSpan, columns, spacing)};
-          max-width:  ${grow ? 'unset' : getColumnWidth(columnSpan, columns, spacing)};
+          flex-basis: ${getColumnWidth(columnSpan, columns)};
+          flex-shrink: 0;
+          max-width:  ${grow ? 'unset' : getColumnWidth(columnSpan, columns)};
         }`;
     });
 
@@ -64,8 +76,9 @@ export function Grid({
       let colStyles = '';
       columnSizes.forEach((columnSpan) => {
         colStyles = `${colStyles} .mantine-col-${breakpoint}-${columnSpan} {
-          flex:${grow ? '1' : '0'} 0 ${getColumnWidth(columnSpan, columns, spacing)};
-          max-width:  ${grow ? 'unset' : getColumnWidth(columnSpan, columns, spacing)};
+          flex-basis: ${getColumnWidth(columnSpan, columns)};
+          flex-shrink: 0;
+          max-width:  ${grow ? 'unset' : getColumnWidth(columnSpan, columns)};
         }`;
       });
        mediaQueries = `${mediaQueries} @media (min-width: ${theme.breakpoints[breakpoint]}px) { ${colStyles} }`;
@@ -76,21 +89,8 @@ export function Grid({
 
   return (
     <>
-      <style>
-        {createStyles()}
-      </style>
-      <div
-        style={{
-          margin: -spacing / 2,
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: justify,
-          alignItems: align,
-          ...style,
-        }}
-        className={cx('mantine-grid', className)}
-        {...others}
-      >
+      <style>{createStyles()}</style>
+      <div style={styles} className={cx('mantine-grid', className)} {...others}>
         {cols}
       </div>
     </>
