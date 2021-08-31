@@ -46,6 +46,8 @@ exports.createPages = async function ({ actions }) {
     })
     .filter((c) => c);
 
+  const componentsCount = Math.floor(components.length / 10) * 10;
+
   const categories = components.reduce((acc, component) => {
     if (!Array.isArray(acc[component.attributes.category])) {
       acc[component.attributes.category] = [];
@@ -78,6 +80,7 @@ exports.createPages = async function ({ actions }) {
     path: '/gallery/',
     component: require.resolve('./src/components/Gallery/Gallery.tsx'),
     context: {
+      componentsCount,
       categories: GALLERY_CATEGORIES.map((category) => ({
         category: category.slug,
         name: category.name,

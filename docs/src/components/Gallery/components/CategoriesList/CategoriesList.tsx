@@ -12,7 +12,7 @@ export function CategoriesList({ categories }: CategoriesListProps) {
   const cards = categories.map((category) => <CategoryCard key={category.url} {...category} />);
 
   return (
-    <Container style={{ paddingTop: 20 }}>
+    <Container style={{ paddingTop: 50 }}>
       <SimpleGrid
         id="cards-grid"
         cols={3}

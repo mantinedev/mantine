@@ -6,6 +6,7 @@ import { GalleryBanner } from './components/GalleryBanner/GalleryBanner';
 
 interface GalleryProps {
   pageContext: {
+    componentsCount: number;
     categories: CategoryCardProps[];
   };
 }
@@ -15,7 +16,7 @@ export default function Gallery({ pageContext }: GalleryProps) {
     <>
       <Head title="Gallery" description="100+ premade responsive components" />
       <GalleryPage>
-        <GalleryBanner componentsCount={30} />
+        <GalleryBanner componentsCount={pageContext.componentsCount} />
         <CategoriesList categories={pageContext.categories} />
       </GalleryPage>
     </>
