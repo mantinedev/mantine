@@ -12,6 +12,7 @@ import {
   Group,
   useMantineTheme,
 } from '@mantine/core';
+import bg from './bg.svg';
 
 const BREAKPOINT = '@media (max-width: 755px)';
 
@@ -79,10 +80,9 @@ const useStyles = createUseStyles(
       boxSizing: 'border-box',
       position: 'relative',
       borderRadius: theme.radius.lg - 2,
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors[theme.primaryColor][9]
-          : theme.colors[theme.primaryColor][7],
+      backgroundImage: `url(${bg})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
       border: '1px solid transparent',
       padding: theme.spacing.xl,
       flex: '0 0 280px',
