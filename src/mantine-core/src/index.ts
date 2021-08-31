@@ -18,6 +18,7 @@ export { Card, CardSection } from './components/Card/Card';
 export { Center } from './components/Center/Center';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
 export { Code } from './components/Code/Code';
+export { Collapse } from './components/Collapse/Collapse';
 export { ColorInput } from './components/ColorInput/ColorInput';
 export { ColorPicker, AlphaSlider, HueSlider } from './components/ColorPicker/ColorPicker';
 export { ColorSwatch } from './components/ColorSwatch/ColorSwatch';

@@ -1,0 +1,34 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Collapse
+order: 1
+slug: /core/collapse/
+category: 'data-display'
+description: 'Collapsible util component'
+props: ['Collapse']
+import: "import { Collapse } from '@mantine/core';"
+source: 'mantine-core/src/components/Collapse/Collapse.tsx'
+docs: 'core/Collapse.mdx'
+styles: ['Collapse']
+---
+
+import { CollapseDemos } from '@demos/core';
+
+## Usage
+
+<Demo data={CollapseDemos.usage} />
+
+## Transition API
+
+Collapse component allows you to fire callback after `height` tranisiton ends.
+You have control on `transitionDuration` and `transitionTimingFunction` either.
+If you want to fire function on start of transition or only `open` event do that on your component scope.
+
+<Demo data={CollapseDemos.transition} />
+
+## Accessibility
+
+In case when you are creating a connection with a control it is important to take care about accessibility.
+
+<Demo data={CollapseDemos.accessibility} />
