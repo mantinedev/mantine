@@ -76,6 +76,30 @@ export default createUseStyles(
       color: theme.white,
       textShadow: 'none',
     },
+
+    features: {
+      maxWidth: 740,
+    },
+
+    featureIcon: {
+      backgroundColor: '#303561',
+    },
+
+    featureBody: {
+      marginTop: theme.spacing.md,
+    },
+
+    featureTitle: {
+      color: theme.white,
+      fontWeight: 500,
+      lineHeight: 1,
+      marginBottom: 7,
+    },
+
+    featureDescription: {
+      color: '#d7dafa',
+      fontSize: theme.fontSizes.xs,
+    },
   }),
   { theming }
 );
