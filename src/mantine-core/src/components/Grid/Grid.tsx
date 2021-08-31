@@ -1,7 +1,9 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
+import { useId } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme, getSizeValue } from '../../theme';
-import { Col, ColProps } from './Col';
+import { Col, ColProps, breakpoints } from './Col';
+import { getResponsiveStyles } from './get-responsive-styles';
 
 export { Col };
 export type { ColProps };
@@ -36,28 +38,31 @@ export function Grid({
   style,
   columns = 12,
   className,
+  id,
   ...others
 }: GridProps) {
+  const uuid = useId(id);
   const theme = useMantineTheme(themeOverride);
   const spacing = getSizeValue({ size: gutter, sizes: theme.spacing });
 
   const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
-    React.cloneElement(col, { gutter, grow, columns, key: index })
+    React.cloneElement(col, { gutter, grow, columns, key: index, id: uuid })
   );
 
+  let styles: React.CSSProperties = {};
+
+  styles = {
+    margin: -spacing / 2,
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: justify,
+    alignItems: align,
+    ...style,
+  };
+
   return (
-    <div
-      style={{
-        margin: -spacing / 2,
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: justify,
-        alignItems: align,
-        ...style,
-      }}
-      className={cx('mantine-grid', className)}
-      {...others}
-    >
+    <div style={styles} className={cx('mantine-grid', className)} {...others}>
+      <style>{getResponsiveStyles({ uuid, breakpoints, columns, grow, theme })}</style>
       {cols}
     </div>
   );

@@ -109,3 +109,32 @@ function YourApp() {
   );
 }
 ```
+
+## Breakpoints
+
+Mantine supports 5 sizes for breakpoints (`xs`, `sm`, `md`, `lg`, `xl`), which are used for example in the [Grid](/core/grid/) component.
+
+You can change the breakpoints by setting corresponding properties.
+In this example:
+
+- sm and lg values from theme will be overwritten
+- xs, md and xl values will be used from default theme
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function YourApp() {
+  return (
+    <MantineProvider
+      theme={{
+        breakpoints: {
+          sm: 800,
+          lg: 1275,
+        },
+      }}
+    >
+     Hello World
+    </MantineProvider>
+  );
+}
+```
