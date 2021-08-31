@@ -3,7 +3,7 @@ import { MantineTheme } from '../../theme';
 
 export interface GetResponsiveStyles {
   uuid: string;
-  breakpoints: any;
+  breakpoints: readonly ['xs', 'sm', 'md', 'lg', 'xl'];
   columns: number;
   grow: boolean;
   theme: MantineTheme;
@@ -34,6 +34,7 @@ export function getResponsiveStyles({
 
   breakpoints.forEach((breakpoint) => {
     let colStyles = '';
+
     columnSizes.forEach((columnSpan) => {
       colStyles = `${colStyles} .${uuid}-col-${breakpoint}-${columnSpan} {
           flex-basis: ${getColumnWidth(columnSpan, columns)};
@@ -41,8 +42,11 @@ export function getResponsiveStyles({
           max-width:  ${grow ? 'unset' : getColumnWidth(columnSpan, columns)};
         }`;
     });
+
     mediaQueries = `${mediaQueries} @media (min-width: ${theme.breakpoints[breakpoint]}px) { ${colStyles} }`;
   });
+
   mediaQueries = `${baseStyles} ${mediaQueries}`;
+
   return mediaQueries;
 }

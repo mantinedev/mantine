@@ -21,7 +21,7 @@ export function isValidSpan(span: number) {
 
 export const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
-export const getColumnWidth = (colSpan, columns) => `${100 / (columns / colSpan)}%`;
+export const getColumnWidth = (colSpan: number, columns: number) => `${100 / (columns / colSpan)}%`;
 
 export function Col({
   themeOverride,
