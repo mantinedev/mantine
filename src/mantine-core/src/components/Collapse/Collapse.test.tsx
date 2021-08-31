@@ -10,7 +10,7 @@ import {
 import { Collapse } from './Collapse';
 
 const defaultProps = {
-  in: false,
+  in: true,
   children: <div style={{ height: '300px' }} />,
 };
 
@@ -21,13 +21,11 @@ describe('@mantine/core/Collapse', () => {
   itSupportsStyle(Collapse, defaultProps);
   checkAccessibility([mount(<Collapse {...defaultProps} />)]);
 
-  it('has correct displayName', () => {
-    expect(Collapse.displayName).toEqual('@mantine/core/Collapse');
-  });
-
-  it('transitionend event bubbling doesnt run onAnimationEnd twice', () => {
+  it('transitionend event bubbling does not run onTransitionEnd twice', () => {
     const mockedFunction = jest.fn();
-    const element = mount(<Collapse {...defaultProps} onTransitionEnd={mockedFunction} id="collapse-id" />);
+    const element = mount(
+      <Collapse {...defaultProps} onTransitionEnd={mockedFunction} id="collapse-id" />
+    );
 
     expect(mockedFunction).not.toBeCalled();
 
@@ -35,5 +33,9 @@ describe('@mantine/core/Collapse', () => {
     element.find('#collapse-id').at(1).simulate('transitionend', { propertyName: 'opacity' });
 
     expect(mockedFunction).toHaveBeenCalledTimes(1);
+  });
+
+  it('has correct displayName', () => {
+    expect(Collapse.displayName).toEqual('@mantine/core/Collapse');
   });
 });

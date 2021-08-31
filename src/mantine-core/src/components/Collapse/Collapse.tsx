@@ -4,30 +4,28 @@ import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks
 
 import { useMantineTheme } from '../../theme';
 
-export interface CollapseProps
-  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
-  /** Any valid JSX Element */
+export interface CollapseProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
+  /** Content that should be collapsed */
   children: React.ReactNode;
 
-  /** Controlled state (controls if Collapse is opened or closed) */
+  /** Opened state */
   in: boolean;
 
-  /** Callback invoked when animation finish */
+  /** Called each time transition ends */
   onTransitionEnd?: () => void;
 
-  /** Transition duration for collapse transitions in ms */
+  /** Transition duration in ms */
   transitionDuration?: number;
 
-  /** Transition timing function for collapse transitions, defaults to theme.transitionTimingFunction */
+  /** Transition timing function */
   transitionTimingFunction?: string;
 }
 
 export function Collapse({
   children,
   in: isOpened,
-  transitionDuration = 300,
-  transitionTimingFunction,
-  className,
+  transitionDuration = 200,
+  transitionTimingFunction = 'ease',
   style,
   onTransitionEnd,
   ...others
@@ -44,7 +42,7 @@ export function Collapse({
   useWindowEvent('resize', forceUpdate);
 
   const handleTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
-    if (onTransitionEnd && event.propertyName === 'height') {
+    if (typeof onTransitionEnd === 'function' && event.propertyName === 'height') {
       onTransitionEnd();
     }
   };
@@ -54,36 +52,37 @@ export function Collapse({
 
     if (content) {
       const { height: boundingHeight } = content.getBoundingClientRect();
-
       setHeight(`${boundingHeight}px`);
     }
   }, [children]);
 
   return (
+    <div
+      ref={collapseRef}
+      onTransitionEnd={handleTransitionEnd}
+      style={{
+        ...style,
+        overflow: 'hidden',
+        transition: `height ${reduceMotion ? 0 : transitionDuration}ms ${
+          transitionTimingFunction || theme.transitionTimingFunction
+        }`,
+        height: isOpened ? height : '0px',
+      }}
+      {...others}
+    >
       <div
-        className={className}
-        role="region"
-        ref={collapseRef}
-        onTransitionEnd={handleTransitionEnd}
+        ref={contentRef}
         style={{
-          ...style,
-          overflow: 'hidden',
-          transition: `height ${reduceMotion ? 0 : transitionDuration}ms ${transitionTimingFunction || theme.transitionTimingFunction}`,
-          height: isOpened ? height : '0px',
+          opacity: isOpened ? 1 : 0,
+          transition: `opacity ${reduceMotion ? 0 : transitionDuration}ms ${
+            transitionTimingFunction || theme.transitionTimingFunction
+          }`,
         }}
-        {...others}
       >
-        <div
-          style={{
-            opacity: isOpened ? 1 : 0,
-            transition: `opacity ${reduceMotion ? 0 : transitionDuration}ms ${transitionTimingFunction || theme.transitionTimingFunction}`,
-          }}
-          ref={contentRef}
-        >
-          {children}
-        </div>
+        {children}
       </div>
-   );
+    </div>
+  );
 }
 
 Collapse.displayName = '@mantine/core/Collapse';

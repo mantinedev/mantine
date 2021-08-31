@@ -1,64 +1,47 @@
 import React, { useState } from 'react';
 import { Button } from '../../Button/Button';
+import { Group } from '../../Group/Group';
 import { Collapse } from '../Collapse';
 
 const code = `
 import { useState } from 'react';
 import { Button, Collapse } from '@mantine/core';
 
-const [isOpen, setOpen] = useState(false);
+function Demo() {
+  const [opened, setOpen] = useState(false);
 
-const handleTransitionEnd = () => {
-  if (isOpen) {
-    alert('collapse opened');
-  }
-};
+  return (
+    <>
+      <Button onClick={() => setOpen((o) => !o)}>
+        Toggle with linear transition
+      </Button>
 
-return (
-  <div style={{ maxWidth: 400 }}>
-    <Button onClick={() => setOpen(prev => !prev)}>
-      Collapse
-    </Button>
-
-    <Collapse
-      in={isOpen}
-      transitionDuration={1000}
-      onTransitionEnd={handleTransitionEnd}
-      transitionTimingFunction="ease"
-    >
-      {/* content */}
-    </Collapse>
-  </div>
-);
+      <Collapse in={opened} transitionDuration={1000} transitionTimingFunction="linear">
+        {/* content... */}
+      </Collapse>
+    </>
+  );
+}
 `;
 
 function Demo() {
-  const [isOpen, setOpen] = useState(false);
-
-  const handleTransitionEnd = () => {
-    if (isOpen) {
-      console.log('collapse opened');
-    }
-  };
+  const [opened, setOpen] = useState(false);
 
   return (
-    <div style={{ maxWidth: 400 }}>
-      <Button onClick={() => setOpen(prev => !prev)}>
-        Collapse
-      </Button>
+    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
+      <Group position="center" style={{ marginBottom: 5 }}>
+        <Button onClick={() => setOpen((o) => !o)}>Toggle with linear transition</Button>
+      </Group>
 
-      <Collapse
-        in={isOpen}
-        transitionDuration={1000}
-        onTransitionEnd={handleTransitionEnd}
-        transitionTimingFunction="ease"
-      >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-        dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+      <Collapse in={opened} transitionDuration={1000} transitionTimingFunction="linear">
+        From Bulbapedia: Bulbasaur is a small, quadrupedal Pokémon that has blue-green skin with
+        darker patches. It has red eyes with white pupils, pointed, ear-like structures on top of
+        its head, and a short, blunt snout with a wide mouth. A pair of small, pointed teeth are
+        visible in the upper jaw when its mouth is open. Each of its thick legs ends with three
+        sharp claws. On Bulbasaur&apos;s back is a green plant bulb, which is grown from a seed
+        planted there at birth. The bulb also conceals two slender, tentacle-like vines and provides
+        it with energy through photosynthesis as well as from the nutrient-rich seeds contained
+        within.
       </Collapse>
     </div>
   );
