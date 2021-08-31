@@ -31,6 +31,12 @@ export default createUseStyles(
       color: '#69f3fa',
     },
 
+    description: {
+      color: '#d7dafa',
+      maxWidth: 580,
+      marginTop: theme.spacing.md,
+    },
+
     body: {
       flex: '0 0 700px',
       paddingTop: 140,

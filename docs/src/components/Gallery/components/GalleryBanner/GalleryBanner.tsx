@@ -27,6 +27,12 @@ export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
           <br /> built with Mantine
         </Title>
 
+        <Text className={classes.description}>
+          Build websites even faster with over {componentsCount}+ fully responsive components
+          designed and built by Mantine maintainers and community. Mantine Gallery is free forever
+          for everyone.
+        </Text>
+
         <Group className={classes.controls}>
           <Button className={classes.controlMain} onClick={() => scrollTo({ y: 700 })}>
             Browse everything
