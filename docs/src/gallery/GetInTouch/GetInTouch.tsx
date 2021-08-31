@@ -92,6 +92,7 @@ const useStyles = createUseStyles(
       },
 
       [BREAKPOINT]: {
+        marginBottom: theme.spacing.sm,
         paddingLeft: theme.spacing.md,
       },
     },
@@ -101,6 +102,12 @@ const useStyles = createUseStyles(
 
       [BREAKPOINT]: {
         marginBottom: theme.spacing.xl,
+      },
+    },
+
+    control: {
+      [BREAKPOINT]: {
+        flex: 1,
       },
     },
   }),
@@ -182,7 +189,9 @@ export function GetInTouch() {
             />
 
             <Group position="right" className={classes.field}>
-              <Button type="submit">Send message</Button>
+              <Button type="submit" className={classes.control}>
+                Send message
+              </Button>
             </Group>
           </div>
         </form>
