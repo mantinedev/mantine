@@ -44,6 +44,11 @@ export default createUseStyles(
       paddingRight: theme.spacing.xl * 2,
       position: 'relative',
       zIndex: 1,
+
+      '@media (max-width: 1310px)': {
+        paddingLeft: theme.spacing.xl,
+        paddingRight: theme.spacing.xl,
+      },
     },
 
     image: {
@@ -59,10 +64,20 @@ export default createUseStyles(
       bottom: 0,
       right: 0,
       zIndex: 0,
+
+      '@media (max-width: 1230px)': {
+        display: 'none',
+      },
     },
 
     controls: {
       marginTop: theme.spacing.md,
+    },
+
+    control: {
+      '@media (max-width: 600px)': {
+        flex: 1,
+      },
     },
 
     controlMain: {
@@ -79,6 +94,11 @@ export default createUseStyles(
 
     features: {
       maxWidth: 740,
+      paddingBottom: theme.spacing.xl,
+
+      '@media (max-width: 755px)': {
+        marginTop: [[theme.spacing.xl * 2], '!important'],
+      },
     },
 
     featureIcon: {

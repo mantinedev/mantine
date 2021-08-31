@@ -12,11 +12,12 @@ export function CategoriesList({ categories }: CategoriesListProps) {
   const cards = categories.map((category) => <CategoryCard key={category.url} {...category} />);
 
   return (
-    <Container style={{ paddingTop: 50 }}>
+    <Container size={1308} padding={15} style={{ paddingTop: 50 }}>
       <SimpleGrid
         id="cards-grid"
-        cols={3}
+        cols={4}
         breakpoints={[
+          { maxWidth: 1000, cols: 3 },
           { maxWidth: 755, cols: 2 },
           { maxWidth: 500, cols: 1 },
         ]}

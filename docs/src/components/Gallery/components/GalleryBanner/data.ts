@@ -10,7 +10,8 @@ export default [
   {
     icon: SunIcon,
     title: 'Light and dark theme',
-    description: 'Components are built with Mantine theme and integrate seamlessly with your theme',
+    description:
+      'Components are built with Mantine theme and integrate seamlessly with your theme – light, dark or both',
   },
 
   {
