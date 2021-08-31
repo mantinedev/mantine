@@ -7,15 +7,15 @@ export default createUseStyles(
     wrapper: {
       position: 'relative',
       minHeight: 700,
-      backgroundColor: '#141844',
-      display: 'flex',
+      backgroundColor: '#080a1d',
     },
 
     supTitle: {
       fontSize: theme.fontSizes.sm,
       textTransform: 'uppercase',
       fontWeight: 700,
-      color: '#a7adfc',
+      color: theme.white,
+      opacity: 0.8,
       marginBottom: theme.spacing.sm,
     },
 
@@ -23,12 +23,12 @@ export default createUseStyles(
       color: theme.white,
       fontSize: 44,
       letterSpacing: -1,
-      lineHeight: 1.1,
+      lineHeight: 1.2,
       fontWeight: 800,
     },
 
     highlight: {
-      color: theme.colors.violet[3],
+      color: '#69f3fa',
     },
 
     body: {
@@ -42,11 +42,17 @@ export default createUseStyles(
 
     image: {
       minHeight: 700,
+      width: 800,
       flex: 1,
       backgroundImage: `url(${banner})`,
       backgroundSize: 'auto 100%',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'right',
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      right: 0,
+      zIndex: 0,
     },
 
     controls: {
@@ -60,7 +66,7 @@ export default createUseStyles(
     },
 
     controlSecondary: {
-      backgroundColor: '#282d69',
+      backgroundColor: '#4a5085',
       color: theme.white,
       textShadow: 'none',
     },
