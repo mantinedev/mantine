@@ -14,6 +14,7 @@ import {
   ButtonDemos,
   BadgeDemos,
   SimpleGridDemos,
+  GridDemos,
 } from '@demos/core';
 
 ## Components redesign
@@ -33,6 +34,10 @@ import {
 <Demo data={SimpleGridDemos.configurator} />
 
 ## New features
+
+[Grid](https://mantine.dev/core/grid/) component now supports setting breakpoints via `Col` component props:
+
+<Demo data={GridDemos.responsive} />
 
 [Text](https://mantine.dev/core/text/) component now supports setting [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
 via prop to limit amount of lines:
