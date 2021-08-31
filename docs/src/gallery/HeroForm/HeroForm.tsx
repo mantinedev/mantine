@@ -16,7 +16,7 @@ const useStyles = createUseStyles(
       },
 
       paddingTop: 200,
-      paddingBottom: 80,
+      paddingBottom: 100,
       position: 'relative',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
@@ -59,7 +59,13 @@ const useStyles = createUseStyles(
       marginLeft: 'auto',
       marginRight: 'auto',
       zIndex: 2,
-      marginTop: -50,
+      marginTop: -60,
+      boxShadow: theme.shadows.lg,
+      borderRadius: theme.spacing.md,
+    },
+
+    label: {
+      color: theme.white,
     },
   }),
   { theming }
@@ -79,7 +85,7 @@ export function HeroForm() {
         <div className={classes.overlay} />
       </div>
 
-      <InlineForm className={classes.form} />
+      <InlineForm className={classes.form} labelClassName={classes.label} />
     </div>
   );
 }
