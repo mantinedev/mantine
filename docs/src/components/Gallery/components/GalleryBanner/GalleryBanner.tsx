@@ -8,7 +8,7 @@ interface GalleryBannerProps {
   componentsCount: number;
 }
 
-export function GalleryBanner({ componentsCount = 20 }: GalleryBannerProps) {
+export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
   const classes = useStyles();
   const [, scrollTo] = useWindowScroll();
   return (
@@ -26,7 +26,10 @@ export function GalleryBanner({ componentsCount = 20 }: GalleryBannerProps) {
 
       <div className={classes.body}>
         <Text className={classes.supTitle}>Mantine gallery</Text>
-        <Title className={classes.title}>{componentsCount} premade components</Title>
+        <Title className={classes.title}>
+          <span className={classes.highlight}>{componentsCount}+ responsive components</span> built
+          with Mantine
+        </Title>
 
         <Group className={classes.controls}>
           <Button className={classes.controlMain} onClick={() => scrollTo({ y: 700 })}>

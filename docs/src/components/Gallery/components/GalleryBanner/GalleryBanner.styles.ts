@@ -16,14 +16,19 @@ export default createUseStyles(
       textTransform: 'uppercase',
       fontWeight: 700,
       color: '#a7adfc',
-      marginBottom: theme.spacing.xs / 2,
+      marginBottom: theme.spacing.sm,
     },
 
     title: {
       color: theme.white,
       fontSize: 44,
       letterSpacing: -1,
+      lineHeight: 1.1,
       fontWeight: 800,
+    },
+
+    highlight: {
+      color: theme.colors.violet[3],
     },
 
     body: {
