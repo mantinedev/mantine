@@ -1,5 +1,7 @@
 import React from 'react';
-import { Title, Overlay } from '@mantine/core';
+import { Link } from 'gatsby';
+import { Title, Overlay, Group, Text, Button } from '@mantine/core';
+import { useWindowScroll } from '@mantine/hooks';
 import useStyles from './GalleryBanner.styles';
 
 interface GalleryBannerProps {
@@ -8,6 +10,7 @@ interface GalleryBannerProps {
 
 export function GalleryBanner({ componentsCount = 20 }: GalleryBannerProps) {
   const classes = useStyles();
+  const [, scrollTo] = useWindowScroll();
   return (
     <div className={classes.wrapper}>
       <Overlay
@@ -20,8 +23,19 @@ export function GalleryBanner({ componentsCount = 20 }: GalleryBannerProps) {
         zIndex={0}
         opacity={0.75}
       />
+
       <div className={classes.body}>
-        <Title className={classes.title}>{componentsCount}+ premade components</Title>
+        <Text className={classes.supTitle}>Mantine gallery</Text>
+        <Title className={classes.title}>{componentsCount} premade components</Title>
+
+        <Group className={classes.controls}>
+          <Button className={classes.controlMain} onClick={() => scrollTo({ y: 700 })}>
+            Browse everything
+          </Button>
+          <Button className={classes.controlSecondary} component={Link} to="/pages/gallery-faq/">
+            FAQ
+          </Button>
+        </Group>
       </div>
       <div className={classes.image} />
     </div>
