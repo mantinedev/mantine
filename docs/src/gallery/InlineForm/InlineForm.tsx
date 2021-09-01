@@ -8,7 +8,9 @@ import { DateRangePicker } from '@mantine/dates';
 const useStyles = createUseStyles(
   (theme) => ({
     wrapper: {
-      backgroundColor: 'transparent',
+      '@media (max-width: 755px)': {
+        padding: theme.spacing.lg,
+      },
     },
 
     fields: {
@@ -34,8 +36,13 @@ const useStyles = createUseStyles(
 
       '& + &': {
         '& $input': {
-          borderLeft: 0,
-          borderRight: 0,
+          borderLeftWidth: 0,
+          borderRightWidth: 0,
+
+          '@media (max-width: 755px)': {
+            borderLeftWidth: 1,
+            borderRightWidth: 1,
+          },
         },
       },
 
@@ -44,23 +51,27 @@ const useStyles = createUseStyles(
         maxWidth: '100% !important',
 
         '&:not(:last-of-type)': {
-          marginRight: 0,
           marginBottom: theme.spacing.md,
         },
       },
     },
 
     input: {
-      borderColor: [[theme.colors.gray[2]], '!important'],
+      borderColor: [
+        [theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]],
+        '!important',
+      ],
       height: 60,
       paddingLeft: theme.spacing.xl,
       fontSize: theme.fontSizes.md,
       borderLeftColor: theme.colors.gray[4],
+
+      '@media (max-width: 755px)': {
+        borderRadius: theme.radius.md,
+      },
     },
 
     inputLabel: {
-      // color: theme.white,
-      // paddingLeft: theme.spacing.xl,
       marginBottom: 9,
     },
 
@@ -81,6 +92,8 @@ const useStyles = createUseStyles(
         width: '100%',
         marginLeft: 0,
         marginTop: theme.spacing.lg,
+        borderTopLeftRadius: theme.radius.md,
+        borderBottomLeftRadius: theme.radius.md,
       },
     },
   }),
@@ -116,7 +129,7 @@ export function InlineForm({ labelClassName, ...props }: InlineFormProps) {
           label="Stay dates"
           minDate={new Date()}
           initialMonth={dayjs(new Date()).add(1, 'month').toDate()}
-          inputFormat="MMMM D"
+          inputFormat="MMM D"
           variant="default"
           classNames={{ input: classes.input, label: cx(classes.inputLabel, labelClassName) }}
         />

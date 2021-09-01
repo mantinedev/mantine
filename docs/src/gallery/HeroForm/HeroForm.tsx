@@ -62,10 +62,18 @@ const useStyles = createUseStyles(
       marginTop: -60,
       boxShadow: theme.shadows.lg,
       borderRadius: theme.spacing.md,
+
+      '@media (max-width: 755px)': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      },
     },
 
     label: {
       color: theme.white,
+
+      '@media (max-width: 755px)': {
+        color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+      },
     },
   }),
   { theming }
