@@ -9,6 +9,7 @@ import {
   PaperProps,
   Button,
   Divider,
+  Checkbox,
   useMantineTheme,
 } from '@mantine/core';
 import { GoogleButton, TwitterButton } from '../SocialButtons/SocialButtons';
@@ -21,6 +22,7 @@ export function AuthenticationForm(props: PaperProps<'div', HTMLDivElement>) {
       email: '',
       name: '',
       password: '',
+      terms: true,
     },
 
     validationRules: {
@@ -79,6 +81,14 @@ export function AuthenticationForm(props: PaperProps<'div', HTMLDivElement>) {
             onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
             error={form.errors.password && 'Password should include at least 6 characters'}
           />
+
+          {type === 'register' && (
+            <Checkbox
+              label="I accept terms and conditions"
+              checked={form.values.terms}
+              onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
+            />
+          )}
         </Group>
 
         <Group position="apart" style={{ marginTop: 15 }}>
