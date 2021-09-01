@@ -1,22 +1,24 @@
-import { LawIcon, SunIcon, ArrowBothIcon } from '@primer/octicons-react';
+import { LawIcon, SunIcon, FlameIcon } from '@primer/octicons-react';
 
 export default [
   {
-    icon: LawIcon,
-    title: 'Free for everyone',
-    description: 'MIT licensed, use anywhere, including commercial projects',
+    icon: FlameIcon,
+    title: 'Flexible',
+    description:
+      'All components are built with Mantine theme, change colors, fonts, shadows and other properties',
   },
 
   {
     icon: SunIcon,
     title: 'Light and dark theme',
     description:
-      'Components are built with Mantine theme and integrate seamlessly with your theme – light, dark or both',
+      'Most components support both dark and light color schemes by default, no additional modifications needed',
   },
 
   {
-    icon: ArrowBothIcon,
-    title: 'Fully responsive',
-    description: 'All components include responsive styles and look great at any screen size',
+    icon: LawIcon,
+    title: 'Free for everyone',
+    description:
+      'MIT licensed, use anywhere. Created by humans, our goal is to build great UI, not to make money from you.',
   },
 ];

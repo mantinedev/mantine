@@ -33,6 +33,7 @@ export default createUseStyles(
 
     description: {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
+      lineHeight: 1.5,
       maxWidth: 580,
       marginTop: theme.spacing.md,
     },
@@ -120,6 +121,7 @@ export default createUseStyles(
     featureDescription: {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
       fontSize: theme.fontSizes.xs,
+      lineHeight: 1.5,
     },
   }),
   { theming }
