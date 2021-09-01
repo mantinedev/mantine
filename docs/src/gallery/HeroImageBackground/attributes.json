@@ -1,6 +1,7 @@
 {
   "title": "Hero with background image",
   "category": "hero",
+  "author": "rtivital",
   "responsive": true,
   "withColor": true,
   "dependencies": [

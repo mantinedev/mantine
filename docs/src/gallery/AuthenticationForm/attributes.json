@@ -1,6 +1,7 @@
 {
   "title": "Authentication form",
   "category": "forms",
+  "author": "rtivital",
   "withColor": true,
   "dependencies": [
     "/core/paper/",

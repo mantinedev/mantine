@@ -1,6 +1,7 @@
 {
   "title": "Inline form",
   "category": "forms",
+  "author": "rtivital",
   "responsive": true,
   "withColor": true,
   "dependencies": [

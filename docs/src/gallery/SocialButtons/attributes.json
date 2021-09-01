@@ -1,6 +1,7 @@
 {
   "title": "Social buttons",
   "category": "forms",
+  "author": "rtivital",
   "dependencies": ["/core/button/", "/core/group/", "@modulz/radix-icons"],
   "canvas": {
     "center": true

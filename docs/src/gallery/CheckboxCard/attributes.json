@@ -1,6 +1,7 @@
 {
   "title": "Card with checkbox",
   "category": "forms",
+  "author": "rtivital",
   "dependencies": [
     "/core/card/",
     "/core/checkbox/",

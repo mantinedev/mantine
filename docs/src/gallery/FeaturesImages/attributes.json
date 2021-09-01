@@ -1,6 +1,7 @@
 {
   "title": "Features with image icons",
   "category": "features",
+  "author": "rtivital",
   "responsive": true,
   "withColor": true,
   "dependencies": [

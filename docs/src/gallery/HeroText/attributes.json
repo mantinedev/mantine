@@ -1,6 +1,7 @@
 {
   "title": "Hero section with gradient",
   "category": "hero",
+  "author": "rtivital",
   "responsive": true,
   "withColor": true,
   "dependencies": [

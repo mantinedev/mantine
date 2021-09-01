@@ -1,6 +1,7 @@
 {
   "title": "Article card with image",
   "category": "cards",
+  "author": "rtivital",
   "dependencies": [
     "/core/card/",
     "/core/text/",
