@@ -30,6 +30,7 @@ export interface CanvasHeaderProps extends GalleryComponent, React.ComponentProp
   onPrimaryColorChange(color: string): void;
   primaryColor: string;
   excludeExternal?: boolean;
+  zIndex?: number;
 }
 
 export function CanvasHeader({
@@ -41,6 +42,7 @@ export function CanvasHeader({
   primaryColor,
   onPrimaryColorChange,
   excludeExternal = false,
+  zIndex,
   ...others
 }: CanvasHeaderProps) {
   const classes = useStyles();

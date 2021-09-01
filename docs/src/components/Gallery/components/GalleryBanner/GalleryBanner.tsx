@@ -24,7 +24,7 @@ export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
   const [, scrollTo] = useWindowScroll();
 
   const features = data.map((feature) => (
-    <div>
+    <div key={feature.title}>
       <ThemeIcon className={classes.featureIcon} size={44}>
         <feature.icon size={20} />
       </ThemeIcon>

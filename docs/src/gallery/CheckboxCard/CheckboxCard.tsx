@@ -66,7 +66,13 @@ export function CheckboxCard({
       onClick={() => handleChange(!value)}
       className={cx(classes.button, 'hello', className)}
     >
-      <Checkbox className={classes.checkbox} checked={value} tabIndex={-1} size="md" />
+      <Checkbox
+        className={classes.checkbox}
+        checked={value}
+        onChange={() => {}}
+        tabIndex={-1}
+        size="md"
+      />
       <div>
         <Text weight={500} className={classes.title}>
           {title}
