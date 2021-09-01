@@ -3,7 +3,7 @@ import { Grid } from '../Grid';
 import { ColWrapper as Col } from './ColWrapper';
 
 const code = `
-<Grid>
+<Grid id="my-grid">
   <Col span={4}>1</Col>
   <Col span={4}>2</Col>
   <Col span={4}>3</Col>
@@ -13,7 +13,7 @@ const code = `
 
 function Demo() {
   return (
-    <Grid>
+    <Grid id="grid-rows">
       <Col span={4}>1</Col>
       <Col span={4}>2</Col>
       <Col span={4}>3</Col>

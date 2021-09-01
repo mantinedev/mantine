@@ -4,7 +4,7 @@ import { ColWrapper as Col } from './ColWrapper';
 
 function Wrapper(props: GridProps) {
   return (
-    <Grid {...props}>
+    <Grid {...props} id="grid-grow">
       <Col span={4}>1</Col>
       <Col span={4}>2</Col>
       <Col span={4}>3</Col>
@@ -14,7 +14,7 @@ function Wrapper(props: GridProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<Grid${props}>
+const codeTemplate = (props: string) => `<Grid${props} id="my-grid">
   <Col span={4}>1</Col>
   <Col span={4}>2</Col>
   <Col span={4}>3</Col>

@@ -8,7 +8,7 @@ import { Grid, Col } from '@mantine/core';
 
 function Demo() {
   return (
-    <Grid>
+    <Grid id="my-grid">
       <Col span={12} md={6} lg={3}>1</Col>
       <Col span={12} md={6} lg={3}>2</Col>
       <Col span={12} md={6} lg={3}>3</Col>
@@ -20,11 +20,19 @@ function Demo() {
 
 function Demo() {
   return (
-    <Grid>
-      <Col span={12} md={6} lg={3}>1</Col>
-      <Col span={12} md={6} lg={3}>2</Col>
-      <Col span={12} md={6} lg={3}>3</Col>
-      <Col span={12} md={6} lg={3}>4</Col>
+    <Grid id="grid-responsive">
+      <Col span={12} md={6} lg={3}>
+        1
+      </Col>
+      <Col span={12} md={6} lg={3}>
+        2
+      </Col>
+      <Col span={12} md={6} lg={3}>
+        3
+      </Col>
+      <Col span={12} md={6} lg={3}>
+        4
+      </Col>
     </Grid>
   );
 }

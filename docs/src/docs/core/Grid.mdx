@@ -104,9 +104,18 @@ function ColWrapper(props: React.ComponentProps<typeof Col>) {
 }
 
 // Later
-<Grid>
+<Grid id="my-grid">
   <ColWrapper span={4}>1</ColWrapper>
   <ColWrapper span={4}>2</ColWrapper>
   <ColWrapper span={4}>3</ColWrapper>
 </Grid>;
+```
+
+## Server side rendering
+
+Grid component uses [use-id](/hooks/use-id/) hook to generate classes, provide static id prop to make it work with ssr:
+
+```tsx
+<Grid /> // -> will not work during ssr
+<Grid id="my-grid" /> // -> works fine during ssr
 ```
