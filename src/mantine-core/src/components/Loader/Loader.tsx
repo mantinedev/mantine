@@ -15,7 +15,7 @@ const LOADERS = {
   bars: Bars,
   oval: Oval,
   dots: Dots,
-};
+} as const;
 
 export const LOADER_SIZES = {
   xs: 18,
@@ -24,6 +24,8 @@ export const LOADER_SIZES = {
   lg: 44,
   xl: 58,
 };
+
+export type LoaderType = keyof typeof LOADERS;
 
 export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'svg'> {
   /** Defines width of loader */
@@ -41,11 +43,12 @@ export function Loader({
   color,
   themeOverride,
   className,
-  variant = 'oval',
+  variant,
   ...others
 }: LoaderProps) {
   const theme = useMantineTheme(themeOverride);
-  const Component = LOADERS[variant] || LOADERS.bars;
+  const defaultLoader = variant in LOADERS ? variant : theme.loader;
+  const Component = LOADERS[defaultLoader] || LOADERS.bars;
   const _color = color || theme.primaryColor;
 
   return (

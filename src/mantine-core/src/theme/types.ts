@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import type { LoaderType } from '../components/Loader/Loader';
 
 export type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;
@@ -25,6 +26,7 @@ type HeadingStyle = {
 export type MantineSizes = Record<MantineSize, number>;
 
 export interface MantineTheme {
+  readonly loader: LoaderType;
   readonly colorScheme: 'light' | 'dark';
   readonly white: string;
   readonly black: string;

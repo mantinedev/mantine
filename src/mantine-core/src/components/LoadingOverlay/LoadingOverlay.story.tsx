@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { AuthenticationForm } from '../../../demos';
-import { DEFAULT_THEME } from '../../theme';
+import { DEFAULT_THEME, MantineProvider } from '../../theme';
 import { Button } from '../Button/Button';
 import { Group } from '../Group/Group';
 import { LoadingOverlay } from './LoadingOverlay';
@@ -52,7 +52,9 @@ const customLoader = (
 storiesOf('@mantine/core/LoadingOverlay', module)
   .add('General usage', () => <LoadingOverlayDemo />)
   .add('Custom Loader props', () => (
-    <LoadingOverlayDemo loaderProps={{ size: 'lg', color: 'grape' }} />
+    <MantineProvider theme={{ loader: 'bars' }}>
+      <LoadingOverlayDemo loaderProps={{ size: 'lg', color: 'grape' }} />
+    </MantineProvider>
   ))
   .add('Custom Overlay props', () => <LoadingOverlayDemo overlayOpacity={0.6} overlayColor="red" />)
   .add('Custom loader', () => <LoadingOverlayDemo loader={customLoader} />)

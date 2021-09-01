@@ -23,6 +23,18 @@ You can choose any color defined in [theme.colors](/theming/extend-theme/#defaul
 
 <Demo data={LoaderDemos.configurator} />
 
+## Configure default loader
+
+You can configure default loader in [MantineProvider](/theming/theming-context/),
+it will be used in Loader and [LoadingOverlay](/core/loading-overlay/) components by default:
+
+```tsx
+// Loader component will render bars
+<MantineProvider theme={{ loader: 'bars' }}>
+  <YourApp />
+</MantineProvider>
+```
+
 ## Size
 
 Size controls loader height or width (depends on loader variant). Loader has predefined sizes: xs, sm, md, lg, xl.

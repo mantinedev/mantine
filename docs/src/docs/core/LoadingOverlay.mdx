@@ -52,6 +52,18 @@ You can change all props of Loader component, opacity and color of Overlay:
 />
 ```
 
+## Configure default loader
+
+You can configure default loader in [MantineProvider](/theming/theming-context/),
+it will be used in [Loader](/core/loader/) and LoadingOverlay components by default:
+
+```tsx
+// Loader component will render bars
+<MantineProvider theme={{ loader: 'bars' }}>
+  <YourApp />
+</MantineProvider>
+```
+
 ## Custom loader
 
 You can use any other loader with LoadingOverlay by setting `loader` prop:

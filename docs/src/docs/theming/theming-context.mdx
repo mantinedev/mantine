@@ -58,6 +58,7 @@ Theme shape:
 
 ```tsx
 interface MantineTheme {
+  loader: 'oval' | 'bars' | 'dots';
   colorScheme: 'light' | 'dark';
   white: string;
   black: string;
@@ -71,6 +72,7 @@ interface MantineTheme {
   fontSizes: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
   radius: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
   spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+  breakpoints: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
   shadows: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
 
   headings: {
