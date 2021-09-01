@@ -8,11 +8,20 @@ export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   offset?: number;
   gutter?: MantineNumberSize;
   grow?: boolean;
+  xs?: number;
+  sm?: number;
+  md?: number;
+  lg?: number;
+  xl?: number;
 }
 
 export function isValidSpan(span: number) {
   return typeof span === 'number' && span > 0 && span % 1 === 0;
 }
+
+export const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+
+export const getColumnWidth = (colSpan: number, columns: number) => `${100 / (columns / colSpan)}%`;
 
 export function Col({
   themeOverride,
@@ -21,11 +30,18 @@ export function Col({
   gutter,
   offset = 0,
   grow,
+  xs,
+  sm,
+  md,
+  lg,
+  xl,
   style,
   columns,
   className,
+  id,
   ...others
 }: ColProps) {
+  const breakpointValues = { xs, sm, md, lg, xl };
   const theme = useMantineTheme(themeOverride);
   const spacing = getSizeValue({ size: gutter, sizes: theme.spacing });
 
@@ -33,22 +49,37 @@ export function Col({
     return null;
   }
 
-  const columnWidth = `calc(${100 / (columns / span)}% - ${spacing}px)`;
-
-  const styles: React.CSSProperties = {
+  let styles: React.CSSProperties = {};
+  styles = {
     ...style,
     boxSizing: 'border-box',
-    flex: `${grow ? '1' : '0'} 0 ${columnWidth}`,
-    maxWidth: grow ? 'unset' : columnWidth,
-    margin: spacing / 2,
+    flexGrow: grow ? 1 : 0,
+    maxWidth: grow ? 'unset' : null,
+    padding: spacing / 2,
   };
 
   if (isValidSpan(offset)) {
-    styles.marginLeft = `calc(${100 / (columns / offset)}% + ${spacing / 2}px)`;
+    styles.marginLeft = `${100 / (columns / offset)}%`;
   }
 
+  let sizeClassObj = {
+    [`${id}-col-${span}`]: span !== undefined,
+  };
+
+  breakpoints.forEach((size) => {
+    const propSize = breakpointValues[size];
+    if (!isValidSpan(propSize) || propSize > columns) {
+      return null;
+    }
+    sizeClassObj = {
+      ...sizeClassObj,
+      [`${id}-col-${size}-${propSize}`]: propSize !== undefined,
+    };
+    return true;
+  });
+
   return (
-    <div style={styles} className={cx('mantine-col', className)} {...others}>
+    <div style={styles} className={cx('mantine-col', className, sizeClassObj)} {...others}>
       {children}
     </div>
   );

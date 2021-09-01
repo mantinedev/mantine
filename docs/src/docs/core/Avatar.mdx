@@ -58,6 +58,24 @@ import { AVATAR_SIZES } from '@mantine/core';
   data={Object.keys(AVATAR_SIZES).map((size) => [size, `${AVATAR_SIZES[size]}px`])}
 />
 
+## Change root element
+
+You can set `component` prop on Avatar to use provide custom root element,
+for example, you can make avatar a link:
+
+<Demo data={AvatarDemos.link} />
+
+You can also use React component instead of an element, for example, Link from react-router-dom:
+
+```tsx
+import { Link } from 'react-router-dom';
+import { Card } from '@mantine/core';
+
+function Demo() {
+  return <Avatar component={Link} to="/my-route/" src="./avatar.png" />;
+}
+```
+
 ## Accessibility
 
 Avatar renders img html element. It is important to add alt text.

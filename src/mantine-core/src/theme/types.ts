@@ -38,6 +38,7 @@ export interface MantineTheme {
   readonly fontSizes: MantineSizes;
   readonly radius: MantineSizes;
   readonly spacing: MantineSizes;
+  readonly breakpoints: MantineSizes;
   readonly shadows: Record<MantineSize, string>;
 
   readonly headings: {

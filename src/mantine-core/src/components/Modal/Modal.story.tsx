@@ -32,7 +32,7 @@ function PopoverWrapper() {
 }
 
 function WrappedModal(props: Omit<React.ComponentProps<typeof Modal>, 'opened' | 'onClose'>) {
-  const [opened, setOpened] = useState(true);
+  const [opened, setOpened] = useState(false);
 
   return (
     <div style={{ padding: 50 }}>

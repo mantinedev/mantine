@@ -118,13 +118,13 @@ export function MenuBody({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ size, theme }, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
-  const [hovered, setHovered] = useState(findInitialItem(items));
+  const [hovered, setHovered] = useState(-1);
   const focusTrapRef = useFocusTrap(trapFocus);
 
   useEffect(() => {
     if (!opened) {
       hoveredTimeout.current = window.setTimeout(() => {
-        setHovered(findInitialItem(items));
+        setHovered(-1);
       }, transitionDuration);
     } else {
       window.clearTimeout(hoveredTimeout.current);
@@ -174,6 +174,7 @@ export function MenuBody({
           radius={radius}
           classNames={classNames}
           styles={styles}
+          onMouseLeave={() => setHovered(-1)}
           onClick={(event) => {
             if (closeOnItemClick) {
               onClose();

@@ -3,10 +3,12 @@ import { getSizeValue } from '../../../theme';
 import { SelectRightSection, SelectRightSectionProps } from './SelectRightSection';
 
 interface GetRightSectionProps extends SelectRightSectionProps {
+  rightSection?: React.ReactNode;
+  rightSectionWidth?: number;
   styles: Record<string, any>;
 }
 
-const rightSectionWidth = {
+const RIGHT_SECTION_WIDTH = {
   xs: 24,
   sm: 30,
   md: 34,
@@ -14,9 +16,18 @@ const rightSectionWidth = {
   xl: 54,
 };
 
-export function getSelectRightSectionProps({ styles, ...props }: GetRightSectionProps) {
+export function getSelectRightSectionProps({
+  styles,
+  rightSection,
+  rightSectionWidth,
+  ...props
+}: GetRightSectionProps) {
+  if (rightSection) {
+    return { rightSection, rightSectionWidth, styles };
+  }
+
   return {
-    rightSectionWidth: getSizeValue({ size: props.size, sizes: rightSectionWidth }) as number,
+    rightSectionWidth: getSizeValue({ size: props.size, sizes: RIGHT_SECTION_WIDTH }) as number,
     rightSection: <SelectRightSection {...props} />,
     styles: {
       ...styles,

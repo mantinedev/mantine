@@ -2,7 +2,8 @@ import React from 'react';
 import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { Text } from '../Text/Text';
-import { Paper } from '../Paper/Paper';
+import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
+import { Center } from '../Center/Center';
 import useStyles from './Alert.styles';
 
 export type AlertStylesName = keyof ReturnType<typeof useStyles>;
@@ -19,8 +20,17 @@ export interface AlertProps
   /** Alert title and line colors from theme */
   color?: string;
 
-  /** Predefined box-shadow from theme.shadows (xs, sm, md, lg, xl) or any valid css box-shadow property */
-  shadow?: string;
+  /** Icon displayed before title */
+  icon?: React.ReactNode;
+
+  /** Display close button */
+  withCloseButton?: boolean;
+
+  /** Called when close button is clicked */
+  onClose?(): void;
+
+  /** Close button aria-label */
+  closeButtonLabel?: string;
 }
 
 export function Alert({
@@ -29,10 +39,11 @@ export function Alert({
   children,
   themeOverride,
   color,
-  shadow = 'sm',
   style,
   classNames,
+  icon,
   styles,
+  withCloseButton,
   ...others
 }: AlertProps) {
   const theme = useMantineTheme(themeOverride);
@@ -40,28 +51,31 @@ export function Alert({
   const _styles = mergeStyles(classes, styles);
 
   return (
-    <Paper
-      shadow={shadow}
-      className={cx(classes.root, className)}
-      themeOverride={themeOverride}
-      style={{ ...style, ..._styles.root }}
-      {...others}
-    >
+    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       {title && (
         <Text
           themeOverride={themeOverride}
           weight={700}
           className={classes.title}
           style={_styles.title}
+          size="sm"
         >
-          {title}
+          <Center>
+            {icon && (
+              <div className={classes.icon} style={_styles.icon}>
+                {icon}
+              </div>
+            )}
+            <span>{title}</span>
+          </Center>
+          {withCloseButton && <CloseButton variant="transparent" size={16} iconSize={16} />}
         </Text>
       )}
 
       <div className={classes.body} style={_styles.body}>
         {children}
       </div>
-    </Paper>
+    </div>
   );
 }
 

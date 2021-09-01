@@ -26,6 +26,12 @@ export default createUseStyles(
       },
     },
 
+    withoutHeader: {
+      '& $main': {
+        paddingTop: 0,
+      },
+    },
+
     main: {
       scrollMarginTop: HEADER_HEIGHT,
       flex: 1,

@@ -39,28 +39,26 @@ describe('@mantine/core/Col', () => {
   });
 
   it('sets correct flex-grow based on grow prop', () => {
-    const { columns, span, gutter } = defaultProps;
-    const width = `calc(${100 / (columns / span)}% - ${gutter}px)`;
     const grow = shallow(<Col {...defaultProps} grow />);
     const noGrow = shallow(<Col {...defaultProps} grow={false} />);
 
-    expect(grow.prop('style').flex).toBe(`1 0 ${width}`);
-    expect(noGrow.prop('style').flex).toBe(`0 0 ${width}`);
+    expect(grow.prop('style').flexGrow).toBe(1);
+    expect(noGrow.prop('style').flexGrow).toBe(0);
   });
 
   it('sets correct flex-basis based on columns, span and gutter props', () => {
-    const element = shallow(<Col columns={10} gutter={40} span={2} grow={false} />);
-    expect(element.prop('style').flex).toBe('0 0 calc(20% - 40px)');
+    const element = shallow(<Col id="mantine-j3ah9g1rk" columns={10} gutter={40} span={2} grow={false} />);
+    expect(element.prop('className')).toContain('mantine-j3ah9g1rk-col-2');
   });
 
-  it('sets correct margin based on gutter', () => {
+  it('sets correct padding based on gutter', () => {
     const element = shallow(<Col {...defaultProps} gutter={42} />);
-    expect(element.prop('style').margin).toBe(21);
+    expect(element.prop('style').padding).toBe(21);
   });
 
   it('sets margin-left based on offset prop', () => {
     const element = shallow(<Col {...defaultProps} columns={10} gutter={40} offset={2} />);
-    expect(element.prop('style').marginLeft).toBe('calc(20% + 20px)');
+    expect(element.prop('style').marginLeft).toBe('20%');
   });
 
   it('has correct displayName', () => {

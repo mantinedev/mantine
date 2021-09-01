@@ -23,10 +23,21 @@ import { BADGE_SIZES } from '@mantine/core';
 ## Colors
 
 Default Badge color is `theme.primaryColor`.
-You can use any color defined in <GatsbyLink to="/theming/extend-theme/#default-colors">theme.colors</GatsbyLink>.
+You can use any color defined in [theme.colors](/theming/extend-theme/#default-colors).
 Note that not all colors in some variants are compatible with dark theme:
 
 <Demo data={BadgeDemos.colors} />
+
+## Gradient variant
+
+To use gradient as Badge background:
+
+- set `variant` to `gradient`
+- set `gradient` to `{ from: 'color-from', to: 'color-to', deg: 135 }`, where
+  - `color-from` and `color-to` are color from `theme.colors`
+  - `deg` is linear gradient deg
+
+<Demo data={BadgeDemos.gradient} />
 
 ## Size and radius
 

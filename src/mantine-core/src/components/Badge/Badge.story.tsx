@@ -53,6 +53,19 @@ storiesOf('@mantine/core/Badge', module)
       <Group style={{ padding: 10 }}>{getThemes({ variant: 'dot' })}</Group>
     </>
   ))
+  .add('Gradient', () => (
+    <Group>
+      <Badge variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>
+        Indigo cyan
+      </Badge>
+      <Badge variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 90 }}>
+        Lime green
+      </Badge>
+      <Badge variant="gradient" gradient={{ from: 'teal', to: 'cyan', deg: 180 }}>
+        Teal cyan
+      </Badge>
+    </Group>
+  ))
   .add('Sizes', () => (
     <>
       <Group style={{ padding: 10 }}>

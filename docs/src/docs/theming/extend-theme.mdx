@@ -16,11 +16,11 @@ import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
 By default Mantine uses system fonts. It brings fast and familiar experience to users.
 You can change fonts and other text styles for headings, code and all other components:
 
-- **theme.fontFamilyMonospace** – controls components with monospace font-family, for example, <GatsbyLink to="/core/code/">Code</GatsbyLink> and <GatsbyLink to="/core/kbd/">Kbd</GatsbyLink>
+- **theme.fontFamilyMonospace** – controls components with monospace font-family, for example, [Code](/core/code/) and [Kbd](/core/kbd/)
 - **theme.fontFamily** – controls font-family in all other cases
 - **theme.lineHeight** – controls line-height property in all components except headings
 - **theme.fontSizes** – controls font-size in all components except headings
-- **theme.headings** – controls font-family, line-heigh and font-size of h1-h6 tags in <GatsbyLink to="/core/title/">Title</GatsbyLink> and <GatsbyLink to="/core/typography-styles-provider/">TypographyStylesProvider</GatsbyLink> components
+- **theme.headings** – controls font-family, line-heigh and font-size of h1-h6 tags in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components
 
 <ThemeFontsExtendDemo />
 
@@ -44,7 +44,7 @@ theme.colors.blue[0];
 
 You can add any amount of extra colors by extending theme.colors with MantineProvider.
 This will allow you to use these colors with all components which support color change,
-for example, <GatsbyLink to="/core/button/">Button</GatsbyLink>, <GatsbyLink to="/core/badge/">Badge</GatsbyLink> or <GatsbyLink to="/core/switch/">Switch</GatsbyLink>.
+for example, [Button](/core/button/), [Badge](/core/badge/) or [Switch](/core/switch/).
 
 Note that all colors that are added should **always include 10 shades**.
 You can use some of these tools to generate or copy ready color palettes:
@@ -65,7 +65,7 @@ Primary color is used:
 - in some components to determine color value if component didn't receive color prop;
 - to define focus styles for all interactive elements.
 
-For example, <GatsbyLink to="/core/button/">Button</GatsbyLink> Component
+For example, [Button](/core/button/) Component
 by default will use **theme.primaryColor** (press any key on keyboard to see focus ring):
 
 <PrimaryColorDemo />
@@ -75,11 +75,11 @@ by default will use **theme.primaryColor** (press any key on keyboard to see foc
 Mantine supports 5 sizes for spacing, radius and shadows: xs, sm, md, lg, xl.
 These values are exposed on theme:
 
-- **theme.spacing** – general spacing values used for paddings and margins, for example, to set padding on <GatsbyLink to="/core/paper/">Paper</GatsbyLink> or <GatsbyLink to="/core/container/">Container</GatsbyLink> components or to calculate margins in <GatsbyLink to="/core/typography-styles-provider/">TypographyStylesProvider</GatsbyLink> component.
-- **theme.shadows** – box-shadow values – used with components which extend <GatsbyLink to="/core/paper/">Paper</GatsbyLink>: <GatsbyLink to="/core/modal/">Modal</GatsbyLink>, <GatsbyLink to="/core/menu/">Menu</GatsbyLink> and others
-- **theme.radius** – border-radius values – used in all components which support radius: <GatsbyLink to="/core/paper/">Paper</GatsbyLink>, <GatsbyLink to="/core/button/">Button</GatsbyLink>, <GatsbyLink to="/core/input/">Input</GatsbyLink> and others
+- **theme.spacing** – general spacing values used for paddings and margins, for example, to set padding on [Paper](/core/paper/) or [Container](/core/container/) components or to calculate margins in [TypographyStylesProvider](/core/typography-styles-provider/) component.
+- **theme.shadows** – box-shadow values – used with components which extend [Paper](/core/paper/): [Modal](/core/modal/), [Menu](/core/menu/) and others
+- **theme.radius** – border-radius values – used in all components which support radius: [Paper](/core/paper/), [Button](/core/button/), [Input](/core/input/) and others
 
-Example with <GatsbyLink to="/core/paper/">Paper</GatsbyLink> component (padding is set with `theme.spacing`):
+Example with [Paper](/core/paper/) component (padding is set with `theme.spacing`):
 
 <Demo data={PaperDemos.configurator} />
 
@@ -105,6 +105,35 @@ function YourApp() {
       <Title order={3}>Georgia or serif title</Title>
       <Button>Verdana button</Button>
       <Code>Courier Code</Code>
+    </MantineProvider>
+  );
+}
+```
+
+## Breakpoints
+
+Mantine supports 5 sizes for breakpoints (`xs`, `sm`, `md`, `lg`, `xl`), which are used for example in the [Grid](/core/grid/) component.
+
+You can change the breakpoints by setting corresponding properties.
+In this example:
+
+- sm and lg values from theme will be overwritten
+- xs, md and xl values will be used from default theme
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function YourApp() {
+  return (
+    <MantineProvider
+      theme={{
+        breakpoints: {
+          sm: 800,
+          lg: 1275,
+        },
+      }}
+    >
+     Hello World
     </MantineProvider>
   );
 }

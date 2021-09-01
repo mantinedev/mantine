@@ -19,8 +19,8 @@ import { SegmentedControlDemos } from '@demos/core';
 
 SegmentedControl is usually used as an alternative to:
 
-- <GatsbyLink to="/core/tabs/">Tabs</GatsbyLink> to switch views
-- <GatsbyLink to="/core/radio-group/">RadioGroup</GatsbyLink> to capture user feedback limited to certain
+- [Tabs](/core/tabs/) to switch views
+- [RadioGroup](/core/radio-group/) to capture user feedback limited to certain
   options
 
 <Demo data={SegmentedControlDemos.usage} />
@@ -70,7 +70,7 @@ SegmentedControl sizes from xs to xl:
 
 ## Radius
 
-xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.radius</GatsbyLink>.
+xs, sm, md, lg, xl radius values are defined in [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows).
 Alternatively, you can use a number to set radius in px:
 
 ```tsx
@@ -86,7 +86,7 @@ Default theme radius values from xs to xl with lg size:
 ## Color
 
 By default segmented control uses `theme.white` with shadow in light color scheme and `theme.colors.dark[6]` background color for active element.
-You can choose any color defined in <GatsbyLink to="/theming/extend-theme/#default-colors">theme.colors</GatsbyLink> in case you need colored variant:
+You can choose any color defined in [theme.colors](/theming/extend-theme/#default-colors) in case you need colored variant:
 
 <Demo data={SegmentedControlDemos.configurator} />
 
@@ -101,7 +101,7 @@ Change transition properties with:
 
 ## Server side rendering
 
-Component uses <GatsbyLink to="/hooks/use-id/">use-id hook</GatsbyLink>
+Component uses [use-id](/hooks/use-id/) hook
 to generate random id which is used to bind inputs to labels.
 If you want to avoid id mismatch during hydration provide static name value:
 

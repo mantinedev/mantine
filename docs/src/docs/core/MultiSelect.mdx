@@ -184,7 +184,7 @@ The best strategy is to use `searchable` option with `limit`:
 By default dropdown animations are turned off to increase responsiveness.
 You can enable them by setting optional props:
 
-- `transition` – premade transition name or custom transition styles object, see <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component for all available options
+- `transition` – premade transition name or custom transition styles object, see [Transition](/core/transition/) component for all available options
 - `transitionDuration` – transition duration in ms, defaults to 0
 - `transitionTimingFunction` – defaults to `theme.transitionTimingFunction`
 
@@ -210,9 +210,16 @@ In disabled state:
 
 <Demo data={MultiSelectDemos.disabled} />
 
+## Right section
+
+You can replace icon in right section with `rightSection` prop.
+Note that in this case `clearable` option will not work and will need to handle it yourself:
+
+<Demo data={MultiSelectDemos.rightSection} />
+
 ## Input props
 
-Component supports all props from <GatsbyLink to="/core/input/">Input</GatsbyLink> and <GatsbyLink to="/core/input-wrapper/">InputWrapper</GatsbyLink> components:
+Component supports all props from [Input](/core/input/) and [InputWrapper](/core/input-wrapper/) components:
 
 <Demo data={MultiSelectDemos.configurator} />
 
@@ -232,7 +239,7 @@ function Demo() {
 
 ## Server side rendering
 
-Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
 provide static `id` prop to prevent props mismatch:
 
 ```tsx

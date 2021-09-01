@@ -109,7 +109,7 @@ Notification state item can have these properties:
 - **onOpen** – calls when notification is mounted
 - **autoClose** – defines timeout in ms on which notification will be automatically closed, use `false` to disable auto close
 - **message** – required notification body
-- **color, icon, title, className, style, loading** – props spread to <GatsbyLink to="/core/notification/">Notification</GatsbyLink> component
+- **color, icon, title, className, style, loading** – props spread to [Notification](/core/notification/) component
 
 All properties except **message** are optional.
 
@@ -142,7 +142,7 @@ Notifications preview (message prop used as children):
 
 ## Notifications container position
 
-NotificationsProvider renders notifications container with fixed position inside <GatsbyLink to="/core/portal/">Portal</GatsbyLink>.
+NotificationsProvider renders notifications container with fixed position inside [Portal](/core/portal/).
 Position cannot be changed per notification.
 
 ```tsx
@@ -153,7 +153,7 @@ Position cannot be changed per notification.
 
 ## Limit and queue
 
-NotificationsProvider uses <GatsbyLink to="/hooks/use-queue/">use-queue</GatsbyLink> hook to manage state.
+NotificationsProvider uses [use-queue](/hooks/use-queue/) hook to manage state.
 You can limit maximum amount of notifications that can be displayed by setting
 `limit` prop on NotificationsProvider:
 

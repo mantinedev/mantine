@@ -7,7 +7,7 @@ slug: /core/menu/
 category: 'overlay'
 description: 'Combine a list of secondary actions into single interactive area'
 props: ['Menu']
-import: "import { Menu, MenuItem, MenuLabel } from '@mantine/core';"
+import: "import { Menu } from '@mantine/core';"
 source: 'mantine-core/src/components/Menu/Menu.tsx'
 docs: 'core/Menu.mdx'
 styles: ['Menu']
@@ -50,18 +50,18 @@ In this case menu will use `onMouseEnter` and `onFocus` events instead of `onCli
 
 <Demo data={MenuDemos.hover} />
 
-## MenuItem component
+## Menu.Item component
 
-You can use <GatsbyLink to="/core/divider/">Divider</GatsbyLink> (renders horizontal line) and MenuItem components inside Menu.
-MenuItem renders button and accepts props:
+You can use [Divider](/core/divider/) (renders horizontal line) and Menu.Item components inside Menu.
+Menu.Item renders button and accepts props:
 
 - **icon** – icon on the left
 - **children** – item label
-- **rightSection** – any element, rendered on the right, for example, <GatsbyLink to="/core/badge/">Badge</GatsbyLink> or keyboard shortcut
-- **...others** – MenuItem produces button element, all other props will be spread to it, for example, `onClick`, `style`, `className`
+- **rightSection** – any element, rendered on the right, for example, [Badge](/core/badge/) or keyboard shortcut
+- **...others** – Menu.Item produces button element, all other props will be spread to it, for example, `onClick`, `style`, `className`
 
 ```tsx
-<MenuItem
+<Menu.Item
   icon={<GearIcon />}
   onClick={() => console.log('Hello')}
   rightSection={
@@ -71,12 +71,12 @@ MenuItem renders button and accepts props:
   }
 >
   Label
-</MenuItem>
+</Menu.Item>
 ```
 
 ## Custom control
 
-By default menu button uses <GatsbyLink to="/core/action-icon/">ActionIcon</GatsbyLink> with horizontal dots.
+By default menu button uses [ActionIcon](/core/action-icon/) with horizontal dots.
 You can change it by setting `control` and `controlRefProp` props:
 
 <Demo data={MenuDemos.controls} />
@@ -87,27 +87,27 @@ For regular html element it will be `controlRefProp="ref"`
 
 ## Change menu position
 
-Menu is rendered inside <GatsbyLink to="/core/portal/">Portal</GatsbyLink> and its position is controlled with the following props:
+Menu is rendered inside [Portal](/core/portal/) and its position is controlled with the following props:
 
 - `position` – left, right, bottom, top
 - `placement` – start, center, end
 - `gutter` – spacing between menu body and target element in px
 - `withArrow` – displays arrow, arrow position is calculated by `position` and `placement` props
 
-Note that in most cases you will need to change <GatsbyLink to="/core/transition/">transition</GatsbyLink> to match your position:
+Note that in most cases you will need to change [Transition](/core/transition/) to match your position:
 
 <Demo data={MenuDemos.positionConfigurator} />
 
 ## Change transition
 
-Menu is built with <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component.
+Menu is built with [Transition](/core/transition/) component.
 You can customize transition, timing function and duration:
 
 <Demo data={MenuDemos.transitions} />
 
 ## Size and shadow
 
-You can use predefined shadows defined in <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.shadows</GatsbyLink> or your own:
+You can use predefined shadows defined in [theme.shadows](/theming/extend-theme/#spacing-radius-and-shadows) or your own:
 
 ```tsx
 <Menu shadow="sm" /> // -> predefined small shadow
@@ -135,24 +135,24 @@ import { MENU_SIZES } from '@mantine/core';
   data={Object.keys(MENU_SIZES).map((size) => [size, `${MENU_SIZES[size]}px`])}
 />
 
-## Custom component as MenuItem
+## Custom component as Menu.Item
 
-By default menu items render as button, to change that set `component` prop on MenuItem component:
+By default menu items render as button, to change that set `component` prop on Menu.Item component:
 
 ```tsx
-// Regular anchor as MenuItem root element
-<MenuItem component="a" href="https://mantine/dev" target="_blank" />
+// Regular anchor as Menu.Item root element
+<Menu.Item component="a" href="https://mantine/dev" target="_blank" />
 
-// React router link as MenuItem root element
-<MenuItem component={Link} to="/hello" />
+// React router link as Menu.Item root element
+<Menu.Item component={Link} to="/hello" />
 ```
 
 <Demo data={MenuDemos.component} />
 
-## MenuItem as Next.js Link
+## Menu.Item as Next.js Link
 
 Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
-to make MenuItem and other similar components work with Next Link, create wrapper component in your components folder:
+to make Menu.Item and other similar components work with Next Link, create wrapper component in your components folder:
 
 ```tsx
 // This component can be reused in every Mantine component which supports component pass through
@@ -172,12 +172,12 @@ export const NextLink = forwardRef(
 );
 ```
 
-And then pass it to MenuItem or other component:
+And then pass it to Menu.Item or other component:
 
 ```tsx
-<MenuItem component={NextLink} href="/hello">
+<Menu.Item component={NextLink} href="/hello">
   Next Link menu item
-</MenuItem>
+</Menu.Item>
 ```
 
 ## Customize behavior
@@ -201,8 +201,8 @@ Menu does not support fragments, the following example **will not work**:
 // Won't work, will not render items
 const items = (
   <>
-    <MenuItem>First</MenuItem>
-    <MenuItem>Second</MenuItem>
+    <Menu.Item>First</Menu.Item>
+    <Menu.Item>Second</Menu.Item>
   </>
 );
 
@@ -214,8 +214,8 @@ In case you want to store items separately use array instead of fragment:
 ```tsx
 // Works as expected
 const items = [
-  <MenuItem>First</MenuItem>
-  <MenuItem>Second</MenuItem>
+  <Menu.Item>First</Menu.Item>
+  <Menu.Item>Second</Menu.Item>
 ];
 
 <Menu>{items}</Menu>;
@@ -223,7 +223,7 @@ const items = [
 
 ## Add your styles with styles API
 
-You can customize add styles to any part of Menu with <GatsbyLink to="/theming/styles-api/">Styles API</GatsbyLink>,
+You can customize add styles to any part of Menu with [Styles API](/theming/styles-api/),
 for example, change hovered item color:
 
 <Demo data={MenuDemos.stylesApi} />
@@ -244,7 +244,7 @@ function Demo() {
 
 ## Server side rendering
 
-Component uses <GatsbyLink to="/hooks/use-id/">use-id</GatsbyLink> hook to generate unique ids and aria- attributes,
+Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
 provide static `menuId` prop to prevent props mismatch:
 
 ```tsx

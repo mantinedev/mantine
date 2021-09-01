@@ -28,10 +28,21 @@ Use ThemeIcon to display an svg icon with theme color background and color. You 
 
 ## Color
 
-You can use any color from <GatsbyLink to="/theming/extend-theme/#default-colors">theme.colors</GatsbyLink>,
-default color is <GatsbyLink to="/theming/extend-theme/#primary-color">theme.primaryColor</GatsbyLink>:
+You can use any color from [theme.colors](/theming/extend-theme/#default-colors),
+default color is [theme.primaryColor](/theming/extend-theme/#primary-color):
 
 <Demo data={ThemeIconDemos.colors} />
+
+## Gradient variant
+
+To use gradient as ThemeIcon background:
+
+- set `variant` to `gradient`
+- set `gradient` to `{ from: 'color-from', to: 'color-to', deg: 135 }`, where
+  - `color-from` and `color-to` are color from `theme.colors`
+  - `deg` is linear gradient deg
+
+<Demo data={ThemeIconDemos.gradient} />
 
 ## Size
 
@@ -61,7 +72,7 @@ import { THEME_ICON_SIZES } from '@mantine/core';
 
 ## Radius
 
-xs, sm, md, lg, xl radius values are defined in <GatsbyLink to="/theming/extend-theme/#spacing-radius-and-shadows">theme.radius</GatsbyLink>.
+xs, sm, md, lg, xl radius values are defined in [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows).
 Alternatively, you can use a number to set radius in px:
 
 ```tsx

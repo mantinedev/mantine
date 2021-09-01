@@ -77,6 +77,7 @@ export default createUseStyles(
       ...getFocusStyles(theme),
       fontWeight: 700,
       textDecoration: 'none',
+      marginBottom: 6,
 
       [`@media (max-width: ${HEADER_BREAKPOINT}px)`]: {
         display: 'none',

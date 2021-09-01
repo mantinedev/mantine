@@ -57,14 +57,6 @@ export default createUseStyles(
         fontSize: theme.fontSizes.sm,
         height: TAB_HEIGHT_MOBILE,
       },
-
-      // '&:first-of-type': {
-      //   marginLeft: theme.spacing.xl * 2,
-
-      //   [`@media (max-width: ${BREAKPOINT}px)`]: {
-      //     marginLeft: theme.spacing.xl,
-      //   },
-      // },
     },
 
     tabContent: {

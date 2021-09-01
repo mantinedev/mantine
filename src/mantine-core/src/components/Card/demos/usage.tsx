@@ -1,28 +1,10 @@
 import React from 'react';
-import {
-  Card,
-  CardSection,
-  Image,
-  Text,
-  Badge,
-  Button,
-  Group,
-  useMantineTheme,
-} from '../../../index';
+import { Card, Image, Text, Badge, Button, Group, useMantineTheme } from '../../../index';
 import { demoBase } from './_demo-base';
 
 const code = `
 import React from 'react';
-import {
-  Card,
-  CardSection,
-  Image,
-  Text,
-  Badge,
-  Button,
-  Group,
-  useMantineTheme,
-} from '@mantine/core';
+import { Card, Image, Text, Badge, Button, Group, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
@@ -34,9 +16,9 @@ function Demo() {
   return (
     <div style={{ width: 340, margin: 'auto' }}>
       <Card shadow="sm" padding="lg">
-        <CardSection>
+        <Card.Section>
           <Image src="./image.png" height={160} alt="Norway" />
-        </CardSection>
+        </Card.Section>
 
         <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
           <Text weight={500}>Norway Fjord Adventures</Text>
@@ -65,13 +47,13 @@ function Demo() {
 
   return (
     <Card shadow="sm" padding="lg">
-      <CardSection>
+      <Card.Section>
         <Image
           src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
           height={160}
           alt="Norway"
         />
-      </CardSection>
+      </Card.Section>
 
       <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
         <Text weight={500}>Norway Fjord Adventures</Text>

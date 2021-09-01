@@ -1,8 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps } from '../../theme';
-import { ComponentPassThrough } from '../../types';
-import { Text, TextProps } from '../Text/Text';
+import { Text, SharedTextProps } from '../Text/Text';
 import { Mark } from '../Mark/Mark';
 
 export function highlighter(value: string, highlight: string | string[]) {
@@ -31,7 +29,14 @@ export function highlighter(value: string, highlight: string | string[]) {
   return chunks;
 }
 
-export interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'> {
+interface _HighlightProps<C extends React.ElementType, R extends HTMLElement>
+  extends SharedTextProps {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+
   /** Substring or an array of substrings to highlight in children */
   highlight: string | string[];
 
@@ -42,24 +47,19 @@ export interface HighlightProps extends DefaultProps, Omit<TextProps, 'children'
   children: string;
 }
 
-export function Highlight<T extends React.ElementType = 'div'>({
-  children,
-  highlight,
-  component,
-  themeOverride,
-  highlightColor = 'yellow',
-  className,
-  ...others
-}: ComponentPassThrough<T, HighlightProps>) {
+export type HighlightProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _HighlightProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _HighlightProps<C, R>>;
+
+export function Highlight<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+>({ children, highlight, highlightColor = 'yellow', className, ...others }: HighlightProps<C, R>) {
   const highlightChunks = highlighter(children, highlight);
 
   return (
-    <Text
-      component={component}
-      themeOverride={themeOverride}
-      className={cx('mantine-highlight', className)}
-      {...others}
-    >
+    <Text className={cx('mantine-highlight', className)} {...others}>
       {highlightChunks.map(({ chunk, highlighted }, i) =>
         highlighted ? (
           <Mark key={i} color={highlightColor}>

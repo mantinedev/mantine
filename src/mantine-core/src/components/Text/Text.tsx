@@ -1,13 +1,9 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineSize } from '../../theme';
-import { ComponentPassThrough } from '../../types';
+import { useMantineTheme, DefaultProps, MantineSize, MantineGradient } from '../../theme';
 import useStyles from './Text.styles';
 
-export interface TextProps extends DefaultProps {
-  /** Text itself */
-  children?: React.ReactNode;
-
+export interface SharedTextProps extends DefaultProps {
   /** Predefined font-size from theme.fontSizes */
   size?: MantineSize;
 
@@ -24,12 +20,37 @@ export interface TextProps extends DefaultProps {
   align?: 'left' | 'center' | 'right';
 
   /** Link or text variant */
-  variant?: 'text' | 'link';
+  variant?: 'text' | 'link' | 'gradient';
+
+  /** CSS -webkit-line-clamp property */
+  lineClamp?: number;
+
+  /** Sets line-height to 1 for centering */
+  inline?: boolean;
+
+  /** Inherit font properties from parent element */
+  inherit?: boolean;
+
+  /** Controls gradient settings in gradient variant only */
+  gradient?: MantineGradient;
 }
 
-export function Text<T extends React.ElementType = 'div', U = HTMLDivElement>({
+interface _TextProps<C extends React.ElementType, R extends HTMLElement> extends SharedTextProps {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+}
+
+export type TextProps<
+  C extends React.ElementType = 'div',
+  R extends HTMLElement = HTMLDivElement
+> = _TextProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof SharedTextProps>;
+
+export function Text<C extends React.ElementType = 'div', R extends HTMLElement = HTMLDivElement>({
   className,
-  component = 'div',
+  component,
   children,
   size = 'md',
   weight,
@@ -38,18 +59,43 @@ export function Text<T extends React.ElementType = 'div', U = HTMLDivElement>({
   color,
   align,
   variant = 'text',
+  lineClamp,
   themeOverride,
   elementRef,
+  gradient = { from: 'blue', to: 'cyan', deg: 45 },
+  inline = false,
+  inherit = false,
   ...others
-}: ComponentPassThrough<T, TextProps> & { elementRef?: React.ForwardedRef<U> }) {
+}: TextProps<C, R>): JSX.Element {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ variant, color, size, theme }, null, 'text');
+  const classes = useStyles(
+    {
+      variant,
+      color,
+      size,
+      theme,
+      lineClamp,
+      inline,
+      inherit,
+      gradientFrom: gradient.from,
+      gradientTo: gradient.to,
+      gradientDeg: gradient.deg,
+    },
+    null,
+    'text'
+  );
+  const Element = component || 'div';
 
   return React.createElement(
-    component,
+    Element,
     {
-      className: cx(classes.root, className),
-      style: { fontWeight: weight, textTransform: transform, textAlign: align, ...style },
+      className: cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className),
+      style: {
+        fontWeight: inherit ? 'inherit' : weight,
+        textTransform: transform,
+        textAlign: align,
+        ...style,
+      },
       ref: elementRef,
       ...others,
     },

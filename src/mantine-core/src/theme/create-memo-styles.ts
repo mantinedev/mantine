@@ -23,6 +23,7 @@ export function createMemoStyles<C extends string = string, Props = unknown>(
 
     if (validArgs && 'theme' in args) {
       dependencies.push((args as any).theme.colorScheme);
+      dependencies.push((args as any).theme.primaryColor);
     }
 
     const stylesProps = useMemo(() => args, dependencies);

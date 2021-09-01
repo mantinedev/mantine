@@ -39,6 +39,19 @@ storiesOf('@mantine/core/Button', module)
       <UnstyledButton>unstyled</UnstyledButton>
     </div>
   ))
+  .add('Gradient', () => (
+    <Group>
+      <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>
+        Indigo cyan
+      </Button>
+      <Button variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 90 }}>
+        Lime green
+      </Button>
+      <Button variant="gradient" gradient={{ from: 'teal', to: 'cyan', deg: 180 }}>
+        Teal cyan
+      </Button>
+    </Group>
+  ))
   .add('Themes', () => (
     <>
       <Group style={{ padding: 20 }}>{getThemes()}</Group>
@@ -110,6 +123,11 @@ storiesOf('@mantine/core/Button', module)
       <Button variant="link" fullWidth style={{ marginTop: 20 }}>
         Full width link variant
       </Button>
+    </div>
+  ))
+  .add('Loading', () => (
+    <div style={{ padding: 40 }}>
+      <Button loading>Loading</Button>
     </div>
   ))
   .add('React router', () => (

@@ -15,16 +15,20 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
 
   const setRef = useCallback(
     (node: HTMLElement | null) => {
-      if (restoreAria.current && active) {
+      if (!active) {
+        return;
+      }
+
+      if (restoreAria.current) {
         restoreAria.current();
       }
 
-      if (ref.current && active) {
+      if (ref.current) {
         returnFocus();
         teardownScopedFocus();
       }
 
-      if (active && node) {
+      if (node) {
         setupScopedFocus(node);
         markForFocusLater();
 
@@ -69,7 +73,10 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
   );
 
   useEffect(() => {
-    if (!active) return undefined;
+    if (!active) {
+      return undefined;
+    }
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Tab' && ref.current) {
         scopeTab(ref.current, event);

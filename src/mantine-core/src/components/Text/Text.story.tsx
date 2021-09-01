@@ -45,17 +45,43 @@ storiesOf('@mantine/core/Text', module)
       Custom component
     </Text>
   ))
+  .add('Gradient', () => <Text variant="gradient">Custom component</Text>)
   .add('Multiline', () => (
-    <Text style={{ padding: 20 }}>
-      Multiline: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque commodi
-      perferendis velit itaque. Harum magnam voluptas molestias a dolore atque hic. Repudiandae
-      aliquam et hic aut ducimus debitis voluptatem cumque veniam aliquid commodi, ratione quae iste
-      similique aperiam tenetur quo eius labore rem animi ex. Assumenda deserunt dolore, dicta vero
-      veritatis enim perferendis ea inventore earum alias adipisci error quisquam obcaecati officia
-      suscipit quidem sequi qui? Itaque asperiores perspiciatis sit iure eum voluptate commodi
-      officia pariatur quae consectetur atque error, facere illum ad corrupti, rerum aperiam
-      molestias cupiditate numquam ipsa ratione doloremque repudiandae? Eveniet deleniti consequatur
-      officia rem quisquam enim.
+    <Text
+      style={{
+        maxWidth: 600,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: 20,
+      }}
+      lineClamp={7}
+    >
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui cum optio adipisci dolore
+        itaque nobis unde tempore iusto ullam nisi cupiditate blanditiis earum minus modi officia
+        ducimus iste, minima incidunt. Facilis nihil fugiat soluta repellat voluptatem in quasi
+        dicta explicabo dolor animi sed commodi, laborum, optio tempora eius eligendi rem?
+      </p>
+      <p>
+        Quidem saepe magnam soluta eos quis dolorem earum sapiente aspernatur iste, consectetur sunt
+        error? Esse assumenda reiciendis vitae. Molestiae, fugiat perferendis neque error vero rerum
+        iusto blanditiis reprehenderit officia asperiores laboriosam distinctio exercitationem
+        pariatur fuga aliquid sint dicta labore minima dolorum quod nobis. Nisi ea commodi inventore
+        obcaecati ullam optio.
+      </p>
+      <p>
+        Cumque beatae animi et molestiae ea. Veritatis doloremque repellendus accusantium molestiae
+        iusto nihil, pariatur qui obcaecati, natus perferendis sapiente voluptate sequi sit ut
+        facilis. Voluptate id modi adipisci, saepe, quo aspernatur hic asperiores sequi, temporibus
+        doloribus minus. Recusandae, enim molestiae. Iusto beatae facilis quidem alias! Suscipit
+        delectus magnam distinctio iste!
+      </p>
+      <p>
+        Eveniet suscipit ipsam tempore sapiente, quos debitis! Quae natus minus porro quam voluptate
+        enim et, molestias blanditiis explicabo eius aliquid nam ipsa accusantium velit officiis
+        nisi, quos sit. Illo nostrum, harum unde error voluptate dolorem, magnam delectus et
+        officiis sint, vero atque enim laborum impedit iure ab ipsum consequatur voluptates!
+      </p>
     </Text>
   ))
   .add('Themes', () => <div style={{ padding: 20 }}>{getThemes()}</div>)

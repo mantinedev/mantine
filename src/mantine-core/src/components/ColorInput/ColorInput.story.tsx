@@ -40,9 +40,34 @@ storiesOf('@mantine/core/ColorInput', module)
       <ColorInput
         label="Disallow input"
         placeholder="Pick color"
-        format="rgba"
         disallowInput
+        withPicker={false}
+        swatches={Object.keys(DEFAULT_THEME.colors).map((color) => DEFAULT_THEME.colors[color][6])}
         style={{ marginTop: 15 }}
+      />
+      <ColorInput
+        format="hex"
+        disallowInput
+        label="color"
+        withPicker={false}
+        swatches={[
+          '#25262b',
+          '#868e96',
+          '#fa5252',
+          '#e64980',
+          '#be4bdb',
+          '#7950f2',
+          '#4c6ef5',
+          '#228be6',
+          '#15aabf',
+          '#12b886',
+          '#40c057',
+          '#82c91e',
+          '#fab005',
+          '#fd7e14',
+        ]}
+        style={{ marginTop: 15 }}
+        dropdownZIndex={1000}
       />
       <ControlledInput />
     </div>

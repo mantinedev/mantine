@@ -17,16 +17,16 @@ import { CardDemos } from '@demos/core';
 
 ## Usage
 
-Card component is a wrapper around <GatsbyLink to="/core/paper/">Paper</GatsbyLink> component
-with context styles for CardSection component.
+Card component is a wrapper around [Paper](/core/paper/) component
+with context styles for Card.Section component.
 Combine Card component with other Mantine components to create cards with your design requirements:
 
 <Demo data={CardDemos.usage} />
 
-## CardSection
+## Card.Section
 
-CardSection is a special component that is used to remove Card padding from its children while other elements still have horizontal spacing.
-CardSection works the following way:
+Card.Section is a special component that is used to remove Card padding from its children while other elements still have horizontal spacing.
+Card.Section works the following way:
 
 - It component is a first child in Card then it has negative top, left and right margins
 - If it is a last child in Card then it has negative bottom, left and right margins
@@ -35,42 +35,81 @@ CardSection works the following way:
 ```tsx
 <Card padding="xl">
   {/* top, right, left margins are negative – -1 * theme.spacing.xl */}
-  <CardSection>First section</CardSection>
+  <Card.Section>First section</Card.Section>
 
-  {/* Content that is not inside CardSection will have theme.spacing.xl spacing on all sides relative to Card */}
+  {/* Content that is not inside Card.Section will have theme.spacing.xl spacing on all sides relative to Card */}
   <Text>Some other content</Text>
 
   {/* right, left margins are negative – -1 * theme.spacing.xl */}
-  <CardSection>Middle section</CardSection>
+  <Card.Section>Middle section</Card.Section>
 
   {/* bottom, right, left margins are negative – -1 * theme.spacing.xl */}
-  <CardSection>Last section</CardSection>
+  <Card.Section>Last section</Card.Section>
 </Card>
 ```
 
-Note that Card relies on mapping direct children and you cannot use fragments or others wrappers for CardSection:
+Note that Card relies on mapping direct children and you cannot use fragments or others wrappers for Card.Section:
 
 ```tsx
 <Card padding="xl">
   <div>
-    <CardSection>Won't work</CardSection>
+    <Card.Section>Won't work</Card.Section>
   </div>
 
   <>
-    <CardSection>Won't work either</CardSection>
+    <Card.Section>Won't work either</Card.Section>
   </>
 
-  <CardSection>Works fine</CardSection>
+  <Card.Section>Works fine</Card.Section>
 </Card>
 ```
 
-## Link overlay
+## Custom root element
 
-Use <GatsbyLink to="/core/overlay/">Overlay</GatsbyLink> component with 0 opacity
-to create link overlay. Note that, card context styles (negative margins and border-radius) rely on `:fist-child` and `:last-child`,
-if you need preserve them, do not put overlay as first or last element.
+You can set `component` prop on Card to use provide custom root element,
+for example, you can make whole card a link:
 
-<Demo data={CardDemos.overlay} />
+<Demo data={CardDemos.link} />
+
+You can also use React component instead of an element, for example, Link from react-router-dom:
+
+```tsx
+import { Link } from 'react-router-dom';
+import { Card } from '@mantine/core';
+
+function Demo() {
+  return <Card component={Link} to="/my-route/" />;
+}
+```
+
+## Usage with Next Link
+
+Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
+to make Card and other similar components work with Next Link, create wrapper component in your components folder:
+
+```tsx
+// This component can be reused in every Mantine component which supports component pass through
+import React, { forwardRef } from 'react';
+import Link from 'next/link';
+
+export const NextLink = forwardRef(
+  (
+    { href, ...others }: React.ComponentPropsWithoutRef<typeof Link>,
+    ref: React.ForwardedRef<HTMLAnchorElement>
+  ) => (
+    <Link href={href}>
+      {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
+      <a {...others} ref={ref} />
+    </Link>
+  )
+);
+```
+
+And then pass it to Card or other component:
+
+```tsx
+<Card component={NextLink} href="/hello" />
+```
 
 ## Get element ref
 
@@ -84,4 +123,29 @@ function Demo() {
   const ref = useRef();
   return <Card elementRef={ref} />;
 }
+```
+
+## TypeScript
+
+You need to pass additional types to use custom component with TypeScript
+in case you need full type coverage for events and `elementRef`:
+
+```tsx
+// With element
+<Card<'a', HTMLAnchorElement>
+  component="a"
+  onClick={(event) => console.log(event)}
+  elementRef={(node) => {
+    window.myRef = node;
+  }}
+/>
+
+// With component
+<Card<typeof Link, HTMLAnchorElement>
+  component={Link}
+  onClick={(event) => console.log(event)}
+  elementRef={(node) => {
+    window.myRef = node;
+  }}
+/>
 ```

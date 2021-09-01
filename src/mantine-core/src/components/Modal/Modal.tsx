@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
-import { useReducedMotion, useId, useScrollLock, useFocusTrap } from '@mantine/hooks';
+import {
+  useReducedMotion,
+  useId,
+  useScrollLock,
+  useFocusTrap,
+  useFocusReturn,
+} from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
@@ -110,6 +116,8 @@ export function MantineModal({
 
   useScrollLock(opened);
 
+  useFocusReturn({ opened, transitionDuration });
+
   return (
     <GroupedTransition
       mounted={opened}
@@ -138,7 +146,7 @@ export function MantineModal({
               onClickOutside={() => onClose()}
               componentNodes={[modalBodyElement]}
             >
-              <Paper
+              <Paper<'div', HTMLDivElement>
                 themeOverride={themeOverride}
                 className={classes.modal}
                 shadow={shadow}

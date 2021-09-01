@@ -1,9 +1,9 @@
 import React from 'react';
 import { Group, Avatar, Text } from '../../../index';
-import { Accordion, AccordionItem } from '../Accordion';
+import { Accordion } from '../Accordion';
 
 const code = `
-import { Group, Avatar, Text, Accordion, AccordionItem } from '../../../index';
+import { Group, Avatar, Text, Accordion } from '../../../index';
 
 function AccordionLabel({ name, avatar, job }) {
   return (
@@ -20,11 +20,11 @@ function AccordionLabel({ name, avatar, job }) {
 }
 
 <Accordion initialItem={-1}>
-  <AccordionItem
+  <Accordion.Item
     label={<AccordionLabel name="Bob Handsome" job="Graphic Designer" avatar={images[0]} />}
   >
     {description}
-  </AccordionItem>
+  </Accordion.Item>
 
   {/* ... more items */}
 </Accordion>
@@ -65,25 +65,25 @@ function AccordionLabel({ name, avatar, job }: AccordionLabelProps) {
 export function AccordionDemo() {
   return (
     <Accordion initialItem={-1}>
-      <AccordionItem
+      <Accordion.Item
         label={<AccordionLabel name="Bob Handsome" job="Graphic Designer" avatar={images[0]} />}
       >
         {descriptions[0]}
-      </AccordionItem>
+      </Accordion.Item>
 
-      <AccordionItem
+      <Accordion.Item
         label={
           <AccordionLabel name="Bill Rataconda" job="Integrations Engineer" avatar={images[1]} />
         }
       >
         {descriptions[1]}
-      </AccordionItem>
+      </Accordion.Item>
 
-      <AccordionItem
+      <Accordion.Item
         label={<AccordionLabel name="Emily Wansteighn" job="DevOps" avatar={images[2]} />}
       >
         {descriptions[2]}
-      </AccordionItem>
+      </Accordion.Item>
     </Accordion>
   );
 }

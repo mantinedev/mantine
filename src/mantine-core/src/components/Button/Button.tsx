@@ -9,18 +9,39 @@ import {
   MantineSize,
   MantineNumberSize,
   mergeStyles,
+  getSizeValue,
+  getSharedColorScheme,
+  MantineGradient,
 } from '../../theme';
-import { ComponentPassThrough } from '../../types';
 import useStyles, { heights } from './Button.styles';
+import { Loader } from '../Loader/Loader';
 
 export { UnstyledButton } from './UnstyledButton/UnstyledButton';
 
+const LOADER_SIZES = {
+  xs: 12,
+  sm: 14,
+  md: 16,
+  lg: 18,
+  xl: 20,
+};
+
 export const BUTTON_SIZES = heights;
 export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light'];
-export type ButtonVariant = 'link' | 'filled' | 'outline' | 'light';
-export type ButtonStylesNames = Exclude<keyof ReturnType<typeof useStyles>, ButtonVariant>;
+export type ButtonVariant = 'link' | 'filled' | 'outline' | 'light' | 'gradient';
+export type ButtonStylesNames = Exclude<
+  keyof ReturnType<typeof useStyles>,
+  ButtonVariant | 'loading'
+>;
 
-interface ButtonBaseProps extends DefaultProps<ButtonStylesNames> {
+interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
+  extends DefaultProps<ButtonStylesNames> {
+  /** Root element or custom component */
+  component?: C;
+
+  /** Get element ref */
+  elementRef?: React.ForwardedRef<R>;
+
   /** Predefined button size */
   size?: MantineSize;
 
@@ -43,18 +64,35 @@ interface ButtonBaseProps extends DefaultProps<ButtonStylesNames> {
   radius?: MantineNumberSize;
 
   /** Controls button appearance */
-  variant?: 'link' | 'filled' | 'outline' | 'light';
+  variant?: 'link' | 'filled' | 'outline' | 'light' | 'gradient';
+
+  /** Controls gradient settings in gradient variant only */
+  gradient?: MantineGradient;
 
   /** Set text-transform to uppercase */
   uppercase?: boolean;
 
   /** Reduces vertical and horizontal spacing */
   compact?: boolean;
+
+  /** Indicate loading state */
+  loading?: boolean;
+
+  /** Props spread to Loader component */
+  loaderProps?: Record<string, any>;
+
+  /** Loader position relative to button label */
+  loaderPosition?: 'left' | 'right';
 }
 
+export type ButtonProps<
+  C extends React.ElementType = 'button',
+  R extends HTMLElement = HTMLButtonElement
+> = _ButtonProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _ButtonProps<C, R>>;
+
 export function Button<
-  T extends React.ElementType = 'button',
-  U extends HTMLElement = HTMLButtonElement
+  C extends React.ElementType = 'button',
+  R extends HTMLElement = HTMLButtonElement
 >({
   className,
   style,
@@ -68,43 +106,67 @@ export function Button<
   fullWidth = false,
   variant = 'filled',
   radius = 'sm',
-  component: Element = 'button',
+  component,
   elementRef,
   themeOverride,
   uppercase = false,
   compact = false,
+  loading = false,
+  loaderPosition = 'left',
+  loaderProps,
+  gradient = { from: 'blue', to: 'cyan', deg: 45 },
   classNames,
   styles,
   ...others
-}: ComponentPassThrough<T, ButtonBaseProps> & {
-  /** Get root element ref */
-  elementRef?: React.ForwardedRef<U>;
-}) {
+}: ButtonProps<C, R>) {
   const theme = useMantineTheme(themeOverride);
+  const colors = getSharedColorScheme({
+    color,
+    theme,
+    variant: variant === 'link' ? 'light' : variant,
+  });
   const classes = useStyles(
-    { radius, color, size, fullWidth, theme, compact },
+    {
+      radius,
+      color,
+      size,
+      fullWidth,
+      theme,
+      compact,
+      gradientFrom: gradient.from,
+      gradientTo: gradient.to,
+      gradientDeg: gradient.deg,
+    },
     classNames,
     'button'
   );
   const _styles = mergeStyles(classes, styles);
+  const Element = component || 'button';
+  const loader = (
+    <Loader
+      color={colors.color}
+      size={getSizeValue({ size, sizes: LOADER_SIZES })}
+      {...loaderProps}
+    />
+  );
 
   return (
     <Element
       {...others}
-      className={cx(classes.root, classes[variant], className)}
+      className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
       type={type}
-      disabled={disabled}
-      ref={elementRef}
+      disabled={disabled || loading}
+      ref={elementRef as any}
       onTouchStart={() => {}}
       style={{ ...style, ..._styles.root }}
     >
       <div className={classes.inner} style={_styles.inner}>
-        {leftIcon && (
+        {(leftIcon || (loading && loaderPosition === 'left')) && (
           <span
             className={cx(classes.icon, classes.leftIcon)}
             style={{ ..._styles.icon, ..._styles.leftIcon }}
           >
-            {leftIcon}
+            {loading && loaderPosition === 'left' ? loader : leftIcon}
           </span>
         )}
 
@@ -115,12 +177,12 @@ export function Button<
           {children}
         </span>
 
-        {rightIcon && (
+        {(rightIcon || (loading && loaderPosition === 'right')) && (
           <span
             className={cx(classes.icon, classes.rightIcon)}
             style={{ ..._styles.icon, ..._styles.rightIcon }}
           >
-            {rightIcon}
+            {loading && loaderPosition === 'right' ? loader : rightIcon}
           </span>
         )}
       </div>
@@ -129,5 +191,3 @@ export function Button<
 }
 
 Button.displayName = '@mantine/core/Button';
-
-export type ButtonProps = React.ComponentProps<typeof Button>;

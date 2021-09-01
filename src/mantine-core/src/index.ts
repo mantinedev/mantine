@@ -18,6 +18,7 @@ export { Card, CardSection } from './components/Card/Card';
 export { Center } from './components/Center/Center';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
 export { Code } from './components/Code/Code';
+export { Collapse } from './components/Collapse/Collapse';
 export { ColorInput } from './components/ColorInput/ColorInput';
 export { ColorPicker, AlphaSlider, HueSlider } from './components/ColorPicker/ColorPicker';
 export { ColorSwatch } from './components/ColorSwatch/ColorSwatch';
@@ -52,6 +53,7 @@ export { RadioGroup, Radio, RADIO_SIZES } from './components/RadioGroup/RadioGro
 export { RingProgress } from './components/RingProgress/RingProgress';
 export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
 export { Select } from './components/Select/Select';
+export { SimpleGrid } from './components/SimpleGrid/SimpleGrid';
 export { Slider, RangeSlider, SLIDER_SIZES } from './components/Slider';
 export { Spoiler } from './components/Spoiler/Spoiler';
 export { Switch, SWITCH_SIZES } from './components/Switch/Switch';
@@ -69,8 +71,6 @@ export {
   AVAILABLE_TRANSITIONS,
 } from './components/Transition/Transition';
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
-
-export type { ComponentPassThrough } from './types';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
 export type {
@@ -136,6 +136,7 @@ export type { ModalProps, ModalStylesNames } from './components/Modal/Modal';
 export type {
   MultiSelectProps,
   MultiSelectStylesNames,
+  MultiSelectValueProps,
 } from './components/MultiSelect/MultiSelect';
 export type {
   NativeSelectProps,
@@ -166,7 +167,8 @@ export type {
   SegmentedControlProps,
   SegmentedControlStylesNames,
 } from './components/SegmentedControl/SegmentedControl';
-export type { SelectProps, SelectStylesNames } from './components/Select/Select';
+export type { SelectProps, SelectStylesNames, SelectItemProps } from './components/Select/Select';
+export type { SimpleGridProps } from './components/SimpleGrid/SimpleGrid';
 export type { SliderProps, RangeSliderProps, SliderStylesNames } from './components/Slider';
 export type { SpoilerProps, SpoilerStylesNames } from './components/Spoiler/Spoiler';
 export type { SwitchProps, SwitchStylesNames } from './components/Switch/Switch';

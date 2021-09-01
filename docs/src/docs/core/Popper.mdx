@@ -16,7 +16,7 @@ import { PopperDemos, TooltipDemos } from '@demos/core';
 
 ## Usage
 
-Popper is an utility component used under the hood in <GatsbyLink to="/core/menu/">Menu</GatsbyLink>, <GatsbyLink to="/core/popover/">Popover</GatsbyLink>, <GatsbyLink to="/core/tooltip/">Tooltip</GatsbyLink>
+Popper is an utility component used under the hood in [Menu](/core/menu/), [Progress](/core/popover/), [Tooltip](/core/tooltip/)
 and other Mantine components. You can use it to create your own dropdowns and popovers if Mantine components do not meet your requirements.
 
 To start using Popper add following required props first:
@@ -63,9 +63,9 @@ Popper position is controlled by these props:
 
 ## Transitions
 
-Popper uses <GatsbyLink to="/core/transition/">Transition</GatsbyLink> component to animate presence.
+Popper uses [Transition](/core/transition/) component to animate presence.
 You can choose one of premade transitions or create your own. All premade transitions demo
-(<GatsbyLink to="/core/tooltip/">Tooltip</GatsbyLink> component which uses Popper):
+([Tooltip](/core/tooltip/) component which uses Popper):
 
 <Demo data={TooltipDemos.transitions} />
 
@@ -86,7 +86,7 @@ You can control Popper transition with following props:
 
 ## Force position update
 
-In some cases Popper position will get outdated since it is rendered in <GatsbyLink to="/core/portal/">Portal</GatsbyLink>
+In some cases Popper position will get outdated since it is rendered in [Portal](/core/portal/)
 Popper does not know about layout changes. To force position update provide an array of dependencies which trigger layout updates:
 
 ```tsx

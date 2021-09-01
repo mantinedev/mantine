@@ -1,0 +1,30 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Collapse
+order: 1
+slug: /core/collapse/
+category: 'misc'
+description: 'Animate presence with slide down transition'
+props: ['Collapse']
+import: "import { Collapse } from '@mantine/core';"
+source: 'mantine-core/src/components/Collapse/Collapse.tsx'
+docs: 'core/Collapse.mdx'
+styles: ['Collapse', 'single-node']
+---
+
+import { CollapseDemos } from '@demos/core';
+
+## Usage
+
+<Demo data={CollapseDemos.usage} />
+
+## Change transition
+
+Set following props to control transition:
+
+- `transitionDuration` – duration in ms
+- `transitionTimingFunction` – timing function (ease, linear, etc.), defaults to `ease`
+- `onTransitionEnd` – called when transition ends (both open and close)
+
+<Demo data={CollapseDemos.transition} />

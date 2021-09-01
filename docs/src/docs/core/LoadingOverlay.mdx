@@ -41,12 +41,12 @@ You can change appear and disappear animations duration by passing `transitionDu
 
 ## Loader and Overlay props
 
-LoadingOverlay is built using <GatsbyLink to="/core/overlay/">Overlay</GatsbyLink> and <GatsbyLink to="/core/loader/">Loader</GatsbyLink> components.
+LoadingOverlay is built using [Overlay](/core/overlay/) and [Loader](/core/loader/) components.
 You can change all props of Loader component, opacity and color of Overlay:
 
 ```tsx
 <LoadingOverlay
-  loaderProps={{ size: 'sm', color: 'pink' }}
+  loaderProps={{ size: 'sm', color: 'pink', variant: 'bars' }}
   overlayOpacity={0.3}
   overlayColor="#c5c5c5"
 />

@@ -8,3 +8,4 @@ export { animations } from './animations';
 export { validation } from './validation';
 export { disabled } from './disabled';
 export { icon } from './icon';
+export { rightSection } from './rightSection';
