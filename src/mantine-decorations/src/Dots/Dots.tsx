@@ -1,14 +1,19 @@
 import React from 'react';
 
-export function Dots(props: React.ComponentPropsWithoutRef<'svg'>) {
+interface DotsProps extends React.ComponentPropsWithoutRef<'svg'> {
+  size?: number;
+}
+
+export function Dots({ size = 205, ...others }: DotsProps) {
   return (
     <svg
+      aria-hidden
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
       viewBox="0 0 205 205"
-      width={205}
-      height={205}
-      {...props}
+      width={size}
+      height={size}
+      {...others}
     >
       <rect width="5" height="5" rx="2.5" />
       <rect width="5" height="5" x="60" rx="2.5" />
@@ -134,3 +139,5 @@ export function Dots(props: React.ComponentPropsWithoutRef<'svg'>) {
     </svg>
   );
 }
+
+Dots.displayName = '@mantine/dressing/Dots';

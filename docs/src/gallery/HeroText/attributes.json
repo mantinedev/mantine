@@ -10,6 +10,7 @@
     "/core/button/",
     "/core/container/",
     "/core/group/",
+    "/others/decorations/",
     "@modulz/radix-icons"
   ],
   "canvas": {

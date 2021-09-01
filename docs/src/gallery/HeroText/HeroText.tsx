@@ -1,7 +1,7 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { theming, Title, Text, Button, Container, useMantineTheme } from '@mantine/core';
-import { Dots } from './Dots';
+import { Dots } from '@mantine/decorations';
 
 const useStyles = createUseStyles(
   (theme) => ({
