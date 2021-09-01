@@ -46,13 +46,14 @@ export function Loader({
 }: LoaderProps) {
   const theme = useMantineTheme(themeOverride);
   const Component = LOADERS[variant] || LOADERS.bars;
+  const _color = color || theme.primaryColor;
 
   return (
     <Component
       size={getSizeValue({ size, sizes: LOADER_SIZES })}
       color={
-        color in theme.colors
-          ? getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 })
+        _color in theme.colors
+          ? getThemeColor({ theme, color: _color, shade: theme.colorScheme === 'dark' ? 4 : 6 })
           : color
       }
       role="presentation"
