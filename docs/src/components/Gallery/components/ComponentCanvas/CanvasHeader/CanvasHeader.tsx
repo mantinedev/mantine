@@ -7,7 +7,16 @@ import {
   GitHubLogoIcon,
   InfoCircledIcon,
 } from '@modulz/radix-icons';
-import { Group, Text, ActionIcon, Menu, Badge, SegmentedControl, Center } from '@mantine/core';
+import {
+  Group,
+  Text,
+  ActionIcon,
+  Menu,
+  Badge,
+  SegmentedControl,
+  Center,
+  Anchor,
+} from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import { MantineIcon } from '../icons/MantineIcon';
 import { NpmIcon } from '../icons/NpmIcon';
@@ -109,7 +118,20 @@ export function CanvasHeader({
             <Menu.Label>Component dependencies</Menu.Label>
             {dependencies}
           </Menu>
+
           {attributes.responsive && <Badge>Responsive</Badge>}
+
+          <Text size="xs">
+            Built by{' '}
+            <Anchor
+              size="xs"
+              href={`https://github.com/${attributes.author}`}
+              target="_blank"
+              color="gray"
+            >
+              @{attributes.author}
+            </Anchor>
+          </Text>
         </Group>
       </Group>
 

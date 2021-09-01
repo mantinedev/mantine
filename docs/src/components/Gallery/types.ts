@@ -6,6 +6,7 @@ export interface GalleryPageCategory {
 export interface GalleryCanvasAttributes {
   responsive?: boolean;
   withColor?: boolean;
+  author: string;
   canvas: { center: boolean; maxWidth?: number };
   category: string;
   dependencies: string[];
