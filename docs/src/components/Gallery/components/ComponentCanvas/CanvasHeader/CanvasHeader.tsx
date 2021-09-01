@@ -57,6 +57,25 @@ export function CanvasHeader({
       );
     }
 
+    if (dependency.trim().startsWith('https://')) {
+      const _dependencyUrl = dependency.replace('https://', '').replace('www.', '');
+      const dependencyUrl = _dependencyUrl.endsWith('/')
+        ? _dependencyUrl.slice(0, -1)
+        : _dependencyUrl;
+
+      return (
+        <Menu.Item
+          component="a"
+          href={dependency}
+          target="_blank"
+          key={dependency}
+          icon={<ExternalLinkIcon />}
+        >
+          {dependencyUrl}
+        </Menu.Item>
+      );
+    }
+
     return (
       <Menu.Item
         component="a"

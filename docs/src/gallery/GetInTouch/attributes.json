@@ -10,7 +10,8 @@
     "/core/text/",
     "/core/button/",
     "/core/group/",
-    "react-feather"
+    "react-feather",
+    "https://www.svgbackgrounds.com/"
   ],
   "canvas": {
     "center": true,
