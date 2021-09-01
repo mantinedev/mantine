@@ -10,6 +10,7 @@ import {
   ThemeIcon,
   SimpleGrid,
   Container,
+  useMantineTheme,
 } from '@mantine/core';
 import { useWindowScroll } from '@mantine/hooks';
 import data from './data';
@@ -22,6 +23,7 @@ interface GalleryBannerProps {
 export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
   const classes = useStyles();
   const [, scrollTo] = useWindowScroll();
+  const theme = useMantineTheme();
 
   const features = data.map((feature) => (
     <div key={feature.title}>
@@ -41,7 +43,9 @@ export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
       <Container size="xl" padding={0}>
         <div className={classes.image} />
         <Overlay
-          gradient="linear-gradient(45deg, #0d1138 25%, rgba(0, 0, 0, 0) 95%)"
+          gradient={`linear-gradient(45deg, ${
+            theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+          } 25%, rgba(0, 0, 0, 0) 95%)`}
           opacity={0.5}
           zIndex={1}
         />

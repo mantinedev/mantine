@@ -7,20 +7,20 @@ export default createUseStyles(
     wrapper: {
       position: 'relative',
       minHeight: 700,
-      backgroundColor: '#080a1d',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
     },
 
     supTitle: {
       fontSize: theme.fontSizes.sm,
       textTransform: 'uppercase',
       fontWeight: 700,
-      color: theme.white,
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
       opacity: 0.8,
       marginBottom: theme.spacing.sm,
     },
 
     title: {
-      color: theme.white,
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
       fontSize: 44,
       letterSpacing: -1,
       lineHeight: 1.2,
@@ -28,11 +28,11 @@ export default createUseStyles(
     },
 
     highlight: {
-      color: '#69f3fa',
+      color: theme.colorScheme === 'dark' ? theme.colors.yellow[4] : theme.colors.cyan[6],
     },
 
     description: {
-      color: '#d7dafa',
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
       maxWidth: 580,
       marginTop: theme.spacing.md,
     },
@@ -81,14 +81,14 @@ export default createUseStyles(
     },
 
     controlMain: {
-      backgroundColor: theme.white,
-      color: '#333980',
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.yellow[4] : theme.colors.cyan[6],
       textShadow: 'none',
     },
 
     controlSecondary: {
-      backgroundColor: '#4a5085',
-      color: theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
       textShadow: 'none',
     },
 
@@ -102,7 +102,8 @@ export default createUseStyles(
     },
 
     featureIcon: {
-      backgroundColor: '#303561',
+      color: theme.colorScheme === 'dark' ? theme.colors.yellow[4] : theme.colors.cyan[6],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
     },
 
     featureBody: {
@@ -110,14 +111,14 @@ export default createUseStyles(
     },
 
     featureTitle: {
-      color: theme.white,
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
       fontWeight: 500,
       lineHeight: 1,
       marginBottom: 7,
     },
 
     featureDescription: {
-      color: '#d7dafa',
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
       fontSize: theme.fontSizes.xs,
     },
   }),
