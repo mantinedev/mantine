@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import cx from 'clsx';
+import { MarkGithubIcon } from '@primer/octicons-react';
 import {
   Title,
   Overlay,
@@ -69,6 +70,14 @@ export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
               onClick={() => scrollTo({ y: 700 })}
             >
               Browse everything
+            </Button>
+            <Button
+              className={cx(classes.control, classes.controlSecondary)}
+              leftIcon={<MarkGithubIcon />}
+              component="a"
+              href="https://github.com/mantinedev/mantine"
+            >
+              GitHub
             </Button>
             <Button
               className={cx(classes.control, classes.controlSecondary)}
