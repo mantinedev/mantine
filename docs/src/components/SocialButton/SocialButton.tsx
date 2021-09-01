@@ -59,7 +59,6 @@ export function SocialButton({ service, style, ...others }: SocialButtonProps) {
       style={{
         ...style,
         backgroundColor: serviceData.color,
-        textShadow: 'unset',
         border: 0,
         height: 42,
         paddingLeft: 20,

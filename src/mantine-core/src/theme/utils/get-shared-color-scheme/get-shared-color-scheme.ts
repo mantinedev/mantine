@@ -70,6 +70,6 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
   return {
     border: 'transparent',
     background: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 6 }),
-    color: theme.colorScheme === 'dark' ? getThemeColor({ theme, color, shade: 0 }) : theme.white,
+    color: theme.white,
   };
 }

@@ -200,7 +200,6 @@ export default createMemoStyles({
         borderColor: 'transparent',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
         color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-        textShadow: 'none',
         cursor: 'not-allowed',
       },
     };
@@ -215,7 +214,6 @@ export default createMemoStyles({
       fontWeight: 600,
       backgroundColor: colors.background,
       color: colors.color,
-      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
 
       '&:not(:disabled):active': {
         transform: 'translateY(1px)',
@@ -225,7 +223,6 @@ export default createMemoStyles({
         borderColor: 'transparent',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
         color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-        textShadow: 'none',
         cursor: 'not-allowed',
       },
     };

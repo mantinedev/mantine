@@ -4,85 +4,59 @@ import { Button, ButtonProps, Group, useMantineTheme } from '@mantine/core';
 import { GoogleIcon } from './GoogleIcon';
 import { TwitterIcon } from './TwitterIcon';
 
-export function GoogleButton(props: ButtonProps) {
+export function GoogleButton({ style, ...props }: ButtonProps) {
   const theme = useMantineTheme();
   return (
     <Button
       leftIcon={<GoogleIcon />}
       variant="outline"
       color="gray"
-      styles={{
-        root: {
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-          borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
-        },
-        label: {
-          textShadow: 'none',
-        },
+      style={{
+        ...style,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
       }}
       {...props}
     />
   );
 }
 
-export function FacebookButton(props: ButtonProps) {
-  return (
-    <Button
-      styles={{
-        root: {
-          backgroundColor: '#4267B2',
-          color: '#fff',
-        },
-
-        label: {
-          textShadow: '1px 1px 0 #385185',
-        },
-      }}
-      {...props}
-    />
-  );
+export function FacebookButton({ style, ...props }: ButtonProps) {
+  return <Button style={{ ...style, backgroundColor: '#4267B2', color: '#fff' }} {...props} />;
 }
 
 // Generic arguments are used to support custom component in TypeScript
 export function TwitterButton<
   C extends React.ElementType = 'button',
   R extends HTMLElement = HTMLButtonElement
->(props: ButtonProps<C, R>) {
+>({ style, ...props }: ButtonProps<C, R>) {
   const theme = useMantineTheme();
   return (
     <Button
       leftIcon={<TwitterIcon />}
       variant="outline"
-      styles={{
-        root: {
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
-          borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        },
-        label: {
-          textShadow: 'none',
-        },
+      style={{
+        ...style,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
+        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       }}
       {...props}
     />
   );
 }
 
-export function GithubButton(props: ButtonProps) {
+export function GithubButton({ style, ...props }: ButtonProps) {
   return (
     <Button
-      leftIcon={<GitHubLogoIcon />}
-      styles={{
-        root: {
-          backgroundColor: '#000',
-          color: '#fff',
-        },
-        label: {
-          textShadow: 'none',
-        },
-      }}
       {...props}
+      leftIcon={<GitHubLogoIcon />}
+      style={{
+        ...style,
+        backgroundColor: '#000',
+        color: '#fff',
+      }}
     />
   );
 }

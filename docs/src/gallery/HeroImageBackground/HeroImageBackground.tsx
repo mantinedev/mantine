@@ -86,13 +86,11 @@ const useStyles = createUseStyles(
     secondaryControl: {
       color: theme.white,
       backgroundColor: 'rgba(255, 255, 255, .4)',
-      textShadow: 'none',
     },
 
     controlPrimary: {
       color: theme.colors[theme.primaryColor][8],
       backgroundColor: theme.white,
-      textShadow: 'none',
     },
   }),
   { theming }

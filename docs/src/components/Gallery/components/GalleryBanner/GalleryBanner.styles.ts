@@ -84,13 +84,11 @@ export default createUseStyles(
     controlMain: {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.yellow[4] : theme.colors.cyan[6],
-      textShadow: 'none',
     },
 
     controlSecondary: {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
       color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-      textShadow: 'none',
     },
 
     features: {

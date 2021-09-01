@@ -24,7 +24,6 @@ const useStyles = createUseStyles(
     action: {
       backgroundColor: theme.white,
       color: theme.black,
-      textShadow: 'none',
       position: 'absolute',
       bottom: theme.spacing.xl,
       right: theme.spacing.xl,

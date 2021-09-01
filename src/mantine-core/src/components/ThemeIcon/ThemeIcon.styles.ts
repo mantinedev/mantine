@@ -3,7 +3,6 @@ import {
   MantineTheme,
   MantineNumberSize,
   getSizeValue,
-  getThemeColor,
   getFontStyles,
   getSharedColorScheme,
 } from '../../theme';
@@ -42,7 +41,6 @@ export default createMemoStyles({
     return {
       backgroundColor: colors.background,
       color: colors.color,
-      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
     };
   },
 
