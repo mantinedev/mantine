@@ -10,6 +10,9 @@ export default createUseStyles(
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: [theme.spacing.xs, theme.spacing.md],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+      borderTopRightRadius: theme.radius.md,
+      borderTopLeftRadius: theme.radius.md,
       borderBottom: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
       }`,

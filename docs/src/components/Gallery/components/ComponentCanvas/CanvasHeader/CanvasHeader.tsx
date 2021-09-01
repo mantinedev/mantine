@@ -15,11 +15,12 @@ import { ColorControl } from '../ColorControl/ColorControl';
 import { GalleryComponent } from '../../../types';
 import useStyles from './CanvasHeader.styles';
 
-interface CanvasHeaderProps extends GalleryComponent {
+export interface CanvasHeaderProps extends GalleryComponent, React.ComponentPropsWithoutRef<'div'> {
   state: string;
   onStateChange(state: string): void;
   onPrimaryColorChange(color: string): void;
   primaryColor: string;
+  excludeExternal?: boolean;
 }
 
 export function CanvasHeader({
@@ -30,6 +31,8 @@ export function CanvasHeader({
   onStateChange,
   primaryColor,
   onPrimaryColorChange,
+  excludeExternal = false,
+  ...others
 }: CanvasHeaderProps) {
   const classes = useStyles();
   const dependencies = attributes.dependencies.map((dependency) => {
@@ -59,23 +62,25 @@ export function CanvasHeader({
   });
 
   return (
-    <div className={classes.header}>
+    <div className={classes.header} {...others}>
       <Group>
         <Text weight={500} style={{ marginRight: 15 }}>
           {attributes.title}
         </Text>
 
         <Group spacing="xs" className={classes.actions}>
-          <ActionIcon
-            variant="outline"
-            className={classes.action}
-            title="View component in isolation"
-            component="a"
-            href={url}
-            target="_blank"
-          >
-            <ExternalLinkIcon style={{ width: 14, height: 14 }} />
-          </ActionIcon>
+          {!excludeExternal && (
+            <ActionIcon
+              variant="outline"
+              className={classes.action}
+              title="View component in isolation"
+              component="a"
+              href={url}
+              target="_blank"
+            >
+              <ExternalLinkIcon style={{ width: 14, height: 14 }} />
+            </ActionIcon>
+          )}
 
           <ActionIcon
             variant="outline"
