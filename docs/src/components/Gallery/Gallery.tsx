@@ -1,13 +1,13 @@
 import React from 'react';
 import Head from '../Head/Head';
 import { GalleryPage } from './components/GalleryPage/GalleryPage';
-import { CategoriesList, CategoryCardProps } from './components/CategoriesList/CategoriesList';
+import { CategoriesList, CategoriesListItem } from './components/CategoriesList/CategoriesList';
 import { GalleryBanner } from './components/GalleryBanner/GalleryBanner';
 
 interface GalleryProps {
   pageContext: {
     componentsCount: number;
-    categories: CategoryCardProps[];
+    categories: CategoriesListItem[];
   };
 }
 
