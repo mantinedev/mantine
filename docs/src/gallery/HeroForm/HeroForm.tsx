@@ -1,83 +1,79 @@
 import React from 'react';
-import { createUseStyles } from 'react-jss';
-import { theming, Title, Text } from '@mantine/core';
+import { Title, Text, createStyles } from '@mantine/core';
 import { InlineForm } from '../InlineForm/InlineForm';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    wrapper: {
-      paddingBottom: 80,
-    },
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    paddingBottom: 80,
+  },
 
-    imageSection: {
-      '& *': {
-        color: theme.white,
-        textAlign: 'center',
-      },
-
-      paddingTop: 200,
-      paddingBottom: 100,
-      position: 'relative',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundImage:
-        'url(https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=980&q=80)',
-    },
-
-    body: {
-      position: 'relative',
-      zIndex: 1,
-    },
-
-    subheader: {
-      fontWeight: 800,
-      textTransform: 'uppercase',
-      fontSize: theme.fontSizes.xs,
-      letterSpacing: 1,
-      marginBottom: 5,
-    },
-
-    title: {
-      fontWeight: 800,
-      fontSize: 40,
-      marginBottom: theme.spacing.xs,
-    },
-
-    overlay: {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      left: 0,
-      bottom: 0,
-      zIndex: 0,
-      backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 5%, #000000 95%)',
-    },
-
-    form: {
-      position: 'relative',
-      maxWidth: 820,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      zIndex: 2,
-      marginTop: -60,
-      boxShadow: theme.shadows.lg,
-      borderRadius: theme.spacing.md,
-
-      '@media (max-width: 755px)': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-      },
-    },
-
-    label: {
+  imageSection: {
+    '& *': {
       color: theme.white,
-
-      '@media (max-width: 755px)': {
-        color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-      },
+      textAlign: 'center',
     },
-  }),
-  { theming }
-);
+
+    paddingTop: 200,
+    paddingBottom: 100,
+    position: 'relative',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundImage:
+      'url(https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=980&q=80)',
+  },
+
+  body: {
+    position: 'relative',
+    zIndex: 1,
+  },
+
+  subheader: {
+    fontWeight: 800,
+    textTransform: 'uppercase',
+    fontSize: theme.fontSizes.xs,
+    letterSpacing: 1,
+    marginBottom: 5,
+  },
+
+  title: {
+    fontWeight: 800,
+    fontSize: 40,
+    marginBottom: theme.spacing.xs,
+  },
+
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
+    zIndex: 0,
+    backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 5%, #000000 95%)',
+  },
+
+  form: {
+    position: 'relative',
+    maxWidth: 820,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    zIndex: 2,
+    marginTop: -60,
+    boxShadow: theme.shadows.lg,
+    borderRadius: theme.spacing.md,
+
+    '@media (max-width: 755px)': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    },
+  },
+
+  label: {
+    color: theme.white,
+
+    '@media (max-width: 755px)': {
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    },
+  },
+}));
 
 export function HeroForm() {
   const classes = useStyles();

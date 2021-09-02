@@ -1,7 +1,5 @@
 import React from 'react';
-import { createUseStyles } from 'react-jss';
 import {
-  theming,
   Image,
   Text,
   Container,
@@ -9,63 +7,61 @@ import {
   Title,
   SimpleGrid,
   hexToRgba,
+  createStyles,
 } from '@mantine/core';
 import IMAGES from './images';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    wrapper: {
-      paddingTop: 80,
-      paddingBottom: 50,
-    },
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    paddingTop: 80,
+    paddingBottom: 50,
+  },
 
-    item: {
-      display: 'flex',
-    },
+  item: {
+    display: 'flex',
+  },
 
-    itemIcon: {
-      padding: theme.spacing.xs,
-      marginRight: theme.spacing.md,
-    },
+  itemIcon: {
+    padding: theme.spacing.xs,
+    marginRight: theme.spacing.md,
+  },
 
-    itemTitle: {
-      marginBottom: theme.spacing.xs / 2,
-    },
+  itemTitle: {
+    marginBottom: theme.spacing.xs / 2,
+  },
 
-    supTitle: {
-      textAlign: 'center',
-      textTransform: 'uppercase',
-      fontWeight: 800,
-      fontSize: theme.fontSizes.sm,
-      color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 8],
-      letterSpacing: 0.5,
-    },
+  supTitle: {
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    fontWeight: 800,
+    fontSize: theme.fontSizes.sm,
+    color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 8],
+    letterSpacing: 0.5,
+  },
 
-    title: {
-      lineHeight: 1,
-      textAlign: 'center',
-      marginTop: theme.spacing.xl,
-    },
+  title: {
+    lineHeight: 1,
+    textAlign: 'center',
+    marginTop: theme.spacing.xl,
+  },
 
-    description: {
-      textAlign: 'center',
-      marginTop: theme.spacing.xs,
-    },
+  description: {
+    textAlign: 'center',
+    marginTop: theme.spacing.xs,
+  },
 
-    highlight: {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? hexToRgba(theme.colors[theme.primaryColor][6], 0.55)
-          : theme.colors[theme.primaryColor][0],
-      padding: 5,
-      paddingTop: 0,
-      borderRadius: theme.radius.sm,
-      display: 'inline-block',
-      color: theme.colorScheme === 'dark' ? theme.white : 'inherit',
-    },
-  }),
-  { theming }
-);
+  highlight: {
+    backgroundColor:
+      theme.colorScheme === 'dark'
+        ? hexToRgba(theme.colors[theme.primaryColor][6], 0.55)
+        : theme.colors[theme.primaryColor][0],
+    padding: 5,
+    paddingTop: 0,
+    borderRadius: theme.radius.sm,
+    display: 'inline-block',
+    color: theme.colorScheme === 'dark' ? theme.white : 'inherit',
+  },
+}));
 
 interface FeatureImage {
   image: string;

@@ -1,37 +1,33 @@
 import React from 'react';
 import cx from 'clsx';
-import { createUseStyles } from 'react-jss';
-import { theming, UnstyledButton, Checkbox, Text } from '@mantine/core';
+import { UnstyledButton, Checkbox, Text, createStyles } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    button: {
-      display: 'flex',
-      width: '100%',
-      border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[3]
-      }`,
-      borderRadius: theme.radius.sm,
-      padding: theme.spacing.lg,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+const useStyles = createStyles((theme) => ({
+  button: {
+    display: 'flex',
+    width: '100%',
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[3]
+    }`,
+    borderRadius: theme.radius.sm,
+    padding: theme.spacing.lg,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
 
-      '&:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
-      },
+    '&:hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
     },
+  },
 
-    checkbox: {
-      marginRight: theme.spacing.xl,
-    },
+  checkbox: {
+    marginRight: theme.spacing.xl,
+  },
 
-    title: {
-      marginBottom: 7,
-      lineHeight: 1,
-    },
-  }),
-  { theming }
-);
+  title: {
+    marginBottom: 7,
+    lineHeight: 1,
+  },
+}));
 
 interface CheckboxCardProps {
   checked?: boolean;

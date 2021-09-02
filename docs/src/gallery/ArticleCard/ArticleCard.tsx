@@ -1,9 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { createUseStyles } from 'react-jss';
 import { BookmarkIcon, HeartIcon, ShareIcon } from '@primer/octicons-react';
 import {
-  theming,
   Card,
   Image,
   Text,
@@ -13,37 +11,35 @@ import {
   Center,
   Avatar,
   useMantineTheme,
+  createStyles,
 } from '@mantine/core';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    card: {
-      position: 'relative',
-    },
+const useStyles = createStyles((theme) => ({
+  card: {
+    position: 'relative',
+  },
 
-    rating: {
-      position: 'absolute',
-      top: theme.spacing.xs,
-      right: theme.spacing.xs + 2,
-      pointerEvents: 'none',
-    },
+  rating: {
+    position: 'absolute',
+    top: theme.spacing.xs,
+    right: theme.spacing.xs + 2,
+    pointerEvents: 'none',
+  },
 
-    title: {
-      display: 'block',
-      marginTop: theme.spacing.xs,
-      marginBottom: theme.spacing.xs / 2,
-    },
+  title: {
+    display: 'block',
+    marginTop: theme.spacing.xs,
+    marginBottom: theme.spacing.xs / 2,
+  },
 
-    action: {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
-    },
+  action: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
+  },
 
-    footer: {
-      marginTop: theme.spacing.xs,
-    },
-  }),
-  { theming }
-);
+  footer: {
+    marginTop: theme.spacing.xs,
+  },
+}));
 
 interface ArticleCardProps {
   image: string;

@@ -1,46 +1,50 @@
 import React from 'react';
 import cx from 'clsx';
-import { createUseStyles } from 'react-jss';
-import { theming, Card, Overlay, CardProps, Button, Text, useMantineTheme } from '@mantine/core';
+import {
+  createStyles,
+  Card,
+  Overlay,
+  CardProps,
+  Button,
+  Text,
+  useMantineTheme,
+} from '@mantine/core';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    card: {
-      height: 240,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    },
+const useStyles = createStyles((theme) => ({
+  card: {
+    height: 240,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
 
-    content: {
-      position: 'absolute',
-      padding: theme.spacing.xl,
-      zIndex: 1,
-      top: 0,
-      bottom: 0,
-      right: 0,
-      left: 0,
-    },
+  content: {
+    position: 'absolute',
+    padding: theme.spacing.xl,
+    zIndex: 1,
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+  },
 
-    action: {
-      backgroundColor: theme.white,
-      color: theme.black,
-      position: 'absolute',
-      bottom: theme.spacing.xl,
-      right: theme.spacing.xl,
-    },
+  action: {
+    backgroundColor: theme.white,
+    color: theme.black,
+    position: 'absolute',
+    bottom: theme.spacing.xl,
+    right: theme.spacing.xl,
+  },
 
-    title: {
-      color: theme.white,
-      marginBottom: theme.spacing.xs / 2,
-    },
+  title: {
+    color: theme.white,
+    marginBottom: theme.spacing.xs / 2,
+  },
 
-    description: {
-      color: theme.white,
-      maxWidth: 220,
-    },
-  }),
-  { theming }
-);
+  description: {
+    color: theme.white,
+    maxWidth: 220,
+  },
+}));
 
 interface ImageActionCardProps {
   title: React.ReactNode;
