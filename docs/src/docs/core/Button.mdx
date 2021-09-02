@@ -22,7 +22,7 @@ import { BUTTON_SIZES } from '@mantine/core';
 
 ## Variants
 
-Button has 4 variants: filled, light, outline and link:
+Button has 6 variants: white, gradient, filled, light, outline and link:
 
 <Demo data={ButtonDemos.variants} />
 
@@ -34,7 +34,7 @@ Default Button color is `theme.primaryColor`, to change color and variant pass `
 <Button variant="link" color="indigo" /> // indigo link button
 ```
 
-## Gradient variant
+### Gradient variant
 
 To use gradient as Button background:
 
@@ -44,6 +44,12 @@ To use gradient as Button background:
   - `deg` is linear gradient deg
 
 <Demo data={ButtonDemos.gradient} />
+
+### White variant
+
+White is a variant in which button background color is always white (both in light and dark theme) and color is controlled with `color` prop:
+
+<Demo data={ButtonDemos.whiteConfigurator} />
 
 ## Loading state
 
