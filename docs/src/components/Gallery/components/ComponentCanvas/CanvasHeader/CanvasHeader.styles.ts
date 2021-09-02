@@ -35,7 +35,8 @@ export default createUseStyles(
     },
 
     action: {
-      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3],
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
 
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
