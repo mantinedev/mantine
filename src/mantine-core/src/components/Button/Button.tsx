@@ -27,7 +27,7 @@ const LOADER_SIZES = {
 };
 
 export const BUTTON_SIZES = heights;
-export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light'];
+export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light', 'white'];
 export type ButtonVariant = 'link' | 'filled' | 'outline' | 'light' | 'gradient';
 export type ButtonStylesNames = Exclude<
   keyof ReturnType<typeof useStyles>,
@@ -64,7 +64,7 @@ interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
   radius?: MantineNumberSize;
 
   /** Controls button appearance */
-  variant?: 'link' | 'filled' | 'outline' | 'light' | 'gradient';
+  variant?: 'link' | 'filled' | 'outline' | 'light' | 'gradient' | 'white';
 
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
@@ -125,6 +125,7 @@ export function Button<
     theme,
     variant: variant === 'link' ? 'light' : variant,
   });
+
   const classes = useStyles(
     {
       radius,

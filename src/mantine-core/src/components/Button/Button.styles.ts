@@ -208,6 +208,17 @@ export default createMemoStyles({
     };
   },
 
+  white: ({ color, radius, theme }: ButtonStylesProps) => {
+    const colors = getSharedColorScheme({ color, theme, variant: 'white' });
+
+    return {
+      border: `1px solid ${colors.border}`,
+      backgroundColor: colors.background,
+      color: colors.color,
+      ...getSharedProps({ theme, radius }),
+    };
+  },
+
   gradient: ({ radius, theme, gradientDeg, gradientFrom, gradientTo }: ButtonStylesProps) => {
     const colors = getSharedColorScheme({
       theme,
