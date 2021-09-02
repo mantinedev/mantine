@@ -69,7 +69,7 @@ export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
               className={cx(classes.control, classes.controlMain)}
               onClick={() => scrollTo({ y: 700 })}
             >
-              Browse everything
+              Explore everything
             </Button>
             <Button
               className={cx(classes.control, classes.controlSecondary)}
