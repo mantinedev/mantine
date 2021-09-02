@@ -85,11 +85,6 @@ const useStyles = createStyles((theme) => ({
     color: theme.white,
     backgroundColor: 'rgba(255, 255, 255, .4)',
   },
-
-  controlPrimary: {
-    color: theme.colors[theme.primaryColor][8],
-    backgroundColor: theme.white,
-  },
 }));
 
 export function HeroImageBackground() {
@@ -116,7 +111,8 @@ export function HeroImageBackground() {
 
         <div className={classes.controls}>
           <Button
-            className={cx(classes.control, classes.controlPrimary)}
+            className={classes.control}
+            variant="white"
             size="lg"
             themeOverride={{ colorScheme: 'light' }}
           >

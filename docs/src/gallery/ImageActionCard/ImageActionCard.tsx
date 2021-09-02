@@ -28,8 +28,6 @@ const useStyles = createStyles((theme) => ({
   },
 
   action: {
-    backgroundColor: theme.white,
-    color: theme.black,
     position: 'absolute',
     bottom: theme.spacing.xl,
     right: theme.spacing.xl,
@@ -93,9 +91,10 @@ export function ImageActionCard({
 
         <Button
           className={classes.action}
+          variant="white"
+          color="dark"
           component="a"
           href={action.link}
-          target="_blank"
           size="xs"
         >
           {action.label}
