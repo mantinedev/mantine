@@ -98,7 +98,7 @@ export function FeaturesImages({ supTitle, description, data }: FeaturesImagesPr
       <Text className={classes.supTitle}>{supTitle}</Text>
 
       <Title className={classes.title} order={2}>
-        GreatAudit is <span className={classes.highlight}>not</span> just for auditors
+        PharmLand is <span className={classes.highlight}>not</span> just for pharmacists
       </Title>
 
       <Container size={660} padding={0}>
