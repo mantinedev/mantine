@@ -56,6 +56,14 @@ Line clamp can also be used with any children (not only strings), for example wi
 
 <Demo data={TextDemos.lineClamp} />
 
+## Inherit styles
+
+By default Text always applies font-size, font-family and line-height styles,
+but in some cases this is not a desired behavior. To force Text to inherit parent
+styles set `inherit` prop. For example, you can highlight part of [Title](/core/title/):
+
+<Demo data={TextDemos.inherit} />
+
 ## Custom component
 
 By default text is rendered in div element, you can change it by setting `component` prop:
