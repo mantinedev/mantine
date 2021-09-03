@@ -1,11 +1,18 @@
 import React, { Children } from 'react';
 import { DefaultProps } from '../../theme';
-import { TimelineItem, TimelineItemProps } from './TimelineItem/TimelineItem';
+import {
+  TimelineItem,
+  TimelineItemProps,
+  TimelineItemStylesNames,
+} from './TimelineItem/TimelineItem';
 
 export { TimelineItem };
 export type { TimelineItemProps };
+export type TimelineStylesNames = TimelineItemStylesNames;
 
-export interface TimelineProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface TimelineProps
+  extends DefaultProps<TimelineStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** <Timeline.Item /> components only */
   children: React.ReactNode;
 

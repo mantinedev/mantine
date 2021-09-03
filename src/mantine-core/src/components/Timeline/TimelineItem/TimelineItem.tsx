@@ -42,6 +42,7 @@ export interface TimelineItemProps
 
 export function TimelineItem({
   className,
+  style,
   themeOverride,
   bullet,
   title,
@@ -72,11 +73,17 @@ export function TimelineItem({
         { [classes.itemLineActive]: lineActive, [classes.itemActive]: active },
         className
       )}
+      style={{
+        ...style,
+        ..._styles.item,
+        ...(lineActive ? _styles.itemLineActive : null),
+        ...(active ? _styles.itemActive : null),
+      }}
       {...others}
     >
       <div
         className={cx(classes.itemBullet, { [classes.itemBulletWithChild]: bullet })}
-        style={_styles.itemBullet}
+        style={{ ..._styles.itemBullet, ...(bullet ? _styles.itemBulletWithChild : null) }}
       >
         {bullet}
       </div>
