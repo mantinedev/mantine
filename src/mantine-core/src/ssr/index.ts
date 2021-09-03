@@ -4,5 +4,5 @@ export { SheetsRegistry };
 
 export { applyConsolePatch } from './console-patch';
 export { SsrProvider } from './SsrProvider';
-export { MantineServerStyles } from './MantineServerStyles';
+export { ServerStyles } from './ServerStyles';
 export { useStylesCleanup } from './use-styles-cleanup';
