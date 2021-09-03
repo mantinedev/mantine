@@ -3,6 +3,7 @@ import { createMemoStyles, getThemeColor, MantineTheme } from '../../../theme';
 interface TimelineItemStyles {
   theme: MantineTheme;
   bulletSize: number;
+  color: string;
 }
 
 export default createMemoStyles({
@@ -32,15 +33,15 @@ export default createMemoStyles({
     },
   }),
 
-  itemLineActive: ({ theme }: TimelineItemStyles) => ({
+  itemLineActive: ({ theme, color }: TimelineItemStyles) => ({
     '&::before': {
-      backgroundColor: getThemeColor({ theme, color: theme.primaryColor, shade: 6 }),
+      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
     },
   }),
 
-  itemActive: ({ theme }: TimelineItemStyles) => ({
+  itemActive: ({ theme, color }: TimelineItemStyles) => ({
     '& $itemBullet': {
-      borderColor: getThemeColor({ theme, color: theme.primaryColor, shade: 6 }),
+      borderColor: getThemeColor({ theme, color, shade: 6 }),
     },
   }),
 

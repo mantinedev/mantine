@@ -11,15 +11,19 @@ export interface TimelineProps extends DefaultProps, React.ComponentPropsWithout
 
   /** Index of active element */
   active?: number;
+
+  /** Active color from theme */
+  color?: string;
 }
 
-export function Timeline({ children, active, ...others }: TimelineProps) {
+export function Timeline({ children, active, color, ...others }: TimelineProps) {
   const hasActive = typeof active === 'number';
 
   const items = Children.toArray(children)
     .filter((child: React.ReactElement) => child.type === TimelineItem)
     .map((item: React.ReactElement, index) =>
       React.cloneElement(item, {
+        color,
         active: hasActive && active >= index,
         lineActive: hasActive && active - 1 >= index,
       })

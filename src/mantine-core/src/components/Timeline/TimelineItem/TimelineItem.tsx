@@ -15,6 +15,7 @@ export interface TimelineItemProps
   children?: React.ReactNode;
   active?: boolean;
   lineActive?: boolean;
+  color?: string;
 }
 
 export function TimelineItem({
@@ -28,10 +29,11 @@ export function TimelineItem({
   classNames,
   styles,
   children,
+  color,
   ...others
 }: TimelineItemProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, bulletSize }, classNames, 'timeline');
+  const classes = useStyles({ theme, bulletSize, color }, classNames, 'timeline');
   const _styles = mergeStyles(classes, styles);
 
   return (
