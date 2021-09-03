@@ -1,4 +1,4 @@
-import { createMemoStyles, MantineTheme } from '../../../theme';
+import { createMemoStyles, getThemeColor, MantineTheme } from '../../../theme';
 
 interface TimelineItemStyles {
   theme: MantineTheme;
@@ -29,6 +29,18 @@ export default createMemoStyles({
       backgroundColor: theme.colors.gray[3],
       content: '""',
       display: 'none',
+    },
+  }),
+
+  itemLineActive: ({ theme }: TimelineItemStyles) => ({
+    '&::before': {
+      backgroundColor: getThemeColor({ theme, color: theme.primaryColor, shade: 6 }),
+    },
+  }),
+
+  itemActive: ({ theme }: TimelineItemStyles) => ({
+    '& $itemBullet': {
+      borderColor: getThemeColor({ theme, color: theme.primaryColor, shade: 6 }),
     },
   }),
 

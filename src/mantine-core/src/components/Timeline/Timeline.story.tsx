@@ -5,7 +5,7 @@ import { Timeline } from './Timeline';
 
 storiesOf('@mantine/core/Timeline', module).add('General usage', () => (
   <div style={{ padding: 40, maxWidth: 400 }}>
-    <Timeline>
+    <Timeline active={2}>
       <Timeline.Item title="Item title">
         <Text>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas aliquid obcaecati vel

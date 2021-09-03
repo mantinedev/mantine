@@ -13,6 +13,8 @@ export interface TimelineItemProps
   bullet?: React.ReactNode;
   bulletSize?: number;
   children?: React.ReactNode;
+  active?: boolean;
+  lineActive?: boolean;
 }
 
 export function TimelineItem({
@@ -21,6 +23,8 @@ export function TimelineItem({
   bullet,
   title,
   bulletSize = 20,
+  active,
+  lineActive,
   classNames,
   styles,
   children,
@@ -31,7 +35,14 @@ export function TimelineItem({
   const _styles = mergeStyles(classes, styles);
 
   return (
-    <div className={cx(classes.item, className)} {...others}>
+    <div
+      className={cx(
+        classes.item,
+        { [classes.itemLineActive]: lineActive, [classes.itemActive]: active },
+        className
+      )}
+      {...others}
+    >
       {bullet ? (
         <div className={classes.itemCustomBullet} style={_styles.itemCustomBullet}>
           {bullet}
