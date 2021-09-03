@@ -14,11 +14,11 @@ Package depends on [react](https://www.npmjs.com/package/react), [react-dom](htt
 Install with npm:
 
 ```sh
-npm install react-jss prism-react-renderer @mantine/prism @mantine/core @mantine/hooks
+npm install @mantine/prism @mantine/core @mantine/hooks
 ```
 
 Install with yarn:
 
 ```sh
-yarn add react-jss prism-react-renderer @mantine/prism @mantine/core @mantine/hooks
+yarn add @mantine/prism @mantine/core @mantine/hooks
 ```
