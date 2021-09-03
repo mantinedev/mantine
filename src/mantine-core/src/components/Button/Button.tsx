@@ -27,8 +27,8 @@ const LOADER_SIZES = {
 };
 
 export const BUTTON_SIZES = heights;
-export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light', 'white'];
-export type ButtonVariant = 'link' | 'filled' | 'outline' | 'light' | 'gradient';
+export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light', 'white', 'gradient'] as const;
+export type ButtonVariant = typeof BUTTON_VARIANTS[number];
 export type ButtonStylesNames = Exclude<
   keyof ReturnType<typeof useStyles>,
   ButtonVariant | 'loading'
