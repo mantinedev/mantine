@@ -64,6 +64,7 @@ export { Text } from './components/Text/Text';
 export { Textarea } from './components/Textarea/Textarea';
 export { TextInput } from './components/TextInput/TextInput';
 export { ThemeIcon, THEME_ICON_SIZES } from './components/ThemeIcon/ThemeIcon';
+export { Timeline, TimelineItem } from './components/Timeline/Timeline';
 export { Title } from './components/Title/Title';
 export { Tooltip } from './components/Tooltip/Tooltip';
 export {
@@ -179,6 +180,11 @@ export type { TextProps } from './components/Text/Text';
 export type { TextareaProps, TextareaStylesNames } from './components/Textarea/Textarea';
 export type { TextInputProps, TextInputStylesNames } from './components/TextInput/TextInput';
 export type { ThemeIconProps } from './components/ThemeIcon/ThemeIcon';
+export type {
+  TimelineProps,
+  TimelineItemProps,
+  TimelineStylesNames,
+} from './components/Timeline/Timeline';
 export type { TitleProps } from './components/Title/Title';
 export type { TooltipProps, TooltipStylesNames } from './components/Tooltip/Tooltip';
 export type {
