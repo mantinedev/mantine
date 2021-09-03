@@ -9,15 +9,34 @@ export type TimelineItemStylesNames = keyof ReturnType<typeof useStyles>;
 export interface TimelineItemProps
   extends DefaultProps<TimelineItemStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+  /** Item title, rendered next to bullet */
   title?: React.ReactNode;
+
+  /** React node that should be rendered inside bullet – icon, image, avatar, etc. */
   bullet?: React.ReactNode;
+
+  /** Bullet width, height and border-radius in px */
   bulletSize?: number;
+
+  /** React node that will be rendered after title */
   children?: React.ReactNode;
+
+  /** Should this item be highlighted */
   active?: boolean;
+
+  /** Should line of this item be highlighted */
   lineActive?: boolean;
+
+  /** Highlight color for active item */
   color?: string;
+
+  /** Line and bullet position relative to item content */
   align?: 'right' | 'left';
+
+  /** Line border style */
   lineVariant?: 'solid' | 'dashed' | 'dotted';
+
+  /** Line border width in px */
   lineWidth?: number;
 }
 
