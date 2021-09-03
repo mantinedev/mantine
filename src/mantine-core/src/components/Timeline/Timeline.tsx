@@ -26,10 +26,10 @@ export function Timeline({ children, active, color, bulletSize, ...others }: Tim
     .filter((child: React.ReactElement) => child.type === TimelineItem)
     .map((item: React.ReactElement, index) =>
       React.cloneElement(item, {
-        color,
-        bulletSize,
-        active: hasActive && active >= index,
-        lineActive: hasActive && active - 1 >= index,
+        color: item.props.color || color,
+        bulletSize: item.props.bulletSize,
+        active: item.props.active || (hasActive && active >= index),
+        lineActive: item.props.lineActive || (hasActive && active - 1 >= index),
       })
     );
 

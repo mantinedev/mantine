@@ -45,7 +45,10 @@ export function TimelineItem({
       )}
       {...others}
     >
-      <div className={classes.itemBullet} style={_styles.itemBullet}>
+      <div
+        className={cx(classes.itemBullet, { [classes.itemBulletWithChild]: bullet })}
+        style={_styles.itemBullet}
+      >
         {bullet}
       </div>
 

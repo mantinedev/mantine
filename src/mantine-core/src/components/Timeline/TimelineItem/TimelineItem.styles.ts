@@ -58,6 +58,15 @@ export default createMemoStyles({
     position: 'absolute',
     top: 0,
     left: -bulletSize / 2 - 2,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: theme.white,
+  }),
+
+  itemBulletWithChild: ({ theme, color }: TimelineItemStyles) => ({
+    borderWidth: 1,
+    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
   }),
 
   itemTitle: ({ theme }: TimelineItemStyles) => ({
