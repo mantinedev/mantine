@@ -6,11 +6,15 @@ const code = `
 
 function Demo() {
   return (
-    <Timeline>
-      <Timeline.Item>1</Timeline.Item>
-      <Timeline.Item>2</Timeline.Item>
-      <Timeline.Item>3</Timeline.Item>
-    </Timeline>
+    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
+      <Timeline active={1}>
+        <Timeline.Item bullet="$">1</Timeline.Item>
+        <Timeline.Item>2</Timeline.Item>
+        <Timeline.Item>3</Timeline.Item>
+        <Timeline.Item>4</Timeline.Item>
+        <Timeline.Item bullet="$">5</Timeline.Item>
+      </Timeline>
+    </div>
   );
 }
 
