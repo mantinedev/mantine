@@ -52,6 +52,11 @@ export default createMemoStyles({
     '& $itemBullet': {
       borderColor: getThemeColor({ theme, color, shade: 6 }),
     },
+
+    '& $itemBulletWithChild': {
+      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+      color: theme.white,
+    },
   }),
 
   itemBullet: ({ theme, bulletSize, align, lineWidth }: TimelineItemStyles) => ({
@@ -71,9 +76,10 @@ export default createMemoStyles({
     color: theme.white,
   }),
 
-  itemBulletWithChild: ({ theme, color }: TimelineItemStyles) => ({
+  itemBulletWithChild: ({ theme }: TimelineItemStyles) => ({
     borderWidth: 1,
-    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+    backgroundColor: theme.colors.gray[3],
+    color: theme.black,
   }),
 
   itemTitle: ({ theme, align }: TimelineItemStyles) => ({
