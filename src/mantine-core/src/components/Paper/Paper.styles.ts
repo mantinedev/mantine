@@ -11,10 +11,11 @@ interface PaperStyles {
   radius: MantineNumberSize;
   shadow: string;
   padding: MantineNumberSize;
+  withBorder: boolean;
 }
 
 export default createMemoStyles({
-  paper: ({ theme, radius, shadow, padding }: PaperStyles) => ({
+  paper: ({ theme, radius, shadow, padding, withBorder }: PaperStyles) => ({
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     display: 'block',
@@ -25,5 +26,8 @@ export default createMemoStyles({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     boxShadow: theme.shadows[shadow] || shadow || 'none',
     padding: getSizeValue({ size: padding, sizes: theme.spacing }),
+    border: withBorder
+      ? `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]}`
+      : undefined,
   }),
 });

@@ -33,5 +33,6 @@ export const configurator: MantineDemo = {
     { name: 'padding', type: 'size', initialValue: 'md', defaultValue: 0 },
     { name: 'shadow', type: 'size', initialValue: 'xs', defaultValue: 'none' },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
+    { name: 'withBorder', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };
