@@ -5,6 +5,7 @@ slug: /theming/extend-theme/
 order: 1
 ---
 
+import { DEFAULT_THEME } from '@mantine/core';
 import { PaperDemos } from '@demos/core';
 import { ThemeColorExtendDemo, ThemeFontsExtendDemo, PrimaryColorDemo } from '@docs/demos';
 import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
@@ -133,8 +134,18 @@ function YourApp() {
         },
       }}
     >
-     Hello World
+      Hello World
     </MantineProvider>
   );
 }
 ```
+
+Mantine uses Bootstrap's breakpoint values as defaults:
+
+<DataTable
+  head={['Breakpoint', 'Viewport width']}
+  data={Object.keys(DEFAULT_THEME.breakpoints).map((size) => [
+    size,
+    `${DEFAULT_THEME.breakpoints[size]}px`,
+  ])}
+/>
