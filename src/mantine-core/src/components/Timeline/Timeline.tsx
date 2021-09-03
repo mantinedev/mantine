@@ -17,15 +17,26 @@ export interface TimelineProps extends DefaultProps, React.ComponentPropsWithout
 
   /** Bullet size in px */
   bulletSize?: number;
+
+  /** Timeline alignment */
+  align?: 'right' | 'left';
 }
 
-export function Timeline({ children, active, color, bulletSize, ...others }: TimelineProps) {
+export function Timeline({
+  children,
+  active,
+  color,
+  bulletSize,
+  align = 'left',
+  ...others
+}: TimelineProps) {
   const hasActive = typeof active === 'number';
 
   const items = Children.toArray(children)
     .filter((child: React.ReactElement) => child.type === TimelineItem)
     .map((item: React.ReactElement, index) =>
       React.cloneElement(item, {
+        align,
         color: item.props.color || color,
         bulletSize: item.props.bulletSize,
         active: item.props.active || (hasActive && active >= index),
