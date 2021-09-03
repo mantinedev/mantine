@@ -5,13 +5,14 @@ interface TimelineItemStyles {
   bulletSize: number;
   color: string;
   align: 'right' | 'left';
+  lineVariant: 'solid' | 'dashed' | 'dotted';
 }
 
 export default createMemoStyles({
   itemBody: {},
   itemContent: {},
 
-  item: ({ theme, align }: TimelineItemStyles) => ({
+  item: ({ theme, align, lineVariant }: TimelineItemStyles) => ({
     position: 'relative',
     boxSizing: 'border-box',
     color: theme.colors.gray[7],
@@ -28,13 +29,13 @@ export default createMemoStyles({
     },
 
     '&::before': {
+      boxSizing: 'border-box',
       position: 'absolute',
       top: 0,
       left: align === 'left' ? -4 : 'auto',
       right: align === 'right' ? -4 : 'auto',
       bottom: -theme.spacing.xl,
-      width: 4,
-      backgroundColor: theme.colors.gray[3],
+      borderLeft: `4px ${lineVariant} ${theme.colors.gray[3]}`,
       content: '""',
       display: 'none',
     },
@@ -42,7 +43,7 @@ export default createMemoStyles({
 
   itemLineActive: ({ theme, color }: TimelineItemStyles) => ({
     '&::before': {
-      backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+      borderLeftColor: getThemeColor({ theme, color, shade: 6 }),
     },
   }),
 

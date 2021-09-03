@@ -29,10 +29,10 @@ storiesOf('@mantine/core/Timeline', module).add('General usage', () => (
       >
         <Text>Timeline item 2</Text>
       </Timeline.Item>
-      <Timeline.Item title="Item title">
+      <Timeline.Item title="Item title" lineVariant="dashed">
         <Text>Timeline item 3</Text>
       </Timeline.Item>
-      <Timeline.Item title="Item title">
+      <Timeline.Item title="Item title" lineVariant="dotted">
         <Text>Timeline item 4</Text>
       </Timeline.Item>
       <Timeline.Item title="Item title">

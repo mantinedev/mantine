@@ -17,6 +17,7 @@ export interface TimelineItemProps
   lineActive?: boolean;
   color?: string;
   align?: 'right' | 'left';
+  lineVariant?: 'solid' | 'dashed' | 'dotted';
 }
 
 export function TimelineItem({
@@ -32,10 +33,15 @@ export function TimelineItem({
   children,
   color,
   align,
+  lineVariant = 'solid',
   ...others
 }: TimelineItemProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, bulletSize, color, align }, classNames, 'timeline');
+  const classes = useStyles(
+    { theme, bulletSize, color, align, lineVariant },
+    classNames,
+    'timeline'
+  );
   const _styles = mergeStyles(classes, styles);
 
   return (
