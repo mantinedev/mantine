@@ -1,4 +1,11 @@
-import { itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
+import React from 'react';
+import { shallow } from 'enzyme';
+import {
+  itSupportsClassName,
+  itSupportsOthers,
+  itSupportsStyle,
+  itRendersChildren,
+} from '@mantine/tests';
 import { TimelineItem } from './TimelineItem';
 
 const defaultProps = {};
@@ -6,7 +13,18 @@ const defaultProps = {};
 describe('@mantine/core/TimelineItem', () => {
   itSupportsClassName(TimelineItem, defaultProps);
   itSupportsOthers(TimelineItem, defaultProps);
+  itRendersChildren(TimelineItem, defaultProps);
   itSupportsStyle(TimelineItem, defaultProps);
+
+  it('renders given bullet', () => {
+    const element = shallow(<TimelineItem bullet="test-bullet" />);
+    expect(element.find('.mantine-timeline-itemBullet').text()).toBe('test-bullet');
+  });
+
+  it('renders given title', () => {
+    const element = shallow(<TimelineItem title="test-title" />);
+    expect(element.render().find('.mantine-timeline-itemTitle').text()).toBe('test-title');
+  });
 
   it('has correct displayName', () => {
     expect(TimelineItem.displayName).toEqual('@mantine/core/TimelineItem');
