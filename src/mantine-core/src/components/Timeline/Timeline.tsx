@@ -14,9 +14,12 @@ export interface TimelineProps extends DefaultProps, React.ComponentPropsWithout
 
   /** Active color from theme */
   color?: string;
+
+  /** Bullet size in px */
+  bulletSize?: number;
 }
 
-export function Timeline({ children, active, color, ...others }: TimelineProps) {
+export function Timeline({ children, active, color, bulletSize, ...others }: TimelineProps) {
   const hasActive = typeof active === 'number';
 
   const items = Children.toArray(children)
@@ -24,6 +27,7 @@ export function Timeline({ children, active, color, ...others }: TimelineProps) 
     .map((item: React.ReactElement, index) =>
       React.cloneElement(item, {
         color,
+        bulletSize,
         active: hasActive && active >= index,
         lineActive: hasActive && active - 1 >= index,
       })

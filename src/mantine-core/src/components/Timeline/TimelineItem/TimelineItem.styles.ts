@@ -7,6 +7,9 @@ interface TimelineItemStyles {
 }
 
 export default createMemoStyles({
+  itemBody: {},
+  itemContent: {},
+
   item: ({ theme }: TimelineItemStyles) => ({
     position: 'relative',
     boxSizing: 'border-box',

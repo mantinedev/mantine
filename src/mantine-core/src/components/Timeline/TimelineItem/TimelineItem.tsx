@@ -45,13 +45,9 @@ export function TimelineItem({
       )}
       {...others}
     >
-      {bullet ? (
-        <div className={classes.itemCustomBullet} style={_styles.itemCustomBullet}>
-          {bullet}
-        </div>
-      ) : (
-        <div className={classes.itemBullet} style={_styles.itemBullet} />
-      )}
+      <div className={classes.itemBullet} style={_styles.itemBullet}>
+        {bullet}
+      </div>
 
       <div className={classes.itemBody} style={_styles.itemBody}>
         {title && (
