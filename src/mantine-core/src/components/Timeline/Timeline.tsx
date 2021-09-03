@@ -34,9 +34,10 @@ export interface TimelineProps
 
 export function Timeline({
   children,
+  style,
   active,
   color,
-  bulletSize,
+  bulletSize = 20,
   align = 'left',
   lineWidth = 4,
   classNames,
@@ -60,7 +61,14 @@ export function Timeline({
       })
     );
 
-  return <div {...others}>{items}</div>;
+  const offset: React.CSSProperties =
+    align === 'left' ? { paddingLeft: bulletSize / 2 } : { paddingRight: bulletSize / 2 };
+
+  return (
+    <div style={{ ...offset, ...style }} {...others}>
+      {items}
+    </div>
+  );
 }
 
 Timeline.Item = TimelineItem;
