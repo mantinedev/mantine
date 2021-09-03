@@ -6,13 +6,14 @@ interface TimelineItemStyles {
   color: string;
   align: 'right' | 'left';
   lineVariant: 'solid' | 'dashed' | 'dotted';
+  lineWidth: number;
 }
 
 export default createMemoStyles({
   itemBody: {},
   itemContent: {},
 
-  item: ({ theme, align, lineVariant }: TimelineItemStyles) => ({
+  item: ({ theme, align, lineVariant, lineWidth }: TimelineItemStyles) => ({
     position: 'relative',
     boxSizing: 'border-box',
     color: theme.colors.gray[7],
@@ -32,10 +33,10 @@ export default createMemoStyles({
       boxSizing: 'border-box',
       position: 'absolute',
       top: 0,
-      left: align === 'left' ? -4 : 'auto',
-      right: align === 'right' ? -4 : 'auto',
+      left: align === 'left' ? -lineWidth : 'auto',
+      right: align === 'right' ? -lineWidth : 'auto',
       bottom: -theme.spacing.xl,
-      borderLeft: `4px ${lineVariant} ${theme.colors.gray[3]}`,
+      borderLeft: `${lineWidth}px ${lineVariant} ${theme.colors.gray[3]}`,
       content: '""',
       display: 'none',
     },
@@ -53,17 +54,17 @@ export default createMemoStyles({
     },
   }),
 
-  itemBullet: ({ theme, bulletSize, align }: TimelineItemStyles) => ({
+  itemBullet: ({ theme, bulletSize, align, lineWidth }: TimelineItemStyles) => ({
     boxSizing: 'border-box',
     width: bulletSize,
     height: bulletSize,
     borderRadius: bulletSize,
-    border: `4px solid ${theme.colors.gray[3]}`,
+    border: `${lineWidth}px solid ${theme.colors.gray[3]}`,
     backgroundColor: theme.white,
     position: 'absolute',
     top: 0,
-    left: align === 'left' ? -bulletSize / 2 - 2 : 'auto',
-    right: align === 'right' ? -bulletSize / 2 - 2 : 'auto',
+    left: align === 'left' ? -bulletSize / 2 - lineWidth / 2 : 'auto',
+    right: align === 'right' ? -bulletSize / 2 - lineWidth / 2 : 'auto',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

@@ -20,6 +20,9 @@ export interface TimelineProps extends DefaultProps, React.ComponentPropsWithout
 
   /** Timeline alignment */
   align?: 'right' | 'left';
+
+  /** Line width in px */
+  lineWidth?: number;
 }
 
 export function Timeline({
@@ -28,6 +31,7 @@ export function Timeline({
   color,
   bulletSize,
   align = 'left',
+  lineWidth = 4,
   ...others
 }: TimelineProps) {
   const hasActive = typeof active === 'number';
@@ -37,6 +41,7 @@ export function Timeline({
     .map((item: React.ReactElement, index) =>
       React.cloneElement(item, {
         align,
+        lineWidth,
         color: item.props.color || color,
         bulletSize: item.props.bulletSize,
         active: item.props.active || (hasActive && active >= index),
