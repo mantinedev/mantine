@@ -1,23 +1,18 @@
 import React from 'react';
-import { createUseStyles } from 'react-jss';
-import { theming } from '../../../theme';
+import { createStyles } from '../../../theme';
 import { Menu } from '../Menu';
 import { Group } from '../../Group/Group';
 import { menuItems } from './_menu-items';
 
 const code = `
-import { createUseStyles } from 'react-jss';
-import { Menu, theming } from '@mantine/core';
+import { Menu, createStyles } from '@mantine/core';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    itemHovered: {
-      backgroundColor: theme.colors[theme.primaryColor][7],
-      color: theme.white,
-    },
-  }),
-  { theming }
-);
+const useStyles = createStyles((theme) => ({
+  itemHovered: {
+    backgroundColor: theme.colors[theme.primaryColor][7],
+    color: theme.white,
+  },
+}));
 
 function Demo() {
   const classes = useStyles();
@@ -29,15 +24,12 @@ function Demo() {
 }
 `;
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    itemHovered: {
-      backgroundColor: theme.colors[theme.primaryColor][7],
-      color: theme.white,
-    },
-  }),
-  { theming }
-);
+const useStyles = createStyles((theme) => ({
+  itemHovered: {
+    backgroundColor: theme.colors[theme.primaryColor][7],
+    color: theme.white,
+  },
+}));
 
 function Demo() {
   const classes = useStyles();

@@ -1,50 +1,45 @@
 import React from 'react';
-import { createUseStyles } from 'react-jss';
-import { theming } from '../../../theme';
+import { createStyles } from '../../../theme';
 import { Accordion, AccordionItem, AccordionProps } from '../Accordion';
 
 const code = `
-import { createUseStyles } from 'react-jss';
-import { Accordion, AccordionItem, AccordionProps, theming } from '@mantine/core';
+import { Accordion, AccordionItem, AccordionProps, createStyles } from '@mantine/core';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    control: {
-      fontSize: theme.fontSizes.lg,
+const useStyles = createStyles((theme) => ({
+  control: {
+    fontSize: theme.fontSizes.lg,
+  },
+
+  item: {
+    border: \`1px solid \${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]}\`,
+
+    '&:first-of-type': {
+      borderTopRightRadius: theme.radius.sm,
+      borderTopLeftRadius: theme.radius.sm,
     },
 
-    item: {
-      border: \`1px solid \${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]}\`,
-
-      '&:first-of-type': {
-        borderTopRightRadius: theme.radius.sm,
-        borderTopLeftRadius: theme.radius.sm,
-      },
-
-      '&:last-of-type': {
-        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
-        borderBottomRightRadius: theme.radius.sm,
-        borderBottomLeftRadius: theme.radius.sm,
-      },
-
-      '& + &': {
-        borderTop: 'none',
-      },
+    '&:last-of-type': {
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
+      borderBottomRightRadius: theme.radius.sm,
+      borderBottomLeftRadius: theme.radius.sm,
     },
 
-    itemOpened: {
-      '& $control': {
-        backgroundColor: theme.colors.blue[theme.colorScheme === 'dark' ? 9 : 0],
-        color: theme.colorScheme === 'dark' ? theme.white : theme.colors.blue[9],
-      },
+    '& + &': {
+      borderTop: 'none',
     },
+  },
 
-    contentInner: {
-      paddingTop: theme.spacing.md,
+  itemOpened: {
+    '& $control': {
+      backgroundColor: theme.colors.blue[theme.colorScheme === 'dark' ? 9 : 0],
+      color: theme.colorScheme === 'dark' ? theme.white : theme.colors.blue[9],
     },
-  }),
-  { theming }
-);
+  },
+
+  contentInner: {
+    paddingTop: theme.spacing.md,
+  },
+}));
 
 function StyledAccordion(props: AccordionProps) {
   const classes = useStyles();
@@ -72,46 +67,43 @@ function Demo() {
 }
 `;
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    control: {
-      fontSize: theme.fontSizes.lg,
+const useStyles = createStyles((theme) => ({
+  control: {
+    fontSize: theme.fontSizes.lg,
+  },
+
+  item: {
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+    }`,
+
+    '&:first-of-type': {
+      borderTopRightRadius: theme.radius.sm,
+      borderTopLeftRadius: theme.radius.sm,
     },
 
-    item: {
-      border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
-      }`,
-
-      '&:first-of-type': {
-        borderTopRightRadius: theme.radius.sm,
-        borderTopLeftRadius: theme.radius.sm,
-      },
-
-      '&:last-of-type': {
-        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
-        borderBottomRightRadius: theme.radius.sm,
-        borderBottomLeftRadius: theme.radius.sm,
-      },
-
-      '& + &': {
-        borderTop: 'none',
-      },
+    '&:last-of-type': {
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
+      borderBottomRightRadius: theme.radius.sm,
+      borderBottomLeftRadius: theme.radius.sm,
     },
 
-    itemOpened: {
-      '& $control': {
-        backgroundColor: theme.colors.blue[theme.colorScheme === 'dark' ? 9 : 0],
-        color: theme.colorScheme === 'dark' ? theme.white : theme.colors.blue[9],
-      },
+    '& + &': {
+      borderTop: 'none',
     },
+  },
 
-    contentInner: {
-      paddingTop: theme.spacing.md,
+  itemOpened: {
+    '& $control': {
+      backgroundColor: theme.colors.blue[theme.colorScheme === 'dark' ? 9 : 0],
+      color: theme.colorScheme === 'dark' ? theme.white : theme.colors.blue[9],
     },
-  }),
-  { theming }
-);
+  },
+
+  contentInner: {
+    paddingTop: theme.spacing.md,
+  },
+}));
 
 function StyledAccordion(props: AccordionProps) {
   const classes = useStyles();
