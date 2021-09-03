@@ -14,20 +14,16 @@ as it provides you with the most convenient way to utilize Mantine theme, but it
 
 ## Theming context
 
-If your application is wrapped with MantineProvider you can utilize theming context in createUseStyles:
+If your application is **wrapped with MantineProvider** you can utilize theming context with `createStyles` function:
 
 ```tsx
-import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    wrapper: {
-      background: theme.colors.gray[5],
-    },
-  }),
-  { theming }
-);
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    background: theme.colors.gray[5],
+  },
+}));
 
 function YourComponent() {
   const classes = useStyles();
@@ -61,18 +57,14 @@ getFocusStyles function returns mantine focus styles in jss format for interacti
 Focus styles are visible only when user navigates with keyboard.
 
 ```tsx
-import { createUseStyles } from 'react-jss';
-import { getFocusStyles, theming } from '@mantine/core';
+import { getFocusStyles, createStyles } from '@mantine/core';
 
-createUseStyles(
-  (theme) => ({
-    button: {
-      ...getFocusStyles(theme),
-      color: 'red',
-    },
-  }),
-  { theming }
-);
+createStyles((theme) => ({
+  button: {
+    ...getFocusStyles(theme),
+    color: 'red',
+  },
+}));
 ```
 
 ## getFontStyles util
@@ -80,16 +72,12 @@ createUseStyles(
 getFontStyles function returns font styles from theme with [font smoothing](https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth):
 
 ```tsx
-import { createUseStyles } from 'react-jss';
-import { getFontStyles, theming } from '@mantine/core';
+import { getFontStyles, createStyles } from '@mantine/core';
 
-createUseStyles(
-  (theme) => ({
-    wrapper: {
-      ...getFontStyles(theme),
-      color: 'red',
-    },
-  }),
-  { theming }
-);
+createUseStyles((theme) => ({
+  wrapper: {
+    ...getFontStyles(theme),
+    color: 'red',
+  },
+}));
 ```
