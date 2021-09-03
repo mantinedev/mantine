@@ -39,6 +39,8 @@ export function Timeline({
   bulletSize,
   align = 'left',
   lineWidth = 4,
+  classNames,
+  styles,
   ...others
 }: TimelineProps) {
   const hasActive = typeof active === 'number';
@@ -47,6 +49,8 @@ export function Timeline({
     .filter((child: React.ReactElement) => child.type === TimelineItem)
     .map((item: React.ReactElement, index) =>
       React.cloneElement(item, {
+        classNames,
+        styles,
         align,
         lineWidth,
         color: item.props.color || color,
