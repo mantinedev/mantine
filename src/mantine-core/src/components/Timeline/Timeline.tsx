@@ -62,7 +62,9 @@ export function Timeline({
     );
 
   const offset: React.CSSProperties =
-    align === 'left' ? { paddingLeft: bulletSize / 2 } : { paddingRight: bulletSize / 2 };
+    align === 'left'
+      ? { paddingLeft: bulletSize / 2 + lineWidth / 2 }
+      : { paddingRight: bulletSize / 2 + lineWidth / 2 };
 
   return (
     <div style={{ ...offset, ...style }} {...others}>
