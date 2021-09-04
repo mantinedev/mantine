@@ -8,10 +8,11 @@ import {
 import { Text } from '../../Text/Text';
 import { Timeline } from '../Timeline';
 
-export function TimelineBase() {
+export function TimelineBase(props: any) {
+  const displayIcon = !props?.noIcon;
   return (
-    <Timeline active={1} bulletSize={24} lineWidth={2}>
-      <Timeline.Item bullet={<GitBranchIcon size={12} />} title="New branch">
+    <Timeline active={1} bulletSize={24} lineWidth={2} {...props}>
+      <Timeline.Item bullet={displayIcon ? <GitBranchIcon size={12} /> : null} title="New branch">
         <Text color="dimmed" size="sm">
           You&apos;ve created new branch{' '}
           <Text variant="link" component="span" inherit>
@@ -24,7 +25,7 @@ export function TimelineBase() {
         </Text>
       </Timeline.Item>
 
-      <Timeline.Item bullet={<GitCommitIcon size={12} />} title="Commits">
+      <Timeline.Item bullet={displayIcon ? <GitCommitIcon size={12} /> : null} title="Commits">
         <Text color="dimmed" size="sm">
           You&apos;ve pushed 23 commits to{' '}
           <Text variant="link" component="span" inherit>
@@ -38,7 +39,7 @@ export function TimelineBase() {
 
       <Timeline.Item
         title="Pull request"
-        bullet={<GitPullRequestIcon size={12} />}
+        bullet={displayIcon ? <GitPullRequestIcon size={12} /> : null}
         lineVariant="dashed"
       >
         <Text color="dimmed" size="sm">
@@ -52,7 +53,10 @@ export function TimelineBase() {
         </Text>
       </Timeline.Item>
 
-      <Timeline.Item title="Code review" bullet={<CommentDiscussionIcon size={12} />}>
+      <Timeline.Item
+        title="Code review"
+        bullet={displayIcon ? <CommentDiscussionIcon size={12} /> : null}
+      >
         <Text color="dimmed" size="sm">
           <Text variant="link" component="span" inherit>
             Robert Gluesticker
