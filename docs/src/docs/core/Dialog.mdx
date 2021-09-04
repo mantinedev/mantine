@@ -17,4 +17,42 @@ import { DialogDemos } from '@demos/core';
 
 ## Usage
 
+Dialog is a simplified version of [Modal](/core/modal/) component.
+It does not include most of accessibility and usability [Modal](/core/modal/) features:
+
+- Focus trap is not available
+- Does not close on click outside
+- Does now have overlay
+
+Use Dialog to attract attention with not important information or action,
+for example, you can create an email subscription form:
+
 <Demo data={DialogDemos.usage} />
+
+## Paper props
+
+Component supports all props from [Paper](/core/paper/) component,
+you can customize `shadow`, `padding` and `radius` same way.
+
+```tsx
+<Dialog shadow="xl" padding={30} radius="sm" />
+```
+
+## Change transition
+
+Dialog supports all transition from [Transition](/core/transition/) component.
+To change transition provide following props:
+
+- **transition** – predefined transition name or transition object
+- **transitionDuration** – transition duration in ms, defaults to 200ms
+- **transitionTimingFunction** – timing function, defaults to `theme.transitionTimingFunction`
+
+```tsx
+<Dialog transition="slide-up" transitionDuration={300} transitionTimingFunction="ease" />
+```
+
+## Accessibility
+
+Component is not accessible and most likely will not be announced by screen reader,
+make sure you do not put any important information. In most cases it would be much better
+to select [Modal](/core/modal/), [Drawer](/core/drawer/) or [Notifications](/others/notifications/).
