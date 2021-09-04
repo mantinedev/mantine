@@ -29,6 +29,18 @@ for example, you can create an email subscription form:
 
 <Demo data={DialogDemos.usage} />
 
+## Change position
+
+Dialog is rendered in [Portal](/core/portal/) and has fixed position, set `position` prop to control Dialog position:
+
+```tsx
+// Dialog in top left corner
+<Dialog position={{ top: 20, left: 20 }} />
+
+// Dialog in bottom left corner
+<Dialog position={{ bottom: 20, left: 20 }} />
+```
+
 ## Paper props
 
 Component supports all props from [Paper](/core/paper/) component,
