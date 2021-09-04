@@ -5,9 +5,11 @@ import {
   itSupportsClassName,
   itRendersChildren,
   itSupportsOthers,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Dialog, MantineDialog } from './Dialog';
+import { Dialog as DialogStylesNames } from './styles.api';
 
 const defaultProps = {
   opened: true,
@@ -20,6 +22,7 @@ describe('@mantine/core/Dialog', () => {
   itSupportsClassName(MantineDialog, defaultProps);
   itRendersChildren(MantineDialog, defaultProps);
   itSupportsOthers(MantineDialog, defaultProps);
+  itSupportsStylesApi(MantineDialog, defaultProps, Object.keys(DialogStylesNames), 'dialog');
 
   it('renders close button based on withCloseButton prop', () => {
     const withButton = shallow(<MantineDialog opened withCloseButton />);
