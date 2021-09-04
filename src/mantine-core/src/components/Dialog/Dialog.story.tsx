@@ -4,7 +4,7 @@ import { Button } from '../Button/Button';
 import { Dialog, DialogProps } from './Dialog';
 
 function Wrapper(props: Omit<DialogProps, 'opened' | 'onClosed'>) {
-  const [opened, setOpened] = useState(true);
+  const [opened, setOpened] = useState(false);
   return (
     <div style={{ padding: 40 }}>
       <Button onClick={() => setOpened((o) => !o)}>toggle</Button>

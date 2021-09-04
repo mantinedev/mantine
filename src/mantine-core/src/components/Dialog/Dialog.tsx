@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
+import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../theme';
+import { Transition, MantineTransition } from '../Transition/Transition';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Affix } from '../Affix/Affix';
 import { Paper, PaperProps } from '../Paper/Paper';
@@ -33,6 +34,18 @@ export interface DialogProps
 
   /** Opened state */
   opened: boolean;
+
+  /** Appear/disappear transition */
+  transition?: MantineTransition;
+
+  /** Duration in ms of modal transitions, set to 0 to disable all animations */
+  transitionDuration?: number;
+
+  /** Transition timing function, defaults to theme.transitionTimingFunction */
+  transitionTimingFunction?: string;
+
+  /** Predefined dialog width or number to set width in px */
+  size?: MantineNumberSize;
 }
 
 export function MantineDialog({
@@ -48,31 +61,47 @@ export function MantineDialog({
   style,
   classNames,
   styles,
+  opened,
+  withBorder = true,
+  size = 'md',
+  transition = 'pop-top-right',
+  transitionDuration = 200,
+  transitionTimingFunction,
   ...others
 }: DialogProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'dialog');
+  const classes = useStyles({ theme, size }, classNames, 'dialog');
   const _styles = mergeStyles(classes, styles);
 
   return (
-    <Paper
-      className={cx(classes.root, className)}
-      style={{ ...style, ..._styles.root }}
-      shadow={shadow}
-      padding={padding}
-      themeOverride={themeOverride}
-      {...others}
+    <Transition
+      mounted={opened}
+      transition={transition}
+      duration={transitionDuration}
+      timingFunction={transitionTimingFunction}
     >
-      {withCloseButton && (
-        <CloseButton
-          onClick={onClose}
+      {(transitionStyles) => (
+        <Paper
+          className={cx(classes.root, className)}
+          style={{ ...style, ..._styles.root, ...transitionStyles }}
+          shadow={shadow}
+          padding={padding}
           themeOverride={themeOverride}
-          className={classes.closeButton}
-          style={_styles.closeButton}
-        />
+          withBorder={withBorder}
+          {...others}
+        >
+          {withCloseButton && (
+            <CloseButton
+              onClick={onClose}
+              themeOverride={themeOverride}
+              className={classes.closeButton}
+              style={_styles.closeButton}
+            />
+          )}
+          {children}
+        </Paper>
       )}
-      {children}
-    </Paper>
+    </Transition>
   );
 }
 
