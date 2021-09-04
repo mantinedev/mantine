@@ -7,6 +7,8 @@ release: https://github.com/mantinedev/mantine/releases/tag/2.5.0
 date: 'September 1st, 2021'
 ---
 
+import { TimelineDemos } from '@demos/core';
+
 ## react-jss dependency removal
 
 All `@mantine/` packages no longer require react-jss installation as peer dependency – it will be installed automatically as @mantine/core dependency.
@@ -40,6 +42,12 @@ Note that it will only work if your application is wrapped with MantineProvider.
 
 @mantine/core package now comes with components to simplify server side rendering setup with Next.js and any other environment.
 Checkout [Next.js guide](https://mantine.dev/theming/next/) to learn more.
+
+## New components
+
+[Timeline](https://mantine.dev/core/timeline/) component lets you show list of events in chronological order:
+
+<Demo data={TimelineDemos.usage} demoProps={{ toggle: true }} />
 
 ## New features
 
