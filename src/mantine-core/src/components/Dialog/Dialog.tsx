@@ -107,6 +107,7 @@ export function MantineDialog({
 
 export function Dialog(props: DialogProps) {
   const theme = useMantineTheme(props.themeOverride);
+
   return (
     <Affix
       zIndex={props.zIndex}
@@ -116,3 +117,5 @@ export function Dialog(props: DialogProps) {
     </Affix>
   );
 }
+
+Dialog.displayName = '@mantine/core/Dialog';
