@@ -55,7 +55,7 @@ export function Timeline({
         align,
         lineWidth,
         color: item.props.color || color,
-        bulletSize: item.props.bulletSize,
+        bulletSize: item.props.bulletSize || bulletSize,
         active: item.props.active || (hasActive && active >= index),
         lineActive: item.props.lineActive || (hasActive && active - 1 >= index),
       })
