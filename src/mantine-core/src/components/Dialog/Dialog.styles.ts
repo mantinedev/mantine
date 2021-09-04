@@ -14,16 +14,17 @@ const sizes = {
 };
 
 export default createMemoStyles({
-  root: ({ size }: DialogStyles) => ({
+  root: ({ size, theme }: DialogStyles) => ({
     position: 'relative',
     width: getSizeValue({ size, sizes }),
     maxWidth: '100%',
     minHeight: 50,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
   }),
 
   closeButton: ({ theme }: DialogStyles) => ({
     position: 'absolute',
-    top: theme.spacing.xs / 2,
-    right: theme.spacing.xs / 2,
+    top: theme.spacing.md / 2,
+    right: theme.spacing.md / 2,
   }),
 });
