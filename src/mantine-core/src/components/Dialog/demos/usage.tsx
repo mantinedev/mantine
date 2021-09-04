@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { Dialog, Group, Button, TextInput, Text } from '@mantine/core';
 
 function Demo() {
-  const [opened, setOpened] = useState(true);
+  const [opened, setOpened] = useState(false);
 
   return (
     <>
@@ -40,7 +40,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [opened, setOpened] = useState(true);
+  const [opened, setOpened] = useState(false);
 
   return (
     <>
