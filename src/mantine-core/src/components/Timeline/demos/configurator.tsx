@@ -27,7 +27,7 @@ export const configurator: MantineDemo = {
       type: 'number',
       initialValue: 20,
       defaultValue: 20,
-      min: 8,
+      min: 12,
       max: 30,
       step: 2,
     },

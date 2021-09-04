@@ -29,8 +29,9 @@ export function TimelineBase(props: any) {
         <Text color="dimmed" size="sm">
           You&apos;ve pushed 23 commits to{' '}
           <Text variant="link" component="span" inherit>
-            fix-notifications branch
+            fix-notifications
           </Text>{' '}
+          branch
         </Text>
         <Text size="xs" style={{ marginTop: 4 }}>
           52 minutes ago
