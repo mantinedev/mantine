@@ -24,6 +24,7 @@ export { ColorInput } from './components/ColorInput/ColorInput';
 export { ColorPicker, AlphaSlider, HueSlider } from './components/ColorPicker/ColorPicker';
 export { ColorSwatch } from './components/ColorSwatch/ColorSwatch';
 export { Container, CONTAINER_SIZES } from './components/Container/Container';
+export { Dialog } from './components/Dialog/Dialog';
 export { Drawer, DRAWER_SIZES } from './components/Drawer/Drawer';
 export { Divider, DIVIDER_SIZES } from './components/Divider/Divider';
 export { Grid, Col } from './components/Grid/Grid';
@@ -111,6 +112,7 @@ export type {
 } from './components/ColorPicker/ColorPicker';
 export type { ColorSwatchProps } from './components/ColorSwatch/ColorSwatch';
 export type { ContainerProps } from './components/Container/Container';
+export type { DialogProps, DialogStylesNames } from './components/Dialog/Dialog';
 export type { DividerProps, DividerStylesNames } from './components/Divider/Divider';
 export type { DrawerProps, DrawerStylesNames } from './components/Drawer/Drawer';
 export type { GridProps, ColProps } from './components/Grid/Grid';

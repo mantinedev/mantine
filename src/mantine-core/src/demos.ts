@@ -19,6 +19,7 @@ export * as ColorInputDemos from './components/ColorInput/demos';
 export * as ColorPickerDemos from './components/ColorPicker/demos';
 export * as ColorSwatchDemos from './components/ColorSwatch/demos';
 export * as ContainerDemos from './components/Container/demos';
+export * as DialogDemos from './components/Dialog/demos';
 export * as DividerDemos from './components/Divider/demos';
 export * as DrawerDemos from './components/Drawer/demos';
 export * as GridDemos from './components/Grid/demos';

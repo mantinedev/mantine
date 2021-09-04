@@ -10,6 +10,7 @@ export * from './components/Button/styles.api';
 export * from './components/Checkbox/styles.api';
 export * from './components/ColorInput/styles.api';
 export * from './components/ColorPicker/styles.api';
+export * from './components/Dialog/styles.api';
 export * from './components/Divider/styles.api';
 export * from './components/Drawer/styles.api';
 export * from './components/Group/styles.api';
