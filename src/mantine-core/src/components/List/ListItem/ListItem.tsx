@@ -29,18 +29,21 @@ export function ListItem({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, spacing }, classNames, 'list');
   const _styles = mergeStyles(classes, styles);
+
   return (
     <li
       className={cx(classes.item, { [classes.withIcon]: icon }, className)}
       style={{ ...style, ..._styles.item }}
       {...others}
     >
-      {icon && (
-        <span className={classes.icon} style={_styles.icon}>
-          {icon}
-        </span>
-      )}
-      {children}
+      <div className={classes.itemWrapper}>
+        {icon && (
+          <span className={classes.icon} style={_styles.icon}>
+            {icon}
+          </span>
+        )}
+        <span>{children}</span>
+      </div>
     </li>
   );
 }

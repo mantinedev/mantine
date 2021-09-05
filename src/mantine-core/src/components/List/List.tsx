@@ -22,7 +22,7 @@ export interface ListProps extends DefaultProps, React.ComponentPropsWithoutRef<
   /** Icon that should replace list item dot */
   icon?: React.ReactNode;
 
-  /** Predefined spacing between items or number to set value in px */
+  /** Spacing between items from theme or number to set value in px */
   spacing?: MantineNumberSize;
 }
 
