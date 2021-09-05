@@ -15,7 +15,8 @@ export default createMemoStyles({
       padding: [1, theme.spacing.xs / 2],
       borderRadius: theme.radius.sm,
       color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-      backgroundColor: colors.background,
+      backgroundColor:
+        theme.colorScheme === 'dark' && color === 'dark' ? theme.colors.dark[5] : colors.background,
       fontFamily: theme.fontFamilyMonospace,
       fontSize: theme.fontSizes.xs,
       border: `1px solid ${colors.border}`,

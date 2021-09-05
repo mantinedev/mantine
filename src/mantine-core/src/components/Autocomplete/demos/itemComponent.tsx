@@ -1,9 +1,10 @@
 import React from 'react';
-import { Group, Avatar, Text, UnstyledButton } from '../../../index';
+import { Group, Avatar, Text } from '../../../index';
+import { SelectItemProps } from '../../Select/Select';
 import { Autocomplete } from '../Autocomplete';
 
 const code = `
-import { Group, Avatar, Text, UnstyledButton, Autocomplete } from '@mantine/core';
+import { Group, Avatar, Text, Autocomplete } from '@mantine/core';
 
 const data = [
   { value: 'bob@handsome.inc', color: 'red', email: 'bob@handsome.inc', name: 'Bob Handsome' },
@@ -13,7 +14,7 @@ const data = [
 
 function AutoCompleteItem({ color, email, name, ...others }) {
   return (
-    <UnstyledButton {...others}>
+    <div {...others}>
       <Group>
         <Avatar color={color}>
           {name
@@ -29,7 +30,7 @@ function AutoCompleteItem({ color, email, name, ...others }) {
           </Text>
         </div>
       </Group>
-    </UnstyledButton>
+    </div>
   );
 }
 
@@ -55,7 +56,7 @@ const data = [
   { value: 'amy@wong.cn', color: 'blue', email: 'amy@wong.cn', name: 'Amy Wong' },
 ];
 
-interface ItemProps extends React.ComponentProps<'button'> {
+interface ItemProps extends SelectItemProps {
   color: string;
   email: string;
   name: string;
@@ -63,7 +64,7 @@ interface ItemProps extends React.ComponentProps<'button'> {
 
 function AutoCompleteItem({ color, email, name, ...others }: ItemProps) {
   return (
-    <UnstyledButton {...others}>
+    <div {...others}>
       <Group>
         <Avatar color={color}>
           {name
@@ -79,7 +80,7 @@ function AutoCompleteItem({ color, email, name, ...others }: ItemProps) {
           </Text>
         </div>
       </Group>
-    </UnstyledButton>
+    </div>
   );
 }
 

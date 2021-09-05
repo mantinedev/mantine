@@ -3,7 +3,6 @@ import cx from 'clsx';
 import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
 import { Text } from '../Text/Text';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { Center } from '../Center/Center';
 import useStyles from './Alert.styles';
 
 export type AlertStylesName = keyof ReturnType<typeof useStyles>;
@@ -47,33 +46,44 @@ export function Alert({
   ...others
 }: AlertProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, theme }, classNames, 'alert');
+  const classes = useStyles({ color, theme, withIcon: !!icon }, classNames, 'alert');
   const _styles = mergeStyles(classes, styles);
 
   return (
     <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
-      {title && (
-        <Text
-          themeOverride={themeOverride}
-          weight={700}
-          className={classes.title}
-          style={_styles.title}
-          size="sm"
-        >
-          <Center>
-            {icon && (
-              <div className={classes.icon} style={_styles.icon}>
-                {icon}
-              </div>
-            )}
-            <span>{title}</span>
-          </Center>
-          {withCloseButton && <CloseButton variant="transparent" size={16} iconSize={16} />}
-        </Text>
-      )}
+      <div className={classes.wrapper} style={_styles.wrapper}>
+        {icon && (
+          <div className={classes.icon} style={_styles.icon}>
+            {icon}
+          </div>
+        )}
 
-      <div className={classes.body} style={_styles.body}>
-        {children}
+        <div className={classes.body} style={_styles.body}>
+          {title && (
+            <Text
+              themeOverride={themeOverride}
+              weight={700}
+              className={classes.title}
+              style={_styles.title}
+              size="sm"
+            >
+              <span>{title}</span>
+              {withCloseButton && (
+                <CloseButton
+                  className={classes.closeButton}
+                  style={_styles.closeButton}
+                  variant="transparent"
+                  size={16}
+                  iconSize={16}
+                />
+              )}
+            </Text>
+          )}
+
+          <div className={classes.message} style={_styles.message}>
+            {children}
+          </div>
+        </div>
       </div>
     </div>
   );
