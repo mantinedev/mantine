@@ -1,8 +1,18 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Chip } from './Chip/Chip';
+import { Chips } from './Chips';
 
 storiesOf('@mantine/core/Chips', module)
+  .add('Chips', () => (
+    <div style={{ padding: 40 }}>
+      <Chips multiple>
+        <Chip value="1">First</Chip>
+        <Chip value="2">Second</Chip>
+        <Chip value="3">Third</Chip>
+      </Chips>
+    </div>
+  ))
   .add('Chip', () => (
     <div style={{ padding: 40 }}>
       <Chip type="radio">Radio chip</Chip>
