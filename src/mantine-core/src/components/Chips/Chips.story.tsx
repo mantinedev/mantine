@@ -6,7 +6,7 @@ storiesOf('@mantine/core/Chips', module)
   .add('Chip', () => (
     <div style={{ padding: 40 }}>
       <Chip type="radio">Radio chip</Chip>
-      <Chip>Checkbox chip</Chip>
+      <Chip variant="filled">Checkbox chip</Chip>
     </div>
   ))
   .add('Chip sizes', () => (

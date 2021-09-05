@@ -25,6 +25,9 @@ export interface ChipProps
   /** Chip input type */
   type?: 'radio' | 'checkbox';
 
+  /** Controls chip appearance */
+  variant?: 'outline' | 'filled';
+
   /** Chip label */
   children: React.ReactNode;
 
@@ -45,6 +48,7 @@ export function Chip({
   radius = 'xl',
   type = 'checkbox',
   size = 'sm',
+  variant = 'outline',
   color,
   children,
   className,
@@ -72,7 +76,7 @@ export function Chip({
     // Rule is broken
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label
-      className={cx(classes.root, { [classes.checked]: value }, className)}
+      className={cx(classes.root, { [classes.checked]: value }, classes[variant], className)}
       style={{ ...style, ..._styles.root, ...(value ? _styles.checked : null) }}
     >
       <input

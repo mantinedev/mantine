@@ -53,8 +53,7 @@ export default createMemoStyles({
     display: 'inline-block',
     alignItems: 'center',
     userSelect: 'none',
-    backgroundColor: theme.white,
-    border: `1px solid ${theme.colors.gray[4]}`,
+    border: '1px solid transparent',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     height: getSizeValue({ size, sizes }),
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
@@ -63,6 +62,20 @@ export default createMemoStyles({
     paddingRight: getSizeValue({ size, sizes: padding }),
     cursor: 'pointer',
     whiteSpace: 'nowrap',
+    transition: 'background-color 100ms ease',
+  }),
+
+  outline: ({ theme }: ChipStyles) => ({
+    backgroundColor: theme.white,
+    borderColor: theme.colors.gray[4],
+
+    '&:hover': {
+      backgroundColor: theme.colors.gray[0],
+    },
+  }),
+
+  filled: ({ theme }: ChipStyles) => ({
+    backgroundColor: theme.colors.gray[1],
 
     '&:hover': {
       backgroundColor: theme.colors.gray[0],
@@ -70,9 +83,16 @@ export default createMemoStyles({
   }),
 
   checked: ({ theme, color, size }: ChipStyles) => ({
-    borderColor: getThemeColor({ theme, color, shade: 6 }),
     paddingLeft: getSizeValue({ size, sizes: checkedPadding }),
     paddingRight: getSizeValue({ size, sizes: checkedPadding }),
+
+    '&$outline': {
+      borderColor: getThemeColor({ theme, color, shade: 6 }),
+    },
+
+    '&$filled': {
+      backgroundColor: getThemeColor({ theme, color, shade: 1 }),
+    },
   }),
 
   checkIcon: ({ size }: ChipStyles) => ({
