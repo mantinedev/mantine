@@ -1,617 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 3.8.1"/><title data-react-helmet="true">Features with monotone icons | Mantine</title><link data-react-helmet="true" rel="preconnect" href="https://fonts.googleapis.com"/><link data-react-helmet="true" rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"/><link data-react-helmet="true" href="https://fonts.googleapis.com/css2?family=Dosis:wght@800&amp;display=swap" rel="stylesheet"/><meta data-react-helmet="true" name="viewport" content="width=device-width, user-scalable=no"/><meta data-react-helmet="true" name="description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><meta data-react-helmet="true" property="og:title" content="Features with monotone icons"/><meta data-react-helmet="true" property="og:image" content="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png"/><meta data-react-helmet="true" property="og:image:width" content="1280"/><meta data-react-helmet="true" property="og:image:height" content="640"/><meta data-react-helmet="true" property="og:description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" name="twitter:card" content="summary_large_image"/><meta data-react-helmet="true" name="twitter:creator" content="@mantinedev"/><meta data-react-helmet="true" name="twitter:title" content="Features with monotone icons"/><meta data-react-helmet="true" name="twitter:description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><link rel="icon" href="/favicon-32x32.png?v=c7bf473b30e5d81722ea0acf3a11a107" type="image/png"/><link rel="icon" href="/favicon.svg?v=c7bf473b30e5d81722ea0acf3a11a107" type="image/svg+xml"/><link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous"/><meta name="theme-color" content="#228be6"/><link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><style type="text/css" id="server-side-jss">*, *::before, *::after {
-  box-sizing: border-box;
-}
-body {
-  color: #000;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  line-height: 1.4;
-  background-color: #fff;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-html {
-  font-family: sans-serif;
-  line-height: 1.15;
-  text-size-adjust: 100%;
-}
-body {
-  margin: 0;
-}
-article, aside, footer, header, nav, section, figcaption, figure, main {
-  display: block;
-}
-h1 {
-  margin: 0.67em 0;
-  font-size: 2em;
-}
-hr {
-  height: 0;
-  overflow: visible;
-  box-sizing: content-box;
-}
-pre {
-  font-size: 1em;
-  font-family: monospace, monospace;
-}
-a {
-  background: transparent;
-  text-decoration-skip: objects;
-}
-a:active, a:hover {
-  outline-width: 0;
-}
-abbr[title] {
-  border-bottom: none;
-  text-decoration: underline;
-}
-b, strong {
-  font-weight: bolder;
-}
-code, kbp, samp {
-  font-size: 1em;
-  font-family: monospace, monospace;
-}
-dfn {
-  font-style: italic;
-}
-mark {
-  color: #000;
-  background-color: #ff0;
-}
-small {
-  font-size: 80%;
-}
-sub, sup {
-  position: relative;
-  font-size: 75%;
-  line-height: 0;
-  vertical-align: baseline;
-}
-sup {
-  top: -0.5em;
-}
-sub {
-  bottom: -0.25em;
-}
-audio, video {
-  display: inline-block;
-}
-audio:not([controls]) {
-  height: 0;
-  display: none;
-}
-img {
-  border-style: none;
-  vertical-align: middle;
-}
-svg:not(:root) {
-  overflow: hidden;
-}
-button, input, optgroup, select, textarea {
-  margin: 0;
-  font-size: 100%;
-  font-family: sans-serif;
-  line-height: 1.15;
-}
-button, input {
-  overflow: visible;
-}
-button, select {
-  text-transform: none;
-}
-button, [type=reset], [type=submit] {
-  -webkit-appearance: button;
-}
-button::-moz-focus-inner, [type=button]::-moz-focus-inner, [type=reset]::-moz-focus-inner, [type=submit]::-moz-focus-inner {
-  padding: 0;
-  border-style: none;
-}
-button:-moz-focusring, [type=button]:-moz-focusring, [type=reset]:-moz-focusring, [type=submit]:-moz-focusring {
-  outline: 1px dotted ButtonText;
-}
-fieldset {
-  border: 1px solid #c0c0c0;
-  margin: 0 2px;
-  padding: 0.35em 0.625em 0.75em;
-}
-legend {
-  color: inherit;
-  display: table;
-  padding: 0;
-  max-width: 100%;
-  box-sizing: border-box;
-  white-space: normal;
-}
-progress {
-  display: inline-block;
-  vertical-align: baseline;
-}
-textarea {
-  overflow: auto;
-}
-[type=checkbox], [type=radio] {
-  padding: 0;
-  box-sizing: border-box;
-}
-[type=number]::-webkit-inner-spin-button, [type=number]::-webkit-outer-spin-button {
-  height: auto;
-}
-[type=search] {
-  appearance: textfield;
-  outline-offset: -2px;
-}
-[type=search]::-webkit-search-cancel-button, [type=search]::-webkit-search-decoration {
-  appearance: none;
-}
-::-webkit-file-upload-button {
-  font: inherit;
-  appearance: button;
-}
-details, menu {
-  display: block;
-}
-summary {
-  display: list-item;
-}
-canvas {
-  display: inline-block;
-}
-template {
-  display: none;
-}
-[hidden] {
-  display: none;
-}
-.c0218 {}
-.c0219 {}
-.c0220 {
-  color: #000;
-  font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  line-height: 1.4;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
-.c0220:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
-}
-.c0220:focus:not(:focus-visible) {
-  box-shadow: none;
-}
-.c0220:hover {
-  text-decoration: none;
-}
-.c0221 {
-  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.c0230 {
-  color: #000;
-  font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  line-height: 1.4;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
-.c0230:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
-}
-.c0230:focus:not(:focus-visible) {
-  box-shadow: none;
-}
-.c0230:hover {
-  text-decoration: none;
-}
-.c0231 {
-  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.c0232 {
-  color: #868e96;
-  font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  line-height: 1.4;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
-.c0232:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
-}
-.c0232:focus:not(:focus-visible) {
-  box-shadow: none;
-}
-.c0232:hover {
-  text-decoration: none;
-}
-.c0233 {
-  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.c0238 {
-  color: #000;
-  font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  line-height: 1.4;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
-.c0238:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
-}
-.c0238:focus:not(:focus-visible) {
-  box-shadow: none;
-}
-.c0238:hover {
-  text-decoration: none;
-}
-.c0239 {
-  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.c0240 {
-  color: #868e96;
-  font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  line-height: 1.4;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
-.c0240:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
-}
-.c0240:focus:not(:focus-visible) {
-  box-shadow: none;
-}
-.c0240:hover {
-  text-decoration: none;
-}
-.c0241 {
-  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.c0246 {
-  color: #000;
-  font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  line-height: 1.4;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
-.c0246:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
-}
-.c0246:focus:not(:focus-visible) {
-  box-shadow: none;
-}
-.c0246:hover {
-  text-decoration: none;
-}
-.c0247 {
-  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.c0248 {
-  color: #868e96;
-  font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  line-height: 1.4;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
-.c0248:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
-}
-.c0248:focus:not(:focus-visible) {
-  box-shadow: none;
-}
-.c0248:hover {
-  text-decoration: none;
-}
-.c0249 {
-  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.c0254 {
-  color: #000;
-  font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  line-height: 1.4;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
-.c0254:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
-}
-.c0254:focus:not(:focus-visible) {
-  box-shadow: none;
-}
-.c0254:hover {
-  text-decoration: none;
-}
-.c0255 {
-  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.c0256 {
-  color: #868e96;
-  font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  line-height: 1.4;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
-.c0256:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
-}
-.c0256:focus:not(:focus-visible) {
-  box-shadow: none;
-}
-.c0256:hover {
-  text-decoration: none;
-}
-.c0257 {
-  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.c0262 {
-  color: #000;
-  font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  line-height: 1.4;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
-.c0262:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
-}
-.c0262:focus:not(:focus-visible) {
-  box-shadow: none;
-}
-.c0262:hover {
-  text-decoration: none;
-}
-.c0263 {
-  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.c0264 {
-  color: #868e96;
-  font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  line-height: 1.4;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
-.c0264:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
-}
-.c0264:focus:not(:focus-visible) {
-  box-shadow: none;
-}
-.c0264:hover {
-  text-decoration: none;
-}
-.c0265 {
-  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.c025 {}
-.c026 {}
-.c027 {
-  width: calc(100% - 32px);
-  z-index: 1000;
-  position: fixed;
-  box-sizing: border-box;
-}
-.c028 {}
-.c028 + .c028 {
-  margin-top: 12px;
-}
-.c0215 {}
-.c0216 {
-  color: #000;
-  margin: 0;
-  font-size: 34px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  font-weight: 700;
-  line-height: 1.3;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-@media (max-width: 755px) {
-  .c0216 {
-    font-size: 26.153846153846153px;
-  }
-}
-  .c0222 {  }
-  .c0223 {  }
-  .c0224 {  }
-  .c0225 {  }
-  .c0226 {
-    color: #1864ab;
-    background-color: rgba(231, 245, 255, 1);
-  }
-  .c0227 {
-    color: #fff;
-    text-shadow: 1px 1px 0 #1864ab;
-    background-color: #228be6;
-  }
-  .c0228 {
-    color: #fff;
-    border: 0;
-    background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  }
-  .c0229 {
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    min-width: 40px;
-    box-sizing: border-box;
-    min-height: 40px;
-    align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-    border-radius: 40px;
-    justify-content: center;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  .c0234 {
-    color: #1864ab;
-    background-color: rgba(231, 245, 255, 1);
-  }
-  .c0235 {
-    color: #fff;
-    text-shadow: 1px 1px 0 #1864ab;
-    background-color: #228be6;
-  }
-  .c0236 {
-    color: #fff;
-    border: 0;
-    background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  }
-  .c0237 {
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    min-width: 40px;
-    box-sizing: border-box;
-    min-height: 40px;
-    align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-    border-radius: 40px;
-    justify-content: center;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  .c0242 {
-    color: #1864ab;
-    background-color: rgba(231, 245, 255, 1);
-  }
-  .c0243 {
-    color: #fff;
-    text-shadow: 1px 1px 0 #1864ab;
-    background-color: #228be6;
-  }
-  .c0244 {
-    color: #fff;
-    border: 0;
-    background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  }
-  .c0245 {
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    min-width: 40px;
-    box-sizing: border-box;
-    min-height: 40px;
-    align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-    border-radius: 40px;
-    justify-content: center;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  .c0250 {
-    color: #1864ab;
-    background-color: rgba(231, 245, 255, 1);
-  }
-  .c0251 {
-    color: #fff;
-    text-shadow: 1px 1px 0 #1864ab;
-    background-color: #228be6;
-  }
-  .c0252 {
-    color: #fff;
-    border: 0;
-    background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  }
-  .c0253 {
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    min-width: 40px;
-    box-sizing: border-box;
-    min-height: 40px;
-    align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-    border-radius: 40px;
-    justify-content: center;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  .c0258 {
-    color: #1864ab;
-    background-color: rgba(231, 245, 255, 1);
-  }
-  .c0259 {
-    color: #fff;
-    text-shadow: 1px 1px 0 #1864ab;
-    background-color: #228be6;
-  }
-  .c0260 {
-    color: #fff;
-    border: 0;
-    background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
-  }
-  .c0261 {
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    min-width: 40px;
-    box-sizing: border-box;
-    min-height: 40px;
-    align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-    border-radius: 40px;
-    justify-content: center;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-#nprogress {
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 3.8.1"/><title data-react-helmet="true">Features with monotone icons | Mantine</title><link data-react-helmet="true" rel="preconnect" href="https://fonts.googleapis.com"/><link data-react-helmet="true" rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"/><link data-react-helmet="true" href="https://fonts.googleapis.com/css2?family=Dosis:wght@800&amp;display=swap" rel="stylesheet"/><meta data-react-helmet="true" name="viewport" content="width=device-width, user-scalable=no"/><meta data-react-helmet="true" name="description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><meta data-react-helmet="true" property="og:title" content="Features with monotone icons"/><meta data-react-helmet="true" property="og:image" content="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png"/><meta data-react-helmet="true" property="og:image:width" content="1280"/><meta data-react-helmet="true" property="og:image:height" content="640"/><meta data-react-helmet="true" property="og:description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" name="twitter:card" content="summary_large_image"/><meta data-react-helmet="true" name="twitter:creator" content="@mantinedev"/><meta data-react-helmet="true" name="twitter:title" content="Features with monotone icons"/><meta data-react-helmet="true" name="twitter:description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><link rel="icon" href="/favicon-32x32.png?v=c7bf473b30e5d81722ea0acf3a11a107" type="image/png"/><link rel="icon" href="/favicon.svg?v=c7bf473b30e5d81722ea0acf3a11a107" type="image/svg+xml"/><link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous"/><meta name="theme-color" content="#228be6"/><link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><style type="text/css" id="server-side-jss">#nprogress {
   z-index: 100000;
 }
 :target {
@@ -620,81 +7,66 @@ template {
   position: relative;
   visibility: hidden;
 }
-  .c021 {
-    padding-left: 260px;
-  }
+.c121 {
+  padding-left: 260px;
+}
 @media (max-width: 760px) {
-  .c021 {
+  .c121 {
     padding-left: 0;
   }
 }
-  .c022 .c023 {
+  .c122 .c123 {
     padding-top: 0;
   }
-  .c023 {
+  .c123 {
     flex: 1;
     padding-top: 34px;
     scroll-margin-top: 60;
   }
 @media (max-width: 760px) {
-  .c023 {
+  .c123 {
     padding-left: 0;
     padding-right: 0;
   }
 }
-  .c024 {
+  .c124 {
     min-height: calc(100vh - 280px);
   }
-  .c0213 {  }
-  .c0214 {
-    max-width: 970px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-  .c0217 {
-    max-width: 560px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .c029 {
+  .c125 {
     padding-top: 96px;
     padding-bottom: 96px;
   }
-  .c0210 {
+  .c126 {
     text-align: center;
     font-family: Dosis, sans-serif;
     font-weight: 900;
     margin-bottom: 16px;
   }
 @media (max-width: 755px) {
-  .c0210 {
+  .c126 {
     font-size: 28px;
     text-align: left;
   }
 }
-  .c0211 {
+  .c127 {
     text-align: center;
   }
 @media (max-width: 755px) {
-  .c0211 {
+  .c127 {
     text-align: left;
   }
 }
-  .c0212 {
+  .c128 {
     margin-top: 24px !important;
-  }</style><link as="script" rel="preload" href="/webpack-runtime-001eb639d79dfbfb85e9.js"/><link as="script" rel="preload" href="/framework-633d23f07caeb5181df0.js"/><link as="script" rel="preload" href="/fba589a3-d7d06c674224283c9899.js"/><link as="script" rel="preload" href="/8fe526ae-3e33597ee9740181898f.js"/><link as="script" rel="preload" href="/app-540eefbfd4372be5fbb4.js"/><link as="script" rel="preload" href="/commons-07f9de10726a96adb9dc.js"/><link as="script" rel="preload" href="/4215b017aee8acc9f1af0e63dbaf7a4508daa2bd-b8d76cf49f4a2836e17a.js"/><link as="script" rel="preload" href="/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js"/><link as="fetch" rel="preload" href="/page-data/gallery/component/features-grid/page-data.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/2731172446.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/3701445061.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/655967936.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/app-data.json" crossorigin="anonymous"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="c022"><main class="c023"><div class="c024"><div style="padding-bottom:50px"><div style="padding:0"><div style="padding-top:0;max-width:100%;margin-left:unset;margin-right:unset"><div class="c0213 c0214 c029"><h1 class="c0215 c0216 mantine-title-title c0210">Integrate effortlessly with any technology stack</h1><div class="c0213 c0217"><div class="c0218 c0220 mantine-text-root c0211">Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens when hunger drives it to try biting a Steel-type Pokémon.</div></div><style>
-    .grid-mantine-t9ef4pm95 {
+  }</style><link as="script" rel="preload" href="/webpack-runtime-2363a199414b50ff16e1.js"/><link as="script" rel="preload" href="/framework-633d23f07caeb5181df0.js"/><link as="script" rel="preload" href="/fba589a3-d7d06c674224283c9899.js"/><link as="script" rel="preload" href="/8fe526ae-3e33597ee9740181898f.js"/><link as="script" rel="preload" href="/app-450e9ffbe4e2a11e2ba4.js"/><link as="script" rel="preload" href="/commons-07f9de10726a96adb9dc.js"/><link as="script" rel="preload" href="/4215b017aee8acc9f1af0e63dbaf7a4508daa2bd-aa80d31b44259e42fa8f.js"/><link as="script" rel="preload" href="/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js"/><link as="fetch" rel="preload" href="/page-data/gallery/component/features-grid/page-data.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/2731172446.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/3701445061.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/655967936.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/app-data.json" crossorigin="anonymous"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="c122"><main class="c123"><div class="c124"><div style="padding-bottom:50px"><div style="padding:0"><div style="padding-top:0;max-width:100%;margin-left:unset;margin-right:unset"><div class="container-0-2-413 container-d61-0-2-11710 c125"><h1 class="title-0-2-266 title-d309-0-2-11711 mantine-title-title c126">Integrate effortlessly with any technology stack</h1><div class="container-0-2-413 container-d62-0-2-11712"><div class="root-0-2-36 root-d3890-0-2-11713 mantine-text-root c127">Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens when hunger drives it to try biting a Steel-type Pokémon.</div></div><style>
+    .grid-mantine-7frscpfzz {
       box-sizing: border-box;
       display: flex;
       flex-wrap: wrap;
       margin: -24px;
     }
 
-    .col-mantine-t9ef4pm95 {
+    .col-mantine-7frscpfzz {
       box-sizing: border-box;
       width: 100%;
       margin: 24px;
@@ -702,24 +74,24 @@ template {
     }
   
       @media (max-width: 980px) {
-        .grid-mantine-t9ef4pm95 {
+        .grid-mantine-7frscpfzz {
           margin: -12px;
         }
 
-        .col-mantine-t9ef4pm95 {
+        .col-mantine-7frscpfzz {
           margin: 12px;
           max-width: calc(50% - 24px);
         }
       }
     
       @media (max-width: 755px) {
-        .grid-mantine-t9ef4pm95 {
+        .grid-mantine-7frscpfzz {
           margin: -12px;
         }
 
-        .col-mantine-t9ef4pm95 {
+        .col-mantine-7frscpfzz {
           margin: 12px;
           max-width: calc(100% - 24px);
         }
       }
-    </style><div class="grid-mantine-t9ef4pm95 c0212"><div class="col-mantine-t9ef4pm95"><div class="c0225 c0229 mantine-theme-icon-root c0222 c0226 mantine-theme-icon-light"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px"><path d="M8.69666 0.040354C8.90859 0.131038 9.03105 0.354856 8.99315 0.582235L8.09019 6.00001H12.4999C12.6893 6.00001 12.8625 6.10701 12.9472 6.2764C13.0318 6.44579 13.0136 6.6485 12.8999 6.8L6.89997 14.8C6.76166 14.9844 6.5152 15.0503 6.30327 14.9596C6.09134 14.869 5.96888 14.6451 6.00678 14.4178L6.90974 8.99999H2.49999C2.31061 8.99999 2.13747 8.89299 2.05278 8.7236C1.96808 8.55421 1.98636 8.3515 2.09999 8.2L8.09996 0.200037C8.23827 0.0156255 8.48473 -0.0503301 8.69666 0.040354ZM3.49999 8H7.49996C7.64694 8 7.78647 8.06466 7.88147 8.17681C7.97647 8.28895 8.01732 8.43722 7.99316 8.58219L7.33026 12.5596L11.4999 7H7.49996C7.35299 7 7.21346 6.93534 7.11846 6.82319C7.02346 6.71105 6.98261 6.56278 7.00677 6.41781L7.66967 2.44042L3.49999 8Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div><div class="c0218 c0230 mantine-text-root" style="margin-top:12px;margin-bottom:7px">Extreme performance</div><div class="c0218 c0232 mantine-text-root" style="line-height:1.6">This dust is actually a powerful poison that will even make a pro wrestler sick, Regice cloaks itself with frigid air of -328 degrees Fahrenheit</div></div><div class="col-mantine-t9ef4pm95"><div class="c0225 c0237 mantine-theme-icon-root c0222 c0234 mantine-theme-icon-light"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px"><path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div><div class="c0218 c0238 mantine-text-root" style="margin-top:12px;margin-bottom:7px">Privacy focused</div><div class="c0218 c0240 mantine-text-root" style="line-height:1.6">People say it can run at the same speed as lightning striking, Its icy body is so cold, it will not melt even if it is immersed in magma</div></div><div class="col-mantine-t9ef4pm95"><div class="c0225 c0245 mantine-theme-icon-root c0222 c0242 mantine-theme-icon-light"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px"><path d="M12.0697 1.76746C12.4807 1.21947 11.4605 0.454311 11.0495 1.0023C10.6385 1.55028 11.6588 2.31544 12.0697 1.76746ZM8.39263 1.07811C7.15585 0.950602 5.7823 1.16348 4.58433 1.70937C3.38552 2.25563 2.32735 3.15309 1.78844 4.41832C1.37574 5.38724 1.01715 6.28113 1.00088 7.44354C0.984724 8.59844 1.30522 9.96898 2.13174 11.928C2.61142 13.0649 4.03963 13.5446 5.13895 13.8079C6.40836 14.1119 7.80857 14.1914 8.6644 14.0742C9.36515 13.9782 10.1448 13.8284 10.7987 13.297C11.8977 12.4039 12.9009 11.3955 13.4994 10.3393C14.104 9.27221 14.3256 8.09207 13.7216 6.95324C13.5628 6.65373 13.316 6.57734 13.0412 6.4923C12.9374 6.46016 12.8295 6.42678 12.7209 6.37966C11.6211 5.90234 10.9646 5.34963 10.9135 5.02876C10.8656 4.72808 10.9221 4.51463 10.9811 4.29181C11.0129 4.17199 11.0453 4.04947 11.0626 3.90922C11.0838 3.73737 11.0814 3.33319 10.6996 3.12761C10.4048 2.96888 10.2164 2.65843 10.0407 2.36904C9.99742 2.29775 9.95492 2.22773 9.9118 2.16158C9.62634 1.72367 9.20769 1.16213 8.39263 1.07811ZM4.99899 2.61935C3.96483 3.09058 3.12554 3.83097 2.70846 4.81018C2.29808 5.77368 2.01406 6.50873 2.00079 7.45753C1.98741 8.41385 2.25043 9.6368 3.0531 11.5393C3.39181 12.3421 4.62167 12.6557 5.37186 12.8354C6.5493 13.1174 7.822 13.1802 8.52868 13.0834C9.21271 12.9897 9.74568 12.8642 10.1681 12.5209C11.229 11.6587 12.121 10.7435 12.6293 9.84635C12.9349 9.30709 13.5141 7.7028 12.6292 7.3873C10.7539 6.71875 10.262 6.06669 9.99011 5.41268C9.80915 4.97744 9.82868 4.52282 9.95741 4.07885L9.95741 4.07884C9.97662 4.0126 9.99538 3.94791 10.0334 3.88882C9.81857 3.73676 9.6515 3.55195 9.51464 3.3715C9.42876 3.25828 9.3469 3.12099 9.26197 2.97856C9.01866 2.57052 8.75018 2.12027 8.29008 2.07283C7.22889 1.96343 6.03398 2.14772 4.99899 2.61935ZM13.2081 3.77471C13.441 3.22671 12.4547 2.63606 12.0822 3.10163C11.5817 3.72732 12.9029 4.49281 13.2081 3.77471ZM14.3672 2.26031C14.9668 2.27493 15.1551 1.11603 14.5718 0.949371C13.8076 0.731026 13.5918 2.24139 14.3672 2.26031ZM14.2857 5.09098C14.8644 5.10004 15.0462 4.38222 14.4832 4.27899C13.7455 4.14375 13.5373 5.07927 14.2857 5.09098ZM6.9075 4.28672C6.46898 4.66754 6.0522 4.15185 5.97983 3.7365C5.86848 3.09744 6.33696 2.56856 6.94823 2.91156C7.43344 3.18382 7.26678 3.97471 6.9075 4.28672ZM4.94455 5.88184C5.40885 5.41754 4.59567 4.57013 4.11425 5.05154C3.83338 5.33242 4.00936 5.65376 4.23744 5.88184C4.43271 6.0771 4.74929 6.0771 4.94455 5.88184ZM6.97716 6.71984C7.31181 7.38914 8.48804 6.79159 7.99413 6.14788C7.86519 5.97983 7.68657 5.9494 7.62145 5.94207C7.21217 5.89601 6.76349 6.2925 6.97716 6.71984ZM6.98798 8.72461C7.14066 9.1188 7.51122 9.3187 7.91915 9.1633C8.27434 9.02799 8.33186 8.39689 8.17175 8.07427C8.02331 7.77514 7.63956 7.67793 7.33747 7.79417C6.98512 7.92976 6.85672 8.38708 6.98576 8.71889L6.98798 8.72461ZM10.3885 8.84081C10.7575 8.6566 11.4617 8.82771 11.4617 9.31199C11.4617 9.71286 10.9587 10.2165 10.5634 10.2826C10.1813 10.3465 9.70515 9.97581 9.76648 9.57718C9.81445 9.26539 10.1217 8.97401 10.3885 8.84081ZM7.56704 10.8432C7.33461 10.7502 7.14353 10.8601 7.11437 10.8769L7.11279 10.8778C6.90782 10.9949 6.71383 11.2439 6.6747 11.4842C6.59018 12.0034 7.13199 12.1239 7.52661 12.0987C8.2074 12.0553 8.06547 11.0426 7.56704 10.8432ZM4.8805 10.8932C5.0674 10.7723 5.15658 10.5363 5.08293 10.3153C4.93046 9.79687 4.3246 9.71252 3.96561 10.1297C3.79336 10.3299 3.80749 10.6274 3.99214 10.8105L3.99495 10.814L3.9979 10.8176C4.22025 11.0942 4.63624 11.1857 4.8805 10.8932ZM3.04695 7.81318C3.33147 8.0977 3.60077 8.15067 3.98443 8.05859C4.60826 7.90887 4.13814 6.24299 3.047 6.87296C2.70939 7.06788 2.86716 7.63339 3.04695 7.81318Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div><div class="c0218 c0246 mantine-text-root" style="margin-top:12px;margin-bottom:7px">No third parties</div><div class="c0218 c0248 mantine-text-root" style="line-height:1.6">They’re popular, but they’re rare. Trainers who show them off recklessly may be targeted by thieves</div></div><div class="col-mantine-t9ef4pm95"><div class="c0225 c0253 mantine-theme-icon-root c0222 c0250 mantine-theme-icon-light"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px"><path d="M5 4.63601C5 3.76031 5.24219 3.1054 5.64323 2.67357C6.03934 2.24705 6.64582 1.9783 7.5014 1.9783C8.35745 1.9783 8.96306 2.24652 9.35823 2.67208C9.75838 3.10299 10 3.75708 10 4.63325V5.99999H5V4.63601ZM4 5.99999V4.63601C4 3.58148 4.29339 2.65754 4.91049 1.99307C5.53252 1.32329 6.42675 0.978302 7.5014 0.978302C8.57583 0.978302 9.46952 1.32233 10.091 1.99162C10.7076 2.65557 11 3.57896 11 4.63325V5.99999H12C12.5523 5.99999 13 6.44771 13 6.99999V13C13 13.5523 12.5523 14 12 14H3C2.44772 14 2 13.5523 2 13V6.99999C2 6.44771 2.44772 5.99999 3 5.99999H4ZM3 6.99999H12V13H3V6.99999Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div><div class="c0218 c0254 mantine-text-root" style="margin-top:12px;margin-bottom:7px">Secure by default</div><div class="c0218 c0256 mantine-text-root" style="line-height:1.6">Although it still can’t fly, its jumping power is outstanding, in Alola the mushrooms on Paras don’t grow up quite right</div></div><div class="col-mantine-t9ef4pm95"><div class="c0225 c0261 mantine-theme-icon-root c0222 c0258 mantine-theme-icon-light"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px"><path d="M12.5 3L2.49999 3.00002C1.67157 3.00002 0.999999 3.67159 0.999999 4.50002V9.50002C0.999999 10.3284 1.67157 11 2.5 11H7.50002C7.63263 11 7.75981 11.0527 7.85358 11.1465L9.99999 13.2929V11.5C9.99999 11.2239 10.2239 11 10.5 11H12.5C13.3284 11 14 10.3284 14 9.50002V4.5C14 3.67157 13.3284 3 12.5 3ZM2.49999 2.00002L12.5 2C13.8807 2 15 3.11928 15 4.5V9.50002C15 10.8807 13.8807 12 12.5 12H11V14.5C11 14.7022 10.8782 14.8845 10.6913 14.9619C10.5045 15.0393 10.2894 14.9965 10.1464 14.8535L7.29292 12H2.5C1.11929 12 0 10.8807 0 9.50002V4.50002C0 3.11931 1.11928 2.00002 2.49999 2.00002Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div><div class="c0218 c0262 mantine-text-root" style="margin-top:12px;margin-bottom:7px">24/7 Support</div><div class="c0218 c0264 mantine-text-root" style="line-height:1.6">Rapidash usually can be seen casually cantering in the fields and plains, Skitty is known to chase around after its own tail</div></div></div></div></div></div></div></div></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/gallery/component/features-grid";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-731835509f3307e8d424.js"],"app":["/app-540eefbfd4372be5fbb4.js"],"component---src-components-gallery-gallery-category-page-tsx":["/component---src-components-gallery-gallery-category-page-tsx-2a503c6794c377faa94a.js"],"component---src-components-gallery-gallery-component-page-tsx":["/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js"],"component---src-components-gallery-gallery-tsx":["/component---src-components-gallery-gallery-tsx-58eb9468aee0cd3a11e8.js"],"component---src-pages-404-tsx":["/component---src-pages-404-tsx-99eb9c747916a6851964.js"],"component---src-pages-contribute-tsx":["/component---src-pages-contribute-tsx-cd905878fea21cd63c39.js"],"component---src-pages-getting-started-tsx":["/component---src-pages-getting-started-tsx-60318d27cb5369f0d087.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx-aaa415e62ca29c472437.js"],"component---src-pages-mdx-slug-tsx":["/component---src-pages-mdx-slug-tsx-8eeb9f2551c215b7c250.js"]};/*]]>*/</script><script src="/polyfill-731835509f3307e8d424.js" nomodule=""></script><script src="/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js" async=""></script><script src="/4215b017aee8acc9f1af0e63dbaf7a4508daa2bd-b8d76cf49f4a2836e17a.js" async=""></script><script src="/commons-07f9de10726a96adb9dc.js" async=""></script><script src="/app-540eefbfd4372be5fbb4.js" async=""></script><script src="/8fe526ae-3e33597ee9740181898f.js" async=""></script><script src="/fba589a3-d7d06c674224283c9899.js" async=""></script><script src="/framework-633d23f07caeb5181df0.js" async=""></script><script src="/webpack-runtime-001eb639d79dfbfb85e9.js" async=""></script></body></html>
+    </style><div class="grid-mantine-7frscpfzz c128"><div class="col-mantine-7frscpfzz"><div class="root-0-2-221 root-d383-0-2-11718 mantine-theme-icon-root light-0-2-218 light-d380-0-2-11715 mantine-theme-icon-light"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px"><path d="M8.69666 0.040354C8.90859 0.131038 9.03105 0.354856 8.99315 0.582235L8.09019 6.00001H12.4999C12.6893 6.00001 12.8625 6.10701 12.9472 6.2764C13.0318 6.44579 13.0136 6.6485 12.8999 6.8L6.89997 14.8C6.76166 14.9844 6.5152 15.0503 6.30327 14.9596C6.09134 14.869 5.96888 14.6451 6.00678 14.4178L6.90974 8.99999H2.49999C2.31061 8.99999 2.13747 8.89299 2.05278 8.7236C1.96808 8.55421 1.98636 8.3515 2.09999 8.2L8.09996 0.200037C8.23827 0.0156255 8.48473 -0.0503301 8.69666 0.040354ZM3.49999 8H7.49996C7.64694 8 7.78647 8.06466 7.88147 8.17681C7.97647 8.28895 8.01732 8.43722 7.99316 8.58219L7.33026 12.5596L11.4999 7H7.49996C7.35299 7 7.21346 6.93534 7.11846 6.82319C7.02346 6.71105 6.98261 6.56278 7.00677 6.41781L7.66967 2.44042L3.49999 8Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div><div class="root-0-2-36 root-d3892-0-2-11719 mantine-text-root" style="margin-top:12px;margin-bottom:7px">Extreme performance</div><div class="root-0-2-36 root-d3894-0-2-11721 mantine-text-root" style="line-height:1.6">This dust is actually a powerful poison that will even make a pro wrestler sick, Regice cloaks itself with frigid air of -328 degrees Fahrenheit</div></div><div class="col-mantine-7frscpfzz"><div class="root-0-2-221 root-d387-0-2-11726 mantine-theme-icon-root light-0-2-218 light-d384-0-2-11723 mantine-theme-icon-light"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px"><path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div><div class="root-0-2-36 root-d3896-0-2-11727 mantine-text-root" style="margin-top:12px;margin-bottom:7px">Privacy focused</div><div class="root-0-2-36 root-d3898-0-2-11729 mantine-text-root" style="line-height:1.6">People say it can run at the same speed as lightning striking, Its icy body is so cold, it will not melt even if it is immersed in magma</div></div><div class="col-mantine-7frscpfzz"><div class="root-0-2-221 root-d391-0-2-11734 mantine-theme-icon-root light-0-2-218 light-d388-0-2-11731 mantine-theme-icon-light"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px"><path d="M12.0697 1.76746C12.4807 1.21947 11.4605 0.454311 11.0495 1.0023C10.6385 1.55028 11.6588 2.31544 12.0697 1.76746ZM8.39263 1.07811C7.15585 0.950602 5.7823 1.16348 4.58433 1.70937C3.38552 2.25563 2.32735 3.15309 1.78844 4.41832C1.37574 5.38724 1.01715 6.28113 1.00088 7.44354C0.984724 8.59844 1.30522 9.96898 2.13174 11.928C2.61142 13.0649 4.03963 13.5446 5.13895 13.8079C6.40836 14.1119 7.80857 14.1914 8.6644 14.0742C9.36515 13.9782 10.1448 13.8284 10.7987 13.297C11.8977 12.4039 12.9009 11.3955 13.4994 10.3393C14.104 9.27221 14.3256 8.09207 13.7216 6.95324C13.5628 6.65373 13.316 6.57734 13.0412 6.4923C12.9374 6.46016 12.8295 6.42678 12.7209 6.37966C11.6211 5.90234 10.9646 5.34963 10.9135 5.02876C10.8656 4.72808 10.9221 4.51463 10.9811 4.29181C11.0129 4.17199 11.0453 4.04947 11.0626 3.90922C11.0838 3.73737 11.0814 3.33319 10.6996 3.12761C10.4048 2.96888 10.2164 2.65843 10.0407 2.36904C9.99742 2.29775 9.95492 2.22773 9.9118 2.16158C9.62634 1.72367 9.20769 1.16213 8.39263 1.07811ZM4.99899 2.61935C3.96483 3.09058 3.12554 3.83097 2.70846 4.81018C2.29808 5.77368 2.01406 6.50873 2.00079 7.45753C1.98741 8.41385 2.25043 9.6368 3.0531 11.5393C3.39181 12.3421 4.62167 12.6557 5.37186 12.8354C6.5493 13.1174 7.822 13.1802 8.52868 13.0834C9.21271 12.9897 9.74568 12.8642 10.1681 12.5209C11.229 11.6587 12.121 10.7435 12.6293 9.84635C12.9349 9.30709 13.5141 7.7028 12.6292 7.3873C10.7539 6.71875 10.262 6.06669 9.99011 5.41268C9.80915 4.97744 9.82868 4.52282 9.95741 4.07885L9.95741 4.07884C9.97662 4.0126 9.99538 3.94791 10.0334 3.88882C9.81857 3.73676 9.6515 3.55195 9.51464 3.3715C9.42876 3.25828 9.3469 3.12099 9.26197 2.97856C9.01866 2.57052 8.75018 2.12027 8.29008 2.07283C7.22889 1.96343 6.03398 2.14772 4.99899 2.61935ZM13.2081 3.77471C13.441 3.22671 12.4547 2.63606 12.0822 3.10163C11.5817 3.72732 12.9029 4.49281 13.2081 3.77471ZM14.3672 2.26031C14.9668 2.27493 15.1551 1.11603 14.5718 0.949371C13.8076 0.731026 13.5918 2.24139 14.3672 2.26031ZM14.2857 5.09098C14.8644 5.10004 15.0462 4.38222 14.4832 4.27899C13.7455 4.14375 13.5373 5.07927 14.2857 5.09098ZM6.9075 4.28672C6.46898 4.66754 6.0522 4.15185 5.97983 3.7365C5.86848 3.09744 6.33696 2.56856 6.94823 2.91156C7.43344 3.18382 7.26678 3.97471 6.9075 4.28672ZM4.94455 5.88184C5.40885 5.41754 4.59567 4.57013 4.11425 5.05154C3.83338 5.33242 4.00936 5.65376 4.23744 5.88184C4.43271 6.0771 4.74929 6.0771 4.94455 5.88184ZM6.97716 6.71984C7.31181 7.38914 8.48804 6.79159 7.99413 6.14788C7.86519 5.97983 7.68657 5.9494 7.62145 5.94207C7.21217 5.89601 6.76349 6.2925 6.97716 6.71984ZM6.98798 8.72461C7.14066 9.1188 7.51122 9.3187 7.91915 9.1633C8.27434 9.02799 8.33186 8.39689 8.17175 8.07427C8.02331 7.77514 7.63956 7.67793 7.33747 7.79417C6.98512 7.92976 6.85672 8.38708 6.98576 8.71889L6.98798 8.72461ZM10.3885 8.84081C10.7575 8.6566 11.4617 8.82771 11.4617 9.31199C11.4617 9.71286 10.9587 10.2165 10.5634 10.2826C10.1813 10.3465 9.70515 9.97581 9.76648 9.57718C9.81445 9.26539 10.1217 8.97401 10.3885 8.84081ZM7.56704 10.8432C7.33461 10.7502 7.14353 10.8601 7.11437 10.8769L7.11279 10.8778C6.90782 10.9949 6.71383 11.2439 6.6747 11.4842C6.59018 12.0034 7.13199 12.1239 7.52661 12.0987C8.2074 12.0553 8.06547 11.0426 7.56704 10.8432ZM4.8805 10.8932C5.0674 10.7723 5.15658 10.5363 5.08293 10.3153C4.93046 9.79687 4.3246 9.71252 3.96561 10.1297C3.79336 10.3299 3.80749 10.6274 3.99214 10.8105L3.99495 10.814L3.9979 10.8176C4.22025 11.0942 4.63624 11.1857 4.8805 10.8932ZM3.04695 7.81318C3.33147 8.0977 3.60077 8.15067 3.98443 8.05859C4.60826 7.90887 4.13814 6.24299 3.047 6.87296C2.70939 7.06788 2.86716 7.63339 3.04695 7.81318Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div><div class="root-0-2-36 root-d3900-0-2-11735 mantine-text-root" style="margin-top:12px;margin-bottom:7px">No third parties</div><div class="root-0-2-36 root-d3902-0-2-11737 mantine-text-root" style="line-height:1.6">They’re popular, but they’re rare. Trainers who show them off recklessly may be targeted by thieves</div></div><div class="col-mantine-7frscpfzz"><div class="root-0-2-221 root-d395-0-2-11742 mantine-theme-icon-root light-0-2-218 light-d392-0-2-11739 mantine-theme-icon-light"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px"><path d="M5 4.63601C5 3.76031 5.24219 3.1054 5.64323 2.67357C6.03934 2.24705 6.64582 1.9783 7.5014 1.9783C8.35745 1.9783 8.96306 2.24652 9.35823 2.67208C9.75838 3.10299 10 3.75708 10 4.63325V5.99999H5V4.63601ZM4 5.99999V4.63601C4 3.58148 4.29339 2.65754 4.91049 1.99307C5.53252 1.32329 6.42675 0.978302 7.5014 0.978302C8.57583 0.978302 9.46952 1.32233 10.091 1.99162C10.7076 2.65557 11 3.57896 11 4.63325V5.99999H12C12.5523 5.99999 13 6.44771 13 6.99999V13C13 13.5523 12.5523 14 12 14H3C2.44772 14 2 13.5523 2 13V6.99999C2 6.44771 2.44772 5.99999 3 5.99999H4ZM3 6.99999H12V13H3V6.99999Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div><div class="root-0-2-36 root-d3904-0-2-11743 mantine-text-root" style="margin-top:12px;margin-bottom:7px">Secure by default</div><div class="root-0-2-36 root-d3906-0-2-11745 mantine-text-root" style="line-height:1.6">Although it still can’t fly, its jumping power is outstanding, in Alola the mushrooms on Paras don’t grow up quite right</div></div><div class="col-mantine-7frscpfzz"><div class="root-0-2-221 root-d399-0-2-11750 mantine-theme-icon-root light-0-2-218 light-d396-0-2-11747 mantine-theme-icon-light"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px"><path d="M12.5 3L2.49999 3.00002C1.67157 3.00002 0.999999 3.67159 0.999999 4.50002V9.50002C0.999999 10.3284 1.67157 11 2.5 11H7.50002C7.63263 11 7.75981 11.0527 7.85358 11.1465L9.99999 13.2929V11.5C9.99999 11.2239 10.2239 11 10.5 11H12.5C13.3284 11 14 10.3284 14 9.50002V4.5C14 3.67157 13.3284 3 12.5 3ZM2.49999 2.00002L12.5 2C13.8807 2 15 3.11928 15 4.5V9.50002C15 10.8807 13.8807 12 12.5 12H11V14.5C11 14.7022 10.8782 14.8845 10.6913 14.9619C10.5045 15.0393 10.2894 14.9965 10.1464 14.8535L7.29292 12H2.5C1.11929 12 0 10.8807 0 9.50002V4.50002C0 3.11931 1.11928 2.00002 2.49999 2.00002Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div><div class="root-0-2-36 root-d3908-0-2-11751 mantine-text-root" style="margin-top:12px;margin-bottom:7px">24/7 Support</div><div class="root-0-2-36 root-d3910-0-2-11753 mantine-text-root" style="line-height:1.6">Rapidash usually can be seen casually cantering in the fields and plains, Skitty is known to chase around after its own tail</div></div></div></div></div></div></div></div></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/gallery/component/features-grid";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-731835509f3307e8d424.js"],"app":["/app-450e9ffbe4e2a11e2ba4.js"],"component---src-components-gallery-gallery-category-page-tsx":["/component---src-components-gallery-gallery-category-page-tsx-4f99edacd69293630a49.js"],"component---src-components-gallery-gallery-component-page-tsx":["/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js"],"component---src-components-gallery-gallery-tsx":["/component---src-components-gallery-gallery-tsx-a1705f4cc36de2d6fa48.js"],"component---src-pages-404-tsx":["/component---src-pages-404-tsx-99eb9c747916a6851964.js"],"component---src-pages-contribute-tsx":["/component---src-pages-contribute-tsx-4cc3a003167c2bdcbbe9.js"],"component---src-pages-getting-started-tsx":["/component---src-pages-getting-started-tsx-ec60c24bbb7b759740c9.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx-b2eef05f86bd46f66d7f.js"],"component---src-pages-mdx-slug-tsx":["/component---src-pages-mdx-slug-tsx-da7f46fde3284a07657f.js"]};/*]]>*/</script><script src="/polyfill-731835509f3307e8d424.js" nomodule=""></script><script src="/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js" async=""></script><script src="/4215b017aee8acc9f1af0e63dbaf7a4508daa2bd-aa80d31b44259e42fa8f.js" async=""></script><script src="/commons-07f9de10726a96adb9dc.js" async=""></script><script src="/app-450e9ffbe4e2a11e2ba4.js" async=""></script><script src="/8fe526ae-3e33597ee9740181898f.js" async=""></script><script src="/fba589a3-d7d06c674224283c9899.js" async=""></script><script src="/framework-633d23f07caeb5181df0.js" async=""></script><script src="/webpack-runtime-2363a199414b50ff16e1.js" async=""></script></body></html>
