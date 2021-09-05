@@ -16,6 +16,7 @@ const defaultProps = {
   title: 'test-title',
   children: 'test-alert',
   icon: '$',
+  withCloseButton: true,
 };
 
 describe('@mantine/core/Alert', () => {

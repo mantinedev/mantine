@@ -71,6 +71,7 @@ export function Alert({
               {withCloseButton && (
                 <CloseButton
                   className={classes.closeButton}
+                  style={_styles.closeButton}
                   variant="transparent"
                   size={16}
                   iconSize={16}
