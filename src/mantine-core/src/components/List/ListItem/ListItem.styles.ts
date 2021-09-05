@@ -25,7 +25,7 @@ export default createMemoStyles({
     },
   },
 
-  icon: ({ theme }) => ({
+  itemIcon: ({ theme }) => ({
     display: 'inline-block',
     verticalAlign: 'middle',
     marginRight: theme.spacing.sm,

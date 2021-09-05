@@ -33,12 +33,12 @@ export function ListItem({
   return (
     <li
       className={cx(classes.item, { [classes.withIcon]: icon }, className)}
-      style={{ ...style, ..._styles.item }}
+      style={{ ...style, ..._styles.item, ...(icon ? _styles.withIcon : null) }}
       {...others}
     >
       <div className={classes.itemWrapper}>
         {icon && (
-          <span className={classes.icon} style={_styles.icon}>
+          <span className={classes.itemIcon} style={_styles.itemIcon}>
             {icon}
           </span>
         )}
