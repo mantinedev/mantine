@@ -11,6 +11,8 @@ function Demo() {
   return (
     <List
       spacing="xs"
+      size="sm"
+      center
       icon={
         <ThemeIcon color="teal" size={24} radius="xl">
           <IssueClosedIcon size={12} />
@@ -40,6 +42,8 @@ function Demo() {
     <div style={{ maxWidth: 500, marginLeft: 'auto', marginRight: 'auto' }}>
       <List
         spacing="xs"
+        size="sm"
+        center
         icon={
           <ThemeIcon color="teal" size={24} radius="xl">
             <IssueClosedIcon size={12} />

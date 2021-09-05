@@ -8,11 +8,17 @@ export type ListItemStylesNames = keyof ReturnType<typeof useStyles>;
 export interface ListItemProps
   extends DefaultProps<ListItemStylesNames>,
     React.ComponentPropsWithoutRef<'li'> {
+  /** Icon to replace bullet */
   icon?: React.ReactNode;
+
+  /** Item content */
   children: React.ReactNode;
 
   /** Predefined spacing between items or number to set value in px */
   spacing?: MantineNumberSize;
+
+  /** Center item content with icon */
+  center?: boolean;
 }
 
 export function ListItem({
@@ -24,10 +30,11 @@ export function ListItem({
   classNames,
   styles,
   spacing,
+  center,
   ...others
 }: ListItemProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, spacing }, classNames, 'list');
+  const classes = useStyles({ theme, spacing, center }, classNames, 'list');
   const _styles = mergeStyles(classes, styles);
 
   return (

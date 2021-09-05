@@ -3,10 +3,13 @@ import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from 
 interface ListItemStyles {
   theme: MantineTheme;
   spacing: MantineNumberSize;
+  center: boolean;
 }
 
 export default createMemoStyles({
-  item: ({ theme, spacing }: ListItemStyles) => ({
+  item: ({ theme, spacing, center }: ListItemStyles) => ({
+    lineHeight: center ? 1 : theme.lineHeight,
+
     '&:not(:first-of-type)': {
       marginTop: getSizeValue({ size: spacing, sizes: theme.spacing }),
     },
@@ -16,14 +19,14 @@ export default createMemoStyles({
     display: 'inline',
   },
 
-  withIcon: {
+  withIcon: ({ center }: ListItemStyles) => ({
     listStyle: 'none',
 
     '& $itemWrapper': {
       display: 'inline-flex',
-      alignItems: 'flex-start',
+      alignItems: center ? 'center' : 'flex-start',
     },
-  },
+  }),
 
   itemIcon: ({ theme }) => ({
     display: 'inline-block',

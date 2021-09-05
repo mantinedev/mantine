@@ -15,6 +15,7 @@ interface ListStyles {
 export default createMemoStyles({
   root: ({ theme, withPadding, size }: ListStyles) => ({
     ...getFontStyles(theme),
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     lineHeight: theme.lineHeight,
     margin: 0,

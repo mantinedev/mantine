@@ -29,6 +29,9 @@ export interface ListProps
 
   /** Spacing between items from theme or number to set value in px */
   spacing?: MantineNumberSize;
+
+  /** Center items with icon */
+  center?: boolean;
 }
 
 export function List({
@@ -36,6 +39,7 @@ export function List({
   type = 'unordered',
   size = 'md',
   withPadding = false,
+  center = false,
   spacing = 0,
   icon,
   className,
@@ -57,6 +61,7 @@ export function List({
         classNames,
         styles,
         spacing,
+        center,
         icon: item.props?.icon || icon,
       })
     );
