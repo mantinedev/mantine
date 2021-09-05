@@ -16,6 +16,14 @@ export const sizes = {
   xl: 40,
 };
 
+const iconSizes = {
+  xs: 10,
+  sm: 12,
+  md: 14,
+  lg: 16,
+  xl: 18,
+};
+
 interface ChipStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
@@ -45,13 +53,22 @@ export default createMemoStyles({
     },
   }),
 
-  checkIcon: ({ theme, color, size }: ChipStyles) => ({
+  checkIcon: ({ size }: ChipStyles) => ({
+    width: getSizeValue({ size, sizes: iconSizes }),
+    height: getSizeValue({ size, sizes: iconSizes }) / 1.1,
+    display: 'block',
+  }),
+
+  iconWrapper: ({ theme, color, size }: ChipStyles) => ({
     color: getThemeColor({ theme, color, shade: 6 }),
-    marginRight: getSizeValue({ size, sizes: theme.spacing }) / 2,
-    width: 14,
-    height: 14,
+    width:
+      getSizeValue({ size, sizes: iconSizes }) + getSizeValue({ size, sizes: theme.spacing }) / 1.5,
+    maxWidth:
+      getSizeValue({ size, sizes: iconSizes }) + getSizeValue({ size, sizes: theme.spacing }) / 1.5,
+    height: getSizeValue({ size, sizes: iconSizes }),
     display: 'inline-block',
     verticalAlign: 'middle',
+    overflow: 'hidden',
   }),
 
   input: {

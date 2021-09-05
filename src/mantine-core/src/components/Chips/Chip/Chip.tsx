@@ -8,6 +8,7 @@ import {
   MantineSize,
   mergeStyles,
 } from '../../../theme';
+import { Transition, MantineTransition } from '../../Transition/Transition';
 import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
 import useStyles from './Chip.styles';
 
@@ -41,6 +42,12 @@ export interface ChipProps
   color?: string;
 }
 
+const checkTransition: MantineTransition = {
+  in: { opacity: 1 },
+  out: { maxWidth: 0, opacity: 0 },
+  transitionProperty: 'max-width, opacity',
+};
+
 export function Chip({
   radius = 'xl',
   type = 'checkbox',
@@ -63,7 +70,7 @@ export function Chip({
   const [value, setValue] = useUncontrolled({
     value: checked,
     defaultValue: defaultChecked,
-    finalValue: false,
+    finalValue: true,
     onChange,
     rule: (val) => typeof val === 'boolean',
   });
@@ -80,13 +87,30 @@ export function Chip({
         onChange={(event) => setValue(event.currentTarget.checked)}
         {...others}
       />
-      {value && (
-        <CheckboxIcon
-          indeterminate={false}
-          className={classes.checkIcon}
-          style={_styles.checkIcon}
-        />
-      )}
+      <Transition
+        mounted={value}
+        transition={checkTransition}
+        duration={100}
+        timingFunction="linear"
+      >
+        {(transitionStyles) => (
+          <span
+            className={classes.iconWrapper}
+            style={{
+              ...transitionStyles,
+              display: 'inline-block',
+              overflow: 'hidden',
+              lineHeight: '18px',
+            }}
+          >
+            <CheckboxIcon
+              indeterminate={false}
+              className={classes.checkIcon}
+              style={{ ..._styles.checkIcon }}
+            />
+          </span>
+        )}
+      </Transition>
       {children}
     </label>
   );
