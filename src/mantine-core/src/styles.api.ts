@@ -17,6 +17,7 @@ export * from './components/Group/styles.api';
 export * from './components/Image/styles.api';
 export * from './components/InputWrapper/styles.api';
 export * from './components/JsonInput/styles.api';
+export * from './components/List/styles.api';
 export * from './components/Input/styles.api';
 export * from './components/Menu/styles.api';
 export * from './components/Modal/styles.api';

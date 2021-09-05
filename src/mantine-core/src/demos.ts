@@ -30,6 +30,7 @@ export * as InputDemos from './components/Input/demos';
 export * as InputWrapperDemos from './components/InputWrapper/demos';
 export * as JsonInputDemos from './components/JsonInput/demos';
 export * as KbdDemos from './components/Kbd/demos';
+export * as ListDemos from './components/List/demos';
 export * as LoaderDemos from './components/Loader/demos';
 export * as LoadingOverlayDemos from './components/LoadingOverlay/demos';
 export * as MarkDemos from './components/Mark/demos';
