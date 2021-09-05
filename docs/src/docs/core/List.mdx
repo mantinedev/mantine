@@ -18,3 +18,13 @@ import { ListDemos } from '@demos/core';
 ## Usage
 
 <Demo data={ListDemos.configurator} />
+
+## With icons
+
+You can replace list bullets with icon. To do so provide following props:
+
+- `icon` on List component will be used as default icon for all list elements
+- `icon` on List.Item component will override context icon from List
+- `spacing` – spacing between list items from theme or number to set spacing in px, defaults to `0`
+
+<Demo data={ListDemos.icon} />
