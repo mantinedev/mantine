@@ -123,7 +123,6 @@ export function ColorPicker({
   const handleChange = (color: Partial<HsvaColor>) => {
     // This is required for useEffect to work, it's dirty but works fine
     setShouldSkip(true);
-    Promise.resolve().then(() => setShouldSkip(false));
 
     setParsed((current) => {
       const next = { ...current, ...color };
@@ -131,7 +130,10 @@ export function ColorPicker({
       return next;
     });
 
-    setValue(valueRef.current);
+    Promise.resolve().then(() => {
+      setShouldSkip(false);
+      setValue(valueRef.current);
+    });
   };
 
   useEffect(() => {
