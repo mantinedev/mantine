@@ -21,7 +21,7 @@ export const configurator: MantineDemo = {
     { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
     {
       name: 'variant',
-      type: 'select',
+      type: 'segmented',
       initialValue: 'oval',
       defaultValue: 'oval',
       data: [
