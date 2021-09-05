@@ -3,6 +3,7 @@ import { createMemoStyles, MantineTheme, getThemeColor, getFontStyles } from '..
 interface AlertStyles {
   color: string;
   theme: MantineTheme;
+  withIcon: boolean;
 }
 
 export default createMemoStyles({
@@ -16,7 +17,15 @@ export default createMemoStyles({
         : getThemeColor({ theme, color, shade: 0 }),
   }),
 
-  title: ({ color, theme }: AlertStyles) => ({
+  wrapper: {
+    display: 'flex',
+  },
+
+  body: {
+    flex: 1,
+  },
+
+  title: ({ color, theme, withIcon }: AlertStyles) => ({
     boxSizing: 'border-box',
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
     margin: 0,
@@ -26,24 +35,25 @@ export default createMemoStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    lineHeight: 1,
+    lineHeight: withIcon ? theme.lineHeight : 1,
   }),
 
-  icon: ({ theme }: AlertStyles) => ({
-    marginRight: theme.spacing.xs / 2,
+  icon: ({ theme, color }: AlertStyles) => ({
+    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
     lineHeight: 1,
     width: 20,
     height: 20,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    marginRight: theme.spacing.md,
 
     '& svg': {
       display: 'block',
     },
   }),
 
-  body: ({ theme }: AlertStyles) => ({
+  message: ({ theme }: AlertStyles) => ({
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,
     borderBottomLeftRadius: theme.radius.sm,
@@ -58,4 +68,8 @@ export default createMemoStyles({
       borderTopLeftRadius: theme.radius.sm,
     },
   }),
+
+  closeButton: {
+    marginTop: 2,
+  },
 });
