@@ -32,12 +32,16 @@ export interface ListProps
 
   /** Center items with icon */
   center?: boolean;
+
+  /** List style */
+  listStyleType?: React.CSSProperties['listStyleType'];
 }
 
 export function List({
   children,
   type = 'unordered',
   size = 'md',
+  listStyleType = 'disc',
   withPadding = false,
   center = false,
   spacing = 0,
@@ -50,7 +54,7 @@ export function List({
   ...others
 }: ListProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, withPadding, size }, classNames, 'list');
+  const classes = useStyles({ theme, withPadding, size, listStyleType }, classNames, 'list');
   const _styles = mergeStyles(classes, styles);
   const Element = type === 'unordered' ? 'ul' : 'ol';
 

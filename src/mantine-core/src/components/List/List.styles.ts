@@ -10,11 +10,13 @@ interface ListStyles {
   theme: MantineTheme;
   withPadding: boolean;
   size: MantineNumberSize;
+  listStyleType: string;
 }
 
 export default createMemoStyles({
-  root: ({ theme, withPadding, size }: ListStyles) => ({
+  root: ({ theme, withPadding, size, listStyleType }: ListStyles) => ({
     ...getFontStyles(theme),
+    listStyleType,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     lineHeight: theme.lineHeight,
