@@ -24,6 +24,22 @@ const iconSizes = {
   xl: 18,
 };
 
+const padding = {
+  xs: 16,
+  sm: 20,
+  md: 24,
+  lg: 28,
+  xl: 32,
+};
+
+const checkedPadding = {
+  xs: 7.5,
+  sm: 10,
+  md: 11.5,
+  lg: 13,
+  xl: 15,
+};
+
 interface ChipStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
@@ -43,14 +59,20 @@ export default createMemoStyles({
     height: getSizeValue({ size, sizes }),
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     lineHeight: `${getSizeValue({ size, sizes })}px`,
-    paddingLeft: 22,
-    paddingRight: 22,
+    paddingLeft: getSizeValue({ size, sizes: padding }),
+    paddingRight: getSizeValue({ size, sizes: padding }),
     cursor: 'pointer',
     whiteSpace: 'nowrap',
 
     '&:hover': {
       backgroundColor: theme.colors.gray[0],
     },
+  }),
+
+  checked: ({ theme, color, size }: ChipStyles) => ({
+    borderColor: getThemeColor({ theme, color, shade: 6 }),
+    paddingLeft: getSizeValue({ size, sizes: checkedPadding }),
+    paddingRight: getSizeValue({ size, sizes: checkedPadding }),
   }),
 
   checkIcon: ({ size }: ChipStyles) => ({

@@ -8,7 +8,6 @@ import {
   MantineSize,
   mergeStyles,
 } from '../../../theme';
-import { Transition, MantineTransition } from '../../Transition/Transition';
 import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
 import useStyles from './Chip.styles';
 
@@ -42,12 +41,6 @@ export interface ChipProps
   color?: string;
 }
 
-const checkTransition: MantineTransition = {
-  in: { opacity: 1 },
-  out: { maxWidth: 0, opacity: 0 },
-  transitionProperty: 'max-width, opacity',
-};
-
 export function Chip({
   radius = 'xl',
   type = 'checkbox',
@@ -78,7 +71,10 @@ export function Chip({
   return (
     // Rule is broken
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
-    <label className={cx(classes.root, className)} style={{ ...style, ..._styles.root }}>
+    <label
+      className={cx(classes.root, { [classes.checked]: value }, className)}
+      style={{ ...style, ..._styles.root, ...(value ? _styles.checked : null) }}
+    >
       <input
         type={type}
         className={classes.input}
@@ -87,30 +83,15 @@ export function Chip({
         onChange={(event) => setValue(event.currentTarget.checked)}
         {...others}
       />
-      <Transition
-        mounted={value}
-        transition={checkTransition}
-        duration={100}
-        timingFunction="linear"
-      >
-        {(transitionStyles) => (
-          <span
-            className={classes.iconWrapper}
-            style={{
-              ...transitionStyles,
-              display: 'inline-block',
-              overflow: 'hidden',
-              lineHeight: '18px',
-            }}
-          >
-            <CheckboxIcon
-              indeterminate={false}
-              className={classes.checkIcon}
-              style={{ ..._styles.checkIcon }}
-            />
-          </span>
-        )}
-      </Transition>
+      {value && (
+        <span className={classes.iconWrapper} style={_styles.iconWrapper}>
+          <CheckboxIcon
+            indeterminate={false}
+            className={classes.checkIcon}
+            style={{ ..._styles.checkIcon }}
+          />
+        </span>
+      )}
       {children}
     </label>
   );

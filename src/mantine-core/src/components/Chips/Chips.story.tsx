@@ -14,16 +14,16 @@ storiesOf('@mantine/core/Chips', module)
       <div>
         <Chip size="xs">xs chip</Chip>
       </div>
-      <div>
+      <div style={{ marginTop: 15 }}>
         <Chip size="sm">sm chip</Chip>
       </div>
-      <div>
+      <div style={{ marginTop: 15 }}>
         <Chip size="md">md chip</Chip>
       </div>
-      <div>
+      <div style={{ marginTop: 15 }}>
         <Chip size="lg">lg chip</Chip>
       </div>
-      <div>
+      <div style={{ marginTop: 15 }}>
         <Chip size="xl">xl chip</Chip>
       </div>
     </div>
