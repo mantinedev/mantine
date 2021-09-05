@@ -130,10 +130,9 @@ export function ColorPicker({
       return next;
     });
 
-    Promise.resolve().then(() => {
-      setShouldSkip(false);
-      setValue(valueRef.current);
-    });
+    Promise.resolve()
+      .then(() => setValue(valueRef.current))
+      .then(() => setShouldSkip(false));
   };
 
   useEffect(() => {
