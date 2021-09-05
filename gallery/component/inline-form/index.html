@@ -1,4 +1,691 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 3.8.1"/><title data-react-helmet="true">Inline form | Mantine</title><link data-react-helmet="true" rel="preconnect" href="https://fonts.googleapis.com"/><link data-react-helmet="true" rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"/><link data-react-helmet="true" href="https://fonts.googleapis.com/css2?family=Dosis:wght@800&amp;display=swap" rel="stylesheet"/><meta data-react-helmet="true" name="viewport" content="width=device-width, user-scalable=no"/><meta data-react-helmet="true" name="description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><meta data-react-helmet="true" property="og:title" content="Inline form"/><meta data-react-helmet="true" property="og:image" content="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png"/><meta data-react-helmet="true" property="og:image:width" content="1280"/><meta data-react-helmet="true" property="og:image:height" content="640"/><meta data-react-helmet="true" property="og:description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" name="twitter:card" content="summary_large_image"/><meta data-react-helmet="true" name="twitter:creator" content="@mantinedev"/><meta data-react-helmet="true" name="twitter:title" content="Inline form"/><meta data-react-helmet="true" name="twitter:description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><link rel="icon" href="/favicon-32x32.png?v=c7bf473b30e5d81722ea0acf3a11a107" type="image/png"/><link rel="icon" href="/favicon.svg?v=c7bf473b30e5d81722ea0acf3a11a107" type="image/svg+xml"/><link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous"/><meta name="theme-color" content="#228be6"/><link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><style type="text/css" id="server-side-jss">#nprogress {
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 3.8.1"/><title data-react-helmet="true">Inline form | Mantine</title><link data-react-helmet="true" rel="preconnect" href="https://fonts.googleapis.com"/><link data-react-helmet="true" rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"/><link data-react-helmet="true" href="https://fonts.googleapis.com/css2?family=Dosis:wght@800&amp;display=swap" rel="stylesheet"/><meta data-react-helmet="true" name="viewport" content="width=device-width, user-scalable=no"/><meta data-react-helmet="true" name="description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><meta data-react-helmet="true" property="og:title" content="Inline form"/><meta data-react-helmet="true" property="og:image" content="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png"/><meta data-react-helmet="true" property="og:image:width" content="1280"/><meta data-react-helmet="true" property="og:image:height" content="640"/><meta data-react-helmet="true" property="og:description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" name="twitter:card" content="summary_large_image"/><meta data-react-helmet="true" name="twitter:creator" content="@mantinedev"/><meta data-react-helmet="true" name="twitter:title" content="Inline form"/><meta data-react-helmet="true" name="twitter:description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><link rel="icon" href="/favicon-32x32.png?v=c7bf473b30e5d81722ea0acf3a11a107" type="image/png"/><link rel="icon" href="/favicon.svg?v=c7bf473b30e5d81722ea0acf3a11a107" type="image/svg+xml"/><link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous"/><meta name="theme-color" content="#228be6"/><link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><style type="text/css" id="server-side-jss">*, *::before, *::after {
+  box-sizing: border-box;
+}
+body {
+  color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+}
+article, aside, footer, header, nav, section, figcaption, figure, main {
+  display: block;
+}
+h1 {
+  margin: 0.67em 0;
+  font-size: 2em;
+}
+hr {
+  height: 0;
+  overflow: visible;
+  box-sizing: content-box;
+}
+pre {
+  font-size: 1em;
+  font-family: monospace, monospace;
+}
+a {
+  background: transparent;
+  text-decoration-skip: objects;
+}
+a:active, a:hover {
+  outline-width: 0;
+}
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+}
+b, strong {
+  font-weight: bolder;
+}
+code, kbp, samp {
+  font-size: 1em;
+  font-family: monospace, monospace;
+}
+dfn {
+  font-style: italic;
+}
+mark {
+  color: #000;
+  background-color: #ff0;
+}
+small {
+  font-size: 80%;
+}
+sub, sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+audio, video {
+  display: inline-block;
+}
+audio:not([controls]) {
+  height: 0;
+  display: none;
+}
+img {
+  border-style: none;
+  vertical-align: middle;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+button, input, optgroup, select, textarea {
+  margin: 0;
+  font-size: 100%;
+  font-family: sans-serif;
+  line-height: 1.15;
+}
+button, input {
+  overflow: visible;
+}
+button, select {
+  text-transform: none;
+}
+button, [type=reset], [type=submit] {
+  -webkit-appearance: button;
+}
+button::-moz-focus-inner, [type=button]::-moz-focus-inner, [type=reset]::-moz-focus-inner, [type=submit]::-moz-focus-inner {
+  padding: 0;
+  border-style: none;
+}
+button:-moz-focusring, [type=button]:-moz-focusring, [type=reset]:-moz-focusring, [type=submit]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+legend {
+  color: inherit;
+  display: table;
+  padding: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+}
+progress {
+  display: inline-block;
+  vertical-align: baseline;
+}
+textarea {
+  overflow: auto;
+}
+[type=checkbox], [type=radio] {
+  padding: 0;
+  box-sizing: border-box;
+}
+[type=number]::-webkit-inner-spin-button, [type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+[type=search] {
+  appearance: textfield;
+  outline-offset: -2px;
+}
+[type=search]::-webkit-search-cancel-button, [type=search]::-webkit-search-decoration {
+  appearance: none;
+}
+::-webkit-file-upload-button {
+  font: inherit;
+  appearance: button;
+}
+details, menu {
+  display: block;
+}
+summary {
+  display: list-item;
+}
+canvas {
+  display: inline-block;
+}
+template {
+  display: none;
+}
+[hidden] {
+  display: none;
+}
+.c0262 {}
+.c0263 {}
+.c0264 {
+  color: #000;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0264:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+}
+.c0264:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.c0264:hover {
+  text-decoration: none;
+}
+.c0265 {
+  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.c025 {}
+.c026 {}
+.c027 {
+  width: calc(100% - 32px);
+  z-index: 1000;
+  position: fixed;
+  box-sizing: border-box;
+}
+.c028 {}
+.c028 + .c028 {
+  margin-top: 12px;
+}
+.c0266 {}
+.c0267 {}
+.c0268 {}
+.c0269 {}
+.c0270 {}
+.c0271 {}
+.c0272 {}
+.c0273 {}
+.c0274 {
+  width: 6px;
+  border: 1px solid transparent;
+  height: 6px;
+  z-index: 1;
+  position: absolute;
+  transform: rotate(45deg);
+}
+.c0275 {
+  right: -3px;
+  border-left: 0;
+  border-bottom: 0;
+}
+.c0275.c0266 {
+  top: calc(50% - 3px);
+}
+.c0275.c0268 {
+  bottom: 6px;
+}
+.c0275.c0267 {
+  top: 6px;
+}
+.c0276 {
+  left: -3px;
+  border-top: 0;
+  border-right: 0;
+}
+.c0276.c0266 {
+  top: calc(50% - 3px);
+}
+.c0276.c0268 {
+  bottom: 6px;
+}
+.c0276.c0267 {
+  top: 6px;
+}
+.c0277 {
+  bottom: -3px;
+  border-top: 0;
+  border-left: 0;
+}
+.c0277.c0266 {
+  left: calc(50% - 3px);
+}
+.c0277.c0268 {
+  right: 6px;
+}
+.c0277.c0267 {
+  left: 6px;
+}
+.c0278 {
+  top: -3px;
+  border-right: 0;
+  border-bottom: 0;
+}
+.c0278.c0266 {
+  left: calc(50% - 3px);
+}
+.c0278.c0268 {
+  right: 6px;
+}
+.c0278.c0267 {
+  left: 6px;
+}
+.c0224 {}
+.c0225 {}
+.c0226 {}
+.c0227 {}
+.c0228 {}
+.c0229 {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.c0230 {
+  color: #212529;
+  cursor: default;
+  display: block;
+  font-size: 16px;
+  word-break: break-word;
+  font-weight: 500;
+  margin-bottom: 5px;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0231 {
+  color: #f03e3e;
+  margin-top: 5px;
+  word-break: break-word;
+}
+.c0232 {
+  color: #868e96;
+  font-size: 14px;
+  margin-top: -3px;
+  word-break: break-word;
+  line-height: 1.2;
+  margin-bottom: 7px;
+}
+.c0233 {
+  color: #f03e3e;
+}
+.c0253 {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.c0254 {
+  color: #212529;
+  cursor: default;
+  display: block;
+  font-size: 16px;
+  word-break: break-word;
+  font-weight: 500;
+  margin-bottom: 5px;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0255 {
+  color: #f03e3e;
+  margin-top: 5px;
+  word-break: break-word;
+}
+.c0256 {
+  color: #868e96;
+  font-size: 14px;
+  margin-top: -3px;
+  word-break: break-word;
+  line-height: 1.2;
+  margin-bottom: 7px;
+}
+.c0257 {
+  color: #f03e3e;
+}
+.c0286 {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.c0287 {
+  color: #212529;
+  cursor: default;
+  display: block;
+  font-size: 16px;
+  word-break: break-word;
+  font-weight: 500;
+  margin-bottom: 5px;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0288 {
+  color: #f03e3e;
+  margin-top: 5px;
+  word-break: break-word;
+}
+.c0289 {
+  color: #868e96;
+  font-size: 14px;
+  margin-top: -3px;
+  word-break: break-word;
+  line-height: 1.2;
+  margin-bottom: 7px;
+}
+.c0290 {
+  color: #f03e3e;
+}
+.c0234 {}
+.c0235 {}
+.c0236 {}
+.c0237 {}
+.c0238 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+}
+.c0239 {
+  position: relative;
+  border-radius: 0;
+}
+.c0240 {
+  color: #000;
+  width: 100%;
+  height: 42px;
+  resize: none;
+  display: block;
+  font-size: 16px;
+  appearance: none;
+  box-sizing: border-box;
+  min-height: 42px;
+  text-align: left;
+  transition: border-color 100ms ease, box-shadow 100ms ease;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 40px;
+  border-color: #ced4da;
+  border-style: solid;
+  border-width: 1px;
+  padding-left: 14px;
+  border-radius: 0;
+  padding-right: 14px;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0240:focus, .c0240:focus-within {
+  outline: none;
+  border-color: #339af0;
+}
+.c0240:disabled {
+  color: #9D9FA4;
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #f1f3f5;
+}
+.c0240::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+  user-select: none;
+}
+.c0240::-webkit-inner-spin-button, .c0240::-webkit-outer-spin-button, .c0240::-webkit-search-decoration, .c0240::-webkit-search-cancel-button, .c0240::-webkit-search-results-button, .c0240::-webkit-search-results-decoration {
+  appearance: none;
+}
+.c0240[type=number] {
+  -moz-appearance: textfield;
+}
+.c0240:disabled::placeholder {
+  color: #9D9FA4;
+}
+.c0241 {
+  padding-left: 42px;
+}
+.c0242 {
+  top: 0;
+  left: 0;
+  color: #868e96;
+  width: 42px;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  pointer-events: none;
+  justify-content: center;
+}
+.c0258 {
+  position: relative;
+  border-radius: 0;
+}
+.c0259 {
+  color: #000;
+  width: 100%;
+  height: 42px;
+  resize: none;
+  display: block;
+  font-size: 16px;
+  appearance: none;
+  box-sizing: border-box;
+  min-height: 42px;
+  text-align: left;
+  transition: border-color 100ms ease, box-shadow 100ms ease;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 40px;
+  border-color: #ced4da;
+  border-style: solid;
+  border-width: 1px;
+  padding-left: 14px;
+  border-radius: 0;
+  padding-right: 14px;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0259:focus, .c0259:focus-within {
+  outline: none;
+  border-color: #339af0;
+}
+.c0259:disabled {
+  color: #9D9FA4;
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #f1f3f5;
+}
+.c0259::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+  user-select: none;
+}
+.c0259::-webkit-inner-spin-button, .c0259::-webkit-outer-spin-button, .c0259::-webkit-search-decoration, .c0259::-webkit-search-cancel-button, .c0259::-webkit-search-results-button, .c0259::-webkit-search-results-decoration {
+  appearance: none;
+}
+.c0259[type=number] {
+  -moz-appearance: textfield;
+}
+.c0259:disabled::placeholder {
+  color: #9D9FA4;
+}
+.c0260 {
+  padding-left: 42px;
+}
+.c0261 {
+  top: 0;
+  left: 0;
+  color: #868e96;
+  width: 42px;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  pointer-events: none;
+  justify-content: center;
+}
+.c0291 {
+  position: relative;
+  border-radius: 0;
+}
+.c0292 {
+  color: #000;
+  width: 100%;
+  height: 42px;
+  resize: none;
+  display: block;
+  font-size: 16px;
+  appearance: none;
+  box-sizing: border-box;
+  min-height: 42px;
+  text-align: left;
+  transition: border-color 100ms ease, box-shadow 100ms ease;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 40px;
+  border-color: #ced4da;
+  border-style: solid;
+  border-width: 1px;
+  padding-left: 14px;
+  border-radius: 0;
+  padding-right: 14px;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0292:focus, .c0292:focus-within {
+  outline: none;
+  border-color: #339af0;
+}
+.c0292:disabled {
+  color: #9D9FA4;
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #f1f3f5;
+}
+.c0292::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+  user-select: none;
+}
+.c0292::-webkit-inner-spin-button, .c0292::-webkit-outer-spin-button, .c0292::-webkit-search-decoration, .c0292::-webkit-search-cancel-button, .c0292::-webkit-search-results-button, .c0292::-webkit-search-results-decoration {
+  appearance: none;
+}
+.c0292[type=number] {
+  -moz-appearance: textfield;
+}
+.c0292:disabled::placeholder {
+  color: #9D9FA4;
+}
+.c0293 {
+  padding-left: 42px;
+}
+.c0294 {
+  top: 0;
+  left: 0;
+  color: #868e96;
+  width: 42px;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  pointer-events: none;
+  justify-content: center;
+}
+.c0279 {
+  height: calc(100% - 2px);
+  margin: 1px;
+  display: flex;
+  margin-right: 1px;
+  flex-direction: column;
+}
+.c0280 {}
+.c0281 {}
+.c0282 {}
+.c0283 {
+  flex: 0 0 50%;
+  width: 30px;
+  padding: 0;
+  position: relative;
+  border-top: 0;
+  box-sizing: border-box;
+  border-left: 1px solid #ced4da;
+  border-right: 0;
+  margin-right: 1px;
+  border-bottom: 1px solid #ced4da;
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0283:not(:disabled):hover {
+  background-color: #f8f9fa;
+}
+.c0283::after {
+  top: calc(50% - 2.5px);
+  left: calc(50% - 4.5px);
+  width: 0;
+  height: 0;
+  content: "";
+  display: block;
+  position: absolute;
+  border-style: solid;
+}
+.c0284 {
+  border-top-right-radius: -1px;
+}
+.c0284::after {
+  border-color: transparent transparent #000 transparent;
+  border-width: 0 5px 5px 5px;
+}
+.c0284:disabled::after {
+  border-bottom-color: #adb5bd;
+}
+.c0285 {
+  border-bottom: 0;
+  border-bottom-right-radius: -1px;
+}
+.c0285::after {
+  border-color: #000 transparent transparent transparent;
+  border-width: 5px 5px 0 5px;
+}
+.c0285:disabled::after {
+  border-top-color: #adb5bd;
+}
+.c0243 {}
+.c0244 {
+  top: 5px;
+  left: 0;
+  right: 0;
+  border: 1px solid #e9ecef;
+  padding: 4px;
+  z-index: 1;
+  position: absolute;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background-color: #fff;
+}
+.c0217 {
+  position: relative;
+}
+.c0218 {}
+.c0219 {}
+.c0220 {}
+.c0221 {
+  color: #000;
+  width: 100%;
+  padding: 10.666666666666666px 16px;
+  font-size: 16px;
+  text-align: left;
+}
+.c0222 {
+  background-color: #f1f3f5;
+}
+.c0223 {
+  color: #868e96;
+  box-sizing: border-box;
+  text-align: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+#nprogress {
   z-index: 100000;
 }
 :target {
@@ -7,75 +694,272 @@
   position: relative;
   visibility: hidden;
 }
-.c121 {
+.c021 {
   padding-left: 260px;
 }
 @media (max-width: 760px) {
-  .c121 {
+  .c021 {
     padding-left: 0;
   }
 }
-  .c122 .c123 {
+  .c022 .c023 {
     padding-top: 0;
   }
-  .c123 {
+  .c023 {
     flex: 1;
     padding-top: 34px;
     scroll-margin-top: 60;
   }
 @media (max-width: 760px) {
-  .c123 {
+  .c023 {
     padding-left: 0;
     padding-right: 0;
   }
 }
-  .c124 {
+  .c024 {
     min-height: calc(100vh - 280px);
   }
+  .c0295 {  }
+  .c0296 {
+    display: flex;
+    align-items: center;
+  }
+  .c0297 {
+    margin-right: 10px;
+  }
+  .c0298 {
+    margin-left: 10px;
+  }
+  .c0299 {
+    height: 100%;
+    display: flex;
+    overflow: visible;
+    align-items: center;
+    justify-content: center;
+  }
+  .c02100 {
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .c02101 {  }
+  .c02102 {  }
+  .c02103 {  }
+  .c02104 {  }
+  .c02105 {  }
+  .c02106 {  }
+  .c02107 {  }
+  .c02107::before {
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    cursor: not-allowed;
+    content: "";
+    position: absolute;
+    border-radius: 7px;
+    background-color: rgba(255, 255, 255, .5);
+  }
+  .c02108 {
+    width: auto;
+    cursor: pointer;
+    height: 50px;
+    display: inline-block;
+    padding: 0 26px;
+    position: relative;
+    font-size: 18px;
+    appearance: none;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+    line-height: 1;
+    user-select: none;
+    text-decoration: none;
+    -webkit-appearance: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .c02108:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+  }
+  .c02108:focus:not(:focus-visible) {
+    box-shadow: none;
+  }
+  .c02109 {
+    color: #1c7ed6;
+    border: 1px solid rgba(28, 126, 214, 0.65);
+    font-weight: 600;
+    border-radius: 8px;
+    background-color: transparent;
+  }
+  .c02109:not(:disabled):active {
+    transform: translateY(1px);
+  }
+  .c02109:disabled:not(.c0295) {
+    color: #adb5bd;
+    cursor: not-allowed;
+    border-color: transparent;
+    background-color: #e9ecef;
+  }
+  .c02110 {
+    color: #1864ab;
+    border: 1px solid transparent;
+    font-weight: 600;
+    border-radius: 8px;
+    background-color: rgba(231, 245, 255, 1);
+  }
+  .c02110:not(:disabled):active {
+    transform: translateY(1px);
+  }
+  .c02110:disabled:not(.c0295) {
+    color: #adb5bd;
+    cursor: not-allowed;
+    text-shadow: none;
+    border-color: transparent;
+    background-color: #e9ecef;
+  }
+  .c02111 {
+    color: #fff;
+    border: 1px solid transparent;
+    font-weight: 600;
+    text-shadow: 1px 1px 0 #1864ab;
+    border-radius: 8px;
+    background-color: #228be6;
+  }
+  .c02111:not(:disabled):active {
+    transform: translateY(1px);
+  }
+  .c02111:disabled:disabled:not(.c0295) {
+    color: #adb5bd;
+    cursor: not-allowed;
+    text-shadow: none;
+    border-color: transparent;
+    background-color: #e9ecef;
+  }
+  .c02112 {
+    color: #fff;
+    border: 0;
+    font-weight: 600;
+    border-radius: 8px;
+    background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  }
+  .c02112:not(:disabled):active {
+    transform: translateY(1px);
+  }
+  .c02112:disabled:disabled:not(.c0295) {
+    color: #adb5bd;
+    cursor: not-allowed;
+    background-color: #e9ecef;
+  }
+  .c02113 {
+    color: #1c7ed6;
+    border: 0;
+    cursor: pointer;
+    height: auto;
+    display: inline-block;
+    padding: 0;
+    line-height: 1.4;
+    border-radius: 8px;
+    background-color: transparent;
+  }
+  .c02113:hover {
+    text-decoration: underline;
+  }
+  .c02113:disabled {
+    color: #adb5bd;
+    cursor: not-allowed;
+  }
+  .c02113:disabled:hover {
+    text-decoration: none;
+  }
+  .c0245 {  }
+  .c0246 {  }
+  .c0247 {
+    position: relative;
+    pointer-events: all;
+  }
+  .c0248 {
+    cursor: pointer;
+  }
+  .c0249 {  }
+  .c0250 {
+    cursor: pointer;
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .c0251 {
+    color: #adb5bd;
+    line-height: 40px;
+  }
+  .c0252 {
+    top: 10px;
+    left: 0;
+    border: 1px solid #e9ecef;
+    padding: 16px 10px;
+    z-index: 4;
+    position: absolute;
+    background-color: #fff;
+  }
+  .c0252::before {
+    top: -5px;
+    width: 8px;
+    height: 8px;
+    content: "";
+    position: absolute;
+    transform: rotate(45deg);
+    border-top: 1px solid #e9ecef;
+    border-left: 1px solid #e9ecef;
+    background-color: #fff;
+  }
 @media (max-width: 755px) {
-  .c125 {
+  .c029 {
     padding: 20px;
   }
 }
-  .c126 {
+  .c0210 {
     display: flex;
     align-items: flex-end;
   }
 @media (max-width: 755px) {
-  .c126 {
+  .c0210 {
     display: block;
   }
 }
-  .c127 {
+  .c0211 {
     flex: 1;
   }
-  .c127:first-of-type .c128 {
+  .c0211:first-of-type .c0212 {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
   }
 @media (max-width: 755px) {
-  .c127 {
+  .c0211 {
     width: 100%;
     max-width: 100% !important;
   }
-  .c127:not(:last-of-type) {
+  .c0211:not(:last-of-type) {
     margin-bottom: 16px;
   }
 }
-  .c127 + .c127 .c128 {
+  .c0211 + .c0211 .c0212 {
     border-left-width: 0;
     border-right-width: 0;
   }
 @media (max-width: 755px) {
-  .c127 + .c127 .c128 {
+  .c0211 + .c0211 .c0212 {
     border-left-width: 1px;
     border-right-width: 1px;
   }
 }
-  .c127:first-of-type .c128:not(:focus) {
+  .c0211:first-of-type .c0212:not(:focus) {
     border-left-color: #e9ecef;
   }
-  .c128 {
+  .c0212 {
     height: 60px;
     font-size: 16px;
     border-color: #e9ecef !important;
@@ -83,30 +967,30 @@
     border-left-color: #ced4da;
   }
 @media (max-width: 755px) {
-  .c128 {
+  .c0212 {
     border-radius: 8px;
   }
 }
-  .c129 {
+  .c0213 {
     margin-bottom: 9px;
   }
-  .c1210 {
+  .c0214 {
     max-width: 120px;
   }
-  .c1211 {
+  .c0215 {
     max-width: 280px;
   }
-  .c1212 {
+  .c0216 {
     height: 60px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
 @media (max-width: 755px) {
-  .c1212 {
+  .c0216 {
     width: 100%;
     margin-top: 20px;
     margin-left: 0;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
   }
-}</style><link as="script" rel="preload" href="/webpack-runtime-2363a199414b50ff16e1.js"/><link as="script" rel="preload" href="/framework-633d23f07caeb5181df0.js"/><link as="script" rel="preload" href="/fba589a3-d7d06c674224283c9899.js"/><link as="script" rel="preload" href="/8fe526ae-3e33597ee9740181898f.js"/><link as="script" rel="preload" href="/app-450e9ffbe4e2a11e2ba4.js"/><link as="script" rel="preload" href="/commons-07f9de10726a96adb9dc.js"/><link as="script" rel="preload" href="/4215b017aee8acc9f1af0e63dbaf7a4508daa2bd-aa80d31b44259e42fa8f.js"/><link as="script" rel="preload" href="/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js"/><link as="fetch" rel="preload" href="/page-data/gallery/component/inline-form/page-data.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/2731172446.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/3701445061.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/655967936.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/app-data.json" crossorigin="anonymous"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="c122"><main class="c123"><div class="c124"><div style="padding-bottom:50px"><div style="padding:12px"><div style="padding-top:40px;max-width:820px;margin-left:auto;margin-right:auto"><div class="c125"><div class="c126"><div class="root-0-2-128 root-d395-0-2-11348 mantine-autocomplete-root c127 c1211"><label for="mantine-o0l4y944w" id="mantine-o0l4y944w-label" class="label-0-2-129 label-d396-0-2-11349 c129 mantine-autocomplete-label">Destination</label><div class="wrapper-0-2-189 mantine-autocomplete-wrapper" role="combobox" aria-haspopup="listbox" aria-owns="mantine-o0l4y944w-items" aria-controls="mantine-o0l4y944w" aria-expanded="false" tabindex="-1"><div class="root-0-2-138 root-d272-0-2-11353 mantine-autocomplete-root"><input type="string" placeholder="Destination country" data-mantine-stop-propagation="false" id="mantine-o0l4y944w" value="" aria-autocomplete="list" aria-required="false" aria-invalid="false" class="input-0-2-139 input-d273-0-2-11354 c128 mantine-autocomplete-input" style="padding-right:16px"/></div></div></div><div class="root-0-2-128 root-d400-0-2-11361 mantine-date-range-picker-root c127"><label for="mantine-r9xtdlt96" id="mantine-r9xtdlt96-label" class="label-0-2-129 label-d401-0-2-11362 c129 mantine-date-range-picker-label">Stay dates</label><div><div class="wrapper-0-2-8544 wrapper-d12-0-2-11358 mantine-date-range-picker-wrapper"><div class="root-0-2-138 root-d276-0-2-11366 mantine-date-range-picker-root"><button type="button" id="mantine-r9xtdlt96" aria-required="false" aria-invalid="false" class="input-0-2-139 input-d277-0-2-11367 c128 mantine-date-range-picker-input" style="padding-right:16px;cursor:pointer"><div class="root-0-2-36 root-d3818-0-2-11370 mantine-text-root placeholder-0-2-8545 placeholder-d13-0-2-11359 mantine-date-range-picker-placeholder">Stay dates</div></button></div></div></div></div><input type="hidden" name="date-from" value=""/><input type="hidden" name="date-to" value=""/><div class="root-0-2-128 root-d405-0-2-11380 mantine-number-input-root c127 c1210"><label for="mantine-8ydnaokd9" id="mantine-8ydnaokd9-label" class="label-0-2-129 label-d406-0-2-11381 c129 mantine-number-input-label">Budget</label><div class="root-0-2-138 root-d280-0-2-11385 mantine-number-input-root"><input type="number" value="500" min="150" step="50" id="mantine-8ydnaokd9" aria-required="false" aria-invalid="false" class="input-0-2-139 input-d281-0-2-11386 c128 mantine-number-input-input" style="padding-right:16px"/></div></div><button class="root-0-2-94 root-d1219-0-2-11390 mantine-button-root filled-0-2-97 filled-d1222-0-2-11393 mantine-button-filled c1212" type="button"><div class="inner-0-2-92 mantine-button-inner"><span class="label-0-2-93 mantine-button-label">Search</span></div></button></div></div></div></div></div></div></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/gallery/component/inline-form";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-731835509f3307e8d424.js"],"app":["/app-450e9ffbe4e2a11e2ba4.js"],"component---src-components-gallery-gallery-category-page-tsx":["/component---src-components-gallery-gallery-category-page-tsx-4f99edacd69293630a49.js"],"component---src-components-gallery-gallery-component-page-tsx":["/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js"],"component---src-components-gallery-gallery-tsx":["/component---src-components-gallery-gallery-tsx-a1705f4cc36de2d6fa48.js"],"component---src-pages-404-tsx":["/component---src-pages-404-tsx-99eb9c747916a6851964.js"],"component---src-pages-contribute-tsx":["/component---src-pages-contribute-tsx-4cc3a003167c2bdcbbe9.js"],"component---src-pages-getting-started-tsx":["/component---src-pages-getting-started-tsx-ec60c24bbb7b759740c9.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx-b2eef05f86bd46f66d7f.js"],"component---src-pages-mdx-slug-tsx":["/component---src-pages-mdx-slug-tsx-da7f46fde3284a07657f.js"]};/*]]>*/</script><script src="/polyfill-731835509f3307e8d424.js" nomodule=""></script><script src="/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js" async=""></script><script src="/4215b017aee8acc9f1af0e63dbaf7a4508daa2bd-aa80d31b44259e42fa8f.js" async=""></script><script src="/commons-07f9de10726a96adb9dc.js" async=""></script><script src="/app-450e9ffbe4e2a11e2ba4.js" async=""></script><script src="/8fe526ae-3e33597ee9740181898f.js" async=""></script><script src="/fba589a3-d7d06c674224283c9899.js" async=""></script><script src="/framework-633d23f07caeb5181df0.js" async=""></script><script src="/webpack-runtime-2363a199414b50ff16e1.js" async=""></script></body></html>
+}</style><link as="script" rel="preload" href="/webpack-runtime-dc5ceebb38586e2e667d.js"/><link as="script" rel="preload" href="/framework-633d23f07caeb5181df0.js"/><link as="script" rel="preload" href="/fba589a3-d7d06c674224283c9899.js"/><link as="script" rel="preload" href="/8fe526ae-3e33597ee9740181898f.js"/><link as="script" rel="preload" href="/app-e524860718af7ee9825a.js"/><link as="script" rel="preload" href="/commons-07f9de10726a96adb9dc.js"/><link as="script" rel="preload" href="/4215b017aee8acc9f1af0e63dbaf7a4508daa2bd-b8d76cf49f4a2836e17a.js"/><link as="script" rel="preload" href="/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js"/><link as="fetch" rel="preload" href="/page-data/gallery/component/inline-form/page-data.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/2731172446.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/3701445061.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/655967936.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/app-data.json" crossorigin="anonymous"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="c022"><main class="c023"><div class="c024"><div style="padding-bottom:50px"><div style="padding:12px"><div style="padding-top:40px;max-width:820px;margin-left:auto;margin-right:auto"><div class="c029"><div class="c0210"><div class="c0224 c0229 mantine-autocomplete-root c0211 c0215"><label for="mantine-p2zvudtpl" id="mantine-p2zvudtpl-label" class="c0225 c0230 c0213 mantine-autocomplete-label">Destination</label><div class="c0217 mantine-autocomplete-wrapper" role="combobox" aria-haspopup="listbox" aria-owns="mantine-p2zvudtpl-items" aria-controls="mantine-p2zvudtpl" aria-expanded="false" tabindex="-1"><div class="c0234 c0239 mantine-autocomplete-root"><input type="string" placeholder="Destination country" data-mantine-stop-propagation="false" id="mantine-p2zvudtpl" value="" aria-autocomplete="list" aria-required="false" aria-invalid="false" class="c0235 c0240 c0212 mantine-autocomplete-input" style="padding-right:16px"/></div></div></div><div class="c0224 c0253 mantine-date-range-picker-root c0211"><label for="mantine-e2mtade5b" id="mantine-e2mtade5b-label" class="c0225 c0254 c0213 mantine-date-range-picker-label">Stay dates</label><div><div class="c0245 c0250 mantine-date-range-picker-wrapper"><div class="c0234 c0258 mantine-date-range-picker-root"><button type="button" id="mantine-e2mtade5b" aria-required="false" aria-invalid="false" class="c0235 c0259 c0212 mantine-date-range-picker-input" style="padding-right:16px;cursor:pointer"><div class="c0262 c0264 mantine-text-root c0246 c0251 mantine-date-range-picker-placeholder">Stay dates</div></button></div></div></div></div><input type="hidden" name="date-from" value=""/><input type="hidden" name="date-to" value=""/><div class="c0224 c0286 mantine-number-input-root c0211 c0214"><label for="mantine-49t9l7jbb" id="mantine-49t9l7jbb-label" class="c0225 c0287 c0213 mantine-number-input-label">Budget</label><div class="c0234 c0291 mantine-number-input-root"><input type="number" value="500" min="150" step="50" id="mantine-49t9l7jbb" aria-required="false" aria-invalid="false" class="c0235 c0292 c0212 mantine-number-input-input" style="padding-right:16px"/></div></div><button class="c02101 c02108 mantine-button-root c02104 c02111 mantine-button-filled c0216" type="button"><div class="c0299 mantine-button-inner"><span class="c02100 mantine-button-label">Search</span></div></button></div></div></div></div></div></div></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/gallery/component/inline-form";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-731835509f3307e8d424.js"],"app":["/app-e524860718af7ee9825a.js"],"component---src-components-gallery-gallery-category-page-tsx":["/component---src-components-gallery-gallery-category-page-tsx-2a503c6794c377faa94a.js"],"component---src-components-gallery-gallery-component-page-tsx":["/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js"],"component---src-components-gallery-gallery-tsx":["/component---src-components-gallery-gallery-tsx-58eb9468aee0cd3a11e8.js"],"component---src-pages-404-tsx":["/component---src-pages-404-tsx-99eb9c747916a6851964.js"],"component---src-pages-contribute-tsx":["/component---src-pages-contribute-tsx-cd905878fea21cd63c39.js"],"component---src-pages-getting-started-tsx":["/component---src-pages-getting-started-tsx-60318d27cb5369f0d087.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx-aaa415e62ca29c472437.js"],"component---src-pages-mdx-slug-tsx":["/component---src-pages-mdx-slug-tsx-ea7934d75ef2f7678743.js"]};/*]]>*/</script><script src="/polyfill-731835509f3307e8d424.js" nomodule=""></script><script src="/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js" async=""></script><script src="/4215b017aee8acc9f1af0e63dbaf7a4508daa2bd-b8d76cf49f4a2836e17a.js" async=""></script><script src="/commons-07f9de10726a96adb9dc.js" async=""></script><script src="/app-e524860718af7ee9825a.js" async=""></script><script src="/8fe526ae-3e33597ee9740181898f.js" async=""></script><script src="/fba589a3-d7d06c674224283c9899.js" async=""></script><script src="/framework-633d23f07caeb5181df0.js" async=""></script><script src="/webpack-runtime-dc5ceebb38586e2e667d.js" async=""></script></body></html>

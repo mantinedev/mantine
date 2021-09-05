@@ -1,4 +1,896 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 3.8.1"/><title data-react-helmet="true">Contact form | Mantine</title><link data-react-helmet="true" rel="preconnect" href="https://fonts.googleapis.com"/><link data-react-helmet="true" rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"/><link data-react-helmet="true" href="https://fonts.googleapis.com/css2?family=Dosis:wght@800&amp;display=swap" rel="stylesheet"/><meta data-react-helmet="true" name="viewport" content="width=device-width, user-scalable=no"/><meta data-react-helmet="true" name="description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><meta data-react-helmet="true" property="og:title" content="Contact form"/><meta data-react-helmet="true" property="og:image" content="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png"/><meta data-react-helmet="true" property="og:image:width" content="1280"/><meta data-react-helmet="true" property="og:image:height" content="640"/><meta data-react-helmet="true" property="og:description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" name="twitter:card" content="summary_large_image"/><meta data-react-helmet="true" name="twitter:creator" content="@mantinedev"/><meta data-react-helmet="true" name="twitter:title" content="Contact form"/><meta data-react-helmet="true" name="twitter:description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><link rel="icon" href="/favicon-32x32.png?v=c7bf473b30e5d81722ea0acf3a11a107" type="image/png"/><link rel="icon" href="/favicon.svg?v=c7bf473b30e5d81722ea0acf3a11a107" type="image/svg+xml"/><link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous"/><meta name="theme-color" content="#228be6"/><link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><style type="text/css" id="server-side-jss">#nprogress {
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 3.8.1"/><title data-react-helmet="true">Contact form | Mantine</title><link data-react-helmet="true" rel="preconnect" href="https://fonts.googleapis.com"/><link data-react-helmet="true" rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"/><link data-react-helmet="true" href="https://fonts.googleapis.com/css2?family=Dosis:wght@800&amp;display=swap" rel="stylesheet"/><meta data-react-helmet="true" name="viewport" content="width=device-width, user-scalable=no"/><meta data-react-helmet="true" name="description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><meta data-react-helmet="true" property="og:title" content="Contact form"/><meta data-react-helmet="true" property="og:image" content="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png"/><meta data-react-helmet="true" property="og:image:width" content="1280"/><meta data-react-helmet="true" property="og:image:height" content="640"/><meta data-react-helmet="true" property="og:description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" name="twitter:card" content="summary_large_image"/><meta data-react-helmet="true" name="twitter:creator" content="@mantinedev"/><meta data-react-helmet="true" name="twitter:title" content="Contact form"/><meta data-react-helmet="true" name="twitter:description" content="React components and hooks library with native dark theme support and focus on usability, accessibility and developer experience"/><link rel="icon" href="/favicon-32x32.png?v=c7bf473b30e5d81722ea0acf3a11a107" type="image/png"/><link rel="icon" href="/favicon.svg?v=c7bf473b30e5d81722ea0acf3a11a107" type="image/svg+xml"/><link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous"/><meta name="theme-color" content="#228be6"/><link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=c7bf473b30e5d81722ea0acf3a11a107"/><style type="text/css" id="server-side-jss">*, *::before, *::after {
+  box-sizing: border-box;
+}
+body {
+  color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+}
+article, aside, footer, header, nav, section, figcaption, figure, main {
+  display: block;
+}
+h1 {
+  margin: 0.67em 0;
+  font-size: 2em;
+}
+hr {
+  height: 0;
+  overflow: visible;
+  box-sizing: content-box;
+}
+pre {
+  font-size: 1em;
+  font-family: monospace, monospace;
+}
+a {
+  background: transparent;
+  text-decoration-skip: objects;
+}
+a:active, a:hover {
+  outline-width: 0;
+}
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+}
+b, strong {
+  font-weight: bolder;
+}
+code, kbp, samp {
+  font-size: 1em;
+  font-family: monospace, monospace;
+}
+dfn {
+  font-style: italic;
+}
+mark {
+  color: #000;
+  background-color: #ff0;
+}
+small {
+  font-size: 80%;
+}
+sub, sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+audio, video {
+  display: inline-block;
+}
+audio:not([controls]) {
+  height: 0;
+  display: none;
+}
+img {
+  border-style: none;
+  vertical-align: middle;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+button, input, optgroup, select, textarea {
+  margin: 0;
+  font-size: 100%;
+  font-family: sans-serif;
+  line-height: 1.15;
+}
+button, input {
+  overflow: visible;
+}
+button, select {
+  text-transform: none;
+}
+button, [type=reset], [type=submit] {
+  -webkit-appearance: button;
+}
+button::-moz-focus-inner, [type=button]::-moz-focus-inner, [type=reset]::-moz-focus-inner, [type=submit]::-moz-focus-inner {
+  padding: 0;
+  border-style: none;
+}
+button:-moz-focusring, [type=button]:-moz-focusring, [type=reset]:-moz-focusring, [type=submit]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+legend {
+  color: inherit;
+  display: table;
+  padding: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+}
+progress {
+  display: inline-block;
+  vertical-align: baseline;
+}
+textarea {
+  overflow: auto;
+}
+[type=checkbox], [type=radio] {
+  padding: 0;
+  box-sizing: border-box;
+}
+[type=number]::-webkit-inner-spin-button, [type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+[type=search] {
+  appearance: textfield;
+  outline-offset: -2px;
+}
+[type=search]::-webkit-search-cancel-button, [type=search]::-webkit-search-decoration {
+  appearance: none;
+}
+::-webkit-file-upload-button {
+  font: inherit;
+  appearance: button;
+}
+details, menu {
+  display: block;
+}
+summary {
+  display: list-item;
+}
+canvas {
+  display: inline-block;
+}
+template {
+  display: none;
+}
+[hidden] {
+  display: none;
+}
+.c0218 {}
+.c0219 {
+  color: #000;
+  display: block;
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  text-decoration: none;
+  background-color: #fff;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0219:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+}
+.c0219:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.c0220 {}
+.c0221 {}
+.c0222 {
+  color: #000;
+  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0222:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+}
+.c0222:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.c0222:hover {
+  text-decoration: none;
+}
+.c0223 {
+  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.c0228 {
+  color: #000;
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0228:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+}
+.c0228:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.c0228:hover {
+  text-decoration: none;
+}
+.c0229 {
+  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.c0230 {
+  color: #000;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0230:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+}
+.c0230:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.c0230:hover {
+  text-decoration: none;
+}
+.c0231 {
+  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.c0232 {
+  color: #000;
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0232:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+}
+.c0232:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.c0232:hover {
+  text-decoration: none;
+}
+.c0233 {
+  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.c0234 {
+  color: #000;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0234:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+}
+.c0234:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.c0234:hover {
+  text-decoration: none;
+}
+.c0235 {
+  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.c0236 {
+  color: #000;
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0236:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+}
+.c0236:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.c0236:hover {
+  text-decoration: none;
+}
+.c0237 {
+  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.c0238 {
+  color: #000;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0238:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+}
+.c0238:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.c0238:hover {
+  text-decoration: none;
+}
+.c0239 {
+  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.c0240 {
+  color: #000;
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0240:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+}
+.c0240:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.c0240:hover {
+  text-decoration: none;
+}
+.c0241 {
+  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.c0242 {
+  color: #000;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0242:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+}
+.c0242:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.c0242:hover {
+  text-decoration: none;
+}
+.c0243 {
+  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.c0244 {
+  color: #000;
+  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0244:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+}
+.c0244:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+.c0244:hover {
+  text-decoration: none;
+}
+.c0245 {
+  background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.c025 {}
+.c026 {}
+.c027 {
+  width: calc(100% - 32px);
+  z-index: 1000;
+  position: fixed;
+  box-sizing: border-box;
+}
+.c028 {}
+.c028 + .c028 {
+  margin-top: 12px;
+}
+.c0224 {}
+.c0225 {}
+.c0226 {
+  margin: -12px;
+  display: flex;
+  padding: 0;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.c0227 {
+  margin: 12px;
+  flex-grow: 0;
+}
+.c0292 {
+  margin: -8px;
+  display: flex;
+  padding: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.c0293 {
+  margin: 8px;
+  flex-grow: 0;
+}
+.c0246 {}
+.c0247 {}
+.c0248 {}
+.c0249 {}
+.c0250 {}
+.c0251 {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.c0252 {
+  color: #212529;
+  cursor: default;
+  display: block;
+  font-size: 14px;
+  word-break: break-word;
+  font-weight: 500;
+  margin-bottom: 5px;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0253 {
+  color: #f03e3e;
+  margin-top: 5px;
+  word-break: break-word;
+}
+.c0254 {
+  color: #868e96;
+  font-size: 12px;
+  margin-top: -3px;
+  word-break: break-word;
+  line-height: 1.2;
+  margin-bottom: 7px;
+}
+.c0255 {
+  color: #f03e3e;
+}
+.c0265 {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.c0266 {
+  color: #212529;
+  cursor: default;
+  display: block;
+  font-size: 14px;
+  word-break: break-word;
+  font-weight: 500;
+  margin-bottom: 5px;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0267 {
+  color: #f03e3e;
+  margin-top: 5px;
+  word-break: break-word;
+}
+.c0268 {
+  color: #868e96;
+  font-size: 12px;
+  margin-top: -3px;
+  word-break: break-word;
+  line-height: 1.2;
+  margin-bottom: 7px;
+}
+.c0269 {
+  color: #f03e3e;
+}
+.c0274 {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.c0275 {
+  color: #212529;
+  cursor: default;
+  display: block;
+  font-size: 14px;
+  word-break: break-word;
+  font-weight: 500;
+  margin-bottom: 5px;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0276 {
+  color: #f03e3e;
+  margin-top: 5px;
+  word-break: break-word;
+}
+.c0277 {
+  color: #868e96;
+  font-size: 12px;
+  margin-top: -3px;
+  word-break: break-word;
+  line-height: 1.2;
+  margin-bottom: 7px;
+}
+.c0278 {
+  color: #f03e3e;
+}
+.c0283 {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.c0284 {
+  color: #212529;
+  cursor: default;
+  display: block;
+  font-size: 14px;
+  word-break: break-word;
+  font-weight: 500;
+  margin-bottom: 5px;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0285 {
+  color: #f03e3e;
+  margin-top: 5px;
+  word-break: break-word;
+}
+.c0286 {
+  color: #868e96;
+  font-size: 12px;
+  margin-top: -3px;
+  word-break: break-word;
+  line-height: 1.2;
+  margin-bottom: 7px;
+}
+.c0287 {
+  color: #f03e3e;
+}
+.c0256 {}
+.c0257 {}
+.c0258 {}
+.c0259 {}
+.c0260 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+}
+.c0261 {
+  position: relative;
+  border-radius: 4px;
+}
+.c0262 {
+  color: #000;
+  width: 100%;
+  height: 36px;
+  resize: none;
+  display: block;
+  font-size: 14px;
+  appearance: none;
+  box-sizing: border-box;
+  min-height: 36px;
+  text-align: left;
+  transition: border-color 100ms ease, box-shadow 100ms ease;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 34px;
+  border-color: #ced4da;
+  border-style: solid;
+  border-width: 1px;
+  padding-left: 12px;
+  border-radius: 4px;
+  padding-right: 12px;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0262:focus, .c0262:focus-within {
+  outline: none;
+  border-color: #339af0;
+}
+.c0262:disabled {
+  color: #9D9FA4;
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #f1f3f5;
+}
+.c0262::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+  user-select: none;
+}
+.c0262::-webkit-inner-spin-button, .c0262::-webkit-outer-spin-button, .c0262::-webkit-search-decoration, .c0262::-webkit-search-cancel-button, .c0262::-webkit-search-results-button, .c0262::-webkit-search-results-decoration {
+  appearance: none;
+}
+.c0262[type=number] {
+  -moz-appearance: textfield;
+}
+.c0262:disabled::placeholder {
+  color: #9D9FA4;
+}
+.c0263 {
+  padding-left: 36px;
+}
+.c0264 {
+  top: 0;
+  left: 0;
+  color: #868e96;
+  width: 36px;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  pointer-events: none;
+  justify-content: center;
+}
+.c0270 {
+  position: relative;
+  border-radius: 4px;
+}
+.c0271 {
+  color: #000;
+  width: 100%;
+  height: 36px;
+  resize: none;
+  display: block;
+  font-size: 14px;
+  appearance: none;
+  box-sizing: border-box;
+  min-height: 36px;
+  text-align: left;
+  transition: border-color 100ms ease, box-shadow 100ms ease;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 34px;
+  border-color: #ced4da;
+  border-style: solid;
+  border-width: 1px;
+  padding-left: 12px;
+  border-radius: 4px;
+  padding-right: 12px;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0271:focus, .c0271:focus-within {
+  outline: none;
+  border-color: #339af0;
+}
+.c0271:disabled {
+  color: #9D9FA4;
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #f1f3f5;
+}
+.c0271::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+  user-select: none;
+}
+.c0271::-webkit-inner-spin-button, .c0271::-webkit-outer-spin-button, .c0271::-webkit-search-decoration, .c0271::-webkit-search-cancel-button, .c0271::-webkit-search-results-button, .c0271::-webkit-search-results-decoration {
+  appearance: none;
+}
+.c0271[type=number] {
+  -moz-appearance: textfield;
+}
+.c0271:disabled::placeholder {
+  color: #9D9FA4;
+}
+.c0272 {
+  padding-left: 36px;
+}
+.c0273 {
+  top: 0;
+  left: 0;
+  color: #868e96;
+  width: 36px;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  pointer-events: none;
+  justify-content: center;
+}
+.c0279 {
+  position: relative;
+  border-radius: 4px;
+}
+.c0280 {
+  color: #000;
+  width: 100%;
+  height: 36px;
+  resize: none;
+  display: block;
+  font-size: 14px;
+  appearance: none;
+  box-sizing: border-box;
+  min-height: 36px;
+  text-align: left;
+  transition: border-color 100ms ease, box-shadow 100ms ease;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 34px;
+  border-color: #ced4da;
+  border-style: solid;
+  border-width: 1px;
+  padding-left: 12px;
+  border-radius: 4px;
+  padding-right: 12px;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0280:focus, .c0280:focus-within {
+  outline: none;
+  border-color: #339af0;
+}
+.c0280:disabled {
+  color: #9D9FA4;
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #f1f3f5;
+}
+.c0280::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+  user-select: none;
+}
+.c0280::-webkit-inner-spin-button, .c0280::-webkit-outer-spin-button, .c0280::-webkit-search-decoration, .c0280::-webkit-search-cancel-button, .c0280::-webkit-search-results-button, .c0280::-webkit-search-results-decoration {
+  appearance: none;
+}
+.c0280[type=number] {
+  -moz-appearance: textfield;
+}
+.c0280:disabled::placeholder {
+  color: #9D9FA4;
+}
+.c0281 {
+  padding-left: 36px;
+}
+.c0282 {
+  top: 0;
+  left: 0;
+  color: #868e96;
+  width: 36px;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  pointer-events: none;
+  justify-content: center;
+}
+.c0288 {
+  position: relative;
+  border-radius: 4px;
+}
+.c0289 {
+  color: #000;
+  width: 100%;
+  height: auto;
+  resize: none;
+  display: block;
+  font-size: 14px;
+  appearance: none;
+  box-sizing: border-box;
+  min-height: 36px;
+  text-align: left;
+  transition: border-color 100ms ease, box-shadow 100ms ease;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  line-height: 1.4;
+  border-color: #ced4da;
+  border-style: solid;
+  border-width: 1px;
+  padding-left: 12px;
+  border-radius: 4px;
+  padding-right: 12px;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+.c0289:focus, .c0289:focus-within {
+  outline: none;
+  border-color: #339af0;
+}
+.c0289:disabled {
+  color: #9D9FA4;
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #f1f3f5;
+}
+.c0289::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+  user-select: none;
+}
+.c0289::-webkit-inner-spin-button, .c0289::-webkit-outer-spin-button, .c0289::-webkit-search-decoration, .c0289::-webkit-search-cancel-button, .c0289::-webkit-search-results-button, .c0289::-webkit-search-results-decoration {
+  appearance: none;
+}
+.c0289[type=number] {
+  -moz-appearance: textfield;
+}
+.c0289:disabled::placeholder {
+  color: #9D9FA4;
+}
+.c0290 {
+  padding-left: 36px;
+}
+.c0291 {
+  top: 0;
+  left: 0;
+  color: #868e96;
+  width: 36px;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  pointer-events: none;
+  justify-content: center;
+}
+#nprogress {
   z-index: 100000;
 }
 :target {
@@ -7,32 +899,188 @@
   position: relative;
   visibility: hidden;
 }
-.c121 {
+.c021 {
   padding-left: 260px;
 }
 @media (max-width: 760px) {
-  .c121 {
+  .c021 {
     padding-left: 0;
   }
 }
-  .c122 .c123 {
+  .c022 .c023 {
     padding-top: 0;
   }
-  .c123 {
+  .c023 {
     flex: 1;
     padding-top: 34px;
     scroll-margin-top: 60;
   }
 @media (max-width: 760px) {
-  .c123 {
+  .c023 {
     padding-left: 0;
     padding-right: 0;
   }
 }
-  .c124 {
+  .c024 {
     min-height: calc(100vh - 280px);
   }
-  .c125 {
+  .c0294 {  }
+  .c0295 {
+    display: flex;
+    align-items: center;
+  }
+  .c0296 {
+    margin-right: 10px;
+  }
+  .c0297 {
+    margin-left: 10px;
+  }
+  .c0298 {
+    height: 100%;
+    display: flex;
+    overflow: visible;
+    align-items: center;
+    justify-content: center;
+  }
+  .c0299 {
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .c02100 {  }
+  .c02101 {  }
+  .c02102 {  }
+  .c02103 {  }
+  .c02104 {  }
+  .c02105 {  }
+  .c02106 {  }
+  .c02106::before {
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    cursor: not-allowed;
+    content: "";
+    position: absolute;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, .5);
+  }
+  .c02107 {
+    width: auto;
+    cursor: pointer;
+    height: 36px;
+    display: inline-block;
+    padding: 0 18px;
+    position: relative;
+    font-size: 14px;
+    appearance: none;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+    line-height: 1;
+    user-select: none;
+    text-decoration: none;
+    -webkit-appearance: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .c02107:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #339af0;
+  }
+  .c02107:focus:not(:focus-visible) {
+    box-shadow: none;
+  }
+  .c02108 {
+    color: #1c7ed6;
+    border: 1px solid rgba(28, 126, 214, 0.65);
+    font-weight: 600;
+    border-radius: 4px;
+    background-color: transparent;
+  }
+  .c02108:not(:disabled):active {
+    transform: translateY(1px);
+  }
+  .c02108:disabled:not(.c0294) {
+    color: #adb5bd;
+    cursor: not-allowed;
+    border-color: transparent;
+    background-color: #e9ecef;
+  }
+  .c02109 {
+    color: #1864ab;
+    border: 1px solid transparent;
+    font-weight: 600;
+    border-radius: 4px;
+    background-color: rgba(231, 245, 255, 1);
+  }
+  .c02109:not(:disabled):active {
+    transform: translateY(1px);
+  }
+  .c02109:disabled:not(.c0294) {
+    color: #adb5bd;
+    cursor: not-allowed;
+    text-shadow: none;
+    border-color: transparent;
+    background-color: #e9ecef;
+  }
+  .c02110 {
+    color: #fff;
+    border: 1px solid transparent;
+    font-weight: 600;
+    text-shadow: 1px 1px 0 #1864ab;
+    border-radius: 4px;
+    background-color: #228be6;
+  }
+  .c02110:not(:disabled):active {
+    transform: translateY(1px);
+  }
+  .c02110:disabled:disabled:not(.c0294) {
+    color: #adb5bd;
+    cursor: not-allowed;
+    text-shadow: none;
+    border-color: transparent;
+    background-color: #e9ecef;
+  }
+  .c02111 {
+    color: #fff;
+    border: 0;
+    font-weight: 600;
+    border-radius: 4px;
+    background-image: linear-gradient(45deg, #228be6 0%, #15aabf 100%);
+  }
+  .c02111:not(:disabled):active {
+    transform: translateY(1px);
+  }
+  .c02111:disabled:disabled:not(.c0294) {
+    color: #adb5bd;
+    cursor: not-allowed;
+    background-color: #e9ecef;
+  }
+  .c02112 {
+    color: #1c7ed6;
+    border: 0;
+    cursor: pointer;
+    height: auto;
+    display: inline-block;
+    padding: 0;
+    line-height: 1.4;
+    border-radius: 4px;
+    background-color: transparent;
+  }
+  .c02112:hover {
+    text-decoration: underline;
+  }
+  .c02112:disabled {
+    color: #adb5bd;
+    cursor: not-allowed;
+  }
+  .c02112:disabled:hover {
+    text-decoration: none;
+  }
+  .c029 {
     border: 1px solid #e9ecef;
     display: flex;
     padding: 4px;
@@ -40,11 +1088,11 @@
     background-color: #fff;
   }
 @media (max-width: 755px) {
-  .c125 {
+  .c029 {
     flex-direction: column;
   }
 }
-  .c126 {
+  .c0210 {
     flex: 1;
     padding: 24px;
     box-sizing: border-box;
@@ -52,38 +1100,38 @@
     padding-left: 48px;
   }
 @media (max-width: 755px) {
-  .c126 {
+  .c0210 {
     padding: 16px;
     padding-left: 16px;
   }
 }
-  .c127 {
+  .c0211 {
     margin-top: -12px;
   }
-  .c128 {
+  .c0212 {
     flex: 1;
   }
-  .c128 + .c128 {
+  .c0212 + .c0212 {
     margin-left: 16px;
   }
 @media (max-width: 755px) {
-  .c128 + .c128 {
+  .c0212 + .c0212 {
     margin-top: 16px;
     margin-left: 0;
   }
 }
-  .c129 {
+  .c0213 {
     display: flex;
   }
 @media (max-width: 755px) {
-  .c129 {
+  .c0213 {
     flex-direction: column;
   }
 }
-  .c1210 + .c1210 {
+  .c0214 + .c0214 {
     margin-top: 12px;
   }
-  .c1211 {
+  .c0215 {
     flex: 0 0 280px;
     border: 1px solid transparent;
     padding: 24px;
@@ -94,25 +1142,25 @@
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAwIDgwMCIgc3R5bGU9InRyYW5zZm9ybTogcm90YXRlKDE4MGRlZyk7Ij48cGF0aCBmaWxsPSIjMjI4QkU2IiBkPSJNMCAwaDE2MDB2ODAwSDB6Ii8+PHBhdGggZmlsbD0iIzIxODhlMyIgZD0iTTQ4NiA3MDUuOGMtMTA5LjMtMjEuOC0yMjMuNC0zMi4yLTMzNS4zLTE5LjRDOTkuNSA2OTIuMSA0OSA3MDMgMCA3MTkuOFY4MDBoODQzLjhjLTExNS45LTMzLjItMjMwLjgtNjguMS0zNDcuNi05Mi4yLTMuNC0uNy02LjgtMS4zLTEwLjItMnoiLz48cGF0aCBmaWxsPSIjMjA4NmUwIiBkPSJNMTYwMCAwSDB2NzE5LjhDNDkgNzAzIDk5LjUgNjkyIDE1MC43IDY4Ni4zYzExMS45LTEyLjcgMjI2LTIuNCAzMzUuMyAxOS40IDMuNC43IDYuOCAxLjQgMTAuMiAyIDExNi44IDI0IDIzMS43IDU5IDM0Ny42IDkyLjJIMTYwMFYweiIvPjxwYXRoIGZpbGw9IiMxZTgzZGMiIGQ9Ik00NzguNCA1ODFjMy4yLjggNi40IDEuNyA5LjUgMi41QzY4NC4xIDYzNiA4NzYuNiA3MTcgMTA4MS40IDc2MC4xYzE3NC4yIDM2LjYgMzQ5LjUgMjkuMiA1MTguNi0xMC4yVjBIMHY1NzQuOWM1Mi4zLTE3LjYgMTA2LjUtMjcuNyAxNjEuMS0zMC45IDEwNy4zLTYuNiAyMTQuNiAxMC4yIDMxNy4zIDM3eiIvPjxwYXRoIGZpbGw9IiMxZDgxZDkiIGQ9Ik0wIDB2NDI5LjRjNTUuNi0xOC40IDExMy41LTI3LjMgMTcxLjQtMjcuNyAxMDIuOC0uOCAyMDMuMiAyMi43IDI5OS4zIDU0LjUgMyAxIDUuOSAyIDguOSAzIDE4My42IDYyIDM2NS43IDE0Ni4xIDU2Mi40IDE5Mi4xIDE4Ni43IDQzLjcgMzc2LjMgMzQuNCA1NTcuOS0xMi42VjBIMHoiLz48cGF0aCBmaWxsPSIjMUM3RUQ2IiBkPSJNMTgxLjggMjU5LjRjOTguMiA2IDE5MS45IDM1LjIgMjgxLjMgNzIuMSAyLjggMS4xIDUuNSAyLjMgOC4zIDMuNCAxNzEgNzEuNiAzNDIuNyAxNTguNSA1MzEuMyAyMDcuNyAxOTguOCA1MS44IDQwMy40IDQwLjggNTk3LjMtMTQuOFYwSDB2MjgzLjJhNDgzLjUgNDgzLjUgMCAwMTE4MS44LTIzLjh6Ii8+PHBhdGggZmlsbD0iIzFiNzljZCIgZD0iTTE2MDAgMEgwdjEzNi4zYzYyLjMtMjAuOSAxMjcuNy0yNy41IDE5Mi4yLTE5LjIgOTMuNiAxMi4xIDE4MC41IDQ3LjcgMjYzLjMgODkuNiAyLjYgMS4zIDUuMSAyLjYgNy43IDMuOSAxNTguNCA4MS4xIDMxOS43IDE3MC45IDUwMC4zIDIyMy4yIDIxMC41IDYxIDQzMC44IDQ5IDYzNi42LTE2LjZWMHoiLz48cGF0aCBmaWxsPSIjMWE3M2M1IiBkPSJNNDU0LjkgODYuM0M2MDAuNyAxNzcgNzUxLjYgMjY5LjMgOTI0LjEgMzI1YzIwOC42IDY3LjQgNDMxLjMgNjAuOCA2MzcuOS01LjMgMTIuOC00LjEgMjUuNC04LjQgMzguMS0xMi45VjBoLTEzMTJjNTYgMjEuMyAxMDguNyA1MC42IDE1OS43IDgyIDIuNCAxLjQgNC43IDIuOSA3LjEgNC4zeiIvPjxwYXRoIGZpbGw9IiMxYTZlYmMiIGQ9Ik0xNjAwIDBINDk4YzExOC4xIDg1LjggMjQzLjUgMTY0LjUgMzg2LjggMjE2LjIgMTkxLjggNjkuMiA0MDAgNzQuNyA1OTUgMjEuMSA0MC44LTExLjIgODEuMS0yNS4yIDEyMC4zLTQxLjdWMHoiLz48cGF0aCBmaWxsPSIjMTk2OWIzIiBkPSJNMTM5Ny41IDE1NC44YzQ3LjItMTAuNiA5My42LTI1LjMgMTM4LjYtNDMuOCAyMS43LTguOSA0My0xOC44IDYzLjktMjkuNVYwSDY0My40YzYyLjkgNDEuNyAxMjkuNyA3OC4yIDIwMi4xIDEwNy40IDE3NC45IDcwLjcgMzY4LjcgODguNyA1NTIgNDcuNHoiLz48cGF0aCBmaWxsPSIjMTg2NEFCIiBkPSJNMTMxNS4zIDcyLjRjNzUuMy0xMi42IDE0OC45LTM3LjEgMjE2LjgtNzIuNGgtNzIzYzE1Ny43IDcxIDMzNS42IDEwMSA1MDYuMiA3Mi40eiIvPjwvc3ZnPgo=);
     background-position: center;
   }
-  .c1211 * {
+  .c0215 * {
     color: #fff;
   }
 @media (max-width: 755px) {
-  .c1211 {
+  .c0215 {
     padding-left: 16px;
     margin-bottom: 12px;
   }
 }
-  .c1212 {
+  .c0216 {
     margin-bottom: 36px;
   }
 @media (max-width: 755px) {
-  .c1212 {
+  .c0216 {
     margin-bottom: 24px;
   }
 }
 @media (max-width: 755px) {
-  .c1213 {
+  .c0217 {
     flex: 1;
   }
-}</style><link as="script" rel="preload" href="/webpack-runtime-2363a199414b50ff16e1.js"/><link as="script" rel="preload" href="/framework-633d23f07caeb5181df0.js"/><link as="script" rel="preload" href="/fba589a3-d7d06c674224283c9899.js"/><link as="script" rel="preload" href="/8fe526ae-3e33597ee9740181898f.js"/><link as="script" rel="preload" href="/app-450e9ffbe4e2a11e2ba4.js"/><link as="script" rel="preload" href="/commons-07f9de10726a96adb9dc.js"/><link as="script" rel="preload" href="/4215b017aee8acc9f1af0e63dbaf7a4508daa2bd-aa80d31b44259e42fa8f.js"/><link as="script" rel="preload" href="/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js"/><link as="fetch" rel="preload" href="/page-data/gallery/component/get-in-touch/page-data.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/2731172446.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/3701445061.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/655967936.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/app-data.json" crossorigin="anonymous"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="c122"><main class="c123"><div class="c124"><div style="padding-bottom:50px"><div style="padding:12px"><div style="padding-top:40px;max-width:800px;margin-left:auto;margin-right:auto"><div class="paper-0-2-7 paper-d68-0-2-11640 mantine-paper-paper"><div class="c125"><div class="c1211"><div class="root-0-2-36 root-d3870-0-2-11641 mantine-text-root c1212" style="font-weight:700">Contact information</div><div class="root-0-2-42 root-d376-0-2-11643 mantine-group-root"><div style="display:flex;align-items:flex-start" class="child-0-2-43 child-d377-0-2-11644 mantine-group-child"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:16px"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg><div><div class="root-0-2-36 root-d3872-0-2-11645 mantine-text-root" style="color:#e7f5ff">Email</div><div class="root-0-2-36 root-d3874-0-2-11647 mantine-text-root" style="font-weight:500">hello@mantine.dev</div></div></div><div style="display:flex;align-items:flex-start" class="child-0-2-43 child-d377-0-2-11644 mantine-group-child"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:16px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg><div><div class="root-0-2-36 root-d3876-0-2-11649 mantine-text-root" style="color:#e7f5ff">Phone</div><div class="root-0-2-36 root-d3878-0-2-11651 mantine-text-root" style="font-weight:500">+49 (800) 335 35 35</div></div></div><div style="display:flex;align-items:flex-start" class="child-0-2-43 child-d377-0-2-11644 mantine-group-child"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:16px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><div><div class="root-0-2-36 root-d3880-0-2-11653 mantine-text-root" style="color:#e7f5ff">Address</div><div class="root-0-2-36 root-d3882-0-2-11655 mantine-text-root" style="font-weight:500">844 Morris Park avenue</div></div></div><div style="display:flex;align-items:flex-start" class="child-0-2-43 child-d377-0-2-11644 mantine-group-child"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:16px"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><div><div class="root-0-2-36 root-d3884-0-2-11657 mantine-text-root" style="color:#e7f5ff">Working hours</div><div class="root-0-2-36 root-d3886-0-2-11659 mantine-text-root" style="font-weight:500">8 a.m. – 11 p.m.</div></div></div></div></div><form class="c126"><div class="root-0-2-36 root-d3888-0-2-11661 mantine-text-root c1212" style="font-weight:700">Get in touch</div><div class="c127"><div class="c1210 c129"><div class="root-0-2-128 root-d425-0-2-11663 mantine-text-input-root c128"><label for="mantine-jboc050ni" id="mantine-jboc050ni-label" class="label-0-2-129 label-d426-0-2-11664 mantine-text-input-label">Your name</label><div class="root-0-2-138 root-d296-0-2-11668 mantine-text-input-root"><input type="text" placeholder="Your name" id="mantine-jboc050ni" aria-required="false" aria-invalid="false" class="input-0-2-139 input-d297-0-2-11669 mantine-text-input-input" style="padding-right:16px"/></div></div><div class="root-0-2-128 root-d430-0-2-11672 mantine-text-input-root c128"><label for="mantine-trh8f1xig" id="mantine-trh8f1xig-label" class="label-0-2-129 label-d431-0-2-11673 mantine-text-input-label">Your email<span class="required-0-2-132 required-d434-0-2-11676 mantine-text-input-required"> <!-- -->*</span></label><div class="root-0-2-138 root-d300-0-2-11677 mantine-text-input-root"><input type="text" placeholder="hello@mantine.dev" id="mantine-trh8f1xig" aria-required="true" aria-invalid="false" class="input-0-2-139 input-d301-0-2-11678 mantine-text-input-input" style="padding-right:16px"/></div></div></div><div class="root-0-2-128 root-d435-0-2-11681 mantine-text-input-root c1210"><label for="mantine-jg0nedcp5" id="mantine-jg0nedcp5-label" class="label-0-2-129 label-d436-0-2-11682 mantine-text-input-label">Subject<span class="required-0-2-132 required-d439-0-2-11685 mantine-text-input-required"> <!-- -->*</span></label><div class="root-0-2-138 root-d304-0-2-11686 mantine-text-input-root"><input type="text" placeholder="Subject" id="mantine-jg0nedcp5" aria-required="true" aria-invalid="false" class="input-0-2-139 input-d305-0-2-11687 mantine-text-input-input" style="padding-right:16px"/></div></div><div class="root-0-2-128 root-d440-0-2-11690 mantine-textarea-root c1210"><label for="mantine-1e9dj2fi3" id="mantine-1e9dj2fi3-label" class="label-0-2-129 label-d441-0-2-11691 mantine-textarea-label">Your message</label><div class="root-0-2-138 root-d308-0-2-11695 mantine-textarea-root"><textarea id="mantine-1e9dj2fi3" rows="3" placeholder="Please include all relevant information" aria-required="false" aria-invalid="false" class="input-0-2-139 input-d309-0-2-11696 mantine-textarea-input" style="padding-right:16px;padding-top:10px;padding-bottom:10px"></textarea></div></div><div class="root-0-2-42 root-d378-0-2-11699 mantine-group-root c1210"><button class="root-0-2-94 root-d1310-0-2-11702 mantine-button-root filled-0-2-97 filled-d1313-0-2-11705 mantine-button-filled child-0-2-43 child-d379-0-2-11700 mantine-group-child c1213" type="submit"><div class="inner-0-2-92 mantine-button-inner"><span class="label-0-2-93 mantine-button-label">Send message</span></div></button></div></div></form></div></div></div></div></div></div></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/gallery/component/get-in-touch";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-731835509f3307e8d424.js"],"app":["/app-450e9ffbe4e2a11e2ba4.js"],"component---src-components-gallery-gallery-category-page-tsx":["/component---src-components-gallery-gallery-category-page-tsx-4f99edacd69293630a49.js"],"component---src-components-gallery-gallery-component-page-tsx":["/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js"],"component---src-components-gallery-gallery-tsx":["/component---src-components-gallery-gallery-tsx-a1705f4cc36de2d6fa48.js"],"component---src-pages-404-tsx":["/component---src-pages-404-tsx-99eb9c747916a6851964.js"],"component---src-pages-contribute-tsx":["/component---src-pages-contribute-tsx-4cc3a003167c2bdcbbe9.js"],"component---src-pages-getting-started-tsx":["/component---src-pages-getting-started-tsx-ec60c24bbb7b759740c9.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx-b2eef05f86bd46f66d7f.js"],"component---src-pages-mdx-slug-tsx":["/component---src-pages-mdx-slug-tsx-da7f46fde3284a07657f.js"]};/*]]>*/</script><script src="/polyfill-731835509f3307e8d424.js" nomodule=""></script><script src="/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js" async=""></script><script src="/4215b017aee8acc9f1af0e63dbaf7a4508daa2bd-aa80d31b44259e42fa8f.js" async=""></script><script src="/commons-07f9de10726a96adb9dc.js" async=""></script><script src="/app-450e9ffbe4e2a11e2ba4.js" async=""></script><script src="/8fe526ae-3e33597ee9740181898f.js" async=""></script><script src="/fba589a3-d7d06c674224283c9899.js" async=""></script><script src="/framework-633d23f07caeb5181df0.js" async=""></script><script src="/webpack-runtime-2363a199414b50ff16e1.js" async=""></script></body></html>
+}</style><link as="script" rel="preload" href="/webpack-runtime-dc5ceebb38586e2e667d.js"/><link as="script" rel="preload" href="/framework-633d23f07caeb5181df0.js"/><link as="script" rel="preload" href="/fba589a3-d7d06c674224283c9899.js"/><link as="script" rel="preload" href="/8fe526ae-3e33597ee9740181898f.js"/><link as="script" rel="preload" href="/app-e524860718af7ee9825a.js"/><link as="script" rel="preload" href="/commons-07f9de10726a96adb9dc.js"/><link as="script" rel="preload" href="/4215b017aee8acc9f1af0e63dbaf7a4508daa2bd-b8d76cf49f4a2836e17a.js"/><link as="script" rel="preload" href="/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js"/><link as="fetch" rel="preload" href="/page-data/gallery/component/get-in-touch/page-data.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/2731172446.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/3701445061.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/sq/d/655967936.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/app-data.json" crossorigin="anonymous"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="c022"><main class="c023"><div class="c024"><div style="padding-bottom:50px"><div style="padding:12px"><div style="padding-top:40px;max-width:800px;margin-left:auto;margin-right:auto"><div class="c0218 c0219 mantine-paper-paper"><div class="c029"><div class="c0215"><div class="c0220 c0222 mantine-text-root c0216" style="font-weight:700">Contact information</div><div class="c0224 c0226 mantine-group-root"><div style="display:flex;align-items:flex-start" class="c0225 c0227 mantine-group-child"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:16px"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg><div><div class="c0220 c0228 mantine-text-root" style="color:#e7f5ff">Email</div><div class="c0220 c0230 mantine-text-root" style="font-weight:500">hello@mantine.dev</div></div></div><div style="display:flex;align-items:flex-start" class="c0225 c0227 mantine-group-child"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:16px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg><div><div class="c0220 c0232 mantine-text-root" style="color:#e7f5ff">Phone</div><div class="c0220 c0234 mantine-text-root" style="font-weight:500">+49 (800) 335 35 35</div></div></div><div style="display:flex;align-items:flex-start" class="c0225 c0227 mantine-group-child"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:16px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><div><div class="c0220 c0236 mantine-text-root" style="color:#e7f5ff">Address</div><div class="c0220 c0238 mantine-text-root" style="font-weight:500">844 Morris Park avenue</div></div></div><div style="display:flex;align-items:flex-start" class="c0225 c0227 mantine-group-child"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:16px"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><div><div class="c0220 c0240 mantine-text-root" style="color:#e7f5ff">Working hours</div><div class="c0220 c0242 mantine-text-root" style="font-weight:500">8 a.m. – 11 p.m.</div></div></div></div></div><form class="c0210"><div class="c0220 c0244 mantine-text-root c0216" style="font-weight:700">Get in touch</div><div class="c0211"><div class="c0214 c0213"><div class="c0246 c0251 mantine-text-input-root c0212"><label for="mantine-0u3vsb0it" id="mantine-0u3vsb0it-label" class="c0247 c0252 mantine-text-input-label">Your name</label><div class="c0256 c0261 mantine-text-input-root"><input type="text" placeholder="Your name" id="mantine-0u3vsb0it" aria-required="false" aria-invalid="false" class="c0257 c0262 mantine-text-input-input" style="padding-right:16px"/></div></div><div class="c0246 c0265 mantine-text-input-root c0212"><label for="mantine-drh6h1mv1" id="mantine-drh6h1mv1-label" class="c0247 c0266 mantine-text-input-label">Your email<span class="c0250 c0269 mantine-text-input-required"> <!-- -->*</span></label><div class="c0256 c0270 mantine-text-input-root"><input type="text" placeholder="hello@mantine.dev" id="mantine-drh6h1mv1" aria-required="true" aria-invalid="false" class="c0257 c0271 mantine-text-input-input" style="padding-right:16px"/></div></div></div><div class="c0246 c0274 mantine-text-input-root c0214"><label for="mantine-40j6eryue" id="mantine-40j6eryue-label" class="c0247 c0275 mantine-text-input-label">Subject<span class="c0250 c0278 mantine-text-input-required"> <!-- -->*</span></label><div class="c0256 c0279 mantine-text-input-root"><input type="text" placeholder="Subject" id="mantine-40j6eryue" aria-required="true" aria-invalid="false" class="c0257 c0280 mantine-text-input-input" style="padding-right:16px"/></div></div><div class="c0246 c0283 mantine-textarea-root c0214"><label for="mantine-4ejntt377" id="mantine-4ejntt377-label" class="c0247 c0284 mantine-textarea-label">Your message</label><div class="c0256 c0288 mantine-textarea-root"><textarea id="mantine-4ejntt377" rows="3" placeholder="Please include all relevant information" aria-required="false" aria-invalid="false" class="c0257 c0289 mantine-textarea-input" style="padding-right:16px;padding-top:10px;padding-bottom:10px"></textarea></div></div><div class="c0224 c0292 mantine-group-root c0214"><button class="c02100 c02107 mantine-button-root c02103 c02110 mantine-button-filled c0225 c0293 mantine-group-child c0217" type="submit"><div class="c0298 mantine-button-inner"><span class="c0299 mantine-button-label">Send message</span></div></button></div></div></form></div></div></div></div></div></div></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/gallery/component/get-in-touch";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-731835509f3307e8d424.js"],"app":["/app-e524860718af7ee9825a.js"],"component---src-components-gallery-gallery-category-page-tsx":["/component---src-components-gallery-gallery-category-page-tsx-2a503c6794c377faa94a.js"],"component---src-components-gallery-gallery-component-page-tsx":["/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js"],"component---src-components-gallery-gallery-tsx":["/component---src-components-gallery-gallery-tsx-58eb9468aee0cd3a11e8.js"],"component---src-pages-404-tsx":["/component---src-pages-404-tsx-99eb9c747916a6851964.js"],"component---src-pages-contribute-tsx":["/component---src-pages-contribute-tsx-cd905878fea21cd63c39.js"],"component---src-pages-getting-started-tsx":["/component---src-pages-getting-started-tsx-60318d27cb5369f0d087.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx-aaa415e62ca29c472437.js"],"component---src-pages-mdx-slug-tsx":["/component---src-pages-mdx-slug-tsx-ea7934d75ef2f7678743.js"]};/*]]>*/</script><script src="/polyfill-731835509f3307e8d424.js" nomodule=""></script><script src="/component---src-components-gallery-gallery-component-page-tsx-9eab3b868d07e218e67d.js" async=""></script><script src="/4215b017aee8acc9f1af0e63dbaf7a4508daa2bd-b8d76cf49f4a2836e17a.js" async=""></script><script src="/commons-07f9de10726a96adb9dc.js" async=""></script><script src="/app-e524860718af7ee9825a.js" async=""></script><script src="/8fe526ae-3e33597ee9740181898f.js" async=""></script><script src="/fba589a3-d7d06c674224283c9899.js" async=""></script><script src="/framework-633d23f07caeb5181df0.js" async=""></script><script src="/webpack-runtime-dc5ceebb38586e2e667d.js" async=""></script></body></html>
