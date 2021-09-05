@@ -2,17 +2,17 @@ import React from 'react';
 import { List } from '../List';
 
 const code = `
-<List>
+<List listStyleType="disc">
   <List.Item>First order item</List.Item>
   <List.Item>First order item</List.Item>
   <List.Item>
     First order item with list
-    <List withPadding>
+    <List withPadding listStyleType="disc">
       <List.Item>Nested item</List.Item>
       <List.Item>Nested item</List.Item>
       <List.Item>
         Nested item with list
-        <List withPadding>
+        <List withPadding listStyleType="disc">
           <List.Item>Event more nested</List.Item>
           <List.Item>Event more nested</List.Item>
         </List>
@@ -26,17 +26,17 @@ const code = `
 
 function Demo() {
   return (
-    <List>
+    <List listStyleType="disc">
       <List.Item>First order item</List.Item>
       <List.Item>First order item</List.Item>
       <List.Item>
         First order item with list
-        <List withPadding>
+        <List withPadding listStyleType="disc">
           <List.Item>Nested item</List.Item>
           <List.Item>Nested item</List.Item>
           <List.Item>
             Nested item with list
-            <List withPadding>
+            <List withPadding listStyleType="disc">
               <List.Item>Event more nested</List.Item>
               <List.Item>Event more nested</List.Item>
             </List>
