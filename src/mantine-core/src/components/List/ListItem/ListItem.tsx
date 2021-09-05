@@ -3,10 +3,10 @@ import React from 'react';
 import { DefaultProps, mergeStyles, useMantineTheme, MantineNumberSize } from '../../../theme';
 import useStyles from './ListItem.styles';
 
-export type ListItemStylesName = keyof ReturnType<typeof useStyles>;
+export type ListItemStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface ListItemProps
-  extends DefaultProps<ListItemStylesName>,
+  extends DefaultProps<ListItemStylesNames>,
     React.ComponentPropsWithoutRef<'li'> {
   icon?: React.ReactNode;
   children: React.ReactNode;
@@ -36,7 +36,7 @@ export function ListItem({
       style={{ ...style, ..._styles.item, ...(icon ? _styles.withIcon : null) }}
       {...others}
     >
-      <div className={classes.itemWrapper}>
+      <div className={classes.itemWrapper} style={_styles.itemWrapper}>
         {icon && (
           <span className={classes.itemIcon} style={_styles.itemIcon}>
             {icon}

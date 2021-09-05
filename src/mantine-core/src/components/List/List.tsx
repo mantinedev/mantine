@@ -1,12 +1,17 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../theme';
-import { ListItem } from './ListItem/ListItem';
+import { ListItem, ListItemProps, ListItemStylesNames } from './ListItem/ListItem';
 import useStyles from './List.styles';
 
 export { ListItem };
+export type { ListItemProps };
 
-export interface ListProps extends DefaultProps, React.ComponentPropsWithoutRef<'ul'> {
+export type ListStylesNames = ListItemStylesNames | keyof ReturnType<typeof useStyles>;
+
+export interface ListProps
+  extends DefaultProps<ListStylesNames>,
+    React.ComponentPropsWithoutRef<'ul'> {
   /** <List.Item /> components only */
   children: React.ReactNode;
 
