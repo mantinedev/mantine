@@ -77,7 +77,7 @@ export interface AutocompleteProps
   /** Function based on which items in dropdown are filtered */
   filter?(value: string, item: AutocompleteItem): boolean;
 
-  /**Default message to be displayed on zero search results  */
+  /** Message that will be displayed on zero search results  */
   nothingFound?: string;
 }
 
@@ -116,7 +116,7 @@ export function Autocomplete({
   classNames,
   styles,
   filter = defaultFilter,
-  nothingFound = 'No Results',
+  nothingFound,
   ...others
 }: AutocompleteProps) {
   const theme = useMantineTheme(themeOverride);
@@ -194,10 +194,12 @@ export function Autocomplete({
 
   const handleInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     typeof onClick === 'function' && onClick(event);
-    setDropdownOpened(o => !o);
+    setDropdownOpened((o) => !o);
   };
 
-  const shouldRenderDropdown = dropdownOpened && filteredData.length > 0;
+  const shouldRenderDropdown =
+    dropdownOpened && (filteredData.length > 0 || (filteredData.length === 0 && !!nothingFound));
+
   return (
     <InputWrapper
       required={required}
@@ -254,7 +256,7 @@ export function Autocomplete({
 
         <SelectDropdown
           themeOverride={themeOverride}
-          mounted={dropdownOpened}
+          mounted={shouldRenderDropdown}
           transition={transition}
           transitionDuration={transitionDuration}
           transitionTimingFunction={transitionTimingFunction}
