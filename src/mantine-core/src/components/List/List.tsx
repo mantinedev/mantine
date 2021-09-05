@@ -41,7 +41,7 @@ export function List({
   children,
   type = 'unordered',
   size = 'md',
-  listStyleType = 'disc',
+  listStyleType,
   withPadding = false,
   center = false,
   spacing = 0,
