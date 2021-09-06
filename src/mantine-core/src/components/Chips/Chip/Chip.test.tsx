@@ -5,11 +5,15 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itRendersChildren,
+  itSupportsStylesApi,
 } from '@mantine/tests';
 import { Chip } from './Chip';
 import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
+import { Chip as ChipStylesApi } from './styles.api';
 
 const defaultProps = {
+  checked: true,
+  disabled: true,
   children: 'test-chip',
 };
 
@@ -19,9 +23,18 @@ describe('@mantine/core/Chip', () => {
   itRendersChildren(Chip, defaultProps);
   itSupportsRef(Chip, defaultProps, HTMLInputElement, 'elementRef');
 
+  itSupportsStylesApi(
+    Chip,
+    defaultProps,
+    Object.keys(ChipStylesApi).filter(
+      (key) => key !== 'checked' && key !== 'label' && key !== 'disabled' && key !== 'input'
+    ),
+    'chip'
+  );
+
   it('displays checked icon based on checked prop', () => {
-    const checked = shallow(<Chip checked {...defaultProps} />);
-    const notChecked = shallow(<Chip checked={false} {...defaultProps} />);
+    const checked = shallow(<Chip {...defaultProps} checked />);
+    const notChecked = shallow(<Chip {...defaultProps} checked={false} />);
 
     expect(checked.find(CheckboxIcon)).toHaveLength(1);
     expect(notChecked.find(CheckboxIcon)).toHaveLength(0);

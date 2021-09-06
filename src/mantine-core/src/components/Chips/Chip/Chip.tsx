@@ -11,7 +11,7 @@ import {
 import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
 import useStyles from './Chip.styles';
 
-export type ChipStylesNames = keyof ReturnType<typeof useStyles>;
+export type ChipStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'filled' | 'outline'>;
 
 export interface ChipProps
   extends DefaultProps<ChipStylesNames>,
@@ -102,7 +102,12 @@ export function Chip({
           classes[variant],
           className
         )}
-        style={{ ...style, ..._styles.label, ...(value ? _styles.checked : null) }}
+        style={{
+          ...style,
+          ..._styles.label,
+          ...(value ? _styles.checked : null),
+          ...(disabled ? _styles.disabled : null),
+        }}
         htmlFor={uuid}
       >
         {value && (
