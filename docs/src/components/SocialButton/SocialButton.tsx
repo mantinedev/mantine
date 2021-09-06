@@ -1,12 +1,11 @@
 import React from 'react';
 import { Button, DEFAULT_THEME } from '@mantine/core';
-import { MarkGithubIcon } from '@primer/octicons-react';
 import { TwitterIcon } from './TwitterIcon';
 import { DiscordIcon } from './DiscordIcon';
 import { MailIcon } from './MailIcon';
 
 interface SocialButtonProps extends Omit<React.ComponentPropsWithoutRef<'a'>, 'type'> {
-  service: 'github' | 'twitter' | 'discord' | 'email' | 'tg';
+  service: 'twitter' | 'discord' | 'email';
 }
 
 const data = {
@@ -15,13 +14,6 @@ const data = {
     label: 'Subscribe to email newsletter',
     link: 'https://buttondown.email/mantine',
     color: DEFAULT_THEME.colors.blue[6],
-  },
-
-  github: {
-    icon: MarkGithubIcon,
-    label: 'Source code',
-    link: 'https://github.com/mantinedev/mantine',
-    color: '#000',
   },
 
   discord: {
@@ -36,13 +28,6 @@ const data = {
     label: 'Follow Mantine on Twitter',
     link: 'https://twitter.com/mantinedev',
     color: '#00acee',
-  },
-
-  tg: {
-    icon: null,
-    label: 'Contact on Telegram',
-    link: 'https://t.me/rtivital',
-    color: '#40B3E0',
   },
 };
 
