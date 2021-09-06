@@ -37,6 +37,9 @@ export interface ChipsProps<T extends boolean = false>
 
   /** <Chip /> components only */
   children?: React.ReactNode;
+
+  /** Controls chip appearance */
+  variant?: 'filled' | 'outline';
 }
 
 export function Chips<T extends boolean>({
@@ -45,6 +48,7 @@ export function Chips<T extends boolean>({
   onChange,
   spacing = 'xs',
   size = 'sm',
+  variant = 'outline',
   multiple,
   children,
   id,
@@ -65,6 +69,7 @@ export function Chips<T extends boolean>({
     .filter((child: React.ReactElement) => child.type === Chip)
     .map((child: React.ReactElement, index) =>
       React.cloneElement(child, {
+        variant,
         __staticSelector: 'chips',
         classNames,
         styles,
