@@ -29,6 +29,13 @@ storiesOf('@mantine/core/ActionIcon', module)
       <Group>{getThemes({ disabled: true, variant: 'transparent' })}</Group>
     </>
   ))
+  .add('Loading', () => (
+    <>
+      <Group>{getThemes({ loading: true })}</Group>
+      <Group>{getThemes({ loading: true, variant: 'filled' })}</Group>
+      <Group>{getThemes({ loading: true, variant: 'transparent' })}</Group>
+    </>
+  ))
   .add('Sizes', () => (
     <>
       <Group>{getThemes({ size: 'xs' }, { style: { width: 12, height: 12 } })}</Group>
@@ -74,6 +81,12 @@ storiesOf('@mantine/core/ActionIcon', module)
       </Group>
       <Group style={{ marginTop: 20 }}>
         {getThemes({ disabled: true, variant: 'outline', themeOverride: { colorScheme: 'dark' } })}
+      </Group>
+      <Group style={{ marginTop: 20 }}>
+        {getThemes({ loading: true, variant: 'filled', themeOverride: { colorScheme: 'dark' } })}
+      </Group>
+      <Group style={{ marginTop: 20 }}>
+        {getThemes({ loading: true, variant: 'outline', themeOverride: { colorScheme: 'dark' } })}
       </Group>
     </div>
   ));
