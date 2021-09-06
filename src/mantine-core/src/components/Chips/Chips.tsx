@@ -1,15 +1,16 @@
 import React, { Children } from 'react';
 import { useUncontrolled, useId } from '@mantine/hooks';
-import { Group } from '../Group/Group';
+import { Group, GroupProps } from '../Group/Group';
 import { DefaultProps, MantineNumberSize, MantineSize } from '../../theme';
-import { Chip, ChipProps } from './Chip/Chip';
+import { Chip, ChipProps, ChipStylesNames } from './Chip/Chip';
 
 export { Chip };
 export type { ChipProps };
+export type ChipsStylesNames = ChipStylesNames;
 
 interface SharedChipsProps<T extends boolean = false>
-  extends DefaultProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'defaultValue' | 'onChange'> {
+  extends DefaultProps<ChipStylesNames>,
+    Omit<GroupProps, 'value' | 'defaultValue' | 'onChange' | 'classNames' | 'styles'> {
   /** Spacing between chips from theme or number to set value in px */
   spacing?: MantineNumberSize;
 
@@ -33,6 +34,9 @@ interface SharedChipsProps<T extends boolean = false>
 
   /** Static id, used to generate inputs names */
   id?: string;
+
+  /** <Chip /> components only */
+  children?: React.ReactNode;
 }
 
 export function Chips<T extends boolean>({
@@ -44,6 +48,8 @@ export function Chips<T extends boolean>({
   multiple,
   children,
   id,
+  classNames,
+  styles,
   ...others
 }: SharedChipsProps<T>) {
   const uuid = useId(id);
@@ -59,6 +65,9 @@ export function Chips<T extends boolean>({
     .filter((child: React.ReactElement) => child.type === Chip)
     .map((child: React.ReactElement, index) =>
       React.cloneElement(child, {
+        __staticSelector: 'chips',
+        classNames,
+        styles,
         name: uuid,
         size,
         id: `${uuid}-${index}`,

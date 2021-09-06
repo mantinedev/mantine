@@ -48,6 +48,9 @@ export interface ChipProps
 
   /** Get input ref */
   elementRef?: React.ForwardedRef<HTMLInputElement>;
+
+  /** Static selector base */
+  __staticSelector?: string;
 }
 
 export function Chip({
@@ -56,6 +59,7 @@ export function Chip({
   size = 'sm',
   variant = 'outline',
   disabled = false,
+  __staticSelector = 'chip',
   elementRef,
   id,
   color,
@@ -72,7 +76,7 @@ export function Chip({
 }: ChipProps) {
   const uuid = useId(id);
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, radius, size, color }, classNames, 'chip');
+  const classes = useStyles({ theme, radius, size, color }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [value, setValue] = useUncontrolled({
     value: checked,
