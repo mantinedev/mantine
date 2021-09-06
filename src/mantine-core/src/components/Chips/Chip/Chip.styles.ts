@@ -6,6 +6,7 @@ import {
   getSizeValue,
   getFontStyles,
   getThemeColor,
+  getSharedColorScheme,
 } from '../../../theme';
 
 export const sizes = {
@@ -78,15 +79,18 @@ export default createMemoStyles({
   }),
 
   filled: ({ theme }: ChipStyles) => ({
-    backgroundColor: theme.colors.gray[1],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
 
     '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     },
   }),
 
   disabled: ({ theme }: ChipStyles) => ({
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+    backgroundColor: [
+      [theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]],
+      '!important',
+    ],
     borderColor: [
       [theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]],
       '!important',
@@ -112,7 +116,10 @@ export default createMemoStyles({
     },
 
     '&$filled': {
-      backgroundColor: getThemeColor({ theme, color, shade: 1 }),
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? getSharedColorScheme({ color, theme, variant: 'light' }).background
+          : getThemeColor({ theme, color, shade: 1 }),
     },
   }),
 
