@@ -50,6 +50,8 @@ interface ChipStyles {
 export default createMemoStyles({
   label: ({ theme, radius, size }: ChipStyles) => ({
     ...getFontStyles(theme),
+    boxSizing: 'border-box',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     display: 'inline-block',
     alignItems: 'center',
     userSelect: 'none',
@@ -57,7 +59,7 @@ export default createMemoStyles({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     height: getSizeValue({ size, sizes }),
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
-    lineHeight: `${getSizeValue({ size, sizes })}px`,
+    lineHeight: `${getSizeValue({ size, sizes }) - 2}px`,
     paddingLeft: getSizeValue({ size, sizes: padding }),
     paddingRight: getSizeValue({ size, sizes: padding }),
     cursor: 'pointer',
@@ -67,11 +69,11 @@ export default createMemoStyles({
   }),
 
   outline: ({ theme }: ChipStyles) => ({
-    backgroundColor: theme.white,
-    borderColor: theme.colors.gray[4],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
 
     '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
     },
   }),
 
@@ -84,17 +86,20 @@ export default createMemoStyles({
   }),
 
   disabled: ({ theme }: ChipStyles) => ({
-    backgroundColor: theme.colors.gray[1],
-    borderColor: [[theme.colors.gray[1]], '!important'],
-    color: theme.colors.gray[5],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+    borderColor: [
+      [theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]],
+      '!important',
+    ],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
     cursor: 'not-allowed',
 
     '&:hover': {
-      backgroundColor: theme.colors.gray[1],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
     },
 
     '& $iconWrapper': {
-      color: theme.colors.gray[5],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
     },
   }),
 
