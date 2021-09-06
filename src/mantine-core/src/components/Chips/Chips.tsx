@@ -40,13 +40,18 @@ export interface ChipsProps<T extends boolean = false>
 
   /** Controls chip appearance */
   variant?: 'filled' | 'outline';
+
+  /** Active chip color, defaults to theme.primaryColor */
+  color?: string;
 }
 
 export function Chips<T extends boolean>({
   value,
   defaultValue,
   onChange,
+  color,
   spacing = 'xs',
+  radius = 'xl',
   size = 'sm',
   variant = 'outline',
   multiple,
@@ -70,6 +75,8 @@ export function Chips<T extends boolean>({
     .map((child: React.ReactElement, index) =>
       React.cloneElement(child, {
         variant,
+        radius,
+        color,
         __staticSelector: 'chips',
         classNames,
         styles,
