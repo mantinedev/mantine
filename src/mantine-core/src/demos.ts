@@ -13,6 +13,7 @@ export * as ButtonDemos from './components/Button/demos';
 export * as CardDemos from './components/Card/demos';
 export * as CenterDemos from './components/Center/demos';
 export * as CheckboxDemos from './components/Checkbox/demos';
+export * as ChipsDemos from './components/Chips/demos';
 export * as CodeDemos from './components/Code/demos';
 export * as CollapseDemos from './components/Collapse/demos';
 export * as ColorInputDemos from './components/ColorInput/demos';

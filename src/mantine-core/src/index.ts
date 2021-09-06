@@ -18,6 +18,7 @@ export { Button, UnstyledButton, BUTTON_SIZES, BUTTON_VARIANTS } from './compone
 export { Card, CardSection } from './components/Card/Card';
 export { Center } from './components/Center/Center';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
+export { Chips, Chip } from './components/Chips/Chips';
 export { Code } from './components/Code/Code';
 export { Collapse } from './components/Collapse/Collapse';
 export { ColorInput } from './components/ColorInput/ColorInput';
@@ -104,6 +105,12 @@ export type { ButtonProps, ButtonStylesNames } from './components/Button/Button'
 export type { CardProps, CardSectionProps } from './components/Card/Card';
 export type { CenterProps } from './components/Center/Center';
 export type { CheckboxProps, CheckboxStylesNames } from './components/Checkbox/Checkbox';
+export type {
+  ChipProps,
+  ChipsProps,
+  ChipsStylesNames,
+  ChipStylesNames,
+} from './components/Chips/Chips';
 export type { CodeProps } from './components/Code/Code';
 export type { ColorInputProps } from './components/ColorInput/ColorInput';
 export type {

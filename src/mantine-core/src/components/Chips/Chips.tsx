@@ -5,10 +5,10 @@ import { DefaultProps, MantineNumberSize, MantineSize } from '../../theme';
 import { Chip, ChipProps, ChipStylesNames } from './Chip/Chip';
 
 export { Chip };
-export type { ChipProps };
+export type { ChipProps, ChipStylesNames };
 export type ChipsStylesNames = ChipStylesNames;
 
-interface SharedChipsProps<T extends boolean = false>
+export interface ChipsProps<T extends boolean = false>
   extends DefaultProps<ChipStylesNames>,
     Omit<GroupProps, 'value' | 'defaultValue' | 'onChange' | 'classNames' | 'styles'> {
   /** Spacing between chips from theme or number to set value in px */
@@ -51,7 +51,7 @@ export function Chips<T extends boolean>({
   classNames,
   styles,
   ...others
-}: SharedChipsProps<T>) {
+}: ChipsProps<T>) {
   const uuid = useId(id);
   const [_value, setValue] = useUncontrolled<string | string[]>({
     value,
