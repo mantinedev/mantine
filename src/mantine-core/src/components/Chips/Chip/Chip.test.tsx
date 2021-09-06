@@ -12,6 +12,7 @@ import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
 import { Chip as ChipStylesApi } from './styles.api';
 
 const defaultProps = {
+  value: 'test-value',
   checked: true,
   disabled: true,
   children: 'test-chip',

@@ -17,26 +17,40 @@ storiesOf('@mantine/core/Chips', module)
   ))
   .add('Chip', () => (
     <div style={{ padding: 40 }}>
-      <Chip type="radio">Radio chip</Chip>
-      <Chip variant="filled">Checkbox chip</Chip>
+      <Chip value="1" type="radio">
+        Radio chip
+      </Chip>
+      <Chip value="1" variant="filled">
+        Checkbox chip
+      </Chip>
     </div>
   ))
   .add('Chip sizes', () => (
     <div style={{ padding: 40 }}>
       <div>
-        <Chip size="xs">xs chip</Chip>
+        <Chip value="1" size="xs">
+          xs chip
+        </Chip>
       </div>
       <div style={{ marginTop: 15 }}>
-        <Chip size="sm">sm chip</Chip>
+        <Chip value="1" size="sm">
+          sm chip
+        </Chip>
       </div>
       <div style={{ marginTop: 15 }}>
-        <Chip size="md">md chip</Chip>
+        <Chip value="1" size="md">
+          md chip
+        </Chip>
       </div>
       <div style={{ marginTop: 15 }}>
-        <Chip size="lg">lg chip</Chip>
+        <Chip value="1" size="lg">
+          lg chip
+        </Chip>
       </div>
       <div style={{ marginTop: 15 }}>
-        <Chip size="xl">xl chip</Chip>
+        <Chip value="1" size="xl">
+          xl chip
+        </Chip>
       </div>
     </div>
   ));

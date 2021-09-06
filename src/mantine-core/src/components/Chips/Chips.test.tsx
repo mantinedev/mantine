@@ -12,7 +12,13 @@ import { Chips as ChipsStylesApi } from './styles.api';
 
 const defaultProps = {
   value: '1',
-  children: [<Chip value="1">test-1</Chip>, <Chip disabled>test-2</Chip>, <Chip>test-3</Chip>],
+  children: [
+    <Chip value="1">test-1</Chip>,
+    <Chip value="2" disabled>
+      test-2
+    </Chip>,
+    <Chip value="2">test-3</Chip>,
+  ],
 };
 
 describe('@mantine/core/Chips', () => {
