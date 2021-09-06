@@ -1,5 +1,5 @@
 import React, { Children } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useUncontrolled, useId } from '@mantine/hooks';
 import { Group } from '../Group/Group';
 import { DefaultProps, MantineNumberSize, MantineSize } from '../../theme';
 import { Chip, ChipProps } from './Chip/Chip';
@@ -30,6 +30,9 @@ interface SharedChipsProps<T extends boolean = false>
 
   /** Called when value changes */
   onChange?(value: T extends true ? string[] : string): void;
+
+  /** Static id, used to generate inputs names */
+  id?: string;
 }
 
 export function Chips<T extends boolean>({
@@ -40,8 +43,10 @@ export function Chips<T extends boolean>({
   size = 'sm',
   multiple,
   children,
+  id,
   ...others
 }: SharedChipsProps<T>) {
+  const uuid = useId(id);
   const [_value, setValue] = useUncontrolled<string | string[]>({
     value,
     defaultValue,
@@ -52,8 +57,12 @@ export function Chips<T extends boolean>({
 
   const chips = Children.toArray(children)
     .filter((child: React.ReactElement) => child.type === Chip)
-    .map((child: React.ReactElement) =>
+    .map((child: React.ReactElement, index) =>
       React.cloneElement(child, {
+        name: uuid,
+        size,
+        id: `${uuid}-${index}`,
+        type: multiple ? 'checkbox' : 'radio',
         checked: Array.isArray(_value)
           ? _value.includes(child.props.value)
           : child.props.value === _value,
@@ -69,5 +78,9 @@ export function Chips<T extends boolean>({
       })
     );
 
-  return <Group spacing={spacing}>{chips}</Group>;
+  return (
+    <Group spacing={spacing} id={uuid} {...others}>
+      {chips}
+    </Group>
+  );
 }

@@ -63,6 +63,7 @@ export default createMemoStyles({
     cursor: 'pointer',
     whiteSpace: 'nowrap',
     transition: 'background-color 100ms ease',
+    WebkitTapHighlightColor: 'transparent',
   }),
 
   outline: ({ theme }: ChipStyles) => ({
@@ -113,7 +114,29 @@ export default createMemoStyles({
     overflow: 'hidden',
   }),
 
-  input: {
-    display: 'none',
-  },
+  input: ({ theme }: ChipStyles) => ({
+    width: 0,
+    height: 0,
+    padding: 0,
+    opacity: 0,
+    margin: 0,
+
+    // input is hidden by default, these styles add focus to label when user navigates with keyboard
+    '&:focus': {
+      outline: 'none',
+
+      '& + $label': {
+        outline: 'none',
+        boxShadow: `0 0 0 2px ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
+        }, 0 0 0 4px ${theme.colors[theme.primaryColor][5]}`,
+      },
+
+      '&:focus:not(:focus-visible)': {
+        '& + $label': {
+          boxShadow: 'none',
+        },
+      },
+    },
+  }),
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { useUncontrolled } from '@mantine/hooks';
+import { useUncontrolled, useId } from '@mantine/hooks';
 import {
   DefaultProps,
   useMantineTheme,
@@ -42,6 +42,9 @@ export interface ChipProps
 
   /** Active color from theme, defaults to theme.primaryColor */
   color?: string;
+
+  /** Static id to bind input with label */
+  id?: string;
 }
 
 export function Chip({
@@ -49,6 +52,7 @@ export function Chip({
   type = 'checkbox',
   size = 'sm',
   variant = 'outline',
+  id,
   color,
   children,
   className,
@@ -61,6 +65,7 @@ export function Chip({
   themeOverride,
   ...others
 }: ChipProps) {
+  const uuid = useId(id);
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, radius, size, color }, classNames, 'chip');
   const _styles = mergeStyles(classes, styles);
@@ -73,30 +78,32 @@ export function Chip({
   });
 
   return (
-    // Rule is broken
-    // eslint-disable-next-line jsx-a11y/label-has-associated-control
-    <label
-      className={cx(classes.root, { [classes.checked]: value }, classes[variant], className)}
-      style={{ ...style, ..._styles.root, ...(value ? _styles.checked : null) }}
-    >
+    <>
       <input
         type={type}
         className={classes.input}
         style={_styles.input}
         checked={value}
         onChange={(event) => setValue(event.currentTarget.checked)}
+        id={uuid}
         {...others}
       />
-      {value && (
-        <span className={classes.iconWrapper} style={_styles.iconWrapper}>
-          <CheckboxIcon
-            indeterminate={false}
-            className={classes.checkIcon}
-            style={{ ..._styles.checkIcon }}
-          />
-        </span>
-      )}
-      {children}
-    </label>
+      <label
+        className={cx(classes.root, { [classes.checked]: value }, classes[variant], className)}
+        style={{ ...style, ..._styles.root, ...(value ? _styles.checked : null) }}
+        htmlFor={uuid}
+      >
+        {value && (
+          <span className={classes.iconWrapper} style={_styles.iconWrapper}>
+            <CheckboxIcon
+              indeterminate={false}
+              className={classes.checkIcon}
+              style={{ ..._styles.checkIcon }}
+            />
+          </span>
+        )}
+        {children}
+      </label>
+    </>
   );
 }

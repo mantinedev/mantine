@@ -6,7 +6,7 @@ import { Chips } from './Chips';
 storiesOf('@mantine/core/Chips', module)
   .add('Chips', () => (
     <div style={{ padding: 40 }}>
-      <Chips multiple>
+      <Chips>
         <Chip value="1">First</Chip>
         <Chip value="2">Second</Chip>
         <Chip value="3">Third</Chip>
