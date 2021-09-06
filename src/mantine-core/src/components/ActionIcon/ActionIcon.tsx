@@ -77,7 +77,7 @@ export function ActionIcon<
   const classes = useStyles({ size, radius, color, theme }, null, 'action-icon');
   const Element = component || 'button';
   const colors = getSharedColorScheme({
-    color: 'gray',
+    color,
     theme,
     variant: 'light',
   });
