@@ -45,6 +45,9 @@ export interface ChipProps
 
   /** Static id to bind input with label */
   id?: string;
+
+  /** Get input ref */
+  elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
 export function Chip({
@@ -53,6 +56,7 @@ export function Chip({
   size = 'sm',
   variant = 'outline',
   disabled = false,
+  elementRef,
   id,
   color,
   children,
@@ -88,6 +92,7 @@ export function Chip({
         onChange={(event) => setValue(event.currentTarget.checked)}
         id={uuid}
         disabled={disabled}
+        ref={elementRef}
         {...others}
       />
       <label
@@ -114,3 +119,5 @@ export function Chip({
     </>
   );
 }
+
+Chip.displayName = '@mantine/core/Chip';
