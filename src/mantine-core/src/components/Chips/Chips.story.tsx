@@ -8,7 +8,9 @@ storiesOf('@mantine/core/Chips', module)
     <div style={{ padding: 40 }}>
       <Chips>
         <Chip value="1">First</Chip>
-        <Chip value="2">Second</Chip>
+        <Chip value="2" disabled>
+          Second
+        </Chip>
         <Chip value="3">Third</Chip>
       </Chips>
     </div>

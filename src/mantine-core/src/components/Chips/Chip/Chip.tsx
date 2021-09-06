@@ -52,6 +52,7 @@ export function Chip({
   type = 'checkbox',
   size = 'sm',
   variant = 'outline',
+  disabled = false,
   id,
   color,
   children,
@@ -86,10 +87,16 @@ export function Chip({
         checked={value}
         onChange={(event) => setValue(event.currentTarget.checked)}
         id={uuid}
+        disabled={disabled}
         {...others}
       />
       <label
-        className={cx(classes.label, { [classes.checked]: value }, classes[variant], className)}
+        className={cx(
+          classes.label,
+          { [classes.checked]: value, [classes.disabled]: disabled },
+          classes[variant],
+          className
+        )}
         style={{ ...style, ..._styles.label, ...(value ? _styles.checked : null) }}
         htmlFor={uuid}
       >

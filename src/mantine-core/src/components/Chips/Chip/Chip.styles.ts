@@ -83,6 +83,16 @@ export default createMemoStyles({
     },
   }),
 
+  disabled: ({ theme }: ChipStyles) => ({
+    backgroundColor: theme.colors.gray[1],
+    borderColor: theme.colors.gray[1],
+    color: theme.colors.gray[5],
+
+    '& $iconWrapper': {
+      color: theme.colors.gray[5],
+    },
+  }),
+
   checked: ({ theme, color, size }: ChipStyles) => ({
     paddingLeft: getSizeValue({ size, sizes: checkedPadding }),
     paddingRight: getSizeValue({ size, sizes: checkedPadding }),
