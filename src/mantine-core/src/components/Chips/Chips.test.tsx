@@ -1,10 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  checkAccessibility,
 } from '@mantine/tests';
 import { Chips } from './Chips';
 import { Chip } from './Chip/Chip';
@@ -26,6 +27,7 @@ describe('@mantine/core/Chips', () => {
   itSupportsOthers(Chips, defaultProps);
   itSupportsStyle(Chips, defaultProps);
   itSupportsStylesApi(Chips, defaultProps, Object.keys(ChipsStylesApi), 'chips');
+  checkAccessibility([mount(<Chips {...defaultProps} />)]);
 
   it('sets chip type based on multiple prop', () => {
     const multiple = shallow(<Chips multiple {...defaultProps} value={['1']} />);
