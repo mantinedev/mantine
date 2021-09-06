@@ -1,0 +1,79 @@
+.tree-view-hidden {
+    display: none;
+}
+
+.tree-view-item-selected {
+    font-weight: bolder;
+    background-color: cornsilk;
+}
+
+.tree-view-root {
+    margin: 0;
+    padding: 0;
+}
+
+.tree-view-root ul {
+    list-style-type: none;
+}
+
+.tree-view-sub {
+    padding-left: 0;
+}
+
+.tree-view-no-items {
+    width: 1rem;
+}
+
+.tree-view-no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.tree-view-hidden-input {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    border: none;
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+.tree-view-root {
+    padding-left: 0;
+}
+
+.tree-view-icon {
+    min-width: 1rem
+}
+
+.tree-view-item-label {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 3px .5rem 3px 1rem;
+    gap: 2px;
+    min-height: 28px
+}
+
+.tree-view-title {
+    display: block;
+    width: 100%
+}
+
+.tree-view-selected {
+    background-color: rgba(92, 95, 102, 0.35)
+}
+
+.tree-view-highlighted {
+    background-color: rgba(92, 95, 92, 0.15)
+}
+
+.tree-view-item {
+    padding-left: 1rem;
+    cursor: pointer;
+}

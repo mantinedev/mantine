@@ -21,11 +21,11 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "clsx": "^1.1.1",
-    "react-textarea-autosize": "^8.3.2",
     "@popperjs/core": "^2.9.3",
+    "clsx": "^1.1.1",
+    "detect-it": "^4.0.1",
     "react-jss": "^10.7.1",
-    "react-popper": "^2.2.5"
-  },
-  "devDependencies": {}
+    "react-popper": "^2.2.5",
+    "react-textarea-autosize": "^8.3.2"
+  }
 }

@@ -75,6 +75,7 @@ export {
   GroupedTransition,
   AVAILABLE_TRANSITIONS,
 } from './components/Transition/Transition';
+export { Treeview } from './components/Treeview/Treeview';
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
