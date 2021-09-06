@@ -1,10 +1,20 @@
 import React from 'react';
 import { Chips, Chip } from '../Chips';
 
+const code = `
+<Chips multiple value={['checked', 'checked-disabled']}>
+  <Chip value="default">Default</Chip>
+  <Chip value="checked">Checked</Chip>
+  <Chip value="checked-disabled" disabled>
+    Checked disabled
+  </Chip>
+</Chips>
+`;
+
 function Demo() {
   return (
     <>
-      <Chips multiple value={['checked', 'checked-disabled']} position="center">
+      <Chips multiple value={['checked', 'checked-disabled']} position="center" variant="outline">
         <Chip value="default">Outline default</Chip>
         <Chip value="checked">Outline checked</Chip>
         <Chip value="checked-disabled" disabled>
@@ -32,4 +42,5 @@ function Demo() {
 export const states: MantineDemo = {
   type: 'demo',
   component: Demo,
+  code,
 };

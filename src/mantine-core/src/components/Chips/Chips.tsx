@@ -38,7 +38,7 @@ export interface ChipsProps<T extends boolean = false>
   /** <Chip /> components only */
   children?: React.ReactNode;
 
-  /** Controls chip appearance */
+  /** Controls chip appearance, defaults to filled with dark theme and to outline in light theme */
   variant?: 'filled' | 'outline';
 
   /** Active chip color, defaults to theme.primaryColor */
@@ -53,10 +53,11 @@ export function Chips<T extends boolean>({
   spacing = 'xs',
   radius = 'xl',
   size = 'sm',
-  variant = 'outline',
+  variant,
   multiple,
   children,
   id,
+  themeOverride,
   classNames,
   styles,
   ...others
@@ -74,6 +75,7 @@ export function Chips<T extends boolean>({
     .filter((child: React.ReactElement) => child.type === Chip)
     .map((child: React.ReactElement, index) =>
       React.cloneElement(child, {
+        themeOverride,
         variant,
         radius,
         color,

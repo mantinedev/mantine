@@ -25,7 +25,7 @@ export interface ChipProps
   /** Chip input type */
   type?: 'radio' | 'checkbox';
 
-  /** Controls chip appearance */
+  /** Controls chip appearance, defaults to filled with dark theme and to outline in light theme */
   variant?: 'outline' | 'filled';
 
   /** Chip label */
@@ -57,7 +57,7 @@ export function Chip({
   radius = 'xl',
   type = 'checkbox',
   size = 'sm',
-  variant = 'outline',
+  variant,
   disabled = false,
   __staticSelector = 'chip',
   elementRef,
@@ -86,6 +86,8 @@ export function Chip({
     rule: (val) => typeof val === 'boolean',
   });
 
+  const defaultVariant = theme.colorScheme === 'dark' ? 'filled' : 'outline';
+
   return (
     <>
       <input
@@ -103,7 +105,7 @@ export function Chip({
         className={cx(
           classes.label,
           { [classes.checked]: value, [classes.disabled]: disabled },
-          classes[variant],
+          classes[variant || defaultVariant],
           className
         )}
         style={{
