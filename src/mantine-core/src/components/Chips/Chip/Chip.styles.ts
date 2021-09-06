@@ -85,8 +85,13 @@ export default createMemoStyles({
 
   disabled: ({ theme }: ChipStyles) => ({
     backgroundColor: theme.colors.gray[1],
-    borderColor: theme.colors.gray[1],
+    borderColor: [[theme.colors.gray[1]], '!important'],
     color: theme.colors.gray[5],
+    cursor: 'not-allowed',
+
+    '&:hover': {
+      backgroundColor: theme.colors.gray[1],
+    },
 
     '& $iconWrapper': {
       color: theme.colors.gray[5],

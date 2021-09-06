@@ -14,7 +14,9 @@ function Demo() {
     <Chips multiple value={['checked', 'checked-disabled']} position="center">
       <Chip value="default">Default</Chip>
       <Chip value="checked">Checked</Chip>
-      <Chip value="checked-disabled">Checked disabled</Chip>
+      <Chip value="checked-disabled" disabled>
+        Checked disabled
+      </Chip>
     </Chips>
   );
 }
