@@ -51,6 +51,9 @@ export interface ChipProps
 
   /** Static selector base */
   __staticSelector?: string;
+
+  /** Input value */
+  value: string;
 }
 
 export function Chip({
