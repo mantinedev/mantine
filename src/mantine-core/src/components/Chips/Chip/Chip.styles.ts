@@ -48,7 +48,7 @@ interface ChipStyles {
 }
 
 export default createMemoStyles({
-  root: ({ theme, radius, size }: ChipStyles) => ({
+  label: ({ theme, radius, size }: ChipStyles) => ({
     ...getFontStyles(theme),
     display: 'inline-block',
     alignItems: 'center',

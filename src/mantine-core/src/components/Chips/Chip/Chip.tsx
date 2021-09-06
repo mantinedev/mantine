@@ -89,8 +89,8 @@ export function Chip({
         {...others}
       />
       <label
-        className={cx(classes.root, { [classes.checked]: value }, classes[variant], className)}
-        style={{ ...style, ..._styles.root, ...(value ? _styles.checked : null) }}
+        className={cx(classes.label, { [classes.checked]: value }, classes[variant], className)}
+        style={{ ...style, ..._styles.label, ...(value ? _styles.checked : null) }}
         htmlFor={uuid}
       >
         {value && (

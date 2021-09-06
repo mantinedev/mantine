@@ -84,3 +84,5 @@ export function Chips<T extends boolean>({
     </Group>
   );
 }
+
+Chips.displayName = '@mantine/core/Chips';
