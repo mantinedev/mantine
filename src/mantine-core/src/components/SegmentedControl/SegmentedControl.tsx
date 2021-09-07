@@ -21,7 +21,7 @@ export interface SegmentedControlProps
   extends DefaultProps<SegmentedControlStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Data based on which controls are rendered */
-  data: SegmentedControlItem[];
+  data: string[] | SegmentedControlItem[];
 
   /** Current selected value */
   value?: string;
@@ -58,7 +58,7 @@ export function SegmentedControl({
   className,
   style,
   themeOverride,
-  data,
+  data: _data,
   name,
   value,
   onChange,
@@ -77,6 +77,10 @@ export function SegmentedControl({
   // https://github.com/cssinjs/jss/issues/1320
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme(themeOverride);
+  const data = _data.map((item) =>
+    typeof item === 'string' ? { label: item, value: item } : item
+  );
+
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const [_value, handleValueChange] = useUncontrolled({
     value,

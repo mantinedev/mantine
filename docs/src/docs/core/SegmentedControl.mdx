@@ -48,6 +48,33 @@ function Demo() {
 }
 ```
 
+## Data prop
+
+SegmentedControl support two different data formats:
+
+1. An array of strings – use when you do not need to customize item component or display `label` different than `value`
+2. An array of objects with required `value` and `label` properties and any other additional properties
+
+```tsx
+// Data as an array of strings, will be mapped to
+// [
+//  { value: 'React', label: 'React' },
+//  { value: 'Angular', label: 'Angular' },
+//  { value: 'Svelte', label: 'Svelte' },
+//  { value: 'Vue', label: 'Vue' },
+// ]
+<SegmentedControl data={['React', 'Angular', 'Svelte', 'Vue']} />
+
+// Data as an array of objects:
+// Minimal example (same as first example above)
+<SegmentedControl data={[
+  { value: 'React', label: 'React' },
+  { value: 'Angular', label: 'Angular' },
+  { value: 'Svelte', label: 'Svelte' },
+  { value: 'Vue', label: 'Vue' },
+]} />
+```
+
 ## Full width
 
 By default SegmentedControl is inline and will take only the amount of space which is required to render elements.
