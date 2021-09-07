@@ -1,12 +1,11 @@
 import React from 'react';
 
-interface DotsProps extends React.ComponentPropsWithoutRef<'svg'> {
+export interface DotsProps extends React.ComponentPropsWithoutRef<'svg'> {
   size?: number;
-  dotSize?: number;
   radius?: number;
 }
 
-export function Dots({ size = 205, radius = 2.5, ...others }: DotsProps) {
+export function Dots({ size = 185, radius = 2.5, ...others }: DotsProps) {
   return (
     <svg
       aria-hidden
