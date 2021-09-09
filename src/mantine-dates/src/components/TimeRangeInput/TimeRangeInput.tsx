@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import {
   InputBaseProps,
