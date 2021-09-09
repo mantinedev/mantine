@@ -9,6 +9,11 @@ date: 'September 1st, 2021'
 
 import { TimelineDemos, DialogDemos, ListDemos, ChipsDemos } from '@demos/core';
 
+## UMD builds deprecation
+
+All `@mantine/` packages will no longer default to umd builds via `browser` field in `package.json`.
+This change will simplify tree shacking for Webpack and should not affect your Next.js, Gatsby, Vite or CRA applications.
+
 ## react-jss peer dependency removal
 
 All `@mantine/` packages no longer require react-jss installation as peer dependency – it will be installed automatically as @mantine/core dependency.
