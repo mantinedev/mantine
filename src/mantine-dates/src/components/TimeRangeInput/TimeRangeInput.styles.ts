@@ -30,7 +30,7 @@ export default createMemoStyles({
   },
 
   controls: ({ size }: TimeRangeInputStyles) => ({
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center',
     // -2 for border offset
     height: getSizeValue({ size, sizes: INPUT_SIZES }) - 2,
@@ -53,4 +53,5 @@ export default createMemoStyles({
       cursor: 'not-allowed',
     },
   }),
+
 });

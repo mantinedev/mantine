@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/core';
@@ -8,15 +10,24 @@ const sizes = MANTINE_SIZES.map((size) => (
 ));
 
 function Controlled() {
-  const [value, onChange] = useState([new Date(), new Date()]);
-  return <TimeRangeInput value={[value[0], value[1]]} onChange={onChange} label="Controlled" />;
+  const [value, setValue] = useState([new Date(), new Date()]);
+  const onChange = (val) => {
+    setValue(val);
+  };
+  return <TimeRangeInput value={[value[0], value[1]]} onChange={onChange} label="Controlled" withSeconds />;
 }
 
-storiesOf('@mantine/dates/TimeInput', module)
+storiesOf('@mantine/dates/TimeRangeInput', module)
   .add('General usage', () => (
-    <div style={{ width: 320, padding: 40 }}>
-      <TimeRangeInput label="Time input" disabled />
-    </div>
+    <TimeRangeInput
+      label="Time Range input"
+      disabled
+      styles={{
+      wrapper: {
+        padding: '100px',
+      },
+    }}
+    />
   ))
   .add('Controlled', () => (
     <div style={{ width: 320, padding: 40 }}>
