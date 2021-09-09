@@ -94,7 +94,13 @@ export function TimeField({
       />
 
       {withSeparator && (
-        <Text size={size} style={{ lineHeight: 1, color: 'inherit' }}>
+        <Text
+          size={size}
+          style={{ lineHeight: 1,
+                    color: 'inherit',
+                    position: 'relative',
+                    top: '.1em' }}
+        >
           :
         </Text>
       )}
