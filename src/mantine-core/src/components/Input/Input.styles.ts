@@ -209,7 +209,7 @@ export default createMemoStyles({
       ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[2]
-      : theme.colors.gray[6],
+      : theme.colors.gray[5],
   }),
 
   rightSection: {
