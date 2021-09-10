@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import {
@@ -27,9 +26,9 @@ export type TimeRangeInputStylesNames =
 
 export interface TimeRangeInputProps
   extends DefaultProps<TimeRangeInputStylesNames>,
-    InputBaseProps,
-    InputWrapperBaseProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {
+  InputBaseProps,
+  InputWrapperBaseProps,
+  Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {
   /** Input size */
   size?: MantineSize;
 
@@ -132,9 +131,7 @@ export function TimeRangeInput({
 
   const handleHoursChange = createTimeHandler({
     onChange: (val) => {
-      console.log(val);
       setTime((c) => ({ ...c, hours: val }));
-      //dayjs(_value).set('hours', parseInt(val, 10)).toDate()
       handleChange(constructDayjsValue('hours', val));
     },
     min: selectedFieldIndex === 0 ? 0 : parseInt(fromTime.hours, 10),
@@ -214,7 +211,7 @@ export function TimeRangeInput({
             }, elementRef)}
             value={fromTime.hours}
             onChange={handleHoursChange}
-            setValue={(val) => setFromTime((c) => ({ ...c, hours: val }))}
+            setValue={(val) => handleHoursChange(val, false)}
             id={uuid}
             className={classes.timeInput}
             style={_styles.timeInput}
@@ -261,7 +258,7 @@ export function TimeRangeInput({
             />
           )}
 
-          <span tabIndex={-1}>{ labelSeparator }</span>
+          <span>{labelSeparator}</span>
 
           <div className={classes.controls} style={_styles.controls}>
             <TimeField

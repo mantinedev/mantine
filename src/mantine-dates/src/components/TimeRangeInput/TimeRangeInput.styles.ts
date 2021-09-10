@@ -25,10 +25,6 @@ export default createMemoStyles({
     cursor: 'not-allowed',
   },
 
-  wrapper: {
-    paddingTop: '5px',
-  },
-
   controls: ({ size }: TimeRangeInputStyles) => ({
     display: 'inline-flex',
     alignItems: 'center',
