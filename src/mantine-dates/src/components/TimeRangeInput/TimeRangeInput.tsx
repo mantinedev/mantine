@@ -216,7 +216,7 @@ export function TimeRangeInput({
             withSeparator
             size={size}
             max={23}
-            aria-label={hoursLabel}
+            aria-label={`from ${hoursLabel}`}
             disabled={disabled}
             onFocus={() => handleFieldFocus(0)}
           />
@@ -233,7 +233,7 @@ export function TimeRangeInput({
             withSeparator={withSeconds}
             size={size}
             max={59}
-            aria-label={minutesLabel}
+            aria-label={`from ${minutesLabel}`}
             disabled={disabled}
             onFocus={() => handleFieldFocus(0)}
           />
@@ -250,7 +250,7 @@ export function TimeRangeInput({
               style={_styles.timeInput}
               size={size}
               max={59}
-              aria-label={secondsLabel}
+              aria-label={`from ${secondsLabel}`}
               disabled={disabled}
               onFocus={() => handleFieldFocus(0)}
             />
@@ -274,7 +274,7 @@ export function TimeRangeInput({
               withSeparator
               size={size}
               max={23}
-              aria-label={hoursLabel}
+              aria-label={`to ${hoursLabel}`}
               disabled={disabled}
               onFocus={() => handleFieldFocus(1)}
             />
@@ -291,7 +291,7 @@ export function TimeRangeInput({
               withSeparator={withSeconds}
               size={size}
               max={59}
-              aria-label={minutesLabel}
+              aria-label={`to ${minutesLabel}`}
               disabled={disabled}
               onFocus={() => handleFieldFocus(1)}
             />
@@ -308,7 +308,7 @@ export function TimeRangeInput({
                 style={_styles.timeInput}
                 size={size}
                 max={59}
-                aria-label={secondsLabel}
+                aria-label={`to ${secondsLabel}`}
                 disabled={disabled}
                 onFocus={() => handleFieldFocus(1)}
               />
