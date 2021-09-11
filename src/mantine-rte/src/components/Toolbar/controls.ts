@@ -1,4 +1,9 @@
-import { FontBoldIcon, FontItalicIcon } from '@modulz/radix-icons';
+import {
+  FontBoldIcon,
+  FontItalicIcon,
+  UnderlineIcon,
+  StrikethroughIcon,
+} from '@modulz/radix-icons';
 
 export const controls = {
   bold: {
@@ -9,5 +14,15 @@ export const controls = {
   italic: {
     icon: FontItalicIcon,
     controls: 'italic',
+  },
+
+  underline: {
+    icon: UnderlineIcon,
+    controls: 'underline',
+  },
+
+  strike: {
+    icon: StrikethroughIcon,
+    controls: 'strike',
   },
 };
