@@ -4,6 +4,7 @@ import {
   UnderlineIcon,
   StrikethroughIcon,
   ListBulletIcon,
+  Link1Icon,
 } from '@modulz/radix-icons';
 import { OrderedList } from './icons/OrderedList';
 
@@ -38,6 +39,11 @@ export const CONTROLS = {
     icon: OrderedList,
     controls: 'list',
     value: 'ordered',
+  },
+
+  link: {
+    icon: Link1Icon,
+    controls: 'link',
   },
 } as const;
 

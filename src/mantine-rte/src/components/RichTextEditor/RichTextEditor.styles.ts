@@ -22,6 +22,33 @@ export default createMemoStyles({
       padding: [theme.spacing.md, theme.spacing.sm],
     },
 
+    '& .ql-container.ql-disabled .ql-tooltip': {
+      display: 'none',
+    },
+
+    '& .ql-tooltip': {
+      position: 'absolute',
+      backgroundColor: theme.white,
+      padding: [theme.spacing.sm, theme.spacing.xs],
+      border: `1px solid ${theme.colors.gray[3]}`,
+      borderRadius: theme.radius.sm,
+    },
+
+    '& .ql-action::before': {
+      content: '"Edit"',
+    },
+
+    '& .ql-hidden': {
+      display: 'none',
+    },
+
+    '& .ql-preview': {
+      display: 'inline-block',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      maxWidth: 120,
+    },
+
     '& a': {
       color: theme.colors[theme.primaryColor][7],
       textDecoration: 'none',

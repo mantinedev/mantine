@@ -1,10 +1,15 @@
 import React from 'react';
 import cx from 'clsx';
-import Editor from 'react-quill';
+import Editor, { Quill } from 'react-quill';
 import { useMantineTheme, DefaultProps } from '@mantine/core';
 import { Toolbar } from '../Toolbar/Toolbar';
 import { ALL_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
+import { replaceIcons } from './replace-icons';
+
+const icons = Quill.import('ui/icons');
+
+replaceIcons(icons);
 
 interface RichTextEditorProps extends DefaultProps {
   value: string;
@@ -25,7 +30,7 @@ export function RichTextEditor({
     <div className={cx(classes.root, className)} {...others}>
       <Toolbar controls={ALL_CONTROLS} themeOverride={themeOverride} />
       <Editor
-        theme={null}
+        theme="snow"
         modules={{ toolbar: { container: '#toolbar' } }}
         value={value}
         onChange={onChange}
