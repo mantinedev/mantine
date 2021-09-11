@@ -134,7 +134,7 @@ export function TimeRangeInput({
       setTime((c) => ({ ...c, hours: val }));
       handleChange(constructDayjsValue('hours', val));
     },
-    min: selectedFieldIndex === 0 ? 0 : parseInt(fromTime.hours, 10),
+    min: 0,
     max: 23,
     maxValue: 2,
     nextRef: {
@@ -147,8 +147,7 @@ export function TimeRangeInput({
       setTime((c) => ({ ...c, minutes: val }));
       handleChange(constructDayjsValue('minutes', val));
     },
-    min: selectedFieldIndex === 0
-      || (+toTime.hours > +fromTime.hours) ? 0 : parseInt(fromTime.minutes, 10),
+    min: 0,
     max: 59,
     maxValue: 5,
     nextRef: {
@@ -162,8 +161,7 @@ export function TimeRangeInput({
       setTime((c) => ({ ...c, seconds: val }));
       handleChange(constructDayjsValue('seconds', val));
     },
-    min: selectedFieldIndex === 0
-      || (+toTime.minutes > +fromTime.minutes) ? 0 : parseInt(fromTime.seconds, 10) + 1,
+    min: 0,
     max: 59,
     maxValue: 5,
     nextRef: {
