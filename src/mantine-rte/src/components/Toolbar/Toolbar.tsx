@@ -1,6 +1,6 @@
 import React from 'react';
-import { FontBoldIcon } from '@modulz/radix-icons';
 import { ToolbarButton } from './ToolbarButton/ToolbarButton';
+import { controls } from './controls';
 
 // <NativeSelect
 //   onChange={(event) => event.persist()}
@@ -14,11 +14,14 @@ import { ToolbarButton } from './ToolbarButton/ToolbarButton';
 //   />
 
 export function Toolbar() {
-  return (
-    <div id="toolbar">
-      <ToolbarButton controls="bold">
-        <FontBoldIcon />
+  const buttons = Object.keys(controls).map((control) => {
+    const Icon = controls[control].icon;
+    return (
+      <ToolbarButton controls={controls[control].controls} key={control}>
+        <Icon />
       </ToolbarButton>
-    </div>
-  );
+    );
+  });
+
+  return <div id="toolbar">{buttons}</div>;
 }
