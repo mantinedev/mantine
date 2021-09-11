@@ -258,7 +258,9 @@ export function TimeRangeInput({
             />
           )}
 
-          <span>{labelSeparator}</span>
+          <span style={{ paddingLeft: 5, paddingRight: 5 }}>
+            {labelSeparator}
+          </span>
 
           <div className={classes.controls} style={_styles.controls}>
             <TimeField
