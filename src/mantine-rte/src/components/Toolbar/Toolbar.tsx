@@ -17,8 +17,12 @@ export function Toolbar() {
   const buttons = Object.keys(controls).map((control) => {
     const Icon = controls[control].icon;
     return (
-      <ToolbarButton controls={controls[control].controls} key={control}>
-        <Icon />
+      <ToolbarButton
+        controls={controls[control].controls}
+        value={controls[control].value}
+        key={control}
+      >
+        <Icon style={{ width: 18, height: 18 }} />
       </ToolbarButton>
     );
   });

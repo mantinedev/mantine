@@ -3,7 +3,9 @@ import {
   FontItalicIcon,
   UnderlineIcon,
   StrikethroughIcon,
+  ListBulletIcon,
 } from '@modulz/radix-icons';
+import { OrderedList } from './icons/OrderedList';
 
 export const controls = {
   bold: {
@@ -24,5 +26,17 @@ export const controls = {
   strike: {
     icon: StrikethroughIcon,
     controls: 'strike',
+  },
+
+  unorderedList: {
+    icon: ListBulletIcon,
+    controls: 'list',
+    value: 'bullet',
+  },
+
+  orderedList: {
+    icon: OrderedList,
+    controls: 'list',
+    value: 'ordered',
   },
 };
