@@ -29,13 +29,37 @@ export default createMemoStyles({
     '& .ql-tooltip': {
       position: 'absolute',
       backgroundColor: theme.white,
-      padding: [theme.spacing.sm, theme.spacing.xs],
+      padding: [theme.spacing.xs, theme.spacing.md],
       border: `1px solid ${theme.colors.gray[3]}`,
+      boxShadow: theme.shadows.sm,
       borderRadius: theme.radius.sm,
+      display: 'flex',
+      alignItems: 'center',
     },
 
     '& .ql-action::before': {
       content: '"Edit"',
+      cursor: 'pointer',
+      display: 'block',
+      height: 28,
+      lineHeight: '28px',
+      backgroundColor: theme.colors[theme.primaryColor][6],
+      color: theme.white,
+      borderRadius: theme.radius.sm,
+      fontWeight: 500,
+      padding: [0, theme.spacing.sm],
+      marginRight: theme.spacing.sm,
+      fontSize: theme.fontSizes.sm,
+    },
+
+    '& .ql-remove::before': {
+      content: '"Remove"',
+      cursor: 'pointer',
+      color: theme.colors.red[7],
+      fontSize: theme.fontSizes.sm,
+      display: 'block',
+      height: 34,
+      lineHeight: '34px',
     },
 
     '& .ql-hidden': {
@@ -46,7 +70,54 @@ export default createMemoStyles({
       display: 'inline-block',
       textOverflow: 'ellipsis',
       overflow: 'hidden',
-      maxWidth: 120,
+      maxWidth: 180,
+      marginRight: theme.spacing.md,
+    },
+
+    '& .ql-editing .ql-preview': {
+      display: 'none',
+    },
+
+    '& .ql-editing .ql-remove': {
+      display: 'none',
+    },
+
+    '& .ql-editing .ql-action::before': {
+      content: '"Save"',
+      marginRight: 0,
+    },
+
+    '& .ql-tooltip.ql-editing input': {
+      display: 'block',
+    },
+
+    '& .ql-tooltip input': {
+      display: 'none',
+      border: `1px solid ${theme.colors.gray[4]}`,
+      WebkitTapHighlightColor: 'transparent',
+      height: 34,
+      appearance: 'none',
+      resize: 'none',
+      boxSizing: 'border-box',
+      fontSize: theme.fontSizes.sm,
+      width: '100%',
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+      textAlign: 'left',
+      paddingLeft: theme.spacing.sm,
+      paddingRight: theme.spacing.sm,
+      borderRadius: theme.radius.sm,
+      marginRight: theme.spacing.md,
+
+      '&::placeholder': {
+        opacity: 1,
+        userSelect: 'none',
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      },
+
+      '&:focus': {
+        outline: 'none',
+        borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 5],
+      },
     },
 
     '& a': {
