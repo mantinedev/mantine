@@ -6,10 +6,17 @@ interface ToolbarButtonStyles {
 
 export default createMemoStyles({
   control: ({ theme }: ToolbarButtonStyles) => ({
-    backgroundColor: theme.colors.red[5],
+    backgroundColor: theme.white,
+    border: `1px solid ${theme.colors.gray[3]}`,
+    borderRadius: 0,
 
     '&.ql-active': {
-      backgroundColor: theme.colors.blue[5],
+      backgroundColor: theme.colors[theme.primaryColor][0],
+      color: theme.colors[theme.primaryColor][7],
+
+      '&:hover': {
+        backgroundColor: theme.colors[theme.primaryColor][0],
+      },
     },
   }),
 });

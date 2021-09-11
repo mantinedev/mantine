@@ -7,7 +7,7 @@ import {
 } from '@modulz/radix-icons';
 import { OrderedList } from './icons/OrderedList';
 
-export const controls = {
+export const CONTROLS = {
   bold: {
     icon: FontBoldIcon,
     controls: 'bold',
@@ -39,4 +39,6 @@ export const controls = {
     controls: 'list',
     value: 'ordered',
   },
-};
+} as const;
+
+export type ToolbarControl = keyof typeof CONTROLS;

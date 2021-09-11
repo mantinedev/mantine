@@ -11,7 +11,7 @@
   height: 100%;
   margin: 0px;
   position: relative;
-  background-color: #ccc;
+  background-color: #fff;
 }
 .ql-container.ql-disabled .ql-tooltip {
   visibility: hidden;
