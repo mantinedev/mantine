@@ -1,6 +1,9 @@
 import React from 'react';
+import { useMantineTheme, getThemeColor } from '@mantine/core';
 
 export function MantineIcon(props: React.ComponentProps<'svg'>) {
+  const theme = useMantineTheme();
+
   return (
     <svg
       {...props}
@@ -10,7 +13,7 @@ export function MantineIcon(props: React.ComponentProps<'svg'>) {
       style={{ width: 16, height: 16, ...props.style }}
     >
       <path
-        fill="#339AF0"
+        fill={getThemeColor({ theme, color: props.color, shade: 6 })}
         d="M162.162 81.5c0-45.011-36.301-81.5-81.08-81.5C36.301 0 0 36.489 0 81.5 0 126.51 36.301 163 81.081 163s81.081-36.49 81.081-81.5z"
       />
       <path

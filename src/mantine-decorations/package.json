@@ -1,0 +1,22 @@
+{
+  "name": "@mantine/decorations",
+  "description": "Decorative svg based components, used mainly as backgrounds and page dividers",
+  "version": "2.5.0-alpha.2",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/src/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev/dressing/getting-started/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-dressing"
+  },
+  "peerDependencies": {},
+  "dependencies": {
+    "clsx": "^1.1.1"
+  },
+  "devDependencies": {}
+}

@@ -1,5 +1,6 @@
 export * from './theme';
 export * from './utils';
+export * from './ssr';
 
 export { Accordion, AccordionItem } from './components/Accordion/Accordion';
 export { ActionIcon, ACTION_ICON_SIZES } from './components/ActionIcon/ActionIcon';
@@ -17,12 +18,14 @@ export { Button, UnstyledButton, BUTTON_SIZES, BUTTON_VARIANTS } from './compone
 export { Card, CardSection } from './components/Card/Card';
 export { Center } from './components/Center/Center';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
+export { Chips, Chip } from './components/Chips/Chips';
 export { Code } from './components/Code/Code';
 export { Collapse } from './components/Collapse/Collapse';
 export { ColorInput } from './components/ColorInput/ColorInput';
 export { ColorPicker, AlphaSlider, HueSlider } from './components/ColorPicker/ColorPicker';
 export { ColorSwatch } from './components/ColorSwatch/ColorSwatch';
 export { Container, CONTAINER_SIZES } from './components/Container/Container';
+export { Dialog } from './components/Dialog/Dialog';
 export { Drawer, DRAWER_SIZES } from './components/Drawer/Drawer';
 export { Divider, DIVIDER_SIZES } from './components/Divider/Divider';
 export { Grid, Col } from './components/Grid/Grid';
@@ -33,6 +36,7 @@ export { Input, INPUT_VARIANTS, INPUT_SIZES } from './components/Input/Input';
 export { InputWrapper } from './components/InputWrapper/InputWrapper';
 export { JsonInput } from './components/JsonInput/JsonInput';
 export { Kbd } from './components/Kbd/Kbd';
+export { List } from './components/List/List';
 export { Loader, LOADER_SIZES } from './components/Loader/Loader';
 export { LoadingOverlay } from './components/LoadingOverlay/LoadingOverlay';
 export { Mark } from './components/Mark/Mark';
@@ -63,6 +67,7 @@ export { Text } from './components/Text/Text';
 export { Textarea } from './components/Textarea/Textarea';
 export { TextInput } from './components/TextInput/TextInput';
 export { ThemeIcon, THEME_ICON_SIZES } from './components/ThemeIcon/ThemeIcon';
+export { Timeline, TimelineItem } from './components/Timeline/Timeline';
 export { Title } from './components/Title/Title';
 export { Tooltip } from './components/Tooltip/Tooltip';
 export {
@@ -100,6 +105,12 @@ export type { ButtonProps, ButtonStylesNames } from './components/Button/Button'
 export type { CardProps, CardSectionProps } from './components/Card/Card';
 export type { CenterProps } from './components/Center/Center';
 export type { CheckboxProps, CheckboxStylesNames } from './components/Checkbox/Checkbox';
+export type {
+  ChipProps,
+  ChipsProps,
+  ChipsStylesNames,
+  ChipStylesNames,
+} from './components/Chips/Chips';
 export type { CodeProps } from './components/Code/Code';
 export type { ColorInputProps } from './components/ColorInput/ColorInput';
 export type {
@@ -109,6 +120,7 @@ export type {
 } from './components/ColorPicker/ColorPicker';
 export type { ColorSwatchProps } from './components/ColorSwatch/ColorSwatch';
 export type { ContainerProps } from './components/Container/Container';
+export type { DialogProps, DialogStylesNames } from './components/Dialog/Dialog';
 export type { DividerProps, DividerStylesNames } from './components/Divider/Divider';
 export type { DrawerProps, DrawerStylesNames } from './components/Drawer/Drawer';
 export type { GridProps, ColProps } from './components/Grid/Grid';
@@ -123,6 +135,7 @@ export type {
 } from './components/InputWrapper/InputWrapper';
 export type { JsonInputProps, JsonInputStylesNames } from './components/JsonInput/JsonInput';
 export type { KbdProps } from './components/Kbd/Kbd';
+export type { ListProps, ListItemProps, ListStylesNames } from './components/List/List';
 export type { LoaderProps } from './components/Loader/Loader';
 export type { LoadingOverlayProps } from './components/LoadingOverlay/LoadingOverlay';
 export type { MarkProps } from './components/Mark/Mark';
@@ -178,6 +191,11 @@ export type { TextProps } from './components/Text/Text';
 export type { TextareaProps, TextareaStylesNames } from './components/Textarea/Textarea';
 export type { TextInputProps, TextInputStylesNames } from './components/TextInput/TextInput';
 export type { ThemeIconProps } from './components/ThemeIcon/ThemeIcon';
+export type {
+  TimelineProps,
+  TimelineItemProps,
+  TimelineStylesNames,
+} from './components/Timeline/Timeline';
 export type { TitleProps } from './components/Title/Title';
 export type { TooltipProps, TooltipStylesNames } from './components/Tooltip/Tooltip';
 export type {

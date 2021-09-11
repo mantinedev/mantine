@@ -1,0 +1,99 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Chips
+order: 1
+slug: /core/chips/
+category: 'inputs'
+description: 'Alternative to Select and RadioGroup'
+props: ['Chips', 'Chip']
+import: "import { Chips, Chip } from '@mantine/core';"
+source: 'mantine-core/src/components/Chips/Chips.tsx'
+docs: 'core/Chips.mdx'
+styles: ['Chips', 'Chip']
+---
+
+import { ChipsDemos } from '@demos/core';
+
+## Usage
+
+Use Chips as an inline alternative to [RadioGroup](/core/radio-group/) and [MultiSelect](/core/multi-select/) components:
+
+<Demo data={ChipsDemos.configurator} />
+
+## States
+
+<Demo data={ChipsDemos.states} />
+
+## Multiple
+
+Set `multiple` prop to enable multiple chips selection:
+
+<Demo data={ChipsDemos.type} />
+
+## Controlled
+
+Since Chips component supports both single and multiple state you will need to adjust your state to match `multiple` prop:
+
+```tsx
+import { useState } from 'react';
+import { Chips } from '@mantine/core';
+
+function Demo() {
+  // string value when multiple is false (default)
+  const [value, setValue] = useState('react');
+
+  return (
+    <Chips value={value} onChange={setValue}>
+      <Chip value="react">React</Chip>
+      <Chip value="ng">Angular</Chip>
+      <Chip value="svelte">Svelte</Chip>
+      <Chip value="vue">Vue</Chip>
+    </Chips>
+  );
+}
+
+function Demo() {
+  // array of strings value when multiple is true
+  const [value, setValue] = useState(['react']);
+
+  return (
+    <Chips value={value} onChange={setValue} multiple>
+      <Chip value="react">React</Chip>
+      <Chip value="ng">Angular</Chip>
+      <Chip value="svelte">Svelte</Chip>
+      <Chip value="vue">Vue</Chip>
+    </Chips>
+  );
+}
+```
+
+## Chip component
+
+You can use Chip component outside of Chips:
+
+<Demo data={ChipsDemos.chip} />
+
+## Server side rendering
+
+Both Chip and Chips component use [use-id](/hooks/use-id/) hook to generate unique ids to connect inputs with labels,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<Chips /> // random id generated both on client and server, props mismatch warning
+<Chip /> // random id generated both on client and server, props mismatch warning
+
+// -> id is static, no mismatches
+<Chip id="my-chip" />
+
+// -> id is static, no mismatches
+<Chips id="my-chips-picker">
+  {/* It's not required to set id on Chip component when it is used inside Chips */}
+  <Chip value="react">React</Chip>
+</Chips>
+```
+
+## Accessibility
+
+Chip and Chips components are accessible by default since they are built with native radio/checkbox inputs,
+all keyboard events works the same as with native controls.

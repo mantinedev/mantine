@@ -10,6 +10,13 @@ const data = [
   { label: 'Very long label', value: 'svelte' },
 ];
 
+const simpleData = [
+  'React',
+  'Angular',
+  'Vue',
+  'Very',
+];
+
 function Wrapper(
   props: Omit<
     React.ComponentPropsWithoutRef<typeof SegmentedControl>,
@@ -56,4 +63,9 @@ storiesOf('@mantine/core/SegmentedControl', module)
         <Wrapper fullWidth color="blue" style={{ marginTop: 20 }} />
       </div>
     </MantineProvider>
+  ))
+  .add('Simple Data Format', () => (
+    <div style={{ padding: 40 }}>
+      <SegmentedControl data={simpleData} defaultValue="Vue" />
+    </div>
   ));

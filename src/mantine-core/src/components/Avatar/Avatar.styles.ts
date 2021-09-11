@@ -40,6 +40,7 @@ export default createMemoStyles({
     objectFit: 'cover',
     width: '100%',
     height: '100%',
+    display: 'block',
   },
 
   placeholder: ({ theme, size, color }: AvatarStyles) => {

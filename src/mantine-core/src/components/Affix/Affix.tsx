@@ -10,10 +10,10 @@ export interface AffixProps extends React.ComponentPropsWithoutRef<'div'> {
 
   /** Fixed position in px */
   position?: {
-    top?: number;
-    left?: number;
-    bottom?: number;
-    right?: number;
+    top?: string | number;
+    left?: string | number;
+    bottom?: string | number;
+    right?: string | number;
   };
 }
 

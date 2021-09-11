@@ -95,6 +95,22 @@ const getWidthStyles = (fullWidth: boolean) => ({
   width: fullWidth ? '100%' : 'auto',
 });
 
+const getSharedProps = ({ theme, radius }: Partial<ButtonStylesProps>) => ({
+  borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+  fontWeight: 600,
+
+  '&:not(:disabled):active': {
+    transform: 'translateY(1px)',
+  },
+
+  '&:disabled:not($loading)': {
+    borderColor: 'transparent',
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
+    cursor: 'not-allowed',
+  },
+});
+
 export default createMemoStyles({
   loading: (props: ButtonStylesProps) => ({
     '&::before': {
@@ -164,21 +180,9 @@ export default createMemoStyles({
 
     return {
       backgroundColor: colors.background,
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      fontWeight: 600,
       color: colors.color,
       border: `1px solid ${colors.border}`,
-
-      '&:not(:disabled):active': {
-        transform: 'translateY(1px)',
-      },
-
-      '&:disabled:not($loading)': {
-        borderColor: 'transparent',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-        cursor: 'not-allowed',
-      },
+      ...getSharedProps({ theme, radius }),
     };
   },
 
@@ -186,23 +190,10 @@ export default createMemoStyles({
     const colors = getSharedColorScheme({ color, theme, variant: 'light' });
 
     return {
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      fontWeight: 600,
       border: `1px solid ${colors.border}`,
       backgroundColor: colors.background,
       color: colors.color,
-
-      '&:not(:disabled):active': {
-        transform: 'translateY(1px)',
-      },
-
-      '&:disabled:not($loading)': {
-        borderColor: 'transparent',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-        textShadow: 'none',
-        cursor: 'not-allowed',
-      },
+      ...getSharedProps({ theme, radius }),
     };
   },
 
@@ -211,23 +202,20 @@ export default createMemoStyles({
 
     return {
       border: `1px solid ${colors.border}`,
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      fontWeight: 600,
       backgroundColor: colors.background,
       color: colors.color,
-      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
+      ...getSharedProps({ theme, radius }),
+    };
+  },
 
-      '&:not(:disabled):active': {
-        transform: 'translateY(1px)',
-      },
+  white: ({ color, radius, theme }: ButtonStylesProps) => {
+    const colors = getSharedColorScheme({ color, theme, variant: 'white' });
 
-      '&:disabled:disabled:not($loading)': {
-        borderColor: 'transparent',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-        textShadow: 'none',
-        cursor: 'not-allowed',
-      },
+    return {
+      border: `1px solid ${colors.border}`,
+      backgroundColor: colors.background,
+      color: colors.color,
+      ...getSharedProps({ theme, radius }),
     };
   },
 
@@ -240,20 +228,9 @@ export default createMemoStyles({
 
     return {
       border: 0,
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      fontWeight: 600,
       backgroundImage: colors.background,
       color: colors.color,
-
-      '&:not(:disabled):active': {
-        transform: 'translateY(1px)',
-      },
-
-      '&:disabled:disabled:not($loading)': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-        cursor: 'not-allowed',
-      },
+      ...getSharedProps({ theme, radius }),
     };
   },
 

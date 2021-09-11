@@ -1,0 +1,156 @@
+---
+group: 'theming'
+title: Usage with Next.js
+slug: /theming/next/
+order: 5
+---
+
+# Usage with Next.js
+
+Mantine is fully compatible with Next.js, follow following guide to setup your application
+
+## Get started with template
+
+If you are starting new project you can skip all configuration steps and use [Next.js template](https://github.com/mantinedev/mantine-next-template).
+To get started [follow this link](https://github.com/mantinedev/mantine-next-template/generate) and create new repository.
+Alternatively you can download or clone [repository](https://github.com/mantinedev/mantine-next-template) to get started on your machine.
+
+## Adding to existing Next.js project
+
+1. Create `pages/_document.tsx` file:
+
+```tsx
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
+import { SsrProvider, SheetsRegistry, MantineServerStyles } from '@mantine/core';
+
+export default class _Document extends Document {
+  static async getInitialProps(ctx: DocumentContext) {
+    const registry = new SheetsRegistry();
+    const originalRenderPage = ctx.renderPage;
+
+    ctx.renderPage = () =>
+      originalRenderPage({
+        // eslint-disable-next-line react/display-name
+        enhanceApp: (App) => (props) =>
+          (
+            <SsrProvider registry={registry}>
+              <App {...props} />
+            </SsrProvider>
+          ),
+      });
+
+    const initialProps = await Document.getInitialProps(ctx);
+
+    return {
+      ...initialProps,
+      styles: (
+        <>
+          {initialProps.styles}
+          <MantineServerStyles registry={registry} />
+        </>
+      ),
+    };
+  }
+
+  render() {
+    return (
+      <Html>
+        <Head>
+          <link rel="icon" href="link to favicon" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
+}
+```
+
+2. Replace your `pages/_app.tsx` with
+
+```tsx
+import { AppProps } from 'next/app';
+import Head from 'next/head';
+import {
+  MantineProvider,
+  NormalizeCSS,
+  GlobalStyles,
+  useStylesCleanup,
+  SsrProvider,
+} from '@mantine/core';
+
+export default function App(props: AppProps) {
+  const { Component, pageProps } = props;
+
+  useStylesCleanup();
+
+  return (
+    <>
+      <SsrProvider>
+        <Head>
+          <title>Mantine next example</title>
+          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+        </Head>
+
+        <MantineProvider
+          theme={{
+            /* Put your mantine theme override here */
+            colorScheme: 'light',
+          }}
+        >
+          {/* NormalizeCSS and GlobalStyles are optional */}
+          <NormalizeCSS />
+          <GlobalStyles />
+          <Component {...pageProps} />
+        </MantineProvider>
+      </SsrProvider>
+    </>
+  );
+}
+```
+
+All done! You can start developing your application. If you experience any issues with Next.js [please report an issue](https://github.com/mantinedev/mantine/issues/new).
+
+## NextLink component
+
+Some Mantine components support changing root element via `component` prop (e.g. [Button](/core/button/) and [ActionIcon](/core/action-icon/)).
+In order to make this prop work correctly with Next Link component create `NextLink` wrapper in your components folder:
+
+```tsx
+import React, { forwardRef } from 'react';
+import Link from 'next/link';
+
+export const NextLink = forwardRef(
+  (
+    { href, ...others }: React.ComponentPropsWithoutRef<typeof Link>,
+    ref: React.ForwardedRef<HTMLAnchorElement>
+  ) => (
+    <Link href={href}>
+      {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
+      <a {...others} ref={ref} />
+    </Link>
+  )
+);
+```
+
+Then you can use it with any Mantine component:
+
+```tsx
+import { Button, ActionIcon } from '@mantine/core';
+import { NextLink } from '../components/NextLink/NextLink';
+
+function Demo() {
+  return (
+    <>
+      <Button component={NextLink} href="/hello">
+        My next link button
+      </Button>
+      <ActionIcon component={NextLink} href="/hello">
+        $
+      </ActionIcon>
+    </>
+  );
+}
+```

@@ -46,5 +46,7 @@ export const configurator: MantineDemo = {
       initialValue: 'hover',
       defaultValue: 'hover',
     },
+    { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
+    { name: 'loading', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };

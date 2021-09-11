@@ -10,7 +10,8 @@
     "/core/text/",
     "/core/container/",
     "/core/simple-grid/",
-    "@modulz/radix-icons"
+    "@modulz/radix-icons",
+    "https://fonts.google.com/specimen/Dosis"
   ],
   "props": {
     "title": "Integrate effortlessly with any technology stack",

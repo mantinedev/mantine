@@ -1,83 +1,79 @@
 import React from 'react';
 import cx from 'clsx';
 import { GitHubLogoIcon } from '@modulz/radix-icons';
-import { createUseStyles } from 'react-jss';
-import { theming, Container, Text, Button, Group, useMantineTheme } from '@mantine/core';
+import { createStyles, Container, Text, Button, Group, useMantineTheme } from '@mantine/core';
 
 const BREAKPOINT = '@media (max-width: 755px)';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    wrapper: {
-      position: 'relative',
-      boxSizing: 'border-box',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    position: 'relative',
+    boxSizing: 'border-box',
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+  },
+
+  inner: {
+    position: 'relative',
+    paddingTop: 200,
+    paddingBottom: 120,
+
+    [BREAKPOINT]: {
+      paddingBottom: 80,
+      paddingTop: 80,
     },
+  },
 
-    inner: {
-      position: 'relative',
-      paddingTop: 200,
-      paddingBottom: 120,
+  title: {
+    fontFamily: `Dosis, ${theme.fontFamily}`,
+    fontSize: 68,
+    fontWeight: 900,
+    lineHeight: 1.1,
+    margin: 0,
+    padding: 0,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
-      [BREAKPOINT]: {
-        paddingBottom: 80,
-        paddingTop: 80,
-      },
+    [BREAKPOINT]: {
+      fontSize: 42,
+      lineHeight: 1.2,
     },
+  },
 
-    title: {
-      fontFamily: `Dosis, ${theme.fontFamily}`,
-      fontSize: 68,
-      fontWeight: 900,
-      lineHeight: 1.1,
-      margin: 0,
-      padding: 0,
-      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+  description: {
+    marginTop: theme.spacing.xl,
+    fontSize: 24,
 
-      [BREAKPOINT]: {
-        fontSize: 42,
-        lineHeight: 1.2,
-      },
+    [BREAKPOINT]: {
+      fontSize: 18,
     },
+  },
 
-    description: {
+  controls: {
+    marginTop: theme.spacing.xl * 2,
+
+    [BREAKPOINT]: {
       marginTop: theme.spacing.xl,
-      fontSize: 24,
-
-      [BREAKPOINT]: {
-        fontSize: 18,
-      },
     },
+  },
 
-    controls: {
-      marginTop: theme.spacing.xl * 2,
+  control: {
+    height: 54,
+    paddingLeft: 38,
+    paddingRight: 38,
 
-      [BREAKPOINT]: {
-        marginTop: theme.spacing.xl,
-      },
-    },
-
-    control: {
+    [BREAKPOINT]: {
       height: 54,
-      paddingLeft: 38,
-      paddingRight: 38,
-
-      [BREAKPOINT]: {
-        height: 54,
-        paddingLeft: 18,
-        paddingRight: 18,
-        flex: 1,
-      },
+      paddingLeft: 18,
+      paddingRight: 18,
+      flex: 1,
     },
+  },
 
-    githubControl: {
-      borderWidth: 2,
-      borderColor: theme.colorScheme === 'dark' ? 'transparent' : theme.colors.dark[9],
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : 'transparent',
-    },
-  }),
-  { theming }
-);
+  githubControl: {
+    borderWidth: 2,
+    borderColor: theme.colorScheme === 'dark' ? 'transparent' : theme.colors.dark[9],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : 'transparent',
+  },
+}));
 
 export function HeroTitle() {
   const classes = useStyles();

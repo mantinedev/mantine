@@ -7,6 +7,7 @@ import {
   getThemeColor,
   createMemoStyles,
   getSharedColorScheme,
+  hexToRgba,
 } from '../../theme';
 
 interface ActionIconStyles {
@@ -25,13 +26,29 @@ export const sizes = {
 };
 
 export default createMemoStyles({
+  loading: (props: ActionIconStyles) => ({
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      top: -1,
+      left: -1,
+      right: -1,
+      bottom: -1,
+      backgroundColor:
+        props.theme.colorScheme === 'dark'
+          ? hexToRgba(props.theme.colors.dark[7], 0.5)
+          : 'rgba(255, 255, 255, .5)',
+      borderRadius: getSizeValue({ size: props.radius, sizes: props.theme.radius }) - 1,
+      cursor: 'not-allowed',
+    },
+  }),
+
   filled: ({ theme, color }: ActionIconStyles) => {
     const colors = getSharedColorScheme({ theme, color, variant: 'filled' });
 
     return {
       backgroundColor: colors.background,
       color: colors.color,
-      textShadow: `1px 1px 0 ${getThemeColor({ theme, color, shade: 9 })}`,
 
       '&:disabled': {
         backgroundColor: getThemeColor({
@@ -80,6 +97,7 @@ export default createMemoStyles({
   root: ({ radius, theme, size }: ActionIconStyles) => ({
     ...getFocusStyles(theme),
     ...getFontStyles(theme),
+    position: 'relative',
     appearance: 'none',
     WebkitAppearance: 'none',
     WebkitTapHighlightColor: 'transparent',

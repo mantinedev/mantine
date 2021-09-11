@@ -44,7 +44,7 @@ storiesOf('@mantine/core/NumberInput', module)
     <div style={{ maxWidth: 400, padding: 20 }}>
       <Wrapper
         max={10}
-        step={0.2}
+        step={0.5}
         precision={2}
         min={-10}
         placeholder="Number input"

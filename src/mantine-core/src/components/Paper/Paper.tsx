@@ -12,6 +12,9 @@ export interface SharedPaperProps extends DefaultProps {
 
   /** Predefined border-radius value from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Adds 1px border with theme.colors.gray[2] color in light color scheme and theme.colors.dark[6] in dark color scheme */
+  withBorder?: boolean;
 }
 
 interface _PaperProps<C extends React.ElementType, R extends HTMLElement> extends SharedPaperProps {
@@ -33,13 +36,14 @@ export function Paper<C extends React.ElementType = 'div', R extends HTMLElement
   children,
   padding = 0,
   radius = 'sm',
+  withBorder = false,
   shadow,
   themeOverride,
   elementRef,
   ...others
 }: PaperProps<C, R>) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, shadow, padding, theme }, null, 'paper');
+  const classes = useStyles({ radius, shadow, padding, theme, withBorder }, null, 'paper');
   const Element = component || 'div';
 
   return (

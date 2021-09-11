@@ -1,13 +1,12 @@
 import React from 'react';
-import { createUseStyles } from 'react-jss';
 import {
   ThemeIcon,
   Text,
-  theming,
   Title,
   Container,
   SimpleGrid,
   useMantineTheme,
+  createStyles,
 } from '@mantine/core';
 import { MOCKDATA } from './mockdata';
 
@@ -37,39 +36,36 @@ export function Feature({
   );
 }
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    wrapper: {
-      paddingTop: theme.spacing.xl * 4,
-      paddingBottom: theme.spacing.xl * 4,
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    paddingTop: theme.spacing.xl * 4,
+    paddingBottom: theme.spacing.xl * 4,
+  },
+
+  title: {
+    fontFamily: 'Dosis, sans-serif',
+    fontWeight: 900,
+    marginBottom: theme.spacing.md,
+    textAlign: 'center',
+
+    '@media (max-width: 755px)': {
+      fontSize: 28,
+      textAlign: 'left',
     },
+  },
 
-    title: {
-      fontFamily: 'Dosis, sans-serif',
-      fontWeight: 900,
-      marginBottom: theme.spacing.md,
-      textAlign: 'center',
+  description: {
+    textAlign: 'center',
 
-      '@media (max-width: 755px)': {
-        fontSize: 28,
-        textAlign: 'left',
-      },
+    '@media (max-width: 755px)': {
+      textAlign: 'left',
     },
+  },
 
-    description: {
-      textAlign: 'center',
-
-      '@media (max-width: 755px)': {
-        textAlign: 'left',
-      },
-    },
-
-    features: {
-      marginTop: [[theme.spacing.xl], '!important'],
-    },
-  }),
-  { theming }
-);
+  features: {
+    marginTop: [[theme.spacing.xl], '!important'],
+  },
+}));
 
 interface FeaturesGridProps {
   title: React.ReactNode;

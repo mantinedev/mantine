@@ -12,6 +12,7 @@ export default createMemoStyles({
   },
 
   item: ({ theme }: AccordionControlStyles) => ({
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     borderTop: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,

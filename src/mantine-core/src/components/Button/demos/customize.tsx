@@ -13,7 +13,6 @@ const code = `
   styles={{
     root: {
       backgroundColor: '#00acee',
-      textShadow: 'unset',
       border: 0,
       height: 42,
       paddingLeft: 20,
@@ -41,7 +40,6 @@ function Demo() {
         styles={{
           root: {
             backgroundColor: '#00acee',
-            textShadow: 'unset',
             border: 0,
             height: 42,
             paddingLeft: 20,

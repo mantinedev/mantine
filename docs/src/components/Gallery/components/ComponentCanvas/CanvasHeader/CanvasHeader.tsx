@@ -33,6 +33,18 @@ export interface CanvasHeaderProps extends GalleryComponent, React.ComponentProp
   zIndex?: number;
 }
 
+function getDependencyName(url: string) {
+  if (url.startsWith('/hooks/')) {
+    return { name: url.split('/')[2], color: 'blue' };
+  }
+
+  if (url.startsWith('/gallery/component/')) {
+    return { name: url.split('/')[3].split('-').map(upperFirst).join(''), color: 'cyan' };
+  }
+
+  return { name: url.split('/')[2].split('-').map(upperFirst).join(''), color: 'blue' };
+}
+
 export function CanvasHeader({
   attributes,
   url,
@@ -48,13 +60,15 @@ export function CanvasHeader({
   const classes = useStyles();
   const dependencies = attributes.dependencies.map((dependency) => {
     if (dependency.trim().startsWith('/')) {
-      const componentName = dependency.startsWith('/hooks/')
-        ? dependency.split('/')[2]
-        : dependency.split('/')[2].split('-').map(upperFirst).join('');
-
+      const { color, name } = getDependencyName(dependency.trim());
       return (
-        <Menu.Item component={Link} to={dependency} icon={<MantineIcon />} key={dependency}>
-          {componentName}
+        <Menu.Item
+          component={Link}
+          to={dependency}
+          icon={<MantineIcon color={color} />}
+          key={dependency}
+        >
+          {name}
         </Menu.Item>
       );
     }

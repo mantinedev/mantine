@@ -1,10 +1,9 @@
 {
   "name": "@mantine/prism",
   "description": "Code highlight with Mantine theme",
-  "version": "2.4.3",
+  "version": "2.5.0-alpha.2",
   "main": "cjs/index.js",
   "module": "esm/index.js",
-  "browser": "lib/index.umd.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
@@ -16,14 +15,14 @@
     "directory": "src/mantine-prism"
   },
   "peerDependencies": {
-    "@mantine/core": "2.4.3",
-    "@mantine/hooks": "2.4.3",
+    "@mantine/core": "2.5.0-alpha.2",
+    "@mantine/hooks": "2.5.0-alpha.2",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
-    "react-jss": ">=10.1.1"
+    "react-dom": ">=16.8.0"
   },
   "dependencies": {
     "clsx": "^1.1.1",
+    "react-jss": "^10.7.1",
     "prism-react-renderer": "^1.2.1"
   },
   "devDependencies": {}

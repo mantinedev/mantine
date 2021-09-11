@@ -1,9 +1,8 @@
 {
   "name": "@mantine/hooks",
-  "version": "2.4.3",
+  "version": "2.5.0-alpha.2",
   "main": "cjs/index.js",
   "module": "esm/index.js",
-  "browser": "lib/index.umd.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",

@@ -4,7 +4,7 @@ import { hexToRgba } from '../hex-to-rgba/hex-to-rgba';
 
 interface GetSharedColorScheme {
   color?: string;
-  variant: 'outline' | 'filled' | 'light' | 'gradient';
+  variant: 'outline' | 'filled' | 'light' | 'gradient' | 'white';
   gradient?: { from: string; to: string; deg: number };
   theme: MantineTheme;
 }
@@ -34,6 +34,14 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
         theme.colorScheme === 'dark' ? 0.35 : 1
       ),
       color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 2 : 9 }),
+    };
+  }
+
+  if (variant === 'white') {
+    return {
+      border: 'transparent',
+      background: theme.white,
+      color: getThemeColor({ theme, color, shade: 7 }),
     };
   }
 
@@ -70,6 +78,6 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
   return {
     border: 'transparent',
     background: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 6 }),
-    color: theme.colorScheme === 'dark' ? getThemeColor({ theme, color, shade: 0 }) : theme.white,
+    color: theme.white,
   };
 }

@@ -10,14 +10,33 @@ const convertCase = (string) => {
 };
 
 const GALLERY_CATEGORIES = [
-  { slug: 'forms', name: 'Forms and inputs' },
-  { slug: 'cards', name: 'Cards' },
-  { slug: 'hero', name: 'Hero headers' },
-  { slug: 'features', name: 'Features section' },
+  {
+    name: 'Landing page sections',
+    categories: [
+      { slug: 'hero', name: 'Hero headers' },
+      { slug: 'features', name: 'Features section' },
+    ],
+  },
+  {
+    name: 'Application UI',
+    categories: [{ slug: 'forms', name: 'Forms and inputs' }],
+  },
+  {
+    name: 'Blog',
+    categories: [{ slug: 'cards', name: 'Blog cards' }],
+  },
 ];
 
 const getCategory = (slug) => {
-  return GALLERY_CATEGORIES.find((cat) => cat.slug === slug) || {};
+  for (const group of GALLERY_CATEGORIES) {
+    const cat = group.categories.find((cat) => cat.slug === slug);
+
+    if (cat) {
+      return cat;
+    }
+  }
+
+  return {};
 };
 
 exports.createPages = async function ({ actions }) {
@@ -81,12 +100,23 @@ exports.createPages = async function ({ actions }) {
     component: require.resolve('./src/components/Gallery/Gallery.tsx'),
     context: {
       componentsCount,
-      categories: GALLERY_CATEGORIES.map((category) => ({
-        category: category.slug,
-        name: category.name,
-        count: categories[category.slug].length,
-        url: `/gallery/category/${category.slug}/`,
-      })),
+      categories: GALLERY_CATEGORIES.map((category) => {
+        const total = category.categories.reduce(
+          (acc, cat) => categories[cat.slug].length + acc,
+          0
+        );
+        return {
+          category: category.slug,
+          name: category.name,
+          count: total,
+          groups: category.categories.map((cat) => ({
+            ...cat,
+            category: cat.slug,
+            url: `/gallery/category/${cat.slug}/`,
+            count: categories[cat.slug].length,
+          })),
+        };
+      }),
     },
   });
 };
