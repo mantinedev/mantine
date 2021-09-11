@@ -268,7 +268,6 @@ export function TimeRangeInput({
               value={toTime.hours}
               onChange={handleHoursChange}
               setValue={(val) => handleHoursChange(val, false)}
-              id={uuid}
               className={classes.timeInput}
               style={_styles.timeInput}
               withSeparator
