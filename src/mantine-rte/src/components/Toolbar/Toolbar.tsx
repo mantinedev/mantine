@@ -1,5 +1,6 @@
 import React from 'react';
 import { DefaultProps, useMantineTheme } from '@mantine/core';
+import type { RichTextEditorLabels } from '../RichTextEditor/default-labels';
 import { ToolbarButton } from './ToolbarButton/ToolbarButton';
 import { CONTROLS, ToolbarControl } from './controls';
 import useStyles from './Toolbar.styles';
@@ -18,9 +19,12 @@ import useStyles from './Toolbar.styles';
 interface ToolbarProps extends DefaultProps {
   /** Toolbar controls divided into groups */
   controls: ToolbarControl[][];
+
+  /** Labels used for all toolbar controls */
+  labels: RichTextEditorLabels;
 }
 
-export function Toolbar({ themeOverride, controls }: ToolbarProps) {
+export function Toolbar({ themeOverride, controls, labels }: ToolbarProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, null, 'rte');
 
@@ -37,6 +41,7 @@ export function Toolbar({ themeOverride, controls }: ToolbarProps) {
             controls={CONTROLS[item].controls}
             value={(CONTROLS[item] as any).value}
             key={item}
+            title={labels[item]}
           >
             <Icon style={{ width: 18, height: 18 }} />
           </ToolbarButton>

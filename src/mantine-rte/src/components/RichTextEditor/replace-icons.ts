@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 const ICONS = {
   list: {},
   strike: {},
@@ -10,6 +9,7 @@ const ICONS = {
 
 export function replaceIcons(quillIconsModule: any) {
   Object.keys(ICONS).forEach((icon) => {
+    // eslint-disable-next-line no-param-reassign
     quillIconsModule[icon] = ICONS[icon];
   });
 }

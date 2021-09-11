@@ -6,19 +6,25 @@ import { Toolbar } from '../Toolbar/Toolbar';
 import { ALL_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
 import { replaceIcons } from './replace-icons';
+import { DEFAULT_LABELS, RichTextEditorLabels } from './default-labels';
+// import './lib.css';
+
+export type { RichTextEditorLabels };
 
 const icons = Quill.import('ui/icons');
 
 replaceIcons(icons);
 
-interface RichTextEditorProps extends DefaultProps {
+export interface RichTextEditorProps extends DefaultProps {
   value: string;
   onChange(value: string): void;
+  labels?: RichTextEditorLabels;
 }
 
 export function RichTextEditor({
   value,
   onChange,
+  labels = DEFAULT_LABELS,
   themeOverride,
   className,
   ...others
@@ -28,7 +34,7 @@ export function RichTextEditor({
 
   return (
     <div className={cx(classes.root, className)} {...others}>
-      <Toolbar controls={ALL_CONTROLS} themeOverride={themeOverride} />
+      <Toolbar controls={ALL_CONTROLS} themeOverride={themeOverride} labels={labels} />
       <Editor
         theme="snow"
         modules={{ toolbar: { container: '#toolbar' } }}
