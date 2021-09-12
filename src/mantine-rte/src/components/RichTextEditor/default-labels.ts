@@ -1,4 +1,7 @@
 export interface RichTextEditorLabels {
+  save: string;
+  remove: string;
+  edit: string;
   bold: string;
   italic: string;
   underline: string;
@@ -6,12 +9,12 @@ export interface RichTextEditorLabels {
   link: string;
   unorderedList: string;
   orderedList: string;
-  save: string;
   clean: string;
   video: string;
   alignCenter: string;
   alignLeft: string;
   alignRight: string;
+  image: string;
   h1: string;
   h2: string;
   h3: string;
@@ -23,6 +26,9 @@ export interface RichTextEditorLabels {
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
+  save: 'Save',
+  edit: 'Edit',
+  remove: 'Remove',
   bold: 'Bold',
   italic: 'Italic',
   underline: 'Underline',
@@ -30,12 +36,12 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   link: 'Link',
   unorderedList: 'Bullet list',
   orderedList: 'Ordered list',
-  save: 'Save',
   clean: 'Clean formatting',
   video: 'Embed video',
   alignCenter: 'Align text to center',
   alignLeft: 'Align text to left',
   alignRight: 'Align text to right',
+  image: 'Embed image',
   h1: 'Heading 1',
   h2: 'Heading 2',
   h3: 'Heading 3',

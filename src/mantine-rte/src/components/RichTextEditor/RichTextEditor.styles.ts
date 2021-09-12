@@ -2,10 +2,13 @@ import { createMemoStyles, MantineTheme, getFontStyles } from '@mantine/core';
 
 interface RichTextEditorStyles {
   theme: MantineTheme;
+  saveLabel: string;
+  editLabel: string;
+  removeLabel: string;
 }
 
 export default createMemoStyles({
-  root: ({ theme }: RichTextEditorStyles) => ({
+  root: ({ theme, saveLabel, editLabel, removeLabel }: RichTextEditorStyles) => ({
     ...getFontStyles(theme),
     fontSize: theme.fontSizes.sm,
     border: `1px solid ${
@@ -46,7 +49,7 @@ export default createMemoStyles({
     },
 
     '& .ql-action::before': {
-      content: '"Edit"',
+      content: `"${editLabel}"`,
       cursor: 'pointer',
       display: 'block',
       height: 28,
@@ -61,7 +64,7 @@ export default createMemoStyles({
     },
 
     '& .ql-remove::before': {
-      content: '"Remove"',
+      content: `"${removeLabel}"`,
       cursor: 'pointer',
       color: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
       fontSize: theme.fontSizes.sm,
@@ -91,7 +94,7 @@ export default createMemoStyles({
     },
 
     '& .ql-editing .ql-action::before': {
-      content: '"Save"',
+      content: `"${saveLabel}"`,
       marginRight: 0,
     },
 

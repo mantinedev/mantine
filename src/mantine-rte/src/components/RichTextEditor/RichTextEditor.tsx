@@ -45,7 +45,11 @@ export function RichTextEditor({
   ...others
 }: RichTextEditorProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, null, 'rte');
+  const classes = useStyles(
+    { theme, saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
+    null,
+    'rte'
+  );
 
   const modules = useMemo(
     () => ({
