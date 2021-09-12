@@ -5,7 +5,7 @@ import { ToolbarButton } from './ToolbarButton/ToolbarButton';
 import { CONTROLS, ToolbarControl } from './controls';
 import useStyles from './Toolbar.styles';
 
-interface ToolbarProps extends DefaultProps {
+export interface ToolbarProps extends DefaultProps {
   /** Toolbar controls divided into groups */
   controls: ToolbarControl[][];
 

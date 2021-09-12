@@ -1,6 +1,16 @@
-import { RichTextEditor } from './components/RichTextEditor/RichTextEditor';
+import {
+  RichTextEditor,
+  DEFAULT_CONTROLS,
+  DEFAULT_LABELS,
+} from './components/RichTextEditor/RichTextEditor';
 
-export { RichTextEditor };
+export { RichTextEditor, DEFAULT_CONTROLS, DEFAULT_LABELS };
 export default RichTextEditor;
 
-export type { RichTextEditorProps } from './components/RichTextEditor/RichTextEditor';
+export { Toolbar } from './components/Toolbar/Toolbar';
+
+export type {
+  RichTextEditorProps,
+  RichTextEditorLabels,
+} from './components/RichTextEditor/RichTextEditor';
+export type { ToolbarProps } from './components/Toolbar/Toolbar';
