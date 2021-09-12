@@ -125,17 +125,45 @@ export default createMemoStyles({
       textDecoration: 'none',
     },
 
-    '& h1': {
+    '& h1, & h2, & h3, & h4, & h5, & h6': {
       fontFamily: theme.headings.fontFamily,
       fontWeight: theme.headings.fontWeight,
-      fontSize: theme.headings.sizes.h1.fontSize,
       marginTop: 0,
+    },
+
+    '& h1': {
+      fontSize: theme.headings.sizes.h1.fontSize,
       marginBottom: theme.spacing.sm * (theme.headings.sizes.h1.lineHeight as number),
+    },
+
+    '& h2': {
+      fontSize: theme.headings.sizes.h2.fontSize,
+      marginBottom: theme.spacing.sm * (theme.headings.sizes.h2.lineHeight as number),
+    },
+
+    '& h3': {
+      fontSize: theme.headings.sizes.h3.fontSize,
+      marginBottom: theme.spacing.sm * (theme.headings.sizes.h3.lineHeight as number),
+    },
+
+    '& h4': {
+      fontSize: theme.headings.sizes.h4.fontSize,
+      marginBottom: theme.spacing.sm * (theme.headings.sizes.h4.lineHeight as number),
+    },
+
+    '& h5': {
+      fontSize: theme.headings.sizes.h5.fontSize,
+      marginBottom: theme.spacing.sm * (theme.headings.sizes.h5.lineHeight as number),
+    },
+
+    '& h6': {
+      fontSize: theme.headings.sizes.h6.fontSize,
+      marginBottom: theme.spacing.sm * (theme.headings.sizes.h6.lineHeight as number),
     },
 
     '& p': {
       marginTop: 0,
-      marginBottom: theme.spacing.sm / 2,
+      marginBottom: theme.spacing.sm,
     },
   }),
 });
