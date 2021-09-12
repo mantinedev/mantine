@@ -3,7 +3,7 @@ import cx from 'clsx';
 import Editor, { Quill } from 'react-quill';
 import { useMantineTheme, DefaultProps } from '@mantine/core';
 import { Toolbar } from '../Toolbar/Toolbar';
-import { ALL_CONTROLS, DEFAULT_CONTROLS } from './default-control';
+import { DEFAULT_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './default-labels';
 import { ToolbarControl } from '../Toolbar/controls';
@@ -12,7 +12,7 @@ import { replaceIcons } from '../../modules/icons';
 
 export type { RichTextEditorLabels };
 
-export { DEFAULT_LABELS, ALL_CONTROLS, DEFAULT_CONTROLS };
+export { DEFAULT_LABELS, DEFAULT_CONTROLS };
 
 const InlineBlot = Quill.import('blots/block');
 const ImageBlot = createImageBlot(InlineBlot);
