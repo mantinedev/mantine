@@ -12,5 +12,6 @@ export { Toolbar } from './components/Toolbar/Toolbar';
 export type {
   RichTextEditorProps,
   RichTextEditorLabels,
+  RichTextEditorStylesNames,
 } from './components/RichTextEditor/RichTextEditor';
 export type { ToolbarProps } from './components/Toolbar/Toolbar';

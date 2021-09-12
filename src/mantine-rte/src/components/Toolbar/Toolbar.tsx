@@ -1,11 +1,13 @@
 import React from 'react';
-import { DefaultProps, useMantineTheme } from '@mantine/core';
+import { DefaultProps, mergeStyles, useMantineTheme } from '@mantine/core';
 import type { RichTextEditorLabels } from '../RichTextEditor/default-labels';
 import { ToolbarButton } from './ToolbarButton/ToolbarButton';
 import { CONTROLS, ToolbarControl } from './controls';
 import useStyles from './Toolbar.styles';
 
-export interface ToolbarProps extends DefaultProps {
+export type ToolbarStylesNames = keyof ReturnType<typeof useStyles>;
+
+export interface ToolbarProps extends DefaultProps<ToolbarStylesNames> {
   /** Toolbar controls divided into groups */
   controls: ToolbarControl[][];
 
@@ -25,9 +27,12 @@ export function Toolbar({
   labels,
   stickyOffset = 0,
   sticky = true,
+  classNames,
+  styles,
 }: ToolbarProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, sticky, stickyOffset }, null, 'rte');
+  const classes = useStyles({ theme, sticky, stickyOffset }, classNames, 'rte');
+  const _styles = mergeStyles(classes, styles);
 
   const groups = controls.map((group, index) => {
     const items = group
@@ -38,6 +43,7 @@ export function Toolbar({
         return (
           <ToolbarButton
             className={classes.toolbarControl}
+            style={_styles.toolbarControl}
             themeOverride={themeOverride}
             controls={CONTROLS[item].controls}
             value={(CONTROLS[item] as any).value}
@@ -51,15 +57,17 @@ export function Toolbar({
       });
 
     return (
-      <div className={classes.toolbarGroup} key={index}>
+      <div className={classes.toolbarGroup} style={_styles.toolbarGroup} key={index}>
         {items}
       </div>
     );
   });
 
   return (
-    <div id="toolbar" className={classes.toolbar}>
-      <div className={classes.toolbarInner}>{groups}</div>
+    <div id="toolbar" className={classes.toolbar} style={_styles.toolbar}>
+      <div className={classes.toolbarInner} style={_styles.toolbarInner}>
+        {groups}
+      </div>
     </div>
   );
 }

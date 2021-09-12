@@ -1,14 +1,16 @@
 import React, { useMemo } from 'react';
 import cx from 'clsx';
 import Editor, { Quill } from 'react-quill';
-import { useMantineTheme, DefaultProps } from '@mantine/core';
-import { Toolbar } from '../Toolbar/Toolbar';
+import { useMantineTheme, DefaultProps, mergeStyles } from '@mantine/core';
+import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './default-labels';
 import { ToolbarControl } from '../Toolbar/controls';
 import { createImageBlot, ImageUploader } from '../../modules/image-uploader';
 import { replaceIcons } from '../../modules/icons';
+
+export type RichTextEditorStylesNames = ToolbarStylesNames | keyof ReturnType<typeof useStyles>;
 
 export type { RichTextEditorLabels };
 
@@ -22,7 +24,7 @@ Quill.register('modules/imageUploader', ImageUploader);
 const icons = Quill.import('ui/icons');
 replaceIcons(icons);
 
-export interface RichTextEditorProps extends DefaultProps {
+export interface RichTextEditorProps extends DefaultProps<RichTextEditorStylesNames> {
   /** HTML content, value not forced as quill works in uncontrolled mode */
   value: string;
 
@@ -54,15 +56,19 @@ export function RichTextEditor({
   labels = DEFAULT_LABELS,
   controls = DEFAULT_CONTROLS,
   themeOverride,
+  style,
   className,
+  classNames,
+  styles,
   ...others
 }: RichTextEditorProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles(
     { theme, saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
-    null,
+    classNames,
     'rte'
   );
+  const _styles = mergeStyles(classes, styles);
 
   const modules = useMemo(
     () => ({
@@ -75,14 +81,17 @@ export function RichTextEditor({
   );
 
   return (
-    <div className={cx(classes.root, className)} {...others}>
+    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       <Toolbar
         controls={controls}
         themeOverride={themeOverride}
         labels={labels}
         sticky={sticky}
         stickyOffset={stickyOffset}
+        classNames={classNames}
+        styles={styles}
       />
+
       <Editor theme="snow" modules={modules} value={value} onChange={onChange} />
     </div>
   );
