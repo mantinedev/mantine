@@ -41,7 +41,7 @@ function Wrapper() {
       value={value}
       onChange={onChange}
       onImageUpload={handleImageUpload}
-      stickyOffset={60}
+      stickyOffset={0}
     />
   );
 }
