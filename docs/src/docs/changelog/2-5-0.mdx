@@ -9,6 +9,8 @@ date: 'September 1st, 2021'
 
 import { TimelineDemos, DialogDemos, ListDemos, ChipsDemos } from '@demos/core';
 
+import { TimeRangeInputDemos } from '@demos/dates'
+
 ## UMD builds deprecation
 
 All `@mantine/` packages will no longer default to umd builds via `browser` field in `package.json`.
@@ -65,6 +67,12 @@ With [Dialog](https://mantine.dev/core/dialog/) component you can display fixed 
 [List](https://mantine.dev/core/list/) component is a wrapper for ul and ol lists with option to replace bullets with icons:
 
 <Demo data={ListDemos.icon} demoProps={{ toggle: true }} />
+
+## New @mantine/dates components
+
+[TimeInput](/dates/time-input/) component allows to capture time range from user:
+
+<Demo date={TimeRangeInputDemos.usage} demoProps={{ toggle: true }} />
 
 ## New features
 
