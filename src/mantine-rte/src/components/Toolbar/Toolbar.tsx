@@ -5,17 +5,6 @@ import { ToolbarButton } from './ToolbarButton/ToolbarButton';
 import { CONTROLS, ToolbarControl } from './controls';
 import useStyles from './Toolbar.styles';
 
-// <NativeSelect
-//   onChange={(event) => event.persist()}
-//   classNames={{ input: 'ql-header' }}
-//   data={[
-//     { label: 'Text', value: '' },
-//     { label: 'Heading 1', value: '1' },
-//     { label: 'Heading 2', value: '2' },
-//     { label: 'Heading 3', value: '3' },
-//   ]}
-//   />
-
 interface ToolbarProps extends DefaultProps {
   /** Toolbar controls divided into groups */
   controls: ToolbarControl[][];

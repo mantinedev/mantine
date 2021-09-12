@@ -3,13 +3,16 @@ import cx from 'clsx';
 import Editor, { Quill } from 'react-quill';
 import { useMantineTheme, DefaultProps } from '@mantine/core';
 import { Toolbar } from '../Toolbar/Toolbar';
-import { ALL_CONTROLS } from './default-control';
+import { ALL_CONTROLS, DEFAULT_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './default-labels';
+import { ToolbarControl } from '../Toolbar/controls';
 import { createImageBlot, ImageUploader } from '../../modules/image-uploader';
 import { replaceIcons } from '../../modules/icons';
 
 export type { RichTextEditorLabels };
+
+export { DEFAULT_LABELS, ALL_CONTROLS, DEFAULT_CONTROLS };
 
 const InlineBlot = Quill.import('blots/block');
 const ImageBlot = createImageBlot(InlineBlot);
@@ -20,10 +23,20 @@ const icons = Quill.import('ui/icons');
 replaceIcons(icons);
 
 export interface RichTextEditorProps extends DefaultProps {
+  /** HTML content, value not forced as quill works in uncontrolled mode */
   value: string;
+
+  /** Called each time value changes */
   onChange(value: string): void;
+
+  /** Called when image image is inserted in editor */
   onImageUpload?(image: File): Promise<string>;
+
+  /** Labels used in toolbar button titles and assets insertion popovers */
   labels?: RichTextEditorLabels;
+
+  /** Toolbar controls divided into groups */
+  controls?: ToolbarControl[][];
 
   /** Make toolbar sticky */
   sticky?: boolean;
@@ -39,6 +52,7 @@ export function RichTextEditor({
   sticky = true,
   stickyOffset = 0,
   labels = DEFAULT_LABELS,
+  controls = DEFAULT_CONTROLS,
   themeOverride,
   className,
   ...others
@@ -63,7 +77,7 @@ export function RichTextEditor({
   return (
     <div className={cx(classes.root, className)} {...others}>
       <Toolbar
-        controls={ALL_CONTROLS}
+        controls={controls}
         themeOverride={themeOverride}
         labels={labels}
         sticky={sticky}
