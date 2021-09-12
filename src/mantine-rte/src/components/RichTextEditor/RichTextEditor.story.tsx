@@ -13,7 +13,7 @@ const html = `
 <h2>Sub titlte</h2>
 <p>It swims <a href="https://mantine.dev">along with its mouth</a> open and swallows down seawater along with its food. It sprays excess water out of its nostrils.It likes swimming around with people on its back. In the Alola region, it’s an important means of transportation over water.While Milotic is said to be the most beautiful Pokémon, Trainers who like Feebas and have raised it are seemingly disappointed by Milotic.</p>
 
-<img src="https://images.unsplash.com/photo-1542779283-429940ce8336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3150&q=80" />
+<iframe class="ql-video" frameborder="0" allowfullscreen="true" src="https://www.youtube.com/embed/LoLWYHoExyo?showinfo=0"></iframe>
 
 <img src="https://images.unsplash.com/photo-1542779283-429940ce8336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3150&q=80" />
 

@@ -8,6 +8,7 @@ export interface RichTextEditorLabels {
   orderedList: string;
   save: string;
   clean: string;
+  video: string;
   'align-center': string;
   'align-left': string;
   'align-right': string;
@@ -23,6 +24,7 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   orderedList: 'Ordered list',
   save: 'Save',
   clean: 'Clean formatting',
+  video: 'Embed video',
   'align-center': 'Align text to center',
   'align-left': 'Align text to left',
   'align-right': 'Align text to right',

@@ -10,6 +10,7 @@ import {
   TextAlignLeftIcon,
   TextAlignRightIcon,
   TextAlignCenterIcon,
+  VideoIcon,
 } from '@modulz/radix-icons';
 import { OrderedList } from './icons/OrderedList';
 
@@ -80,6 +81,11 @@ export const CONTROLS = {
     controls: 'align',
     value: 'right',
     noActive: true,
+  },
+
+  video: {
+    icon: VideoIcon,
+    controls: 'video',
   },
 } as const;
 

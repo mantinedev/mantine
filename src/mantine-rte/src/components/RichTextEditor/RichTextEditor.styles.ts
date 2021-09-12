@@ -143,6 +143,11 @@ export default createMemoStyles({
       textAlign: 'right',
     },
 
+    '& iframe.ql-video': {
+      width: '100%',
+      height: 400,
+    },
+
     '& a': {
       color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7],
       textDecoration: 'none',
