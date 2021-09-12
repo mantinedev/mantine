@@ -149,6 +149,10 @@ export default createMemoStyles({
     '& iframe.ql-video': {
       width: '100%',
       height: 400,
+
+      '@media (max-width: 755px)': {
+        height: 220,
+      },
     },
 
     '& a': {
