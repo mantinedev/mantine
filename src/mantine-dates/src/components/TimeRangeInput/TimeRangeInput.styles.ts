@@ -6,18 +6,12 @@ import {
   getSizeValue,
 } from '@mantine/core';
 
+import { inputSizes } from '../TimeInput/TimeInput.styles';
+
 interface TimeRangeInputStyles {
   theme: MantineTheme;
   size: MantineSize;
 }
-
-const inputSizes = {
-  xs: 20,
-  sm: 23,
-  md: 25,
-  lg: 27,
-  xl: 29,
-};
 
 export default createMemoStyles({
   disabled: {

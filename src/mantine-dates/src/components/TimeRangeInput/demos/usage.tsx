@@ -3,14 +3,13 @@ import { TimeRangeInput } from '../TimeRangeInput';
 
 const code = `
 import { useState } from 'react';
-import dayjs from 'dayjs';
-import { DateRangePicker } from '@mantine/dates';
+import { TimeRangeInput } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState<[Date, Date]>([new Date(), new Date()]);
 
   return (
-    <DateRangePicker
+    <TimeRangeInput
       label="Log Time"
       value={value}
       onChange={setValue}
