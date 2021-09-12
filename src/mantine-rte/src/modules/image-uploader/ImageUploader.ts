@@ -7,15 +7,13 @@ interface Options {
 export class ImageUploader {
   quill: Quill;
   options: Options;
+  range: any;
+  fileHolder: HTMLInputElement;
 
   constructor(quill: Quill, options: Options) {
     this.quill = quill;
     this.options = options;
     this.range = null;
-
-    if (typeof this.options.upload !== 'function') {
-      console.warn('[Missing config] upload function that returns a promise is required');
-    }
 
     const toolbar = this.quill.getModule('toolbar');
     toolbar.addHandler('image', this.selectLocalImage.bind(this));
@@ -45,13 +43,14 @@ export class ImageUploader {
     });
   }
 
-  handleDrop(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-    if (evt.dataTransfer && evt.dataTransfer.files && evt.dataTransfer.files.length) {
+  handleDrop(event: any) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
       if (document.caretRangeFromPoint) {
         const selection = document.getSelection();
-        const range = document.caretRangeFromPoint(evt.clientX, evt.clientY);
+        const range = document.caretRangeFromPoint(event.clientX, event.clientY);
         if (selection && range) {
           selection.setBaseAndExtent(
             range.startContainer,
@@ -62,7 +61,7 @@ export class ImageUploader {
         }
       } else {
         const selection = document.getSelection();
-        const range = document.caretPositionFromPoint(evt.clientX, evt.clientY);
+        const range = (document as any).caretPositionFromPoint(event.clientX, event.clientY);
         if (selection && range) {
           selection.setBaseAndExtent(
             range.offsetNode,
@@ -74,7 +73,7 @@ export class ImageUploader {
       }
 
       this.range = this.quill.getSelection();
-      const file = evt.dataTransfer.files[0];
+      const file = event.dataTransfer.files[0];
 
       setTimeout(() => {
         this.range = this.quill.getSelection();
@@ -83,21 +82,20 @@ export class ImageUploader {
     }
   }
 
-  handlePaste(evt) {
-    const clipboard = evt.clipboardData || window.clipboardData;
+  handlePaste(event: any) {
+    const clipboard = event.clipboardData || (window as any).clipboardData;
 
-    // IE 11 is .files other browsers are .items
     if (clipboard && (clipboard.items || clipboard.files)) {
       const items = clipboard.items || clipboard.files;
       const IMAGE_MIME_REGEX = /^image\/(jpe?g|gif|png|svg|webp)$/i;
 
-      for (let i = 0; i < items.length; i++) {
+      for (let i = 0; i < items.length; i += 1) {
         if (IMAGE_MIME_REGEX.test(items[i].type)) {
           const file = items[i].getAsFile ? items[i].getAsFile() : items[i];
 
           if (file) {
             this.range = this.quill.getSelection();
-            evt.preventDefault();
+            event.preventDefault();
             setTimeout(() => {
               this.range = this.quill.getSelection();
               this.readAndUploadFile(file);
@@ -108,7 +106,7 @@ export class ImageUploader {
     }
   }
 
-  readAndUploadFile(file) {
+  readAndUploadFile(file: File) {
     let isUploadReject = false;
 
     const fileReader = new FileReader();
@@ -118,7 +116,7 @@ export class ImageUploader {
       () => {
         if (!isUploadReject) {
           const base64ImageSrc = fileReader.result;
-          this.insertBase64Image(base64ImageSrc);
+          this.insertBase64Image(base64ImageSrc as string);
         }
       },
       false
@@ -132,10 +130,9 @@ export class ImageUploader {
       (imageUrl) => {
         this.insertToEditor(imageUrl);
       },
-      (error) => {
+      () => {
         isUploadReject = true;
         this.removeBase64Image();
-        console.warn(error);
       }
     );
   }
@@ -145,19 +142,17 @@ export class ImageUploader {
     this.readAndUploadFile(file);
   }
 
-  insertBase64Image(url) {
+  insertBase64Image(url: string) {
     const { range } = this;
-    this.quill.insertEmbed(range.index, LoadingImage.blotName, `${url}`, 'user');
+    this.quill.insertEmbed(range.index, 'imageBlot', `${url}`, 'user');
   }
 
-  insertToEditor(url) {
+  insertToEditor(url: string) {
     const { range } = this;
-    // Delete the placeholder image
     this.quill.deleteText(range.index, 3, 'user');
-    // Insert the server saved image
     this.quill.insertEmbed(range.index, 'image', `${url}`, 'user');
 
-    range.index++;
+    range.index += 1;
     this.quill.setSelection(range, 'user');
   }
 

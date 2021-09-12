@@ -12,9 +12,23 @@ const html = `
 <p>It swims <a href="https://mantine.dev">along with its mouth</a> open and swallows down seawater along with its food. It sprays excess water out of its nostrils.It likes swimming around with people on its back. In the Alola region, it’s an important means of transportation over water.While Milotic is said to be the most beautiful Pokémon, Trainers who like Feebas and have raised it are seemingly disappointed by Milotic.</p>
 `;
 
+const handleImageupload = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    fetch('https://api.imgbb.com/1/upload?key=d36eb6591370ae7f9089d85875e56b22', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((result) => resolve(result.data.url))
+      .catch(() => reject(new Error('Upload failed')));
+  });
+
 function Wrapper() {
   const [value, onChange] = useState(html);
-  return <RichTextEditor value={value} onChange={onChange} />;
+  return <RichTextEditor value={value} onChange={onChange} onImageUpload={handleImageupload} />;
 }
 
 storiesOf('@mantine/rte/RichTextEditor', module).add('General usage', () => (

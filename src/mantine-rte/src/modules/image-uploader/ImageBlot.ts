@@ -4,9 +4,12 @@ export function createImageBlot(InlineBlot: any) {
     static className = 'image-uploading';
     static tagName = 'span';
 
-    static create(src) {
+    static create(src: string) {
       const node = super.create(src);
-      if (src === true) return node;
+
+      if (typeof src === 'boolean' && src) {
+        return node;
+      }
 
       const image = document.createElement('img');
       image.setAttribute('src', src);
@@ -14,12 +17,12 @@ export function createImageBlot(InlineBlot: any) {
       return node;
     }
 
-    static value(domNode) {
+    static value(domNode: HTMLElement) {
       const { src, custom } = domNode.dataset;
       return { src, custom };
     }
 
-    deleteAt(index, length) {
+    deleteAt(index: number, length: number) {
       super.deleteAt(index, length);
       this.cache = {};
     }

@@ -24,12 +24,14 @@ replaceIcons(icons);
 export interface RichTextEditorProps extends DefaultProps {
   value: string;
   onChange(value: string): void;
+  onImageUpload?(image: File): Promise<string>;
   labels?: RichTextEditorLabels;
 }
 
 export function RichTextEditor({
   value,
   onChange,
+  onImageUpload = () => Promise.resolve(null),
   labels = DEFAULT_LABELS,
   themeOverride,
   className,
@@ -42,25 +44,7 @@ export function RichTextEditor({
     () => ({
       toolbar: { container: '#toolbar' },
       imageUploader: {
-        upload: (file) =>
-          new Promise((resolve, reject) => {
-            const formData = new FormData();
-            formData.append('image', file);
-
-            fetch('https://api.imgbb.com/1/upload?key=d36eb6591370ae7f9089d85875e56b22', {
-              method: 'POST',
-              body: formData,
-            })
-              .then((response) => response.json())
-              .then((result) => {
-                console.log(result);
-                resolve(result.data.url);
-              })
-              .catch((error) => {
-                reject('Upload failed');
-                console.error('Error:', error);
-              });
-          }),
+        upload: (file: File) => onImageUpload(file),
       },
     }),
     []
