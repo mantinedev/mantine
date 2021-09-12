@@ -9,9 +9,15 @@ export interface RichTextEditorLabels {
   save: string;
   clean: string;
   video: string;
-  'align-center': string;
-  'align-left': string;
-  'align-right': string;
+  alignCenter: string;
+  alignLeft: string;
+  alignRight: string;
+  h1: string;
+  h2: string;
+  h3: string;
+  h4: string;
+  h5: string;
+  h6: string;
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
@@ -25,7 +31,13 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   save: 'Save',
   clean: 'Clean formatting',
   video: 'Embed video',
-  'align-center': 'Align text to center',
-  'align-left': 'Align text to left',
-  'align-right': 'Align text to right',
+  alignCenter: 'Align text to center',
+  alignLeft: 'Align text to left',
+  alignRight: 'Align text to right',
+  h1: 'Heading 1',
+  h2: 'Heading 2',
+  h3: 'Heading 3',
+  h4: 'Heading 4',
+  h5: 'Heading 5',
+  h6: 'Heading 6',
 };

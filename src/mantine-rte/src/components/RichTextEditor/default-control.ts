@@ -8,7 +8,8 @@ export const DEFAULT_CONTROLS: ToolbarControl[][] = [
 
 export const ALL_CONTROLS: ToolbarControl[][] = [
   ['bold', 'italic', 'underline', 'strike', 'clean'],
-  ['align-left', 'align-center', 'align-right'],
+  ['alignLeft', 'alignCenter', 'alignRight'],
   ['unorderedList', 'orderedList'],
   ['link', 'image', 'video'],
+  ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
 ];

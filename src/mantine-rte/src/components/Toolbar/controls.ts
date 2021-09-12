@@ -12,7 +12,7 @@ import {
   TextAlignCenterIcon,
   VideoIcon,
 } from '@modulz/radix-icons';
-import { OrderedList } from './icons/OrderedList';
+import { OrderedList, H1, H2, H3, H4, H5, H6 } from './icons';
 
 export const CONTROLS = {
   bold: {
@@ -62,21 +62,21 @@ export const CONTROLS = {
     controls: 'clean',
   },
 
-  'align-center': {
+  alignCenter: {
     icon: TextAlignCenterIcon,
     controls: 'align',
     value: 'center',
     noActive: true,
   },
 
-  'align-left': {
+  alignLeft: {
     icon: TextAlignLeftIcon,
     controls: 'align',
     value: '',
     noActive: true,
   },
 
-  'align-right': {
+  alignRight: {
     icon: TextAlignRightIcon,
     controls: 'align',
     value: 'right',
@@ -86,6 +86,42 @@ export const CONTROLS = {
   video: {
     icon: VideoIcon,
     controls: 'video',
+  },
+
+  h1: {
+    icon: H1,
+    controls: 'header',
+    value: '1',
+  },
+
+  h2: {
+    icon: H2,
+    controls: 'header',
+    value: '2',
+  },
+
+  h3: {
+    icon: H3,
+    controls: 'header',
+    value: '3',
+  },
+
+  h4: {
+    icon: H4,
+    controls: 'header',
+    value: '4',
+  },
+
+  h5: {
+    icon: H5,
+    controls: 'header',
+    value: '5',
+  },
+
+  h6: {
+    icon: H6,
+    controls: 'header',
+    value: '6',
   },
 } as const;
 
