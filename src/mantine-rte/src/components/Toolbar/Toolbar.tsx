@@ -22,11 +22,23 @@ interface ToolbarProps extends DefaultProps {
 
   /** Labels used for all toolbar controls */
   labels: RichTextEditorLabels;
+
+  /** Make toolbar sticky */
+  sticky?: boolean;
+
+  /** Top toolbar position in any valid css value */
+  stickyOffset?: number | string;
 }
 
-export function Toolbar({ themeOverride, controls, labels }: ToolbarProps) {
+export function Toolbar({
+  themeOverride,
+  controls,
+  labels,
+  stickyOffset = 0,
+  sticky = true,
+}: ToolbarProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, null, 'rte');
+  const classes = useStyles({ theme, sticky, stickyOffset }, null, 'rte');
 
   const groups = controls.map((group, index) => {
     const items = group

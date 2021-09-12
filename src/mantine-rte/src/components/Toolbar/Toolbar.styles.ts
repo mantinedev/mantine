@@ -2,6 +2,8 @@ import { createMemoStyles, MantineTheme } from '@mantine/core';
 
 interface ToolbarStyles {
   theme: MantineTheme;
+  sticky: boolean;
+  stickyOffset: string | number;
 }
 
 export default createMemoStyles({
@@ -15,7 +17,10 @@ export default createMemoStyles({
     },
   }),
 
-  toolbar: ({ theme }: ToolbarStyles) => ({
+  toolbar: ({ theme, sticky, stickyOffset }: ToolbarStyles) => ({
+    position: sticky ? 'sticky' : 'relative',
+    zIndex: 1,
+    top: sticky ? stickyOffset : 0,
     display: 'flex',
     flexWrap: 'wrap',
     backgroundColor: theme.white,

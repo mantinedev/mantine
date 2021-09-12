@@ -10,6 +10,7 @@ export default createMemoStyles({
     fontSize: theme.fontSizes.sm,
     border: `1px solid ${theme.colors.gray[4]}`,
     borderRadius: theme.radius.sm,
+    position: 'relative',
 
     '& .ql-container': {
       position: 'relative',

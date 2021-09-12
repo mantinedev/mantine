@@ -25,12 +25,20 @@ export interface RichTextEditorProps extends DefaultProps {
   onChange(value: string): void;
   onImageUpload?(image: File): Promise<string>;
   labels?: RichTextEditorLabels;
+
+  /** Make toolbar sticky */
+  sticky?: boolean;
+
+  /** Top toolbar position in any valid css value */
+  stickyOffset?: number | string;
 }
 
 export function RichTextEditor({
   value,
   onChange,
   onImageUpload = () => Promise.resolve(null),
+  sticky = true,
+  stickyOffset = 0,
   labels = DEFAULT_LABELS,
   themeOverride,
   className,
@@ -51,7 +59,13 @@ export function RichTextEditor({
 
   return (
     <div className={cx(classes.root, className)} {...others}>
-      <Toolbar controls={ALL_CONTROLS} themeOverride={themeOverride} labels={labels} />
+      <Toolbar
+        controls={ALL_CONTROLS}
+        themeOverride={themeOverride}
+        labels={labels}
+        sticky={sticky}
+        stickyOffset={stickyOffset}
+      />
       <Editor theme="snow" modules={modules} value={value} onChange={onChange} />
     </div>
   );
