@@ -8,7 +8,6 @@ import useStyles from './RichTextEditor.styles';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './default-labels';
 import { createImageBlot, ImageUploader } from '../../modules/image-uploader';
 import { replaceIcons } from '../../modules/icons';
-// import './lib.css';
 
 export type { RichTextEditorLabels };
 
