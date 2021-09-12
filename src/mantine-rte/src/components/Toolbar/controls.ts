@@ -6,6 +6,7 @@ import {
   ListBulletIcon,
   Link1Icon,
   ImageIcon,
+  TextNoneIcon,
 } from '@modulz/radix-icons';
 import { OrderedList } from './icons/OrderedList';
 
@@ -50,6 +51,11 @@ export const CONTROLS = {
   image: {
     icon: ImageIcon,
     controls: 'image',
+  },
+
+  clean: {
+    icon: TextNoneIcon,
+    controls: 'clean',
   },
 } as const;
 

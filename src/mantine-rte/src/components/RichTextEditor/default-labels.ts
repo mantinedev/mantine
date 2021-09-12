@@ -7,6 +7,7 @@ export interface RichTextEditorLabels {
   unorderedList: string;
   orderedList: string;
   save: string;
+  clean: string;
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
@@ -18,4 +19,5 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   unorderedList: 'Bullet list',
   orderedList: 'Ordered list',
   save: 'Save',
+  clean: 'Clean formatting',
 };
