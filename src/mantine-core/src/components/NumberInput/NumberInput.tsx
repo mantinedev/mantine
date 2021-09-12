@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
-import { useMergedRef, assignRef } from '@mantine/hooks';
+import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
 import { useMantineTheme, DefaultProps, mergeStyles, getSizeValue } from '../../theme';
 import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';
@@ -103,19 +103,15 @@ export function NumberInput({
 
   const _min = typeof min === 'number' ? min : -Infinity;
   const _max = typeof max === 'number' ? max : Infinity;
-  const clamp = (v: string | number) => {
-    const val = typeof v === 'number' ? v : parseFloat(v);
-    return Math.min(Math.max(val, _min), _max);
-  };
 
   const increment = () => {
-    const result = clamp(finalValue + step).toFixed(precision);
+    const result = clamp({ value: finalValue + step, min: _min, max: _max }).toFixed(precision);
     handleValueChange(parseFloat(result));
     setTempValue(result);
   };
 
   const decrement = () => {
-    const result = clamp(finalValue - step).toFixed(precision);
+    const result = clamp({ value: finalValue - step, min: _min, max: _max }).toFixed(precision);
     handleValueChange(parseFloat(result));
     setTempValue(result);
   };
@@ -169,7 +165,8 @@ export function NumberInput({
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    const val = clamp(event.currentTarget.value);
+    const parsedVal = parseFloat(event.target.value);
+    const val = clamp({ value: parsedVal, min: _min, max: _max });
 
     if (!Number.isNaN(val)) {
       if (!noClampOnBlur) {
