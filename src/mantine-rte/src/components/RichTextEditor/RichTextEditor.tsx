@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import cx from 'clsx';
 import Editor, { Quill } from 'react-quill';
 import { useMantineTheme, DefaultProps } from '@mantine/core';
@@ -38,38 +38,38 @@ export function RichTextEditor({
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme }, null, 'rte');
 
+  const modules = useMemo(
+    () => ({
+      toolbar: { container: '#toolbar' },
+      imageUploader: {
+        upload: (file) =>
+          new Promise((resolve, reject) => {
+            const formData = new FormData();
+            formData.append('image', file);
+
+            fetch('https://api.imgbb.com/1/upload?key=d36eb6591370ae7f9089d85875e56b22', {
+              method: 'POST',
+              body: formData,
+            })
+              .then((response) => response.json())
+              .then((result) => {
+                console.log(result);
+                resolve(result.data.url);
+              })
+              .catch((error) => {
+                reject('Upload failed');
+                console.error('Error:', error);
+              });
+          }),
+      },
+    }),
+    []
+  );
+
   return (
     <div className={cx(classes.root, className)} {...others}>
       <Toolbar controls={ALL_CONTROLS} themeOverride={themeOverride} labels={labels} />
-      <Editor
-        theme="snow"
-        modules={{
-          toolbar: { container: '#toolbar' },
-          imageUploader: {
-            upload: (file) =>
-              new Promise((resolve, reject) => {
-                const formData = new FormData();
-                formData.append('image', file);
-
-                fetch('https://api.imgbb.com/1/upload?key=d36eb6591370ae7f9089d85875e56b22', {
-                  method: 'POST',
-                  body: formData,
-                })
-                  .then((response) => response.json())
-                  .then((result) => {
-                    console.log(result);
-                    resolve(result.data.url);
-                  })
-                  .catch((error) => {
-                    reject('Upload failed');
-                    console.error('Error:', error);
-                  });
-              }),
-          },
-        }}
-        // value={value}
-        // onChange={onChange}
-      />
+      <Editor theme="snow" modules={modules} value={value} onChange={onChange} />
     </div>
   );
 }
