@@ -70,7 +70,7 @@ export function Toolbar({
 
   return (
     <div id="toolbar" className={classes.toolbar}>
-      {groups}
+      <div className={classes.toolbarInner}>{groups}</div>
     </div>
   );
 }

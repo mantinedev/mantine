@@ -11,18 +11,13 @@ export default createMemoStyles({
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-
-    '& + &': {
-      marginLeft: theme.spacing.md,
-    },
+    margin: theme.spacing.md / 2,
   }),
 
   toolbar: ({ theme, sticky, stickyOffset }: ToolbarStyles) => ({
     position: sticky ? 'sticky' : 'relative',
     zIndex: 1,
     top: sticky ? stickyOffset : 0,
-    display: 'flex',
-    flexWrap: 'wrap',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     borderBottom: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
@@ -30,6 +25,12 @@ export default createMemoStyles({
     borderTopRightRadius: theme.radius.sm,
     borderTopLeftRadius: theme.radius.sm,
     padding: [theme.spacing.sm, theme.spacing.md],
+  }),
+
+  toolbarInner: ({ theme }: ToolbarStyles) => ({
+    display: 'flex',
+    flexWrap: 'wrap',
+    margin: -theme.spacing.md / 2,
   }),
 
   toolbarControl: ({ theme }: ToolbarStyles) => ({
