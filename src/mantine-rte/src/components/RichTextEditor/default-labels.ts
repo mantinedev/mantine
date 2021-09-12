@@ -18,6 +18,8 @@ export interface RichTextEditorLabels {
   h4: string;
   h5: string;
   h6: string;
+  sub: string;
+  sup: string;
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
@@ -40,4 +42,6 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   h4: 'Heading 4',
   h5: 'Heading 5',
   h6: 'Heading 6',
+  sup: 'Super script',
+  sub: 'Sub script',
 };

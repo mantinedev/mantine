@@ -12,7 +12,7 @@ import {
   TextAlignCenterIcon,
   VideoIcon,
 } from '@modulz/radix-icons';
-import { OrderedList, H1, H2, H3, H4, H5, H6 } from './icons';
+import { OrderedList, H1, H2, H3, H4, H5, H6, Sub, Sup } from './icons';
 
 export const CONTROLS = {
   bold: {
@@ -122,6 +122,18 @@ export const CONTROLS = {
     icon: H6,
     controls: 'header',
     value: '6',
+  },
+
+  sup: {
+    icon: Sup,
+    controls: 'script',
+    value: 'super',
+  },
+
+  sub: {
+    icon: Sub,
+    controls: 'script',
+    value: 'sub',
   },
 } as const;
 

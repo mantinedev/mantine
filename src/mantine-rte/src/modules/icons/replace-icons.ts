@@ -10,6 +10,7 @@ const CLEANUP = [
   'align',
   'video',
   'header',
+  'script',
 ];
 
 export function replaceIcons(quillIconsModule: any) {
