@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'clsx';
 import { DefaultProps, mergeStyles, useMantineTheme } from '@mantine/core';
 import type { RichTextEditorLabels } from '../RichTextEditor/default-labels';
 import { ToolbarButton } from './ToolbarButton/ToolbarButton';
@@ -27,8 +28,11 @@ export function Toolbar({
   labels,
   stickyOffset = 0,
   sticky = true,
+  className,
+  style,
   classNames,
   styles,
+  ...others
 }: ToolbarProps) {
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles({ theme, sticky, stickyOffset }, classNames, 'rte');
@@ -64,10 +68,17 @@ export function Toolbar({
   });
 
   return (
-    <div id="toolbar" className={classes.toolbar} style={_styles.toolbar}>
+    <div
+      id="toolbar"
+      className={cx(classes.toolbar, className)}
+      style={{ ...style, ..._styles.toolbar }}
+      {...others}
+    >
       <div className={classes.toolbarInner} style={_styles.toolbarInner}>
         {groups}
       </div>
     </div>
   );
 }
+
+Toolbar.displayName = '@mantine/rte/Toolbar';
