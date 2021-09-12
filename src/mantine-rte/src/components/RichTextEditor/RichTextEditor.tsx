@@ -7,11 +7,17 @@ import { ALL_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
 import { replaceIcons } from './replace-icons';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './default-labels';
+import { createImageBlot, ImageUploader } from '../../modules/image-uploader';
 // import './lib.css';
 
 export type { RichTextEditorLabels };
 
 const icons = Quill.import('ui/icons');
+const InlineBlot = Quill.import('blots/block');
+const ImageBlot = createImageBlot(InlineBlot);
+
+Quill.register({ 'formats/imageBlot': ImageBlot });
+Quill.register('modules/imageUploader', ImageUploader);
 
 replaceIcons(icons);
 
@@ -37,9 +43,32 @@ export function RichTextEditor({
       <Toolbar controls={ALL_CONTROLS} themeOverride={themeOverride} labels={labels} />
       <Editor
         theme="snow"
-        modules={{ toolbar: { container: '#toolbar' } }}
-        value={value}
-        onChange={onChange}
+        modules={{
+          toolbar: { container: '#toolbar' },
+          imageUploader: {
+            upload: (file) =>
+              new Promise((resolve, reject) => {
+                const formData = new FormData();
+                formData.append('image', file);
+
+                fetch('https://api.imgbb.com/1/upload?key=d36eb6591370ae7f9089d85875e56b22', {
+                  method: 'POST',
+                  body: formData,
+                })
+                  .then((response) => response.json())
+                  .then((result) => {
+                    console.log(result);
+                    resolve(result.data.url);
+                  })
+                  .catch((error) => {
+                    reject('Upload failed');
+                    console.error('Error:', error);
+                  });
+              }),
+          },
+        }}
+        // value={value}
+        // onChange={onChange}
       />
     </div>
   );
