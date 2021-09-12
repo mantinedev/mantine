@@ -131,6 +131,10 @@ export default createMemoStyles({
       },
     },
 
+    '& .ql-clipboard': {
+      display: 'none',
+    },
+
     '& a': {
       color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7],
       textDecoration: 'none',
