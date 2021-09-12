@@ -165,5 +165,16 @@ export default createMemoStyles({
       marginTop: 0,
       marginBottom: theme.spacing.sm,
     },
+
+    '& img': {
+      display: 'block',
+      position: 'relative',
+      maxWidth: '100%',
+      marginBottom: theme.spacing.sm,
+    },
+
+    '& .ql-image-uploading img': {
+      filter: 'blur(10px)',
+    },
   }),
 });

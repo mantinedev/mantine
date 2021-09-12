@@ -1,7 +1,7 @@
 export function createImageBlot(InlineBlot: any) {
   return class ImageBlot extends InlineBlot {
     static blotName = 'imageBlot';
-    static className = 'image-uploading';
+    static className = 'ql-image-uploading';
     static tagName = 'span';
 
     static create(src: string) {
