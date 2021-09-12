@@ -5,20 +5,19 @@ import { useMantineTheme, DefaultProps } from '@mantine/core';
 import { Toolbar } from '../Toolbar/Toolbar';
 import { ALL_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
-import { replaceIcons } from './replace-icons';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './default-labels';
 import { createImageBlot, ImageUploader } from '../../modules/image-uploader';
+import { replaceIcons } from '../../modules/icons';
 // import './lib.css';
 
 export type { RichTextEditorLabels };
 
-const icons = Quill.import('ui/icons');
 const InlineBlot = Quill.import('blots/block');
 const ImageBlot = createImageBlot(InlineBlot);
-
 Quill.register({ 'formats/imageBlot': ImageBlot });
 Quill.register('modules/imageUploader', ImageUploader);
 
+const icons = Quill.import('ui/icons');
 replaceIcons(icons);
 
 export interface RichTextEditorProps extends DefaultProps {
