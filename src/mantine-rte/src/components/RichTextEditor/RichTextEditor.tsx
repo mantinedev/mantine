@@ -24,7 +24,9 @@ Quill.register('modules/imageUploader', ImageUploader);
 const icons = Quill.import('ui/icons');
 replaceIcons(icons);
 
-export interface RichTextEditorProps extends DefaultProps<RichTextEditorStylesNames> {
+export interface RichTextEditorProps
+  extends DefaultProps<RichTextEditorStylesNames>,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** HTML content, value not forced as quill works in uncontrolled mode */
   value: string;
 
@@ -96,3 +98,5 @@ export function RichTextEditor({
     </div>
   );
 }
+
+RichTextEditor.displayName = '@mantine/rte/RichTextEditor';
