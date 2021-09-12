@@ -23,8 +23,10 @@ export default createMemoStyles({
     top: sticky ? stickyOffset : 0,
     display: 'flex',
     flexWrap: 'wrap',
-    backgroundColor: theme.white,
-    borderBottom: `1px solid ${theme.colors.gray[4]}`,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    borderBottom: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+    }`,
     borderTopRightRadius: theme.radius.sm,
     borderTopLeftRadius: theme.radius.sm,
     padding: [theme.spacing.sm, theme.spacing.md],

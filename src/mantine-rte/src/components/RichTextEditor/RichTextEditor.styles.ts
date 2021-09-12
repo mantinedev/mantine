@@ -8,9 +8,12 @@ export default createMemoStyles({
   root: ({ theme }: RichTextEditorStyles) => ({
     ...getFontStyles(theme),
     fontSize: theme.fontSizes.sm,
-    border: `1px solid ${theme.colors.gray[4]}`,
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+    }`,
     borderRadius: theme.radius.sm,
     position: 'relative',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '& .ql-container': {
       position: 'relative',
@@ -31,9 +34,11 @@ export default createMemoStyles({
 
     '& .ql-tooltip': {
       position: 'absolute',
-      backgroundColor: theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       padding: [theme.spacing.xs, theme.spacing.md],
-      border: `1px solid ${theme.colors.gray[2]}`,
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
+      }`,
       boxShadow: theme.shadows.sm,
       borderRadius: theme.radius.sm,
       display: 'flex',
@@ -58,7 +63,7 @@ export default createMemoStyles({
     '& .ql-remove::before': {
       content: '"Remove"',
       cursor: 'pointer',
-      color: theme.colors.red[7],
+      color: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
       fontSize: theme.fontSizes.sm,
       display: 'block',
       height: 34,
@@ -96,7 +101,9 @@ export default createMemoStyles({
 
     '& .ql-tooltip input': {
       display: 'none',
-      border: `1px solid ${theme.colors.gray[4]}`,
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+      }`,
       WebkitTapHighlightColor: 'transparent',
       height: 34,
       appearance: 'none',
@@ -110,6 +117,7 @@ export default createMemoStyles({
       paddingRight: theme.spacing.sm,
       borderRadius: theme.radius.sm,
       marginRight: theme.spacing.md,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
 
       '&::placeholder': {
         opacity: 1,
@@ -124,7 +132,7 @@ export default createMemoStyles({
     },
 
     '& a': {
-      color: theme.colors[theme.primaryColor][7],
+      color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7],
       textDecoration: 'none',
     },
 
