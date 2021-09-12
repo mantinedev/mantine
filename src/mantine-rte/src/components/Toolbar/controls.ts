@@ -7,6 +7,9 @@ import {
   Link1Icon,
   ImageIcon,
   TextNoneIcon,
+  TextAlignLeftIcon,
+  TextAlignRightIcon,
+  TextAlignCenterIcon,
 } from '@modulz/radix-icons';
 import { OrderedList } from './icons/OrderedList';
 
@@ -56,6 +59,27 @@ export const CONTROLS = {
   clean: {
     icon: TextNoneIcon,
     controls: 'clean',
+  },
+
+  'align-center': {
+    icon: TextAlignCenterIcon,
+    controls: 'align',
+    value: 'center',
+    noActive: true,
+  },
+
+  'align-left': {
+    icon: TextAlignLeftIcon,
+    controls: 'align',
+    value: '',
+    noActive: true,
+  },
+
+  'align-right': {
+    icon: TextAlignRightIcon,
+    controls: 'align',
+    value: 'right',
+    noActive: true,
   },
 } as const;
 

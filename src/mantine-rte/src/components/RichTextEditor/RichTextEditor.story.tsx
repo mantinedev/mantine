@@ -47,7 +47,7 @@ function Wrapper() {
 }
 
 storiesOf('@mantine/rte/RichTextEditor', module).add('General usage', () => (
-  <div style={{ padding: 40, maxWidth: 500 }}>
+  <div style={{ padding: 40, maxWidth: 800 }}>
     <Wrapper />
   </div>
 ));

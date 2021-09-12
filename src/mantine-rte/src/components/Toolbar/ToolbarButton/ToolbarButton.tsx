@@ -12,6 +12,9 @@ interface ToolbarButtonProps extends ActionIconProps<'button', HTMLButtonElement
 
   /** Value for quill control */
   value?: string;
+
+  /** Disable active styles */
+  noActive?: boolean;
 }
 
 export function ToolbarButton({
@@ -20,10 +23,12 @@ export function ToolbarButton({
   controls,
   value,
   themeOverride,
+  noActive,
   ...others
 }: ToolbarButtonProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, null, 'rte');
+  const classes = useStyles({ theme, noActive }, null, 'rte');
+
   return (
     <ActionIcon
       themeOverride={themeOverride}

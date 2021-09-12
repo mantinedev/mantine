@@ -54,6 +54,7 @@ export function Toolbar({
             value={(CONTROLS[item] as any).value}
             key={item}
             title={labels[item]}
+            noActive={(CONTROLS[item] as any).noActive}
           >
             <Icon style={{ width: 18, height: 18 }} />
           </ToolbarButton>

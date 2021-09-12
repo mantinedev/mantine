@@ -7,6 +7,7 @@ const ICONS = {
   italic: {},
   image: {},
   clean: {},
+  align: {},
 };
 
 export function replaceIcons(quillIconsModule: any) {

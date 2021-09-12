@@ -135,6 +135,14 @@ export default createMemoStyles({
       display: 'none',
     },
 
+    '& .ql-align-center': {
+      textAlign: 'center',
+    },
+
+    '& .ql-align-right': {
+      textAlign: 'right',
+    },
+
     '& a': {
       color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7],
       textDecoration: 'none',
