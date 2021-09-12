@@ -8,6 +8,8 @@ export default createMemoStyles({
   root: ({ theme }: RichTextEditorStyles) => ({
     ...getFontStyles(theme),
     fontSize: theme.fontSizes.sm,
+    border: `1px solid ${theme.colors.gray[4]}`,
+    borderRadius: theme.radius.sm,
 
     '& .ql-container': {
       position: 'relative',
@@ -19,7 +21,7 @@ export default createMemoStyles({
 
     '& .ql-editor': {
       outline: 'none',
-      padding: [theme.spacing.md, theme.spacing.sm],
+      padding: [theme.spacing.sm, theme.spacing.md],
     },
 
     '& .ql-container.ql-disabled .ql-tooltip': {
@@ -30,7 +32,7 @@ export default createMemoStyles({
       position: 'absolute',
       backgroundColor: theme.white,
       padding: [theme.spacing.xs, theme.spacing.md],
-      border: `1px solid ${theme.colors.gray[3]}`,
+      border: `1px solid ${theme.colors.gray[2]}`,
       boxShadow: theme.shadows.sm,
       borderRadius: theme.radius.sm,
       display: 'flex',

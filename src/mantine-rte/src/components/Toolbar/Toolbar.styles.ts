@@ -19,8 +19,10 @@ export default createMemoStyles({
     display: 'flex',
     flexWrap: 'wrap',
     backgroundColor: theme.white,
-    borderBottom: `1px solid ${theme.colors.gray[3]}`,
-    padding: [theme.spacing.md, theme.spacing.sm],
+    borderBottom: `1px solid ${theme.colors.gray[4]}`,
+    borderTopRightRadius: theme.radius.sm,
+    borderTopLeftRadius: theme.radius.sm,
+    padding: [theme.spacing.sm, theme.spacing.md],
   }),
 
   toolbarControl: ({ theme }: ToolbarStyles) => ({
