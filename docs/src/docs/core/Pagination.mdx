@@ -20,9 +20,43 @@ import { PaginationDemos } from '@demos/core';
 Pagination component allows user to compose divided data onto separate paginated pages.
 Final amount of elements is equal `activePage + 2x dots + 2x sibling amount + 2x boundary amount`
 
-<Demo data={PaginationDemos.usage} />
+<Demo data={PaginationDemos.configurator} />
 
 
 ## Controlled
 
-<Demo data={PaginationDemos.controlled} />
+To control component state provide `page` and `onChange` props:
+
+```tsx
+import { useState } from 'react';
+import { Pagination } from '@mantine/core';
+
+function Demo() {
+  const [activePage, setPage] = useState(1);
+
+  return <Pagination page={activePage} onChange={setPage} />;
+}
+```
+
+
+## Accessibility
+
+Pagination renders a regular button element. To include aria-label for screen reader support make use of `getItemAriaLabel` prop.
+
+```tsx
+<Pagination
+  total={20}
+  getItemAriaLabel={(page) => {
+    switch (page) {
+      case 'dots':
+        return 'dots element aria-label';
+      case 'prev':
+        return 'previous page button aria-label';
+      case 'next':
+        return 'next page button aria-label';
+      default:
+        return `${page} item aria-label`;
+    }
+  }}
+/>
+```

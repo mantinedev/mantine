@@ -19,7 +19,6 @@ describe('@mantine/core/Pagination', () => {
   itSupportsOthers(Pagination, defaultProps);
   itSupportsStyle(Pagination, defaultProps);
   itSupportsStylesApi(Pagination, defaultProps, Object.keys(PaginationStylesApi), 'pagination');
-  checkAccessibility([mount(<Pagination {...defaultProps} />)]);
 
   it('has correct displayName', () => {
     expect(Pagination.displayName).toEqual('@mantine/core/Pagination');

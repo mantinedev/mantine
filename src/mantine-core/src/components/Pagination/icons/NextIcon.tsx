@@ -1,10 +1,10 @@
 import React from 'react';
 
-export function NextIcon(props: React.SVGProps<SVGSVGElement>) {
+export function NextIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
-      width="1.25em"
-      height="1.25em"
+      width={20}
+      height={20}
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

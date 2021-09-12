@@ -14,6 +14,7 @@ export interface PaginationItemProps extends
 
 export function DefaultItem({
   page,
+  active,
   onClick,
   ...rest
 }: PaginationItemProps) {

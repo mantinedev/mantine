@@ -33,6 +33,9 @@ export interface PaginationProps extends DefaultProps<PaginationStylesNames>, Pa
 
   /** Callback fired after change of each page */
   onChange?: (page: number) => void;
+
+  /** Callback to control aria-labels */
+  getItemAriaLabel?: (page: number | 'dots' | 'prev' | 'next') => string | undefined;
 }
 
 export function Pagination({
@@ -49,6 +52,7 @@ export function Pagination({
   siblings = 1,
   boundary = 1,
   onChange,
+  getItemAriaLabel,
   ...others
 }: PaginationProps) {
   const theme = useMantineTheme(themeOverride);
@@ -79,7 +83,7 @@ export function Pagination({
       <Item
         page="prev"
         onClick={goPrevPage}
-        aria-label="go to previous page"
+        aria-label={getItemAriaLabel ? getItemAriaLabel('prev') : undefined}
         aria-disabled={activePage === 1}
         style={{
           ..._styles.item,
@@ -95,7 +99,7 @@ export function Pagination({
           key={`${pageNumber}${index}`}
           page={pageNumber}
           active={pageNumber === activePage || undefined}
-          aria-label={pageNumber === 'dots' ? 'dots spacing between buttons' : `go to page ${pageNumber}`}
+          aria-label={getItemAriaLabel ? getItemAriaLabel(pageNumber) : undefined}
           style={{
             ..._styles.item,
             ...(pageNumber === activePage ? _styles.active : undefined),
@@ -111,7 +115,7 @@ export function Pagination({
        <Item
          page="next"
          onClick={goNextPage}
-         aria-label="go to next page"
+         aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
          aria-disabled={activePage === total}
          style={{
           ..._styles.item,
