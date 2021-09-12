@@ -1,5 +1,5 @@
-import { useUncontrolled } from '@mantine/hooks';
 import { useMemo, useCallback } from 'react';
+import { useUncontrolled } from '../use-uncontrolled/use-uncontrolled';
 
 export const DOTS = 'dots';
 

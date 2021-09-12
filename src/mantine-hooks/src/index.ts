@@ -19,6 +19,7 @@ export { useLocalStorageValue } from './use-local-storage-value/use-local-storag
 export { useMediaQuery } from './use-media-query/use-media-query';
 export { useMergedRef } from './use-merged-ref/use-merged-ref';
 export { useMove, clampUseMovePosition } from './use-move/use-move';
+export { usePagination } from './use-pagination/use-pagination';
 export { useQueue } from './use-queue/use-queue';
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion';
 export { useScrollLock } from './use-scroll-lock/use-scroll-lock';

@@ -1,15 +1,15 @@
 import React from 'react';
 import cx from 'clsx';
+import { usePagination } from '@mantine/hooks';
 import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
 import useStyles from './Pagination.styles';
-import { usePagination, PaginationParams } from './usePagination/usePagination';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
 
 export type { PaginationItemProps } from './DefaultItem/DefaultItem';
 
 export type PaginationStylesNames = keyof ReturnType<typeof useStyles>;
 
-export interface PaginationProps extends DefaultProps<PaginationStylesNames>, PaginationParams {
+export interface PaginationProps extends DefaultProps<PaginationStylesNames> {
   /** Change item component  */
   itemComponent?: React.FC<PaginationItemProps>
 

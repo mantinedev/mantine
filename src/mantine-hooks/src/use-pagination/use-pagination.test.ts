@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { usePagination } from './usePagination';
+import { usePagination } from './use-pagination';
 
 describe('@mantine/core/Pagination/usePagination', () => {
   it('goToPage set activePage properly', () => {
