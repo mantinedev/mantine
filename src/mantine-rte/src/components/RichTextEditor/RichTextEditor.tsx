@@ -26,6 +26,14 @@ Quill.register('modules/imageUploader', ImageUploader);
 const icons = Quill.import('ui/icons');
 replaceIcons(icons);
 
+function defaultImageUpload(file: File): Promise<string> {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.readAsDataURL(file);
+  });
+}
+
 export interface RichTextEditorProps
   extends DefaultProps<RichTextEditorStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
@@ -54,7 +62,7 @@ export interface RichTextEditorProps
 export function RichTextEditor({
   value,
   onChange,
-  onImageUpload = () => Promise.resolve(null),
+  onImageUpload = defaultImageUpload,
   sticky = true,
   stickyOffset = 0,
   labels = DEFAULT_LABELS,
