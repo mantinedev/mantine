@@ -1,33 +1,29 @@
 import React, { useState } from 'react';
+import dayjs from 'dayjs';
 import { TimeRangeInput } from '../TimeRangeInput';
 
 const code = `
 import { useState } from 'react';
+import dayjs from 'dayjs';
 import { TimeRangeInput } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<[Date, Date]>([new Date(), new Date()]);
+  const now = new Date();
+  const then = dayjs(now).add(30, 'minutes').toDate();
+  const [value, setValue] = useState([now, then]);
 
-  return (
-    <TimeRangeInput
-      label="Log Time"
-      value={value}
-      onChange={setValue}
-    />
-  );
+  return <TimeRangeInput label="Appointment time" value={value} onChange={setValue} />;
 }
 `;
 
 function Demo() {
-  const [value, setValue] = useState<[Date, Date]>([new Date(), new Date()]);
+  const now = new Date();
+  const then = dayjs(now).add(30, 'minutes').toDate();
+  const [value, setValue] = useState<[Date, Date]>([now, then]);
 
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <TimeRangeInput
-        label="Log Time"
-        value={value}
-        onChange={setValue}
-      />
+      <TimeRangeInput label="Appointment time" value={value} onChange={setValue} withSeconds />
     </div>
   );
 }

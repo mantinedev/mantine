@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-console */
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import {
@@ -28,7 +26,12 @@ describe('@mantine/dates/TimeRangeInput', () => {
       />
     ),
     mount(
-      <TimeRangeInput label="test-label" withSeconds={false} hoursLabel="Hours" minutesLabel="Minutes" />
+      <TimeRangeInput
+        label="test-label"
+        withSeconds={false}
+        hoursLabel="Hours"
+        minutesLabel="Minutes"
+      />
     ),
   ]);
 
@@ -73,7 +76,6 @@ describe('@mantine/dates/TimeRangeInput', () => {
   it('renders hidden input with given name', () => {
     const value = [new Date(), new Date()];
     const element = shallow(<TimeRangeInput value={[value[0], value[1]]} name="test-name" />);
-    const test = element.find('input[type="hidden"]');
     expect(element.find('input[type="hidden"]').length).toBe(2);
     expect(element.find('input[type="hidden"]').at(0).prop('value')).toBe(value[0].toISOString());
     expect(element.find('input[type="hidden"]').at(1).prop('value')).toBe(value[1].toISOString());

@@ -44,4 +44,10 @@ export default createMemoStyles({
     },
   }),
 
+  separator: ({ theme, size }: TimeRangeInputStyles) => ({
+    paddingLeft: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    paddingRight: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    lineHeight: 1,
+    marginBottom: 3,
+  }),
 });

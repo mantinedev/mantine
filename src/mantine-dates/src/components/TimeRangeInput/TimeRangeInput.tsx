@@ -13,7 +13,7 @@ import {
   mergeStyles,
 } from '@mantine/core';
 import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
-import dayjs from 'dayjs';
+import dayjs, { UnitType } from 'dayjs';
 import { TimeField } from '../TimeInput/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInput/create-time-handler/create-time-handler';
 import { getTimeValues } from '../TimeInput/get-time-values/get-time-value';
@@ -62,7 +62,7 @@ export interface TimeRangeInputProps
   /** Disable field */
   disabled?: boolean;
 
-  /** Separator between dates */
+  /** Separator between time inputs */
   labelSeparator?: string;
 }
 
@@ -103,7 +103,7 @@ export function TimeRangeInput({
     value,
     defaultValue,
     finalValue: [fromDate, toDate],
-    rule: (val) => val && val.length === 2 && val.every((ele) => ele instanceof Date),
+    rule: (val) => val && val.length === 2 && val.every((v) => v instanceof Date),
     onChange,
   });
 
@@ -114,24 +114,22 @@ export function TimeRangeInput({
   const [toTime, setToTime] = useState(getTimeValues(_value[1]));
   const [selectedFieldIndex, setSelectedFieldIndex] = useState<0 | 1>(0);
 
-  const setTime = (cb) => {
+  const setTime = (
+    cb: (val: ReturnType<typeof getTimeValues>) => ReturnType<typeof getTimeValues>
+  ) => {
     selectedFieldIndex === 0 ? setFromTime(cb) : setToTime(cb);
   };
 
-  const constructDayjsValue = (fieldName, val) => {
+  const constructDayjsValue = (fieldName: UnitType, val: string) => {
     const index = selectedFieldIndex;
-    const newTime = [...value];
+    const newTime = [..._value];
     newTime[index] = dayjs(newTime[index]).set(fieldName, parseInt(val, 10)).toDate();
     return newTime;
   };
 
-  const handleFieldFocus = (index) => {
-    setSelectedFieldIndex(index);
-  };
-
   const handleHoursChange = createTimeHandler({
     onChange: (val) => {
-      setTime((c) => ({ ...c, hours: val }));
+      setTime((current) => ({ ...current, hours: val }));
       handleChange(constructDayjsValue('hours', val));
     },
     min: 0,
@@ -144,7 +142,7 @@ export function TimeRangeInput({
 
   const handleMinutesChange = createTimeHandler({
     onChange: (val) => {
-      setTime((c) => ({ ...c, minutes: val }));
+      setTime((current) => ({ ...current, minutes: val }));
       handleChange(constructDayjsValue('minutes', val));
     },
     min: 0,
@@ -160,7 +158,7 @@ export function TimeRangeInput({
 
   const handleSecondsChange = createTimeHandler({
     onChange: (val) => {
-      setTime((c) => ({ ...c, seconds: val }));
+      setTime((current) => ({ ...current, seconds: val }));
       handleChange(constructDayjsValue('seconds', val));
     },
     min: 0,
@@ -206,8 +204,8 @@ export function TimeRangeInput({
       >
         <div className={classes.controls} style={_styles.controls}>
           <TimeField
-            elementRef={useMergedRef((val) => {
-              hoursRef.current[0] = val;
+            elementRef={useMergedRef((node: HTMLInputElement) => {
+              hoursRef.current[0] = node;
             }, elementRef)}
             value={fromTime.hours}
             onChange={handleHoursChange}
@@ -220,12 +218,12 @@ export function TimeRangeInput({
             max={23}
             aria-label={`from ${hoursLabel}`}
             disabled={disabled}
-            onFocus={() => handleFieldFocus(0)}
+            onFocus={() => setSelectedFieldIndex(0)}
           />
 
           <TimeField
-            elementRef={(val) => {
-              minutesRef.current[0] = val;
+            elementRef={(node) => {
+              minutesRef.current[0] = node;
             }}
             value={fromTime.minutes}
             onChange={handleMinutesChange}
@@ -237,13 +235,13 @@ export function TimeRangeInput({
             max={59}
             aria-label={`from ${minutesLabel}`}
             disabled={disabled}
-            onFocus={() => handleFieldFocus(0)}
+            onFocus={() => setSelectedFieldIndex(0)}
           />
 
           {withSeconds && (
             <TimeField
-              elementRef={(val) => {
-                secondsRef.current[0] = val;
+              elementRef={(node) => {
+                secondsRef.current[0] = node;
               }}
               value={fromTime.seconds}
               onChange={handleSecondsChange}
@@ -254,17 +252,19 @@ export function TimeRangeInput({
               max={59}
               aria-label={`from ${secondsLabel}`}
               disabled={disabled}
-              onFocus={() => handleFieldFocus(0)}
+              onFocus={() => setSelectedFieldIndex(0)}
             />
           )}
 
-          <span style={{ paddingLeft: 5, paddingRight: 5 }}>{labelSeparator}</span>
+          <span className={classes.separator} style={_styles.separator}>
+            {labelSeparator}
+          </span>
 
           <div className={classes.controls} style={_styles.controls}>
             <TimeField
-              elementRef={useMergedRef((val) => {
-                hoursRef.current[1] = val;
-              }, elementRef)}
+              elementRef={(node) => {
+                hoursRef.current[1] = node;
+              }}
               value={toTime.hours}
               onChange={handleHoursChange}
               setValue={(val) => handleHoursChange(val, false)}
@@ -275,12 +275,12 @@ export function TimeRangeInput({
               max={23}
               aria-label={`to ${hoursLabel}`}
               disabled={disabled}
-              onFocus={() => handleFieldFocus(1)}
+              onFocus={() => setSelectedFieldIndex(1)}
             />
 
             <TimeField
-              elementRef={(val) => {
-                minutesRef.current[1] = val;
+              elementRef={(node) => {
+                minutesRef.current[1] = node;
               }}
               value={toTime.minutes}
               onChange={handleMinutesChange}
@@ -292,13 +292,13 @@ export function TimeRangeInput({
               max={59}
               aria-label={`to ${minutesLabel}`}
               disabled={disabled}
-              onFocus={() => handleFieldFocus(1)}
+              onFocus={() => setSelectedFieldIndex(1)}
             />
 
             {withSeconds && (
               <TimeField
-                elementRef={(val) => {
-                  secondsRef.current[1] = val;
+                elementRef={(node) => {
+                  secondsRef.current[1] = node;
                 }}
                 value={toTime.seconds}
                 onChange={handleSecondsChange}
@@ -309,7 +309,7 @@ export function TimeRangeInput({
                 max={59}
                 aria-label={`to ${secondsLabel}`}
                 disabled={disabled}
-                onFocus={() => handleFieldFocus(1)}
+                onFocus={() => setSelectedFieldIndex(1)}
               />
             )}
           </div>

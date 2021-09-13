@@ -18,10 +18,14 @@ import { TimeRangeInputDemos } from '@demos/dates';
 
 <Demo data={TimeRangeInputDemos.usage} />
 
+## With seconds
+
+<Demo data={TimeRangeInputDemos.withSeconds} />
+
 ## TimeRangeInput props
 
-TimeRangeInput component uses the same props as [TimePicker](/dates/time-picker/) component,
-With differences in `value`, `onChange`, `defaultValue` and some additional props like `labelSeperator`.
+TimeRangeInput component uses the same props as [TimeInput](/dates/time-input/) component,
+With differences in `value`, `onChange`, `defaultValue` and some additional props like `labelSeparator`.
 
 ## Server side rendering
 
@@ -35,7 +39,7 @@ provide static `id` prop to prevent props mismatch:
 
 ## Accessibility and usability
 
-Provide generic hours, minutes and seconds labels to make inputs visible to screen reader:
+Provide hours, minutes and seconds labels to make inputs visible to screen reader:
 
 ```tsx
 <TimeRangeInput hoursLabel="Hours" minutesLabel="Minutes" seconds="Seconds" />

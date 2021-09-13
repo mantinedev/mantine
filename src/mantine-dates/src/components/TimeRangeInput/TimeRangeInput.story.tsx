@@ -9,13 +9,21 @@ const sizes = MANTINE_SIZES.map((size) => (
 
 function Controlled() {
   const [value, setValue] = useState([new Date(), new Date()]);
-  return <TimeRangeInput value={[value[0], value[1]]} onChange={setValue} label="Controlled" withSeconds />;
+
+  return (
+    <TimeRangeInput
+      value={[value[0], value[1]]}
+      onChange={setValue}
+      label="Controlled"
+      withSeconds
+    />
+  );
 }
 
 storiesOf('@mantine/dates/TimeRangeInput', module)
   .add('General usage', () => (
     <div style={{ width: 320, padding: 40 }}>
-      <TimeRangeInput label="Time Range input" disabled />
+      <TimeRangeInput label="Time Range input" withSeconds />
     </div>
   ))
   .add('Controlled', () => (
