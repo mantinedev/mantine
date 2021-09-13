@@ -8,3 +8,5 @@ export const TimeInput: Record<TimeInputStylesNames, string> = {
   ...Input,
   ...InputWrapper,
 };
+
+export const TimeRangeInput = TimeInput;

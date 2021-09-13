@@ -4,3 +4,4 @@ export * as DateRangePickerDemos from './components/DateRangePicker/demos';
 export * as RangeCalendarDemos from './components/RangeCalendar/demos';
 export * as MonthDemos from './components/Month/demos';
 export * as TimeInputDemos from './components/TimeInput/demos';
+export * as TimeRangeInputDemos from './components/TimeRangeInput/demos';

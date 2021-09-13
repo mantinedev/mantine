@@ -6,18 +6,12 @@ import {
   getSizeValue,
 } from '@mantine/core';
 
-interface TimeInputStyles {
+import { inputSizes } from '../TimeInput/TimeInput.styles';
+
+interface TimeRangeInputStyles {
   theme: MantineTheme;
   size: MantineSize;
 }
-
-export const inputSizes = {
-  xs: 20,
-  sm: 23,
-  md: 25,
-  lg: 27,
-  xl: 29,
-};
 
 export default createMemoStyles({
   disabled: {
@@ -25,14 +19,14 @@ export default createMemoStyles({
     cursor: 'not-allowed',
   },
 
-  controls: ({ size }: TimeInputStyles) => ({
-    display: 'flex',
+  controls: ({ size }: TimeRangeInputStyles) => ({
+    display: 'inline-flex',
     alignItems: 'center',
     // -2 for border offset
     height: getSizeValue({ size, sizes: INPUT_SIZES }) - 2,
   }),
 
-  timeInput: ({ theme, size }: TimeInputStyles) => ({
+  timeInput: ({ theme, size }: TimeRangeInputStyles) => ({
     width: getSizeValue({ size, sizes: inputSizes }),
     appearance: 'none',
     backgroundColor: 'transparent',
@@ -49,4 +43,5 @@ export default createMemoStyles({
       cursor: 'not-allowed',
     },
   }),
+
 });

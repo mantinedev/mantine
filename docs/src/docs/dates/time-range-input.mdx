@@ -1,0 +1,42 @@
+---
+group: 'mantine-dates'
+package: '@mantine/dates'
+title: TimeRangeInput
+order: 1
+slug: /dates/time-range-input/
+description: 'Capture time range from user'
+props: ['TimeRangeInput']
+import: "import { TimeRangeInput } from '@mantine/dates';"
+source: 'mantine-dates/src/components/TimeRangeInput/TimeRangeInput.tsx'
+docs: 'dates/TimeRangeInput.mdx'
+styles: ['TimeRangeInput']
+---
+
+import { TimeRangeInputDemos } from '@demos/dates';
+
+## Usage
+
+<Demo data={TimeRangeInputDemos.usage} />
+
+## TimeRangeInput props
+
+TimeRangeInput component uses the same props as [TimePicker](/dates/time-picker/) component,
+With differences in `value`, `onChange`, `defaultValue` and some additional props like `labelSeperator`.
+
+## Server side rendering
+
+Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
+provide static `id` prop to prevent props mismatch:
+
+```tsx
+<TimeRangeInput /> // -> random id generated both on client and server, props mismatch warning
+<TimeRangeInput id="my-time-range-input" /> // -> id is static, no mismatches
+```
+
+## Accessibility and usability
+
+Provide generic hours, minutes and seconds labels to make inputs visible to screen reader:
+
+```tsx
+<TimeRangeInput hoursLabel="Hours" minutesLabel="Minutes" seconds="Seconds" />
+```
