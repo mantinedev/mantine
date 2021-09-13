@@ -37,13 +37,30 @@ yarn add @mantine/rte @mantine/core @mantine/hooks
 
 <Demo data={RichTextDemos.usage} />
 
+## Configure toolbar
+
+RichTextEditor supports these controls in toolbar:
+
+- `bold`, `strike`, `italic`, `underline` – general inline formatting
+- `clean` – removes all inline formatting
+- `h1`, `h2`, ..., `h6` – headings, in default toolbar only h1-h4 headings are displayed
+- `link` – link editor
+- `sub`, `sup` – super and sub scripts
+- `video`, `image` – video and image embeds
+- `unorderedList`, `orderedList` – ul and ol tags
+- `alignCenter`, `alignLeft`, `alignRight` – controls text-align
+
+You can add, remove and configure controls arrangement in toolbar with `controls` prop:
+
+<Demo data={RichTextDemos.toolbar} />
+
 ## Keyboard shortcuts
 
-- `⌘ + B` / `Ctrl + B` – toggle bold format
-- `⌘ + I` / `Ctrl + I` – toggle italic format
-- `⌘ + U` / `Ctrl + U` – toggle underline format
-- `⌘ + K` / `Ctrl + K` – add link
-- `⌘ + option + 1` / `Ctrl + Alt + 1` – toggle heading, valid for 1-6 headings
+- `⌘ + B` / `Ctrl + B` – toggle bold format in current selection
+- `⌘ + I` / `Ctrl + I` – toggle italic format in current selection
+- `⌘ + U` / `Ctrl + U` – toggle underline format in current selection
+- `⌘ + K` / `Ctrl + K` – add link to current selection
+- `⌘ + option + 1` / `Ctrl + Alt + 1` – toggle heading at current line, valid for 1-6 headings
 
 ## Server side rendering
 
