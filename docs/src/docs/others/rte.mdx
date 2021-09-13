@@ -54,6 +54,19 @@ You can add, remove and configure controls arrangement in toolbar with `controls
 
 <Demo data={RichTextDemos.toolbar} />
 
+To configure sticky toolbar properties set following props:
+
+- `sticky` – set to false to make toolbar stay at the top
+- `stickyOffset` – top property, used with sticky position, use it to offset elements with fixed position, for example, Mantine docs website has 60px header, in this case you should set stickyOffset to 60
+
+```tsx
+// Toolbar stays at the top
+<RichTextEditor sticky={false} />
+
+// Toolbar position is set to sticky with top: 40px
+<RichTextEditor stickyOffset={40} />
+```
+
 ## Images upload
 
 RichTextEditor will handle images upload in following situations:
@@ -127,7 +140,7 @@ export function RichText(props: RichTextEditorProps) {
 }
 ```
 
-### Usage with Next.js
+## Usage with Next.js
 
 To make component work with Next.js use [dynamic module](https://nextjs.org/docs/advanced-features/dynamic-import):
 
