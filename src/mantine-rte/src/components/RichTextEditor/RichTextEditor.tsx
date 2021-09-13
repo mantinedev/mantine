@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 import cx from 'clsx';
 import Editor, { Quill } from 'react-quill';
 import { useMantineTheme, DefaultProps, mergeStyles } from '@mantine/core';
@@ -10,6 +10,7 @@ import { DEFAULT_LABELS, RichTextEditorLabels } from './default-labels';
 import { ToolbarControl } from '../Toolbar/controls';
 import { createImageBlot, ImageUploader } from '../../modules/image-uploader';
 import { replaceIcons } from '../../modules/icons';
+import { attachShortcuts } from '../../modules/shortcuts';
 
 export type RichTextEditorStylesNames = ToolbarStylesNames | keyof ReturnType<typeof useStyles>;
 
@@ -67,6 +68,7 @@ export function RichTextEditor({
   ...others
 }: RichTextEditorProps) {
   const uuid = useId(id);
+  const editorRef = useRef<any>();
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles(
     { theme, saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
@@ -85,6 +87,10 @@ export function RichTextEditor({
     []
   );
 
+  useEffect(() => {
+    attachShortcuts(editorRef?.current?.editor?.keyboard);
+  }, []);
+
   return (
     <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       <Toolbar
@@ -98,7 +104,7 @@ export function RichTextEditor({
         id={uuid}
       />
 
-      <Editor theme="snow" modules={modules} value={value} onChange={onChange} />
+      <Editor theme="snow" modules={modules} value={value} onChange={onChange} ref={editorRef} />
     </div>
   );
 }
