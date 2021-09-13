@@ -19,14 +19,14 @@ export default createMemoStyles({
     cursor: 'not-allowed',
   },
 
-  controls: ({ size }: TimeRangeInputStyles) => ({
+  inputWrapper: ({ size }: TimeRangeInputStyles) => ({
     display: 'inline-flex',
     alignItems: 'center',
     // -2 for border offset
     height: getSizeValue({ size, sizes: INPUT_SIZES }) - 2,
   }),
 
-  timeInput: ({ theme, size }: TimeRangeInputStyles) => ({
+  timeField: ({ theme, size }: TimeRangeInputStyles) => ({
     width: getSizeValue({ size, sizes: inputSizes }),
     appearance: 'none',
     backgroundColor: 'transparent',

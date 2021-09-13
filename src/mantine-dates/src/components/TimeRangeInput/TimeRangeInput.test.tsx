@@ -4,16 +4,32 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsStylesApi,
   checkAccessibility,
 } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
 import { TimeField } from '../TimeInput/TimeField/TimeField';
 import { TimeRangeInput } from './TimeRangeInput';
+import { TimeRangeInput as TimeRangeInputStylesApi } from './styles.api';
 
 describe('@mantine/dates/TimeRangeInput', () => {
   itSupportsClassName(TimeRangeInput, {});
   itSupportsStyle(TimeRangeInput, {});
   itSupportsRef(TimeRangeInput, {}, HTMLInputElement, 'elementRef');
+
+  itSupportsStylesApi(
+    TimeRangeInput,
+    {
+      icon: '$',
+      rightSection: '$',
+      label: 'test-label',
+      error: 'test-error',
+      description: 'test-description',
+      required: true,
+    },
+    Object.keys(TimeRangeInputStylesApi),
+    'time-range-input'
+  );
 
   checkAccessibility([
     mount(

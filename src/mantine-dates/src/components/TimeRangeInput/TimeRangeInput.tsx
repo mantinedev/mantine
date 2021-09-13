@@ -20,7 +20,7 @@ import { getTimeValues } from '../TimeInput/get-time-values/get-time-value';
 import useStyles from './TimeRangeInput.styles';
 
 export type TimeRangeInputStylesNames =
-  | keyof ReturnType<typeof useStyles>
+  | Exclude<keyof ReturnType<typeof useStyles>, 'disabled'>
   | InputStylesNames
   | InputWrapperStylesNames;
 
@@ -93,7 +93,7 @@ export function TimeRangeInput({
   ...others
 }: TimeRangeInputProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'time-input');
+  const classes = useStyles({ theme, size }, classNames, 'time-range-input');
   const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);
   const fromDate = new Date();
@@ -202,7 +202,7 @@ export function TimeRangeInput({
         disabled={disabled}
         {...others}
       >
-        <div className={classes.controls} style={_styles.controls}>
+        <div className={classes.inputWrapper} style={_styles.inputWrapper}>
           <TimeField
             elementRef={useMergedRef((node: HTMLInputElement) => {
               hoursRef.current[0] = node;
@@ -211,8 +211,8 @@ export function TimeRangeInput({
             onChange={handleHoursChange}
             setValue={(val) => handleHoursChange(val, false)}
             id={uuid}
-            className={classes.timeInput}
-            style={_styles.timeInput}
+            className={classes.timeField}
+            style={_styles.timeField}
             withSeparator
             size={size}
             max={23}
@@ -228,8 +228,8 @@ export function TimeRangeInput({
             value={fromTime.minutes}
             onChange={handleMinutesChange}
             setValue={(val) => setFromTime((c) => ({ ...c, minutes: val }))}
-            className={classes.timeInput}
-            style={_styles.timeInput}
+            className={classes.timeField}
+            style={_styles.timeField}
             withSeparator={withSeconds}
             size={size}
             max={59}
@@ -246,8 +246,8 @@ export function TimeRangeInput({
               value={fromTime.seconds}
               onChange={handleSecondsChange}
               setValue={(val) => setFromTime((c) => ({ ...c, seconds: val }))}
-              className={classes.timeInput}
-              style={_styles.timeInput}
+              className={classes.timeField}
+              style={_styles.timeField}
               size={size}
               max={59}
               aria-label={`from ${secondsLabel}`}
@@ -260,7 +260,7 @@ export function TimeRangeInput({
             {labelSeparator}
           </span>
 
-          <div className={classes.controls} style={_styles.controls}>
+          <div className={classes.inputWrapper} style={_styles.inputWrapper}>
             <TimeField
               elementRef={(node) => {
                 hoursRef.current[1] = node;
@@ -268,8 +268,8 @@ export function TimeRangeInput({
               value={toTime.hours}
               onChange={handleHoursChange}
               setValue={(val) => handleHoursChange(val, false)}
-              className={classes.timeInput}
-              style={_styles.timeInput}
+              className={classes.timeField}
+              style={_styles.timeField}
               withSeparator
               size={size}
               max={23}
@@ -285,8 +285,8 @@ export function TimeRangeInput({
               value={toTime.minutes}
               onChange={handleMinutesChange}
               setValue={(val) => setToTime((c) => ({ ...c, minutes: val }))}
-              className={classes.timeInput}
-              style={_styles.timeInput}
+              className={classes.timeField}
+              style={_styles.timeField}
               withSeparator={withSeconds}
               size={size}
               max={59}
@@ -303,8 +303,8 @@ export function TimeRangeInput({
                 value={toTime.seconds}
                 onChange={handleSecondsChange}
                 setValue={(val) => setToTime((c) => ({ ...c, seconds: val }))}
-                className={classes.timeInput}
-                style={_styles.timeInput}
+                className={classes.timeField}
+                style={_styles.timeField}
                 size={size}
                 max={59}
                 aria-label={`to ${secondsLabel}`}
