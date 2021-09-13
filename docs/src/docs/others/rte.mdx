@@ -54,6 +54,47 @@ You can add, remove and configure controls arrangement in toolbar with `controls
 
 <Demo data={RichTextDemos.toolbar} />
 
+## Images upload
+
+RichTextEditor will handle images upload in following situations:
+
+- Image button click in toolbar
+- Image was pasted from clipboard into editor
+- Image was dropped into editor
+
+To set up images upload add `onImageUpload` function:
+
+```tsx
+import { useState } from 'react';
+import { RichTextEditor } from '@mantine/rte';
+
+// Example with imgbb.com, usually you would use similar logic to upload to S3 like storages
+// Function must return a promise that resolves with uploaded image url
+// After promise is resolved blurred image placeholder with be replaced with uploaded
+const handleImageUpload = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    fetch('https://api.imgbb.com/1/upload?key=api_key', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((result) => resolve(result.data.url))
+      .catch(() => reject(new Error('Upload failed')));
+  });
+
+function Demo() {
+  const [value, onChange] = useState('');
+  return <RichTextEditor value={value} onChange={onChange} onImageUpload={handleImageUpload} />;
+}
+```
+
+**Important!** If you do not provide `onImageUpload` all images will be converted to
+base64 format. In most cases this is not a valid option to store images so make sure you provide `onImageUpload`
+if you are planning to use images.
+
 ## Keyboard shortcuts
 
 - `⌘ + B` / `Ctrl + B` – toggle bold format in current selection
