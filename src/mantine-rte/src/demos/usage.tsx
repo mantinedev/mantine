@@ -13,4 +13,7 @@ function Demo() {
 export const usage: MantineDemo = {
   type: 'demo',
   component: Demo,
+  demoProps: {
+    inline: true,
+  },
 };

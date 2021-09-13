@@ -32,6 +32,7 @@ interface MantineCodeDemo extends MantineDemoBase {
     demoBackground?: string;
     toggle?: boolean;
     githubLink?: string;
+    inline?: boolean;
   };
 }
 

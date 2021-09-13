@@ -14,6 +14,7 @@ interface CodeDemoProps {
   demoBorder?: boolean;
   children: React.ReactNode;
   toggle?: boolean;
+  inline?: boolean;
   zIndex?: number;
 }
 
@@ -24,11 +25,16 @@ export default function CodeDemo({
   demoBackground,
   demoBorder = true,
   toggle = false,
+  inline = false,
   zIndex = 3,
 }: CodeDemoProps) {
   const classes = useStyles();
   const [visible, setVisible] = useState(!toggle);
   const theme = useMantineTheme();
+
+  if (inline) {
+    return <DocsSection>{children}</DocsSection>;
+  }
 
   return (
     <DocsSection>
