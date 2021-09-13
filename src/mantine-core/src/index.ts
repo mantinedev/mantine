@@ -47,6 +47,7 @@ export { NativeSelect } from './components/NativeSelect/NativeSelect';
 export { Notification } from './components/Notification/Notification';
 export { NumberInput } from './components/NumberInput/NumberInput';
 export { Overlay } from './components/Overlay/Overlay';
+export { Pagination } from './components/Pagination/Pagination';
 export { Paper } from './components/Paper/Paper';
 export { PasswordInput } from './components/PasswordInput/PasswordInput';
 export { Popover } from './components/Popover/Popover';
@@ -165,6 +166,7 @@ export type {
   NumberInputStylesNames,
 } from './components/NumberInput/NumberInput';
 export type { OverlayProps } from './components/Overlay/Overlay';
+export type { PaginationProps, PaginationItemProps } from './components/Pagination/Pagination';
 export type { PaperProps } from './components/Paper/Paper';
 export type {
   PasswordInputProps,
