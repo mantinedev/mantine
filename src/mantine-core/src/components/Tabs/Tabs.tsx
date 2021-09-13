@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import cx from 'clsx';
-import { useUncontrolled } from '@mantine/hooks';
+import { useUncontrolled, clamp } from '@mantine/hooks';
 import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
@@ -15,10 +15,6 @@ export type TabsVariant = typeof TABS_VARIANTS[number];
 export type TabsStylesNames =
   | Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>
   | TabControlStylesNames;
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
-}
 
 export interface TabsProps
   extends DefaultProps<TabsStylesNames>,
@@ -120,7 +116,7 @@ export function Tabs({
     onChange: onTabChange,
   });
 
-  const activeTab = clamp(_activeTab, 0, tabs.length - 1);
+  const activeTab = clamp({ value: _activeTab, min: 0, max: tabs.length - 1 });
 
   const nextTabCode = orientation === 'horizontal' ? 'ArrowRight' : 'ArrowDown';
   const previousTabCode = orientation === 'horizontal' ? 'ArrowLeft' : 'ArrowUp';
