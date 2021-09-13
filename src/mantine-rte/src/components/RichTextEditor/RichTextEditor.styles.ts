@@ -79,6 +79,7 @@ export default createMemoStyles({
 
     '& .ql-preview': {
       display: 'inline-block',
+      whiteSpace: 'nowrap',
       textOverflow: 'ellipsis',
       overflow: 'hidden',
       maxWidth: 180,
