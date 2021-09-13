@@ -167,6 +167,12 @@ export default createMemoStyles({
       marginTop: 0,
     },
 
+    '& ol, & ul': {
+      marginTop: theme.spacing.sm,
+      paddingLeft: theme.spacing.md * 2,
+      listStylePosition: 'outside',
+    },
+
     '& h1': {
       fontSize: theme.headings.sizes.h1.fontSize,
       marginBottom: theme.spacing.sm * (theme.headings.sizes.h1.lineHeight as number),
