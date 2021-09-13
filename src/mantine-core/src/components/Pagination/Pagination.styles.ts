@@ -1,6 +1,6 @@
 import { createMemoStyles, MantineTheme, getSharedColorScheme } from '../../theme';
 
-interface PaginationControlStyles {
+interface PaginationStyles {
   theme: MantineTheme;
   color: string;
 }
@@ -13,41 +13,32 @@ export default createMemoStyles({
     margin: 0,
     padding: 0,
   },
-  item: ({ theme, color }: PaginationControlStyles) => {
-    const colors = getSharedColorScheme({
-      color,
-      theme,
-      variant: 'light',
-    });
 
-    return {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontWeight: 600,
-      border: `1px solid ${colors.border}`,
-      color: colors.color,
-      height: 32,
-      width: 32,
-      borderRadius: theme.radius.sm,
-      marginBottom: 5,
-      lineHeight: 1,
+  item: ({ theme }: PaginationStyles) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: 500,
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3]
+    }`,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    height: 32,
+    width: 32,
+    borderRadius: theme.radius.sm,
+    lineHeight: 1,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
 
-      '&:not($dots):not($active):not($disabled)': {
-        backgroundColor: colors.background,
-      },
+    '&:not(:last-of-type), &:not(:first-of-type)': {
+      marginLeft: theme.spacing.xs / 2,
+    },
 
-      '&:not(:last-of-type),  &:not(:first-of-type)': {
-        marginLeft: 5,
-      },
+    '&:active:not($disabled):not($dots)': {
+      transform: 'translateY(1px)',
+    },
+  }),
 
-      '&:active:not($disabled):not($dots)': {
-        transform: 'translateY(1px)',
-      },
-    };
-  },
-
-  active: ({ theme, color }: PaginationControlStyles) => {
+  active: ({ theme, color }: PaginationStyles) => {
     const colors = getSharedColorScheme({
       color,
       theme,
@@ -55,19 +46,20 @@ export default createMemoStyles({
     });
 
     return {
-      border: `1px solid ${colors.border}`,
+      borderColor: 'transparent',
       color: colors.color,
       backgroundColor: colors.background,
     };
   },
 
-  dots: {
+  dots: () => ({
     cursor: 'default',
-  },
+    borderColor: 'transparent',
+    backgroundColor: 'transparent',
+  }),
 
-  disabled: ({ theme }: PaginationControlStyles) => ({
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
+  disabled: () => ({
+    opacity: 0.6,
     cursor: 'not-allowed',
   }),
 });
