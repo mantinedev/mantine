@@ -11,7 +11,7 @@ export type PaginationStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface PaginationProps extends DefaultProps<PaginationStylesNames> {
   /** Change item component  */
-  itemComponent?: React.FC<PaginationItemProps>
+  itemComponent?: React.FC<PaginationItemProps>;
 
   /** Button color from theme */
   color?: string;
@@ -56,20 +56,10 @@ export function Pagination({
   ...others
 }: PaginationProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles(
-    { theme, color },
-    classNames,
-    'pagination'
-  );
+  const classes = useStyles({ theme, color }, classNames, 'pagination');
   const _styles = mergeStyles(classes, styles);
 
-  const {
-    paginationRange,
-    goToPage,
-    goNextPage,
-    goPrevPage,
-    activePage,
-  } = usePagination({
+  const { paginationRange, goToPage, goNextPage, goPrevPage, activePage } = usePagination({
     page,
     siblings,
     total,
@@ -88,7 +78,7 @@ export function Pagination({
         style={{
           ..._styles.item,
           ...(activePage === 1 ? _styles.disabled : undefined),
-         }}
+        }}
         className={cx(classes.item, {
           [classes.disabled]: activePage === 1,
         })}
@@ -112,20 +102,20 @@ export function Pagination({
           onClick={pageNumber !== 'dots' ? () => goToPage(pageNumber) : undefined}
         />
       ))}
-       <Item
-         page="next"
-         onClick={goNextPage}
-         aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
-         aria-disabled={activePage === total}
-         style={{
+      <Item
+        page="next"
+        onClick={goNextPage}
+        aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
+        aria-disabled={activePage === total}
+        style={{
           ..._styles.item,
           ...(activePage === total ? _styles.disabled : undefined),
-         }}
-         className={cx(classes.item, {
-           [classes.disabled]: activePage === total,
-          })}
-         disabled={activePage === total || undefined}
-       />
+        }}
+        className={cx(classes.item, {
+          [classes.disabled]: activePage === total,
+        })}
+        disabled={activePage === total || undefined}
+      />
     </nav>
   );
 }

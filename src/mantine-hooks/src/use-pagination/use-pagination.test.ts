@@ -1,11 +1,13 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { usePagination } from './use-pagination';
 
-describe('@mantine/core/Pagination/usePagination', () => {
+describe('@mantine/hooks/use-pagination', () => {
   it('goToPage set activePage properly', () => {
-    const { result } = renderHook(() => usePagination({
-      total: 10,
-    }));
+    const { result } = renderHook(() =>
+      usePagination({
+        total: 10,
+      })
+    );
 
     act(() => result.current.goToPage(5));
     expect(result.current.activePage).toBe(5);
@@ -16,15 +18,19 @@ describe('@mantine/core/Pagination/usePagination', () => {
     act(() => result.current.goToPage(-1));
     expect(result.current.activePage).toBe(1);
   });
-  describe('default options', () => {
+
+  describe('@mantine/hooks/use-pagination default options', () => {
     const pagesAmount = 10;
     let hook;
 
     beforeEach(() => {
-      hook = renderHook(() => usePagination({
-        total: pagesAmount,
-      }));
+      hook = renderHook(() =>
+        usePagination({
+          total: pagesAmount,
+        })
+      );
     });
+
     it('returns correct initial state', () => {
       const { result } = hook;
 
@@ -32,7 +38,7 @@ describe('@mantine/core/Pagination/usePagination', () => {
       expect(result.current.activePage).toBe(1);
     });
 
-    it('paginationRange length doesnt change between page changes', () => {
+    it('paginationRange length does not change between page changes', () => {
       // 2siblings + 2boundaries + 2dots + activePage
       const expectedLength = 7;
 
@@ -46,25 +52,40 @@ describe('@mantine/core/Pagination/usePagination', () => {
     });
   });
 
-  describe('custom options', () => {
+  describe('@mantine/hooks/use-pagination custom options', () => {
     const pagesAmount = 20;
     const onChangeCallback = jest.fn();
     const initialPage = 7;
     let hook;
 
     beforeEach(() => {
-      hook = renderHook(() => usePagination({
-        total: pagesAmount,
-        onChange: onChangeCallback,
-        siblings: 2,
-        boundary: 2,
-        initialPage,
-      }));
+      hook = renderHook(() =>
+        usePagination({
+          total: pagesAmount,
+          onChange: onChangeCallback,
+          siblings: 2,
+          boundary: 2,
+          initialPage,
+        })
+      );
     });
+
     it('returns correct initial state', () => {
       const { result } = hook;
 
-      expect(result.current.paginationRange).toStrictEqual([1, 2, 'dots', 5, 6, 7, 8, 9, 'dots', 19, 20]);
+      expect(result.current.paginationRange).toStrictEqual([
+        1,
+        2,
+        'dots',
+        5,
+        6,
+        7,
+        8,
+        9,
+        'dots',
+        19,
+        20,
+      ]);
       expect(result.current.activePage).toBe(initialPage);
     });
 
@@ -77,7 +98,7 @@ describe('@mantine/core/Pagination/usePagination', () => {
       expect(onChangeCallback).toBeCalledWith(initialPage + 1);
     });
 
-    it('paginationRange length doesnt change between page changes', () => {
+    it('paginationRange length does not change between page changes', () => {
       // 4siblings + 4boundaries + 2dots + activePage
       const expectedLength = 11;
 
