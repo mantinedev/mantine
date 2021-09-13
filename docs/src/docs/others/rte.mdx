@@ -20,3 +20,54 @@ import * as RichTextDemos from '@demos/rte';
 ## Usage
 
 <Demo data={RichTextDemos.usage} />
+
+## Server side rendering
+
+Quill does not support server side rendering as it relies on browser API.
+To make component work on server you will need to create a wrapper component with additional checks.
+
+General strategy:
+
+```tsx
+// Create a separate component which will load RichTextEditor only in browser
+import React from 'react';
+import type { RichTextEditorProps } from '@mantine/rte';
+
+export function RichText(props: RichTextEditorProps) {
+  if (typeof window !== 'undefined') {
+    // eslint-disable-next-line import/extensions, global-require
+    const { RichTextEditor } = require('@mantine/rte');
+    return <RichTextEditor {...props} />;
+  }
+
+  // Render anything as fallback on server, e.g. loader or html content without editor
+  return null;
+}
+```
+
+### Usage with Next.js
+
+To make component work with Next.js use [dynamic module](https://nextjs.org/docs/advanced-features/dynamic-import):
+
+```tsx
+// RichText.tsx in your components folder
+import dynamic from 'next/dynamic';
+
+export default dynamic(() => import('@mantine/rte'), {
+  // Disable during server side rendering
+  ssr: false,
+
+  // Render anything as fallback on server, e.g. loader or html content without editor
+  loader: () => null,
+});
+```
+
+Then when you want to use RichTextEditor import your component instead:
+
+```tsx
+import RichTextEditor from '../components/RichText';
+
+function MyPage() {
+  return <RichTextEditor />;
+}
+```
