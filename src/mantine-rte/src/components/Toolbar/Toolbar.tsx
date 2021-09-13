@@ -20,6 +20,9 @@ export interface ToolbarProps extends DefaultProps<ToolbarStylesNames> {
 
   /** Top toolbar position in any valid css value */
   stickyOffset?: number | string;
+
+  /** Id that is used to connect toolbar to editor */
+  id?: string;
 }
 
 export function Toolbar({
@@ -32,6 +35,7 @@ export function Toolbar({
   style,
   classNames,
   styles,
+  id,
   ...others
 }: ToolbarProps) {
   const theme = useMantineTheme(themeOverride);
@@ -69,7 +73,7 @@ export function Toolbar({
 
   return (
     <div
-      id="toolbar"
+      id={id}
       className={cx(classes.toolbar, className)}
       style={{ ...style, ..._styles.toolbar }}
       {...others}

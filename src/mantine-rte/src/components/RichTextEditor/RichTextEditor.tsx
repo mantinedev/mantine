@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import cx from 'clsx';
 import Editor, { Quill } from 'react-quill';
 import { useMantineTheme, DefaultProps, mergeStyles } from '@mantine/core';
+import { useId } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
@@ -57,6 +58,7 @@ export function RichTextEditor({
   stickyOffset = 0,
   labels = DEFAULT_LABELS,
   controls = DEFAULT_CONTROLS,
+  id,
   themeOverride,
   style,
   className,
@@ -64,6 +66,7 @@ export function RichTextEditor({
   styles,
   ...others
 }: RichTextEditorProps) {
+  const uuid = useId(id);
   const theme = useMantineTheme(themeOverride);
   const classes = useStyles(
     { theme, saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
@@ -74,7 +77,7 @@ export function RichTextEditor({
 
   const modules = useMemo(
     () => ({
-      toolbar: { container: '#toolbar' },
+      toolbar: { container: `#${uuid}` },
       imageUploader: {
         upload: (file: File) => onImageUpload(file),
       },
@@ -92,6 +95,7 @@ export function RichTextEditor({
         stickyOffset={stickyOffset}
         classNames={classNames}
         styles={styles}
+        id={uuid}
       />
 
       <Editor theme="snow" modules={modules} value={value} onChange={onChange} />
