@@ -26,9 +26,9 @@ export type TimeRangeInputStylesNames =
 
 export interface TimeRangeInputProps
   extends DefaultProps<TimeRangeInputStylesNames>,
-  InputBaseProps,
-  InputWrapperBaseProps,
-  Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {
+    InputBaseProps,
+    InputWrapperBaseProps,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {
   /** Input size */
   size?: MantineSize;
 
@@ -88,7 +88,7 @@ export function TimeRangeInput({
   hoursLabel,
   minutesLabel,
   secondsLabel,
-  labelSeparator = '-',
+  labelSeparator = '–',
   disabled = false,
   ...others
 }: TimeRangeInputProps) {
@@ -97,13 +97,13 @@ export function TimeRangeInput({
   const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);
   const fromDate = new Date();
-  const toDate = new Date((new Date()).valueOf() + 1000);
+  const toDate = new Date(new Date().valueOf() + 1000);
 
   const [_value, handleChange] = useUncontrolled({
     value,
     defaultValue,
     finalValue: [fromDate, toDate],
-    rule: (val) => val && val.length === 2 && val.every(ele => ele instanceof Date),
+    rule: (val) => val && val.length === 2 && val.every((ele) => ele instanceof Date),
     onChange,
   });
 
@@ -151,8 +151,10 @@ export function TimeRangeInput({
     max: 59,
     maxValue: 5,
     nextRef: {
-      current: !withSeconds && selectedFieldIndex === 0 ?
-        hoursRef.current[1] : secondsRef.current[selectedFieldIndex],
+      current:
+        !withSeconds && selectedFieldIndex === 0
+          ? hoursRef.current[1]
+          : secondsRef.current[selectedFieldIndex],
     },
   });
 
@@ -256,9 +258,7 @@ export function TimeRangeInput({
             />
           )}
 
-          <span style={{ paddingLeft: 5, paddingRight: 5 }}>
-            {labelSeparator}
-          </span>
+          <span style={{ paddingLeft: 5, paddingRight: 5 }}>{labelSeparator}</span>
 
           <div className={classes.controls} style={_styles.controls}>
             <TimeField
