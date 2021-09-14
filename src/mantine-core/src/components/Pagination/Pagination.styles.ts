@@ -9,6 +9,7 @@ import {
 interface PaginationStyles {
   theme: MantineTheme;
   size: MantineNumberSize;
+  radius: MantineNumberSize;
   color: string;
 }
 
@@ -21,7 +22,7 @@ const sizes = {
 };
 
 export default createMemoStyles({
-  item: ({ theme, size }: PaginationStyles) => ({
+  item: ({ theme, size, radius }: PaginationStyles) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -33,7 +34,7 @@ export default createMemoStyles({
     height: getSizeValue({ size, sizes }),
     width: getSizeValue({ size, sizes }),
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
-    borderRadius: theme.radius.sm,
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     lineHeight: 1,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
 

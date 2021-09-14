@@ -49,8 +49,11 @@ export interface PaginationProps
   /** Spacing between items from theme or number to set value in px, defaults to theme.spacing.xs / 2 */
   spacing?: MantineNumberSize;
 
-  /** Predefined item size or number to set value in px */
+  /** Predefined item size or number to set width and height in px */
   size?: MantineNumberSize;
+
+  /** Predefined item radius or number to set border-radius in px */
+  radius?: MantineNumberSize;
 }
 
 export function Pagination({
@@ -66,13 +69,14 @@ export function Pagination({
   siblings = 1,
   boundary = 1,
   size = 'xs',
+  radius = 'sm',
   onChange,
   getItemAriaLabel,
   spacing,
   ...others
 }: PaginationProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color, size }, classNames, 'pagination');
+  const classes = useStyles({ theme, color, size, radius }, classNames, 'pagination');
   const _styles = mergeStyles(classes, styles);
 
   const { paginationRange, goToPage, goNextPage, goPrevPage, activePage } = usePagination({
