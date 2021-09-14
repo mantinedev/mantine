@@ -36,10 +36,10 @@ export interface TimeRangeInputProps
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 
   /** Controlled input value */
-  value?: [Date, Date];
+  value?: [Date | null, Date | null];
 
   /** Uncontrolled input default value */
-  defaultValue?: [Date, Date];
+  defaultValue?: [Date | null, Date | null];
 
   /** Controlled input onChange handler */
   onChange?(value: [Date, Date]): void;
