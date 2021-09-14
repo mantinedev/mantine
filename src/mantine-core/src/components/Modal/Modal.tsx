@@ -7,7 +7,13 @@ import {
   useFocusTrap,
   useFocusReturn,
 } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
+import {
+  DefaultProps,
+  useMantineTheme,
+  mergeStyles,
+  MantineNumberSize,
+  MantineShadow,
+} from '../../theme';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
@@ -67,7 +73,7 @@ export interface ModalProps
   id?: string;
 
   /** Modal shadow from theme or css value */
-  shadow?: string;
+  shadow?: MantineShadow;
 
   /** Modal padding from theme or number value for padding in px */
   padding?: MantineNumberSize;

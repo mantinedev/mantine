@@ -7,7 +7,13 @@ import {
   useReducedMotion,
   useMergedRef,
 } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
+import {
+  DefaultProps,
+  useMantineTheme,
+  MantineNumberSize,
+  mergeStyles,
+  MantineShadow,
+} from '../../theme';
 import { useClickOutsideRegister } from '../../utils';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';
@@ -56,7 +62,7 @@ export interface PopoverProps
   radius?: MantineNumberSize;
 
   /** Popover shadow, value from theme.shadows or string to set box-shadow to any value */
-  shadow?: string;
+  shadow?: MantineShadow;
 
   /** aria-label for close button */
   closeButtonLabel?: string;

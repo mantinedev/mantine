@@ -1,5 +1,11 @@
 import React from 'react';
-import { useMantineTheme, DefaultProps, MantineNumberSize, mergeStyles } from '../../../theme';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
+  mergeStyles,
+  MantineShadow,
+} from '../../../theme';
 import { Text } from '../../Text/Text';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import useStyles from './PopoverBody.styles';
@@ -9,7 +15,7 @@ export type PopoverBodyStylesNames = keyof ReturnType<typeof useStyles>;
 interface PopoverBodyProps
   extends DefaultProps<PopoverBodyStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
-  shadow: string;
+  shadow: MantineShadow;
   radius: MantineNumberSize;
   spacing: MantineNumberSize;
   elementRef: React.ForwardedRef<HTMLDivElement>;

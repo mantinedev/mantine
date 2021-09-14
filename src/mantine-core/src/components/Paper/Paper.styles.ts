@@ -4,12 +4,13 @@ import {
   MantineNumberSize,
   getSizeValue,
   getFocusStyles,
+  MantineShadow,
 } from '../../theme';
 
 interface PaperStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
-  shadow: string;
+  shadow: MantineShadow;
   padding: MantineNumberSize;
   withBorder: boolean;
 }

@@ -7,7 +7,13 @@ import {
   useFocusTrap,
   useFocusReturn,
 } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
+import {
+  DefaultProps,
+  useMantineTheme,
+  MantineNumberSize,
+  mergeStyles,
+  MantineShadow,
+} from '../../theme';
 import { ClickOutsideProvider } from '../../utils';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
@@ -37,7 +43,7 @@ export interface DrawerProps
   size?: string | number;
 
   /** Drawer body shadow from theme or any css shadow value */
-  shadow?: string;
+  shadow?: MantineShadow;
 
   /** Drawer body padding from theme or number for padding in px */
   padding?: MantineNumberSize;

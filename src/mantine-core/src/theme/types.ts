@@ -63,6 +63,8 @@ export interface InternalMantineTheme extends MantineTheme {
 
 export type MantineThemeOverride = DeepPartial<MantineTheme>;
 
+export type MantineShadow = MantineSize | (string & {});
+
 export type MantineColor =
   | 'dark'
   | 'gray'

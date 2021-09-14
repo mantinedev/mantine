@@ -1,8 +1,14 @@
-import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../../theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  MantineNumberSize,
+  getSizeValue,
+  MantineShadow,
+} from '../../../theme';
 
 interface PopoverBodyStyles {
   theme: MantineTheme;
-  shadow: string;
+  shadow: MantineShadow;
   radius: MantineNumberSize;
   spacing: MantineNumberSize;
 }
