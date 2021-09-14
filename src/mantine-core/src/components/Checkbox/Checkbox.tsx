@@ -25,7 +25,7 @@ export interface CheckboxProps
   indeterminate?: boolean;
 
   /** Props spread to wrapper element */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;

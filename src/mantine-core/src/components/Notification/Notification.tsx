@@ -34,7 +34,7 @@ export interface NotificationProps
   disallowClose?: boolean;
 
   /** Props spread to close button */
-  closeButtonProps?: Record<string, any>;
+  closeButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 }
 
 export function Notification({

@@ -9,7 +9,7 @@ import {
   MantineColor,
 } from '../../theme';
 import useStyles, { sizes } from './ActionIcon.styles';
-import { Loader } from '../Loader/Loader';
+import { Loader, LoaderProps } from '../Loader/Loader';
 
 export const ACTION_ICON_SIZES = sizes;
 
@@ -45,7 +45,7 @@ interface _ActionIconProps<C extends React.ElementType, R extends HTMLElement>
   size?: MantineNumberSize;
 
   /** Props spread to Loader component */
-  loaderProps?: Record<string, any>;
+  loaderProps?: LoaderProps;
 
   /** Indicate loading state */
   loading?: boolean;

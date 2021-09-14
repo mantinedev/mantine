@@ -15,7 +15,7 @@ import {
   MantineColor,
 } from '../../theme';
 import useStyles, { heights } from './Button.styles';
-import { Loader } from '../Loader/Loader';
+import { Loader, LoaderProps } from '../Loader/Loader';
 
 export { UnstyledButton } from './UnstyledButton/UnstyledButton';
 
@@ -80,7 +80,7 @@ interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
   loading?: boolean;
 
   /** Props spread to Loader component */
-  loaderProps?: Record<string, any>;
+  loaderProps?: LoaderProps;
 
   /** Loader position relative to button label */
   loaderPosition?: 'left' | 'right';

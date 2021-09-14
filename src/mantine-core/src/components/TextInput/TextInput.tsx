@@ -25,7 +25,7 @@ export interface TextInputProps
   type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url' | 'number';
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Get element ref */
   elementRef?: React.ForwardedRef<HTMLInputElement>;

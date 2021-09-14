@@ -33,7 +33,7 @@ export interface DividerProps
   labelPosition?: 'left' | 'center' | 'right';
 
   /** Props spread to Text component in label */
-  labelProps?: Record<string, any>;
+  labelProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Divider borderStyle */
   variant?: 'solid' | 'dashed' | 'dotted';

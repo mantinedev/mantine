@@ -35,7 +35,7 @@ export interface ImageProps
   placeholder?: React.ReactNode;
 
   /** Props spread to img element */
-  imageProps?: Record<string, any>;
+  imageProps?: React.ComponentPropsWithoutRef<'img'>;
 
   /** Get root element ref */
   elementRef?: React.ForwardedRef<HTMLDivElement>;

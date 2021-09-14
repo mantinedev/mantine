@@ -34,7 +34,7 @@ export interface SwitchProps
   radius?: MantineNumberSize;
 
   /** Props spread to wrapper element */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Get element ref */
   elementRef?: React.ForwardedRef<HTMLInputElement>;
