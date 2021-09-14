@@ -18,7 +18,7 @@ export interface PaginationParams {
   siblings?: number;
 
   /** Amount of elements visible on left/right edges, defaults to 1  */
-  boundary?: number;
+  boundaries?: number;
 
   /** Callback fired after change of each page */
   onChange?: (page: number) => void;
@@ -27,12 +27,12 @@ export interface PaginationParams {
 export const usePagination = ({
   total,
   siblings = 1,
-  boundary = 1,
+  boundaries = 1,
   page,
   initialPage = 1,
   onChange,
 }: PaginationParams) => {
-  const [activePage, setPage] = useUncontrolled({
+  const [activePage, setActivePage] = useUncontrolled({
     value: page,
     onChange,
     defaultValue: initialPage,
@@ -40,80 +40,69 @@ export const usePagination = ({
     rule: (_page) => typeof _page === 'number' && _page <= total,
   });
 
-  const goToPage = useCallback(
+  const setPage = useCallback(
     (pageNumber: number) => {
       if (pageNumber <= 0) {
-        setPage(1);
+        setActivePage(1);
       } else if (pageNumber > total) {
-        setPage(total);
+        setActivePage(total);
       } else {
-        setPage(pageNumber);
+        setActivePage(pageNumber);
       }
     },
     [total]
   );
 
-  const goNextPage = () => {
-    const nextPage = activePage + 1;
-
-    goToPage(nextPage);
-  };
-
-  const goPrevPage = () => {
-    const prevPage = activePage - 1;
-
-    goToPage(prevPage);
-  };
+  const next = () => setPage(activePage + 1);
+  const previous = () => setPage(activePage - 1);
 
   const paginationRange = useMemo((): (number | 'dots')[] => {
-    // Pages count is determined as siblings (left/right) + boundary(left/right) + currentPage + 2*DOTS
-    const totalPageNumbers = siblings * 2 + 3 + boundary * 2;
+    // Pages count is determined as siblings (left/right) + boundaries(left/right) + currentPage + 2*DOTS
+    const totalPageNumbers = siblings * 2 + 3 + boundaries * 2;
 
     /*
-    If the number of pages is less than the page numbers we want to show in our
-    paginationComponent, we return the range [1..total]
-    */
+     * If the number of pages is less than the page numbers we want to show in our
+     * paginationComponent, we return the range [1..total]
+     */
     if (totalPageNumbers >= total) {
       return range(1, total);
     }
 
-    const leftSiblingIndex = Math.max(activePage - siblings, boundary);
-    const rightSiblingIndex = Math.min(activePage + siblings, total - boundary);
+    const leftSiblingIndex = Math.max(activePage - siblings, boundaries);
+    const rightSiblingIndex = Math.min(activePage + siblings, total - boundaries);
 
     /*
-      We do not want to show dots if there is only one position left
-      after/before the left/right page count as that would lead to a change if our Pagination
-      component size which we do not want
-    */
-    const shouldShowLeftDots = leftSiblingIndex > boundary + 2;
-    const shouldShowRightDots = rightSiblingIndex < total - (boundary + 1);
+     * We do not want to show dots if there is only one position left
+     * after/before the left/right page count as that would lead to a change if our Pagination
+     * component size which we do not want
+     */
+    const shouldShowLeftDots = leftSiblingIndex > boundaries + 2;
+    const shouldShowRightDots = rightSiblingIndex < total - (boundaries + 1);
 
     if (!shouldShowLeftDots && shouldShowRightDots) {
-      const leftItemCount = siblings * 2 + boundary + 2;
-
-      return [...range(1, leftItemCount), DOTS, ...range(total - (boundary - 1), total)];
+      const leftItemCount = siblings * 2 + boundaries + 2;
+      return [...range(1, leftItemCount), DOTS, ...range(total - (boundaries - 1), total)];
     }
 
     if (shouldShowLeftDots && !shouldShowRightDots) {
-      const rightItemCount = boundary + 1 + 2 * siblings;
-
-      return [...range(1, boundary), DOTS, ...range(total - rightItemCount, total)];
+      const rightItemCount = boundaries + 1 + 2 * siblings;
+      return [...range(1, boundaries), DOTS, ...range(total - rightItemCount, total)];
     }
 
     return [
-      ...range(1, boundary),
+      ...range(1, boundaries),
       DOTS,
       ...range(leftSiblingIndex, rightSiblingIndex),
       DOTS,
-      ...range(total - boundary + 1, total),
+      ...range(total - boundaries + 1, total),
     ];
   }, [total, siblings, activePage]);
 
   return {
-    paginationRange,
-    goToPage,
-    goNextPage,
-    goPrevPage,
-    activePage,
+    range: paginationRange,
+    active: activePage,
+    setPage,
+    next,
+    previous,
   };
 };

@@ -2,21 +2,21 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { usePagination } from './use-pagination';
 
 describe('@mantine/hooks/use-pagination', () => {
-  it('goToPage set activePage properly', () => {
+  it('setPage set active properly', () => {
     const { result } = renderHook(() =>
       usePagination({
         total: 10,
       })
     );
 
-    act(() => result.current.goToPage(5));
-    expect(result.current.activePage).toBe(5);
+    act(() => result.current.setPage(5));
+    expect(result.current.active).toBe(5);
 
-    act(() => result.current.goToPage(15));
-    expect(result.current.activePage).toBe(10);
+    act(() => result.current.setPage(15));
+    expect(result.current.active).toBe(10);
 
-    act(() => result.current.goToPage(-1));
-    expect(result.current.activePage).toBe(1);
+    act(() => result.current.setPage(-1));
+    expect(result.current.active).toBe(1);
   });
 
   describe('@mantine/hooks/use-pagination default options', () => {
@@ -34,20 +34,20 @@ describe('@mantine/hooks/use-pagination', () => {
     it('returns correct initial state', () => {
       const { result } = hook;
 
-      expect(result.current.paginationRange).toStrictEqual([1, 2, 3, 4, 5, 'dots', 10]);
-      expect(result.current.activePage).toBe(1);
+      expect(result.current.range).toStrictEqual([1, 2, 3, 4, 5, 'dots', 10]);
+      expect(result.current.active).toBe(1);
     });
 
-    it('paginationRange length does not change between page changes', () => {
-      // 2siblings + 2boundaries + 2dots + activePage
+    it('range length does not change between page changes', () => {
+      // 2siblings + 2boundaries + 2dots + active
       const expectedLength = 7;
 
       const { result } = hook;
 
       [...new Array(pagesAmount).fill(null)].forEach(() => {
-        expect(result.current.paginationRange.length).toBe(expectedLength);
+        expect(result.current.range.length).toBe(expectedLength);
 
-        act(() => result.current.goNextPage());
+        act(() => result.current.next());
       });
     });
   });
@@ -64,7 +64,7 @@ describe('@mantine/hooks/use-pagination', () => {
           total: pagesAmount,
           onChange: onChangeCallback,
           siblings: 2,
-          boundary: 2,
+          boundaries: 2,
           initialPage,
         })
       );
@@ -73,41 +73,29 @@ describe('@mantine/hooks/use-pagination', () => {
     it('returns correct initial state', () => {
       const { result } = hook;
 
-      expect(result.current.paginationRange).toStrictEqual([
-        1,
-        2,
-        'dots',
-        5,
-        6,
-        7,
-        8,
-        9,
-        'dots',
-        19,
-        20,
-      ]);
-      expect(result.current.activePage).toBe(initialPage);
+      expect(result.current.range).toStrictEqual([1, 2, 'dots', 5, 6, 7, 8, 9, 'dots', 19, 20]);
+      expect(result.current.active).toBe(initialPage);
     });
 
-    it('onChange fires correctly with activePage', () => {
+    it('onChange fires correctly with active', () => {
       const { result } = hook;
 
-      act(() => result.current.goNextPage());
+      act(() => result.current.next());
 
       expect(onChangeCallback).toBeCalledTimes(1);
       expect(onChangeCallback).toBeCalledWith(initialPage + 1);
     });
 
-    it('paginationRange length does not change between page changes', () => {
-      // 4siblings + 4boundaries + 2dots + activePage
+    it('range length does not change between page changes', () => {
+      // 4siblings + 4boundaries + 2dots + active
       const expectedLength = 11;
 
       const { result } = hook;
 
       [...new Array(pagesAmount).fill(null)].forEach(() => {
-        expect(result.current.paginationRange.length).toBe(expectedLength);
+        expect(result.current.range.length).toBe(expectedLength);
 
-        act(() => result.current.goNextPage());
+        act(() => result.current.next());
       });
     });
   });

@@ -38,7 +38,7 @@ export interface PaginationProps
   siblings?: number;
 
   /** Amount of elements visible on left/right edges */
-  boundary?: number;
+  boundaries?: number;
 
   /** Callback fired after change of each page */
   onChange?: (page: number) => void;
@@ -67,7 +67,7 @@ export function Pagination({
   color,
   total,
   siblings = 1,
-  boundary = 1,
+  boundaries = 1,
   size = 'md',
   radius = 'sm',
   onChange,
@@ -79,31 +79,31 @@ export function Pagination({
   const classes = useStyles({ theme, color, size, radius }, classNames, 'pagination');
   const _styles = mergeStyles(classes, styles);
 
-  const { paginationRange, goToPage, goNextPage, goPrevPage, activePage } = usePagination({
+  const { range, setPage, next, previous, active } = usePagination({
     page,
     siblings,
     total,
     onChange,
     initialPage,
-    boundary,
+    boundaries,
   });
 
-  const items = paginationRange.map((pageNumber, index) => (
+  const items = range.map((pageNumber, index) => (
     <Item
       key={index}
       page={pageNumber}
-      active={pageNumber === activePage}
+      active={pageNumber === active}
       aria-label={typeof getItemAriaLabel === 'function' ? getItemAriaLabel(pageNumber) : null}
       style={{
         ..._styles.item,
-        ...(pageNumber === activePage ? _styles.active : null),
+        ...(pageNumber === active ? _styles.active : null),
         ...(pageNumber === 'dots' ? _styles.dots : null),
       }}
       className={cx(classes.item, {
-        [classes.active]: pageNumber === activePage,
+        [classes.active]: pageNumber === active,
         [classes.dots]: pageNumber === 'dots',
       })}
-      onClick={pageNumber !== 'dots' ? () => goToPage(pageNumber) : undefined}
+      onClick={pageNumber !== 'dots' ? () => setPage(pageNumber) : undefined}
     />
   ));
 
@@ -111,24 +111,24 @@ export function Pagination({
     <Group spacing={spacing || getSizeValue({ size, sizes: theme.spacing }) / 2} {...others}>
       <Item
         page="prev"
-        onClick={goPrevPage}
+        onClick={previous}
         aria-label={getItemAriaLabel ? getItemAriaLabel('prev') : undefined}
-        aria-disabled={activePage === 1}
+        aria-disabled={active === 1}
         style={_styles.item}
         className={classes.item}
-        disabled={activePage === 1}
+        disabled={active === 1}
       />
 
       {items}
 
       <Item
         page="next"
-        onClick={goNextPage}
+        onClick={next}
         aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
-        aria-disabled={activePage === total}
+        aria-disabled={active === total}
         style={_styles.item}
         className={classes.item}
-        disabled={activePage === total}
+        disabled={active === total}
       />
     </Group>
   );
