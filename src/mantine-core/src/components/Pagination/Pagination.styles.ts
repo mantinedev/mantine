@@ -23,6 +23,7 @@ const sizes = {
 
 export default createMemoStyles({
   item: ({ theme, size, radius }: PaginationStyles) => ({
+    userSelect: 'none',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

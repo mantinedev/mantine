@@ -94,6 +94,7 @@ export function Pagination({
       page={pageNumber}
       active={pageNumber === active}
       aria-label={typeof getItemAriaLabel === 'function' ? getItemAriaLabel(pageNumber) : null}
+      tabIndex={pageNumber === 'dots' ? -1 : 0}
       style={{
         ..._styles.item,
         ...(pageNumber === active ? _styles.active : null),
