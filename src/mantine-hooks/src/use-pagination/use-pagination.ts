@@ -1,13 +1,8 @@
 import { useMemo, useCallback } from 'react';
 import { useUncontrolled } from '../use-uncontrolled/use-uncontrolled';
+import { range } from '../utils';
 
 export const DOTS = 'dots';
-
-const range = (start: number, end: number): number[] => {
-  const length = end - start + 1;
-
-  return Array.from({ length }, (_, idx) => idx + start);
-};
 
 export interface PaginationParams {
   /** Page selected on initial render, defaults to 1 */
@@ -37,7 +32,7 @@ export const usePagination = ({
   initialPage = 1,
   onChange,
 }: PaginationParams) => {
-  const [activePage, setPage] = useUncontrolled<number>({
+  const [activePage, setPage] = useUncontrolled({
     value: page,
     onChange,
     defaultValue: initialPage,
@@ -49,17 +44,11 @@ export const usePagination = ({
     (pageNumber: number) => {
       if (pageNumber <= 0) {
         setPage(1);
-
-        return;
-      }
-
-      if (pageNumber > total) {
+      } else if (pageNumber > total) {
         setPage(total);
-
-        return;
+      } else {
+        setPage(pageNumber);
       }
-
-      setPage(pageNumber);
     },
     [total]
   );
