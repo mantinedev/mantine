@@ -9,7 +9,9 @@ export type { PaginationItemProps } from './DefaultItem/DefaultItem';
 
 export type PaginationStylesNames = keyof ReturnType<typeof useStyles>;
 
-export interface PaginationProps extends DefaultProps<PaginationStylesNames> {
+export interface PaginationProps
+  extends DefaultProps<PaginationStylesNames>,
+    Omit<React.ComponentPropsWithoutRef<'nav'>, 'onChange'> {
   /** Change item component  */
   itemComponent?: React.FC<PaginationItemProps>;
 

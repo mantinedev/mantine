@@ -5,19 +5,13 @@ import { PrevIcon } from '../icons/PrevIcon';
 import { NextIcon } from '../icons/NextIcon';
 import { DotsIcon } from '../icons/DotsIcon';
 
-export interface PaginationItemProps extends
-    React.ComponentPropsWithoutRef<'button'> {
+export interface PaginationItemProps extends React.ComponentPropsWithoutRef<'button'> {
   page: number | 'dots' | 'prev' | 'next';
   active?: boolean;
   onClick?: () => void;
 }
 
-export function DefaultItem({
-  page,
-  active,
-  onClick,
-  ...rest
-}: PaginationItemProps) {
+export function DefaultItem({ page, active, onClick, ...others }: PaginationItemProps) {
   const renderContent = () => {
     switch (page) {
       case 'dots':
@@ -32,10 +26,7 @@ export function DefaultItem({
   };
 
   return (
-    <UnstyledButton
-      onClick={onClick}
-      {...rest}
-    >
+    <UnstyledButton onClick={onClick} {...others}>
       {renderContent()}
     </UnstyledButton>
   );
