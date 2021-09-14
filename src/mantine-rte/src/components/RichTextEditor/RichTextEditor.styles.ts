@@ -208,6 +208,17 @@ export default createMemoStyles({
       marginBottom: theme.spacing.sm,
     },
 
+    '& blockquote': {
+      marginTop: 0,
+      marginLeft: 0,
+      marginBottom: theme.spacing.sm,
+      paddingLeft: theme.spacing.md,
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
+      borderLeft: `4px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+      }`,
+    },
+
     '& img': {
       display: 'block',
       position: 'relative',

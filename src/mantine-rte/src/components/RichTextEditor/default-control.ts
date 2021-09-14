@@ -4,7 +4,7 @@ export const DEFAULT_CONTROLS: ToolbarControl[][] = [
   ['bold', 'italic', 'underline', 'strike', 'clean'],
   ['h1', 'h2', 'h3', 'h4'],
   ['unorderedList', 'orderedList'],
-  ['link', 'image', 'video'],
+  ['link', 'image', 'video', 'blockquote'],
   ['alignLeft', 'alignCenter', 'alignRight'],
   ['sup', 'sub'],
 ];

@@ -11,6 +11,7 @@ const CLEANUP = [
   'video',
   'header',
   'script',
+  'blockquote',
 ];
 
 export function replaceIcons(quillIconsModule: any) {

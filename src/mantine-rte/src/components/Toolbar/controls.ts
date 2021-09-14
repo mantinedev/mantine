@@ -11,6 +11,7 @@ import {
   TextAlignRightIcon,
   TextAlignCenterIcon,
   VideoIcon,
+  QuoteIcon,
 } from '@modulz/radix-icons';
 import { OrderedList, H1, H2, H3, H4, H5, H6, Sub, Sup } from './icons';
 
@@ -134,6 +135,11 @@ export const CONTROLS = {
     icon: Sub,
     controls: 'script',
     value: 'sub',
+  },
+
+  blockquote: {
+    icon: QuoteIcon,
+    controls: 'blockquote',
   },
 } as const;
 
