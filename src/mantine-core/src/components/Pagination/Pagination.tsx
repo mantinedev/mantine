@@ -2,7 +2,13 @@ import React from 'react';
 import cx from 'clsx';
 import { usePagination } from '@mantine/hooks';
 import { Group } from '../Group/Group';
-import { DefaultProps, mergeStyles, useMantineTheme, MantineNumberSize } from '../../theme';
+import {
+  DefaultProps,
+  mergeStyles,
+  useMantineTheme,
+  MantineNumberSize,
+  getSizeValue,
+} from '../../theme';
 import useStyles from './Pagination.styles';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
 
@@ -42,13 +48,15 @@ export interface PaginationProps
 
   /** Spacing between items from theme or number to set value in px, defaults to theme.spacing.xs / 2 */
   spacing?: MantineNumberSize;
+
+  /** Predefined item size or number to set value in px */
+  size?: MantineNumberSize;
 }
 
 export function Pagination({
   itemComponent: Item = DefaultItem,
   className,
   classNames,
-  style,
   styles,
   themeOverride,
   page,
@@ -57,13 +65,14 @@ export function Pagination({
   total,
   siblings = 1,
   boundary = 1,
+  size = 'xs',
   onChange,
   getItemAriaLabel,
   spacing,
   ...others
 }: PaginationProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color }, classNames, 'pagination');
+  const classes = useStyles({ theme, color, size }, classNames, 'pagination');
   const _styles = mergeStyles(classes, styles);
 
   const { paginationRange, goToPage, goNextPage, goPrevPage, activePage } = usePagination({
@@ -95,7 +104,7 @@ export function Pagination({
   ));
 
   return (
-    <Group spacing={spacing || theme.spacing.xs / 2} {...others}>
+    <Group spacing={spacing || getSizeValue({ size, sizes: theme.spacing }) / 2} {...others}>
       <Item
         page="prev"
         onClick={goPrevPage}

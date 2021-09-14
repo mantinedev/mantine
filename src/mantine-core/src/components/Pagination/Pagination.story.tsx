@@ -5,7 +5,11 @@ import { Pagination } from './Pagination';
 storiesOf('@mantine/core/Pagination', module)
   .add('General usage', () => (
     <div style={{ padding: 40 }}>
-      <Pagination total={10} color="cyan" />
+      <Pagination total={10} color="cyan" size="xs" />
+      <Pagination style={{ marginTop: 15 }} total={10} color="cyan" size="sm" />
+      <Pagination style={{ marginTop: 15 }} total={10} color="cyan" size="md" />
+      <Pagination style={{ marginTop: 15 }} total={10} color="cyan" size="lg" />
+      <Pagination style={{ marginTop: 15 }} total={10} color="cyan" size="xl" />
     </div>
   ))
   .add('No siblings', () => <Pagination siblings={0} total={20} color="orange" initialPage={7} />)

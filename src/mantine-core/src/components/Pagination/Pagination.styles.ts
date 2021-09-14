@@ -1,12 +1,27 @@
-import { createMemoStyles, MantineTheme, getSharedColorScheme } from '../../theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  getSharedColorScheme,
+  MantineNumberSize,
+  getSizeValue,
+} from '../../theme';
 
 interface PaginationStyles {
   theme: MantineTheme;
+  size: MantineNumberSize;
   color: string;
 }
 
+const sizes = {
+  xs: 22,
+  sm: 26,
+  md: 32,
+  lg: 38,
+  xl: 44,
+};
+
 export default createMemoStyles({
-  item: ({ theme }: PaginationStyles) => ({
+  item: ({ theme, size }: PaginationStyles) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -15,8 +30,9 @@ export default createMemoStyles({
       theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3]
     }`,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-    height: 32,
-    width: 32,
+    height: getSizeValue({ size, sizes }),
+    width: getSizeValue({ size, sizes }),
+    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     borderRadius: theme.radius.sm,
     lineHeight: 1,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
