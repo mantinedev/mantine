@@ -5,12 +5,12 @@ import { Group } from '../../Group/Group';
 function Wrapper(props: any) {
   return (
     <Group position="center">
-      <Pagination {...props} />
+      <Pagination total={10} {...props} />
     </Group>
   );
 }
 
-const codeTemplate = (props: string) => `<Pagination${props} />`;
+const codeTemplate = (props: string) => `<Pagination total={10}${props} />`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
@@ -18,8 +18,7 @@ export const configurator: MantineDemo = {
   codeTemplate,
   configurator: [
     { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
-    { name: 'total', type: 'number', initialValue: 10, min: 1, max: 30 },
-    { name: 'siblings', type: 'number', initialValue: 1, defaultValue: 1, min: 0, max: 5 },
-    { name: 'boundary', type: 'number', initialValue: 1, defaultValue: 1, min: 0, max: 5 },
+    { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
+    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
   ],
 };
