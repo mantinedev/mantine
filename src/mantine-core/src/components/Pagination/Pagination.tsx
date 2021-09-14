@@ -12,13 +12,13 @@ export type PaginationStylesNames = keyof ReturnType<typeof useStyles>;
 export interface PaginationProps
   extends DefaultProps<PaginationStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'nav'>, 'onChange'> {
-  /** Change item component  */
+  /** Change item component */
   itemComponent?: React.FC<PaginationItemProps>;
 
-  /** Button color from theme */
+  /** Active item color from theme, defaults to theme.primaryColor */
   color?: string;
 
-  /** Page selected on initial render */
+  /** Active initial page for uncontrolled component */
   initialPage?: number;
 
   /** Controlled active page number */
