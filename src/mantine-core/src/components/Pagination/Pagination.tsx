@@ -1,7 +1,8 @@
 import React from 'react';
 import cx from 'clsx';
 import { usePagination } from '@mantine/hooks';
-import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
+import { Group } from '../Group/Group';
+import { DefaultProps, mergeStyles, useMantineTheme, MantineNumberSize } from '../../theme';
 import useStyles from './Pagination.styles';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
 
@@ -11,7 +12,7 @@ export type PaginationStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface PaginationProps
   extends DefaultProps<PaginationStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'nav'>, 'onChange'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** Change item component */
   itemComponent?: React.FC<PaginationItemProps>;
 
@@ -38,6 +39,9 @@ export interface PaginationProps
 
   /** Callback to control aria-labels */
   getItemAriaLabel?: (page: number | 'dots' | 'prev' | 'next') => string | undefined;
+
+  /** Spacing between items from theme or number to set value in px, defaults to theme.spacing.xs / 2 */
+  spacing?: MantineNumberSize;
 }
 
 export function Pagination({
@@ -55,6 +59,7 @@ export function Pagination({
   boundary = 1,
   onChange,
   getItemAriaLabel,
+  spacing,
   ...others
 }: PaginationProps) {
   const theme = useMantineTheme(themeOverride);
@@ -90,7 +95,7 @@ export function Pagination({
   ));
 
   return (
-    <nav className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <Group spacing={spacing || theme.spacing.xs / 2} {...others}>
       <Item
         page="prev"
         onClick={goPrevPage}
@@ -112,7 +117,7 @@ export function Pagination({
         className={classes.item}
         disabled={activePage === total}
       />
-    </nav>
+    </Group>
   );
 }
 

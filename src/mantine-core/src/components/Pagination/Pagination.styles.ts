@@ -6,14 +6,6 @@ interface PaginationStyles {
 }
 
 export default createMemoStyles({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    margin: 0,
-    padding: 0,
-  },
-
   item: ({ theme }: PaginationStyles) => ({
     display: 'flex',
     alignItems: 'center',
@@ -28,10 +20,6 @@ export default createMemoStyles({
     borderRadius: theme.radius.sm,
     lineHeight: 1,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
-
-    '&:not(:last-of-type), &:not(:first-of-type)': {
-      marginLeft: theme.spacing.xs / 2,
-    },
 
     '&:active:not(:disabled):not($dots)': {
       transform: 'translateY(1px)',
