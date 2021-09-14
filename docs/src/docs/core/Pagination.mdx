@@ -5,7 +5,7 @@ title: Pagination
 order: 1
 slug: /core/pagination/
 category: 'navigation'
-description: 'Make paginated content'
+description: 'Display active page and navigate between multiple pages'
 props: ['Pagination']
 import: "import { Pagination } from '@mantine/core';"
 source: 'mantine-core/src/components/Pagination/Pagination.tsx'
@@ -16,9 +16,6 @@ styles: ['Pagination']
 import { PaginationDemos } from '@demos/core';
 
 ## Usage
-
-Pagination component allows user to compose divided data onto separate paginated pages.
-Final amount of elements is equal `activePage + 2x dots + 2x sibling amount + 2x boundary amount`
 
 <Demo data={PaginationDemos.configurator} />
 

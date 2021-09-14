@@ -7,9 +7,8 @@ release: https://github.com/mantinedev/mantine/releases/tag/2.5.0
 date: 'September 1st, 2021'
 ---
 
-import { TimelineDemos, DialogDemos, ListDemos, ChipsDemos } from '@demos/core';
-
-import { TimeRangeInputDemos } from '@demos/dates'
+import { TimelineDemos, DialogDemos, ListDemos, ChipsDemos, PaginationDemos } from '@demos/core';
+import { TimeRangeInputDemos } from '@demos/dates';
 
 ## UMD builds deprecation
 
@@ -55,6 +54,10 @@ Checkout [Next.js guide](https://mantine.dev/theming/next/) to learn more.
 [Timeline](https://mantine.dev/core/timeline/) component lets you show list of events in chronological order:
 
 <Demo data={TimelineDemos.usage} demoProps={{ toggle: true }} />
+
+Navigate between multiple pages with new [Pagination](https://mantine.dev/core/pagination/) component:
+
+<Demo data={PaginationDemos.configurator} />
 
 [Chips](https://mantine.dev/core/chips/) component is an inline alternative to [RadioGroup](https://mantine.dev/core/radio-group/) and [MultiSelect](https://mantine.dev/core/multi-select/) components:
 
