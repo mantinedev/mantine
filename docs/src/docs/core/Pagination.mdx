@@ -22,18 +22,6 @@ Final amount of elements is equal `activePage + 2x dots + 2x sibling amount + 2x
 
 <Demo data={PaginationDemos.configurator} />
 
-## Siblings
-
-Control amount of active item siblings with `siblings` prop:
-
-<Demo data={PaginationDemos.siblings} />
-
-## Boundaries
-
-Control amount of items displayed after previous and before next buttons with `boundaries` prop:
-
-<Demo data={PaginationDemos.boundaries} />
-
 ## Controlled
 
 To control component state provide `page` and `onChange` props:
@@ -49,9 +37,22 @@ function Demo() {
 }
 ```
 
+## Siblings
+
+Control amount of active item siblings with `siblings` prop:
+
+<Demo data={PaginationDemos.siblings} />
+
+## Boundaries
+
+Control amount of items displayed after previous and before next buttons with `boundaries` prop:
+
+<Demo data={PaginationDemos.boundaries} />
+
 ## Accessibility
 
-Pagination renders a regular button element. To include aria-label for screen reader support make use of `getItemAriaLabel` prop.
+Pagination renders a regular button element. To include aria-label for screen reader support
+provide `getItemAriaLabel` function to generate aria-labels:
 
 ```tsx
 <Pagination
