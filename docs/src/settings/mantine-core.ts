@@ -6,12 +6,14 @@ import {
   ExclamationTriangleIcon,
   LetterCaseCapitalizeIcon,
   ContainerIcon,
+  TextAlignJustifyIcon,
 } from '@modulz/radix-icons';
 import { Category } from './types';
 
 export const MANTINE_CORE_ORDER = [
   'layout',
   'inputs',
+  'navigation',
   'data-display',
   'overlay',
   'typography',
@@ -29,6 +31,12 @@ export const MANTINE_CORE_CATEGORIES: Record<typeof MANTINE_CORE_ORDER[number], 
   overlay: {
     title: 'Overlay',
     icon: StackIcon,
+    color: 'indigo',
+  },
+
+  navigation: {
+    title: 'Navigation',
+    icon: TextAlignJustifyIcon,
     color: 'indigo',
   },
 

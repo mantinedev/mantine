@@ -4,7 +4,7 @@ package: '@mantine/core'
 title: Pagination
 order: 1
 slug: /core/pagination/
-category: 'data-display'
+category: 'navigation'
 description: 'Make paginated content'
 props: ['Pagination']
 import: "import { Pagination } from '@mantine/core';"
@@ -22,7 +22,6 @@ Final amount of elements is equal `activePage + 2x dots + 2x sibling amount + 2x
 
 <Demo data={PaginationDemos.configurator} />
 
-
 ## Controlled
 
 To control component state provide `page` and `onChange` props:
@@ -37,7 +36,6 @@ function Demo() {
   return <Pagination page={activePage} onChange={setPage} />;
 }
 ```
-
 
 ## Accessibility
 
