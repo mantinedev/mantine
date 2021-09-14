@@ -68,6 +68,25 @@ export function Pagination({
     boundary,
   });
 
+  const items = paginationRange.map((pageNumber, index) => (
+    <Item
+      key={index}
+      page={pageNumber}
+      active={pageNumber === activePage}
+      aria-label={typeof getItemAriaLabel === 'function' ? getItemAriaLabel(pageNumber) : null}
+      style={{
+        ..._styles.item,
+        ...(pageNumber === activePage ? _styles.active : null),
+        ...(pageNumber === 'dots' ? _styles.dots : null),
+      }}
+      className={cx(classes.item, {
+        [classes.active]: pageNumber === activePage,
+        [classes.dots]: pageNumber === 'dots',
+      })}
+      onClick={pageNumber !== 'dots' ? () => goToPage(pageNumber) : undefined}
+    />
+  ));
+
   return (
     <nav className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       <Item
@@ -75,46 +94,21 @@ export function Pagination({
         onClick={goPrevPage}
         aria-label={getItemAriaLabel ? getItemAriaLabel('prev') : undefined}
         aria-disabled={activePage === 1}
-        style={{
-          ..._styles.item,
-          ...(activePage === 1 ? _styles.disabled : undefined),
-        }}
-        className={cx(classes.item, {
-          [classes.disabled]: activePage === 1,
-        })}
-        disabled={activePage === 1 || undefined}
+        style={_styles.item}
+        className={classes.item}
+        disabled={activePage === 1}
       />
-      {paginationRange.map((pageNumber, index) => (
-        <Item
-          key={`${pageNumber}${index}`}
-          page={pageNumber}
-          active={pageNumber === activePage || undefined}
-          aria-label={getItemAriaLabel ? getItemAriaLabel(pageNumber) : undefined}
-          style={{
-            ..._styles.item,
-            ...(pageNumber === activePage ? _styles.active : undefined),
-            ...(pageNumber === 'dots' ? _styles.dots : undefined),
-          }}
-          className={cx(classes.item, {
-            [classes.active]: pageNumber === activePage,
-            [classes.dots]: pageNumber === 'dots',
-          })}
-          onClick={pageNumber !== 'dots' ? () => goToPage(pageNumber) : undefined}
-        />
-      ))}
+
+      {items}
+
       <Item
         page="next"
         onClick={goNextPage}
         aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
         aria-disabled={activePage === total}
-        style={{
-          ..._styles.item,
-          ...(activePage === total ? _styles.disabled : undefined),
-        }}
-        className={cx(classes.item, {
-          [classes.disabled]: activePage === total,
-        })}
-        disabled={activePage === total || undefined}
+        style={_styles.item}
+        className={classes.item}
+        disabled={activePage === total}
       />
     </nav>
   );

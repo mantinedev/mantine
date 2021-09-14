@@ -33,8 +33,14 @@ export default createMemoStyles({
       marginLeft: theme.spacing.xs / 2,
     },
 
-    '&:active:not($disabled):not($dots)': {
+    '&:active:not(:disabled):not($dots)': {
       transform: 'translateY(1px)',
+    },
+
+    '&:disabled': {
+      opacity: 0.6,
+      cursor: 'not-allowed',
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
     },
   }),
 
@@ -56,10 +62,5 @@ export default createMemoStyles({
     cursor: 'default',
     borderColor: 'transparent',
     backgroundColor: 'transparent',
-  }),
-
-  disabled: () => ({
-    opacity: 0.6,
-    cursor: 'not-allowed',
   }),
 });
