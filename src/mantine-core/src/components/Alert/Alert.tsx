@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles, MantineColor } from '../../theme';
 import { Text } from '../Text/Text';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import useStyles from './Alert.styles';
@@ -17,7 +17,7 @@ export interface AlertProps
   children: React.ReactNode;
 
   /** Alert title and line colors from theme */
-  color?: string;
+  color?: MantineColor;
 
   /** Icon displayed before title */
   icon?: React.ReactNode;

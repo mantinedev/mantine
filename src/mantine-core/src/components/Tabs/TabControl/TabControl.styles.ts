@@ -4,12 +4,13 @@ import {
   getFontStyles,
   getFocusStyles,
   getThemeColor,
+  MantineColor,
 } from '../../../theme';
 
 interface TabControlStyles {
   theme: MantineTheme;
   reduceMotion: boolean;
-  color: string;
+  color: MantineColor;
   orientation: 'horizontal' | 'vertical';
 }
 

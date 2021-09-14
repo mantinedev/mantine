@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { Curve } from './Curve/Curve';
-import { DefaultProps, mergeStyles } from '../../theme';
+import { DefaultProps, mergeStyles, MantineColor } from '../../theme';
 import { getCurves } from './get-curves/get-curves';
 import useStyles from './RingProgress.styles';
 
@@ -20,7 +20,7 @@ export interface RingProgressProps
   size?: number;
 
   /** Ring sections */
-  sections: { value: number; color: string }[];
+  sections: { value: number; color: MantineColor }[];
 }
 
 export function RingProgress({

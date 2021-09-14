@@ -8,6 +8,7 @@ import {
   useMantineTheme,
   MantineNumberSize,
   getSizeValue,
+  MantineColor,
 } from '../../theme';
 import useStyles from './Pagination.styles';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
@@ -23,7 +24,7 @@ export interface PaginationProps
   itemComponent?: React.FC<PaginationItemProps>;
 
   /** Active item color from theme, defaults to theme.primaryColor */
-  color?: string;
+  color?: MantineColor;
 
   /** Active initial page for uncontrolled component */
   initialPage?: number;

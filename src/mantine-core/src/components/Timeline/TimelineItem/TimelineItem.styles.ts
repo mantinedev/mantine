@@ -1,9 +1,9 @@
-import { createMemoStyles, getThemeColor, MantineTheme } from '../../../theme';
+import { createMemoStyles, getThemeColor, MantineTheme, MantineColor } from '../../../theme';
 
 interface TimelineItemStyles {
   theme: MantineTheme;
   bulletSize: number;
-  color: string;
+  color: MantineColor;
   align: 'right' | 'left';
   lineVariant: 'solid' | 'dashed' | 'dotted';
   lineWidth: number;

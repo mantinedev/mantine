@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../../theme';
+import {
+  DefaultProps,
+  useMantineTheme,
+  mergeStyles,
+  MantineNumberSize,
+  MantineColor,
+} from '../../../theme';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import useStyles from './Thumb.styles';
 
@@ -12,7 +18,7 @@ interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   value: number;
   position: number;
   dragging: boolean;
-  color: string;
+  color: MantineColor;
   size: MantineNumberSize;
   label: React.ReactNode;
   elementRef: React.ForwardedRef<HTMLDivElement>;

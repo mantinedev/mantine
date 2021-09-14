@@ -1,8 +1,8 @@
-import { createMemoStyles, MantineTheme, getFontStyles, getSharedColorScheme } from '../../theme';
+import { createMemoStyles, MantineTheme, getFontStyles, getSharedColorScheme, MantineColor } from '../../theme';
 
 interface CodeStyles {
   theme: MantineTheme;
-  color: string;
+  color: MantineColor;
 }
 
 export default createMemoStyles({

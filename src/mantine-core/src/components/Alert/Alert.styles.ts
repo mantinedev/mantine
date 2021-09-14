@@ -1,7 +1,13 @@
-import { createMemoStyles, MantineTheme, getThemeColor, getFontStyles } from '../../theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  getThemeColor,
+  getFontStyles,
+  MantineColor,
+} from '../../theme';
 
 interface AlertStyles {
-  color: string;
+  color: MantineColor;
   theme: MantineTheme;
   withIcon: boolean;
 }

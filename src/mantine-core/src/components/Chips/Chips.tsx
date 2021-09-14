@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useUncontrolled, useId } from '@mantine/hooks';
 import { Group, GroupProps } from '../Group/Group';
-import { DefaultProps, MantineNumberSize, MantineSize } from '../../theme';
+import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '../../theme';
 import { Chip, ChipProps, ChipStylesNames } from './Chip/Chip';
 
 export { Chip };
@@ -42,7 +42,7 @@ export interface ChipsProps<T extends boolean = false>
   variant?: 'filled' | 'outline';
 
   /** Active chip color, defaults to theme.primaryColor */
-  color?: string;
+  color?: MantineColor;
 }
 
 export function Chips<T extends boolean>({

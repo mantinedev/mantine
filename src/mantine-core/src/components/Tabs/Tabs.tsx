@@ -1,7 +1,13 @@
 import React, { useRef } from 'react';
 import cx from 'clsx';
 import { useUncontrolled, clamp } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
+import {
+  DefaultProps,
+  useMantineTheme,
+  mergeStyles,
+  MantineNumberSize,
+  MantineColor,
+} from '../../theme';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
@@ -28,8 +34,8 @@ export interface TabsProps
   /** Index of active tab, overrides internal state */
   active?: number;
 
-  /** Active tab color from theme */
-  color?: string;
+  /** Active tab color from theme.colors */
+  color?: MantineColor;
 
   /** True if tabs should take all available space */
   grow?: boolean;

@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
+import { DefaultProps, mergeStyles, useMantineTheme, MantineColor } from '../../theme';
 import { Paper } from '../Paper/Paper';
 import { Text } from '../Text/Text';
 import { Loader } from '../Loader/Loader';
@@ -16,7 +16,7 @@ export interface NotificationProps
   onClose(): void;
 
   /** Notification line or icon color */
-  color?: string;
+  color?: MantineColor;
 
   /** Notification icon, replaces color line */
   icon?: React.ReactNode;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Avatar, Text } from '../../../index';
+import { Group, Avatar, Text, MantineColor } from '../../../index';
 import { SelectItemProps } from '../../Select/Select';
 import { Autocomplete } from '../Autocomplete';
 
@@ -57,7 +57,7 @@ const data = [
 ];
 
 interface ItemProps extends SelectItemProps {
-  color: string;
+  color: MantineColor;
   email: string;
   name: string;
 }

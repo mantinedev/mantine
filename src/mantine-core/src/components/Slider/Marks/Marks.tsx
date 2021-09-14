@@ -1,6 +1,12 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../../theme';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  mergeStyles,
+  useMantineTheme,
+  MantineColor,
+} from '../../../theme';
 import { getPosition } from '../utils/get-position/get-position';
 import { isMarkFilled } from './is-mark-filled';
 import useStyles from './Marks.styles';
@@ -10,7 +16,7 @@ export type MarksStylesNames = keyof ReturnType<typeof useStyles>;
 interface MarksProps extends DefaultProps<MarksStylesNames> {
   marks: { value: number; label?: React.ReactNode }[];
   size: MantineNumberSize;
-  color: string;
+  color: MantineColor;
   min: number;
   max: number;
   value: number;

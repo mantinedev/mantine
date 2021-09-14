@@ -7,6 +7,7 @@ import {
   MantineNumberSize,
   mergeStyles,
   MantineGradient,
+  MantineColor,
 } from '../../theme';
 import useStyles, { heights } from './Badge.styles';
 
@@ -24,7 +25,7 @@ interface _BadgeProps<C extends React.ElementType, R extends HTMLElement>
   elementRef?: React.ForwardedRef<R>;
 
   /** Badge color from theme */
-  color?: string;
+  color?: MantineColor;
 
   /** Controls badge background, color and border styles */
   variant?: 'light' | 'filled' | 'outline' | 'dot' | 'gradient';

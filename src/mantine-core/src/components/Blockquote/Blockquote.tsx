@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles, MantineColor } from '../../theme';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
@@ -10,7 +10,7 @@ export interface BlockquoteProps
   extends DefaultProps<BlockquoteStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'blockquote'>, 'cite'> {
   /** Icon color from theme */
-  color?: string;
+  color?: MantineColor;
 
   /** Icon, defaults to quote icon */
   icon?: React.ReactNode;

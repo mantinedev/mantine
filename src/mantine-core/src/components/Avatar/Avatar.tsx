@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineNumberSize, mergeStyles } from '../../theme';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
+  mergeStyles,
+  MantineColor,
+} from '../../theme';
 import { PlaceholderIcon } from './PlaceholderIcon';
 import useStyles, { sizes } from './Avatar.styles';
 
@@ -29,7 +35,7 @@ interface _AvatarProps<C extends React.ElementType, R extends HTMLElement>
   radius?: MantineNumberSize;
 
   /** Color from theme used for letter and icon placeholders */
-  color?: string;
+  color?: MantineColor;
 }
 
 export type AvatarProps<

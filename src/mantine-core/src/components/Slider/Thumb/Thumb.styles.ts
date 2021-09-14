@@ -5,12 +5,13 @@ import {
   getFocusStyles,
   getSizeValue,
   MantineNumberSize,
+  MantineColor,
 } from '../../../theme';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface ThumbStyles {
   theme: MantineTheme;
-  color: string;
+  color: MantineColor;
   size: MantineNumberSize;
 }
 

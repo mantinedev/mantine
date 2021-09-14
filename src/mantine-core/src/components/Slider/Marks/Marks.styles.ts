@@ -4,12 +4,13 @@ import {
   MantineTheme,
   getSizeValue,
   getThemeColor,
+  MantineColor,
 } from '../../../theme';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface MarksStyles {
   theme: MantineTheme;
-  color: string;
+  color: MantineColor;
   size: MantineNumberSize;
 }
 

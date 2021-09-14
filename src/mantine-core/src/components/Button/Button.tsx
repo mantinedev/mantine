@@ -12,6 +12,7 @@ import {
   getSizeValue,
   getSharedColorScheme,
   MantineGradient,
+  MantineColor,
 } from '../../theme';
 import useStyles, { heights } from './Button.styles';
 import { Loader } from '../Loader/Loader';
@@ -49,7 +50,7 @@ interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
   type?: 'submit' | 'button' | 'reset';
 
   /** Button color from theme */
-  color?: string;
+  color?: MantineColor;
 
   /** Adds icon before button label  */
   leftIcon?: React.ReactNode;

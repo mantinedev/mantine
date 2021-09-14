@@ -6,6 +6,7 @@ import {
   MantineNumberSize,
   getSizeValue,
   getSharedColorScheme,
+  MantineColor,
 } from '../../theme';
 import useStyles, { sizes } from './ActionIcon.styles';
 import { Loader } from '../Loader/Loader';
@@ -35,7 +36,7 @@ interface _ActionIconProps<C extends React.ElementType, R extends HTMLElement>
   variant?: 'transparent' | 'hover' | 'filled' | 'outline' | 'light';
 
   /** Button hover, active and icon colors from theme */
-  color?: string;
+  color?: MantineColor;
 
   /** Button border-radius from theme or number to set border-radius in px */
   radius?: MantineNumberSize;

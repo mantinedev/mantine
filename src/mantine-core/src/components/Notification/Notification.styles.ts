@@ -1,7 +1,7 @@
-import { createMemoStyles, MantineTheme, getThemeColor } from '../../theme';
+import { createMemoStyles, MantineTheme, getThemeColor, MantineColor } from '../../theme';
 
 interface NotificationStyles {
-  color: string;
+  color: MantineColor;
   theme: MantineTheme;
   disallowClose: boolean;
 }

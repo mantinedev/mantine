@@ -1,8 +1,14 @@
-import { createMemoStyles, MantineTheme, getThemeColor, getFontStyles } from '../../theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  getThemeColor,
+  getFontStyles,
+  MantineColor,
+} from '../../theme';
 
 interface TooltipStyles {
   theme: MantineTheme;
-  color: string;
+  color: MantineColor;
 }
 
 export default createMemoStyles({

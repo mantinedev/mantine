@@ -6,6 +6,7 @@ import {
   useMantineTheme,
   getThemeColor,
   getSizeValue,
+  MantineColor,
 } from '../../theme';
 import { Bars } from './loaders/Bars';
 import { Oval } from './loaders/Oval';
@@ -32,7 +33,7 @@ export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRe
   size?: MantineNumberSize;
 
   /** Loader color from theme */
-  color?: string;
+  color?: MantineColor;
 
   /** Loader appearance */
   variant?: 'bars' | 'oval' | 'dots';

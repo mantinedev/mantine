@@ -4,13 +4,14 @@ import {
   getSharedColorScheme,
   MantineNumberSize,
   getSizeValue,
+  MantineColor,
 } from '../../theme';
 
 interface PaginationStyles {
   theme: MantineTheme;
   size: MantineNumberSize;
   radius: MantineNumberSize;
-  color: string;
+  color: MantineColor;
 }
 
 const sizes = {

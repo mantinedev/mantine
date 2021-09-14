@@ -7,6 +7,7 @@ import {
   getFontStyles,
   getThemeColor,
   getSharedColorScheme,
+  MantineColor,
 } from '../../../theme';
 
 export const sizes = {
@@ -45,7 +46,7 @@ interface ChipStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
   size: MantineSize;
-  color: string;
+  color: MantineColor;
 }
 
 export default createMemoStyles({

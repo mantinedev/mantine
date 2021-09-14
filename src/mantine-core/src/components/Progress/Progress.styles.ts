@@ -4,6 +4,7 @@ import {
   MantineNumberSize,
   getThemeColor,
   getSizeValue,
+  MantineColor,
 } from '../../theme';
 
 export const sizes = {
@@ -16,7 +17,7 @@ export const sizes = {
 
 interface ProgressStyles {
   theme: MantineTheme;
-  color: string;
+  color: MantineColor;
   radius: MantineNumberSize;
   reduceMotion: boolean;
   size: MantineNumberSize;

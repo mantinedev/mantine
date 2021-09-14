@@ -8,10 +8,11 @@ import {
   getFocusStyles,
   getSizeValue,
   getSharedColorScheme,
+  MantineColor,
 } from '../../theme';
 
 interface BadgeStyles {
-  color: string;
+  color: MantineColor;
   theme: MantineTheme;
   size: MantineSize;
   radius: MantineNumberSize;

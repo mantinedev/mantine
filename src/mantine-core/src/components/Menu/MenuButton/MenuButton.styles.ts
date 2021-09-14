@@ -6,12 +6,13 @@ import {
   MantineNumberSize,
   getSizeValue,
   hexToRgba,
+  MantineColor,
 } from '../../../theme';
 
 interface MenuButtonStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
-  color: string;
+  color: MantineColor;
 }
 
 export default createMemoStyles({
