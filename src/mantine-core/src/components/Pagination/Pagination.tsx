@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { usePagination } from '@mantine/hooks';
-import { Group } from '../Group/Group';
+import { Group, GroupProps } from '../Group/Group';
 import {
   DefaultProps,
   mergeStyles,
@@ -18,7 +18,7 @@ export type PaginationStylesNames = keyof ReturnType<typeof useStyles>;
 
 export interface PaginationProps
   extends DefaultProps<PaginationStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
+    Omit<GroupProps, 'classNames' | 'styles' | 'onChange'> {
   /** Change item component */
   itemComponent?: React.FC<PaginationItemProps>;
 
@@ -68,7 +68,7 @@ export function Pagination({
   total,
   siblings = 1,
   boundary = 1,
-  size = 'xs',
+  size = 'md',
   radius = 'sm',
   onChange,
   getItemAriaLabel,
