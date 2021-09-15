@@ -48,6 +48,8 @@ npm install @mantine/hooks
 - [use-intersection](https://mantine.dev/hooks/use-intersection/) – wrapper for IntersectionObserver API
 - [use-hotkeys](https://mantine.dev/hooks/use-hotkeys/) – subscribe to multiple hotkeys with single hook
 - [use-move](https://mantine.dev/hooks/use-move/) – handles move behavior over any element, build custom sliders, color pickers, etc.
+- [use-pagination](https://mantine.dev/hooks/use-pagination/) – manage pagination state
+- [use-focus-return](https://mantine.dev/hooks/use-focus-return/) – capture last focused element on the page and return focus to it once condition is met
 
 ## Licence
 
