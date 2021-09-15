@@ -55,6 +55,8 @@ export function usePagination({
 
   const next = () => setPage(activePage + 1);
   const previous = () => setPage(activePage - 1);
+  const first = () => setPage(1);
+  const last = () => setPage(total);
 
   const paginationRange = useMemo((): (number | 'dots')[] => {
     // Pages count is determined as siblings (left/right) + boundaries(left/right) + currentPage + 2*DOTS
@@ -104,5 +106,7 @@ export function usePagination({
     setPage,
     next,
     previous,
+    first,
+    last,
   };
 }
