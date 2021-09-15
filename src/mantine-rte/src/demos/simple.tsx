@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RichTextEditor } from '../components/RichTextEditor/RichTextEditor';
+import { SSRWrapper } from './_SSRWrapper';
 
 const code = `
 import { useState } from 'react;
@@ -19,7 +19,7 @@ const initialValue =
 
 function Demo() {
   const [value, onChange] = useState(initialValue);
-  return <RichTextEditor value={value} onChange={onChange} />;
+  return <SSRWrapper value={value} onChange={onChange} />;
 }
 
 export const simple: MantineDemo = {
