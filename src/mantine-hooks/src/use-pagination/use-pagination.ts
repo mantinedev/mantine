@@ -24,14 +24,14 @@ export interface PaginationParams {
   onChange?: (page: number) => void;
 }
 
-export const usePagination = ({
+export function usePagination({
   total,
   siblings = 1,
   boundaries = 1,
   page,
   initialPage = 1,
   onChange,
-}: PaginationParams) => {
+}: PaginationParams) {
   const [activePage, setActivePage] = useUncontrolled({
     value: page,
     onChange,
@@ -105,4 +105,4 @@ export const usePagination = ({
     next,
     previous,
   };
-};
+}
