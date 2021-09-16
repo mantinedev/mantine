@@ -9,6 +9,10 @@ import {
 } from '../../theme';
 import { PlaceholderIcon } from './PlaceholderIcon';
 import useStyles, { sizes } from './Avatar.styles';
+import { AvatarsGroup, AvatarsGroupProps, AvatarsGroupStylesNames } from './AvatarsGroup/AvatarsGroup';
+
+export { AvatarsGroup };
+export type { AvatarsGroupProps, AvatarsGroupStylesNames };
 
 export const AVATAR_SIZES = sizes;
 
