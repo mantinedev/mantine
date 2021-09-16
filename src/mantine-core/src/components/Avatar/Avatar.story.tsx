@@ -4,6 +4,7 @@ import { CrumpledPaperIcon } from '@modulz/radix-icons';
 import { DEFAULT_THEME } from '../../theme';
 import { Group } from '../Group/Group';
 import { Avatar } from './Avatar';
+import { AvatarsGroup } from './AvatarsGroup/AvatarsGroup';
 
 const getSizes = (props?: any) =>
   ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => <Avatar key={size} size={size} {...props} />);
@@ -43,5 +44,14 @@ storiesOf('@mantine/core/Avatar', module)
       <Group style={{ padding: 15 }}>
         {getSizes({ src: image, themeOverride: { colorScheme: 'dark' } })}
       </Group>
+    </div>
+  ))
+  .add('AvatarsGroup', () => (
+    <div style={{ padding: 40 }}>
+      <AvatarsGroup size="md" spacing="md" radius="lg">
+        <Avatar color="red" />
+        <Avatar radius="xl" color="indigo" />
+        <Avatar radius="md" color="blue" />
+      </AvatarsGroup>
     </div>
   ));

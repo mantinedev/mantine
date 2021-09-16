@@ -1,24 +1,22 @@
-import { createMemoStyles, MantineTheme, MantineNumberSize, MantineSize } from '../../theme';
+import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../../theme';
 
 interface AvatarsGroupStyles {
   theme: MantineTheme;
-  radius?: MantineNumberSize;
-  size?: MantineSize;
-  color?: string;
+  spacing: MantineNumberSize;
 }
 
 export default createMemoStyles({
   root: () => ({
     display: 'flex',
   }),
-  child: ({ theme }: AvatarsGroupStyles) => ({
-    marginLeft: -8,
+  child: ({ theme, spacing }: AvatarsGroupStyles) => ({
+    marginLeft: -getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
     border: `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[3]}`,
     '&:first-child': {
       marginLeft: 0,
     },
   }),
-  number: ({ theme }: AvatarsGroupStyles) => ({
+  truncated: ({ theme }: AvatarsGroupStyles) => ({
     color: `${theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7]}`,
   }),
 });

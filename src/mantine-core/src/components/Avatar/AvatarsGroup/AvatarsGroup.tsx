@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { Avatar, Text } from '@mantine/core';
-import { DefaultProps, MantineNumberSize, useMantineTheme, mergeStyles } from '../../theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme, mergeStyles } from '../../../theme';
 import useStyles from './AvatarsGroup.styles';
 
 export type AvatarsGroupStylesNames = keyof ReturnType<typeof useStyles>;
@@ -12,14 +12,17 @@ export interface AvatarsGroupProps extends
   /** <Avatar /> components only */
   children?: React.ReactNode;
 
-  /** Avatar width */
+  /** Avatar width and height*/
   size?: MantineNumberSize;
 
   /** Avatar radius */
   radius?: MantineNumberSize;
 
   /** Maximum number of Avatar components rendered */
-  max?: number;
+  limit?: number;
+
+  /** Spacing between avatars */
+  spacing?: MantineNumberSize;
 }
 
 export function AvatarsGroup({
@@ -28,14 +31,15 @@ export function AvatarsGroup({
   children,
   size = 'md',
   radius = 'xl',
-  max = 2,
+  limit = 2,
   themeOverride,
   classNames,
   styles,
+  spacing = 'sm',
   ...others
 }: AvatarsGroupProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'avatar-group');
+  const classes = useStyles({ theme, spacing }, classNames, 'avatar-group');
   const _styles = mergeStyles(classes, styles);
   const avatars = React.Children
     .toArray(children).filter((child: React.ReactElement) => child.type === Avatar)
@@ -50,7 +54,7 @@ export function AvatarsGroup({
       })
     );
 
-  const clampedMax = max < 2 ? 2 : max;
+  const clampedMax = limit < 2 ? 2 : limit;
   const extraAvatars = avatars.length > clampedMax ? avatars.length - clampedMax : 0;
 
   return (
@@ -58,7 +62,7 @@ export function AvatarsGroup({
       {avatars.slice(0, avatars.length - extraAvatars)}
       {extraAvatars ? (
         <Avatar size={size} radius={radius} className={classes.child} style={_styles.child}>
-          <Text size={size} className={classes.number} style={_styles.number}>
+          <Text size={size} className={classes.truncated} style={_styles.truncated}>
             +{extraAvatars}
           </Text>
         </Avatar>) : null
