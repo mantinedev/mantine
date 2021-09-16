@@ -48,7 +48,7 @@ storiesOf('@mantine/core/Avatar', module)
   ))
   .add('AvatarsGroup', () => (
     <div style={{ padding: 40 }}>
-      <AvatarsGroup size="md" spacing="md" radius="lg">
+      <AvatarsGroup size="lg" spacing="md" radius="xl" limit={2}>
         <Avatar color="red" />
         <Avatar radius="xl" color="indigo" />
         <Avatar radius="md" color="blue" />
