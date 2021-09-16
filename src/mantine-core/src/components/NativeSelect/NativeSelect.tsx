@@ -30,7 +30,7 @@ export interface NativeSelectProps
   inputStyle?: React.CSSProperties;
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
   /** Get element ref */
   elementRef?: React.ForwardedRef<HTMLSelectElement>;

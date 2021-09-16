@@ -54,7 +54,7 @@ export interface MenuProps
   menuButtonLabel?: string;
 
   /** MenuBody component props */
-  menuBodyProps?: React.ComponentPropsWithoutRef<'div'>;
+  menuBodyProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
   /** Predefined menu width or number for width in px */
   size?: MantineNumberSize;

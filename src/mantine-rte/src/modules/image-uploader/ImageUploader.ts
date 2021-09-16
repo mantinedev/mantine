@@ -1,16 +1,14 @@
-import { Quill } from 'react-quill';
-
 interface Options {
   upload(file: File): Promise<string>;
 }
 
 export class ImageUploader {
-  quill: Quill;
+  quill: any;
   options: Options;
   range: any;
   fileHolder: HTMLInputElement;
 
-  constructor(quill: Quill, options: Options) {
+  constructor(quill: any, options: Options) {
     this.quill = quill;
     this.options = options;
     this.range = null;

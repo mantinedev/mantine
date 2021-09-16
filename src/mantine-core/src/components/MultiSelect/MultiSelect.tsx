@@ -45,7 +45,7 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   size?: MantineSize;
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
   /** Data for select options */
   data: SelectDataItem[];

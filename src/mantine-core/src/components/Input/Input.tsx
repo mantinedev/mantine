@@ -31,7 +31,7 @@ export interface InputBaseProps {
   rightSectionProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Properties spread to root element */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
   /** Sets aria-required=true on input element */
   required?: boolean;

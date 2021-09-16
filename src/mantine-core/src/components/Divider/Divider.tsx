@@ -16,7 +16,7 @@ export type DividerStylesNames = 'label' | 'root';
 
 export interface DividerProps
   extends DefaultProps<DividerStylesNames>,
-    React.ComponentPropsWithoutRef<'hr'> {
+    React.ComponentPropsWithoutRef<'div'> {
   /** Line color from theme, defaults to gray in light color scheme and to dark in dark color scheme */
   color?: MantineColor;
 
@@ -33,7 +33,7 @@ export interface DividerProps
   labelPosition?: 'left' | 'center' | 'right';
 
   /** Props spread to Text component in label */
-  labelProps?: React.ComponentPropsWithoutRef<'div'>;
+  labelProps?: Record<string, any>;
 
   /** Divider borderStyle */
   variant?: 'solid' | 'dashed' | 'dotted';

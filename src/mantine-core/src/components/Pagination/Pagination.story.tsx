@@ -13,7 +13,7 @@ storiesOf('@mantine/core/Pagination', module)
     </div>
   ))
   .add('No siblings', () => <Pagination siblings={0} total={20} color="orange" initialPage={7} />)
-  .add('With 2 boundaries', () => <Pagination total={20} boundary={2} initialPage={12} />)
+  .add('With 2 boundaries', () => <Pagination total={20} boundaries={2} initialPage={12} />)
   .add('With 2 boundaries and 2 siblings', () => (
-    <Pagination siblings={2} boundary={2} total={20} initialPage={12} />
+    <Pagination siblings={2} boundaries={2} total={20} initialPage={12} />
   ));
