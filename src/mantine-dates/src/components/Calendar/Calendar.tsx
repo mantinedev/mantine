@@ -25,7 +25,7 @@ export interface CalendarSettings extends MonthSettings {
   locale?: string;
 
   /** Initial selected month */
-  initialMonth?: Date;
+  initialMonth?: Date | null;
 
   /** dayjs label format */
   labelFormat?: string;

@@ -1,7 +1,13 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '../../theme';
+import {
+  DefaultProps,
+  MantineSize,
+  mergeStyles,
+  useMantineTheme,
+  MantineShadow,
+} from '../../theme';
 import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
@@ -39,7 +45,7 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   size?: MantineSize;
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
   /** Data for select options */
   data: SelectDataItem[];
@@ -69,7 +75,7 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   transitionTimingFunction?: string;
 
   /** Dropdown shadow from theme or any value to set box-shadow */
-  shadow?: string;
+  shadow?: MantineShadow;
 
   /** Maximum dropdown height in px */
   maxDropdownHeight?: number;

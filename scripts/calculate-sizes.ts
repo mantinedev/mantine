@@ -11,6 +11,7 @@ const PACKAGES = [
   'mantine-prism',
   'mantine-dates',
   'mantine-decorations',
+  'mantine-rte',
 ];
 
 function truncateNumber(number: number) {

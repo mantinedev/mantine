@@ -14,6 +14,7 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/Slider/Slider/Slider.tsx',
   '../src/mantine-core/src/components/Slider/RangeSlider/RangeSlider.tsx',
   '../src/mantine-prism/src/Prism.tsx',
+  '../src/mantine-rte/src/components/RichTextEditor/RichTextEditor.tsx',
 ];
 
 const PATHS: DeclarationPath[] = [

@@ -24,4 +24,9 @@ export const PACKAGES_DATA = [
     description: 'Code highlight with your theme colors and styles',
     dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/prism'],
   },
+  {
+    package: '@mantine/rte',
+    description: 'Rich text editor based on Quill.js',
+    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/rte'],
+  },
 ];

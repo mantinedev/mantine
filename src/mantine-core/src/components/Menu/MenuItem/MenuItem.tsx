@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '../../../theme';
+import { DefaultProps, MantineColor } from '../../../theme';
 import type { MenuButtonStylesNames } from '../MenuButton/MenuButton';
 
 export interface SharedMenuItemProps extends DefaultProps<MenuButtonStylesNames> {
@@ -10,7 +10,7 @@ export interface SharedMenuItemProps extends DefaultProps<MenuButtonStylesNames>
   icon?: React.ReactNode;
 
   /** Any color from theme.colors */
-  color?: string;
+  color?: MantineColor;
 
   /** Any react node to render on the right side of item, for example, keyboard shortcut or badge */
   rightSection?: React.ReactNode;

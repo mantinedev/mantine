@@ -26,6 +26,7 @@ export * from './components/MultiSelect/styles.api';
 export * from './components/NativeSelect/styles.api';
 export * from './components/Notification/styles.api';
 export * from './components/NumberInput/styles.api';
+export * from './components/Pagination/styles.api';
 export * from './components/PasswordInput/styles.api';
 export * from './components/Popover/styles.api';
 export * from './components/Progress/styles.api';

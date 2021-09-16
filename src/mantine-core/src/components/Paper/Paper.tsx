@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../theme';
+import { DefaultProps, MantineNumberSize, useMantineTheme, MantineShadow } from '../../theme';
 import useStyles from './Paper.styles';
 
 export interface SharedPaperProps extends DefaultProps {
@@ -8,7 +8,7 @@ export interface SharedPaperProps extends DefaultProps {
   padding?: MantineNumberSize;
 
   /** Predefined box-shadow from theme.shadows (xs, sm, md, lg, xl) or any valid css box-shadow property */
-  shadow?: string;
+  shadow?: MantineShadow;
 
   /** Predefined border-radius value from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;

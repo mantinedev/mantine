@@ -1,8 +1,14 @@
-import { createMemoStyles, MantineTheme, getFontStyles, getThemeColor } from '../../theme';
+import {
+  createMemoStyles,
+  MantineTheme,
+  getFontStyles,
+  getThemeColor,
+  MantineColor,
+} from '../../theme';
 
 interface BlockquoteStyles {
   theme: MantineTheme;
-  color: string;
+  color: MantineColor;
 }
 
 export default createMemoStyles({

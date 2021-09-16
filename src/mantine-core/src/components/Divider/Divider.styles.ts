@@ -5,6 +5,7 @@ import {
   MantineTheme,
   getSizeValue,
   getThemeColor,
+  MantineColor,
 } from '../../theme';
 
 interface DividerStyles {
@@ -12,7 +13,7 @@ interface DividerStyles {
   size: MantineNumberSize;
   margins: MantineNumberSize;
   variant: React.CSSProperties['borderTopStyle'];
-  color: string;
+  color: MantineColor;
 }
 
 export const sizes = {

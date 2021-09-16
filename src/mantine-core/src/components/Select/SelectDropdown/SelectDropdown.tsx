@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme, DefaultProps, mergeStyles } from '../../../theme';
+import { useMantineTheme, DefaultProps, mergeStyles, MantineShadow } from '../../../theme';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import useStyles from './SelectDropdown.styles';
@@ -12,7 +12,7 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   transitionDuration: number;
   transitionTimingFunction: string;
   uuid: string;
-  shadow: string;
+  shadow: MantineShadow;
   maxDropdownHeight?: number | string;
   children: React.ReactNode;
   __staticSelector: string;

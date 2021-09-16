@@ -1,5 +1,5 @@
 import React from 'react';
-import { getThemeColor, useMantineTheme, MantineThemeOverride } from '../../../theme';
+import { getThemeColor, useMantineTheme, MantineThemeOverride, MantineColor } from '../../../theme';
 import { getCurveProps } from './get-curve-props';
 
 interface CurveProps {
@@ -9,7 +9,7 @@ interface CurveProps {
   sum: number;
   thickness: number;
   root?: boolean;
-  color?: string;
+  color?: MantineColor;
   themeOverride?: MantineThemeOverride;
 }
 

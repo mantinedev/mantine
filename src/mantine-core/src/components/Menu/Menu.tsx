@@ -7,7 +7,13 @@ import {
   useUncontrolled,
   useReducedMotion,
 } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../theme';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  mergeStyles,
+  useMantineTheme,
+  MantineShadow,
+} from '../../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { useClickOutsideRegister } from '../../utils';
@@ -48,13 +54,13 @@ export interface MenuProps
   menuButtonLabel?: string;
 
   /** MenuBody component props */
-  menuBodyProps?: Record<string, any>;
+  menuBodyProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
   /** Predefined menu width or number for width in px */
   size?: MantineNumberSize;
 
   /** Predefined shadow from theme or box-shadow value */
-  shadow?: string;
+  shadow?: MantineShadow;
 
   /** Should menu close on item click */
   closeOnItemClick?: boolean;

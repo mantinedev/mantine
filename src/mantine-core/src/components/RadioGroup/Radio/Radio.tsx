@@ -1,7 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../../theme';
+import {
+  DefaultProps,
+  useMantineTheme,
+  MantineSize,
+  mergeStyles,
+  MantineColor,
+} from '../../../theme';
 import useStyles from './Radio.styles';
 
 export type RadioStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'labelDisabled'>;
@@ -15,8 +21,8 @@ export interface RadioProps
   /** Radio value */
   value: string;
 
-  /** Active radio color */
-  color?: string;
+  /** Active radio color from theme.colors */
+  color?: MantineColor;
 
   /** Predefined label fontSize, radio width, height and border-radius */
   size?: MantineSize;

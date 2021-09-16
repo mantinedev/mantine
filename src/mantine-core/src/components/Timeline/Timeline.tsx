@@ -1,5 +1,5 @@
 import React, { Children } from 'react';
-import { DefaultProps } from '../../theme';
+import { DefaultProps, MantineColor } from '../../theme';
 import {
   TimelineItem,
   TimelineItemProps,
@@ -20,7 +20,7 @@ export interface TimelineProps
   active?: number;
 
   /** Active color from theme */
-  color?: string;
+  color?: MantineColor;
 
   /** Bullet size in px */
   bulletSize?: number;

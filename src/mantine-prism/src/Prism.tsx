@@ -9,6 +9,7 @@ import {
   mergeStyles,
   getThemeColor,
   hexToRgba,
+  MantineColor,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
@@ -39,7 +40,7 @@ export interface PrismProps
   withLineNumbers?: boolean;
 
   /** Highlight line at given line number with color from theme.colors */
-  highlightLines?: Record<string, { color: string; label?: string }>;
+  highlightLines?: Record<string, { color: MantineColor; label?: string }>;
 }
 
 export function Prism({

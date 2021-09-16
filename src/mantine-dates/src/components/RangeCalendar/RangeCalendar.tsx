@@ -18,7 +18,7 @@ export interface RangeCalendarProps
   month?: Date;
 
   /** Selected dates */
-  value: [Date, Date];
+  value: [Date | null, Date | null];
 
   /** Called when selected date changes */
   onChange(value: [Date, Date]): void;

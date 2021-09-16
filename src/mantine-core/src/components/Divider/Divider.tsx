@@ -1,6 +1,12 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineNumberSize, mergeStyles } from '../../theme';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
+  mergeStyles,
+  MantineColor,
+} from '../../theme';
 import useStyles, { sizes } from './Divider.styles';
 import { Text } from '../Text/Text';
 
@@ -10,9 +16,9 @@ export type DividerStylesNames = 'label' | 'root';
 
 export interface DividerProps
   extends DefaultProps<DividerStylesNames>,
-    React.ComponentPropsWithoutRef<'hr'> {
+    React.ComponentPropsWithoutRef<'div'> {
   /** Line color from theme, defaults to gray in light color scheme and to dark in dark color scheme */
-  color?: string;
+  color?: MantineColor;
 
   /** Line orientation */
   orientation?: 'horizontal' | 'vertical';

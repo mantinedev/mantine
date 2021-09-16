@@ -20,13 +20,13 @@ export interface InputWrapperBaseProps {
   required?: boolean;
 
   /** Props spread to label element */
-  labelProps?: Record<string, any>;
+  labelProps?: React.ComponentPropsWithoutRef<'label'> & { [key: string]: any };
 
   /** Props spread to description element */
-  descriptionProps?: Record<string, any>;
+  descriptionProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
   /** Props spread to error element */
-  errorProps?: Record<string, any>;
+  errorProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 }
 
 export interface InputWrapperProps

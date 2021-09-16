@@ -6,9 +6,7 @@ interface UseFocusReturn {
   transitionDuration: number;
 }
 
-/** Returns focus to last active element, used in Modal and Drawer
- *  Is not documented as has very limited usage
- */
+/** Returns focus to last active element, used in Modal and Drawer */
 export function useFocusReturn({ opened, transitionDuration }: UseFocusReturn) {
   const returnFocus = useRef<HTMLElement>();
 

@@ -4,12 +4,13 @@ import {
   MantineNumberSize,
   getSizeValue,
   getFocusStyles,
+  MantineColor,
 } from '../../theme';
 
 interface BurgerStyles {
   size: MantineNumberSize;
   theme: MantineTheme;
-  color: string;
+  color: MantineColor;
   reduceMotion: boolean;
 }
 

@@ -11,7 +11,7 @@ interface TimeInputStyles {
   size: MantineSize;
 }
 
-const inputSizes = {
+export const inputSizes = {
   xs: 20,
   sm: 23,
   md: 25,

@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, mergeStyles, useMantineTheme } from '../../../theme';
+import { DefaultProps, mergeStyles, useMantineTheme, MantineColor } from '../../../theme';
 import { Text } from '../../Text/Text';
 import useStyles from './TimelineItem.styles';
 
@@ -28,7 +28,7 @@ export interface TimelineItemProps
   lineActive?: boolean;
 
   /** Highlight color for active item */
-  color?: string;
+  color?: MantineColor;
 
   /** Line and bullet position relative to item content */
   align?: 'right' | 'left';

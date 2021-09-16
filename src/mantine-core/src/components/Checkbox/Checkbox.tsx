@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { useId, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineSize, mergeStyles, MantineColor } from '../../theme';
 import { CheckboxIcon } from './CheckboxIcon';
 import useStyles, { sizes } from './Checkbox.styles';
 
@@ -13,7 +13,7 @@ export interface CheckboxProps
   extends DefaultProps<CheckboxStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
   /** Checkbox checked and indeterminate state color from theme, defaults to theme.primaryColor */
-  color?: string;
+  color?: MantineColor;
 
   /** Predefined label font-size and checkbox width and height in px */
   size?: MantineSize;
@@ -25,7 +25,7 @@ export interface CheckboxProps
   indeterminate?: boolean;
 
   /** Props spread to wrapper element */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;

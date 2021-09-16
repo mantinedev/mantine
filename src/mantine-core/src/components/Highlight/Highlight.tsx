@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
+import { MantineColor } from '../../theme';
 import { Text, SharedTextProps } from '../Text/Text';
 import { Mark } from '../Mark/Mark';
 
@@ -41,7 +42,7 @@ interface _HighlightProps<C extends React.ElementType, R extends HTMLElement>
   highlight: string | string[];
 
   /** Color from theme that is used for highlighting */
-  highlightColor?: string;
+  highlightColor?: MantineColor;
 
   /** Full string part of which will be highlighted */
   children: string;

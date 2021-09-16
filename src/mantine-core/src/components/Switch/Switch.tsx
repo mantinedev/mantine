@@ -7,6 +7,7 @@ import {
   MantineSize,
   mergeStyles,
   useMantineTheme,
+  MantineColor,
 } from '../../theme';
 import useStyles, { sizes } from './Switch.styles';
 
@@ -23,8 +24,8 @@ export interface SwitchProps
   /** Switch label */
   label?: React.ReactNode;
 
-  /** Switch checked state color from theme, defaults to theme.primaryColor */
-  color?: string;
+  /** Switch checked state color from theme.colors, defaults to theme.primaryColor */
+  color?: MantineColor;
 
   /** Predefined size value */
   size?: MantineSize;
@@ -33,7 +34,7 @@ export interface SwitchProps
   radius?: MantineNumberSize;
 
   /** Props spread to wrapper element */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
   /** Get element ref */
   elementRef?: React.ForwardedRef<HTMLInputElement>;

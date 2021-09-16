@@ -36,6 +36,12 @@ const data: readonly ExploreDataItem[] = [
       'Notifications system with queue, auto hide timeout and vast customization options',
   },
   {
+    id: 'richText',
+    title: 'Rich text editor',
+    description:
+      'Quill based rich text editor with seamless integration with your Mantine theme. Editor has a sticky toolbar and supports images uploads.',
+  },
+  {
     id: 'hooks',
     title: 'Hooks library',
     description:

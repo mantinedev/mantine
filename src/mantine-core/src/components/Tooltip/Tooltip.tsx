@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, mergeStyles, useMantineTheme } from '../../theme';
+import { DefaultProps, mergeStyles, useMantineTheme, MantineColor } from '../../theme';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 
@@ -24,7 +24,7 @@ export interface TooltipProps
   delay?: number;
 
   /** Any color from theme.colors, defaults to gray in light color scheme and dark in dark colors scheme */
-  color?: string;
+  color?: MantineColor;
 
   /** True to disable tooltip */
   disabled?: boolean;

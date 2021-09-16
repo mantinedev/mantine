@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import cx from 'clsx';
 import {
   DefaultProps,
   useMantineTheme,
@@ -18,6 +19,7 @@ import {
   CloseButton,
   getSizeValue,
   useClickOutsideRegister,
+  MantineShadow,
 } from '@mantine/core';
 import {
   useId,
@@ -45,7 +47,7 @@ export interface DatePickerBaseSharedProps
       'value' | 'defaultValue' | 'onChange' | 'placeholder'
     > {
   /** Props spread to root element (InputWrapper) */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Placeholder, displayed when date is not selected */
   placeholder?: React.ReactNode;
@@ -60,7 +62,7 @@ export interface DatePickerBaseSharedProps
   transitionTimingFunction?: string;
 
   /** Dropdown shadow from theme or css value for custom box-shadow */
-  shadow?: string;
+  shadow?: MantineShadow;
 
   /** Get input button ref */
   elementRef?: React.ForwardedRef<HTMLButtonElement>;
@@ -211,7 +213,7 @@ export function DatePickerBase({
             themeOverride={themeOverride}
             component="button"
             type="button"
-            classNames={classNames}
+            classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
             styles={{ ...styles, input: { ...styles?.input, cursor: 'pointer' } }}
             onClick={() => setDropdownOpened(!dropdownOpened)}
             id={uuid}

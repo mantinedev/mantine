@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { useMergedRef, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, mergeStyles } from '../../../theme';
+import { DefaultProps, useMantineTheme, mergeStyles, MantineColor } from '../../../theme';
 import { TabProps } from '../Tab/Tab';
 import type { TabsVariant } from '../Tabs';
 import useStyles from './TabControl.styles';
@@ -14,7 +14,7 @@ export interface TabControlProps
   active: boolean;
   elementRef(node: HTMLButtonElement): void;
   tabProps: TabProps;
-  color?: string;
+  color?: MantineColor;
   variant?: TabsVariant;
   orientation?: 'horizontal' | 'vertical';
   icon?: React.ReactNode;

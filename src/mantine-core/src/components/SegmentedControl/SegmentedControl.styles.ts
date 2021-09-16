@@ -7,6 +7,7 @@ import {
   getSizeValue,
   getThemeColor,
   getFocusStyles,
+  MantineColor,
 } from '../../theme';
 
 export const WRAPPER_PADDING = 4;
@@ -14,7 +15,7 @@ export const WRAPPER_PADDING = 4;
 interface SegmentedControlStyles {
   theme: MantineTheme;
   fullWidth: boolean;
-  color: string;
+  color: MantineColor;
   radius: MantineNumberSize;
   reduceMotion: boolean;
   transitionDuration: number;

@@ -7,11 +7,12 @@ import {
   getFocusStyles,
   getSizeValue,
   MantineSize,
+  MantineColor,
 } from '../../theme';
 
 interface SwitchStyles {
   reduceMotion: boolean;
-  color: string;
+  color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
   theme: MantineTheme;

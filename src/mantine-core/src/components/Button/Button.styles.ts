@@ -10,11 +10,12 @@ import {
   MantineSizes,
   getSharedColorScheme,
   hexToRgba,
+  MantineColor,
 } from '../../theme';
 import { INPUT_SIZES } from '../Input/Input';
 
 interface ButtonStylesProps {
-  color: string;
+  color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
   theme: MantineTheme;

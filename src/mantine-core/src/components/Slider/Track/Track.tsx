@@ -1,5 +1,11 @@
 import React from 'react';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../../theme';
+import {
+  DefaultProps,
+  useMantineTheme,
+  mergeStyles,
+  MantineNumberSize,
+  MantineColor,
+} from '../../../theme';
 import { Marks, MarksStylesNames } from '../Marks/Marks';
 import useStyles from './Track.styles';
 
@@ -11,7 +17,7 @@ interface TrackProps extends DefaultProps<TrackStylesNames> {
   marks: { value: number; label?: React.ReactNode }[];
   size: MantineNumberSize;
   radius: MantineNumberSize;
-  color: string;
+  color: MantineColor;
   min: number;
   max: number;
   value: number;

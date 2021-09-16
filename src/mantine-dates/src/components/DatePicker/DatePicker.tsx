@@ -9,10 +9,10 @@ export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<Calenda
   value?: Date;
 
   /** Called when date changes */
-  onChange?(value: Date): void;
+  onChange?(value: Date | null): void;
 
   /** Default value for uncontrolled input */
-  defaultValue?: Date;
+  defaultValue?: Date | null;
 
   /** Set to false to force dropdown to stay open after date was selected */
   closeCalendarOnChange?: boolean;

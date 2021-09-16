@@ -45,7 +45,6 @@ export function TimeField({
 
   const handleBlur = (event: any) => {
     typeof onBlur === 'function' && onBlur(event);
-    setValue(padTime(clamp({ value: parseInt(event.currentTarget.value, 10), min: 0, max })));
   };
 
   const handleClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {

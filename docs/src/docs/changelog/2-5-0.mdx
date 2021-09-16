@@ -7,7 +7,9 @@ release: https://github.com/mantinedev/mantine/releases/tag/2.5.0
 date: 'September 1st, 2021'
 ---
 
-import { TimelineDemos, DialogDemos, ListDemos, ChipsDemos } from '@demos/core';
+import { TimelineDemos, DialogDemos, ListDemos, ChipsDemos, PaginationDemos } from '@demos/core';
+import { TimeRangeInputDemos } from '@demos/dates';
+import * as RichTextDemos from '@demos/rte';
 
 ## UMD builds deprecation
 
@@ -48,11 +50,22 @@ Note that it will only work if your application is wrapped with MantineProvider.
 @mantine/core package now comes with components to simplify server side rendering setup with Next.js and any other environment.
 Checkout [Next.js guide](https://mantine.dev/theming/next/) to learn more.
 
+## New package @mantine/rte
+
+[@mantine/rte](https://mantine.dev/others/rte/) is a new package with RichTextEditor component.
+Component integrates seamlessly with your MantineTheme and provides all basic rich text editing features:
+
+<Demo data={RichTextDemos.usage} />
+
 ## New components
 
 [Timeline](https://mantine.dev/core/timeline/) component lets you show list of events in chronological order:
 
 <Demo data={TimelineDemos.usage} demoProps={{ toggle: true }} />
+
+Navigate between multiple pages with new [Pagination](https://mantine.dev/core/pagination/) component:
+
+<Demo data={PaginationDemos.configurator} />
 
 [Chips](https://mantine.dev/core/chips/) component is an inline alternative to [RadioGroup](https://mantine.dev/core/radio-group/) and [MultiSelect](https://mantine.dev/core/multi-select/) components:
 
@@ -65,6 +78,15 @@ With [Dialog](https://mantine.dev/core/dialog/) component you can display fixed 
 [List](https://mantine.dev/core/list/) component is a wrapper for ul and ol lists with option to replace bullets with icons:
 
 <Demo data={ListDemos.icon} demoProps={{ toggle: true }} />
+
+[TimeRangeInput](https://mantine.dev/dates/time-range-input/) component allows to capture time range from user:
+
+<Demo data={TimeRangeInputDemos.usage} demoProps={{ toggle: true }} />
+
+## New hooks
+
+- [use-pagination](https://mantine.dev/hooks/use-pagination/) – manage pagination state
+- [use-focus-return](https://mantine.dev/hooks/use-focus-return/) – capture last focused element on the page and return focus to it once condition is met
 
 ## New features
 

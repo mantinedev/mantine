@@ -12,7 +12,7 @@ export interface DateRangePickerProps
   value?: [Date, Date];
 
   /** Called when date range changes */
-  onChange?(value: [Date, Date]): void;
+  onChange?(value: [Date | null, Date | null]): void;
 
   /** Default value for uncontrolled input */
   defaultValue?: [Date, Date];

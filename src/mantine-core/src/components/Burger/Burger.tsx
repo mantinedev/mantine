@@ -1,7 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, useMantineTheme, mergeStyles } from '../../theme';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  useMantineTheme,
+  mergeStyles,
+  MantineColor,
+} from '../../theme';
 import useStyles, { sizes } from './Burger.styles';
 
 export const BURGER_SIZES = sizes;
@@ -15,7 +21,7 @@ export interface BurgerProps
   opened: boolean;
 
   /** Burger color value, not connected to theme.colors, defaults to theme.black with light color scheme and theme.white with dark */
-  color?: string;
+  color?: MantineColor;
 
   /** Predefined burger size or number to set width and height in px */
   size?: MantineNumberSize;

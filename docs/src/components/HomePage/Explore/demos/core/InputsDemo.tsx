@@ -34,6 +34,7 @@ const useStyles = createUseStyles({
 
   column: {
     flex: 1,
+    maxWidth: '50%',
 
     '&:first-of-type': {
       paddingRight: 10,
@@ -44,6 +45,8 @@ const useStyles = createUseStyles({
     },
 
     [BREAKPOINT]: {
+      maxWidth: '100%',
+
       '&:first-of-type': {
         paddingRight: 0,
       },

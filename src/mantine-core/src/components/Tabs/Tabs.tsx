@@ -1,7 +1,13 @@
 import React, { useRef } from 'react';
 import cx from 'clsx';
-import { useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineNumberSize } from '../../theme';
+import { useUncontrolled, clamp } from '@mantine/hooks';
+import {
+  DefaultProps,
+  useMantineTheme,
+  mergeStyles,
+  MantineNumberSize,
+  MantineColor,
+} from '../../theme';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
@@ -16,10 +22,6 @@ export type TabsStylesNames =
   | Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>
   | TabControlStylesNames;
 
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
-}
-
 export interface TabsProps
   extends DefaultProps<TabsStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
@@ -32,8 +34,8 @@ export interface TabsProps
   /** Index of active tab, overrides internal state */
   active?: number;
 
-  /** Active tab color from theme */
-  color?: string;
+  /** Active tab color from theme.colors */
+  color?: MantineColor;
 
   /** True if tabs should take all available space */
   grow?: boolean;
@@ -120,7 +122,7 @@ export function Tabs({
     onChange: onTabChange,
   });
 
-  const activeTab = clamp(_activeTab, 0, tabs.length - 1);
+  const activeTab = clamp({ value: _activeTab, min: 0, max: tabs.length - 1 });
 
   const nextTabCode = orientation === 'horizontal' ? 'ArrowRight' : 'ArrowDown';
   const previousTabCode = orientation === 'horizontal' ? 'ArrowLeft' : 'ArrowUp';

@@ -1,6 +1,6 @@
 import React, { Children, cloneElement } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize } from '../../theme';
+import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '../../theme';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -41,8 +41,8 @@ export interface RadioGroupProps
   /** Spacing between radios in horizontal variant */
   spacing?: MantineNumberSize;
 
-  /** Active radio color */
-  color?: string;
+  /** Active radio color from theme.colors */
+  color?: MantineColor;
 
   /** Predefined label fontSize, radio width, height and border-radius */
   size?: MantineSize;

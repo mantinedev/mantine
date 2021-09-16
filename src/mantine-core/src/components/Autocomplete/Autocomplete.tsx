@@ -1,6 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, MantineSize, mergeStyles } from '../../theme';
+import {
+  DefaultProps,
+  useMantineTheme,
+  MantineSize,
+  mergeStyles,
+  MantineShadow,
+} from '../../theme';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -45,7 +51,7 @@ export interface AutocompleteProps
   itemComponent?: React.FC<any>;
 
   /** Dropdown shadow from theme or any value to set box-shadow */
-  shadow?: string;
+  shadow?: MantineShadow;
 
   /** Limit amount of items rendered in dropdown */
   limit?: number;

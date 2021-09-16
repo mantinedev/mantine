@@ -6,6 +6,7 @@ import {
   getFontStyles,
   getSharedColorScheme,
   getFocusStyles,
+  MantineColor,
 } from '../../theme';
 
 export const sizes = {
@@ -20,7 +21,7 @@ interface AvatarStyles {
   size: MantineNumberSize;
   radius: MantineNumberSize;
   theme: MantineTheme;
-  color: string;
+  color: MantineColor;
 }
 
 export default createMemoStyles({

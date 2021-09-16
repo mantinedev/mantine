@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize } from '../../../theme';
+import { DefaultProps, MantineNumberSize, MantineColor } from '../../../theme';
 import { MantineTransition } from '../../Transition/Transition';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
 import { getPosition } from '../utils/get-position/get-position';
@@ -23,7 +23,7 @@ export interface RangeSliderProps
   extends DefaultProps<RangeSliderStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange' | 'defaultValue'> {
   /** Color from theme.colors */
-  color?: string;
+  color?: MantineColor;
 
   /** Track border-radius from theme or number to set border-radius in px */
   radius?: MantineNumberSize;

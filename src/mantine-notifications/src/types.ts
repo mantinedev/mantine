@@ -1,6 +1,8 @@
+import type { MantineColor } from '@mantine/core';
+
 export interface NotificationProps {
   id?: string;
-  color?: string;
+  color?: MantineColor;
   className?: string;
   style?: React.CSSProperties;
   icon?: React.ReactNode;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, MantineSize } from '../../theme';
+import { DefaultProps, MantineSize, MantineShadow } from '../../theme';
 import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
@@ -29,7 +29,7 @@ export interface SelectProps extends DefaultProps<SelectStylesNames>, BaseSelect
   itemComponent?: React.FC<any>;
 
   /** Dropdown shadow from theme or any value to set box-shadow */
-  shadow?: string;
+  shadow?: MantineShadow;
 
   /** Controlled input value */
   value?: string;

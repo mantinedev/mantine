@@ -1,7 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import cx from 'clsx';
 import { useFocusTrap } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../../theme';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  mergeStyles,
+  useMantineTheme,
+  MantineShadow,
+} from '../../../theme';
 import { MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import { Divider } from '../../Divider/Divider';
@@ -38,7 +44,7 @@ export interface MenuBodyProps
   size?: MantineNumberSize;
 
   /** Predefined shadow from theme or box-shadow value */
-  shadow?: string;
+  shadow?: MantineShadow;
 
   /** Should menu close on outside click */
   closeOnClickOutside?: boolean;

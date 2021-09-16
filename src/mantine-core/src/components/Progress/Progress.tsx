@@ -7,6 +7,7 @@ import {
   MantineNumberSize,
   mergeStyles,
   getThemeColor,
+  MantineColor,
 } from '../../theme';
 import useStyles, { sizes } from './Progress.styles';
 
@@ -21,7 +22,7 @@ export interface ProgressProps
   value?: number;
 
   /** Progress color from theme */
-  color?: string;
+  color?: MantineColor;
 
   /** Predefined progress height or number for height in px */
   size?: MantineNumberSize;
@@ -33,12 +34,12 @@ export interface ProgressProps
   striped?: boolean;
 
   /** Replaces value if present, renders multiple sections instead of single one */
-  sections?: { value: number; color: string }[];
+  sections?: { value: number; color: MantineColor }[];
 }
 
 function getCumulativeSections(
-  sections: { value: number; color: string }[]
-): { value: number; color: string; accumulated: number }[] {
+  sections: { value: number; color: MantineColor }[]
+): { value: number; color: MantineColor; accumulated: number }[] {
   return sections.reduce(
     (acc, section) => {
       acc.sections.push({ ...section, accumulated: acc.accumulated });

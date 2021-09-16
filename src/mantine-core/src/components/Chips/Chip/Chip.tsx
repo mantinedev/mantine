@@ -7,6 +7,7 @@ import {
   MantineNumberSize,
   MantineSize,
   mergeStyles,
+  MantineColor,
 } from '../../../theme';
 import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
 import useStyles from './Chip.styles';
@@ -41,7 +42,7 @@ export interface ChipProps
   onChange?(checked: boolean): void;
 
   /** Active color from theme, defaults to theme.primaryColor */
-  color?: string;
+  color?: MantineColor;
 
   /** Static id to bind input with label */
   id?: string;

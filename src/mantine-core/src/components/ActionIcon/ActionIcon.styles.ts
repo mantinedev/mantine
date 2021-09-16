@@ -8,10 +8,11 @@ import {
   createMemoStyles,
   getSharedColorScheme,
   hexToRgba,
+  MantineColor,
 } from '../../theme';
 
 interface ActionIconStyles {
-  color: string;
+  color: MantineColor;
   size: MantineNumberSize;
   radius: MantineNumberSize;
   theme: MantineTheme;

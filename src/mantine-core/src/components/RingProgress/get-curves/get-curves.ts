@@ -1,6 +1,8 @@
+import type { MantineColor } from '../../../theme';
+
 interface CurveData {
   value: number;
-  color: string;
+  color: MantineColor;
 }
 
 interface GetCurves {

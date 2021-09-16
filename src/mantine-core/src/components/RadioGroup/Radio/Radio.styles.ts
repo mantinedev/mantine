@@ -6,12 +6,13 @@ import {
   getFontStyles,
   getFocusStyles,
   getThemeColor,
+  MantineColor,
 } from '../../../theme';
 
 interface RadioStyles {
   theme: MantineTheme;
   size: MantineSize;
-  color: string;
+  color: MantineColor;
 }
 
 export const sizes = {

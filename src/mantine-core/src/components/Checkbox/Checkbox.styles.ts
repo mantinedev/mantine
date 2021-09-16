@@ -6,6 +6,7 @@ import {
   getSizeValue,
   getThemeColor,
   getFocusStyles,
+  MantineColor,
 } from '../../theme';
 
 export const sizes = {
@@ -27,7 +28,7 @@ const iconSizes = {
 interface CheckboxStyles {
   theme: MantineTheme;
   size: MantineSize;
-  color: string;
+  color: MantineColor;
   transitionDuration: number;
 }
 

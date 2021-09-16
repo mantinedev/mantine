@@ -1,0 +1,180 @@
+---
+group: 'Other packages'
+package: '@mantine/rte'
+title: 'Rich text editor'
+order: 1
+slug: /others/rte/
+description: 'Quill based rich text editor'
+props: ['RichTextEditor']
+import: "import { RichTextEditor } from '@mantine/rte';"
+source: 'mantine-rte/src'
+docs: 'others/rte.mdx'
+installation: '@mantine/rte'
+bundleSize: '@mantine/rte'
+license: MIT
+styles: ['RichTextEditor']
+---
+
+import * as RichTextDemos from '@demos/rte';
+
+## Installation
+
+Package has peer dependencies: [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks) and [@mantine/core](https://www.npmjs.com/package/@mantine/core):.
+
+Install with npm:
+
+```sh
+npm install @mantine/rte @mantine/core @mantine/hooks
+```
+
+Install with yarn:
+
+```sh
+yarn add @mantine/rte @mantine/core @mantine/hooks
+```
+
+## Demo
+
+<Demo data={RichTextDemos.usage} />
+
+## Usage
+
+`value` and `onChange` props are required for component to work.
+Note that though component is controlled you cannot force value (limitation of Quill.js library).
+
+<Demo data={RichTextDemos.simple} />
+
+## Configure toolbar
+
+RichTextEditor supports these controls in toolbar:
+
+- `bold`, `strike`, `italic`, `underline` – general inline formatting
+- `clean` – removes all inline formatting
+- `h1`, `h2`, ..., `h6` – headings, in default toolbar only h1-h4 headings are displayed
+- `link` – link editor
+- `blockquote` – blockquote
+- `sub`, `sup` – super and sub scripts
+- `video`, `image` – video and image embeds
+- `unorderedList`, `orderedList` – ul and ol tags
+- `alignCenter`, `alignLeft`, `alignRight` – controls text-align
+
+You can add, remove and configure controls arrangement in toolbar with `controls` prop:
+
+<Demo data={RichTextDemos.toolbar} />
+
+To configure sticky toolbar properties set following props:
+
+- `sticky` – set to false to make toolbar stay at the top
+- `stickyOffset` – top property, used with sticky position, use it to offset elements with fixed position, for example, Mantine docs website has 60px header, in this case you should set stickyOffset to 60
+
+```tsx
+// Toolbar stays at the top
+<RichTextEditor sticky={false} />
+
+// Toolbar position is set to sticky with top: 40px
+<RichTextEditor stickyOffset={40} />
+```
+
+## Images and videos embeds
+
+<Demo data={RichTextDemos.embeds} />
+
+## Images upload
+
+RichTextEditor will handle images upload in following situations:
+
+- Image button click in toolbar
+- Image was pasted from clipboard into editor
+- Image was dropped into editor
+
+To set up images upload add `onImageUpload` function:
+
+```tsx
+import { useState } from 'react';
+import { RichTextEditor } from '@mantine/rte';
+
+// Example with imgbb.com, usually you would use similar logic to upload to S3 like storages
+// Function must return a promise that resolves with uploaded image url
+// After promise is resolved blurred image placeholder with be replaced with uploaded
+const handleImageUpload = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    fetch('https://api.imgbb.com/1/upload?key=api_key', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((result) => resolve(result.data.url))
+      .catch(() => reject(new Error('Upload failed')));
+  });
+
+function Demo() {
+  const [value, onChange] = useState('');
+  return <RichTextEditor value={value} onChange={onChange} onImageUpload={handleImageUpload} />;
+}
+```
+
+**Important!** If you do not provide `onImageUpload` all images will be converted to
+base64 format. In most cases this is not a valid option to store images so make sure you provide `onImageUpload`
+if you are planning to use images.
+
+## Keyboard shortcuts
+
+- `⌘ + B` / `Ctrl + B` – toggle bold format in current selection
+- `⌘ + I` / `Ctrl + I` – toggle italic format in current selection
+- `⌘ + U` / `Ctrl + U` – toggle underline format in current selection
+- `⌘ + K` / `Ctrl + K` – add link to current selection
+- `⌘ + option + 1` / `Ctrl + Alt + 1` – toggle heading at current line, valid for 1-6 headings
+
+## Server side rendering
+
+Quill does not support server side rendering as it relies on browser API.
+To make component work on server you will need to create a wrapper component with additional checks.
+
+General strategy:
+
+```tsx
+// Create a separate component which will load RichTextEditor only in browser
+import React from 'react';
+import type { RichTextEditorProps } from '@mantine/rte';
+
+export function RichText(props: RichTextEditorProps) {
+  if (typeof window !== 'undefined') {
+    // eslint-disable-next-line import/extensions, global-require
+    const { RichTextEditor } = require('@mantine/rte');
+    return <RichTextEditor {...props} />;
+  }
+
+  // Render anything as fallback on server, e.g. loader or html content without editor
+  return null;
+}
+```
+
+## Usage with Next.js
+
+To make component work with Next.js use [dynamic module](https://nextjs.org/docs/advanced-features/dynamic-import):
+
+```tsx
+// RichText.tsx in your components folder
+import dynamic from 'next/dynamic';
+
+export default dynamic(() => import('@mantine/rte'), {
+  // Disable during server side rendering
+  ssr: false,
+
+  // Render anything as fallback on server, e.g. loader or html content without editor
+  loader: () => null,
+});
+```
+
+Then when you want to use RichTextEditor import your component instead:
+
+```tsx
+import RichTextEditor from '../components/RichText';
+
+function MyPage() {
+  return <RichTextEditor />;
+}
+```

@@ -5,11 +5,12 @@ import {
   getFocusStyles,
   getFontStyles,
   getSharedColorScheme,
+  MantineColor,
 } from '../../theme';
 
 interface TextStyles {
   theme: MantineTheme;
-  color: string;
+  color: MantineColor;
   variant: 'text' | 'link' | 'gradient';
   size: MantineSize;
   lineClamp: number;

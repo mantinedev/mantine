@@ -4,6 +4,7 @@ import {
   getThemeColor,
   MantineNumberSize,
   MantineTheme,
+  MantineColor,
 } from '../../../theme';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
@@ -11,7 +12,7 @@ interface TrackStyles {
   theme: MantineTheme;
   radius: MantineNumberSize;
   size: MantineNumberSize;
-  color: string;
+  color: MantineColor;
 }
 
 export default createMemoStyles({

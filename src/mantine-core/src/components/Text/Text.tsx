@@ -1,6 +1,12 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, MantineSize, MantineGradient } from '../../theme';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineSize,
+  MantineGradient,
+  MantineColor,
+} from '../../theme';
 import useStyles from './Text.styles';
 
 export interface SharedTextProps extends DefaultProps {
@@ -8,7 +14,7 @@ export interface SharedTextProps extends DefaultProps {
   size?: MantineSize;
 
   /** Text color from theme */
-  color?: string;
+  color?: MantineColor;
 
   /** Sets font-weight css property */
   weight?: React.CSSProperties['fontWeight'];

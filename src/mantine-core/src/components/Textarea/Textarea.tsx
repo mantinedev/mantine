@@ -29,7 +29,7 @@ export interface TextareaProps
   minRows?: number;
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
   /** Get element ref */
   elementRef?: React.ForwardedRef<HTMLTextAreaElement>;

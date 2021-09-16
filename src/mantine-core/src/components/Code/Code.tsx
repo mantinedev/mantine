@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps, useMantineTheme, MantineColor } from '../../theme';
 import useStyles from './Code.styles';
 
 export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<'code'> {
@@ -8,7 +8,7 @@ export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<
   children: React.ReactNode;
 
   /** Code color and background from theme, defaults to gray in light theme and to dark in dark theme */
-  color?: string;
+  color?: MantineColor;
 
   /** True for code block, false for inline code */
   block?: boolean;

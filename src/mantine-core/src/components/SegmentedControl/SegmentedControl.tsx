@@ -7,6 +7,7 @@ import {
   MantineSize,
   mergeStyles,
   useMantineTheme,
+  MantineColor,
 } from '../../theme';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
@@ -35,8 +36,8 @@ export interface SegmentedControlProps
   /** True if component should have 100% width */
   fullWidth?: boolean;
 
-  /** Active control color from theme, defaults to white in light color scheme and theme.colors.dark[9] in dark */
-  color?: string;
+  /** Active control color from theme.colors, defaults to white in light color scheme and theme.colors.dark[9] in dark */
+  color?: MantineColor;
 
   /** Controls font-size, paddings and height */
   size?: MantineSize;

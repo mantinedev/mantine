@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["./src", "./demos", "../../configuration/types", "../../tests"],
+  "include": ["./src", "./demos", "../../configuration/types", "../../tests", "../mantine-hooks/src/use-pagination/use-pagination.test.ts", "../mantine-hooks/src/use-pagination/usePagination.ts"],
   "exclude": ["./lib", "./esm", "./cjs"],
   "compilerOptions": {
     "rootDir": ".",

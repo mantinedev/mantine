@@ -5,11 +5,12 @@ import {
   getSizeValue,
   getFontStyles,
   getSharedColorScheme,
+  MantineColor,
 } from '../../theme';
 
 interface ThemeIconStyles {
   theme: MantineTheme;
-  color: string;
+  color: MantineColor;
   size: MantineNumberSize;
   radius: MantineNumberSize;
   gradientFrom: string;
