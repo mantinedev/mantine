@@ -5,6 +5,7 @@ import { ThemingDemo } from './Theming';
 import { NotificationsDemo } from './Notifications';
 import { HooksDemo } from './Hooks';
 import { PrismDemo } from './Prism';
+import { RichTextDemo } from './RichText';
 
 export default {
   core: CoreDemo,
@@ -14,4 +15,5 @@ export default {
   notifications: NotificationsDemo,
   hooks: HooksDemo,
   prism: PrismDemo,
+  richText: RichTextDemo,
 };
