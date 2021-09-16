@@ -36,6 +36,7 @@ export default createMemoStyles({
 
   input: {
     cursor: 'pointer',
+    whiteSpace: 'nowrap',
   },
 
   dropdown: ({ theme }: DatePickerBaseStyles) => ({

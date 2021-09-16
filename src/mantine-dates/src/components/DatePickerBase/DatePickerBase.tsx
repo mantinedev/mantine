@@ -223,6 +223,7 @@ export function DatePickerBase({
             invalid={!!error}
             rightSection={rightSection}
             rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
+            className={classes.input}
             {...others}
           >
             {inputLabel || (
