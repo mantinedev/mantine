@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { Avatar, Text } from '@mantine/core';
+import { Avatar } from '@mantine/core';
 import { DefaultProps, MantineNumberSize, useMantineTheme, mergeStyles } from '../../../theme';
 import useStyles from './AvatarsGroup.styles';
 
@@ -39,36 +39,40 @@ export function AvatarsGroup({
   ...others
 }: AvatarsGroupProps) {
   const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, spacing }, classNames, 'avatar-group');
+  const classes = useStyles({ theme, spacing, size }, classNames, 'avatars-group');
   const _styles = mergeStyles(classes, styles);
   const avatars = React.Children
     .toArray(children).filter((child: React.ReactElement) => child.type === Avatar)
-    .map((child: React.ReactElement, index) =>
-      React.cloneElement(child, {
+    .map((child: React.ReactElement, index) => {
+      const childStyle = {
+        ...child.props.style,
+        zIndex: limit - index,
+      };
+      return React.cloneElement(child, {
         size,
         radius,
         themeOverride,
         key: index,
         className: cx(classes.child, child.props.className),
-        style: { ...child.props.style, ..._styles.child },
-      })
-    );
+        style: { ...childStyle, ..._styles.child },
+      });
+    });
 
   const clampedMax = limit < 2 ? 2 : limit;
   const extraAvatars = avatars.length > clampedMax ? avatars.length - clampedMax : 0;
 
   return (
-    <div className={cx(classes.root)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(className, classes.root)} style={{ ...style, ..._styles.root }} {...others}>
       {avatars.slice(0, avatars.length - extraAvatars)}
       {extraAvatars ? (
         <Avatar size={size} radius={radius} className={classes.child} style={_styles.child}>
-          <Text size={size} className={classes.truncated} style={_styles.truncated}>
+          <div className={classes.truncated} style={_styles.truncated}>
             +{extraAvatars}
-          </Text>
+          </div>
         </Avatar>) : null
       }
     </div>
   );
 }
 
-AvatarsGroup.displayname = '@mantine/core/AvatarsGroup';
+AvatarsGroup.displayName = '@mantine/core/AvatarsGroup';

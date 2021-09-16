@@ -3,6 +3,7 @@ import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from 
 interface AvatarsGroupStyles {
   theme: MantineTheme;
   spacing: MantineNumberSize;
+  size: MantineNumberSize;
 }
 
 export default createMemoStyles({
@@ -16,7 +17,10 @@ export default createMemoStyles({
       marginLeft: 0,
     },
   }),
-  truncated: ({ theme }: AvatarsGroupStyles) => ({
+  truncated: ({ theme, size }: AvatarsGroupStyles) => ({
+    fontFamily: theme.fontFamily,
+    lineHeight: theme.lineHeight,
+    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     color: `${theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7]}`,
   }),
 });

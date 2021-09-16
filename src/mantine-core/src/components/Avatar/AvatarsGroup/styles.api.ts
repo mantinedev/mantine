@@ -1,7 +1,7 @@
 import { AvatarsGroupStylesNames } from './AvatarsGroup';
 
-export const Avatar: Record<AvatarsGroupStylesNames, string> = {
+export const AvatarsGroup: Record<AvatarsGroupStylesNames, string> = {
   root: 'Root element',
   child: 'Styles added to every child inside AvatarsGroup',
-  truncated: 'Truncated avatars count',
+  truncated: 'Truncated avatars count label',
 };
