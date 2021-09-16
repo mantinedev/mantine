@@ -59,7 +59,6 @@ export interface PaginationProps
 
 export function Pagination({
   itemComponent: Item = DefaultItem,
-  className,
   classNames,
   styles,
   themeOverride,
