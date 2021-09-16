@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import cx from 'clsx';
 import {
   DefaultProps,
   useMantineTheme,
@@ -212,7 +213,7 @@ export function DatePickerBase({
             themeOverride={themeOverride}
             component="button"
             type="button"
-            classNames={classNames}
+            classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
             styles={{ ...styles, input: { ...styles?.input, cursor: 'pointer' } }}
             onClick={() => setDropdownOpened(!dropdownOpened)}
             id={uuid}
@@ -223,7 +224,6 @@ export function DatePickerBase({
             invalid={!!error}
             rightSection={rightSection}
             rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
-            className={classes.input}
             {...others}
           >
             {inputLabel || (
