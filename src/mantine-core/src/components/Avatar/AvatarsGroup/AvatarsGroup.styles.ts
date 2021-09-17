@@ -12,7 +12,7 @@ export default createMemoStyles({
   }),
   child: ({ theme, spacing }: AvatarsGroupStyles) => ({
     marginLeft: -getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
-    border: `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[3]}`,
+    border: `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
     '&:first-child': {
       marginLeft: 0,
     },

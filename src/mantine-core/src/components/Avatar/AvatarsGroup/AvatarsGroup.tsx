@@ -46,7 +46,7 @@ export function AvatarsGroup({
     .map((child: React.ReactElement, index) => {
       const childStyle = {
         ...child.props.style,
-        zIndex: limit - index,
+        zIndex: index + 1,
       };
       return React.cloneElement(child, {
         size,
@@ -65,7 +65,12 @@ export function AvatarsGroup({
     <div className={cx(className, classes.root)} style={{ ...style, ..._styles.root }} {...others}>
       {avatars.slice(0, avatars.length - extraAvatars)}
       {extraAvatars ? (
-        <Avatar size={size} radius={radius} className={classes.child} style={_styles.child}>
+        <Avatar
+          size={size}
+          radius={radius}
+          className={classes.child}
+          style={{ ..._styles.child, zIndex: limit + 1 }}
+        >
           <div className={classes.truncated} style={_styles.truncated}>
             +{extraAvatars}
           </div>
