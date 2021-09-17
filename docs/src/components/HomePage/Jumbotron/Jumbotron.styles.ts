@@ -14,8 +14,8 @@ export default createUseStyles(
 
     inner: {
       position: 'relative',
-      paddingTop: 200,
-      paddingBottom: 120,
+      paddingTop: 180,
+      paddingBottom: 180,
 
       [BREAKPOINT]: {
         paddingBottom: 80,
@@ -25,8 +25,9 @@ export default createUseStyles(
 
     title: {
       fontFamily: `Dosis, ${theme.fontFamily}`,
-      fontSize: 68,
-      lineHeight: 1.1,
+      fontWeight: 800,
+      fontSize: 86,
+      lineHeight: 1.05,
       margin: 0,
       padding: 0,
       color: theme.colorScheme === 'dark' ? theme.white : theme.black,
@@ -46,8 +47,9 @@ export default createUseStyles(
     },
 
     description: {
-      marginTop: theme.spacing.xl,
+      marginTop: theme.spacing.xl * 1.5,
       fontSize: 24,
+      maxWidth: 800,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
 
       [BREAKPOINT]: {

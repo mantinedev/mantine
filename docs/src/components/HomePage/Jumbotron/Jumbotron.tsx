@@ -11,10 +11,9 @@ export function Jumbotron() {
 
   return (
     <div className={classes.jumbotron}>
-      <Container size={700} className={classes.inner}>
+      <Container size={1100} className={classes.inner}>
         <h1 className={classes.title}>
-          A <span className={classes.highlight}>fully featured</span> React components and hooks
-          library
+          A <span className={classes.highlight}>fully featured</span> React components library
         </h1>
 
         <Text className={classes.description}>
