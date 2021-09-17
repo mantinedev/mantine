@@ -6,7 +6,7 @@ storiesOf('@mantine/core/Pagination', module)
   .add('General usage', () => (
     <div style={{ padding: 40 }}>
       <Pagination total={10} color="cyan" size="xs" />
-      <Pagination style={{ marginTop: 15 }} total={10} color="cyan" size="sm" />
+      <Pagination style={{ marginTop: 15 }} total={1000} color="cyan" size="sm" />
       <Pagination style={{ marginTop: 15 }} total={10} color="cyan" size="md" />
       <Pagination style={{ marginTop: 15 }} total={10} color="cyan" size="lg" />
       <Pagination style={{ marginTop: 15 }} total={10} color="cyan" size="xl" />

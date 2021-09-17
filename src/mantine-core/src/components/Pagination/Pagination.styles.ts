@@ -5,6 +5,7 @@ import {
   MantineNumberSize,
   getSizeValue,
   MantineColor,
+  getFocusStyles,
 } from '../../theme';
 
 interface PaginationStyles {
@@ -24,6 +25,8 @@ const sizes = {
 
 export default createMemoStyles({
   item: ({ theme, size, radius }: PaginationStyles) => ({
+    ...getFocusStyles(theme),
+    cursor: 'pointer',
     userSelect: 'none',
     display: 'flex',
     alignItems: 'center',
@@ -34,7 +37,8 @@ export default createMemoStyles({
     }`,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     height: getSizeValue({ size, sizes }),
-    width: getSizeValue({ size, sizes }),
+    minWidth: getSizeValue({ size, sizes }),
+    padding: [0, getSizeValue({ size, sizes: theme.spacing }) / 2],
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     lineHeight: 1,
