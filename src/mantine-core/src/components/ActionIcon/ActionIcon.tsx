@@ -33,7 +33,7 @@ interface _ActionIconProps<C extends React.ElementType, R extends HTMLElement>
   children: React.ReactNode;
 
   /** Controls appearance */
-  variant?: 'transparent' | 'hover' | 'filled' | 'outline' | 'light';
+  variant?: 'transparent' | 'hover' | 'filled' | 'outline' | 'light' | 'default';
 
   /** Button hover, active and icon colors from theme */
   color?: MantineColor;
@@ -65,7 +65,7 @@ export function ActionIcon<
   children,
   radius = 'sm',
   size = 'md',
-  variant = 'hover',
+  variant = 'default',
   disabled = false,
   loaderProps,
   loading = false,

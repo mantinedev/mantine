@@ -27,6 +27,38 @@ export const sizes = {
 };
 
 export default createMemoStyles({
+  root: ({ radius, theme, size }: ActionIconStyles) => ({
+    ...getFocusStyles(theme),
+    ...getFontStyles(theme),
+    position: 'relative',
+    appearance: 'none',
+    WebkitAppearance: 'none',
+    WebkitTapHighlightColor: 'transparent',
+    border: '1px solid transparent',
+    boxSizing: 'border-box',
+    height: getSizeValue({ size, sizes }),
+    minHeight: getSizeValue({ size, sizes }),
+    width: getSizeValue({ size, sizes }),
+    minWidth: getSizeValue({ size, sizes }),
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    padding: 0,
+    lineHeight: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    transition: 'color 100ms ease, background-color 100ms ease',
+
+    '&:not(:disabled):active': {
+      transform: 'translateY(1px)',
+    },
+
+    '&:disabled': {
+      color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
+      cursor: 'not-allowed',
+    },
+  }),
+
   loading: (props: ActionIconStyles) => ({
     '&::before': {
       content: '""',
@@ -95,38 +127,6 @@ export default createMemoStyles({
     backgroundColor: 'transparent',
   }),
 
-  root: ({ radius, theme, size }: ActionIconStyles) => ({
-    ...getFocusStyles(theme),
-    ...getFontStyles(theme),
-    position: 'relative',
-    appearance: 'none',
-    WebkitAppearance: 'none',
-    WebkitTapHighlightColor: 'transparent',
-    border: '1px solid transparent',
-    boxSizing: 'border-box',
-    height: getSizeValue({ size, sizes }),
-    minHeight: getSizeValue({ size, sizes }),
-    width: getSizeValue({ size, sizes }),
-    minWidth: getSizeValue({ size, sizes }),
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-    padding: 0,
-    lineHeight: 1,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-    transition: 'color 100ms ease, background-color 100ms ease',
-
-    '&:not(:disabled):active': {
-      transform: 'translateY(1px)',
-    },
-
-    '&:disabled': {
-      color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
-      cursor: 'not-allowed',
-    },
-  }),
-
   outline: ({ theme, color }: ActionIconStyles) => {
     const colors = getSharedColorScheme({ theme, color, variant: 'outline' });
 
@@ -137,6 +137,24 @@ export default createMemoStyles({
 
       '&:disabled': {
         borderColor: theme.colors.gray[theme.colorScheme === 'dark' ? 7 : 3],
+      },
+    };
+  },
+
+  default: ({ theme, color }: ActionIconStyles) => {
+    const colors = getSharedColorScheme({ theme, color, variant: 'default' });
+
+    return {
+      backgroundColor: colors.background,
+      border: `1px solid ${colors.border}`,
+      color: colors.color,
+
+      '&:disabled': {
+        backgroundColor: getThemeColor({
+          theme,
+          color: 'gray',
+          shade: theme.colorScheme === 'dark' ? 8 : 1,
+        }),
       },
     };
   },
