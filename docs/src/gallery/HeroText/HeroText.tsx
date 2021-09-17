@@ -112,7 +112,7 @@ export function HeroText() {
           <Button className={classes.control} size="lg">
             Get started for free
           </Button>
-          <Button className={classes.control} size="lg" variant="light">
+          <Button className={classes.control} size="lg" variant="default" color="gray">
             Live demo
           </Button>
         </div>

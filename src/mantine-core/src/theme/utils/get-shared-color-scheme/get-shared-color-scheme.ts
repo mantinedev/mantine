@@ -39,9 +39,9 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
 
   if (variant === 'default') {
     return {
-      border: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3],
-      background: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
+      border: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
+      background: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     };
   }
 

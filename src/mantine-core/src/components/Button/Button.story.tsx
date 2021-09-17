@@ -55,6 +55,7 @@ storiesOf('@mantine/core/Button', module)
   .add('Themes', () => (
     <>
       <Group style={{ padding: 20 }}>{getThemes()}</Group>
+      <Group style={{ padding: 20 }}>{getThemes({ variant: 'default' })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'outline' })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'link' })}</Group>
