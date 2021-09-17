@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 interface DebouncedWindowSizeOptions {
@@ -25,12 +25,16 @@ export const useViewportSize = ({
   const setSize = useCallback(
     (): void => {
       setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: window?.innerWidth ?? initialWidth,
+        height: window?.innerHeight ?? initialWidth,
       });
     },
     [],
   );
+
+  useEffect(() => {
+    setSize();
+  }, []);
 
   useWindowEvent('resize', setSize, eventListerOptions);
 
