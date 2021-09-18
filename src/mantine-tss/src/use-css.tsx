@@ -8,7 +8,7 @@ import { useCache } from './CacheProvider';
 const refPropertyName = 'ref' as const;
 
 function getRef(args: any[]) {
-  let ref;
+  let ref: string;
 
   if (args.length !== 1) {
     return { args, ref };
@@ -34,7 +34,7 @@ export const { cssFactory } = (() => {
   function _cssFactory(params: { cache: EmotionCache }) {
     const { cache } = params;
 
-    const css: CSS = (...styles) => {
+    const css: CSS = (...styles: any) => {
       const { ref, args } = getRef(styles);
       const serialized = serializeStyles(args, cache.registered);
       insertStyles(cache as any, serialized, false);
