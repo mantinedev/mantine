@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
 export function useMouse<T extends HTMLElement = any>(): {
-  x: number;
-  y: number;
+  readonly x: number;
+  readonly y: number;
   ref: React.MutableRefObject<T>;
 } {
   const [position, setPosition] = useState({ x: 0, y: 0 });
