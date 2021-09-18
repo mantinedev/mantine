@@ -1,21 +1,21 @@
-import { MantineTheme, getFontStyles, createMemoStyles } from '@mantine/core';
+import { MantineTheme, getFontStyles, createStyles } from '@mantine/core';
 
 interface MonthStyles {
   theme: MantineTheme;
   fullWidth: boolean;
 }
 
-export default createMemoStyles({
-  weekday: ({ theme }: MonthStyles) => ({
+export default createStyles((theme, { fullWidth }: MonthStyles) => ({
+  weekday: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[5],
-  }),
+  },
 
-  root: ({ theme, fullWidth }: MonthStyles) => ({
+  root: {
     ...getFontStyles(theme),
     borderCollapse: 'collapse',
     width: fullWidth ? '100%' : 'auto',
     tableLayout: 'fixed',
-  }),
+  },
 
   cell: {
     boxSizing: 'border-box',
@@ -23,7 +23,7 @@ export default createMemoStyles({
     borderTop: '1px solid transparent',
   },
 
-  weekdayCell: ({ theme }: MonthStyles) => ({
+  weekdayCell: {
     boxSizing: 'border-box',
     padding: 0,
     fontWeight: 'normal',
@@ -31,5 +31,5 @@ export default createMemoStyles({
     textAlign: 'center',
     cursor: 'default',
     userSelect: 'none',
-  }),
-});
+  },
+}));

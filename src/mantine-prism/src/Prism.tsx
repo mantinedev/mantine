@@ -49,7 +49,6 @@ export function Prism({
   children,
   language,
   noCopy = false,
-  themeOverride,
   classNames,
   styles,
   copyLabel = 'Copy code',
@@ -58,8 +57,8 @@ export function Prism({
   highlightLines = {},
   ...others
 }: PrismProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'prism');
+  const theme = useMantineTheme();
+  const classes = useStyles(null, classNames, 'prism');
   const _styles = mergeStyles(classes, styles);
   const clipboard = useClipboard();
 
@@ -78,12 +77,10 @@ export function Prism({
           arrowSize={4}
           gutter={8}
           color={clipboard.copied ? 'teal' : undefined}
-          themeOverride={themeOverride}
         >
           <ActionIcon
             aria-label={clipboard.copied ? copiedLabel : copyLabel}
             onClick={() => clipboard.copy(children)}
-            themeOverride={themeOverride}
           >
             <CopyIcon copied={clipboard.copied} />
           </ActionIcon>

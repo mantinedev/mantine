@@ -1,6 +1,6 @@
-import { createMemoStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
-export default createMemoStyles({
+export default createStyles({
   selectGroup: {},
   select: {},
   label: {},

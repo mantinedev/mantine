@@ -1,4 +1,4 @@
-import { createMemoStyles, MantineTheme } from '@mantine/core';
+import { createStyles, MantineTheme } from '@mantine/core';
 
 interface ToolbarStyles {
   theme: MantineTheme;
@@ -6,15 +6,15 @@ interface ToolbarStyles {
   stickyOffset: string | number;
 }
 
-export default createMemoStyles({
-  toolbarGroup: ({ theme }: ToolbarStyles) => ({
+export default createStyles((theme, { sticky, stickyOffset }: ToolbarStyles) => ({
+  toolbarGroup: {
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
     margin: theme.spacing.md / 2,
-  }),
+  },
 
-  toolbar: ({ theme, sticky, stickyOffset }: ToolbarStyles) => ({
+  toolbar: {
     position: sticky ? 'sticky' : 'relative',
     zIndex: 1,
     top: sticky ? stickyOffset : 0,
@@ -25,15 +25,15 @@ export default createMemoStyles({
     borderTopRightRadius: theme.radius.sm,
     borderTopLeftRadius: theme.radius.sm,
     padding: [theme.spacing.sm, theme.spacing.md],
-  }),
+  },
 
-  toolbarInner: ({ theme }: ToolbarStyles) => ({
+  toolbarInner: {
     display: 'flex',
     flexWrap: 'wrap',
     margin: -theme.spacing.md / 2,
-  }),
+  },
 
-  toolbarControl: ({ theme }: ToolbarStyles) => ({
+  toolbarControl: {
     '& + &': {
       borderLeftWidth: 0,
     },
@@ -47,5 +47,5 @@ export default createMemoStyles({
       borderTopRightRadius: theme.radius.sm,
       borderBottomRightRadius: theme.radius.sm,
     },
-  }),
-});
+  },
+}));

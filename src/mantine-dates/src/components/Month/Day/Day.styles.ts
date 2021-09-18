@@ -2,7 +2,7 @@ import {
   MantineTheme,
   getFontStyles,
   getFocusStyles,
-  createMemoStyles,
+  createStyles,
   MantineSize,
   getSizeValue,
   hexToRgba,
@@ -22,7 +22,8 @@ export const sizes = {
   xl: 66,
 };
 
-export default createMemoStyles({
+// @XXX: STYLES
+export default createStyles((theme, { size, fullWidth }: DayStyles) => ({
   weekend: {},
   outside: {},
   selected: {},
@@ -30,7 +31,7 @@ export default createMemoStyles({
   firstInRange: {},
   lastInRange: {},
 
-  day: ({ theme, size, fullWidth }: DayStyles) => ({
+  day: {
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
     position: 'relative',
@@ -88,5 +89,5 @@ export default createMemoStyles({
       borderTopRightRadius: theme.radius.sm,
       borderBottomRightRadius: theme.radius.sm,
     },
-  }),
-});
+  },
+}));

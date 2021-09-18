@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { createUseStyles } from 'react-jss';
 import { MailIcon } from '@primer/octicons-react';
 import {
   TextInput,
@@ -17,13 +16,14 @@ import {
   Radio,
   Autocomplete,
   ColorInput,
+  createStyles,
 } from '@mantine/core';
 import { CustomSelectDemo } from '@mantine/core/src/components/Select/demos/itemComponent';
 import { CountriesSelect } from '@mantine/core/src/components/MultiSelect/demos/countries';
 import { DatePicker, TimeInput, DateRangePicker } from '@mantine/dates';
 import { BREAKPOINT } from '../../Explore.styles';
 
-const useStyles = createUseStyles({
+const useStyles = createStyles({
   wrapper: {
     display: 'flex',
 
