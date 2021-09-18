@@ -4,9 +4,9 @@ import createCache, { EmotionCache } from '@emotion/cache';
 export const { getCache } = (() => {
   let cache: EmotionCache;
 
-  function _getCache(): EmotionCache {
+  function _getCache() {
     if (cache === undefined) {
-      cache = createCache({ key: 'tss-react' });
+      cache = createCache({ key: 'mantine' });
     }
 
     return cache;

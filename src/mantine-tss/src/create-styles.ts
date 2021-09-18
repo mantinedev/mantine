@@ -23,7 +23,7 @@ export function createStyles<Key extends string = string, Params = void>(
 
     function createRef() {
       count += 1;
-      return `tss-react-ref_${count}`;
+      return `mantine-ref_${count}`;
     }
 
     const cssObject = getCssObject(theme, params, createRef);
