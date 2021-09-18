@@ -1,15 +1,14 @@
+import { createStyles } from '@mantine/tss';
 import {
-  createMemoStyles,
   MantineTheme,
   MantineSize,
   getFocusStyles,
   getFontStyles,
   getSharedColorScheme,
   MantineColor,
-} from '../../theme';
+} from '@mantine/theme';
 
 interface TextStyles {
-  theme: MantineTheme;
   color: MantineColor;
   variant: 'text' | 'link' | 'gradient';
   size: MantineSize;
@@ -21,7 +20,13 @@ interface TextStyles {
   gradientDeg: number;
 }
 
-function getTextColor({ theme, color, variant }: Partial<TextStyles>) {
+interface GetTextColor {
+  theme: MantineTheme;
+  color: MantineColor;
+  variant: TextStyles['variant'];
+}
+
+function getTextColor({ theme, color, variant }: GetTextColor) {
   if (color === 'dimmed') {
     return theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6];
   }
@@ -49,24 +54,21 @@ function getLineClamp(lineClamp: number): React.CSSProperties {
   return null;
 }
 
-export default createMemoStyles({
-  root: ({ theme, color, variant, size, lineClamp, inline, inherit }: TextStyles) => ({
-    ...getFontStyles(theme),
-    ...getFocusStyles(theme),
-    ...getLineClamp(lineClamp),
-    color: getTextColor({ color, theme, variant }),
-    fontFamily: inherit ? 'inherit' : theme.fontFamily,
-    fontSize: inherit ? 'inherit' : theme.fontSizes[size],
-    lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
-    textDecoration: 'none',
-    WebkitTapHighlightColor: 'transparent',
-
-    '&:hover': {
-      textDecoration: variant === 'link' ? 'underline' : 'none',
-    },
-  }),
-
-  gradient: ({ theme, gradientDeg, gradientTo, gradientFrom }: TextStyles) => {
+export default createStyles(
+  (
+    theme,
+    {
+      color,
+      variant,
+      size,
+      lineClamp,
+      inline,
+      inherit,
+      gradientDeg,
+      gradientTo,
+      gradientFrom,
+    }: TextStyles
+  ) => {
     const colors = getSharedColorScheme({
       theme,
       variant: 'gradient',
@@ -74,9 +76,27 @@ export default createMemoStyles({
     });
 
     return {
-      backgroundImage: colors.background,
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
+      root: {
+        ...getFontStyles(theme),
+        ...getFocusStyles(theme),
+        ...getLineClamp(lineClamp),
+        color: getTextColor({ color, theme, variant }),
+        fontFamily: inherit ? 'inherit' : theme.fontFamily,
+        fontSize: inherit ? 'inherit' : theme.fontSizes[size],
+        lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
+        textDecoration: 'none',
+        WebkitTapHighlightColor: 'transparent',
+
+        '&:hover': {
+          textDecoration: variant === 'link' ? 'underline' : 'none',
+        },
+      },
+
+      gradient: {
+        backgroundImage: colors.background,
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+      },
     };
-  },
-});
+  }
+);

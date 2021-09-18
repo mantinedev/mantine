@@ -11,7 +11,13 @@ import {
   MantineTheme,
 } from '@mantine/theme';
 
-export type ActionIconVariant = 'hover' | 'filled' | 'outline' | 'light' | 'default';
+export type ActionIconVariant =
+  | 'hover'
+  | 'filled'
+  | 'outline'
+  | 'light'
+  | 'default'
+  | 'transparent';
 
 interface ActionIconStyles {
   color: MantineColor;
@@ -35,18 +41,21 @@ interface GetVariantStyles {
 }
 
 function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
-  if (variant === 'hover') {
+  if (variant === 'hover' || variant === 'transparent') {
     return {
       border: '1px solid transparent',
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
       backgroundColor: 'transparent',
 
-      '&:hover': {
-        backgroundColor:
-          theme.colorScheme === 'dark'
-            ? theme.colors.dark[8]
-            : getThemeColor({ theme, color, shade: 0 }),
-      },
+      '&:hover':
+        variant === 'transparent'
+          ? {}
+          : {
+              backgroundColor:
+                theme.colorScheme === 'dark'
+                  ? theme.colors.dark[8]
+                  : getThemeColor({ theme, color, shade: 0 }),
+            },
     };
   }
 
