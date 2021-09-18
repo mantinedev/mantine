@@ -21,6 +21,7 @@ export { useMergedRef } from './use-merged-ref/use-merged-ref';
 export { useMove, clampUseMovePosition } from './use-move/use-move';
 export { useQueue } from './use-queue/use-queue';
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion';
+export { useResizeObserver } from './use-resize-observer/use-resize-observer';
 export { useScrollLock } from './use-scroll-lock/use-scroll-lock';
 export { useShallowEffect } from './use-shallow-effect/use-shallow-effect';
 export { useToggle, useBooleanToggle } from './use-toggle/use-toggle';

@@ -8,6 +8,7 @@ export * from './hooks/use-idle';
 export * from './hooks/use-interval';
 export * from './hooks/use-media-query';
 export * from './hooks/use-reduced-motion';
+export * from './hooks/use-resize-observer';
 export * from './hooks/use-scroll-lock';
 export * from './hooks/use-force-update';
 export * from './hooks/use-toggle';
