@@ -1,11 +1,12 @@
+import type { MantineTheme } from '@mantine/theme';
 import type { CSSObject } from './types';
 import { fromEntries } from './utils/from-entries';
 import { useCss } from './use-css';
-import { useTheme, Theme } from './ThemeProvider';
+import { useMantineTheme } from './MantineProvider/use-mantine-theme';
 
 export function createStyles<Key extends string = string, Params = void>(
   getCssObjectOrCssObject:
-    | ((theme: Theme, params: Params, createRef: () => string) => Record<Key, CSSObject>)
+    | ((theme: MantineTheme, params: Params, createRef: () => string) => Record<Key, CSSObject>)
     | Record<Key, CSSObject>
 ) {
   const getCssObject =
@@ -14,7 +15,7 @@ export function createStyles<Key extends string = string, Params = void>(
       : () => getCssObjectOrCssObject;
 
   function useStyles(params: Params) {
-    const theme = useTheme();
+    const theme = useMantineTheme();
     const css = useCss();
 
     let count = 0;

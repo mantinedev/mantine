@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
 import { storiesOf } from '@storybook/react';
-import { ThemeProvider } from './ThemeProvider';
+import { MantineProvider } from './MantineProvider/MantineProvider';
 import { createStyles } from './create-styles';
 
 interface Params {
@@ -11,25 +11,25 @@ interface Params {
 const useStyles = createStyles((theme, { color }: Params, createRef) => {
   const child = {
     ref: createRef(),
-    background: 'green',
+    background: theme.colors.gray[1],
   } as const;
 
   return {
     root: {
-      color,
+      color: theme.colors.blue[5],
 
       '&:hover': {
-        color: theme.primaryColor,
+        color: theme.colors[color][6],
       },
 
       '@media (max-width: 755px)': {
-        backgroundColor: 'red',
+        backgroundColor: theme.colors.gray[2],
       },
     },
 
     active: {
       [`& .${child.ref}`]: {
-        background: 'red',
+        background: theme.colors.blue[0],
       },
     },
 
@@ -54,9 +54,9 @@ function Component(props: any) {
 
 storiesOf('@mantine/tss', module).add('Usage', () => (
   <>
-    <ThemeProvider theme={{ primaryColor: 'orange' }}>
+    <MantineProvider theme={{ primaryColor: 'orange' }}>
       <Component />
-    </ThemeProvider>
+    </MantineProvider>
     <Component active />
   </>
 ));

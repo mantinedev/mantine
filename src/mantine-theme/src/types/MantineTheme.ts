@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { MantineSizes, MantineSize } from './MantineSize';
+import type { MantineColor } from './MantineColor';
 import type { Tuple } from './Tuple';
 import type { DeepPartial } from './DeepPartial';
 
@@ -15,7 +16,7 @@ export interface MantineTheme {
   readonly colorScheme: 'light' | 'dark';
   readonly white: string;
   readonly black: string;
-  readonly colors: Record<string, Tuple<string, 10>>;
+  readonly colors: Record<MantineColor, Tuple<string, 10>>;
   readonly fontFamily: CSSProperties['fontFamily'];
   readonly lineHeight: CSSProperties['lineHeight'];
   readonly transitionTimingFunction: CSSProperties['transitionTimingFunction'];
