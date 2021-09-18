@@ -1,6 +1,6 @@
 import React from 'react';
 import { DEFAULT_THEME, MantineThemeOverride } from '@mantine/theme';
-import { mergeTheme } from './merge-theme/merge-theme';
+import { mergeTheme } from '../utils/merge-theme/merge-theme';
 import { MantineThemeContext } from './theme-context';
 
 interface MantineProviderProps {

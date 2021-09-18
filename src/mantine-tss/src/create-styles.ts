@@ -1,6 +1,6 @@
 import type { MantineTheme } from '@mantine/theme';
 import type { CSSObject } from './types';
-import { fromEntries } from './utils/from-entries';
+import { fromEntries } from './utils/from-entries/from-entries';
 import { useCss } from './use-css';
 import { useMantineTheme } from './MantineProvider/use-mantine-theme';
 import { mergeClassNames } from './utils/merge-class-names/merge-class-names';

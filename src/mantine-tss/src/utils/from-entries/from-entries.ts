@@ -3,7 +3,6 @@ export function fromEntries(entries: any) {
 
   Object.keys(entries).forEach((key) => {
     const [k, v] = entries[key];
-
     o[k] = v;
   });
 

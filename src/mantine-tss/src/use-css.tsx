@@ -1,7 +1,7 @@
 import { serializeStyles } from '@emotion/serialize';
 import { insertStyles } from '@emotion/utils';
 import type { EmotionCache } from '@emotion/cache';
-import { useGuaranteedMemo } from './utils/use-guaranteed-memo';
+import { useGuaranteedMemo } from './utils/use-guaranteed-memo/use-guaranteed-memo';
 import type { CSS } from './types';
 import { useCache } from './CacheProvider';
 

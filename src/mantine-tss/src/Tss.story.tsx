@@ -16,7 +16,7 @@ const useStyles = createStyles((theme, { color }: Params, createRef) => {
 
   return {
     root: {
-      color: theme.colors.blue[5],
+      color: theme.colors[theme.primaryColor][5],
 
       '&:hover': {
         color: theme.colors[color][6],
