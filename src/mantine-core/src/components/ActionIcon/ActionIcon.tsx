@@ -65,7 +65,7 @@ export function ActionIcon<
   children,
   radius = 'sm',
   size = 'md',
-  variant = 'default',
+  variant = 'hover',
   disabled = false,
   loaderProps,
   loading = false,

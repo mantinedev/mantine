@@ -89,7 +89,13 @@ export function Notification({
       </div>
 
       {!disallowClose && (
-        <CloseButton {...closeButtonProps} iconSize={16} color="gray" onClick={onClose} />
+        <CloseButton
+          {...closeButtonProps}
+          iconSize={16}
+          color="gray"
+          onClick={onClose}
+          variant="hover"
+        />
       )}
     </Paper>
   );
