@@ -40,7 +40,7 @@ const [ref, rect] = useResizeObserver();
 ## Definition
 
 ```tsx
-function useIntersection<T extends HTMLElement = any>(): [
+function useResizeObserver<T extends HTMLElement = any>(): [
     MutableRefObject<T>,
     {
       readonly x: number;
