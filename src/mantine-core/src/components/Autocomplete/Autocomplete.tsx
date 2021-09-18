@@ -1,12 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
-import {
-  DefaultProps,
-  useMantineTheme,
-  MantineSize,
-  mergeStyles,
-  MantineShadow,
-} from '../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineSize, MantineShadow } from '@mantine/theme';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -124,8 +119,7 @@ export function Autocomplete({
   nothingFound,
   ...others
 }: AutocompleteProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, size }, classNames, 'autocomplete');
+  const classes = useStyles({ size }, classNames, 'autocomplete');
   const _styles = mergeStyles(classes, styles);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
