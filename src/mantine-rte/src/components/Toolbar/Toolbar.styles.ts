@@ -23,7 +23,7 @@ export default createStyles((theme, { sticky, stickyOffset }: ToolbarStyles) => 
     }`,
     borderTopRightRadius: theme.radius.sm,
     borderTopLeftRadius: theme.radius.sm,
-    padding: [theme.spacing.sm, theme.spacing.md],
+    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
   },
 
   toolbarInner: {

@@ -31,6 +31,7 @@ export function ToolbarButton({
     <ActionIcon
       className={cx(classes.control, `ql-${controls}`, className)}
       value={value}
+      radius={0}
       {...others}
     >
       {children}

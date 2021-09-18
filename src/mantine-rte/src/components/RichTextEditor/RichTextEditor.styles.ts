@@ -28,7 +28,7 @@ export default createStyles(
 
       '& .ql-editor': {
         outline: 'none',
-        padding: [theme.spacing.sm, theme.spacing.md],
+        padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
       },
 
       '& .ql-container.ql-disabled .ql-tooltip': {
@@ -38,7 +38,7 @@ export default createStyles(
       '& .ql-tooltip': {
         position: 'absolute',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-        padding: [theme.spacing.xs, theme.spacing.md],
+        padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
         border: `1px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
         }`,
@@ -58,7 +58,7 @@ export default createStyles(
         color: theme.white,
         borderRadius: theme.radius.sm,
         fontWeight: 500,
-        padding: [0, theme.spacing.sm],
+        padding: `0 ${theme.spacing.md}px`,
         marginRight: theme.spacing.sm,
         fontSize: theme.fontSizes.sm,
       },
