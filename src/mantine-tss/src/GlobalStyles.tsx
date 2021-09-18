@@ -1,9 +1,8 @@
 import React from 'react';
-import { Global, css } from '@emotion/react';
-import type { CSSInterpolation } from './types';
+import { Global, css, CSSObject } from '@emotion/react';
 
 interface GlobalStylesProps {
-  styles: CSSInterpolation;
+  styles: CSSObject;
 }
 
 export function GlobalStyles({ styles }: GlobalStylesProps) {

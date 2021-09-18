@@ -100,6 +100,8 @@
   "dependencies": {
     "@emotion/cache": "^11.4.0",
     "@emotion/react": "^11.4.1",
+    "@emotion/serialize": "^1.0.2",
+    "@emotion/utils": "^1.0.0",
     "@modulz/radix-icons": "^4.0.0",
     "@popperjs/core": "^2.9.3",
     "@primer/octicons-react": "^14.2.1",
