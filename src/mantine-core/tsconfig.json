@@ -11,5 +11,10 @@
     "declarationDir": "lib",
     "composite": true
   },
-  "references": [{ "path": "../mantine-hooks" }, { "path": "../mantine-tests" }]
+  "references": [
+    { "path": "../mantine-hooks" },
+    { "path": "../mantine-tss" },
+    { "path": "../mantine-theme" },
+    { "path": "../mantine-tests" }
+  ]
 }
