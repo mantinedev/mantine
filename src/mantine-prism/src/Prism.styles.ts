@@ -1,7 +1,9 @@
 import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
-  root: { position: 'relative' },
+  root: {
+    position: 'relative',
+  },
 
   code: {
     boxSizing: 'border-box',
@@ -11,12 +13,12 @@ export default createStyles((theme) => ({
     fontSize: 13,
     overflowX: 'auto',
     borderRadius: theme.radius.sm,
-    padding: [theme.spacing.sm, 0],
+    padding: `${theme.spacing.sm}px 0`,
     marginTop: 0,
     marginBottom: 0,
   },
 
-  copy: {
+  copyControl: {
     position: 'absolute',
     top: theme.spacing.xs,
     right: theme.spacing.xs,
@@ -26,7 +28,7 @@ export default createStyles((theme) => ({
   line: {
     display: 'flex',
     width: '100%',
-    padding: [0, theme.spacing.md],
+    padding: `0 ${theme.spacing.md}px`,
   },
 
   lineNumber: {

@@ -67,8 +67,8 @@ export function Prism({
       {!noCopy && (
         <Tooltip
           data-mantine-copy
-          className={classes.copy}
-          style={_styles.copy}
+          style={_styles.copyControl}
+          className={classes.copyControl}
           label={clipboard.copied ? copiedLabel : copyLabel}
           position="left"
           placement="center"
