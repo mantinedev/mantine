@@ -5,3 +5,4 @@ export { keyframes } from '@emotion/react';
 export { GlobalStyles } from './GlobalStyles';
 export { MantineProvider } from './MantineProvider/MantineProvider';
 export { useMantineTheme } from './MantineProvider/use-mantine-theme';
+export { getCache } from './CacheProvider';
