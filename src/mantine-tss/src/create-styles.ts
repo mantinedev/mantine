@@ -3,6 +3,7 @@ import type { CSSObject } from './types';
 import { fromEntries } from './utils/from-entries';
 import { useCss } from './use-css';
 import { useMantineTheme } from './MantineProvider/use-mantine-theme';
+import { mergeClassNames } from './utils/merge-class-names/merge-class-names';
 
 export function createStyles<Key extends string = string, Params = void>(
   getCssObjectOrCssObject:
@@ -14,7 +15,7 @@ export function createStyles<Key extends string = string, Params = void>(
       ? getCssObjectOrCssObject
       : () => getCssObjectOrCssObject;
 
-  function useStyles(params: Params) {
+  function useStyles(params: Params, classNames?: Partial<Record<Key, string>>, name?: string) {
     const theme = useMantineTheme();
     const css = useCss();
 
@@ -31,7 +32,7 @@ export function createStyles<Key extends string = string, Params = void>(
       Object.keys(cssObject).map((key) => [key, css(cssObject[key])])
     ) as Record<Key, string>;
 
-    return classes;
+    return mergeClassNames(classes, classNames, name);
   }
 
   return useStyles;
