@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
+import { DefaultProps, mergeStyles } from '../../theme';
 import { Text } from '../Text/Text';
 import useStyles from './Breadcrumbs.styles';
 
@@ -25,8 +25,7 @@ export function Breadcrumbs({
   styles,
   ...others
 }: BreadcrumbsProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme }, classNames, 'breadcrumbs');
+  const classes = useStyles(null, classNames, 'breadcrumbs');
   const _styles = mergeStyles(classes, styles);
 
   const items = React.Children.toArray(children).reduce((acc: any[], child: any, index, array) => {
