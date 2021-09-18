@@ -1,7 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineSize,
   MantineNumberSize,
@@ -72,14 +71,12 @@ export function Badge<C extends React.ElementType = 'div', R extends HTMLElement
   styles,
   ...others
 }: BadgeProps<C, R>) {
-  const theme = useMantineTheme();
   const classes = useStyles(
     {
       size,
       fullWidth,
       color,
       radius,
-      theme,
       gradientFrom: gradient.from,
       gradientTo: gradient.to,
       gradientDeg: gradient.deg,
