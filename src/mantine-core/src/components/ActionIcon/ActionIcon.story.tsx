@@ -15,9 +15,8 @@ const getThemes = (props?: any, iconProps?: any) =>
 storiesOf('@mantine/core/ActionIcon', module)
   .add('Variants', () => (
     <>
+      <Group style={{ padding: 20 }}>{getThemes({ variant: 'hover' })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'default' })}</Group>
-      <Group style={{ padding: 20 }}>{getThemes()}</Group>
-      <Group style={{ padding: 20 }}>{getThemes({ variant: 'transparent' })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'filled' })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'outline' })}</Group>
