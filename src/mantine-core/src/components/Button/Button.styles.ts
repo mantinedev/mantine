@@ -1,6 +1,5 @@
+import { createStyles } from '@mantine/tss';
 import {
-  createMemoStyles,
-  MantineTheme,
   MantineSize,
   MantineNumberSize,
   getFontStyles,
@@ -11,70 +10,79 @@ import {
   getSharedColorScheme,
   hexToRgba,
   MantineColor,
-} from '../../theme';
+} from '@mantine/theme';
 import { INPUT_SIZES } from '../Input/Input';
+
+export type ButtonVariant =
+  | 'link'
+  | 'filled'
+  | 'outline'
+  | 'light'
+  | 'gradient'
+  | 'white'
+  | 'default';
 
 interface ButtonStylesProps {
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
-  theme: MantineTheme;
   fullWidth: boolean;
   compact: boolean;
   gradientFrom: string;
   gradientTo: string;
   gradientDeg: number;
+  variant: ButtonVariant;
 }
 
 const sizes = {
   xs: {
     height: INPUT_SIZES.xs,
-    padding: [0, 14],
+    padding: '0 14px',
   },
 
   sm: {
     height: INPUT_SIZES.sm,
-    padding: [0, 18],
+    padding: '0 18px',
   },
 
   md: {
     height: INPUT_SIZES.md,
-    padding: [0, 22],
+    padding: '0 22px',
   },
 
   lg: {
     height: INPUT_SIZES.lg,
-    padding: [0, 26],
+    padding: '0 26px',
   },
 
   xl: {
     height: INPUT_SIZES.xl,
-    padding: [0, 32],
+    padding: '0 32px',
   },
 
   'compact-xs': {
     height: 22,
-    padding: [0, 7],
+    padding: '0 7px',
   },
 
   'compact-sm': {
     height: 26,
-    padding: [0, 8],
+    padding: '0 8px',
   },
 
   'compact-md': {
     height: 30,
-    padding: [0, 10],
+    padding: '0 10px',
   },
 
   'compact-lg': {
     height: 34,
-    padding: [0, 12],
+    padding: '0 12px',
   },
 
   'compact-xl': {
     height: 40,
-    padding: [0, 14],
+    padding: '0 14px',
   },
 };
 
@@ -96,178 +104,139 @@ const getWidthStyles = (fullWidth: boolean) => ({
   width: fullWidth ? '100%' : 'auto',
 });
 
-const getSharedProps = ({ theme, radius }: Partial<ButtonStylesProps>) => ({
-  borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-  fontWeight: 600,
+export default createStyles(
+  (
+    theme,
+    {
+      color,
+      size,
+      radius,
+      fullWidth,
+      compact,
+      gradientFrom,
+      variant,
+      gradientTo,
+      gradientDeg,
+    }: ButtonStylesProps,
+    getRef
+  ) => {
+    const loading = {
+      ref: getRef(),
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        top: -1,
+        left: -1,
+        right: -1,
+        bottom: -1,
+        backgroundColor:
+          theme.colorScheme === 'dark'
+            ? hexToRgba(theme.colors.dark[7], 0.5)
+            : 'rgba(255, 255, 255, .5)',
+        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
+        cursor: 'not-allowed',
+      },
+    } as const;
 
-  '&:not(:disabled):active': {
-    transform: 'translateY(1px)',
-  },
-
-  '&:disabled:not($loading)': {
-    borderColor: 'transparent',
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
-    cursor: 'not-allowed',
-  },
-});
-
-export default createMemoStyles({
-  loading: (props: ButtonStylesProps) => ({
-    '&::before': {
-      content: '""',
-      position: 'absolute',
-      top: -1,
-      left: -1,
-      right: -1,
-      bottom: -1,
-      backgroundColor:
-        props.theme.colorScheme === 'dark'
-          ? hexToRgba(props.theme.colors.dark[7], 0.5)
-          : 'rgba(255, 255, 255, .5)',
-      borderRadius: getSizeValue({ size: props.radius, sizes: props.theme.radius }) - 1,
-      cursor: 'not-allowed',
-    },
-  }),
-
-  icon: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-
-  leftIcon: {
-    marginRight: 10,
-  },
-
-  rightIcon: {
-    marginLeft: 10,
-  },
-
-  inner: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
-    overflow: 'visible',
-  },
-
-  label: {
-    display: 'flex',
-    alignItems: 'center',
-    whiteSpace: 'nowrap',
-    height: '100%',
-    overflow: 'hidden',
-  },
-
-  root: (props: ButtonStylesProps) => ({
-    ...getSizeStyles({ compact: props.compact, size: props.size }),
-    ...getFontStyles(props.theme),
-    ...getFocusStyles(props.theme),
-    ...getWidthStyles(props.fullWidth),
-    position: 'relative',
-    lineHeight: 1,
-    fontSize: getSizeValue({ size: props.size, sizes: props.theme.fontSizes }),
-    WebkitTapHighlightColor: 'transparent',
-    userSelect: 'none',
-    boxSizing: 'border-box',
-    textDecoration: 'none',
-    cursor: 'pointer',
-    appearance: 'none',
-    WebkitAppearance: 'none',
-  }),
-
-  outline: ({ color, radius, theme }: ButtonStylesProps) => {
-    const colors = getSharedColorScheme({ color, theme, variant: 'outline' });
-
-    return {
-      backgroundColor: colors.background,
-      color: colors.color,
-      border: `1px solid ${colors.border}`,
-      ...getSharedProps({ theme, radius }),
-    };
-  },
-
-  light: ({ color, radius, theme }: ButtonStylesProps) => {
-    const colors = getSharedColorScheme({ color, theme, variant: 'light' });
-
-    return {
-      border: `1px solid ${colors.border}`,
-      backgroundColor: colors.background,
-      color: colors.color,
-      ...getSharedProps({ theme, radius }),
-    };
-  },
-
-  filled: ({ color, radius, theme }: ButtonStylesProps) => {
-    const colors = getSharedColorScheme({ color, theme, variant: 'filled' });
-
-    return {
-      border: `1px solid ${colors.border}`,
-      backgroundColor: colors.background,
-      color: colors.color,
-      ...getSharedProps({ theme, radius }),
-    };
-  },
-
-  default: ({ color, radius, theme }: ButtonStylesProps) => {
-    const colors = getSharedColorScheme({ color, theme, variant: 'default' });
-
-    return {
-      border: `1px solid ${colors.border}`,
-      backgroundColor: colors.background,
-      color: colors.color,
-      ...getSharedProps({ theme, radius }),
-    };
-  },
-
-  white: ({ color, radius, theme }: ButtonStylesProps) => {
-    const colors = getSharedColorScheme({ color, theme, variant: 'white' });
-
-    return {
-      border: `1px solid ${colors.border}`,
-      backgroundColor: colors.background,
-      color: colors.color,
-      ...getSharedProps({ theme, radius }),
-    };
-  },
-
-  gradient: ({ radius, theme, gradientDeg, gradientFrom, gradientTo }: ButtonStylesProps) => {
     const colors = getSharedColorScheme({
       theme,
-      variant: 'gradient',
+      color,
+      variant: variant as any,
       gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
     });
 
     return {
-      border: 0,
-      backgroundImage: colors.background,
-      color: colors.color,
-      ...getSharedProps({ theme, radius }),
-    };
-  },
+      loading,
 
-  link: ({ color, radius, theme }: ButtonStylesProps) => ({
-    padding: 0,
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-    backgroundColor: 'transparent',
-    border: 0,
-    display: 'inline-block',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
-    cursor: 'pointer',
-    height: 'auto',
-    lineHeight: theme.lineHeight,
-
-    '&:hover': {
-      textDecoration: 'underline',
-    },
-
-    '&:disabled': {
-      color: theme.colors.gray[5],
-      cursor: 'not-allowed',
-
-      '&:hover': {
+      root: {
+        ...getSizeStyles({ compact, size }),
+        ...getFontStyles(theme),
+        ...getFocusStyles(theme),
+        ...getWidthStyles(fullWidth),
+        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+        fontWeight: 600,
+        position: 'relative',
+        lineHeight: 1,
+        fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+        border: `1px solid ${colors.border}`,
+        backgroundColor: colors.background,
+        backgroundImage: variant === 'gradient' ? colors.background : null,
+        color: colors.color,
+        WebkitTapHighlightColor: 'transparent',
+        userSelect: 'none',
+        boxSizing: 'border-box',
         textDecoration: 'none',
+        cursor: 'pointer',
+        appearance: 'none',
+        WebkitAppearance: 'none',
+
+        '&:not(:disabled):active': {
+          transform: 'translateY(1px)',
+        },
+
+        [`&:not(.${loading.ref}):disabled`]: {
+          borderColor: 'transparent',
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
+          cursor: 'not-allowed',
+        },
       },
-    },
-  }),
-});
+
+      icon: {
+        display: 'flex',
+        alignItems: 'center',
+      },
+
+      leftIcon: {
+        marginRight: 10,
+      },
+
+      rightIcon: {
+        marginLeft: 10,
+      },
+
+      inner: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+        overflow: 'visible',
+      },
+
+      label: {
+        display: 'flex',
+        alignItems: 'center',
+        whiteSpace: 'nowrap',
+        height: '100%',
+        overflow: 'hidden',
+      },
+
+      link: {
+        padding: 0,
+        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+        backgroundColor: 'transparent',
+        border: 0,
+        display: 'inline-block',
+        color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
+        cursor: 'pointer',
+        height: 'auto',
+        lineHeight: theme.lineHeight,
+        fontWeight: 400,
+
+        '&:hover': {
+          textDecoration: 'underline',
+        },
+
+        '&:disabled': {
+          color: theme.colors.gray[5],
+          cursor: 'not-allowed',
+
+          '&:hover': {
+            textDecoration: 'none',
+          },
+        },
+      },
+    };
+  }
+);
