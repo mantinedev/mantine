@@ -26,12 +26,11 @@ export function SimpleGrid({
   cols,
   id,
   spacing = 'md',
-  themeOverride,
   children,
   ...others
 }: SimpleGridProps) {
   const uuid = useId(id);
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const sortedBreakpoints = [...breakpoints].sort((a, b) => b.maxWidth - a.maxWidth);
   const gridClassName = `grid-${uuid}`;
   const colClassName = `col-${uuid}`;

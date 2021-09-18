@@ -19,14 +19,13 @@ export interface BreadcrumbsProps
 export function Breadcrumbs({
   className,
   style,
-  themeOverride,
   children,
   separator = '/',
   classNames,
   styles,
   ...others
 }: BreadcrumbsProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme }, classNames, 'breadcrumbs');
   const _styles = mergeStyles(classes, styles);
 
@@ -46,7 +45,6 @@ export function Breadcrumbs({
           className={classes.separator}
           style={_styles.separator}
           key={`separator-${index}`}
-          themeOverride={themeOverride}
         >
           {separator}
         </Text>

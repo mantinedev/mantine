@@ -48,7 +48,6 @@ export function Switch({
   style,
   size = 'sm',
   radius = 'xl',
-  themeOverride,
   wrapperProps,
   elementRef,
   children,
@@ -57,7 +56,7 @@ export function Switch({
   ...others
 }: SwitchProps) {
   const reduceMotion = useReducedMotion();
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ size, color, radius, reduceMotion, theme }, classNames, 'switch');
   const _styles = mergeStyles(classes, styles);
 

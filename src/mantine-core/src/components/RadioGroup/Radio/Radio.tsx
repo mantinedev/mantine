@@ -34,7 +34,6 @@ export interface RadioProps
 export function Radio({
   className,
   style,
-  themeOverride,
   id,
   children,
   size,
@@ -46,7 +45,7 @@ export function Radio({
   styles,
   ...others
 }: RadioProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ color, size, theme }, classNames, 'radio-group');
   const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);

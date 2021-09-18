@@ -118,14 +118,13 @@ export function Autocomplete({
   transitionTimingFunction,
   wrapperProps,
   elementRef,
-  themeOverride,
   classNames,
   styles,
   filter = defaultFilter,
   nothingFound,
   ...others
 }: AutocompleteProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, size }, classNames, 'autocomplete');
   const _styles = mergeStyles(classes, styles);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
@@ -216,7 +215,6 @@ export function Autocomplete({
       size={size}
       className={className}
       style={style}
-      themeOverride={themeOverride}
       classNames={classNames}
       styles={styles}
       __staticSelector="autocomplete"
@@ -243,7 +241,6 @@ export function Autocomplete({
           invalid={!!error}
           size={size}
           onKeyDown={handleInputKeydown}
-          themeOverride={themeOverride}
           classNames={classNames}
           styles={styles}
           __staticSelector="autocomplete"
@@ -261,7 +258,6 @@ export function Autocomplete({
         />
 
         <SelectDropdown
-          themeOverride={themeOverride}
           mounted={shouldRenderDropdown}
           transition={transition}
           transitionDuration={transitionDuration}
@@ -276,7 +272,6 @@ export function Autocomplete({
           <SelectItems
             data={filteredData}
             hovered={hovered}
-            themeOverride={themeOverride}
             classNames={classNames}
             styles={styles}
             uuid={uuid}

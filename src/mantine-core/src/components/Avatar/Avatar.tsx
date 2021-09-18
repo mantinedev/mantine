@@ -51,7 +51,6 @@ export function Avatar<
   radius = 'sm',
   children,
   color = 'gray',
-  themeOverride,
   classNames,
   styles,
   elementRef,

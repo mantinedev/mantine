@@ -39,10 +39,9 @@ export function ThemeIcon({
   color,
   children,
   gradient = { from: 'blue', to: 'cyan', deg: 45 },
-  themeOverride,
   ...others
 }: ThemeIconProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles(
     {
       theme,

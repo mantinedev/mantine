@@ -7,13 +7,8 @@ export interface CardSectionProps extends DefaultProps, React.ComponentPropsWith
   padding?: MantineNumberSize;
 }
 
-export function CardSection({
-  className,
-  themeOverride,
-  padding = 0,
-  ...others
-}: CardSectionProps) {
-  const theme = useMantineTheme(themeOverride);
+export function CardSection({ className, padding = 0, ...others }: CardSectionProps) {
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, padding }, null, 'card');
   return <div className={cx(classes.cardSection, className)} {...others} />;
 }

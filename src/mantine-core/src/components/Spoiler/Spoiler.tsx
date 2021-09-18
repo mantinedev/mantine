@@ -36,7 +36,6 @@ export function Spoiler({
   maxHeight = 100,
   hideLabel,
   showLabel,
-  themeOverride,
   transitionDuration = 200,
   controlRef,
   initialState = false,
@@ -47,7 +46,7 @@ export function Spoiler({
   const classes = useStyles(
     {
       transitionDuration: !useReducedMotion() && transitionDuration,
-      theme: useMantineTheme(themeOverride),
+      theme: useMantineTheme(),
     },
     classNames,
     'spoiler'
@@ -80,7 +79,6 @@ export function Spoiler({
           variant="link"
           elementRef={controlRef}
           onClick={() => setShowState((opened) => !opened)}
-          themeOverride={themeOverride}
           className={classes.control}
           style={_styles.control}
         >

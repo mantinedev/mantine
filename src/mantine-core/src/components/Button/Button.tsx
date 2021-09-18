@@ -117,7 +117,6 @@ export function Button<
   radius = 'sm',
   component,
   elementRef,
-  themeOverride,
   uppercase = false,
   compact = false,
   loading = false,
@@ -128,7 +127,7 @@ export function Button<
   styles,
   ...others
 }: ButtonProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const colors = getSharedColorScheme({
     color,
     theme,

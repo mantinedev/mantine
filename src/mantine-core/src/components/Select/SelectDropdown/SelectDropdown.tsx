@@ -20,7 +20,6 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
 }
 
 export function SelectDropdown({
-  themeOverride,
   mounted,
   transition,
   transitionDuration,
@@ -34,7 +33,7 @@ export function SelectDropdown({
   elementRef,
   __staticSelector,
 }: SelectDropdownProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 

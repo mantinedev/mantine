@@ -105,7 +105,6 @@ export function Select({
   transitionTimingFunction,
   wrapperProps,
   elementRef,
-  themeOverride,
   classNames,
   styles,
   filter = defaultFilter,
@@ -269,7 +268,6 @@ export function Select({
       size={size}
       className={className}
       style={style}
-      themeOverride={themeOverride}
       classNames={classNames}
       styles={styles}
       __staticSelector="select"
@@ -293,7 +291,6 @@ export function Select({
           invalid={!!error}
           size={size}
           onKeyDown={handleInputKeydown}
-          themeOverride={themeOverride}
           classNames={classNames}
           __staticSelector="select"
           value={inputValue}
@@ -319,7 +316,6 @@ export function Select({
             },
             size,
             shouldClear: clearable && !!selectedValue,
-            themeOverride,
             clearButtonLabel,
             onClear: handleClear,
             error,
@@ -327,7 +323,6 @@ export function Select({
         />
 
         <SelectDropdown
-          themeOverride={themeOverride}
           mounted={dropdownOpened}
           transition={transition}
           transitionDuration={transitionDuration}
@@ -343,7 +338,6 @@ export function Select({
           <SelectItems
             data={filteredData}
             hovered={hovered}
-            themeOverride={themeOverride}
             classNames={classNames}
             styles={styles}
             isItemSelected={(val) => val === _value}

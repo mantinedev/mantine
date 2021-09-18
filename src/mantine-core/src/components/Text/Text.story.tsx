@@ -92,17 +92,4 @@ storiesOf('@mantine/core/Text', module)
         Link
       </Text>
     </div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <Text themeOverride={{ colorScheme: 'dark' }}>Default text</Text>
-      <Text themeOverride={{ colorScheme: 'dark' }} weight={500}>
-        Semibold text
-      </Text>
-      <Text themeOverride={{ colorScheme: 'dark' }} weight={700}>
-        Bold text
-      </Text>
-
-      {getThemes({ themeOverride: { colorScheme: 'dark' } })}
-    </div>
   ));

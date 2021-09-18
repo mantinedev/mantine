@@ -44,14 +44,13 @@ export function ColorSlider({
   focusable = true,
   elementRef,
   overlays,
-  themeOverride,
   classNames,
   styles,
   className,
   style,
   ...others
 }: ColorSliderProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ y: 0, x: value / maxValue });
@@ -109,7 +108,6 @@ export function ColorSlider({
         __staticSelector={__staticSelector}
         classNames={classNames}
         styles={styles}
-        themeOverride={themeOverride}
         position={position}
         style={{ top: 1, backgroundColor: thumbColor }}
         className={classes.sliderThumb}

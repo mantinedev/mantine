@@ -108,7 +108,6 @@ storiesOf('@mantine/core/Slider', module)
     <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
       <div style={{ width: 280, padding: 40 }}>
         <Wrapper
-          themeOverride={{ colorScheme: 'dark' }}
           step={25}
           radius={0}
           color="lime"

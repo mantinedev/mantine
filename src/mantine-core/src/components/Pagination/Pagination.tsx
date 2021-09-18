@@ -61,7 +61,6 @@ export function Pagination({
   itemComponent: Item = DefaultItem,
   classNames,
   styles,
-  themeOverride,
   page,
   initialPage = 1,
   color,
@@ -75,7 +74,7 @@ export function Pagination({
   spacing,
   ...others
 }: PaginationProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, color, size, radius }, classNames, 'pagination');
   const _styles = mergeStyles(classes, styles);
 

@@ -28,11 +28,10 @@ export function Saturation({
   size,
   color,
   saturationLabel,
-  themeOverride,
   classNames,
   styles,
 }: SaturationProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ x: value.s / 100, y: 1 - value.v / 100 });
@@ -112,7 +111,6 @@ export function Saturation({
         __staticSelector={__staticSelector}
         classNames={classNames}
         styles={styles}
-        themeOverride={themeOverride}
         position={position}
         className={classes.saturationThumb}
         style={{ backgroundColor: color }}

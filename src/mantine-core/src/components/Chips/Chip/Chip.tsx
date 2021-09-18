@@ -75,11 +75,10 @@ export function Chip({
   checked,
   defaultChecked,
   onChange,
-  themeOverride,
   ...others
 }: ChipProps) {
   const uuid = useId(id);
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, radius, size, color }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [value, setValue] = useUncontrolled({

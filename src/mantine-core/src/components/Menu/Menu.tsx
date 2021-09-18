@@ -105,7 +105,6 @@ export function Menu({
   onClose,
   onOpen,
   opened,
-  themeOverride,
   style,
   menuId,
   menuBodyProps = {},
@@ -135,7 +134,7 @@ export function Menu({
   onChange,
   ...others
 }: MenuProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme }, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
   const controlRefFocusTimeout = useRef<number>();
@@ -251,7 +250,6 @@ export function Menu({
           opened={_opened}
           onClose={handleClose}
           id={uuid}
-          themeOverride={themeOverride}
           closeOnItemClick={closeOnItemClick}
           size={size}
           shadow={shadow}

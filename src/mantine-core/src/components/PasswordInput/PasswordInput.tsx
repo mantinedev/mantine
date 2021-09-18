@@ -53,7 +53,6 @@ export function PasswordInput({
   disabled,
   hidePasswordLabel,
   showPasswordLabel,
-  themeOverride,
   size = 'sm',
   toggleTabIndex = -1,
   ...others
@@ -73,7 +72,6 @@ export function PasswordInput({
         }
       }}
       tabIndex={toggleTabIndex}
-      themeOverride={themeOverride}
       title={reveal ? hidePasswordLabel : showPasswordLabel}
       aria-label={reveal ? hidePasswordLabel : showPasswordLabel}
       radius={radius}
@@ -87,7 +85,6 @@ export function PasswordInput({
     <TextInput
       {...others}
       disabled={disabled}
-      themeOverride={themeOverride}
       type={reveal ? 'text' : 'password'}
       rightSection={disabled ? null : rightSection}
       rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}

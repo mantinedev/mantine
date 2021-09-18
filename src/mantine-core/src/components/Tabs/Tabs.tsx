@@ -91,7 +91,6 @@ export function Tabs({
   children,
   style,
   initialTab,
-  themeOverride,
   active,
   position = 'left',
   grow = false,
@@ -104,7 +103,7 @@ export function Tabs({
   orientation = 'horizontal',
   ...others
 }: TabsProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, tabPadding, orientation }, classNames, 'tabs');
   const _styles = mergeStyles(classes, styles);
 

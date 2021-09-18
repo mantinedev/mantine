@@ -58,14 +58,13 @@ export function Progress({
   size = 'md',
   radius = 'sm',
   striped = false,
-  themeOverride,
   'aria-label': ariaLabel,
   classNames,
   styles,
   sections,
   ...others
 }: ProgressProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
   const classes = useStyles(
     { color, size, radius, striped, reduceMotion, theme },

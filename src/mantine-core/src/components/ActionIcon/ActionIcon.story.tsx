@@ -60,33 +60,4 @@ storiesOf('@mantine/core/ActionIcon', module)
     <ActionIcon autoFocus>
       <GearIcon />
     </ActionIcon>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 30 }}>
-      <Group>{getThemes({ variant: 'filled', themeOverride: { colorScheme: 'dark' } })}</Group>
-      <Group style={{ marginTop: 20 }}>
-        {getThemes({ variant: 'transparent', themeOverride: { colorScheme: 'dark' } })}
-      </Group>
-      <Group style={{ marginTop: 20 }}>
-        {getThemes({ variant: 'hover', themeOverride: { colorScheme: 'dark' } })}
-      </Group>
-      <Group style={{ marginTop: 20 }}>
-        {getThemes({ variant: 'outline', themeOverride: { colorScheme: 'dark' } })}
-      </Group>
-      <Group style={{ marginTop: 20 }}>
-        {getThemes({ variant: 'light', themeOverride: { colorScheme: 'dark' } })}
-      </Group>
-      <Group style={{ marginTop: 20 }}>
-        {getThemes({ disabled: true, variant: 'filled', themeOverride: { colorScheme: 'dark' } })}
-      </Group>
-      <Group style={{ marginTop: 20 }}>
-        {getThemes({ disabled: true, variant: 'outline', themeOverride: { colorScheme: 'dark' } })}
-      </Group>
-      <Group style={{ marginTop: 20 }}>
-        {getThemes({ loading: true, variant: 'filled', themeOverride: { colorScheme: 'dark' } })}
-      </Group>
-      <Group style={{ marginTop: 20 }}>
-        {getThemes({ loading: true, variant: 'outline', themeOverride: { colorScheme: 'dark' } })}
-      </Group>
-    </div>
   ));

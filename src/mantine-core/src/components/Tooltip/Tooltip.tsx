@@ -57,7 +57,6 @@ export interface TooltipProps
 export function Tooltip({
   className,
   style,
-  themeOverride,
   label,
   children,
   opened,
@@ -84,7 +83,7 @@ export function Tooltip({
   styles,
   ...others
 }: TooltipProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, color }, classNames, 'tooltip');
   const _styles = mergeStyles(classes, styles);
   const timeoutRef = useRef<number>();

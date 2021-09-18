@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles, Text, MantineSize } from '@mantine/core';
+import { DefaultProps, mergeStyles, Text, MantineSize } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
@@ -81,7 +81,6 @@ export function Month({
   locale = 'en',
   dayClassName,
   dayStyle,
-  themeOverride,
   classNames,
   styles,
   minDate,
@@ -95,8 +94,7 @@ export function Month({
   fullWidth = false,
   ...others
 }: MonthProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, fullWidth }, classNames, __staticSelector);
+  const classes = useStyles({ fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
@@ -195,7 +193,6 @@ export function Month({
             selected={dayProps.selected || dayProps.selectedInRange}
             hasValue={hasValueInMonthRange}
             onKeyDown={handleKeyDown}
-            themeOverride={themeOverride}
             className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
             style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
             styles={styles}

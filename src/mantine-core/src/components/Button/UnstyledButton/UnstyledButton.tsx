@@ -7,13 +7,8 @@ interface UnstyledButtonProps extends DefaultProps, React.ComponentPropsWithoutR
   elementRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
-export function UnstyledButton({
-  className,
-  themeOverride,
-  elementRef,
-  ...others
-}: UnstyledButtonProps) {
-  const theme = useMantineTheme(themeOverride);
+export function UnstyledButton({ className, elementRef, ...others }: UnstyledButtonProps) {
+  const theme = useMantineTheme();
   const classes = useStyles({ theme });
 
   return (

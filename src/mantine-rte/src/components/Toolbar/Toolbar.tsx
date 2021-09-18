@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, mergeStyles, useMantineTheme } from '@mantine/core';
+import { DefaultProps, mergeStyles } from '@mantine/core';
 import type { RichTextEditorLabels } from '../RichTextEditor/default-labels';
 import { ToolbarButton } from './ToolbarButton/ToolbarButton';
 import { CONTROLS, ToolbarControl } from './controls';
@@ -26,7 +26,6 @@ export interface ToolbarProps extends DefaultProps<ToolbarStylesNames> {
 }
 
 export function Toolbar({
-  themeOverride,
   controls,
   labels,
   stickyOffset = 0,
@@ -38,8 +37,7 @@ export function Toolbar({
   id,
   ...others
 }: ToolbarProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, sticky, stickyOffset }, classNames, 'rte');
+  const classes = useStyles({ sticky, stickyOffset }, classNames, 'rte');
   const _styles = mergeStyles(classes, styles);
 
   const groups = controls.map((group, index) => {
@@ -52,7 +50,6 @@ export function Toolbar({
           <ToolbarButton
             className={classes.toolbarControl}
             style={_styles.toolbarControl}
-            themeOverride={themeOverride}
             controls={CONTROLS[item].controls}
             value={(CONTROLS[item] as any).value}
             key={item}

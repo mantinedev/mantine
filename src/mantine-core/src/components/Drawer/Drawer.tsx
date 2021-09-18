@@ -103,7 +103,6 @@ export function MantineDrawer({
   style,
   opened,
   onClose,
-  themeOverride,
   position = 'left',
   size = 'md',
   noFocusTrap = false,
@@ -127,7 +126,7 @@ export function MantineDrawer({
   styles,
   ...others
 }: DrawerProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const duration = useReducedMotion() ? 1 : transitionDuration;
   const classes = useStyles({ theme, size, position }, classNames, 'drawer');
   const _styles = mergeStyles(classes, styles);
@@ -201,25 +200,15 @@ export function MantineDrawer({
               }}
               shadow={shadow}
               padding={padding}
-              themeOverride={themeOverride}
             >
               {(title || !hideCloseButton) && (
                 <div className={classes.header} style={_styles.header}>
-                  <Text
-                    className={classes.title}
-                    style={_styles.title}
-                    themeOverride={themeOverride}
-                  >
+                  <Text className={classes.title} style={_styles.title}>
                     {title}
                   </Text>
 
                   {!hideCloseButton && (
-                    <CloseButton
-                      iconSize={16}
-                      onClick={onClose}
-                      aria-label={closeButtonLabel}
-                      themeOverride={themeOverride}
-                    />
+                    <CloseButton iconSize={16} onClick={onClose} aria-label={closeButtonLabel} />
                   )}
                 </div>
               )}

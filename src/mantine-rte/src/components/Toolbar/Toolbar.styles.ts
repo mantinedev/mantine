@@ -1,7 +1,6 @@
-import { createStyles, MantineTheme } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 interface ToolbarStyles {
-  theme: MantineTheme;
   sticky: boolean;
   stickyOffset: string | number;
 }

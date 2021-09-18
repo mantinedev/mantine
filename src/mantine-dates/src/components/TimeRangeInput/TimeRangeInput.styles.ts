@@ -1,9 +1,8 @@
-import { createStyles, MantineTheme, INPUT_SIZES, MantineSize, getSizeValue } from '@mantine/core';
+import { createStyles, INPUT_SIZES, MantineSize, getSizeValue } from '@mantine/core';
 
 import { inputSizes } from '../TimeInput/TimeInput.styles';
 
 interface TimeRangeInputStyles {
-  theme: MantineTheme;
   size: MantineSize;
 }
 

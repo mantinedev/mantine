@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { ActionIcon, ActionIconProps, useMantineTheme } from '@mantine/core';
+import { ActionIcon, ActionIconProps } from '@mantine/core';
 import useStyles from './ToolbarButton.styles';
 
 interface ToolbarButtonProps extends ActionIconProps<'button', HTMLButtonElement> {
@@ -22,16 +22,13 @@ export function ToolbarButton({
   children,
   controls,
   value,
-  themeOverride,
   noActive,
   ...others
 }: ToolbarButtonProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, noActive }, null, 'rte');
+  const classes = useStyles({ noActive }, null, 'rte');
 
   return (
     <ActionIcon
-      themeOverride={themeOverride}
       className={cx(classes.control, `ql-${controls}`, className)}
       value={value}
       {...others}

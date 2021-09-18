@@ -65,18 +65,4 @@ storiesOf('@mantine/core/InputWrapper', module)
         <Text>Input is located here</Text>
       </InputWrapper>
     </div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <InputWrapper
-        label="Input label"
-        required
-        error="Validation error"
-        id="input-wrapper-1"
-        description="Provide additional information about input here, can be multiline. Dimmed and smaller compared to label."
-        themeOverride={{ colorScheme: 'dark' }}
-      >
-        <Text>Input is located here</Text>
-      </InputWrapper>
-    </div>
   ));

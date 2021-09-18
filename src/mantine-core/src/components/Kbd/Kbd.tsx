@@ -8,8 +8,8 @@ export interface KbdProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   children: React.ReactNode;
 }
 
-export function Kbd({ className, children, themeOverride, ...others }: KbdProps) {
-  const theme = useMantineTheme(themeOverride);
+export function Kbd({ className, children, ...others }: KbdProps) {
+  const theme = useMantineTheme();
   const classes = useStyles({ theme }, null, 'kbd');
 
   return (

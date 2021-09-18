@@ -56,7 +56,6 @@ export function MantineDialog({
   padding = 'md',
   zIndex,
   children,
-  themeOverride,
   className,
   style,
   classNames,
@@ -69,7 +68,7 @@ export function MantineDialog({
   transitionTimingFunction,
   ...others
 }: DialogProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, size }, classNames, 'dialog');
   const _styles = mergeStyles(classes, styles);
 
@@ -86,14 +85,12 @@ export function MantineDialog({
           style={{ ...style, ..._styles.root, ...transitionStyles }}
           shadow={shadow}
           padding={padding}
-          themeOverride={themeOverride}
           withBorder={withBorder}
           {...others}
         >
           {withCloseButton && (
             <CloseButton
               onClick={onClose}
-              themeOverride={themeOverride}
               className={classes.closeButton}
               style={_styles.closeButton}
             />
@@ -106,7 +103,7 @@ export function MantineDialog({
 }
 
 export function Dialog(props: DialogProps) {
-  const theme = useMantineTheme(props.themeOverride);
+  const theme = useMantineTheme();
 
   return (
     <Affix

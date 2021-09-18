@@ -1,27 +1,22 @@
 import React from 'react';
 import cx from 'clsx';
-import { Group, theming } from '@mantine/core';
-import { createUseStyles } from 'react-jss';
+import { Group, createStyles } from '@mantine/core';
 import { Calendar } from '../Calendar';
 
 const code = `
 import cx from 'clsx';
-import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    outside: {
-      opacity: 0,
-    },
+const useStyles = createStyles((theme) => ({
+  outside: {
+    opacity: 0,
+  },
 
-    weekend: {
-      color: \`\${theme.colors.blue[6]} !important\`,
-    },
-  }),
-  { theming }
-);
+  weekend: {
+    color: \`\${theme.colors.blue[6]} !important\`,
+  },
+}));
 
 
 function Demo() {
@@ -39,18 +34,15 @@ function Demo() {
 }
 `;
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    outside: {
-      opacity: 0,
-    },
+const useStyles = createStyles((theme) => ({
+  outside: {
+    opacity: 0,
+  },
 
-    weekend: {
-      color: `${theme.colors.blue[6]} !important`,
-    },
-  }),
-  { theming }
-);
+  weekend: {
+    color: `${theme.colors.blue[6]} !important`,
+  },
+}));
 
 function Demo() {
   const classes = useStyles();

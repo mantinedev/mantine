@@ -29,7 +29,6 @@ export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<
 }
 
 export function Grid({
-  themeOverride,
   gutter = 'md',
   children,
   grow = false,
@@ -42,7 +41,7 @@ export function Grid({
   ...others
 }: GridProps) {
   const uuid = useId(id);
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const spacing = getSizeValue({ size: gutter, sizes: theme.spacing });
 
   const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>

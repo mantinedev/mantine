@@ -24,7 +24,6 @@ interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
 export function SelectItems({
   data,
   hovered,
-  themeOverride,
   classNames,
   styles,
   isItemSelected,
@@ -37,7 +36,7 @@ export function SelectItems({
   size,
   nothingFound,
 }: SelectItemsProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 

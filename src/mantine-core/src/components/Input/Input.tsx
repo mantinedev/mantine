@@ -72,7 +72,6 @@ export function Input<
   rightSectionProps = {},
   radius = 'sm',
   size = 'sm',
-  themeOverride,
   wrapperProps,
   elementRef,
   classNames,
@@ -91,7 +90,7 @@ export function Input<
     /** Get element ref */
     elementRef?: React.ForwardedRef<U>;
   }) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
   const classes = useStyles(
     { radius, theme, size, multiline, variant: _variant, invalid, disabled },

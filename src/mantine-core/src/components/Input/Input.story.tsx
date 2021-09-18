@@ -119,24 +119,5 @@ storiesOf('@mantine/core/Input', module)
       })}
     </>
   ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      {getStates({
-        variant: 'default',
-        themeOverride: { colorScheme: 'dark' },
-        inputStyle: { paddingTop: 9, paddingBottom: 9 },
-      })}
-      {getStates({
-        variant: 'filled',
-        themeOverride: { colorScheme: 'dark' },
-        inputStyle: { paddingTop: 9, paddingBottom: 9 },
-      })}
-      {getStates({
-        variant: 'unstyled',
-        themeOverride: { colorScheme: 'dark' },
-        inputStyle: { paddingTop: 9, paddingBottom: 9 },
-      })}
-    </div>
-  ))
   .add('Invalid toggle', () => <ValidInvalid />)
   .add('With classNames', () => <WithStyles />);

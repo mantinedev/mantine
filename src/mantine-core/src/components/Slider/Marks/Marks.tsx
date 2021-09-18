@@ -31,13 +31,12 @@ export function Marks({
   min,
   max,
   value,
-  themeOverride,
   classNames,
   styles,
   offset,
   onChange,
 }: MarksProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, size, color }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
 

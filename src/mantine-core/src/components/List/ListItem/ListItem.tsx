@@ -26,14 +26,13 @@ export function ListItem({
   style,
   children,
   icon,
-  themeOverride,
   classNames,
   styles,
   spacing,
   center,
   ...others
 }: ListItemProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, spacing, center }, classNames, 'list');
   const _styles = mergeStyles(classes, styles);
 

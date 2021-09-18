@@ -16,15 +16,8 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
   fluid?: boolean;
 }
 
-export function Container({
-  className,
-  padding = 'md',
-  fluid,
-  size,
-  themeOverride,
-  ...others
-}: ContainerProps) {
-  const classes = useStyles({ padding, fluid, size, theme: useMantineTheme(themeOverride) });
+export function Container({ className, padding = 'md', fluid, size, ...others }: ContainerProps) {
+  const classes = useStyles({ padding, fluid, size, theme: useMantineTheme() });
   return <div className={cx(classes.container, className)} {...others} />;
 }
 

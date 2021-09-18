@@ -14,15 +14,8 @@ export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<
   block?: boolean;
 }
 
-export function Code({
-  className,
-  children,
-  themeOverride,
-  block = false,
-  color,
-  ...others
-}: CodeProps) {
-  const theme = useMantineTheme(themeOverride);
+export function Code({ className, children, block = false, color, ...others }: CodeProps) {
+  const theme = useMantineTheme();
   const themeColor = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
   const classes = useStyles({ color: themeColor, theme }, null, 'code');
 

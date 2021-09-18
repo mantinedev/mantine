@@ -25,14 +25,6 @@ storiesOf('@mantine/core/Divider', module)
   ))
   .add('Sizes', () => <div style={{ padding: 20 }}>{sizes}</div>)
   .add('Colors', () => <div style={{ padding: 20 }}>{getColors()}</div>)
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <Divider themeOverride={{ colorScheme: 'dark' }} />
-      <Divider themeOverride={{ colorScheme: 'dark' }} variant="dotted" style={{ marginTop: 15 }} />
-      <Divider themeOverride={{ colorScheme: 'dark' }} variant="solid" style={{ marginTop: 15 }} />
-      {getColors({ themeOverride: { colorScheme: 'dark' } })}
-    </div>
-  ))
   .add('Vertical Divider', () => (
     <div>
       <Group>

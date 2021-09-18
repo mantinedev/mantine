@@ -36,15 +36,10 @@ export function ColorSwatch<
   size = 25,
   radius = 25,
   className,
-  themeOverride,
   children,
   ...others
 }: ColorSwatchProps<C, R>) {
-  const classes = useStyles(
-    { radius, size, theme: useMantineTheme(themeOverride) },
-    null,
-    'color-swatch'
-  );
+  const classes = useStyles({ radius, size, theme: useMantineTheme() }, null, 'color-swatch');
 
   const Element = component || 'div';
 

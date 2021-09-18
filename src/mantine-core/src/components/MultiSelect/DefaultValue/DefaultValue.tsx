@@ -37,13 +37,12 @@ export function DefaultValue({
   className,
   style,
   onRemove,
-  themeOverride,
   disabled,
   size,
   radius,
   ...others
 }: MultiSelectValueProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, size, disabled, radius }, classNames, 'multi-select');
   const _styles = mergeStyles(classes, styles);
 

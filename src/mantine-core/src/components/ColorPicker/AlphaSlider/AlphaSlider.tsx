@@ -7,20 +7,13 @@ export interface AlphaSliderProps extends BaseColorSliderProps {
   color: string;
 }
 
-export function AlphaSlider({
-  value,
-  onChange,
-  color,
-  themeOverride,
-  ...others
-}: AlphaSliderProps) {
-  const theme = useMantineTheme(themeOverride);
+export function AlphaSlider({ value, onChange, color, ...others }: AlphaSliderProps) {
+  const theme = useMantineTheme();
   const _color = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3];
 
   return (
     <ColorSlider
       {...others}
-      themeOverride={themeOverride}
       value={value}
       onChange={(val) => onChange(round(val, 2))}
       maxValue={1}

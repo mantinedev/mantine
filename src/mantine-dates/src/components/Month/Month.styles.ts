@@ -1,7 +1,6 @@
-import { MantineTheme, getFontStyles, createStyles } from '@mantine/core';
+import { getFontStyles, createStyles } from '@mantine/core';
 
 interface MonthStyles {
-  theme: MantineTheme;
   fullWidth: boolean;
 }
 

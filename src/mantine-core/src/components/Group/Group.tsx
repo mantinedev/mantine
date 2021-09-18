@@ -43,13 +43,12 @@ export function Group({
   spacing = 'md',
   direction = 'row',
   withGutter = false,
-  themeOverride,
   classNames,
   styles,
   ...others
 }: GroupProps) {
   const count = Children.count(children);
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles(
     {
       theme,

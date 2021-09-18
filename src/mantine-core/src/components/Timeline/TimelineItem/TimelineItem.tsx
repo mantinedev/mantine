@@ -43,7 +43,6 @@ export interface TimelineItemProps
 export function TimelineItem({
   className,
   style,
-  themeOverride,
   bullet,
   title,
   bulletSize = 20,
@@ -58,7 +57,7 @@ export function TimelineItem({
   lineVariant = 'solid',
   ...others
 }: TimelineItemProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles(
     { theme, bulletSize, color, align, lineVariant, lineWidth },
     classNames,

@@ -51,14 +51,13 @@ export function Divider({
   label,
   labelPosition = 'left',
   labelProps,
-  themeOverride,
   variant = 'solid',
   margins = 0,
   styles,
   classNames,
   ...others
 }: DividerProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
   const classes = useStyles(
     {

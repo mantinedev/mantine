@@ -50,7 +50,6 @@ export interface RadioGroupProps
 
 export function RadioGroup({
   className,
-  themeOverride,
   name,
   children,
   value,

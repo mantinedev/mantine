@@ -51,7 +51,6 @@ export function Textarea({
   id,
   className,
   required,
-  themeOverride,
   style,
   wrapperProps,
   elementRef,
@@ -62,7 +61,7 @@ export function Textarea({
   ...others
 }: TextareaProps) {
   const uuid = useId(id);
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
 
   const inputStyles = {
     ...styles,

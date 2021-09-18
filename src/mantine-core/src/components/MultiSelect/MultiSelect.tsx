@@ -125,7 +125,6 @@ export function defaultFilter(value: string, selected: boolean, item: SelectItem
 export function MultiSelect({
   className,
   style,
-  themeOverride,
   required,
   label,
   description,
@@ -168,7 +167,7 @@ export function MultiSelect({
   rightSectionWidth,
   ...others
 }: MultiSelectProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, size, variant, invalid: !!error }, classNames, 'multi-select');
   const _styles = mergeStyles(classes, styles);
   const dropdownRef = useRef<HTMLDivElement>();
@@ -297,7 +296,6 @@ export function MultiSelect({
         style={_styles.value}
         onRemove={() => handleValueRemove(item.value)}
         key={item.value}
-        themeOverride={themeOverride}
         size={size}
         styles={styles}
         classNames={classNames}
@@ -325,7 +323,6 @@ export function MultiSelect({
       size={size}
       className={className}
       style={style}
-      themeOverride={themeOverride}
       classNames={classNames}
       styles={styles}
       __staticSelector="multi-select"
@@ -372,7 +369,6 @@ export function MultiSelect({
             },
             size,
             shouldClear: clearable && _value.length > 0,
-            themeOverride,
             clearButtonLabel,
             onClear: handleClear,
             error,
@@ -407,7 +403,6 @@ export function MultiSelect({
         </Input>
 
         <SelectDropdown
-          themeOverride={themeOverride}
           mounted={dropdownOpened && shouldRenderDropdown}
           transition={transition}
           transitionDuration={transitionDuration}
@@ -423,7 +418,6 @@ export function MultiSelect({
           <SelectItems
             data={filteredData}
             hovered={hovered}
-            themeOverride={themeOverride}
             classNames={classNames}
             styles={styles}
             uuid={uuid}

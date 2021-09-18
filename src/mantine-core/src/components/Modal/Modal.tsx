@@ -83,7 +83,6 @@ export function MantineModal({
   className,
   style,
   opened,
-  themeOverride,
   title,
   onClose,
   children,
@@ -107,7 +106,7 @@ export function MantineModal({
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const reduceMotion = useReducedMotion();
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ size, overflow, theme }, classNames, 'modal');
   const _styles = mergeStyles(classes, styles);
   const [modalBodyElement, setModalBodyElement] = useState<HTMLDivElement>(null);
@@ -153,7 +152,6 @@ export function MantineModal({
               componentNodes={[modalBodyElement]}
             >
               <Paper<'div', HTMLDivElement>
-                themeOverride={themeOverride}
                 className={classes.modal}
                 shadow={shadow}
                 padding={padding}
@@ -167,22 +165,12 @@ export function MantineModal({
               >
                 {(title || !hideCloseButton) && (
                   <div className={classes.header} style={_styles.header}>
-                    <Text
-                      id={titleId}
-                      className={classes.title}
-                      style={_styles.title}
-                      themeOverride={themeOverride}
-                    >
+                    <Text id={titleId} className={classes.title} style={_styles.title}>
                       {title}
                     </Text>
 
                     {!hideCloseButton && (
-                      <CloseButton
-                        iconSize={16}
-                        onClick={onClose}
-                        aria-label={closeButtonLabel}
-                        themeOverride={themeOverride}
-                      />
+                      <CloseButton iconSize={16} onClick={onClose} aria-label={closeButtonLabel} />
                     )}
                   </div>
                 )}

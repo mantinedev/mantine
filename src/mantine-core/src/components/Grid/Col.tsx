@@ -24,7 +24,6 @@ export const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 export const getColumnWidth = (colSpan: number, columns: number) => `${100 / (columns / colSpan)}%`;
 
 export function Col({
-  themeOverride,
   children,
   span,
   gutter,
@@ -42,7 +41,7 @@ export function Col({
   ...others
 }: ColProps) {
   const breakpointValues = { xs, sm, md, lg, xl };
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const spacing = getSizeValue({ size: gutter, sizes: theme.spacing });
 
   if (!isValidSpan(span) || span > columns) {

@@ -38,11 +38,10 @@ export function Paper<C extends React.ElementType = 'div', R extends HTMLElement
   radius = 'sm',
   withBorder = false,
   shadow,
-  themeOverride,
   elementRef,
   ...others
 }: PaperProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ radius, shadow, padding, theme, withBorder }, null, 'paper');
   const Element = component || 'div';
 

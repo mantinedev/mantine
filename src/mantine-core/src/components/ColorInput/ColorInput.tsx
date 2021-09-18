@@ -85,7 +85,6 @@ export function ColorInput({
   defaultValue,
   classNames,
   styles,
-  themeOverride,
   disallowInput = false,
   fixOnBlur = true,
   withPreview = true,
@@ -102,7 +101,7 @@ export function ColorInput({
   swatches,
   ...others
 }: ColorInputProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme }, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);

@@ -18,7 +18,6 @@ interface ThumbProps extends DefaultProps<ThumbStylesNames> {
 
 export function Thumb({
   position,
-  themeOverride,
   className,
   styles,
   classNames,
@@ -26,7 +25,7 @@ export function Thumb({
   size,
   __staticSelector,
 }: ThumbProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 

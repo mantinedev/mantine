@@ -36,10 +36,9 @@ export function JsonInput({
   formatOnBlur = false,
   size = 'sm',
   validationError,
-  themeOverride,
   ...others
 }: JsonInputProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -67,7 +66,6 @@ export function JsonInput({
 
   return (
     <Textarea
-      themeOverride={themeOverride}
       value={_value}
       onChange={(event) => setValue(event.currentTarget.value)}
       onFocus={handleFocus}

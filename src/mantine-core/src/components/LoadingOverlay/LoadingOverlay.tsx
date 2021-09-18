@@ -36,25 +36,19 @@ export function LoadingOverlay({
   loaderProps = {},
   overlayOpacity = 0.75,
   overlayColor,
-  themeOverride,
   transitionDuration = 200,
   zIndex = 1000,
   style,
   loader,
   ...others
 }: LoadingOverlayProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles(null, null, 'loading-overlay');
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 1 : transitionDuration;
 
   return (
-    <Transition
-      duration={duration}
-      mounted={visible}
-      transition="fade"
-      themeOverride={themeOverride}
-    >
+    <Transition duration={duration} mounted={visible} transition="fade">
       {(transitionStyles) => (
         <div
           className={cx(classes.root, className)}
@@ -64,7 +58,7 @@ export function LoadingOverlay({
           {loader ? (
             <div style={{ zIndex: zIndex + 1 }}>{loader}</div>
           ) : (
-            <Loader themeOverride={themeOverride} style={{ zIndex: zIndex + 1 }} {...loaderProps} />
+            <Loader style={{ zIndex: zIndex + 1 }} {...loaderProps} />
           )}
 
           <Overlay

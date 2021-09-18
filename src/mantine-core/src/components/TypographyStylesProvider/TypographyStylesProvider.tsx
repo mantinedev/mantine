@@ -10,12 +10,8 @@ export interface TypographyStylesProviderProps
   children: React.ReactNode;
 }
 
-export function TypographyStylesProvider({
-  className,
-  themeOverride,
-  ...others
-}: TypographyStylesProviderProps) {
-  const theme = useMantineTheme(themeOverride);
+export function TypographyStylesProvider({ className, ...others }: TypographyStylesProviderProps) {
+  const theme = useMantineTheme();
   const classes = useStyles({ theme }, null, 'typography-styles-provider');
   return <div className={cx(classes.root, className)} {...others} />;
 }

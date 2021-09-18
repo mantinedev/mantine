@@ -63,7 +63,6 @@ export function Calendar({
   classNames,
   styles,
   locale = 'en',
-  themeOverride,
   nextMonthLabel,
   previousMonthLabel,
   initialMonth,
@@ -101,7 +100,6 @@ export function Calendar({
     <CalendarWrapper size={size} fullWidth={fullWidth} {...others}>
       <CalendarHeader
         size={size}
-        themeOverride={themeOverride}
         nextMonthLabel={nextMonthLabel}
         previousMonthLabel={previousMonthLabel}
         previousMonthDisabled={disabledState.previousDisabled}
@@ -122,7 +120,6 @@ export function Calendar({
       />
 
       <Month
-        themeOverride={themeOverride}
         month={_month}
         value={value}
         onChange={onChange}

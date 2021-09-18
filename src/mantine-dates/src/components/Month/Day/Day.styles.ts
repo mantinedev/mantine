@@ -1,5 +1,4 @@
 import {
-  MantineTheme,
   getFontStyles,
   getFocusStyles,
   createStyles,
@@ -9,7 +8,6 @@ import {
 } from '@mantine/core';
 
 interface DayStyles {
-  theme: MantineTheme;
   size: MantineSize;
   fullWidth: boolean;
 }

@@ -39,15 +39,8 @@ export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRe
   variant?: 'bars' | 'oval' | 'dots';
 }
 
-export function Loader({
-  size = 'md',
-  color,
-  themeOverride,
-  className,
-  variant,
-  ...others
-}: LoaderProps) {
-  const theme = useMantineTheme(themeOverride);
+export function Loader({ size = 'md', color, className, variant, ...others }: LoaderProps) {
+  const theme = useMantineTheme();
   const defaultLoader = variant in LOADERS ? variant : theme.loader;
   const Component = LOADERS[defaultLoader] || LOADERS.bars;
   const _color = color || theme.primaryColor;

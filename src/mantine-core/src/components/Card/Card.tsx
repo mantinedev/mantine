@@ -27,13 +27,12 @@ export type CardProps<
 export function Card<C extends React.ElementType = 'div', R extends HTMLElement = HTMLDivElement>({
   component,
   className,
-  themeOverride,
   padding = 'md',
   radius = 'sm',
   children,
   ...others
 }: CardProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme }, null, 'card');
 
   const content = Children.map(children, (child) => {

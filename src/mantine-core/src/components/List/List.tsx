@@ -50,10 +50,9 @@ export function List({
   style,
   styles,
   classNames,
-  themeOverride,
   ...others
 }: ListProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, withPadding, size, listStyleType }, classNames, 'list');
   const _styles = mergeStyles(classes, styles);
   const Element = type === 'unordered' ? 'ul' : 'ol';

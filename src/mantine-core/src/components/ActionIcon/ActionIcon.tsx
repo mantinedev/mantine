@@ -69,7 +69,6 @@ export function ActionIcon<
   disabled = false,
   loaderProps,
   loading = false,
-  themeOverride,
   elementRef,
   component,
   ...others

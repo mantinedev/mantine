@@ -30,7 +30,6 @@ export function RingProgress({
   sections,
   size = 120,
   thickness = size / 10,
-  themeOverride,
   classNames,
   styles,
   ...others
@@ -48,7 +47,6 @@ export function RingProgress({
       offset={curve.offset}
       color={curve.data?.color}
       root={curve.root}
-      themeOverride={themeOverride}
     />
   ));
 

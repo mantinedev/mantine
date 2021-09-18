@@ -1,7 +1,6 @@
-import { createStyles, MantineTheme, getSharedColorScheme } from '@mantine/core';
+import { createStyles, getSharedColorScheme } from '@mantine/core';
 
 interface ToolbarButtonStyles {
-  theme: MantineTheme;
   noActive: boolean;
 }
 

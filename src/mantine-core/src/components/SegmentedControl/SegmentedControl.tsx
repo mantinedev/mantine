@@ -58,7 +58,6 @@ export interface SegmentedControlProps
 export function SegmentedControl({
   className,
   style,
-  themeOverride,
   data: _data,
   name,
   value,
@@ -77,7 +76,7 @@ export function SegmentedControl({
   // reduce motion should be implemented via js, there is a bug in jss with media queries
   // https://github.com/cssinjs/jss/issues/1320
   const reduceMotion = useReducedMotion();
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const data = _data.map((item) =>
     typeof item === 'string' ? { label: item, value: item } : item
   );

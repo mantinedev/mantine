@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../theme';
 import { Button } from '../Button/Button';
 import { Tooltip } from './Tooltip';
 
@@ -46,19 +45,5 @@ storiesOf('@mantine/core/Tooltip', module)
       <Tooltip label="tooltip">
         <Button>Button</Button>
       </Tooltip>
-    </div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40, minHeight: '100vh' }}>
-      <div style={{ padding: 100 }}>
-        <Tooltip label="tooltip" color="blue" themeOverride={{ colorScheme: 'dark' }}>
-          <Button>Button</Button>
-        </Tooltip>
-      </div>
-      <div style={{ padding: 100 }}>
-        <Tooltip label="tooltip" themeOverride={{ colorScheme: 'dark' }}>
-          <Button>Button</Button>
-        </Tooltip>
-      </div>
     </div>
   ));

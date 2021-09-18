@@ -14,9 +14,9 @@ const iconSizes = {
   xl: 28,
 };
 
-export function ChevronIcon({ size, error, style, themeOverride, ...others }: ChevronIconProps) {
+export function ChevronIcon({ size, error, style, ...others }: ChevronIconProps) {
   const _size = getSizeValue({ size, sizes: iconSizes });
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
 
   return (
     <svg

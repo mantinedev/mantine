@@ -44,7 +44,6 @@ export function GroupedTransition({
   duration = 250,
   mounted,
   children,
-  themeOverride,
   timingFunction,
   onExit,
   onEntered,
@@ -54,7 +53,6 @@ export function GroupedTransition({
   const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
     mounted,
     duration,
-    themeOverride,
     timingFunction,
     onExit,
     onEntered,

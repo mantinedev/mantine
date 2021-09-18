@@ -99,7 +99,6 @@ function getPreviousItem(active: number, items: MenuItemType[]) {
 export function MenuBody({
   className,
   style,
-  themeOverride,
   opened,
   onClose,
   children,
@@ -121,7 +120,7 @@ export function MenuBody({
 
   const hoveredTimeout = useRef<number>();
   const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ size, theme }, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
   const [hovered, setHovered] = useState(-1);

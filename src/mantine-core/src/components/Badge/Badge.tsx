@@ -63,7 +63,6 @@ export function Badge<C extends React.ElementType = 'div', R extends HTMLElement
   variant = 'light',
   fullWidth,
   children,
-  themeOverride,
   size = 'md',
   leftSection,
   rightSection,
@@ -73,7 +72,7 @@ export function Badge<C extends React.ElementType = 'div', R extends HTMLElement
   styles,
   ...others
 }: BadgeProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles(
     {
       size,

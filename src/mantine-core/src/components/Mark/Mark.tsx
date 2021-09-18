@@ -6,8 +6,8 @@ export interface MarkProps extends DefaultProps, React.ComponentPropsWithoutRef<
   color?: MantineColor;
 }
 
-export function Mark({ color = 'yellow', style, themeOverride, ...others }: MarkProps) {
-  const theme = useMantineTheme(themeOverride);
+export function Mark({ color = 'yellow', style, ...others }: MarkProps) {
+  const theme = useMantineTheme();
 
   return (
     <mark

@@ -47,7 +47,6 @@ export function TextInput({
   style,
   icon,
   description,
-  themeOverride,
   wrapperProps,
   elementRef,
   size = 'sm',
@@ -68,7 +67,6 @@ export function TextInput({
       size={size}
       className={className}
       style={style}
-      themeOverride={themeOverride}
       classNames={classNames}
       styles={styles}
       __staticSelector={__staticSelector}
@@ -83,7 +81,6 @@ export function TextInput({
         invalid={!!error}
         icon={icon}
         size={size}
-        themeOverride={themeOverride}
         classNames={classNames}
         styles={styles}
         __staticSelector={__staticSelector}

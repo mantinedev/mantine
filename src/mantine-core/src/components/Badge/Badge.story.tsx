@@ -154,17 +154,6 @@ storiesOf('@mantine/core/Badge', module)
       </Badge>
     </Group>
   ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh' }}>
-      <Group style={{ padding: 10 }}>{getThemes({ themeOverride: { colorScheme: 'dark' } })}</Group>
-      <Group style={{ padding: 10 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'outline' })}
-      </Group>
-      <Group style={{ padding: 10 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'filled' })}
-      </Group>
-    </div>
-  ))
   .add('Dot Variant', () => (
     <>
       <Group style={{ padding: 10 }}>{getDots({ size: 'xs' })}</Group>

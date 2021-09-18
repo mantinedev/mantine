@@ -23,7 +23,6 @@ export interface TabControlProps
 export function TabControl({
   className,
   style,
-  themeOverride,
   active,
   elementRef,
   tabProps,
@@ -36,7 +35,7 @@ export function TabControl({
   ...others
 }: TabControlProps) {
   const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
   const classes = useStyles(
     { reduceMotion, color: overrideColor || color, theme, orientation },

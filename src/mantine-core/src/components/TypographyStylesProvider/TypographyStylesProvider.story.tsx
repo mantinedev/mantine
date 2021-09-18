@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../theme';
 import { TypographyStylesProvider } from './TypographyStylesProvider';
 
 const html = `
@@ -34,20 +33,10 @@ export function AvatarDemo() {
 }</pre>
 `;
 
-storiesOf('@mantine/core/TypographyStylesProvider', module)
-  .add('General usage', () => (
-    <div style={{ maxWidth: 600, padding: 20, margin: 'auto' }}>
-      <TypographyStylesProvider>
-        <div dangerouslySetInnerHTML={{ __html: html }} />
-      </TypographyStylesProvider>
-    </div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <div style={{ maxWidth: 600, padding: 20, margin: 'auto' }}>
-        <TypographyStylesProvider themeOverride={{ colorScheme: 'dark' }}>
-          <div dangerouslySetInnerHTML={{ __html: html }} />
-        </TypographyStylesProvider>
-      </div>
-    </div>
-  ));
+storiesOf('@mantine/core/TypographyStylesProvider', module).add('General usage', () => (
+  <div style={{ maxWidth: 600, padding: 20, margin: 'auto' }}>
+    <TypographyStylesProvider>
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+    </TypographyStylesProvider>
+  </div>
+));

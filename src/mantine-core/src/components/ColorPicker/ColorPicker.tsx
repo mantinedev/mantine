@@ -95,14 +95,13 @@ export function ColorPicker({
   saturationLabel,
   hueLabel,
   alphaLabel,
-  themeOverride,
   className,
   style,
   styles,
   classNames,
   ...others
 }: ColorPickerProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, size, fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const formatRef = useRef(format);
@@ -154,7 +153,6 @@ export function ColorPicker({
             value={parsed}
             onChange={handleChange}
             color={_value}
-            themeOverride={themeOverride}
             styles={styles}
             classNames={classNames}
             size={size}
@@ -169,7 +167,6 @@ export function ColorPicker({
                 value={parsed.h}
                 onChange={(h) => handleChange({ h })}
                 size={size}
-                themeOverride={themeOverride}
                 styles={styles}
                 classNames={classNames}
                 focusable={focusable}
@@ -184,7 +181,6 @@ export function ColorPicker({
                   size={size}
                   color={convertHsvaTo('hex', parsed)}
                   style={{ marginTop: 6 }}
-                  themeOverride={themeOverride}
                   styles={styles}
                   classNames={classNames}
                   focusable={focusable}
@@ -198,7 +194,6 @@ export function ColorPicker({
               <ColorSwatch
                 color={_value}
                 radius="sm"
-                themeOverride={themeOverride}
                 size={getSizeValue({ size, sizes: SWATCH_SIZES })}
                 className={classes.preview}
                 style={_styles.preview}

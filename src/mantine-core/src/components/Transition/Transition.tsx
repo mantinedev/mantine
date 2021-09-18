@@ -45,7 +45,6 @@ export function Transition({
   duration = 250,
   mounted,
   children,
-  themeOverride,
   timingFunction,
   onExit,
   onEntered,
@@ -55,7 +54,6 @@ export function Transition({
   const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
     mounted,
     duration,
-    themeOverride,
     timingFunction,
     onExit,
     onEntered,

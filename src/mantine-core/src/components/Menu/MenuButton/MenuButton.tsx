@@ -41,7 +41,6 @@ export function MenuButton<
   children,
   onHover,
   hovered,
-  themeOverride,
   elementRef,
   icon,
   color,
@@ -53,7 +52,7 @@ export function MenuButton<
   radius,
   ...others
 }: MenuButtonProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ color, theme, radius }, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
   const Element = component || 'button';

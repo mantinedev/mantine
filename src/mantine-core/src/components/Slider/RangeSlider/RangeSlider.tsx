@@ -81,7 +81,6 @@ export interface RangeSliderProps
 }
 
 export function RangeSlider({
-  themeOverride,
   classNames,
   styles,
   color,
@@ -285,7 +284,6 @@ export function RangeSlider({
     labelTransitionDuration,
     labelTransitionTimingFunction,
     labelAlwaysOn,
-    themeOverride,
     onBlur: () => setFocused(-1),
     classNames,
     styles,
@@ -303,7 +301,6 @@ export function RangeSlider({
       onMouseDownCapture={handleTrackMouseDownCapture}
       onMouseUpCapture={() => setDragging(-1)}
       onKeyDownCapture={handleTrackKeydownCapture}
-      themeOverride={themeOverride}
       styles={styles}
       classNames={classNames}
     >
@@ -317,7 +314,6 @@ export function RangeSlider({
         min={min}
         max={max}
         value={_value[1]}
-        themeOverride={themeOverride}
         styles={styles}
         classNames={classNames}
         onChange={(val) => {

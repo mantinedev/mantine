@@ -74,7 +74,6 @@ export interface PopoverProps
 export function Popover({
   className,
   style,
-  themeOverride,
   children,
   target,
   title,
@@ -104,7 +103,7 @@ export function Popover({
   styles,
   ...others
 }: PopoverProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme }, classNames, 'popover');
   const _styles = mergeStyles(classes, styles);
   const handleClose = () => typeof onClose === 'function' && onClose();

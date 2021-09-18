@@ -42,7 +42,6 @@ export function Thumb({
   dragging,
   onMouseDown,
   color,
-  themeOverride,
   classNames,
   styles,
   size,
@@ -54,7 +53,7 @@ export function Thumb({
   onFocus,
   onBlur,
 }: ThumbProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ color, theme, size }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
   const [focused, setFocused] = useState(false);

@@ -29,7 +29,6 @@ interface PopoverBodyProps
 export function PopoverBody({
   classNames,
   styles,
-  themeOverride,
   shadow,
   spacing,
   radius,
@@ -43,7 +42,7 @@ export function PopoverBody({
   children,
   ...others
 }: PopoverBodyProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, shadow, radius, spacing }, classNames, 'popover');
   const _styles = mergeStyles(classes, styles);
 
@@ -70,7 +69,6 @@ export function PopoverBody({
 
           {withCloseButton && (
             <CloseButton
-              themeOverride={themeOverride}
               size="sm"
               onClick={onClose}
               aria-label={closeButtonLabel}

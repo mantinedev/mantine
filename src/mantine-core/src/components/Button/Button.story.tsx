@@ -142,27 +142,4 @@ storiesOf('@mantine/core/Button', module)
         </Button>
       </Group>
     </MemoryRouter>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <Group style={{ padding: 20 }}>{getThemes({ themeOverride: { colorScheme: 'dark' } })}</Group>
-      <Group style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'light' })}
-      </Group>
-      <Group style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'outline' })}
-      </Group>
-      <Group style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'link' })}
-      </Group>
-      <Group style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, disabled: true })}
-      </Group>
-      <Group style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'outline', disabled: true })}
-      </Group>
-      <Group style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'link', disabled: true })}
-      </Group>
-    </div>
   ));

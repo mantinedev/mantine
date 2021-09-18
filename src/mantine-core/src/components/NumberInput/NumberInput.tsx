@@ -63,7 +63,6 @@ export interface NumberInputProps
 
 export function NumberInput({
   disabled,
-  themeOverride,
   elementRef,
   value,
   onChange,
@@ -84,7 +83,7 @@ export function NumberInput({
   size,
   ...others
 }: NumberInputProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ theme, radius, size }, classNames, 'number-input');
   const _styles = mergeStyles(classes, styles);
   const [focused, setFocused] = useState(false);
@@ -192,7 +191,6 @@ export function NumberInput({
       variant={variant}
       value={tempValue}
       disabled={disabled}
-      themeOverride={themeOverride}
       elementRef={useMergedRef(inputRef, elementRef)}
       type="number"
       onChange={handleChange}

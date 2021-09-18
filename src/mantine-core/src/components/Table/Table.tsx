@@ -19,11 +19,10 @@ export function Table({
   children,
   striped = false,
   highlightOnHover = false,
-  themeOverride,
   captionSide = 'top',
   ...others
 }: TableProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ captionSide, theme }, null, 'table');
 
   return (

@@ -48,12 +48,11 @@ export function Notification({
   children,
   onClose,
   closeButtonProps,
-  themeOverride,
   classNames,
   styles,
   ...others
 }: NotificationProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ color, disallowClose, theme }, classNames, 'notification');
   const _styles = mergeStyles(classes, styles);
   const withIcon = icon || loading;
@@ -64,7 +63,6 @@ export function Notification({
       padding="sm"
       className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
       role="alert"
-      themeOverride={themeOverride}
       style={{ ...style, ..._styles.root, ...(withIcon ? _styles.withIcon : null) }}
       {...others}
     >
@@ -80,35 +78,18 @@ export function Notification({
 
       <div className={classes.body} style={_styles.body}>
         {title && (
-          <Text
-            className={classes.title}
-            size="sm"
-            weight={500}
-            themeOverride={themeOverride}
-            style={_styles.title}
-          >
+          <Text className={classes.title} size="sm" weight={500} style={_styles.title}>
             {title}
           </Text>
         )}
 
-        <Text
-          className={classes.description}
-          size="sm"
-          themeOverride={themeOverride}
-          style={_styles.description}
-        >
+        <Text className={classes.description} size="sm" style={_styles.description}>
           {children}
         </Text>
       </div>
 
       {!disallowClose && (
-        <CloseButton
-          {...closeButtonProps}
-          iconSize={16}
-          color="gray"
-          onClick={onClose}
-          themeOverride={themeOverride}
-        />
+        <CloseButton {...closeButtonProps} iconSize={16} color="gray" onClick={onClose} />
       )}
     </Paper>
   );

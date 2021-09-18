@@ -50,7 +50,6 @@ export interface ImageProps
 export function Image({
   className,
   style,
-  themeOverride,
   alt,
   src,
   fit = 'cover',
@@ -67,7 +66,7 @@ export function Image({
   caption,
   ...others
 }: ImageProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ radius, theme }, classNames, 'image');
   const _styles = mergeStyles(classes, styles);
   const [loaded, setLoaded] = useState(false);

@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useReducedMotion, useDidUpdate } from '@mantine/hooks';
-import { MantineThemeOverride, useMantineTheme } from '../../theme';
+import { useMantineTheme } from '../../theme';
 
 export type TransitionStatus =
   | 'entered'
@@ -14,7 +14,6 @@ interface UseTransition {
   duration: number;
   timingFunction: string;
   mounted: boolean;
-  themeOverride: MantineThemeOverride;
   onEnter?(): void;
   onExit?(): void;
   onEntered?(): void;
@@ -29,9 +28,8 @@ export function useTransition({
   onExit,
   onEntered,
   onExited,
-  themeOverride,
 }: UseTransition) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
   const transitionDuration = reduceMotion ? 0 : duration;
   const [transitionStatus, setStatus] = useState<TransitionStatus>(mounted ? 'entered' : 'exited');

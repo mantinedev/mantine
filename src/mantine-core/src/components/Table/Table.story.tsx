@@ -51,15 +51,4 @@ storiesOf('@mantine/core/Table', module)
     <div style={{ maxWidth: 600, padding: 20 }}>
       <Table highlightOnHover>{table}</Table>
     </div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40, minHeight: '100vh' }}>
-      <Table themeOverride={{ colorScheme: 'dark' }}>{table}</Table>
-      <Table style={{ marginTop: 50 }} themeOverride={{ colorScheme: 'dark' }} striped>
-        {table}
-      </Table>
-      <Table style={{ marginTop: 50 }} themeOverride={{ colorScheme: 'dark' }} highlightOnHover>
-        {table}
-      </Table>
-    </div>
   ));

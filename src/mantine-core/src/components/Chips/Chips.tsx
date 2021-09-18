@@ -57,7 +57,6 @@ export function Chips<T extends boolean>({
   multiple,
   children,
   id,
-  themeOverride,
   classNames,
   styles,
   ...others
@@ -75,7 +74,6 @@ export function Chips<T extends boolean>({
     .filter((child: React.ReactElement) => child.type === Chip)
     .map((child: React.ReactElement, index) =>
       React.cloneElement(child, {
-        themeOverride,
         variant,
         radius,
         color,

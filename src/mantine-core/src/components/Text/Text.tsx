@@ -60,7 +60,6 @@ export function Text<C extends React.ElementType = 'div', R extends HTMLElement 
   align,
   variant = 'text',
   lineClamp,
-  themeOverride,
   elementRef,
   gradient = { from: 'blue', to: 'cyan', deg: 45 },
   inline = false,

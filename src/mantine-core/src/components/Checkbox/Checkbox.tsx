@@ -43,7 +43,6 @@ export function Checkbox({
   checked,
   onChange,
   color,
-  themeOverride,
   label,
   disabled,
   indeterminate,
@@ -58,7 +57,7 @@ export function Checkbox({
   ...others
 }: CheckboxProps) {
   const uuid = useId(id);
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
   const classes = useStyles(
     { size, color, theme, transitionDuration: reduceMotion ? 0 : transitionDuration },

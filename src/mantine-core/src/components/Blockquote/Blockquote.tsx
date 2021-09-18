@@ -28,12 +28,11 @@ export function Blockquote({
   icon = defaultIcon,
   cite,
   children,
-  themeOverride,
   classNames,
   styles,
   ...others
 }: BlockquoteProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const classes = useStyles({ color, theme }, classNames, 'blockquote');
   const _styles = mergeStyles(classes, styles);
 
