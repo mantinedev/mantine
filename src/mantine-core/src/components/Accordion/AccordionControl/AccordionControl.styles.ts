@@ -1,57 +1,69 @@
-import { createMemoStyles, MantineTheme } from '../../../theme';
+import { createStyles } from '@mantine/tss';
+import { getFocusStyles, getFontStyles } from '@mantine/theme';
 
 interface AccordionControlStyles {
-  theme: MantineTheme;
   transitionDuration: number;
 }
 
-export default createMemoStyles({
-  label: {
-    color: 'inherit',
-    fontWeight: 500,
-  },
+export default createStyles((theme, { transitionDuration }: AccordionControlStyles, getRef) => {
+  const icon = {
+    ref: getRef(),
+    transition: `transform ${transitionDuration}ms ease`,
+  } as const;
 
-  item: ({ theme }: AccordionControlStyles) => ({
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-    borderTop: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
-    }`,
+  return {
+    icon,
 
-    '&:last-of-type': {
-      borderBottom: `1px solid ${
+    label: {
+      color: 'inherit',
+      fontWeight: 500,
+    },
+
+    item: {
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+      borderTop: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
       }`,
+
+      '&:last-of-type': {
+        borderBottom: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+        }`,
+      },
     },
-  }),
 
-  icon: ({ transitionDuration }: AccordionControlStyles) => ({
-    transition: `transform ${transitionDuration}ms ease`,
-  }),
-
-  itemOpened: {
-    '& $icon': {
-      transform: 'rotate(180deg)',
+    itemOpened: {
+      [`& .${icon.ref}`]: {
+        transform: 'rotate(180deg)',
+      },
     },
-  },
 
-  control: ({ theme }: AccordionControlStyles) => ({
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: theme.spacing.md,
-    textAlign: 'left',
-    color: 'inherit',
-  }),
+    control: {
+      ...getFocusStyles(theme),
+      ...getFontStyles(theme),
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: theme.spacing.md,
+      fontSize: theme.fontSizes.md,
+      fontWeight: 500,
+      textAlign: 'left',
+      color: 'inherit',
+      backgroundColor: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+    },
 
-  content: ({ transitionDuration }: AccordionControlStyles) => ({
-    transition: `height ${transitionDuration}ms ease`,
-    overflow: 'hidden',
-  }),
+    content: {
+      transition: `height ${transitionDuration}ms ease`,
+      overflow: 'hidden',
+    },
 
-  contentInner: ({ theme, transitionDuration }: AccordionControlStyles) => ({
-    paddingTop: 0,
-    padding: theme.spacing.md,
-    transition: `opacity ${transitionDuration}ms ease`,
-  }),
+    contentInner: {
+      paddingTop: 0,
+      padding: theme.spacing.md,
+      transition: `opacity ${transitionDuration}ms ease`,
+    },
+  };
 });

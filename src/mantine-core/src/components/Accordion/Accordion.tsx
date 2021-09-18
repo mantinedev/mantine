@@ -1,6 +1,6 @@
 import React from 'react';
 import { useUncontrolled, useId } from '@mantine/hooks';
-import { DefaultProps } from '../../theme';
+import { DefaultProps } from '@mantine/theme';
 import {
   AccordionItem,
   AccordionItemType,
@@ -49,7 +49,6 @@ export function Accordion({
   onChange,
   multiple = false,
   transitionDuration = 200,
-  themeOverride,
   classNames,
   styles,
   id,
@@ -92,7 +91,6 @@ export function Accordion({
     <AccordionControl
       {...item.props}
       key={index}
-      themeOverride={themeOverride}
       transitionDuration={transitionDuration}
       opened={value[index]}
       onToggle={() => handleItemToggle(index)}
