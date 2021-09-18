@@ -25,6 +25,7 @@ export { useScrollLock } from './use-scroll-lock/use-scroll-lock';
 export { useShallowEffect } from './use-shallow-effect/use-shallow-effect';
 export { useToggle, useBooleanToggle } from './use-toggle/use-toggle';
 export { useUncontrolled } from './use-uncontrolled/use-uncontrolled';
+export { useViewportSize } from './use-viewport-size/use-viewport-size';
 export { useWindowEvent } from './use-window-event/use-window-event';
 export { useWindowScroll } from './use-window-scroll/use-window-scroll';
 export { useIntersection } from './use-intersection/use-intersection';
