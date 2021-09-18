@@ -1,18 +1,12 @@
-import {
-  createMemoStyles,
-  MantineTheme,
-  getFontStyles,
-  getThemeColor,
-  MantineColor,
-} from '../../theme';
+import { createStyles } from '@mantine/tss';
+import { getFontStyles, getThemeColor, MantineColor } from '@mantine/theme';
 
 interface BlockquoteStyles {
-  theme: MantineTheme;
   color: MantineColor;
 }
 
-export default createMemoStyles({
-  root: ({ theme }: BlockquoteStyles) => ({
+export default createStyles((theme, { color }: BlockquoteStyles) => ({
+  root: {
     ...getFontStyles(theme),
     fontSize: theme.fontSizes.lg,
     lineHeight: theme.lineHeight,
@@ -21,7 +15,7 @@ export default createMemoStyles({
     borderTopRightRadius: theme.radius.sm,
     borderBottomRightRadius: theme.radius.sm,
     padding: [theme.spacing.md, theme.spacing.lg],
-  }),
+  },
 
   inner: {
     display: 'flex',
@@ -33,19 +27,19 @@ export default createMemoStyles({
     textOverflow: 'ellipsis',
   },
 
-  icon: ({ theme, color }: BlockquoteStyles) => ({
+  icon: {
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 6 : 7 }),
     marginRight: theme.spacing.lg,
     marginTop: 2,
     width: 22,
-  }),
+  },
 
-  cite: ({ theme }: BlockquoteStyles) => ({
+  cite: {
     display: 'block',
     fontSize: theme.fontSizes.sm,
     marginTop: theme.spacing.xs,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  }),
-});
+  },
+}));

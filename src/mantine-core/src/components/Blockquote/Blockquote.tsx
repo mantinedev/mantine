@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineColor } from '../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineColor } from '@mantine/theme';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
@@ -32,8 +33,7 @@ export function Blockquote({
   styles,
   ...others
 }: BlockquoteProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ color, theme }, classNames, 'blockquote');
+  const classes = useStyles({ color }, classNames, 'blockquote');
   const _styles = mergeStyles(classes, styles);
 
   return (
