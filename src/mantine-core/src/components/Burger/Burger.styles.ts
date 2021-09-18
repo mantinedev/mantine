@@ -1,15 +1,8 @@
-import {
-  createMemoStyles,
-  MantineTheme,
-  MantineNumberSize,
-  getSizeValue,
-  getFocusStyles,
-  MantineColor,
-} from '../../theme';
+import { createStyles } from '@mantine/tss';
+import { MantineNumberSize, getSizeValue, getFocusStyles, MantineColor } from '@mantine/theme';
 
 interface BurgerStyles {
   size: MantineNumberSize;
-  theme: MantineTheme;
   color: MantineColor;
   reduceMotion: boolean;
 }
@@ -22,25 +15,29 @@ export const sizes = {
   xl: 42,
 };
 
-export default createMemoStyles({
-  opened: {},
+export default createStyles((theme, { size, color, reduceMotion }: BurgerStyles, getRef) => {
+  const sizeValue = getSizeValue({ size, sizes });
 
-  root: ({ size, theme }: BurgerStyles) => ({
-    ...getFocusStyles(theme),
-    WebkitTapHighlightColor: 'transparent',
-    borderRadius: theme.radius.sm,
-    width: getSizeValue({ size, sizes }) + theme.spacing.xs,
-    height: getSizeValue({ size, sizes }) + theme.spacing.xs,
-    padding: theme.spacing.xs / 2,
-    backgroundColor: 'transparent',
-    border: 0,
-    cursor: 'pointer',
-  }),
+  const opened = {
+    ref: getRef(),
+  };
 
-  burger: ({ size, color, reduceMotion }: BurgerStyles) => {
-    const sizeValue = getSizeValue({ size, sizes });
+  return {
+    opened,
 
-    return {
+    root: {
+      ...getFocusStyles(theme),
+      WebkitTapHighlightColor: 'transparent',
+      borderRadius: theme.radius.sm,
+      width: sizeValue + theme.spacing.xs,
+      height: sizeValue + theme.spacing.xs,
+      padding: theme.spacing.xs / 2,
+      backgroundColor: 'transparent',
+      border: 0,
+      cursor: 'pointer',
+    },
+
+    burger: {
       position: 'relative',
       userSelect: 'none',
       boxSizing: 'border-box',
@@ -69,8 +66,9 @@ export default createMemoStyles({
         top: sizeValue / 3,
       },
 
-      '&$opened': {
+      [`&.${opened.ref}`]: {
         backgroundColor: 'transparent !important',
+
         '&:before': {
           transform: `translateY(${sizeValue / 3}px) rotate(45deg)`,
         },
@@ -79,6 +77,6 @@ export default createMemoStyles({
           transform: `translateY(-${sizeValue / 3}px) rotate(-45deg)`,
         },
       },
-    };
-  },
+    },
+  };
 });
