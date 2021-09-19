@@ -1,5 +1,6 @@
 import React from 'react';
-import { getThemeColor, useMantineTheme, MantineColor } from '../../../theme';
+import { useMantineTheme } from '@mantine/tss';
+import { getThemeColor, MantineColor } from '@mantine/theme';
 import { getCurveProps } from './get-curve-props';
 
 interface CurveProps {
