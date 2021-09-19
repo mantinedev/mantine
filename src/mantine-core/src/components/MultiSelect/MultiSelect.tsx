@@ -1,13 +1,8 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  mergeStyles,
-  useMantineTheme,
-  MantineShadow,
-} from '../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineSize, MantineShadow } from '@mantine/theme';
 import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
@@ -167,8 +162,7 @@ export function MultiSelect({
   rightSectionWidth,
   ...others
 }: MultiSelectProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, size, variant, invalid: !!error }, classNames, 'multi-select');
+  const classes = useStyles({ size, invalid: !!error }, classNames, 'multi-select');
   const _styles = mergeStyles(classes, styles);
   const dropdownRef = useRef<HTMLDivElement>();
   const inputRef = useRef<HTMLInputElement>();
