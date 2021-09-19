@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, mergeStyles, useMantineTheme, MantineColor } from '../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineColor } from '../../theme';
 import { Paper } from '../Paper/Paper';
 import { Text } from '../Text/Text';
 import { Loader } from '../Loader/Loader';
@@ -52,8 +53,7 @@ export function Notification({
   styles,
   ...others
 }: NotificationProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ color, disallowClose, theme }, classNames, 'notification');
+  const classes = useStyles({ color, disallowClose }, classNames, 'notification');
   const _styles = mergeStyles(classes, styles);
   const withIcon = icon || loading;
 
