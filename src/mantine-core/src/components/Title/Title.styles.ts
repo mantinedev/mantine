@@ -1,14 +1,14 @@
-import { createMemoStyles, getFontStyles, MantineTheme } from '../../theme';
+import { createStyles } from '@mantine/tss';
+import { getFontStyles } from '@mantine/theme';
 
 type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 interface TitleStyles {
-  theme: MantineTheme;
   element: HeadingElement;
 }
 
-export default createMemoStyles({
-  title: ({ theme, element }: TitleStyles) => ({
+export default createStyles((theme, { element }: TitleStyles) => ({
+  title: {
     ...getFontStyles(theme),
     fontFamily: theme.headings.fontFamily,
     fontWeight: theme.headings.fontWeight,
@@ -22,5 +22,5 @@ export default createMemoStyles({
         typeof theme.headings.sizes[element].fontSize === 'number' &&
         (theme.headings.sizes[element].fontSize as number) / 1.3,
     },
-  }),
-});
+  },
+}));
