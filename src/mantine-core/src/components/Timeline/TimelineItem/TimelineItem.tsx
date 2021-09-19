@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, mergeStyles, useMantineTheme, MantineColor } from '../../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineColor } from '@mantine/theme';
 import { Text } from '../../Text/Text';
 import useStyles from './TimelineItem.styles';
 
@@ -57,9 +58,8 @@ export function TimelineItem({
   lineVariant = 'solid',
   ...others
 }: TimelineItemProps) {
-  const theme = useMantineTheme();
   const classes = useStyles(
-    { theme, bulletSize, color, align, lineVariant, lineWidth },
+    { bulletSize, color, align, lineVariant, lineWidth },
     classNames,
     'timeline'
   );
