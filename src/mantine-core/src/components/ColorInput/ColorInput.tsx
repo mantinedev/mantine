@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useUncontrolled, useReducedMotion, useDidUpdate, useId } from '@mantine/hooks';
-import { DefaultProps, getSizeValue, mergeStyles, useMantineTheme } from '../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, getSizeValue } from '@mantine/theme';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -101,8 +102,7 @@ export function ColorInput({
   swatches,
   ...others
 }: ColorInputProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme }, classNames, 'color-input');
+  const classes = useStyles(null, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
