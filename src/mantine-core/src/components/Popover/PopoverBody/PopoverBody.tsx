@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineNumberSize,
-  mergeStyles,
-  MantineShadow,
-} from '../../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/theme';
 import { Text } from '../../Text/Text';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import useStyles from './PopoverBody.styles';
@@ -42,8 +37,7 @@ export function PopoverBody({
   children,
   ...others
 }: PopoverBodyProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, shadow, radius, spacing }, classNames, 'popover');
+  const classes = useStyles({ shadow, radius, spacing }, classNames, 'popover');
   const _styles = mergeStyles(classes, styles);
 
   return (
