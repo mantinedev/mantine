@@ -1,30 +1,27 @@
-import { createMemoStyles, MantineTheme, getFontStyles, getFocusStyles } from '../../theme';
+import { createStyles } from '@mantine/tss';
+import { getFontStyles, getFocusStyles } from '@mantine/theme';
 
-interface TypographyStylesProviderStyles {
-  theme: MantineTheme;
-}
+export default createStyles((theme) => {
+  const headings = Object.keys(theme.headings.sizes).reduce((acc, h) => {
+    acc[`& ${h}`] = {
+      fontFamily: theme.headings.fontFamily,
+      fontWeight: theme.headings.fontWeight,
+      marginTop: theme.spacing.lg * theme.headings.sizes[h].lineHeight,
+      marginBottom: theme.spacing.xs * theme.headings.sizes[h].lineHeight,
+      ...theme.headings.sizes[h],
 
-export default createMemoStyles({
-  root: ({ theme }: TypographyStylesProviderStyles) => {
-    const headings = Object.keys(theme.headings.sizes).reduce((acc, h) => {
-      acc[`& ${h}`] = {
-        fontFamily: theme.headings.fontFamily,
-        fontWeight: theme.headings.fontWeight,
-        marginTop: theme.spacing.lg * theme.headings.sizes[h].lineHeight,
-        marginBottom: theme.spacing.xs * theme.headings.sizes[h].lineHeight,
-        ...theme.headings.sizes[h],
+      '@media (max-width: 755px)': {
+        fontSize:
+          typeof theme.headings.sizes[h].fontSize === 'number' &&
+          (theme.headings.sizes[h].fontSize as number) / 1.3,
+      },
+    };
 
-        '@media (max-width: 755px)': {
-          fontSize:
-            typeof theme.headings.sizes[h].fontSize === 'number' &&
-            (theme.headings.sizes[h].fontSize as number) / 1.3,
-        },
-      };
+    return acc;
+  }, {});
 
-      return acc;
-    }, {});
-
-    return {
+  return {
+    root: {
       ...getFontStyles(theme),
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       lineHeight: theme.lineHeight,
@@ -163,6 +160,6 @@ export default createMemoStyles({
           textOverflow: 'ellipsis',
         },
       },
-    };
-  },
+    },
+  };
 });
