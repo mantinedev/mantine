@@ -1,5 +1,5 @@
 import { createStyles } from '@mantine/tss';
-import { getSizeValue, MantineSize } from '../../../theme';
+import { getSizeValue, MantineSize } from '@mantine/theme';
 import { THUMB_SIZES } from '../Thumb/Thumb.styles';
 
 interface ColorSliderStyles {

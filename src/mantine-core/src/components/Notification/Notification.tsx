@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineColor } from '../../theme';
+import { DefaultProps, MantineColor } from '@mantine/theme';
 import { Text } from '../Text/Text';
 import { Loader } from '../Loader/Loader';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';

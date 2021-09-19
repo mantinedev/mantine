@@ -4,7 +4,7 @@ import {
   MantineNumberSize,
   MantineSize,
   MantineTheme,
-} from '../../../theme';
+} from '@mantine/theme';
 
 interface DefaultLabelStyles {
   theme: MantineTheme;

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineColor } from '../../../theme';
+import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/theme';
 import { MantineTransition } from '../../Transition/Transition';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
 import { getPosition } from '../utils/get-position/get-position';

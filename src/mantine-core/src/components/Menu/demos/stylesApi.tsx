@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles } from '../../../theme';
+import { createStyles } from '@mantine/theme';
 import { Menu } from '../Menu';
 import { Group } from '../../Group/Group';
 import { menuItems } from './_menu-items';

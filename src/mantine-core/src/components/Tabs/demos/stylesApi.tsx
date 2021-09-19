@@ -1,6 +1,6 @@
 import React from 'react';
 import { ImageIcon, ChatBubbleIcon, GearIcon } from '@modulz/radix-icons';
-import { createStyles } from '../../../theme';
+import { createStyles } from '@mantine/theme';
 import { Tabs, TabsProps, Tab } from '../Tabs';
 
 const code = `

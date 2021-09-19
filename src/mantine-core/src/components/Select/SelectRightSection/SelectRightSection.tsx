@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineSize } from '../../../theme';
+import { MantineSize } from '@mantine/theme';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import { ChevronIcon } from './ChevronIcon';
 

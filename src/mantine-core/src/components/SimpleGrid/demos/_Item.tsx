@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from '../../Text/Text';
-import { useMantineTheme } from '../../../theme';
+import { useMantineTheme } from '@mantine/theme';
 
 export function GridItem(props: React.ComponentPropsWithoutRef<'div'>) {
   const theme = useMantineTheme();

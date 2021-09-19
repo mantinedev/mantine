@@ -1,10 +1,10 @@
 import React from 'react';
 import { CheckIcon } from '@modulz/radix-icons';
+import { ThemeIcon } from '@mantine/themeIcon/ThemeIcon';
 import { RingProgress } from '../RingProgress';
 import { Group } from '../../Group/Group';
 import { Text } from '../../Text/Text';
 import { Center } from '../../Center/Center';
-import { ThemeIcon } from '../../ThemeIcon/ThemeIcon';
 
 const code = `
 <RingProgress

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MANTINE_SIZES } from '../../../theme';
+import { MANTINE_SIZES } from '@mantine/theme';
 import { Input } from '../Input';
 
 const code = `

@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, MantineShadow } from '../../theme';
+import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/theme';
 import useStyles from './Paper.styles';
 
 export interface SharedPaperProps extends DefaultProps {

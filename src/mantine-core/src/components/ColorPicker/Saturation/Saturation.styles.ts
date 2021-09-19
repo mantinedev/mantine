@@ -1,5 +1,5 @@
 import { createStyles } from '@mantine/tss';
-import { MantineSize, getSizeValue } from '../../../theme';
+import { MantineSize, getSizeValue } from '@mantine/theme';
 import { THUMB_SIZES } from '../Thumb/Thumb.styles';
 
 interface SaturationStyles {

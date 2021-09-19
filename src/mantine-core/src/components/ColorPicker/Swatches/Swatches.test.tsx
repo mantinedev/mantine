@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { checkAccessibility } from '@mantine/tests';
-import { DEFAULT_THEME } from '../../../theme';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
 import { Swatches } from './Swatches';
 import { parseColor } from '../converters';

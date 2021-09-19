@@ -7,7 +7,7 @@ import {
   mergeStyles,
   MantineNumberSize,
   MantineColor,
-} from '../../theme';
+} from '@mantine/theme';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';

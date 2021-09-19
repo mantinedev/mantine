@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../theme';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Divider } from './Divider';
 import { Badge } from '../Badge/Badge';
 import { Group } from '../Group/Group';

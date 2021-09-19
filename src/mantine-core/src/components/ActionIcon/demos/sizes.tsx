@@ -3,7 +3,7 @@ import { ImageIcon } from '@modulz/radix-icons';
 import { ActionIcon, ActionIconProps } from '../ActionIcon';
 import { Group } from '../../Group/Group';
 import { Text } from '../../Text/Text';
-import { MANTINE_SIZES } from '../../../theme';
+import { MANTINE_SIZES } from '@mantine/theme';
 
 const iconSizes = {
   xs: 12,

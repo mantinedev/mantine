@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useUncontrolled, useId } from '@mantine/hooks';
+import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/theme';
 import { Group, GroupProps } from '../Group/Group';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '../../theme';
 import { Chip, ChipProps, ChipStylesNames } from './Chip/Chip';
 
 export { Chip };

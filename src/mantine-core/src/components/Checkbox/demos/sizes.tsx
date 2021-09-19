@@ -1,6 +1,6 @@
 import React from 'react';
 import { Checkbox, CheckboxProps } from '../Checkbox';
-import { MANTINE_SIZES } from '../../../theme';
+import { MANTINE_SIZES } from '@mantine/theme';
 import { Group } from '../../Group/Group';
 
 const getSizes = (props?: CheckboxProps) =>

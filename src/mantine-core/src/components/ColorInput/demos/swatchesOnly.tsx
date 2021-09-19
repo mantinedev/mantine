@@ -1,5 +1,5 @@
 import React from 'react';
-import { DEFAULT_THEME } from '../../../theme';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { ColorInput } from '../ColorInput';
 
 const code = `

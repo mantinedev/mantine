@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { createUseStyles } from 'react-jss';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import Textarea from 'react-textarea-autosize';
-import { DEFAULT_THEME, MANTINE_SIZES } from '../../theme';
+import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
 

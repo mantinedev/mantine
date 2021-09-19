@@ -2,7 +2,7 @@ import React from 'react';
 import { DatabaseIcon } from '@primer/octicons-react';
 import { Button, ButtonProps } from '../Button';
 import { Group } from '../../Group/Group';
-import { DEFAULT_THEME } from '../../../theme';
+import { DEFAULT_THEME } from '@mantine/theme';
 
 function Wrapper(props: ButtonProps) {
   return (

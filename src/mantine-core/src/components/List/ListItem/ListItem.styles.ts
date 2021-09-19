@@ -1,5 +1,5 @@
 import { createStyles } from '@mantine/tss';
-import { MantineNumberSize, getSizeValue } from '../../../theme';
+import { MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 interface ListItemStyles {
   spacing: MantineNumberSize;

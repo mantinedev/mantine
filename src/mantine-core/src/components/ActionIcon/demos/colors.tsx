@@ -2,7 +2,7 @@ import React from 'react';
 import { ImageIcon } from '@modulz/radix-icons';
 import { Group } from '../../Group/Group';
 import { ActionIcon, ActionIconProps } from '../ActionIcon';
-import { MANTINE_COLORS } from '../../../theme';
+import { MANTINE_COLORS } from '@mantine/theme';
 
 const getColors = (props: Omit<ActionIconProps, 'children'>) =>
   MANTINE_COLORS.slice(1).map((color) => (

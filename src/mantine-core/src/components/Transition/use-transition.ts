@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useReducedMotion, useDidUpdate } from '@mantine/hooks';
-import { useMantineTheme } from '../../theme';
+import { useMantineTheme } from '@mantine/theme';
 
 export type TransitionStatus =
   | 'entered'

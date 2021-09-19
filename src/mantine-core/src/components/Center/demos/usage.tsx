@@ -1,6 +1,6 @@
 import React from 'react';
 import { Center } from '../Center';
-import { useMantineTheme } from '../../../theme';
+import { useMantineTheme } from '@mantine/theme';
 
 const code = `
 <Center style={{ width: 400, height: 200 }}>

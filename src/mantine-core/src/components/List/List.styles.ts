@@ -1,5 +1,5 @@
 import { createStyles } from '@mantine/tss';
-import { getFontStyles, getSizeValue, MantineNumberSize } from '../../theme';
+import { getFontStyles, getSizeValue, MantineNumberSize } from '@mantine/theme';
 
 interface ListStyles {
   withPadding: boolean;

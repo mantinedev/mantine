@@ -1,5 +1,5 @@
 import { createStyles } from '@mantine/tss';
-import { MantineNumberSize, getSizeValue, getThemeColor, MantineColor } from '../../theme';
+import { MantineNumberSize, getSizeValue, getThemeColor, MantineColor } from '@mantine/theme';
 
 interface DividerStyles {
   size: MantineNumberSize;

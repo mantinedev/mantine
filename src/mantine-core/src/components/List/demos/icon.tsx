@@ -1,6 +1,6 @@
 import React from 'react';
 import { IssueClosedIcon, IssueDraftIcon } from '@primer/octicons-react';
-import { ThemeIcon } from '../../ThemeIcon/ThemeIcon';
+import { ThemeIcon } from '@mantine/themeIcon/ThemeIcon';
 import { List } from '../List';
 
 const code = `

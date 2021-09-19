@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, MemoryRouter } from 'react-router-dom';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
-import { MantineSize, DEFAULT_THEME } from '../../theme';
+import { MantineSize, DEFAULT_THEME } from '@mantine/theme';
 import { Group } from '../Group/Group';
 import { Button, UnstyledButton } from './Button';
 

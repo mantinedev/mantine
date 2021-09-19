@@ -1,7 +1,7 @@
 import React from 'react';
+import { MANTINE_COLORS } from '@mantine/theme';
 import { Badge } from '../Badge';
 import { Group } from '../../Group/Group';
-import { MANTINE_COLORS } from '../../../theme';
 
 const getDots = (props?: any) =>
   MANTINE_COLORS.map((color) => (

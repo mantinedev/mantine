@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MantineProvider } from '../../theme';
+import { DEFAULT_THEME, MantineProvider } from '@mantine/theme';
 import { Title } from './Title';
 
 storiesOf('@mantine/core/Title', module)

@@ -1,5 +1,5 @@
 import { createStyles } from '@mantine/tss';
-import { getThemeColor, MantineColor } from '../../theme';
+import { getThemeColor, MantineColor } from '@mantine/theme';
 
 interface NotificationStyles {
   color: MantineColor;

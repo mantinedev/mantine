@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChatBubbleIcon } from '@modulz/radix-icons';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../theme';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Blockquote } from './Blockquote';
 
 const getThemes = (props?: any) =>

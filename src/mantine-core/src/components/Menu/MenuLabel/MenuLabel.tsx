@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from '../../Text/Text';
-import { DefaultProps } from '../../../theme';
+import { DefaultProps } from '@mantine/theme';
 
 export interface MenuLabelProps extends DefaultProps, React.ComponentPropsWithoutRef<typeof Text> {
   /** Label content */

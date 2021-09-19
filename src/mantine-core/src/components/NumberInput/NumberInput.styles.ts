@@ -1,5 +1,5 @@
 import { createStyles } from '@mantine/tss';
-import { MantineNumberSize, getSizeValue, MantineSize } from '../../theme';
+import { MantineNumberSize, getSizeValue, MantineSize } from '@mantine/theme';
 
 interface NumberInputStyles {
   radius: MantineNumberSize;

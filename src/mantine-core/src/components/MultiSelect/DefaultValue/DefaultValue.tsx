@@ -1,13 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
-import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import {
   useMantineTheme,
   DefaultProps,
   mergeStyles,
   MantineSize,
   MantineNumberSize,
-} from '../../../theme';
+} from '@mantine/theme';
+import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import useStyles from './DefaultValue.styles';
 
 export type DefaultValueStylesNames = keyof ReturnType<typeof useStyles>;
