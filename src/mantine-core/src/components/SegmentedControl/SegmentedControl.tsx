@@ -1,14 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cx from 'clsx';
 import { useId, useReducedMotion, useUncontrolled } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  MantineSize,
-  mergeStyles,
-  useMantineTheme,
-  MantineColor,
-} from '../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/theme';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
 interface SegmentedControlItem {
@@ -73,11 +67,8 @@ export function SegmentedControl({
   defaultValue,
   ...others
 }: SegmentedControlProps) {
-  // reduce motion should be implemented via js, there is a bug in jss with media queries
-  // https://github.com/cssinjs/jss/issues/1320
   const reduceMotion = useReducedMotion();
-  const theme = useMantineTheme();
-  const data = _data.map((item) =>
+  const data = _data.map((item: any) =>
     typeof item === 'string' ? { label: item, value: item } : item
   );
 
@@ -92,7 +83,6 @@ export function SegmentedControl({
 
   const classes = useStyles(
     {
-      theme,
       size,
       fullWidth,
       color,
