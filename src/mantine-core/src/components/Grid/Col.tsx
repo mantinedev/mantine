@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize, getSizeValue } from '@mantine/theme';
+import { useMantineTheme } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   span: number;

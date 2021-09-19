@@ -1,12 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import {
-  useMantineTheme,
-  DefaultProps,
-  mergeStyles,
-  MantineSize,
-  MantineNumberSize,
-} from '@mantine/theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineSize, MantineNumberSize } from '@mantine/theme';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import useStyles from './DefaultValue.styles';
 
@@ -42,8 +37,7 @@ export function DefaultValue({
   radius,
   ...others
 }: MultiSelectValueProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, size, disabled, radius }, classNames, 'multi-select');
+  const classes = useStyles({ size, disabled, radius }, classNames, 'multi-select');
   const _styles = mergeStyles(classes, styles);
 
   return (

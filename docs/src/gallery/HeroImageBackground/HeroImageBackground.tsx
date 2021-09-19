@@ -110,12 +110,7 @@ export function HeroImageBackground() {
         </Container>
 
         <div className={classes.controls}>
-          <Button
-            className={classes.control}
-            variant="white"
-            size="lg"
-            themeOverride={{ colorScheme: 'light' }}
-          >
+          <Button className={classes.control} variant="white" size="lg">
             Get started
           </Button>
           <Button className={cx(classes.control, classes.secondaryControl)} size="lg">

@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { CaretRightIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME } from '@mantine/theme';
 import { Text } from '../Text/Text';
 import { Breadcrumbs } from './Breadcrumbs';
 

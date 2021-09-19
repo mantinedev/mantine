@@ -1,6 +1,10 @@
 import { createStyles } from '@mantine/core';
 
-export default createStyles((theme) => ({
+interface PrismStyles {
+  colorScheme: 'light' | 'dark';
+}
+
+export default createStyles((theme, { colorScheme }: PrismStyles) => ({
   root: {
     position: 'relative',
   },
@@ -18,8 +22,8 @@ export default createStyles((theme) => ({
     marginBottom: 0,
   },
 
-  copyControl: {
-    position: 'absolute',
+  copy: {
+    position: 'absolute !important' as any,
     top: theme.spacing.xs,
     right: theme.spacing.xs,
     zIndex: 2,
@@ -32,7 +36,7 @@ export default createStyles((theme) => ({
   },
 
   lineNumber: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
+    color: colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
     textAlign: 'right',
     paddingRight: theme.spacing.xl,
     userSelect: 'none',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckIcon } from '@modulz/radix-icons';
-import { ThemeIcon } from '@mantine/themeIcon/ThemeIcon';
+import { ThemeIcon } from '../../ThemeIcon/ThemeIcon';
 import { RingProgress } from '../RingProgress';
 import { Group } from '../../Group/Group';
 import { Text } from '../../Text/Text';

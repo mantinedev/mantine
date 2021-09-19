@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MantineProvider, MANTINE_SIZES } from '@mantine/theme';
+import { MantineProvider } from '@mantine/tss';
+import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/theme';
 import { Switch } from './Switch';
 
 function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' | 'onChange'>) {

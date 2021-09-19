@@ -1,9 +1,9 @@
 import React from 'react';
 import cx from 'clsx';
+import { useMantineTheme } from '@mantine/tss';
 import {
   DefaultProps,
   MantineNumberSize,
-  useMantineTheme,
   getThemeColor,
   getSizeValue,
   MantineColor,

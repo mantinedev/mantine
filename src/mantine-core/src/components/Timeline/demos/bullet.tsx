@@ -1,6 +1,6 @@
 import React from 'react';
 import { SunIcon, VideoIcon } from '@modulz/radix-icons';
-import { ThemeIcon } from '@mantine/themeIcon/ThemeIcon';
+import { ThemeIcon } from '../../ThemeIcon/ThemeIcon';
 import { Text } from '../../Text/Text';
 import { Avatar } from '../../Avatar/Avatar';
 import { Timeline } from '../Timeline';

@@ -41,6 +41,9 @@ export interface PrismProps
 
   /** Highlight line at given line number with color from theme.colors */
   highlightLines?: Record<string, { color: MantineColor; label?: string }>;
+
+  /** Force color scheme, defaults to theme.colorScheme */
+  colorScheme?: 'dark' | 'light';
 }
 
 export function Prism({
@@ -55,10 +58,11 @@ export function Prism({
   copiedLabel = 'Copied',
   withLineNumbers = false,
   highlightLines = {},
+  colorScheme,
   ...others
 }: PrismProps) {
   const theme = useMantineTheme();
-  const classes = useStyles(null, classNames, 'prism');
+  const classes = useStyles({ colorScheme: colorScheme || theme.colorScheme }, classNames, 'prism');
   const _styles = mergeStyles(classes, styles);
   const clipboard = useClipboard();
 
@@ -67,8 +71,8 @@ export function Prism({
       {!noCopy && (
         <Tooltip
           data-mantine-copy
-          style={_styles.copyControl}
-          className={classes.copyControl}
+          style={_styles.copy}
+          className={classes.copy}
           label={clipboard.copied ? copiedLabel : copyLabel}
           position="left"
           placement="center"
@@ -87,7 +91,12 @@ export function Prism({
         </Tooltip>
       )}
 
-      <Highlight {...defaultProps} theme={getPrismTheme(theme)} code={children} language={language}>
+      <Highlight
+        {...defaultProps}
+        theme={getPrismTheme(theme, colorScheme || theme.colorScheme)}
+        code={children}
+        language={language}
+      >
         {({
           className: inheritedClassName,
           style: inheritedStyle,

@@ -9,8 +9,8 @@ import { Prism } from '@mantine/prism';
 function Demo() {
   return (
     <>
-      <Prism language="tsx">{code}</Prism>
-      <Prism language="tsx" themeOverride={{ colorScheme: 'dark' }}>{code}</Prism>
+      <Prism language="tsx" colorScheme="light">{code}</Prism>
+      <Prism language="tsx" colorScheme="dark">{code}</Prism>
     </>
   );
 }
@@ -22,11 +22,11 @@ export function PrismDemo() {
       <LinkTitle title="Highlight code with your theme colors" link="/others/prism/" />
 
       <div style={{ backgroundColor: '#fff', borderRadius: 3 }}>
-        <Prism language="tsx" themeOverride={{ colorScheme: 'light' }} style={{ marginTop: 15 }}>
+        <Prism language="tsx" colorScheme="light" style={{ marginTop: 15 }}>
           {code}
         </Prism>
       </div>
-      <Prism language="tsx" themeOverride={{ colorScheme: 'dark' }} style={{ marginTop: 15 }}>
+      <Prism language="tsx" colorScheme="dark" style={{ marginTop: 15 }}>
         {code}
       </Prism>
     </>

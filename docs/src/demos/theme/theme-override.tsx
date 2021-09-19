@@ -12,11 +12,12 @@ function Demo() {
   );
 }`;
 
+// @XXX: FIX
 export function ThemeOverrideDemo() {
   return (
     <CodeDemo code={code} language="tsx">
       <Group position="center">
-        <Button themeOverride={{ fontFamily: 'Verdana, sans-serif' }}>Verdana button</Button>
+        <Button>Verdana button</Button>
       </Group>
     </CodeDemo>
   );

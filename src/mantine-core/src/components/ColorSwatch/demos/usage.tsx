@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme } from '@mantine/theme';
+import { useMantineTheme } from '@mantine/tss';
 import { ColorSwatch } from '../ColorSwatch';
 import { Group } from '../../Group/Group';
 

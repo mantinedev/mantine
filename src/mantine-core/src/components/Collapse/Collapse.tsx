@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { TransitionEvent } from 'react';
 import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
-
-import { useMantineTheme } from '@mantine/theme';
+import { useMantineTheme } from '@mantine/tss';
 
 export interface CollapseProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** Content that should be collapsed */

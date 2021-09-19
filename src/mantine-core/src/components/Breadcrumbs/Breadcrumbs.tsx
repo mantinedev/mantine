@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, mergeStyles } from '@mantine/theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps } from '@mantine/theme';
 import { Text } from '../Text/Text';
 import useStyles from './Breadcrumbs.styles';
 

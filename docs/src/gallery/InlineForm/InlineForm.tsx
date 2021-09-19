@@ -55,10 +55,9 @@ const useStyles = createStyles((theme) => ({
   },
 
   input: {
-    borderColor: [
-      [theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]],
-      '!important',
-    ],
+    borderColor: `${
+      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+    } !important`,
     height: 60,
     paddingLeft: theme.spacing.xl,
     fontSize: theme.fontSizes.md,

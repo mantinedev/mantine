@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { CrumpledPaperIcon } from '@modulz/radix-icons';
-import { MantineProvider } from '@mantine/tss';
 import { DEFAULT_THEME } from '@mantine/theme';
 import { Group } from '../Group/Group';
 import { Avatar } from './Avatar';

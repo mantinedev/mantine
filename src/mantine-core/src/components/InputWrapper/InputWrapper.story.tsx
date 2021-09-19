@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/theme';
+import { MANTINE_SIZES } from '@mantine/theme';
 import { InputWrapper } from './InputWrapper';
 import { Text } from '../Text/Text';
 

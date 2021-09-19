@@ -32,13 +32,12 @@ export function Burger({
   opened,
   color = 'gray',
   size = 'md',
-  themeOverride,
   elementRef,
   classNames,
   styles,
   ...others
 }: BurgerProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
   const classes = useStyles({ color, size, theme, reduceMotion }, classNames);
   const _styles = mergeStyles(classes, styles);
