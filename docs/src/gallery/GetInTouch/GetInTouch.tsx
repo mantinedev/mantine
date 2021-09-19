@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { Sun, Phone, MapPin, AtSign } from 'react-feather';
 import {
   Paper,
@@ -141,7 +140,7 @@ function Contact({
 }
 
 export function GetInTouch() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
     <Paper shadow="md" radius="lg">

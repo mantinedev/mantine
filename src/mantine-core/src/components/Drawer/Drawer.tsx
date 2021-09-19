@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import cx from 'clsx';
 import {
   useScrollLock,
   useMergedRef,
@@ -20,7 +19,7 @@ import useStyles, { Position, sizes } from './Drawer.styles';
 
 export const DRAWER_SIZES = sizes;
 
-export type DrawerStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'noOverlay'>;
+export type DrawerStylesNames = Exclude<keyof ReturnType<typeof useStyles>['classes'], 'noOverlay'>;
 
 export interface DrawerProps
   extends DefaultProps<DrawerStylesNames>,
@@ -123,7 +122,7 @@ export function MantineDrawer({
 }: DrawerProps) {
   const theme = useMantineTheme();
   const duration = useReducedMotion() ? 1 : transitionDuration;
-  const classes = useStyles({ size, position }, classNames, 'drawer');
+  const { classes, cx } = useStyles({ size, position }, classNames, 'drawer');
   const _styles = mergeStyles(classes, styles);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
   const [drawerBodyElement, setDrawerBodyElement] = useState<HTMLDivElement>(null);

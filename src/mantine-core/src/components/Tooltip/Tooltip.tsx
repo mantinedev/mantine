@@ -1,12 +1,11 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineColor } from '@mantine/theme';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 
-export type TooltipStylesNames = keyof ReturnType<typeof useStyles>;
+export type TooltipStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface TooltipProps
   extends DefaultProps<TooltipStylesNames>,
@@ -84,7 +83,7 @@ export function Tooltip({
   styles,
   ...others
 }: TooltipProps) {
-  const classes = useStyles({ color }, classNames, 'tooltip');
+  const { classes, cx } = useStyles({ color }, classNames, 'tooltip');
   const _styles = mergeStyles(classes, styles);
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);

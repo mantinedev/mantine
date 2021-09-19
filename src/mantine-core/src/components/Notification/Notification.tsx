@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineColor } from '@mantine/theme';
 import { Text } from '../Text/Text';
@@ -7,7 +6,10 @@ import { Loader } from '../Loader/Loader';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import useStyles from './Notification.styles';
 
-export type NotificationStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'withIcon'>;
+export type NotificationStylesNames = Exclude<
+  keyof ReturnType<typeof useStyles>['classes'],
+  'withIcon'
+>;
 
 export interface NotificationProps
   extends DefaultProps<NotificationStylesNames>,
@@ -52,7 +54,7 @@ export function Notification({
   styles,
   ...others
 }: NotificationProps) {
-  const classes = useStyles({ color, disallowClose }, classNames, 'notification');
+  const { classes, cx } = useStyles({ color, disallowClose }, classNames, 'notification');
   const _styles = mergeStyles(classes, styles);
   const withIcon = icon || loading;
 

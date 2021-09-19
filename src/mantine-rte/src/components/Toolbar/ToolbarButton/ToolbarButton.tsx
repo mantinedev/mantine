@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { ActionIcon, ActionIconProps } from '@mantine/core';
 import useStyles from './ToolbarButton.styles';
 
@@ -25,7 +24,7 @@ export function ToolbarButton({
   noActive,
   ...others
 }: ToolbarButtonProps) {
-  const classes = useStyles({ noActive }, null, 'rte');
+  const { classes, cx } = useStyles({ noActive }, null, 'rte');
 
   return (
     <ActionIcon

@@ -1,10 +1,8 @@
 import React from 'react';
-import cx from 'clsx';
 import { Group, createStyles } from '@mantine/core';
 import { Month } from '../Month';
 
 const code = `
-import cx from 'clsx';
 import { createStyles } from '@mantine/core';
 import { Month } from '@mantine/dates';
 
@@ -19,7 +17,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Demo() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
     <Month
@@ -44,7 +42,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Demo() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
     <Group position="center">

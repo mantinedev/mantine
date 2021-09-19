@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import cx from 'clsx';
 import { useId, useReducedMotion, useUncontrolled } from '@mantine/hooks';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/theme';
@@ -10,7 +9,7 @@ interface SegmentedControlItem {
   label: React.ReactNode;
 }
 
-export type SegmentedControlStylesNames = keyof ReturnType<typeof useStyles>;
+export type SegmentedControlStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface SegmentedControlProps
   extends DefaultProps<SegmentedControlStylesNames>,
@@ -81,7 +80,7 @@ export function SegmentedControl({
     rule: (val) => !!val,
   });
 
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     {
       size,
       fullWidth,

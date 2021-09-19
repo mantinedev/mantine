@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps } from '@mantine/theme';
 import useStyles from './Title.styles';
 
@@ -24,7 +23,7 @@ export function Title({
   }
 
   const element = `h${order}` as const;
-  const classes = useStyles({ element }, null, 'title');
+  const { classes, cx } = useStyles({ element }, null, 'title');
   const styles: React.CSSProperties = {};
 
   if (align) {

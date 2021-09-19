@@ -7,7 +7,8 @@ interface MdxPageBaseProps {
 }
 
 export function MdxPageBase({ children }: MdxPageBaseProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
+
   return (
     <>
       <div className={classes.content}>{children}</div>

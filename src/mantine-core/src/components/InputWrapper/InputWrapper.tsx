@@ -1,11 +1,10 @@
 import React, { createElement } from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineSize } from '@mantine/theme';
 import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
-export type InputWrapperStylesNames = keyof ReturnType<typeof useStyles>;
+export type InputWrapperStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface InputWrapperBaseProps {
   /** Input label, displayed before input */
@@ -69,7 +68,7 @@ export function InputWrapper({
   __staticSelector = 'input-wrapper',
   ...others
 }: InputWrapperProps) {
-  const classes = useStyles({ size }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
   const inputLabel = createElement(

@@ -15,7 +15,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Demo() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Menu classNames={classes}>
       {/* Menu items... */}
@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Demo() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const items = [...menuItems];
   items.splice(4, 1);
   return (

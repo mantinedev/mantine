@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cx from 'clsx';
 import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, getSizeValue } from '@mantine/theme';
@@ -8,7 +7,7 @@ import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
 import useStyles, { CONTROL_SIZES } from './NumberInput.styles';
 
-export type InnerNumberInputStylesNames = keyof ReturnType<typeof useStyles>;
+export type InnerNumberInputStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 export type NumberInputStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
@@ -84,7 +83,7 @@ export function NumberInput({
   size,
   ...others
 }: NumberInputProps) {
-  const classes = useStyles({ radius, size }, classNames, 'number-input');
+  const { classes, cx } = useStyles({ radius, size }, classNames, 'number-input');
   const _styles = mergeStyles(classes, styles);
   const [focused, setFocused] = useState(false);
   const [_value, setValue] = useState(

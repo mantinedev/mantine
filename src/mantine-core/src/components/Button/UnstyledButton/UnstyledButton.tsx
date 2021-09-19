@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps } from '@mantine/theme';
 import useStyles from './UnstyledButton.styles';
 
@@ -8,7 +7,7 @@ interface UnstyledButtonProps extends DefaultProps, React.ComponentPropsWithoutR
 }
 
 export function UnstyledButton({ className, elementRef, ...others }: UnstyledButtonProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
     <button

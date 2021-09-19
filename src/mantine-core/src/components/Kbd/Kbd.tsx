@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps } from '@mantine/theme';
 import useStyles from './Kbd.styles';
 
@@ -9,7 +8,7 @@ export interface KbdProps extends DefaultProps, React.ComponentPropsWithoutRef<'
 }
 
 export function Kbd({ className, children, ...others }: KbdProps) {
-  const classes = useStyles(null, null, 'kbd');
+  const { classes, cx } = useStyles(null, null, 'kbd');
 
   return (
     <kbd className={cx(classes.kbd, className)} {...others}>

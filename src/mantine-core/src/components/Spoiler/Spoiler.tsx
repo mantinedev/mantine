@@ -1,12 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
-import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps } from '@mantine/theme';
 import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
 
-export type SpoilerStylesNames = keyof ReturnType<typeof useStyles>;
+export type SpoilerStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface SpoilerProps
   extends DefaultProps<SpoilerStylesNames>,
@@ -44,7 +43,7 @@ export function Spoiler({
   styles,
   ...others
 }: SpoilerProps) {
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     { transitionDuration: !useReducedMotion() && transitionDuration },
     classNames,
     'spoiler'

@@ -84,8 +84,9 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function HeroText() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const theme = useMantineTheme();
+
   return (
     <Container className={classes.wrapper} size={1400}>
       <Dots className={classes.dots} style={{ left: 0, top: 0 }} />

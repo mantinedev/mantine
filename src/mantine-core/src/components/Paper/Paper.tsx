@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/theme';
 import useStyles from './Paper.styles';
 
@@ -41,7 +40,7 @@ export function Paper<C extends React.ElementType = 'div', R extends HTMLElement
   elementRef,
   ...others
 }: PaperProps<C, R>) {
-  const classes = useStyles({ radius, shadow, padding, withBorder }, null, 'paper');
+  const { classes, cx } = useStyles({ radius, shadow, padding, withBorder }, null, 'paper');
   const Element = component || 'div';
 
   return (

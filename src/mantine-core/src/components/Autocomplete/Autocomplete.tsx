@@ -19,7 +19,7 @@ export type AutocompleteStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
   | SelectDropdownStylesNames
-  | keyof ReturnType<typeof useStyles>;
+  | keyof ReturnType<typeof useStyles>['classes'];
 
 export interface AutocompleteItem {
   value: string;
@@ -119,7 +119,7 @@ export function Autocomplete({
   nothingFound,
   ...others
 }: AutocompleteProps) {
-  const classes = useStyles({ size }, classNames, 'autocomplete');
+  const { classes } = useStyles({ size }, classNames, 'autocomplete');
   const _styles = mergeStyles(classes, styles);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);

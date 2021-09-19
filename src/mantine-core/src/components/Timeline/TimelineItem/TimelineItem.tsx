@@ -1,11 +1,10 @@
 import React from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineColor } from '@mantine/theme';
 import { Text } from '../../Text/Text';
 import useStyles from './TimelineItem.styles';
 
-export type TimelineItemStylesNames = keyof ReturnType<typeof useStyles>;
+export type TimelineItemStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface TimelineItemProps
   extends DefaultProps<TimelineItemStylesNames>,
@@ -58,7 +57,7 @@ export function TimelineItem({
   lineVariant = 'solid',
   ...others
 }: TimelineItemProps) {
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     { bulletSize, color, align, lineVariant, lineWidth },
     classNames,
     'timeline'

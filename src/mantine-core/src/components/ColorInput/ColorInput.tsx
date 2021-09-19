@@ -25,7 +25,7 @@ export type ColorInputStylesNames =
   | InputWrapperStylesNames
   | InputStylesNames
   | ColorPickerStylesNames
-  | keyof ReturnType<typeof useStyles>;
+  | keyof ReturnType<typeof useStyles>['classes'];
 
 export interface ColorInputProps
   extends InputWrapperBaseProps,
@@ -102,7 +102,7 @@ export function ColorInput({
   swatches,
   ...others
 }: ColorInputProps) {
-  const classes = useStyles(null, classNames, 'color-input');
+  const { classes } = useStyles(null, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);

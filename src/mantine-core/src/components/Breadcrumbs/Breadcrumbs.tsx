@@ -1,11 +1,10 @@
 import React from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps } from '@mantine/theme';
 import { Text } from '../Text/Text';
 import useStyles from './Breadcrumbs.styles';
 
-export type BreadcrumbsStylesNames = keyof ReturnType<typeof useStyles>;
+export type BreadcrumbsStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface BreadcrumbsProps
   extends DefaultProps<BreadcrumbsStylesNames>,
@@ -26,7 +25,7 @@ export function Breadcrumbs({
   styles,
   ...others
 }: BreadcrumbsProps) {
-  const classes = useStyles(null, classNames, 'breadcrumbs');
+  const { classes, cx } = useStyles(null, classNames, 'breadcrumbs');
   const _styles = mergeStyles(classes, styles);
 
   const items = React.Children.toArray(children).reduce((acc: any[], child: any, index, array) => {

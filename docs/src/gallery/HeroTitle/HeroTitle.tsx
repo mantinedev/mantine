@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { GitHubLogoIcon } from '@modulz/radix-icons';
 import { createStyles, Container, Text, Button, Group, useMantineTheme } from '@mantine/core';
 
@@ -76,7 +75,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function HeroTitle() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const theme = useMantineTheme();
 
   return (

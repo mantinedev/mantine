@@ -5,7 +5,7 @@ import { SectionTitle } from '../SectionTitle/SectionTitle';
 import useStyles from './Community.styles';
 
 export function Community() {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <div className={classes.wrapper}>

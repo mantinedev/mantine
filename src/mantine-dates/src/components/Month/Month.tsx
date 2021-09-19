@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import cx from 'clsx';
 import { DefaultProps, mergeStyles, Text, MantineSize } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -37,7 +36,7 @@ export interface MonthSettings {
   fullWidth?: boolean;
 }
 
-export type MonthStylesNames = keyof ReturnType<typeof useStyles> | DayStylesNames;
+export type MonthStylesNames = keyof ReturnType<typeof useStyles>['classes'] | DayStylesNames;
 
 export interface MonthProps
   extends DefaultProps<MonthStylesNames>,
@@ -94,7 +93,7 @@ export function Month({
   fullWidth = false,
   ...others
 }: MonthProps) {
-  const classes = useStyles({ fullWidth }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);

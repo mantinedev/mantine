@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import cx from 'clsx';
 import {
   DefaultProps,
   mergeStyles,
@@ -32,7 +31,7 @@ import { CalendarStylesNames } from '../Calendar/Calendar';
 import useStyles from './DatePickerBase.styles';
 
 export type DatePickerStylesNames =
-  | keyof ReturnType<typeof useStyles>
+  | keyof ReturnType<typeof useStyles>['classes']
   | CalendarStylesNames
   | InputStylesNames
   | InputWrapperStylesNames;
@@ -148,7 +147,7 @@ export function DatePickerBase({
   zIndex = 3,
   ...others
 }: DatePickerBaseProps) {
-  const classes = useStyles({ size, invalid: !!error }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);

@@ -1,12 +1,14 @@
 import React from 'react';
-import cx from 'clsx';
 import { useUncontrolled, useId } from '@mantine/hooks';
 import { mergeStyles, useMantineTheme } from '@mantine/tss';
 import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/theme';
 import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
 import useStyles from './Chip.styles';
 
-export type ChipStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'filled' | 'outline'>;
+export type ChipStylesNames = Exclude<
+  keyof ReturnType<typeof useStyles>['classes'],
+  'filled' | 'outline'
+>;
 
 export interface ChipProps
   extends DefaultProps<ChipStylesNames>,
@@ -73,7 +75,7 @@ export function Chip({
 }: ChipProps) {
   const uuid = useId(id);
   const theme = useMantineTheme();
-  const classes = useStyles({ radius, size, color }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ radius, size, color }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [value, setValue] = useUncontrolled({
     value: checked,

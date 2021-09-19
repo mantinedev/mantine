@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps, MantineNumberSize, MantineGradient, MantineColor } from '@mantine/theme';
 import useStyles, { sizes, ThemeIconVariant } from './ThemeIcon.styles';
 
@@ -35,7 +34,7 @@ export function ThemeIcon({
   gradient = { from: 'blue', to: 'cyan', deg: 45 },
   ...others
 }: ThemeIconProps) {
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     {
       variant,
       radius,

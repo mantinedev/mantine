@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { Text } from '../Text/Text';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
 
-export type ImageStylesNames = keyof ReturnType<typeof useStyles>;
+export type ImageStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface ImageProps
   extends DefaultProps<ImageStylesNames>,
@@ -67,7 +66,7 @@ export function Image({
   caption,
   ...others
 }: ImageProps) {
-  const classes = useStyles({ radius }, classNames, 'image');
+  const { classes, cx } = useStyles({ radius }, classNames, 'image');
   const _styles = mergeStyles(classes, styles);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(!src);

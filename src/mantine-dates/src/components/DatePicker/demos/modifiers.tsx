@@ -1,10 +1,8 @@
 import React from 'react';
-import cx from 'clsx';
 import { createStyles } from '@mantine/core';
 import { DatePicker } from '../DatePicker';
 
 const code = `
-import cx from 'clsx';
 import { createStyles } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 
@@ -20,7 +18,7 @@ const useStyles = createStyles((theme) => ({
 
 
 function Demo() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
     <DatePicker
@@ -47,7 +45,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Demo() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>

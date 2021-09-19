@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import cx from 'clsx';
 import { useFocusTrap } from '@mantine/hooks';
 import { mergeStyles, useMantineTheme } from '@mantine/tss';
 import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/theme';
@@ -12,7 +11,9 @@ import { MenuLabel } from '../MenuLabel/MenuLabel';
 import { MenuButton, MenuButtonStylesNames } from '../MenuButton/MenuButton';
 import useStyles from './MenuBody.styles';
 
-export type MenuBodyStylesNames = keyof ReturnType<typeof useStyles> | MenuButtonStylesNames;
+export type MenuBodyStylesNames =
+  | keyof ReturnType<typeof useStyles>['classes']
+  | MenuButtonStylesNames;
 
 export interface MenuBodyProps
   extends DefaultProps<MenuBodyStylesNames>,
@@ -116,7 +117,7 @@ export function MenuBody({
   const hoveredTimeout = useRef<number>();
   const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
   const theme = useMantineTheme();
-  const classes = useStyles({ size }, classNames, 'menu');
+  const { classes, cx } = useStyles({ size }, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
   const [hovered, setHovered] = useState(-1);
   const focusTrapRef = useFocusTrap(trapFocus);

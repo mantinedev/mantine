@@ -8,7 +8,7 @@ export default function MdxTitle({
   order,
   ...others
 }: React.ComponentPropsWithoutRef<typeof Title>) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const theme = useMantineTheme();
 
   if (order === 1) {

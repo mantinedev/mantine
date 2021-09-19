@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
 import {
   InputBaseProps,
   InputWrapperBaseProps,
@@ -19,7 +18,7 @@ import { getTimeValues } from '../TimeInput/get-time-values/get-time-value';
 import useStyles from './TimeRangeInput.styles';
 
 export type TimeRangeInputStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>, 'disabled'>
+  | Exclude<keyof ReturnType<typeof useStyles>['classes'], 'disabled'>
   | InputStylesNames
   | InputWrapperStylesNames;
 
@@ -90,7 +89,7 @@ export function TimeRangeInput({
   disabled = false,
   ...others
 }: TimeRangeInputProps) {
-  const classes = useStyles({ size }, classNames, 'time-range-input');
+  const { classes, cx } = useStyles({ size }, classNames, 'time-range-input');
   const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);
   const fromDate = new Date();

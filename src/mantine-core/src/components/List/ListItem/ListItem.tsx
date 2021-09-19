@@ -1,10 +1,9 @@
-import cx from 'clsx';
 import React from 'react';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import useStyles from './ListItem.styles';
 
-export type ListItemStylesNames = keyof ReturnType<typeof useStyles>;
+export type ListItemStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface ListItemProps
   extends DefaultProps<ListItemStylesNames>,
@@ -33,7 +32,7 @@ export function ListItem({
   center,
   ...others
 }: ListItemProps) {
-  const classes = useStyles({ spacing, center }, classNames, 'list');
+  const { classes, cx } = useStyles({ spacing, center }, classNames, 'list');
   const _styles = mergeStyles(classes, styles);
 
   return (

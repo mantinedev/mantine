@@ -17,7 +17,7 @@ export function createStyles<Key extends string = string, Params = void>(
 
   function useStyles(params: Params, classNames?: Partial<Record<Key, string>>, name?: string) {
     const theme = useMantineTheme();
-    const css = useCss();
+    const { css, cx } = useCss();
 
     let count = 0;
 
@@ -32,7 +32,7 @@ export function createStyles<Key extends string = string, Params = void>(
       Object.keys(cssObject).map((key) => [key, css(cssObject[key])])
     ) as Record<Key, string>;
 
-    return mergeClassNames(classes, classNames, name);
+    return { classes: mergeClassNames(cx, classes, classNames, name), cx };
   }
 
   return useStyles;

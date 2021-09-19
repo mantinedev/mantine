@@ -5,7 +5,7 @@ import { Text } from '../../Text/Text';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import useStyles from './PopoverBody.styles';
 
-export type PopoverBodyStylesNames = keyof ReturnType<typeof useStyles>;
+export type PopoverBodyStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 interface PopoverBodyProps
   extends DefaultProps<PopoverBodyStylesNames>,
@@ -37,7 +37,7 @@ export function PopoverBody({
   children,
   ...others
 }: PopoverBodyProps) {
-  const classes = useStyles({ shadow, radius, spacing }, classNames, 'popover');
+  const { classes } = useStyles({ shadow, radius, spacing }, classNames, 'popover');
   const _styles = mergeStyles(classes, styles);
 
   return (

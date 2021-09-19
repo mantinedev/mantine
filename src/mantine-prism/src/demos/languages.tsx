@@ -39,7 +39,7 @@ export function Burger({
 }: BurgerProps) {
   const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
-  const classes = useStyles({ color, size, theme, reduceMotion }, classNames);
+  const { classes } = useStyles({ color, size, theme, reduceMotion }, classNames);
   const _styles = mergeStyles(classes, styles);
 
   return (

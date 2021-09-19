@@ -1,5 +1,6 @@
-import { serializeStyles } from '@emotion/serialize';
-import { insertStyles } from '@emotion/utils';
+import clsx from 'clsx';
+import { serializeStyles, RegisteredCache } from '@emotion/serialize';
+import { insertStyles, getRegisteredStyles } from '@emotion/utils';
 import type { EmotionCache } from '@emotion/cache';
 import { useGuaranteedMemo } from './utils/use-guaranteed-memo/use-guaranteed-memo';
 import type { CSS } from './types';
@@ -31,6 +32,18 @@ function getRef(args: any[]) {
 }
 
 export const { cssFactory } = (() => {
+  function merge(registered: RegisteredCache, css: CSS, className: string) {
+    const registeredStyles: string[] = [];
+
+    const rawClassName = getRegisteredStyles(registered, registeredStyles, className);
+
+    if (registeredStyles.length < 2) {
+      return className;
+    }
+
+    return rawClassName + css(registeredStyles);
+  }
+
   function _cssFactory(params: { cache: EmotionCache }) {
     const { cache } = params;
 
@@ -41,7 +54,9 @@ export const { cssFactory } = (() => {
       return `${cache.key}-${serialized.name}${ref === undefined ? '' : ` ${ref}`}`;
     };
 
-    return css;
+    const cx = (...args: any) => merge(cache.registered, css, clsx(args));
+
+    return { css, cx };
   }
 
   return { cssFactory: _cssFactory };

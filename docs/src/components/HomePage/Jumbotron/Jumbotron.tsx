@@ -1,12 +1,11 @@
 import React from 'react';
-import cx from 'clsx';
 import { Link } from 'gatsby';
 import { Container, Group, Button, Text, useMantineTheme } from '@mantine/core';
 import { MarkGithubIcon } from '@primer/octicons-react';
 import useStyles from './Jumbotron.styles';
 
 export function Jumbotron() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const theme = useMantineTheme();
 
   return (

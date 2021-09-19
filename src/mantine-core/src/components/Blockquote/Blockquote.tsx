@@ -1,11 +1,10 @@
 import React from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineColor } from '@mantine/theme';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
-export type BlockquoteStylesNames = keyof ReturnType<typeof useStyles>;
+export type BlockquoteStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface BlockquoteProps
   extends DefaultProps<BlockquoteStylesNames>,
@@ -33,7 +32,7 @@ export function Blockquote({
   styles,
   ...others
 }: BlockquoteProps) {
-  const classes = useStyles({ color }, classNames, 'blockquote');
+  const { classes, cx } = useStyles({ color }, classNames, 'blockquote');
   const _styles = mergeStyles(classes, styles);
 
   return (

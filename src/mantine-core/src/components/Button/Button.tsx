@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { useMantineTheme, mergeStyles } from '@mantine/tss';
 import {
   DefaultProps,
@@ -26,7 +25,7 @@ const LOADER_SIZES = {
 export const BUTTON_SIZES = heights;
 
 export type ButtonStylesNames = Exclude<
-  keyof ReturnType<typeof useStyles>,
+  keyof ReturnType<typeof useStyles>['classes'],
   ButtonVariant | 'loading'
 >;
 
@@ -121,7 +120,7 @@ export function Button<
     variant: variant === 'link' ? 'light' : variant,
   });
 
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     {
       radius,
       color,

@@ -22,7 +22,7 @@ import useStyles from './Menu.styles';
 export { MenuBody, MenuItem, MenuLabel };
 export type { MenuBodyProps, MenuItemProps, MenuLabelProps };
 
-export type MenuStylesNames = keyof ReturnType<typeof useStyles> | MenuBodyStylesNames;
+export type MenuStylesNames = keyof ReturnType<typeof useStyles>['classes'] | MenuBodyStylesNames;
 
 export const MENU_SIZES = sizes;
 
@@ -129,7 +129,7 @@ export function Menu({
   onChange,
   ...others
 }: MenuProps) {
-  const classes = useStyles(null, classNames, 'menu');
+  const { classes } = useStyles(null, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
   const controlRefFocusTimeout = useRef<number>();
   const delayTimeout = useRef<number>();

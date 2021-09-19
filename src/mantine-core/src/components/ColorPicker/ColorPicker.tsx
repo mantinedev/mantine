@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cx from 'clsx';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineSize, getSizeValue } from '@mantine/theme';
@@ -18,7 +17,7 @@ export { HueSlider, AlphaSlider };
 export type { HueSliderProps, AlphaSliderProps };
 
 export type ColorPickerStylesNames =
-  | keyof ReturnType<typeof useStyles>
+  | keyof ReturnType<typeof useStyles>['classes']
   | ColorSliderStylesNames
   | SwatchesStylesNames
   | SaturationStylesNames
@@ -102,7 +101,7 @@ export function ColorPicker({
   classNames,
   ...others
 }: ColorPickerProps) {
-  const classes = useStyles({ size, fullWidth }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size, fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const formatRef = useRef(format);
   const valueRef = useRef<string>(null);

@@ -1,11 +1,13 @@
 import React from 'react';
-import cx from 'clsx';
 import { useId } from '@mantine/hooks';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineSize, MantineColor } from '@mantine/theme';
 import useStyles from './Radio.styles';
 
-export type RadioStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'labelDisabled'>;
+export type RadioStylesNames = Exclude<
+  keyof ReturnType<typeof useStyles>['classes'],
+  'labelDisabled'
+>;
 
 export interface RadioProps
   extends DefaultProps<RadioStylesNames>,
@@ -40,7 +42,7 @@ export function Radio({
   styles,
   ...others
 }: RadioProps) {
-  const classes = useStyles({ color, size }, classNames, 'radio-group');
+  const { classes, cx } = useStyles({ color, size }, classNames, 'radio-group');
   const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);
 

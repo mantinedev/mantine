@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from './MantineProvider/MantineProvider';
 import { createStyles } from './create-styles';
@@ -38,7 +37,7 @@ const useStyles = createStyles((theme, { color }: Params, createRef) => {
 });
 
 function Component(props: any) {
-  const classes = useStyles({ color: 'blue' }, { child: 'child' }, 'test');
+  const { classes, cx } = useStyles({ color: 'blue' }, { child: 'child' }, 'test');
   const [value, setValue] = useState('');
   return (
     <div className={cx(classes.root, { [classes.active]: props.active })}>

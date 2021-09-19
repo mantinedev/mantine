@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { useMantineTheme } from '@mantine/tss';
 import { DefaultProps, MantineColor } from '@mantine/theme';
 import useStyles from './Code.styles';
@@ -18,7 +17,7 @@ export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<
 export function Code({ className, children, block = false, color, ...others }: CodeProps) {
   const theme = useMantineTheme();
   const themeColor = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
-  const classes = useStyles({ color: themeColor }, null, 'code');
+  const { classes, cx } = useStyles({ color: themeColor }, null, 'code');
 
   if (block) {
     return (

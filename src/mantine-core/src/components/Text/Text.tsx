@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps, MantineSize, MantineGradient, MantineColor } from '@mantine/theme';
 import useStyles from './Text.styles';
 
@@ -66,7 +65,7 @@ export function Text<C extends React.ElementType = 'div', R extends HTMLElement 
   inherit = false,
   ...others
 }: TextProps<C, R>): JSX.Element {
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     {
       variant,
       color,

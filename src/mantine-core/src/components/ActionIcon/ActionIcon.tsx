@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { useMantineTheme } from '@mantine/tss';
 import {
   DefaultProps,
@@ -74,7 +73,7 @@ export function ActionIcon<
   ...others
 }: ActionIconProps<C, R>) {
   const theme = useMantineTheme();
-  const classes = useStyles({ size, radius, color, variant }, null, 'action-icon');
+  const { classes, cx } = useStyles({ size, radius, color, variant }, null, 'action-icon');
   const Element = component || 'button';
   const colors = getSharedColorScheme({ color, theme, variant: 'light' });
 

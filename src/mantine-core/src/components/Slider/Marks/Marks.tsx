@@ -1,12 +1,11 @@
 import React from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/theme';
 import { getPosition } from '../utils/get-position/get-position';
 import { isMarkFilled } from './is-mark-filled';
 import useStyles from './Marks.styles';
 
-export type MarksStylesNames = keyof ReturnType<typeof useStyles>;
+export type MarksStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 interface MarksProps extends DefaultProps<MarksStylesNames> {
   marks: { value: number; label?: React.ReactNode }[];
@@ -31,7 +30,7 @@ export function Marks({
   offset,
   onChange,
 }: MarksProps) {
-  const classes = useStyles({ size, color }, classNames, 'slider');
+  const { classes, cx } = useStyles({ size, color }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
 
   const items = marks.map((mark, index) => (

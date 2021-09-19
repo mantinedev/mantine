@@ -6,7 +6,7 @@ import { parseColor } from '../converters/parsers';
 import { HsvaColor } from '../types';
 import useStyles from './Swatches.styles';
 
-export type SwatchesStylesNames = keyof ReturnType<typeof useStyles>;
+export type SwatchesStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 interface SwatchesProps
   extends DefaultProps<SwatchesStylesNames>,
@@ -29,7 +29,7 @@ export function Swatches({
   __staticSelector = 'color-picker',
   ...others
 }: SwatchesProps) {
-  const classes = useStyles({ swatchesPerRow }, classNames, __staticSelector);
+  const { classes } = useStyles({ swatchesPerRow }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   const colors = data.map((color, index) => (

@@ -1,5 +1,4 @@
 import React, { useMemo, useRef, useEffect } from 'react';
-import cx from 'clsx';
 import Editor, { Quill } from 'react-quill';
 import { DefaultProps, mergeStyles } from '@mantine/core';
 import { useId } from '@mantine/hooks';
@@ -12,7 +11,9 @@ import { createImageBlot, ImageUploader } from '../../modules/image-uploader';
 import { replaceIcons } from '../../modules/icons';
 import { attachShortcuts } from '../../modules/shortcuts';
 
-export type RichTextEditorStylesNames = ToolbarStylesNames | keyof ReturnType<typeof useStyles>;
+export type RichTextEditorStylesNames =
+  | ToolbarStylesNames
+  | keyof ReturnType<typeof useStyles>['classes'];
 
 export type { RichTextEditorLabels };
 
@@ -76,7 +77,7 @@ export function RichTextEditor({
 }: RichTextEditorProps) {
   const uuid = useId(id);
   const editorRef = useRef<any>();
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
     classNames,
     'rte'

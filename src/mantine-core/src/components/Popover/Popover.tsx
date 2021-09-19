@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import cx from 'clsx';
 import {
   useClickOutside,
   useFocusTrap,
@@ -14,7 +13,9 @@ import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';
 import useStyles from './Popover.styles';
 
-export type PopoverStylesNames = keyof ReturnType<typeof useStyles> | PopoverBodyStylesNames;
+export type PopoverStylesNames =
+  | keyof ReturnType<typeof useStyles>['classes']
+  | PopoverBodyStylesNames;
 
 export interface PopoverProps
   extends DefaultProps<PopoverStylesNames>,
@@ -98,7 +99,7 @@ export function Popover({
   styles,
   ...others
 }: PopoverProps) {
-  const classes = useStyles(null, classNames, 'popover');
+  const { classes, cx } = useStyles(null, classNames, 'popover');
   const _styles = mergeStyles(classes, styles);
   const handleClose = () => typeof onClose === 'function' && onClose();
   const [referenceElement, setReferenceElement] = useState(null);

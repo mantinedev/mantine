@@ -4,7 +4,7 @@ import { LogoImage } from './LogoImage';
 import useStyles from './Logo.styles';
 
 export function Logo() {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <Link to="/" className={classes.logo} aria-label="Mantine">

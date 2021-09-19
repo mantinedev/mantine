@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { mergeStyles, useMantineTheme } from '@mantine/tss';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { Transition, MantineTransition } from '../Transition/Transition';
@@ -8,7 +7,7 @@ import { Affix } from '../Affix/Affix';
 import { Paper, PaperProps } from '../Paper/Paper';
 import useStyles from './Dialog.styles';
 
-export type DialogStylesNames = keyof ReturnType<typeof useStyles>;
+export type DialogStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface DialogProps
   extends DefaultProps<DialogStylesNames>,
@@ -69,7 +68,7 @@ export function MantineDialog({
   transitionTimingFunction,
   ...others
 }: DialogProps) {
-  const classes = useStyles({ size }, classNames, 'dialog');
+  const { classes, cx } = useStyles({ size }, classNames, 'dialog');
   const _styles = mergeStyles(classes, styles);
 
   return (

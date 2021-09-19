@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StyledTabs(props: TabsProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return <Tabs variant="unstyled" classNames={classes} {...props} />;
 }
 
@@ -87,8 +87,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StyledTabs(props: TabsProps) {
-  const classes = useStyles();
-  return <Tabs variant="unstyled" classNames={classes} {...props} />;
+  const { classes } = useStyles();
+  return <Tabs variant="unstyled" classNames={classes as any} {...props} />;
 }
 
 function Demo() {

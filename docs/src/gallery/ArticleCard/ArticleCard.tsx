@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { BookmarkIcon, HeartIcon, ShareIcon } from '@primer/octicons-react';
 import {
   Card,
@@ -63,7 +62,7 @@ export function ArticleCard({
   rating,
   ...others
 }: ArticleCardProps & Omit<React.ComponentPropsWithoutRef<'div'>, keyof ArticleCardProps>) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const theme = useMantineTheme();
 
   return (

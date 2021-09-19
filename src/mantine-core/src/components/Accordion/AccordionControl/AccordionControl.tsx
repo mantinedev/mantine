@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps } from '@mantine/theme';
 import { mergeStyles } from '@mantine/tss';
@@ -7,7 +6,7 @@ import { AccordionItemProps } from '../AccordionItem/AccordionItem';
 import { ChevronIcon } from './ChevronIcon';
 import useStyles from './AccordionControl.styles';
 
-export type AccordionControlStylesNames = keyof ReturnType<typeof useStyles>;
+export type AccordionControlStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 interface AccordionControlProps
   extends DefaultProps<AccordionControlStylesNames>,
@@ -33,7 +32,7 @@ export function AccordionControl({
 }: AccordionControlProps) {
   const forceUpdate = useForceUpdate();
   const reduceMotion = useReducedMotion();
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     { transitionDuration: reduceMotion ? 0 : transitionDuration },
     classNames,
     'accordion'

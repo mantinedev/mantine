@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineSize, MantineShadow } from '@mantine/theme';
@@ -30,7 +29,7 @@ export type { MultiSelectValueProps };
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
   | Exclude<
-      keyof ReturnType<typeof useStyles>,
+      keyof ReturnType<typeof useStyles>['classes'],
       'searchInputEmpty' | 'searchInputInputHidden' | 'searchInputPointer'
     >
   | Exclude<BaseSelectStylesNames, 'selected'>;
@@ -162,7 +161,7 @@ export function MultiSelect({
   rightSectionWidth,
   ...others
 }: MultiSelectProps) {
-  const classes = useStyles({ size, invalid: !!error }, classNames, 'multi-select');
+  const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, 'multi-select');
   const _styles = mergeStyles(classes, styles);
   const dropdownRef = useRef<HTMLDivElement>();
   const inputRef = useRef<HTMLInputElement>();

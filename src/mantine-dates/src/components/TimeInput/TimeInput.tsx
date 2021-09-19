@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
 import {
   InputBaseProps,
   InputWrapperBaseProps,
@@ -19,7 +18,7 @@ import { getTimeValues } from './get-time-values/get-time-value';
 import useStyles from './TimeInput.styles';
 
 export type TimeInputStylesNames =
-  | keyof ReturnType<typeof useStyles>
+  | keyof ReturnType<typeof useStyles>['classes']
   | InputStylesNames
   | InputWrapperStylesNames;
 
@@ -86,7 +85,7 @@ export function TimeInput({
   disabled = false,
   ...others
 }: TimeInputProps) {
-  const classes = useStyles({ size }, classNames, 'time-input');
+  const { classes, cx } = useStyles({ size }, classNames, 'time-input');
   const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);
 

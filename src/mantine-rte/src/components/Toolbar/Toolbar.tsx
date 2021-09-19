@@ -1,12 +1,11 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps, mergeStyles } from '@mantine/core';
 import type { RichTextEditorLabels } from '../RichTextEditor/default-labels';
 import { ToolbarButton } from './ToolbarButton/ToolbarButton';
 import { CONTROLS, ToolbarControl } from './controls';
 import useStyles from './Toolbar.styles';
 
-export type ToolbarStylesNames = keyof ReturnType<typeof useStyles>;
+export type ToolbarStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface ToolbarProps extends DefaultProps<ToolbarStylesNames> {
   /** Toolbar controls divided into groups */
@@ -37,7 +36,7 @@ export function Toolbar({
   id,
   ...others
 }: ToolbarProps) {
-  const classes = useStyles({ sticky, stickyOffset }, classNames, 'rte');
+  const { classes, cx } = useStyles({ sticky, stickyOffset }, classNames, 'rte');
   const _styles = mergeStyles(classes, styles);
 
   const groups = controls.map((group, index) => {

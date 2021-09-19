@@ -1,12 +1,11 @@
 import React from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineSize } from '@mantine/theme';
 import { Text } from '../../Text/Text';
 import { SelectItem } from '../types';
 import useStyles from './SelectItems.styles';
 
-export type SelectItemsStylesNames = keyof ReturnType<typeof useStyles>;
+export type SelectItemsStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
   data: SelectItem[];
@@ -37,7 +36,7 @@ export function SelectItems({
   size,
   nothingFound,
 }: SelectItemsProps) {
-  const classes = useStyles({ size }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   const items = data.map((item, index) => {

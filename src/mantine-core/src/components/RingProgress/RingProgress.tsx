@@ -1,12 +1,11 @@
 import React from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineColor } from '@mantine/theme';
 import { Curve } from './Curve/Curve';
 import { getCurves } from './get-curves/get-curves';
 import useStyles from './RingProgress.styles';
 
-export type RingProgressStylesNames = keyof ReturnType<typeof useStyles>;
+export type RingProgressStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface RingProgressProps
   extends DefaultProps<RingProgressStylesNames>,
@@ -35,7 +34,7 @@ export function RingProgress({
   styles,
   ...others
 }: RingProgressProps) {
-  const classes = useStyles(null, classNames, 'ring-progress');
+  const { classes, cx } = useStyles(null, classNames, 'ring-progress');
   const _styles = mergeStyles(classes, styles);
 
   const curves = getCurves({ size, thickness, sections }).map((curve, index) => (

@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import {
   ActionIcon,
@@ -16,7 +15,7 @@ import { CopyIcon } from './CopyIcon';
 import { getPrismTheme } from './prism-theme';
 import useStyles from './Prism.styles';
 
-export type PrismStylesNames = keyof ReturnType<typeof useStyles>;
+export type PrismStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface PrismProps
   extends DefaultProps<PrismStylesNames>,
@@ -62,7 +61,11 @@ export function Prism({
   ...others
 }: PrismProps) {
   const theme = useMantineTheme();
-  const classes = useStyles({ colorScheme: colorScheme || theme.colorScheme }, classNames, 'prism');
+  const { classes, cx } = useStyles(
+    { colorScheme: colorScheme || theme.colorScheme },
+    classNames,
+    'prism'
+  );
   const _styles = mergeStyles(classes, styles);
   const clipboard = useClipboard();
 

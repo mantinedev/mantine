@@ -1,11 +1,10 @@
 import React from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { MantineNumberSize } from '@mantine/theme';
 import { SharedMenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 
-export type MenuButtonStylesNames = keyof ReturnType<typeof useStyles>;
+export type MenuButtonStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 interface _MenuButtonProps<C extends React.ElementType, R extends HTMLElement>
   extends SharedMenuItemProps {
@@ -53,7 +52,7 @@ export function MenuButton<
   radius,
   ...others
 }: MenuButtonProps<C, R>) {
-  const classes = useStyles({ color, radius }, classNames, 'menu');
+  const { classes, cx } = useStyles({ color, radius }, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
   const Element = component || 'button';
 

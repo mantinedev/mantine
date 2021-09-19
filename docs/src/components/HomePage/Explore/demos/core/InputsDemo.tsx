@@ -76,7 +76,7 @@ export function SegmentedControlWrapper(
 }
 
 export function InputsDemo() {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <div className={classes.wrapper}>

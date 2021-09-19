@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/tss';
 import { DefaultProps } from '@mantine/theme';
@@ -44,7 +43,7 @@ export function LoadingOverlay({
   ...others
 }: LoadingOverlayProps) {
   const theme = useMantineTheme();
-  const classes = useStyles(null, null, 'loading-overlay');
+  const { classes, cx } = useStyles(null, null, 'loading-overlay');
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 1 : transitionDuration;
 

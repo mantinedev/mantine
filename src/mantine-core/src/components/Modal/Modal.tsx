@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import {
   useReducedMotion,
   useId,
@@ -20,7 +19,7 @@ import useStyles, { sizes } from './Modal.styles';
 
 export const MODAL_SIZES = sizes;
 
-export type ModalStylesNames = keyof ReturnType<typeof useStyles>;
+export type ModalStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface ModalProps
   extends DefaultProps<ModalStylesNames>,
@@ -102,7 +101,7 @@ export function MantineModal({
   const bodyId = `${baseId}-body`;
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme();
-  const classes = useStyles({ size, overflow }, classNames, 'modal');
+  const { classes, cx } = useStyles({ size, overflow }, classNames, 'modal');
   const _styles = mergeStyles(classes, styles);
   const [modalBodyElement, setModalBodyElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap();

@@ -4,7 +4,7 @@ import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/theme';
 import { Marks, MarksStylesNames } from '../Marks/Marks';
 import useStyles from './Track.styles';
 
-export type TrackStylesNames = keyof ReturnType<typeof useStyles> | MarksStylesNames;
+export type TrackStylesNames = keyof ReturnType<typeof useStyles>['classes'] | MarksStylesNames;
 
 interface TrackProps extends DefaultProps<TrackStylesNames> {
   filled: number;
@@ -31,7 +31,7 @@ export function Track({
   offset,
   ...others
 }: TrackProps) {
-  const classes = useStyles({ color, size, radius }, classNames, 'slider');
+  const { classes } = useStyles({ color, size, radius }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
 
   return (

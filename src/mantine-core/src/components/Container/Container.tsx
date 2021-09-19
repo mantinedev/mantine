@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import useStyles, { sizes } from './Container.styles';
 
@@ -17,7 +16,7 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
 }
 
 export function Container({ className, padding = 'md', fluid, size, ...others }: ContainerProps) {
-  const classes = useStyles({ padding, fluid, size }, null, 'container');
+  const { classes, cx } = useStyles({ padding, fluid, size }, null, 'container');
   return <div className={cx(classes.container, className)} {...others} />;
 }
 

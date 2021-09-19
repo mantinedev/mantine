@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import cx from 'clsx';
 import { useUncontrolled, clamp } from '@mantine/hooks';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/theme';
@@ -14,7 +13,7 @@ export type { TabProps };
 export const TABS_VARIANTS = ['default', 'outline', 'pills', 'unstyled'] as const;
 export type TabsVariant = typeof TABS_VARIANTS[number];
 export type TabsStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>
+  | Exclude<keyof ReturnType<typeof useStyles>['classes'], TabsVariant>
   | TabControlStylesNames;
 
 export interface TabsProps
@@ -98,7 +97,7 @@ export function Tabs({
   orientation = 'horizontal',
   ...others
 }: TabsProps) {
-  const classes = useStyles({ tabPadding, orientation }, classNames, 'tabs');
+  const { classes, cx } = useStyles({ tabPadding, orientation }, classNames, 'tabs');
   const _styles = mergeStyles(classes, styles);
 
   const controlRefs = useRef<Record<string, HTMLButtonElement>>({});

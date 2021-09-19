@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import {
   DefaultProps,
@@ -13,7 +12,7 @@ import useStyles, { heights } from './Badge.styles';
 export const BADGE_SIZES = heights;
 export const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot', 'gradient'] as const;
 export type BadgeVariant = typeof BADGE_VARIANTS[number];
-export type BadgeStylesNames = Exclude<keyof ReturnType<typeof useStyles>, BadgeVariant>;
+export type BadgeStylesNames = Exclude<keyof ReturnType<typeof useStyles>['classes'], BadgeVariant>;
 
 interface _BadgeProps<C extends React.ElementType, R extends HTMLElement>
   extends DefaultProps<BadgeStylesNames> {
@@ -71,7 +70,7 @@ export function Badge<C extends React.ElementType = 'div', R extends HTMLElement
   styles,
   ...others
 }: BadgeProps<C, R>) {
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     {
       size,
       fullWidth,

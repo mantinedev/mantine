@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps } from '@mantine/theme';
 import useStyles from './Table.styles';
 
@@ -22,7 +21,7 @@ export function Table({
   captionSide = 'top',
   ...others
 }: TableProps) {
-  const classes = useStyles({ captionSide }, null, 'table');
+  const { classes, cx } = useStyles({ captionSide }, null, 'table');
 
   return (
     <table

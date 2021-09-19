@@ -5,7 +5,7 @@ import { upperFirst } from '@mantine/hooks';
 import { getMonthsNames, getYearsRange } from '../../../utils';
 import useStyles from './CalendarLabel.styles';
 
-export type CalendarLabelStylesNames = keyof ReturnType<typeof useStyles>;
+export type CalendarLabelStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 interface CalendarLabelProps extends DefaultProps<CalendarLabelStylesNames> {
   locale: string;
@@ -35,7 +35,7 @@ export function CalendarLabel({
   yearLabel,
 }: CalendarLabelProps) {
   const selectSize = size === 'lg' || size === 'xl' ? 'md' : 'xs';
-  const classes = useStyles(null, classNames, __staticSelector);
+  const { classes } = useStyles(null, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return withSelect ? (

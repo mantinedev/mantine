@@ -76,7 +76,7 @@ interface FeaturesImagesProps {
 }
 
 export function FeaturesImages({ supTitle, description, data }: FeaturesImagesProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   const items = data.map((item) => (
     <div className={classes.item} key={item.image}>

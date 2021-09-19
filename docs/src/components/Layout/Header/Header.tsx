@@ -24,7 +24,7 @@ function isMac() {
 }
 
 export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [isMacOS, setIsMacOS] = useState(true);
   const burgerTitle = navbarOpened ? 'Open navigation' : 'Hide navigation';
 

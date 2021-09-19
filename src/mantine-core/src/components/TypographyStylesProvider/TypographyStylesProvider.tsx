@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps } from '@mantine/theme';
 import useStyles from './TypographyStylesProvider.styles';
 
@@ -11,7 +10,7 @@ export interface TypographyStylesProviderProps
 }
 
 export function TypographyStylesProvider({ className, ...others }: TypographyStylesProviderProps) {
-  const classes = useStyles(null, null, 'typography-styles-provider');
+  const { classes, cx } = useStyles(null, null, 'typography-styles-provider');
   return <div className={cx(classes.root, className)} {...others} />;
 }
 

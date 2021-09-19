@@ -8,7 +8,7 @@ import useStyles from './Saturation.styles';
 import { convertHsvaTo } from '../converters';
 
 export type SaturationStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>, 'saturationOverlay' | 'saturationThumb'>
+  | Exclude<keyof ReturnType<typeof useStyles>['classes'], 'saturationOverlay' | 'saturationThumb'>
   | ThumbStylesNames;
 
 interface SaturationProps extends DefaultProps<SaturationStylesNames> {
@@ -32,7 +32,7 @@ export function Saturation({
   classNames,
   styles,
 }: SaturationProps) {
-  const classes = useStyles({ size }, classNames, __staticSelector);
+  const { classes } = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ x: value.s / 100, y: 1 - value.v / 100 });
 

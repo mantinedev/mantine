@@ -42,7 +42,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StyledAccordion(props: AccordionProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return <Accordion classNames={classes} {...props} />;
 }
 
@@ -106,7 +106,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StyledAccordion(props: AccordionProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return <Accordion classNames={classes} {...props} />;
 }
 

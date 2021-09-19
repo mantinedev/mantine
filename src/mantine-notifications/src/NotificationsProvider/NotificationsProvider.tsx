@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { Transition, TransitionGroup } from 'react-transition-group';
 import { DefaultProps, useMantineTheme, Portal } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
@@ -76,7 +75,7 @@ export function NotificationsProvider({
   const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 1 : transitionDuration;
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const positioning = (POSITIONS.includes(position) ? position : 'bottom-right').split(
     '-'
   ) as NotificationsProviderPositioning;

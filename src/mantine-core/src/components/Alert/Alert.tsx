@@ -1,11 +1,10 @@
 import React from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineColor } from '@mantine/theme';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import useStyles from './Alert.styles';
 
-export type AlertStylesName = keyof ReturnType<typeof useStyles>;
+export type AlertStylesName = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface AlertProps
   extends DefaultProps<AlertStylesName>,
@@ -44,7 +43,7 @@ export function Alert({
   withCloseButton,
   ...others
 }: AlertProps) {
-  const classes = useStyles({ color, withIcon: !!icon }, classNames, 'alert');
+  const { classes, cx } = useStyles({ color, withIcon: !!icon }, classNames, 'alert');
   const _styles = mergeStyles(classes, styles);
 
   return (

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import {
   useMove,
   clampUseMovePosition,
@@ -13,7 +12,7 @@ import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
 
 export type ColorSliderStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>, 'sliderThumb'>
+  | Exclude<keyof ReturnType<typeof useStyles>['classes'], 'sliderThumb'>
   | ThumbStylesNames;
 
 export interface BaseColorSliderProps
@@ -51,7 +50,7 @@ export function ColorSlider({
   style,
   ...others
 }: ColorSliderProps) {
-  const classes = useStyles({ size }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ y: 0, x: value / maxValue });
   const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);

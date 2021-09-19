@@ -1,5 +1,4 @@
 import React, { Children } from 'react';
-import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { ListItem, ListItemProps, ListItemStylesNames } from './ListItem/ListItem';
@@ -8,7 +7,7 @@ import useStyles from './List.styles';
 export { ListItem };
 export type { ListItemProps };
 
-export type ListStylesNames = ListItemStylesNames | keyof ReturnType<typeof useStyles>;
+export type ListStylesNames = ListItemStylesNames | keyof ReturnType<typeof useStyles>['classes'];
 
 export interface ListProps
   extends DefaultProps<ListStylesNames>,
@@ -53,7 +52,7 @@ export function List({
   classNames,
   ...others
 }: ListProps) {
-  const classes = useStyles({ withPadding, size, listStyleType }, classNames, 'list');
+  const { classes, cx } = useStyles({ withPadding, size, listStyleType }, classNames, 'list');
   const _styles = mergeStyles(classes, styles);
   const Element = type === 'unordered' ? 'ul' : 'ol';
 

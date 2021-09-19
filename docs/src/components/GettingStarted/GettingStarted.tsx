@@ -8,7 +8,7 @@ import { NextSteps } from './NextSteps/NextSteps';
 import useStyles from './GettingStarted.styles';
 
 export function GettingStarted() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [dependencies, setDependencies] = useState('react-jss @mantine/hooks @mantine/core');
 
   return (

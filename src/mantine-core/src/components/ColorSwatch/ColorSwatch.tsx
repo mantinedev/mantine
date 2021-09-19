@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import useStyles from './ColorSwatch.styles';
 
@@ -39,7 +38,7 @@ export function ColorSwatch<
   children,
   ...others
 }: ColorSwatchProps<C, R>) {
-  const classes = useStyles({ radius, size }, null, 'color-swatch');
+  const { classes, cx } = useStyles({ radius, size }, null, 'color-swatch');
 
   const Element = component || 'div';
 
