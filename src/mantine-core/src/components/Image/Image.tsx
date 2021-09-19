@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { Text } from '../Text/Text';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
@@ -66,8 +67,7 @@ export function Image({
   caption,
   ...others
 }: ImageProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ radius, theme }, classNames, 'image');
+  const classes = useStyles({ radius }, classNames, 'image');
   const _styles = mergeStyles(classes, styles);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(!src);
