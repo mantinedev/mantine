@@ -1,12 +1,12 @@
-import { createMemoStyles, MantineNumberSize, MantineTheme, getSizeValue } from '../../../theme';
+import { createStyles } from '@mantine/tss';
+import { MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 interface CardSectionStyles {
-  theme: MantineTheme;
   padding: MantineNumberSize;
 }
 
-export default createMemoStyles({
-  cardSection: ({ theme, padding }: CardSectionStyles) => ({
+export default createStyles((theme, { padding }: CardSectionStyles) => ({
+  cardSection: {
     marginLeft: -1 * getSizeValue({ size: padding, sizes: theme.spacing }),
     marginRight: -1 * getSizeValue({ size: padding, sizes: theme.spacing }),
 
@@ -17,5 +17,5 @@ export default createMemoStyles({
     '&:last-child': {
       marginBottom: -1 * getSizeValue({ size: padding, sizes: theme.spacing }),
     },
-  }),
-});
+  },
+}));
