@@ -1,12 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import {
-  DefaultProps,
-  useMantineTheme,
-  MantineNumberSize,
-  mergeStyles,
-  MantineSize,
-} from '../../theme';
+import { useMantineTheme, mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineSize } from '@mantine/theme';
 import useStyles, { sizes } from './Input.styles';
 
 export const INPUT_VARIANTS = ['default', 'filled', 'unstyled', 'headless'] as const;
@@ -93,7 +88,7 @@ export function Input<
   const theme = useMantineTheme();
   const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
   const classes = useStyles(
-    { radius, theme, size, multiline, variant: _variant, invalid, disabled },
+    { radius, size, multiline, variant: _variant, invalid, disabled },
     classNames,
     __staticSelector
   );

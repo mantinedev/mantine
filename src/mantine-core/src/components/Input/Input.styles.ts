@@ -1,15 +1,14 @@
+import { createStyles } from '@mantine/tss';
 import {
-  MantineTheme,
   MantineNumberSize,
   getFontStyles,
   getSizeValue,
-  createMemoStyles,
   MantineSize,
-} from '../../theme';
+  MantineTheme,
+} from '@mantine/theme';
 import type { InputVariant } from './Input';
 
 interface InputStyles {
-  theme: MantineTheme;
   radius: MantineNumberSize;
   size: MantineSize;
   variant: InputVariant;
@@ -26,7 +25,7 @@ export const sizes = {
   xl: 60,
 };
 
-function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'theme'>) {
+function getVariantStyles({ variant, theme }: { variant: InputVariant; theme: MantineTheme }) {
   if (variant === 'default') {
     return {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
@@ -87,7 +86,7 @@ function getVariantStyles({ variant, theme }: Pick<InputStyles, 'variant' | 'the
   return null;
 }
 
-function getInvalidStyles({ invalid, theme }: Pick<InputStyles, 'invalid' | 'theme'>) {
+function getInvalidStyles({ invalid, theme }: { invalid: boolean; theme: MantineTheme }) {
   if (!invalid) {
     return null;
   }
@@ -105,17 +104,8 @@ function getInvalidStyles({ invalid, theme }: Pick<InputStyles, 'invalid' | 'the
   };
 }
 
-export default createMemoStyles({
-  root: ({ radius, theme }: InputStyles) => ({
-    position: 'relative',
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-  }),
-
-  input: ({ theme, size, multiline, radius, variant, invalid, disabled }: InputStyles) => {
-    if (variant === 'headless') {
-      return {};
-    }
-
+export default createStyles(
+  (theme, { size, multiline, radius, variant, invalid, disabled }: InputStyles) => {
     const sizeStyles =
       variant === 'default' || variant === 'filled'
         ? {
@@ -141,84 +131,95 @@ export default createMemoStyles({
       : null;
 
     return {
-      ...getFontStyles(theme),
-      ...getVariantStyles({ variant, theme }),
-      height: multiline
-        ? variant === 'unstyled'
-          ? undefined
-          : 'auto'
-        : getSizeValue({ size, sizes }),
-      WebkitTapHighlightColor: 'transparent',
-      lineHeight: multiline ? theme.lineHeight : `${getSizeValue({ size, sizes }) - 2}px`,
-      appearance: 'none',
-      resize: 'none',
-      boxSizing: 'border-box',
-      fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
-      width: '100%',
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      display: 'block',
-      textAlign: 'left',
-      ...sizeStyles,
-      ...disabledStyles,
-
-      '&:disabled': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
-        color: theme.colors.dark[2],
-        opacity: 0.6,
-        cursor: 'not-allowed',
-
-        '&::placeholder': {
-          color: theme.colors.dark[2],
-        },
+      root: {
+        position: 'relative',
+        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       },
 
-      '&::placeholder': {
-        opacity: 1,
-        userSelect: 'none',
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      input:
+        variant === 'headless'
+          ? {}
+          : {
+              ...getFontStyles(theme),
+              ...getVariantStyles({ variant, theme }),
+              height: multiline
+                ? variant === 'unstyled'
+                  ? undefined
+                  : 'auto'
+                : getSizeValue({ size, sizes }),
+              WebkitTapHighlightColor: 'transparent',
+              lineHeight: multiline ? theme.lineHeight : `${getSizeValue({ size, sizes }) - 2}px`,
+              appearance: 'none',
+              resize: 'none',
+              boxSizing: 'border-box',
+              fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+              width: '100%',
+              color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+              display: 'block',
+              textAlign: 'left',
+              ...sizeStyles,
+              ...disabledStyles,
+
+              '&:disabled': {
+                backgroundColor:
+                  theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+                color: theme.colors.dark[2],
+                opacity: 0.6,
+                cursor: 'not-allowed',
+
+                '&::placeholder': {
+                  color: theme.colors.dark[2],
+                },
+              },
+
+              '&::placeholder': {
+                opacity: 1,
+                userSelect: 'none',
+                color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+              },
+
+              '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration':
+                {
+                  appearance: 'none',
+                },
+
+              '&[type=number]': {
+                MozAppearance: 'textfield',
+              },
+
+              ...getInvalidStyles({ invalid, theme }),
+            },
+
+      withIcon: {
+        paddingLeft: `${getSizeValue({ size, sizes })}px !important`,
       },
 
-      '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration':
-        {
-          appearance: 'none',
-        },
-
-      '&[type=number]': {
-        MozAppearance: 'textfield',
+      icon: {
+        pointerEvents: 'none',
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        bottom: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: getSizeValue({ size, sizes }),
+        color: invalid
+          ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
+          : theme.colorScheme === 'dark'
+          ? theme.colors.dark[2]
+          : theme.colors.gray[5],
       },
 
-      ...getInvalidStyles({ invalid, theme }),
+      rightSection: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
     };
-  },
-
-  withIcon: ({ size }) => ({
-    paddingLeft: getSizeValue({ size, sizes }),
-  }),
-
-  icon: ({ theme, size, invalid }: InputStyles) => ({
-    pointerEvents: 'none',
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: getSizeValue({ size, sizes }),
-    color: invalid
-      ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
-      : theme.colorScheme === 'dark'
-      ? theme.colors.dark[2]
-      : theme.colors.gray[5],
-  }),
-
-  rightSection: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  }
+);
