@@ -1,14 +1,8 @@
 import React from 'react';
 import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
-import {
-  DefaultProps,
-  useMantineTheme,
-  MantineNumberSize,
-  mergeStyles,
-  getThemeColor,
-  MantineColor,
-} from '../../theme';
+import { useMantineTheme, mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, getThemeColor, MantineColor } from '@mantine/theme';
 import useStyles, { sizes } from './Progress.styles';
 
 export const PROGRESS_SIZES = sizes;
@@ -66,11 +60,7 @@ export function Progress({
 }: ProgressProps) {
   const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
-  const classes = useStyles(
-    { color, size, radius, striped, reduceMotion, theme },
-    classNames,
-    'progress'
-  );
+  const classes = useStyles({ color, size, radius, striped, reduceMotion }, classNames, 'progress');
   const _styles = mergeStyles(classes, styles);
 
   const segments = Array.isArray(sections)
