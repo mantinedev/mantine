@@ -1,49 +1,39 @@
-import {
-  createMemoStyles,
-  MantineNumberSize,
-  MantineTheme,
-  getSizeValue,
-  getThemeColor,
-  MantineColor,
-} from '../../../theme';
+import { createStyles } from '@mantine/tss';
+import { MantineNumberSize, getSizeValue, getThemeColor, MantineColor } from '@mantine/theme';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface MarksStyles {
-  theme: MantineTheme;
   color: MantineColor;
   size: MantineNumberSize;
 }
 
-export default createMemoStyles({
+export default createStyles((theme, { size, color }: MarksStyles) => ({
   markWrapper: {
     position: 'absolute',
     top: 0,
   },
 
-  mark: ({ theme, size }: MarksStyles) => {
-    const MARK_SIZE = getSizeValue({ sizes, size });
-    return {
-      boxSizing: 'border-box',
-      border: `${getSizeValue({ size, sizes }) >= 8 ? '2px' : '1px'} solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
-      }`,
-      zIndex: 1,
-      height: MARK_SIZE,
-      width: MARK_SIZE,
-      borderRadius: 1000,
-      transform: `translateX(-${MARK_SIZE / 2}px)`,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.white,
-    };
+  mark: {
+    boxSizing: 'border-box',
+    border: `${getSizeValue({ size, sizes }) >= 8 ? '2px' : '1px'} solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+    }`,
+    zIndex: 1,
+    height: getSizeValue({ sizes, size }),
+    width: getSizeValue({ sizes, size }),
+    borderRadius: 1000,
+    transform: `translateX(-${getSizeValue({ sizes, size }) / 2}px)`,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.white,
   },
 
-  markFilled: ({ theme, color }: MarksStyles) => ({
+  markFilled: {
     borderColor: getThemeColor({ theme, color, shade: 6 }),
-  }),
+  },
 
-  markLabel: ({ theme }: MarksStyles) => ({
+  markLabel: {
     transform: 'translate(-50%, 0)',
     fontSize: theme.fontSizes.sm,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     marginTop: theme.spacing.xs / 2,
-  }),
-});
+  },
+}));

@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  DefaultProps,
-  useMantineTheme,
-  mergeStyles,
-  MantineNumberSize,
-  MantineColor,
-} from '../../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/theme';
 import { Marks, MarksStylesNames } from '../Marks/Marks';
 import useStyles from './Track.styles';
 
@@ -36,8 +31,7 @@ export function Track({
   offset,
   ...others
 }: TrackProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, color, size, radius }, classNames, 'slider');
+  const classes = useStyles({ color, size, radius }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
 
   return (

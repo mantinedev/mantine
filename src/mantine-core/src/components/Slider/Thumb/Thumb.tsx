@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import cx from 'clsx';
-import {
-  DefaultProps,
-  useMantineTheme,
-  mergeStyles,
-  MantineNumberSize,
-  MantineColor,
-} from '../../../theme';
+import { useMantineTheme, mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/theme';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import useStyles from './Thumb.styles';
 
@@ -54,7 +49,7 @@ export function Thumb({
   onBlur,
 }: ThumbProps) {
   const theme = useMantineTheme();
-  const classes = useStyles({ color, theme, size }, classNames, 'slider');
+  const classes = useStyles({ color, size }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
   const [focused, setFocused] = useState(false);
 

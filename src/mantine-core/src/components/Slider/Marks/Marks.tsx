@@ -1,12 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  mergeStyles,
-  useMantineTheme,
-  MantineColor,
-} from '../../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/theme';
 import { getPosition } from '../utils/get-position/get-position';
 import { isMarkFilled } from './is-mark-filled';
 import useStyles from './Marks.styles';
@@ -36,8 +31,7 @@ export function Marks({
   offset,
   onChange,
 }: MarksProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, size, color }, classNames, 'slider');
+  const classes = useStyles({ size, color }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
 
   const items = marks.map((mark, index) => (
