@@ -1,17 +1,11 @@
-import {
-  createMemoStyles,
-  MantineTheme,
-  getThemeColor,
-  getFontStyles,
-  MantineColor,
-} from '../../theme';
+import { createStyles } from '@mantine/tss';
+import { getThemeColor, getFontStyles, MantineColor } from '@mantine/theme';
 
 interface TooltipStyles {
-  theme: MantineTheme;
   color: MantineColor;
 }
 
-export default createMemoStyles({
+export default createStyles((theme, { color }: TooltipStyles) => ({
   root: {
     position: 'relative',
     display: 'inline-block',
@@ -27,25 +21,25 @@ export default createMemoStyles({
     pointerEvents: 'none',
   },
 
-  body: ({ theme, color }: TooltipStyles) => ({
+  body: {
     ...getFontStyles(theme),
     backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
     lineHeight: theme.lineHeight,
     fontSize: theme.fontSizes.sm,
     borderRadius: theme.radius.sm,
-    padding: [theme.spacing.xs / 2, theme.spacing.xs],
+    padding: `${theme.spacing.xs / 2}px ${theme.spacing.xs}px`,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
     position: 'relative',
-  }),
+  },
 
   tooltip: {
     display: 'inline-block',
     position: 'absolute',
   },
 
-  arrow: ({ theme, color }: TooltipStyles) => ({
+  arrow: {
     border: 0,
     background: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
     zIndex: 1,
-  }),
-});
+  },
+}));
