@@ -1,5 +1,6 @@
 import React from 'react';
-import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
+import { createStyles } from '@mantine/tss';
+import { MantineNumberSize, getSizeValue } from '@mantine/theme';
 
 export type GroupPosition = 'right' | 'center' | 'left' | 'apart';
 
@@ -8,9 +9,8 @@ interface GroupStyles {
   noWrap: boolean;
   grow: boolean;
   spacing: MantineNumberSize;
-  withGutter: boolean,
+  withGutter: boolean;
   direction: 'row' | 'column';
-  theme: MantineTheme;
   align: React.CSSProperties['alignItems'];
   count: number;
 }
@@ -22,32 +22,29 @@ const POSITIONS = {
   apart: 'space-between',
 };
 
-export default createMemoStyles({
-  root: ({ spacing,
-    position,
-    noWrap,
-    direction,
+export default createStyles(
+  (
     theme,
-    grow,
-    align,
-    withGutter }: GroupStyles) => ({
+    { spacing, position, noWrap, direction, grow, align, withGutter, count }: GroupStyles
+  ) => ({
+    root: {
       display: 'flex',
       flexDirection: direction,
-      alignItems: align || (direction === 'row' ? 'center' : grow ? 'stretch' : POSITIONS[position]),
+      alignItems:
+        align || (direction === 'row' ? 'center' : grow ? 'stretch' : POSITIONS[position]),
       flexWrap: noWrap ? 'nowrap' : 'wrap',
       justifyContent: direction === 'row' && POSITIONS[position],
       margin: (-1 * getSizeValue({ size: spacing, sizes: theme.spacing })) / 2,
-      padding: withGutter
-        ? getSizeValue({ size: spacing, sizes: theme.spacing }) / 2
-        : 0,
-  }),
+      padding: withGutter ? getSizeValue({ size: spacing, sizes: theme.spacing }) / 2 : 0,
+    },
 
-  child: ({ grow, spacing, theme, count, direction }: GroupStyles) => ({
-    maxWidth:
-      grow && direction === 'row'
-        ? `calc(${100 / count}% - ${getSizeValue({ size: spacing, sizes: theme.spacing })}px)`
-        : undefined,
-    flexGrow: grow ? 1 : 0,
-    margin: getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
-  }),
-});
+    child: {
+      maxWidth:
+        grow && direction === 'row'
+          ? `calc(${100 / count}% - ${getSizeValue({ size: spacing, sizes: theme.spacing })}px)`
+          : undefined,
+      flexGrow: grow ? 1 : 0,
+      margin: getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
+    },
+  })
+);
