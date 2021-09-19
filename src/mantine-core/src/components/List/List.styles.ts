@@ -1,20 +1,14 @@
-import {
-  createMemoStyles,
-  getFontStyles,
-  getSizeValue,
-  MantineNumberSize,
-  MantineTheme,
-} from '../../theme';
+import { createStyles } from '@mantine/tss';
+import { getFontStyles, getSizeValue, MantineNumberSize } from '../../theme';
 
 interface ListStyles {
-  theme: MantineTheme;
   withPadding: boolean;
   size: MantineNumberSize;
   listStyleType: string;
 }
 
-export default createMemoStyles({
-  root: ({ theme, withPadding, size, listStyleType }: ListStyles) => ({
+export default createStyles((theme, { withPadding, size, listStyleType }: ListStyles) => ({
+  root: {
     ...getFontStyles(theme),
     listStyleType,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
@@ -23,5 +17,5 @@ export default createMemoStyles({
     margin: 0,
     paddingLeft: withPadding ? theme.spacing.xl : 0,
     listStylePosition: 'inside',
-  }),
-});
+  },
+}));

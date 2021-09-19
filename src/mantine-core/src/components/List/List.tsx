@@ -1,6 +1,6 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../theme';
+import { DefaultProps, MantineNumberSize, mergeStyles } from '../../theme';
 import { ListItem, ListItemProps, ListItemStylesNames } from './ListItem/ListItem';
 import useStyles from './List.styles';
 
@@ -52,8 +52,7 @@ export function List({
   classNames,
   ...others
 }: ListProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, withPadding, size, listStyleType }, classNames, 'list');
+  const classes = useStyles({ withPadding, size, listStyleType }, classNames, 'list');
   const _styles = mergeStyles(classes, styles);
   const Element = type === 'unordered' ? 'ul' : 'ol';
 
