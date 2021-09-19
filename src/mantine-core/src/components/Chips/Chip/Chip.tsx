@@ -1,14 +1,8 @@
 import React from 'react';
 import cx from 'clsx';
 import { useUncontrolled, useId } from '@mantine/hooks';
-import {
-  DefaultProps,
-  useMantineTheme,
-  MantineNumberSize,
-  MantineSize,
-  mergeStyles,
-  MantineColor,
-} from '../../../theme';
+import { mergeStyles, useMantineTheme } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/theme';
 import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
 import useStyles from './Chip.styles';
 
@@ -79,7 +73,7 @@ export function Chip({
 }: ChipProps) {
   const uuid = useId(id);
   const theme = useMantineTheme();
-  const classes = useStyles({ theme, radius, size, color }, classNames, __staticSelector);
+  const classes = useStyles({ radius, size, color }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [value, setValue] = useUncontrolled({
     value: checked,

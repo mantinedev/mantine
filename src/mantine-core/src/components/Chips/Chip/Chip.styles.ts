@@ -1,6 +1,5 @@
+import { createStyles } from '@mantine/tss';
 import {
-  createMemoStyles,
-  MantineTheme,
   MantineNumberSize,
   MantineSize,
   getSizeValue,
@@ -8,7 +7,7 @@ import {
   getThemeColor,
   getSharedColorScheme,
   MantineColor,
-} from '../../../theme';
+} from '@mantine/theme';
 
 export const sizes = {
   xs: 24,
@@ -43,21 +42,23 @@ const checkedPadding = {
 };
 
 interface ChipStyles {
-  theme: MantineTheme;
   radius: MantineNumberSize;
   size: MantineSize;
   color: MantineColor;
 }
 
-export default createMemoStyles({
-  label: ({ theme, radius, size }: ChipStyles) => ({
+export default createStyles((theme, { radius, size, color }: ChipStyles, getRef) => {
+  const label = {
+    ref: getRef(),
     ...getFontStyles(theme),
     boxSizing: 'border-box',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     display: 'inline-block',
     alignItems: 'center',
     userSelect: 'none',
-    border: '1px solid transparent',
+    border: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+    }`,
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     height: getSizeValue({ size, sizes }),
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
@@ -68,69 +69,29 @@ export default createMemoStyles({
     whiteSpace: 'nowrap',
     transition: 'background-color 100ms ease',
     WebkitTapHighlightColor: 'transparent',
-  }),
+  } as const;
 
-  outline: ({ theme }: ChipStyles) => ({
+  const outline = {
+    ref: getRef(),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
 
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
     },
-  }),
+  } as const;
 
-  filled: ({ theme }: ChipStyles) => ({
+  const filled = {
+    ref: getRef(),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+    borderColor: 'transparent',
 
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     },
-  }),
+  } as const;
 
-  disabled: ({ theme }: ChipStyles) => ({
-    backgroundColor: [
-      [theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]],
-      '!important',
-    ],
-    borderColor: [
-      [theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]],
-      '!important',
-    ],
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-    cursor: 'not-allowed',
-
-    '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-    },
-
-    '& $iconWrapper': {
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-    },
-  }),
-
-  checked: ({ theme, color, size }: ChipStyles) => ({
-    paddingLeft: getSizeValue({ size, sizes: checkedPadding }),
-    paddingRight: getSizeValue({ size, sizes: checkedPadding }),
-
-    '&$outline': {
-      borderColor: getThemeColor({ theme, color, shade: 6 }),
-    },
-
-    '&$filled': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? getSharedColorScheme({ color, theme, variant: 'light' }).background
-          : getThemeColor({ theme, color, shade: 1 }),
-    },
-  }),
-
-  checkIcon: ({ size }: ChipStyles) => ({
-    width: getSizeValue({ size, sizes: iconSizes }),
-    height: getSizeValue({ size, sizes: iconSizes }) / 1.1,
-    display: 'block',
-  }),
-
-  iconWrapper: ({ theme, color, size }: ChipStyles) => ({
+  const iconWrapper = {
+    ref: getRef(),
     color: getThemeColor({ theme, color, shade: 6 }),
     width:
       getSizeValue({ size, sizes: iconSizes }) + getSizeValue({ size, sizes: theme.spacing }) / 1.5,
@@ -140,31 +101,79 @@ export default createMemoStyles({
     display: 'inline-block',
     verticalAlign: 'middle',
     overflow: 'hidden',
-  }),
+  } as const;
 
-  input: ({ theme }: ChipStyles) => ({
-    width: 0,
-    height: 0,
-    padding: 0,
-    opacity: 0,
-    margin: 0,
+  return {
+    label,
+    filled,
+    iconWrapper,
+    outline,
 
-    // input is hidden by default, these styles add focus to label when user navigates with keyboard
-    '&:focus': {
-      outline: 'none',
+    disabled: {
+      backgroundColor: `${
+        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
+      } !important`,
+      borderColor: `${
+        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
+      } !important`,
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      cursor: 'not-allowed',
 
-      '& + $label': {
-        outline: 'none',
-        boxShadow: `0 0 0 2px ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
-        }, 0 0 0 4px ${theme.colors[theme.primaryColor][5]}`,
+      '&:hover': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
       },
 
-      '&:focus:not(:focus-visible)': {
-        '& + $label': {
-          boxShadow: 'none',
+      [`& .${iconWrapper.ref}`]: {
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      },
+    },
+
+    checked: {
+      paddingLeft: getSizeValue({ size, sizes: checkedPadding }),
+      paddingRight: getSizeValue({ size, sizes: checkedPadding }),
+
+      [`&.${outline.ref}`]: {
+        border: `1px solid ${getThemeColor({ theme, color, shade: 6 })}`,
+      },
+
+      [`&.${filled.ref}`]: {
+        backgroundColor:
+          theme.colorScheme === 'dark'
+            ? getSharedColorScheme({ color, theme, variant: 'light' }).background
+            : getThemeColor({ theme, color, shade: 1 }),
+      },
+    },
+
+    checkIcon: {
+      width: getSizeValue({ size, sizes: iconSizes }),
+      height: getSizeValue({ size, sizes: iconSizes }) / 1.1,
+      display: 'block',
+    },
+
+    input: {
+      width: 0,
+      height: 0,
+      padding: 0,
+      opacity: 0,
+      margin: 0,
+
+      // input is hidden by default, these styles add focus to label when user navigates with keyboard
+      '&:focus': {
+        outline: 'none',
+
+        [`& + .${label.ref}`]: {
+          outline: 'none',
+          boxShadow: `0 0 0 2px ${
+            theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
+          }, 0 0 0 4px ${theme.colors[theme.primaryColor][5]}`,
+        },
+
+        '&:focus:not(:focus-visible)': {
+          [`& + .${label.ref}`]: {
+            boxShadow: 'none',
+          },
         },
       },
     },
-  }),
+  };
 });
