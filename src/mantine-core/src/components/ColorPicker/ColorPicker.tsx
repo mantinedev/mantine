@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, mergeStyles, MantineSize, getSizeValue } from '../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineSize, getSizeValue } from '@mantine/theme';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { ColorSliderStylesNames } from './ColorSlider/ColorSlider';
@@ -101,8 +102,7 @@ export function ColorPicker({
   classNames,
   ...others
 }: ColorPickerProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, size, fullWidth }, classNames, __staticSelector);
+  const classes = useStyles({ size, fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const formatRef = useRef(format);
   const valueRef = useRef<string>(null);

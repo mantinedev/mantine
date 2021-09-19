@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, mergeStyles, MantineSize } from '../../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineSize } from '@mantine/theme';
 import useStyles, { THUMB_SIZES } from './Thumb.styles';
 
 export type ThumbStylesNames = keyof ReturnType<typeof useStyles>;
@@ -25,8 +26,7 @@ export function Thumb({
   size,
   __staticSelector,
 }: ThumbProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, size }, classNames, __staticSelector);
+  const classes = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return (

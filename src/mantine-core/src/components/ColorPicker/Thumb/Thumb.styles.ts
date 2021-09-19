@@ -1,7 +1,7 @@
-import { createMemoStyles, getSizeValue, MantineSize, MantineTheme } from '../../../theme';
+import { createStyles } from '@mantine/tss';
+import { getSizeValue, MantineSize } from '@mantine/theme';
 
 interface ThumbStyles {
-  theme: MantineTheme;
   size: MantineSize;
 }
 
@@ -13,11 +13,10 @@ export const THUMB_SIZES = {
   xl: 22,
 };
 
-export default createMemoStyles({
-  thumb: ({ theme, size }: ThumbStyles) => {
-    const _size = getSizeValue({ size, sizes: THUMB_SIZES });
-
-    return {
+export default createStyles((theme, { size }: ThumbStyles) => {
+  const _size = getSizeValue({ size, sizes: THUMB_SIZES });
+  return {
+    thumb: {
       overflow: 'hidden',
       boxSizing: 'border-box',
       position: 'absolute',
@@ -27,6 +26,6 @@ export default createMemoStyles({
       width: _size,
       height: _size,
       borderRadius: _size,
-    };
-  },
+    },
+  };
 });

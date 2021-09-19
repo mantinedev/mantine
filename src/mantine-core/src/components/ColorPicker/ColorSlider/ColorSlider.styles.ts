@@ -1,41 +1,45 @@
-import { createMemoStyles, getSizeValue, MantineSize, MantineTheme } from '../../../theme';
+import { createStyles } from '@mantine/tss';
+import { getSizeValue, MantineSize } from '../../../theme';
 import { THUMB_SIZES } from '../Thumb/Thumb.styles';
 
-interface HueStyles {
-  theme: MantineTheme;
+interface ColorSliderStyles {
   size: MantineSize;
 }
 
-export default createMemoStyles({
-  sliderThumb: {},
+export default createStyles((theme, { size }: ColorSliderStyles, getRef) => {
+  const sliderThumb = { ref: getRef() } as const;
 
-  slider: ({ theme, size }: HueStyles) => ({
-    position: 'relative',
-    height: getSizeValue({ size, sizes: THUMB_SIZES }) + 2,
-    boxSizing: 'border-box',
-    marginLeft: getSizeValue({ size, sizes: THUMB_SIZES }) / 2,
-    marginRight: getSizeValue({ size, sizes: THUMB_SIZES }) / 2,
-    outline: 0,
+  return {
+    sliderThumb,
 
-    '&:focus $sliderThumb': {
-      outline: 'none',
-      boxShadow: `0 0 0 1px ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
-      }, 0 0 0 3px ${theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]}`,
+    slider: {
+      position: 'relative',
+      height: getSizeValue({ size, sizes: THUMB_SIZES }) + 2,
+      boxSizing: 'border-box',
+      marginLeft: getSizeValue({ size, sizes: THUMB_SIZES }) / 2,
+      marginRight: getSizeValue({ size, sizes: THUMB_SIZES }) / 2,
+      outline: 0,
+
+      [`&:focus .${sliderThumb.ref}`]: {
+        outline: 'none',
+        boxShadow: `0 0 0 1px ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
+        }, 0 0 0 3px ${theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]}`,
+      },
+
+      [`&:focus:not(:focus-visible) .${sliderThumb.ref}`]: {
+        boxShadow: 'none',
+      },
     },
 
-    '&:focus:not(:focus-visible) $sliderThumb': {
-      boxShadow: 'none',
+    sliderOverlay: {
+      position: 'absolute',
+      boxSizing: 'border-box',
+      top: 0,
+      bottom: 0,
+      left: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,
+      right: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,
+      borderRadius: 1000,
     },
-  }),
-
-  sliderOverlay: ({ size }: HueStyles) => ({
-    position: 'absolute',
-    boxSizing: 'border-box',
-    top: 0,
-    bottom: 0,
-    left: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,
-    right: -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1,
-    borderRadius: 1000,
-  }),
+  };
 });

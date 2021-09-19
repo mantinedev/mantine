@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../theme';
+import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import useStyles from './ColorSwatch.styles';
 
 interface _ColorSwatchProps<C extends React.ElementType, R extends HTMLElement>
@@ -39,7 +39,7 @@ export function ColorSwatch<
   children,
   ...others
 }: ColorSwatchProps<C, R>) {
-  const classes = useStyles({ radius, size, theme: useMantineTheme() }, null, 'color-swatch');
+  const classes = useStyles({ radius, size }, null, 'color-swatch');
 
   const Element = component || 'div';
 
