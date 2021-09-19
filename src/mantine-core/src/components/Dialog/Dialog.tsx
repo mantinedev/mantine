@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../theme';
+import { mergeStyles, useMantineTheme } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize } from '@mantine/theme';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Affix } from '../Affix/Affix';
@@ -68,8 +69,7 @@ export function MantineDialog({
   transitionTimingFunction,
   ...others
 }: DialogProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, size }, classNames, 'dialog');
+  const classes = useStyles({ size }, classNames, 'dialog');
   const _styles = mergeStyles(classes, styles);
 
   return (

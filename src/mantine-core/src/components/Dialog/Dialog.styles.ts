@@ -1,7 +1,7 @@
-import { createMemoStyles, getSizeValue, MantineNumberSize, MantineTheme } from '../../theme';
+import { createStyles } from '@mantine/tss';
+import { getSizeValue, MantineNumberSize } from '@mantine/theme';
 
 interface DialogStyles {
-  theme: MantineTheme;
   size: MantineNumberSize;
 }
 
@@ -13,18 +13,18 @@ const sizes = {
   xl: 500,
 };
 
-export default createMemoStyles({
-  root: ({ size, theme }: DialogStyles) => ({
+export default createStyles((theme, { size }: DialogStyles) => ({
+  root: {
     position: 'relative',
     width: getSizeValue({ size, sizes }),
     maxWidth: '100%',
     minHeight: 50,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-  }),
+  },
 
-  closeButton: ({ theme }: DialogStyles) => ({
-    position: 'absolute',
+  closeButton: {
+    position: 'absolute !important' as any,
     top: theme.spacing.md / 2,
     right: theme.spacing.md / 2,
-  }),
-});
+  },
+}));
