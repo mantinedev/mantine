@@ -7,13 +7,8 @@ import {
   useFocusTrap,
   useFocusReturn,
 } from '@mantine/hooks';
-import {
-  DefaultProps,
-  useMantineTheme,
-  mergeStyles,
-  MantineNumberSize,
-  MantineShadow,
-} from '../../theme';
+import { useMantineTheme, mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/theme';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
@@ -107,7 +102,7 @@ export function MantineModal({
   const bodyId = `${baseId}-body`;
   const reduceMotion = useReducedMotion();
   const theme = useMantineTheme();
-  const classes = useStyles({ size, overflow, theme }, classNames, 'modal');
+  const classes = useStyles({ size, overflow }, classNames, 'modal');
   const _styles = mergeStyles(classes, styles);
   const [modalBodyElement, setModalBodyElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap();
