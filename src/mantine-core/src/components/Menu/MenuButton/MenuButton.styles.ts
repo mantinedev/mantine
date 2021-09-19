@@ -1,8 +1,7 @@
+import { createStyles } from '@mantine/tss';
 import {
-  MantineTheme,
   getFontStyles,
   getThemeColor,
-  createMemoStyles,
   MantineNumberSize,
   getSizeValue,
   hexToRgba,
@@ -10,13 +9,12 @@ import {
 } from '../../../theme';
 
 interface MenuButtonStyles {
-  theme: MantineTheme;
   radius: MantineNumberSize;
   color: MantineColor;
 }
 
-export default createMemoStyles({
-  item: ({ theme, color, radius }: MenuButtonStyles) => ({
+export default createStyles((theme, { radius, color }: MenuButtonStyles) => ({
+  item: {
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     fontSize: theme.fontSizes.sm,
@@ -28,7 +26,7 @@ export default createMemoStyles({
     display: 'inline-block',
     textDecoration: 'none',
     boxSizing: 'border-box',
-    padding: [theme.spacing.xs, theme.spacing.sm],
+    padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
     cursor: 'pointer',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     color: color
@@ -41,18 +39,20 @@ export default createMemoStyles({
       color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
       cursor: 'not-allowed',
     },
-  }),
+  },
 
-  itemHovered: ({ theme, color }: MenuButtonStyles) => ({
-    backgroundColor: color
-      ? hexToRgba(
-          getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
-          theme.colorScheme === 'dark' ? 0.2 : 1
-        )
-      : theme.colorScheme === 'dark'
-      ? hexToRgba(theme.colors.dark[3], 0.35)
-      : theme.colors.gray[0],
-  }),
+  itemHovered: {
+    backgroundColor: `${
+      color
+        ? hexToRgba(
+            getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+            theme.colorScheme === 'dark' ? 0.2 : 1
+          )
+        : theme.colorScheme === 'dark'
+        ? hexToRgba(theme.colors.dark[3], 0.35)
+        : theme.colors.gray[0]
+    } !important`,
+  },
 
   itemInner: {
     display: 'flex',
@@ -67,15 +67,15 @@ export default createMemoStyles({
     flex: 1,
   },
 
-  itemIcon: ({ theme }: MenuButtonStyles) => ({
+  itemIcon: {
     marginRight: theme.spacing.xs,
 
     '& *': {
       display: 'block',
     },
-  }),
+  },
 
   itemLabel: {
     lineHeight: 1,
   },
-});
+}));

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { GearIcon, ChatBubbleIcon, Cross1Icon } from '@modulz/radix-icons';
-import { DEFAULT_THEME, MantineProvider } from '../../theme';
+import { MantineProvider } from '@mantine/tss';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Divider } from '../Divider/Divider';
 import { menuItems } from './demos/_menu-items';
 import { Menu, MenuItem } from './Menu';

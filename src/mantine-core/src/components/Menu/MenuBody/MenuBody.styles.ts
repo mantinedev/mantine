@@ -1,7 +1,7 @@
-import { createMemoStyles, getSizeValue, MantineNumberSize, MantineTheme } from '../../../theme';
+import { createStyles } from '@mantine/tss';
+import { getSizeValue, MantineNumberSize } from '@mantine/theme';
 
 interface MenuBodyStyles {
-  theme: MantineTheme;
   size: MantineNumberSize;
 }
 
@@ -15,8 +15,8 @@ export const sizes = {
 
 const MENU_PADDING = 4;
 
-export default createMemoStyles({
-  body: ({ theme, size }: MenuBodyStyles) => ({
+export default createStyles((theme, { size }: MenuBodyStyles) => ({
+  body: {
     width: getSizeValue({ size, sizes }),
     overflow: 'hidden',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
@@ -24,19 +24,23 @@ export default createMemoStyles({
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
-    padding: MENU_PADDING,
-  }),
+    padding: `${MENU_PADDING}px !important`,
+  },
 
-  divider: ({ theme }: MenuBodyStyles) => ({
-    borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2],
-    margin: [theme.spacing.xs / 2, -MENU_PADDING],
-  }),
+  divider: {
+    borderTopColor: `${
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
+    } !important`,
+    margin: `${theme.spacing.xs / 2}px -${MENU_PADDING}px !important`,
+  },
 
-  label: ({ theme }: MenuBodyStyles) => ({
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+  label: {
+    color: `${
+      theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6]
+    } !important`,
     fontWeight: 500,
-    fontSize: theme.fontSizes.xs,
-    padding: [theme.spacing.xs / 2, theme.spacing.sm],
+    fontSize: `${theme.fontSizes.xs}px !important`,
+    padding: `${theme.spacing.xs / 2}px ${theme.spacing.sm}px !important`,
     cursor: 'default',
-  }),
-});
+  },
+}));

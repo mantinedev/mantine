@@ -7,13 +7,8 @@ import {
   useUncontrolled,
   useReducedMotion,
 } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  mergeStyles,
-  useMantineTheme,
-  MantineShadow,
-} from '../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { useClickOutsideRegister } from '../../utils';
@@ -134,8 +129,7 @@ export function Menu({
   onChange,
   ...others
 }: MenuProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme }, classNames, 'menu');
+  const classes = useStyles(null, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
   const controlRefFocusTimeout = useRef<number>();
   const delayTimeout = useRef<number>();
