@@ -1,5 +1,6 @@
 import React from 'react';
-import { useMantineTheme, DefaultProps, mergeStyles, MantineShadow } from '../../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineShadow } from '@mantine/theme';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import useStyles from './SelectDropdown.styles';
@@ -33,8 +34,7 @@ export function SelectDropdown({
   elementRef,
   __staticSelector,
 }: SelectDropdownProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme }, classNames, __staticSelector);
+  const classes = useStyles(null, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return (

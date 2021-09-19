@@ -1,11 +1,7 @@
-import { createMemoStyles, MantineTheme } from '../../../theme';
+import { createStyles } from '@mantine/tss';
 
-interface SelectDropdownStyles {
-  theme: MantineTheme;
-}
-
-export default createMemoStyles({
-  dropdown: ({ theme }: SelectDropdownStyles) => ({
+export default createStyles((theme) => ({
+  dropdown: {
     boxSizing: 'border-box',
     position: 'absolute',
     zIndex: 1,
@@ -18,5 +14,5 @@ export default createMemoStyles({
     }`,
     padding: 4,
     overflowY: 'auto',
-  }),
-});
+  },
+}));

@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme, DefaultProps, mergeStyles, MantineSize } from '../../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineSize } from '@mantine/theme';
 import { Text } from '../../Text/Text';
 import { SelectItem } from '../types';
 import useStyles from './SelectItems.styles';
@@ -36,8 +37,7 @@ export function SelectItems({
   size,
   nothingFound,
 }: SelectItemsProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, size }, classNames, __staticSelector);
+  const classes = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   const items = data.map((item, index) => {
