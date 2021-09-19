@@ -1,6 +1,7 @@
 import React, { createElement } from 'react';
 import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineSize } from '../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineSize } from '@mantine/theme';
 import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
@@ -68,8 +69,7 @@ export function InputWrapper({
   __staticSelector = 'input-wrapper',
   ...others
 }: InputWrapperProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, size }, classNames, __staticSelector);
+  const classes = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
   const inputLabel = createElement(

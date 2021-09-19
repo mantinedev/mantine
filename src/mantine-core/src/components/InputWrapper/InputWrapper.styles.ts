@@ -1,23 +1,17 @@
-import {
-  createMemoStyles,
-  MantineTheme,
-  getFontStyles,
-  getSizeValue,
-  MantineSize,
-} from '../../theme';
+import { createStyles } from '@mantine/tss';
+import { getFontStyles, getSizeValue, MantineSize } from '../../theme';
 
 interface InputWrapperStyles {
-  theme: MantineTheme;
   size: MantineSize;
 }
 
-export default createMemoStyles({
-  root: ({ theme }: InputWrapperStyles) => ({
+export default createStyles((theme, { size }: InputWrapperStyles) => ({
+  root: {
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,
-  }),
+  },
 
-  label: ({ theme, size }: InputWrapperStyles) => ({
+  label: {
     display: 'block',
     marginBottom: 5,
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
@@ -26,24 +20,24 @@ export default createMemoStyles({
     wordBreak: 'break-word',
     cursor: 'default',
     WebkitTapHighlightColor: 'transparent',
-  }),
+  },
 
-  error: ({ theme }: InputWrapperStyles) => ({
+  error: {
     marginTop: theme.spacing.xs / 2,
     wordBreak: 'break-word',
-    color: theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7],
-  }),
+    color: `${theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]} !important`,
+  },
 
-  description: ({ theme, size }: InputWrapperStyles) => ({
+  description: {
     marginTop: -3,
     marginBottom: 7,
     wordBreak: 'break-word',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }) - 2,
     lineHeight: 1.2,
-  }),
+  },
 
-  required: ({ theme }: InputWrapperStyles) => ({
+  required: {
     color: theme.colorScheme === 'dark' ? theme.colors.red[5] : theme.colors.red[7],
-  }),
-});
+  },
+}));
