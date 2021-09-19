@@ -1,15 +1,13 @@
+import { createStyles } from '@mantine/tss';
 import {
-  createMemoStyles,
-  MantineTheme,
   getSharedColorScheme,
   MantineNumberSize,
   getSizeValue,
   MantineColor,
   getFocusStyles,
-} from '../../theme';
+} from '@mantine/theme';
 
 interface PaginationStyles {
-  theme: MantineTheme;
   size: MantineNumberSize;
   radius: MantineNumberSize;
   color: MantineColor;
@@ -23,55 +21,58 @@ const sizes = {
   xl: 44,
 };
 
-export default createMemoStyles({
-  item: ({ theme, size, radius }: PaginationStyles) => ({
-    ...getFocusStyles(theme),
-    cursor: 'pointer',
-    userSelect: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: 500,
-    border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3]
-    }`,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-    height: getSizeValue({ size, sizes }),
-    minWidth: getSizeValue({ size, sizes }),
-    padding: [0, getSizeValue({ size, sizes: theme.spacing }) / 2],
-    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-    lineHeight: 1,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+export default createStyles((theme, { size, radius, color }: PaginationStyles, getRef) => {
+  const dots = {
+    ref: getRef(),
+    cursor: 'default !important',
+    borderColor: 'transparent !important',
+    backgroundColor: 'transparent !important',
+  } as const;
 
-    '&:active:not(:disabled):not($dots)': {
-      transform: 'translateY(1px)',
+  const colors = getSharedColorScheme({
+    color,
+    theme,
+    variant: 'filled',
+  });
+
+  return {
+    item: {
+      ...getFocusStyles(theme),
+      cursor: 'pointer',
+      userSelect: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontWeight: 500,
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3]
+      }`,
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+      height: getSizeValue({ size, sizes }),
+      minWidth: getSizeValue({ size, sizes }),
+      padding: `0 ${getSizeValue({ size, sizes: theme.spacing }) / 2}px`,
+      fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      lineHeight: 1,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+
+      [`&:active:not(:disabled):not(.${dots.ref})`]: {
+        transform: 'translateY(1px)',
+      },
+
+      '&:disabled': {
+        opacity: 0.6,
+        cursor: 'not-allowed',
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      },
     },
 
-    '&:disabled': {
-      opacity: 0.6,
-      cursor: 'not-allowed',
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-    },
-  }),
-
-  active: ({ theme, color }: PaginationStyles) => {
-    const colors = getSharedColorScheme({
-      color,
-      theme,
-      variant: 'filled',
-    });
-
-    return {
+    active: {
       borderColor: 'transparent',
-      color: colors.color,
-      backgroundColor: colors.background,
-    };
-  },
+      color: `${colors.color} !important`,
+      backgroundColor: `${colors.background} !important`,
+    },
 
-  dots: () => ({
-    cursor: 'default',
-    borderColor: 'transparent',
-    backgroundColor: 'transparent',
-  }),
+    dots,
+  };
 });
