@@ -2,7 +2,6 @@ import React from 'react';
 import cx from 'clsx';
 import { mergeStyles } from '@mantine/tss';
 import { DefaultProps, MantineColor } from '../../theme';
-import { Paper } from '../Paper/Paper';
 import { Text } from '../Text/Text';
 import { Loader } from '../Loader/Loader';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
@@ -58,9 +57,7 @@ export function Notification({
   const withIcon = icon || loading;
 
   return (
-    <Paper
-      shadow="lg"
-      padding="sm"
+    <div
       className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
       role="alert"
       style={{ ...style, ..._styles.root, ...(withIcon ? _styles.withIcon : null) }}
@@ -83,7 +80,7 @@ export function Notification({
           </Text>
         )}
 
-        <Text className={classes.description} size="sm" style={_styles.description}>
+        <Text color="dimmed" className={classes.description} size="sm" style={_styles.description}>
           {children}
         </Text>
       </div>
@@ -97,7 +94,7 @@ export function Notification({
           variant="hover"
         />
       )}
-    </Paper>
+    </div>
   );
 }
 

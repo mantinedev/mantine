@@ -42,6 +42,7 @@ export default createStyles((theme, { color, disallowClose }: NotificationStyles
       paddingBottom: 10,
       borderRadius: 4,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+      boxShadow: theme.shadows.lg,
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
       }`,

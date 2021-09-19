@@ -7,7 +7,8 @@ import {
   ExclamationTriangleIcon,
   BookmarkIcon,
 } from '@modulz/radix-icons';
-import { MantineProvider, DEFAULT_THEME } from '../../theme';
+import { MantineProvider } from '@mantine/tss';
+import { DEFAULT_THEME } from '@mantine/theme';
 import { Notification } from './Notification';
 
 storiesOf('@mantine/core/Notification', module)

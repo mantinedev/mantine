@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MantineProvider, MANTINE_SIZES } from '../../theme';
+import { MantineProvider } from '@mantine/tss';
+import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Group } from '../Group/Group';
 import { NumberInput, NumberInputHandlers } from './NumberInput';
