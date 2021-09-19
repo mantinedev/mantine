@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import cx from 'clsx';
 import { usePopper } from 'react-popper';
 import { useDidUpdate } from '@mantine/hooks';
-import useStyles from './Popper.styles';
 import { Portal } from '../Portal/Portal';
 import { Transition, MantineTransition } from '../Transition/Transition';
+import useStyles from './Popper.styles';
 
 export interface SharedPopperProps {
   /** Position relative to reference element */

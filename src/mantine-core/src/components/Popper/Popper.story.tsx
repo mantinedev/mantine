@@ -19,7 +19,7 @@ function Demo() {
       </button>
       <Popper
         placement="end"
-        position="top"
+        position="left"
         gutter={5}
         arrowSize={3}
         referenceElement={referenceElement}
