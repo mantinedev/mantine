@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMove, clampUseMovePosition, UseMovePosition } from '@mantine/hooks';
-import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '../../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineSize } from '@mantine/theme';
 import { HsvaColor } from '../types';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './Saturation.styles';
@@ -31,8 +32,7 @@ export function Saturation({
   classNames,
   styles,
 }: SaturationProps) {
-  const theme = useMantineTheme();
-  const classes = useStyles({ theme, size }, classNames, __staticSelector);
+  const classes = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ x: value.s / 100, y: 1 - value.v / 100 });
 

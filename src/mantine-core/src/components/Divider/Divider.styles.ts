@@ -1,18 +1,10 @@
-import React from 'react';
-import {
-  createMemoStyles,
-  MantineNumberSize,
-  MantineTheme,
-  getSizeValue,
-  getThemeColor,
-  MantineColor,
-} from '../../theme';
+import { createStyles } from '@mantine/tss';
+import { MantineNumberSize, getSizeValue, getThemeColor, MantineColor } from '../../theme';
 
 interface DividerStyles {
-  theme: MantineTheme;
   size: MantineNumberSize;
   margins: MantineNumberSize;
-  variant: React.CSSProperties['borderTopStyle'];
+  variant: string;
   color: MantineColor;
 }
 
@@ -24,7 +16,7 @@ export const sizes = {
   xl: 5,
 };
 
-export default createMemoStyles({
+export default createStyles((theme, { size, margins, variant, color }: DividerStyles) => ({
   root: {},
 
   withLabel: {
@@ -43,7 +35,7 @@ export default createMemoStyles({
     },
   },
 
-  label: ({ theme, color, variant }: DividerStyles) => ({
+  label: {
     display: 'flex',
     alignItems: 'center',
     color: color === 'dark' ? theme.colors.dark[1] : getThemeColor({ theme, color, shade: 6 }),
@@ -70,25 +62,25 @@ export default createMemoStyles({
       })}`,
       marginLeft: theme.spacing.xs,
     },
-  }),
+  },
 
-  horizontal: ({ theme, size, variant, color, margins }: DividerStyles) => ({
+  horizontal: {
     border: 0,
     borderTopWidth: getSizeValue({ size, sizes }),
     borderTopColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 4 }),
-    borderTopStyle: variant,
+    borderTopStyle: variant as any,
     margin: 0,
     marginTop: getSizeValue({ size: margins, sizes: theme.spacing }),
     marginBottom: getSizeValue({ size: margins, sizes: theme.spacing }),
-  }),
+  },
 
-  vertical: ({ theme, size, variant, color, margins }: DividerStyles) => ({
+  vertical: {
     border: 0,
     alignSelf: 'stretch',
     borderLeftWidth: getSizeValue({ size, sizes }),
     borderLeftColor: getThemeColor({ theme, color, shade: 4 }),
-    borderLeftStyle: variant,
+    borderLeftStyle: variant as any,
     marginLeft: getSizeValue({ size: margins, sizes: theme.spacing }),
     marginRight: getSizeValue({ size: margins, sizes: theme.spacing }),
-  }),
-});
+  },
+}));

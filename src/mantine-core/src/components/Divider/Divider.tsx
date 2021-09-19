@@ -1,12 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineNumberSize,
-  mergeStyles,
-  MantineColor,
-} from '../../theme';
+import { useMantineTheme, mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/theme';
 import useStyles, { sizes } from './Divider.styles';
 import { Text } from '../Text/Text';
 
@@ -62,7 +57,6 @@ export function Divider({
   const classes = useStyles(
     {
       color: _color,
-      theme,
       margins,
       size,
       variant,
