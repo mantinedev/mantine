@@ -7,13 +7,8 @@ import {
   useFocusTrap,
   useFocusReturn,
 } from '@mantine/hooks';
-import {
-  DefaultProps,
-  useMantineTheme,
-  MantineNumberSize,
-  mergeStyles,
-  MantineShadow,
-} from '../../theme';
+import { useMantineTheme, mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/theme';
 import { ClickOutsideProvider } from '../../utils';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
@@ -128,7 +123,7 @@ export function MantineDrawer({
 }: DrawerProps) {
   const theme = useMantineTheme();
   const duration = useReducedMotion() ? 1 : transitionDuration;
-  const classes = useStyles({ theme, size, position }, classNames, 'drawer');
+  const classes = useStyles({ size, position }, classNames, 'drawer');
   const _styles = mergeStyles(classes, styles);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
   const [drawerBodyElement, setDrawerBodyElement] = useState<HTMLDivElement>(null);

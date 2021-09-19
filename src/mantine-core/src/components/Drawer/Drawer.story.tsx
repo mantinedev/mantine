@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../theme';
 import { Button } from '../Button/Button';
 import { Group } from '../Group/Group';
 import { Text } from '../Text/Text';
