@@ -1,18 +1,19 @@
+import { createStyles } from '@mantine/tss';
 import {
-  createMemoStyles,
-  MantineTheme,
   MantineNumberSize,
   getSizeValue,
   getFontStyles,
   getSharedColorScheme,
   MantineColor,
-} from '../../theme';
+} from '@mantine/theme';
+
+export type ThemeIconVariant = 'filled' | 'light' | 'gradient';
 
 interface ThemeIconStyles {
-  theme: MantineTheme;
   color: MantineColor;
   size: MantineNumberSize;
   radius: MantineNumberSize;
+  variant: ThemeIconVariant;
   gradientFrom: string;
   gradientTo: string;
   gradientDeg: number;
@@ -26,53 +27,36 @@ export const sizes = {
   xl: 40,
 };
 
-export default createMemoStyles({
-  light: ({ theme, color }: ThemeIconStyles) => {
-    const colors = getSharedColorScheme({ theme, color, variant: 'light' });
-
-    return {
-      backgroundColor: colors.background,
-      color: colors.color,
-    };
-  },
-
-  filled: ({ theme, color }: ThemeIconStyles) => {
-    const colors = getSharedColorScheme({ theme, color, variant: 'filled' });
-
-    return {
-      backgroundColor: colors.background,
-      color: colors.color,
-    };
-  },
-
-  gradient: ({ theme, gradientDeg, gradientTo, gradientFrom }: ThemeIconStyles) => {
+export default createStyles(
+  (
+    theme,
+    { color, size, radius, gradientFrom, gradientTo, gradientDeg, variant }: ThemeIconStyles
+  ) => {
     const colors = getSharedColorScheme({
       theme,
-      variant: 'gradient',
+      color,
+      variant,
       gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
     });
 
-    return {
-      backgroundImage: colors.background,
-      color: colors.color,
-      border: 0,
-    };
-  },
-
-  root: ({ theme, size, radius }: ThemeIconStyles) => {
     const iconSize = getSizeValue({ size, sizes });
 
     return {
-      ...getFontStyles(theme),
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      boxSizing: 'border-box',
-      width: iconSize,
-      height: iconSize,
-      minWidth: iconSize,
-      minHeight: iconSize,
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      root: {
+        ...getFontStyles(theme),
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxSizing: 'border-box',
+        width: iconSize,
+        height: iconSize,
+        minWidth: iconSize,
+        minHeight: iconSize,
+        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+        backgroundColor: colors.background,
+        color: colors.color,
+        backgroundImage: variant === 'gradient' ? colors.background : null,
+      },
     };
-  },
-});
+  }
+);

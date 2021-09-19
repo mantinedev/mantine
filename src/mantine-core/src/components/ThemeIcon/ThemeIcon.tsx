@@ -1,13 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  useMantineTheme,
-  MantineGradient,
-  MantineColor,
-} from '../../theme';
-import useStyles, { sizes } from './ThemeIcon.styles';
+import { DefaultProps, MantineNumberSize, MantineGradient, MantineColor } from '@mantine/theme';
+import useStyles, { sizes, ThemeIconVariant } from './ThemeIcon.styles';
 
 export const THEME_ICON_SIZES = sizes;
 
@@ -25,7 +19,7 @@ export interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'
   color?: MantineColor;
 
   /** Controls appearance */
-  variant?: 'filled' | 'light' | 'gradient';
+  variant?: ThemeIconVariant;
 
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
@@ -41,10 +35,9 @@ export function ThemeIcon({
   gradient = { from: 'blue', to: 'cyan', deg: 45 },
   ...others
 }: ThemeIconProps) {
-  const theme = useMantineTheme();
   const classes = useStyles(
     {
-      theme,
+      variant,
       radius,
       color,
       size,
@@ -57,7 +50,7 @@ export function ThemeIcon({
   );
 
   return (
-    <div className={cx(classes.root, classes[variant], className)} {...others}>
+    <div className={cx(classes.root, className)} {...others}>
       {children}
     </div>
   );
