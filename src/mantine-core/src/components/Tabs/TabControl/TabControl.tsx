@@ -1,7 +1,8 @@
 import React from 'react';
 import cx from 'clsx';
 import { useMergedRef, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineColor } from '../../../theme';
+import { mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineColor } from '@mantine/theme';
 import { TabProps } from '../Tab/Tab';
 import type { TabsVariant } from '../Tabs';
 import useStyles from './TabControl.styles';
@@ -35,10 +36,9 @@ export function TabControl({
   ...others
 }: TabControlProps) {
   const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
-  const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
   const classes = useStyles(
-    { reduceMotion, color: overrideColor || color, theme, orientation },
+    { reduceMotion, color: overrideColor || color, orientation },
     classNames,
     'tabs'
   );
