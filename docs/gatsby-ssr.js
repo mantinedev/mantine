@@ -1,18 +1,12 @@
 /* eslint-disable react/jsx-filename-extension */
+import React from 'react';
 import { renderToString } from 'react-dom/server';
-import htmlReactParser from 'html-react-parser';
-import createEmotionServer from '@emotion/server/create-instance';
-import { getCache } from '@mantine/styles';
+import { createStylesServer, ServerStyles } from '@mantine/ssr';
 
-const emotionServer = createEmotionServer(getCache());
+const stylesServer = createStylesServer();
 
 export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadComponents }) => {
   const html = renderToString(bodyComponent);
-
-  const styles = emotionServer.constructStyleTagsFromChunks(
-    emotionServer.extractCriticalToChunks(html)
-  );
-
-  setHeadComponents([htmlReactParser(styles)]);
+  setHeadComponents([<ServerStyles html={html} server={stylesServer} />]);
   replaceBodyHTMLString(html);
 };
