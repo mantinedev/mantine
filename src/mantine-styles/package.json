@@ -19,7 +19,6 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@mantine/theme": "2.5.1",
     "@emotion/cache": "^11.4.0",
     "@emotion/react": "^11.4.1",
     "@emotion/serialize": "^1.0.2",

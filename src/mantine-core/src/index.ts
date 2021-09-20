@@ -1,6 +1,5 @@
 export * from '@mantine/styles';
 export * from './utils';
-export * from './ssr';
 
 export { Accordion, AccordionItem } from './components/Accordion/Accordion';
 export { ActionIcon, ACTION_ICON_SIZES } from './components/ActionIcon/ActionIcon';
