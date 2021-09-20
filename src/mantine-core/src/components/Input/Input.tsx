@@ -1,6 +1,11 @@
 import React from 'react';
-import { useMantineTheme, mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, MantineSize } from '@mantine/theme';
+import {
+  useMantineTheme,
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+} from '@mantine/tss';
 import useStyles, { sizes } from './Input.styles';
 
 export const INPUT_VARIANTS = ['default', 'filled', 'unstyled', 'headless'] as const;

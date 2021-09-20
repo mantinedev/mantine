@@ -1,5 +1,4 @@
-import { createStyles } from '@mantine/tss';
-import { getFontStyles } from '@mantine/theme';
+import { createStyles, getFontStyles } from '@mantine/tss';
 
 interface TableStyles {
   captionSide: 'top' | 'bottom';

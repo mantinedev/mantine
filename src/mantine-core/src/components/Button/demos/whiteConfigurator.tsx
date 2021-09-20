@@ -1,6 +1,6 @@
 import React from 'react';
 import { DatabaseIcon } from '@primer/octicons-react';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { DEFAULT_THEME } from '@mantine/tss';
 import { Button, ButtonProps } from '../Button';
 import { Group } from '../../Group/Group';
 

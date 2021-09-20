@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import { useMantineTheme, mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/theme';
+import {
+  useMantineTheme,
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+} from '@mantine/tss';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import useStyles from './Thumb.styles';
 

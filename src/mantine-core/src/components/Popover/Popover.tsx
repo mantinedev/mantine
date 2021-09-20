@@ -6,8 +6,7 @@ import {
   useReducedMotion,
   useMergedRef,
 } from '@mantine/hooks';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/theme';
+import { mergeStyles, DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/tss';
 import { useClickOutsideRegister } from '../../utils';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';

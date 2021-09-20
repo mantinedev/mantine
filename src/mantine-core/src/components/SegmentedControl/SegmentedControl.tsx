@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useId, useReducedMotion, useUncontrolled } from '@mantine/hooks';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/theme';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  MantineColor,
+} from '@mantine/tss';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
 interface SegmentedControlItem {

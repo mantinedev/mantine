@@ -1,5 +1,4 @@
-import { createStyles } from '@mantine/tss';
-import { MantineSize, getSizeValue } from '@mantine/theme';
+import { createStyles, MantineSize, getSizeValue } from '@mantine/tss';
 
 interface SelectItemsStyles {
   size: MantineSize;

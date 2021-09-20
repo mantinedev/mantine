@@ -1,12 +1,13 @@
 import React from 'react';
-import { mergeStyles } from '@mantine/tss';
 import {
+  mergeStyles,
   DefaultProps,
   MantineSize,
   MantineNumberSize,
   MantineGradient,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
+
 import useStyles, { heights } from './Badge.styles';
 
 export const BADGE_SIZES = heights;

@@ -1,12 +1,12 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   getFontStyles,
   getThemeColor,
   MantineNumberSize,
   getSizeValue,
   hexToRgba,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
 
 interface MenuButtonStyles {
   radius: MantineNumberSize;

@@ -1,5 +1,5 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   MantineSize,
   MantineNumberSize,
   getFontStyles,
@@ -10,7 +10,8 @@ import {
   getSharedColorScheme,
   hexToRgba,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
+
 import { INPUT_SIZES } from '../Input/Input';
 
 export type ButtonVariant =

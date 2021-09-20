@@ -1,7 +1,13 @@
 import React from 'react';
 import { useId, useReducedMotion } from '@mantine/hooks';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/theme';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  MantineColor,
+} from '@mantine/tss';
+
 import useStyles, { sizes } from './Switch.styles';
 
 export const SWITCH_SIZES = sizes;

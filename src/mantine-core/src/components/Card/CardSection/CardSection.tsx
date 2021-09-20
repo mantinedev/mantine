@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize } from '@mantine/tss';
 import useStyles from './CardSection.styles';
 
 export interface CardSectionProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {

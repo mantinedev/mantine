@@ -1,5 +1,10 @@
-import { createStyles } from '@mantine/tss';
-import { getFontStyles, getFocusStyles, getThemeColor, MantineColor } from '@mantine/theme';
+import {
+  createStyles,
+  getFontStyles,
+  getFocusStyles,
+  getThemeColor,
+  MantineColor,
+} from '@mantine/tss';
 
 interface TabControlStyles {
   reduceMotion: boolean;

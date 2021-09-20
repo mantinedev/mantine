@@ -1,6 +1,6 @@
 import React from 'react';
 import { useUncontrolled, useId } from '@mantine/hooks';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps } from '@mantine/tss';
 import {
   AccordionItem,
   AccordionItemType,

@@ -1,5 +1,5 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   MantineNumberSize,
   MantineSize,
   getFontStyles,
@@ -7,7 +7,7 @@ import {
   getThemeColor,
   getFocusStyles,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
 
 export const WRAPPER_PADDING = 4;
 

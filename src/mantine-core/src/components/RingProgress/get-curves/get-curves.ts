@@ -1,4 +1,4 @@
-import type { MantineColor } from '@mantine/theme';
+import type { MantineColor } from '@mantine/tss';
 
 interface CurveData {
   value: number;

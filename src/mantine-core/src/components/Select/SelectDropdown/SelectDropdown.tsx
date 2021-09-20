@@ -1,6 +1,6 @@
 import React from 'react';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineShadow } from '@mantine/theme';
+import { mergeStyles, DefaultProps, MantineShadow } from '@mantine/tss';
+
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import useStyles from './SelectDropdown.styles';

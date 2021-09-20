@@ -1,13 +1,13 @@
 import React from 'react';
 import cx from 'clsx';
-import { useMantineTheme } from '@mantine/tss';
 import {
+  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   getThemeColor,
   getSizeValue,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
 import { Bars } from './loaders/Bars';
 import { Oval } from './loaders/Oval';
 import { Dots } from './loaders/Dots';

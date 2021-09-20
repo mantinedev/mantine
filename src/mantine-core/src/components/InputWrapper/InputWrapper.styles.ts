@@ -1,5 +1,4 @@
-import { createStyles } from '@mantine/tss';
-import { getFontStyles, getSizeValue, MantineSize } from '@mantine/theme';
+import { createStyles, getFontStyles, getSizeValue, MantineSize } from '@mantine/tss';
 
 interface InputWrapperStyles {
   size: MantineSize;

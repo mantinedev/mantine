@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps } from '@mantine/tss';
 import useStyles from './Kbd.styles';
 
 export interface KbdProps extends DefaultProps, React.ComponentPropsWithoutRef<'kbd'> {

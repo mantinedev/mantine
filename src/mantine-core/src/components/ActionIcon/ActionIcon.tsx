@@ -1,12 +1,13 @@
 import React from 'react';
-import { useMantineTheme } from '@mantine/tss';
 import {
+  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   getSizeValue,
   getSharedColorScheme,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
+
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader/Loader';
 

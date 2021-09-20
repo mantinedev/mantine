@@ -1,6 +1,5 @@
 import React from 'react';
-import { useMantineTheme } from '@mantine/tss';
-import { DefaultProps, MantineColor } from '@mantine/theme';
+import { useMantineTheme, DefaultProps, MantineColor } from '@mantine/tss';
 import useStyles from './Code.styles';
 
 export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<'code'> {

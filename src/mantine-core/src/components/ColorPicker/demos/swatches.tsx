@@ -1,5 +1,5 @@
 import React from 'react';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { DEFAULT_THEME } from '@mantine/tss';
 import { Group } from '../../Group/Group';
 import { ColorPicker } from '../ColorPicker';
 

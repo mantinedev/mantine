@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize } from '@mantine/tss';
 import useStyles, { sizes } from './Container.styles';
 
 export const CONTAINER_SIZES = sizes;

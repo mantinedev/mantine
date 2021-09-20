@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { useUncontrolled, clamp } from '@mantine/hooks';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/theme';
+import { mergeStyles, DefaultProps, MantineNumberSize, MantineColor } from '@mantine/tss';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';

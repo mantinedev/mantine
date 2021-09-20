@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize } from '@mantine/theme';
+import { mergeStyles, DefaultProps, MantineNumberSize } from '@mantine/tss';
+
 import { Text } from '../Text/Text';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';

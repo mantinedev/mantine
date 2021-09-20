@@ -1,11 +1,12 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   MantineNumberSize,
   getFontStyles,
   getSizeValue,
   MantineSize,
   MantineTheme,
-} from '@mantine/theme';
+} from '@mantine/tss';
+
 import type { InputVariant } from './Input';
 
 interface InputStyles {

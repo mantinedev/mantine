@@ -1,5 +1,4 @@
-import { createStyles } from '@mantine/tss';
-import { getSizeValue, MantineNumberSize } from '@mantine/theme';
+import { createStyles, getSizeValue, MantineNumberSize } from '@mantine/tss';
 
 interface DialogStyles {
   size: MantineNumberSize;

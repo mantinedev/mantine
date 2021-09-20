@@ -1,5 +1,5 @@
 import React from 'react';
-import { MANTINE_SIZES } from '@mantine/theme';
+import { MANTINE_SIZES } from '@mantine/tss';
 import { WrappedBurger } from './WrappedBurger';
 import { Group } from '../../Group/Group';
 

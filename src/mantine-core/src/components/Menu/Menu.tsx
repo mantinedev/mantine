@@ -7,8 +7,7 @@ import {
   useUncontrolled,
   useReducedMotion,
 } from '@mantine/hooks';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/theme';
+import { mergeStyles, DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/tss';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { useClickOutsideRegister } from '../../utils';

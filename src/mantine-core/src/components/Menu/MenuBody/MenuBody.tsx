@@ -1,7 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useFocusTrap } from '@mantine/hooks';
-import { mergeStyles, useMantineTheme } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/theme';
+import {
+  mergeStyles,
+  useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
+  MantineShadow,
+} from '@mantine/tss';
 import { MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import { Divider } from '../../Divider/Divider';

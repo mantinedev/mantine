@@ -1,6 +1,5 @@
 import React, { Children } from 'react';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize } from '@mantine/theme';
+import { mergeStyles, DefaultProps, MantineNumberSize } from '@mantine/tss';
 import { ListItem, ListItemProps, ListItemStylesNames } from './ListItem/ListItem';
 import useStyles from './List.styles';
 

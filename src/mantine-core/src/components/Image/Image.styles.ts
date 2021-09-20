@@ -1,5 +1,4 @@
-import { createStyles } from '@mantine/tss';
-import { MantineNumberSize, getSizeValue, getFontStyles } from '@mantine/theme';
+import { createStyles, MantineNumberSize, getSizeValue, getFontStyles } from '@mantine/tss';
 
 interface ImageStyles {
   radius: MantineNumberSize;

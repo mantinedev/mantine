@@ -1,5 +1,5 @@
 import React from 'react';
-import { MANTINE_COLORS } from '@mantine/theme';
+import { MANTINE_COLORS } from '@mantine/tss';
 import { Badge, BadgeProps } from '../Badge';
 import { Group } from '../../Group/Group';
 

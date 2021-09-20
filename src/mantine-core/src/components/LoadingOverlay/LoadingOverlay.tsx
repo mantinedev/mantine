@@ -1,7 +1,6 @@
 import React from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { useMantineTheme } from '@mantine/tss';
-import { DefaultProps } from '@mantine/theme';
+import { useMantineTheme, DefaultProps } from '@mantine/tss';
 import { Overlay } from '../Overlay/Overlay';
 import { Transition } from '../Transition/Transition';
 import { Loader, LoaderProps } from '../Loader/Loader';

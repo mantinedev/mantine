@@ -1,6 +1,5 @@
 import React from 'react';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineSize } from '@mantine/theme';
+import { mergeStyles, DefaultProps, MantineSize } from '@mantine/tss';
 import useStyles, { THUMB_SIZES } from './Thumb.styles';
 
 export type ThumbStylesNames = keyof ReturnType<typeof useStyles>['classes'];

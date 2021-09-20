@@ -1,7 +1,13 @@
 import React from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { useMantineTheme, mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, getThemeColor, MantineColor } from '@mantine/theme';
+import {
+  useMantineTheme,
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  getThemeColor,
+  MantineColor,
+} from '@mantine/tss';
 import useStyles, { sizes } from './Progress.styles';
 
 export const PROGRESS_SIZES = sizes;

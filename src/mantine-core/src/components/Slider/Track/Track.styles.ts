@@ -1,5 +1,10 @@
-import { createStyles } from '@mantine/tss';
-import { getSizeValue, getThemeColor, MantineNumberSize, MantineColor } from '@mantine/theme';
+import {
+  createStyles,
+  getSizeValue,
+  getThemeColor,
+  MantineNumberSize,
+  MantineColor,
+} from '@mantine/tss';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface TrackStyles {

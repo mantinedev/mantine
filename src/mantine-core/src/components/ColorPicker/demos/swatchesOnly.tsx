@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { DEFAULT_THEME } from '@mantine/theme';
+import { DEFAULT_THEME } from '@mantine/tss';
 import { Text } from '../../Text/Text';
 import { ColorPicker } from '../ColorPicker';
 

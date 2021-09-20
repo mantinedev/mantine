@@ -1,5 +1,10 @@
-import { createStyles } from '@mantine/tss';
-import { MantineNumberSize, getSizeValue, getFocusStyles, MantineColor } from '@mantine/theme';
+import {
+  createStyles,
+  MantineNumberSize,
+  getSizeValue,
+  getFocusStyles,
+  MantineColor,
+} from '@mantine/tss';
 
 interface BurgerStyles {
   size: MantineNumberSize;

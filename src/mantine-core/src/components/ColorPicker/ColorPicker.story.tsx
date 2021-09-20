@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/theme';
+import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/tss';
 import { ColorPicker } from './ColorPicker';
 
 const sizes = MANTINE_SIZES.map((size) => (

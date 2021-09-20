@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps } from '@mantine/tss';
 import useStyles from './TypographyStylesProvider.styles';
 
 export interface TypographyStylesProviderProps

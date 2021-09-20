@@ -1,5 +1,5 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   MantineNumberSize,
   getFontStyles,
   getThemeColor,
@@ -7,7 +7,7 @@ import {
   getSizeValue,
   MantineSize,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
 
 interface SwitchStyles {
   reduceMotion: boolean;

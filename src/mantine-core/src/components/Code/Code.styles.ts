@@ -1,5 +1,4 @@
-import { createStyles } from '@mantine/tss';
-import { getFontStyles, getSharedColorScheme, MantineColor } from '@mantine/theme';
+import { createStyles, getFontStyles, getSharedColorScheme, MantineColor } from '@mantine/tss';
 
 interface CodeStyles {
   color: MantineColor;

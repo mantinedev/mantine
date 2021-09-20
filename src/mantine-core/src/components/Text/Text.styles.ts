@@ -1,12 +1,12 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   MantineTheme,
   MantineSize,
   getFocusStyles,
   getFontStyles,
   getSharedColorScheme,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
 
 interface TextStyles {
   color: MantineColor;

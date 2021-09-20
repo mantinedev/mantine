@@ -1,6 +1,6 @@
 import React, { Children } from 'react';
 import { useUncontrolled, useId } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/tss';
 import { Group, GroupProps } from '../Group/Group';
 import { Chip, ChipProps, ChipStylesNames } from './Chip/Chip';
 

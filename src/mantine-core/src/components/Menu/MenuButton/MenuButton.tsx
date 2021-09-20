@@ -1,6 +1,5 @@
 import React from 'react';
-import { mergeStyles } from '@mantine/tss';
-import { MantineNumberSize } from '@mantine/theme';
+import { mergeStyles, MantineNumberSize } from '@mantine/tss';
 import { SharedMenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 

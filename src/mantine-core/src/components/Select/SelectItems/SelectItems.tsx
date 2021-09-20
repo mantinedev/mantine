@@ -1,6 +1,6 @@
 import React from 'react';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineSize } from '@mantine/theme';
+import { mergeStyles, DefaultProps, MantineSize } from '@mantine/tss';
+
 import { Text } from '../../Text/Text';
 import { SelectItem } from '../types';
 import useStyles from './SelectItems.styles';

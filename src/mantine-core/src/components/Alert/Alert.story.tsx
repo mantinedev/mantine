@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { XCircleFillIcon } from '@primer/octicons-react';
-import { MANTINE_COLORS } from '@mantine/theme';
+import { MANTINE_COLORS } from '@mantine/tss';
 import { Alert } from './Alert';
 
 const getThemes = (props?: any) =>

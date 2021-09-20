@@ -1,12 +1,12 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   MantineNumberSize,
   MantineColor,
   getSizeValue,
   getFontStyles,
   getSharedColorScheme,
   getFocusStyles,
-} from '@mantine/theme';
+} from '@mantine/tss';
 
 interface AvatarStyles {
   size: MantineNumberSize;

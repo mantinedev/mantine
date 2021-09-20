@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, MantineGradient, MantineColor } from '@mantine/theme';
+import { DefaultProps, MantineNumberSize, MantineGradient, MantineColor } from '@mantine/tss';
 import useStyles, { sizes, ThemeIconVariant } from './ThemeIcon.styles';
 
 export const THEME_ICON_SIZES = sizes;

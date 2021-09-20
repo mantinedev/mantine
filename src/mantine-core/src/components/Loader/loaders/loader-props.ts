@@ -1,5 +1,5 @@
 import React from 'react';
-import type { MantineColor } from '@mantine/theme';
+import type { MantineColor } from '@mantine/tss';
 
 export interface LoaderProps extends React.ComponentPropsWithoutRef<'svg'> {
   size: number;

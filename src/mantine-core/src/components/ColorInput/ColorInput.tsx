@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useUncontrolled, useReducedMotion, useDidUpdate, useId } from '@mantine/hooks';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, getSizeValue } from '@mantine/theme';
+import { mergeStyles, DefaultProps, getSizeValue } from '@mantine/tss';
+
 import {
   InputWrapper,
   InputWrapperBaseProps,

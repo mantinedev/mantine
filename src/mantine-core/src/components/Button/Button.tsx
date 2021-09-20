@@ -1,6 +1,7 @@
 import React from 'react';
-import { useMantineTheme, mergeStyles } from '@mantine/tss';
 import {
+  useMantineTheme,
+  mergeStyles,
   DefaultProps,
   MantineSize,
   MantineNumberSize,
@@ -8,7 +9,7 @@ import {
   getSharedColorScheme,
   MantineGradient,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
 import useStyles, { heights, ButtonVariant } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader/Loader';
 

@@ -1,5 +1,10 @@
-import { createStyles } from '@mantine/tss';
-import { MantineNumberSize, getSizeValue, getFocusStyles, MantineShadow } from '@mantine/theme';
+import {
+  createStyles,
+  MantineNumberSize,
+  getSizeValue,
+  getFocusStyles,
+  MantineShadow,
+} from '@mantine/tss';
 
 interface PaperStyles {
   radius: MantineNumberSize;

@@ -1,5 +1,5 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   MantineNumberSize,
   getSizeValue,
   getFontStyles,
@@ -9,7 +9,7 @@ import {
   hexToRgba,
   MantineColor,
   MantineTheme,
-} from '@mantine/theme';
+} from '@mantine/tss';
 
 export type ActionIconVariant =
   | 'hover'

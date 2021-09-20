@@ -1,12 +1,12 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   MantineSize,
   getSizeValue,
   getFontStyles,
   getFocusStyles,
   getThemeColor,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
 
 interface RadioStyles {
   size: MantineSize;

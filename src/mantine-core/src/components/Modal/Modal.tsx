@@ -6,8 +6,14 @@ import {
   useFocusTrap,
   useFocusReturn,
 } from '@mantine/hooks';
-import { useMantineTheme, mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/theme';
+import {
+  useMantineTheme,
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  MantineShadow,
+} from '@mantine/tss';
+
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';

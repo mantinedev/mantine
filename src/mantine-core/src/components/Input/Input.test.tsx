@@ -7,7 +7,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
 } from '@mantine/tests';
-import { DEFAULT_THEME } from '@mantine/theme';
+import { DEFAULT_THEME } from '@mantine/tss';
 import { Input } from './Input';
 import { Input as InputStylesApi } from './styles.api';
 

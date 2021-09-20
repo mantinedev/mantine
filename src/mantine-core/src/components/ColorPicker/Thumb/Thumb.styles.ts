@@ -1,5 +1,4 @@
-import { createStyles } from '@mantine/tss';
-import { getSizeValue, MantineSize } from '@mantine/theme';
+import { createStyles, getSizeValue, MantineSize } from '@mantine/tss';
 
 interface ThumbStyles {
   size: MantineSize;

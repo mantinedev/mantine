@@ -1,7 +1,13 @@
 import React from 'react';
 import { usePagination } from '@mantine/hooks';
-import { mergeStyles, useMantineTheme } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, getSizeValue, MantineColor } from '@mantine/theme';
+import {
+  mergeStyles,
+  useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
+  getSizeValue,
+  MantineColor,
+} from '@mantine/tss';
 import { Group, GroupProps } from '../Group/Group';
 import useStyles from './Pagination.styles';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';

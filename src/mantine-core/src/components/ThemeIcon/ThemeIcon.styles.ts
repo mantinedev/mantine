@@ -1,11 +1,11 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   MantineNumberSize,
   getSizeValue,
   getFontStyles,
   getSharedColorScheme,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
 
 export type ThemeIconVariant = 'filled' | 'light' | 'gradient';
 

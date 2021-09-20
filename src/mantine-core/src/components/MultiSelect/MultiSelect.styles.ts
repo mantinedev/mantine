@@ -1,5 +1,5 @@
-import { createStyles } from '@mantine/tss';
-import { getSizeValue, MantineSize } from '@mantine/theme';
+import { createStyles, getSizeValue, MantineSize } from '@mantine/tss';
+
 import { INPUT_SIZES } from '../Input/Input';
 
 interface MultiSelectStyles {

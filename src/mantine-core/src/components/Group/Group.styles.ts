@@ -1,6 +1,5 @@
 import React from 'react';
-import { createStyles } from '@mantine/tss';
-import { MantineNumberSize, getSizeValue } from '@mantine/theme';
+import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/tss';
 
 export type GroupPosition = 'right' | 'center' | 'left' | 'apart';
 

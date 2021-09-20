@@ -1,6 +1,12 @@
 import React from 'react';
-import { useMantineTheme, mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/theme';
+import {
+  useMantineTheme,
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+} from '@mantine/tss';
+
 import useStyles, { sizes } from './Divider.styles';
 import { Text } from '../Text/Text';
 

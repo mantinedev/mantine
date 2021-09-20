@@ -1,5 +1,5 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   MantineNumberSize,
   MantineSize,
   getSizeValue,
@@ -7,7 +7,7 @@ import {
   getThemeColor,
   getSharedColorScheme,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
 
 export const sizes = {
   xs: 24,

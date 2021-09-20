@@ -1,5 +1,4 @@
-import { createStyles } from '@mantine/tss';
-import { getSizeValue } from '@mantine/theme';
+import { createStyles, getSizeValue } from '@mantine/tss';
 
 export const sizes = {
   xs: 320,

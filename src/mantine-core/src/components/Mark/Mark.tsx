@@ -1,6 +1,5 @@
 import React from 'react';
-import { useMantineTheme } from '@mantine/tss';
-import { DefaultProps, getThemeColor, MantineColor } from '@mantine/theme';
+import { useMantineTheme, DefaultProps, getThemeColor, MantineColor } from '@mantine/tss';
 
 export interface MarkProps extends DefaultProps, React.ComponentPropsWithoutRef<'mark'> {
   /** Background color from theme.colors */

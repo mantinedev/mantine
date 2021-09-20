@@ -1,11 +1,11 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   getSharedColorScheme,
   MantineNumberSize,
   getSizeValue,
   MantineColor,
   getFocusStyles,
-} from '@mantine/theme';
+} from '@mantine/tss';
 
 interface PaginationStyles {
   size: MantineNumberSize;

@@ -1,7 +1,13 @@
 import React from 'react';
 import { useUncontrolled, useId } from '@mantine/hooks';
-import { mergeStyles, useMantineTheme } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/theme';
+import {
+  mergeStyles,
+  useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  MantineColor,
+} from '@mantine/tss';
 import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
 import useStyles from './Chip.styles';
 

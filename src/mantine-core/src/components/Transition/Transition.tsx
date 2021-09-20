@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps } from '@mantine/tss';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { useTransition } from './use-transition';
 import { MantineTransition, transitions } from './transitions';

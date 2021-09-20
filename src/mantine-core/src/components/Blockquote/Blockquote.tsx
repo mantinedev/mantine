@@ -1,6 +1,5 @@
 import React from 'react';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineColor } from '@mantine/theme';
+import { mergeStyles, DefaultProps, MantineColor } from '@mantine/tss';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 

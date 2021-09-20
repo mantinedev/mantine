@@ -1,4 +1,3 @@
-export * from '@mantine/theme';
 export * from '@mantine/tss';
 export * from './utils';
 export * from './ssr';

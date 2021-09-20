@@ -1,5 +1,4 @@
-import { createStyles } from '@mantine/tss';
-import { getFontStyles, getSizeValue, MantineNumberSize } from '@mantine/theme';
+import { createStyles, getFontStyles, getSizeValue, MantineNumberSize } from '@mantine/tss';
 
 interface SliderRootStyles {
   size: MantineNumberSize;

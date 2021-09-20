@@ -1,6 +1,6 @@
 import React from 'react';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps } from '@mantine/theme';
+import { mergeStyles, DefaultProps } from '@mantine/tss';
+
 import { Text } from '../Text/Text';
 import useStyles from './Breadcrumbs.styles';
 

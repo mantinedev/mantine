@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineColor } from '@mantine/theme';
+import { mergeStyles, DefaultProps, MantineColor } from '@mantine/tss';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/theme';
+import { mergeStyles, DefaultProps, MantineNumberSize, MantineColor } from '@mantine/tss';
 import { Marks, MarksStylesNames } from '../Marks/Marks';
 import useStyles from './Track.styles';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/theme';
+import { DefaultProps } from '@mantine/tss';
 import useStyles from './UnstyledButton.styles';
 
 interface UnstyledButtonProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {

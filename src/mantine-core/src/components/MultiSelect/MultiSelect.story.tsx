@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/tss';
-import { MANTINE_SIZES, DEFAULT_THEME } from '@mantine/theme';
+import { MantineProvider, MANTINE_SIZES, DEFAULT_THEME } from '@mantine/tss';
+
 import { Group } from '../Group/Group';
 import { TextInput } from '../TextInput/TextInput';
 import { MultiSelect } from './MultiSelect';

@@ -1,6 +1,5 @@
 import React from 'react';
-import { mergeStyles } from '@mantine/tss';
-import { DefaultProps, MantineColor } from '@mantine/theme';
+import { mergeStyles, DefaultProps, MantineColor } from '@mantine/tss';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import useStyles from './Alert.styles';
 

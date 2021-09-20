@@ -1,11 +1,11 @@
-import { createStyles } from '@mantine/tss';
 import {
+  createStyles,
   getThemeColor,
   getFocusStyles,
   getSizeValue,
   MantineNumberSize,
   MantineColor,
-} from '@mantine/theme';
+} from '@mantine/tss';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface ThumbStyles {
