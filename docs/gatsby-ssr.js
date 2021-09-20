@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server';
 import htmlReactParser from 'html-react-parser';
 import { JssProvider, SheetsRegistry, createGenerateId } from 'react-jss';
 import createEmotionServer from '@emotion/server/create-instance';
-import { getCache } from '@mantine/tss';
+import { getCache } from '@mantine/styles';
 
 const emotionServer = createEmotionServer(getCache());
 
