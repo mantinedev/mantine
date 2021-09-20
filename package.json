@@ -82,6 +82,7 @@
     "jest": "^26.6.3",
     "jest-axe": "^4.1.0",
     "new-github-release-url": "^1.0.0",
+    "next": "^11.1.2",
     "open": "^8.2.0",
     "react-docgen-typescript": "2.1.0",
     "react-dom": "^17.0.2",

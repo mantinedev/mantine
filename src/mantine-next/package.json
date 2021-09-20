@@ -16,10 +16,11 @@
   },
   "peerDependencies": {
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react-dom": ">=16.8.0",
+    "next": "*"
   },
   "dependencies": {
-    "@mantine/styles": "2.5.1"
+    "@mantine/ssr": "2.5.1"
   },
   "devDependencies": {}
 }
