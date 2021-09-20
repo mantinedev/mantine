@@ -58,6 +58,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     ];
   } else {
     externals = [
+      '@emotion/server/create-instance',
       ...(config?.externals || []),
       ...Object.keys({
         ...packageJson.peerDependencies,
