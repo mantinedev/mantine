@@ -6,7 +6,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-} from '@mantine/tss';
+} from '@mantine/styles';
 import { MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import { Divider } from '../../Divider/Divider';

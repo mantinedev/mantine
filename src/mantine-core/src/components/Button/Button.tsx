@@ -9,7 +9,7 @@ import {
   getSharedColorScheme,
   MantineGradient,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 import useStyles, { heights, ButtonVariant } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader/Loader';
 

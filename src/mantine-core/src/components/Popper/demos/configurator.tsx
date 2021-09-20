@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMantineTheme } from '@mantine/tss';
+import { useMantineTheme } from '@mantine/styles';
 import { Popper, PopperProps } from '../Popper';
 import { Button } from '../../Button/Button';
 import { Paper } from '../../Paper/Paper';

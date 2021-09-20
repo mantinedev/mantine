@@ -1,4 +1,4 @@
-import { createStyles, getFocusStyles, getFontStyles } from '@mantine/tss';
+import { createStyles, getFocusStyles, getFontStyles } from '@mantine/styles';
 
 interface AccordionControlStyles {
   transitionDuration: number;

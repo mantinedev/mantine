@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/tss';
+import { createStyles } from '@mantine/styles';
 
 export default createStyles({
   root: {

@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles, getFocusStyles } from '@mantine/tss';
+import { createStyles, getFontStyles, getFocusStyles } from '@mantine/styles';
 
 export default createStyles((theme) => {
   const headings = Object.keys(theme.headings.sizes).reduce((acc, h) => {

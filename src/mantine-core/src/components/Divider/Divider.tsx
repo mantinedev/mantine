@@ -5,7 +5,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 import useStyles, { sizes } from './Divider.styles';
 import { Text } from '../Text/Text';

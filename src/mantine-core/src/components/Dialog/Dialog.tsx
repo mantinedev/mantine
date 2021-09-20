@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/tss';
+import { mergeStyles, useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/styles';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Affix } from '../Affix/Affix';

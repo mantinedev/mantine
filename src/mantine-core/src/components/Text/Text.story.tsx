@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '@mantine/tss';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Text } from './Text';
 
 const CustomComponent = ({

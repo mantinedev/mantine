@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBooleanToggle } from '@mantine/hooks';
-import { getSizeValue } from '@mantine/tss';
+import { getSizeValue } from '@mantine/styles';
 import type { InputStylesNames } from '../Input/Input';
 import type { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
 import { ActionIcon } from '../ActionIcon/ActionIcon';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, MantineNumberSize, DefaultProps } from '@mantine/tss';
+import { mergeStyles, MantineNumberSize, DefaultProps } from '@mantine/styles';
 import useStyles from './SliderRoot.styles';
 
 export type SliderRootStylesNames = keyof ReturnType<typeof useStyles>['classes'];

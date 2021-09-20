@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMergedRef, useReducedMotion } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineColor } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineColor } from '@mantine/styles';
 import { TabProps } from '../Tab/Tab';
 import type { TabsVariant } from '../Tabs';
 import useStyles from './TabControl.styles';

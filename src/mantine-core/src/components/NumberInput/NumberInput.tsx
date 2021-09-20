@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, getSizeValue } from '@mantine/tss';
+import { mergeStyles, DefaultProps, getSizeValue } from '@mantine/styles';
 
 import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';

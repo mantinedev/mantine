@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { mergeStyles, DefaultProps } from '@mantine/tss';
+import { mergeStyles, DefaultProps } from '@mantine/styles';
 import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
 

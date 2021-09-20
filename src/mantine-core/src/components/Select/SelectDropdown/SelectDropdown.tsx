@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineShadow } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineShadow } from '@mantine/styles';
 
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';

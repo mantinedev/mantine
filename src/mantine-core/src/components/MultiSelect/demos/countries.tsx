@@ -1,6 +1,6 @@
 import React from 'react';
 import Flag from 'react-flagpack';
-import { useMantineTheme } from '@mantine/tss';
+import { useMantineTheme } from '@mantine/styles';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import { countriesData } from './_countries-data';
 import { MultiSelect, MultiSelectProps } from '../MultiSelect';

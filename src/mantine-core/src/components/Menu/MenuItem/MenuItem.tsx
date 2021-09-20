@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineColor } from '@mantine/tss';
+import { DefaultProps, MantineColor } from '@mantine/styles';
 import type { MenuButtonStylesNames } from '../MenuButton/MenuButton';
 
 export interface SharedMenuItemProps extends DefaultProps<MenuButtonStylesNames> {

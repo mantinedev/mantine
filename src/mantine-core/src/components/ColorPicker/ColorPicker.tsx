@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, getSizeValue } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineSize, getSizeValue } from '@mantine/styles';
 
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';

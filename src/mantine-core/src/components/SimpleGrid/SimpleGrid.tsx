@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
 import { useId } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, MantineNumberSize, getSizeValue } from '@mantine/tss';
+import { useMantineTheme, DefaultProps, MantineNumberSize, getSizeValue } from '@mantine/styles';
 
 interface GridBreakpoint {
   maxWidth: number;

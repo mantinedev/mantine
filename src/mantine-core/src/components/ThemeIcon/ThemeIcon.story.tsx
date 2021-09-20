@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { RocketIcon } from '@modulz/radix-icons';
-import { MantineProvider, DEFAULT_THEME } from '@mantine/tss';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
 
 import { Group } from '../Group/Group';
 import { ThemeIcon } from './ThemeIcon';

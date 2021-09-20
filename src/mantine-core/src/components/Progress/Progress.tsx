@@ -7,7 +7,7 @@ import {
   MantineNumberSize,
   getThemeColor,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 import useStyles, { sizes } from './Progress.styles';
 
 export const PROGRESS_SIZES = sizes;

@@ -7,7 +7,7 @@ import {
   MantineNumberSize,
   getSizeValue,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
 import useStyles from './Pagination.styles';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';

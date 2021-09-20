@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
 import useStyles from './ColorSwatch.styles';
 
 interface _ColorSwatchProps<C extends React.ElementType, R extends HTMLElement>

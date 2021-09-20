@@ -1,5 +1,5 @@
 import React from 'react';
-import { getSizeValue } from '@mantine/tss';
+import { getSizeValue } from '@mantine/styles';
 import { ActionIcon, ActionIconProps } from '../ActionIcon';
 import { CloseIcon } from './CloseIcon';
 

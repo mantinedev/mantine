@@ -20,8 +20,7 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@mantine/tss": "2.5.1",
-    "@mantine/theme": "2.5.1",
+    "@mantine/styles": "2.5.1",
     "clsx": "^1.1.1",
     "react-textarea-autosize": "^8.3.2",
     "@popperjs/core": "^2.9.3",

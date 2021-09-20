@@ -7,7 +7,7 @@ import {
   getThemeColor,
   getFocusStyles,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 export const WRAPPER_PADDING = 4;
 

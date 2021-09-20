@@ -1,4 +1,4 @@
-import { DEFAULT_THEME } from '@mantine/tss';
+import { DEFAULT_THEME } from '../../default-theme';
 import { mergeTheme } from './merge-theme';
 
 describe('@mantine/tss/merge-theme', () => {

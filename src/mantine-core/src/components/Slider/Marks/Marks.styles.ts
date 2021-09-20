@@ -4,7 +4,7 @@ import {
   getSizeValue,
   getThemeColor,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface MarksStyles {

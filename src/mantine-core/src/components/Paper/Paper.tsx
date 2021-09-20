@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/styles';
 import useStyles from './Paper.styles';
 
 export interface SharedPaperProps extends DefaultProps {

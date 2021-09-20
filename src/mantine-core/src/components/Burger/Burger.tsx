@@ -6,7 +6,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 import useStyles, { sizes } from './Burger.styles';
 

@@ -7,7 +7,7 @@ import {
   getThemeColor,
   getSizeValue,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 import { Bars } from './loaders/Bars';
 import { Oval } from './loaders/Oval';
 import { Dots } from './loaders/Dots';

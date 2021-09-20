@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineNumberSize } from '@mantine/styles';
 import useStyles from './ListItem.styles';
 
 export type ListItemStylesNames = keyof ReturnType<typeof useStyles>['classes'];

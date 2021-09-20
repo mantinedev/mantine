@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useMove, clampUseMovePosition, UseMovePosition } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineSize } from '@mantine/styles';
 import { HsvaColor } from '../types';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './Saturation.styles';

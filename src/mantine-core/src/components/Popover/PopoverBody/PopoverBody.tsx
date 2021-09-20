@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import useStyles from './PopoverBody.styles';

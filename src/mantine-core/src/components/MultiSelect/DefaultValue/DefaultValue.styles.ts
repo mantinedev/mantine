@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineNumberSize, MantineSize } from '@mantine/tss';
+import { createStyles, getSizeValue, MantineNumberSize, MantineSize } from '@mantine/styles';
 
 interface DefaultLabelStyles {
   size: MantineSize;

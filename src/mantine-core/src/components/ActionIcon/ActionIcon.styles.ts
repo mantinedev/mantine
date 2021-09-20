@@ -9,7 +9,7 @@ import {
   hexToRgba,
   MantineColor,
   MantineTheme,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 export type ActionIconVariant =
   | 'hover'

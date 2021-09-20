@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DefaultProps, MantineNumberSize, MantineColor, mergeStyles } from '@mantine/tss';
+import { DefaultProps, MantineNumberSize, MantineColor, mergeStyles } from '@mantine/styles';
 import { PlaceholderIcon } from './PlaceholderIcon';
 import useStyles, { sizes } from './Avatar.styles';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, MantineColor } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineSize, MantineColor } from '@mantine/styles';
 import useStyles from './Radio.styles';
 
 export type RadioStylesNames = Exclude<

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, getSizeValue } from '@mantine/tss';
+import { useMantineTheme, DefaultProps, getSizeValue } from '@mantine/styles';
 import { validateJson } from './validate-json/validate-json';
 import { Textarea, TextareaProps, TextareaStylesNames } from '../Textarea/Textarea';
 

@@ -7,7 +7,7 @@ import {
   itSupportsStylesApi,
   checkAccessibility,
 } from '@mantine/tests';
-import { DEFAULT_THEME } from '@mantine/tss';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { ColorPicker } from './ColorPicker';
 import { ColorPicker as ColorPickerStylesApi } from './styles.api';
 import { Swatches } from './Swatches/Swatches';

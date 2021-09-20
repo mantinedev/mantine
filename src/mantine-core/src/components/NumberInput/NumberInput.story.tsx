@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider, DEFAULT_THEME, MANTINE_SIZES } from '@mantine/tss';
+import { MantineProvider, DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
 
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Group } from '../Group/Group';

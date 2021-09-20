@@ -12,7 +12,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';

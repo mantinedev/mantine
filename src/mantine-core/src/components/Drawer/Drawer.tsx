@@ -12,7 +12,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-} from '@mantine/tss';
+} from '@mantine/styles';
 import { ClickOutsideProvider } from '../../utils';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';

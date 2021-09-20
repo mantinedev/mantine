@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, DefaultProps } from '@mantine/tss';
+import { mergeStyles, DefaultProps } from '@mantine/styles';
 import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
 import { parseColor } from '../converters/parsers';
 import { HsvaColor } from '../types';

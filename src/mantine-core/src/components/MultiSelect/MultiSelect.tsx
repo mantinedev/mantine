@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, MantineShadow } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineSize, MantineShadow } from '@mantine/styles';
 
 import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper/InputWrapper';

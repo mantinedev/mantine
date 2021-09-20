@@ -6,7 +6,7 @@ import {
   MantineNumberSize,
   MantineSize,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
 interface SegmentedControlItem {

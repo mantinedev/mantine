@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles } from '@mantine/tss';
+import { createStyles } from '@mantine/styles';
 import { Accordion, AccordionItem, AccordionProps } from '../Accordion';
 
 const code = `

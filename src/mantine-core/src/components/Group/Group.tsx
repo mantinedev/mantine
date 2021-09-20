@@ -1,5 +1,5 @@
 import React, { Children } from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineNumberSize } from '@mantine/styles';
 import useStyles, { GroupPosition } from './Group.styles';
 
 export type GroupStylesNames = keyof ReturnType<typeof useStyles>['classes'];

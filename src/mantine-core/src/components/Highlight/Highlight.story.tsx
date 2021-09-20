@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '@mantine/tss';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Highlight } from './Highlight';
 
 const themes = Object.keys(DEFAULT_THEME.colors).map((color) => (

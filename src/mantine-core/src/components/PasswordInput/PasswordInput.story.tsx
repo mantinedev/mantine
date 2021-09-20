@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { LockClosedIcon } from '@modulz/radix-icons';
-import { MANTINE_SIZES } from '@mantine/tss';
+import { MANTINE_SIZES } from '@mantine/styles';
 import { PasswordInput } from './PasswordInput';
 
 const sizes = MANTINE_SIZES.map((size) => (

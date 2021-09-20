@@ -1,4 +1,4 @@
-import { MantineTheme } from '@mantine/tss';
+import { MantineTheme } from '@mantine/styles';
 import { getColumnWidth } from './Col';
 
 export interface GetResponsiveStyles {

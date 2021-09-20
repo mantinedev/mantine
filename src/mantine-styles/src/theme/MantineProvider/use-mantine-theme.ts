@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { DEFAULT_THEME } from '@mantine/tss';
+import { DEFAULT_THEME } from '../default-theme';
 import { MantineThemeContext } from './theme-context';
 
 export function useMantineTheme() {

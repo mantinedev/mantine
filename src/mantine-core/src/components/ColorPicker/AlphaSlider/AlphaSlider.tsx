@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme } from '@mantine/tss';
+import { useMantineTheme } from '@mantine/styles';
 import { ColorSlider, BaseColorSliderProps } from '../ColorSlider/ColorSlider';
 import { round } from '../converters/parsers';
 

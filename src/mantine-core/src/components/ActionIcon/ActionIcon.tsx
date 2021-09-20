@@ -6,7 +6,7 @@ import {
   getSizeValue,
   getSharedColorScheme,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader/Loader';

@@ -10,7 +10,7 @@ import {
   getSharedColorScheme,
   hexToRgba,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 import { INPUT_SIZES } from '../Input/Input';
 

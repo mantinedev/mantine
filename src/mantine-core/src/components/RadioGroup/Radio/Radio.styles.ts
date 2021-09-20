@@ -6,7 +6,7 @@ import {
   getFocusStyles,
   getThemeColor,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 interface RadioStyles {
   size: MantineSize;

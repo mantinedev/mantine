@@ -4,7 +4,7 @@ import {
   getSizeValue,
   getFocusStyles,
   MantineShadow,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 interface PaperStyles {
   radius: MantineNumberSize;

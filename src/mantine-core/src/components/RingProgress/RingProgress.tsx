@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineColor } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineColor } from '@mantine/styles';
 import { Curve } from './Curve/Curve';
 import { getCurves } from './get-curves/get-curves';
 import useStyles from './RingProgress.styles';

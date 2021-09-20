@@ -13,8 +13,7 @@
   },
   "references": [
     { "path": "../mantine-hooks" },
-    { "path": "../mantine-tss" },
-    { "path": "../mantine-theme" },
+    { "path": "../mantine-styles" },
     { "path": "../mantine-tests" }
   ]
 }

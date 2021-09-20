@@ -4,7 +4,7 @@ import {
   getThemeColor,
   MantineNumberSize,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface TrackStyles {

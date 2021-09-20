@@ -6,7 +6,7 @@ import {
   UseMovePosition,
   useMergedRef,
 } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineSize } from '@mantine/styles';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
 

@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles, getThemeColor, MantineColor } from '@mantine/tss';
+import { createStyles, getFontStyles, getThemeColor, MantineColor } from '@mantine/styles';
 
 interface BlockquoteStyles {
   color: MantineColor;

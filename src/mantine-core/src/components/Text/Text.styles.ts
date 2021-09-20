@@ -6,7 +6,7 @@ import {
   getFontStyles,
   getSharedColorScheme,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 interface TextStyles {
   color: MantineColor;

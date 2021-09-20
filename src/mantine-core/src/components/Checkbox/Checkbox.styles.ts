@@ -6,7 +6,7 @@ import {
   getThemeColor,
   getFocusStyles,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 export const sizes = {
   xs: 14,

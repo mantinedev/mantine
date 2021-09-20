@@ -1,5 +1,5 @@
 import React, { createElement } from 'react';
-import { mergeStyles, DefaultProps, MantineSize } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineSize } from '@mantine/styles';
 
 import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';

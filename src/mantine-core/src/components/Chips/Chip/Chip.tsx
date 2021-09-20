@@ -7,7 +7,7 @@ import {
   MantineNumberSize,
   MantineSize,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
 import useStyles from './Chip.styles';
 

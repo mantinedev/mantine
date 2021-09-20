@@ -4,7 +4,7 @@ import {
   getSizeValue,
   getFocusStyles,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 interface BurgerStyles {
   size: MantineNumberSize;

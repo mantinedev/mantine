@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue, MantineShadow } from '@mantine/tss';
+import { createStyles, MantineNumberSize, getSizeValue, MantineShadow } from '@mantine/styles';
 
 interface PopoverBodyStyles {
   shadow: MantineShadow;

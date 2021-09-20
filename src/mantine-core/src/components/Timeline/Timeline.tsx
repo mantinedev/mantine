@@ -1,5 +1,5 @@
 import React, { Children } from 'react';
-import { DefaultProps, MantineColor } from '@mantine/tss';
+import { DefaultProps, MantineColor } from '@mantine/styles';
 import {
   TimelineItem,
   TimelineItemProps,

@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'clsx';
-import { MantineColor } from '@mantine/tss';
+import { MantineColor } from '@mantine/styles';
 import { Text, SharedTextProps } from '../Text/Text';
 import { Mark } from '../Mark/Mark';
 

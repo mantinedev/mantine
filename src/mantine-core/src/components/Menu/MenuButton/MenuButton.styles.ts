@@ -6,7 +6,7 @@ import {
   getSizeValue,
   hexToRgba,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 interface MenuButtonStyles {
   radius: MantineNumberSize;

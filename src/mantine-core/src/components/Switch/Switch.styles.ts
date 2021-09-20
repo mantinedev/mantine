@@ -7,7 +7,7 @@ import {
   getSizeValue,
   MantineSize,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 interface SwitchStyles {
   reduceMotion: boolean;

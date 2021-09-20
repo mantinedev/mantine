@@ -5,7 +5,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import useStyles from './Thumb.styles';
 

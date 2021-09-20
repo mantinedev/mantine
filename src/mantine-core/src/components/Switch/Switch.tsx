@@ -6,7 +6,7 @@ import {
   MantineNumberSize,
   MantineSize,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 import useStyles, { sizes } from './Switch.styles';
 

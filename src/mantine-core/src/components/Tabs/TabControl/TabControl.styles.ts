@@ -4,7 +4,7 @@ import {
   getFocusStyles,
   getThemeColor,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 interface TabControlStyles {
   reduceMotion: boolean;

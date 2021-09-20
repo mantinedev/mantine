@@ -1,7 +1,7 @@
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useId } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, MantineSize } from '@mantine/tss';
+import { useMantineTheme, DefaultProps, MantineSize } from '@mantine/styles';
 import {
   InputWrapperBaseProps,
   InputWrapper,

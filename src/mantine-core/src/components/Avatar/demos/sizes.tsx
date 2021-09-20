@@ -1,5 +1,5 @@
 import React from 'react';
-import { MANTINE_SIZES } from '@mantine/tss';
+import { MANTINE_SIZES } from '@mantine/styles';
 import { Avatar } from '../Avatar';
 import { Group } from '../../Group/Group';
 import { Text } from '../../Text/Text';

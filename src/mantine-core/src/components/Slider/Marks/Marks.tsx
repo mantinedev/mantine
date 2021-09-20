@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize, MantineColor } from '@mantine/tss';
+import { mergeStyles, DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { getPosition } from '../utils/get-position/get-position';
 import { isMarkFilled } from './is-mark-filled';
 import useStyles from './Marks.styles';

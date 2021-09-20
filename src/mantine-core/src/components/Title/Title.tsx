@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/tss';
+import { DefaultProps } from '@mantine/styles';
 import useStyles from './Title.styles';
 
 export interface TitleProps extends DefaultProps, React.ComponentPropsWithoutRef<'h1'> {

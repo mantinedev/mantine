@@ -5,7 +5,7 @@ import {
   getFontStyles,
   getSharedColorScheme,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 export type ThemeIconVariant = 'filled' | 'light' | 'gradient';
 

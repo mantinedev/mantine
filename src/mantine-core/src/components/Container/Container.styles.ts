@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/tss';
+import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
 
 interface ContainerStyles {
   fluid: boolean;

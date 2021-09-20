@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, hexToRgba } from '@mantine/tss';
+import { DEFAULT_THEME, hexToRgba } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { ColorSwatch } from './ColorSwatch';
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DEFAULT_THEME } from '@mantine/tss';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import { AlphaSlider, AlphaSliderProps } from '../AlphaSlider/AlphaSlider';
 

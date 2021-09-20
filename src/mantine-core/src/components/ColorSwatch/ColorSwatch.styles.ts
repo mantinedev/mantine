@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineNumberSize, getFocusStyles } from '@mantine/tss';
+import { createStyles, getSizeValue, MantineNumberSize, getFocusStyles } from '@mantine/styles';
 
 interface ColorSwatchStyles {
   radius: MantineNumberSize;

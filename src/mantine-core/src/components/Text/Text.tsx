@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineSize, MantineGradient, MantineColor } from '@mantine/tss';
+import { DefaultProps, MantineSize, MantineGradient, MantineColor } from '@mantine/styles';
 import useStyles from './Text.styles';
 
 export interface SharedTextProps extends DefaultProps {

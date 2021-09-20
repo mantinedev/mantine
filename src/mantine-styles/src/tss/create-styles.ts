@@ -1,4 +1,4 @@
-import type { MantineTheme } from '@mantine/theme';
+import type { MantineTheme } from '../theme';
 import type { CSSObject } from './types';
 import { fromEntries } from './utils/from-entries/from-entries';
 import { useCss } from './use-css';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, mergeStyles } from '@mantine/tss';
+import { DefaultProps, mergeStyles } from '@mantine/styles';
 import { AccordionItemProps } from '../AccordionItem/AccordionItem';
 import { ChevronIcon } from './ChevronIcon';
 import useStyles from './AccordionControl.styles';

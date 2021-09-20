@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CheckIcon } from '@modulz/radix-icons';
-import { useMantineTheme } from '@mantine/tss';
+import { useMantineTheme } from '@mantine/styles';
 import { ColorSwatch } from '../ColorSwatch';
 import { Group } from '../../Group/Group';
 

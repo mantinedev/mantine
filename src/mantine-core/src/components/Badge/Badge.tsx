@@ -6,7 +6,7 @@ import {
   MantineNumberSize,
   MantineGradient,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 import useStyles, { heights } from './Badge.styles';
 

@@ -6,7 +6,7 @@ import {
   getFontStyles,
   getSharedColorScheme,
   getFocusStyles,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 interface AvatarStyles {
   size: MantineNumberSize;

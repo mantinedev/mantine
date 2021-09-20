@@ -5,7 +5,7 @@ import {
   getSizeValue,
   MantineSize,
   MantineTheme,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 import type { InputVariant } from './Input';
 

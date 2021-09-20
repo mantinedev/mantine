@@ -1,6 +1,6 @@
 import React from 'react';
 import { MixIcon, RocketIcon } from '@modulz/radix-icons';
-import { MANTINE_COLORS } from '@mantine/tss';
+import { MANTINE_COLORS } from '@mantine/styles';
 import { Group } from '../../Group/Group';
 import { ThemeIcon, ThemeIconProps } from '../ThemeIcon';
 

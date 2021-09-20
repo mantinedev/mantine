@@ -8,7 +8,7 @@ import {
   getSizeValue,
   getSharedColorScheme,
   MantineColor,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 interface BadgeStyles {
   color: MantineColor;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MANTINE_SIZES } from '@mantine/tss';
+import { MANTINE_SIZES } from '@mantine/styles';
 import { Checkbox, CheckboxProps } from '../Checkbox';
 import { Group } from '../../Group/Group';
 

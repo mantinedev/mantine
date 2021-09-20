@@ -5,7 +5,7 @@ import {
   getSizeValue,
   MantineColor,
   getFocusStyles,
-} from '@mantine/tss';
+} from '@mantine/styles';
 
 interface PaginationStyles {
   size: MantineNumberSize;

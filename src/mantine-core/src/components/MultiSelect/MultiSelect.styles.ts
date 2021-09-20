@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineSize } from '@mantine/tss';
+import { createStyles, getSizeValue, MantineSize } from '@mantine/styles';
 
 import { INPUT_SIZES } from '../Input/Input';
 

@@ -5,7 +5,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-} from '@mantine/tss';
+} from '@mantine/styles';
 import useStyles, { sizes } from './Input.styles';
 
 export const INPUT_VARIANTS = ['default', 'filled', 'unstyled', 'headless'] as const;
