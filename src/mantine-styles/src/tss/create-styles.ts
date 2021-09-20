@@ -7,7 +7,11 @@ import { mergeClassNames } from './utils/merge-class-names/merge-class-names';
 
 export function createStyles<Key extends string = string, Params = void>(
   getCssObjectOrCssObject:
-    | ((theme: MantineTheme, params: Params, createRef: () => string) => Record<Key, CSSObject>)
+    | ((
+        theme: MantineTheme,
+        params: Params,
+        createRef: (refName: string) => string
+      ) => Record<Key, CSSObject>)
     | Record<Key, CSSObject>
 ) {
   const getCssObject =
@@ -21,9 +25,9 @@ export function createStyles<Key extends string = string, Params = void>(
 
     let count = 0;
 
-    function createRef() {
+    function createRef(refName: string) {
       count += 1;
-      return `mantine-ref_${count}`;
+      return `mantine-ref_${refName || ''}_${count}`;
     }
 
     const cssObject = getCssObject(theme, params, createRef);
