@@ -32,6 +32,7 @@
     "_release:no-test": "esno scripts/release",
     "_release": "npm run release:prepare && esno scripts/release",
     "_release:alpha": "npm run _release minor -- --stage alpha --tag next",
+    "_release:alpha:major": "npm run _release major -- --stage alpha --tag next",
     "release:prepare": "npm run clean && npm test",
     "release:patch": "npm run _release patch && npm run docs:deploy",
     "release:minor": "npm run _release minor && npm run docs:deploy",
