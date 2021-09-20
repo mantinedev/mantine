@@ -22,10 +22,7 @@ export const sizes = {
 
 export default createStyles((theme, { size, color, reduceMotion }: BurgerStyles, getRef) => {
   const sizeValue = getSizeValue({ size, sizes });
-
-  const opened = {
-    ref: getRef(),
-  };
+  const opened = { ref: getRef('opened') } as const;
 
   return {
     opened,

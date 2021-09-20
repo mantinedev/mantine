@@ -14,7 +14,8 @@ interface TabControlStyles {
 
 export default createStyles(
   (theme, { reduceMotion, color, orientation }: TabControlStyles, getRef) => {
-    const tabActive = { ref: getRef() } as const;
+    const tabActive = { ref: getRef('tabActive') } as const;
+
     return {
       tabActive,
       tabLabel: {},

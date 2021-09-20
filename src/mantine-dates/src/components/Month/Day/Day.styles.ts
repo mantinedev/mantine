@@ -21,12 +21,12 @@ export const sizes = {
 };
 
 export default createStyles((theme, { size, fullWidth }: DayStyles, getRef) => {
-  const weekend = { ref: getRef() } as const;
-  const outside = { ref: getRef() } as const;
-  const selected = { ref: getRef() } as const;
-  const inRange = { ref: getRef() } as const;
-  const firstInRange = { ref: getRef() } as const;
-  const lastInRange = { ref: getRef() } as const;
+  const weekend = { ref: getRef('weekend') } as const;
+  const outside = { ref: getRef('outside') } as const;
+  const selected = { ref: getRef('selected') } as const;
+  const inRange = { ref: getRef('inRange') } as const;
+  const firstInRange = { ref: getRef('firstInRange') } as const;
+  const lastInRange = { ref: getRef('lastInRange') } as const;
 
   return {
     weekend,

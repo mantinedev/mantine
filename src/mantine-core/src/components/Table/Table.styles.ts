@@ -5,8 +5,9 @@ interface TableStyles {
 }
 
 export default createStyles((theme, { captionSide }: TableStyles, getRef) => {
-  const striped = { ref: getRef() };
-  const hover = { ref: getRef() };
+  const striped = { ref: getRef('striped') };
+  const hover = { ref: getRef('hover') };
+
   return {
     striped,
     hover,

@@ -7,7 +7,7 @@ interface ListItemStyles {
 
 export default createStyles((theme, { spacing, center }: ListItemStyles, getRef) => {
   const itemWrapper = {
-    ref: getRef(),
+    ref: getRef('itemWrapper'),
     display: 'inline',
   } as const;
 

@@ -15,9 +15,7 @@ const SATURATION_HEIGHTS = {
 
 export default createStyles((theme, { size }: SaturationStyles, getRef) => {
   const position = -getSizeValue({ size, sizes: THUMB_SIZES }) / 2 - 1;
-  const saturationThumb = {
-    ref: getRef(),
-  } as const;
+  const saturationThumb = { ref: getRef('saturationThumb') } as const;
 
   return {
     saturationThumb,

@@ -7,9 +7,9 @@ interface Params {
   color: 'red' | 'blue';
 }
 
-const useStyles = createStyles((theme, { color }: Params, createRef) => {
+const useStyles = createStyles((theme, { color }: Params, gerRef) => {
   const child = {
-    ref: createRef(),
+    ref: gerRef('child'),
     background: theme.colors.gray[1],
   } as const;
 

@@ -6,7 +6,7 @@ interface AccordionControlStyles {
 
 export default createStyles((theme, { transitionDuration }: AccordionControlStyles, getRef) => {
   const icon = {
-    ref: getRef(),
+    ref: getRef('icon'),
     transition: `transform ${transitionDuration}ms ease`,
   } as const;
 

@@ -6,7 +6,8 @@ interface TabsStyles {
 }
 
 export default createStyles((theme, { tabPadding, orientation }: TabsStyles, getRef) => {
-  const tabsList = { ref: getRef() } as const;
+  const tabsList = { ref: getRef('tabsList') } as const;
+
   return {
     tabsListWrapper: {},
     tabsList,

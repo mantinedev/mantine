@@ -23,7 +23,7 @@ const sizes = {
 
 export default createStyles((theme, { size, radius, color }: PaginationStyles, getRef) => {
   const dots = {
-    ref: getRef(),
+    ref: getRef('dots'),
     cursor: 'default',
     borderColor: 'transparent',
     backgroundColor: 'transparent',

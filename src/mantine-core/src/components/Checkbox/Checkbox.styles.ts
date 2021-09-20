@@ -33,7 +33,7 @@ interface CheckboxStyles {
 export default createStyles(
   (theme, { size, color, transitionDuration }: CheckboxStyles, getRef) => {
     const icon = {
-      ref: getRef(),
+      ref: getRef('icon'),
       color: theme.white,
       transform: 'translateY(5px) scale(0.5)',
       opacity: 0,

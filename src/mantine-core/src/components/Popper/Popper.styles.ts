@@ -39,9 +39,9 @@ const verticalPlacement = (arrowSize: number, classes: PlacementClasses) => ({
 });
 
 export default createStyles((_theme, { arrowSize }: PopperStyles, getRef) => {
-  const center = { ref: getRef() } as const;
-  const start = { ref: getRef() } as const;
-  const end = { ref: getRef() } as const;
+  const center = { ref: getRef('center') } as const;
+  const start = { ref: getRef('start') } as const;
+  const end = { ref: getRef('end') } as const;
 
   const placementClasses = {
     center: center.ref,

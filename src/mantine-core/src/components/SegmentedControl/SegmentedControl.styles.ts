@@ -44,7 +44,7 @@ export default createStyles(
     getRef
   ) => {
     const label = {
-      ref: getRef(),
+      ref: getRef('label'),
       ...getFocusStyles(theme),
       ...getFontStyles(theme),
       WebkitTapHighlightColor: 'transparent',
@@ -69,7 +69,7 @@ export default createStyles(
     } as const;
 
     const control = {
-      ref: getRef(),
+      ref: getRef('control'),
       position: 'relative',
       boxSizing: 'border-box',
       flex: 1,

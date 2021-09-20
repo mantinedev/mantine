@@ -122,7 +122,8 @@ export default createStyles(
     getRef
   ) => {
     const loading = {
-      ref: getRef(),
+      ref: getRef('loading'),
+
       '&::before': {
         content: '""',
         position: 'absolute',

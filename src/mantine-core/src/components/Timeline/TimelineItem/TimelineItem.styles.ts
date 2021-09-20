@@ -11,14 +11,14 @@ interface TimelineItemStyles {
 export default createStyles(
   (theme, { bulletSize, color, align, lineVariant, lineWidth }: TimelineItemStyles, getRef) => {
     const itemBulletWithChild = {
-      ref: getRef(),
+      ref: getRef('itemBulletWithChild'),
       borderWidth: 1,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     };
 
     const itemBullet = {
-      ref: getRef(),
+      ref: getRef('itemBullet'),
       boxSizing: 'border-box',
       width: bulletSize,
       height: bulletSize,

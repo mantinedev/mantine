@@ -7,7 +7,7 @@ interface NotificationStyles {
 
 export default createStyles((theme, { color, disallowClose }: NotificationStyles, getRef) => {
   const icon = {
-    ref: getRef(),
+    ref: getRef('icon'),
     boxSizing: 'border-box',
     marginRight: theme.spacing.md,
     width: 28,

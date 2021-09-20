@@ -49,7 +49,7 @@ interface ChipStyles {
 
 export default createStyles((theme, { radius, size, color }: ChipStyles, getRef) => {
   const label = {
-    ref: getRef(),
+    ref: getRef('label'),
     ...getFontStyles(theme),
     boxSizing: 'border-box',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
@@ -72,7 +72,7 @@ export default createStyles((theme, { radius, size, color }: ChipStyles, getRef)
   } as const;
 
   const outline = {
-    ref: getRef(),
+    ref: getRef('outline'),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
 
     '&:hover': {
@@ -81,7 +81,7 @@ export default createStyles((theme, { radius, size, color }: ChipStyles, getRef)
   } as const;
 
   const filled = {
-    ref: getRef(),
+    ref: getRef('filled'),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
     borderColor: 'transparent',
 
@@ -91,7 +91,7 @@ export default createStyles((theme, { radius, size, color }: ChipStyles, getRef)
   } as const;
 
   const iconWrapper = {
-    ref: getRef(),
+    ref: getRef('iconWrapper'),
     color: getThemeColor({ theme, color, shade: 6 }),
     width:
       getSizeValue({ size, sizes: iconSizes }) + getSizeValue({ size, sizes: theme.spacing }) / 1.5,

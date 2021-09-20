@@ -7,7 +7,7 @@ interface ColorSliderStyles {
 }
 
 export default createStyles((theme, { size }: ColorSliderStyles, getRef) => {
-  const sliderThumb = { ref: getRef() } as const;
+  const sliderThumb = { ref: getRef('sliderThumb') } as const;
 
   return {
     sliderThumb,

@@ -22,7 +22,8 @@ export const sizes = {
 };
 
 export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
-  const labelDisabled = { ref: getRef() } as const;
+  const labelDisabled = { ref: getRef('labelDisabled') } as const;
+
   return {
     labelDisabled,
 
