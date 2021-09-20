@@ -23,10 +23,10 @@ export default createStyles((theme, { color, disallowClose }: NotificationStyles
     icon,
 
     withIcon: {
-      paddingLeft: '10px !important',
+      paddingLeft: theme.spacing.xs,
 
       '&::before': {
-        display: 'none !important',
+        display: 'none',
       },
     },
 
@@ -37,8 +37,8 @@ export default createStyles((theme, { color, disallowClose }: NotificationStyles
       alignItems: 'center',
       paddingLeft: 22,
       paddingRight: 5,
-      paddingTop: 10,
-      paddingBottom: 10,
+      paddingTop: theme.spacing.xs,
+      paddingBottom: theme.spacing.xs,
       borderRadius: 4,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       boxShadow: theme.shadows.lg,

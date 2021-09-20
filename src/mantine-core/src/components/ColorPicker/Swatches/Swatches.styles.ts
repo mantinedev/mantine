@@ -6,9 +6,9 @@ interface SwatchesStyles {
 
 export default createStyles((_theme, { swatchesPerRow }: SwatchesStyles) => ({
   swatch: {
-    width: `calc(${100 / swatchesPerRow}% - 4px) !important`,
-    height: '0 !important',
-    paddingBottom: `calc(${100 / swatchesPerRow}% - 4px) !important`,
+    width: `calc(${100 / swatchesPerRow}% - 4px)`,
+    height: 0,
+    paddingBottom: `calc(${100 / swatchesPerRow}% - 4px)`,
     margin: 2,
     boxSizing: 'content-box',
   },

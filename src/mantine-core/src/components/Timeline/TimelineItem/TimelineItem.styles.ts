@@ -76,11 +76,11 @@ export default createStyles(
 
       itemLineActive: {
         '&::before': {
-          borderLeftColor: `${getThemeColor({
+          borderLeftColor: getThemeColor({
             theme,
             color,
             shade: theme.colorScheme === 'light' ? 6 : 7,
-          })} !important`,
+          }),
         },
       },
 

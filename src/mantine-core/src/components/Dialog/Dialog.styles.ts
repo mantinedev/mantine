@@ -22,7 +22,7 @@ export default createStyles((theme, { size }: DialogStyles) => ({
   },
 
   closeButton: {
-    position: 'absolute !important' as any,
+    position: 'absolute',
     top: theme.spacing.md / 2,
     right: theme.spacing.md / 2,
   },

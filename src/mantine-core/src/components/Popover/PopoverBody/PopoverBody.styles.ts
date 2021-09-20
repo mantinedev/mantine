@@ -39,7 +39,7 @@ export default createStyles((theme, { radius, shadow, spacing }: PopoverBodyStyl
   },
 
   close: {
-    position: 'absolute !important' as any,
+    position: 'absolute',
     top: 7,
     zIndex: 2,
     right: 10,

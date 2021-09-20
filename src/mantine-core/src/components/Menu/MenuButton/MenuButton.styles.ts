@@ -42,16 +42,14 @@ export default createStyles((theme, { radius, color }: MenuButtonStyles) => ({
   },
 
   itemHovered: {
-    backgroundColor: `${
-      color
-        ? hexToRgba(
-            getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
-            theme.colorScheme === 'dark' ? 0.2 : 1
-          )
-        : theme.colorScheme === 'dark'
-        ? hexToRgba(theme.colors.dark[3], 0.35)
-        : theme.colors.gray[0]
-    } !important`,
+    backgroundColor: color
+      ? hexToRgba(
+          getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+          theme.colorScheme === 'dark' ? 0.2 : 1
+        )
+      : theme.colorScheme === 'dark'
+      ? hexToRgba(theme.colors.dark[3], 0.35)
+      : theme.colors.gray[0],
   },
 
   itemInner: {

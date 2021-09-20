@@ -135,9 +135,7 @@ export default createStyles(
 
       labelActive: {
         '&, &:hover': {
-          color: `${
-            color in theme.colors || theme.colorScheme === 'dark' ? theme.white : theme.black
-          } !important`,
+          color: color in theme.colors || theme.colorScheme === 'dark' ? theme.white : theme.black,
         },
       },
 

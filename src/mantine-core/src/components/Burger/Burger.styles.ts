@@ -72,7 +72,7 @@ export default createStyles((theme, { size, color, reduceMotion }: BurgerStyles,
       },
 
       [`&.${opened.ref}`]: {
-        backgroundColor: 'transparent !important',
+        backgroundColor: 'transparent',
 
         '&:before': {
           transform: `translateY(${sizeValue / 3}px) rotate(45deg)`,

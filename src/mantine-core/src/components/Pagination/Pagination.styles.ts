@@ -24,9 +24,9 @@ const sizes = {
 export default createStyles((theme, { size, radius, color }: PaginationStyles, getRef) => {
   const dots = {
     ref: getRef(),
-    cursor: 'default !important',
-    borderColor: 'transparent !important',
-    backgroundColor: 'transparent !important',
+    cursor: 'default',
+    borderColor: 'transparent',
+    backgroundColor: 'transparent',
   } as const;
 
   const colors = getSharedColorScheme({
@@ -69,8 +69,8 @@ export default createStyles((theme, { size, radius, color }: PaginationStyles, g
 
     active: {
       borderColor: 'transparent',
-      color: `${colors.color} !important`,
-      backgroundColor: `${colors.background} !important`,
+      color: colors.color,
+      backgroundColor: colors.background,
     },
 
     dots,
