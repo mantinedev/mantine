@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBooleanToggle } from '@mantine/hooks';
 import { storiesOf } from '@storybook/react';
-import { createUseStyles } from 'react-jss';
+import { createStyles } from '@mantine/core';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import Textarea from 'react-textarea-autosize';
 import { MANTINE_SIZES } from '@mantine/styles';
@@ -22,7 +22,7 @@ function ValidInvalid() {
   );
 }
 
-const useStyles = createUseStyles({
+const useStyles = createStyles({
   input: {
     border: '2px solid red',
 

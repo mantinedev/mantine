@@ -9,7 +9,7 @@ import useStyles from './GettingStarted.styles';
 
 export function GettingStarted() {
   const { classes } = useStyles();
-  const [dependencies, setDependencies] = useState('react-jss @mantine/hooks @mantine/core');
+  const [dependencies, setDependencies] = useState('@mantine/hooks @mantine/core');
 
   return (
     <>
