@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { Select } from './Select';
 
 const data = [
-  { value: 'react', label: 'React' },
+  { value: 'react', label: 'React', disabled: true },
   { value: 'ng', label: 'Angular' },
   { value: 'svelte', label: 'Svelte' },
   { value: 'vue', label: 'Vue' },
@@ -51,7 +51,6 @@ storiesOf('@mantine/core/Select', module)
         searchable
         label="Choose your favorite library/framework"
         placeholder="Choose value"
-        limit={2}
         data={data}
         style={{ marginTop: 20 }}
         nothingFound="No options"

@@ -11,6 +11,7 @@ export const MultiSelect: Record<MultiSelectStylesNames, string> = {
   dropdown: 'Dropdown element',
   item: 'Item element, rendered inside dropdown',
   hovered: 'Hovered item modifier, added to item when it is selected with arrows or hovered',
+  disabled: 'Disabled item modifier',
   nothingFound: 'Nothing found label',
   values: 'Values wrapper',
   value: 'Value element',

@@ -6,6 +6,7 @@ import type { SelectItemsStylesNames } from './SelectItems/SelectItems';
 export interface SelectItem {
   value: string;
   label?: string;
+  disabled?: boolean;
   [key: string]: any;
 }
 

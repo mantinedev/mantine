@@ -48,13 +48,15 @@ export function SelectItems({
       <Item
         key={item.value}
         className={cx(classes.item, {
-          [classes.hovered]: hovered === index,
-          [classes.selected]: selected,
+          [classes.hovered]: !item.disabled && hovered === index,
+          [classes.selected]: !item.disabled && selected,
+          [classes.disabled]: item.disabled,
         })}
         style={{
           ..._styles.item,
-          ...(hovered === index ? _styles.hovered : null),
-          ...(selected ? _styles.selected : null),
+          ...(hovered === index && !item.disabled ? _styles.hovered : null),
+          ...(selected && !item.disabled ? _styles.selected : null),
+          ...(item.disabled ? _styles.disabled : null),
         }}
         onMouseEnter={() => onItemHover(index)}
         id={`${uuid}-${index}`}
@@ -67,10 +69,10 @@ export function SelectItems({
             itemsRefs.current[item.value] = node;
           }
         }}
-        onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {
+        onMouseDown={!item.disabled ? (event: React.MouseEvent<HTMLDivElement>) => {
           event.preventDefault();
           onItemSelect(item);
-        }}
+        } : null}
         {...item}
       />
     );

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import cx from 'clsx';
-import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
+import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineSize,
@@ -199,7 +199,6 @@ export function MultiSelect({
   const handleValueRemove = (_val: string) => setValue(_value.filter((val) => val !== _val));
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setHovered(0);
     handleSearchChange(event.currentTarget.value);
     setDropdownOpened(true);
   };
@@ -223,6 +222,25 @@ export function MultiSelect({
     value: _value,
   });
 
+  const getNextIndex = (
+    index: number,
+    nextItem: (index: number) => number,
+    compareFn: (index: number) => boolean) => {
+    let i = index;
+    while (compareFn(i)) {
+      i = nextItem(i);
+      if (!filteredData[i].disabled) return i;
+    }
+    return index;
+  };
+
+  useDidUpdate(() => {
+    setHovered(getNextIndex(
+      -1,
+      (index) => index + 1,
+      (index) => index < filteredData.length - 1));
+  }, [searchValue]);
+
   const handleItemSelect = (item: SelectItem) => {
     setTimeout(() => {
       clearSearchOnChange && handleSearchChange('');
@@ -244,7 +262,7 @@ export function MultiSelect({
         event.preventDefault();
         setDropdownOpened(true);
         setHovered((current) => {
-          const nextIndex = current > 0 ? current - 1 : current;
+          const nextIndex = getNextIndex(current, (index) => index - 1, (index) => index > 0);
           scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
           return nextIndex;
         });
@@ -255,7 +273,10 @@ export function MultiSelect({
         event.preventDefault();
         setDropdownOpened(true);
         setHovered((current) => {
-          const nextIndex = current < filteredData.length - 1 ? current + 1 : current;
+          const nextIndex = getNextIndex(
+            current,
+            (index) => index + 1,
+            (index) => index < filteredData.length - 1);
           scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
           return nextIndex;
         });

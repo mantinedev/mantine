@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
+import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
 import { DefaultProps, MantineSize, MantineShadow } from '../../theme';
 import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
@@ -184,6 +184,25 @@ export function Select({
     filter,
   });
 
+  const getNextIndex = (
+    index: number,
+    nextItem: (index: number) => number,
+    compareFn: (index: number) => boolean) => {
+    let i = index;
+    while (compareFn(i)) {
+      i = nextItem(i);
+      if (!filteredData[i].disabled) return i;
+    }
+    return index;
+  };
+
+  useDidUpdate(() => {
+    setHovered(getNextIndex(
+      -1,
+      (index) => index + 1,
+      (index) => index < filteredData.length - 1));
+  }, [inputValue]);
+
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     typeof onKeyDown === 'function' && onKeyDown(event);
 
@@ -192,7 +211,7 @@ export function Select({
         event.preventDefault();
         setDropdownOpened(true);
         setHovered((current) => {
-          const nextIndex = current > 0 ? current - 1 : current;
+          const nextIndex = getNextIndex(current, (index) => index - 1, (index) => index > 0);
           scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
           return nextIndex;
         });
@@ -203,7 +222,10 @@ export function Select({
         event.preventDefault();
         setDropdownOpened(true);
         setHovered((current) => {
-          const nextIndex = current < filteredData.length - 1 ? current + 1 : current;
+          const nextIndex = getNextIndex(
+            current,
+            (index) => index + 1,
+            (index) => index < filteredData.length - 1);
           scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
           return nextIndex;
         });
@@ -221,7 +243,10 @@ export function Select({
         if (!searchable && !dropdownOpened) {
           event.preventDefault();
           setDropdownOpened(true);
-          setHovered(0);
+          setHovered(getNextIndex(
+            -1,
+            (index) => index + 1,
+            (index) => index < filteredData.length - 1));
         }
         break;
       }
@@ -243,7 +268,7 @@ export function Select({
     typeof onBlur === 'function' && onBlur(event);
     const selected = formattedData.find((item) => item.value === _value);
     handleSearchChange(selected?.label || '');
-    setDropdownOpened(false);
+    //setDropdownOpened(false);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -255,7 +280,6 @@ export function Select({
     } else {
       handleSearchChange(event.currentTarget.value);
     }
-    setHovered(0);
     setDropdownOpened(true);
   };
 

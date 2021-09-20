@@ -37,4 +37,8 @@ export default createMemoStyles({
     paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
     textAlign: 'center',
   }),
+
+  disabled: ({ theme }: SelectItemsStyles) => ({
+    color: theme.colors.dark[2],
+  }),
 });

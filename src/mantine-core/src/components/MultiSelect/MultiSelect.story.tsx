@@ -7,10 +7,10 @@ import { MultiSelect } from './MultiSelect';
 import { CountriesSelect } from './demos/countries';
 
 const data = [
-  { value: 'react', label: 'React' },
-  { value: 'ng', label: 'Angular' },
-  { value: 'svelte', label: 'Svelte' },
-  { value: 'vue', label: 'Vue' },
+  { value: 'react', label: 'React', disabled: true },
+  { value: 'ng', label: 'Angular', disabled: true },
+  { value: 'svelte', label: 'Svelte', disabled: true },
+  { value: 'vue', label: 'Vue', disabled: true },
   { value: 'riot', label: 'Riot' },
   { value: 'next', label: 'Next.js' },
   { value: 'blitz', label: 'Blitz.js' },
