@@ -46,7 +46,7 @@ export default createStyles((theme) => ({
   },
 
   dropdownBody: {
-    padding: [theme.spacing.xs, 0],
+    padding: `${theme.spacing.xs}px 0`,
   },
 
   item: {

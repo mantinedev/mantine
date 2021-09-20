@@ -7,7 +7,7 @@ export default createStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: [theme.spacing.xs, theme.spacing.md],
+    padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     borderTopRightRadius: theme.radius.md,
     borderTopLeftRadius: theme.radius.md,

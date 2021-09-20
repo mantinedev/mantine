@@ -17,7 +17,7 @@ export default createStyles((theme) => ({
 
   body: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    padding: [theme.spacing.xs, theme.spacing.md],
+    padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
     borderBottomRightRadius: theme.radius.md - 1,
     borderBottomLeftRadius: theme.radius.md - 1,
 

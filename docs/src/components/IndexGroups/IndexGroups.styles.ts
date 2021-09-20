@@ -21,7 +21,7 @@ export default createStyles((theme) => ({
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
-    padding: [theme.spacing.xs, theme.spacing.md],
+    padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
     // wtf, why it is * 5, idk
     flex: `0 1 calc(50% - ${theme.spacing.xs * 5}px)`,
 

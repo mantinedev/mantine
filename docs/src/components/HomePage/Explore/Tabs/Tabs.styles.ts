@@ -24,7 +24,8 @@ export default createStyles((theme) => ({
     WebkitTapHighlightColor: 'transparent',
     opacity: 0.6,
     cursor: 'pointer',
-    padding: [theme.spacing.md, 0],
+    paddingTop: theme.spacing.md,
+    paddingBottom: theme.spacing.md,
 
     '&:hover': {
       opacity: 1,
