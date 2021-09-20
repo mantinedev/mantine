@@ -1,4 +1,4 @@
-import { MantineThemeOverride, MantineTheme } from '@mantine/theme';
+import { MantineThemeOverride, MantineTheme } from '@mantine/tss';
 
 export function mergeTheme(
   currentTheme: MantineTheme,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from './MantineProvider/MantineProvider';
-import { createStyles } from './create-styles';
+import { MantineProvider } from './theme/MantineProvider/MantineProvider';
+import { createStyles } from './tss/create-styles';
 
 interface Params {
   color: 'red' | 'blue';
