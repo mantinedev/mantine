@@ -1,10 +1,9 @@
 import React from 'react';
 import { useBooleanToggle } from '@mantine/hooks';
 import { storiesOf } from '@storybook/react';
-import { createStyles } from '@mantine/core';
+import { createStyles, MANTINE_SIZES } from '@mantine/styles';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import Textarea from 'react-textarea-autosize';
-import { MANTINE_SIZES } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
 
@@ -33,7 +32,7 @@ const useStyles = createStyles({
 });
 
 function WithStyles() {
-  return <Input classNames={useStyles()} placeholder="red" />;
+  return <Input classNames={useStyles().classes} placeholder="red" />;
 }
 
 const actionIcon = (
