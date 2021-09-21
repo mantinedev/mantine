@@ -8,20 +8,18 @@ import {
 } from '../settings';
 
 export default createStyles((theme) => ({
-  tabs: {
-    boxSizing: 'border-box',
-  },
-
   tabsWrapper: {
     background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-    borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2],
+    borderBottomColor: `${
+      theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+    } !important`,
     paddingLeft: theme.spacing.xl * 2,
 
     [`@media (max-width: ${BREAKPOINT}px)`]: {
       paddingLeft: theme.spacing.xl,
     },
 
-    [`@media (min-width: ${1380}px)`]: {
+    '@media (min-width: 1380px)': {
       paddingLeft: 0,
     },
   },
