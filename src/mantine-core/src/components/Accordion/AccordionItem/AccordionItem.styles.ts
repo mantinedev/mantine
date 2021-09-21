@@ -4,10 +4,17 @@ interface AccordionItemStyles {
   transitionDuration: number;
 }
 
+const ICON_SIZE = 24;
+
 export default createStyles((theme, { transitionDuration }: AccordionItemStyles, getRef) => {
   const icon = {
     ref: getRef('icon'),
     transition: `transform ${transitionDuration}ms ease`,
+    marginRight: theme.spacing.md,
+    width: ICON_SIZE,
+    minWidth: ICON_SIZE,
+    height: ICON_SIZE,
+    borderRadius: ICON_SIZE,
   } as const;
 
   return {
@@ -20,15 +27,9 @@ export default createStyles((theme, { transitionDuration }: AccordionItemStyles,
 
     item: {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      borderTop: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+      borderBottom: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
       }`,
-
-      '&:last-of-type': {
-        borderBottom: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
-        }`,
-      },
     },
 
     itemOpened: {
@@ -43,15 +44,14 @@ export default createStyles((theme, { transitionDuration }: AccordionItemStyles,
       width: '100%',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: theme.spacing.md,
-      fontSize: theme.fontSizes.md,
+      padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
       fontWeight: 500,
       textAlign: 'left',
-      color: 'inherit',
-      backgroundColor: 'transparent',
-      border: 'none',
-      cursor: 'pointer',
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+
+      '&:hover': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+      },
     },
 
     content: {
@@ -59,11 +59,12 @@ export default createStyles((theme, { transitionDuration }: AccordionItemStyles,
       lineHeight: theme.lineHeight,
       transition: `height ${transitionDuration}ms ease`,
       overflow: 'hidden',
+      paddingLeft: ICON_SIZE + theme.spacing.md,
     },
 
     contentInner: {
-      paddingTop: 0,
       padding: theme.spacing.md,
+      paddingTop: theme.spacing.xs,
       transition: `opacity ${transitionDuration}ms ease`,
     },
   };

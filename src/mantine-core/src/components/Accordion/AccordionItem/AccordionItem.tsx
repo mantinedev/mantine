@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, mergeStyles } from '@mantine/styles';
+import { UnstyledButton } from '../../Button/UnstyledButton/UnstyledButton';
+import { Center } from '../../Center/Center';
 import { ChevronIcon } from './ChevronIcon';
 import useStyles from './AccordionItem.styles';
 
@@ -65,7 +67,7 @@ export function AccordionItem({
       style={{ ..._styles.item, ...(opened ? _styles.itemOpened : null), ...style }}
       {...others}
     >
-      <button
+      <UnstyledButton
         className={classes.control}
         style={_styles.control}
         onClick={onToggle}
@@ -74,13 +76,14 @@ export function AccordionItem({
         aria-controls={`${id}-body`}
         id={id}
       >
+        <Center className={classes.icon} style={_styles.icon}>
+          <ChevronIcon />
+        </Center>
+
         <div className={classes.label} style={_styles.label}>
           {label}
         </div>
-        <div className={classes.icon} style={_styles.icon}>
-          <ChevronIcon />
-        </div>
-      </button>
+      </UnstyledButton>
 
       <div
         className={classes.content}
