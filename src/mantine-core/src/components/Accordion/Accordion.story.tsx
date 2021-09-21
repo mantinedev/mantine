@@ -40,6 +40,7 @@ storiesOf('@mantine/core/Accordion', module)
         <BaseDemo />
         <StyledAccordion style={{ marginTop: 60 }}>{baseDemoItems}</StyledAccordion>
         <IconsReplacementDemo style={{ marginTop: 60 }} />
+        <AccordionDemo style={{ marginTop: 60 }} />
       </div>
     </DarkStory>
   ));

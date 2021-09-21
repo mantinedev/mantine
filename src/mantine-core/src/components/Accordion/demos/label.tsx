@@ -1,7 +1,7 @@
 import React from 'react';
 import { Group, Avatar, Text } from '../../../index';
 import { LABELS_DATA } from './_mockdata';
-import { Accordion } from '../Accordion';
+import { Accordion, AccordionProps } from '../Accordion';
 
 const code = `
 import { Group, Avatar, Text, Accordion } from '../../../index';
@@ -55,14 +55,18 @@ function AccordionLabel({ label, image, description }: AccordionLabelProps) {
   );
 }
 
-export function AccordionDemo() {
+export function AccordionDemo(props: Partial<AccordionProps>) {
   const items = LABELS_DATA.map((item) => (
     <Accordion.Item label={<AccordionLabel {...item} />} key={item.label}>
       <Text size="sm">{item.content}</Text>
     </Accordion.Item>
   ));
 
-  return <Accordion initialItem={-1}>{items}</Accordion>;
+  return (
+    <Accordion initialItem={-1} {...props}>
+      {items}
+    </Accordion>
+  );
 }
 
 function Demo() {
