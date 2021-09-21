@@ -5,6 +5,7 @@ import { BaseDemo, baseDemoItems } from './demos/_base';
 import { DarkStory } from '../../../demos';
 import { IconReplaceDemo } from './demos/icon';
 import { IconsReplacementDemo } from './demos/icons';
+import { AccordionDemo } from './demos/label';
 
 storiesOf('@mantine/core/Accordion', module)
   .add('General usage', () => (
@@ -21,6 +22,11 @@ storiesOf('@mantine/core/Accordion', module)
     <div style={{ padding: 40, maxWidth: 540 }}>
       <IconReplaceDemo />
       <IconsReplacementDemo style={{ marginTop: 60 }} />
+    </div>
+  ))
+  .add('Custom labels', () => (
+    <div style={{ padding: 40, maxWidth: 540 }}>
+      <AccordionDemo />
     </div>
   ))
   .add('Styles API', () => (
