@@ -57,15 +57,12 @@ export default createStyles((theme, { transitionDuration }: AccordionItemStyles,
     content: {
       ...getFontStyles(theme),
       lineHeight: theme.lineHeight,
-      transition: `height ${transitionDuration}ms ease`,
-      overflow: 'hidden',
       paddingLeft: ICON_SIZE + theme.spacing.md,
     },
 
     contentInner: {
       padding: theme.spacing.md,
       paddingTop: theme.spacing.xs,
-      transition: `opacity ${transitionDuration}ms ease`,
     },
   };
 });

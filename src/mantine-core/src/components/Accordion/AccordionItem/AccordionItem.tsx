@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, mergeStyles } from '@mantine/styles';
+import { Collapse } from '../../Collapse/Collapse';
 import { UnstyledButton } from '../../Button/UnstyledButton/UnstyledButton';
 import { Center } from '../../Center/Center';
 import { ChevronIcon } from './ChevronIcon';
@@ -51,13 +52,9 @@ export function AccordionItem({
 }: AccordionItemProps) {
   const forceUpdate = useForceUpdate();
   const reduceMotion = useReducedMotion();
-  const { classes, cx } = useStyles(
-    { transitionDuration: reduceMotion ? 0 : transitionDuration },
-    classNames,
-    'accordion'
-  );
+  const duration = reduceMotion ? 0 : transitionDuration;
+  const { classes, cx } = useStyles({ transitionDuration: duration }, classNames, 'accordion');
   const _styles = mergeStyles(classes, styles);
-  const [rect, setRect] = useState<HTMLDivElement>(null);
 
   useWindowEvent('resize', () => forceUpdate());
 
@@ -85,24 +82,19 @@ export function AccordionItem({
         </div>
       </UnstyledButton>
 
-      <div
-        className={classes.content}
-        role="region"
-        id={`${id}-body`}
-        aria-labelledby={id}
-        style={{
-          ..._styles.content,
-          height: opened ? (!rect ? 'auto' : rect.getBoundingClientRect().height) : 0,
-        }}
-      >
+      <Collapse in={opened} transitionDuration={duration}>
         <div
-          className={classes.contentInner}
-          style={{ ..._styles.contentInner, opacity: opened ? 1 : 0 }}
-          ref={(node) => setRect(node)}
+          className={classes.content}
+          role="region"
+          id={`${id}-body`}
+          aria-labelledby={id}
+          style={_styles.content}
         >
-          {children}
+          <div className={classes.contentInner} style={_styles.contentInner}>
+            {children}
+          </div>
         </div>
-      </div>
+      </Collapse>
     </div>
   );
 }
