@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { MantineSize, DEFAULT_THEME } from '@mantine/styles';
 import { Group } from '../Group/Group';
-import { Button, UnstyledButton } from './Button';
+import { Button, UnstyledButton } from './index';
 
 const getThemes = (props?: any) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (

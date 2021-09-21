@@ -2,7 +2,10 @@ import React from 'react';
 import { DefaultProps } from '@mantine/styles';
 import useStyles from './UnstyledButton.styles';
 
-interface UnstyledButtonProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
+export interface UnstyledButtonProps
+  extends DefaultProps,
+    React.ComponentPropsWithoutRef<'button'> {
+  /** Get button ref */
   elementRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 

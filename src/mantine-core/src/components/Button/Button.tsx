@@ -13,18 +13,6 @@ import {
 import useStyles, { heights, ButtonVariant } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader/Loader';
 
-export { UnstyledButton } from './UnstyledButton/UnstyledButton';
-
-const LOADER_SIZES = {
-  xs: 12,
-  sm: 14,
-  md: 16,
-  lg: 18,
-  xl: 20,
-};
-
-export const BUTTON_SIZES = heights;
-
 export type ButtonStylesNames = Exclude<
   keyof ReturnType<typeof useStyles>['classes'],
   ButtonVariant | 'loading'
@@ -141,7 +129,7 @@ export function Button<
   const loader = (
     <Loader
       color={colors.color}
-      size={getSizeValue({ size, sizes: LOADER_SIZES })}
+      size={getSizeValue({ size, sizes: heights }) - 12}
       {...loaderProps}
     />
   );

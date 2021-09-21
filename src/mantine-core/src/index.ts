@@ -13,7 +13,7 @@ export { Badge, BADGE_SIZES, BADGE_VARIANTS } from './components/Badge/Badge';
 export { Blockquote } from './components/Blockquote/Blockquote';
 export { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
 export { Burger, BURGER_SIZES } from './components/Burger/Burger';
-export { Button, UnstyledButton, BUTTON_SIZES } from './components/Button/Button';
+export * from './components/Button';
 export { Card, CardSection } from './components/Card/Card';
 export { Center } from './components/Center/Center';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
@@ -94,7 +94,6 @@ export type {
   BreadcrumbsStylesNames,
 } from './components/Breadcrumbs/Breadcrumbs';
 export type { BurgerProps, BurgerStylesNames } from './components/Burger/Burger';
-export type { ButtonProps, ButtonStylesNames } from './components/Button/Button';
 export type { CardProps, CardSectionProps } from './components/Card/Card';
 export type { CenterProps } from './components/Center/Center';
 export type { CheckboxProps, CheckboxStylesNames } from './components/Checkbox/Checkbox';
