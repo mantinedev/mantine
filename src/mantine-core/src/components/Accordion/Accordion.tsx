@@ -5,18 +5,12 @@ import {
   AccordionItem,
   AccordionItemStylesNames,
   AccordionItemType,
-  PublicAccordionItemProps,
   AccordionIconPosition,
 } from './AccordionItem/AccordionItem';
 import { useAccordionState, AccordionState } from './use-accordion-state/use-accordion-state';
 
-export type AccordionStylesNames = AccordionItemStylesNames;
-export type AccordionItemProps = PublicAccordionItemProps;
-
-export { AccordionItem };
-
 export interface AccordionProps
-  extends DefaultProps<AccordionStylesNames>,
+  extends DefaultProps<AccordionItemStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** <AccordionItem /> components only */
   children: React.ReactNode;
