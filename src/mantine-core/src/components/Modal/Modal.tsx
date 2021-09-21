@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import {
   useReducedMotion,
   useId,
@@ -8,12 +7,13 @@ import {
   useFocusReturn,
 } from '@mantine/hooks';
 import {
-  DefaultProps,
   useMantineTheme,
   mergeStyles,
+  DefaultProps,
   MantineNumberSize,
   MantineShadow,
-} from '../../theme';
+} from '@mantine/styles';
+
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
@@ -25,7 +25,7 @@ import useStyles, { sizes } from './Modal.styles';
 
 export const MODAL_SIZES = sizes;
 
-export type ModalStylesNames = keyof ReturnType<typeof useStyles>;
+export type ModalStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface ModalProps
   extends DefaultProps<ModalStylesNames>,
@@ -83,7 +83,6 @@ export function MantineModal({
   className,
   style,
   opened,
-  themeOverride,
   title,
   onClose,
   children,
@@ -107,8 +106,8 @@ export function MantineModal({
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const reduceMotion = useReducedMotion();
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, overflow, theme }, classNames, 'modal');
+  const theme = useMantineTheme();
+  const { classes, cx } = useStyles({ size, overflow }, classNames, 'modal');
   const _styles = mergeStyles(classes, styles);
   const [modalBodyElement, setModalBodyElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap();
@@ -153,7 +152,6 @@ export function MantineModal({
               componentNodes={[modalBodyElement]}
             >
               <Paper<'div', HTMLDivElement>
-                themeOverride={themeOverride}
                 className={classes.modal}
                 shadow={shadow}
                 padding={padding}
@@ -167,22 +165,12 @@ export function MantineModal({
               >
                 {(title || !hideCloseButton) && (
                   <div className={classes.header} style={_styles.header}>
-                    <Text
-                      id={titleId}
-                      className={classes.title}
-                      style={_styles.title}
-                      themeOverride={themeOverride}
-                    >
+                    <Text id={titleId} className={classes.title} style={_styles.title}>
                       {title}
                     </Text>
 
                     {!hideCloseButton && (
-                      <CloseButton
-                        iconSize={16}
-                        onClick={onClose}
-                        aria-label={closeButtonLabel}
-                        themeOverride={themeOverride}
-                      />
+                      <CloseButton iconSize={16} onClick={onClose} aria-label={closeButtonLabel} />
                     )}
                   </div>
                 )}

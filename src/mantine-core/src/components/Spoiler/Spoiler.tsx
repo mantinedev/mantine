@@ -1,11 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
+import { mergeStyles, DefaultProps } from '@mantine/styles';
 import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
 
-export type SpoilerStylesNames = keyof ReturnType<typeof useStyles>;
+export type SpoilerStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface SpoilerProps
   extends DefaultProps<SpoilerStylesNames>,
@@ -36,7 +35,6 @@ export function Spoiler({
   maxHeight = 100,
   hideLabel,
   showLabel,
-  themeOverride,
   transitionDuration = 200,
   controlRef,
   initialState = false,
@@ -44,11 +42,8 @@ export function Spoiler({
   styles,
   ...others
 }: SpoilerProps) {
-  const classes = useStyles(
-    {
-      transitionDuration: !useReducedMotion() && transitionDuration,
-      theme: useMantineTheme(themeOverride),
-    },
+  const { classes, cx } = useStyles(
+    { transitionDuration: !useReducedMotion() && transitionDuration },
     classNames,
     'spoiler'
   );
@@ -80,7 +75,6 @@ export function Spoiler({
           variant="link"
           elementRef={controlRef}
           onClick={() => setShowState((opened) => !opened)}
-          themeOverride={themeOverride}
           className={classes.control}
           style={_styles.control}
         >

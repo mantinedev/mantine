@@ -1,6 +1,5 @@
 import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../theme';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
 import useStyles, { sizes } from './Container.styles';
 
 export const CONTAINER_SIZES = sizes;
@@ -16,15 +15,8 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
   fluid?: boolean;
 }
 
-export function Container({
-  className,
-  padding = 'md',
-  fluid,
-  size,
-  themeOverride,
-  ...others
-}: ContainerProps) {
-  const classes = useStyles({ padding, fluid, size, theme: useMantineTheme(themeOverride) });
+export function Container({ className, padding = 'md', fluid, size, ...others }: ContainerProps) {
+  const { classes, cx } = useStyles({ padding, fluid, size }, null, 'container');
   return <div className={cx(classes.container, className)} {...others} />;
 }
 

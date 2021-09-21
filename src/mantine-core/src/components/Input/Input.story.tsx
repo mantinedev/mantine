@@ -1,10 +1,9 @@
 import React from 'react';
 import { useBooleanToggle } from '@mantine/hooks';
 import { storiesOf } from '@storybook/react';
-import { createUseStyles } from 'react-jss';
+import { createStyles, MANTINE_SIZES } from '@mantine/styles';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import Textarea from 'react-textarea-autosize';
-import { DEFAULT_THEME, MANTINE_SIZES } from '../../theme';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
 
@@ -22,7 +21,7 @@ function ValidInvalid() {
   );
 }
 
-const useStyles = createUseStyles({
+const useStyles = createStyles({
   input: {
     border: '2px solid red',
 
@@ -33,7 +32,7 @@ const useStyles = createUseStyles({
 });
 
 function WithStyles() {
-  return <Input classNames={useStyles()} placeholder="red" />;
+  return <Input classNames={useStyles().classes} placeholder="red" />;
 }
 
 const actionIcon = (
@@ -118,25 +117,6 @@ storiesOf('@mantine/core/Input', module)
         inputStyle: { paddingTop: 9, paddingBottom: 9 },
       })}
     </>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      {getStates({
-        variant: 'default',
-        themeOverride: { colorScheme: 'dark' },
-        inputStyle: { paddingTop: 9, paddingBottom: 9 },
-      })}
-      {getStates({
-        variant: 'filled',
-        themeOverride: { colorScheme: 'dark' },
-        inputStyle: { paddingTop: 9, paddingBottom: 9 },
-      })}
-      {getStates({
-        variant: 'unstyled',
-        themeOverride: { colorScheme: 'dark' },
-        inputStyle: { paddingTop: 9, paddingBottom: 9 },
-      })}
-    </div>
   ))
   .add('Invalid toggle', () => <ValidInvalid />)
   .add('With classNames', () => <WithStyles />);

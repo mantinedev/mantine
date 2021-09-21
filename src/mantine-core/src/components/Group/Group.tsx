@@ -1,9 +1,8 @@
 import React, { Children } from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
+import { mergeStyles, DefaultProps, MantineNumberSize } from '@mantine/styles';
 import useStyles, { GroupPosition } from './Group.styles';
 
-export type GroupStylesNames = keyof ReturnType<typeof useStyles>;
+export type GroupStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface GroupProps
   extends DefaultProps<GroupStylesNames>,
@@ -43,16 +42,13 @@ export function Group({
   spacing = 'md',
   direction = 'row',
   withGutter = false,
-  themeOverride,
   classNames,
   styles,
   ...others
 }: GroupProps) {
   const count = Children.count(children);
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     {
-      theme,
       align,
       grow,
       noWrap,

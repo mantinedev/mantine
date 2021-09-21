@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MANTINE_SIZES } from '../../theme';
+import { MANTINE_SIZES } from '@mantine/styles';
 import { InputWrapper } from './InputWrapper';
 import { Text } from '../Text/Text';
 
@@ -61,20 +61,6 @@ storiesOf('@mantine/core/InputWrapper', module)
         label="ThisInputHasLabelThatIsSoLargeThatItWillOverflowAndBreakLayout"
         required
         id="input-wrapper-1"
-      >
-        <Text>Input is located here</Text>
-      </InputWrapper>
-    </div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <InputWrapper
-        label="Input label"
-        required
-        error="Validation error"
-        id="input-wrapper-1"
-        description="Provide additional information about input here, can be multiline. Dimmed and smaller compared to label."
-        themeOverride={{ colorScheme: 'dark' }}
       >
         <Text>Input is located here</Text>
       </InputWrapper>

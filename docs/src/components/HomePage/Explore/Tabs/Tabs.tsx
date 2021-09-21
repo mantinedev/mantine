@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { Text, Transition } from '@mantine/core';
 import { ExploreDataItem } from '../data';
 import useStyles from './Tabs.styles';
@@ -12,7 +11,8 @@ interface TabsProps {
 }
 
 export function Tabs({ data, active, onChange, className }: TabsProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
+
   const tabs = data.map((tab, index) => (
     <button
       className={cx(classes.tab, { [classes.active]: active === tab.id })}

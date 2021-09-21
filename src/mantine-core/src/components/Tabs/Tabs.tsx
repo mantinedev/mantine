@@ -1,13 +1,6 @@
 import React, { useRef } from 'react';
-import cx from 'clsx';
 import { useUncontrolled, clamp } from '@mantine/hooks';
-import {
-  DefaultProps,
-  useMantineTheme,
-  mergeStyles,
-  MantineNumberSize,
-  MantineColor,
-} from '../../theme';
+import { mergeStyles, DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
@@ -19,7 +12,7 @@ export type { TabProps };
 export const TABS_VARIANTS = ['default', 'outline', 'pills', 'unstyled'] as const;
 export type TabsVariant = typeof TABS_VARIANTS[number];
 export type TabsStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>
+  | Exclude<keyof ReturnType<typeof useStyles>['classes'], TabsVariant>
   | TabControlStylesNames;
 
 export interface TabsProps
@@ -91,7 +84,6 @@ export function Tabs({
   children,
   style,
   initialTab,
-  themeOverride,
   active,
   position = 'left',
   grow = false,
@@ -104,8 +96,7 @@ export function Tabs({
   orientation = 'horizontal',
   ...others
 }: TabsProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, tabPadding, orientation }, classNames, 'tabs');
+  const { classes, cx } = useStyles({ tabPadding, orientation }, classNames, 'tabs');
   const _styles = mergeStyles(classes, styles);
 
   const controlRefs = useRef<Record<string, HTMLButtonElement>>({});

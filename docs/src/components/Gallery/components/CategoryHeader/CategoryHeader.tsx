@@ -10,7 +10,7 @@ interface CategoryHeaderProps {
 }
 
 export function CategoryHeader({ category }: CategoryHeaderProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <div>
       <Anchor component={Link} to="/gallery/">

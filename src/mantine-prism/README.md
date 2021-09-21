@@ -9,7 +9,7 @@ under the hood and support light and dark theme.
 
 ## Installation
 
-Package depends on [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks), [@mantine/core](https://www.npmjs.com/package/@mantine/core), [react-jss](https://www.npmjs.com/package/react-jss) and [prism-react-renderer](https://www.npmjs.com/package/prism-react-renderer).
+Package depends on [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks), [@mantine/core](https://www.npmjs.com/package/@mantine/core) and [prism-react-renderer](https://www.npmjs.com/package/prism-react-renderer).
 
 Install with npm:
 

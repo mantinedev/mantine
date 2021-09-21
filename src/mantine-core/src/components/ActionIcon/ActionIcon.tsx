@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import {
   useMantineTheme,
   DefaultProps,
@@ -7,8 +6,9 @@ import {
   getSizeValue,
   getSharedColorScheme,
   MantineColor,
-} from '../../theme';
-import useStyles, { sizes } from './ActionIcon.styles';
+} from '@mantine/styles';
+
+import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader/Loader';
 
 export const ACTION_ICON_SIZES = sizes;
@@ -33,7 +33,7 @@ interface _ActionIconProps<C extends React.ElementType, R extends HTMLElement>
   children: React.ReactNode;
 
   /** Controls appearance */
-  variant?: 'transparent' | 'hover' | 'filled' | 'outline' | 'light';
+  variant?: ActionIconVariant;
 
   /** Button hover, active and icon colors from theme */
   color?: MantineColor;
@@ -69,19 +69,14 @@ export function ActionIcon<
   disabled = false,
   loaderProps,
   loading = false,
-  themeOverride,
   elementRef,
   component,
   ...others
 }: ActionIconProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, radius, color, theme }, null, 'action-icon');
+  const theme = useMantineTheme();
+  const { classes, cx } = useStyles({ size, radius, color, variant }, null, 'action-icon');
   const Element = component || 'button';
-  const colors = getSharedColorScheme({
-    color,
-    theme,
-    variant: 'light',
-  });
+  const colors = getSharedColorScheme({ color, theme, variant: 'light' });
 
   const loader = (
     <Loader

@@ -1,11 +1,11 @@
 import React from 'react';
-import cx from 'clsx';
-import { useMantineTheme, DefaultProps, mergeStyles, MantineSize } from '../../../theme';
+import { mergeStyles, DefaultProps, MantineSize } from '@mantine/styles';
+
 import { Text } from '../../Text/Text';
 import { SelectItem } from '../types';
 import useStyles from './SelectItems.styles';
 
-export type SelectItemsStylesNames = keyof ReturnType<typeof useStyles>;
+export type SelectItemsStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
   data: SelectItem[];
@@ -24,7 +24,6 @@ interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
 export function SelectItems({
   data,
   hovered,
-  themeOverride,
   classNames,
   styles,
   isItemSelected,
@@ -37,8 +36,7 @@ export function SelectItems({
   size,
   nothingFound,
 }: SelectItemsProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   const items = data.map((item, index) => {

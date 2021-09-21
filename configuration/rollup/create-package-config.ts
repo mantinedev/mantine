@@ -58,6 +58,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     ];
   } else {
     externals = [
+      '@emotion/server/create-instance',
       ...(config?.externals || []),
       ...Object.keys({
         ...packageJson.peerDependencies,
@@ -95,7 +96,6 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       react: 'React',
       dayjs: 'dayjs',
       'react-dom': 'ReactDOM',
-      'react-jss': 'reactJss',
     };
   }
 

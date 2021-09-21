@@ -1,5 +1,5 @@
 import React from 'react';
-import { getSizeValue } from '../../../theme';
+import { getSizeValue } from '@mantine/styles';
 import { SelectRightSection, SelectRightSectionProps } from './SelectRightSection';
 
 interface GetRightSectionProps extends SelectRightSectionProps {

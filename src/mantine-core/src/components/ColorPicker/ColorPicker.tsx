@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cx from 'clsx';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, mergeStyles, MantineSize, getSizeValue } from '../../theme';
+import { mergeStyles, DefaultProps, MantineSize, getSizeValue } from '@mantine/styles';
+
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { ColorSliderStylesNames } from './ColorSlider/ColorSlider';
@@ -17,7 +17,7 @@ export { HueSlider, AlphaSlider };
 export type { HueSliderProps, AlphaSliderProps };
 
 export type ColorPickerStylesNames =
-  | keyof ReturnType<typeof useStyles>
+  | keyof ReturnType<typeof useStyles>['classes']
   | ColorSliderStylesNames
   | SwatchesStylesNames
   | SaturationStylesNames
@@ -95,15 +95,13 @@ export function ColorPicker({
   saturationLabel,
   hueLabel,
   alphaLabel,
-  themeOverride,
   className,
   style,
   styles,
   classNames,
   ...others
 }: ColorPickerProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size, fullWidth }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size, fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const formatRef = useRef(format);
   const valueRef = useRef<string>(null);
@@ -154,7 +152,6 @@ export function ColorPicker({
             value={parsed}
             onChange={handleChange}
             color={_value}
-            themeOverride={themeOverride}
             styles={styles}
             classNames={classNames}
             size={size}
@@ -169,7 +166,6 @@ export function ColorPicker({
                 value={parsed.h}
                 onChange={(h) => handleChange({ h })}
                 size={size}
-                themeOverride={themeOverride}
                 styles={styles}
                 classNames={classNames}
                 focusable={focusable}
@@ -184,7 +180,6 @@ export function ColorPicker({
                   size={size}
                   color={convertHsvaTo('hex', parsed)}
                   style={{ marginTop: 6 }}
-                  themeOverride={themeOverride}
                   styles={styles}
                   classNames={classNames}
                   focusable={focusable}
@@ -198,7 +193,6 @@ export function ColorPicker({
               <ColorSwatch
                 color={_value}
                 radius="sm"
-                themeOverride={themeOverride}
                 size={getSizeValue({ size, sizes: SWATCH_SIZES })}
                 className={classes.preview}
                 style={_styles.preview}

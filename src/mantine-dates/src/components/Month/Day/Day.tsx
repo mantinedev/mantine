@@ -1,9 +1,8 @@
 import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '@mantine/core';
+import { DefaultProps, MantineSize, mergeStyles } from '@mantine/core';
 import useStyles from './Day.styles';
 
-export type DayStylesNames = keyof ReturnType<typeof useStyles>;
+export type DayStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface DayProps
   extends DefaultProps<DayStylesNames>,
@@ -38,7 +37,6 @@ export function Day({
   elementRef,
   onKeyDown,
   onMouseEnter,
-  themeOverride,
   classNames,
   disabled,
   styles,
@@ -52,8 +50,7 @@ export function Day({
   firstInMonth,
   ...others
 }: DayProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size, fullWidth }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size, fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return (

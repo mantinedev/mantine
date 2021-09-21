@@ -1,12 +1,12 @@
 import React from 'react';
-import cx from 'clsx';
 import {
   useMantineTheme,
+  mergeStyles,
   DefaultProps,
   MantineNumberSize,
-  mergeStyles,
   MantineColor,
-} from '../../theme';
+} from '@mantine/styles';
+
 import useStyles, { sizes } from './Divider.styles';
 import { Text } from '../Text/Text';
 
@@ -51,19 +51,17 @@ export function Divider({
   label,
   labelPosition = 'left',
   labelProps,
-  themeOverride,
   variant = 'solid',
   margins = 0,
   styles,
   classNames,
   ...others
 }: DividerProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     {
       color: _color,
-      theme,
       margins,
       size,
       variant,

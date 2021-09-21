@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../theme';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Text } from '../Text/Text';
 import { Paper } from './Paper';
 
@@ -37,10 +37,5 @@ storiesOf('@mantine/core/Paper', module)
   .add('Custom padding', () => (
     <div style={{ backgroundColor: DEFAULT_THEME.colors.gray[0], padding: 40 }}>
       {getShadows({ padding: 'lg' })}
-    </div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40 }}>
-      {getShadows({ themeOverride: { colorScheme: 'dark' } })}
     </div>
   ));

@@ -1,36 +1,40 @@
-import { createMemoStyles, MantineTheme, MantineNumberSize, getSizeValue } from '../../../theme';
+import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
 
 interface ListItemStyles {
-  theme: MantineTheme;
   spacing: MantineNumberSize;
   center: boolean;
 }
 
-export default createMemoStyles({
-  item: ({ theme, spacing, center }: ListItemStyles) => ({
-    lineHeight: center ? 1 : theme.lineHeight,
-
-    '&:not(:first-of-type)': {
-      marginTop: getSizeValue({ size: spacing, sizes: theme.spacing }),
-    },
-  }),
-
-  itemWrapper: {
+export default createStyles((theme, { spacing, center }: ListItemStyles, getRef) => {
+  const itemWrapper = {
+    ref: getRef('itemWrapper'),
     display: 'inline',
-  },
+  } as const;
 
-  withIcon: ({ center }: ListItemStyles) => ({
-    listStyle: 'none',
+  return {
+    itemWrapper,
 
-    '& $itemWrapper': {
-      display: 'inline-flex',
-      alignItems: center ? 'center' : 'flex-start',
+    item: {
+      lineHeight: center ? 1 : theme.lineHeight,
+
+      '&:not(:first-of-type)': {
+        marginTop: getSizeValue({ size: spacing, sizes: theme.spacing }),
+      },
     },
-  }),
 
-  itemIcon: ({ theme }) => ({
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    marginRight: theme.spacing.sm,
-  }),
+    withIcon: {
+      listStyle: 'none',
+
+      [`& .${itemWrapper.ref}`]: {
+        display: 'inline-flex',
+        alignItems: center ? 'center' : 'flex-start',
+      },
+    },
+
+    itemIcon: {
+      display: 'inline-block',
+      verticalAlign: 'middle',
+      marginRight: theme.spacing.sm,
+    },
+  };
 });

@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import cx from 'clsx';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineNumberSize,
-  mergeStyles,
-  MantineColor,
-} from '../../theme';
+import { DefaultProps, MantineNumberSize, MantineColor, mergeStyles } from '@mantine/styles';
 import { PlaceholderIcon } from './PlaceholderIcon';
 import useStyles, { sizes } from './Avatar.styles';
 import { AvatarsGroup, AvatarsGroupProps, AvatarsGroupStylesNames } from './AvatarsGroup/AvatarsGroup';
@@ -16,7 +9,7 @@ export type { AvatarsGroupProps, AvatarsGroupStylesNames };
 
 export const AVATAR_SIZES = sizes;
 
-export type AvatarStylesNames = keyof ReturnType<typeof useStyles>;
+export type AvatarStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 interface _AvatarProps<C extends React.ElementType, R extends HTMLElement>
   extends DefaultProps<AvatarStylesNames> {
@@ -60,14 +53,12 @@ export function Avatar<
   radius = 'sm',
   children,
   color = 'gray',
-  themeOverride,
   classNames,
   styles,
   elementRef,
   ...others
 }: AvatarProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, radius, size, theme }, classNames, 'avatar');
+  const { classes, cx } = useStyles({ color, radius, size }, classNames, 'avatar');
   const _styles = mergeStyles(classes, styles);
   const [error, setError] = useState(!src);
   const Element = component || 'div';

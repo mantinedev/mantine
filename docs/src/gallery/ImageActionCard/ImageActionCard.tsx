@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import {
   createStyles,
   Card,
@@ -64,7 +63,7 @@ export function ImageActionCard({
   ...others
 }: ImageActionCardProps &
   Omit<CardProps<'div', HTMLDivElement>, keyof ImageActionCardProps | 'children'>) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const theme = useMantineTheme();
 
   return (

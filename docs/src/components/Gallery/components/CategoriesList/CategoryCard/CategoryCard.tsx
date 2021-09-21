@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { Link } from 'gatsby';
 import { Card, CardSection, Text, Image, Overlay, useMantineTheme } from '@mantine/core';
 import images from './images';
@@ -14,7 +13,7 @@ export interface CategoryCardProps {
 }
 
 export function CategoryCard({ name, url, count, category, className }: CategoryCardProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const theme = useMantineTheme();
 
   return (

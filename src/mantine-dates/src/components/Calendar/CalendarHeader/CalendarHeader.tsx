@@ -42,7 +42,6 @@ interface CalendarHeaderProps extends DefaultProps {
 
 export function CalendarHeader({
   size,
-  themeOverride,
   nextMonthLabel,
   previousMonthLabel,
   previousMonthDisabled,
@@ -61,22 +60,16 @@ export function CalendarHeader({
   monthLabel,
   yearLabel,
 }: CalendarHeaderProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const iconSize = getSizeValue({ size, sizes: iconSizes });
   const iconButtonSize = getSizeValue({ size, sizes: DAY_SIZES });
 
   return (
-    <Group
-      position="apart"
-      noWrap
-      themeOverride={themeOverride}
-      style={{ marginBottom: theme.spacing.xs / 2 }}
-    >
+    <Group position="apart" noWrap style={{ marginBottom: theme.spacing.xs / 2 }}>
       <ActionIcon
         aria-label={previousMonthLabel}
         onClick={onPreviousMonth}
         disabled={previousMonthDisabled}
-        themeOverride={themeOverride}
         size={iconButtonSize}
         data-mantine-stop-propagation
       >
@@ -92,7 +85,6 @@ export function CalendarHeader({
         value={month}
         onChange={setMonth}
         labelFormat={labelFormat}
-        themeOverride={themeOverride}
         size={size}
         __staticSelector={__staticSelector}
         monthLabel={monthLabel}
@@ -103,7 +95,6 @@ export function CalendarHeader({
         aria-label={nextMonthLabel}
         onClick={onNextMonth}
         disabled={nextMonthDisabled}
-        themeOverride={themeOverride}
         size={iconButtonSize}
         data-mantine-stop-propagation
       >

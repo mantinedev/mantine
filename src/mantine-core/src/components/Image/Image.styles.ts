@@ -1,41 +1,34 @@
-import {
-  createMemoStyles,
-  MantineTheme,
-  MantineNumberSize,
-  getSizeValue,
-  getFontStyles,
-} from '../../theme';
+import { createStyles, MantineNumberSize, getSizeValue, getFontStyles } from '@mantine/styles';
 
 interface ImageStyles {
-  theme: MantineTheme;
   radius: MantineNumberSize;
 }
 
-export default createMemoStyles({
+export default createStyles((theme, { radius }: ImageStyles) => ({
   root: {
     position: 'relative',
     overflow: 'hidden',
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   },
 
   figure: {
     margin: 0,
   },
 
-  image: ({ theme, radius }: ImageStyles) => ({
+  image: {
     ...getFontStyles(theme),
     display: 'block',
     width: '100%',
     height: '100%',
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     border: 0,
-  }),
+  },
 
-  caption: ({ theme }: ImageStyles) => ({
+  caption: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
     marginTop: theme.spacing.xs / 2,
-  }),
+  },
 
-  placeholder: ({ theme, radius }: ImageStyles) => ({
+  placeholder: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -49,5 +42,5 @@ export default createMemoStyles({
     left: 0,
     right: 0,
     bottom: 0,
-  }),
-});
+  },
+}));

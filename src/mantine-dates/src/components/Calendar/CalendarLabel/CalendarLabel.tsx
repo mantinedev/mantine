@@ -1,19 +1,11 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import {
-  useMantineTheme,
-  DefaultProps,
-  mergeStyles,
-  NativeSelect,
-  Group,
-  Text,
-  MantineSize,
-} from '@mantine/core';
+import { DefaultProps, mergeStyles, NativeSelect, Group, Text, MantineSize } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import { getMonthsNames, getYearsRange } from '../../../utils';
 import useStyles from './CalendarLabel.styles';
 
-export type CalendarLabelStylesNames = keyof ReturnType<typeof useStyles>;
+export type CalendarLabelStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 interface CalendarLabelProps extends DefaultProps<CalendarLabelStylesNames> {
   locale: string;
@@ -35,7 +27,6 @@ export function CalendarLabel({
   withSelect,
   yearsRange,
   value,
-  themeOverride,
   labelFormat,
   onChange,
   size,
@@ -43,25 +34,17 @@ export function CalendarLabel({
   monthLabel,
   yearLabel,
 }: CalendarLabelProps) {
-  const theme = useMantineTheme(themeOverride);
   const selectSize = size === 'lg' || size === 'xl' ? 'md' : 'xs';
-  const classes = useStyles({ theme }, classNames, __staticSelector);
+  const { classes } = useStyles(null, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return withSelect ? (
-    <Group
-      spacing={5}
-      noWrap
-      themeOverride={themeOverride}
-      className={classes.selectGroup}
-      style={_styles.selectGroup}
-    >
+    <Group spacing={5} noWrap className={classes.selectGroup} style={_styles.selectGroup}>
       <NativeSelect
         aria-label={monthLabel}
         className={classes.select}
         style={_styles.select}
         size={selectSize}
-        themeOverride={themeOverride}
         value={value.getMonth()}
         onChange={(event) =>
           onChange(dayjs(value).set('month', parseInt(event.currentTarget.value, 10)).toDate())
@@ -77,7 +60,6 @@ export function CalendarLabel({
         className={classes.select}
         style={_styles.select}
         size={selectSize}
-        themeOverride={themeOverride}
         value={value.getFullYear()}
         onChange={(event) =>
           onChange(dayjs(value).set('year', parseInt(event.currentTarget.value, 10)).toDate())

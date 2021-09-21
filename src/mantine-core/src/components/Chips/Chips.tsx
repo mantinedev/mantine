@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { useUncontrolled, useId } from '@mantine/hooks';
+import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '../../theme';
 import { Chip, ChipProps, ChipStylesNames } from './Chip/Chip';
 
 export { Chip };
@@ -57,7 +57,6 @@ export function Chips<T extends boolean>({
   multiple,
   children,
   id,
-  themeOverride,
   classNames,
   styles,
   ...others
@@ -75,7 +74,6 @@ export function Chips<T extends boolean>({
     .filter((child: React.ReactElement) => child.type === Chip)
     .map((child: React.ReactElement, index) =>
       React.cloneElement(child, {
-        themeOverride,
         variant,
         radius,
         color,

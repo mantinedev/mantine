@@ -65,7 +65,7 @@ interface ImageCardProps {
 }
 
 export function ImageCard({ image, title, author, views, comments, link }: ImageCardProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <Card

@@ -1,6 +1,6 @@
 import React, { Children, cloneElement } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '../../theme';
+import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -50,7 +50,6 @@ export interface RadioGroupProps
 
 export function RadioGroup({
   className,
-  themeOverride,
   name,
   children,
   value,

@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, mergeStyles } from '../../../theme';
-import { UnstyledButton } from '../../Button/UnstyledButton/UnstyledButton';
+import { DefaultProps, mergeStyles } from '@mantine/styles';
 import { AccordionItemProps } from '../AccordionItem/AccordionItem';
 import { ChevronIcon } from './ChevronIcon';
 import useStyles from './AccordionControl.styles';
 
-export type AccordionControlStylesNames = keyof ReturnType<typeof useStyles>;
+export type AccordionControlStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 interface AccordionControlProps
   extends DefaultProps<AccordionControlStylesNames>,
@@ -26,17 +24,15 @@ export function AccordionControl({
   className,
   classNames,
   styles,
-  themeOverride,
   transitionDuration,
   style,
   id,
   ...others
 }: AccordionControlProps) {
   const forceUpdate = useForceUpdate();
-  const theme = useMantineTheme(themeOverride);
   const reduceMotion = useReducedMotion();
-  const classes = useStyles(
-    { theme, transitionDuration: reduceMotion ? 0 : transitionDuration },
+  const { classes, cx } = useStyles(
+    { transitionDuration: reduceMotion ? 0 : transitionDuration },
     classNames,
     'accordion'
   );
@@ -51,7 +47,7 @@ export function AccordionControl({
       style={{ ..._styles.item, ...(opened ? _styles.itemOpened : null), ...style }}
       {...others}
     >
-      <UnstyledButton
+      <button
         className={classes.control}
         style={_styles.control}
         onClick={onToggle}
@@ -66,7 +62,7 @@ export function AccordionControl({
         <div className={classes.icon} style={_styles.icon}>
           <ChevronIcon />
         </div>
-      </UnstyledButton>
+      </button>
 
       <div
         className={classes.content}

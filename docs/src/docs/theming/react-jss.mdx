@@ -26,27 +26,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function YourComponent() {
-  const classes = useStyles();
-  return <div className={classes.wrapper} />;
-}
-```
-
-## Theme as function value
-
-This way will work in all cases no matter if you use MantineProvider or not:
-
-```tsx
-import { createUseStyles } from 'react-jss';
-import { useMantineTheme } from '@mantine/core';
-
-const useStyles = createUseStyles({
-  wrapper: ({ theme }) => ({
-    background: theme.colors.gray[5],
-  }),
-});
-
-function YourComponent() {
-  const classes = useStyles({ theme: useMantineTheme() });
+  const classes = { useStyles }();
   return <div className={classes.wrapper} />;
 }
 ```

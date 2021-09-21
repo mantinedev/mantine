@@ -1,9 +1,9 @@
 import React from 'react';
 import { ImageIcon } from '@modulz/radix-icons';
+import { MANTINE_SIZES } from '@mantine/styles';
 import { ActionIcon, ActionIconProps } from '../ActionIcon';
 import { Group } from '../../Group/Group';
 import { Text } from '../../Text/Text';
-import { MANTINE_SIZES } from '../../../theme';
 
 const iconSizes = {
   xs: 12,

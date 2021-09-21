@@ -11,12 +11,12 @@ function Demo() {
 `;
 
 const code = `
-<Prism themeOverride={{ colorScheme: 'dark' }} language="tsx">{code}</Prism>
+<Prism colorScheme="dark" language="tsx">{code}</Prism>
 `;
 
 function Demo() {
   return (
-    <Prism language="tsx" themeOverride={{ colorScheme: 'dark' }}>
+    <Prism language="tsx" colorScheme="dark">
       {demoCode.trim()}
     </Prism>
   );

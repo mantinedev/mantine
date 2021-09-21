@@ -8,7 +8,9 @@ function Wrapper(props: Omit<DialogProps, 'opened' | 'onClosed'>) {
   return (
     <div style={{ padding: 40 }}>
       <Button onClick={() => setOpened((o) => !o)}>toggle</Button>
-      <Dialog {...props} opened={opened} onClose={() => setOpened(false)} withCloseButton />
+      <Dialog {...props} opened={opened} onClose={() => setOpened(false)} withCloseButton>
+        Hello there
+      </Dialog>
     </div>
   );
 }

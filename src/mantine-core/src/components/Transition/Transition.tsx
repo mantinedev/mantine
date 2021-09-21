@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '../../theme';
+import { DefaultProps } from '@mantine/styles';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { useTransition } from './use-transition';
 import { MantineTransition, transitions } from './transitions';
@@ -45,7 +45,6 @@ export function Transition({
   duration = 250,
   mounted,
   children,
-  themeOverride,
   timingFunction,
   onExit,
   onEntered,
@@ -55,7 +54,6 @@ export function Transition({
   const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
     mounted,
     duration,
-    themeOverride,
     timingFunction,
     onExit,
     onEntered,

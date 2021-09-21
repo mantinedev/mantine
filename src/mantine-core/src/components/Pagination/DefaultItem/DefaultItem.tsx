@@ -1,5 +1,4 @@
 import React from 'react';
-import { UnstyledButton } from '../../Button/Button';
 import { PrevIcon } from '../icons/PrevIcon';
 import { NextIcon } from '../icons/NextIcon';
 import { DotsIcon } from '../icons/DotsIcon';
@@ -21,9 +20,9 @@ export function DefaultItem({ page, active, onClick, ...others }: PaginationItem
   const children = Item ? <Item /> : page;
 
   return (
-    <UnstyledButton onClick={onClick} {...others}>
+    <button type="button" onClick={onClick} {...others}>
       {children}
-    </UnstyledButton>
+    </button>
   );
 }
 

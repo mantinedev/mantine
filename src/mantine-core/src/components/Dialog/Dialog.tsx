@@ -1,13 +1,12 @@
 import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../theme';
+import { mergeStyles, useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/styles';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Affix } from '../Affix/Affix';
 import { Paper, PaperProps } from '../Paper/Paper';
 import useStyles from './Dialog.styles';
 
-export type DialogStylesNames = keyof ReturnType<typeof useStyles>;
+export type DialogStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface DialogProps
   extends DefaultProps<DialogStylesNames>,
@@ -56,7 +55,6 @@ export function MantineDialog({
   padding = 'md',
   zIndex,
   children,
-  themeOverride,
   className,
   style,
   classNames,
@@ -69,8 +67,7 @@ export function MantineDialog({
   transitionTimingFunction,
   ...others
 }: DialogProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'dialog');
+  const { classes, cx } = useStyles({ size }, classNames, 'dialog');
   const _styles = mergeStyles(classes, styles);
 
   return (
@@ -86,14 +83,12 @@ export function MantineDialog({
           style={{ ...style, ..._styles.root, ...transitionStyles }}
           shadow={shadow}
           padding={padding}
-          themeOverride={themeOverride}
           withBorder={withBorder}
           {...others}
         >
           {withCloseButton && (
             <CloseButton
               onClick={onClose}
-              themeOverride={themeOverride}
               className={classes.closeButton}
               style={_styles.closeButton}
             />
@@ -106,7 +101,7 @@ export function MantineDialog({
 }
 
 export function Dialog(props: DialogProps) {
-  const theme = useMantineTheme(props.themeOverride);
+  const theme = useMantineTheme();
 
   return (
     <Affix

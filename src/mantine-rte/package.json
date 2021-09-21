@@ -1,7 +1,7 @@
 {
   "name": "@mantine/rte",
   "description": "Rich text editor built with Mantine components",
-  "version": "2.5.0-alpha.5",
+  "version": "2.6.0-alpha.0",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -15,15 +15,14 @@
     "directory": "src/mantine-rte"
   },
   "peerDependencies": {
-    "@mantine/core": "2.5.0-alpha.5",
-    "@mantine/hooks": "2.5.0-alpha.5",
+    "@mantine/core": "2.6.0-alpha.0",
+    "@mantine/hooks": "2.6.0-alpha.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
     "@modulz/radix-icons": "^4.0.0",
     "clsx": "^1.1.1",
-    "react-jss": "^10.7.1",
     "react-quill": "2.0.0-beta.4"
   },
   "devDependencies": {}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { CrumpledPaperIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME } from '../../theme';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { Avatar } from './Avatar';
 import { AvatarsGroup } from './AvatarsGroup/AvatarsGroup';
@@ -25,26 +25,6 @@ storiesOf('@mantine/core/Avatar', module)
   ))
   .add('Letter avatar', () => (
     <Group style={{ padding: 15 }}>{getThemes({ children: 'VR', radius: 500 })}</Group>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh' }}>
-      <Group style={{ padding: 15 }}>
-        {getThemes({
-          themeOverride: { colorScheme: 'dark' },
-          children: <CrumpledPaperIcon style={{ width: 24, height: 24 }} />,
-        })}
-      </Group>
-      <Group style={{ padding: 15 }}>
-        {getThemes({
-          themeOverride: { colorScheme: 'dark' },
-          children: 'VR',
-        })}
-      </Group>
-      <Group style={{ padding: 15 }}>{getSizes({ themeOverride: { colorScheme: 'dark' } })}</Group>
-      <Group style={{ padding: 15 }}>
-        {getSizes({ src: image, themeOverride: { colorScheme: 'dark' } })}
-      </Group>
-    </div>
   ))
   .add('AvatarsGroup', () => (
     <div style={{ padding: 40 }}>

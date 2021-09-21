@@ -1,6 +1,4 @@
 import React, { Children, cloneElement } from 'react';
-import cx from 'clsx';
-import { useMantineTheme } from '../../theme';
 import { Paper, SharedPaperProps } from '../Paper/Paper';
 import { CardSection, CardSectionProps } from './CardSection/CardSection';
 import useStyles from './Card.styles';
@@ -27,14 +25,12 @@ export type CardProps<
 export function Card<C extends React.ElementType = 'div', R extends HTMLElement = HTMLDivElement>({
   component,
   className,
-  themeOverride,
   padding = 'md',
   radius = 'sm',
   children,
   ...others
 }: CardProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, null, 'card');
+  const { classes, cx } = useStyles(null, null, 'card');
 
   const content = Children.map(children, (child) => {
     if (typeof child === 'object' && child && 'type' in child && child.type === CardSection) {

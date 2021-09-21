@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useMove, clampUseMovePosition, UseMovePosition } from '@mantine/hooks';
-import { DefaultProps, MantineSize, mergeStyles, useMantineTheme } from '../../../theme';
+import { mergeStyles, DefaultProps, MantineSize } from '@mantine/styles';
 import { HsvaColor } from '../types';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './Saturation.styles';
 import { convertHsvaTo } from '../converters';
 
 export type SaturationStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>, 'saturationOverlay' | 'saturationThumb'>
+  | Exclude<keyof ReturnType<typeof useStyles>['classes'], 'saturationOverlay' | 'saturationThumb'>
   | ThumbStylesNames;
 
 interface SaturationProps extends DefaultProps<SaturationStylesNames> {
@@ -28,12 +28,10 @@ export function Saturation({
   size,
   color,
   saturationLabel,
-  themeOverride,
   classNames,
   styles,
 }: SaturationProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, __staticSelector);
+  const { classes } = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ x: value.s / 100, y: 1 - value.v / 100 });
 
@@ -112,7 +110,6 @@ export function Saturation({
         __staticSelector={__staticSelector}
         classNames={classNames}
         styles={styles}
-        themeOverride={themeOverride}
         position={position}
         className={classes.saturationThumb}
         style={{ backgroundColor: color }}

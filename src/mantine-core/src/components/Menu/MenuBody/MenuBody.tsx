@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import cx from 'clsx';
 import { useFocusTrap } from '@mantine/hooks';
 import {
-  DefaultProps,
-  MantineNumberSize,
   mergeStyles,
   useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
   MantineShadow,
-} from '../../../theme';
+} from '@mantine/styles';
 import { MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import { Divider } from '../../Divider/Divider';
@@ -17,7 +16,9 @@ import { MenuLabel } from '../MenuLabel/MenuLabel';
 import { MenuButton, MenuButtonStylesNames } from '../MenuButton/MenuButton';
 import useStyles from './MenuBody.styles';
 
-export type MenuBodyStylesNames = keyof ReturnType<typeof useStyles> | MenuButtonStylesNames;
+export type MenuBodyStylesNames =
+  | keyof ReturnType<typeof useStyles>['classes']
+  | MenuButtonStylesNames;
 
 export interface MenuBodyProps
   extends DefaultProps<MenuBodyStylesNames>,
@@ -99,7 +100,6 @@ function getPreviousItem(active: number, items: MenuItemType[]) {
 export function MenuBody({
   className,
   style,
-  themeOverride,
   opened,
   onClose,
   children,
@@ -121,8 +121,8 @@ export function MenuBody({
 
   const hoveredTimeout = useRef<number>();
   const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, theme }, classNames, 'menu');
+  const theme = useMantineTheme();
+  const { classes, cx } = useStyles({ size }, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
   const [hovered, setHovered] = useState(-1);
   const focusTrapRef = useFocusTrap(trapFocus);

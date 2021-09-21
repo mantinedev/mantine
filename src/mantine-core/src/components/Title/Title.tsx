@@ -1,6 +1,5 @@
 import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps } from '@mantine/styles';
 import useStyles from './Title.styles';
 
 export interface TitleProps extends DefaultProps, React.ComponentPropsWithoutRef<'h1'> {
@@ -13,7 +12,6 @@ export interface TitleProps extends DefaultProps, React.ComponentPropsWithoutRef
 
 export function Title({
   className,
-  themeOverride,
   order = 1,
   children,
   align,
@@ -25,8 +23,7 @@ export function Title({
   }
 
   const element = `h${order}` as const;
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, element }, null, 'title');
+  const { classes, cx } = useStyles({ element }, null, 'title');
   const styles: React.CSSProperties = {};
 
   if (align) {

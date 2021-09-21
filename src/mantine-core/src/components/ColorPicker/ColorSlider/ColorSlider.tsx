@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import {
   useMove,
   clampUseMovePosition,
@@ -7,12 +6,12 @@ import {
   UseMovePosition,
   useMergedRef,
 } from '@mantine/hooks';
-import { DefaultProps, mergeStyles, useMantineTheme, MantineSize } from '../../../theme';
+import { mergeStyles, DefaultProps, MantineSize } from '@mantine/styles';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
 
 export type ColorSliderStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>, 'sliderThumb'>
+  | Exclude<keyof ReturnType<typeof useStyles>['classes'], 'sliderThumb'>
   | ThumbStylesNames;
 
 export interface BaseColorSliderProps
@@ -44,15 +43,13 @@ export function ColorSlider({
   focusable = true,
   elementRef,
   overlays,
-  themeOverride,
   classNames,
   styles,
   className,
   style,
   ...others
 }: ColorSliderProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [position, setPosition] = useState({ y: 0, x: value / maxValue });
   const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);
@@ -109,7 +106,6 @@ export function ColorSlider({
         __staticSelector={__staticSelector}
         classNames={classNames}
         styles={styles}
-        themeOverride={themeOverride}
         position={position}
         style={{ top: 1, backgroundColor: thumbColor }}
         className={classes.sliderThumb}

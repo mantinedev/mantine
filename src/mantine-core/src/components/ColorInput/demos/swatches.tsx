@@ -1,7 +1,6 @@
 import React from 'react';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { ColorInput } from '../ColorInput';
-
-import { DEFAULT_THEME } from '../../../theme';
 
 const code = `
 <ColorInput format="hex" swatches={[${Object.keys(DEFAULT_THEME.colors).map(

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import cx from 'clsx';
 import {
   useScrollLock,
   useMergedRef,
@@ -8,12 +7,12 @@ import {
   useFocusReturn,
 } from '@mantine/hooks';
 import {
-  DefaultProps,
   useMantineTheme,
-  MantineNumberSize,
   mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
   MantineShadow,
-} from '../../theme';
+} from '@mantine/styles';
 import { ClickOutsideProvider } from '../../utils';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
@@ -25,7 +24,7 @@ import useStyles, { Position, sizes } from './Drawer.styles';
 
 export const DRAWER_SIZES = sizes;
 
-export type DrawerStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'noOverlay'>;
+export type DrawerStylesNames = Exclude<keyof ReturnType<typeof useStyles>['classes'], 'noOverlay'>;
 
 export interface DrawerProps
   extends DefaultProps<DrawerStylesNames>,
@@ -103,7 +102,6 @@ export function MantineDrawer({
   style,
   opened,
   onClose,
-  themeOverride,
   position = 'left',
   size = 'md',
   noFocusTrap = false,
@@ -127,9 +125,9 @@ export function MantineDrawer({
   styles,
   ...others
 }: DrawerProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const duration = useReducedMotion() ? 1 : transitionDuration;
-  const classes = useStyles({ theme, size, position }, classNames, 'drawer');
+  const { classes, cx } = useStyles({ size, position }, classNames, 'drawer');
   const _styles = mergeStyles(classes, styles);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
   const [drawerBodyElement, setDrawerBodyElement] = useState<HTMLDivElement>(null);
@@ -201,25 +199,15 @@ export function MantineDrawer({
               }}
               shadow={shadow}
               padding={padding}
-              themeOverride={themeOverride}
             >
               {(title || !hideCloseButton) && (
                 <div className={classes.header} style={_styles.header}>
-                  <Text
-                    className={classes.title}
-                    style={_styles.title}
-                    themeOverride={themeOverride}
-                  >
+                  <Text className={classes.title} style={_styles.title}>
                     {title}
                   </Text>
 
                   {!hideCloseButton && (
-                    <CloseButton
-                      iconSize={16}
-                      onClick={onClose}
-                      aria-label={closeButtonLabel}
-                      themeOverride={themeOverride}
-                    />
+                    <CloseButton iconSize={16} onClick={onClose} aria-label={closeButtonLabel} />
                   )}
                 </div>
               )}

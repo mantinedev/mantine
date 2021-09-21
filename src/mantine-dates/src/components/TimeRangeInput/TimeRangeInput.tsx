@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
 import {
   InputBaseProps,
   InputWrapperBaseProps,
@@ -9,7 +8,6 @@ import {
   Input,
   InputWrapper,
   MantineSize,
-  useMantineTheme,
   mergeStyles,
 } from '@mantine/core';
 import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
@@ -20,7 +18,7 @@ import { getTimeValues } from '../TimeInput/get-time-values/get-time-value';
 import useStyles from './TimeRangeInput.styles';
 
 export type TimeRangeInputStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>, 'disabled'>
+  | Exclude<keyof ReturnType<typeof useStyles>['classes'], 'disabled'>
   | InputStylesNames
   | InputWrapperStylesNames;
 
@@ -73,7 +71,6 @@ export function TimeRangeInput({
   description,
   className,
   style,
-  themeOverride,
   size = 'sm',
   wrapperProps,
   classNames,
@@ -92,8 +89,7 @@ export function TimeRangeInput({
   disabled = false,
   ...others
 }: TimeRangeInputProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'time-range-input');
+  const { classes, cx } = useStyles({ size }, classNames, 'time-range-input');
   const _styles = mergeStyles(classes, styles);
   const uuid = useId(id);
   const fromDate = new Date();
@@ -177,7 +173,6 @@ export function TimeRangeInput({
       description={description}
       className={className}
       style={style}
-      themeOverride={themeOverride}
       classNames={classNames}
       styles={styles}
       size={size}
@@ -188,7 +183,6 @@ export function TimeRangeInput({
       <Input
         component="div"
         __staticSelector="time-range-input"
-        themeOverride={themeOverride}
         required={required}
         invalid={!!error}
         onClick={() => {

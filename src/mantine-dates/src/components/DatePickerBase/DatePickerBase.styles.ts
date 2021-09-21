@@ -1,33 +1,25 @@
-import {
-  createMemoStyles,
-  getFontStyles,
-  getSizeValue,
-  MantineTheme,
-  MantineSize,
-  INPUT_SIZES,
-} from '@mantine/core';
+import { createStyles, getFontStyles, getSizeValue, MantineSize, INPUT_SIZES } from '@mantine/core';
 
 interface DatePickerBaseStyles {
-  theme: MantineTheme;
   size: MantineSize;
   invalid: boolean;
 }
 
-export default createMemoStyles({
-  wrapper: ({ theme }: DatePickerBaseStyles) => ({
+export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => ({
+  wrapper: {
     ...getFontStyles(theme),
     position: 'relative',
     cursor: 'pointer',
-  }),
+  },
 
-  placeholder: ({ theme, size, invalid }: DatePickerBaseStyles) => ({
+  placeholder: {
     lineHeight: `${getSizeValue({ size, sizes: INPUT_SIZES }) - 2}px`,
     color: invalid
       ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[3]
       : theme.colors.gray[5],
-  }),
+  },
 
   dropdownWrapper: {
     position: 'relative',
@@ -39,7 +31,7 @@ export default createMemoStyles({
     whiteSpace: 'nowrap',
   },
 
-  dropdown: ({ theme }: DatePickerBaseStyles) => ({
+  dropdown: {
     position: 'absolute',
     left: 0,
     top: theme.spacing.xs,
@@ -65,5 +57,5 @@ export default createMemoStyles({
         theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
       }`,
     },
-  }),
-});
+  },
+}));

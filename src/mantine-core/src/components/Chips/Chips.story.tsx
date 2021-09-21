@@ -13,6 +13,13 @@ storiesOf('@mantine/core/Chips', module)
         </Chip>
         <Chip value="3">Third</Chip>
       </Chips>
+      <Chips variant="filled">
+        <Chip value="1">First</Chip>
+        <Chip value="2" disabled>
+          Second
+        </Chip>
+        <Chip value="3">Third</Chip>
+      </Chips>
     </div>
   ))
   .add('Chip', () => (

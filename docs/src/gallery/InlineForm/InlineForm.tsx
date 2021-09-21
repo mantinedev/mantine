@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { createStyles, Autocomplete, NumberInput, Button } from '@mantine/core';
 import dayjs from 'dayjs';
 import { DateRangePicker } from '@mantine/dates';
@@ -55,10 +54,9 @@ const useStyles = createStyles((theme) => ({
   },
 
   input: {
-    borderColor: [
-      [theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]],
-      '!important',
-    ],
+    borderColor: `${
+      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+    } !important`,
     height: 60,
     paddingLeft: theme.spacing.xl,
     fontSize: theme.fontSizes.md,
@@ -101,7 +99,7 @@ interface InlineFormProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 export function InlineForm({ labelClassName, ...props }: InlineFormProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
     <div {...props} className={cx(classes.wrapper, props.className)}>

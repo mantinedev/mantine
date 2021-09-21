@@ -1,13 +1,18 @@
 import {
-  createMemoStyles,
-  MantineTheme,
-  getSizeValue,
+  createStyles,
   MantineNumberSize,
+  MantineColor,
+  getSizeValue,
   getFontStyles,
   getSharedColorScheme,
   getFocusStyles,
-  MantineColor,
-} from '../../theme';
+} from '@mantine/styles';
+
+interface AvatarStyles {
+  size: MantineNumberSize;
+  radius: MantineNumberSize;
+  color: MantineColor;
+}
 
 export const sizes = {
   xs: 16,
@@ -17,15 +22,8 @@ export const sizes = {
   xl: 84,
 };
 
-interface AvatarStyles {
-  size: MantineNumberSize;
-  radius: MantineNumberSize;
-  theme: MantineTheme;
-  color: MantineColor;
-}
-
-export default createMemoStyles({
-  root: ({ size, radius, theme }: AvatarStyles) => ({
+export default createStyles((theme, { size, radius, color }: AvatarStyles) => ({
+  root: {
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     boxSizing: 'border-box',
@@ -35,7 +33,7 @@ export default createMemoStyles({
     width: getSizeValue({ size, sizes }),
     height: getSizeValue({ size, sizes }),
     borderRadius: radius ? getSizeValue({ size: radius, sizes: theme.radius }) : size,
-  }),
+  },
 
   image: {
     objectFit: 'cover',
@@ -44,27 +42,23 @@ export default createMemoStyles({
     display: 'block',
   },
 
-  placeholder: ({ theme, size, color }: AvatarStyles) => {
-    const colors = getSharedColorScheme({ theme, color, variant: 'light' });
-
-    return {
-      ...getFontStyles(theme),
-      fontSize: getSizeValue({ size, sizes }) / 2.5,
-      color: colors.color,
-      fontWeight: 700,
-      backgroundColor: colors.background,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '100%',
-      height: '100%',
-      userSelect: 'none',
-    };
+  placeholder: {
+    ...getFontStyles(theme),
+    fontSize: getSizeValue({ size, sizes }) / 2.5,
+    color: getSharedColorScheme({ theme, color, variant: 'light' }).color,
+    fontWeight: 700,
+    backgroundColor: getSharedColorScheme({ theme, color, variant: 'light' }).background,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    userSelect: 'none',
   },
 
-  placeholderIcon: ({ theme, color }: AvatarStyles) => ({
+  placeholderIcon: {
     width: '70%',
     height: '70%',
     color: getSharedColorScheme({ theme, color, variant: 'light' }).color,
-  }),
-});
+  },
+}));

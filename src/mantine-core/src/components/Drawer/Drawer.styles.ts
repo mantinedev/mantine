@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoStyles, MantineTheme, getSizeValue } from '../../theme';
+import { createStyles, getSizeValue } from '@mantine/styles';
 
 export const sizes = {
   xs: 180,
@@ -13,7 +13,6 @@ export const sizes = {
 export type Position = 'top' | 'bottom' | 'left' | 'right';
 
 interface DrawerStyles {
-  theme: MantineTheme;
   position: Position;
   size: number | string;
 }
@@ -43,39 +42,43 @@ function getPositionStyles({
   }
 }
 
-export default createMemoStyles({
-  noOverlay: {},
+export default createStyles((theme, { position, size }: DrawerStyles, getRef) => {
+  const noOverlay = { ref: getRef('noOverlay') } as const;
 
-  root: {
-    '&:not($noOverlay)': {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
+  return {
+    noOverlay,
+
+    root: {
+      [`&:not(.${noOverlay.ref})`]: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      },
     },
-  },
 
-  drawer: ({ size, position }: DrawerStyles) => ({
-    ...getPositionStyles({ position, size }),
-    maxWidth: '100%',
-    maxHeight: '100vh',
-    position: 'fixed',
-    outline: 0,
-  }),
+    drawer: {
+      ...getPositionStyles({ position, size }),
+      maxWidth: '100%',
+      maxHeight: '100vh',
+      position: 'fixed',
+      outline: 0,
+    },
 
-  title: ({ theme }: DrawerStyles) => ({
-    marginRight: theme.spacing.md,
-    textOverflow: 'ellipsis',
-    display: 'block',
-    wordBreak: 'break-word',
-  }),
+    title: {
+      marginRight: theme.spacing.md,
+      textOverflow: 'ellipsis',
+      display: 'block',
+      wordBreak: 'break-word',
+    },
 
-  header: ({ theme }: DrawerStyles) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: theme.spacing.md,
-    marginRight: -9,
-  }),
+    header: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: theme.spacing.md,
+      marginRight: -9,
+    },
+  };
 });

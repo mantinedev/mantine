@@ -23,7 +23,7 @@ function Demo() {
 
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <TimeRangeInput label="Appointment time" value={value} onChange={setValue} withSeconds />
+      <TimeRangeInput label="Appointment time" value={value} onChange={setValue} />
     </div>
   );
 }

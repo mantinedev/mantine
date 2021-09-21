@@ -57,7 +57,7 @@ export function CanvasHeader({
   zIndex,
   ...others
 }: CanvasHeaderProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const dependencies = attributes.dependencies.map((dependency) => {
     if (dependency.trim().startsWith('/')) {
       const { color, name } = getDependencyName(dependency.trim());

@@ -1,20 +1,16 @@
-/* eslint-disable react/button-has-type */
-// ^ this is fun – https://github.com/yannickcr/eslint-plugin-react/issues/1555
-
 import React from 'react';
-import cx from 'clsx';
 import {
   useMantineTheme,
+  mergeStyles,
   DefaultProps,
   MantineSize,
   MantineNumberSize,
-  mergeStyles,
   getSizeValue,
   getSharedColorScheme,
   MantineGradient,
   MantineColor,
-} from '../../theme';
-import useStyles, { heights } from './Button.styles';
+} from '@mantine/styles';
+import useStyles, { heights, ButtonVariant } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader/Loader';
 
 export { UnstyledButton } from './UnstyledButton/UnstyledButton';
@@ -28,10 +24,9 @@ const LOADER_SIZES = {
 };
 
 export const BUTTON_SIZES = heights;
-export const BUTTON_VARIANTS = ['link', 'filled', 'outline', 'light', 'white', 'gradient'] as const;
-export type ButtonVariant = typeof BUTTON_VARIANTS[number];
+
 export type ButtonStylesNames = Exclude<
-  keyof ReturnType<typeof useStyles>,
+  keyof ReturnType<typeof useStyles>['classes'],
   ButtonVariant | 'loading'
 >;
 
@@ -65,7 +60,7 @@ interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
   radius?: MantineNumberSize;
 
   /** Controls button appearance */
-  variant?: 'link' | 'filled' | 'outline' | 'light' | 'gradient' | 'white';
+  variant?: ButtonVariant;
 
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
@@ -109,7 +104,6 @@ export function Button<
   radius = 'sm',
   component,
   elementRef,
-  themeOverride,
   uppercase = false,
   compact = false,
   loading = false,
@@ -120,24 +114,24 @@ export function Button<
   styles,
   ...others
 }: ButtonProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const colors = getSharedColorScheme({
     color,
     theme,
     variant: variant === 'link' ? 'light' : variant,
   });
 
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     {
       radius,
       color,
       size,
       fullWidth,
-      theme,
       compact,
       gradientFrom: gradient.from,
       gradientTo: gradient.to,
       gradientDeg: gradient.deg,
+      variant,
     },
     classNames,
     'button'

@@ -9,7 +9,7 @@ interface InstallationProps {
 }
 
 export function Installation({ setDependencies }: InstallationProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [values, setValues] = useState({
     '@mantine/hooks': true,
     '@mantine/core': true,

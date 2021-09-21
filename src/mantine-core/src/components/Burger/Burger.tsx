@@ -1,18 +1,18 @@
 import React from 'react';
-import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
 import {
-  DefaultProps,
-  MantineNumberSize,
   useMantineTheme,
   mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
   MantineColor,
-} from '../../theme';
+} from '@mantine/styles';
+
 import useStyles, { sizes } from './Burger.styles';
 
 export const BURGER_SIZES = sizes;
 
-export type BurgerStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'opened'>;
+export type BurgerStylesNames = Exclude<keyof ReturnType<typeof useStyles>['classes'], 'opened'>;
 
 export interface BurgerProps
   extends DefaultProps<BurgerStylesNames>,
@@ -36,16 +36,15 @@ export function Burger({
   opened,
   color,
   size = 'md',
-  themeOverride,
   elementRef,
   classNames,
   styles,
   ...others
 }: BurgerProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
   const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
-  const classes = useStyles({ color: _color, size, theme, reduceMotion }, classNames, 'burger');
+  const { classes, cx } = useStyles({ color: _color, size, reduceMotion }, classNames, 'burger');
   const _styles = mergeStyles(classes, styles);
 
   return (

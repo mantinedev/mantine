@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
 import { AuthenticationForm } from '../../../demos';
-import { DEFAULT_THEME, MantineProvider } from '../../theme';
 import { Button } from '../Button/Button';
 import { Group } from '../Group/Group';
 import { LoadingOverlay } from './LoadingOverlay';
@@ -57,9 +57,4 @@ storiesOf('@mantine/core/LoadingOverlay', module)
     </MantineProvider>
   ))
   .add('Custom Overlay props', () => <LoadingOverlayDemo overlayOpacity={0.6} overlayColor="red" />)
-  .add('Custom loader', () => <LoadingOverlayDemo loader={customLoader} />)
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <LoadingOverlayDemo themeOverride={{ colorScheme: 'dark' }} />
-    </div>
-  ));
+  .add('Custom loader', () => <LoadingOverlayDemo loader={customLoader} />);

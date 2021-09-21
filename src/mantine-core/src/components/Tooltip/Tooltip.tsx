@@ -1,11 +1,10 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
 import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, mergeStyles, useMantineTheme, MantineColor } from '../../theme';
+import { mergeStyles, DefaultProps, MantineColor } from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 
-export type TooltipStylesNames = keyof ReturnType<typeof useStyles>;
+export type TooltipStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface TooltipProps
   extends DefaultProps<TooltipStylesNames>,
@@ -57,7 +56,6 @@ export interface TooltipProps
 export function Tooltip({
   className,
   style,
-  themeOverride,
   label,
   children,
   opened,
@@ -84,8 +82,7 @@ export function Tooltip({
   styles,
   ...others
 }: TooltipProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color }, classNames, 'tooltip');
+  const { classes, cx } = useStyles({ color }, classNames, 'tooltip');
   const _styles = mergeStyles(classes, styles);
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);

@@ -7,7 +7,6 @@ import {
   MoonIcon,
   ShuffleIcon,
   LightningBoltIcon,
-  MagicWandIcon,
 } from '@modulz/radix-icons';
 
 export default [
@@ -57,13 +56,6 @@ export default [
     title: 'TypeScript',
     description:
       'All @mantine/ scoped packages are built with TypeScript and support it by default',
-  },
-  {
-    icon: MagicWandIcon,
-    color: 'lime',
-    title: 'React JSS',
-    description:
-      'Take advantage of all react-jss features: automatic critical css extraction during ssr, lazy evaluation, dynamic theming, etc.',
   },
   {
     icon: FaceIcon,

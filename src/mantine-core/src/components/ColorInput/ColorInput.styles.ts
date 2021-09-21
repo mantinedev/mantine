@@ -1,19 +1,15 @@
-import { createMemoStyles, MantineTheme } from '../../theme';
+import { createStyles } from '@mantine/styles';
 
-interface ColorInputStyles {
-  theme: MantineTheme;
-}
-
-export default createMemoStyles({
-  arrow: ({ theme }: ColorInputStyles) => ({
+export default createStyles((theme) => ({
+  arrow: {
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-  }),
+  },
 
-  dropdownBody: ({ theme }: ColorInputStyles) => ({
+  dropdownBody: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
-  }),
-});
+  },
+}));

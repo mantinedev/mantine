@@ -1,8 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import cx from 'clsx';
 import {
   DefaultProps,
-  useMantineTheme,
   mergeStyles,
   Input,
   InputWrapper,
@@ -33,7 +31,7 @@ import { CalendarStylesNames } from '../Calendar/Calendar';
 import useStyles from './DatePickerBase.styles';
 
 export type DatePickerStylesNames =
-  | keyof ReturnType<typeof useStyles>
+  | keyof ReturnType<typeof useStyles>['classes']
   | CalendarStylesNames
   | InputStylesNames
   | InputWrapperStylesNames;
@@ -118,7 +116,6 @@ const RIGHT_SECTION_WIDTH = {
 };
 
 export function DatePickerBase({
-  themeOverride,
   classNames,
   className,
   style,
@@ -150,8 +147,7 @@ export function DatePickerBase({
   zIndex = 3,
   ...others
 }: DatePickerBaseProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size, invalid: !!error }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
@@ -183,7 +179,6 @@ export function DatePickerBase({
 
   const rightSection = clearable ? (
     <CloseButton
-      themeOverride={themeOverride}
       variant="transparent"
       aria-label={clearButtonLabel}
       onClick={onClear}
@@ -200,7 +195,6 @@ export function DatePickerBase({
       description={description}
       className={className}
       style={style}
-      themeOverride={themeOverride}
       classNames={classNames}
       styles={styles}
       size={size}
@@ -210,7 +204,6 @@ export function DatePickerBase({
       <div ref={setRootElement}>
         <div className={classes.wrapper} style={_styles.wrapper} ref={setReferenceElement}>
           <Input
-            themeOverride={themeOverride}
             component="button"
             type="button"
             classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}

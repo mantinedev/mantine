@@ -11,7 +11,7 @@ import useStyles from './MdxPageTabs.styles';
 
 export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
   const [query, setQuery] = useState('');
-  const classes = useStyles();
+  const { classes } = useStyles();
   const mobile = useMediaQuery('(max-width: 500px)');
   const hasProps = Array.isArray(frontmatter.props);
   const hasStyles = Array.isArray(frontmatter.styles);

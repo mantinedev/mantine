@@ -7,13 +7,7 @@ import {
   useUncontrolled,
   useReducedMotion,
 } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  mergeStyles,
-  useMantineTheme,
-  MantineShadow,
-} from '../../theme';
+import { mergeStyles, DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { useClickOutsideRegister } from '../../utils';
@@ -27,7 +21,7 @@ import useStyles from './Menu.styles';
 export { MenuBody, MenuItem, MenuLabel };
 export type { MenuBodyProps, MenuItemProps, MenuLabelProps };
 
-export type MenuStylesNames = keyof ReturnType<typeof useStyles> | MenuBodyStylesNames;
+export type MenuStylesNames = keyof ReturnType<typeof useStyles>['classes'] | MenuBodyStylesNames;
 
 export const MENU_SIZES = sizes;
 
@@ -105,7 +99,6 @@ export function Menu({
   onClose,
   onOpen,
   opened,
-  themeOverride,
   style,
   menuId,
   menuBodyProps = {},
@@ -135,8 +128,7 @@ export function Menu({
   onChange,
   ...others
 }: MenuProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'menu');
+  const { classes } = useStyles(null, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
   const controlRefFocusTimeout = useRef<number>();
   const delayTimeout = useRef<number>();
@@ -251,7 +243,6 @@ export function Menu({
           opened={_opened}
           onClose={handleClose}
           id={uuid}
-          themeOverride={themeOverride}
           closeOnItemClick={closeOnItemClick}
           size={size}
           shadow={shadow}

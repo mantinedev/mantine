@@ -31,7 +31,6 @@ export function DatePicker({
   value,
   onChange,
   defaultValue,
-  themeOverride,
   classNames,
   styles,
   shadow = 'sm',
@@ -116,7 +115,6 @@ export function DatePicker({
           classNames={classNames}
           styles={styles}
           locale={locale}
-          themeOverride={themeOverride}
           nextMonthLabel={nextMonthLabel}
           previousMonthLabel={previousMonthLabel}
           initialMonth={_value instanceof Date ? _value : initialMonth}

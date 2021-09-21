@@ -1,19 +1,18 @@
 import React from 'react';
-import cx from 'clsx';
 import { useId, useReducedMotion } from '@mantine/hooks';
 import {
+  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  mergeStyles,
-  useMantineTheme,
   MantineColor,
-} from '../../theme';
+} from '@mantine/styles';
+
 import useStyles, { sizes } from './Switch.styles';
 
 export const SWITCH_SIZES = sizes;
 
-export type SwitchStylesNames = keyof ReturnType<typeof useStyles>;
+export type SwitchStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface SwitchProps
   extends DefaultProps<SwitchStylesNames>,
@@ -48,7 +47,6 @@ export function Switch({
   style,
   size = 'sm',
   radius = 'xl',
-  themeOverride,
   wrapperProps,
   elementRef,
   children,
@@ -57,8 +55,7 @@ export function Switch({
   ...others
 }: SwitchProps) {
   const reduceMotion = useReducedMotion();
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, color, radius, reduceMotion, theme }, classNames, 'switch');
+  const { classes, cx } = useStyles({ size, color, radius, reduceMotion }, classNames, 'switch');
   const _styles = mergeStyles(classes, styles);
 
   const uuid = useId(id);

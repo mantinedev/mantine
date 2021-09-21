@@ -1,48 +1,44 @@
-import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 export const BREAKPOINT = '@media (max-width: 960px)';
 
-export default createUseStyles(
-  (theme) => ({
-    wrapper: {
-      position: 'relative',
-      paddingTop: 120,
-      paddingBottom: 120,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+export default createStyles((theme) => ({
+  wrapper: {
+    position: 'relative',
+    paddingTop: 120,
+    paddingBottom: 120,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+  },
+
+  inner: {
+    display: 'flex',
+
+    [BREAKPOINT]: {
+      flexDirection: 'column',
     },
+  },
 
-    inner: {
-      display: 'flex',
+  tabs: {
+    flex: '0 0 40%',
+    maxWidth: '40%',
 
-      [BREAKPOINT]: {
-        flexDirection: 'column',
-      },
+    [BREAKPOINT]: {
+      flex: 1,
+      maxWidth: '100%',
     },
+  },
 
-    tabs: {
-      flex: '0 0 40%',
-      maxWidth: '40%',
+  main: {
+    boxSizing: 'border-box',
+    paddingLeft: theme.spacing.xl * 1.5,
+    flex: '0 0 60%',
+    maxWidth: '60%',
+    paddingTop: theme.spacing.md,
 
-      [BREAKPOINT]: {
-        flex: 1,
-        maxWidth: '100%',
-      },
+    [BREAKPOINT]: {
+      flex: 1,
+      paddingLeft: 0,
+      maxWidth: '100%',
     },
-
-    main: {
-      boxSizing: 'border-box',
-      paddingLeft: theme.spacing.xl * 1.5,
-      flex: '0 0 60%',
-      maxWidth: '60%',
-      paddingTop: theme.spacing.md,
-
-      [BREAKPOINT]: {
-        flex: 1,
-        paddingLeft: 0,
-        maxWidth: '100%',
-      },
-    },
-  }),
-  { theming }
-);
+  },
+}));

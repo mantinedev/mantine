@@ -1,18 +1,17 @@
 import React from 'react';
-import cx from 'clsx';
 import {
-  DefaultProps,
   useMantineTheme,
-  MantineNumberSize,
   mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
   MantineSize,
-} from '../../theme';
+} from '@mantine/styles';
 import useStyles, { sizes } from './Input.styles';
 
 export const INPUT_VARIANTS = ['default', 'filled', 'unstyled', 'headless'] as const;
 export const INPUT_SIZES = sizes;
 export type InputVariant = typeof INPUT_VARIANTS[number];
-export type InputStylesNames = Exclude<keyof ReturnType<typeof useStyles>, InputVariant>;
+export type InputStylesNames = Exclude<keyof ReturnType<typeof useStyles>['classes'], InputVariant>;
 
 export interface InputBaseProps {
   /** Sets border color to red and aria-invalid=true on input element */
@@ -72,7 +71,6 @@ export function Input<
   rightSectionProps = {},
   radius = 'sm',
   size = 'sm',
-  themeOverride,
   wrapperProps,
   elementRef,
   classNames,
@@ -91,10 +89,10 @@ export function Input<
     /** Get element ref */
     elementRef?: React.ForwardedRef<U>;
   }) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
-  const classes = useStyles(
-    { radius, theme, size, multiline, variant: _variant, invalid, disabled },
+  const { classes, cx } = useStyles(
+    { radius, size, multiline, variant: _variant, invalid, disabled },
     classNames,
     __staticSelector
   );

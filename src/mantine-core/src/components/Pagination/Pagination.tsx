@@ -1,21 +1,20 @@
 import React from 'react';
-import cx from 'clsx';
 import { usePagination } from '@mantine/hooks';
-import { Group, GroupProps } from '../Group/Group';
 import {
-  DefaultProps,
   mergeStyles,
   useMantineTheme,
+  DefaultProps,
   MantineNumberSize,
   getSizeValue,
   MantineColor,
-} from '../../theme';
+} from '@mantine/styles';
+import { Group, GroupProps } from '../Group/Group';
 import useStyles from './Pagination.styles';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
 
 export type { PaginationItemProps } from './DefaultItem/DefaultItem';
 
-export type PaginationStylesNames = keyof ReturnType<typeof useStyles>;
+export type PaginationStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface PaginationProps
   extends DefaultProps<PaginationStylesNames>,
@@ -61,7 +60,6 @@ export function Pagination({
   itemComponent: Item = DefaultItem,
   classNames,
   styles,
-  themeOverride,
   page,
   initialPage = 1,
   color,
@@ -75,8 +73,8 @@ export function Pagination({
   spacing,
   ...others
 }: PaginationProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color, size, radius }, classNames, 'pagination');
+  const theme = useMantineTheme();
+  const { classes, cx } = useStyles({ color, size, radius }, classNames, 'pagination');
   const _styles = mergeStyles(classes, styles);
 
   const { range, setPage, next, previous, active } = usePagination({

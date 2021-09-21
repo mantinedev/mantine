@@ -1,12 +1,14 @@
 import React from 'react';
-import cx from 'clsx';
 import { useMergedRef, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineColor } from '../../../theme';
+import { mergeStyles, DefaultProps, MantineColor } from '@mantine/styles';
 import { TabProps } from '../Tab/Tab';
 import type { TabsVariant } from '../Tabs';
 import useStyles from './TabControl.styles';
 
-export type TabControlStylesNames = Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>;
+export type TabControlStylesNames = Exclude<
+  keyof ReturnType<typeof useStyles>['classes'],
+  TabsVariant
+>;
 
 export interface TabControlProps
   extends DefaultProps<TabControlStylesNames>,
@@ -23,7 +25,6 @@ export interface TabControlProps
 export function TabControl({
   className,
   style,
-  themeOverride,
   active,
   elementRef,
   tabProps,
@@ -36,10 +37,9 @@ export function TabControl({
   ...others
 }: TabControlProps) {
   const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
-  const theme = useMantineTheme(themeOverride);
   const reduceMotion = useReducedMotion();
-  const classes = useStyles(
-    { reduceMotion, color: overrideColor || color, theme, orientation },
+  const { classes, cx } = useStyles(
+    { reduceMotion, color: overrideColor || color, orientation },
     classNames,
     'tabs'
   );

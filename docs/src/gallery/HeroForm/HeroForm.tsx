@@ -76,7 +76,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function HeroForm() {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <div className={classes.wrapper}>

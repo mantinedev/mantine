@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MANTINE_SIZES } from '../../theme';
+import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
 import { ColorInput } from './ColorInput';
 
 const sizes = MANTINE_SIZES.map((size) => (

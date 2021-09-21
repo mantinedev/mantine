@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme } from '../../../theme';
+import { useMantineTheme } from '@mantine/styles';
 import { Slider } from '../Slider/Slider';
 
 const code = `

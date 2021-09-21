@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider, DEFAULT_THEME } from '../../theme';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
 import { SegmentedControl } from './SegmentedControl';
 
 const data = [
@@ -10,12 +10,7 @@ const data = [
   { label: 'Very long label', value: 'svelte' },
 ];
 
-const simpleData = [
-  'React',
-  'Angular',
-  'Vue',
-  'Very',
-];
+const simpleData = ['React', 'Angular', 'Vue', 'Very'];
 
 function Wrapper(
   props: Omit<

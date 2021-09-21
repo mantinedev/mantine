@@ -1,5 +1,5 @@
+import { MantineTheme } from '@mantine/styles';
 import { getColumnWidth } from './Col';
-import { MantineTheme } from '../../theme';
 
 export interface GetResponsiveStyles {
   uuid: string;

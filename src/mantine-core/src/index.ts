@@ -1,6 +1,5 @@
-export * from './theme';
+export * from '@mantine/styles';
 export * from './utils';
-export * from './ssr';
 
 export { Accordion, AccordionItem } from './components/Accordion/Accordion';
 export { ActionIcon, ACTION_ICON_SIZES } from './components/ActionIcon/ActionIcon';
@@ -14,7 +13,7 @@ export { Badge, BADGE_SIZES, BADGE_VARIANTS } from './components/Badge/Badge';
 export { Blockquote } from './components/Blockquote/Blockquote';
 export { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
 export { Burger, BURGER_SIZES } from './components/Burger/Burger';
-export { Button, UnstyledButton, BUTTON_SIZES, BUTTON_VARIANTS } from './components/Button/Button';
+export { Button, UnstyledButton, BUTTON_SIZES } from './components/Button/Button';
 export { Card, CardSection } from './components/Card/Card';
 export { Center } from './components/Center/Center';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';

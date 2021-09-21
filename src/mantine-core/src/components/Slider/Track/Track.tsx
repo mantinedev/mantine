@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  DefaultProps,
-  useMantineTheme,
-  mergeStyles,
-  MantineNumberSize,
-  MantineColor,
-} from '../../../theme';
+import { mergeStyles, DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { Marks, MarksStylesNames } from '../Marks/Marks';
 import useStyles from './Track.styles';
 
-export type TrackStylesNames = keyof ReturnType<typeof useStyles> | MarksStylesNames;
+export type TrackStylesNames = keyof ReturnType<typeof useStyles>['classes'] | MarksStylesNames;
 
 interface TrackProps extends DefaultProps<TrackStylesNames> {
   filled: number;
@@ -32,13 +26,11 @@ export function Track({
   classNames,
   styles,
   radius,
-  themeOverride,
   children,
   offset,
   ...others
 }: TrackProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color, size, radius }, classNames, 'slider');
+  const { classes } = useStyles({ color, size, radius }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
 
   return (
@@ -55,7 +47,6 @@ export function Track({
         size={size}
         color={color}
         offset={offset}
-        themeOverride={themeOverride}
         classNames={classNames}
         styles={styles}
       />

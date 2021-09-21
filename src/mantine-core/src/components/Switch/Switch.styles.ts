@@ -1,6 +1,5 @@
 import {
-  createMemoStyles,
-  MantineTheme,
+  createStyles,
   MantineNumberSize,
   getFontStyles,
   getThemeColor,
@@ -8,14 +7,13 @@ import {
   getSizeValue,
   MantineSize,
   MantineColor,
-} from '../../theme';
+} from '@mantine/styles';
 
 interface SwitchStyles {
   reduceMotion: boolean;
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
-  theme: MantineTheme;
 }
 
 const switchHeight = {
@@ -47,17 +45,17 @@ export const sizes = Object.keys(switchHeight).reduce((acc, size) => {
   return acc;
 }, {} as Record<MantineSize, { width: number; height: number }>);
 
-export default createMemoStyles({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-  },
+export default createStyles((theme, { size, radius, reduceMotion, color }: SwitchStyles) => {
+  const handleSize = getSizeValue({ size, sizes: handleSizes });
+  const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
 
-  input: ({ size, radius, theme, reduceMotion, color }: SwitchStyles) => {
-    const handleSize = getSizeValue({ size, sizes: handleSizes });
-    const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
+  return {
+    root: {
+      display: 'flex',
+      alignItems: 'center',
+    },
 
-    return {
+    input: {
       ...getFocusStyles(theme),
       WebkitTapHighlightColor: 'transparent',
       position: 'relative',
@@ -116,15 +114,15 @@ export default createMemoStyles({
             theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[0],
         },
       },
-    };
-  },
+    },
 
-  label: ({ theme, size }: SwitchStyles) => ({
-    ...getFontStyles(theme),
-    WebkitTapHighlightColor: 'transparent',
-    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
-    fontFamily: theme.fontFamily,
-    paddingLeft: theme.spacing.sm,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-  }),
+    label: {
+      ...getFontStyles(theme),
+      WebkitTapHighlightColor: 'transparent',
+      fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+      fontFamily: theme.fontFamily,
+      paddingLeft: theme.spacing.sm,
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    },
+  };
 });

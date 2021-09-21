@@ -1,7 +1,7 @@
 {
   "name": "@mantine/dates",
   "description": "Calendars, date and time pickers based on Mantine components",
-  "version": "2.5.0-alpha.5",
+  "version": "2.6.0-alpha.0",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -9,15 +9,14 @@
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "homepage": "https://mantine.dev/dates/getting-started/",
   "peerDependencies": {
-    "@mantine/core": "2.5.0-alpha.5",
-    "@mantine/hooks": "2.5.0-alpha.5",
+    "@mantine/core": "2.6.0-alpha.0",
+    "@mantine/hooks": "2.6.0-alpha.0",
     "dayjs": "^1.10.5",
     "react": ">=16.8.0"
   },
   "dependencies": {
     "clsx": "^1.1.1",
     "@popperjs/core": "^2.9.3",
-    "react-jss": "^10.7.1",
     "react-popper": "^2.2.5"
   },
   "devDependencies": {}

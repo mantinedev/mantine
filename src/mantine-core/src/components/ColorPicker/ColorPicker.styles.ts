@@ -1,7 +1,6 @@
-import { createMemoStyles, getSizeValue, MantineSize, MantineTheme } from '../../theme';
+import { createStyles, getSizeValue, MantineSize } from '@mantine/styles';
 
 interface ColorPickerStyles {
-  theme: MantineTheme;
   size: MantineSize;
   fullWidth: boolean;
 }
@@ -14,29 +13,29 @@ export const sizes = {
   xl: 320,
 };
 
-export default createMemoStyles({
+export default createStyles((theme, { size, fullWidth }: ColorPickerStyles) => ({
   preview: {},
 
-  root: ({ size, fullWidth }: ColorPickerStyles) => ({
+  root: {
     boxSizing: 'border-box',
     width: fullWidth ? '100%' : getSizeValue({ size, sizes }),
     padding: 1,
-  }),
+  },
 
-  body: ({ theme, size }: ColorPickerStyles) => ({
+  body: {
     display: 'flex',
     boxSizing: 'border-box',
     paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
-  }),
+  },
 
-  sliders: ({ theme }: ColorPickerStyles) => ({
+  sliders: {
     flex: 1,
     boxSizing: 'border-box',
 
     '&:not(:only-child)': {
       marginRight: theme.spacing.xs,
     },
-  }),
+  },
 
   slider: {
     boxSizing: 'border-box',
@@ -49,4 +48,4 @@ export default createMemoStyles({
   swatch: {
     cursor: 'pointer',
   },
-});
+}));

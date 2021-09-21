@@ -6,6 +6,6 @@ interface DocsSectionProps {
 }
 
 export default function DocsSection({ children }: DocsSectionProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return <div className={classes.wrapper}>{children}</div>;
 }
