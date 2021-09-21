@@ -22,7 +22,7 @@ function AccordionLabel({ label, image, description }) {
 
 function Demo() {
   return (
-    <Accordion initialItem={-1}>
+    <Accordion initialItem={-1} iconPosition="right">
       <Accordion.Item label={<AccordionLabel image="./avatar.png" label="Bender Bending Rodríguez" description="..." />}>
         <Text size="sm">{item.content}</Text>
       </Accordion.Item>
@@ -63,7 +63,7 @@ export function AccordionDemo(props: Partial<AccordionProps>) {
   ));
 
   return (
-    <Accordion initialItem={-1} {...props}>
+    <Accordion initialItem={-1} iconPosition="right" {...props}>
       {items}
     </Accordion>
   );

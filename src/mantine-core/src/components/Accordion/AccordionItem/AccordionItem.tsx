@@ -5,8 +5,9 @@ import { Collapse } from '../../Collapse/Collapse';
 import { UnstyledButton } from '../../Button/UnstyledButton/UnstyledButton';
 import { Center } from '../../Center/Center';
 import { ChevronIcon } from './ChevronIcon';
-import useStyles from './AccordionItem.styles';
+import useStyles, { AccordionIconPosition } from './AccordionItem.styles';
 
+export type { AccordionIconPosition };
 export type AccordionItemStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface PublicAccordionItemProps extends React.ComponentPropsWithoutRef<'div'> {
@@ -15,6 +16,7 @@ export interface PublicAccordionItemProps extends React.ComponentPropsWithoutRef
   children?: React.ReactNode;
   elementRef?: React.ForwardedRef<HTMLButtonElement>;
   disableIconRotation?: boolean;
+  iconPosition?: AccordionIconPosition;
 }
 
 export interface AccordionItemType {
@@ -42,6 +44,7 @@ export function AccordionItem({
   transitionDuration,
   icon = <ChevronIcon />,
   disableIconRotation = false,
+  iconPosition = 'left',
   style,
   id,
   ...others
@@ -50,7 +53,7 @@ export function AccordionItem({
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
   const { classes, cx } = useStyles(
-    { transitionDuration: duration, disableIconRotation },
+    { transitionDuration: duration, disableIconRotation, iconPosition },
     classNames,
     'accordion'
   );

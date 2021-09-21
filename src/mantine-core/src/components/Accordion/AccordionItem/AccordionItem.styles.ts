@@ -1,14 +1,21 @@
 import { createStyles, getFocusStyles, getFontStyles } from '@mantine/styles';
 
+export type AccordionIconPosition = 'right' | 'left';
+
 interface AccordionItemStyles {
   transitionDuration: number;
   disableIconRotation: boolean;
+  iconPosition: AccordionIconPosition;
 }
 
 const ICON_SIZE = 24;
 
 export default createStyles(
-  (theme, { transitionDuration, disableIconRotation }: AccordionItemStyles, getRef) => {
+  (
+    theme,
+    { transitionDuration, disableIconRotation, iconPosition }: AccordionItemStyles,
+    getRef
+  ) => {
     const icon = {
       ref: getRef('icon'),
       transition: `transform ${transitionDuration}ms ease`,
@@ -25,6 +32,7 @@ export default createStyles(
       label: {
         color: 'inherit',
         fontWeight: 500,
+        flex: 1,
       },
 
       item: {
@@ -46,7 +54,9 @@ export default createStyles(
         width: '100%',
         display: 'flex',
         alignItems: 'center',
+        flexDirection: iconPosition === 'right' ? 'row-reverse' : 'row',
         padding: `${theme.spacing.sm}px ${theme.spacing.md / 2}px`,
+        paddingLeft: iconPosition === 'right' ? theme.spacing.sm + 4 : null,
         fontWeight: 500,
         textAlign: 'left',
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
@@ -60,7 +70,7 @@ export default createStyles(
       content: {
         ...getFontStyles(theme),
         lineHeight: theme.lineHeight,
-        paddingLeft: ICON_SIZE + theme.spacing.xs / 2,
+        paddingLeft: iconPosition === 'right' ? 0 : ICON_SIZE + theme.spacing.xs / 2,
       },
 
       contentInner: {

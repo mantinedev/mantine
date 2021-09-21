@@ -6,6 +6,7 @@ import {
   AccordionItemStylesNames,
   AccordionItemType,
   PublicAccordionItemProps,
+  AccordionIconPosition,
 } from './AccordionItem/AccordionItem';
 
 export type AccordionStylesNames = AccordionItemStylesNames;
@@ -45,6 +46,9 @@ export interface AccordionProps
 
   /** Should icon rotation be disabled */
   disableIconRotation?: boolean;
+
+  /** Change icon position: left or right */
+  iconPosition?: AccordionIconPosition;
 }
 
 export function Accordion({
@@ -56,6 +60,7 @@ export function Accordion({
   multiple = false,
   disableIconRotation = false,
   transitionDuration = 200,
+  iconPosition = 'left',
   icon,
   classNames,
   styles,
@@ -99,6 +104,7 @@ export function Accordion({
     <AccordionItem
       {...item.props}
       icon={item.props.icon || icon}
+      iconPosition={item.props.iconPosition || iconPosition}
       disableIconRotation={disableIconRotation}
       key={index}
       transitionDuration={transitionDuration}

@@ -18,6 +18,11 @@ storiesOf('@mantine/core/Accordion', module)
       <BaseDemo multiple />
     </div>
   ))
+  .add('Icon on the right', () => (
+    <div style={{ padding: 40, maxWidth: 540 }}>
+      <BaseDemo iconPosition="right" />
+    </div>
+  ))
   .add('Replace icon', () => (
     <div style={{ padding: 40, maxWidth: 540 }}>
       <IconReplaceDemo />
