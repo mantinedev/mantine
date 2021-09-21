@@ -3,6 +3,7 @@ export * from './utils';
 
 export * from './components/Accordion';
 export * from './components/ActionIcon';
+export * from './components/Center';
 
 export { Affix } from './components/Affix/Affix';
 export { Alert } from './components/Alert/Alert';
@@ -15,7 +16,6 @@ export { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
 export { Burger, BURGER_SIZES } from './components/Burger/Burger';
 export * from './components/Button';
 export { Card, CardSection } from './components/Card/Card';
-export { Center } from './components/Center/Center';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
 export { Chips, Chip } from './components/Chips/Chips';
 export { Code } from './components/Code/Code';
@@ -95,7 +95,6 @@ export type {
 } from './components/Breadcrumbs/Breadcrumbs';
 export type { BurgerProps, BurgerStylesNames } from './components/Burger/Burger';
 export type { CardProps, CardSectionProps } from './components/Card/Card';
-export type { CenterProps } from './components/Center/Center';
 export type { CheckboxProps, CheckboxStylesNames } from './components/Checkbox/Checkbox';
 export type {
   ChipProps,

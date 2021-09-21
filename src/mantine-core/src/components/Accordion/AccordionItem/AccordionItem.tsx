@@ -3,7 +3,7 @@ import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks
 import { DefaultProps, mergeStyles } from '@mantine/styles';
 import { Collapse } from '../../Collapse';
 import { UnstyledButton } from '../../Button';
-import { Center } from '../../Center/Center';
+import { Center } from '../../Center';
 import { ChevronIcon } from './ChevronIcon';
 import useStyles, { AccordionIconPosition } from './AccordionItem.styles';
 
