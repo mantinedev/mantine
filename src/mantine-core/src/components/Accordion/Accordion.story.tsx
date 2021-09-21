@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
 import { Accordion } from './Accordion';
+import { DarkStory } from '../../../demos';
 
 const base = (
   <Accordion>
@@ -23,9 +23,7 @@ const base = (
 storiesOf('@mantine/core/Accordion', module)
   .add('General usage', () => <div style={{ padding: 40, maxWidth: 540 }}>{base}</div>)
   .add('Dark theme', () => (
-    <div style={{ height: '100vh', backgroundColor: DEFAULT_THEME.colors.dark[7] }}>
-      <MantineProvider theme={{ colorScheme: 'dark' }}>
-        <div style={{ padding: 40, maxWidth: 540 }}>{base}</div>
-      </MantineProvider>
-    </div>
+    <DarkStory>
+      <div style={{ padding: 40, maxWidth: 540 }}>{base}</div>
+    </DarkStory>
   ));
