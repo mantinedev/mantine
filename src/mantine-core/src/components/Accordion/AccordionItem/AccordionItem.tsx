@@ -10,17 +10,11 @@ import useStyles from './AccordionItem.styles';
 export type AccordionItemStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface PublicAccordionItemProps extends React.ComponentPropsWithoutRef<'div'> {
-  /** Accordion.Item control label */
   label?: React.ReactNode;
-
-  /** Chevron icon */
   icon?: React.ReactNode;
-
-  /** Accordion.Item content */
   children?: React.ReactNode;
-
-  /** Get item control ref */
   elementRef?: React.ForwardedRef<HTMLButtonElement>;
+  disableIconRotation?: boolean;
 }
 
 export interface AccordionItemType {
@@ -47,6 +41,7 @@ export function AccordionItem({
   styles,
   transitionDuration,
   icon = <ChevronIcon />,
+  disableIconRotation = false,
   style,
   id,
   ...others
@@ -54,7 +49,11 @@ export function AccordionItem({
   const forceUpdate = useForceUpdate();
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
-  const { classes, cx } = useStyles({ transitionDuration: duration }, classNames, 'accordion');
+  const { classes, cx } = useStyles(
+    { transitionDuration: duration, disableIconRotation },
+    classNames,
+    'accordion'
+  );
   const _styles = mergeStyles(classes, styles);
 
   useWindowEvent('resize', () => forceUpdate());

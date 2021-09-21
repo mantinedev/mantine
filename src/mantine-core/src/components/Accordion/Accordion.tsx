@@ -42,6 +42,9 @@ export interface AccordionProps
 
   /** Replace icon on all items */
   icon?: React.ReactNode;
+
+  /** Should icon rotation be disabled */
+  disableIconRotation?: boolean;
 }
 
 export function Accordion({
@@ -51,6 +54,7 @@ export function Accordion({
   state,
   onChange,
   multiple = false,
+  disableIconRotation = false,
   transitionDuration = 200,
   icon,
   classNames,
@@ -95,6 +99,7 @@ export function Accordion({
     <AccordionItem
       {...item.props}
       icon={item.props.icon || icon}
+      disableIconRotation={disableIconRotation}
       key={index}
       transitionDuration={transitionDuration}
       opened={value[index]}

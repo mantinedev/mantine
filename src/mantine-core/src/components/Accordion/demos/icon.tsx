@@ -3,13 +3,13 @@ import { PlusCircledIcon } from '@modulz/radix-icons';
 import { BaseDemo } from './_base';
 
 const code = `
-<Accordion icon={<PlusCircledIcon />}>
+<Accordion icon={<PlusCircledIcon />} disableIconRotation>
   {/* <Accordion.Item /> components */}
 </Accordion>
 `;
 
 export function IconReplaceDemo() {
-  return <BaseDemo icon={<PlusCircledIcon />} />;
+  return <BaseDemo disableIconRotation icon={<PlusCircledIcon />} />;
 }
 
 function Demo() {
