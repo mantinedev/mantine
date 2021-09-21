@@ -1,10 +1,10 @@
 import { createStyles, getFocusStyles, getFontStyles } from '@mantine/styles';
 
-interface AccordionControlStyles {
+interface AccordionItemStyles {
   transitionDuration: number;
 }
 
-export default createStyles((theme, { transitionDuration }: AccordionControlStyles, getRef) => {
+export default createStyles((theme, { transitionDuration }: AccordionItemStyles, getRef) => {
   const icon = {
     ref: getRef('icon'),
     transition: `transform ${transitionDuration}ms ease`,

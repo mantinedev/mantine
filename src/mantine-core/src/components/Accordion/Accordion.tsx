@@ -3,15 +3,15 @@ import { useUncontrolled, useId } from '@mantine/hooks';
 import { DefaultProps } from '@mantine/styles';
 import {
   AccordionItem,
+  AccordionItemStylesNames,
   AccordionItemType,
-  AccordionItemProps,
+  PublicAccordionItemProps,
 } from './AccordionItem/AccordionItem';
-import { AccordionControl, AccordionControlStylesNames } from './AccordionControl/AccordionControl';
 
-export type { AccordionItemProps };
+export type AccordionStylesNames = AccordionItemStylesNames;
+export type AccordionItemProps = PublicAccordionItemProps;
+
 export { AccordionItem };
-
-export type AccordionStylesNames = AccordionControlStylesNames;
 
 export interface AccordionProps
   extends DefaultProps<AccordionStylesNames>,
@@ -88,7 +88,7 @@ export function Accordion({
   };
 
   const controls = items.map((item, index) => (
-    <AccordionControl
+    <AccordionItem
       {...item.props}
       key={index}
       transitionDuration={transitionDuration}
