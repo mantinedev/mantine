@@ -10,16 +10,6 @@ import {
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader/Loader';
 
-export const ACTION_ICON_SIZES = sizes;
-
-const LOADER_SIZES = {
-  xs: 12,
-  sm: 14,
-  md: 16,
-  lg: 18,
-  xl: 20,
-};
-
 interface _ActionIconProps<C extends React.ElementType, R extends HTMLElement>
   extends DefaultProps {
   /** Root element or custom component */
@@ -78,11 +68,7 @@ export function ActionIcon<
   const colors = getSharedColorScheme({ color, theme, variant: 'light' });
 
   const loader = (
-    <Loader
-      color={colors.color}
-      size={getSizeValue({ size, sizes: LOADER_SIZES })}
-      {...loaderProps}
-    />
+    <Loader color={colors.color} size={getSizeValue({ size, sizes }) - 12} {...loaderProps} />
   );
 
   return (

@@ -31,7 +31,7 @@ storiesOf('@mantine/core/ActionIcon', module)
   ))
   .add('Loading', () => (
     <>
-      <Group>{getThemes({ loading: true })}</Group>
+      <Group>{getThemes({ loading: true, size: 44 })}</Group>
       <Group>{getThemes({ loading: true, variant: 'filled' })}</Group>
       <Group>{getThemes({ loading: true, variant: 'transparent' })}</Group>
     </>

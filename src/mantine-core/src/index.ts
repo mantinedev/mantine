@@ -2,9 +2,9 @@ export * from '@mantine/styles';
 export * from './utils';
 
 export * from './components/Accordion';
-export { ActionIcon, ACTION_ICON_SIZES } from './components/ActionIcon/ActionIcon';
+export * from './components/ActionIcon';
+
 export { Affix } from './components/Affix/Affix';
-export { CloseButton } from './components/ActionIcon/CloseButton/CloseButton';
 export { Alert } from './components/Alert/Alert';
 export { Anchor } from './components/Anchor/Anchor';
 export { Autocomplete } from './components/Autocomplete/Autocomplete';
@@ -78,9 +78,7 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { ActionIconProps } from './components/ActionIcon/ActionIcon';
 export type { AffixProps } from './components/Affix/Affix';
-export type { CloseButtonProps } from './components/ActionIcon/CloseButton/CloseButton';
 export type { AlertProps, AlertStylesName } from './components/Alert/Alert';
 export type { AnchorProps } from './components/Anchor/Anchor';
 export type {
