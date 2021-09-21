@@ -48,7 +48,7 @@ export interface AccordionProps
 
 export function Accordion({
   children,
-  initialItem = 0,
+  initialItem = -1,
   initialState,
   state,
   onChange,
