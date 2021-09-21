@@ -1,10 +1,9 @@
 import React from 'react';
-import cx from 'clsx';
 import { Avatar } from '@mantine/core';
-import { DefaultProps, MantineNumberSize, useMantineTheme, mergeStyles } from '../../../theme';
+import { DefaultProps, MantineNumberSize, mergeStyles } from '@mantine/styles';
 import useStyles from './AvatarsGroup.styles';
 
-export type AvatarsGroupStylesNames = keyof ReturnType<typeof useStyles>;
+export type AvatarsGroupStylesNames = keyof ReturnType<typeof useStyles>['classes'];
 
 export interface AvatarsGroupProps extends
   DefaultProps<AvatarsGroupStylesNames>,
@@ -32,14 +31,12 @@ export function AvatarsGroup({
   size = 'md',
   radius = 'xl',
   limit = 2,
-  themeOverride,
   classNames,
   styles,
   spacing = 'sm',
   ...others
 }: AvatarsGroupProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, spacing, size }, classNames, 'avatars-group');
+  const { classes, cx } = useStyles({ spacing, size }, classNames, 'avatars-group');
   const _styles = mergeStyles(classes, styles);
   const avatars = React.Children
     .toArray(children).filter((child: React.ReactElement) => child.type === Avatar)
@@ -51,7 +48,6 @@ export function AvatarsGroup({
       return React.cloneElement(child, {
         size,
         radius,
-        themeOverride,
         key: index,
         className: cx(classes.child, child.props.className),
         style: { ...childStyle, ..._styles.child },
