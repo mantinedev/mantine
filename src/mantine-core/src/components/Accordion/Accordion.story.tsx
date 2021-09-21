@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { StyledAccordion } from './demos/stylesApi';
 import { BaseDemo, baseDemoItems } from './demos/_base';
 import { DarkStory } from '../../../demos';
+import { IconReplaceDemo } from './demos/icon';
 
 storiesOf('@mantine/core/Accordion', module)
   .add('General usage', () => (
@@ -13,6 +14,11 @@ storiesOf('@mantine/core/Accordion', module)
   .add('Multiple selected items', () => (
     <div style={{ padding: 40, maxWidth: 540 }}>
       <BaseDemo multiple />
+    </div>
+  ))
+  .add('Replace icon', () => (
+    <div style={{ padding: 40, maxWidth: 540 }}>
+      <IconReplaceDemo />
     </div>
   ))
   .add('Styles API', () => (

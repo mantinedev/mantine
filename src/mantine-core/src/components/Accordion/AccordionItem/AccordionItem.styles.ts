@@ -10,7 +10,7 @@ export default createStyles((theme, { transitionDuration }: AccordionItemStyles,
   const icon = {
     ref: getRef('icon'),
     transition: `transform ${transitionDuration}ms ease`,
-    marginRight: theme.spacing.md,
+    marginRight: theme.spacing.sm,
     width: ICON_SIZE,
     minWidth: ICON_SIZE,
     height: ICON_SIZE,
@@ -44,7 +44,7 @@ export default createStyles((theme, { transitionDuration }: AccordionItemStyles,
       width: '100%',
       display: 'flex',
       alignItems: 'center',
-      padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+      padding: `${theme.spacing.sm}px ${theme.spacing.md / 2}px`,
       fontWeight: 500,
       textAlign: 'left',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
@@ -57,12 +57,12 @@ export default createStyles((theme, { transitionDuration }: AccordionItemStyles,
     content: {
       ...getFontStyles(theme),
       lineHeight: theme.lineHeight,
-      paddingLeft: ICON_SIZE + theme.spacing.md,
+      paddingLeft: ICON_SIZE + theme.spacing.sm / 2,
     },
 
     contentInner: {
       padding: theme.spacing.md,
-      paddingTop: theme.spacing.xs,
+      paddingTop: theme.spacing.xs / 2,
     },
   };
 });

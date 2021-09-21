@@ -13,7 +13,7 @@ export interface PublicAccordionItemProps extends React.ComponentPropsWithoutRef
   /** Accordion.Item control label */
   label?: React.ReactNode;
 
-  /** Icon on the left side of label */
+  /** Chevron icon */
   icon?: React.ReactNode;
 
   /** Accordion.Item content */
@@ -46,6 +46,7 @@ export function AccordionItem({
   classNames,
   styles,
   transitionDuration,
+  icon = <ChevronIcon />,
   style,
   id,
   ...others
@@ -74,7 +75,7 @@ export function AccordionItem({
         id={id}
       >
         <Center className={classes.icon} style={_styles.icon}>
-          <ChevronIcon />
+          {icon}
         </Center>
 
         <div className={classes.label} style={_styles.label}>

@@ -39,6 +39,9 @@ export interface AccordionProps
 
   /** Used to connect accordion items controls to related content */
   id?: string;
+
+  /** Replace icon on all items */
+  icon?: React.ReactNode;
 }
 
 export function Accordion({
@@ -49,6 +52,7 @@ export function Accordion({
   onChange,
   multiple = false,
   transitionDuration = 200,
+  icon,
   classNames,
   styles,
   id,
@@ -90,6 +94,7 @@ export function Accordion({
   const controls = items.map((item, index) => (
     <AccordionItem
       {...item.props}
+      icon={item.props.icon || icon}
       key={index}
       transitionDuration={transitionDuration}
       opened={value[index]}
