@@ -9,7 +9,7 @@ const code = `
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
+    <div style={{ maxWidth: 540, marginLeft: 'auto', marginRight: 'auto' }}>
       <BaseDemo multiple />
     </div>
   );
