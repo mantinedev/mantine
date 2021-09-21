@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUncontrolled, useId } from '@mantine/hooks';
+import { useId } from '@mantine/hooks';
 import { DefaultProps } from '@mantine/styles';
 import {
   AccordionItem,
@@ -8,6 +8,7 @@ import {
   PublicAccordionItemProps,
   AccordionIconPosition,
 } from './AccordionItem/AccordionItem';
+import { useAccordionState, AccordionState } from './use-accordion-state/use-accordion-state';
 
 export type AccordionStylesNames = AccordionItemStylesNames;
 export type AccordionItemProps = PublicAccordionItemProps;
@@ -24,13 +25,13 @@ export interface AccordionProps
   initialItem?: number;
 
   /** Initial state (controls opened state of accordion items) for uncontrolled component */
-  initialState?: Record<string, boolean>;
+  initialState?: AccordionState;
 
   /** Controlled state (controls opened state of accordion items) */
-  state?: Record<string, boolean>;
+  state?: AccordionState;
 
   /** onChange handler for controlled component */
-  onChange?(state: Record<string, boolean>): void;
+  onChange?(state: AccordionState): void;
 
   /** Allow multiple items to be opened at the same time */
   multiple?: boolean;
@@ -72,33 +73,14 @@ export function Accordion({
     (item: AccordionItemType) => item.type === AccordionItem
   ) as AccordionItemType[];
 
-  const _initialState =
-    initialState ||
-    (items.reduce((acc, item, index) => {
-      acc[index] = index === initialItem;
-      return acc;
-    }, {}) as Record<string, boolean>);
-
-  const [value, setValue] = useUncontrolled({
-    value: state,
-    defaultValue: _initialState,
-    finalValue: {} as Record<string, boolean>,
+  const [value, onToggle] = useAccordionState({
+    multiple,
+    items,
+    initialItem,
+    state,
+    initialState,
     onChange,
-    rule: (val) => val !== null && typeof val === 'object',
   });
-
-  const handleItemToggle = (index: number) => {
-    if (multiple) {
-      setValue({ ...value, [index]: !value[index] });
-    } else {
-      const newValues = items.reduce((acc, item, itemIndex) => {
-        acc[itemIndex] = false;
-        return acc;
-      }, {}) as Record<string, boolean>;
-      newValues[index] = !value[index];
-      setValue(newValues);
-    }
-  };
 
   const controls = items.map((item, index) => (
     <AccordionItem
@@ -109,7 +91,7 @@ export function Accordion({
       key={index}
       transitionDuration={transitionDuration}
       opened={value[index]}
-      onToggle={() => handleItemToggle(index)}
+      onToggle={() => onToggle(index)}
       classNames={classNames}
       styles={styles}
       id={`${uuid}-${index}`}
