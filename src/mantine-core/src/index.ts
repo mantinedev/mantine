@@ -19,7 +19,7 @@ export { Center } from './components/Center/Center';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
 export { Chips, Chip } from './components/Chips/Chips';
 export { Code } from './components/Code/Code';
-export { Collapse } from './components/Collapse/Collapse';
+export * from './components/Collapse';
 export { ColorInput } from './components/ColorInput/ColorInput';
 export { ColorPicker, AlphaSlider, HueSlider } from './components/ColorPicker/ColorPicker';
 export { ColorSwatch } from './components/ColorSwatch/ColorSwatch';
