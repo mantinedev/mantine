@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { Accordion } from './Accordion';
 
 storiesOf('@mantine/core/Accordion', module).add('General usage', () => (
-  <div style={{ padding: 40 }}>
+  <div style={{ padding: 40, maxWidth: 600 }}>
     <Accordion>
       <Accordion.Item label="Customization">
         Colors, fonts, shadows and many other parts are customizable to fit your design needs

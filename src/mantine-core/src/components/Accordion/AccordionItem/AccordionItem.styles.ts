@@ -55,6 +55,8 @@ export default createStyles((theme, { transitionDuration }: AccordionItemStyles,
     },
 
     content: {
+      ...getFontStyles(theme),
+      lineHeight: theme.lineHeight,
       transition: `height ${transitionDuration}ms ease`,
       overflow: 'hidden',
     },
