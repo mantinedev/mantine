@@ -40,7 +40,7 @@ export default createStyles((theme) => ({
     display: 'block',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
     borderLeft: '1px solid transparent',
-    padding: [8, theme.spacing.md],
+    padding: `8px ${theme.spacing.md}px`,
     marginLeft: -1,
   },
 
@@ -59,18 +59,5 @@ export default createStyles((theme) => ({
 
   title: {
     marginLeft: theme.spacing.md,
-  },
-
-  shortcut: {
-    marginTop: theme.spacing.xs,
-  },
-
-  shortcutLabel: {
-    display: 'inline',
-    marginLeft: theme.spacing.xs,
-  },
-
-  shortcuts: {
-    marginTop: theme.spacing.xl * 2,
   },
 }));
