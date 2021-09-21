@@ -1,4 +1,4 @@
-export { useAccordionState } from './use-accordion-state/use-accordion-state';
+export { useAccordionState, createAccordionState } from './use-accordion-state/use-accordion-state';
 
 export { Accordion } from './Accordion';
 export { AccordionItem } from './AccordionItem/AccordionItem';

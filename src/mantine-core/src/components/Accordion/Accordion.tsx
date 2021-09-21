@@ -15,7 +15,7 @@ export interface AccordionProps
   /** <AccordionItem /> components only */
   children: React.ReactNode;
 
-  /** Index of item which is initially opened */
+  /** Index of item which is initially opened (uncontrolled component) */
   initialItem?: number;
 
   /** Initial state (controls opened state of accordion items) for uncontrolled component */

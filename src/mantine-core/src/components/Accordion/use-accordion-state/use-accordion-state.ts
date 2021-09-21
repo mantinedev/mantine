@@ -1,5 +1,12 @@
 import { useUncontrolled } from '@mantine/hooks';
 
+export function createAccordionState(length: number, initialItem = -1) {
+  return Array.from({ length }).reduce((acc, _item, index) => {
+    acc[index] = index === initialItem;
+    return acc;
+  }, {}) as AccordionState;
+}
+
 export type AccordionState = Record<string, boolean>;
 
 interface UseAccordionState {
@@ -19,12 +26,7 @@ export function useAccordionState({
   onChange,
   multiple,
 }: UseAccordionState) {
-  const _initialState =
-    initialState ||
-    (items.reduce((acc, _item, index) => {
-      acc[index] = index === initialItem;
-      return acc;
-    }, {}) as AccordionState);
+  const _initialState = initialState || createAccordionState(items.length, initialItem);
 
   const [value, setValue] = useUncontrolled({
     value: state,
