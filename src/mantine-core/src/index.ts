@@ -21,8 +21,8 @@ export * from './components/Chips';
 export * from './components/Code';
 export * from './components/Collapse';
 export * from './components/ColorInput';
+export * from './components/ColorPicker';
 
-export { ColorPicker, AlphaSlider, HueSlider } from './components/ColorPicker/ColorPicker';
 export { ColorSwatch } from './components/ColorSwatch/ColorSwatch';
 export { Container, CONTAINER_SIZES } from './components/Container/Container';
 export { Dialog } from './components/Dialog/Dialog';
@@ -78,11 +78,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type {
-  AlphaSliderProps,
-  HueSliderProps,
-  ColorPickerProps,
-} from './components/ColorPicker/ColorPicker';
 export type { ColorSwatchProps } from './components/ColorSwatch/ColorSwatch';
 export type { ContainerProps } from './components/Container/Container';
 export type { DialogProps, DialogStylesNames } from './components/Dialog/Dialog';
