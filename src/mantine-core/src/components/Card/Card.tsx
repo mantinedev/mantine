@@ -1,10 +1,7 @@
 import React, { Children, cloneElement } from 'react';
 import { Paper, SharedPaperProps } from '../Paper/Paper';
-import { CardSection, CardSectionProps } from './CardSection/CardSection';
+import { CardSection } from './CardSection/CardSection';
 import useStyles from './Card.styles';
-
-export { CardSection };
-export type { CardSectionProps };
 
 interface _CardProps<C extends React.ElementType, R extends HTMLElement> extends SharedPaperProps {
   /** Root element or custom component */

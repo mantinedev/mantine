@@ -13,11 +13,11 @@ export * from './components/Badge';
 export * from './components/Blockquote';
 export * from './components/Breadcrumbs';
 export * from './components/Burger';
+export * from './components/Button';
+export * from './components/Card';
 
 export * from './components/Center';
 
-export * from './components/Button';
-export { Card, CardSection } from './components/Card/Card';
 export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
 export { Chips, Chip } from './components/Chips/Chips';
 export { Code } from './components/Code/Code';
@@ -79,7 +79,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { CardProps, CardSectionProps } from './components/Card/Card';
 export type { CheckboxProps, CheckboxStylesNames } from './components/Checkbox/Checkbox';
 export type {
   ChipProps,
