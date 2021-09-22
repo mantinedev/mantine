@@ -99,6 +99,11 @@ export default createStyles((theme, { color, size, radius, variant }: ActionIcon
         color: 'gray',
         shade: theme.colorScheme === 'dark' ? 8 : 1,
       }),
+      borderColor: getThemeColor({
+        theme,
+        color: 'gray',
+        shade: theme.colorScheme === 'dark' ? 8 : 1,
+      }),
     },
 
     '&:not(:disabled):active': {
