@@ -8,8 +8,8 @@ export * from './components/Alert';
 export * from './components/Center';
 export * from './components/Loader';
 export * from './components/Anchor';
+export * from './components/Autocomplete';
 
-export { Autocomplete } from './components/Autocomplete/Autocomplete';
 export { Avatar, AVATAR_SIZES } from './components/Avatar/Avatar';
 export { Badge, BADGE_SIZES, BADGE_VARIANTS } from './components/Badge/Badge';
 export { Blockquote } from './components/Blockquote/Blockquote';
@@ -78,12 +78,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { AnchorProps } from './components/Anchor/Anchor';
-export type {
-  AutocompleteProps,
-  AutocompleteStylesNames,
-  AutocompleteItem,
-} from './components/Autocomplete/Autocomplete';
 export type { AvatarProps, AvatarStylesNames } from './components/Avatar/Avatar';
 export type { BadgeProps, BadgeStylesNames } from './components/Badge/Badge';
 export type { BlockquoteProps, BlockquoteStylesNames } from './components/Blockquote/Blockquote';
