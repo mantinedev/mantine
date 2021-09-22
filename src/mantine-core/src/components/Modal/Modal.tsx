@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useId, useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import {
   useMantineTheme,
@@ -8,19 +8,17 @@ import {
   MantineShadow,
   ClassNames,
 } from '@mantine/styles';
-
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { Portal } from '../Portal/Portal';
 import { GroupedTransition, MantineTransition } from '../Transition/Transition';
-import { ClickOutsideProvider } from '../../utils';
 import useStyles, { sizes } from './Modal.styles';
 
 export const MODAL_SIZES = sizes;
 
-export type ModalStylesNames = ClassNames<typeof useStyles>;
+export type ModalStylesNames = Exclude<ClassNames<typeof useStyles>, 'clickOutsideOverlay'>;
 
 export interface ModalProps
   extends DefaultProps<ModalStylesNames>,
@@ -103,7 +101,6 @@ export function MantineModal({
   const theme = useMantineTheme();
   const { classes, cx } = useStyles({ size, overflow }, classNames, 'modal');
   const _styles = mergeStyles(classes, styles);
-  const [modalBodyElement, setModalBodyElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap();
   const _overlayOpacity =
     typeof overlayOpacity === 'number'
@@ -140,39 +137,36 @@ export function MantineModal({
             style={{ zIndex: zIndex + 1, ..._styles.inner }}
             ref={focusTrapRef}
           >
-            <ClickOutsideProvider
-              onClickOutside={() => onClose()}
-              componentNodes={[modalBodyElement]}
+            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
+            <div onClick={onClose} className={classes.clickOutsideOverlay} />
+
+            <Paper<'div', HTMLDivElement>
+              className={classes.modal}
+              shadow={shadow}
+              padding={padding}
+              role="dialog"
+              aria-labelledby={titleId}
+              aria-describedby={bodyId}
+              aria-modal
+              style={{ ..._styles.modal, ...transitionStyles.modal }}
+              tabIndex={-1}
             >
-              <Paper<'div', HTMLDivElement>
-                className={classes.modal}
-                shadow={shadow}
-                padding={padding}
-                role="dialog"
-                aria-labelledby={titleId}
-                aria-describedby={bodyId}
-                aria-modal
-                style={{ ..._styles.modal, ...transitionStyles.modal }}
-                elementRef={setModalBodyElement}
-                tabIndex={-1}
-              >
-                {(title || !hideCloseButton) && (
-                  <div className={classes.header} style={_styles.header}>
-                    <Text id={titleId} className={classes.title} style={_styles.title}>
-                      {title}
-                    </Text>
+              {(title || !hideCloseButton) && (
+                <div className={classes.header} style={_styles.header}>
+                  <Text id={titleId} className={classes.title} style={_styles.title}>
+                    {title}
+                  </Text>
 
-                    {!hideCloseButton && (
-                      <CloseButton iconSize={16} onClick={onClose} aria-label={closeButtonLabel} />
-                    )}
-                  </div>
-                )}
-
-                <div id={bodyId} className={classes.body} style={_styles.body}>
-                  {children}
+                  {!hideCloseButton && (
+                    <CloseButton iconSize={16} onClick={onClose} aria-label={closeButtonLabel} />
+                  )}
                 </div>
-              </Paper>
-            </ClickOutsideProvider>
+              )}
+
+              <div id={bodyId} className={classes.body} style={_styles.body}>
+                {children}
+              </div>
+            </Paper>
           </div>
 
           <div style={transitionStyles.overlay}>
