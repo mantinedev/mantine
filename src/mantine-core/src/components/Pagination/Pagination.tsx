@@ -55,6 +55,12 @@ export interface PaginationProps
 
   /** Predefined item radius or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Whether to show the jump to pagination start button */
+  showFirstButton?: boolean
+
+  /** Whether to show the jump to pagination end button */
+  showLastButton?: boolean
 }
 
 export function Pagination({
@@ -73,6 +79,8 @@ export function Pagination({
   onChange,
   getItemAriaLabel,
   spacing,
+  showFirstButton = false,
+  showLastButton = false,
   ...others
 }: PaginationProps) {
   const theme = useMantineTheme(themeOverride);
@@ -110,7 +118,7 @@ export function Pagination({
 
   return (
     <Group spacing={spacing || getSizeValue({ size, sizes: theme.spacing }) / 2} {...others}>
-      <Item
+      {showFirstButton && <Item
         page="showFirst"
         onClick={first}
         aria-label={getItemAriaLabel ? getItemAriaLabel('prev') : undefined}
@@ -118,7 +126,7 @@ export function Pagination({
         style={_styles.item}
         className={classes.item}
         disabled={active === 1}
-      />
+      /> }
       <Item
         page="prev"
         onClick={previous}
@@ -140,7 +148,7 @@ export function Pagination({
         className={classes.item}
         disabled={active === total}
       />
-      <Item
+      {showLastButton && <Item
         page="showLast"
         onClick={last}
         aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
@@ -148,7 +156,7 @@ export function Pagination({
         style={_styles.item}
         className={classes.item}
         disabled={active === total}
-      />
+      />}
     </Group>
   );
 }
