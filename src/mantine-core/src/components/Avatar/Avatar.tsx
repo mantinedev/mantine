@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { DefaultProps, MantineNumberSize, MantineColor, mergeStyles } from '@mantine/styles';
-import { PlaceholderIcon } from './PlaceholderIcon';
-import useStyles, { sizes } from './Avatar.styles';
-import { AvatarsGroup, AvatarsGroupProps, AvatarsGroupStylesNames } from './AvatarsGroup/AvatarsGroup';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+  mergeStyles,
+  ClassNames,
+} from '@mantine/styles';
+import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
+import useStyles from './Avatar.styles';
 
-export { AvatarsGroup };
-export type { AvatarsGroupProps, AvatarsGroupStylesNames };
-
-export const AVATAR_SIZES = sizes;
-
-export type AvatarStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type AvatarStylesNames = ClassNames<typeof useStyles>;
 
 interface _AvatarProps<C extends React.ElementType, R extends HTMLElement>
   extends DefaultProps<AvatarStylesNames> {
@@ -77,7 +77,10 @@ export function Avatar<
       {error ? (
         <div className={classes.placeholder} title={alt} style={_styles.placeholder}>
           {children || (
-            <PlaceholderIcon className={classes.placeholderIcon} style={_styles.placeholderIcon} />
+            <AvatarPlaceholderIcon
+              className={classes.placeholderIcon}
+              style={_styles.placeholderIcon}
+            />
           )}
         </div>
       ) : (

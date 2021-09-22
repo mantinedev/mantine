@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function PlaceholderIcon(props: React.ComponentProps<'svg'>) {
+export function AvatarPlaceholderIcon(props: React.ComponentProps<'svg'>) {
   return (
     <svg
       {...props}

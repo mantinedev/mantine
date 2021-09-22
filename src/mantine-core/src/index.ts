@@ -9,8 +9,8 @@ export * from './components/Center';
 export * from './components/Loader';
 export * from './components/Anchor';
 export * from './components/Autocomplete';
+export * from './components/Avatar';
 
-export { Avatar, AVATAR_SIZES } from './components/Avatar/Avatar';
 export { Badge, BADGE_SIZES, BADGE_VARIANTS } from './components/Badge/Badge';
 export { Blockquote } from './components/Blockquote/Blockquote';
 export { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
