@@ -5,6 +5,7 @@ import { Divider } from './Divider';
 import { Badge } from '../Badge/Badge';
 import { Group } from '../Group/Group';
 import { Text } from '../Text/Text';
+import { DarkStory } from '../../../demos';
 
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl', 10] as const).map((size) => (
   <Divider style={{ marginTop: 15 }} size={size} key={size} />
@@ -56,4 +57,15 @@ storiesOf('@mantine/core/Divider', module)
       <Divider label="Label center" labelPosition="center" />
       <Divider label="Label right" labelPosition="right" />
     </div>
+  ))
+  .add('Dark theme', () => (
+    <DarkStory>
+      <div style={{ padding: 20 }}>
+        <Divider label="Label" />
+        <Divider label="Label center" labelPosition="center" />
+        <Divider label="Label right" labelPosition="right" />
+
+        {getColors()}
+      </div>
+    </DarkStory>
   ));

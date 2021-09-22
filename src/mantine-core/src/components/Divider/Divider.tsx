@@ -6,11 +6,8 @@ import {
   MantineNumberSize,
   MantineColor,
 } from '@mantine/styles';
-
-import useStyles, { sizes } from './Divider.styles';
+import useStyles from './Divider.styles';
 import { Text } from '../Text/Text';
-
-export const DIVIDER_SIZES = sizes;
 
 export type DividerStylesNames = 'label' | 'root';
 
