@@ -79,7 +79,7 @@ export function Pagination({
   const classes = useStyles({ theme, color, size, radius }, classNames, 'pagination');
   const _styles = mergeStyles(classes, styles);
 
-  const { range, setPage, next, previous, active } = usePagination({
+  const { range, setPage, next, previous, active, first, last } = usePagination({
     page,
     siblings,
     total,
@@ -111,6 +111,15 @@ export function Pagination({
   return (
     <Group spacing={spacing || getSizeValue({ size, sizes: theme.spacing }) / 2} {...others}>
       <Item
+        page="showFirst"
+        onClick={first}
+        aria-label={getItemAriaLabel ? getItemAriaLabel('prev') : undefined}
+        aria-disabled={active === 1}
+        style={_styles.item}
+        className={classes.item}
+        disabled={active === 1}
+      />
+      <Item
         page="prev"
         onClick={previous}
         aria-label={getItemAriaLabel ? getItemAriaLabel('prev') : undefined}
@@ -125,6 +134,15 @@ export function Pagination({
       <Item
         page="next"
         onClick={next}
+        aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
+        aria-disabled={active === total}
+        style={_styles.item}
+        className={classes.item}
+        disabled={active === total}
+      />
+      <Item
+        page="showLast"
+        onClick={last}
         aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
         aria-disabled={active === total}
         style={_styles.item}
