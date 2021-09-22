@@ -3,10 +3,10 @@ import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/st
 import { CloseButton } from '../ActionIcon';
 import useStyles from './Alert.styles';
 
-export type AlertStylesName = ClassNames<typeof useStyles>;
+export type AlertStylesNames = ClassNames<typeof useStyles>;
 
 export interface AlertProps
-  extends DefaultProps<AlertStylesName>,
+  extends DefaultProps<AlertStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Optional alert title */
   title?: React.ReactNode;

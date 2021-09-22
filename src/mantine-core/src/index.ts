@@ -4,10 +4,10 @@ export * from './utils';
 export * from './components/Accordion';
 export * from './components/ActionIcon';
 export * from './components/Affix';
+export * from './components/Alert';
 export * from './components/Center';
 export * from './components/Loader';
 
-export { Alert } from './components/Alert/Alert';
 export { Anchor } from './components/Anchor/Anchor';
 export { Autocomplete } from './components/Autocomplete/Autocomplete';
 export { Avatar, AVATAR_SIZES } from './components/Avatar/Avatar';
@@ -78,7 +78,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { AlertProps, AlertStylesName } from './components/Alert/Alert';
 export type { AnchorProps } from './components/Anchor/Anchor';
 export type {
   AutocompleteProps,
