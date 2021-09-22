@@ -10,10 +10,8 @@ import {
   ClassNames,
 } from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
-import useStyles from './Pagination.styles';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
-
-export type { PaginationItemProps } from './DefaultItem/DefaultItem';
+import useStyles from './Pagination.styles';
 
 export type PaginationStylesNames = ClassNames<typeof useStyles>;
 

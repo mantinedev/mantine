@@ -14,9 +14,7 @@ import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { Portal } from '../Portal/Portal';
 import { GroupedTransition, MantineTransition } from '../Transition/Transition';
-import useStyles, { sizes } from './Modal.styles';
-
-export const MODAL_SIZES = sizes;
+import useStyles from './Modal.styles';
 
 export type ModalStylesNames = Exclude<ClassNames<typeof useStyles>, 'clickOutsideOverlay'>;
 

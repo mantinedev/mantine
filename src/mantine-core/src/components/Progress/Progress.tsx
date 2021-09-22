@@ -8,9 +8,7 @@ import {
   MantineColor,
   ClassNames,
 } from '@mantine/styles';
-import useStyles, { sizes } from './Progress.styles';
-
-export const PROGRESS_SIZES = sizes;
+import useStyles from './Progress.styles';
 
 export type ProgressStylesNames = ClassNames<typeof useStyles>;
 

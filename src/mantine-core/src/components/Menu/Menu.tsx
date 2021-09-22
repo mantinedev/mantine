@@ -16,18 +16,12 @@ import {
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { MenuIcon } from './MenuIcon';
-import { MenuBody, MenuBodyProps, MenuBodyStylesNames } from './MenuBody/MenuBody';
-import { sizes } from './MenuBody/MenuBody.styles';
-import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
-import { MenuLabel, MenuLabelProps } from './MenuLabel/MenuLabel';
+import { MenuBody, MenuBodyStylesNames } from './MenuBody/MenuBody';
+import { MenuItem } from './MenuItem/MenuItem';
+import { MenuLabel } from './MenuLabel/MenuLabel';
 import useStyles from './Menu.styles';
 
-export { MenuBody, MenuItem, MenuLabel };
-export type { MenuBodyProps, MenuItemProps, MenuLabelProps };
-
 export type MenuStylesNames = ClassNames<typeof useStyles> | MenuBodyStylesNames;
-
-export const MENU_SIZES = sizes;
 
 export interface MenuProps
   extends DefaultProps<MenuStylesNames>,

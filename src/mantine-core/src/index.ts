@@ -38,20 +38,20 @@ export * from './components/List';
 export * from './components/Loader';
 export * from './components/LoadingOverlay';
 export * from './components/Mark';
-export { Menu, MenuItem, MenuBody, MenuLabel, MENU_SIZES } from './components/Menu/Menu';
-export { Modal, MODAL_SIZES } from './components/Modal/Modal';
-export { MultiSelect } from './components/MultiSelect/MultiSelect';
-export { NativeSelect } from './components/NativeSelect/NativeSelect';
-export { Notification } from './components/Notification/Notification';
-export { NumberInput } from './components/NumberInput/NumberInput';
-export { Overlay } from './components/Overlay/Overlay';
-export { Pagination } from './components/Pagination/Pagination';
-export { Paper } from './components/Paper/Paper';
-export { PasswordInput } from './components/PasswordInput/PasswordInput';
-export { Popover } from './components/Popover/Popover';
-export { Popper } from './components/Popper/Popper';
-export { Portal } from './components/Portal/Portal';
-export { Progress, PROGRESS_SIZES } from './components/Progress/Progress';
+export * from './components/Menu';
+export * from './components/Modal';
+export * from './components/MultiSelect';
+export * from './components/NativeSelect';
+export * from './components/Notification';
+export * from './components/NumberInput';
+export * from './components/Overlay';
+export * from './components/Pagination';
+export * from './components/Paper';
+export * from './components/PasswordInput';
+export * from './components/Popover';
+export * from './components/Popper';
+export * from './components/Portal';
+export * from './components/Progress';
 export { RadioGroup, Radio, RADIO_SIZES } from './components/RadioGroup/RadioGroup';
 export { RingProgress } from './components/RingProgress/RingProgress';
 export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
@@ -77,42 +77,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type {
-  MenuProps,
-  MenuItemProps,
-  MenuBodyProps,
-  MenuLabelProps,
-} from './components/Menu/Menu';
-export type { ModalProps, ModalStylesNames } from './components/Modal/Modal';
-export type {
-  MultiSelectProps,
-  MultiSelectStylesNames,
-  MultiSelectValueProps,
-} from './components/MultiSelect/MultiSelect';
-export type {
-  NativeSelectProps,
-  NativeSelectStylesNames,
-} from './components/NativeSelect/NativeSelect';
-export type {
-  NotificationProps,
-  NotificationStylesNames,
-} from './components/Notification/Notification';
-export type {
-  NumberInputProps,
-  NumberInputHandlers,
-  NumberInputStylesNames,
-} from './components/NumberInput/NumberInput';
-export type { OverlayProps } from './components/Overlay/Overlay';
-export type { PaginationProps, PaginationItemProps } from './components/Pagination/Pagination';
-export type { PaperProps } from './components/Paper/Paper';
-export type {
-  PasswordInputProps,
-  PasswordInputStylesNames,
-} from './components/PasswordInput/PasswordInput';
-export type { PopoverProps, PopoverStylesNames } from './components/Popover/Popover';
-export type { PopperProps } from './components/Popper/Popper';
-export type { PortalProps } from './components/Portal/Portal';
-export type { ProgressProps, ProgressStylesNames } from './components/Progress/Progress';
 export type { RadioGroupProps, RadioProps } from './components/RadioGroup/RadioGroup';
 export type { RingProgressProps } from './components/RingProgress/RingProgress';
 export type {

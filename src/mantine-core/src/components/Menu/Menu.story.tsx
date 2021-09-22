@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { GearIcon, ChatBubbleIcon, Cross1Icon } from '@modulz/radix-icons';
-import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
-import { Divider } from '../Divider/Divider';
 import { menuItems } from './demos/_menu-items';
-import { Menu, MenuItem } from './Menu';
+import { Menu } from './Menu';
+import { DarkStory } from '../../../demos';
 
 function Controlled() {
   const [opened, setOpened] = useState(false);
@@ -30,19 +28,9 @@ storiesOf('@mantine/core/Menu', module)
     </div>
   ))
   .add('Dark theme', () => (
-    <MantineProvider theme={{ colorScheme: 'dark' }}>
-      <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-        <Menu>
-          <MenuItem icon={<GearIcon style={{ width: 12, height: 12 }} />}>Settings</MenuItem>
-          <MenuItem disabled icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
-            Disabled
-          </MenuItem>
-          <Divider />
-          <MenuItem icon={<ChatBubbleIcon style={{ width: 12, height: 12 }} />}>Messages</MenuItem>
-          <MenuItem color="red" icon={<Cross1Icon style={{ width: 12, height: 12 }} />}>
-            Delete
-          </MenuItem>
-        </Menu>
+    <DarkStory>
+      <div style={{ padding: 60 }}>
+        <Menu>{menuItems}</Menu>
       </div>
-    </MantineProvider>
+    </DarkStory>
   ));

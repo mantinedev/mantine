@@ -5,11 +5,7 @@ import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { MantineTransition } from '../Transition/Transition';
-import {
-  DefaultValue,
-  DefaultValueStylesNames,
-  MultiSelectValueProps,
-} from './DefaultValue/DefaultValue';
+import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
@@ -22,8 +18,6 @@ import {
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { SelectDropdown } from '../Select/SelectDropdown/SelectDropdown';
 import useStyles from './MultiSelect.styles';
-
-export type { MultiSelectValueProps };
 
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
