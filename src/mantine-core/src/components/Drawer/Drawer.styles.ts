@@ -66,6 +66,14 @@ export default createStyles((theme, { position, size }: DrawerStyles, getRef) =>
       outline: 0,
     },
 
+    clickOutsideOverlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
+
     title: {
       marginRight: theme.spacing.md,
       textOverflow: 'ellipsis',
@@ -78,7 +86,7 @@ export default createStyles((theme, { position, size }: DrawerStyles, getRef) =>
       alignItems: 'center',
       justifyContent: 'space-between',
       marginBottom: theme.spacing.md,
-      marginRight: -9,
+      padding: theme.spacing.md,
     },
   };
 });

@@ -17,7 +17,13 @@ function Wrapper(
 
   return (
     <div style={{ padding: 40 }}>
-      <Drawer opened={opened} onClose={() => setOpened(false)} position={position} {...props} />
+      <Drawer
+        opened={opened}
+        onClose={() => setOpened(false)}
+        position={position}
+        title="hello"
+        {...props}
+      />
       <Group>
         <Button onClick={() => open('top')}>top</Button>
         <Button onClick={() => open('bottom')}>bottom</Button>
