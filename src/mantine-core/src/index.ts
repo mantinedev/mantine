@@ -20,8 +20,8 @@ export * from './components/Checkbox';
 export * from './components/Chips';
 export * from './components/Code';
 export * from './components/Collapse';
+export * from './components/ColorInput';
 
-export { ColorInput } from './components/ColorInput/ColorInput';
 export { ColorPicker, AlphaSlider, HueSlider } from './components/ColorPicker/ColorPicker';
 export { ColorSwatch } from './components/ColorSwatch/ColorSwatch';
 export { Container, CONTAINER_SIZES } from './components/Container/Container';
@@ -78,7 +78,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { ColorInputProps } from './components/ColorInput/ColorInput';
 export type {
   AlphaSliderProps,
   HueSliderProps,
