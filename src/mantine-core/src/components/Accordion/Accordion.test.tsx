@@ -11,6 +11,7 @@ import { Accordion } from './Accordion';
 import { Accordion as AccordionStylesApi } from './styles.api';
 
 const defaultProps = {
+  initialItem: 1,
   children: [
     <Accordion.Item label="Test 1">Test 1</Accordion.Item>,
     <Accordion.Item label="Test 2">Test 2</Accordion.Item>,
