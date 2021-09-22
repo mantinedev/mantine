@@ -2,9 +2,7 @@ import React from 'react';
 import { useId } from '@mantine/hooks';
 import { mergeStyles, DefaultProps, MantineSize, MantineColor, ClassNames } from '@mantine/styles';
 import { CheckboxIcon } from './CheckboxIcon';
-import useStyles, { sizes } from './Checkbox.styles';
-
-export const CHECKBOX_SIZES = sizes;
+import useStyles from './Checkbox.styles';
 
 export type CheckboxStylesNames = ClassNames<typeof useStyles>;
 

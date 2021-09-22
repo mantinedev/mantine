@@ -15,10 +15,9 @@ export * from './components/Breadcrumbs';
 export * from './components/Burger';
 export * from './components/Button';
 export * from './components/Card';
-
 export * from './components/Center';
+export * from './components/Checkbox';
 
-export { Checkbox, CHECKBOX_SIZES } from './components/Checkbox/Checkbox';
 export { Chips, Chip } from './components/Chips/Chips';
 export { Code } from './components/Code/Code';
 export * from './components/Collapse';
@@ -79,7 +78,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { CheckboxProps, CheckboxStylesNames } from './components/Checkbox/Checkbox';
 export type {
   ChipProps,
   ChipsProps,
