@@ -1,23 +1,23 @@
 import React from 'react';
 import { Avatar } from '@mantine/core';
-import { DefaultProps, MantineNumberSize, mergeStyles } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, mergeStyles, ClassNames } from '@mantine/styles';
 import useStyles from './AvatarsGroup.styles';
 
-export type AvatarsGroupStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type AvatarsGroupStylesNames = ClassNames<typeof useStyles>;
 
-export interface AvatarsGroupProps extends
-  DefaultProps<AvatarsGroupStylesNames>,
-  React.ComponentPropsWithoutRef<'div'> {
+export interface AvatarsGroupProps
+  extends DefaultProps<AvatarsGroupStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** <Avatar /> components only */
   children?: React.ReactNode;
 
-  /** Avatar width and height*/
+  /** Child Avatars width and height */
   size?: MantineNumberSize;
 
-  /** Avatar radius */
+  /** Child Avatars radius */
   radius?: MantineNumberSize;
 
-  /** Maximum number of Avatar components rendered */
+  /** Maximum amount of Avatar components rendered, everything after limit is truncated */
   limit?: number;
 
   /** Spacing between avatars */
@@ -36,10 +36,11 @@ export function AvatarsGroup({
   spacing = 'sm',
   ...others
 }: AvatarsGroupProps) {
-  const { classes, cx } = useStyles({ spacing, size }, classNames, 'avatars-group');
+  const { classes, cx } = useStyles({ spacing }, classNames, 'avatars-group');
   const _styles = mergeStyles(classes, styles);
-  const avatars = React.Children
-    .toArray(children).filter((child: React.ReactElement) => child.type === Avatar)
+
+  const avatars = React.Children.toArray(children)
+    .filter((child: React.ReactElement) => child.type === Avatar)
     .map((child: React.ReactElement, index) => {
       const childStyle = {
         ...child.props.style,
@@ -70,8 +71,8 @@ export function AvatarsGroup({
           <div className={classes.truncated} style={_styles.truncated}>
             +{extraAvatars}
           </div>
-        </Avatar>) : null
-      }
+        </Avatar>
+      ) : null}
     </div>
   );
 }

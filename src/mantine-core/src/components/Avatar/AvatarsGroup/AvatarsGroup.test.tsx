@@ -12,18 +12,19 @@ import { Avatar } from '../Avatar';
 import { AvatarsGroup as AvatarsGroupStylesApi } from './styles.api';
 
 const defaultProps = {
-  children: [
-    <Avatar>M</Avatar>,
-    <Avatar>K</Avatar>,
-    <Avatar>L</Avatar>,
-  ],
+  children: [<Avatar>M</Avatar>, <Avatar>K</Avatar>, <Avatar>L</Avatar>],
 };
 
 describe('@mantine/core/AvatarsGroup', () => {
   itSupportsOthers(AvatarsGroup, {});
   itSupportsClassName(AvatarsGroup, {});
   itSupportsStyle(AvatarsGroup, {});
-  itSupportsStylesApi(AvatarsGroup, defaultProps, Object.keys(AvatarsGroupStylesApi), 'avatars-group');
+  itSupportsStylesApi(
+    AvatarsGroup,
+    defaultProps,
+    Object.keys(AvatarsGroupStylesApi),
+    'avatars-group'
+  );
   checkAccessibility([mount(<AvatarsGroup {...defaultProps} />)]);
 
   it('has correct displayName', () => {

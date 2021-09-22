@@ -1,7 +1,6 @@
 import { AvatarStylesNames } from './Avatar';
-import { AvatarsGroup } from './AvatarsGroup/styles.api';
 
-export { AvatarsGroup };
+export { AvatarsGroup } from './AvatarsGroup/styles.api';
 
 export const Avatar: Record<AvatarStylesNames, string> = {
   root: 'Root element',
