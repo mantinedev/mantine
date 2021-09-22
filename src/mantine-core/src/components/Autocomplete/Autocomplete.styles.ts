@@ -6,6 +6,7 @@ interface AutocompleteStyles {
 
 export default createStyles((theme, { size }: AutocompleteStyles) => {
   const spacing = getSizeValue({ size, sizes: theme.spacing });
+
   return {
     wrapper: {
       position: 'relative',

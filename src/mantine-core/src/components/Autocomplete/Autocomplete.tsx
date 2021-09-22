@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, MantineShadow } from '@mantine/styles';
+import { mergeStyles, DefaultProps, MantineSize, MantineShadow, ClassNames } from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -18,14 +18,12 @@ export type AutocompleteStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
   | SelectDropdownStylesNames
-  | keyof ReturnType<typeof useStyles>['classes'];
+  | ClassNames<typeof useStyles>;
 
 export interface AutocompleteItem {
   value: string;
   [key: string]: any;
 }
-
-export type AutocompleteDataItem = string | AutocompleteItem;
 
 export interface AutocompleteProps
   extends DefaultProps<AutocompleteStylesNames>,
@@ -39,7 +37,7 @@ export interface AutocompleteProps
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 
   /** Autocomplete data used to renderer items in dropdown */
-  data: AutocompleteDataItem[];
+  data: (string | AutocompleteItem)[];
 
   /** Change item renderer */
   itemComponent?: React.FC<any>;
