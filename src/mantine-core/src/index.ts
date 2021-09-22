@@ -5,11 +5,11 @@ export * from './components/Accordion';
 export * from './components/ActionIcon';
 export * from './components/Affix';
 export * from './components/Alert';
-export * from './components/Center';
 export * from './components/Loader';
 export * from './components/Anchor';
 export * from './components/Autocomplete';
 export * from './components/Avatar';
+export * from './components/Center';
 
 export { Badge, BADGE_SIZES, BADGE_VARIANTS } from './components/Badge/Badge';
 export { Blockquote } from './components/Blockquote/Blockquote';
@@ -78,7 +78,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { AvatarProps, AvatarStylesNames } from './components/Avatar/Avatar';
 export type { BadgeProps, BadgeStylesNames } from './components/Badge/Badge';
 export type { BlockquoteProps, BlockquoteStylesNames } from './components/Blockquote/Blockquote';
 export type {

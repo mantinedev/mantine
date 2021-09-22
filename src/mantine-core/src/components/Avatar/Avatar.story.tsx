@@ -29,13 +29,11 @@ storiesOf('@mantine/core/Avatar', module)
   ))
   .add('AvatarsGroup', () => (
     <div style={{ padding: 40 }}>
-      <div style={{ backgroundColor: 'red' }}>
-        <AvatarsGroup size={40} spacing="lg" limit={2}>
-          <Avatar component="a" href="https://github.com/rtivital" src={image} />
-          <Avatar src={image} radius="xl" color="indigo" />
-          <Avatar radius="md" color="blue" />
-        </AvatarsGroup>
-      </div>
+      <AvatarsGroup size={40} spacing="lg" limit={2}>
+        <Avatar component="a" href="https://github.com/rtivital" src={image} />
+        <Avatar src={image} radius="xl" color="indigo" />
+        <Avatar radius="md" color="blue" />
+      </AvatarsGroup>
     </div>
   ))
   .add('Dark theme', () => (
