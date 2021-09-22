@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button } from '../Button/Button';
 import { Dialog, DialogProps } from './Dialog';
+import { DarkStory } from '../../../demos';
 
 function Wrapper(props: Omit<DialogProps, 'opened' | 'onClosed'>) {
   const [opened, setOpened] = useState(false);
@@ -15,4 +16,10 @@ function Wrapper(props: Omit<DialogProps, 'opened' | 'onClosed'>) {
   );
 }
 
-storiesOf('@mantine/core/Dialog', module).add('General usage', () => <Wrapper />);
+storiesOf('@mantine/core/Dialog', module)
+  .add('General usage', () => <Wrapper />)
+  .add('Dark theme', () => (
+    <DarkStory>
+      <Wrapper />
+    </DarkStory>
+  ));

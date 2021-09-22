@@ -7,6 +7,7 @@ import {
   getThemeColor,
   getSizeValue,
   MantineColor,
+  MantineTheme,
 } from '@mantine/styles';
 import { Bars } from './loaders/Bars';
 import { Oval } from './loaders/Oval';
@@ -26,8 +27,6 @@ export const LOADER_SIZES = {
   xl: 58,
 };
 
-export type LoaderType = keyof typeof LOADERS;
-
 export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'svg'> {
   /** Defines width of loader */
   size?: MantineNumberSize;
@@ -36,7 +35,7 @@ export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRe
   color?: MantineColor;
 
   /** Loader appearance */
-  variant?: 'bars' | 'oval' | 'dots';
+  variant?: MantineTheme['loader'];
 }
 
 export function Loader({ size = 'md', color, className, variant, ...others }: LoaderProps) {

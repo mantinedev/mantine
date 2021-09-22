@@ -4,16 +4,13 @@ import { mergeStyles, DefaultProps, MantineSize, getSizeValue, ClassNames } from
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { ColorSliderStylesNames } from './ColorSlider/ColorSlider';
-import { HueSlider, HueSliderProps } from './HueSlider/HueSlider';
-import { AlphaSlider, AlphaSliderProps } from './AlphaSlider/AlphaSlider';
+import { HueSlider } from './HueSlider/HueSlider';
+import { AlphaSlider } from './AlphaSlider/AlphaSlider';
 import { Saturation, SaturationStylesNames } from './Saturation/Saturation';
 import { Swatches, SwatchesStylesNames } from './Swatches/Swatches';
 import { ThumbStylesNames } from './Thumb/Thumb';
 import { HsvaColor } from './types';
 import useStyles from './ColorPicker.styles';
-
-export { HueSlider, AlphaSlider };
-export type { HueSliderProps, AlphaSliderProps };
 
 export type ColorPickerStylesNames =
   | ClassNames<typeof useStyles>

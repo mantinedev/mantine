@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
 import { ColorInput } from './ColorInput';
+import { DarkStory } from '../../../demos';
 
 const sizes = MANTINE_SIZES.map((size) => (
   <ColorInput
@@ -33,8 +34,8 @@ function ControlledInput() {
   );
 }
 
-storiesOf('@mantine/core/ColorInput', module)
-  .add('General usage', () => (
+function BaseStory() {
+  return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <ColorInput label="Color input" placeholder="Pick color" format="hsla" />
       <ColorInput
@@ -71,5 +72,14 @@ storiesOf('@mantine/core/ColorInput', module)
       />
       <ControlledInput />
     </div>
-  ))
-  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>);
+  );
+}
+
+storiesOf('@mantine/core/ColorInput', module)
+  .add('General usage', () => <BaseStory />)
+  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
+  .add('Dark theme', () => (
+    <DarkStory>
+      <BaseStory />
+    </DarkStory>
+  ));

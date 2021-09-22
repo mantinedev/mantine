@@ -29,8 +29,6 @@ export interface GroupProps
   withGutter?: boolean;
 }
 
-export type { GroupPosition };
-
 export function Group({
   className,
   style,

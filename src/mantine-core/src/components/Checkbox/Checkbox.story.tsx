@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { Checkbox } from './Checkbox';
+import { DarkStory } from '../../../demos';
 
 function CheckboxWrapper(props: Omit<React.ComponentProps<typeof Checkbox>, 'value' | 'onChange'>) {
   const [value, onChange] = useState(true);
@@ -11,6 +12,18 @@ function CheckboxWrapper(props: Omit<React.ComponentProps<typeof Checkbox>, 'val
       onChange={(event) => onChange(event.currentTarget.checked)}
       {...props}
     />
+  );
+}
+
+function States() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Checkbox label="default" />
+      <Checkbox style={{ marginTop: 15 }} label="checked" checked />
+      <Checkbox style={{ marginTop: 15 }} label="indeterminate" indeterminate />
+      <Checkbox style={{ marginTop: 15 }} label="indeterminate disabled" indeterminate disabled />
+      <Checkbox style={{ marginTop: 15 }} label="checked disabled" checked disabled />
+    </div>
   );
 }
 
@@ -33,12 +46,9 @@ storiesOf('@mantine/core/Checkbox', module)
   .add('Themes', () => <div style={{ padding: 15 }}>{getThemes({ checked: true })}</div>)
   .add('Sizes', () => <div style={{ padding: 15 }}>{sizes}</div>)
   .add('Controlled', () => <CheckboxWrapper label="Controlled" style={{ padding: 15 }} />)
-  .add('Indeterminate', () => (
-    <Checkbox indeterminate label="Indeterminate" style={{ padding: 15 }} />
-  ))
-  .add('Disabled', () => (
-    <div style={{ padding: 15 }}>
-      <Checkbox label="Disabled" disabled />
-      <Checkbox checked label="Disabled checked" disabled style={{ marginTop: 15 }} />
-    </div>
+  .add('States', () => <States />)
+  .add('Dark theme', () => (
+    <DarkStory>
+      <States />
+    </DarkStory>
   ));

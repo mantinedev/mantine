@@ -1,8 +1,6 @@
 import React from 'react';
 import { DefaultProps, MantineNumberSize } from '@mantine/styles';
-import useStyles, { sizes } from './Container.styles';
-
-export const CONTAINER_SIZES = sizes;
+import useStyles from './Container.styles';
 
 export interface ContainerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Predefined container max-width or number for max-width in px */

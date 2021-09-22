@@ -7,11 +7,9 @@ import {
   MantineSize,
   ClassNames,
 } from '@mantine/styles';
-import useStyles, { sizes } from './Input.styles';
+import useStyles from './Input.styles';
 
-export const INPUT_VARIANTS = ['default', 'filled', 'unstyled', 'headless'] as const;
-export const INPUT_SIZES = sizes;
-export type InputVariant = typeof INPUT_VARIANTS[number];
+export type InputVariant = 'default' | 'filled' | 'unstyled' | 'headless';
 export type InputStylesNames = Exclude<ClassNames<typeof useStyles>, InputVariant>;
 
 export interface InputBaseProps {
@@ -40,7 +38,7 @@ export interface InputBaseProps {
   radius?: MantineNumberSize;
 
   /** Defines input appearance, defaults to default in light color scheme and filled in dark */
-  variant?: 'default' | 'filled' | 'unstyled' | 'headless';
+  variant?: InputVariant;
 
   /** Will input have multiple lines? */
   multiline?: boolean;

@@ -25,7 +25,7 @@ export default createStyles((theme, { radius }: ImageStyles) => ({
 
   caption: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
-    marginTop: theme.spacing.xs / 2,
+    marginTop: theme.spacing.xs,
   },
 
   placeholder: {

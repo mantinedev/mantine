@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
 import { InputWrapper } from './InputWrapper';
 import { Text } from '../Text/Text';
+import { DarkStory } from '../../../demos';
 
 const sizes = MANTINE_SIZES.map((size) => (
   <InputWrapper
@@ -65,4 +66,19 @@ storiesOf('@mantine/core/InputWrapper', module)
         <Text>Input is located here</Text>
       </InputWrapper>
     </div>
+  ))
+  .add('Dark theme', () => (
+    <DarkStory>
+      <div style={{ padding: 40 }}>
+        <InputWrapper
+          label="Dark theme label"
+          description="Dark theme description"
+          error="Dark theme error"
+          required
+          id="input-wrapper-1"
+        >
+          <Text>Input is located here</Text>
+        </InputWrapper>
+      </div>
+    </DarkStory>
   ));
