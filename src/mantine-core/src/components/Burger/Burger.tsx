@@ -8,9 +8,7 @@ import {
   MantineColor,
   ClassNames,
 } from '@mantine/styles';
-import useStyles, { sizes } from './Burger.styles';
-
-export const BURGER_SIZES = sizes;
+import useStyles from './Burger.styles';
 
 export type BurgerStylesNames = Exclude<ClassNames<typeof useStyles>, 'opened'>;
 
