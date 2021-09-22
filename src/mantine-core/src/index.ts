@@ -18,9 +18,9 @@ export * from './components/Card';
 export * from './components/Center';
 export * from './components/Checkbox';
 export * from './components/Chips';
-
-export { Code } from './components/Code/Code';
+export * from './components/Code';
 export * from './components/Collapse';
+
 export { ColorInput } from './components/ColorInput/ColorInput';
 export { ColorPicker, AlphaSlider, HueSlider } from './components/ColorPicker/ColorPicker';
 export { ColorSwatch } from './components/ColorSwatch/ColorSwatch';
@@ -78,7 +78,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { CodeProps } from './components/Code/Code';
 export type { ColorInputProps } from './components/ColorInput/ColorInput';
 export type {
   AlphaSliderProps,
