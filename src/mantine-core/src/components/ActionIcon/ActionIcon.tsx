@@ -74,7 +74,7 @@ export function ActionIcon<
   return (
     <Element
       {...others}
-      className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
+      className={cx(classes.root, { [classes.loading]: loading }, className)}
       type="button"
       ref={elementRef as any}
       disabled={disabled || loading}
