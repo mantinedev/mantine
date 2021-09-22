@@ -22,8 +22,6 @@ export const sizes = {
 };
 
 export default createStyles((theme, { size, margins, variant, color }: DividerStyles) => ({
-  root: {},
-
   withLabel: {
     borderTop: '0 !important',
   },

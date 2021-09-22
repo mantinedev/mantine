@@ -12,7 +12,7 @@ import { Text } from '../Text/Text';
 
 export const DIVIDER_SIZES = sizes;
 
-export type DividerStylesNames = 'label' | 'root';
+export type DividerStylesNames = 'label';
 
 export interface DividerProps
   extends DefaultProps<DividerStylesNames>,
