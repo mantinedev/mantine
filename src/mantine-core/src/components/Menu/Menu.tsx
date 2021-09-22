@@ -1,4 +1,4 @@
-import React, { useState, useRef, cloneElement, useEffect } from 'react';
+import React, { useState, useRef, cloneElement } from 'react';
 import {
   useId,
   useClickOutside,
@@ -15,7 +15,6 @@ import {
 } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
-import { useClickOutsideRegister } from '../../utils';
 import { MenuIcon } from './MenuIcon';
 import { MenuBody, MenuBodyProps, MenuBodyStylesNames } from './MenuBody/MenuBody';
 import { sizes } from './MenuBody/MenuBody.styles';
@@ -140,7 +139,6 @@ export function Menu({
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
   const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-  const clickOutsideRegister = useClickOutsideRegister();
   const uuid = useId(menuId);
 
   const [_opened, setOpened] = useUncontrolled({
@@ -175,10 +173,6 @@ export function Menu({
   useWindowEvent('scroll', () => closeOnScroll && handleClose(true));
 
   useClickOutside(() => _opened && handleClose(), null, [dropdownElement, wrapperElement]);
-
-  useEffect(() => {
-    clickOutsideRegister(`${uuid}-menu`, dropdownElement);
-  }, [dropdownElement]);
 
   const toggleMenu = () => {
     _opened ? handleClose() : handleOpen();

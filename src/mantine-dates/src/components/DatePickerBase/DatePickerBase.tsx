@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   DefaultProps,
   mergeStyles,
@@ -16,7 +16,6 @@ import {
   Modal,
   CloseButton,
   getSizeValue,
-  useClickOutsideRegister,
   MantineShadow,
   ClassNames,
 } from '@mantine/core';
@@ -147,7 +146,6 @@ export function DatePickerBase({
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const uuid = useId(id);
-  const clickOutsideRegister = useClickOutsideRegister();
 
   const focusTrapRef = useFocusTrap();
   const inputRef = useRef<HTMLButtonElement>();
@@ -166,10 +164,6 @@ export function DatePickerBase({
   ]);
 
   useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
-
-  useEffect(() => {
-    clickOutsideRegister(`${uuid}-dropdown`, dropdownElement);
-  }, [dropdownElement]);
 
   const rightSection = clearable ? (
     <CloseButton

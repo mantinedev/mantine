@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useClickOutside, useFocusTrap, useId, useMergedRef } from '@mantine/hooks';
 import {
   mergeStyles,
@@ -7,7 +7,6 @@ import {
   MantineShadow,
   ClassNames,
 } from '@mantine/styles';
-import { useClickOutsideRegister } from '../../utils';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';
 import useStyles from './Popover.styles';
@@ -103,7 +102,6 @@ export function Popover({
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
-  const clickOutsideRegister = useClickOutsideRegister();
 
   useClickOutside(() => !noClickOutside && handleClose(), null, [rootElement, dropdownElement]);
 
@@ -116,10 +114,6 @@ export function Popover({
   const uuid = useId(id);
   const titleId = `${uuid}-title`;
   const bodyId = `${uuid}-body`;
-
-  useEffect(() => {
-    clickOutsideRegister(`${uuid}-dropdown`, dropdownElement);
-  }, [dropdownElement]);
 
   return (
     <div
