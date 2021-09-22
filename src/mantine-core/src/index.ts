@@ -23,8 +23,7 @@ export * from './components/Collapse';
 export * from './components/ColorInput';
 export * from './components/ColorPicker';
 export * from './components/ColorSwatch';
-
-export { Container, CONTAINER_SIZES } from './components/Container/Container';
+export * from './components/Container';
 export { Dialog } from './components/Dialog/Dialog';
 export { Drawer, DRAWER_SIZES } from './components/Drawer/Drawer';
 export { Divider, DIVIDER_SIZES } from './components/Divider/Divider';
@@ -78,7 +77,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { ContainerProps } from './components/Container/Container';
 export type { DialogProps, DialogStylesNames } from './components/Dialog/Dialog';
 export type { DividerProps, DividerStylesNames } from './components/Divider/Divider';
 export type { DrawerProps, DrawerStylesNames } from './components/Drawer/Drawer';
