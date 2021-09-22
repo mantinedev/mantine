@@ -9,7 +9,7 @@ import {
 import useStyles from './Divider.styles';
 import { Text } from '../Text/Text';
 
-export type DividerStylesNames = 'label' | 'root';
+export type DividerStylesNames = 'label';
 
 export interface DividerProps
   extends DefaultProps<DividerStylesNames>,
