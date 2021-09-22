@@ -11,10 +11,10 @@ export * from './components/Autocomplete';
 export * from './components/Avatar';
 export * from './components/Badge';
 export * from './components/Blockquote';
+export * from './components/Breadcrumbs';
 
 export * from './components/Center';
 
-export { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
 export { Burger, BURGER_SIZES } from './components/Burger/Burger';
 export * from './components/Button';
 export { Card, CardSection } from './components/Card/Card';
@@ -79,10 +79,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type {
-  BreadcrumbsProps,
-  BreadcrumbsStylesNames,
-} from './components/Breadcrumbs/Breadcrumbs';
 export type { BurgerProps, BurgerStylesNames } from './components/Burger/Burger';
 export type { CardProps, CardSectionProps } from './components/Card/Card';
 export type { CheckboxProps, CheckboxStylesNames } from './components/Checkbox/Checkbox';
