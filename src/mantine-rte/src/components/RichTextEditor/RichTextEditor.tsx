@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useEffect } from 'react';
 import Editor, { Quill } from 'react-quill';
-import { DefaultProps, mergeStyles } from '@mantine/core';
+import { DefaultProps, mergeStyles, ClassNames } from '@mantine/core';
 import { useId } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
@@ -11,9 +11,7 @@ import { createImageBlot, ImageUploader } from '../../modules/image-uploader';
 import { replaceIcons } from '../../modules/icons';
 import { attachShortcuts } from '../../modules/shortcuts';
 
-export type RichTextEditorStylesNames =
-  | ToolbarStylesNames
-  | keyof ReturnType<typeof useStyles>['classes'];
+export type RichTextEditorStylesNames = ToolbarStylesNames | ClassNames<typeof useStyles>;
 
 export type { RichTextEditorLabels };
 

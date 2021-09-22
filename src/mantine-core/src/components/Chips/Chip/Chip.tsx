@@ -7,14 +7,12 @@ import {
   MantineNumberSize,
   MantineSize,
   MantineColor,
+  ClassNames,
 } from '@mantine/styles';
 import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
 import useStyles from './Chip.styles';
 
-export type ChipStylesNames = Exclude<
-  keyof ReturnType<typeof useStyles>['classes'],
-  'filled' | 'outline'
->;
+export type ChipStylesNames = Exclude<ClassNames<typeof useStyles>, 'filled' | 'outline'>;
 
 export interface ChipProps
   extends DefaultProps<ChipStylesNames>,

@@ -6,13 +6,13 @@ import {
   MantineNumberSize,
   MantineSize,
   MantineColor,
+  ClassNames,
 } from '@mantine/styles';
-
 import useStyles, { sizes } from './Switch.styles';
 
 export const SWITCH_SIZES = sizes;
 
-export type SwitchStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type SwitchStylesNames = ClassNames<typeof useStyles>;
 
 export interface SwitchProps
   extends DefaultProps<SwitchStylesNames>,

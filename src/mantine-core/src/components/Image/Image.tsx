@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize } from '@mantine/styles';
-
+import { mergeStyles, DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
 import { Text } from '../Text/Text';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
 
-export type ImageStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type ImageStylesNames = ClassNames<typeof useStyles>;
 
 export interface ImageProps
   extends DefaultProps<ImageStylesNames>,

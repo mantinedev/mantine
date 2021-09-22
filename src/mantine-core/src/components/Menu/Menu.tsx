@@ -7,7 +7,13 @@ import {
   useUncontrolled,
   useReducedMotion,
 } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  MantineShadow,
+  ClassNames,
+} from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { useClickOutsideRegister } from '../../utils';
@@ -21,7 +27,7 @@ import useStyles from './Menu.styles';
 export { MenuBody, MenuItem, MenuLabel };
 export type { MenuBodyProps, MenuItemProps, MenuLabelProps };
 
-export type MenuStylesNames = keyof ReturnType<typeof useStyles>['classes'] | MenuBodyStylesNames;
+export type MenuStylesNames = ClassNames<typeof useStyles> | MenuBodyStylesNames;
 
 export const MENU_SIZES = sizes;
 

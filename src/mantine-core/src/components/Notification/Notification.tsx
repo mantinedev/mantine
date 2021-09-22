@@ -1,14 +1,11 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineColor } from '@mantine/styles';
+import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { Text } from '../Text/Text';
 import { Loader } from '../Loader/Loader';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import useStyles from './Notification.styles';
 
-export type NotificationStylesNames = Exclude<
-  keyof ReturnType<typeof useStyles>['classes'],
-  'withIcon'
->;
+export type NotificationStylesNames = Exclude<ClassNames<typeof useStyles>, 'withIcon'>;
 
 export interface NotificationProps
   extends DefaultProps<NotificationStylesNames>,

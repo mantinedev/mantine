@@ -1,8 +1,8 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { mergeStyles, DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
 import useStyles from './ListItem.styles';
 
-export type ListItemStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type ListItemStylesNames = ClassNames<typeof useStyles>;
 
 export interface ListItemProps
   extends DefaultProps<ListItemStylesNames>,

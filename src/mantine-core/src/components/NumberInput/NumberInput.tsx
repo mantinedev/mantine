@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, getSizeValue } from '@mantine/styles';
-
+import { mergeStyles, DefaultProps, getSizeValue, ClassNames } from '@mantine/styles';
 import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
 import useStyles, { CONTROL_SIZES } from './NumberInput.styles';
 
-export type InnerNumberInputStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type InnerNumberInputStylesNames = ClassNames<typeof useStyles>;
 export type NumberInputStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames

@@ -18,6 +18,7 @@ import {
   getSizeValue,
   useClickOutsideRegister,
   MantineShadow,
+  ClassNames,
 } from '@mantine/core';
 import {
   useId,
@@ -31,7 +32,7 @@ import { CalendarStylesNames } from '../Calendar/Calendar';
 import useStyles from './DatePickerBase.styles';
 
 export type DatePickerStylesNames =
-  | keyof ReturnType<typeof useStyles>['classes']
+  | ClassNames<typeof useStyles>
   | CalendarStylesNames
   | InputStylesNames
   | InputWrapperStylesNames;

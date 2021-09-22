@@ -7,6 +7,7 @@ import {
   MantineNumberSize,
   getSizeValue,
   MantineColor,
+  ClassNames,
 } from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
 import useStyles from './Pagination.styles';
@@ -14,7 +15,7 @@ import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
 
 export type { PaginationItemProps } from './DefaultItem/DefaultItem';
 
-export type PaginationStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type PaginationStylesNames = ClassNames<typeof useStyles>;
 
 export interface PaginationProps
   extends DefaultProps<PaginationStylesNames>,

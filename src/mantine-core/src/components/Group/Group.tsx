@@ -1,8 +1,8 @@
 import React, { Children } from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { mergeStyles, DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
 import useStyles, { GroupPosition } from './Group.styles';
 
-export type GroupStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type GroupStylesNames = ClassNames<typeof useStyles>;
 
 export interface GroupProps
   extends DefaultProps<GroupStylesNames>,

@@ -1,11 +1,11 @@
 import React from 'react';
-import { DefaultProps, mergeStyles } from '@mantine/core';
+import { DefaultProps, mergeStyles, ClassNames } from '@mantine/core';
 import type { RichTextEditorLabels } from '../RichTextEditor/default-labels';
 import { ToolbarButton } from './ToolbarButton/ToolbarButton';
 import { CONTROLS, ToolbarControl } from './controls';
 import useStyles from './Toolbar.styles';
 
-export type ToolbarStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type ToolbarStylesNames = ClassNames<typeof useStyles>;
 
 export interface ToolbarProps extends DefaultProps<ToolbarStylesNames> {
   /** Toolbar controls divided into groups */

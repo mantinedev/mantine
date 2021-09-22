@@ -9,13 +9,14 @@ import {
   getThemeColor,
   hexToRgba,
   MantineColor,
+  ClassNames,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
 import { getPrismTheme } from './prism-theme';
 import useStyles from './Prism.styles';
 
-export type PrismStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type PrismStylesNames = ClassNames<typeof useStyles>;
 
 export interface PrismProps
   extends DefaultProps<PrismStylesNames>,

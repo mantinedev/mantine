@@ -1,11 +1,10 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineShadow } from '@mantine/styles';
-
+import { mergeStyles, DefaultProps, MantineShadow, ClassNames } from '@mantine/styles';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
 import useStyles from './SelectDropdown.styles';
 
-export type SelectDropdownStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type SelectDropdownStylesNames = ClassNames<typeof useStyles>;
 
 interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   mounted: boolean;

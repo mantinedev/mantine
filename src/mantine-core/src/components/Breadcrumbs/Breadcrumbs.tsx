@@ -1,10 +1,9 @@
 import React from 'react';
-import { mergeStyles, DefaultProps } from '@mantine/styles';
-
+import { mergeStyles, DefaultProps, ClassNames } from '@mantine/styles';
 import { Text } from '../Text/Text';
 import useStyles from './Breadcrumbs.styles';
 
-export type BreadcrumbsStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type BreadcrumbsStylesNames = ClassNames<typeof useStyles>;
 
 export interface BreadcrumbsProps
   extends DefaultProps<BreadcrumbsStylesNames>,

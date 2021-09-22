@@ -1,10 +1,9 @@
 import React, { createElement } from 'react';
-import { mergeStyles, DefaultProps, MantineSize } from '@mantine/styles';
-
+import { mergeStyles, DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
 import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
-export type InputWrapperStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type InputWrapperStylesNames = ClassNames<typeof useStyles>;
 
 export interface InputWrapperBaseProps {
   /** Input label, displayed before input */

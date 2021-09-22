@@ -12,6 +12,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
+  ClassNames,
 } from '@mantine/styles';
 
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
@@ -25,7 +26,7 @@ import useStyles, { sizes } from './Modal.styles';
 
 export const MODAL_SIZES = sizes;
 
-export type ModalStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type ModalStylesNames = ClassNames<typeof useStyles>;
 
 export interface ModalProps
   extends DefaultProps<ModalStylesNames>,

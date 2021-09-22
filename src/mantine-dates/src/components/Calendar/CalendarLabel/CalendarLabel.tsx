@@ -1,11 +1,19 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { DefaultProps, mergeStyles, NativeSelect, Group, Text, MantineSize } from '@mantine/core';
+import {
+  DefaultProps,
+  mergeStyles,
+  NativeSelect,
+  Group,
+  Text,
+  MantineSize,
+  ClassNames,
+} from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import { getMonthsNames, getYearsRange } from '../../../utils';
 import useStyles from './CalendarLabel.styles';
 
-export type CalendarLabelStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type CalendarLabelStylesNames = ClassNames<typeof useStyles>;
 
 interface CalendarLabelProps extends DefaultProps<CalendarLabelStylesNames> {
   locale: string;

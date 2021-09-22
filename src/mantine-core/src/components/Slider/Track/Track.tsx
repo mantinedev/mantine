@@ -1,9 +1,15 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+  ClassNames,
+} from '@mantine/styles';
 import { Marks, MarksStylesNames } from '../Marks/Marks';
 import useStyles from './Track.styles';
 
-export type TrackStylesNames = keyof ReturnType<typeof useStyles>['classes'] | MarksStylesNames;
+export type TrackStylesNames = ClassNames<typeof useStyles> | MarksStylesNames;
 
 interface TrackProps extends DefaultProps<TrackStylesNames> {
   filled: number;

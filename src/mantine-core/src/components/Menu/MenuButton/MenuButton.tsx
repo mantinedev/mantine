@@ -1,9 +1,9 @@
 import React from 'react';
-import { mergeStyles, MantineNumberSize } from '@mantine/styles';
+import { mergeStyles, MantineNumberSize, ClassNames } from '@mantine/styles';
 import { SharedMenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 
-export type MenuButtonStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type MenuButtonStylesNames = ClassNames<typeof useStyles>;
 
 interface _MenuButtonProps<C extends React.ElementType, R extends HTMLElement>
   extends SharedMenuItemProps {

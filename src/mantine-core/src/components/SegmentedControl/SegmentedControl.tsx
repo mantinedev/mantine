@@ -6,6 +6,7 @@ import {
   MantineNumberSize,
   MantineSize,
   MantineColor,
+  ClassNames,
 } from '@mantine/styles';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
@@ -14,7 +15,7 @@ interface SegmentedControlItem {
   label: React.ReactNode;
 }
 
-export type SegmentedControlStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type SegmentedControlStylesNames = ClassNames<typeof useStyles>;
 
 export interface SegmentedControlProps
   extends DefaultProps<SegmentedControlStylesNames>,

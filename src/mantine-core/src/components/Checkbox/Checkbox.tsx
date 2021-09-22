@@ -1,12 +1,12 @@
 import React from 'react';
 import { useId, useReducedMotion } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, MantineColor } from '@mantine/styles';
+import { mergeStyles, DefaultProps, MantineSize, MantineColor, ClassNames } from '@mantine/styles';
 import { CheckboxIcon } from './CheckboxIcon';
 import useStyles, { sizes } from './Checkbox.styles';
 
 export const CHECKBOX_SIZES = sizes;
 
-export type CheckboxStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type CheckboxStylesNames = ClassNames<typeof useStyles>;
 
 export interface CheckboxProps
   extends DefaultProps<CheckboxStylesNames>,

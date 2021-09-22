@@ -7,12 +7,13 @@ import {
   MantineNumberSize,
   getThemeColor,
   MantineColor,
+  ClassNames,
 } from '@mantine/styles';
 import useStyles, { sizes } from './Progress.styles';
 
 export const PROGRESS_SIZES = sizes;
 
-export type ProgressStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type ProgressStylesNames = ClassNames<typeof useStyles>;
 
 export interface ProgressProps
   extends DefaultProps<ProgressStylesNames>,

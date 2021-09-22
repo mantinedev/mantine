@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { mergeStyles, DefaultProps } from '@mantine/styles';
+import { mergeStyles, DefaultProps, ClassNames } from '@mantine/styles';
 import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
 
-export type SpoilerStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type SpoilerStylesNames = ClassNames<typeof useStyles>;
 
 export interface SpoilerProps
   extends DefaultProps<SpoilerStylesNames>,

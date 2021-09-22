@@ -1,10 +1,16 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  MantineShadow,
+  ClassNames,
+} from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import useStyles from './PopoverBody.styles';
 
-export type PopoverBodyStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type PopoverBodyStylesNames = ClassNames<typeof useStyles>;
 
 interface PopoverBodyProps
   extends DefaultProps<PopoverBodyStylesNames>,

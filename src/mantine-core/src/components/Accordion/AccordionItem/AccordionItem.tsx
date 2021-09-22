@@ -1,6 +1,6 @@
 import React from 'react';
 import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, mergeStyles } from '@mantine/styles';
+import { DefaultProps, mergeStyles, ClassNames } from '@mantine/styles';
 import { Collapse } from '../../Collapse';
 import { UnstyledButton } from '../../Button';
 import { Center } from '../../Center';
@@ -8,7 +8,7 @@ import { ChevronIcon } from './ChevronIcon';
 import useStyles, { AccordionIconPosition } from './AccordionItem.styles';
 
 export type { AccordionIconPosition };
-export type AccordionItemStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type AccordionItemStylesNames = ClassNames<typeof useStyles>;
 
 export interface PublicAccordionItemProps extends React.ComponentPropsWithoutRef<'div'> {
   label?: React.ReactNode;

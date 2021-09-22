@@ -9,14 +9,12 @@ import {
   getSharedColorScheme,
   MantineGradient,
   MantineColor,
+  ClassNames,
 } from '@mantine/styles';
 import useStyles, { heights, ButtonVariant } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader/Loader';
 
-export type ButtonStylesNames = Exclude<
-  keyof ReturnType<typeof useStyles>['classes'],
-  ButtonVariant | 'loading'
->;
+export type ButtonStylesNames = Exclude<ClassNames<typeof useStyles>, ButtonVariant | 'loading'>;
 
 interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
   extends DefaultProps<ButtonStylesNames> {

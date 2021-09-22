@@ -1,8 +1,8 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineSize } from '@mantine/styles';
+import { mergeStyles, DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
 import useStyles, { THUMB_SIZES } from './Thumb.styles';
 
-export type ThumbStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type ThumbStylesNames = ClassNames<typeof useStyles>;
 
 interface Position {
   x: number;

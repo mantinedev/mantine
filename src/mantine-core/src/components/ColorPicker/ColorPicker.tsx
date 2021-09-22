@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, getSizeValue } from '@mantine/styles';
-
+import { mergeStyles, DefaultProps, MantineSize, getSizeValue, ClassNames } from '@mantine/styles';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { ColorSliderStylesNames } from './ColorSlider/ColorSlider';
@@ -17,7 +16,7 @@ export { HueSlider, AlphaSlider };
 export type { HueSliderProps, AlphaSliderProps };
 
 export type ColorPickerStylesNames =
-  | keyof ReturnType<typeof useStyles>['classes']
+  | ClassNames<typeof useStyles>
   | ColorSliderStylesNames
   | SwatchesStylesNames
   | SaturationStylesNames

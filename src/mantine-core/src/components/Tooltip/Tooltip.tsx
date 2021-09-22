@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineColor } from '@mantine/styles';
+import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 
-export type TooltipStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type TooltipStylesNames = ClassNames<typeof useStyles>;
 
 export interface TooltipProps
   extends DefaultProps<TooltipStylesNames>,

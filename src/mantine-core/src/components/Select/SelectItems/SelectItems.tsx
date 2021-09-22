@@ -1,11 +1,10 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineSize } from '@mantine/styles';
-
+import { mergeStyles, DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import { SelectItem } from '../types';
 import useStyles from './SelectItems.styles';
 
-export type SelectItemsStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type SelectItemsStylesNames = ClassNames<typeof useStyles>;
 
 interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
   data: SelectItem[];

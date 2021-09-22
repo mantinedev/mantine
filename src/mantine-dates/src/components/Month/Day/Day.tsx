@@ -1,8 +1,8 @@
 import React from 'react';
-import { DefaultProps, MantineSize, mergeStyles } from '@mantine/core';
+import { DefaultProps, MantineSize, mergeStyles, ClassNames } from '@mantine/core';
 import useStyles from './Day.styles';
 
-export type DayStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type DayStylesNames = ClassNames<typeof useStyles>;
 
 export interface DayProps
   extends DefaultProps<DayStylesNames>,

@@ -6,13 +6,13 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
+  ClassNames,
 } from '@mantine/styles';
-
 import useStyles, { sizes } from './Burger.styles';
 
 export const BURGER_SIZES = sizes;
 
-export type BurgerStylesNames = Exclude<keyof ReturnType<typeof useStyles>['classes'], 'opened'>;
+export type BurgerStylesNames = Exclude<ClassNames<typeof useStyles>, 'opened'>;
 
 export interface BurgerProps
   extends DefaultProps<BurgerStylesNames>,

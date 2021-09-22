@@ -6,12 +6,12 @@ import {
   UseMovePosition,
   useMergedRef,
 } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize } from '@mantine/styles';
+import { mergeStyles, DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
 
 export type ColorSliderStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>['classes'], 'sliderThumb'>
+  | Exclude<ClassNames<typeof useStyles>, 'sliderThumb'>
   | ThumbStylesNames;
 
 export interface BaseColorSliderProps

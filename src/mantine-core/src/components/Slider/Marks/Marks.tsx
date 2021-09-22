@@ -1,10 +1,16 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+  ClassNames,
+} from '@mantine/styles';
 import { getPosition } from '../utils/get-position/get-position';
 import { isMarkFilled } from './is-mark-filled';
 import useStyles from './Marks.styles';
 
-export type MarksStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type MarksStylesNames = ClassNames<typeof useStyles>;
 
 interface MarksProps extends DefaultProps<MarksStylesNames> {
   marks: { value: number; label?: React.ReactNode }[];

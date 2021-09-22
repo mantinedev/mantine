@@ -9,6 +9,7 @@ import {
   InputWrapper,
   MantineSize,
   mergeStyles,
+  ClassNames,
 } from '@mantine/core';
 import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import dayjs, { UnitType } from 'dayjs';
@@ -18,7 +19,7 @@ import { getTimeValues } from '../TimeInput/get-time-values/get-time-value';
 import useStyles from './TimeRangeInput.styles';
 
 export type TimeRangeInputStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>['classes'], 'disabled'>
+  | Exclude<ClassNames<typeof useStyles>, 'disabled'>
   | InputStylesNames
   | InputWrapperStylesNames;
 

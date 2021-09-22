@@ -6,6 +6,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
+  ClassNames,
 } from '@mantine/styles';
 import { MantineTransition } from '../../Transition/Transition';
 import { Paper } from '../../Paper/Paper';
@@ -16,9 +17,7 @@ import { MenuLabel } from '../MenuLabel/MenuLabel';
 import { MenuButton, MenuButtonStylesNames } from '../MenuButton/MenuButton';
 import useStyles from './MenuBody.styles';
 
-export type MenuBodyStylesNames =
-  | keyof ReturnType<typeof useStyles>['classes']
-  | MenuButtonStylesNames;
+export type MenuBodyStylesNames = ClassNames<typeof useStyles> | MenuButtonStylesNames;
 
 export interface MenuBodyProps
   extends DefaultProps<MenuBodyStylesNames>,

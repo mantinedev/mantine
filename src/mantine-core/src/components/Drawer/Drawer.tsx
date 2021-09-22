@@ -12,6 +12,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
+  ClassNames,
 } from '@mantine/styles';
 import { ClickOutsideProvider } from '../../utils';
 import { Paper } from '../Paper/Paper';
@@ -24,7 +25,7 @@ import useStyles, { Position, sizes } from './Drawer.styles';
 
 export const DRAWER_SIZES = sizes;
 
-export type DrawerStylesNames = Exclude<keyof ReturnType<typeof useStyles>['classes'], 'noOverlay'>;
+export type DrawerStylesNames = Exclude<ClassNames<typeof useStyles>, 'noOverlay'>;
 
 export interface DrawerProps
   extends DefaultProps<DrawerStylesNames>,

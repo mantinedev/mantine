@@ -1,6 +1,12 @@
 import React, { useRef } from 'react';
 import { useUncontrolled, clamp } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+  ClassNames,
+} from '@mantine/styles';
 import { Group, GroupPosition } from '../Group/Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
@@ -12,7 +18,7 @@ export type { TabProps };
 export const TABS_VARIANTS = ['default', 'outline', 'pills', 'unstyled'] as const;
 export type TabsVariant = typeof TABS_VARIANTS[number];
 export type TabsStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>['classes'], TabsVariant>
+  | Exclude<ClassNames<typeof useStyles>, TabsVariant>
   | TabControlStylesNames;
 
 export interface TabsProps

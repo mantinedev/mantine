@@ -1,12 +1,9 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, MantineColor } from '@mantine/styles';
+import { mergeStyles, DefaultProps, MantineSize, MantineColor, ClassNames } from '@mantine/styles';
 import useStyles from './Radio.styles';
 
-export type RadioStylesNames = Exclude<
-  keyof ReturnType<typeof useStyles>['classes'],
-  'labelDisabled'
->;
+export type RadioStylesNames = Exclude<ClassNames<typeof useStyles>, 'labelDisabled'>;
 
 export interface RadioProps
   extends DefaultProps<RadioStylesNames>,

@@ -9,6 +9,7 @@ import {
   InputWrapper,
   MantineSize,
   mergeStyles,
+  ClassNames,
 } from '@mantine/core';
 import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -18,7 +19,7 @@ import { getTimeValues } from './get-time-values/get-time-value';
 import useStyles from './TimeInput.styles';
 
 export type TimeInputStylesNames =
-  | keyof ReturnType<typeof useStyles>['classes']
+  | ClassNames<typeof useStyles>
   | InputStylesNames
   | InputWrapperStylesNames;
 

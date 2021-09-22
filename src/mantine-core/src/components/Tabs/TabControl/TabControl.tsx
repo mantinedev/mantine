@@ -1,14 +1,11 @@
 import React from 'react';
 import { useMergedRef, useReducedMotion } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineColor } from '@mantine/styles';
+import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { TabProps } from '../Tab/Tab';
 import type { TabsVariant } from '../Tabs';
 import useStyles from './TabControl.styles';
 
-export type TabControlStylesNames = Exclude<
-  keyof ReturnType<typeof useStyles>['classes'],
-  TabsVariant
->;
+export type TabControlStylesNames = Exclude<ClassNames<typeof useStyles>, TabsVariant>;
 
 export interface TabControlProps
   extends DefaultProps<TabControlStylesNames>,

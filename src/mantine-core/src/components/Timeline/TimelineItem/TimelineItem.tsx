@@ -1,10 +1,9 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineColor } from '@mantine/styles';
-
+import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import useStyles from './TimelineItem.styles';
 
-export type TimelineItemStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type TimelineItemStylesNames = ClassNames<typeof useStyles>;
 
 export interface TimelineItemProps
   extends DefaultProps<TimelineItemStylesNames>,

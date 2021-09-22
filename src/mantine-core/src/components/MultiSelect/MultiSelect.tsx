@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, MantineShadow } from '@mantine/styles';
-
+import { mergeStyles, DefaultProps, MantineSize, MantineShadow, ClassNames } from '@mantine/styles';
 import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
@@ -29,7 +28,7 @@ export type { MultiSelectValueProps };
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
   | Exclude<
-      keyof ReturnType<typeof useStyles>['classes'],
+      ClassNames<typeof useStyles>,
       'searchInputEmpty' | 'searchInputInputHidden' | 'searchInputPointer'
     >
   | Exclude<BaseSelectStylesNames, 'selected'>;

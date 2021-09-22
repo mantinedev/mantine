@@ -1,12 +1,18 @@
 import React from 'react';
-import { mergeStyles, useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/styles';
+import {
+  mergeStyles,
+  useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
+  ClassNames,
+} from '@mantine/styles';
 import { Transition, MantineTransition } from '../Transition/Transition';
 import { CloseButton } from '../ActionIcon';
 import { Affix } from '../Affix';
 import { Paper, PaperProps } from '../Paper/Paper';
 import useStyles from './Dialog.styles';
 
-export type DialogStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type DialogStylesNames = ClassNames<typeof useStyles>;
 
 export interface DialogProps
   extends DefaultProps<DialogStylesNames>,

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useUncontrolled, useReducedMotion, useDidUpdate, useId } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, getSizeValue } from '@mantine/styles';
-
+import { mergeStyles, DefaultProps, getSizeValue, ClassNames } from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -25,7 +24,7 @@ export type ColorInputStylesNames =
   | InputWrapperStylesNames
   | InputStylesNames
   | ColorPickerStylesNames
-  | keyof ReturnType<typeof useStyles>['classes'];
+  | ClassNames<typeof useStyles>;
 
 export interface ColorInputProps
   extends InputWrapperBaseProps,

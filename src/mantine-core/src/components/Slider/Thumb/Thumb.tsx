@@ -5,11 +5,12 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
+  ClassNames,
 } from '@mantine/styles';
 import { Transition, MantineTransition } from '../../Transition/Transition';
 import useStyles from './Thumb.styles';
 
-export type ThumbStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type ThumbStylesNames = ClassNames<typeof useStyles>;
 
 interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   max: number;
