@@ -3,4 +3,4 @@ export { placeholders } from './placeholders';
 export { sizes } from './sizes';
 export { configurator } from './configurator';
 export { link } from './link';
-export { avatarsgroup } from './avatarsgroup';
+export { avatarsGroup } from './avatarsGroup-2';

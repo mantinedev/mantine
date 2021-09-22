@@ -41,7 +41,7 @@ function Demo() {
   );
 }
 
-export const avatarsgroup: MantineDemo = {
+export const avatarsGroup: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,
