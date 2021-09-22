@@ -10,9 +10,10 @@ export * from './components/Anchor';
 export * from './components/Autocomplete';
 export * from './components/Avatar';
 export * from './components/Badge';
+export * from './components/Blockquote';
+
 export * from './components/Center';
 
-export { Blockquote } from './components/Blockquote/Blockquote';
 export { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
 export { Burger, BURGER_SIZES } from './components/Burger/Burger';
 export * from './components/Button';
@@ -78,7 +79,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { BlockquoteProps, BlockquoteStylesNames } from './components/Blockquote/Blockquote';
 export type {
   BreadcrumbsProps,
   BreadcrumbsStylesNames,

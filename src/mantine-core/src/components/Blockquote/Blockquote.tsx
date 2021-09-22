@@ -1,9 +1,9 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineColor } from '@mantine/styles';
+import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
-export type BlockquoteStylesNames = keyof ReturnType<typeof useStyles>['classes'];
+export type BlockquoteStylesNames = ClassNames<typeof useStyles>;
 
 export interface BlockquoteProps
   extends DefaultProps<BlockquoteStylesNames>,
