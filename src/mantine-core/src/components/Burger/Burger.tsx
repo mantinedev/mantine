@@ -1,5 +1,4 @@
 import React from 'react';
-import { useReducedMotion } from '@mantine/hooks';
 import {
   useMantineTheme,
   mergeStyles,
@@ -40,9 +39,8 @@ export function Burger({
   ...others
 }: BurgerProps) {
   const theme = useMantineTheme();
-  const reduceMotion = useReducedMotion();
   const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
-  const { classes, cx } = useStyles({ color: _color, size, reduceMotion }, classNames, 'burger');
+  const { classes, cx } = useStyles({ color: _color, size }, classNames, 'burger');
   const _styles = mergeStyles(classes, styles);
 
   return (

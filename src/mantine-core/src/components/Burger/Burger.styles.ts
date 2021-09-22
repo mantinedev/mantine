@@ -9,7 +9,6 @@ import {
 interface BurgerStyles {
   size: MantineNumberSize;
   color: MantineColor;
-  reduceMotion: boolean;
 }
 
 export const sizes = {
@@ -20,7 +19,7 @@ export const sizes = {
   xl: 42,
 };
 
-export default createStyles((theme, { size, color, reduceMotion }: BurgerStyles, getRef) => {
+export default createStyles((theme, { size, color }: BurgerStyles, getRef) => {
   const sizeValue = getSizeValue({ size, sizes });
   const opened = { ref: getRef('opened') } as const;
 
@@ -51,7 +50,11 @@ export default createStyles((theme, { size, color, reduceMotion }: BurgerStyles,
         backgroundColor: color,
         outline: '1px solid transparent',
         transitionProperty: 'background-color, transform',
-        transitionDuration: reduceMotion ? '0ms' : '300ms',
+        transitionDuration: '300ms',
+
+        '@media (prefers-reduced-motion)': {
+          transitionDuration: '0ms',
+        },
       },
 
       '&:before, &:after': {
