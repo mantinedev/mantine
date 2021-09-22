@@ -24,7 +24,7 @@ export * from './components/ColorInput';
 export * from './components/ColorPicker';
 export * from './components/ColorSwatch';
 export * from './components/Container';
-export { Dialog } from './components/Dialog/Dialog';
+export * from './components/Dialog';
 export { Drawer, DRAWER_SIZES } from './components/Drawer/Drawer';
 export { Divider, DIVIDER_SIZES } from './components/Divider/Divider';
 export { Grid, Col } from './components/Grid/Grid';
@@ -77,7 +77,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { DialogProps, DialogStylesNames } from './components/Dialog/Dialog';
 export type { DividerProps, DividerStylesNames } from './components/Divider/Divider';
 export type { DrawerProps, DrawerStylesNames } from './components/Drawer/Drawer';
 export type { GridProps, ColProps } from './components/Grid/Grid';
