@@ -7,8 +7,8 @@ export * from './components/Affix';
 export * from './components/Alert';
 export * from './components/Center';
 export * from './components/Loader';
+export * from './components/Anchor';
 
-export { Anchor } from './components/Anchor/Anchor';
 export { Autocomplete } from './components/Autocomplete/Autocomplete';
 export { Avatar, AVATAR_SIZES } from './components/Avatar/Avatar';
 export { Badge, BADGE_SIZES, BADGE_VARIANTS } from './components/Badge/Badge';
