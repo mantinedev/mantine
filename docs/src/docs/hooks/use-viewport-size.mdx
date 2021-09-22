@@ -5,7 +5,7 @@ category: 'dom'
 title: 'use-viewport-size'
 order: 1
 slug: /hooks/use-viewport-size/
-description: 'Get information about current viewport size'
+description: 'Get viewport width and height'
 import: "import { useViewportSize } from '@mantine/hooks';"
 docs: 'hooks/use-viewport-size.mdx'
 source: 'mantine-hooks/src/use-viewport-size/use-viewport-size.ts'
@@ -24,8 +24,8 @@ On the first render (as well as during SSR), both width and height are equal to 
 ## Definition
 
 ```tsx
-function useViewportSize(): Readonly<{
+function useViewportSize(): {
   height: number;
   width: number;
-}>;
+};
 ```

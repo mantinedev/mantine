@@ -1,31 +1,21 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 const eventListerOptions = {
   passive: true,
 };
 
-export function useViewportSize(): Readonly<{
-  width: number;
-  height: number;
-}> {
+export function useViewportSize() {
   const [windowSize, setWindowSize] = useState({
-    width: 0,
-    height: 0,
+    width: window?.innerWidth ?? 0,
+    height: window?.innerHeight ?? 0,
   });
 
-  const setSize = useCallback(
-    (): void => {
-      setWindowSize({
-        width: window?.innerWidth ?? 0,
-        height: window?.innerHeight ?? 0,
-      });
-    },
-    [],
-  );
-
-  useEffect(() => {
-    setSize();
+  const setSize = useCallback(() => {
+    setWindowSize({
+      width: window?.innerWidth ?? 0,
+      height: window?.innerHeight ?? 0,
+    });
   }, []);
 
   useWindowEvent('resize', setSize, eventListerOptions);
