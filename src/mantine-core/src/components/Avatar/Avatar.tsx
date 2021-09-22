@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { DefaultProps, MantineNumberSize, MantineColor, mergeStyles } from '@mantine/styles';
 import { PlaceholderIcon } from './PlaceholderIcon';
 import useStyles, { sizes } from './Avatar.styles';
+import { AvatarsGroup, AvatarsGroupProps, AvatarsGroupStylesNames } from './AvatarsGroup/AvatarsGroup';
+
+export { AvatarsGroup };
+export type { AvatarsGroupProps, AvatarsGroupStylesNames };
 
 export const AVATAR_SIZES = sizes;
 
