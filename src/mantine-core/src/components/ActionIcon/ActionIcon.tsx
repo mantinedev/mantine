@@ -8,7 +8,7 @@ import {
   MantineColor,
 } from '@mantine/styles';
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
-import { Loader, LoaderProps } from '../Loader/Loader';
+import { Loader, LoaderProps } from '../Loader';
 
 interface _ActionIconProps<C extends React.ElementType, R extends HTMLElement>
   extends DefaultProps {

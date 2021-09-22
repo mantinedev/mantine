@@ -4,6 +4,7 @@ export * from './utils';
 export * from './components/Accordion';
 export * from './components/ActionIcon';
 export * from './components/Center';
+export * from './components/Loader';
 
 export { Affix } from './components/Affix/Affix';
 export { Alert } from './components/Alert/Alert';
@@ -36,7 +37,6 @@ export { InputWrapper } from './components/InputWrapper/InputWrapper';
 export { JsonInput } from './components/JsonInput/JsonInput';
 export { Kbd } from './components/Kbd/Kbd';
 export { List } from './components/List/List';
-export { Loader, LOADER_SIZES } from './components/Loader/Loader';
 export { LoadingOverlay } from './components/LoadingOverlay/LoadingOverlay';
 export { Mark } from './components/Mark/Mark';
 export { Menu, MenuItem, MenuBody, MenuLabel, MENU_SIZES } from './components/Menu/Menu';
@@ -127,7 +127,6 @@ export type {
 export type { JsonInputProps, JsonInputStylesNames } from './components/JsonInput/JsonInput';
 export type { KbdProps } from './components/Kbd/Kbd';
 export type { ListProps, ListItemProps, ListStylesNames } from './components/List/List';
-export type { LoaderProps } from './components/Loader/Loader';
 export type { LoadingOverlayProps } from './components/LoadingOverlay/LoadingOverlay';
 export type { MarkProps } from './components/Mark/Mark';
 export type {
