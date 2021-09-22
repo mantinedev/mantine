@@ -40,7 +40,7 @@ storiesOf('@mantine/core/Button', module)
     </div>
   ))
   .add('Gradient', () => (
-    <Group>
+    <Group style={{ padding: 20 }}>
       <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>
         Indigo cyan
       </Button>
