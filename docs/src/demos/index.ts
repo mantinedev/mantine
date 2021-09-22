@@ -18,6 +18,7 @@ export * from './hooks/use-hash';
 export * from './hooks/use-hotkeys';
 export * from './hooks/use-fullscreen';
 export * from './hooks/use-logger';
+export * from './hooks/use-mouse';
 export * from './hooks/use-move';
 
 export * from './inputs-guide/color-input';

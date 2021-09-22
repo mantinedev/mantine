@@ -18,6 +18,7 @@ export { useListState } from './use-list-state/use-list-state';
 export { useLocalStorageValue } from './use-local-storage-value/use-local-storage-value';
 export { useMediaQuery } from './use-media-query/use-media-query';
 export { useMergedRef } from './use-merged-ref/use-merged-ref';
+export { useMouse } from './use-mouse/use-mouse';
 export { useMove, clampUseMovePosition } from './use-move/use-move';
 export { useQueue } from './use-queue/use-queue';
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion';
