@@ -1,8 +1,8 @@
 import React from 'react';
 import { mergeStyles, useMantineTheme, DefaultProps, MantineNumberSize } from '@mantine/styles';
 import { Transition, MantineTransition } from '../Transition/Transition';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { Affix } from '../Affix/Affix';
+import { CloseButton } from '../ActionIcon';
+import { Affix } from '../Affix';
 import { Paper, PaperProps } from '../Paper/Paper';
 import useStyles from './Dialog.styles';
 
