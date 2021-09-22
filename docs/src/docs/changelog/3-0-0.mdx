@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.0.0
 date: 'September 16th, 2021'
 ---
 
-import { AccordionDemos } from '@demos/core';
+import { AccordionDemos, AvatarDemos } from '@demos/core';
 
 ## New features
 
@@ -17,6 +17,10 @@ import { AccordionDemos } from '@demos/core';
 - with `icon` prop on Accordion and Accordion.Item components you can replace icons of all items at once or of each item individually
 
 <Demo data={AccordionDemos.label} demoProps={{ toggle: true }} />
+
+[Avatar](https://mantine.dev/core/avatar/) component now supports stacking with [AvatarsGroup](https://mantine.dev/core/avatar/#avatars-group):
+
+<Demo data={AvatarDemos.avatarsGroup} demoProps={{ toggle: true }} />
 
 ## Other changes
 
