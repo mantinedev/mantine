@@ -12,7 +12,7 @@ function Demo() {
 
   return (
     <>
-      <Text align="center" size="sm" style={{ marginBottom: theme.spacing.xs }}>
+      <Text align="center" size="sm">
         Resize current element by moving its left bottom corner
       </Text>
       <Group position="center">
@@ -30,7 +30,7 @@ function Demo() {
           }}
         />
       </Group>
-      <Text align="center" style={{ marginTop: theme.spacing.sm }}>
+      <Text align="center">
         Rect: <Code>{JSON.stringify(rect, null, 2)}</Code>
       </Text>
     </>

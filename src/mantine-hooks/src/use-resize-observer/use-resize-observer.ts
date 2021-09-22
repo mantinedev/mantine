@@ -1,10 +1,6 @@
-import { MutableRefObject, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
-type ObserverRect = Pick<
-  DOMRectReadOnly,
-  'x' | 'y' | 'top' | 'left' | 'right' | 'bottom' | 'height' | 'width'
->;
-type UseResizeObserverResult<T extends HTMLElement = any> = [MutableRefObject<T>, ObserverRect];
+type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
 
 const defaultState: ObserverRect = {
   x: 0,
@@ -17,7 +13,7 @@ const defaultState: ObserverRect = {
   right: 0,
 };
 
-export function useResizeObserver<T extends HTMLElement = any>(): UseResizeObserverResult {
+export function useResizeObserver<T extends HTMLElement = any>() {
   const frameID = useRef(0);
   const ref = useRef<T>(null);
 
@@ -54,5 +50,5 @@ export function useResizeObserver<T extends HTMLElement = any>(): UseResizeObser
     };
   }, [ref.current]);
 
-  return [ref, rect];
+  return [ref, rect] as const;
 }
