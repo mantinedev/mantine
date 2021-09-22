@@ -1,4 +1,4 @@
-export type { CSSObject } from './types';
+export type { CSSObject, ClassNames } from './types';
 
 export { keyframes } from '@emotion/react';
 export { createStyles } from './create-styles';

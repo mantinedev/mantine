@@ -1,9 +1,9 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineColor } from '@mantine/styles';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
+import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { CloseButton } from '../ActionIcon';
 import useStyles from './Alert.styles';
 
-export type AlertStylesName = keyof ReturnType<typeof useStyles>['classes'];
+export type AlertStylesName = ClassNames<typeof useStyles>;
 
 export interface AlertProps
   extends DefaultProps<AlertStylesName>,
