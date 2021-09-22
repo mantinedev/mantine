@@ -1,6 +1,6 @@
 import React from 'react';
-import { Avatar } from '@mantine/core';
 import { DefaultProps, MantineNumberSize, mergeStyles, ClassNames } from '@mantine/styles';
+import { Avatar } from '../Avatar';
 import { Center } from '../../Center';
 import useStyles from './AvatarsGroup.styles';
 

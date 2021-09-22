@@ -18,7 +18,10 @@ import useStyles, { Position, sizes } from './Drawer.styles';
 
 export const DRAWER_SIZES = sizes;
 
-export type DrawerStylesNames = Exclude<ClassNames<typeof useStyles>, 'noOverlay'>;
+export type DrawerStylesNames = Exclude<
+  ClassNames<typeof useStyles>,
+  'noOverlay' | 'clickOutsideOverlay'
+>;
 
 export interface DrawerProps
   extends DefaultProps<DrawerStylesNames>,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chips, Chip } from '../Chips';
+import { Chips, Chip } from '../index';
 
 const code = `
 // Single chip can be selected at a time (radio input)
