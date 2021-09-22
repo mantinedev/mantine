@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useUncontrolled, useReducedMotion, useDidUpdate, useId } from '@mantine/hooks';
+import { useUncontrolled, useDidUpdate, useId } from '@mantine/hooks';
 import { mergeStyles, DefaultProps, getSizeValue, ClassNames } from '@mantine/styles';
 import {
   InputWrapper,
@@ -192,7 +192,7 @@ export function ColorInput({
 
       <Popper
         referenceElement={referenceElement}
-        transitionDuration={useReducedMotion() ? 0 : transitionDuration}
+        transitionDuration={transitionDuration}
         transitionTimingFunction={transitionTimingFunction}
         transition={transition}
         mounted={dropdownOpened}

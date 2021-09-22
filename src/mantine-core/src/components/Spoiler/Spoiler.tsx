@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useReducedMotion } from '@mantine/hooks';
 import { mergeStyles, DefaultProps, ClassNames } from '@mantine/styles';
 import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
@@ -42,11 +41,7 @@ export function Spoiler({
   styles,
   ...others
 }: SpoilerProps) {
-  const { classes, cx } = useStyles(
-    { transitionDuration: !useReducedMotion() && transitionDuration },
-    classNames,
-    'spoiler'
-  );
+  const { classes, cx } = useStyles({ transitionDuration }, classNames, 'spoiler');
   const _styles = mergeStyles(classes, styles);
   const [show, setShowState] = useState(initialState);
   const [spoiler, setSpoilerState] = useState(initialState);

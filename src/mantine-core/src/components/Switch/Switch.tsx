@@ -1,5 +1,5 @@
 import React from 'react';
-import { useId, useReducedMotion } from '@mantine/hooks';
+import { useId } from '@mantine/hooks';
 import {
   mergeStyles,
   DefaultProps,
@@ -54,8 +54,7 @@ export function Switch({
   styles,
   ...others
 }: SwitchProps) {
-  const reduceMotion = useReducedMotion();
-  const { classes, cx } = useStyles({ size, color, radius, reduceMotion }, classNames, 'switch');
+  const { classes, cx } = useStyles({ size, color, radius }, classNames, 'switch');
   const _styles = mergeStyles(classes, styles);
 
   const uuid = useId(id);

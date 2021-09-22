@@ -15,6 +15,10 @@ export default createStyles((_theme, { transitionDuration }: SpoilerStyles) => (
     overflow: 'hidden',
     transitionProperty: 'max-height',
     transitionTimingFunction: 'ease',
-    transitionDuration: `${transitionDuration || 0}ms`,
+    transitionDuration: `${transitionDuration}ms`,
+
+    '@media (prefers-reduced-motion)': {
+      transitionDuration: '0ms',
+    },
   },
 }));

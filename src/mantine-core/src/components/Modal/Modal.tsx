@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  useReducedMotion,
-  useId,
-  useScrollLock,
-  useFocusTrap,
-  useFocusReturn,
-} from '@mantine/hooks';
+import { useId, useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import {
   useMantineTheme,
   mergeStyles,
@@ -106,13 +100,11 @@ export function MantineModal({
   const baseId = useId(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
-  const reduceMotion = useReducedMotion();
   const theme = useMantineTheme();
   const { classes, cx } = useStyles({ size, overflow }, classNames, 'modal');
   const _styles = mergeStyles(classes, styles);
   const [modalBodyElement, setModalBodyElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap();
-  const duration = reduceMotion ? 1 : transitionDuration;
   const _overlayOpacity =
     typeof overlayOpacity === 'number'
       ? overlayOpacity
@@ -128,8 +120,8 @@ export function MantineModal({
     <GroupedTransition
       mounted={opened}
       transitions={{
-        modal: { duration, transition },
-        overlay: { duration: duration / 2, transition: 'fade', timingFunction: 'ease' },
+        modal: { duration: transitionDuration, transition },
+        overlay: { duration: transitionDuration / 2, transition: 'fade', timingFunction: 'ease' },
       }}
     >
       {(transitionStyles) => (

@@ -5,7 +5,6 @@ import {
   useMergedRef,
   useWindowEvent,
   useUncontrolled,
-  useReducedMotion,
 } from '@mantine/hooks';
 import {
   mergeStyles,
@@ -141,7 +140,6 @@ export function Menu({
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
   const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-  const _transitionDuration = useReducedMotion() ? 0 : transitionDuration;
   const clickOutsideRegister = useClickOutsideRegister();
   const uuid = useId(menuId);
 
@@ -231,7 +229,7 @@ export function Menu({
 
       <Popper
         referenceElement={referenceElement}
-        transitionDuration={_transitionDuration}
+        transitionDuration={transitionDuration}
         transitionTimingFunction={transitionTimingFunction}
         transition={transition}
         mounted={_opened}
@@ -256,7 +254,7 @@ export function Menu({
           styles={styles}
           radius={radius}
           trapFocus={trigger !== 'hover' && trapFocus}
-          transitionDuration={_transitionDuration}
+          transitionDuration={transitionDuration}
           elementRef={setDropdownElement}
         >
           {children}

@@ -10,7 +10,6 @@ import {
 } from '@mantine/styles';
 
 interface SwitchStyles {
-  reduceMotion: boolean;
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
@@ -45,7 +44,7 @@ export const sizes = Object.keys(switchHeight).reduce((acc, size) => {
   return acc;
 }, {} as Record<MantineSize, { width: number; height: number }>);
 
-export default createStyles((theme, { size, radius, reduceMotion, color }: SwitchStyles) => {
+export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
   const handleSize = getSizeValue({ size, sizes: handleSizes });
   const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
 
@@ -71,7 +70,7 @@ export default createStyles((theme, { size, radius, reduceMotion, color }: Switc
       margin: 0,
       transitionProperty: 'background-color, border-color',
       transitionTimingFunction: theme.transitionTimingFunction,
-      transitionDuration: reduceMotion ? '1ms' : '150ms',
+      transitionDuration: '150ms',
       boxSizing: 'border-box',
       appearance: 'none',
       display: 'flex',
@@ -86,7 +85,11 @@ export default createStyles((theme, { size, radius, reduceMotion, color }: Switc
         height: handleSize,
         width: handleSize,
         border: `1px solid ${theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[3]}`,
-        transition: reduceMotion ? 'none' : `transform 150ms ${theme.transitionTimingFunction}`,
+        transition: `transform 150ms ${theme.transitionTimingFunction}`,
+
+        '@media (prefers-reduced-motion)': {
+          transitionDuration: '0ms',
+        },
       },
 
       '&:checked': {

@@ -92,7 +92,7 @@ export function SegmentedControl({
       fullWidth,
       color,
       radius,
-      reduceMotion: reduceMotion || !shouldAnimate,
+      shouldAnimate: reduceMotion || !shouldAnimate,
       transitionDuration,
       transitionTimingFunction,
     },

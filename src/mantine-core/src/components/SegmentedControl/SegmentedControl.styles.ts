@@ -15,7 +15,7 @@ interface SegmentedControlStyles {
   fullWidth: boolean;
   color: MantineColor;
   radius: MantineNumberSize;
-  reduceMotion: boolean;
+  shouldAnimate: boolean;
   transitionDuration: number;
   transitionTimingFunction: string;
   size: MantineSize;
@@ -36,7 +36,7 @@ export default createStyles(
       fullWidth,
       color,
       radius,
-      reduceMotion,
+      shouldAnimate,
       transitionDuration,
       transitionTimingFunction,
       size,
@@ -59,7 +59,7 @@ export default createStyles(
       overflow: 'hidden',
       textOverflow: 'ellipsis',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
-      transition: `color ${reduceMotion ? 0 : transitionDuration}ms ${
+      transition: `color ${shouldAnimate ? 0 : transitionDuration}ms ${
         transitionTimingFunction || theme.transitionTimingFunction
       }`,
 
@@ -74,7 +74,7 @@ export default createStyles(
       boxSizing: 'border-box',
       flex: 1,
       zIndex: 2,
-      transition: `border-left-color ${reduceMotion ? 0 : transitionDuration}ms ${
+      transition: `border-left-color ${shouldAnimate ? 0 : transitionDuration}ms ${
         transitionTimingFunction || theme.transitionTimingFunction
       }`,
 
@@ -147,9 +147,9 @@ export default createStyles(
         bottom: 4,
         zIndex: 1,
         boxShadow: color || theme.colorScheme === 'dark' ? 'none' : theme.shadows.xs,
-        transition: `transform ${reduceMotion ? 0 : transitionDuration}ms ${
+        transition: `transform ${shouldAnimate ? 0 : transitionDuration}ms ${
           theme.transitionTimingFunction
-        }, width ${reduceMotion ? 0 : transitionDuration / 2}ms ${
+        }, width ${shouldAnimate ? 0 : transitionDuration / 2}ms ${
           transitionTimingFunction || theme.transitionTimingFunction
         }`,
         backgroundColor:

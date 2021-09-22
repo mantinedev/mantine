@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  useClickOutside,
-  useFocusTrap,
-  useId,
-  useReducedMotion,
-  useMergedRef,
-} from '@mantine/hooks';
+import { useClickOutside, useFocusTrap, useId, useMergedRef } from '@mantine/hooks';
 import {
   mergeStyles,
   DefaultProps,
@@ -137,7 +131,7 @@ export function Popover({
     >
       <Popper
         referenceElement={referenceElement}
-        transitionDuration={useReducedMotion() ? 0 : transitionDuration}
+        transitionDuration={transitionDuration}
         transition={transition}
         mounted={opened && !disabled}
         position={position}

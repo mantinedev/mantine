@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { useReducedMotion } from '@mantine/hooks';
 import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
@@ -113,7 +112,7 @@ export function Tooltip({
     >
       <Popper
         referenceElement={referenceElement}
-        transitionDuration={useReducedMotion() ? 0 : transitionDuration}
+        transitionDuration={transitionDuration}
         transition={transition}
         mounted={visible}
         position={position}

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useReducedMotion } from '@mantine/hooks';
 import { useMantineTheme, DefaultProps } from '@mantine/styles';
 import { Overlay } from '../Overlay/Overlay';
 import { Transition } from '../Transition/Transition';
@@ -43,11 +42,9 @@ export function LoadingOverlay({
 }: LoadingOverlayProps) {
   const theme = useMantineTheme();
   const { classes, cx } = useStyles(null, null, 'loading-overlay');
-  const reduceMotion = useReducedMotion();
-  const duration = reduceMotion ? 1 : transitionDuration;
 
   return (
-    <Transition duration={duration} mounted={visible} transition="fade">
+    <Transition duration={transitionDuration} mounted={visible} transition="fade">
       {(transitionStyles) => (
         <div
           className={cx(classes.root, className)}

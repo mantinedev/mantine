@@ -20,14 +20,7 @@ import {
   MantineShadow,
   ClassNames,
 } from '@mantine/core';
-import {
-  useId,
-  useClickOutside,
-  useFocusTrap,
-  useMergedRef,
-  useWindowEvent,
-  useReducedMotion,
-} from '@mantine/hooks';
+import { useId, useClickOutside, useFocusTrap, useMergedRef, useWindowEvent } from '@mantine/hooks';
 import { CalendarStylesNames } from '../Calendar/Calendar';
 import useStyles from './DatePickerBase.styles';
 
@@ -231,7 +224,7 @@ export function DatePickerBase({
         {dropdownType === 'popover' ? (
           <Popper
             referenceElement={referenceElement}
-            transitionDuration={useReducedMotion() ? 0 : transitionDuration}
+            transitionDuration={transitionDuration}
             transitionTimingFunction={transitionTimingFunction}
             forceUpdateDependencies={positionDependencies}
             transition={transition}

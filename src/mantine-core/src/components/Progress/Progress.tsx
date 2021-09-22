@@ -1,5 +1,4 @@
 import React from 'react';
-import { useReducedMotion } from '@mantine/hooks';
 import {
   useMantineTheme,
   mergeStyles,
@@ -65,12 +64,7 @@ export function Progress({
   ...others
 }: ProgressProps) {
   const theme = useMantineTheme();
-  const reduceMotion = useReducedMotion();
-  const { classes, cx } = useStyles(
-    { color, size, radius, striped, reduceMotion },
-    classNames,
-    'progress'
-  );
+  const { classes, cx } = useStyles({ color, size, radius, striped }, classNames, 'progress');
   const _styles = mergeStyles(classes, styles);
 
   const segments = Array.isArray(sections)

@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react';
 import { Prism } from './Prism';
 
 const tsx = `import React from 'react';
-import { useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, useMantineTheme, mergeStyles } from '../../theme';
 import useStyles, { sizes } from './Burger.styles';
 
@@ -37,8 +36,7 @@ export function Burger({
   ...others
 }: BurgerProps) {
   const theme = useMantineTheme();
-  const reduceMotion = useReducedMotion();
-  const { classes, cx } = useStyles({ color, size, theme, reduceMotion }, classNames);
+  const { classes, cx } = useStyles({ color, size, theme }, classNames);
   const _styles = mergeStyles(classes, styles);
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMergedRef, useReducedMotion } from '@mantine/hooks';
+import { useMergedRef } from '@mantine/hooks';
 import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { TabProps } from '../Tab/Tab';
 import type { TabsVariant } from '../Tabs';
@@ -34,9 +34,8 @@ export function TabControl({
   ...others
 }: TabControlProps) {
   const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
-  const reduceMotion = useReducedMotion();
   const { classes, cx } = useStyles(
-    { reduceMotion, color: overrideColor || color, orientation },
+    { color: overrideColor || color, orientation },
     classNames,
     'tabs'
   );

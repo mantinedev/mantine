@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  useScrollLock,
-  useMergedRef,
-  useReducedMotion,
-  useFocusTrap,
-  useFocusReturn,
-} from '@mantine/hooks';
+import { useScrollLock, useMergedRef, useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import {
   useMantineTheme,
   mergeStyles,
@@ -127,7 +121,6 @@ export function MantineDrawer({
   ...others
 }: DrawerProps) {
   const theme = useMantineTheme();
-  const duration = useReducedMotion() ? 1 : transitionDuration;
   const { classes, cx } = useStyles({ size, position }, classNames, 'drawer');
   const _styles = mergeStyles(classes, styles);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
@@ -163,9 +156,9 @@ export function MantineDrawer({
     <GroupedTransition
       mounted={opened}
       transitions={{
-        overlay: { duration: duration / 2, transition: 'fade', timingFunction: 'ease' },
+        overlay: { duration: transitionDuration / 2, transition: 'fade', timingFunction: 'ease' },
         drawer: {
-          duration,
+          duration: transitionDuration,
           transition: drawerTransition,
           timingFunction: transitionTimingFunction,
         },
