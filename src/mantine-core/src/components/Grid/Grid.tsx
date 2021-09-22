@@ -2,12 +2,7 @@ import React, { Children } from 'react';
 import cx from 'clsx';
 import { useId } from '@mantine/hooks';
 import { useMantineTheme, DefaultProps, MantineNumberSize, getSizeValue } from '@mantine/styles';
-
-import { Col, ColProps, breakpoints } from './Col';
 import { getResponsiveStyles } from './get-responsive-styles';
-
-export { Col };
-export type { ColProps };
 
 export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** <Col /> components only */
@@ -62,7 +57,7 @@ export function Grid({
 
   return (
     <div style={styles} className={cx('mantine-grid', className)} {...others}>
-      <style>{getResponsiveStyles({ uuid, breakpoints, columns, grow, theme })}</style>
+      <style>{getResponsiveStyles({ uuid, columns, grow, theme })}</style>
       {cols}
     </div>
   );

@@ -14,9 +14,7 @@ import { Portal } from '../Portal/Portal';
 import { Text } from '../Text/Text';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { GroupedTransition, MantineTransition } from '../Transition/Transition';
-import useStyles, { Position, sizes } from './Drawer.styles';
-
-export const DRAWER_SIZES = sizes;
+import useStyles, { DrawerPosition } from './Drawer.styles';
 
 export type DrawerStylesNames = Exclude<
   ClassNames<typeof useStyles>,
@@ -33,7 +31,7 @@ export interface DrawerProps
   onClose(): void;
 
   /** Drawer body position */
-  position?: 'top' | 'left' | 'bottom' | 'right';
+  position?: DrawerPosition;
 
   /** Drawer body width (right | left position) or height (top | bottom position), cannot exceed 100vh for height and 100% for width */
   size?: string | number;
@@ -87,7 +85,7 @@ export interface DrawerProps
   closeButtonLabel?: string;
 }
 
-const transitions: Record<Position, MantineTransition> = {
+const transitions: Record<DrawerPosition, MantineTransition> = {
   top: 'slide-down',
   bottom: 'slide-up',
   left: 'slide-right',

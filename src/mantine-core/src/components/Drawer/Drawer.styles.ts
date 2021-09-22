@@ -10,10 +10,10 @@ export const sizes = {
   full: '100%',
 };
 
-export type Position = 'top' | 'bottom' | 'left' | 'right';
+export type DrawerPosition = 'top' | 'bottom' | 'left' | 'right';
 
 interface DrawerStyles {
-  position: Position;
+  position: DrawerPosition;
   size: number | string;
 }
 
@@ -21,7 +21,7 @@ function getPositionStyles({
   position,
   size,
 }: {
-  position: Position;
+  position: DrawerPosition;
   size: number | string;
 }): Partial<Record<keyof React.CSSProperties, any>> {
   switch (position) {

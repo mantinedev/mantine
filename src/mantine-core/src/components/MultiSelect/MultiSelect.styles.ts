@@ -1,6 +1,5 @@
 import { createStyles, getSizeValue, MantineSize } from '@mantine/styles';
-
-import { INPUT_SIZES } from '../Input/Input';
+import { INPUT_SIZES } from '../Input';
 
 interface MultiSelectStyles {
   size: MantineSize;

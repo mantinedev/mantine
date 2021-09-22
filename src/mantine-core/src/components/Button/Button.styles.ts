@@ -11,8 +11,7 @@ import {
   hexToRgba,
   MantineColor,
 } from '@mantine/styles';
-
-import { INPUT_SIZES } from '../Input/Input';
+import { INPUT_SIZES } from '../Input';
 
 export type ButtonVariant =
   | 'link'

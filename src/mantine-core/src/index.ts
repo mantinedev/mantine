@@ -5,7 +5,6 @@ export * from './components/Accordion';
 export * from './components/ActionIcon';
 export * from './components/Affix';
 export * from './components/Alert';
-export * from './components/Loader';
 export * from './components/Anchor';
 export * from './components/Autocomplete';
 export * from './components/Avatar';
@@ -26,18 +25,19 @@ export * from './components/ColorSwatch';
 export * from './components/Container';
 export * from './components/Dialog';
 export * from './components/Divider';
-export { Drawer, DRAWER_SIZES } from './components/Drawer/Drawer';
-export { Grid, Col } from './components/Grid/Grid';
-export { Group } from './components/Group/Group';
-export { Highlight } from './components/Highlight/Highlight';
-export { Image } from './components/Image/Image';
-export { Input, INPUT_VARIANTS, INPUT_SIZES } from './components/Input/Input';
-export { InputWrapper } from './components/InputWrapper/InputWrapper';
-export { JsonInput } from './components/JsonInput/JsonInput';
-export { Kbd } from './components/Kbd/Kbd';
-export { List } from './components/List/List';
-export { LoadingOverlay } from './components/LoadingOverlay/LoadingOverlay';
-export { Mark } from './components/Mark/Mark';
+export * from './components/Drawer';
+export * from './components/Grid';
+export * from './components/Group';
+export * from './components/Highlight';
+export * from './components/Image';
+export * from './components/Input';
+export * from './components/InputWrapper';
+export * from './components/JsonInput';
+export * from './components/Kbd';
+export * from './components/List';
+export * from './components/Loader';
+export * from './components/LoadingOverlay';
+export * from './components/Mark';
 export { Menu, MenuItem, MenuBody, MenuLabel, MENU_SIZES } from './components/Menu/Menu';
 export { Modal, MODAL_SIZES } from './components/Modal/Modal';
 export { MultiSelect } from './components/MultiSelect/MultiSelect';
@@ -77,23 +77,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type { DividerProps, DividerStylesNames } from './components/Divider/Divider';
-export type { DrawerProps, DrawerStylesNames } from './components/Drawer/Drawer';
-export type { GridProps, ColProps } from './components/Grid/Grid';
-export type { GroupProps, GroupStylesNames } from './components/Group/Group';
-export type { HighlightProps } from './components/Highlight/Highlight';
-export type { ImageProps, ImageStylesNames } from './components/Image/Image';
-export type { InputProps, InputBaseProps, InputStylesNames } from './components/Input/Input';
-export type {
-  InputWrapperBaseProps,
-  InputWrapperProps,
-  InputWrapperStylesNames,
-} from './components/InputWrapper/InputWrapper';
-export type { JsonInputProps, JsonInputStylesNames } from './components/JsonInput/JsonInput';
-export type { KbdProps } from './components/Kbd/Kbd';
-export type { ListProps, ListItemProps, ListStylesNames } from './components/List/List';
-export type { LoadingOverlayProps } from './components/LoadingOverlay/LoadingOverlay';
-export type { MarkProps } from './components/Mark/Mark';
 export type {
   MenuProps,
   MenuItemProps,

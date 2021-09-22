@@ -4,6 +4,7 @@ import { Button } from '../Button/Button';
 import { Group } from '../Group/Group';
 import { Text } from '../Text/Text';
 import { Drawer } from './Drawer';
+import { DarkStory } from '../../../demos';
 
 function Wrapper(
   props: Omit<React.ComponentPropsWithoutRef<typeof Drawer>, 'opened' | 'onClose' | 'position'>
@@ -45,4 +46,9 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl', 'full', 800] as const).map((size) 
 
 storiesOf('@mantine/core/Drawer', module)
   .add('General usage', () => <Wrapper>Drawer</Wrapper>)
-  .add('Sizes', () => <div style={{ padding: 20 }}>{sizes}</div>);
+  .add('Sizes', () => <div style={{ padding: 20 }}>{sizes}</div>)
+  .add('Dark theme', () => (
+    <DarkStory>
+      <Wrapper>Dark theme</Wrapper>
+    </DarkStory>
+  ));

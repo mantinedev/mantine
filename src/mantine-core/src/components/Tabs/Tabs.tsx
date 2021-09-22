@@ -7,7 +7,7 @@ import {
   MantineColor,
   ClassNames,
 } from '@mantine/styles';
-import { Group, GroupPosition } from '../Group/Group';
+import { Group, GroupPosition } from '../Group';
 import { Tab, TabType, TabProps } from './Tab/Tab';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';

@@ -12,7 +12,7 @@ import {
   ClassNames,
 } from '@mantine/styles';
 import useStyles, { heights, ButtonVariant } from './Button.styles';
-import { Loader, LoaderProps } from '../Loader/Loader';
+import { Loader, LoaderProps } from '../Loader';
 
 export type ButtonStylesNames = Exclude<ClassNames<typeof useStyles>, ButtonVariant | 'loading'>;
 

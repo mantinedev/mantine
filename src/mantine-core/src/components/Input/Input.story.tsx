@@ -6,6 +6,7 @@ import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import Textarea from 'react-textarea-autosize';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
+import { DarkStory } from '../../../demos';
 
 function ValidInvalid() {
   const [valid, toggle] = useBooleanToggle();
@@ -119,4 +120,10 @@ storiesOf('@mantine/core/Input', module)
     </>
   ))
   .add('Invalid toggle', () => <ValidInvalid />)
-  .add('With classNames', () => <WithStyles />);
+  .add('With classNames', () => <WithStyles />)
+  .add('Dark theme', () => (
+    <DarkStory>
+      <ValidInvalid />
+      {getStates()}
+    </DarkStory>
+  ));

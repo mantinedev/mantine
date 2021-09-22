@@ -1,10 +1,7 @@
 import React, { Children } from 'react';
 import { mergeStyles, DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
-import { ListItem, ListItemProps, ListItemStylesNames } from './ListItem/ListItem';
+import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 import useStyles from './List.styles';
-
-export { ListItem };
-export type { ListItemProps };
 
 export type ListStylesNames = ListItemStylesNames | ClassNames<typeof useStyles>;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Card } from '../Card/Card';
-import { Grid, Col } from './Grid';
+import { Grid, Col } from './index';
 
 storiesOf('@mantine/core/Grid', module)
   .add('General usage', () => (
