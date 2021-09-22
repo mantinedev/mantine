@@ -23,7 +23,7 @@ function Demo() {
           }}
         />
       </Group>
-      <Text align="center" style={{ marginTop: theme.spacing.sm }}>
+      <Text align="center">
         Mouse coordinates <Code>{\`{ x: \${x}, y: \${y} }\`}</Code>
       </Text>
     </>
