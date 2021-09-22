@@ -5,6 +5,7 @@ import { DEFAULT_THEME } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { Avatar } from './Avatar';
 import { AvatarsGroup } from './AvatarsGroup/AvatarsGroup';
+import { DarkStory } from '../../../demos';
 
 const getSizes = (props?: any) =>
   ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => <Avatar key={size} size={size} {...props} />);
@@ -28,10 +29,23 @@ storiesOf('@mantine/core/Avatar', module)
   ))
   .add('AvatarsGroup', () => (
     <div style={{ padding: 40 }}>
-      <AvatarsGroup size={40} spacing="lg" limit={2}>
-        <Avatar src={image} />
-        <Avatar src={image} radius="xl" color="indigo" />
-        <Avatar radius="md" color="blue" />
-      </AvatarsGroup>
+      <div style={{ backgroundColor: 'red' }}>
+        <AvatarsGroup size={40} spacing="lg" limit={2}>
+          <Avatar component="a" href="https://github.com/rtivital" src={image} />
+          <Avatar src={image} radius="xl" color="indigo" />
+          <Avatar radius="md" color="blue" />
+        </AvatarsGroup>
+      </div>
     </div>
+  ))
+  .add('Dark theme', () => (
+    <DarkStory>
+      <div style={{ padding: 40 }}>
+        <AvatarsGroup size={40} spacing="lg" limit={2}>
+          <Avatar src={image} />
+          <Avatar src={image} radius="xl" color="indigo" />
+          <Avatar radius="md" color="blue" />
+        </AvatarsGroup>
+      </div>
+    </DarkStory>
   ));

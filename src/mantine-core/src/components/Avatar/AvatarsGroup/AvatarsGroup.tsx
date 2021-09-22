@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar } from '@mantine/core';
 import { DefaultProps, MantineNumberSize, mergeStyles, ClassNames } from '@mantine/styles';
+import { Center } from '../../Center';
 import useStyles from './AvatarsGroup.styles';
 
 export type AvatarsGroupStylesNames = ClassNames<typeof useStyles>;
@@ -68,9 +69,9 @@ export function AvatarsGroup({
           className={classes.child}
           style={{ ..._styles.child, zIndex: limit + 1 }}
         >
-          <div className={classes.truncated} style={_styles.truncated}>
+          <Center className={classes.truncated} style={_styles.truncated}>
             +{extraAvatars}
-          </div>
+          </Center>
         </Avatar>
       ) : null}
     </div>
