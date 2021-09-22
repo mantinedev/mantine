@@ -17,8 +17,8 @@ export * from './components/Button';
 export * from './components/Card';
 export * from './components/Center';
 export * from './components/Checkbox';
+export * from './components/Chips';
 
-export { Chips, Chip } from './components/Chips/Chips';
 export { Code } from './components/Code/Code';
 export * from './components/Collapse';
 export { ColorInput } from './components/ColorInput/ColorInput';
@@ -78,12 +78,6 @@ export {
 export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
 
 // Types are exported separately due to build issue: bundled types were not included with regular export
-export type {
-  ChipProps,
-  ChipsProps,
-  ChipsStylesNames,
-  ChipStylesNames,
-} from './components/Chips/Chips';
 export type { CodeProps } from './components/Code/Code';
 export type { ColorInputProps } from './components/ColorInput/ColorInput';
 export type {

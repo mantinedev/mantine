@@ -9,7 +9,7 @@ import {
   MantineColor,
   ClassNames,
 } from '@mantine/styles';
-import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
+import { CheckboxIcon } from '../../Checkbox';
 import useStyles from './Chip.styles';
 
 export type ChipStylesNames = Exclude<ClassNames<typeof useStyles>, 'filled' | 'outline'>;
