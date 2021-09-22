@@ -137,10 +137,11 @@ export default createStyles((theme, { radius, size, color }: ChipStyles, getRef)
       },
 
       [`&.${filled.ref}`]: {
-        backgroundColor:
+        backgroundColor: `${
           theme.colorScheme === 'dark'
             ? getSharedColorScheme({ color, theme, variant: 'light' }).background
-            : getThemeColor({ theme, color, shade: 1 }),
+            : getThemeColor({ theme, color, shade: 1 })
+        } !important`,
       },
     },
 

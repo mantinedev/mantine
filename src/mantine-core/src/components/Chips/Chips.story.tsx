@@ -2,20 +2,21 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Group } from '../Group/Group';
 import { Chip } from './Chip/Chip';
-import { Chips, ChipsProps } from './Chips';
+import { Chips } from './Chips';
 import { DarkStory } from '../../../demos';
 
-function BaseDemo(props?: Partial<ChipsProps>) {
+function BaseDemo(props?: any) {
   return (
     <div style={{ padding: 40 }}>
-      <Chips {...props}>
+      <Chips multiple {...props}>
         <Chip value="1">First</Chip>
         <Chip value="2" disabled>
           Second
         </Chip>
         <Chip value="3">Third</Chip>
       </Chips>
-      <Chips variant="filled">
+
+      <Chips variant="filled" {...props} style={{ marginTop: 15 }}>
         <Chip value="1">First</Chip>
         <Chip value="2" disabled>
           Second
@@ -28,6 +29,7 @@ function BaseDemo(props?: Partial<ChipsProps>) {
 
 storiesOf('@mantine/core/Chips', module)
   .add('Chips', () => <BaseDemo />)
+  .add('Checkboxes', () => <BaseDemo multiple />)
   .add('Chip sizes', () => (
     <Group style={{ padding: 40 }} direction="column">
       <Chip value="1" size="xs">
