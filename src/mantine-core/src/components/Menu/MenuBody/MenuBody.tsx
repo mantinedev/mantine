@@ -8,7 +8,7 @@ import {
   MantineShadow,
   ClassNames,
 } from '@mantine/styles';
-import { MantineTransition } from '../../Transition/Transition';
+import { MantineTransition } from '../../Transition';
 import { Paper } from '../../Paper/Paper';
 import { Divider } from '../../Divider/Divider';
 import { Text } from '../../Text/Text';

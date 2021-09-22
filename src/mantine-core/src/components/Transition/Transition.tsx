@@ -2,14 +2,7 @@ import React from 'react';
 import { DefaultProps } from '@mantine/styles';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { useTransition } from './use-transition';
-import { MantineTransition, transitions } from './transitions';
-
-export { GroupedTransition } from './GroupedTransition';
-export type { GroupedTransitionProps } from './GroupedTransition';
-
-export const AVAILABLE_TRANSITIONS = Object.keys(transitions) as Array<keyof typeof transitions>;
-
-export type { MantineTransition };
+import { MantineTransition } from './transitions';
 
 export interface TransitionProps extends Omit<DefaultProps, 'className'> {
   /** Predefined transition name or transition styles */

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMantineTheme, DefaultProps } from '@mantine/styles';
 import { Overlay } from '../Overlay/Overlay';
-import { Transition } from '../Transition/Transition';
+import { Transition } from '../Transition';
 import { Loader, LoaderProps } from '../Loader/Loader';
 import useStyles from './LoadingOverlay.styles';
 

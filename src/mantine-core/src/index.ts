@@ -52,58 +52,22 @@ export * from './components/Popover';
 export * from './components/Popper';
 export * from './components/Portal';
 export * from './components/Progress';
-export { RadioGroup, Radio, RADIO_SIZES } from './components/RadioGroup/RadioGroup';
-export { RingProgress } from './components/RingProgress/RingProgress';
-export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
-export { Select } from './components/Select/Select';
-export { SimpleGrid } from './components/SimpleGrid/SimpleGrid';
-export { Slider, RangeSlider, SLIDER_SIZES } from './components/Slider';
-export { Spoiler } from './components/Spoiler/Spoiler';
-export { Switch, SWITCH_SIZES } from './components/Switch/Switch';
-export { Table } from './components/Table/Table';
-export { Tabs, Tab } from './components/Tabs/Tabs';
-export { Text } from './components/Text/Text';
-export { Textarea } from './components/Textarea/Textarea';
-export { TextInput } from './components/TextInput/TextInput';
-export { ThemeIcon, THEME_ICON_SIZES } from './components/ThemeIcon/ThemeIcon';
-export { Timeline, TimelineItem } from './components/Timeline/Timeline';
-export { Title } from './components/Title/Title';
-export { Tooltip } from './components/Tooltip/Tooltip';
-export {
-  Transition,
-  GroupedTransition,
-  AVAILABLE_TRANSITIONS,
-} from './components/Transition/Transition';
-export { TypographyStylesProvider } from './components/TypographyStylesProvider/TypographyStylesProvider';
-
-// Types are exported separately due to build issue: bundled types were not included with regular export
-export type { RadioGroupProps, RadioProps } from './components/RadioGroup/RadioGroup';
-export type { RingProgressProps } from './components/RingProgress/RingProgress';
-export type {
-  SegmentedControlProps,
-  SegmentedControlStylesNames,
-} from './components/SegmentedControl/SegmentedControl';
-export type { SelectProps, SelectStylesNames, SelectItemProps } from './components/Select/Select';
-export type { SimpleGridProps } from './components/SimpleGrid/SimpleGrid';
-export type { SliderProps, RangeSliderProps, SliderStylesNames } from './components/Slider';
-export type { SpoilerProps, SpoilerStylesNames } from './components/Spoiler/Spoiler';
-export type { SwitchProps, SwitchStylesNames } from './components/Switch/Switch';
-export type { TableProps } from './components/Table/Table';
-export type { TabsProps, TabProps, TabsStylesNames } from './components/Tabs/Tabs';
-export type { TextProps } from './components/Text/Text';
-export type { TextareaProps, TextareaStylesNames } from './components/Textarea/Textarea';
-export type { TextInputProps, TextInputStylesNames } from './components/TextInput/TextInput';
-export type { ThemeIconProps } from './components/ThemeIcon/ThemeIcon';
-export type {
-  TimelineProps,
-  TimelineItemProps,
-  TimelineStylesNames,
-} from './components/Timeline/Timeline';
-export type { TitleProps } from './components/Title/Title';
-export type { TooltipProps, TooltipStylesNames } from './components/Tooltip/Tooltip';
-export type {
-  MantineTransition,
-  TransitionProps,
-  GroupedTransitionProps,
-} from './components/Transition/Transition';
-export type { TypographyStylesProviderProps } from './components/TypographyStylesProvider/TypographyStylesProvider';
+export * from './components/RadioGroup';
+export * from './components/RingProgress';
+export * from './components/SegmentedControl';
+export * from './components/Select';
+export * from './components/SimpleGrid';
+export * from './components/Slider';
+export * from './components/Spoiler';
+export * from './components/Switch';
+export * from './components/Table';
+export * from './components/Tabs';
+export * from './components/Text';
+export * from './components/Textarea';
+export * from './components/TextInput';
+export * from './components/ThemeIcon';
+export * from './components/Timeline';
+export * from './components/Title';
+export * from './components/Tooltip';
+export * from './components/Transition';
+export * from './components/TypographyStylesProvider';

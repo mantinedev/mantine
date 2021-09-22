@@ -8,15 +8,11 @@ import {
   ClassNames,
 } from '@mantine/styles';
 import { Group, GroupPosition } from '../Group';
-import { Tab, TabType, TabProps } from './Tab/Tab';
+import { Tab, TabType } from './Tab/Tab';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
 
-export { Tab };
-export type { TabProps };
-
-export const TABS_VARIANTS = ['default', 'outline', 'pills', 'unstyled'] as const;
-export type TabsVariant = typeof TABS_VARIANTS[number];
+export type TabsVariant = 'default' | 'outline' | 'pills' | 'unstyled';
 export type TabsStylesNames =
   | Exclude<ClassNames<typeof useStyles>, TabsVariant>
   | TabControlStylesNames;
@@ -46,7 +42,7 @@ export interface TabsProps
   onTabChange?(tabIndex: number): void;
 
   /** Controls appearance */
-  variant?: 'default' | 'outline' | 'pills' | 'unstyled';
+  variant?: TabsVariant;
 
   /** Controls tab content padding-top */
   tabPadding?: MantineNumberSize;

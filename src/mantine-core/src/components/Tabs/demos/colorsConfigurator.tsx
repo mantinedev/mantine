@@ -1,6 +1,6 @@
 import React from 'react';
 import { ImageIcon, ChatBubbleIcon, MixerVerticalIcon } from '@modulz/radix-icons';
-import { Tabs, Tab, TabsProps } from '../Tabs';
+import { Tabs, Tab, TabsProps } from '../index';
 
 function Wrapper(props: TabsProps) {
   return (

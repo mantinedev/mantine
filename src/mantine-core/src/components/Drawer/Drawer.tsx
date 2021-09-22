@@ -13,7 +13,7 @@ import { Overlay } from '../Overlay/Overlay';
 import { Portal } from '../Portal/Portal';
 import { Text } from '../Text/Text';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { GroupedTransition, MantineTransition } from '../Transition/Transition';
+import { GroupedTransition, MantineTransition } from '../Transition';
 import useStyles, { DrawerPosition } from './Drawer.styles';
 
 export type DrawerStylesNames = Exclude<

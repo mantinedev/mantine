@@ -3,7 +3,7 @@ import cx from 'clsx';
 import { useId } from '@mantine/hooks';
 import { useMantineTheme, DefaultProps, MantineNumberSize, getSizeValue } from '@mantine/styles';
 
-interface GridBreakpoint {
+export interface SimpleGridBreakpoint {
   maxWidth: number;
   cols: number;
   spacing?: MantineNumberSize;
@@ -11,7 +11,7 @@ interface GridBreakpoint {
 
 export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Breakpoints data to change items per row and spacing based on max-width */
-  breakpoints?: GridBreakpoint[];
+  breakpoints?: SimpleGridBreakpoint[];
 
   /** Default amount of columns, used when none of breakpoints can be applied  */
   cols: number;

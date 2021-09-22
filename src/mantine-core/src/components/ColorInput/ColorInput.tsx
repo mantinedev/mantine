@@ -9,7 +9,7 @@ import {
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { Popper } from '../Popper/Popper';
-import { MantineTransition } from '../Transition/Transition';
+import { MantineTransition } from '../Transition';
 import { Paper } from '../Paper/Paper';
 import {
   ColorPicker,

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { usePopper } from 'react-popper';
 import { useDidUpdate } from '@mantine/hooks';
-import { Portal } from '../Portal/Portal';
-import { Transition, MantineTransition } from '../Transition/Transition';
+import { Portal } from '../Portal';
+import { Transition, MantineTransition } from '../Transition';
 import useStyles from './Popper.styles';
 
 export interface SharedPopperProps {

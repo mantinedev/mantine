@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
-import { RadioGroup, Radio } from './RadioGroup';
+import { RadioGroup, Radio } from './index';
 
 storiesOf('@mantine/core/RadioGroup', module)
   .add('General usage', () => (

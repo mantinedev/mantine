@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
-import { MantineTransition } from '../../Transition/Transition';
+import { MantineTransition } from '../../Transition';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
 import { getPosition } from '../utils/get-position/get-position';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';

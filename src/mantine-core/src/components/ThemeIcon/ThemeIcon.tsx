@@ -1,8 +1,6 @@
 import React from 'react';
 import { DefaultProps, MantineNumberSize, MantineGradient, MantineColor } from '@mantine/styles';
-import useStyles, { sizes, ThemeIconVariant } from './ThemeIcon.styles';
-
-export const THEME_ICON_SIZES = sizes;
+import useStyles, { ThemeIconVariant } from './ThemeIcon.styles';
 
 export interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'> {
   /** Icon */

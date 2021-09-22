@@ -6,7 +6,7 @@ import {
   MantineNumberSize,
   ClassNames,
 } from '@mantine/styles';
-import { Transition, MantineTransition } from '../Transition/Transition';
+import { Transition, MantineTransition } from '../Transition';
 import { CloseButton } from '../ActionIcon';
 import { Affix } from '../Affix';
 import { Paper, PaperProps } from '../Paper/Paper';

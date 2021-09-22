@@ -1,7 +1,7 @@
 import React from 'react';
 import { mergeStyles, DefaultProps, MantineShadow, ClassNames } from '@mantine/styles';
-import { Transition, MantineTransition } from '../../Transition/Transition';
-import { Paper } from '../../Paper/Paper';
+import { Transition, MantineTransition } from '../../Transition';
+import { Paper } from '../../Paper';
 import useStyles from './SelectDropdown.styles';
 
 export type SelectDropdownStylesNames = ClassNames<typeof useStyles>;

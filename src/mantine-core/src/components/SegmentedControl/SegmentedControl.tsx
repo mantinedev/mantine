@@ -10,7 +10,7 @@ import {
 } from '@mantine/styles';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
-interface SegmentedControlItem {
+export interface SegmentedControlItem {
   value: string;
   label: React.ReactNode;
 }

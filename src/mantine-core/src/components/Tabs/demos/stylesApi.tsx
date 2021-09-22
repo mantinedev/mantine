@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageIcon, ChatBubbleIcon, GearIcon } from '@modulz/radix-icons';
 import { createStyles } from '@mantine/styles';
-import { Tabs, TabsProps, Tab } from '../Tabs';
+import { Tabs, TabsProps, Tab } from '../index';
 
 const code = `
 import { createStyles, Tabs, Tab } from '@mantine/core';

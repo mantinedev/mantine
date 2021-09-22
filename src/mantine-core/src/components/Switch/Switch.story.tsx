@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider, DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
+import { Switch, SwitchProps } from './Switch';
 
-import { Switch } from './Switch';
-
-function SwitchWrapper(props: Omit<React.ComponentProps<typeof Switch>, 'value' | 'onChange'>) {
+function SwitchWrapper(props: Omit<SwitchProps, 'value' | 'onChange'>) {
   const [value, onChange] = useState(true);
   return (
     <Switch

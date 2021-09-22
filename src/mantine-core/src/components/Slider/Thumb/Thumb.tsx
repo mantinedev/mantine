@@ -7,7 +7,7 @@ import {
   MantineColor,
   ClassNames,
 } from '@mantine/styles';
-import { Transition, MantineTransition } from '../../Transition/Transition';
+import { Transition, MantineTransition } from '../../Transition';
 import useStyles from './Thumb.styles';
 
 export type ThumbStylesNames = ClassNames<typeof useStyles>;

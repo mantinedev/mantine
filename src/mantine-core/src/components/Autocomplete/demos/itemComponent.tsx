@@ -1,6 +1,6 @@
 import React from 'react';
 import { Group, Avatar, Text, MantineColor } from '../../../index';
-import { SelectItemProps } from '../../Select/Select';
+import { SelectItemProps } from '../../Select';
 import { LABELS_DATA } from '../../Accordion/demos/_mockdata';
 import { Autocomplete } from '../Autocomplete';
 

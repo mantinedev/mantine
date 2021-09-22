@@ -8,7 +8,7 @@ import {
   itSupportsOthers,
   itSupportsStylesApi,
 } from '@mantine/tests';
-import { GroupedTransition } from '../Transition/Transition';
+import { GroupedTransition } from '../Transition';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';

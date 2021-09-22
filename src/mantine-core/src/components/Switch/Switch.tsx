@@ -8,9 +8,7 @@ import {
   MantineColor,
   ClassNames,
 } from '@mantine/styles';
-import useStyles, { sizes } from './Switch.styles';
-
-export const SWITCH_SIZES = sizes;
+import useStyles from './Switch.styles';
 
 export type SwitchStylesNames = ClassNames<typeof useStyles>;
 

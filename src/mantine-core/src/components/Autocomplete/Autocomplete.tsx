@@ -7,7 +7,7 @@ import {
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-import { MantineTransition } from '../Transition/Transition';
+import { MantineTransition } from '../Transition';
 import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
