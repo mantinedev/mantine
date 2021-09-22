@@ -3,9 +3,9 @@ import {
   MantineSize,
   getFontStyles,
   getSizeValue,
-  getThemeColor,
   getFocusStyles,
   MantineColor,
+  getSharedColorScheme,
 } from '@mantine/styles';
 
 export const sizes = {
@@ -32,9 +32,12 @@ interface CheckboxStyles {
 
 export default createStyles(
   (theme, { size, color, transitionDuration }: CheckboxStyles, getRef) => {
+    const colors = getSharedColorScheme({ color, theme, variant: 'filled' });
+    const _size = getSizeValue({ size, sizes });
+
     const icon = {
       ref: getRef('icon'),
-      color: theme.white,
+      color: colors.color,
       transform: 'translateY(5px) scale(0.5)',
       opacity: 0,
       transitionProperty: 'opacity, transform',
@@ -65,8 +68,8 @@ export default createStyles(
 
       inner: {
         position: 'relative',
-        width: getSizeValue({ size, sizes }),
-        height: getSizeValue({ size, sizes }),
+        width: _size,
+        height: _size,
       },
 
       label: {
@@ -74,7 +77,7 @@ export default createStyles(
         WebkitTapHighlightColor: 'transparent',
         paddingLeft: theme.spacing.sm,
         fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
-        lineHeight: `${getSizeValue({ size, sizes })}px`,
+        lineHeight: `${_size}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       },
 
@@ -85,8 +88,8 @@ export default createStyles(
         border: `1px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
         }`,
-        width: getSizeValue({ size, sizes }),
-        height: getSizeValue({ size, sizes }),
+        width: _size,
+        height: _size,
         borderRadius: theme.radius.sm,
         padding: 0,
         outline: 0,
@@ -95,8 +98,8 @@ export default createStyles(
         transition: `border-color ${transitionDuration}ms ease, background-color ${transitionDuration}ms ease`,
 
         '&:checked': {
-          backgroundColor: getThemeColor({ theme, color, shade: 6 }),
-          borderColor: getThemeColor({ theme, color, shade: 6 }),
+          backgroundColor: colors.background,
+          borderColor: colors.background,
 
           [`& + .${icon.ref}`]: {
             opacity: 1,
