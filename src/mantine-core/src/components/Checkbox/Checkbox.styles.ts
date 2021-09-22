@@ -37,7 +37,9 @@ export default createStyles(
       color: theme.white,
       transform: 'translateY(5px) scale(0.5)',
       opacity: 0,
-      transition: `opacity ${transitionDuration}ms ease, transform ${transitionDuration}ms ease`,
+      transitionProperty: 'opacity, transform',
+      transitionTimingFunction: 'ease',
+      transitionDuration: `${transitionDuration}ms`,
       pointerEvents: 'none',
       width: getSizeValue({ size, sizes: iconSizes }),
       position: 'absolute',
@@ -47,6 +49,10 @@ export default createStyles(
       left: 0,
       right: 0,
       margin: 'auto',
+
+      '@media (prefers-reduced-motion)': {
+        transitionDuration: '0ms',
+      },
     } as const;
 
     return {

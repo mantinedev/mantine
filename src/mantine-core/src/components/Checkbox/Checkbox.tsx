@@ -1,5 +1,5 @@
 import React from 'react';
-import { useId, useReducedMotion } from '@mantine/hooks';
+import { useId } from '@mantine/hooks';
 import { mergeStyles, DefaultProps, MantineSize, MantineColor, ClassNames } from '@mantine/styles';
 import { CheckboxIcon } from './CheckboxIcon';
 import useStyles, { sizes } from './Checkbox.styles';
@@ -56,12 +56,7 @@ export function Checkbox({
   ...others
 }: CheckboxProps) {
   const uuid = useId(id);
-  const reduceMotion = useReducedMotion();
-  const { classes, cx } = useStyles(
-    { size, color, transitionDuration: reduceMotion ? 0 : transitionDuration },
-    classNames,
-    'checkbox'
-  );
+  const { classes, cx } = useStyles({ size, color, transitionDuration }, classNames, 'checkbox');
   const _styles = mergeStyles(classes, styles);
 
   return (
