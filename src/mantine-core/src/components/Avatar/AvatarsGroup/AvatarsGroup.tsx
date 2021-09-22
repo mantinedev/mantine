@@ -34,7 +34,7 @@ export function AvatarsGroup({
   limit = 2,
   classNames,
   styles,
-  spacing = 'sm',
+  spacing = 'lg',
   ...others
 }: AvatarsGroupProps) {
   const { classes, cx } = useStyles({ spacing }, classNames, 'avatars-group');
