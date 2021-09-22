@@ -6,6 +6,7 @@ import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
 import { Badge } from './Badge';
+import { DarkStory } from '../../../demos';
 
 const section = (
   <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
@@ -162,4 +163,12 @@ storiesOf('@mantine/core/Badge', module)
       <Group style={{ padding: 10 }}>{getDots({ size: 'lg' })}</Group>
       <Group style={{ padding: 10 }}>{getDots({ size: 'xl' })}</Group>
     </>
+  ))
+  .add('Dark theme', () => (
+    <DarkStory>
+      <Group style={{ padding: 10 }}>{getThemes()}</Group>
+      <Group style={{ padding: 10 }}>{getThemes({ variant: 'outline' })}</Group>
+      <Group style={{ padding: 10 }}>{getThemes({ variant: 'filled' })}</Group>
+      <Group style={{ padding: 10 }}>{getThemes({ variant: 'dot' })}</Group>
+    </DarkStory>
   ));
