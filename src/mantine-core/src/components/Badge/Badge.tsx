@@ -6,14 +6,12 @@ import {
   MantineNumberSize,
   MantineGradient,
   MantineColor,
+  ClassNames,
 } from '@mantine/styles';
+import useStyles from './Badge.styles';
 
-import useStyles, { heights } from './Badge.styles';
-
-export const BADGE_SIZES = heights;
-export const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot', 'gradient'] as const;
-export type BadgeVariant = typeof BADGE_VARIANTS[number];
-export type BadgeStylesNames = Exclude<keyof ReturnType<typeof useStyles>['classes'], BadgeVariant>;
+export type BadgeVariant = 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
+export type BadgeStylesNames = Exclude<ClassNames<typeof useStyles>, BadgeVariant>;
 
 interface _BadgeProps<C extends React.ElementType, R extends HTMLElement>
   extends DefaultProps<BadgeStylesNames> {
@@ -27,7 +25,7 @@ interface _BadgeProps<C extends React.ElementType, R extends HTMLElement>
   color?: MantineColor;
 
   /** Controls badge background, color and border styles */
-  variant?: 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
+  variant?: BadgeVariant;
 
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
