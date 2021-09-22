@@ -31,6 +31,7 @@ export default createStyles((theme, { size, radius, color }: AvatarStyles) => ({
     userSelect: 'none',
     overflow: 'hidden',
     width: getSizeValue({ size, sizes }),
+    minWidth: getSizeValue({ size, sizes }),
     height: getSizeValue({ size, sizes }),
     borderRadius: radius ? getSizeValue({ size: radius, sizes: theme.radius }) : size,
   },
