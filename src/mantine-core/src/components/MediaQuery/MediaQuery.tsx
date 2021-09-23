@@ -3,6 +3,8 @@ import { MantineNumberSize } from '@mantine/styles';
 import useStyles from './MediaQuery.styles';
 
 export interface MediaQueryProps {
+  className?: string;
+
   /** Child that should be shown at given breakpoint, it must accept className prop */
   children: React.ReactNode;
 
@@ -13,8 +15,10 @@ export interface MediaQueryProps {
   largerThan?: MantineNumberSize;
 }
 
-export function MediaQuery({ children, smallerThan, largerThan }: MediaQueryProps) {
-  const { classes } = useStyles({ smallerThan, largerThan });
+export function MediaQuery({ children, smallerThan, largerThan, className }: MediaQueryProps) {
+  const { classes, cx } = useStyles({ smallerThan, largerThan });
   const child = Children.only(children) as React.ReactElement;
-  return React.cloneElement(child, { className: classes.media });
+  return React.cloneElement(child, {
+    className: cx(classes.media, child.props?.className, className),
+  });
 }
