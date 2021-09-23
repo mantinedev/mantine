@@ -15,11 +15,10 @@ import { useViewportSizeDemo } from '@docs/demos';
 
 ## Usage
 
-Hook returns current viewport width and height:
+Hook returns current viewport width and height, it subscribes to `resize` and `orientationchange` events,
+during ssr hook will return `{ width: 0, height: 0 }`:
 
 <Demo data={useViewportSizeDemo} />
-
-On the first render (as well as during SSR), both width and height are equal to `0`.
 
 ## Definition
 

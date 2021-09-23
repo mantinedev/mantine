@@ -41,16 +41,16 @@ const [ref, rect] = useResizeObserver();
 
 ```tsx
 function useResizeObserver<T extends HTMLElement = any>(): [
-    MutableRefObject<T>,
-    {
-      readonly x: number;
-      readonly y: number;
-      readonly top: number;
-      readonly left: number;
-      readonly right: number;
-      readonly bottom: number;
-      readonly height: number;
-      readonly width: number;
+  MutableRefObject<T>,
+  {
+    x: number;
+    y: number;
+    top: number;
+    left: number;
+    right: number;
+    bottom: number;
+    height: number;
+    width: number;
   }
 ];
 ```

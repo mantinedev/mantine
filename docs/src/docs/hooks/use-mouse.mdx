@@ -15,7 +15,11 @@ import { useMouseUsage, useMouseRef } from '@docs/demos';
 
 ## Usage
 
-use-mouse returns moure x, y coordinates relatively to viewport screen:
+Provide ref to track mouse position over any element:
+
+<Demo data={useMouseRef} />
+
+If you do not provide ref mouse position will be captured relative to document element:
 
 <Demo data={useMouseUsage} />
 
@@ -33,21 +37,12 @@ const {
 
 On the first render (as well as during SSR), both `x` and `y` values are equal to `0`.
 
-## Examples
-
-### Custom element
-
-use-mouse handles move behavior over any element:
-
-<Demo data={useMouseRef} />
-
-
 ## Definition
 
 ```tsx
 function useMouse<T extends HTMLElement = any>(): {
+  x: number;
+  y: number;
   ref: React.MutableRefObject<T>;
-  readonly x: number;
-  readonly y: number;
 };
 ```

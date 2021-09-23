@@ -21,7 +21,7 @@ export function useResizeObserver<T extends HTMLElement = any>() {
 
   const observer = useMemo(
     () =>
-      new ResizeObserver((entries) => {
+      new ResizeObserver((entries: any) => {
         const entry = entries[0];
 
         if (entry) {
@@ -34,7 +34,8 @@ export function useResizeObserver<T extends HTMLElement = any>() {
           });
         }
       }),
-   []);
+    []
+  );
 
   useEffect(() => {
     if (ref.current) {

@@ -17,7 +17,7 @@ function Demo() {
           ref={ref}
           style={{
             width: 300,
-            height: 300,
+            height: 180,
             backgroundColor:
               theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
           }}
@@ -42,7 +42,7 @@ function Demo() {
           ref={ref}
           style={{
             width: 300,
-            height: 300,
+            height: 180,
             backgroundColor:
               theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
           }}

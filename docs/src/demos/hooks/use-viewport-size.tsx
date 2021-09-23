@@ -6,10 +6,7 @@ import { useViewportSize } from '@mantine/hooks';
 
 function Demo() {
   const { height, width } = useViewportSize();
-
-  return (
-    <div>Width: {width}, height: {height}</div>
-  );
+  return <>Width: {width}, height: {height}</>;
 }
 `;
 
@@ -17,7 +14,9 @@ function Demo() {
   const { height, width } = useViewportSize();
 
   return (
-    <div>Width: {width}, height: {height}</div>
+    <div style={{ textAlign: 'center' }}>
+      Width: {width}, height: {height}
+    </div>
   );
 }
 

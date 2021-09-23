@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme, Text, Code } from '@mantine/core';
+import { Text, Code } from '@mantine/core';
 import { useMouse } from '@mantine/hooks';
 
 const code = `
@@ -18,11 +18,10 @@ function Demo() {
 }`;
 
 function Demo() {
-  const theme = useMantineTheme();
   const { x, y } = useMouse();
 
   return (
-    <Text align="center" style={{ marginTop: theme.spacing.sm }}>
+    <Text align="center">
       Mouse coordinates <Code>{`{ x: ${x}, y: ${y} }`}</Code>
     </Text>
   );
