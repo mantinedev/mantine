@@ -1,6 +1,6 @@
 {
   "name": "@mantine/eslint-config",
-  "version": "2.6.0-alpha.0",
+  "version": "2.6.0-alpha.1",
   "main": "eslint.config.js",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
