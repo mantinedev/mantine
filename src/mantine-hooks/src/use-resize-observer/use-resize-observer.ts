@@ -13,6 +13,8 @@ const defaultState: ObserverRect = {
   right: 0,
 };
 
+const browser = typeof window !== 'undefined';
+
 export function useResizeObserver<T extends HTMLElement = any>() {
   const frameID = useRef(0);
   const ref = useRef<T>(null);
@@ -21,19 +23,21 @@ export function useResizeObserver<T extends HTMLElement = any>() {
 
   const observer = useMemo(
     () =>
-      new ResizeObserver((entries: any) => {
-        const entry = entries[0];
+      browser
+        ? new ResizeObserver((entries: any) => {
+            const entry = entries[0];
 
-        if (entry) {
-          cancelAnimationFrame(frameID.current);
+            if (entry) {
+              cancelAnimationFrame(frameID.current);
 
-          frameID.current = requestAnimationFrame(() => {
-            if (ref.current) {
-              setRect(entry.contentRect);
+              frameID.current = requestAnimationFrame(() => {
+                if (ref.current) {
+                  setRect(entry.contentRect);
+                }
+              });
             }
-          });
-        }
-      }),
+          })
+        : null,
     []
   );
 

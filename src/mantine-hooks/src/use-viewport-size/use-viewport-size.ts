@@ -5,16 +5,18 @@ const eventListerOptions = {
   passive: true,
 };
 
+const browser = typeof window !== 'undefined';
+
 export function useViewportSize() {
   const [windowSize, setWindowSize] = useState({
-    width: window?.innerWidth || 0,
-    height: window?.innerHeight || 0,
+    width: browser ? window.innerWidth : 0,
+    height: browser ? window.innerHeight : 0,
   });
 
   const setSize = useCallback(() => {
     setWindowSize({
-      width: window?.innerWidth || 0,
-      height: window?.innerHeight || 0,
+      width: window.innerWidth || 0,
+      height: window.innerHeight || 0,
     });
   }, []);
 
