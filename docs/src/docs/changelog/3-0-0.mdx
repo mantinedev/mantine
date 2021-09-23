@@ -8,6 +8,7 @@ date: 'September 16th, 2021'
 ---
 
 import { AccordionDemos, AvatarDemos } from '@demos/core';
+import { useResizeObserverDemo, useViewportSizeDemo, useMouseRef } from '@docs/demos';
 
 ## New features
 
@@ -21,6 +22,20 @@ import { AccordionDemos, AvatarDemos } from '@demos/core';
 [Avatar](https://mantine.dev/core/avatar/) component now supports stacking with [AvatarsGroup](https://mantine.dev/core/avatar/#avatars-group):
 
 <Demo data={AvatarDemos.avatarsGroup} demoProps={{ toggle: true }} />
+
+## New hooks
+
+[use-resize-observer](https://mantine.dev/hooks/use-resize-observer/) lets you subscribe to element size and position changes with [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver):
+
+<Demo data={useResizeObserverDemo} demoProps={{ toggle: true }} />
+
+[use-viewport-size](https://mantine.dev/hooks/use-viewport-size/) hook returns viewport width and height:
+
+<Demo data={useViewportSizeDemo} demoProps={{ toggle: true }} />
+
+[use-mouse](https://mantine.dev/hooks/use-mouse/) hook tracks mouse position over given element:
+
+<Demo data={useMouseRef} demoProps={{ toggle: true }} />
 
 ## Other changes
 

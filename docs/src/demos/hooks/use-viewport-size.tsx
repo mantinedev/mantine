@@ -1,5 +1,6 @@
 import React from 'react';
 import { useViewportSize } from '@mantine/hooks';
+import { Text } from '@mantine/core';
 
 const code = `
 import { useViewportSize } from '@mantine/hooks';
@@ -14,9 +15,9 @@ function Demo() {
   const { height, width } = useViewportSize();
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <Text align="center">
       Width: {width}, height: {height}
-    </div>
+    </Text>
   );
 }
 
