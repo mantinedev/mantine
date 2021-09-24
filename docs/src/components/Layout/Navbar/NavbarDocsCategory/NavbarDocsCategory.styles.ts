@@ -19,7 +19,7 @@ export default createStyles((theme) => ({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
     height: 32,
     border: 0,
-    padding: [0, theme.spacing.md],
+    padding: `0 ${theme.spacing.md}px`,
     paddingLeft: 0,
     cursor: 'pointer',
   },

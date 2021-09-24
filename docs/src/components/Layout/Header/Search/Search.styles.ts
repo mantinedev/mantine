@@ -57,7 +57,7 @@ export default createStyles((theme) => ({
     justifyContent: 'space-between',
     height: 44,
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-    padding: [0, theme.spacing.md],
+    padding: `0 ${theme.spacing.md}px`,
     border: 0,
   },
 
