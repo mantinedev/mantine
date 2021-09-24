@@ -66,7 +66,7 @@ export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
       height: getSizeValue({ size, sizes: switchHeight }),
       width: getSizeValue({ size, sizes: switchWidth }),
       minWidth: getSizeValue({ size, sizes: switchWidth }),
-      padding: [0, 2],
+      padding: `0 ${size === 'xs' ? 1 : 2}px`,
       margin: 0,
       transitionProperty: 'background-color, border-color',
       transitionTimingFunction: theme.transitionTimingFunction,
@@ -84,7 +84,6 @@ export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
         backgroundColor: theme.white,
         height: handleSize,
         width: handleSize,
-        transform: `translateX(${size === 'xs' ? 1 : 2}px)`,
         border: `1px solid ${theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[3]}`,
         transition: `transform 150ms ${theme.transitionTimingFunction}`,
 
@@ -101,7 +100,7 @@ export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
           transform: `translateX(${
             getSizeValue({ size, sizes: switchWidth }) -
             getSizeValue({ size, sizes: handleSizes }) -
-            (size === 'xs' ? 3 : 4) // borderWidth: 2 + padding: 2 * 2
+            (size === 'xs' ? 4 : 6) // borderWidth: 2 + padding: 2 * 2
           }px)`,
           borderColor: theme.white,
         },

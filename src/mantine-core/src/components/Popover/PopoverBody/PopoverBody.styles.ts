@@ -32,7 +32,10 @@ export default createStyles((theme, { radius, shadow, spacing }: PopoverBodyStyl
     borderBottom: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
     }`,
-    padding: [theme.spacing.xs / 1.5, getSizeValue({ size: spacing, sizes: theme.spacing })],
+    padding: `${theme.spacing.xs / 1.5}px ${getSizeValue({
+      size: spacing,
+      sizes: theme.spacing,
+    })}px`,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',

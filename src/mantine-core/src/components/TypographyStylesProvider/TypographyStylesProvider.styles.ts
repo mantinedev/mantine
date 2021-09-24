@@ -144,10 +144,10 @@ export default createStyles((theme) => {
       '& blockquote': {
         fontSize: theme.fontSizes.lg,
         lineHeight: theme.lineHeight,
-        margin: [theme.spacing.md, 0],
+        margin: `${theme.spacing.md}px 0`,
         borderTopRightRadius: theme.radius.sm,
         borderBottomRightRadius: theme.radius.sm,
-        padding: [theme.spacing.md, theme.spacing.lg],
+        padding: `${theme.spacing.md}px ${theme.spacing.lg}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
         '& cite': {
