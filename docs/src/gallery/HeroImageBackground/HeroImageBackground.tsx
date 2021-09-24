@@ -68,12 +68,12 @@ const useStyles = createStyles((theme) => ({
     height: 42,
     fontSize: theme.fontSizes.md,
 
-    '& + &': {
+    '&:not(:first-of-type)': {
       marginLeft: theme.spacing.md,
     },
 
     '@media (max-width: 520px)': {
-      '& + &': {
+      '&:not(:first-of-type)': {
         marginTop: theme.spacing.md,
         marginLeft: 0,
       },

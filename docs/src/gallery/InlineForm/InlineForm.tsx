@@ -3,96 +3,98 @@ import { createStyles, Autocomplete, NumberInput, Button } from '@mantine/core';
 import dayjs from 'dayjs';
 import { DateRangePicker } from '@mantine/dates';
 
-const useStyles = createStyles((theme) => ({
-  wrapper: {
-    '@media (max-width: 755px)': {
-      padding: theme.spacing.lg,
-    },
-  },
+const useStyles = createStyles((theme, _params, getRef) => {
+  const input = getRef('input');
 
-  fields: {
-    display: 'flex',
-    alignItems: 'flex-end',
-
-    '@media (max-width: 755px)': {
-      display: 'block',
-    },
-  },
-
-  field: {
-    flex: 1,
-
-    '&:first-of-type $input': {
-      borderTopLeftRadius: theme.radius.md,
-      borderBottomLeftRadius: theme.radius.md,
-
-      '&:not(:focus)': {
-        borderLeftColor: theme.colors.gray[2],
+  return {
+    wrapper: {
+      '@media (max-width: 755px)': {
+        padding: theme.spacing.lg,
       },
     },
 
-    '& + &': {
-      '& $input': {
+    fields: {
+      display: 'flex',
+      alignItems: 'flex-end',
+
+      '@media (max-width: 755px)': {
+        display: 'block',
+      },
+    },
+
+    field: {
+      flex: 1,
+
+      [`&:first-of-type .${input}`]: {
+        borderTopLeftRadius: theme.radius.md,
+        borderBottomLeftRadius: theme.radius.md,
+
+        '&:not(:focus)': {
+          borderLeftColor: theme.colors.gray[2],
+        },
+      },
+
+      [`&:not(:first-of-type) .${input}`]: {
         borderLeftWidth: 0,
-        borderRightWidth: 0,
 
         '@media (max-width: 755px)': {
           borderLeftWidth: 1,
           borderRightWidth: 1,
         },
       },
-    },
 
-    '@media (max-width: 755px)': {
-      width: '100%',
-      maxWidth: '100% !important',
+      '@media (max-width: 755px)': {
+        width: '100%',
+        maxWidth: '100% !important',
 
-      '&:not(:last-of-type)': {
-        marginBottom: theme.spacing.md,
+        '&:not(:last-of-type)': {
+          marginBottom: theme.spacing.md,
+        },
       },
     },
-  },
 
-  input: {
-    borderColor: `${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
-    } !important`,
-    height: 60,
-    paddingLeft: theme.spacing.xl,
-    fontSize: theme.fontSizes.md,
-    borderLeftColor: theme.colors.gray[4],
+    input: {
+      ref: input,
+      borderColor: `${
+        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+      } !important`,
+      height: 60,
+      paddingLeft: theme.spacing.xl,
+      fontSize: theme.fontSizes.md,
+      borderLeftColor: theme.colors.gray[4],
 
-    '@media (max-width: 755px)': {
-      borderRadius: theme.radius.md,
+      '@media (max-width: 755px)': {
+        borderRadius: theme.radius.md,
+      },
     },
-  },
 
-  inputLabel: {
-    marginBottom: 9,
-  },
-
-  budgetField: {
-    maxWidth: 120,
-  },
-
-  destinationField: {
-    maxWidth: 280,
-  },
-
-  control: {
-    height: 60,
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-
-    '@media (max-width: 755px)': {
-      width: '100%',
-      marginLeft: 0,
-      marginTop: theme.spacing.lg,
-      borderTopLeftRadius: theme.radius.md,
-      borderBottomLeftRadius: theme.radius.md,
+    inputLabel: {
+      marginBottom: 9,
     },
-  },
-}));
+
+    budgetField: {
+      maxWidth: 120,
+    },
+
+    destinationField: {
+      maxWidth: 280,
+    },
+
+    control: {
+      height: 60,
+      borderTopLeftRadius: 0,
+      borderBottomLeftRadius: 0,
+
+      '@media (max-width: 755px)': {
+        width: '100%',
+        marginLeft: 0,
+        marginTop: theme.spacing.lg,
+        borderTopLeftRadius: theme.radius.md,
+        borderBottomLeftRadius: theme.radius.md,
+      },
+    },
+  };
+});
 
 interface InlineFormProps extends React.ComponentPropsWithoutRef<'div'> {
   labelClassName?: string;

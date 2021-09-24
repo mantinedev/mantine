@@ -63,7 +63,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   features: {
-    marginTop: `${theme.spacing.xl} !important`,
+    marginTop: `${theme.spacing.xl}px !important`,
   },
 }));
 

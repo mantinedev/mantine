@@ -67,7 +67,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   control: {
-    '& + &': {
+    '&:not(:first-of-type)': {
       marginLeft: theme.spacing.md,
     },
 
@@ -75,7 +75,7 @@ const useStyles = createStyles((theme) => ({
       height: 42,
       fontSize: theme.fontSizes.md,
 
-      '& + &': {
+      '&:not(:first-of-type)': {
         marginTop: theme.spacing.md,
         marginLeft: 0,
       },

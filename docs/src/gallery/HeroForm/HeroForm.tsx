@@ -9,7 +9,7 @@ const useStyles = createStyles((theme) => ({
 
   imageSection: {
     '& *': {
-      color: theme.white,
+      color: `${theme.white} !important`,
       textAlign: 'center',
     },
 
