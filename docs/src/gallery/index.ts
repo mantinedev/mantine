@@ -6,6 +6,7 @@ export { ImageCard } from './ImageCard/ImageCard';
 // Forms
 export { AuthenticationForm } from './AuthenticationForm/AuthenticationForm';
 export { CheckboxCard } from './CheckboxCard/CheckboxCard';
+export { ContainedInputs } from './ContainedInputs/ContainedInputs';
 export { CountriesSelect } from './CountriesSelect/CountriesSelect';
 export { GetInTouch } from './GetInTouch/GetInTouch';
 export { InlineForm } from './InlineForm/InlineForm';
