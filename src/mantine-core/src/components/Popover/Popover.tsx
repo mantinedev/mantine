@@ -1,25 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import cx from 'clsx';
+import React, { useState } from 'react';
+import { useClickOutside, useFocusTrap, useId, useMergedRef } from '@mantine/hooks';
 import {
-  useClickOutside,
-  useFocusTrap,
-  useId,
-  useReducedMotion,
-  useMergedRef,
-} from '@mantine/hooks';
-import {
-  DefaultProps,
-  useMantineTheme,
-  MantineNumberSize,
   mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
   MantineShadow,
-} from '../../theme';
-import { useClickOutsideRegister } from '../../utils';
+  ClassNames,
+} from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';
 import useStyles from './Popover.styles';
 
-export type PopoverStylesNames = keyof ReturnType<typeof useStyles> | PopoverBodyStylesNames;
+export type PopoverStylesNames = ClassNames<typeof useStyles> | PopoverBodyStylesNames;
 
 export interface PopoverProps
   extends DefaultProps<PopoverStylesNames>,
@@ -74,7 +66,6 @@ export interface PopoverProps
 export function Popover({
   className,
   style,
-  themeOverride,
   children,
   target,
   title,
@@ -104,15 +95,13 @@ export function Popover({
   styles,
   ...others
 }: PopoverProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'popover');
+  const { classes, cx } = useStyles(null, classNames, 'popover');
   const _styles = mergeStyles(classes, styles);
   const handleClose = () => typeof onClose === 'function' && onClose();
   const [referenceElement, setReferenceElement] = useState(null);
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
-  const clickOutsideRegister = useClickOutsideRegister();
 
   useClickOutside(() => !noClickOutside && handleClose(), null, [rootElement, dropdownElement]);
 
@@ -126,10 +115,6 @@ export function Popover({
   const titleId = `${uuid}-title`;
   const bodyId = `${uuid}-body`;
 
-  useEffect(() => {
-    clickOutsideRegister(`${uuid}-dropdown`, dropdownElement);
-  }, [dropdownElement]);
-
   return (
     <div
       className={cx(classes.root, className)}
@@ -140,7 +125,7 @@ export function Popover({
     >
       <Popper
         referenceElement={referenceElement}
-        transitionDuration={useReducedMotion() ? 0 : transitionDuration}
+        transitionDuration={transitionDuration}
         transition={transition}
         mounted={opened && !disabled}
         position={position}

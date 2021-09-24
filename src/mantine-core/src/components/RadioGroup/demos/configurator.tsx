@@ -1,5 +1,5 @@
 import React from 'react';
-import { RadioGroup, RadioGroupProps, Radio } from '../RadioGroup';
+import { RadioGroup, RadioGroupProps, Radio } from '../index';
 
 const codeTemplate = (props: string) => `<RadioGroup
  ${props}

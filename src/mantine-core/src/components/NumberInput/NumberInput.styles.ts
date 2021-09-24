@@ -1,13 +1,6 @@
-import {
-  createMemoStyles,
-  MantineTheme,
-  MantineNumberSize,
-  getSizeValue,
-  MantineSize,
-} from '../../theme';
+import { createStyles, MantineNumberSize, getSizeValue, MantineSize } from '@mantine/styles';
 
 interface NumberInputStyles {
-  theme: MantineTheme;
   radius: MantineNumberSize;
   size: MantineSize;
 }
@@ -20,7 +13,7 @@ export const CONTROL_SIZES = {
   xl: 36,
 };
 
-export default createMemoStyles({
+export default createStyles((theme, { radius, size }: NumberInputStyles) => ({
   rightSection: {
     display: 'flex',
     flexDirection: 'column',
@@ -29,7 +22,7 @@ export default createMemoStyles({
     marginRight: 1,
   },
 
-  control: ({ theme, size }: NumberInputStyles) => ({
+  control: {
     position: 'relative',
     flex: '0 0 50%',
     boxSizing: 'border-box',
@@ -61,42 +54,36 @@ export default createMemoStyles({
       height: 0,
       borderStyle: 'solid',
     },
-  }),
+  },
 
-  controlUp: ({ theme, radius }: NumberInputStyles) => ({
+  controlUp: {
     borderTopRightRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
 
     '&::after': {
-      borderWidth: [0, 5, 5, 5],
-      borderColor: [
-        'transparent',
-        'transparent',
-        theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        'transparent',
-      ],
+      borderWidth: '0 5px 5px 5px',
+      borderColor: `transparent transparent ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black
+      } transparent`,
     },
 
     '&:disabled::after': {
       borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
     },
-  }),
+  },
 
-  controlDown: ({ theme, radius }: NumberInputStyles) => ({
+  controlDown: {
     borderBottomRightRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
     borderBottom: 0,
 
     '&::after': {
-      borderWidth: [5, 5, 0, 5],
-      borderColor: [
-        theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        'transparent',
-        'transparent',
-        'transparent',
-      ],
+      borderWidth: '5px 5px 0 5px',
+      borderColor: `${
+        theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black
+      } transparent transparent transparent`,
     },
 
     '&:disabled::after': {
       borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
     },
-  }),
-});
+  },
+}));

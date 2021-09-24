@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import cx from 'clsx';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
-  mergeStyles,
   MantineColor,
-} from '../../theme';
-import { PlaceholderIcon } from './PlaceholderIcon';
-import useStyles, { sizes } from './Avatar.styles';
+  mergeStyles,
+  ClassNames,
+} from '@mantine/styles';
+import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
+import useStyles from './Avatar.styles';
 
-export const AVATAR_SIZES = sizes;
-
-export type AvatarStylesNames = keyof ReturnType<typeof useStyles>;
+export type AvatarStylesNames = ClassNames<typeof useStyles>;
 
 interface _AvatarProps<C extends React.ElementType, R extends HTMLElement>
   extends DefaultProps<AvatarStylesNames> {
@@ -56,14 +53,12 @@ export function Avatar<
   radius = 'sm',
   children,
   color = 'gray',
-  themeOverride,
   classNames,
   styles,
   elementRef,
   ...others
 }: AvatarProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, radius, size, theme }, classNames, 'avatar');
+  const { classes, cx } = useStyles({ color, radius, size }, classNames, 'avatar');
   const _styles = mergeStyles(classes, styles);
   const [error, setError] = useState(!src);
   const Element = component || 'div';
@@ -82,7 +77,10 @@ export function Avatar<
       {error ? (
         <div className={classes.placeholder} title={alt} style={_styles.placeholder}>
           {children || (
-            <PlaceholderIcon className={classes.placeholderIcon} style={_styles.placeholderIcon} />
+            <AvatarPlaceholderIcon
+              className={classes.placeholderIcon}
+              style={_styles.placeholderIcon}
+            />
           )}
         </div>
       ) : (

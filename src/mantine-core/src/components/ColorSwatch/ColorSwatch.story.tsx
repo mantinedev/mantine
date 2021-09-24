@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, hexToRgba } from '../../theme';
+import { DEFAULT_THEME, hexToRgba } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { ColorSwatch } from './ColorSwatch';
 
@@ -22,7 +22,7 @@ storiesOf('@mantine/core/ColorSwatch', module)
   .add('Transparent', () => <Group style={{ padding: 15 }}>{transparent}</Group>)
   .add('Custom components', () => (
     <Group style={{ padding: 15 }}>
-      <ColorSwatch color="#000" component="button" />
+      <ColorSwatch color="#f300f3" component="button" />
       <ColorSwatch color="#000" component="a" href="https://mantine.dev" />
     </Group>
   ));

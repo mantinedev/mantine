@@ -2,9 +2,9 @@ import React from 'react';
 import { Link, MemoryRouter } from 'react-router-dom';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
-import { MantineSize, DEFAULT_THEME } from '../../theme';
+import { MantineSize, DEFAULT_THEME } from '@mantine/styles';
 import { Group } from '../Group/Group';
-import { Button, UnstyledButton } from './Button';
+import { Button, UnstyledButton } from './index';
 
 const getThemes = (props?: any) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (
@@ -40,14 +40,8 @@ storiesOf('@mantine/core/Button', module)
     </div>
   ))
   .add('Gradient', () => (
-    <Group>
-      <Button
-        variant="gradient"
-        gradient={{ from: 'indigo', to: 'cyan' }}
-        style={{
-        color: 'red',
-      }}
-      >
+    <Group style={{ padding: 20 }}>
+      <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>
         Indigo cyan
       </Button>
       <Button variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 90 }}>
@@ -61,6 +55,7 @@ storiesOf('@mantine/core/Button', module)
   .add('Themes', () => (
     <>
       <Group style={{ padding: 20 }}>{getThemes()}</Group>
+      <Group style={{ padding: 20 }}>{getThemes({ variant: 'default' })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'outline' })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'link' })}</Group>
@@ -147,27 +142,4 @@ storiesOf('@mantine/core/Button', module)
         </Button>
       </Group>
     </MemoryRouter>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <Group style={{ padding: 20 }}>{getThemes({ themeOverride: { colorScheme: 'dark' } })}</Group>
-      <Group style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'light' })}
-      </Group>
-      <Group style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'outline' })}
-      </Group>
-      <Group style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'link' })}
-      </Group>
-      <Group style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, disabled: true })}
-      </Group>
-      <Group style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'outline', disabled: true })}
-      </Group>
-      <Group style={{ padding: 20 }}>
-        {getThemes({ themeOverride: { colorScheme: 'dark' }, variant: 'link', disabled: true })}
-      </Group>
-    </div>
   ));

@@ -1,10 +1,9 @@
 import React from 'react';
-import cx from 'clsx';
-import { MantineNumberSize, mergeStyles, useMantineTheme } from '../../../theme';
+import { mergeStyles, MantineNumberSize, ClassNames } from '@mantine/styles';
 import { SharedMenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 
-export type MenuButtonStylesNames = keyof ReturnType<typeof useStyles>;
+export type MenuButtonStylesNames = ClassNames<typeof useStyles>;
 
 interface _MenuButtonProps<C extends React.ElementType, R extends HTMLElement>
   extends SharedMenuItemProps {
@@ -41,7 +40,6 @@ export function MenuButton<
   children,
   onHover,
   hovered,
-  themeOverride,
   elementRef,
   icon,
   color,
@@ -53,8 +51,7 @@ export function MenuButton<
   radius,
   ...others
 }: MenuButtonProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, theme, radius }, classNames, 'menu');
+  const { classes, cx } = useStyles({ color, radius }, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
   const Element = component || 'button';
 

@@ -16,7 +16,7 @@ interface CategoriesListProps {
 }
 
 export function CategoriesList({ categories }: CategoriesListProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   const cards = categories.map((category) => {
     const groups = category.groups.map((group) => <CategoryCard key={group.url} {...group} />);

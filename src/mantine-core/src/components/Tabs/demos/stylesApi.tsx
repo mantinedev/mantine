@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageIcon, ChatBubbleIcon, GearIcon } from '@modulz/radix-icons';
-import { createStyles } from '../../../theme';
-import { Tabs, TabsProps, Tab } from '../Tabs';
+import { createStyles } from '@mantine/styles';
+import { Tabs, TabsProps, Tab } from '../index';
 
 const code = `
 import { createStyles, Tabs, Tab } from '@mantine/core';
@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StyledTabs(props: TabsProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return <Tabs variant="unstyled" classNames={classes} {...props} />;
 }
 
@@ -87,8 +87,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StyledTabs(props: TabsProps) {
-  const classes = useStyles();
-  return <Tabs variant="unstyled" classNames={classes} {...props} />;
+  const { classes } = useStyles();
+  return <Tabs variant="unstyled" classNames={classes as any} {...props} />;
 }
 
 function Demo() {

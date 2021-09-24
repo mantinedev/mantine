@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { Title, Text, Container, Button, Overlay, createStyles } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
@@ -88,7 +87,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function HeroImageBackground() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
     <div className={classes.wrapper}>
@@ -110,12 +109,7 @@ export function HeroImageBackground() {
         </Container>
 
         <div className={classes.controls}>
-          <Button
-            className={classes.control}
-            variant="white"
-            size="lg"
-            themeOverride={{ colorScheme: 'light' }}
-          >
+          <Button className={classes.control} variant="white" size="lg">
             Get started
           </Button>
           <Button className={cx(classes.control, classes.secondaryControl)} size="lg">

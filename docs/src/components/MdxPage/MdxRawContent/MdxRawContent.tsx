@@ -5,7 +5,7 @@ import { MdxPageBase } from '../MdxPageBase/MdxPageBase';
 import useStyles from './MdxRawContent.styles';
 
 export function MdxRawContent({ body, headings }: MdxPage) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <MdxPageBase>
       <div className={classes.wrapper}>

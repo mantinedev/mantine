@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Group } from '../../Group/Group';
-import { Chip } from '../Chips';
+import { Chip } from '../index';
 
 const code = `
 import { useState } from 'react';

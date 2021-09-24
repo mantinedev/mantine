@@ -1,12 +1,5 @@
 import React from 'react';
-import cx from 'clsx';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineSize,
-  MantineGradient,
-  MantineColor,
-} from '../../theme';
+import { DefaultProps, MantineSize, MantineGradient, MantineColor } from '@mantine/styles';
 import useStyles from './Text.styles';
 
 export interface SharedTextProps extends DefaultProps {
@@ -66,20 +59,17 @@ export function Text<C extends React.ElementType = 'div', R extends HTMLElement 
   align,
   variant = 'text',
   lineClamp,
-  themeOverride,
   elementRef,
   gradient = { from: 'blue', to: 'cyan', deg: 45 },
   inline = false,
   inherit = false,
   ...others
 }: TextProps<C, R>): JSX.Element {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     {
       variant,
       color,
       size,
-      theme,
       lineClamp,
       inline,
       inherit,

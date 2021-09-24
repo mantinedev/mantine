@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { checkAccessibility, itSupportsStylesApi } from '@mantine/tests';
-import { RadioGroup, Radio } from './RadioGroup';
+import { RadioGroup, Radio } from './index';
 import { RadioGroup as RadioGroupStylesApi } from './styles.api';
 
 describe('@mantine/core/RadioGroup', () => {

@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-import cx from 'clsx';
 import Slugger from 'github-slugger';
 import { Text, useMantineTheme } from '@mantine/core';
 import { ActivityLogIcon } from '@modulz/radix-icons';
@@ -40,7 +39,7 @@ function getActiveElement(rects: DOMRect[]) {
 
 export default function TableOfContents({ headings, withTabs }: TableOfContentsProps) {
   const theme = useMantineTheme();
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const slugger = new Slugger();
   const [active, setActive] = useState(0);
 

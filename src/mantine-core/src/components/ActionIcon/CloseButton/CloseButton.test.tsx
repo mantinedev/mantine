@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -20,6 +20,13 @@ describe('@mantine/core/CloseButton', () => {
   itSupportsOthers(CloseButton, {});
   itSupportsStyle(CloseButton, {});
   itSupportsRef(CloseButton, {}, HTMLButtonElement, 'elementRef');
+
+  it('sets width and height on CloseIcon based on iconSize prop', () => {
+    const element = shallow(<CloseButton iconSize={45} />);
+    const styles = element.find(CloseIcon).prop('style');
+    expect(styles.width).toBe(45);
+    expect(styles.height).toBe(45);
+  });
 
   it('has correct displayName', () => {
     expect(CloseButton.displayName).toEqual('@mantine/core/CloseButton');

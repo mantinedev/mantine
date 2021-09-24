@@ -1,10 +1,10 @@
 import React from 'react';
-import { useMantineTheme, DefaultProps, mergeStyles, MantineShadow } from '../../../theme';
-import { Transition, MantineTransition } from '../../Transition/Transition';
-import { Paper } from '../../Paper/Paper';
+import { mergeStyles, DefaultProps, MantineShadow, ClassNames } from '@mantine/styles';
+import { Transition, MantineTransition } from '../../Transition';
+import { Paper } from '../../Paper';
 import useStyles from './SelectDropdown.styles';
 
-export type SelectDropdownStylesNames = keyof ReturnType<typeof useStyles>;
+export type SelectDropdownStylesNames = ClassNames<typeof useStyles>;
 
 interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   mounted: boolean;
@@ -20,7 +20,6 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
 }
 
 export function SelectDropdown({
-  themeOverride,
   mounted,
   transition,
   transitionDuration,
@@ -34,8 +33,7 @@ export function SelectDropdown({
   elementRef,
   __staticSelector,
 }: SelectDropdownProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, __staticSelector);
+  const { classes } = useStyles(null, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return (

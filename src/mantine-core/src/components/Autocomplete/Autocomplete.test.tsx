@@ -6,6 +6,7 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsStylesApi,
+  defaultInputProps,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
@@ -34,15 +35,7 @@ describe('@mantine/core/Autocomplete', () => {
 
   itSupportsStylesApi(
     Autocomplete,
-    {
-      ...defaultProps,
-      icon: '$',
-      rightSection: '$',
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-    },
+    { ...defaultProps, ...defaultInputProps },
     Object.keys(AutocompleteStylesApi).filter((key) => key !== 'hovered' && key !== 'nothingFound'),
     'autocomplete'
   );

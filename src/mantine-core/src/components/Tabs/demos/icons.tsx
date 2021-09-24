@@ -1,6 +1,6 @@
 import React from 'react';
 import { MixerHorizontalIcon, ChatBubbleIcon } from '@modulz/radix-icons';
-import { Tabs, Tab } from '../Tabs';
+import { Tabs, Tab } from '../index';
 
 const code = `
 <Tabs>

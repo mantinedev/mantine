@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Transition } from '../../Transition/Transition';
+import { Transition } from '../../Transition';
 import { SelectDropdown } from './SelectDropdown';
 
 const defaultProps = {

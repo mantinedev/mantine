@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab } from '../Tabs';
+import { Tabs, Tab } from '../index';
 
 const code = `
 <Tabs variant="outline">

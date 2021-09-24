@@ -1,1 +1,5 @@
-export { Contribute as default } from '../components/Contribute/Contribute';
+import React from 'react';
+
+export default function Contribute() {
+  return <div style={{ padding: 100 }}>New contribute page</div>;
+}

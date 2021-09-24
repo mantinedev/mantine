@@ -1,21 +1,14 @@
+import { MantineTheme, MANTINE_SIZES } from '@mantine/styles';
 import { getColumnWidth } from './Col';
-import { MantineTheme } from '../../theme';
 
 export interface GetResponsiveStyles {
   uuid: string;
-  breakpoints: readonly ['xs', 'sm', 'md', 'lg', 'xl'];
   columns: number;
   grow: boolean;
   theme: MantineTheme;
 }
 
-export function getResponsiveStyles({
-  uuid,
-  breakpoints,
-  columns,
-  grow,
-  theme,
-}: GetResponsiveStyles) {
+export function getResponsiveStyles({ uuid, columns, grow, theme }: GetResponsiveStyles) {
   const columnSizes = [];
   for (let index = 0; index < columns; index += 1) {
     columnSizes.push(index + 1);
@@ -32,7 +25,7 @@ export function getResponsiveStyles({
         }`;
   });
 
-  breakpoints.forEach((breakpoint) => {
+  MANTINE_SIZES.forEach((breakpoint) => {
     let colStyles = '';
 
     columnSizes.forEach((columnSpan) => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { ArrowUpIcon } from '@modulz/radix-icons';
 import { useWindowScroll } from '@mantine/hooks';
-import { Button } from '../../Button/Button';
+import { Button } from '../../Button';
 import { Text } from '../../Text/Text';
-import { Transition } from '../../Transition/Transition';
+import { Transition } from '../../Transition';
 import { Affix } from '../Affix';
 
 const code = `

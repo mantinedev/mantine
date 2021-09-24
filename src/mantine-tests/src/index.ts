@@ -1,3 +1,5 @@
+export { defaultInputProps } from './default-input-props';
+
 export { checkAccessibility } from './check-accessibility';
 export { itRendersChildren } from './it-renders-children';
 export { itSupportsClassName } from './it-supports-classname';

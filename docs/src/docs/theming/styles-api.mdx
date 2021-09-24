@@ -45,7 +45,7 @@ For example, if you want to add styles to slider thumb:
 <Slider styles={{ thumb: { backgroundColor: 'red' } }} />
 ```
 
-Now you can write styles for your component with [react-jss](/theming/react-jss/)
+Now you can write styles for your component with createStyles function
 or any other any other styling tools and languages:
 
 ```tsx
@@ -76,7 +76,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function MyCustomSlider() {
-  const classes = useStyles();
+  const { classes } = useStyles();
+
   return (
     <Slider
       classNames={{

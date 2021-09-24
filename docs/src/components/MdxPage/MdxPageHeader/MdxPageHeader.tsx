@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { Title, Text } from '@mantine/core';
 import { MarkGithubIcon, PencilIcon, LawIcon, CalendarIcon } from '@primer/octicons-react';
 import { ImportStatement } from './ImportStatement/ImportStatement';
@@ -13,7 +12,7 @@ const DOCS_BASE = `${REPO_BASE}/docs/src/docs`;
 const SOURCE_BASE = `${REPO_BASE}/src`;
 
 export function MdxPageHeader({ frontmatter }: MdxPage) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   const hasTabs = Array.isArray(frontmatter.props);
   const hasLinks = !!(frontmatter.import || frontmatter.source || frontmatter.installation);

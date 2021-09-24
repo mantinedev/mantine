@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import cx from 'clsx';
 import { MoonIcon, SunIcon } from '@modulz/radix-icons';
 import { UnstyledButton, Text, Center } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
@@ -7,7 +6,7 @@ import { ColorSchemeContext } from '../../ColorScheme.context';
 import useStyles from './ColorSchemeToggle.styles';
 
 export function ColorSchemeToggle({ className, ...others }: React.ComponentProps<'button'>) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const { colorScheme, onChange } = useContext(ColorSchemeContext);
   const Icon = colorScheme === 'dark' ? SunIcon : MoonIcon;
 

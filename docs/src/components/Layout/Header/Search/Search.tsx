@@ -50,7 +50,7 @@ function filterPages(query: string, pages: AutocompleteItem[]) {
 }
 
 export default function Search({ data, isMacOS }: SearchProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [query, setQuery] = useState('');
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const closeDropdown = () => setDropdownOpened(false);

@@ -1,13 +1,14 @@
 import React from 'react';
 import cx from 'clsx';
 import {
+  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
-  useMantineTheme,
   getThemeColor,
   getSizeValue,
   MantineColor,
-} from '../../theme';
+  MantineTheme,
+} from '@mantine/styles';
 import { Bars } from './loaders/Bars';
 import { Oval } from './loaders/Oval';
 import { Dots } from './loaders/Dots';
@@ -26,8 +27,6 @@ export const LOADER_SIZES = {
   xl: 58,
 };
 
-export type LoaderType = keyof typeof LOADERS;
-
 export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'svg'> {
   /** Defines width of loader */
   size?: MantineNumberSize;
@@ -36,18 +35,11 @@ export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRe
   color?: MantineColor;
 
   /** Loader appearance */
-  variant?: 'bars' | 'oval' | 'dots';
+  variant?: MantineTheme['loader'];
 }
 
-export function Loader({
-  size = 'md',
-  color,
-  themeOverride,
-  className,
-  variant,
-  ...others
-}: LoaderProps) {
-  const theme = useMantineTheme(themeOverride);
+export function Loader({ size = 'md', color, className, variant, ...others }: LoaderProps) {
+  const theme = useMantineTheme();
   const defaultLoader = variant in LOADERS ? variant : theme.loader;
   const Component = LOADERS[defaultLoader] || LOADERS.bars;
   const _color = color || theme.primaryColor;

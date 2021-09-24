@@ -50,6 +50,9 @@ npm install @mantine/hooks
 - [use-move](https://mantine.dev/hooks/use-move/) – handles move behavior over any element, build custom sliders, color pickers, etc.
 - [use-pagination](https://mantine.dev/hooks/use-pagination/) – manage pagination state
 - [use-focus-return](https://mantine.dev/hooks/use-focus-return/) – capture last focused element on the page and return focus to it once condition is met
+- [use-resize-observer](https://mantine.dev/hooks/use-resize-observer/) – track element size changes with ResizeObserver
+- [use-mouse](https://mantine.dev/hooks/use-mouse/) – track mouse position over document or given element
+- [use-viewport-size](https://mantine.dev/hooks/use-viewport-size/) – get viewport width and height
 
 ## Licence
 

@@ -1,6 +1,6 @@
 import { Input } from '../Input/styles.api';
 import { InputWrapper } from '../InputWrapper/styles.api';
-import { SelectStylesNames } from './Select';
+import { SelectStylesNames } from './index';
 
 export const Select: Record<SelectStylesNames, string> = {
   dropdown: 'Dropdown element',

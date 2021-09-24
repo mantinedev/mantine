@@ -40,7 +40,6 @@ export function DateRangePicker({
   value,
   onChange,
   defaultValue,
-  themeOverride,
   classNames,
   styles,
   shadow = 'sm',
@@ -130,7 +129,6 @@ export function DateRangePicker({
           classNames={classNames}
           styles={styles}
           locale={locale}
-          themeOverride={themeOverride}
           nextMonthLabel={nextMonthLabel}
           previousMonthLabel={previousMonthLabel}
           initialMonth={valueValid ? _value[0] : initialMonth}

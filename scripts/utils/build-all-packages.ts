@@ -12,7 +12,7 @@ export async function buildAllPackages(options?: BuildOptions) {
     analyze: false,
     sourcemap: true,
     minify: false,
-    formats: ['es', 'cjs', 'umd'],
+    formats: ['es', 'cjs'],
   };
 
   for (const item of packages) {

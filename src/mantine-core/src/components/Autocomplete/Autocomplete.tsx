@@ -1,19 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
-import {
-  DefaultProps,
-  useMantineTheme,
-  MantineSize,
-  mergeStyles,
-  MantineShadow,
-} from '../../theme';
+import { mergeStyles, DefaultProps, MantineSize, MantineShadow, ClassNames } from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-import { MantineTransition } from '../Transition/Transition';
+import { MantineTransition } from '../Transition';
 import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
@@ -24,14 +18,12 @@ export type AutocompleteStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
   | SelectDropdownStylesNames
-  | keyof ReturnType<typeof useStyles>;
+  | ClassNames<typeof useStyles>;
 
 export interface AutocompleteItem {
   value: string;
   [key: string]: any;
 }
-
-export type AutocompleteDataItem = string | AutocompleteItem;
 
 export interface AutocompleteProps
   extends DefaultProps<AutocompleteStylesNames>,
@@ -45,7 +37,7 @@ export interface AutocompleteProps
   elementRef?: React.ForwardedRef<HTMLInputElement>;
 
   /** Autocomplete data used to renderer items in dropdown */
-  data: AutocompleteDataItem[];
+  data: (string | AutocompleteItem)[];
 
   /** Change item renderer */
   itemComponent?: React.FC<any>;
@@ -118,15 +110,13 @@ export function Autocomplete({
   transitionTimingFunction,
   wrapperProps,
   elementRef,
-  themeOverride,
   classNames,
   styles,
   filter = defaultFilter,
   nothingFound,
   ...others
 }: AutocompleteProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'autocomplete');
+  const { classes } = useStyles({ size }, classNames, 'autocomplete');
   const _styles = mergeStyles(classes, styles);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
@@ -216,7 +206,6 @@ export function Autocomplete({
       size={size}
       className={className}
       style={style}
-      themeOverride={themeOverride}
       classNames={classNames}
       styles={styles}
       __staticSelector="autocomplete"
@@ -243,7 +232,6 @@ export function Autocomplete({
           invalid={!!error}
           size={size}
           onKeyDown={handleInputKeydown}
-          themeOverride={themeOverride}
           classNames={classNames}
           styles={styles}
           __staticSelector="autocomplete"
@@ -261,7 +249,6 @@ export function Autocomplete({
         />
 
         <SelectDropdown
-          themeOverride={themeOverride}
           mounted={shouldRenderDropdown}
           transition={transition}
           transitionDuration={transitionDuration}
@@ -276,7 +263,6 @@ export function Autocomplete({
           <SelectItems
             data={filteredData}
             hovered={hovered}
-            themeOverride={themeOverride}
             classNames={classNames}
             styles={styles}
             uuid={uuid}

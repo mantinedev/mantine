@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { Scrollbars } from 'react-custom-scrollbars';
 import NavbarMainLink from './NavbarMainLink/NavbarMainLink';
 import NavbarDocsCategory from './NavbarDocsCategory/NavbarDocsCategory';
@@ -14,7 +13,7 @@ interface NavbarProps {
 }
 
 export default function Navbar({ data, opened, onClose }: NavbarProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   const main = mainLinks.map((item) => (
     <NavbarMainLink

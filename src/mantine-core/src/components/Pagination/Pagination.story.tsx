@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Pagination } from './Pagination';
+import { DarkStory } from '../../../demos';
 
 storiesOf('@mantine/core/Pagination', module)
   .add('General usage', () => (
@@ -16,4 +17,11 @@ storiesOf('@mantine/core/Pagination', module)
   .add('With 2 boundaries', () => <Pagination total={20} boundaries={2} initialPage={12} />)
   .add('With 2 boundaries and 2 siblings', () => (
     <Pagination siblings={2} boundaries={2} total={20} initialPage={12} />
+  ))
+  .add('Dark theme', () => (
+    <DarkStory>
+      <div style={{ padding: 40 }}>
+        <Pagination total={10} color="cyan" size="md" />
+      </div>
+    </DarkStory>
   ));

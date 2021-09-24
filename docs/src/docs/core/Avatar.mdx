@@ -6,11 +6,11 @@ order: 1
 slug: /core/avatar/
 category: 'data-display'
 description: 'Display user profile image, initials or fallback icon'
-props: ['Avatar']
-import: "import { Avatar } from '@mantine/core';"
+props: ['Avatar', 'AvatarsGroup']
+import: "import { Avatar, AvatarsGroup } from '@mantine/core';"
 source: 'mantine-core/src/components/Avatar/Avatar.tsx'
 docs: 'core/Avatar.mdx'
-styles: ['Avatar']
+styles: ['Avatar', 'AvatarsGroup']
 ---
 
 import { AvatarDemos } from '@demos/core';
@@ -75,6 +75,12 @@ function Demo() {
   return <Avatar component={Link} to="/my-route/" src="./avatar.png" />;
 }
 ```
+
+## Avatars Group
+
+You can use AvatarsGroup to stack avatar components, set `limit` prop to truncate avatars:
+
+<Demo data={AvatarDemos.avatarsGroup} />
 
 ## Accessibility
 

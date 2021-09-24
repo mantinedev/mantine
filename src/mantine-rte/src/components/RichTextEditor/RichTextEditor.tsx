@@ -1,7 +1,6 @@
 import React, { useMemo, useRef, useEffect } from 'react';
-import cx from 'clsx';
 import Editor, { Quill } from 'react-quill';
-import { useMantineTheme, DefaultProps, mergeStyles } from '@mantine/core';
+import { DefaultProps, mergeStyles, ClassNames } from '@mantine/core';
 import { useId } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
@@ -12,7 +11,7 @@ import { createImageBlot, ImageUploader } from '../../modules/image-uploader';
 import { replaceIcons } from '../../modules/icons';
 import { attachShortcuts } from '../../modules/shortcuts';
 
-export type RichTextEditorStylesNames = ToolbarStylesNames | keyof ReturnType<typeof useStyles>;
+export type RichTextEditorStylesNames = ToolbarStylesNames | ClassNames<typeof useStyles>;
 
 export type { RichTextEditorLabels };
 
@@ -68,7 +67,6 @@ export function RichTextEditor({
   labels = DEFAULT_LABELS,
   controls = DEFAULT_CONTROLS,
   id,
-  themeOverride,
   style,
   className,
   classNames,
@@ -77,9 +75,8 @@ export function RichTextEditor({
 }: RichTextEditorProps) {
   const uuid = useId(id);
   const editorRef = useRef<any>();
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles(
-    { theme, saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
+  const { classes, cx } = useStyles(
+    { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
     classNames,
     'rte'
   );
@@ -103,7 +100,6 @@ export function RichTextEditor({
     <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       <Toolbar
         controls={controls}
-        themeOverride={themeOverride}
         labels={labels}
         sticky={sticky}
         stickyOffset={stickyOffset}
