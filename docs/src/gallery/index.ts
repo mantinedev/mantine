@@ -9,6 +9,7 @@ export { CheckboxCard } from './CheckboxCard/CheckboxCard';
 export { CountriesSelect } from './CountriesSelect/CountriesSelect';
 export { GetInTouch } from './GetInTouch/GetInTouch';
 export { InlineForm } from './InlineForm/InlineForm';
+export { SliderInput } from './SliderInput/SliderInput';
 export { SocialButtons } from './SocialButtons/SocialButtons';
 
 // Hero
