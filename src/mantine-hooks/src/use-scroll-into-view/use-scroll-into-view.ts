@@ -22,6 +22,9 @@ type ScrollIntoViewParams = {
 
   /** axis of scroll */
   axis?: 'x' | 'y'
+
+  /** custom mathematical easing function */
+  easing?: (t: number) => number
 };
 
 export function useScrollIntoView({
@@ -30,6 +33,7 @@ export function useScrollIntoView({
   duration = 1.25,
   axis = 'y',
   onScrollFinish,
+  easing = easeInOutQuad
 }: ScrollIntoViewParams) {
   const forceRerender = useForceUpdate();
   const frameID = useRef(0);
@@ -49,7 +53,7 @@ export function useScrollIntoView({
       // easing timing progress
       const t = elapsed / duration;
 
-      const distance = start + change * easeInOutQuad(t);
+      const distance = start + change * easing(t);
 
       setScrollParam({ parent, axis, distance });
 
