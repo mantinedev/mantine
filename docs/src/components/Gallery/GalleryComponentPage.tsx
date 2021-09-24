@@ -18,7 +18,7 @@ export default function GalleryComponentPage({ pageContext }: GalleryComponentPa
   const Component = GalleryComponents[pageContext._component];
 
   return (
-    <div style={{ paddingBottom: 50 }}>
+    <div style={{ paddingBottom: 50, marginTop: -34 }}>
       <Head title={pageContext.attributes.title} />
 
       <ComponentPreviewControls
