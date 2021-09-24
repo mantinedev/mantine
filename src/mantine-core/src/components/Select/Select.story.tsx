@@ -65,6 +65,19 @@ storiesOf('@mantine/core/Select', module)
         style={{ marginTop: 20 }}
       />
       <Select
+        label="Disabled Elements"
+        placeholder="Choose value"
+        data={[...data, { value: 'lit', label: 'Lit', disabled: true }]}
+        style={{ marginTop: 20 }}
+      />
+      <Select
+        label="Disabled Elements"
+        placeholder="Choose value"
+        data={[...data, { seperator: true, label: 'Google' }, { value: 'lit', label: 'Lit', disabled: true }]}
+        style={{ marginTop: 20 }}
+        searchable
+      />
+      <Select
         label="Large data set"
         placeholder="Choose value"
         searchable

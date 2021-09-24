@@ -1,11 +1,11 @@
-import type { SelectItem } from '../types';
+import type { SelectItem, SelectSeperatorItem } from '../types';
 
 interface FilterData {
-  data: SelectItem[];
+  data: (SelectItem | SelectSeperatorItem)[];
   limit: number;
   searchable: boolean;
   searchValue: string;
-  filter(value: string, item: SelectItem): boolean;
+  filter(value: string, item: SelectItem | SelectSeperatorItem): boolean;
 }
 
 export function filterData({ data, searchable, limit, searchValue, filter }: FilterData) {

@@ -10,7 +10,12 @@ export interface SelectItem {
   [key: string]: any;
 }
 
-export type SelectDataItem = string | SelectItem;
+export interface SelectSeperatorItem {
+  seperator: boolean;
+  label?: string;
+}
+
+export type SelectDataItem = string | SelectItem | SelectSeperatorItem;
 
 export type BaseSelectStylesNames =
   | Exclude<InputStylesNames, 'rightSection'>

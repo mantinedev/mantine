@@ -41,4 +41,18 @@ export default createMemoStyles({
   disabled: ({ theme }: SelectItemsStyles) => ({
     color: theme.colors.dark[2],
   }),
+
+  seperator: ({ theme }: SelectItemsStyles) => ({
+    boxSizing: 'border-box',
+    textAlign: 'left',
+    width: '100%',
+    padding: [
+      getSizeValue({ size, sizes: theme.spacing }) / 1.5,
+      getSizeValue({ size, sizes: theme.spacing }),
+    ],
+  }),
+
+  seperatorLabel:({ theme }: SelectItemsStyles) => ({
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+  }),
 });

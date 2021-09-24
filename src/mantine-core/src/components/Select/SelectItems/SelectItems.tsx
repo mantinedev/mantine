@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'clsx';
 import { useMantineTheme, DefaultProps, mergeStyles, MantineSize } from '../../../theme';
 import { Text } from '../../Text/Text';
+import { Divider } from '../../Divider/Divider';
 import { SelectItem } from '../types';
 import useStyles from './SelectItems.styles';
 
@@ -44,38 +45,44 @@ export function SelectItems({
   const items = data.map((item, index) => {
     const selected = typeof isItemSelected === 'function' ? isItemSelected(item.value) : false;
 
-    return (
-      <Item
-        key={item.value}
-        className={cx(classes.item, {
-          [classes.hovered]: !item.disabled && hovered === index,
-          [classes.selected]: !item.disabled && selected,
-          [classes.disabled]: item.disabled,
-        })}
-        style={{
-          ..._styles.item,
-          ...(hovered === index && !item.disabled ? _styles.hovered : null),
-          ...(selected && !item.disabled ? _styles.selected : null),
-          ...(item.disabled ? _styles.disabled : null),
+    return !item.seperator ? (<Item
+      key={item.value}
+      className={cx(classes.item, {
+        [classes.hovered]: !item.disabled && hovered === index,
+        [classes.selected]: !item.disabled && selected,
+        [classes.disabled]: item.disabled,
+      })}
+      style={{
+        ..._styles.item,
+        ...(hovered === index && !item.disabled ? _styles.hovered : null),
+        ...(selected && !item.disabled ? _styles.selected : null),
+        ...(item.disabled ? _styles.disabled : null),
+      }}
+      onMouseEnter={() => onItemHover(index)}
+      id={`${uuid}-${index}`}
+      role="option"
+      tabIndex={-1}
+      aria-selected={hovered === index}
+      elementRef={(node: HTMLDivElement) => {
+        if (itemsRefs && itemsRefs.current) {
+          // eslint-disable-next-line no-param-reassign
+          itemsRefs.current[item.value] = node;
+        }
+      }}
+      onMouseDown={!item.disabled ? (event: React.MouseEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        onItemSelect(item);
+      } : null}
+      {...item}
+    />) : (
+        <Divider
+          classNames={{
+          root: classes.seperator,
+          label: classes.seperatorLabel,
         }}
-        onMouseEnter={() => onItemHover(index)}
-        id={`${uuid}-${index}`}
-        role="option"
-        tabIndex={-1}
-        aria-selected={hovered === index}
-        elementRef={(node: HTMLDivElement) => {
-          if (itemsRefs && itemsRefs.current) {
-            // eslint-disable-next-line no-param-reassign
-            itemsRefs.current[item.value] = node;
-          }
-        }}
-        onMouseDown={!item.disabled ? (event: React.MouseEvent<HTMLDivElement>) => {
-          event.preventDefault();
-          onItemSelect(item);
-        } : null}
-        {...item}
-      />
-    );
+          label={item.label}
+        />
+      );
   });
 
   return items.length > 0 ? (

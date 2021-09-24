@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
 import { DefaultProps, MantineSize, MantineShadow } from '../../theme';
@@ -9,7 +10,7 @@ import { DefaultItem, SelectItemProps } from './DefaultItem/DefaultItem';
 import { getSelectRightSectionProps } from './SelectRightSection/get-select-right-section-props';
 import { SelectItems } from './SelectItems/SelectItems';
 import { SelectDropdown } from './SelectDropdown/SelectDropdown';
-import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
+import { SelectDataItem, SelectItem, SelectSeperatorItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
 
 export type SelectStylesNames = BaseSelectStylesNames;
@@ -53,7 +54,7 @@ export interface SelectProps extends DefaultProps<SelectStylesNames>, BaseSelect
   initiallyOpened?: boolean;
 
   /** Function based on which items in dropdown are filtered */
-  filter?(value: string, item: SelectItem): boolean;
+  filter?(value: string, item: SelectItem | SelectSeperatorItem): boolean;
 
   /** Maximum dropdown height in px */
   maxDropdownHeight?: number;
@@ -77,7 +78,9 @@ export interface SelectProps extends DefaultProps<SelectStylesNames>, BaseSelect
   onSearchChange?(query: string): void;
 }
 
-export function defaultFilter(value: string, item: SelectItem) {
+export function defaultFilter(value: string, item: SelectItem | SelectSeperatorItem) {
+  if (value.trim() === '' && item.seperator) return true;
+  if (item.seperator) return false;
   return item.label.toLowerCase().trim().includes(value.toLowerCase().trim());
 }
 
@@ -139,7 +142,10 @@ export function Select({
     typeof item === 'string' ? { label: item, value: item } : item
   );
 
-  const selectedValue = formattedData.find((item) => item.value === _value);
+  const formattedSelectableData = formattedData.filter((item) => !item.seperator) as SelectItem[];
+
+  const selectedValue = formattedSelectableData.find((item) => item.value === _value);
+
   const [inputValue, setInputValue] = useState(selectedValue?.label || '');
 
   const handleSearchChange = (val: string) => {
@@ -158,8 +164,9 @@ export function Select({
   };
 
   useEffect(() => {
-    const newSelectedValue = formattedData.find((item) => item.value === _value);
-    if (newSelectedValue) {
+    const newSelectedValue = formattedSelectableData.find((item) => item.value === _value);
+
+      if (newSelectedValue) {
       handleSearchChange(newSelectedValue.label);
     } else {
       handleSearchChange('');
@@ -191,7 +198,8 @@ export function Select({
     let i = index;
     while (compareFn(i)) {
       i = nextItem(i);
-      if (!filteredData[i].disabled) return i;
+      if (filteredData[i].seperator) i = nextItem(i);
+      else if (!filteredData[i].disabled) return i;
     }
     return index;
   };
@@ -266,9 +274,9 @@ export function Select({
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onBlur === 'function' && onBlur(event);
-    const selected = formattedData.find((item) => item.value === _value);
+    const selected = formattedSelectableData.find((item) => item.value === _value);
     handleSearchChange(selected?.label || '');
-    //setDropdownOpened(false);
+    setDropdownOpened(false);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
