@@ -1,11 +1,11 @@
 import React from 'react';
 import { Prism } from '@mantine/prism';
-import { Group, Button, Badge, Text, MantineProvider, useMantineTheme } from '@mantine/core';
+import { Group, Button, Badge, MantineProvider, useMantineTheme } from '@mantine/core';
 import { LinkTitle } from './LinkTitle';
 
 const code = `
 import React from 'react';
-import { Badge, Button, Text, MantineProvider } from '@mantine/core';
+import { Badge, Button, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -18,7 +18,6 @@ function Demo() {
     }}>
       <Button color="deep-blue">Deep blue button</Button>
       <Badge color="asphalt" variant="filled">Asphalt badge</Badge>
-      <Text themeOverride={{ fontFamily: 'Dosis, sans-serif' }}>Dosis text</Text>
     </MantineProvider>
   );
 }
@@ -73,7 +72,6 @@ export function ThemingDemo() {
           <Badge color="asphalt" variant="filled">
             Asphalt badge
           </Badge>
-          <Text themeOverride={{ fontFamily: 'Dosis, sans-serif' }}>Dosis text</Text>
         </Group>
       </MantineProvider>
 

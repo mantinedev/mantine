@@ -1,8 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
-import cx from 'clsx';
+import React, { useRef, useState } from 'react';
 import {
   DefaultProps,
-  useMantineTheme,
   mergeStyles,
   Input,
   InputWrapper,
@@ -18,22 +16,15 @@ import {
   Modal,
   CloseButton,
   getSizeValue,
-  useClickOutsideRegister,
   MantineShadow,
+  ClassNames,
 } from '@mantine/core';
-import {
-  useId,
-  useClickOutside,
-  useFocusTrap,
-  useMergedRef,
-  useWindowEvent,
-  useReducedMotion,
-} from '@mantine/hooks';
+import { useId, useClickOutside, useFocusTrap, useMergedRef, useWindowEvent } from '@mantine/hooks';
 import { CalendarStylesNames } from '../Calendar/Calendar';
 import useStyles from './DatePickerBase.styles';
 
 export type DatePickerStylesNames =
-  | keyof ReturnType<typeof useStyles>
+  | ClassNames<typeof useStyles>
   | CalendarStylesNames
   | InputStylesNames
   | InputWrapperStylesNames;
@@ -118,7 +109,6 @@ const RIGHT_SECTION_WIDTH = {
 };
 
 export function DatePickerBase({
-  themeOverride,
   classNames,
   className,
   style,
@@ -150,14 +140,12 @@ export function DatePickerBase({
   zIndex = 3,
   ...others
 }: DatePickerBaseProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size, invalid: !!error }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const uuid = useId(id);
-  const clickOutsideRegister = useClickOutsideRegister();
 
   const focusTrapRef = useFocusTrap();
   const inputRef = useRef<HTMLButtonElement>();
@@ -177,13 +165,8 @@ export function DatePickerBase({
 
   useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
 
-  useEffect(() => {
-    clickOutsideRegister(`${uuid}-dropdown`, dropdownElement);
-  }, [dropdownElement]);
-
   const rightSection = clearable ? (
     <CloseButton
-      themeOverride={themeOverride}
       variant="transparent"
       aria-label={clearButtonLabel}
       onClick={onClear}
@@ -200,7 +183,6 @@ export function DatePickerBase({
       description={description}
       className={className}
       style={style}
-      themeOverride={themeOverride}
       classNames={classNames}
       styles={styles}
       size={size}
@@ -210,7 +192,6 @@ export function DatePickerBase({
       <div ref={setRootElement}>
         <div className={classes.wrapper} style={_styles.wrapper} ref={setReferenceElement}>
           <Input
-            themeOverride={themeOverride}
             component="button"
             type="button"
             classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
@@ -237,7 +218,7 @@ export function DatePickerBase({
         {dropdownType === 'popover' ? (
           <Popper
             referenceElement={referenceElement}
-            transitionDuration={useReducedMotion() ? 0 : transitionDuration}
+            transitionDuration={transitionDuration}
             transitionTimingFunction={transitionTimingFunction}
             forceUpdateDependencies={positionDependencies}
             transition={transition}

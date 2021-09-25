@@ -8,7 +8,7 @@ import demos from './demos';
 import useStyles from './Explore.styles';
 
 export function Explore() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [active, setActive] = useLocalStorageValue<string>({
     key: '@mantine/home-tabs',
     defaultValue: 'core',

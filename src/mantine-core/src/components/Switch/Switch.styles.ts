@@ -1,6 +1,5 @@
 import {
-  createMemoStyles,
-  MantineTheme,
+  createStyles,
   MantineNumberSize,
   getFontStyles,
   getThemeColor,
@@ -8,14 +7,12 @@ import {
   getSizeValue,
   MantineSize,
   MantineColor,
-} from '../../theme';
+} from '@mantine/styles';
 
 interface SwitchStyles {
-  reduceMotion: boolean;
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
-  theme: MantineTheme;
 }
 
 const switchHeight = {
@@ -47,17 +44,17 @@ export const sizes = Object.keys(switchHeight).reduce((acc, size) => {
   return acc;
 }, {} as Record<MantineSize, { width: number; height: number }>);
 
-export default createMemoStyles({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-  },
+export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
+  const handleSize = getSizeValue({ size, sizes: handleSizes });
+  const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
 
-  input: ({ size, radius, theme, reduceMotion, color }: SwitchStyles) => {
-    const handleSize = getSizeValue({ size, sizes: handleSizes });
-    const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
+  return {
+    root: {
+      display: 'flex',
+      alignItems: 'center',
+    },
 
-    return {
+    input: {
       ...getFocusStyles(theme),
       WebkitTapHighlightColor: 'transparent',
       position: 'relative',
@@ -69,11 +66,11 @@ export default createMemoStyles({
       height: getSizeValue({ size, sizes: switchHeight }),
       width: getSizeValue({ size, sizes: switchWidth }),
       minWidth: getSizeValue({ size, sizes: switchWidth }),
-      padding: [0, 2],
+      padding: `0 ${size === 'xs' ? 1 : 2}px`,
       margin: 0,
       transitionProperty: 'background-color, border-color',
       transitionTimingFunction: theme.transitionTimingFunction,
-      transitionDuration: reduceMotion ? '1ms' : '150ms',
+      transitionDuration: '150ms',
       boxSizing: 'border-box',
       appearance: 'none',
       display: 'flex',
@@ -88,7 +85,11 @@ export default createMemoStyles({
         height: handleSize,
         width: handleSize,
         border: `1px solid ${theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[3]}`,
-        transition: reduceMotion ? 'none' : `transform 150ms ${theme.transitionTimingFunction}`,
+        transition: `transform 150ms ${theme.transitionTimingFunction}`,
+
+        '@media (prefers-reduced-motion)': {
+          transitionDuration: '0ms',
+        },
       },
 
       '&:checked': {
@@ -99,7 +100,7 @@ export default createMemoStyles({
           transform: `translateX(${
             getSizeValue({ size, sizes: switchWidth }) -
             getSizeValue({ size, sizes: handleSizes }) -
-            6 // borderWidth: 2 + padding: 2 * 2
+            (size === 'xs' ? 4 : 6) // borderWidth: 2 + padding: 2 * 2
           }px)`,
           borderColor: theme.white,
         },
@@ -116,15 +117,15 @@ export default createMemoStyles({
             theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[0],
         },
       },
-    };
-  },
+    },
 
-  label: ({ theme, size }: SwitchStyles) => ({
-    ...getFontStyles(theme),
-    WebkitTapHighlightColor: 'transparent',
-    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
-    fontFamily: theme.fontFamily,
-    paddingLeft: theme.spacing.sm,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-  }),
+    label: {
+      ...getFontStyles(theme),
+      WebkitTapHighlightColor: 'transparent',
+      fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+      fontFamily: theme.fontFamily,
+      paddingLeft: theme.spacing.sm,
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    },
+  };
 });

@@ -1,10 +1,9 @@
 import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles } from '../../theme';
+import { mergeStyles, DefaultProps, ClassNames } from '@mantine/styles';
 import { Text } from '../Text/Text';
 import useStyles from './Breadcrumbs.styles';
 
-export type BreadcrumbsStylesNames = keyof ReturnType<typeof useStyles>;
+export type BreadcrumbsStylesNames = ClassNames<typeof useStyles>;
 
 export interface BreadcrumbsProps
   extends DefaultProps<BreadcrumbsStylesNames>,
@@ -19,15 +18,13 @@ export interface BreadcrumbsProps
 export function Breadcrumbs({
   className,
   style,
-  themeOverride,
   children,
   separator = '/',
   classNames,
   styles,
   ...others
 }: BreadcrumbsProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'breadcrumbs');
+  const { classes, cx } = useStyles(null, classNames, 'breadcrumbs');
   const _styles = mergeStyles(classes, styles);
 
   const items = React.Children.toArray(children).reduce((acc: any[], child: any, index, array) => {
@@ -46,7 +43,6 @@ export function Breadcrumbs({
           className={classes.separator}
           style={_styles.separator}
           key={`separator-${index}`}
-          themeOverride={themeOverride}
         >
           {separator}
         </Text>

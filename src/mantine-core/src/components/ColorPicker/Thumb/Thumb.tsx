@@ -1,9 +1,8 @@
 import React from 'react';
-import cx from 'clsx';
-import { useMantineTheme, DefaultProps, mergeStyles, MantineSize } from '../../../theme';
+import { mergeStyles, DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
 import useStyles, { THUMB_SIZES } from './Thumb.styles';
 
-export type ThumbStylesNames = keyof ReturnType<typeof useStyles>;
+export type ThumbStylesNames = ClassNames<typeof useStyles>;
 
 interface Position {
   x: number;
@@ -18,7 +17,6 @@ interface ThumbProps extends DefaultProps<ThumbStylesNames> {
 
 export function Thumb({
   position,
-  themeOverride,
   className,
   styles,
   classNames,
@@ -26,8 +24,7 @@ export function Thumb({
   size,
   __staticSelector,
 }: ThumbProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
 
   return (

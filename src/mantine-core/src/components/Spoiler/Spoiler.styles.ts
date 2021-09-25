@@ -1,21 +1,24 @@
-import { createMemoStyles, MantineTheme } from '../../theme';
+import { createStyles } from '@mantine/styles';
 
 interface SpoilerStyles {
-  theme: MantineTheme;
   transitionDuration: number;
 }
 
-export default createMemoStyles({
+export default createStyles((_theme, { transitionDuration }: SpoilerStyles) => ({
   control: {},
 
   root: {
     position: 'relative',
   },
 
-  content: ({ transitionDuration }: SpoilerStyles) => ({
+  content: {
     overflow: 'hidden',
     transitionProperty: 'max-height',
     transitionTimingFunction: 'ease',
-    transitionDuration: transitionDuration || 0,
-  }),
-});
+    transitionDuration: `${transitionDuration}ms`,
+
+    '@media (prefers-reduced-motion)': {
+      transitionDuration: '0ms',
+    },
+  },
+}));

@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { Sun, Phone, MapPin, AtSign } from 'react-feather';
 import {
   Paper,
@@ -69,7 +68,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   field: {
-    '& + &': {
+    '&:not(:first-of-type)': {
       marginTop: theme.spacing.sm,
     },
   },
@@ -125,29 +124,28 @@ function Contact({
   return (
     <div style={{ display: 'flex', alignItems: 'flex-start' }} className={className}>
       <Icon size={22} style={{ marginRight: theme.spacing.md }} />
+
       <div>
-        <Text
-          size="xs"
-          style={{
-            color: theme.colors.blue[0],
-          }}
-        >
+        <Text size="xs" style={{ color: theme.colors.blue[0] }}>
           {title}
         </Text>
-        <Text weight={500}>{description}</Text>
+        <Text weight={500} style={{ color: theme.white }}>
+          {description}
+        </Text>
       </div>
     </div>
   );
 }
 
 export function GetInTouch() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
+  const theme = useMantineTheme();
 
   return (
     <Paper shadow="md" radius="lg">
       <div className={classes.wrapper}>
         <div className={classes.contacts}>
-          <Text size="lg" weight={700} className={classes.title}>
+          <Text size="lg" weight={700} className={classes.title} style={{ color: theme.white }}>
             Contact information
           </Text>
 

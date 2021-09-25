@@ -1,21 +1,29 @@
 import {
-  MantineTheme,
+  createStyles,
   MantineNumberSize,
   getSizeValue,
   getFontStyles,
   getFocusStyles,
   getThemeColor,
-  createMemoStyles,
   getSharedColorScheme,
   hexToRgba,
   MantineColor,
-} from '../../theme';
+  MantineTheme,
+} from '@mantine/styles';
+
+export type ActionIconVariant =
+  | 'hover'
+  | 'filled'
+  | 'outline'
+  | 'light'
+  | 'default'
+  | 'transparent';
 
 interface ActionIconStyles {
   color: MantineColor;
   size: MantineNumberSize;
   radius: MantineNumberSize;
-  theme: MantineTheme;
+  variant: ActionIconVariant;
 }
 
 export const sizes = {
@@ -26,83 +34,49 @@ export const sizes = {
   xl: 44,
 };
 
-export default createMemoStyles({
-  loading: (props: ActionIconStyles) => ({
-    '&::before': {
-      content: '""',
-      position: 'absolute',
-      top: -1,
-      left: -1,
-      right: -1,
-      bottom: -1,
-      backgroundColor:
-        props.theme.colorScheme === 'dark'
-          ? hexToRgba(props.theme.colors.dark[7], 0.5)
-          : 'rgba(255, 255, 255, .5)',
-      borderRadius: getSizeValue({ size: props.radius, sizes: props.theme.radius }) - 1,
-      cursor: 'not-allowed',
-    },
-  }),
+interface GetVariantStyles {
+  variant: ActionIconVariant;
+  theme: MantineTheme;
+  color: MantineColor;
+}
 
-  filled: ({ theme, color }: ActionIconStyles) => {
-    const colors = getSharedColorScheme({ theme, color, variant: 'filled' });
-
+function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
+  if (variant === 'hover' || variant === 'transparent') {
     return {
-      backgroundColor: colors.background,
-      color: colors.color,
+      border: '1px solid transparent',
+      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
+      backgroundColor: 'transparent',
 
-      '&:disabled': {
-        backgroundColor: getThemeColor({
-          theme,
-          color: 'gray',
-          shade: theme.colorScheme === 'dark' ? 8 : 1,
-        }),
-      },
+      '&:hover':
+        variant === 'transparent'
+          ? {}
+          : {
+              backgroundColor:
+                theme.colorScheme === 'dark'
+                  ? theme.colors.dark[8]
+                  : getThemeColor({ theme, color, shade: 0 }),
+            },
     };
-  },
+  }
 
-  light: ({ theme, color }: ActionIconStyles) => {
-    const colors = getSharedColorScheme({ theme, color, variant: 'light' });
+  const colors = getSharedColorScheme({ theme, color, variant });
 
-    return {
-      backgroundColor: colors.background,
-      color: colors.color,
+  return {
+    backgroundColor: colors.background,
+    color: colors.color,
+    border: `1px solid ${colors.border}`,
+  };
+}
 
-      '&:disabled': {
-        backgroundColor: getThemeColor({
-          theme,
-          color: 'gray',
-          shade: theme.colorScheme === 'dark' ? 8 : 1,
-        }),
-      },
-    };
-  },
-
-  hover: ({ theme, color }: ActionIconStyles) => ({
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
-    backgroundColor: 'transparent',
-
-    '&:not(:disabled):hover': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[8]
-          : getThemeColor({ theme, color, shade: 0 }),
-    },
-  }),
-
-  transparent: ({ theme, color }: ActionIconStyles) => ({
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
-    backgroundColor: 'transparent',
-  }),
-
-  root: ({ radius, theme, size }: ActionIconStyles) => ({
+export default createStyles((theme, { color, size, radius, variant }: ActionIconStyles) => ({
+  root: {
     ...getFocusStyles(theme),
     ...getFontStyles(theme),
+    ...getVariantStyles({ variant, theme, color }),
     position: 'relative',
     appearance: 'none',
     WebkitAppearance: 'none',
     WebkitTapHighlightColor: 'transparent',
-    border: '1px solid transparent',
     boxSizing: 'border-box',
     height: getSizeValue({ size, sizes }),
     minHeight: getSizeValue({ size, sizes }),
@@ -115,29 +89,42 @@ export default createMemoStyles({
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
-    transition: 'color 100ms ease, background-color 100ms ease',
-
-    '&:not(:disabled):active': {
-      transform: 'translateY(1px)',
-    },
 
     '&:disabled': {
       color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
       cursor: 'not-allowed',
+
+      backgroundColor: getThemeColor({
+        theme,
+        color: 'gray',
+        shade: theme.colorScheme === 'dark' ? 8 : 1,
+      }),
+      borderColor: getThemeColor({
+        theme,
+        color: 'gray',
+        shade: theme.colorScheme === 'dark' ? 8 : 1,
+      }),
     },
-  }),
 
-  outline: ({ theme, color }: ActionIconStyles) => {
-    const colors = getSharedColorScheme({ theme, color, variant: 'outline' });
-
-    return {
-      backgroundColor: colors.background,
-      color: colors.color,
-      border: `1px solid ${colors.border}`,
-
-      '&:disabled': {
-        borderColor: theme.colors.gray[theme.colorScheme === 'dark' ? 7 : 3],
-      },
-    };
+    '&:not(:disabled):active': {
+      transform: 'translateY(1px)',
+    },
   },
-});
+
+  loading: {
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      top: -1,
+      left: -1,
+      right: -1,
+      bottom: -1,
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? hexToRgba(theme.colors.dark[7], 0.5)
+          : 'rgba(255, 255, 255, .5)',
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
+      cursor: 'not-allowed',
+    },
+  },
+}));

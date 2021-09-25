@@ -1,9 +1,8 @@
 import React from 'react';
-import cx from 'clsx';
-import { MantineNumberSize, DefaultProps, mergeStyles, useMantineTheme } from '../../../theme';
+import { mergeStyles, MantineNumberSize, DefaultProps, ClassNames } from '@mantine/styles';
 import useStyles from './SliderRoot.styles';
 
-export type SliderRootStylesNames = keyof ReturnType<typeof useStyles>;
+export type SliderRootStylesNames = ClassNames<typeof useStyles>;
 
 interface SliderRootProps
   extends DefaultProps<SliderRootStylesNames>,
@@ -20,11 +19,9 @@ export function SliderRoot({
   size,
   classNames,
   styles,
-  themeOverride,
   ...others
 }: SliderRootProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'slider');
+  const { classes, cx } = useStyles({ size }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
 
   return (

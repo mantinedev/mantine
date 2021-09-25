@@ -1,19 +1,17 @@
-import { createMemoStyles, MantineTheme, getSizeValue, MantineSize } from '../../theme';
-import { INPUT_SIZES } from '../Input/Input';
+import { createStyles, getSizeValue, MantineSize } from '@mantine/styles';
+import { INPUT_SIZES } from '../Input';
 
 interface MultiSelectStyles {
-  theme: MantineTheme;
   size: MantineSize;
-  variant: string;
   invalid: boolean;
 }
 
-export default createMemoStyles({
+export default createStyles((theme, { size, invalid }: MultiSelectStyles) => ({
   wrapper: {
     position: 'relative',
   },
 
-  values: ({ theme, size }: MultiSelectStyles) => ({
+  values: {
     minHeight: getSizeValue({ size, sizes: INPUT_SIZES }) - 2,
     display: 'flex',
     alignItems: 'center',
@@ -22,13 +20,13 @@ export default createMemoStyles({
     paddingTop: theme.spacing.xs / 2 - 2,
     paddingBottom: theme.spacing.xs / 2 - 2,
     boxSizing: 'border-box',
-  }),
+  },
 
-  value: ({ theme }: MultiSelectStyles) => ({
-    margin: [theme.spacing.xs / 2 - 2, theme.spacing.xs / 2],
-  }),
+  value: {
+    margin: `${theme.spacing.xs / 2 - 2}px ${theme.spacing.xs / 2}px`,
+  },
 
-  searchInput: ({ theme, invalid, size }: MultiSelectStyles) => ({
+  searchInput: {
     width: 60,
     backgroundColor: 'transparent',
     border: 0,
@@ -50,18 +48,18 @@ export default createMemoStyles({
     '&:disabled': {
       cursor: 'not-allowed',
     },
-  }),
+  },
 
-  searchInputEmpty: () => ({
+  searchInputEmpty: {
     width: '100%',
-  }),
+  },
 
-  searchInputInputHidden: () => ({
+  searchInputInputHidden: {
     width: 0,
     height: 0,
     margin: 0,
     overflow: 'hidden',
-  }),
+  },
 
   searchInputPointer: {
     cursor: 'pointer',
@@ -70,4 +68,4 @@ export default createMemoStyles({
       cursor: 'not-allowed',
     },
   },
-});
+}));

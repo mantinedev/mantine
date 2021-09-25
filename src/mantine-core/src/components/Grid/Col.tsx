@@ -1,6 +1,12 @@
 import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize, getSizeValue } from '../../theme';
+import clsx from 'clsx';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
+  getSizeValue,
+  MANTINE_SIZES,
+} from '@mantine/styles';
 
 export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   span: number;
@@ -19,12 +25,9 @@ export function isValidSpan(span: number) {
   return typeof span === 'number' && span > 0 && span % 1 === 0;
 }
 
-export const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
-
 export const getColumnWidth = (colSpan: number, columns: number) => `${100 / (columns / colSpan)}%`;
 
 export function Col({
-  themeOverride,
   children,
   span,
   gutter,
@@ -42,7 +45,7 @@ export function Col({
   ...others
 }: ColProps) {
   const breakpointValues = { xs, sm, md, lg, xl };
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const spacing = getSizeValue({ size: gutter, sizes: theme.spacing });
 
   if (!isValidSpan(span) || span > columns) {
@@ -66,7 +69,7 @@ export function Col({
     [`${id}-col-${span}`]: span !== undefined,
   };
 
-  breakpoints.forEach((size) => {
+  MANTINE_SIZES.forEach((size) => {
     const propSize = breakpointValues[size];
     if (!isValidSpan(propSize) || propSize > columns) {
       return null;
@@ -79,7 +82,7 @@ export function Col({
   });
 
   return (
-    <div style={styles} className={cx('mantine-col', className, sizeClassObj)} {...others}>
+    <div style={styles} className={clsx('mantine-col', className, sizeClassObj)} {...others}>
       {children}
     </div>
   );

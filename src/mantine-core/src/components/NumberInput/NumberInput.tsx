@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cx from 'clsx';
 import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, mergeStyles, getSizeValue } from '../../theme';
+import { mergeStyles, DefaultProps, getSizeValue, ClassNames } from '@mantine/styles';
 import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
 import useStyles, { CONTROL_SIZES } from './NumberInput.styles';
 
-export type InnerNumberInputStylesNames = keyof ReturnType<typeof useStyles>;
+export type InnerNumberInputStylesNames = ClassNames<typeof useStyles>;
 export type NumberInputStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
@@ -63,7 +62,6 @@ export interface NumberInputProps
 
 export function NumberInput({
   disabled,
-  themeOverride,
   elementRef,
   value,
   onChange,
@@ -84,8 +82,7 @@ export function NumberInput({
   size,
   ...others
 }: NumberInputProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, radius, size }, classNames, 'number-input');
+  const { classes, cx } = useStyles({ radius, size }, classNames, 'number-input');
   const _styles = mergeStyles(classes, styles);
   const [focused, setFocused] = useState(false);
   const [_value, setValue] = useState(
@@ -192,7 +189,6 @@ export function NumberInput({
       variant={variant}
       value={tempValue}
       disabled={disabled}
-      themeOverride={themeOverride}
       elementRef={useMergedRef(inputRef, elementRef)}
       type="number"
       onChange={handleChange}

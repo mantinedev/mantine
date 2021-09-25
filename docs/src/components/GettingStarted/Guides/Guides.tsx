@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import { CheckIcon } from '@modulz/radix-icons';
 import { Text, Title, ThemeIcon } from '@mantine/core';
 import { GUIDES_DATA } from './data';
@@ -24,7 +23,7 @@ const guides = {
 
 export function Guides({ dependencies }: GuidesProps) {
   const [selected, setSelected] = useState('cra');
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const Guide = guides[selected];
 
   const controls = GUIDES_DATA.map((guide) => (

@@ -1,31 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import cx from 'clsx';
+import React, { useEffect } from 'react';
+import { useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import {
-  useScrollLock,
-  useMergedRef,
-  useReducedMotion,
-  useFocusTrap,
-  useFocusReturn,
-} from '@mantine/hooks';
-import {
-  DefaultProps,
   useMantineTheme,
-  MantineNumberSize,
   mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
   MantineShadow,
-} from '../../theme';
-import { ClickOutsideProvider } from '../../utils';
+  ClassNames,
+} from '@mantine/styles';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { Portal } from '../Portal/Portal';
 import { Text } from '../Text/Text';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { GroupedTransition, MantineTransition } from '../Transition/Transition';
-import useStyles, { Position, sizes } from './Drawer.styles';
+import { GroupedTransition, MantineTransition } from '../Transition';
+import useStyles, { DrawerPosition } from './Drawer.styles';
 
-export const DRAWER_SIZES = sizes;
-
-export type DrawerStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'noOverlay'>;
+export type DrawerStylesNames = Exclude<
+  ClassNames<typeof useStyles>,
+  'noOverlay' | 'clickOutsideOverlay'
+>;
 
 export interface DrawerProps
   extends DefaultProps<DrawerStylesNames>,
@@ -37,7 +31,7 @@ export interface DrawerProps
   onClose(): void;
 
   /** Drawer body position */
-  position?: 'top' | 'left' | 'bottom' | 'right';
+  position?: DrawerPosition;
 
   /** Drawer body width (right | left position) or height (top | bottom position), cannot exceed 100vh for height and 100% for width */
   size?: string | number;
@@ -91,7 +85,7 @@ export interface DrawerProps
   closeButtonLabel?: string;
 }
 
-const transitions: Record<Position, MantineTransition> = {
+const transitions: Record<DrawerPosition, MantineTransition> = {
   top: 'slide-down',
   bottom: 'slide-up',
   left: 'slide-right',
@@ -103,7 +97,6 @@ export function MantineDrawer({
   style,
   opened,
   onClose,
-  themeOverride,
   position = 'left',
   size = 'md',
   noFocusTrap = false,
@@ -127,12 +120,10 @@ export function MantineDrawer({
   styles,
   ...others
 }: DrawerProps) {
-  const theme = useMantineTheme(themeOverride);
-  const duration = useReducedMotion() ? 1 : transitionDuration;
-  const classes = useStyles({ theme, size, position }, classNames, 'drawer');
+  const theme = useMantineTheme();
+  const { classes, cx } = useStyles({ size, position }, classNames, 'drawer');
   const _styles = mergeStyles(classes, styles);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
-  const [drawerBodyElement, setDrawerBodyElement] = useState<HTMLDivElement>(null);
   useScrollLock(opened && !noScrollLock);
 
   const drawerTransition = transition || transitions[position];
@@ -164,9 +155,9 @@ export function MantineDrawer({
     <GroupedTransition
       mounted={opened}
       transitions={{
-        overlay: { duration: duration / 2, transition: 'fade', timingFunction: 'ease' },
+        overlay: { duration: transitionDuration / 2, transition: 'fade', timingFunction: 'ease' },
         drawer: {
-          duration,
+          duration: transitionDuration,
           transition: drawerTransition,
           timingFunction: transitionTimingFunction,
         },
@@ -180,52 +171,43 @@ export function MantineDrawer({
           style={{ ...style, ..._styles.root, ...(noOverlay ? _styles.noOverlay : null) }}
           {...others}
         >
-          <ClickOutsideProvider
-            onClickOutside={() => !noCloseOnClickOutside && onClose()}
-            componentNodes={[drawerBodyElement]}
+          {!noCloseOnClickOutside && (
+            // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
+            <div
+              onClick={onClose}
+              className={classes.clickOutsideOverlay}
+              style={{ zIndex: zIndex + 1 }}
+            />
+          )}
+
+          <Paper<'div', HTMLDivElement>
+            className={cx(classes.drawer, className)}
+            elementRef={focusTrapRef}
+            style={{ ...transitionStyles.drawer, ..._styles.drawer, zIndex: zIndex + 2 }}
+            radius={0}
+            tabIndex={-1}
+            onKeyDownCapture={(event) => {
+              const shouldTrigger =
+                (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
+
+              shouldTrigger && event.nativeEvent.code === 'Escape' && !noCloseOnEscape && onClose();
+            }}
+            shadow={shadow}
+            padding={padding}
           >
-            <Paper<'div', HTMLDivElement>
-              className={cx(classes.drawer, className)}
-              elementRef={useMergedRef(focusTrapRef, setDrawerBodyElement)}
-              style={{ ...transitionStyles.drawer, ..._styles.drawer, zIndex: zIndex + 1 }}
-              radius={0}
-              tabIndex={-1}
-              onKeyDownCapture={(event) => {
-                const shouldTrigger =
-                  (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
+            {(title || !hideCloseButton) && (
+              <div className={classes.header} style={_styles.header}>
+                <Text className={classes.title} style={_styles.title}>
+                  {title}
+                </Text>
 
-                shouldTrigger &&
-                  event.nativeEvent.code === 'Escape' &&
-                  !noCloseOnEscape &&
-                  onClose();
-              }}
-              shadow={shadow}
-              padding={padding}
-              themeOverride={themeOverride}
-            >
-              {(title || !hideCloseButton) && (
-                <div className={classes.header} style={_styles.header}>
-                  <Text
-                    className={classes.title}
-                    style={_styles.title}
-                    themeOverride={themeOverride}
-                  >
-                    {title}
-                  </Text>
-
-                  {!hideCloseButton && (
-                    <CloseButton
-                      iconSize={16}
-                      onClick={onClose}
-                      aria-label={closeButtonLabel}
-                      themeOverride={themeOverride}
-                    />
-                  )}
-                </div>
-              )}
-              {children}
-            </Paper>
-          </ClickOutsideProvider>
+                {!hideCloseButton && (
+                  <CloseButton iconSize={16} onClick={onClose} aria-label={closeButtonLabel} />
+                )}
+              </div>
+            )}
+            {children}
+          </Paper>
 
           {!noOverlay && (
             <div style={transitionStyles.overlay}>

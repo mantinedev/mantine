@@ -1,9 +1,9 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, useMantineTheme, getSizeValue } from '../../theme';
+import { useMantineTheme, DefaultProps, MantineNumberSize, getSizeValue } from '@mantine/styles';
 
-interface GridBreakpoint {
+export interface SimpleGridBreakpoint {
   maxWidth: number;
   cols: number;
   spacing?: MantineNumberSize;
@@ -11,7 +11,7 @@ interface GridBreakpoint {
 
 export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Breakpoints data to change items per row and spacing based on max-width */
-  breakpoints?: GridBreakpoint[];
+  breakpoints?: SimpleGridBreakpoint[];
 
   /** Default amount of columns, used when none of breakpoints can be applied  */
   cols: number;
@@ -26,12 +26,11 @@ export function SimpleGrid({
   cols,
   id,
   spacing = 'md',
-  themeOverride,
   children,
   ...others
 }: SimpleGridProps) {
   const uuid = useId(id);
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const sortedBreakpoints = [...breakpoints].sort((a, b) => b.maxWidth - a.maxWidth);
   const gridClassName = `grid-${uuid}`;
   const colClassName = `col-${uuid}`;

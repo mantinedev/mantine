@@ -1,13 +1,6 @@
-import {
-  createMemoStyles,
-  getFontStyles,
-  getSizeValue,
-  MantineNumberSize,
-  MantineTheme,
-} from '../../../theme';
+import { createStyles, getFontStyles, getSizeValue, MantineNumberSize } from '@mantine/styles';
 
 interface SliderRootStyles {
-  theme: MantineTheme;
   size: MantineNumberSize;
 }
 
@@ -19,8 +12,8 @@ export const sizes = {
   xl: 12,
 };
 
-export default createMemoStyles({
-  root: ({ theme, size }: SliderRootStyles) => ({
+export default createStyles((theme, { size }: SliderRootStyles) => ({
+  root: {
     ...getFontStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     outline: 0,
@@ -28,5 +21,5 @@ export default createMemoStyles({
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
-  }),
-});
+  },
+}));

@@ -1,12 +1,11 @@
 import React from 'react';
-import cx from 'clsx';
 import { Text, ThemeIcon, Paper, Container, Group } from '@mantine/core';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
 import data from './data';
 import useStyles from './Features.styles';
 
 export function Features() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   const items = data.map((item) => (
     <Paper className={classes.item} padding="lg" shadow="xs" key={item.title}>

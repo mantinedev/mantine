@@ -1,20 +1,19 @@
-import { createMemoStyles, MantineTheme } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 interface ToolbarStyles {
-  theme: MantineTheme;
   sticky: boolean;
   stickyOffset: string | number;
 }
 
-export default createMemoStyles({
-  toolbarGroup: ({ theme }: ToolbarStyles) => ({
+export default createStyles((theme, { sticky, stickyOffset }: ToolbarStyles) => ({
+  toolbarGroup: {
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
     margin: theme.spacing.md / 2,
-  }),
+  },
 
-  toolbar: ({ theme, sticky, stickyOffset }: ToolbarStyles) => ({
+  toolbar: {
     position: sticky ? 'sticky' : 'relative',
     zIndex: 1,
     top: sticky ? stickyOffset : 0,
@@ -24,28 +23,28 @@ export default createMemoStyles({
     }`,
     borderTopRightRadius: theme.radius.sm,
     borderTopLeftRadius: theme.radius.sm,
-    padding: [theme.spacing.sm, theme.spacing.md],
-  }),
+    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+  },
 
-  toolbarInner: ({ theme }: ToolbarStyles) => ({
+  toolbarInner: {
     display: 'flex',
     flexWrap: 'wrap',
     margin: -theme.spacing.md / 2,
-  }),
+  },
 
-  toolbarControl: ({ theme }: ToolbarStyles) => ({
+  toolbarControl: {
     '& + &': {
       borderLeftWidth: 0,
     },
 
-    '&:first-child': {
+    '&:first-of-type': {
       borderTopLeftRadius: theme.radius.sm,
       borderBottomLeftRadius: theme.radius.sm,
     },
 
-    '&:last-child': {
+    '&:last-of-type': {
       borderTopRightRadius: theme.radius.sm,
       borderBottomRightRadius: theme.radius.sm,
     },
-  }),
-});
+  },
+}));

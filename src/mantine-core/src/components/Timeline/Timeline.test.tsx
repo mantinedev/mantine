@@ -6,6 +6,7 @@ import {
   itSupportsStylesApi,
 } from '@mantine/tests';
 import { Timeline } from './Timeline';
+import { TimelineItem } from './TimelineItem/TimelineItem';
 import { Timeline as TimelineStylesApi } from './styles.api';
 
 const defaultProps = {
@@ -29,6 +30,10 @@ describe('@mantine/core/Timeline', () => {
     Object.keys(TimelineStylesApi),
     'timeline'
   );
+
+  it('exports Timeline.Item', () => {
+    expect(Timeline.Item).toBe(TimelineItem);
+  });
 
   it('has correct displayName', () => {
     expect(Timeline.displayName).toEqual('@mantine/core/Timeline');

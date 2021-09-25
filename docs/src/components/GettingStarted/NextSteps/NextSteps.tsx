@@ -5,7 +5,7 @@ import { NEXT_STEPS_DATA } from './data';
 import useStyles from './NextSteps.styles';
 
 export function NextSteps() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const items = NEXT_STEPS_DATA.map((item, index) => {
     // eslint-disable-next-line jsx-a11y/anchor-has-content
     const LinkComponent = item.type === 'gatsby' ? Link : (props: any) => <a {...props} />;

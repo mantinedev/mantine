@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import cx from 'clsx';
 import { MarkGithubIcon } from '@primer/octicons-react';
 import {
   Title,
@@ -22,7 +21,7 @@ interface GalleryBannerProps {
 }
 
 export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const [, scrollTo] = useWindowScroll();
   const theme = useMantineTheme();
 

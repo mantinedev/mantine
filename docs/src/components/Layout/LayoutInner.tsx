@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import { graphql, useStaticQuery } from 'gatsby';
 import { useMediaQuery } from '@mantine/hooks';
 import { NotificationsProvider } from '@mantine/notifications';
@@ -39,7 +38,7 @@ const query = graphql`
 `;
 
 export function LayoutInner({ children, location }: LayoutProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const [navbarOpened, setNavbarState] = useState(false);
   const data = getDocsData(useStaticQuery(query));
   const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);

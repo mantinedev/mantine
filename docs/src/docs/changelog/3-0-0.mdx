@@ -1,0 +1,48 @@
+---
+group: 'changelog'
+title: 'Version 3.0.0'
+order: 1
+slug: /changelog/3-0-0/
+release: https://github.com/mantinedev/mantine/releases/tag/3.0.0
+date: 'September 16th, 2021'
+---
+
+import { AccordionDemos, AvatarDemos, MediaQueryDemos } from '@demos/core';
+import { useResizeObserverDemo, useViewportSizeDemo, useMouseRef } from '@docs/demos';
+
+## New components
+
+[MediaQuery](https://mantine.dev/core/media-query/) component provides a simple API to manage breakpoints in jsx:
+
+<Demo data={MediaQueryDemos.usage} />
+
+## New features
+
+[Accordion](https://mantine.dev/core/accordion/) component now supports more options to customize icons and labels:
+
+- `iconPosition` prop let's you choose where chevron icon will be rendered: right or left
+- with `icon` prop on Accordion and Accordion.Item components you can replace icons of all items at once or of each item individually
+
+<Demo data={AccordionDemos.label} demoProps={{ toggle: true }} />
+
+[Avatar](https://mantine.dev/core/avatar/) component now supports stacking with [AvatarsGroup](https://mantine.dev/core/avatar/#avatars-group):
+
+<Demo data={AvatarDemos.avatarsGroup} demoProps={{ toggle: true }} />
+
+## New hooks
+
+[use-resize-observer](https://mantine.dev/hooks/use-resize-observer/) lets you subscribe to element size and position changes with [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver):
+
+<Demo data={useResizeObserverDemo} demoProps={{ toggle: true }} />
+
+[use-viewport-size](https://mantine.dev/hooks/use-viewport-size/) hook returns viewport width and height:
+
+<Demo data={useViewportSizeDemo} demoProps={{ toggle: true }} />
+
+[use-mouse](https://mantine.dev/hooks/use-mouse/) hook tracks mouse position over given element:
+
+<Demo data={useMouseRef} demoProps={{ toggle: true }} />
+
+## Other changes
+
+- [ActionIcon](https://mantine.dev/core/action-icon/) and [Button](https://mantine.dev/core/button/) components now support new `default` variant

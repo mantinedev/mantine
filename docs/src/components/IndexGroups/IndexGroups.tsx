@@ -23,7 +23,7 @@ interface IndexGroupsProps {
 }
 
 export function IndexGroups(props: IndexGroupsProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const data = groupPages(props);
   const theme = useMantineTheme();
 

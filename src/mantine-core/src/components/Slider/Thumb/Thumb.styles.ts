@@ -1,22 +1,20 @@
 import {
-  createMemoStyles,
+  createStyles,
   getThemeColor,
-  MantineTheme,
   getFocusStyles,
   getSizeValue,
   MantineNumberSize,
   MantineColor,
-} from '../../../theme';
+} from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface ThumbStyles {
-  theme: MantineTheme;
   color: MantineColor;
   size: MantineNumberSize;
 }
 
-export default createMemoStyles({
-  label: ({ theme, color }: ThumbStyles) => ({
+export default createStyles((theme, { color, size }: ThumbStyles) => ({
+  label: {
     position: 'absolute',
     top: -32,
     backgroundColor: getThemeColor({ theme, color, shade: 6 }),
@@ -25,9 +23,9 @@ export default createMemoStyles({
     padding: theme.spacing.xs / 2,
     borderRadius: theme.radius.sm,
     whiteSpace: 'nowrap',
-  }),
+  },
 
-  thumb: ({ theme, color, size }: ThumbStyles) => ({
+  thumb: {
     ...getFocusStyles(theme),
     boxSizing: 'border-box',
     position: 'absolute',
@@ -49,10 +47,10 @@ export default createMemoStyles({
     transitionProperty: 'box-shadow, transform',
     transitionTimingFunction: theme.transitionTimingFunction,
     zIndex: 2,
-  }),
+  },
 
-  dragging: ({ theme }: ThumbStyles) => ({
+  dragging: {
     transform: 'translate(-50%, -50%) scale(1.1)',
     boxShadow: theme.shadows.md,
-  }),
-});
+  },
+}));

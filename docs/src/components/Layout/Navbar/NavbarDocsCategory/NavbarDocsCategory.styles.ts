@@ -1,113 +1,109 @@
-import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, getFocusStyles, hexToRgba } from '@mantine/core';
+import { createStyles, getFocusStyles, hexToRgba } from '@mantine/core';
 
-export default createUseStyles(
-  (theme: MantineTheme) => ({
-    category: {
-      marginBottom: theme.spacing.md,
+export default createStyles((theme) => ({
+  category: {
+    marginBottom: theme.spacing.md,
+  },
+
+  categoryCollapsed: {
+    marginBottom: 0,
+  },
+
+  header: {
+    ...getFocusStyles(theme),
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+    outline: 0,
+    display: 'flex',
+    alignItems: 'center',
+    width: `calc(100% + ${theme.spacing.md}px)`,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+    height: 32,
+    border: 0,
+    padding: `0 ${theme.spacing.md}px`,
+    paddingLeft: 0,
+    cursor: 'pointer',
+  },
+
+  icon: {
+    width: 15,
+    height: 15,
+    marginRight: theme.spacing.md,
+    transform: 'rotate(0deg)',
+    transition: 'transform 150ms ease',
+  },
+
+  iconCollapsed: {
+    transform: 'rotate(-90deg)',
+  },
+
+  innerCategory: {
+    paddingTop: 15,
+  },
+
+  innerCategoryIcon: {
+    marginRight: 10,
+    width: 14,
+    height: 14,
+  },
+
+  innerCategoryTitle: {
+    position: 'relative',
+    paddingLeft: 23,
+    marginLeft: 7,
+    marginBottom: 5,
+    borderLeft: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3]
+    }`,
+    height: 34,
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: theme.fontSizes.xs,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+    borderTopRightRadius: theme.radius.sm,
+    borderBottomRightRadius: theme.radius.sm,
+
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      bottom: -5,
+      left: -1,
+      height: 5,
+      width: 1,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3],
     },
+  },
 
-    categoryCollapsed: {
-      marginBottom: 0,
-    },
+  link: {
+    ...getFocusStyles(theme),
+    WebkitTapHighlightColor: 'transparent',
+    borderLeft: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3]
+    }`,
+    outline: 0,
+    display: 'block',
+    textDecoration: 'none',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
+    paddingLeft: 23,
+    paddingRight: theme.spacing.md,
+    marginLeft: 7,
+    height: 34,
+    lineHeight: '34px',
+    borderTopRightRadius: theme.radius.sm,
+    borderBottomRightRadius: theme.radius.sm,
+    fontSize: theme.fontSizes.sm,
+    userSelect: 'none',
+  },
 
-    header: {
-      ...getFocusStyles(theme),
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-      outline: 0,
-      display: 'flex',
-      alignItems: 'center',
-      width: `calc(100% + ${theme.spacing.md}px)`,
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-      height: 32,
-      border: 0,
-      padding: [0, theme.spacing.md],
-      paddingLeft: 0,
-      cursor: 'pointer',
-    },
+  linkActive: {
+    borderLeftColor: theme.colors.blue[7],
+    backgroundColor:
+      theme.colorScheme === 'dark' ? hexToRgba(theme.colors.blue[9], 0.45) : theme.colors.blue[0],
+    color: theme.colorScheme === 'dark' ? theme.colors.blue[1] : theme.colors.blue[8],
+    fontWeight: 500,
+  },
 
-    icon: {
-      width: 15,
-      height: 15,
-      marginRight: theme.spacing.md,
-      transform: 'rotate(0deg)',
-      transition: 'transform 150ms ease',
-    },
-
-    iconCollapsed: {
-      transform: 'rotate(-90deg)',
-    },
-
-    innerCategory: {
-      paddingTop: 15,
-    },
-
-    innerCategoryIcon: {
-      marginRight: 10,
-      width: 14,
-      height: 14,
-    },
-
-    innerCategoryTitle: {
-      position: 'relative',
-      paddingLeft: 23,
-      marginLeft: 7,
-      marginBottom: 5,
-      borderLeft: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3]
-      }`,
-      height: 34,
-      display: 'flex',
-      alignItems: 'center',
-      fontSize: theme.fontSizes.xs,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
-      borderTopRightRadius: theme.radius.sm,
-      borderBottomRightRadius: theme.radius.sm,
-
-      '&::after': {
-        content: '""',
-        position: 'absolute',
-        bottom: -5,
-        left: -1,
-        height: 5,
-        width: 1,
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3],
-      },
-    },
-
-    link: {
-      ...getFocusStyles(theme),
-      WebkitTapHighlightColor: 'transparent',
-      borderLeft: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3]
-      }`,
-      outline: 0,
-      display: 'block',
-      textDecoration: 'none',
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
-      paddingLeft: 23,
-      paddingRight: theme.spacing.md,
-      marginLeft: 7,
-      height: 34,
-      lineHeight: '34px',
-      borderTopRightRadius: theme.radius.sm,
-      borderBottomRightRadius: theme.radius.sm,
-      fontSize: theme.fontSizes.sm,
-      userSelect: 'none',
-    },
-
-    linkActive: {
-      borderLeftColor: theme.colors.blue[7],
-      backgroundColor:
-        theme.colorScheme === 'dark' ? hexToRgba(theme.colors.blue[9], 0.45) : theme.colors.blue[0],
-      color: theme.colorScheme === 'dark' ? theme.colors.blue[1] : theme.colors.blue[8],
-      fontWeight: 500,
-    },
-
-    title: {
-      userSelect: 'none',
-    },
-  }),
-  { theming }
-);
+  title: {
+    userSelect: 'none',
+  },
+}));

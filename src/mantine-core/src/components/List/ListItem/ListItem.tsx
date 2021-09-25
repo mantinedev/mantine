@@ -1,9 +1,8 @@
-import cx from 'clsx';
 import React from 'react';
-import { DefaultProps, mergeStyles, useMantineTheme, MantineNumberSize } from '../../../theme';
+import { mergeStyles, DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
 import useStyles from './ListItem.styles';
 
-export type ListItemStylesNames = keyof ReturnType<typeof useStyles>;
+export type ListItemStylesNames = ClassNames<typeof useStyles>;
 
 export interface ListItemProps
   extends DefaultProps<ListItemStylesNames>,
@@ -26,15 +25,13 @@ export function ListItem({
   style,
   children,
   icon,
-  themeOverride,
   classNames,
   styles,
   spacing,
   center,
   ...others
 }: ListItemProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, spacing, center }, classNames, 'list');
+  const { classes, cx } = useStyles({ spacing, center }, classNames, 'list');
   const _styles = mergeStyles(classes, styles);
 
   return (

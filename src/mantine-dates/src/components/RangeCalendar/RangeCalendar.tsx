@@ -34,7 +34,6 @@ export function RangeCalendar({
   classNames,
   styles,
   locale = 'en',
-  themeOverride,
   nextMonthLabel,
   previousMonthLabel,
   initialMonth,
@@ -57,7 +56,7 @@ export function RangeCalendar({
   __staticSelector = 'range-calendar',
   ...others
 }: RangeCalendarProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const [hoveredDay, setHoveredDay] = useState<Date>(null);
   const [pickedDate, setPickedDate] = useState<Date>(null);
 
@@ -114,7 +113,6 @@ export function RangeCalendar({
     <CalendarWrapper size={size} fullWidth={fullWidth} onMouseLeave={handleMouseLeave} {...others}>
       <CalendarHeader
         size={size}
-        themeOverride={themeOverride}
         nextMonthLabel={nextMonthLabel}
         previousMonthLabel={previousMonthLabel}
         previousMonthDisabled={disabledState.previousDisabled}
@@ -133,7 +131,6 @@ export function RangeCalendar({
       />
 
       <Month
-        themeOverride={themeOverride}
         month={_month}
         range={value}
         value={pickedDate}

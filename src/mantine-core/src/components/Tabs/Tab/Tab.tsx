@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '../../../theme';
+import { DefaultProps } from '@mantine/styles';
 
 export interface TabProps extends DefaultProps, React.ComponentProps<'button'> {
   /** Tab control label */

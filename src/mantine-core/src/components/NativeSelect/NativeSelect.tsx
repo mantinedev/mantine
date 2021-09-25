@@ -1,6 +1,6 @@
 import React from 'react';
 import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineSize } from '../../theme';
+import { DefaultProps, MantineSize } from '@mantine/styles';
 import {
   InputWrapperBaseProps,
   InputWrapper,
@@ -48,7 +48,6 @@ export function NativeSelect({
   style,
   data,
   placeholder,
-  themeOverride,
   wrapperProps,
   inputStyle,
   description,
@@ -92,7 +91,6 @@ export function NativeSelect({
       error={error}
       className={className}
       style={style}
-      themeOverride={themeOverride}
       description={description}
       size={size}
       styles={styles}
@@ -109,7 +107,6 @@ export function NativeSelect({
         elementRef={elementRef}
         id={uuid}
         required={required}
-        themeOverride={themeOverride}
         value={value === null ? '' : value}
         size={size}
         classNames={classNames}
@@ -117,7 +114,6 @@ export function NativeSelect({
         {...getSelectRightSectionProps({
           rightSection,
           rightSectionWidth,
-          themeOverride,
           styles,
           shouldClear: false,
           size,

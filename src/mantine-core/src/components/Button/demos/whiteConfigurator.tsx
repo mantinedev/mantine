@@ -1,8 +1,8 @@
 import React from 'react';
 import { DatabaseIcon } from '@primer/octicons-react';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Button, ButtonProps } from '../Button';
 import { Group } from '../../Group/Group';
-import { DEFAULT_THEME } from '../../../theme';
 
 function Wrapper(props: ButtonProps) {
   return (

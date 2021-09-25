@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chips, Chip, ChipsProps } from '../Chips';
+import { Chips, Chip, ChipsProps } from '../index';
 
 function Wrapper(props: ChipsProps) {
   return (

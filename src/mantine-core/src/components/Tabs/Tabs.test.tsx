@@ -8,7 +8,8 @@ import {
   itSupportsStylesApi,
 } from '@mantine/tests';
 import { TabControl } from './TabControl/TabControl';
-import { Tabs, Tab } from './Tabs';
+import { Tabs } from './Tabs';
+import { Tab } from './Tab/Tab';
 import { Tabs as TabsStylesApi } from './styles.api';
 
 const content = [

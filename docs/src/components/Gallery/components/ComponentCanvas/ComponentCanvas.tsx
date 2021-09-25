@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import { Prism } from '@mantine/prism';
 import { MantineProvider, useMantineTheme } from '@mantine/core';
 import * as GalleryComponents from '../../../../gallery';
@@ -12,7 +11,7 @@ export function ComponentCanvas(props: GalleryComponent & { zIndex: number }) {
   const [state, setState] = useState('preview');
   const [primaryColor, setPrimaryColor] = useState('blue');
   const theme = useMantineTheme();
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const Component = GalleryComponents[props._component];
 
   return (

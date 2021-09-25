@@ -1,20 +1,15 @@
 import React, { Children, cloneElement } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '../../theme';
+import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
-import { Radio, RadioProps, RadioStylesNames } from './Radio/Radio';
+import { Radio, RadioStylesNames } from './Radio/Radio';
 import { Group } from '../Group/Group';
-import { sizes } from './Radio/Radio.styles';
 
-export { Radio };
-export type { RadioProps };
 export type RadioGroupStylesNames = InputWrapperStylesNames | RadioStylesNames;
-
-export const RADIO_SIZES = sizes;
 
 export interface RadioGroupProps
   extends DefaultProps<RadioGroupStylesNames>,
@@ -50,7 +45,6 @@ export interface RadioGroupProps
 
 export function RadioGroup({
   className,
-  themeOverride,
   name,
   children,
   value,

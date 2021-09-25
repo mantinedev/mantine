@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import {
-  DefaultProps,
   useMantineTheme,
   mergeStyles,
+  DefaultProps,
   MantineNumberSize,
   MantineColor,
-} from '../../../theme';
-import { Transition, MantineTransition } from '../../Transition/Transition';
+  ClassNames,
+} from '@mantine/styles';
+import { Transition, MantineTransition } from '../../Transition';
 import useStyles from './Thumb.styles';
 
-export type ThumbStylesNames = keyof ReturnType<typeof useStyles>;
+export type ThumbStylesNames = ClassNames<typeof useStyles>;
 
 interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   max: number;
@@ -42,7 +42,6 @@ export function Thumb({
   dragging,
   onMouseDown,
   color,
-  themeOverride,
   classNames,
   styles,
   size,
@@ -54,8 +53,8 @@ export function Thumb({
   onFocus,
   onBlur,
 }: ThumbProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, theme, size }, classNames, 'slider');
+  const theme = useMantineTheme();
+  const { classes, cx } = useStyles({ color, size }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
   const [focused, setFocused] = useState(false);
 

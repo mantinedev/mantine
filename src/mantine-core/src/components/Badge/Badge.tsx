@@ -1,20 +1,17 @@
 import React from 'react';
-import cx from 'clsx';
 import {
-  useMantineTheme,
+  mergeStyles,
   DefaultProps,
   MantineSize,
   MantineNumberSize,
-  mergeStyles,
   MantineGradient,
   MantineColor,
-} from '../../theme';
-import useStyles, { heights } from './Badge.styles';
+  ClassNames,
+} from '@mantine/styles';
+import useStyles from './Badge.styles';
 
-export const BADGE_SIZES = heights;
-export const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot', 'gradient'] as const;
-export type BadgeVariant = typeof BADGE_VARIANTS[number];
-export type BadgeStylesNames = Exclude<keyof ReturnType<typeof useStyles>, BadgeVariant>;
+export type BadgeVariant = 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
+export type BadgeStylesNames = Exclude<ClassNames<typeof useStyles>, BadgeVariant>;
 
 interface _BadgeProps<C extends React.ElementType, R extends HTMLElement>
   extends DefaultProps<BadgeStylesNames> {
@@ -28,7 +25,7 @@ interface _BadgeProps<C extends React.ElementType, R extends HTMLElement>
   color?: MantineColor;
 
   /** Controls badge background, color and border styles */
-  variant?: 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
+  variant?: BadgeVariant;
 
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
@@ -63,7 +60,6 @@ export function Badge<C extends React.ElementType = 'div', R extends HTMLElement
   variant = 'light',
   fullWidth,
   children,
-  themeOverride,
   size = 'md',
   leftSection,
   rightSection,
@@ -73,14 +69,12 @@ export function Badge<C extends React.ElementType = 'div', R extends HTMLElement
   styles,
   ...others
 }: BadgeProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     {
       size,
       fullWidth,
       color,
       radius,
-      theme,
       gradientFrom: gradient.from,
       gradientTo: gradient.to,
       gradientDeg: gradient.deg,

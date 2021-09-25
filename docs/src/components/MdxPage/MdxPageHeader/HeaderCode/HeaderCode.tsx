@@ -13,7 +13,7 @@ interface ImportStatementProps {
 
 export function HeaderCode({ code, icon, language }: ImportStatementProps) {
   const clipboard = useClipboard();
-  const classes = useStyles();
+  const { classes } = useStyles();
   const mobile = useMediaQuery('(max-width: 500px)');
 
   return (

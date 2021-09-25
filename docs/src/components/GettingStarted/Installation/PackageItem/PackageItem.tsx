@@ -10,7 +10,7 @@ interface PackageItemProps {
 }
 
 export function PackageItem({ title, description, checked, onChange }: PackageItemProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <button className={classes.wrapper} type="button" onClick={() => onChange(!checked)}>
       <Checkbox checked={checked} onChange={() => {}} />

@@ -1,13 +1,9 @@
-import { createMemoStyles, MantineTheme } from '../../theme';
+import { createStyles } from '@mantine/styles';
 
-interface CardStyles {
-  theme: MantineTheme;
-}
-
-export default createMemoStyles({
-  card: ({ theme }: CardStyles) => ({
+export default createStyles((theme) => ({
+  card: {
     position: 'relative',
     overflow: 'hidden',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-  }),
-});
+  },
+}));

@@ -1,17 +1,9 @@
 import React, { Children } from 'react';
-import { DefaultProps, MantineColor } from '../../theme';
-import {
-  TimelineItem,
-  TimelineItemProps,
-  TimelineItemStylesNames,
-} from './TimelineItem/TimelineItem';
-
-export { TimelineItem };
-export type { TimelineItemProps };
-export type TimelineStylesNames = TimelineItemStylesNames;
+import { DefaultProps, MantineColor } from '@mantine/styles';
+import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 
 export interface TimelineProps
-  extends DefaultProps<TimelineStylesNames>,
+  extends DefaultProps<TimelineItemStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   /** <Timeline.Item /> components only */
   children: React.ReactNode;

@@ -1,6 +1,5 @@
 import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps } from '@mantine/styles';
 import useStyles from './Kbd.styles';
 
 export interface KbdProps extends DefaultProps, React.ComponentPropsWithoutRef<'kbd'> {
@@ -8,9 +7,8 @@ export interface KbdProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   children: React.ReactNode;
 }
 
-export function Kbd({ className, children, themeOverride, ...others }: KbdProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, null, 'kbd');
+export function Kbd({ className, children, ...others }: KbdProps) {
+  const { classes, cx } = useStyles(null, null, 'kbd');
 
   return (
     <kbd className={cx(classes.kbd, className)} {...others}>

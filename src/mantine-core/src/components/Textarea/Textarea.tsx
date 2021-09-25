@@ -1,7 +1,7 @@
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useId } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, MantineSize } from '../../theme';
+import { useMantineTheme, DefaultProps, MantineSize } from '@mantine/styles';
 import {
   InputWrapperBaseProps,
   InputWrapper,
@@ -51,7 +51,6 @@ export function Textarea({
   id,
   className,
   required,
-  themeOverride,
   style,
   wrapperProps,
   elementRef,
@@ -62,7 +61,7 @@ export function Textarea({
   ...others
 }: TextareaProps) {
   const uuid = useId(id);
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
 
   const inputStyles = {
     ...styles,
