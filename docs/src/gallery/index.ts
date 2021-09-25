@@ -1,6 +1,7 @@
 // Cards
 export { ArticleCard } from './ArticleCard/ArticleCard';
 export { ImageActionCard } from './ImageActionCard/ImageActionCard';
+export { ImageButtonCards } from './ImageButtonCards/ImageButtonCards';
 export { ImageCard } from './ImageCard/ImageCard';
 
 // Forms
