@@ -2,8 +2,8 @@
   "title": "FAQ simple",
   "category": "faq",
   "author": "rtivital",
-  "responsive": true,
-  "dependencies": ["/core/accordion/"],
+  "withColor": true,
+  "dependencies": ["/core/accordion/", "/core/title/", "/core/container/"],
   "canvas": {
     "center": false
   }
