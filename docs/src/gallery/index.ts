@@ -1,3 +1,7 @@
+// Authentication
+export { AuthenticationForm } from './AuthenticationForm/AuthenticationForm';
+export { SocialButtons } from './SocialButtons/SocialButtons';
+
 // Cards
 export { ArticleCard } from './ArticleCard/ArticleCard';
 export { ImageActionCard } from './ImageActionCard/ImageActionCard';
@@ -6,17 +10,15 @@ export { ImageCard } from './ImageCard/ImageCard';
 
 // Contact us
 export { ContactIcons } from './ContactIcons/ContactIcons';
+export { GetInTouch } from './GetInTouch/GetInTouch';
 
-// Forms
-export { AuthenticationForm } from './AuthenticationForm/AuthenticationForm';
+// Inputs
 export { CheckboxCard } from './CheckboxCard/CheckboxCard';
 export { ContainedInputs } from './ContainedInputs/ContainedInputs';
 export { CountriesSelect } from './CountriesSelect/CountriesSelect';
-export { GetInTouch } from './GetInTouch/GetInTouch';
 export { InlineForm } from './InlineForm/InlineForm';
 export { InputWithButton } from './InputWithButton/InputWithButton';
 export { SliderInput } from './SliderInput/SliderInput';
-export { SocialButtons } from './SocialButtons/SocialButtons';
 
 // Hero
 export { HeroForm } from './HeroForm/HeroForm';

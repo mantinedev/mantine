@@ -1,6 +1,6 @@
 {
   "title": "Inputs with label inside input",
-  "category": "forms",
+  "category": "inputs",
   "author": "rtivital",
   "dependencies": ["/core/select/", "/core/text-input/", "/dates/date-picker/"],
   "canvas": {

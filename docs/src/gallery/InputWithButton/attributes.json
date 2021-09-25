@@ -1,6 +1,6 @@
 {
   "title": "Input with contained button",
-  "category": "forms",
+  "category": "inputs",
   "author": "rtivital",
   "withColor": true,
   "dependencies": ["/core/text-input/", "/core/button/"],

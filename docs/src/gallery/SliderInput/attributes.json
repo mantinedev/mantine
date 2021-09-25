@@ -1,6 +1,6 @@
 {
   "title": "NumberInput with slider",
-  "category": "forms",
+  "category": "inputs",
   "author": "rtivital",
   "withColor": true,
   "dependencies": ["/core/number-input/", "/core/slider/"],

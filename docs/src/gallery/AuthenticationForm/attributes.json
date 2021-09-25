@@ -1,6 +1,6 @@
 {
   "title": "Authentication form",
-  "category": "forms",
+  "category": "authentication",
   "author": "rtivital",
   "withColor": true,
   "dependencies": [
