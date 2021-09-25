@@ -2,6 +2,7 @@
   "title": "Faq with background",
   "category": "faq",
   "author": "rtivital",
+  "responsive": true,
   "dependencies": [
     "/core/accordion/",
     "/core/title/",

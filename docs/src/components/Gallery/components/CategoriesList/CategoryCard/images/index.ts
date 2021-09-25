@@ -10,10 +10,13 @@ import heroDark from './hero-dark.svg';
 import featuresLight from './features-light.svg';
 import featuresDark from './features-dark.svg';
 
+import faqLight from './faq-light.svg';
+import faqDark from './faq-dark.svg';
+
 export default {
   forms: { light: formsLight, dark: formsDark },
   cards: { light: cardsLight, dark: cardsDark },
   hero: { light: heroLight, dark: heroDark },
   features: { light: featuresLight, dark: featuresDark },
-  faq: {},
+  faq: { light: faqLight, dark: faqDark },
 };

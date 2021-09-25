@@ -37,6 +37,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
       paddingTop: theme.spacing.lg,
       paddingBottom: theme.spacing.lg,
       paddingLeft: theme.spacing.xl,
+      color: theme.black,
 
       '&:hover': {
         backgroundColor: 'transparent',
@@ -46,6 +47,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
     content: {
       paddingLeft: theme.spacing.xl,
       lineHeight: 1.6,
+      color: theme.black,
     },
 
     icon: {
