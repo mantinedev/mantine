@@ -37,12 +37,12 @@ export default createStyles((theme, { sticky, stickyOffset }: ToolbarStyles) => 
       borderLeftWidth: 0,
     },
 
-    '&:first-child': {
+    '&:first-of-type': {
       borderTopLeftRadius: theme.radius.sm,
       borderBottomLeftRadius: theme.radius.sm,
     },
 
-    '&:last-child': {
+    '&:last-of-type': {
       borderTopRightRadius: theme.radius.sm,
       borderBottomRightRadius: theme.radius.sm,
     },

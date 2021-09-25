@@ -9,11 +9,11 @@ export default createStyles((theme, { padding }: CardSectionStyles) => ({
     marginLeft: -1 * getSizeValue({ size: padding, sizes: theme.spacing }),
     marginRight: -1 * getSizeValue({ size: padding, sizes: theme.spacing }),
 
-    '&:first-child': {
+    '&:first-of-type': {
       marginTop: -1 * getSizeValue({ size: padding, sizes: theme.spacing }),
     },
 
-    '&:last-child': {
+    '&:last-of-type': {
       marginBottom: -1 * getSizeValue({ size: padding, sizes: theme.spacing }),
     },
   },
