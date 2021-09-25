@@ -43,6 +43,8 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     zIndex: 1,
     fontSize: 46,
+    fontWeight: 800,
+    letterSpacing: -0.5,
 
     '@media (max-width: 1080px)': {
       fontSize: 22,
