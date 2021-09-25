@@ -29,7 +29,7 @@ describe('@mantine/dates/RangeCalendar', () => {
     Object.keys(CalendarStylesApi).filter(
       (prop) =>
         prop !== 'calendar' &&
-        prop !== 'label' &&
+        prop !== 'calendarLabel' &&
         prop !== 'inRange' &&
         prop !== 'firstInRange' &&
         prop !== 'lastInRange'
@@ -44,8 +44,8 @@ describe('@mantine/dates/RangeCalendar', () => {
     Object.keys(CalendarStylesApi).filter(
       (prop) =>
         prop !== 'calendar' &&
-        prop !== 'select' &&
-        prop !== 'selectGroup' &&
+        prop !== 'calendarSelect' &&
+        prop !== 'calendarSelectGroup' &&
         prop !== 'inRange' &&
         prop !== 'firstInRange' &&
         prop !== 'lastInRange'
