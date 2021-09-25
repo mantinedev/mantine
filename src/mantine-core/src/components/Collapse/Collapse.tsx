@@ -59,6 +59,7 @@ export function Collapse({
         ...style,
         overflow: 'hidden',
         transition: `height ${duration}ms ${timingFunction}`,
+        willChange: 'contents',
         height: isOpened ? height : '0px',
       }}
       {...others}
