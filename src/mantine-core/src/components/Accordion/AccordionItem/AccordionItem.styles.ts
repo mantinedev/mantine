@@ -19,7 +19,8 @@ export default createStyles(
     const icon = {
       ref: getRef('icon'),
       transition: `transform ${transitionDuration}ms ease`,
-      marginRight: theme.spacing.sm,
+      marginRight: iconPosition === 'right' ? 0 : theme.spacing.sm,
+      marginLeft: iconPosition === 'right' ? theme.spacing.lg : 0,
       width: ICON_SIZE,
       minWidth: ICON_SIZE,
       height: ICON_SIZE,
