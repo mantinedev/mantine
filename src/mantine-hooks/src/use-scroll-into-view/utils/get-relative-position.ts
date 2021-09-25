@@ -1,5 +1,3 @@
-import { getScrollStart } from './get-scroll-start';
-
 export const getRelativePosition = ({ axis, target, parent }) => {
   if (!target || (!parent && typeof document === 'undefined')) {
     return 0;
@@ -12,7 +10,7 @@ export const getRelativePosition = ({ axis, target, parent }) => {
     targetPosition[property] - parentPosition[property];
 
   if (axis === 'y') {
-    return getDiff('top') + getScrollStart({ axis, parent });
+    return getDiff('top');
   }
 
   return getDiff('left');

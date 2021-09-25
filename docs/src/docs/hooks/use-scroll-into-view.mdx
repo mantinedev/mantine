@@ -1,0 +1,86 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+title: 'use-scroll-into-view'
+category: 'dom'
+order: 1
+slug: /hooks/use-scroll-into-view/
+description: 'Manage scrolling of any scrollable HTML node'
+import: "import { useScrollIntoView } from '@mantine/hooks';"
+docs: 'hooks/use-scroll-into-view.mdx'
+source: 'mantine-hooks/src/use-scroll-into-view/use-scroll-into-view.ts'
+---
+import { useScrollIntoViewUsage, useScrollIntoViewParent, useScrollIntoViewAxis } from '@docs/demos';
+
+## Usage
+
+use-scroll-into-view handles scroll behavior over any scrollable element.
+Basic usage works just as `element.scrollIntoView()`.
+
+<Demo data={useScrollIntoViewUsage} />
+
+## API
+
+Hook accepts 6 arguments:
+
+- `target` – HTML node that parent is scrolled to
+- `parent` – optional any parent scrollable HTML node, default to `document`
+- `onScrollFinish` – optional function that will be called after scroll animation
+- `easing` – optional custom math easing function
+- `duration` - optional duration of scroll animation
+- `axis` - optional axis of scroll
+
+Hook returns React methods `scrollIntoView` and `cancel`.
+
+```tsx
+const {
+  scrollIntoView, // -> scroll to target HTML node
+  cancel, // -> cancel scroll animation at anytime
+} = useScrollIntoView({
+  target: someDomElement,
+  parent: parentScrollableDomElement,
+  duration: 1.5,
+  axis: 'y',
+});
+```
+
+## Easing
+
+Hook accept custom `easing` math function to control the flow of animation.
+It takes `t` argument which is a number between `0` and `1`.
+
+Default easing is `easeInOutQuad` - more info [here](https://easings.net/#easeInOutQuad).
+You can find popular easings examples on [easings.net](https://easings.net/)
+
+```tsx
+useScrollIntoView({
+  target: someDomElement,
+  easing: (t) => t < 0.5 ? 16 * Math.pow(t, 5) : 1 - Math.pow(-2 * x + 2, 5) / 2, // easeInOutQuint
+});
+```
+
+## Examples
+
+### Parent node
+
+<Demo data={useScrollIntoViewParent} />
+
+### Scroll X axis
+
+<Demo data={useScrollIntoViewAxis} />
+
+## Definition
+
+```tsx
+function useScrollIntoView({
+  target: HTMLElement;
+  parent?: HTMLElement;
+  onScrollFinish?: () => void;
+  duration?: number;
+  axis?: 'x' | 'y';
+  easing?: (t: number) => number;
+}): {
+  scrollIntoView: () => void;
+  cancel: () => void;
+};
+```
