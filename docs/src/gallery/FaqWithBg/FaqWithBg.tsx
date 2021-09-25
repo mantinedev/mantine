@@ -10,7 +10,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
     wrapper: {
       paddingTop: theme.spacing.xl * 2,
       paddingBottom: theme.spacing.xl * 4,
-      minHeight: 450,
+      minHeight: 850,
       backgroundImage: `url(${bg}), linear-gradient(162deg, ${theme.colors.blue[6]} 0%, ${theme.colors.violet[5]} 100%)`,
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'top left',
@@ -91,6 +91,7 @@ export function FaqWithBg() {
 
         <Accordion
           iconPosition="right"
+          initialItem={0}
           classNames={{
             item: classes.item,
             itemOpened: classes.itemOpened,
@@ -109,17 +110,17 @@ export function FaqWithBg() {
             <Button className={cx(classes.gradient, classes.button)}>Reset password</Button>
           </Accordion.Item>
           <Accordion.Item label="Can I create more that one account?">{placeholder}</Accordion.Item>
-          <Accordion.Item label="How can I subscribe to monthly newsletter?">
-            {placeholder}
-            <Button className={cx(classes.gradient, classes.button)}>
-              Subscribe to newsletter
-            </Button>
-          </Accordion.Item>
           <Accordion.Item label="Do you store credit card information securely?">
             {placeholder}
           </Accordion.Item>
           <Accordion.Item label="What payment systems to you work with?">
             {placeholder}
+          </Accordion.Item>
+          <Accordion.Item label="How can I subscribe to monthly newsletter?">
+            {placeholder}
+            <Button className={cx(classes.gradient, classes.button)}>
+              Subscribe to newsletter
+            </Button>
           </Accordion.Item>
         </Accordion>
       </Container>
