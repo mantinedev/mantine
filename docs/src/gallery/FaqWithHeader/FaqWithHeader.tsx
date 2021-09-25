@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   createStyles,
   Title,
@@ -7,11 +7,9 @@ import {
   useMantineTheme,
   Group,
   ThemeIcon,
-  UnstyledButton,
-  SimpleGrid,
-  Overlay,
 } from '@mantine/core';
 import { Sun, Phone, MapPin, AtSign } from 'react-feather';
+import { ImageButtonCards } from '../ImageButtonCards/ImageButtonCards';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -104,6 +102,7 @@ function Contact({
   icon: React.FC<React.ComponentProps<typeof Sun>>;
 }) {
   const theme = useMantineTheme();
+
   return (
     <div style={{ display: 'flex', alignItems: 'flex-start' }} className={className}>
       <ThemeIcon
@@ -129,77 +128,8 @@ function Contact({
   );
 }
 
-function Category({
-  className,
-  title,
-  image,
-  active,
-  onClick,
-}: {
-  className?: string;
-  title: string;
-  image: string;
-  active: boolean;
-  onClick(): void;
-}) {
-  const theme = useMantineTheme();
-  return (
-    <UnstyledButton
-      className={className}
-      onClick={onClick}
-      style={{
-        height: 160,
-        position: 'relative',
-        backgroundImage: `url(${image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        border: `1px solid ${active ? theme.colors[theme.primaryColor][6] : theme.colors.gray[3]}`,
-        color: theme.white,
-        borderRadius: theme.radius.md,
-        padding: theme.spacing.xl,
-        overflow: 'hidden',
-      }}
-    >
-      <Overlay color="#000" opacity={0.6} zIndex={1} />
-      <Group direction="column" align="center" style={{ zIndex: 2, position: 'relative' }}>
-        <Text size="xl" weight={700} style={{ color: theme.white }}>
-          {title}
-        </Text>
-      </Group>
-    </UnstyledButton>
-  );
-}
-
-const CATEGORIES_DATA = [
-  {
-    title: 'Customer Support',
-    image:
-      'https://images.unsplash.com/photo-1508780709619-79562169bc64?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    title: 'User Guides',
-    image:
-      'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    title: 'Sales Questions',
-    image:
-      'https://images.unsplash.com/photo-1543286386-713bdd548da4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
-  },
-];
-
 export function FaqWithHeader() {
   const { classes } = useStyles();
-  const [activeCategory, setActiveCategory] = useState(-1);
-
-  const categories = CATEGORIES_DATA.map((category, index) => (
-    <Category
-      key={category.title}
-      {...category}
-      active={index === activeCategory}
-      onClick={() => setActiveCategory(index === activeCategory ? -1 : index)}
-    />
-  ));
 
   return (
     <Container className={classes.wrapper} size="lg">
@@ -223,9 +153,7 @@ export function FaqWithHeader() {
         </div>
       </div>
 
-      <SimpleGrid cols={3} breakpoints={[{ maxWidth: 900, cols: 1 }]}>
-        {categories}
-      </SimpleGrid>
+      <ImageButtonCards />
     </Container>
   );
 }
