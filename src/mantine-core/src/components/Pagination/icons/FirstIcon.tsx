@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function ShowFirst(props: React.ComponentPropsWithoutRef<'svg'>) {
+export function FirstIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
       width={16}

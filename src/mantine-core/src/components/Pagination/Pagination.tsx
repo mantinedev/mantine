@@ -45,7 +45,7 @@ export interface PaginationProps
   onChange?: (page: number) => void;
 
   /** Callback to control aria-labels */
-  getItemAriaLabel?: (page: number | 'dots' | 'prev' | 'next' | 'showFirst' | 'showLast') => string | undefined;
+  getItemAriaLabel?: (page: number | 'dots' | 'prev' | 'next' | 'first' | 'last') => string | undefined;
 
   /** Spacing between items from theme or number to set value in px, defaults to theme.spacing.xs / 2 */
   spacing?: MantineNumberSize;
@@ -56,11 +56,8 @@ export interface PaginationProps
   /** Predefined item radius or number to set border-radius in px */
   radius?: MantineNumberSize;
 
-  /** Whether to show the jump to pagination start button */
-  showFirstButton?: boolean
-
-  /** Whether to show the jump to pagination end button */
-  showLastButton?: boolean
+  /** Whether to render buttons that would allow to jump to start/end of pagination */
+  withEdges?: boolean
 }
 
 export function Pagination({
@@ -79,8 +76,7 @@ export function Pagination({
   onChange,
   getItemAriaLabel,
   spacing,
-  showFirstButton = false,
-  showLastButton = false,
+  withEdges = false,
   ...others
 }: PaginationProps) {
   const theme = useMantineTheme(themeOverride);
@@ -118,10 +114,10 @@ export function Pagination({
 
   return (
     <Group spacing={spacing || getSizeValue({ size, sizes: theme.spacing }) / 2} {...others}>
-      {showFirstButton && <Item
-        page="showFirst"
+      {withEdges && <Item
+        page="first"
         onClick={first}
-        aria-label={getItemAriaLabel ? getItemAriaLabel('showFirst') : undefined}
+        aria-label={getItemAriaLabel ? getItemAriaLabel('first') : undefined}
         aria-disabled={active === 1}
         style={_styles.item}
         className={classes.item}
@@ -148,10 +144,10 @@ export function Pagination({
         className={classes.item}
         disabled={active === total}
       />
-      {showLastButton && <Item
-        page="showLast"
+      {withEdges && <Item
+        page="last"
         onClick={last}
-        aria-label={getItemAriaLabel ? getItemAriaLabel('showLast') : undefined}
+        aria-label={getItemAriaLabel ? getItemAriaLabel('last') : undefined}
         aria-disabled={active === total}
         style={_styles.item}
         className={classes.item}

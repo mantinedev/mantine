@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function ShowLast(props: React.ComponentPropsWithoutRef<'svg'>) {
+export function LastIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
       width={16}

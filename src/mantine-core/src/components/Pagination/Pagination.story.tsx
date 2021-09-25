@@ -19,8 +19,6 @@ storiesOf('@mantine/core/Pagination', module)
   ))
   .add('With jump to first/last buttons', () => (
       <div style={{ padding: 40 }}>
-        <Pagination total={20} boundaries={2} initialPage={12} showFirstButton />
-        <Pagination total={20} boundaries={2} initialPage={12} showLastButton />
-        <Pagination total={20} boundaries={2} initialPage={12} showFirstButton showLastButton />
+        <Pagination total={20} boundaries={2} initialPage={12} withEdges />
       </div>
   ));
