@@ -121,7 +121,7 @@ export function Pagination({
       {showFirstButton && <Item
         page="showFirst"
         onClick={first}
-        aria-label={getItemAriaLabel ? getItemAriaLabel('prev') : undefined}
+        aria-label={getItemAriaLabel ? getItemAriaLabel('showFirst') : undefined}
         aria-disabled={active === 1}
         style={_styles.item}
         className={classes.item}
@@ -151,7 +151,7 @@ export function Pagination({
       {showLastButton && <Item
         page="showLast"
         onClick={last}
-        aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
+        aria-label={getItemAriaLabel ? getItemAriaLabel('showLast') : undefined}
         aria-disabled={active === total}
         style={_styles.item}
         className={classes.item}
