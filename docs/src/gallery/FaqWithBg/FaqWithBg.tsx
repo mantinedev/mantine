@@ -34,9 +34,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
     control: {
       fontSize: theme.fontSizes.lg,
-      paddingTop: theme.spacing.lg,
-      paddingBottom: theme.spacing.lg,
-      paddingLeft: theme.spacing.xl,
+      padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
       color: theme.black,
 
       '&:hover': {
