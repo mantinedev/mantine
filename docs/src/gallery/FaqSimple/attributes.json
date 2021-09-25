@@ -1,0 +1,10 @@
+{
+  "title": "FAQ simple",
+  "category": "faq",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": ["/core/accordion/"],
+  "canvas": {
+    "center": false
+  }
+}

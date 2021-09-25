@@ -24,5 +24,6 @@ export { FeaturesGrid } from './FeaturesGrid/FeaturesGrid';
 export { FeaturesImages } from './FeaturesImages/FeaturesImages';
 
 // Faq
+export { FaqSimple } from './FaqSimple/FaqSimple';
 export { FaqWithBg } from './FaqWithBg/FaqWithBg';
 export { FaqWithImage } from './FaqWithImage/FaqWithImage';
