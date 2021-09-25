@@ -13,7 +13,7 @@ import { ImageButtonCards } from '../ImageButtonCards/ImageButtonCards';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
-    paddingTop: theme.spacing.xl * 2,
+    paddingTop: theme.spacing.md,
     paddingBottom: theme.spacing.xl * 2,
   },
 
@@ -30,7 +30,7 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     padding: `${theme.spacing.xl * 1.5}px ${theme.spacing.xl * 2}px`,
     borderRadius: theme.radius.lg,
-    marginBottom: theme.spacing.xl * 1.5,
+    marginBottom: theme.spacing.lg,
 
     '@media (max-width: 1080px)': {
       height: 'auto',

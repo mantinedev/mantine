@@ -15,7 +15,7 @@ const useStyles = createStyles((theme) => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     color: theme.white,
-    borderRadius: theme.radius.md,
+    borderRadius: theme.radius.lg,
     padding: theme.spacing.xl,
     overflow: 'hidden',
   },
