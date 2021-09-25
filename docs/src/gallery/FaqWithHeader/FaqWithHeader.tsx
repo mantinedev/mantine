@@ -29,6 +29,13 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     padding: `${theme.spacing.xl * 1.5}px ${theme.spacing.xl * 2}px`,
     borderRadius: theme.radius.lg,
+
+    '@media (max-width: 1080px)': {
+      height: 'auto',
+      flexDirection: 'column-reverse',
+      alignItems: 'initial',
+      padding: theme.spacing.xl,
+    },
   },
 
   title: {
@@ -36,6 +43,12 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     zIndex: 1,
     fontSize: 46,
+
+    '@media (max-width: 1080px)': {
+      fontSize: 22,
+      textAlign: 'center',
+      marginTop: theme.spacing.xl,
+    },
   },
 
   titleOverlay: {
@@ -49,6 +62,10 @@ const useStyles = createStyles((theme) => ({
     top: -15,
     left: 32,
     pointerEvents: 'none',
+
+    '@media (max-width: 1080px)': {
+      display: 'none',
+    },
   },
 
   contact: {
@@ -56,6 +73,10 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderRadius: theme.radius.lg,
     boxShadow: theme.shadows.md,
+
+    '@media (max-width: 1080px)': {
+      padding: `${theme.spacing.xl}px`,
+    },
   },
 
   contactTitle: {
