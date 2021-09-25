@@ -13,6 +13,9 @@ import featuresDark from './features-dark.svg';
 import faqLight from './faq-light.svg';
 import faqDark from './faq-dark.svg';
 
+import contactLight from './contact-light.svg';
+import contactDark from './contact-dark.svg';
+
 export default {
   inputs: { light: inputsLight, dark: inputsDark },
   cards: { light: cardsLight, dark: cardsDark },
@@ -20,5 +23,5 @@ export default {
   features: { light: featuresLight, dark: featuresDark },
   faq: { light: faqLight, dark: faqDark },
   authentication: {},
-  contact: {},
+  contact: { light: contactLight, dark: contactDark },
 };
