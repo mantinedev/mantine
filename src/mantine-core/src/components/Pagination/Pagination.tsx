@@ -45,7 +45,7 @@ export interface PaginationProps
   onChange?: (page: number) => void;
 
   /** Callback to control aria-labels */
-  getItemAriaLabel?: (page: number | 'dots' | 'prev' | 'next') => string | undefined;
+  getItemAriaLabel?: (page: number | 'dots' | 'prev' | 'next' | 'showFirst' | 'showLast') => string | undefined;
 
   /** Spacing between items from theme or number to set value in px, defaults to theme.spacing.xs / 2 */
   spacing?: MantineNumberSize;

@@ -16,7 +16,7 @@ const icons = {
   next: NextIcon,
   prev: PrevIcon,
   showFirst: ShowFirst,
-  showLast: ShowLast
+  showLast: ShowLast,
 };
 
 export function DefaultItem({ page, active, onClick, ...others }: PaginationItemProps) {
