@@ -26,4 +26,5 @@ export { FeaturesImages } from './FeaturesImages/FeaturesImages';
 // Faq
 export { FaqSimple } from './FaqSimple/FaqSimple';
 export { FaqWithBg } from './FaqWithBg/FaqWithBg';
+export { FaqWithHeader } from './FaqWithHeader/FaqWithHeader';
 export { FaqWithImage } from './FaqWithImage/FaqWithImage';

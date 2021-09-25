@@ -1,0 +1,17 @@
+{
+  "title": "Faq with image",
+  "category": "faq",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": [
+    "/core/accordion/",
+    "/core/image",
+    "/core/grid/",
+    "/core/container/",
+    "/core/title",
+    "https://www.freepik.com/"
+  ],
+  "canvas": {
+    "center": false
+  }
+}
