@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
+import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
 import { mergeStyles, DefaultProps, MantineSize, MantineShadow, ClassNames } from '@mantine/styles';
 import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper';
@@ -102,10 +102,12 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
+  if (value !== '' && item.seperator) {
+    return false;
+  }
   if (selected) {
     return false;
   }
-
   return item.label.toLowerCase().trim().includes(value.toLowerCase().trim());
 }
 
@@ -169,6 +171,12 @@ export function MultiSelect({
     setSearchValue(val);
   };
 
+  const formattedData = data.map((item) =>
+    typeof item === 'string' ? { label: item, value: item } : item
+  );
+
+  const formattedSearchableData = formattedData.filter((item) => !item.seperator) as SelectItem[];
+
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -176,10 +184,6 @@ export function MultiSelect({
     rule: (val) => Array.isArray(val),
     onChange,
   });
-
-  const formattedData = data.map((item) =>
-    typeof item === 'string' ? { label: item, value: item } : item
-  );
 
   const handleValueRemove = (_val: string) => setValue(_value.filter((val) => val !== _val));
 
@@ -214,7 +218,8 @@ export function MultiSelect({
     let i = index;
     while (compareFn(i)) {
       i = nextItem(i);
-      if (!filteredData[i].disabled) return i;
+      if (filteredData[i].seperator) i = nextItem(i);
+      else if (!filteredData[i].disabled) return i;
     }
     return index;
   };
@@ -293,7 +298,7 @@ export function MultiSelect({
   };
 
   const selectedItems = _value
-    .map((val) => formattedData.find((item) => item.value === val))
+    .map((val) => formattedSearchableData.find((item) => item.value === val && !item.disabled))
     .filter((val) => !!val)
     .map((item) => (
       <Value

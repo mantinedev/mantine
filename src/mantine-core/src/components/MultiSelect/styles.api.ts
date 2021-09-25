@@ -18,6 +18,8 @@ export const MultiSelect: Record<MultiSelectStylesNames, string> = {
   searchInput: 'Search input, rendered after all values',
   defaultValue: 'Default value component wrapper',
   defaultValueRemove: 'Default value remove control',
+  seperator: 'Divider wrapper',
+  seperatorLabel: 'Divider Label',
   ...InputStyles,
   ...InputWrapper,
 };
