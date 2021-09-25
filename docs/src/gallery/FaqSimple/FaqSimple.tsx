@@ -8,6 +8,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
     wrapper: {
       paddingTop: theme.spacing.xl * 2,
       paddingBottom: theme.spacing.xl * 2,
+      minHeight: 650,
     },
 
     title: {
