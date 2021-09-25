@@ -15,6 +15,7 @@ const GALLERY_CATEGORIES = [
     categories: [
       { slug: 'hero', name: 'Hero headers' },
       { slug: 'features', name: 'Features section' },
+      { slug: 'faq', name: 'Frequently asked questions' },
     ],
   },
   {

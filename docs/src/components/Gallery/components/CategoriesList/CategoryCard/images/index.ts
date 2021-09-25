@@ -15,4 +15,5 @@ export default {
   cards: { light: cardsLight, dark: cardsDark },
   hero: { light: heroLight, dark: heroDark },
   features: { light: featuresLight, dark: featuresDark },
+  faq: {},
 };

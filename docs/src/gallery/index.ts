@@ -22,3 +22,6 @@ export { HeroTitle } from './HeroTitle/HeroTitle';
 // Features
 export { FeaturesGrid } from './FeaturesGrid/FeaturesGrid';
 export { FeaturesImages } from './FeaturesImages/FeaturesImages';
+
+// Faq
+export { FaqWithBg } from './FaqWithBg/FaqWithBg';
