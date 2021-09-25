@@ -84,7 +84,7 @@ export function ContactIcons() {
 
   return (
     <SimpleGrid cols={2} breakpoints={[{ maxWidth: 755, cols: 1 }]}>
-      <div style={{ padding: theme.spacing.xl }}>
+      <div style={{ padding: theme.spacing.xl, backgroundColor: theme.white }}>
         <ContactIconsList data={MOCKDATA} />
       </div>
 
