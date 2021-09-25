@@ -48,7 +48,7 @@ function Demo() {
             theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
         }}
       />
-      <Text elementRef={targetRef} id="dupa">Hello there</Text>
+      <Text elementRef={targetRef}>Hello there</Text>
     </Group>
   );
 }
