@@ -1,5 +1,5 @@
-import formsDark from './forms-dark.svg';
-import formsLight from './forms-light.svg';
+import inputsDark from './inputs-dark.svg';
+import inputsLight from './inputs-light.svg';
 
 import cardsLight from './cards-light.svg';
 import cardsDark from './cards-dark.svg';
@@ -14,9 +14,11 @@ import faqLight from './faq-light.svg';
 import faqDark from './faq-dark.svg';
 
 export default {
-  forms: { light: formsLight, dark: formsDark },
+  inputs: { light: inputsLight, dark: inputsDark },
   cards: { light: cardsLight, dark: cardsDark },
   hero: { light: heroLight, dark: heroDark },
   features: { light: featuresLight, dark: featuresDark },
   faq: { light: faqLight, dark: faqDark },
+  authentication: {},
+  contact: {},
 };
