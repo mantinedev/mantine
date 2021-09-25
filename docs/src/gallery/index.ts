@@ -10,6 +10,7 @@ export { ContainedInputs } from './ContainedInputs/ContainedInputs';
 export { CountriesSelect } from './CountriesSelect/CountriesSelect';
 export { GetInTouch } from './GetInTouch/GetInTouch';
 export { InlineForm } from './InlineForm/InlineForm';
+export { InputWithButton } from './InputWithButton/InputWithButton';
 export { SliderInput } from './SliderInput/SliderInput';
 export { SocialButtons } from './SocialButtons/SocialButtons';
 
