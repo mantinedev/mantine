@@ -1,0 +1,10 @@
+{
+  "title": "Contact information with icons",
+  "category": "contact",
+  "author": "rtivital",
+  "dependencies": ["/core/select/", "/core/text-input/", "/dates/date-picker/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 980
+  }
+}

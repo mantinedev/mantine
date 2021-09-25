@@ -4,6 +4,9 @@ export { ImageActionCard } from './ImageActionCard/ImageActionCard';
 export { ImageButtonCards } from './ImageButtonCards/ImageButtonCards';
 export { ImageCard } from './ImageCard/ImageCard';
 
+// Contact us
+export { ContactIcons } from './ContactIcons/ContactIcons';
+
 // Forms
 export { AuthenticationForm } from './AuthenticationForm/AuthenticationForm';
 export { CheckboxCard } from './CheckboxCard/CheckboxCard';
