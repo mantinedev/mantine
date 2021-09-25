@@ -82,7 +82,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   transitionTimingFunction,
   arrowClassName,
   arrowStyle,
-  zIndex = 1,
+  zIndex = 100,
   forceUpdateDependencies = [],
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
