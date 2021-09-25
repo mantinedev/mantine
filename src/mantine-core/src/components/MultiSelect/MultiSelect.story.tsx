@@ -7,10 +7,10 @@ import { MultiSelect } from './MultiSelect';
 import { CountriesSelect } from './demos/countries';
 
 const data = [
-  { value: 'react', label: 'React', disabled: true },
-  { value: 'ng', label: 'Angular', disabled: true },
-  { value: 'svelte', label: 'Svelte', disabled: true },
-  { value: 'vue', label: 'Vue', disabled: true },
+  { value: 'react', label: 'React' },
+  { value: 'ng', label: 'Angular' },
+  { value: 'svelte', label: 'Svelte' },
+  { value: 'vue', label: 'Vue' },
   { value: 'riot', label: 'Riot' },
   { value: 'next', label: 'Next.js' },
   { value: 'blitz', label: 'Blitz.js' },
@@ -89,8 +89,8 @@ storiesOf('@mantine/core/MultiSelect', module)
       <Group style={{ padding: 40, paddingTop: 0 }} grow align="flex-start">
         <TextInput label="Text input" placeholder="Select items" />
         <MultiSelect
-          label="Multi select"
-          data={data}
+          label="Multi select with seperator and disabled items"
+          data={[...data, { seperator: true, label: 'Google' }, { label: 'Lit', value: 'lit', disabled: true }]}
           defaultValue={['react', 'ng']}
           placeholder="Select items"
           nothingFound="Nothing found"
@@ -123,7 +123,7 @@ storiesOf('@mantine/core/MultiSelect', module)
   ))
   .add('Controlled', () => <Controlled />)
   .add('Searchable', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
+    <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
       <MultiSelect
         label="Multi select"
         data={data}
@@ -132,7 +132,15 @@ storiesOf('@mantine/core/MultiSelect', module)
         nothingFound="Nothing found"
         searchable
       />
-    </div>
+      <MultiSelect
+        label="Multi select with disabled and seperator items"
+        data={[...data, { seperator: true, label: 'Google' }, { label: 'Lit', value: 'lit', disabled: true }]}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+      />
+    </Group>
   ))
   .add('Clearable', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>

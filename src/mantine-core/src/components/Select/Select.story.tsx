@@ -60,7 +60,7 @@ storiesOf('@mantine/core/Select', module)
         label="Controlled (fixed value)"
         placeholder="Choose value"
         searchable
-        value="react"
+        value="ng"
         data={data}
         style={{ marginTop: 20 }}
       />
@@ -71,7 +71,7 @@ storiesOf('@mantine/core/Select', module)
         style={{ marginTop: 20 }}
       />
       <Select
-        label="Disabled Elements"
+        label="With Seperators"
         placeholder="Choose value"
         data={[...data, { seperator: true, label: 'Google' }, { value: 'lit', label: 'Lit', disabled: true }]}
         style={{ marginTop: 20 }}
