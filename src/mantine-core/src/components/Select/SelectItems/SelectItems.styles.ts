@@ -38,6 +38,7 @@ export default createStyles((theme, { size }: SelectItemsStyles) => ({
   },
 
   disabled: {
+    cursor: 'default',
     color: theme.colors.dark[2],
   },
 
@@ -45,10 +46,10 @@ export default createStyles((theme, { size }: SelectItemsStyles) => ({
     boxSizing: 'border-box',
     textAlign: 'left',
     width: '100%',
-    padding: [
-      getSizeValue({ size, sizes: theme.spacing }) / 1.5,
-      getSizeValue({ size, sizes: theme.spacing }),
-    ],
+    padding: `${getSizeValue({ size, sizes: theme.spacing }) / 1.5}px ${getSizeValue({
+      size,
+      sizes: theme.spacing,
+    })}px`,
   },
 
   seperatorLabel: {

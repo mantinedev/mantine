@@ -9,7 +9,7 @@ export const Select: Record<SelectStylesNames, string> = {
   disabled: 'Disabled item modifier',
   selected: 'Selected item modifier',
   nothingFound: 'Nothing found label',
-  seperator: 'Divider element, rendered inside dropdown',
+  seperator: 'Divider wrapper',
   seperatorLabel: 'Seperator Label',
   ...Input,
   ...InputWrapper,

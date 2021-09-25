@@ -38,7 +38,6 @@ export function SelectItems({
 }: SelectItemsProps) {
   const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
-
   const items = data.map((item, index) => {
     const selected = typeof isItemSelected === 'function' ? isItemSelected(item.value) : false;
 
@@ -72,14 +71,18 @@ export function SelectItems({
       } : null}
       {...item}
     />) : (
+      <div className={classes.seperator} style={_styles.seperator}>
         <Divider
           classNames={{
-          root: classes.seperator,
-          label: classes.seperatorLabel,
-        }}
+            label: classes.seperatorLabel,
+          }}
+          styles={{
+            label: { ..._styles.seperatorLabel },
+          }}
           label={item.label}
         />
-      );
+      </div>
+    );
   });
 
   return items.length > 0 ? (

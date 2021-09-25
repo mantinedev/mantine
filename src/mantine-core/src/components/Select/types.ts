@@ -4,18 +4,13 @@ import type { SelectDropdownStylesNames } from './SelectDropdown/SelectDropdown'
 import type { SelectItemsStylesNames } from './SelectItems/SelectItems';
 
 export interface SelectItem {
-  value: string;
+  value?: string;
   label?: string;
   disabled?: boolean;
   [key: string]: any;
 }
 
-export interface SelectSeperatorItem {
-  seperator: boolean;
-  label?: string;
-}
-
-export type SelectDataItem = string | SelectItem | SelectSeperatorItem;
+export type SelectDataItem = string | SelectItem;
 
 export type BaseSelectStylesNames =
   | Exclude<InputStylesNames, 'rightSection'>
