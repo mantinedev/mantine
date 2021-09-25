@@ -25,3 +25,4 @@ export { FeaturesImages } from './FeaturesImages/FeaturesImages';
 
 // Faq
 export { FaqWithBg } from './FaqWithBg/FaqWithBg';
+export { FaqWithImage } from './FaqWithImage/FaqWithImage';
