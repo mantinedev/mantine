@@ -5,7 +5,7 @@ const code = `
 <div
   style={{
     backgroundImage: 'linear-gradient(90deg, #6741d9 0%, #22b8cf 100%)',
-    height: 800,
+    height: 400,
     position: 'relative',
   }}
 >
@@ -18,7 +18,7 @@ function Demo() {
     <div
       style={{
         backgroundImage: 'linear-gradient(90deg, #6741d9 0%, #22b8cf 100%)',
-        height: 800,
+        height: 400,
         position: 'relative',
       }}
     >
