@@ -18,15 +18,6 @@ const useStyles = createStyles((theme, _params, getRef) => {
       position: 'relative',
     },
 
-    blobs: {
-      position: 'absolute',
-      pointerEvents: 'none',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-    },
-
     title: {
       color: theme.white,
       fontSize: 52,
@@ -92,7 +83,8 @@ export function FaqWithBg() {
   const { classes, cx } = useStyles();
   return (
     <div className={classes.wrapper}>
-      <Blobs className={classes.blobs} />
+      <Blobs />
+
       <Container size="sm">
         <Title align="center" className={classes.title}>
           Frequently Asked Questions
