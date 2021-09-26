@@ -3,7 +3,7 @@
   "category": "contact",
   "author": "rtivital",
   "withColor": true,
-  "dependencies": ["/core/select/", "/core/text-input/", "/dates/date-picker/"],
+  "dependencies": ["/core/select/", "/core/text-input/", "/dates/date-picker/", "react-feather"],
   "canvas": {
     "center": true,
     "maxWidth": 980

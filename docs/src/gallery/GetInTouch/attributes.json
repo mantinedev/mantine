@@ -10,7 +10,7 @@
     "/core/text/",
     "/core/button/",
     "/core/group/",
-    "react-feather",
+    "/gallery/component/contact-icons",
     "https://www.svgbackgrounds.com/"
   ],
   "canvas": {
