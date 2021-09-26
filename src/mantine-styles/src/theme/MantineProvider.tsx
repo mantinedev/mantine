@@ -1,4 +1,5 @@
 import React, { createContext, useContext } from 'react';
+import { SsrProvider } from './SsrProvider';
 import { DEFAULT_THEME } from './default-theme';
 import { MantineThemeOverride } from './types';
 import { mergeTheme } from './utils/merge-theme/merge-theme';
@@ -16,9 +17,11 @@ interface MantineProviderProps {
 
 export function MantineProvider({ theme, children }: MantineProviderProps) {
   return (
-    <MantineThemeContext.Provider value={mergeTheme(DEFAULT_THEME, theme)}>
-      {children}
-    </MantineThemeContext.Provider>
+    <SsrProvider>
+      <MantineThemeContext.Provider value={mergeTheme(DEFAULT_THEME, theme)}>
+        {children}
+      </MantineThemeContext.Provider>
+    </SsrProvider>
   );
 }
 
