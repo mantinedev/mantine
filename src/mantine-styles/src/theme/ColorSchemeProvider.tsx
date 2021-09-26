@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { ColorScheme } from './types';
 
 interface ColorSchemeContextProps {
@@ -29,8 +29,14 @@ export function ColorSchemeProvider({
   toggleColorScheme,
   children,
 }: ColorSchemeProviderProps) {
+  const [key, setKey] = useState('init');
+
+  useEffect(() => {
+    setKey('update');
+  }, []);
+
   return (
-    <ColorSchemeContext.Provider value={{ colorScheme, toggleColorScheme }}>
+    <ColorSchemeContext.Provider key={key} value={{ colorScheme, toggleColorScheme }}>
       {children}
     </ColorSchemeContext.Provider>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   MantineProvider,
   NormalizeCSS,
@@ -6,13 +6,12 @@ import {
   ColorSchemeProvider,
   ColorScheme,
 } from '@mantine/core';
-import { useWindowEvent, useLocalStorageValue, randomId } from '@mantine/hooks';
+import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
 import { LayoutInner, LayoutProps } from './LayoutInner';
 
 const THEME_KEY = 'mantine-color-scheme';
 
 export default function Layout({ children, location }: LayoutProps) {
-  const [key, setKey] = useState('theme');
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
     key: THEME_KEY,
     defaultValue: 'light',
@@ -28,12 +27,8 @@ export default function Layout({ children, location }: LayoutProps) {
     }
   });
 
-  useEffect(() => {
-    setKey(randomId());
-  }, []);
-
   return (
-    <ColorSchemeProvider key={key} colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }}>
         <GlobalStyles />
         <NormalizeCSS />
