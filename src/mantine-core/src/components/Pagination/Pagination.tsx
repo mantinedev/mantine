@@ -43,7 +43,9 @@ export interface PaginationProps
   onChange?: (page: number) => void;
 
   /** Callback to control aria-labels */
-  getItemAriaLabel?: (page: number | 'dots' | 'prev' | 'next' | 'first' | 'last') => string | undefined;
+  getItemAriaLabel?: (
+    page: number | 'dots' | 'prev' | 'next' | 'first' | 'last'
+  ) => string | undefined;
 
   /** Spacing between items from theme or number to set value in px, defaults to theme.spacing.xs / 2 */
   spacing?: MantineNumberSize;
@@ -55,7 +57,7 @@ export interface PaginationProps
   radius?: MantineNumberSize;
 
   /** Whether to render buttons that would allow to jump to start/end of pagination */
-  withEdges?: boolean
+  withEdges?: boolean;
 }
 
 export function Pagination({
@@ -111,15 +113,18 @@ export function Pagination({
 
   return (
     <Group spacing={spacing || getSizeValue({ size, sizes: theme.spacing }) / 2} {...others}>
-      {withEdges && <Item
-        page="first"
-        onClick={first}
-        aria-label={getItemAriaLabel ? getItemAriaLabel('first') : undefined}
-        aria-disabled={active === 1}
-        style={_styles.item}
-        className={classes.item}
-        disabled={active === 1}
-      /> }
+      {withEdges && (
+        <Item
+          page="first"
+          onClick={first}
+          aria-label={getItemAriaLabel ? getItemAriaLabel('first') : undefined}
+          aria-disabled={active === 1}
+          style={_styles.item}
+          className={classes.item}
+          disabled={active === 1}
+        />
+      )}
+
       <Item
         page="prev"
         onClick={previous}
@@ -141,15 +146,18 @@ export function Pagination({
         className={classes.item}
         disabled={active === total}
       />
-      {withEdges && <Item
-        page="last"
-        onClick={last}
-        aria-label={getItemAriaLabel ? getItemAriaLabel('last') : undefined}
-        aria-disabled={active === total}
-        style={_styles.item}
-        className={classes.item}
-        disabled={active === total}
-      />}
+
+      {withEdges && (
+        <Item
+          page="last"
+          onClick={last}
+          aria-label={getItemAriaLabel ? getItemAriaLabel('last') : undefined}
+          aria-disabled={active === total}
+          style={_styles.item}
+          className={classes.item}
+          disabled={active === total}
+        />
+      )}
     </Group>
   );
 }
