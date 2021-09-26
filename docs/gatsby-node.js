@@ -23,7 +23,7 @@ const GALLERY_CATEGORIES = [
     name: 'Application UI',
     categories: [
       { slug: 'authentication', name: 'Authentication' },
-      { slug: 'inputs', name: 'Forms and inputs' },
+      { slug: 'inputs', name: 'Inputs' },
     ],
   },
   {

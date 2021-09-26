@@ -16,12 +16,15 @@ import faqDark from './faq-dark.svg';
 import contactLight from './contact-light.svg';
 import contactDark from './contact-dark.svg';
 
+import authenticationLight from './authentication-light.svg';
+import authenticationDark from './authentication-dark.svg';
+
 export default {
   inputs: { light: inputsLight, dark: inputsDark },
   cards: { light: cardsLight, dark: cardsDark },
   hero: { light: heroLight, dark: heroDark },
   features: { light: featuresLight, dark: featuresDark },
   faq: { light: faqLight, dark: faqDark },
-  authentication: {},
+  authentication: { light: authenticationLight, dark: authenticationDark },
   contact: { light: contactLight, dark: contactDark },
 };
