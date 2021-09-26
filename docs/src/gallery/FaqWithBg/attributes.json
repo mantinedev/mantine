@@ -10,6 +10,7 @@
     "/core/accordion/",
     "/core/theme-icon/",
     "/core/button/",
+    "/others/decorations/",
     "@primer/octicons-react",
     "https://fonts.google.com/specimen/Dosis"
   ],
