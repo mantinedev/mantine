@@ -1,6 +1,12 @@
-import React, { useContext } from 'react';
-import { Group, Button, Badge, Switch, MantineProvider } from '@mantine/core';
-import { ColorSchemeContext } from '../../components/Layout/ColorScheme.context';
+import React from 'react';
+import {
+  Group,
+  Button,
+  Badge,
+  Switch,
+  MantineProvider,
+  useMantineColorScheme,
+} from '@mantine/core';
 import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
 const code = `import { Badge, Button, MantineProvider, Switch } from '@mantine/core';
@@ -29,7 +35,8 @@ function Demo() {
 }`;
 
 export function ThemeColorExtendDemo() {
-  const { colorScheme } = useContext(ColorSchemeContext);
+  const { colorScheme } = useMantineColorScheme();
+
   return (
     <CodeDemo code={code} language="tsx">
       <MantineProvider

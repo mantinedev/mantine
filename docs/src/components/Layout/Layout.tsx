@@ -1,21 +1,25 @@
-import React, { useLayoutEffect, useState } from 'react';
-import { MantineProvider, NormalizeCSS, GlobalStyles } from '@mantine/core';
+import React, { useEffect, useState } from 'react';
+import {
+  MantineProvider,
+  NormalizeCSS,
+  GlobalStyles,
+  ColorSchemeProvider,
+  ColorScheme,
+} from '@mantine/core';
 import { useWindowEvent, useLocalStorageValue, randomId } from '@mantine/hooks';
-import { ColorSchemeContext, ColorScheme } from './ColorScheme.context';
 import { LayoutInner, LayoutProps } from './LayoutInner';
 
 const THEME_KEY = 'mantine-color-scheme';
 
 export default function Layout({ children, location }: LayoutProps) {
+  const [key, setKey] = useState('theme');
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
     key: THEME_KEY,
     defaultValue: 'light',
   });
 
-  // updating key is required during layout effect
-  // if not done color scheme will not be updated after ssr
-  // and some parts inside mdx will show light version, that's a bummer
-  const [key, setKey] = useState('light');
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
   useWindowEvent('keydown', (event) => {
     if (event.code === 'KeyJ' && (event.ctrlKey || event.metaKey)) {
@@ -24,20 +28,18 @@ export default function Layout({ children, location }: LayoutProps) {
     }
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setKey(randomId());
   }, []);
 
   return (
-    <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
+    <ColorSchemeProvider key={key} colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }}>
         <GlobalStyles />
         <NormalizeCSS />
 
-        <LayoutInner key={key} location={location}>
-          {children}
-        </LayoutInner>
+        <LayoutInner location={location}>{children}</LayoutInner>
       </MantineProvider>
-    </ColorSchemeContext.Provider>
+    </ColorSchemeProvider>
   );
 }
