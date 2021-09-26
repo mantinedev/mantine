@@ -8,6 +8,7 @@ const useStyles = createStyles((theme, { variant }: { variant: Variant }) => ({
   wrapper: {
     display: 'flex',
     alignItems: 'center',
+    color: theme.white,
   },
 
   icon: {
@@ -48,9 +49,13 @@ function ContactIcon({
   const { classes, cx } = useStyles({ variant });
   return (
     <div className={cx(classes.wrapper, className)} {...others}>
-      <ThemeIcon size={40} radius="md" className={classes.icon}>
-        <Icon size={22} />
-      </ThemeIcon>
+      {variant === 'gradient' ? (
+        <ThemeIcon size={40} radius="md" className={classes.icon}>
+          <Icon size={22} />
+        </ThemeIcon>
+      ) : (
+        <Icon size={22} style={{ marginRight: 15 }} />
+      )}
 
       <div>
         <Text size="xs" className={classes.title}>

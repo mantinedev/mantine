@@ -1,5 +1,4 @@
 import React from 'react';
-import { Sun, Phone, MapPin, AtSign } from 'react-feather';
 import {
   Paper,
   Text,
@@ -10,6 +9,7 @@ import {
   useMantineTheme,
   createStyles,
 } from '@mantine/core';
+import { ContactIconsList } from '../ContactIcons/ContactIcons';
 import bg from './bg.svg';
 
 const BREAKPOINT = '@media (max-width: 755px)';
@@ -109,34 +109,6 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function Contact({
-  className,
-  title,
-  description,
-  icon: Icon,
-}: {
-  className?: string;
-  title: string;
-  description: string;
-  icon: React.FC<React.ComponentProps<typeof Sun>>;
-}) {
-  const theme = useMantineTheme();
-  return (
-    <div style={{ display: 'flex', alignItems: 'flex-start' }} className={className}>
-      <Icon size={22} style={{ marginRight: theme.spacing.md }} />
-
-      <div>
-        <Text size="xs" style={{ color: theme.colors.blue[0] }}>
-          {title}
-        </Text>
-        <Text weight={500} style={{ color: theme.white }}>
-          {description}
-        </Text>
-      </div>
-    </div>
-  );
-}
-
 export function GetInTouch() {
   const { classes, cx } = useStyles();
   const theme = useMantineTheme();
@@ -149,12 +121,7 @@ export function GetInTouch() {
             Contact information
           </Text>
 
-          <Group direction="column" spacing="xl">
-            <Contact title="Email" description="hello@mantine.dev" icon={AtSign} />
-            <Contact title="Phone" description="+49 (800) 335 35 35" icon={Phone} />
-            <Contact title="Address" description="844 Morris Park avenue" icon={MapPin} />
-            <Contact title="Working hours" description="8 a.m. – 11 p.m." icon={Sun} />
-          </Group>
+          <ContactIconsList variant="white" />
         </div>
 
         <form className={classes.form} onSubmit={(event) => event.preventDefault()}>
