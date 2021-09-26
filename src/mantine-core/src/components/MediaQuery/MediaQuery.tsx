@@ -22,3 +22,5 @@ export function MediaQuery({ children, smallerThan, largerThan, className }: Med
     className: cx(classes.media, child.props?.className, className),
   });
 }
+
+MediaQuery.displayName = '@mantine/core/MediaQuery';
