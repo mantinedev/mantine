@@ -2,7 +2,7 @@ import type { MantineTheme } from '../theme';
 import type { CSSObject } from './types';
 import { fromEntries } from './utils/from-entries/from-entries';
 import { useCss } from './use-css';
-import { useMantineTheme } from '../theme/MantineProvider/use-mantine-theme';
+import { useMantineTheme } from '../theme/MantineProvider';
 import { mergeClassNames } from './utils/merge-class-names/merge-class-names';
 
 export function createStyles<Key extends string = string, Params = void>(

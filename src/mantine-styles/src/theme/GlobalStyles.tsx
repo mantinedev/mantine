@@ -1,6 +1,6 @@
 import React from 'react';
 import { getFontStyles } from './utils';
-import { useMantineTheme } from './MantineProvider/use-mantine-theme';
+import { useMantineTheme } from './MantineProvider';
 import { Global } from '../tss/Global';
 
 export function GlobalStyles() {

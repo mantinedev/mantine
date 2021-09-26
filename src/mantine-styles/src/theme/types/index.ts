@@ -1,3 +1,4 @@
+export type { ColorScheme } from './ColorScheme';
 export type { DefaultProps } from './DefaultProps';
 export type { MantineColor } from './MantineColor';
 export type { MantineGradient } from './MantineGradient';

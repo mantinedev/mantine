@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from './theme/MantineProvider/MantineProvider';
+import { MantineProvider } from './theme/MantineProvider';
 import { createStyles } from './tss/create-styles';
 
 interface Params {
