@@ -1,7 +1,7 @@
 {
   "name": "@mantine/decorations",
   "description": "Decorative svg based components, used mainly as backgrounds and page dividers",
-  "version": "2.6.0-alpha.1",
+  "version": "2.6.0-alpha.2",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/src/index.d.ts",
