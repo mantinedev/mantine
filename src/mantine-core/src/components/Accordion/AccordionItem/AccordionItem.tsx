@@ -4,7 +4,7 @@ export interface AccordionItemProps extends React.ComponentProps<'div'> {
   /** AccordionItem control label */
   label?: React.ReactNode;
 
-  /** AccordionItem indicator label */
+  /** AccordionItem indicator icon */
   icon?: React.ReactNode;
 
   /** AccordionItem content */

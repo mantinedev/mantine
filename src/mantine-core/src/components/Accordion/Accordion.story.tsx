@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Accordion, AccordionItem } from './Accordion';
 import { CaretDownIcon } from '@modulz/radix-icons';
+import { Accordion, AccordionItem } from './Accordion';
 
 const CustomDownIcon = () => <CaretDownIcon color="red" />;
 
