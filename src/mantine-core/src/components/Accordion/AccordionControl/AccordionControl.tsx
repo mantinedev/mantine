@@ -11,7 +11,7 @@ export type AccordionControlStylesNames = keyof ReturnType<typeof useStyles>;
 
 interface AccordionControlProps
   extends DefaultProps<AccordionControlStylesNames>,
-    AccordionItemProps {
+  AccordionItemProps {
   opened: boolean;
   onToggle(): void;
   transitionDuration: number;
@@ -30,6 +30,7 @@ export function AccordionControl({
   transitionDuration,
   style,
   id,
+  icon,
   ...others
 }: AccordionControlProps) {
   const forceUpdate = useForceUpdate();
@@ -64,7 +65,7 @@ export function AccordionControl({
           {label}
         </div>
         <div className={classes.icon} style={_styles.icon}>
-          <ChevronIcon />
+          {icon ? icon: <ChevronIcon />}
         </div>
       </UnstyledButton>
 
