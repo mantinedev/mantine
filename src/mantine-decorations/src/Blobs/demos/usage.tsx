@@ -9,7 +9,7 @@ const code = `
     position: 'relative',
   }}
 >
-  <Blobs />
+  <Blobs color="#fff" opacity={0.1} />
 </div>
 `;
 
@@ -22,7 +22,7 @@ function Demo() {
         position: 'relative',
       }}
     >
-      <Blobs />
+      <Blobs color="#fff" opacity={0.1} />
     </div>
   );
 }
