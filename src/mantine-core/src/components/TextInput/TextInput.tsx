@@ -1,6 +1,5 @@
 import React from 'react';
-import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineSize } from '@mantine/styles';
+import { DefaultProps, MantineSize, useUuid } from '@mantine/styles';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import {
   InputWrapperBaseProps,
@@ -55,7 +54,7 @@ export function TextInput({
   __staticSelector = 'text-input',
   ...others
 }: TextInputProps) {
-  const uuid = useId(id);
+  const uuid = useUuid(id);
 
   return (
     <InputWrapper

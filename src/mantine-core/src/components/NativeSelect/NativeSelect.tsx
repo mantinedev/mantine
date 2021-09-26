@@ -1,6 +1,5 @@
 import React from 'react';
-import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineSize } from '@mantine/styles';
+import { DefaultProps, MantineSize, useUuid } from '@mantine/styles';
 import {
   InputWrapperBaseProps,
   InputWrapper,
@@ -62,7 +61,7 @@ export function NativeSelect({
   rightSectionWidth,
   ...others
 }: NativeSelectProps) {
-  const uuid = useId(id);
+  const uuid = useUuid(id);
 
   const formattedData = data.map((item) =>
     typeof item === 'string' ? { label: item, value: item } : item

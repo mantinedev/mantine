@@ -18,8 +18,9 @@ import {
   getSizeValue,
   MantineShadow,
   ClassNames,
+  useUuid,
 } from '@mantine/core';
-import { useId, useClickOutside, useFocusTrap, useMergedRef, useWindowEvent } from '@mantine/hooks';
+import { useClickOutside, useFocusTrap, useMergedRef, useWindowEvent } from '@mantine/hooks';
 import { CalendarStylesNames } from '../Calendar/Calendar';
 import useStyles from './DatePickerBase.styles';
 
@@ -145,7 +146,7 @@ export function DatePickerBase({
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
-  const uuid = useId(id);
+  const uuid = useUuid(id);
 
   const focusTrapRef = useFocusTrap();
   const inputRef = useRef<HTMLButtonElement>();

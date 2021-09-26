@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUncontrolled, useId } from '@mantine/hooks';
+import { useUncontrolled } from '@mantine/hooks';
 import {
   mergeStyles,
   useMantineTheme,
@@ -8,6 +8,7 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
+  useUuid,
 } from '@mantine/styles';
 import { CheckboxIcon } from '../../Checkbox';
 import useStyles from './Chip.styles';
@@ -77,7 +78,7 @@ export function Chip({
   onChange,
   ...others
 }: ChipProps) {
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const theme = useMantineTheme();
   const { classes, cx } = useStyles({ radius, size, color }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);

@@ -1,6 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, MantineShadow, ClassNames } from '@mantine/styles';
+import { useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineSize,
+  MantineShadow,
+  ClassNames,
+  useUuid,
+} from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -121,7 +128,7 @@ export function Autocomplete({
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const [_value, handleChange] = useUncontrolled({
     value,
     defaultValue,

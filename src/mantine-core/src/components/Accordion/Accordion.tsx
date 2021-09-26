@@ -1,6 +1,5 @@
 import React from 'react';
-import { useId } from '@mantine/hooks';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, useUuid } from '@mantine/styles';
 import {
   AccordionItem,
   AccordionItemStylesNames,
@@ -62,7 +61,7 @@ export function Accordion({
   id,
   ...others
 }: AccordionProps) {
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const items = React.Children.toArray(children).filter(
     (item: AccordionItemType) => item.type === AccordionItem
   ) as AccordionItemType[];

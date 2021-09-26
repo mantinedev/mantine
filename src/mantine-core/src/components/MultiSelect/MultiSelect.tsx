@@ -1,6 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, MantineShadow, ClassNames } from '@mantine/styles';
+import { useUncontrolled, useMergedRef } from '@mantine/hooks';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineSize,
+  MantineShadow,
+  ClassNames,
+  useUuid,
+} from '@mantine/styles';
 import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
@@ -159,7 +166,7 @@ export function MultiSelect({
   const dropdownRef = useRef<HTMLDivElement>();
   const inputRef = useRef<HTMLInputElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const [searchValue, setSearchValue] = useState('');

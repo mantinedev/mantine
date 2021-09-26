@@ -1,5 +1,4 @@
 import React from 'react';
-import { useId } from '@mantine/hooks';
 import {
   mergeStyles,
   DefaultProps,
@@ -7,6 +6,7 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
+  useUuid,
 } from '@mantine/styles';
 import useStyles from './Switch.styles';
 
@@ -54,8 +54,7 @@ export function Switch({
 }: SwitchProps) {
   const { classes, cx } = useStyles({ size, color, radius }, classNames, 'switch');
   const _styles = mergeStyles(classes, styles);
-
-  const uuid = useId(id);
+  const uuid = useUuid(id);
 
   return (
     <div

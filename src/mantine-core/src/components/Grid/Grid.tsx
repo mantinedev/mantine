@@ -1,7 +1,12 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
-import { useId } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, MantineNumberSize, getSizeValue } from '@mantine/styles';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
+  getSizeValue,
+  useUuid,
+} from '@mantine/styles';
 import { getResponsiveStyles } from './get-responsive-styles';
 
 export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -36,7 +41,7 @@ export function Grid({
   id,
   ...others
 }: GridProps) {
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const theme = useMantineTheme();
   const spacing = getSizeValue({ size: gutter, sizes: theme.spacing });
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, MantineSize, MantineShadow } from '@mantine/styles';
+import { useUncontrolled, useMergedRef } from '@mantine/hooks';
+import { DefaultProps, MantineSize, MantineShadow, useUuid } from '@mantine/styles';
 import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
@@ -122,7 +122,7 @@ export function Select({
   const inputRef = useRef<HTMLInputElement>();
   const dropdownRef = useRef<HTMLDivElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const [_value, handleChange, inputMode] = useUncontrolled({
     value,
     defaultValue,

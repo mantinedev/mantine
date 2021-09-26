@@ -1,7 +1,6 @@
 import React, { useMemo, useRef, useEffect } from 'react';
 import Editor, { Quill } from 'react-quill';
-import { DefaultProps, mergeStyles, ClassNames } from '@mantine/core';
-import { useId } from '@mantine/hooks';
+import { DefaultProps, mergeStyles, ClassNames, useUuid } from '@mantine/core';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
@@ -73,7 +72,7 @@ export function RichTextEditor({
   styles,
   ...others
 }: RichTextEditorProps) {
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const editorRef = useRef<any>();
   const { classes, cx } = useStyles(
     { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },

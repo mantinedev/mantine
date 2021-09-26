@@ -10,8 +10,9 @@ import {
   MantineSize,
   mergeStyles,
   ClassNames,
+  useUuid,
 } from '@mantine/core';
-import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
+import { useMergedRef, useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { TimeField } from './TimeField/TimeField';
 import { createTimeHandler } from './create-time-handler/create-time-handler';
@@ -88,7 +89,7 @@ export function TimeInput({
 }: TimeInputProps) {
   const { classes, cx } = useStyles({ size }, classNames, 'time-input');
   const _styles = mergeStyles(classes, styles);
-  const uuid = useId(id);
+  const uuid = useUuid(id);
 
   const [_value, handleChange] = useUncontrolled({
     value,

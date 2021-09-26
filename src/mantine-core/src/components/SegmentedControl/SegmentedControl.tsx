@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useId, useReducedMotion, useUncontrolled } from '@mantine/hooks';
+import { useReducedMotion, useUncontrolled } from '@mantine/hooks';
 import {
   mergeStyles,
   DefaultProps,
@@ -7,6 +7,7 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
+  useUuid,
 } from '@mantine/styles';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
@@ -102,7 +103,7 @@ export function SegmentedControl({
 
   const _styles = mergeStyles(classes, styles);
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
-  const uuid = useId(name);
+  const uuid = useUuid(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const wrapperRef = useRef<HTMLDivElement>(null);
 

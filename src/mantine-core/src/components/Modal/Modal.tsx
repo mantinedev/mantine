@@ -1,5 +1,5 @@
 import React from 'react';
-import { useId, useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
+import { useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import {
   useMantineTheme,
   mergeStyles,
@@ -7,6 +7,7 @@ import {
   MantineNumberSize,
   MantineShadow,
   ClassNames,
+  useUuid,
 } from '@mantine/styles';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
@@ -93,7 +94,7 @@ export function MantineModal({
   styles,
   ...others
 }: ModalProps) {
-  const baseId = useId(id);
+  const baseId = useUuid(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const theme = useMantineTheme();

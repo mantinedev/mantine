@@ -1,6 +1,12 @@
 import React, { Children } from 'react';
-import { useUncontrolled, useId } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+import { useUncontrolled } from '@mantine/hooks';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  MantineColor,
+  useUuid,
+} from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
 import { Chip, ChipStylesNames } from './Chip/Chip';
 
@@ -57,7 +63,7 @@ export function Chips<T extends boolean>({
   styles,
   ...others
 }: ChipsProps<T>) {
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const [_value, setValue] = useUncontrolled<string | string[]>({
     value,
     defaultValue,

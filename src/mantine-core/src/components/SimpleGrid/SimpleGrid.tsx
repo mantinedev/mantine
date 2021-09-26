@@ -1,7 +1,12 @@
 import React, { Children } from 'react';
 import cx from 'clsx';
-import { useId } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, MantineNumberSize, getSizeValue } from '@mantine/styles';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
+  getSizeValue,
+  useUuid,
+} from '@mantine/styles';
 
 export interface SimpleGridBreakpoint {
   maxWidth: number;
@@ -29,7 +34,7 @@ export function SimpleGrid({
   children,
   ...others
 }: SimpleGridProps) {
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const theme = useMantineTheme();
   const sortedBreakpoints = [...breakpoints].sort((a, b) => b.maxWidth - a.maxWidth);
   const gridClassName = `grid-${uuid}`;

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useClickOutside, useFocusTrap, useId, useMergedRef } from '@mantine/hooks';
+import { useClickOutside, useFocusTrap, useMergedRef } from '@mantine/hooks';
 import {
   mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
   ClassNames,
+  useUuid,
 } from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';
@@ -111,7 +112,7 @@ export function Popover({
     }
   };
 
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const titleId = `${uuid}-title`;
   const bodyId = `${uuid}-body`;
 
