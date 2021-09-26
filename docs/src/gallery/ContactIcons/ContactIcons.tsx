@@ -63,13 +63,8 @@ function ContactIcon({
 }
 
 interface ContactIconsListProps {
-  data: ContactIconProps[];
+  data?: ContactIconProps[];
   variant?: Variant;
-}
-
-export function ContactIconsList({ data, variant }: ContactIconsListProps) {
-  const items = data.map((item, index) => <ContactIcon key={index} variant={variant} {...item} />);
-  return <Group direction="column">{items}</Group>;
 }
 
 const MOCKDATA = [
@@ -79,13 +74,18 @@ const MOCKDATA = [
   { title: 'Working hours', description: '8 a.m. – 11 p.m.', icon: Sun },
 ];
 
+export function ContactIconsList({ data = MOCKDATA, variant }: ContactIconsListProps) {
+  const items = data.map((item, index) => <ContactIcon key={index} variant={variant} {...item} />);
+  return <Group direction="column">{items}</Group>;
+}
+
 export function ContactIcons() {
   const theme = useMantineTheme();
 
   return (
     <SimpleGrid cols={2} breakpoints={[{ maxWidth: 755, cols: 1 }]}>
       <div style={{ padding: theme.spacing.xl, backgroundColor: theme.white }}>
-        <ContactIconsList data={MOCKDATA} />
+        <ContactIconsList />
       </div>
 
       <div
@@ -96,7 +96,7 @@ export function ContactIcons() {
           } 100%)`,
         }}
       >
-        <ContactIconsList variant="white" data={MOCKDATA} />
+        <ContactIconsList variant="white" />
       </div>
     </SimpleGrid>
   );

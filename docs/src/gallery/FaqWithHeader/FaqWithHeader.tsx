@@ -1,14 +1,6 @@
 import React from 'react';
-import {
-  createStyles,
-  Title,
-  Container,
-  Text,
-  useMantineTheme,
-  Group,
-  ThemeIcon,
-} from '@mantine/core';
-import { Sun, Phone, MapPin, AtSign } from 'react-feather';
+import { createStyles, Title, Container, Text } from '@mantine/core';
+import { ContactIconsList } from '../ContactIcons/ContactIcons';
 import { ImageButtonCards } from '../ImageButtonCards/ImageButtonCards';
 
 const useStyles = createStyles((theme) => ({
@@ -90,44 +82,6 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function Contact({
-  className,
-  title,
-  description,
-  icon: Icon,
-}: {
-  className?: string;
-  title: string;
-  description: string;
-  icon: React.FC<React.ComponentProps<typeof Sun>>;
-}) {
-  const theme = useMantineTheme();
-
-  return (
-    <div style={{ display: 'flex', alignItems: 'flex-start' }} className={className}>
-      <ThemeIcon
-        size={40}
-        radius="md"
-        style={{
-          marginRight: theme.spacing.md,
-          backgroundImage: `linear-gradient(135deg, ${theme.colors[theme.primaryColor][4]} 0%, ${
-            theme.colors[theme.primaryColor][6]
-          } 100%)`,
-        }}
-      >
-        <Icon size={22} />
-      </ThemeIcon>
-
-      <div>
-        <Text size="xs" style={{ color: theme.colors.gray[6] }}>
-          {title}
-        </Text>
-        <Text style={{ color: theme.black }}>{description}</Text>
-      </div>
-    </div>
-  );
-}
-
 export function FaqWithHeader() {
   const { classes } = useStyles();
 
@@ -144,12 +98,7 @@ export function FaqWithHeader() {
             Contact us
           </Text>
 
-          <Group direction="column">
-            <Contact title="Email" description="hello@mantine.dev" icon={AtSign} />
-            <Contact title="Phone" description="+49 (800) 335 35 35" icon={Phone} />
-            <Contact title="Address" description="844 Morris Park avenue" icon={MapPin} />
-            <Contact title="Working hours" description="8 a.m. – 11 p.m." icon={Sun} />
-          </Group>
+          <ContactIconsList />
         </div>
       </div>
 
