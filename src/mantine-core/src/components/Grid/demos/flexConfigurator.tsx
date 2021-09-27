@@ -16,7 +16,7 @@ function Wrapper(props: GridProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<Grid${props} id="my-grid">
+const codeTemplate = (props: string) => `<Grid${props}>
   <Col span={3} style={{ minHeight: 80 }}>1</Col>
   <Col span={3} style={{ minHeight: 120 }}>2</Col>
   <Col span={3}>3</Col>
