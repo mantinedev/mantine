@@ -125,20 +125,6 @@ Change transition properties with:
 
 <Demo data={SegmentedControlDemos.transitions} />
 
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook
-to generate random id which is used to bind inputs to labels.
-If you want to avoid id mismatch during hydration provide static name value:
-
-```tsx
-// -> oh-oh, id on elements is mismatched, won't break anything, but shows nasty error
-<SegmentedControl />
-
-// -> ok, inputs ids are static and will match during hydration
-<SegmentedControl name="my-control" />
-```
-
 ## Resize observer
 
 SegmentedControl uses [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)

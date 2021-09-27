@@ -69,13 +69,3 @@ Spacing also works in `breakpoints`:
 // 12px spacing
 <SimpleGrid breakpoints={[{ maxWidth: 755, cols: 2, spacing: 12 }]} />;
 ```
-
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique classes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<SimpleGrid /> // -> random id generated both on client and server, props mismatch warning
-<SimpleGrid id="my-grid" /> // -> id is static, no mismatches
-```

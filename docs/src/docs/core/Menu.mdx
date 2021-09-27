@@ -242,16 +242,6 @@ function Demo() {
 }
 ```
 
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `menuId` prop to prevent props mismatch:
-
-```tsx
-<Menu /> // -> random id generated both on client and server, props mismatch warning
-<Menu menuId="my-menu" /> // -> id is static, no mismatches
-```
-
 ## Accessibility and usability
 
 To make component more accessible for users with screen readers set `menuButtonLabel` prop.

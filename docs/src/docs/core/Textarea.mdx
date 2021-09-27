@@ -59,16 +59,6 @@ function Demo() {
 }
 ```
 
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<Textarea /> // -> random id generated both on client and server, props mismatch warning
-<Textarea id="my-textarea" /> // -> id is static, no mismatches
-```
-
 ## Accessibility
 
 Provide `aria-label` in case you use component without label for screen reader support:
