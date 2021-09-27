@@ -2,6 +2,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import {
   itSupportsClassName,
+  itSupportsMargins,
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
@@ -23,6 +24,7 @@ describe('@mantine/core/Accordion', () => {
   itSupportsClassName(Accordion, defaultProps);
   itSupportsOthers(Accordion, defaultProps);
   itSupportsStyle(Accordion, defaultProps);
+  itSupportsMargins(Accordion, defaultProps);
   checkAccessibility([mount(<Accordion {...defaultProps} />)]);
   itSupportsStylesApi(Accordion, defaultProps, Object.keys(AccordionStylesApi), 'accordion');
 
