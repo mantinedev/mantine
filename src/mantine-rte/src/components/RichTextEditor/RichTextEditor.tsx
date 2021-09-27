@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useEffect } from 'react';
 import Editor, { Quill } from 'react-quill';
-import { DefaultProps, mergeStyles, ClassNames, useUuid } from '@mantine/core';
+import { DefaultProps, mergeStyles, ClassNames, useUuid, useExtractedMargins } from '@mantine/core';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
@@ -80,6 +80,7 @@ export function RichTextEditor({
     'rte'
   );
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   const modules = useMemo(
     () => ({
@@ -96,7 +97,7 @@ export function RichTextEditor({
   }, []);
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       <Toolbar
         controls={controls}
         labels={labels}
