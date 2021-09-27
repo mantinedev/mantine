@@ -1,13 +1,6 @@
-import React, { Children } from 'react';
-import cx from 'clsx';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineNumberSize,
-  getSizeValue,
-  useUuid,
-  useExtractedMargins,
-} from '@mantine/styles';
+import React, { Children, useMemo } from 'react';
+import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
+import useStyles from './SimpleGrid.styles';
 
 export interface SimpleGridBreakpoint {
   maxWidth: number;
@@ -36,58 +29,25 @@ export function SimpleGrid({
   style,
   ...others
 }: SimpleGridProps) {
-  const uuid = useUuid(id);
-  const theme = useMantineTheme();
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const sortedBreakpoints = [...breakpoints].sort((a, b) => b.maxWidth - a.maxWidth);
-  const gridClassName = `grid-${uuid}`;
-  const colClassName = `col-${uuid}`;
-
-  const columns = (Children.toArray(children) as React.ReactElement[]).map((column) =>
-    React.cloneElement(column, { className: cx(colClassName, column.props.className) })
+  const sortedBreakpoints = useMemo(
+    () => [...breakpoints].sort((a, b) => b.maxWidth - a.maxWidth),
+    []
+  );
+  const { classes, cx } = useStyles(
+    { breakpoints: sortedBreakpoints, cols, spacing },
+    null,
+    'simple-grid'
   );
 
-  const baseSpacing = getSizeValue({ size: spacing, sizes: theme.spacing });
-  const baseStyles = `
-    .${gridClassName} {
-      box-sizing: border-box;
-      display: flex;
-      flex-wrap: wrap;
-      margin: ${-baseSpacing / 2}px;
-    }
-
-    .${colClassName} {
-      box-sizing: border-box;
-      width: 100%;
-      margin: ${baseSpacing / 2}px;
-      max-width: calc(${100 / cols}% - ${baseSpacing}px);
-    }
-  `;
-
-  const queries = sortedBreakpoints.reduce((acc, query) => {
-    const querySpacing = getSizeValue({ size: query.spacing || spacing, sizes: theme.spacing });
-    return `${acc}
-      @media (max-width: ${query.maxWidth}px) {
-        .${gridClassName} {
-          margin: ${-querySpacing / 2}px;
-        }
-
-        .${colClassName} {
-          margin: ${querySpacing / 2}px;
-          max-width: calc(${100 / query.cols}% - ${querySpacing}px);
-        }
-      }
-    `;
-  }, baseStyles);
+  const columns = (Children.toArray(children) as React.ReactElement[]).map((column) =>
+    React.cloneElement(column, { className: cx(classes.col, column.props.className) })
+  );
 
   return (
-    <>
-      {/* Usage of style tag is required due to bug in jss which does not allow to implement this */}
-      <style>{queries}</style>
-      <div className={cx(gridClassName, className)} id={id} style={mergedStyles} {...rest}>
-        {columns}
-      </div>
-    </>
+    <div className={cx(classes.grid, className)} id={id} style={mergedStyles} {...rest}>
+      {columns}
+    </div>
   );
 }
 
