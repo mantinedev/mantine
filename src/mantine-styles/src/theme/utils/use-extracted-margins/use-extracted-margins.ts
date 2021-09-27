@@ -1,0 +1,55 @@
+import { useMantineTheme } from '../../MantineProvider';
+import { getSizeValue } from '../get-size-value/get-size-value';
+import type { MantineMargins } from '../../types';
+
+interface UseExtractedMargins {
+  rootStyle?: React.CSSProperties;
+  style?: React.CSSProperties;
+  others: MantineMargins & { [key: string]: any };
+}
+
+function isValidMargin(margin: any) {
+  return typeof margin === 'string' || typeof margin === 'number';
+}
+
+const margins = {
+  m: 'margin',
+  mt: 'marginTop',
+  mb: 'marginBottom',
+  ml: 'marginLeft',
+  mr: 'marginRight',
+};
+
+export function useExtractedMargins({ others, rootStyle, style }: UseExtractedMargins) {
+  const theme = useMantineTheme();
+  const mergedStyles: React.CSSProperties = { ...style, ...rootStyle };
+
+  if (isValidMargin(others.my)) {
+    const margin = getSizeValue({ size: others.m, sizes: theme.spacing });
+    mergedStyles.marginTop = margin;
+    mergedStyles.marginBottom = margin;
+  }
+
+  if (isValidMargin(others.mx)) {
+    const margin = getSizeValue({ size: others.m, sizes: theme.spacing });
+    mergedStyles.marginLeft = margin;
+    mergedStyles.marginRight = margin;
+  }
+
+  Object.keys(margins).forEach((margin) => {
+    if (isValidMargin(others[margin])) {
+      mergedStyles[margin] = getSizeValue({ size: others[margin], sizes: theme.spacing });
+    }
+  });
+
+  const rest = { ...others };
+  delete rest.m;
+  delete rest.mx;
+  delete rest.my;
+  delete rest.mt;
+  delete rest.ml;
+  delete rest.mb;
+  delete rest.mr;
+
+  return { mergedStyles, rest };
+}
