@@ -1,12 +1,18 @@
 import React, { useState, useRef } from 'react';
-import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  MantineMargin,
+} from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 
 export type TooltipStylesNames = ClassNames<typeof useStyles>;
 
 export interface TooltipProps
-  extends DefaultProps<TooltipStylesNames>,
+  extends Omit<DefaultProps<TooltipStylesNames>, MantineMargin>,
     SharedPopperProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** Tooltip content */

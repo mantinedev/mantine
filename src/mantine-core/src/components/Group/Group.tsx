@@ -1,5 +1,11 @@
 import React, { Children } from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import useStyles, { GroupPosition } from './Group.styles';
 
 export type GroupStylesNames = ClassNames<typeof useStyles>;
@@ -61,6 +67,7 @@ export function Group({
   );
 
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   const items = (Children.toArray(children) as React.ReactElement[]).map((child) =>
     React.cloneElement(child, {
@@ -70,7 +77,7 @@ export function Group({
   );
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {items}
     </div>
   );

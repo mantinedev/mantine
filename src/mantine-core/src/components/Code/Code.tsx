@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme, DefaultProps, MantineColor } from '@mantine/styles';
+import { useMantineTheme, DefaultProps, MantineColor, useExtractedMargins } from '@mantine/styles';
 import useStyles from './Code.styles';
 
 export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<'code'> {
@@ -13,21 +13,22 @@ export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<
   block?: boolean;
 }
 
-export function Code({ className, children, block = false, color, ...others }: CodeProps) {
+export function Code({ className, children, block = false, color, style, ...others }: CodeProps) {
   const theme = useMantineTheme();
   const themeColor = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
   const { classes, cx } = useStyles({ color: themeColor }, null, 'code');
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   if (block) {
     return (
-      <pre className={cx(classes.root, classes.block, className)} {...others}>
+      <pre className={cx(classes.root, classes.block, className)} style={mergedStyles} {...rest}>
         {children}
       </pre>
     );
   }
 
   return (
-    <code className={cx(classes.root, className)} {...others}>
+    <code className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {children}
     </code>
   );

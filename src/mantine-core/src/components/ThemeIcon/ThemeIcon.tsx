@@ -1,5 +1,11 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, MantineGradient, MantineColor } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineGradient,
+  MantineColor,
+  useExtractedMargins,
+} from '@mantine/styles';
 import useStyles, { ThemeIconVariant } from './ThemeIcon.styles';
 
 export interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'> {
@@ -30,6 +36,7 @@ export function ThemeIcon({
   color,
   children,
   gradient = { from: 'blue', to: 'cyan', deg: 45 },
+  style,
   ...others
 }: ThemeIconProps) {
   const { classes, cx } = useStyles(
@@ -46,8 +53,10 @@ export function ThemeIcon({
     'theme-icon'
   );
 
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+
   return (
-    <div className={cx(classes.root, className)} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {children}
     </div>
   );

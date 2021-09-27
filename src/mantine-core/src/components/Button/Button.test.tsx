@@ -8,6 +8,7 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Button } from './Button';
 import { Button as ButtonStylesApi } from './styles.api';
@@ -19,6 +20,7 @@ describe('@mantine/core/Button', () => {
   itSupportsStyle(Button, {});
   itSupportsRef(Button, {}, HTMLButtonElement, 'elementRef');
   itSupportsClassName(Button, {});
+  itSupportsMargins(Button, {});
 
   itSupportsStylesApi(
     Button,

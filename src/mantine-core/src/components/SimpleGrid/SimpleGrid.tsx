@@ -6,6 +6,7 @@ import {
   MantineNumberSize,
   getSizeValue,
   useUuid,
+  useExtractedMargins,
 } from '@mantine/styles';
 
 export interface SimpleGridBreakpoint {
@@ -32,10 +33,12 @@ export function SimpleGrid({
   id,
   spacing = 'md',
   children,
+  style,
   ...others
 }: SimpleGridProps) {
   const uuid = useUuid(id);
   const theme = useMantineTheme();
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const sortedBreakpoints = [...breakpoints].sort((a, b) => b.maxWidth - a.maxWidth);
   const gridClassName = `grid-${uuid}`;
   const colClassName = `col-${uuid}`;
@@ -81,7 +84,7 @@ export function SimpleGrid({
     <>
       {/* Usage of style tag is required due to bug in jss which does not allow to implement this */}
       <style>{queries}</style>
-      <div className={cx(gridClassName, className)} id={id} {...others}>
+      <div className={cx(gridClassName, className)} id={id} style={mergedStyles} {...rest}>
         {columns}
       </div>
     </>

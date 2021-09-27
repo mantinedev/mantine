@@ -30,7 +30,7 @@ storiesOf('@mantine/core/Divider', module)
     <div>
       <Group>
         <Badge>Light</Badge>
-        <Divider orientation="vertical" margins={10} />
+        <Divider orientation="vertical" mx={10} />
         <Badge>Outline</Badge>
         <Divider orientation="vertical" />
         <Badge>Filled</Badge>

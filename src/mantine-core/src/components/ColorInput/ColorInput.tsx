@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, getSizeValue, ClassNames, useUuid } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  getSizeValue,
+  ClassNames,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -102,6 +109,7 @@ export function ColorInput({
 }: ColorInputProps) {
   const { classes } = useStyles(null, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const uuid = useUuid(id);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const [dropdownOpened, setDropdownOpened] = useState(false);
@@ -148,13 +156,13 @@ export function ColorInput({
       size={size}
       id={uuid}
       className={className}
-      style={style}
+      style={mergedStyles}
       __staticSelector="color-input"
       {...wrapperProps}
     >
       <div ref={setReferenceElement}>
         <Input<'input'>
-          {...others}
+          {...rest}
           __staticSelector="color-input"
           id={uuid}
           onFocus={handleInputFocus}

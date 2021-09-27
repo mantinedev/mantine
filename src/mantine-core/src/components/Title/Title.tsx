@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, useExtractedMargins } from '@mantine/styles';
 import useStyles from './Title.styles';
 
 export type TitleOrder = 1 | 2 | 3 | 4 | 5 | 6;
@@ -26,18 +26,20 @@ export function Title({
 
   const element = `h${order}` as const;
   const { classes, cx } = useStyles({ element }, null, 'title');
-  const styles: React.CSSProperties = {};
+  const styles: React.CSSProperties = { ...style };
 
   if (align) {
     styles.textAlign = align;
   }
 
+  const { mergedStyles, rest } = useExtractedMargins({ others, style: styles });
+
   return React.createElement(
     element,
     {
       className: cx(classes.title, className),
-      style: { ...style, ...styles },
-      ...others,
+      style: mergedStyles,
+      ...rest,
     },
     children
   );

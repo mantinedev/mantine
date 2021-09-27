@@ -7,6 +7,7 @@ import {
   MantineShadow,
   ClassNames,
   useUuid,
+  MantineMargin,
 } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
@@ -19,7 +20,7 @@ import useStyles from './Menu.styles';
 export type MenuStylesNames = ClassNames<typeof useStyles> | MenuBodyStylesNames;
 
 export interface MenuProps
-  extends DefaultProps<MenuStylesNames>,
+  extends Omit<DefaultProps<MenuStylesNames>, MantineMargin>,
     SharedPopperProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** <MenuItem /> and <Divider /> components only, children are passed to MenuBody component  */

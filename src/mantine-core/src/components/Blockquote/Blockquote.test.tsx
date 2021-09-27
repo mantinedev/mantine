@@ -7,6 +7,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Blockquote } from './Blockquote';
 import { Blockquote as BlockquoteStylesApi } from './styles.api';
@@ -16,6 +17,7 @@ describe('@mantine/core/Blockquote', () => {
   itSupportsClassName(Blockquote, {});
   itSupportsOthers(Blockquote, {});
   itSupportsStyle(Blockquote, {});
+  itSupportsMargins(Blockquote, {});
   itSupportsStylesApi(
     Blockquote,
     { cite: 'test-cite', children: 'test-quote' },

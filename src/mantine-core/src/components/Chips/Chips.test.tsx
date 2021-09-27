@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   checkAccessibility,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Chips } from './Chips';
 import { Chip } from './Chip/Chip';
@@ -24,6 +25,7 @@ const defaultProps = {
 
 describe('@mantine/core/Chips', () => {
   itSupportsClassName(Chips, defaultProps);
+  itSupportsMargins(Chips, defaultProps);
   itSupportsOthers(Chips, defaultProps);
   itSupportsStyle(Chips, defaultProps);
   itSupportsStylesApi(Chips, defaultProps, Object.keys(ChipsStylesApi), 'chips');

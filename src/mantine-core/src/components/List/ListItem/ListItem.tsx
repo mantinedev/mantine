@@ -1,5 +1,11 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import useStyles from './ListItem.styles';
 
 export type ListItemStylesNames = ClassNames<typeof useStyles>;
@@ -33,12 +39,13 @@ export function ListItem({
 }: ListItemProps) {
   const { classes, cx } = useStyles({ spacing, center }, classNames, 'list');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   return (
     <li
       className={cx(classes.item, { [classes.withIcon]: icon }, className)}
-      style={{ ...style, ..._styles.item, ...(icon ? _styles.withIcon : null) }}
-      {...others}
+      style={{ ...mergedStyles, ..._styles.item, ...(icon ? _styles.withIcon : null) }}
+      {...rest}
     >
       <div className={classes.itemWrapper} style={_styles.itemWrapper}>
         {icon && (

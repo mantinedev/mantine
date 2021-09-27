@@ -6,6 +6,7 @@ import {
   MantineColor,
   ClassNames,
   useUuid,
+  useExtractedMargins,
 } from '@mantine/styles';
 import { CheckboxIcon } from './CheckboxIcon';
 import useStyles from './Checkbox.styles';
@@ -62,13 +63,10 @@ export function Checkbox({
   const uuid = useUuid(id);
   const { classes, cx } = useStyles({ size, color, transitionDuration }, classNames, 'checkbox');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   return (
-    <div
-      className={cx(classes.root, className)}
-      style={{ ...style, ..._styles.root }}
-      {...wrapperProps}
-    >
+    <div className={cx(classes.root, className)} style={mergedStyles} {...wrapperProps}>
       <div className={classes.inner} style={_styles.inner}>
         <input
           id={uuid}
@@ -79,7 +77,7 @@ export function Checkbox({
           checked={indeterminate || checked}
           onChange={onChange}
           disabled={disabled}
-          {...others}
+          {...rest}
         />
         <CheckboxIcon indeterminate={indeterminate} className={classes.icon} style={_styles.icon} />
       </div>

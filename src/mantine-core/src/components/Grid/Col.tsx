@@ -6,9 +6,12 @@ import {
   MantineNumberSize,
   getSizeValue,
   MANTINE_SIZES,
+  MantineMargin,
 } from '@mantine/styles';
 
-export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface ColProps
+  extends Omit<DefaultProps, MantineMargin>,
+    React.ComponentPropsWithoutRef<'div'> {
   span: number;
   columns?: number;
   offset?: number;

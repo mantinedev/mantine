@@ -1,4 +1,9 @@
-import { itSupportsStyle, itSupportsClassName, itSupportsStylesApi } from '@mantine/tests';
+import {
+  itSupportsStyle,
+  itSupportsClassName,
+  itSupportsStylesApi,
+  itSupportsMargins,
+} from '@mantine/tests';
 import { JsonInput } from './JsonInput';
 import { Input as InputStylesApi } from '../Input/styles.api';
 import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
@@ -6,6 +11,7 @@ import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.ap
 describe('@mantine/core/JsonInput', () => {
   itSupportsStyle(JsonInput, {});
   itSupportsClassName(JsonInput, {});
+  itSupportsMargins(JsonInput, {});
   itSupportsStylesApi(
     JsonInput,
     {

@@ -5,6 +5,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   ClassNames,
+  MantineMargin,
 } from '@mantine/styles';
 import { Transition, MantineTransition } from '../Transition';
 import { CloseButton } from '../ActionIcon';
@@ -15,7 +16,7 @@ import useStyles from './Dialog.styles';
 export type DialogStylesNames = ClassNames<typeof useStyles>;
 
 export interface DialogProps
-  extends DefaultProps<DialogStylesNames>,
+  extends Omit<DefaultProps<DialogStylesNames>, MantineMargin>,
     Omit<PaperProps<'div', HTMLDivElement>, 'classNames' | 'styles'> {
   /** Display close button at the top right corner */
   withCloseButton?: boolean;

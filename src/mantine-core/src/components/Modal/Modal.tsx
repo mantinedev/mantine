@@ -8,6 +8,7 @@ import {
   MantineShadow,
   ClassNames,
   useUuid,
+  MantineMargin,
 } from '@mantine/styles';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
@@ -20,7 +21,7 @@ import useStyles from './Modal.styles';
 export type ModalStylesNames = Exclude<ClassNames<typeof useStyles>, 'clickOutsideOverlay'>;
 
 export interface ModalProps
-  extends DefaultProps<ModalStylesNames>,
+  extends Omit<DefaultProps<ModalStylesNames>, MantineMargin>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Mounts modal if true */
   opened: boolean;

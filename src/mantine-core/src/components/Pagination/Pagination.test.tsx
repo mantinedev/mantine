@@ -3,6 +3,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Pagination } from './Pagination';
 import { Pagination as PaginationStylesApi } from './styles.api';
@@ -13,6 +14,7 @@ const defaultProps = {
 
 describe('@mantine/core/Pagination', () => {
   itSupportsClassName(Pagination, defaultProps);
+  itSupportsMargins(Pagination, defaultProps);
   itSupportsOthers(Pagination, defaultProps);
   itSupportsStyle(Pagination, defaultProps);
   itSupportsStylesApi(Pagination, defaultProps, Object.keys(PaginationStylesApi), 'pagination');

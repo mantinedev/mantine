@@ -1,11 +1,13 @@
 import React from 'react';
-import { useMantineTheme, DefaultProps } from '@mantine/styles';
+import { useMantineTheme, DefaultProps, MantineMargin } from '@mantine/styles';
 import { Overlay } from '../Overlay/Overlay';
 import { Transition } from '../Transition';
 import { Loader, LoaderProps } from '../Loader/Loader';
 import useStyles from './LoadingOverlay.styles';
 
-export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface LoadingOverlayProps
+  extends Omit<DefaultProps, MantineMargin>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Provide custom loader */
   loader?: React.ReactNode;
 

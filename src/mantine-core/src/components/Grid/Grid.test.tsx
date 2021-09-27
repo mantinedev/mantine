@@ -1,12 +1,18 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
+import {
+  itSupportsClassName,
+  itSupportsOthers,
+  itSupportsStyle,
+  itSupportsMargins,
+} from '@mantine/tests';
 import { Grid } from './Grid';
 
 describe('@mantine/core/Grid', () => {
   itSupportsClassName(Grid, {});
   itSupportsOthers(Grid, {});
   itSupportsStyle(Grid, {});
+  itSupportsMargins(Grid, {});
 
   it('sets justify-content and align-items styles based on props', () => {
     const element = shallow(

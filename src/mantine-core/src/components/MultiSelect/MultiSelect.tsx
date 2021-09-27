@@ -7,6 +7,7 @@ import {
   MantineShadow,
   ClassNames,
   useUuid,
+  useExtractedMargins,
 } from '@mantine/styles';
 import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper';
@@ -163,6 +164,7 @@ export function MultiSelect({
 }: MultiSelectProps) {
   const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, 'multi-select');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const dropdownRef = useRef<HTMLDivElement>();
   const inputRef = useRef<HTMLInputElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
@@ -315,7 +317,7 @@ export function MultiSelect({
       description={description}
       size={size}
       className={className}
-      style={style}
+      style={mergedStyles}
       classNames={classNames}
       styles={styles}
       __staticSelector="multi-select"
@@ -390,7 +392,7 @@ export function MultiSelect({
               placeholder={_value.length === 0 ? placeholder : undefined}
               disabled={disabled}
               data-mantine-stop-propagation={dropdownOpened}
-              {...others}
+              {...rest}
             />
           </div>
         </Input>

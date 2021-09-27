@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, MantineSize, MantineShadow, useUuid } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineSize,
+  MantineShadow,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
@@ -117,6 +123,7 @@ export function Select({
   rightSectionWidth,
   ...others
 }: SelectProps) {
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
@@ -264,7 +271,7 @@ export function Select({
       description={description}
       size={size}
       className={className}
-      style={style}
+      style={mergedStyles}
       classNames={classNames}
       styles={styles}
       __staticSelector="select"
@@ -280,7 +287,7 @@ export function Select({
         tabIndex={-1}
       >
         <Input<'input'>
-          {...others}
+          {...rest}
           type="text"
           required={required}
           elementRef={useMergedRef(elementRef, inputRef)}

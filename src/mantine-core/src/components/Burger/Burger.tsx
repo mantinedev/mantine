@@ -6,6 +6,7 @@ import {
   MantineNumberSize,
   MantineColor,
   ClassNames,
+  useExtractedMargins,
 } from '@mantine/styles';
 import useStyles from './Burger.styles';
 
@@ -42,14 +43,15 @@ export function Burger({
   const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
   const { classes, cx } = useStyles({ color: _color, size }, classNames, 'burger');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   return (
     <button
       type="button"
       className={cx(classes.root, className)}
       ref={elementRef}
-      style={{ ...style, ..._styles.root }}
-      {...others}
+      style={mergedStyles}
+      {...rest}
     >
       <div className={cx(classes.burger, { [classes.opened]: opened })} style={_styles.burger} />
     </button>

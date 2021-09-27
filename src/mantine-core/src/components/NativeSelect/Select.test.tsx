@@ -6,6 +6,7 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { NativeSelect } from './NativeSelect';
@@ -36,6 +37,7 @@ describe('@mantine/core/NativeSelect', () => {
 
   itSupportsClassName(NativeSelect, defaultProps);
   itSupportsStyle(NativeSelect, defaultProps);
+  itSupportsMargins(NativeSelect, defaultProps);
   itSupportsRef(NativeSelect, defaultProps, HTMLSelectElement, 'elementRef');
 
   itSupportsStylesApi(

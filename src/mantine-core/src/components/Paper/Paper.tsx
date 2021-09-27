@@ -1,5 +1,10 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineShadow,
+  useExtractedMargins,
+} from '@mantine/styles';
 import useStyles from './Paper.styles';
 
 export interface SharedPaperProps extends DefaultProps {
@@ -38,13 +43,20 @@ export function Paper<C extends React.ElementType = 'div', R extends HTMLElement
   withBorder = false,
   shadow,
   elementRef,
+  style,
   ...others
 }: PaperProps<C, R>) {
   const { classes, cx } = useStyles({ radius, shadow, padding, withBorder }, null, 'paper');
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const Element = component || 'div';
 
   return (
-    <Element className={cx(classes.paper, className)} ref={elementRef as any} {...others}>
+    <Element
+      className={cx(classes.paper, className)}
+      ref={elementRef as any}
+      style={mergedStyles}
+      {...rest}
+    >
       {children}
     </Element>
   );

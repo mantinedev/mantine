@@ -7,6 +7,7 @@ import {
   getThemeColor,
   MantineColor,
   ClassNames,
+  useExtractedMargins,
 } from '@mantine/styles';
 import useStyles from './Progress.styles';
 
@@ -64,6 +65,7 @@ export function Progress({
   const theme = useMantineTheme();
   const { classes, cx } = useStyles({ color, size, radius, striped }, classNames, 'progress');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   const segments = Array.isArray(sections)
     ? getCumulativeSections(sections).map((section, index) => (
@@ -81,7 +83,7 @@ export function Progress({
     : null;
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {segments || (
         <div
           role="progressbar"

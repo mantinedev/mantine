@@ -212,7 +212,7 @@ export function MenuBody({
         <Divider
           variant="solid"
           className={classes.divider}
-          margins={theme.spacing.xs / 2}
+          my={theme.spacing.xs / 2}
           style={_styles.divider}
           key={index}
         />

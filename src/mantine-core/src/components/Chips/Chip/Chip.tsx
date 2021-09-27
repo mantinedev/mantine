@@ -9,6 +9,7 @@ import {
   MantineColor,
   ClassNames,
   useUuid,
+  useExtractedMargins,
 } from '@mantine/styles';
 import { CheckboxIcon } from '../../Checkbox';
 import useStyles from './Chip.styles';
@@ -82,6 +83,7 @@ export function Chip({
   const theme = useMantineTheme();
   const { classes, cx } = useStyles({ radius, size, color }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const [value, setValue] = useUncontrolled({
     value: checked,
     defaultValue: defaultChecked,
@@ -103,7 +105,7 @@ export function Chip({
         id={uuid}
         disabled={disabled}
         ref={elementRef}
-        {...others}
+        {...rest}
       />
       <label
         className={cx(
@@ -113,7 +115,7 @@ export function Chip({
           className
         )}
         style={{
-          ...style,
+          ...mergedStyles,
           ..._styles.label,
           ...(value ? _styles.checked : null),
           ...(disabled ? _styles.disabled : null),

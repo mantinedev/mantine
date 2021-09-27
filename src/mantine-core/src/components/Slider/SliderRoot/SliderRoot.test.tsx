@@ -5,6 +5,7 @@ import {
   itSupportsStyle,
   itSupportsRef,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { SliderRoot } from './SliderRoot';
 
@@ -18,6 +19,7 @@ describe('@mantine/core/SliderRoot', () => {
   itSupportsClassName(SliderRoot, defaultProps);
   itSupportsOthers(SliderRoot, defaultProps);
   itSupportsStyle(SliderRoot, defaultProps);
+  itSupportsMargins(SliderRoot, defaultProps);
   itSupportsRef(SliderRoot, defaultProps, HTMLDivElement, 'elementRef');
   itSupportsStylesApi(SliderRoot, defaultProps, ['root'], 'slider');
 

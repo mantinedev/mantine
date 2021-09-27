@@ -1,6 +1,12 @@
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useMantineTheme, DefaultProps, MantineSize, useUuid } from '@mantine/styles';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineSize,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
 import {
   InputWrapperBaseProps,
   InputWrapper,
@@ -61,6 +67,7 @@ export function Textarea({
 }: TextareaProps) {
   const uuid = useUuid(id);
   const theme = useMantineTheme();
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   const inputStyles = {
     ...styles,
@@ -78,7 +85,7 @@ export function Textarea({
       id={uuid}
       description={description}
       required={required}
-      style={style}
+      style={mergedStyles}
       className={className}
       classNames={classNames}
       styles={styles}
@@ -99,7 +106,7 @@ export function Textarea({
           styles={inputStyles}
           size={size}
           multiline
-          {...others}
+          {...rest}
         />
       ) : (
         <Input<'textarea', HTMLTextAreaElement>
@@ -114,7 +121,7 @@ export function Textarea({
           size={size}
           __staticSelector={__staticSelector}
           multiline
-          {...others}
+          {...rest}
         />
       )}
     </InputWrapper>

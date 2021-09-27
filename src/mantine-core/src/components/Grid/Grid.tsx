@@ -1,11 +1,12 @@
 import React, { Children } from 'react';
-import cx from 'clsx';
+import clsx from 'clsx';
 import {
   useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   getSizeValue,
   useUuid,
+  useExtractedMargins,
 } from '@mantine/styles';
 import { getResponsiveStyles } from './get-responsive-styles';
 
@@ -44,24 +45,25 @@ export function Grid({
   const uuid = useUuid(id);
   const theme = useMantineTheme();
   const spacing = getSizeValue({ size: gutter, sizes: theme.spacing });
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
     React.cloneElement(col, { gutter, grow, columns, key: index, id: uuid })
   );
 
-  let styles: React.CSSProperties = {};
-
-  styles = {
-    margin: -spacing / 2,
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: justify,
-    alignItems: align,
-    ...style,
-  };
-
   return (
-    <div style={styles} className={cx('mantine-grid', className)} {...others}>
+    <div
+      style={{
+        margin: -spacing / 2,
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: justify,
+        alignItems: align,
+        ...mergedStyles,
+      }}
+      className={clsx('mantine-grid', className)}
+      {...rest}
+    >
       <style>{getResponsiveStyles({ uuid, columns, grow, theme })}</style>
       {cols}
     </div>

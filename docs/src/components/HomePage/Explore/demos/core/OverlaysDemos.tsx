@@ -48,7 +48,7 @@ export function OverlaysDemos() {
             onClick={() => setDrawerOpened(false)}
           />
         </Group>
-        <Divider margins="md" />
+        <Divider my="md" />
         <AuthenticationForm noShadow noPadding />
       </Drawer>
 

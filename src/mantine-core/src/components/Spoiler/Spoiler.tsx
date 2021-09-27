@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { mergeStyles, DefaultProps, ClassNames } from '@mantine/styles';
+import { mergeStyles, DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
 import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
 
@@ -43,6 +43,7 @@ export function Spoiler({
 }: SpoilerProps) {
   const { classes, cx } = useStyles({ transitionDuration }, classNames, 'spoiler');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const [show, setShowState] = useState(initialState);
   const [spoiler, setSpoilerState] = useState(initialState);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -54,7 +55,7 @@ export function Spoiler({
   }, [maxHeight, children]);
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       <div
         className={classes.content}
         style={{

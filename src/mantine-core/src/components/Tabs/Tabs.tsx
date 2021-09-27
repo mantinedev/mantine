@@ -6,6 +6,7 @@ import {
   MantineNumberSize,
   MantineColor,
   ClassNames,
+  useExtractedMargins,
 } from '@mantine/styles';
 import { Group, GroupPosition } from '../Group';
 import { Tab, TabType } from './Tab/Tab';
@@ -100,6 +101,7 @@ export function Tabs({
 }: TabsProps) {
   const { classes, cx } = useStyles({ tabPadding, orientation }, classNames, 'tabs');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
 
@@ -158,7 +160,7 @@ export function Tabs({
   const content = tabs[activeTab].props.children;
 
   return (
-    <div {...others} className={cx(classes.root, className)} style={{ ...style, ..._styles.root }}>
+    <div {...rest} className={cx(classes.root, className)} style={mergedStyles}>
       <div
         className={cx(classes.tabsListWrapper, classes[variant])}
         style={{ ..._styles.tabsListWrapper, ..._styles[variant] }}

@@ -5,6 +5,7 @@ import {
   itSupportsOthers,
   itRendersChildren,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Group } from './Group';
 import { Group as GroupStylesApi } from './styles.api';
@@ -14,6 +15,7 @@ describe('@mantine/core/Group', () => {
   itSupportsClassName(Group, {});
   itSupportsStyle(Group, {});
   itRendersChildren(Group, {});
+  itSupportsMargins(Group, {});
   itSupportsStylesApi(Group, { children: <div /> }, Object.keys(GroupStylesApi), 'group');
 
   it('has correct displayName', () => {
