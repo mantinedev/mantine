@@ -11,6 +11,7 @@ import {
   mergeStyles,
   ClassNames,
   useUuid,
+  useExtractedMargins,
 } from '@mantine/core';
 import { useMergedRef, useUncontrolled } from '@mantine/hooks';
 import dayjs, { UnitType } from 'dayjs';
@@ -93,6 +94,7 @@ export function TimeRangeInput({
 }: TimeRangeInputProps) {
   const { classes, cx } = useStyles({ size }, classNames, 'time-range-input');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const uuid = useUuid(id);
   const fromDate = new Date();
   const toDate = new Date(new Date().valueOf() + 1000);
@@ -174,7 +176,7 @@ export function TimeRangeInput({
       error={error}
       description={description}
       className={className}
-      style={style}
+      style={mergedStyles}
       classNames={classNames}
       styles={styles}
       size={size}
@@ -196,7 +198,7 @@ export function TimeRangeInput({
         classNames={classNames}
         styles={styles}
         disabled={disabled}
-        {...others}
+        {...rest}
       >
         <div className={classes.inputWrapper} style={_styles.inputWrapper}>
           <TimeField

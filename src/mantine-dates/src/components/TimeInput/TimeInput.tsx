@@ -11,6 +11,7 @@ import {
   mergeStyles,
   ClassNames,
   useUuid,
+  useExtractedMargins,
 } from '@mantine/core';
 import { useMergedRef, useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -89,6 +90,7 @@ export function TimeInput({
 }: TimeInputProps) {
   const { classes, cx } = useStyles({ size }, classNames, 'time-input');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const uuid = useUuid(id);
 
   const [_value, handleChange] = useUncontrolled({
@@ -143,7 +145,7 @@ export function TimeInput({
       error={error}
       description={description}
       className={className}
-      style={style}
+      style={mergedStyles}
       classNames={classNames}
       styles={styles}
       size={size}
@@ -162,7 +164,7 @@ export function TimeInput({
         classNames={classNames}
         styles={styles}
         disabled={disabled}
-        {...others}
+        {...rest}
       >
         <div className={classes.controls} style={_styles.controls}>
           <TimeField

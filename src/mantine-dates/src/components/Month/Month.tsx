@@ -1,5 +1,12 @@
 import React, { useRef, useEffect } from 'react';
-import { DefaultProps, mergeStyles, Text, MantineSize, ClassNames } from '@mantine/core';
+import {
+  DefaultProps,
+  mergeStyles,
+  Text,
+  MantineSize,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
@@ -95,6 +102,7 @@ export function Month({
 }: MonthProps) {
   const { classes, cx } = useStyles({ fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
 
@@ -210,11 +218,7 @@ export function Month({
   });
 
   return (
-    <table
-      className={cx(classes.root, className)}
-      style={{ ...style, ..._styles.root }}
-      {...others}
-    >
+    <table className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {!hideWeekdays && (
         <thead>
           <tr>{weekdays}</tr>

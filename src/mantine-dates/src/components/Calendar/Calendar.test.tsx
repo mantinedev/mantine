@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   checkAccessibility,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Calendar } from './Calendar';
 import { Month } from '../Month/Month';
@@ -18,6 +19,7 @@ const defaultProps = { month: new Date(), value: new Date(), withSelect: true };
 describe('@mantine/dates/Calendar', () => {
   itSupportsClassName(Calendar, defaultProps);
   itSupportsOthers(Calendar, defaultProps);
+  itSupportsMargins(Calendar, defaultProps);
   itSupportsStyle(Calendar, defaultProps);
   checkAccessibility([
     mount(

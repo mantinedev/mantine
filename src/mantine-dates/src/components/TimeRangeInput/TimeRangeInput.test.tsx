@@ -6,6 +6,7 @@ import {
   itSupportsRef,
   itSupportsStylesApi,
   checkAccessibility,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
 import { TimeField } from '../TimeInput/TimeField/TimeField';
@@ -15,6 +16,7 @@ import { TimeRangeInput as TimeRangeInputStylesApi } from './styles.api';
 describe('@mantine/dates/TimeRangeInput', () => {
   itSupportsClassName(TimeRangeInput, {});
   itSupportsStyle(TimeRangeInput, {});
+  itSupportsMargins(TimeRangeInput, {});
   itSupportsRef(TimeRangeInput, {}, HTMLInputElement, 'elementRef');
 
   itSupportsStylesApi(
