@@ -1,12 +1,12 @@
 import React, { Children, useMemo } from 'react';
-import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
-import useStyles from './SimpleGrid.styles';
-
-export interface SimpleGridBreakpoint {
-  maxWidth: number;
-  cols: number;
-  spacing?: MantineNumberSize;
-}
+import {
+  DefaultProps,
+  MantineNumberSize,
+  useExtractedMargins,
+  getSizeValue,
+  useMantineTheme,
+} from '@mantine/styles';
+import useStyles, { SimpleGridBreakpoint } from './SimpleGrid.styles';
 
 export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Breakpoints data to change items per row and spacing based on max-width */
@@ -29,9 +29,15 @@ export function SimpleGrid({
   style,
   ...others
 }: SimpleGridProps) {
+  const theme = useMantineTheme();
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const sortedBreakpoints = useMemo(
-    () => [...breakpoints].sort((a, b) => b.maxWidth - a.maxWidth),
+    () =>
+      [...breakpoints].sort(
+        (a, b) =>
+          getSizeValue({ size: b.maxWidth, sizes: theme.breakpoints }) -
+          getSizeValue({ size: a.maxWidth, sizes: theme.breakpoints })
+      ),
     []
   );
   const { classes, cx } = useStyles(
