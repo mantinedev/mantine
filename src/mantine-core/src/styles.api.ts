@@ -14,7 +14,6 @@ export * from './components/ColorPicker/styles.api';
 export * from './components/Dialog/styles.api';
 export * from './components/Divider/styles.api';
 export * from './components/Drawer/styles.api';
-export * from './components/Group/styles.api';
 export * from './components/Image/styles.api';
 export * from './components/InputWrapper/styles.api';
 export * from './components/JsonInput/styles.api';
