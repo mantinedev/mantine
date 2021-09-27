@@ -7,6 +7,7 @@ import {
   MantineShadow,
   ClassNames,
   useUuid,
+  useExtractedMargins,
 } from '@mantine/styles';
 import {
   InputWrapper,
@@ -125,6 +126,7 @@ export function Autocomplete({
 }: AutocompleteProps) {
   const { classes } = useStyles({ size }, classNames, 'autocomplete');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
@@ -212,9 +214,9 @@ export function Autocomplete({
       description={description}
       size={size}
       className={className}
-      style={style}
       classNames={classNames}
       styles={styles}
+      style={mergedStyles}
       __staticSelector="autocomplete"
       {...wrapperProps}
     >
@@ -230,7 +232,7 @@ export function Autocomplete({
         tabIndex={-1}
       >
         <Input<'input'>
-          {...others}
+          {...rest}
           data-mantine-stop-propagation={dropdownOpened}
           required={required}
           elementRef={useMergedRef(elementRef, inputRef)}

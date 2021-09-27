@@ -6,6 +6,7 @@ import {
   getSizeValue,
   getSharedColorScheme,
   MantineColor,
+  useExtractedMargins,
 } from '@mantine/styles';
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader';
@@ -60,9 +61,11 @@ export function ActionIcon<
   loading = false,
   elementRef,
   component,
+  style,
   ...others
 }: ActionIconProps<C, R>) {
   const theme = useMantineTheme();
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const { classes, cx } = useStyles({ size, radius, color, variant }, null, 'action-icon');
   const Element = component || 'button';
   const colors = getSharedColorScheme({ color, theme, variant: 'light' });
@@ -73,7 +76,8 @@ export function ActionIcon<
 
   return (
     <Element
-      {...others}
+      {...rest}
+      style={mergedStyles}
       className={cx(classes.root, { [classes.loading]: loading }, className)}
       type="button"
       ref={elementRef as any}

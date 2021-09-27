@@ -25,20 +25,20 @@ export function useExtractedMargins({ others, rootStyle, style }: UseExtractedMa
   const mergedStyles: React.CSSProperties = { ...style, ...rootStyle };
 
   if (isValidMargin(others.my)) {
-    const margin = getSizeValue({ size: others.m, sizes: theme.spacing });
+    const margin = getSizeValue({ size: others.my, sizes: theme.spacing });
     mergedStyles.marginTop = margin;
     mergedStyles.marginBottom = margin;
   }
 
   if (isValidMargin(others.mx)) {
-    const margin = getSizeValue({ size: others.m, sizes: theme.spacing });
+    const margin = getSizeValue({ size: others.mx, sizes: theme.spacing });
     mergedStyles.marginLeft = margin;
     mergedStyles.marginRight = margin;
   }
 
   Object.keys(margins).forEach((margin) => {
     if (isValidMargin(others[margin])) {
-      mergedStyles[margin] = getSizeValue({ size: others[margin], sizes: theme.spacing });
+      mergedStyles[margins[margin]] = getSizeValue({ size: others[margin], sizes: theme.spacing });
     }
   });
 

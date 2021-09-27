@@ -6,13 +6,7 @@ import { Alert } from './Alert';
 
 const getThemes = (props?: any) =>
   MANTINE_COLORS.map((color) => (
-    <Alert
-      key={color}
-      color={color}
-      {...props}
-      style={{ marginTop: 20 }}
-      icon={<XCircleFillIcon size={14} />}
-    >
+    <Alert key={color} color={color} mt={20} icon={<XCircleFillIcon size={14} {...props} />}>
       Alert body with {color} color, Sign fly semantics, soon as and was alphabet while in big had
       free a he a to of into the on slight them. To the had dreams, drunk.
     </Alert>
@@ -20,23 +14,20 @@ const getThemes = (props?: any) =>
 
 storiesOf('@mantine/core/Alert', module)
   .addDecorator((Story, props) => (
-    <div style={{ maxWidth: 400, margin: 'auto', padding: 50 }}>
+    <div style={{ maxWidth: 400, margin: 'auto', padding: 40 }}>
       <Story {...props} />
     </div>
   ))
   .add('General usage', () => (
-    <>
-      <Alert
-        withCloseButton
-        color="red"
-        style={{ marginTop: 20 }}
-        icon={<XCircleFillIcon size={14} />}
-        title="This is important!"
-      >
-        Alert body with red color, Sign fly semantics, soon as and was alphabet while in big had
-        free a he a to of into the on slight them. To the had dreams, drunk.
-      </Alert>
-    </>
+    <Alert
+      withCloseButton
+      color="red"
+      icon={<XCircleFillIcon size={14} />}
+      title="This is important!"
+    >
+      Alert body with red color, Sign fly semantics, soon as and was alphabet while in big had free
+      a he a to of into the on slight them. To the had dreams, drunk.
+    </Alert>
   ))
   .add('Without title', () => <>{getThemes({})}</>)
   .add('Content overflow', () => (
@@ -49,7 +40,7 @@ storiesOf('@mantine/core/Alert', module)
         classNames={{ title: 'hello', root: 'there' }}
         styles={{ root: { background: 'lightgray' }, title: { color: 'red' } }}
         title="AlertTitleWithoutSpacesThatWillNotBreakToAnotherLineAndWillDamageTheLayout"
-        style={{ marginTop: 20 }}
+        mt={20}
       >
         AlertBodyWithoutSpacesThatWillNotBreakToAnotherLineAndWillDamageTheLayout
       </Alert>

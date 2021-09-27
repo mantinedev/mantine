@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, useUuid } from '@mantine/styles';
+import { DefaultProps, useUuid, useExtractedMargins } from '@mantine/styles';
 import {
   AccordionItem,
   AccordionItemStylesNames,
@@ -58,10 +58,12 @@ export function Accordion({
   icon,
   classNames,
   styles,
+  style,
   id,
   ...others
 }: AccordionProps) {
   const uuid = useUuid(id);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const items = React.Children.toArray(children).filter(
     (item: AccordionItemType) => item.type === AccordionItem
   ) as AccordionItemType[];
@@ -91,7 +93,11 @@ export function Accordion({
     />
   ));
 
-  return <div {...others}>{controls}</div>;
+  return (
+    <div style={mergedStyles} {...rest}>
+      {controls}
+    </div>
+  );
 }
 
 Accordion.Item = AccordionItem;

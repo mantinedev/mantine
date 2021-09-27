@@ -5,6 +5,7 @@ import {
   MantineColor,
   mergeStyles,
   ClassNames,
+  useExtractedMargins,
 } from '@mantine/styles';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import useStyles from './Avatar.styles';
@@ -60,6 +61,7 @@ export function Avatar<
 }: AvatarProps<C, R>) {
   const { classes, cx } = useStyles({ color, radius, size }, classNames, 'avatar');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const [error, setError] = useState(!src);
   const Element = component || 'div';
 
@@ -69,9 +71,9 @@ export function Avatar<
 
   return (
     <Element
-      {...others}
+      {...rest}
       className={cx(classes.root, className)}
-      style={{ ..._styles.root, ...style }}
+      style={mergedStyles}
       ref={elementRef as any}
     >
       {error ? (

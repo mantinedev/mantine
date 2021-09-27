@@ -1,5 +1,11 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { CloseButton } from '../ActionIcon';
 import useStyles from './Alert.styles';
 
@@ -44,9 +50,10 @@ export function Alert({
 }: AlertProps) {
   const { classes, cx } = useStyles({ color, withIcon: !!icon }, classNames, 'alert');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       <div className={classes.wrapper} style={_styles.wrapper}>
         {icon && (
           <div className={classes.icon} style={_styles.icon}>
