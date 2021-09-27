@@ -7,6 +7,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   defaultInputProps,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
@@ -26,6 +27,7 @@ const data = Array(50)
 describe('@mantine/core/Autocomplete', () => {
   itSupportsClassName(Autocomplete, defaultProps);
   itSupportsStyle(Autocomplete, defaultProps);
+  itSupportsMargins(Autocomplete, defaultProps);
   itSupportsRef(Autocomplete, defaultProps, HTMLInputElement, 'elementRef');
 
   checkAccessibility([

@@ -8,6 +8,7 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itRendersChildren,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Loader } from '../Loader/Loader';
 import { ActionIcon } from './ActionIcon';
@@ -16,6 +17,7 @@ describe('@mantine/core/ActionIcon', () => {
   itSupportsClassName(ActionIcon, {});
   itSupportsOthers(ActionIcon, {});
   itSupportsStyle(ActionIcon, {});
+  itSupportsMargins(ActionIcon, {});
   itSupportsRef(ActionIcon, {}, HTMLButtonElement, 'elementRef');
   itRendersChildren(ActionIcon, {});
   checkAccessibility([
