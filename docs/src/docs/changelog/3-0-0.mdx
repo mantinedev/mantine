@@ -15,6 +15,12 @@ import {
   CreateStylesDemos,
 } from '@docs/demos';
 
+## Breaking changes
+
+- Mantine was migrated to [emotion](https://emotion.sh/) from react-jss and no longer supports react-jss
+- `@mantine/core` package no longer exports react-jss `theming` context, use [createStyles](https://mantine.dev/theming/create-styles/) instead
+- All components no longer support `themeOverride` prop due to performance reasons
+
 ## Migration to emotion
 
 Mantine no longer uses react-jss, all components were migrated to [emotion](https://emotion.sh/) based css-in-js library
@@ -101,10 +107,30 @@ function Demo() {
 }
 ```
 
-## Breaking changes
+## Margin props
 
-- `@mantine/core` package no longer exports react-jss `theming` context, use [createStyles](https://mantine.dev/theming/create-styles/) instead
-- All components no longer support `themeOverride` prop
+All components now support setting following props to control margins:
+
+- `m` – sets `margin` property on root element
+- `my` – sets `margin-top` and `margin-bottom` properties on root element
+- `mx` – sets `margin-right` and `margin-left` properties on root element
+- `mt` – sets `margin-top` property on root element
+- `mb` – sets `margin-bottom` property on root element
+- `ml` – sets `margin-left` property on root element
+- `mr` – sets `margin-right` property on root element
+
+```tsx
+import { Button, TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <div>
+      <Button mx={20}>My button</Button>
+      <TextInput mt="md" />
+    </div>
+  );
+}
+```
 
 ## New components
 
