@@ -29,11 +29,11 @@ export function GatsbyGuide({ dependencies }: CraGuideProps) {
       <Text weight={700} style={{ marginTop: 30 }}>
         Install dependencies
       </Text>
-      <Installation dependencies={`${dependencies} gatsby-plugin-jss`} />
+      <Installation dependencies={`${dependencies} gatsby-plugin-mantine`} />
       <Text weight={700} style={{ marginTop: 30, marginBottom: 10 }}>
-        Add gatsby-plugin-jss in your gatsby.config.js file:
+        Add gatsby-plugin-mantine in your gatsby.config.js file:
       </Text>
-      <Prism language="tsx">plugins: [`gatsby-plugin-jss`]</Prism>
+      <Prism language="tsx">plugins: [`gatsby-plugin-mantine`]</Prism>
       <Done />
     </div>
   );
