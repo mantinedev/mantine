@@ -17,129 +17,99 @@ Alternatively you can download or clone [repository](https://github.com/mantined
 
 ## Adding to existing Next.js project
 
+1. Install `@mantine/next`
+
+```bash
+yarn add @mantine/next
+
+npm install @mantine/next
+```
+
 1. Create `pages/_document.tsx` file:
 
 ```tsx
-import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
-import { SsrProvider, SheetsRegistry, ServerStyles } from '@mantine/core';
+import Document from 'next/document';
+import { createGetInitialProps } from '@mantine/next';
+
+const getInitialProps = createGetInitialProps();
 
 export default class _Document extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
-    const registry = new SheetsRegistry();
-    const originalRenderPage = ctx.renderPage;
+  static getInitialProps = getInitialProps;
+}
+```
 
-    ctx.renderPage = () =>
-      originalRenderPage({
-        // eslint-disable-next-line react/display-name
-        enhanceApp: (App) => (props) =>
-          (
-            <SsrProvider registry={registry}>
-              <App {...props} />
-            </SsrProvider>
-          ),
-      });
+2. (Optional) Replace your `pages/_app.tsx` with
 
-    const initialProps = await Document.getInitialProps(ctx);
+```tsx
+import { AppProps } from 'next/app';
+import Head from 'next/head';
+import { MantineProvider, NormalizeCSS, GlobalStyles } from '@mantine/core';
+
+export default function App(props: AppProps) {
+  const { Component, pageProps } = props;
+
+  return (
+    <>
+      <Head>
+        <title>Page title</title>
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+      </Head>
+
+      <MantineProvider
+        theme={{
+          /** Put your mantine theme override here */
+          colorScheme: 'light',
+        }}
+      >
+        <NormalizeCSS />
+        <GlobalStyles />
+        <Component {...pageProps} />
+      </MantineProvider>
+    </>
+  );
+}
+```
+
+## Create your own getInitialProps
+
+In some cases you would want to have access to `getInitialProps` in Next Document,
+to do so you will need to setup Mantine ssr styles extraction on your own:
+
+```tsx
+import Document from 'next/document';
+import NextDocument, { DocumentContext } from 'next/document';
+import { ServerStyles, createStylesServer } from '@mantine/next';
+
+const stylesServer = createStylesServer();
+
+export default class _Document extends Document {
+  static async function getInitialProps(ctx: DocumentContext) {
+    const page = await ctx.renderPage();
+    const initialProps = await NextDocument.getInitialProps(ctx);
+
+    // Add your app specific logic here
 
     return {
       ...initialProps,
       styles: (
         <>
           {initialProps.styles}
-          <ServerStyles registry={registry} />
+          <ServerStyles html={page.html} server={stylesServer} />
         </>
       ),
     };
-  }
-
-  render() {
-    return (
-      <Html>
-        <Head>
-          <link rel="icon" href="link to favicon" />
-        </Head>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    );
-  }
+  };
 }
 ```
-
-2. Replace your `pages/_app.tsx` with
-
-```tsx
-import { AppProps } from 'next/app';
-import Head from 'next/head';
-import {
-  MantineProvider,
-  NormalizeCSS,
-  GlobalStyles,
-  useStylesCleanup,
-  SsrProvider,
-} from '@mantine/core';
-
-export default function App(props: AppProps) {
-  const { Component, pageProps } = props;
-
-  useStylesCleanup();
-
-  return (
-    <>
-      <SsrProvider>
-        <Head>
-          <title>Mantine next example</title>
-          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-        </Head>
-
-        <MantineProvider
-          theme={{
-            /* Put your mantine theme override here */
-            colorScheme: 'light',
-          }}
-        >
-          {/* NormalizeCSS and GlobalStyles are optional */}
-          <NormalizeCSS />
-          <GlobalStyles />
-          <Component {...pageProps} />
-        </MantineProvider>
-      </SsrProvider>
-    </>
-  );
-}
-```
-
-All done! You can start developing your application. If you experience any issues with Next.js [please report an issue](https://github.com/mantinedev/mantine/issues/new).
 
 ## NextLink component
 
 Some Mantine components support changing root element via `component` prop (e.g. [Button](/core/button/) and [ActionIcon](/core/action-icon/)).
-In order to make this prop work correctly with Next Link component create `NextLink` wrapper in your components folder:
-
-```tsx
-import React, { forwardRef } from 'react';
-import Link from 'next/link';
-
-export const NextLink = forwardRef(
-  (
-    { href, ...others }: React.ComponentPropsWithoutRef<typeof Link>,
-    ref: React.ForwardedRef<HTMLAnchorElement>
-  ) => (
-    <Link href={href}>
-      {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
-      <a {...others} ref={ref} />
-    </Link>
-  )
-);
-```
-
-Then you can use it with any Mantine component:
+In order to make this prop work correctly with Next Link component use `NextLink` wrapper from `@mantine/next` package:
 
 ```tsx
 import { Button, ActionIcon } from '@mantine/core';
-import { NextLink } from '../components/NextLink/NextLink';
+import { NextLink } from '@mantine/next';
 
 function Demo() {
   return (
