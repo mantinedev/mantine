@@ -56,6 +56,7 @@ const useStyles = createStyles((theme) => ({
     padding: theme.spacing.md,
     borderRadius: theme.radius.sm,
     boxShadow: theme.shadows.md,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
   },
 }));
 
