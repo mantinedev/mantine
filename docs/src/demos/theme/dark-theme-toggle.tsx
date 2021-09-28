@@ -3,19 +3,18 @@ import { Group, ActionIcon, useMantineColorScheme } from '@mantine/core';
 import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
-const code = `import { ActionIcon } from '@mantine/core';
+const code = `import { ActionIcon, useMantineColorScheme } from '@mantine/core';
 import { SunIcon, MoonIcon } from '@modulz/radix-icons';
-import ColorSchemeContext from './ColorSchemeContext';
 
 function Demo() {
-  const colorSchemeContext = useContext(ColorSchemeContext);
-  const dark = colorSchemeContext.colorScheme === 'dark';
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const dark = colorScheme === 'dark';
 
   return (
     <ActionIcon
       variant="outline"
       color={dark ? 'yellow' : 'blue'}
-      onClick={() => colorSchemeContext.onChange(dark ? 'light' : 'dark')}
+      onClick={() => toggleColorScheme()}
       title="Toggle color scheme"
     >
       {dark ? (

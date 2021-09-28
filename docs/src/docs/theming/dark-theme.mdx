@@ -78,54 +78,42 @@ function Demo() {
 }
 ```
 
-## Color scheme toggle
+## ColorSchemeProvider
 
-Mantine support dynamic color scheme change.
-To implement this create context that will save colorScheme value
-and provide handler to change it:
-
-```tsx
-// ColorSchemeContext.jsx file
-import { createContext } from 'react';
-
-export default createContext(null);
-```
-
-Then wrap your application with provider:
+Mantine support dynamic color scheme change and exports `ColorSchemeProvider` to
+help you set up color scheme context:
 
 ```tsx
-import { MantineProvider } from '@mantine/core';
-import ColorSchemeContext from './ColorSchemeContext';
+import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 
 export default function Demo() {
   const [colorScheme, setColorScheme] = useState('light');
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
   return (
-    <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }}>
         <App />
       </MantineProvider>
-    </ColorSchemeContext.Provider>
+    </ColorSchemeProvider>
   );
 }
 ```
 
-And create theme toggle control:
+And then consume `ColorSchemeProvider` context with `useMantineColorScheme` hook at any place of your app:
 
 <DarkThemeToggleDemo />
 
 ## Save to localStorage and add keyboard shortcut
 
-If you want to replicate dark theme behavior of Mantine docs website
-use [use-local-storage-value](/hooks/use-local-storage-value/)
-hook to store theme state in localStorage and sync it across all opened tabs
-and [use-window-event](/hooks/use-window-event/)
+If you want to replicate dark theme behavior of Mantine docs website use [use-local-storage-value](/hooks/use-local-storage-value/)
+hook to store theme state in localStorage and sync it across all opened tabs and [use-hotkeys](/hooks/use-hotkeys/)
 to add `Ctrl/⌘ + J` keyboard shortcut for theme toggle:
 
 ```tsx
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
-import ColorSchemeContext from './ColorSchemeContext';
 
 export default function Demo() {
   const [colorScheme, setColorScheme] = useLocalStorageValue({
@@ -133,18 +121,17 @@ export default function Demo() {
     defaultValue: 'light',
   });
 
-  useWindowEvent('keydown', (event) => {
-    if (event.code === 'KeyJ' && (event.ctrlKey || event.metaKey)) {
-      setColorScheme((current) => (current === 'dark' ? 'light' : 'dark'));
-    }
-  });
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+
+  useHotkeys([['mod+J', () => toggleColorScheme()]]);
 
   return (
-    <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }}>
         <App />
       </MantineProvider>
-    </ColorSchemeContext.Provider>
+    </ColorSchemeProvider>
   );
 }
 ```
@@ -172,13 +159,15 @@ export default function Demo() {
   // and always 'light' during ssr as window.matchMedia is not available
   const preferredColorScheme = useColorScheme();
   const [colorScheme, setColorScheme] = useState(preferredColorScheme);
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
   return (
-    <ColorSchemeContext.Provider value={{ colorScheme, onChange: setColorScheme }}>
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }}>
         <App />
       </MantineProvider>
-    </ColorSchemeContext.Provider>
+    </ColorSchemeProvider>
   );
 }
 ```

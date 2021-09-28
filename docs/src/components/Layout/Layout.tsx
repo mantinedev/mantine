@@ -6,7 +6,7 @@ import {
   ColorSchemeProvider,
   ColorScheme,
 } from '@mantine/core';
-import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
+import { useHotkeys, useLocalStorageValue } from '@mantine/hooks';
 import { LayoutInner, LayoutProps } from './LayoutInner';
 
 const THEME_KEY = 'mantine-color-scheme';
@@ -20,12 +20,7 @@ export default function Layout({ children, location }: LayoutProps) {
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
-  useWindowEvent('keydown', (event) => {
-    if (event.code === 'KeyJ' && (event.ctrlKey || event.metaKey)) {
-      event.preventDefault();
-      setColorScheme((current) => (current === 'dark' ? 'light' : 'dark'));
-    }
-  });
+  useHotkeys([['mod+J', () => toggleColorScheme()]]);
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
