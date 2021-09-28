@@ -2,6 +2,8 @@
 title: Changelog
 ---
 
+import { PaperDemos } from '@demos/core';
+
 # Learn the basics
 
 This guide will help you get familiar with core Mantine concepts.
@@ -88,6 +90,147 @@ function Demo() {
     <Button className="my-button" style={{ backgroundColor: '#fff' }} mx={20}>
       My button
     </Button>
+  );
+}
+```
+
+### Color prop
+
+Mantine components work with colors defined in [theme.colors](/theming/extend-theme/#default-colors).
+`theme.colors` is an object that contains an array of 10 shades per each color. To use predefined colors in components set `color` prop:
+
+```tsx
+<Badge color="teal" />
+<Button color="violet" />
+```
+
+You can [extend theme](/theming/extend-theme/) with any amount of your colors:
+
+```tsx
+// Theme is deeply merged with default theme
+<MantineProvider
+  theme={{
+    colors: {
+      // Add your color
+      'deep-blue': ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
+      // or replace default theme color
+      blue: ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
+    },
+  }}
+>
+  <YourApp />
+</MantineProvider>
+```
+
+Note that component appearance usually depends on `variant` prop and current `theme.colorScheme`.
+
+### Sizes
+
+Most Mantine components support `size` prop with xs, sm, md, lg and xl values:
+
+```tsx
+<Button size="xl" />
+<Badge size="xs" />
+```
+
+`size` prop controls various css properties across all supported components,
+in some components where size is associated with only one value, you can set it in px:
+
+```tsx
+<Slider size="xs" /> // Predefined xs size
+<Slider size={20} /> // -> 20px track height, other parts are scaled from this value
+```
+
+### Spacing and padding
+
+Components that have padding get values from [theme.spacing](/theming/extend-theme/#spacing-radius-and-shadows),
+default values are:
+
+```tsx
+{ xs: 10, sm: 12, md: 16, lg: 20, xl: 24 }
+```
+
+To change these values set `spacing` property on [theme](/theming/extend-theme/):
+
+```tsx
+<MantineProvider theme={{ spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 } }}>
+  <YourApp />
+</MantineProvider>
+```
+
+Later when you use Mantine components you can reference these values in `spacing` or `padding` props or set spacing in px:
+
+```tsx
+<Paper padding="xl" /> // -> xl padding from theme.spacing
+<Paper padding={30} /> // -> 30px padding
+
+<Group spacing="md" /> // -> md spacing from theme.spacing
+<Group spacing={40} /> // 40px spacing
+```
+
+### Shadows
+
+Components that use box-shadow property get values from [theme.shadows](/theming/extend-theme/#spacing-radius-and-shadows),
+default values are:
+
+```tsx
+{
+  xs: '0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1)',
+  sm: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 10px 15px -5px, rgba(0, 0, 0, 0.04) 0px 7px 7px -5px',
+  md: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px',
+  lg: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 28px 23px -7px, rgba(0, 0, 0, 0.04) 0px 12px 12px -7px',
+  xl: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 36px 28px -7px, rgba(0, 0, 0, 0.04) 0px 17px 17px -7px',
+}
+```
+
+To change these values set `shadows` property on [theme](/theming/extend-theme/):
+
+```tsx
+<MantineProvider
+  theme={{
+    shadows: {
+      xs: '1px 1px 1px rgba(0, 0, 0, 0.3)',
+      sm: '1px 1px 4px rgba(0, 0, 0, 0.4)',
+      md: '3px 3px 4px rgba(0, 0, 0, 0.4)',
+      lg: '3px 3px 4px 5px rgba(0, 0, 0, 0.4)',
+      xl: '3px 3px 4px 15px rgba(0, 0, 0, 0.4)',
+    },
+  }}
+>
+  <YourApp />
+</MantineProvider>
+```
+
+Later when you use Mantine components you can reference these values in `shadow` prop or define your own shadow:
+
+```tsx
+<Paper shadow="xl" /> // -> xl shadow from theme.shadows
+<Paper shadow="1px 3px 4px rgba(0, 0, 0, 0.4)" /> // -> your own shadow not related to theme.shadows
+```
+
+### Default spacing and shadow demo
+
+<Demo data={PaperDemos.configurator} />
+
+## Getting element ref
+
+You can get ref of most components with `elementRef` prop:
+
+```tsx
+import { useRef } from 'react';
+import { Button, Paper, TextInput } from '@mantine/core';
+
+function Demo() {
+  const buttonRef = useRef(); // HTMLButtonElement
+  const paperRef = useRef(); // -> HTMLDivElement
+  const inputRef = useRef(); // -> HTMLInputElement
+
+  return (
+    <>
+      <Button elementRef={buttonRef} />
+      <Paper elementRef={paperRef} />
+      <TextInput elementRef={inputRef} />
+    </>
   );
 }
 ```
