@@ -22,15 +22,15 @@ export function GatsbyGuide({ dependencies }: CraGuideProps) {
       >
         Get stared with Gatsby Github template
       </Button>
-      <Text weight={700} style={{ marginBottom: 15 }}>
+      <Text weight={700} mb={15}>
         Init application
       </Text>
       <Prism language="bash">gatsby new</Prism>
-      <Text weight={700} style={{ marginTop: 30 }}>
+      <Text weight={700} mt={30}>
         Install dependencies
       </Text>
       <Installation dependencies={`${dependencies} gatsby-plugin-mantine`} />
-      <Text weight={700} style={{ marginTop: 30, marginBottom: 10 }}>
+      <Text weight={700} mt={30} mb={10}>
         Add gatsby-plugin-mantine in your gatsby.config.js file:
       </Text>
       <Prism language="tsx">plugins: [`gatsby-plugin-mantine`]</Prism>

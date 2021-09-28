@@ -11,11 +11,11 @@ interface CraGuideProps {
 export function PreactGuide({ dependencies }: CraGuideProps) {
   return (
     <div>
-      <Text weight={700} style={{ marginBottom: 15 }}>
+      <Text weight={700} mb={15}>
         Init application
       </Text>
       <Prism language="bash">npx preact-cli create default your-app</Prism>
-      <Text weight={700} style={{ marginTop: 30 }}>
+      <Text weight={700} mt={30}>
         Install dependencies
       </Text>
       <Installation dependencies={dependencies} />
