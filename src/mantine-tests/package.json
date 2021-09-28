@@ -1,7 +1,7 @@
 {
   "name": "@mantine/tests",
   "private": true,
-  "version": "2.6.0-alpha.3",
+  "version": "2.6.0-alpha.4",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
