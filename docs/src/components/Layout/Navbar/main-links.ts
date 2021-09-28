@@ -10,7 +10,7 @@ export default [
   },
   {
     to: '/pages/basics/',
-    label: 'Learn the basics',
+    label: 'Learn the Basics',
     theme: DEFAULT_THEME.colors.violet[6],
     icon: StarIcon,
   },

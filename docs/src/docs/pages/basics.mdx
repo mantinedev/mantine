@@ -18,3 +18,74 @@ This guide will help you get familiar with core Mantine concepts.
 - `@mantine/next` – components and ssr utils for [Next.js integration](/theming/next/)
 - `gatsby-plugin-mantine` – [Gatsby plugin](/theming/gatsby/) to setup ssr
 - `@mantine/eslint-config` – ESLint and Prettier configuration that is used in all Mantine project
+
+## Theming
+
+Mantine support changing colors, spacing, box-shadows, font families, font sizes and many other properties.
+To configure theme wrap your app with [MantineProvider](/theming/mantine-provider/) component:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+export function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        // Override any other properties from default theme
+        fontFamily: 'Open Sans, sans serif',
+        spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 },
+      }}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+Learn more about [MantineProvider](/theming/mantine-provider/) and [extending theme](/theming/extending-theme/).
+
+## Dark color scheme
+
+All Mantine components support light and dark color scheme out of the box.
+You can set color scheme in [MantineProvider](/theming/mantine-provider/):
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+export function Demo() {
+  return (
+    <MantineProvider theme={{ colorScheme: 'dark' }}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+To learn how to implement color scheme changes via context follow [dark theme guide](/theming/dark-theme/).
+
+## Component props
+
+All Mantine components support these props:
+
+- `className` – adds class to root element
+- `style` – adds style to root element
+- Margins:
+  - `m` – sets `margin` property on root element
+  - `my` – sets `margin-top` and `margin-bottom` properties on root element
+  - `mx` – sets `margin-right` and `margin-left` properties on root element
+  - `mt` – sets `margin-top` property on root element
+  - `mb` – sets `margin-bottom` property on root element
+  - `ml` – sets `margin-left` property on root element
+  - `mr` – sets `margin-right` property on root element
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button className="my-button" style={{ backgroundColor: '#fff' }} mx={20}>
+      My button
+    </Button>
+  );
+}
+```
