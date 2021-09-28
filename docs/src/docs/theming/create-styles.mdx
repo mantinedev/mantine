@@ -26,6 +26,12 @@ as it provides the most convenient way to utilize Mantine theme, but it is not r
 
 <Demo data={CreateStylesDemos.createStylesBasics} />
 
+## Pseudo-classes
+
+You can add pseudo-classes the same way as in any css-preprocessor like Sass:
+
+<Demo data={CreateStylesDemos.createStylesPseudo} />
+
 ## Styles parameters
 
 You can receive any amount of parameters as second argument of `createStyles` function,
@@ -41,6 +47,9 @@ in order to get static selector. `createStyles` receives `getRef` function to ha
 <Demo data={CreateStylesDemos.createStylesComposition} />
 
 ## Media queries
+
+You can use nested media queries like in Sass. Within query body you can use `theme.breakpoints`
+defined via [MantineProvider](/theming/extend-theme/#breakpoints) or just static values:
 
 <Demo data={CreateStylesDemos.createStylesMedia} />
 
