@@ -36,6 +36,7 @@ const bounce = keyframes({
 const useStyles = createStyles((theme) => ({
   container: {
     textAlign: 'center',
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     padding: theme.spacing.xl,
     animation: `${bounce} 3s ease-in-out infinite`,
   },

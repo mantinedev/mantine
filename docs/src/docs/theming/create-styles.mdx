@@ -67,6 +67,74 @@ defined via [MantineProvider](/theming/extend-theme/#breakpoints) or just static
 
 <Demo data={CreateStylesDemos.createStylesKeyframes} />
 
+## Global styles
+
+To set global styles use `Global` component:
+
+```tsx
+import { getFontStyles } from './utils';
+import { Global } from '../tss/Global';
+
+export function GlobalStyles() {
+  return (
+    <Global
+      styles={(theme) => ({
+        '*, *::before, *::after': {
+          boxSizing: 'border-box',
+        },
+
+        body: {
+          ...getFontStyles(theme),
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+          lineHeight: theme.lineHeight,
+        },
+      })}
+    />
+  );
+}
+```
+
+## normalize.css
+
+`@mantine/core` exports `NormalizeCSS` component with [normalize.css](https://necolas.github.io/normalize.css/) styles:
+
+```tsx
+import { MantineProvider, NormalizeCSS } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider>
+      <NormalizeCSS />
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+## GlobalStyles component
+
+GlobalStyles component will help you work with dark color scheme, it sets body styles:
+
+- background color to `theme.colors.dark[7]` in dark color scheme and `theme.white` in light
+- color to `theme.colors.dark[0]` in dark color scheme and `theme.black` in light
+- font-family and font-smoothing based on theme
+
+GlobalStyles must be included only once and rendered inside MantineProvider:
+
+```tsx
+import { MantineProvider, GlobalStyles } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider>
+      <GlobalStyles />
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
 ## Using createStyles without @mantine/core
 
 You can use `createStyles` and `MantineProvider` without any other Mantine packages:
