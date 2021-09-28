@@ -46,6 +46,16 @@ in order to get static selector. `createStyles` receives `getRef` function to ha
 
 <Demo data={CreateStylesDemos.createStylesComposition} />
 
+## Classes merging (cx function)
+
+To merge class names use `cx` function, it has the same api as [clsx](https://www.npmjs.com/package/clsx) package.
+
+**!important:** Do not external libraries like [classnames](https://www.npmjs.com/package/classnames)
+or [clsx](https://www.npmjs.com/package/clsx) with class names created with `createStyles` function
+as it will produce styles collisions.
+
+<Demo data={CreateStylesDemos.createStylesCx} />
+
 ## Media queries
 
 You can use nested media queries like in Sass. Within query body you can use `theme.breakpoints`
