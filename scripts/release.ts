@@ -107,7 +107,7 @@ const { argv }: { argv: any } = yargs(hideBin(process.argv))
   await git.add([
     path.join(__dirname, '../src'),
     path.join(__dirname, '../package.json'),
-    path.join(__dirname, '../eslint'),
+    path.join(__dirname, '../packages'),
   ]);
   await git.commit(`[release] Version: ${incrementedVersion}`);
   await git.push();
