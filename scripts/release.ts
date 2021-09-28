@@ -90,8 +90,14 @@ const { argv }: { argv: any } = yargs(hideBin(process.argv))
     );
 
     await publishPackage({
-      path: path.join(__dirname, '../eslint'),
+      path: path.join(__dirname, '../packages/eslint'),
       name: '@mantine/eslint-config',
+      tag: argv.tag,
+    });
+
+    await publishPackage({
+      path: path.join(__dirname, '../packages/gatsby-plugin-mantine'),
+      name: 'gatsby-plugin-mantine',
       tag: argv.tag,
     });
 
