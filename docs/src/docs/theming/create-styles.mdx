@@ -1,0 +1,67 @@
+---
+group: 'theming'
+title: createStyles
+slug: /theming/create-styles/
+order: 2
+---
+
+import { CreateStylesDemos } from '@docs/demos';
+
+# createStyles
+
+All Mantine components are built with [emotion](https://emotion.sh/) based css-in-js library.
+We recommend using `createStyles` to create styles for the rest of your application
+as it provides the most convenient way to utilize Mantine theme, but it is not required
+– you can use any other styling tools and languages.
+
+## Features
+
+- As fast and lightweight as emotion: `createStyles` extends [@emotion/react](https://emotion.sh/docs/@emotion/react)
+- Subscribes to your Mantine theming context
+- Supports all emotion features: automatic critical css extraction during server side rendering, lazy evaluation, dynamic theming, etc.
+- Server side rendering support: Next.js, Gatsby or any other environment
+- Fully featured TypeScript support
+
+## Basic usage
+
+<Demo data={CreateStylesDemos.createStylesBasics} />
+
+## Styles parameters
+
+You can receive any amount of parameters as second argument of `createStyles` function,
+latter you will need to pass those parameters as argument to `useStyles` hook:
+
+<Demo data={CreateStylesDemos.createStylesParameters} />
+
+## Composition and nested selectors
+
+Since `createStyles` produces scoped class names you will need to create a reference to selector
+in order to get static selector. `createStyles` receives `getRef` function to handle static selector creation:
+
+<Demo data={CreateStylesDemos.createStylesComposition} />
+
+## Media queries
+
+<Demo data={CreateStylesDemos.createStylesMedia} />
+
+## Using createStyles without @mantine/core
+
+You can use `createStyles` and `MantineProvider` without any other Mantine packages:
+
+```bash
+yarn add @mantine/styles
+
+npm install @mantine/styles
+```
+
+After installation you can import `createStyles` and other function from `@mantine/styles` instead of `@mantine/core` and use it separately:
+
+```tsx
+import { createStyles, MantineProvider, useMantineTheme } from '@mantine/styles';
+```
+
+## Can I use other css-in-js libraries with Mantine?
+
+Yes, you can. But please note that Mantine already uses [emotion](https://emotion.sh/) and you may
+have styles collisions and would have to overwrite styles with `!important`. Please consider
+choosing `createStyle` before picking other libraries.

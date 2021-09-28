@@ -26,3 +26,5 @@ export * from './inputs-guide/color-input';
 export * from './inputs-guide/json-input';
 
 export * from './theme';
+
+export * as CreateStylesDemos from './create-styles';
