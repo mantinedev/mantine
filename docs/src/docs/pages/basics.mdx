@@ -2,11 +2,21 @@
 title: Changelog
 ---
 
-import { PaperDemos } from '@demos/core';
+import { PaperDemos, SliderDemos } from '@demos/core';
+import { CreateStylesDemos } from '@docs/demos';
 
 # Learn the basics
 
 This guide will help you get familiar with core Mantine concepts.
+Please read this guide and **theming** section before staring development
+to learn about all available theming features and components props.
+
+## Getting help
+
+Mantine has a very friendly community, we are always happy to help you get started:
+
+- [Join Discord community](https://discord.gg/eUZpPbpxb4) – it is an easiest way to get help, all questions are usually answered in about 30 minutes
+- [Github Discussions](https://github.com/mantinedev/mantine/discussions) – ask anything about the project or give feedback
 
 ## Mantine packages
 
@@ -64,6 +74,24 @@ export function Demo() {
 ```
 
 To learn how to implement color scheme changes via context follow [dark theme guide](/theming/dark-theme/).
+
+## Writing styles
+
+### createStyles
+
+Mantine is built with css-in-js library based on [emotion](https://emotion.sh/).
+You can use any other styling solution bu we recommend to work with [createStyles](/theming/create-styles/)
+to avoid styles collisions.
+
+`createStyles` usage demo:
+
+<Demo data={CreateStylesDemos.createStylesBasics} />
+
+### Styling components internals with Styles API
+
+[Styles API](/theming/styles-api/) lets you add styles to any internal part of component:
+
+<Demo data={SliderDemos.customize} />
 
 ## Components props
 
@@ -234,3 +262,11 @@ function Demo() {
   );
 }
 ```
+
+## Server side rendering
+
+To setup server side rendering follow one of these guides
+
+- [Server side rendering with Next.js](/theming/next/)
+- [Server side rendering with Gatsby.js](/theming/gatsby/)
+- [Server side rendering with express server](/theming/ssr/)
