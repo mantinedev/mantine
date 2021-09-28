@@ -15,12 +15,15 @@ export function NextGuide({ dependencies }: CraGuideProps) {
         component="a"
         href="https://github.com/mantinedev/mantine-next-template"
         target="_blank"
-        size="lg"
+        size="xl"
+        fullWidth
+        variant="default"
+        mb={25}
       >
-        Get stared with Github template
+        Get stared with Next.js Github template
       </Button>
 
-      <Text weight={700} style={{ marginBottom: 15, marginTop: 30 }}>
+      <Text weight={700} style={{ marginBottom: 15 }}>
         Or init new application
       </Text>
 
