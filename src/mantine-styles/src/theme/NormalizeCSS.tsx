@@ -193,5 +193,5 @@ const styles = {
 } as const;
 
 export function NormalizeCSS() {
-  return <Global styles={styles} />;
+  return <Global styles={() => styles} />;
 }
