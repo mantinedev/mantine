@@ -22,8 +22,8 @@ export default createStyles((theme) => ({
   },
 
   title: {
-    fontFamily: `Dosis, ${theme.fontFamily}`,
-    fontWeight: 800,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontWeight: 900,
     fontSize: 86,
     lineHeight: 1.05,
     margin: 0,

@@ -8,6 +8,7 @@ import {
 } from '@mantine/core';
 import { useHotkeys, useLocalStorageValue } from '@mantine/hooks';
 import { LayoutInner, LayoutProps } from './LayoutInner';
+import '../../fonts/GreycfifCF/styles.css';
 
 const THEME_KEY = 'mantine-color-scheme';
 
@@ -24,7 +25,9 @@ export default function Layout({ children, location }: LayoutProps) {
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={{ colorScheme }}>
+      <MantineProvider
+        theme={{ colorScheme, headings: { fontFamily: 'Greycliff CF, sans serif' } }}
+      >
         <GlobalStyles />
         <NormalizeCSS />
 

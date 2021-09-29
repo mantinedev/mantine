@@ -23,8 +23,8 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-    fontFamily: `Dosis, ${theme.fontFamily}`,
-    fontSize: 68,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontSize: 62,
     fontWeight: 900,
     lineHeight: 1.1,
     margin: 0,

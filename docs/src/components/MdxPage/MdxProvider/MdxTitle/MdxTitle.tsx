@@ -1,5 +1,5 @@
 import React from 'react';
-import { Title, useMantineTheme } from '@mantine/core';
+import { Title } from '@mantine/core';
 import useStyles from './MdxTitle.styles';
 
 export default function MdxTitle({
@@ -9,18 +9,10 @@ export default function MdxTitle({
   ...others
 }: React.ComponentPropsWithoutRef<typeof Title>) {
   const { classes } = useStyles();
-  const theme = useMantineTheme();
 
   if (order === 1) {
     return (
-      <Title
-        className={classes.title}
-        style={{
-          fontWeight: 800,
-          fontSize: 38,
-          fontFamily: `Dosis, ${theme.headings.fontFamily}`,
-        }}
-      >
+      <Title className={classes.title} style={{ fontWeight: 900, fontSize: 44 }}>
         {children}
       </Title>
     );

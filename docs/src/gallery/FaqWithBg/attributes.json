@@ -11,8 +11,7 @@
     "/core/theme-icon/",
     "/core/button/",
     "/others/decorations/",
-    "@primer/octicons-react",
-    "https://fonts.google.com/specimen/Dosis"
+    "@primer/octicons-react"
   ],
   "canvas": {
     "center": false

@@ -39,6 +39,7 @@ const useStyles = createStyles((theme) => ({
     fontSize: 46,
     fontWeight: 800,
     letterSpacing: -0.5,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
     '@media (max-width: 1080px)': {
       fontSize: 22,
@@ -55,9 +56,10 @@ const useStyles = createStyles((theme) => ({
     opacity: 0.1,
     fontSize: 320,
     lineHeight: 1,
-    top: -15,
+    top: 10,
     left: 32,
     pointerEvents: 'none',
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
     '@media (max-width: 1080px)': {
       display: 'none',

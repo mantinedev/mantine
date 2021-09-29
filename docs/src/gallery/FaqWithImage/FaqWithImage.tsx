@@ -11,6 +11,7 @@ const useStyles = createStyles((theme) => ({
   title: {
     marginBottom: theme.spacing.md,
     paddingLeft: theme.spacing.md,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
   },
 }));
 
