@@ -6,13 +6,13 @@ import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/Dat
 
 export interface MonthPickerProps extends DatePickerBaseSharedProps, Omit<CalendarSettings, 'size'> {
   /** Selected date, required with controlled input */
-  value?: Date;
+  value?: any;
 
   /** Called when date changes */
-  onChange?(value: Date): void;
+  onChange?(value: any): void;
 
   /** Default value for uncontrolled input */
-  defaultValue?: Date;
+  defaultValue?: any;
 
   /** Set to false to force dropdown to stay open after date was selected */
   closeCalendarOnChange?: boolean;
@@ -25,15 +25,23 @@ export interface MonthPickerProps extends DatePickerBaseSharedProps, Omit<Calend
 
   /** Input name, useful fon uncontrolled variant to capture data with native form */
   name?: string;
-
-  /** Input label */
   label?: string
-
-  description?: string
-  themeOverride?: any 
-  classNames?: string
-  styles?: any
 }
+
+  let months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+]
 
 export function MonthPicker({
   value,
@@ -44,15 +52,15 @@ export function MonthPicker({
   styles,
   shadow = 'sm',
   locale = 'en',
-  inputFormat = 'MMMM, YYYY',
+  inputFormat = 'MM/YYYY',
   transitionDuration = 200,
   transitionTimingFunction,
   nextMonthLabel,
   previousMonthLabel,
   closeCalendarOnChange = true,
-  labelFormat = 'MMMM YYYY',
+  labelFormat = 'MMMM',
   withSelect = false,
-  yearsRange,
+  yearsRange, 
   dayClassName,
   dayStyle,
   disableOutsideEvents,
@@ -62,7 +70,7 @@ export function MonthPicker({
   elementRef,
   initialMonth,
   initiallyOpened = false,
-  name = 'date',
+  name = 'month',
   size = 'sm',
   dropdownType = 'popover',
   clearable = true,
@@ -74,9 +82,9 @@ export function MonthPicker({
   const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
   const inputRef = useRef<HTMLInputElement>();
   const [_value, setValue] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: null,
+    value: months,
+    defaultValue: initialMonth,
+    finalValue: new Date(),
     onChange,
     rule: (val) => val === null || val instanceof Date,
   });
@@ -86,7 +94,7 @@ export function MonthPicker({
     setTimeout(() => inputRef.current?.focus(), transitionDuration + 20);
   };
 
-  const handleValueChange = (date: Date) => {
+  const handleValueChange = (date: any) => {
     setValue(date);
     closeCalendarOnChange && closeDropdown();
   };
@@ -95,6 +103,8 @@ export function MonthPicker({
     setValue(null);
     inputRef.current?.focus();
   };
+
+  console.log(_value);  
 
   return (
     <>
@@ -121,13 +131,14 @@ export function MonthPicker({
         {...others}
       >
         <Calendar
+          month={_value}
           classNames={classNames}
           styles={styles}
           locale={locale}
           themeOverride={themeOverride}
-          nextMonthLabel={nextMonthLabel}
-          previousMonthLabel={previousMonthLabel}
-          initialMonth={_value instanceof Date ? _value : initialMonth}
+          // nextMonthLabel={nextMonthLabel}
+          // previousMonthLabel={previousMonthLabel}
+          // initialMonth={_value instanceof Date ? _value : initialMonth}
           value={_value}
           onChange={handleValueChange}
           labelFormat={labelFormat}
@@ -136,14 +147,16 @@ export function MonthPicker({
           dayClassName={dayClassName}
           dayStyle={dayStyle}
           disableOutsideEvents={disableOutsideEvents}
+          minDate={minDate}
+          maxDate={maxDate}
           excludeDate={excludeDate}
-          __staticSelector="date-picker"
+          __staticSelector="month-picker"
           fullWidth={dropdownType === 'modal'}
           size={dropdownType === 'modal' ? 'lg' : calendarSize}
         />
       </DatePickerBase>
 
-      <input type="hidden" name={name} value={_value instanceof Date ? _value.toISOString() : ''} />
+      <input type="hidden" name={name} value={_value} />
     </>
   );
 }

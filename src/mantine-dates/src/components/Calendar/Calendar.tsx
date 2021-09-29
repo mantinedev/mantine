@@ -44,7 +44,7 @@ export interface CalendarProps
     CalendarSettings,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Current month */
-  month?: Date;
+  month: Date;
 
   /** Selected date */
   value?: Date;

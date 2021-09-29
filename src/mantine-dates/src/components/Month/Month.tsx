@@ -100,6 +100,7 @@ export function Month({
   const _styles = mergeStyles(classes, styles);
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
+  console.log(days, month);
 
   const focusDay = (date: Date, diff: number) => {
     const offset = new Date(date);
