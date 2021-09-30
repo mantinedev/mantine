@@ -4,6 +4,7 @@ import { SectionTitle } from '../SectionTitle/SectionTitle';
 import { CoreComponents } from './CoreComponents/CoreComponents';
 import { Theming } from './Theming/Theming';
 import { DarkTheme } from './DarkTheme/DarkTheme';
+import { RichText } from './RichText/RichText';
 import useStyles from './FeaturesSection.styles';
 
 export function FeaturesSection() {
@@ -27,6 +28,7 @@ export function FeaturesSection() {
           <CoreComponents />
           <Theming />
           <DarkTheme />
+          <RichText />
         </Container>
       </div>
 
