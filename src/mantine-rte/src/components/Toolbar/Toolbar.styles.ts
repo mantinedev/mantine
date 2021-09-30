@@ -19,7 +19,7 @@ export default createStyles((theme, { sticky, stickyOffset }: ToolbarStyles) => 
     top: sticky ? stickyOffset : 0,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     borderBottom: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[4]
     }`,
     borderTopRightRadius: theme.radius.sm,
     borderTopLeftRadius: theme.radius.sm,

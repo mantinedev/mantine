@@ -12,8 +12,9 @@ export default createStyles(
       ...getFontStyles(theme),
       fontSize: theme.fontSizes.sm,
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
       }`,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       borderRadius: theme.radius.sm,
       position: 'relative',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
