@@ -27,6 +27,10 @@ export default createStyles((theme) => ({
 
   description: {
     lineHeight: 1.6,
+
+    '&:not(:first-of-type)': {
+      marginTop: theme.spacing.sm,
+    },
   },
 
   link: {

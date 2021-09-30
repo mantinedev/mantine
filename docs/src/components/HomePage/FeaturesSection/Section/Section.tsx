@@ -6,7 +6,7 @@ import useStyles from './Section.styles';
 
 interface SectionProps {
   title: React.ReactNode;
-  description: React.ReactNode;
+  description: React.ReactNode | React.ReactNode[];
   children: React.ReactNode;
   label: React.ReactNode;
   link: string;
@@ -14,13 +14,22 @@ interface SectionProps {
 
 export function Section({ title, description, children, link, label }: SectionProps) {
   const { classes } = useStyles();
+
   return (
     <div className={classes.wrapper}>
       <div className={classes.meta}>
         <Title order={3} className={classes.title}>
           {title}
         </Title>
-        <Text className={classes.description}>{description}</Text>
+        {Array.isArray(description) ? (
+          description.map((line, index) => (
+            <Text className={classes.description} key={index}>
+              {line}
+            </Text>
+          ))
+        ) : (
+          <Text className={classes.description}>{description}</Text>
+        )}
 
         <Anchor component={Link} to={link} className={classes.link}>
           {label}
