@@ -1,5 +1,7 @@
 import { createStyles } from '@mantine/core';
 
+const BREAKPOINT = '@media (max-width: 960px)';
+
 export default createStyles((theme) => ({
   wrapper: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -12,8 +14,8 @@ export default createStyles((theme) => ({
     transform: 'scaleX(-1)',
     filter: 'drop-shadow(10px 5px 5px rgba(0, 0, 0, 0.05))',
 
-    '@media (max-width: 755px)': {
-      height: 34,
+    [BREAKPOINT]: {
+      height: 18,
     },
   },
 
@@ -27,6 +29,11 @@ export default createStyles((theme) => ({
   inner: {
     paddingTop: 120,
     paddingBottom: 200,
+
+    [BREAKPOINT]: {
+      paddingTop: 60,
+      paddingBottom: 80,
+    },
   },
 
   title: {

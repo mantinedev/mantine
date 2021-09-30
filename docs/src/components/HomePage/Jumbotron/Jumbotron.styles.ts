@@ -1,6 +1,6 @@
 import { createStyles } from '@mantine/core';
 
-const BREAKPOINT = '@media (max-width: 755px)';
+const BREAKPOINT = '@media (max-width: 960px)';
 
 export default createStyles((theme) => ({
   jumbotron: {
@@ -15,7 +15,7 @@ export default createStyles((theme) => ({
     paddingBottom: 180,
 
     [BREAKPOINT]: {
-      paddingBottom: 70,
+      paddingBottom: 100,
       paddingTop: 90,
     },
   },
