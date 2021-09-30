@@ -12,7 +12,7 @@ export default createStyles((theme) => ({
   inner: {
     position: 'relative',
     paddingTop: 200,
-    paddingBottom: 160,
+    paddingBottom: 180,
 
     [BREAKPOINT]: {
       paddingBottom: 70,
