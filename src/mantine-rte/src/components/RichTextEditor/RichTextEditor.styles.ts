@@ -38,10 +38,10 @@ export default createStyles(
 
       '& .ql-tooltip': {
         position: 'absolute',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
         padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
         border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
+          theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
         }`,
         boxShadow: theme.shadows.sm,
         borderRadius: theme.radius.sm,
