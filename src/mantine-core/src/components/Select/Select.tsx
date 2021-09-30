@@ -11,6 +11,7 @@ import { SelectItems } from './SelectItems/SelectItems';
 import { SelectDropdown } from './SelectDropdown/SelectDropdown';
 import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
+import { groupSortData } from './group-sort-data/group-sort-data';
 
 export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSelectProps {
   /** Input size */
@@ -72,11 +73,26 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
 
   /** Called each time search value changes */
   onSearchChange?(query: string): void;
+
+  /** Allow creatable option  */
+  creatable?: boolean;
+
+  /** Function to get create Label */
+  getCreateLabel?: (query: string) => React.ReactNode;
+
+  /** Function to determine if create label should be displayed */
+  shouldCreate?: (query: string, data: SelectItem[]) => boolean;
+
+  /** Called when create option is selected */
+  onCreate?: (query: string) => void;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
-  if (value !== '' && item.seperator) return false;
   return item.label.toLowerCase().trim().includes(value.toLowerCase().trim());
+}
+
+export function defaultShouldCreate(query:string, data: SelectItem[]) {
+  return !!query && !data.some((item) => item.value.toLowerCase() === query.toLowerCase());
 }
 
 export function Select({
@@ -116,6 +132,10 @@ export function Select({
   onSearchChange,
   rightSection,
   rightSectionWidth,
+  creatable = false,
+  getCreateLabel,
+  shouldCreate = defaultShouldCreate,
+  onCreate,
   ...others
 }: SelectProps) {
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
@@ -124,25 +144,26 @@ export function Select({
   const dropdownRef = useRef<HTMLDivElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
   const uuid = useId(id);
+  const isCreatable = creatable && typeof getCreateLabel === 'function';
+  let createLabel = null;
 
   const formattedData = data.map((item) =>
     typeof item === 'string' ? { label: item, value: item } : item
   );
 
-  const formattedSearchableData = formattedData.filter((item) => !item.seperator) as SelectItem[];
-
-  const isSelectableItem = (itemValue: string) =>
-    formattedSearchableData.some((item) => !item.disabled && item.value === itemValue);
+  /*sorting data by groups while maintaining the insertion order
+  for consistent behaviour on keydown events. */
+  const sortedData = groupSortData({ data: formattedData });
 
   const [_value, handleChange, inputMode] = useUncontrolled({
     value,
     defaultValue,
     finalValue: null,
     onChange,
-    rule: (val) => typeof val === 'string' && isSelectableItem(val),
+    rule: (val) => typeof val === 'string',
   });
 
-  const selectedValue = formattedSearchableData.find((item) => item.value === _value);
+  const selectedValue = sortedData.find((item) => item.value === _value);
   const [inputValue, setInputValue] = useState(selectedValue?.label || '');
 
   const handleSearchChange = (val: string) => {
@@ -161,17 +182,20 @@ export function Select({
   };
 
   useEffect(() => {
-    const newSelectedValue = formattedSearchableData.find((item) => item.value === _value);
+    const newSelectedValue = sortedData.find((item) => item.value === _value);
 
-      if (newSelectedValue) {
+    if (newSelectedValue) {
       handleSearchChange(newSelectedValue.label);
-    } else {
+    } else if (!creatable) {
       handleSearchChange('');
     }
   }, [_value]);
 
   const handleItemSelect = (item: SelectItem) => {
     handleChange(item.value);
+    if (item.creatable) {
+      typeof onCreate === 'function' && onCreate(item.value);
+    }
     setHovered(-1);
     if (inputMode === 'uncontrolled') {
       handleSearchChange(item.label);
@@ -181,12 +205,17 @@ export function Select({
   };
 
   const filteredData = filterData({
-    data: formattedData,
+    data: sortedData,
     searchable,
     limit,
     searchValue: inputValue,
     filter,
   });
+
+  if (isCreatable && shouldCreate(inputValue, filteredData)) {
+    createLabel = getCreateLabel(inputValue);
+    filteredData.push({ label: inputValue, value: inputValue, creatable: true });
+  }
 
   const getNextIndex = (
     index: number,
@@ -195,8 +224,7 @@ export function Select({
     let i = index;
     while (compareFn(i)) {
       i = nextItem(i);
-      if (filteredData[i].seperator) i = nextItem(i);
-      else if (!filteredData[i].disabled) return i;
+      if (!filteredData[i].disabled) return i;
     }
     return index;
   };
@@ -271,9 +299,9 @@ export function Select({
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onBlur === 'function' && onBlur(event);
-    const selected = formattedSearchableData.find((item) => item.value === _value);
+    const selected = sortedData.find((item) => item.value === _value);
     handleSearchChange(selected?.label || '');
-    //setDropdownOpened(false);
+    setDropdownOpened(false);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -379,6 +407,8 @@ export function Select({
             itemComponent={itemComponent}
             size={size}
             nothingFound={nothingFound}
+            creatable={creatable && !!createLabel}
+            createLabel={createLabel}
           />
         </SelectDropdown>
       </div>
