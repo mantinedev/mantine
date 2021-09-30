@@ -75,6 +75,51 @@ describe('@mantine/core/Select', () => {
     expect(element.render().find('.mantine-select-item')).toHaveLength(14);
   });
 
+  it('renders correct amount of disabled items', () => {
+    const element = shallow(
+      <Select
+        data={Array(50)
+          .fill(0)
+          .map((_, index) =>
+          (
+            { value: index.toString(),
+              label: index.toString(),
+              disabled: index % 2 === 0,
+            }
+          ))}
+        initiallyOpened
+        searchable
+      />
+    );
+
+    expect(element.render().find('.mantine-select-item[disabled]')).toHaveLength(25);
+  });
+
+  it('renders correct grouped items', () => {
+    const element = shallow(
+      <Select
+        data={Array(50)
+          .fill(0)
+          .map((_, index) =>
+          (
+            {
+              value: index.toString(),
+              label: index.toString(),
+              disabled: index % 2 === 0,
+              group: `${index % 2}`,
+            }
+          )
+        )}
+        initiallyOpened
+        searchable
+      />
+    );
+
+    expect(element.render().find('.mantine-select-item')).toHaveLength(50);
+    expect(element.render().find('.mantine-select-item[disabled]')).toHaveLength(25);
+    expect(element.render().find('.mantine-divider-horizontal')).toHaveLength(2);
+  });
+
   it('passes wrapperProps to InputWrapper', () => {
     const element = shallow(<Select {...defaultProps} wrapperProps={{ 'aria-label': 'test' }} />);
     expect(element.render().attr('aria-label')).toBe('test');
