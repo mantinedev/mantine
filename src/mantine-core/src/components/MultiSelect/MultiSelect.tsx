@@ -17,6 +17,7 @@ import {
 } from '../Select/types';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { SelectDropdown } from '../Select/SelectDropdown/SelectDropdown';
+import { groupSortData } from '../Select/group-sort-data/group-sort-data';
 import useStyles from './MultiSelect.styles';
 
 export type MultiSelectStylesNames =
@@ -99,16 +100,29 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
 
   /** Get input ref */
   elementRef?: React.ForwardedRef<HTMLInputElement>;
+
+  /** Allow creatable option  */
+  creatable?: boolean;
+
+  /** Function to get create Label */
+  getCreateLabel?: (query: string) => React.ReactNode;
+
+  /** Function to determine if create label should be displayed */
+  shouldCreate?: (query: string, data: SelectItem[]) => boolean;
+
+  /** Called when create option is selected */
+  onCreate?: (query: string) => void;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
-  if (value !== '' && item.seperator) {
-    return false;
-  }
   if (selected) {
     return false;
   }
   return item.label.toLowerCase().trim().includes(value.toLowerCase().trim());
+}
+
+export function defaultShouldCreate(query:string, data: SelectItem[]) {
+  return !!query && !data.some((item) => item.value.toLowerCase() === query.toLowerCase());
 }
 
 export function MultiSelect({
@@ -154,6 +168,10 @@ export function MultiSelect({
   icon,
   rightSection,
   rightSectionWidth,
+  creatable = false,
+  getCreateLabel,
+  shouldCreate = defaultShouldCreate,
+  onCreate,
   ...others
 }: MultiSelectProps) {
   const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, 'multi-select');
@@ -165,6 +183,8 @@ export function MultiSelect({
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const [searchValue, setSearchValue] = useState('');
+  const isCreatable = creatable && typeof getCreateLabel === 'function';
+  let createLabel = null;
 
   const handleSearchChange = (val: string) => {
     typeof onSearchChange === 'function' && onSearchChange(val);
@@ -175,7 +195,7 @@ export function MultiSelect({
     typeof item === 'string' ? { label: item, value: item } : item
   );
 
-  const formattedSearchableData = formattedData.filter((item) => !item.seperator) as SelectItem[];
+  const sortedData = groupSortData({ data: formattedData });
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -203,7 +223,7 @@ export function MultiSelect({
   };
 
   const filteredData = filterData({
-    data: formattedData,
+    data: sortedData,
     searchable,
     searchValue,
     limit,
@@ -218,8 +238,7 @@ export function MultiSelect({
     let i = index;
     while (compareFn(i)) {
       i = nextItem(i);
-      if (filteredData[i].seperator) i = nextItem(i);
-      else if (!filteredData[i].disabled) return i;
+      if (!filteredData[i].disabled) return i;
     }
     return index;
   };
@@ -234,7 +253,6 @@ export function MultiSelect({
   const handleItemSelect = (item: SelectItem) => {
     setTimeout(() => {
       clearSearchOnChange && handleSearchChange('');
-
       if (_value.includes(item.value)) {
         handleValueRemove(item.value);
       } else {
@@ -242,6 +260,9 @@ export function MultiSelect({
         if (hovered === filteredData.length - 1) {
           setHovered(filteredData.length - 2);
         }
+      }
+      if (item.creatable) {
+        typeof onCreate === 'function' && onCreate(item.value);
       }
     });
   };
@@ -298,7 +319,16 @@ export function MultiSelect({
   };
 
   const selectedItems = _value
-    .map((val) => formattedSearchableData.find((item) => item.value === val && !item.disabled))
+    .map((val) => {
+      let selectedItem = sortedData.find((item) => item.value === val && !item.disabled);
+      if (!selectedItem && isCreatable) {
+        selectedItem = {
+          value: val,
+          label: val,
+        };
+      }
+      return selectedItem;
+    })
     .filter((val) => !!val)
     .map((item) => (
       <Value
@@ -321,8 +351,14 @@ export function MultiSelect({
     inputRef.current?.focus();
   };
 
+  if (isCreatable && shouldCreate(searchValue, filteredData)) {
+    createLabel = getCreateLabel(searchValue);
+    filteredData.push({ label: searchValue, value: searchValue, creatable: true });
+  }
+
   const shouldRenderDropdown =
     filteredData.length > 0 ||
+    isCreatable ||
     (searchValue.length > 0 && !!nothingFound && filteredData.length === 0);
 
   return (
@@ -440,6 +476,8 @@ export function MultiSelect({
             itemComponent={itemComponent}
             size={size}
             nothingFound={nothingFound}
+            creatable={creatable && !!createLabel}
+            createLabel={createLabel}
           />
         </SelectDropdown>
       </div>
