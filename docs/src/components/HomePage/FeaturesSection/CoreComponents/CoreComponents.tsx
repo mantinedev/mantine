@@ -7,6 +7,8 @@ export function CoreComponents() {
     <Section
       title="Core components library"
       description="Mantine core library includes all essential components: inputs, buttons, modals, popovers, typography elements, layout management, etc."
+      link="/core/getting-started/"
+      label="Explore all components"
     >
       <CoreDemo />
     </Section>

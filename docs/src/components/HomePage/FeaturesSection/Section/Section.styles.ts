@@ -13,8 +13,8 @@ export default createStyles((theme) => ({
 
   meta: {
     flex: 1,
-    maxWidth: '40%',
-    paddingRight: theme.spacing.xl * 2,
+    maxWidth: '35%',
+    paddingRight: theme.spacing.xl * 1.5,
   },
 
   title: {
@@ -23,5 +23,11 @@ export default createStyles((theme) => ({
 
   description: {
     lineHeight: 1.6,
+  },
+
+  link: {
+    marginTop: theme.spacing.md,
+    display: 'flex',
+    alignItems: 'center',
   },
 }));

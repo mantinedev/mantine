@@ -1,14 +1,18 @@
 import React from 'react';
-import { Title, Text } from '@mantine/core';
+import { Link } from 'gatsby';
+import { ArrowRightIcon } from '@modulz/radix-icons';
+import { Title, Text, Anchor } from '@mantine/core';
 import useStyles from './Section.styles';
 
 interface SectionProps {
   title: React.ReactNode;
   description: React.ReactNode;
   children: React.ReactNode;
+  label: React.ReactNode;
+  link: string;
 }
 
-export function Section({ title, description, children }: SectionProps) {
+export function Section({ title, description, children, link, label }: SectionProps) {
   const { classes } = useStyles();
   return (
     <div className={classes.wrapper}>
@@ -17,6 +21,11 @@ export function Section({ title, description, children }: SectionProps) {
           {title}
         </Title>
         <Text className={classes.description}>{description}</Text>
+
+        <Anchor component={Link} to={link} className={classes.link}>
+          {label}
+          <ArrowRightIcon style={{ marginLeft: 8 }} />
+        </Anchor>
       </div>
 
       <div className={classes.body}>{children}</div>
