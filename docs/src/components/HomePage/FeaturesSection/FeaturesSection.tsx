@@ -3,6 +3,7 @@ import React from 'react';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
 import { CoreComponents } from './CoreComponents/CoreComponents';
 import { Theming } from './Theming/Theming';
+import { DarkTheme } from './DarkTheme/DarkTheme';
 import useStyles from './FeaturesSection.styles';
 
 export function FeaturesSection() {
@@ -25,6 +26,7 @@ export function FeaturesSection() {
           <SectionTitle className={classes.title}>Explore examples</SectionTitle>
           <CoreComponents />
           <Theming />
+          <DarkTheme />
         </Container>
       </div>
 
