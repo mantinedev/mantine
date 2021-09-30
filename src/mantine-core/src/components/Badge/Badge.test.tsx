@@ -7,22 +7,24 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Badge } from './Badge';
 import { Badge as BadgeStylesApi } from './styles.api';
 
 describe('@mantine/core/Badge', () => {
   checkAccessibility([mount(<Badge>this is badge</Badge>)]);
+  itSupportsOthers(Badge, {});
+  itSupportsClassName(Badge, {});
+  itRendersChildren(Badge, {});
+  itSupportsStyle(Badge, {});
+  itSupportsMargins(Badge, {});
   itSupportsStylesApi(
     Badge,
     { children: 'test', leftSection: 'l', rightSection: 'r' },
     Object.keys(BadgeStylesApi),
     'badge'
   );
-  itSupportsOthers(Badge, {});
-  itSupportsClassName(Badge, {});
-  itRendersChildren(Badge, {});
-  itSupportsStyle(Badge, {});
 
   it('has correct displayName', () => {
     expect(Badge.displayName).toEqual('@mantine/core/Badge');

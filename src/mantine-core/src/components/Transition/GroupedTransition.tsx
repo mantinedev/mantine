@@ -1,5 +1,4 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/styles';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { useTransition } from './use-transition';
 import { MantineTransition } from './transitions';
@@ -10,7 +9,7 @@ interface GroupedTransitionItem {
   transition: MantineTransition;
 }
 
-export interface GroupedTransitionProps extends Omit<DefaultProps, 'className'> {
+export interface GroupedTransitionProps {
   /** Transitions group */
   transitions: Record<string, GroupedTransitionItem>;
 

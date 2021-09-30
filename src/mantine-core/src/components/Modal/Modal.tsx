@@ -1,5 +1,5 @@
 import React from 'react';
-import { useId, useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
+import { useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import {
   useMantineTheme,
   mergeStyles,
@@ -7,6 +7,8 @@ import {
   MantineNumberSize,
   MantineShadow,
   ClassNames,
+  useUuid,
+  MantineMargin,
 } from '@mantine/styles';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
@@ -19,7 +21,7 @@ import useStyles from './Modal.styles';
 export type ModalStylesNames = Exclude<ClassNames<typeof useStyles>, 'clickOutsideOverlay'>;
 
 export interface ModalProps
-  extends DefaultProps<ModalStylesNames>,
+  extends Omit<DefaultProps<ModalStylesNames>, MantineMargin>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Mounts modal if true */
   opened: boolean;
@@ -93,7 +95,7 @@ export function MantineModal({
   styles,
   ...others
 }: ModalProps) {
-  const baseId = useId(id);
+  const baseId = useUuid(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const theme = useMantineTheme();

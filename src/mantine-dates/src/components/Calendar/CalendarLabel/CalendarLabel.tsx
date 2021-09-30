@@ -47,11 +47,16 @@ export function CalendarLabel({
   const _styles = mergeStyles(classes, styles);
 
   return withSelect ? (
-    <Group spacing={5} noWrap className={classes.selectGroup} style={_styles.selectGroup}>
+    <Group
+      spacing={5}
+      noWrap
+      className={classes.calendarSelectGroup}
+      style={_styles.calendarSelectGroup}
+    >
       <NativeSelect
         aria-label={monthLabel}
-        className={classes.select}
-        style={_styles.select}
+        className={classes.calendarSelect}
+        style={_styles.calendarSelect}
         size={selectSize}
         value={value.getMonth()}
         onChange={(event) =>
@@ -65,8 +70,8 @@ export function CalendarLabel({
 
       <NativeSelect
         aria-label={yearLabel}
-        className={classes.select}
-        style={_styles.select}
+        className={classes.calendarSelect}
+        style={_styles.calendarSelect}
         size={selectSize}
         value={value.getFullYear()}
         onChange={(event) =>
@@ -79,7 +84,7 @@ export function CalendarLabel({
       />
     </Group>
   ) : (
-    <Text className={classes.label} style={_styles.label} size={size}>
+    <Text className={classes.calendarLabel} style={_styles.calendarLabel} size={size}>
       {upperFirst(dayjs(value).locale(locale).format(labelFormat))}
     </Text>
   );

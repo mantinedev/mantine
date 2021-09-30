@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsClassName,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Progress } from './Progress';
 import { Progress as ProgressStylesApi } from './styles.api';
@@ -15,6 +16,7 @@ const defaultProps = { value: 80 };
 describe('@mantine/core/Progress', () => {
   itSupportsClassName(Progress, defaultProps);
   itSupportsStyle(Progress, defaultProps);
+  itSupportsMargins(Progress, defaultProps);
   itSupportsOthers(Progress, defaultProps);
   checkAccessibility([mount(<Progress value={80} aria-label="test-progress" />)]);
   itSupportsStylesApi(Progress, defaultProps, Object.keys(ProgressStylesApi), 'progress');

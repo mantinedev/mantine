@@ -1,5 +1,11 @@
 import React, { createElement } from 'react';
-import { mergeStyles, DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineSize,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
@@ -69,6 +75,7 @@ export function InputWrapper({
 }: InputWrapperProps) {
   const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
   const inputLabel = createElement(
     labelElement,
@@ -91,7 +98,7 @@ export function InputWrapper({
   );
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {label && inputLabel}
 
       {description && (

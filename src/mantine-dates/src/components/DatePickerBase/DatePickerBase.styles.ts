@@ -40,7 +40,7 @@ export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => 
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
     zIndex: 4,
-    padding: [theme.spacing.md, theme.spacing.xs],
+    padding: `${theme.spacing.md}px ${theme.spacing.xs}px`,
 
     '&::before': {
       content: '""',

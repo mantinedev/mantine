@@ -8,7 +8,6 @@ import {
 
 interface DividerStyles {
   size: MantineNumberSize;
-  margins: MantineNumberSize;
   variant: string;
   color: MantineColor;
 }
@@ -21,7 +20,7 @@ export const sizes = {
   xl: 5,
 };
 
-export default createStyles((theme, { size, margins, variant, color }: DividerStyles) => ({
+export default createStyles((theme, { size, variant, color }: DividerStyles) => ({
   withLabel: {
     borderTop: '0 !important',
   },
@@ -73,8 +72,6 @@ export default createStyles((theme, { size, margins, variant, color }: DividerSt
     borderTopColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 4 }),
     borderTopStyle: variant as any,
     margin: 0,
-    marginTop: getSizeValue({ size: margins, sizes: theme.spacing }),
-    marginBottom: getSizeValue({ size: margins, sizes: theme.spacing }),
   },
 
   vertical: {
@@ -83,7 +80,5 @@ export default createStyles((theme, { size, margins, variant, color }: DividerSt
     borderLeftWidth: getSizeValue({ size, sizes }),
     borderLeftColor: getThemeColor({ theme, color, shade: 4 }),
     borderLeftStyle: variant as any,
-    marginLeft: getSizeValue({ size: margins, sizes: theme.spacing }),
-    marginRight: getSizeValue({ size: margins, sizes: theme.spacing }),
   },
 }));

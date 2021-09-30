@@ -1,6 +1,14 @@
 import React, { useState, useRef } from 'react';
-import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, MantineShadow, ClassNames } from '@mantine/styles';
+import { useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineSize,
+  MantineShadow,
+  ClassNames,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -118,10 +126,11 @@ export function Autocomplete({
 }: AutocompleteProps) {
   const { classes } = useStyles({ size }, classNames, 'autocomplete');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const [_value, handleChange] = useUncontrolled({
     value,
     defaultValue,
@@ -205,9 +214,9 @@ export function Autocomplete({
       description={description}
       size={size}
       className={className}
-      style={style}
       classNames={classNames}
       styles={styles}
+      style={mergedStyles}
       __staticSelector="autocomplete"
       {...wrapperProps}
     >
@@ -223,7 +232,7 @@ export function Autocomplete({
         tabIndex={-1}
       >
         <Input<'input'>
-          {...others}
+          {...rest}
           data-mantine-stop-propagation={dropdownOpened}
           required={required}
           elementRef={useMergedRef(elementRef, inputRef)}

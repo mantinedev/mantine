@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { useClickOutside, useFocusTrap, useId, useMergedRef } from '@mantine/hooks';
+import { useClickOutside, useFocusTrap, useMergedRef } from '@mantine/hooks';
 import {
   mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
   ClassNames,
+  useUuid,
+  MantineMargin,
 } from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';
@@ -14,7 +16,7 @@ import useStyles from './Popover.styles';
 export type PopoverStylesNames = ClassNames<typeof useStyles> | PopoverBodyStylesNames;
 
 export interface PopoverProps
-  extends DefaultProps<PopoverStylesNames>,
+  extends Omit<DefaultProps<PopoverStylesNames>, MantineMargin>,
     SharedPopperProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Disable closing by click outside */
@@ -111,7 +113,7 @@ export function Popover({
     }
   };
 
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const titleId = `${uuid}-title`;
   const bodyId = `${uuid}-body`;
 

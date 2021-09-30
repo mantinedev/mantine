@@ -10,6 +10,7 @@ import {
   hexToRgba,
   MantineColor,
   ClassNames,
+  useExtractedMargins,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
@@ -68,10 +69,11 @@ export function Prism({
     'prism'
   );
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const clipboard = useClipboard();
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {!noCopy && (
         <Tooltip
           data-mantine-copy

@@ -1,5 +1,11 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
@@ -33,13 +39,10 @@ export function Blockquote({
 }: BlockquoteProps) {
   const { classes, cx } = useStyles({ color }, classNames, 'blockquote');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   return (
-    <blockquote
-      className={cx(classes.root, className)}
-      style={{ ...style, ..._styles.root }}
-      {...others}
-    >
+    <blockquote className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       <div className={classes.inner} style={_styles.inner}>
         {icon && (
           <div className={classes.icon} style={_styles.icon}>

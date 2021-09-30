@@ -8,7 +8,129 @@ date: 'September 16th, 2021'
 ---
 
 import { AccordionDemos, AvatarDemos, MediaQueryDemos } from '@demos/core';
-import { useResizeObserverDemo, useViewportSizeDemo, useMouseRef } from '@docs/demos';
+import {
+  useResizeObserverDemo,
+  useViewportSizeDemo,
+  useMouseRef,
+  CreateStylesDemos,
+} from '@docs/demos';
+
+## Breaking changes
+
+- Mantine was migrated to [emotion](https://emotion.sh/) from react-jss and no longer supports react-jss
+- `@mantine/core` package no longer exports react-jss `theming` context, use [createStyles](https://mantine.dev/theming/create-styles/) instead
+- All components no longer support `themeOverride` prop due to performance reasons
+
+## Migration to emotion
+
+Mantine no longer uses react-jss, all components were migrated to [emotion](https://emotion.sh/) based css-in-js library
+exposed as separate `@mantine/styles` package and as a part of `@mantine/core`. This means that you will have to:
+
+- migrate all of your custom styles built with react-jss to new `createStyles` hook creator
+- setup new strategy for server side rendering
+
+### createStyles
+
+[Read createStyles documentation](https://mantine.dev/theming/create-styles/)
+
+From version 3.0 [createStyles](https://mantine.dev/theming/create-styles/) is the main way to add styles to Mantine components. Core features:
+
+- API is similar to react-jss
+- As fast and lightweight as emotion: `createStyles` extends [@emotion/react](https://emotion.sh/docs/@emotion/react)
+- Subscribes to your Mantine theming context
+- Supports all emotion features: automatic critical css extraction during server side rendering, lazy evaluation, dynamic theming, etc.
+- Server side rendering support: Next.js, Gatsby or any other environment
+- Fully featured TypeScript support
+
+Basic `createStyles` usage example:
+
+<Demo data={CreateStylesDemos.createStylesBasics} />
+
+### Server side rendering
+
+Since Mantine now uses emotion instead of react-jss you will need to change server side rendering strategy.
+Mantine now has 3 new packages to help you setup server side rendering:
+
+- `@mantine/ssr` – general server side rendering utilities
+- `@mantine/next` – Next.js specific ssr configurations
+- `gatsby-plugin-mantine` – enable ssr in Gatsby
+
+Follow these guides to get started with ssr:
+
+- [SSR with Next.js](https://mantine.dev/theming/next/)
+- [SSR with Gatsby.js](https://mantine.dev/theming/gatsby/)
+- [General approach to SSR](https://mantine.dev/theming/ssr/)
+
+## ColorSchemeProvider
+
+`ColorSchemeProvider` is a new component that will help you manage color scheme ([read full docs](https://mantine.dev/theming/dark-theme/)):
+
+```tsx
+import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
+
+export default function Demo() {
+  const [colorScheme, setColorScheme] = useState('light');
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+
+  return (
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+      <MantineProvider theme={{ colorScheme }}>
+        <App />
+      </MantineProvider>
+    </ColorSchemeProvider>
+  );
+}
+
+// ...later in other component
+import { ActionIcon, useMantineColorScheme } from '@mantine/core';
+import { SunIcon, MoonIcon } from '@modulz/radix-icons';
+
+function Demo() {
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const dark = colorScheme === 'dark';
+
+  return (
+    <ActionIcon
+      variant="outline"
+      color={dark ? 'yellow' : 'blue'}
+      onClick={() => toggleColorScheme()}
+      title="Toggle color scheme"
+    >
+      {dark ? (
+        <SunIcon style={{ width: 18, height: 18 }} />
+      ) : (
+        <MoonIcon style={{ width: 18, height: 18 }} />
+      )}
+    </ActionIcon>
+  );
+}
+```
+
+## Margin props
+
+All components now support setting following props to control margins:
+
+- `m` – sets `margin` property on root element
+- `my` – sets `margin-top` and `margin-bottom` properties on root element
+- `mx` – sets `margin-right` and `margin-left` properties on root element
+- `mt` – sets `margin-top` property on root element
+- `mb` – sets `margin-bottom` property on root element
+- `ml` – sets `margin-left` property on root element
+- `mr` – sets `margin-right` property on root element
+
+```tsx
+import { Button, TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <div>
+      <Button mx={20}>My button</Button>
+      <TextInput mt="md" />
+    </div>
+  );
+}
+```
 
 ## New components
 
@@ -46,3 +168,6 @@ import { useResizeObserverDemo, useViewportSizeDemo, useMouseRef } from '@docs/d
 ## Other changes
 
 - [ActionIcon](https://mantine.dev/core/action-icon/) and [Button](https://mantine.dev/core/button/) components now support new `default` variant
+- [Pagination](https://mantine.dev/core/pagination/) component now supports adding first and last controls
+- [SimpleGrid](https://mantine.dev/core/simple-grid/) component now supports `theme.breakpoints` usage in `breakpoints` prop
+- [Group](https://mantine.dev/core/group/) component no longer supports Styles API, you can add styles directly to element and children instead

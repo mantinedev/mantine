@@ -10,7 +10,7 @@ const code = `
   gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
   size="xl"
   weight={700}
-  style={{ fontFamily: 'Dosis, sans-serif' }}
+  style={{ fontFamily: 'Greycliff CF, sans-serif' }}
 >
   Indigo cyan gradient
 </Text>
@@ -26,7 +26,7 @@ function Demo() {
         gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
         size="xl"
         weight={700}
-        style={{ fontFamily: 'Dosis, sans-serif' }}
+        style={{ fontFamily: 'Greycliff CF, sans-serif' }}
       >
         Indigo cyan gradient
       </Text>

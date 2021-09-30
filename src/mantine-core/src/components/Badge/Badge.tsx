@@ -7,6 +7,7 @@ import {
   MantineGradient,
   MantineColor,
   ClassNames,
+  useExtractedMargins,
 } from '@mantine/styles';
 import useStyles from './Badge.styles';
 
@@ -83,13 +84,14 @@ export function Badge<C extends React.ElementType = 'div', R extends HTMLElement
     'badge'
   );
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, rootStyle: _styles.root, style });
   const Element = component || 'div';
 
   return (
     <Element
-      {...others}
+      {...rest}
       className={cx(classes.root, classes[variant], className)}
-      style={{ ...style, ..._styles.root, ..._styles[variant] }}
+      style={mergedStyles}
       ref={elementRef as any}
     >
       {leftSection && (

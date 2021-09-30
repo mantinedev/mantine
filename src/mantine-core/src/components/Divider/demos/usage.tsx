@@ -10,9 +10,9 @@ const code = `
 function Demo() {
   return (
     <>
-      <Divider margins="sm" />
-      <Divider margins="sm" variant="dashed" />
-      <Divider margins="sm" variant="dotted" />
+      <Divider my="sm" />
+      <Divider my="sm" variant="dashed" />
+      <Divider my="sm" variant="dotted" />
     </>
   );
 }

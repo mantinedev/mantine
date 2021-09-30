@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { Text } from '../Text/Text';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
@@ -67,6 +73,7 @@ export function Image({
 }: ImageProps) {
   const { classes, cx } = useStyles({ radius }, classNames, 'image');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(!src);
   const isPlaceholder = withPlaceholder && (!loaded || error);
@@ -84,9 +91,9 @@ export function Image({
   return (
     <div
       className={cx(classes.root, className)}
-      style={{ width, height, ...style, ..._styles.root }}
+      style={{ width, height, ...mergedStyles }}
       ref={elementRef}
-      {...others}
+      {...rest}
     >
       {isPlaceholder && (
         <div className={classes.placeholder} title={alt} style={_styles.placeholder}>

@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   checkAccessibility,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Input } from '../Input/Input';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
@@ -20,6 +21,7 @@ const defaultProps = {
 describe('@mantine/core/MultiSelect', () => {
   itSupportsClassName(MultiSelect, defaultProps);
   itSupportsStyle(MultiSelect, defaultProps);
+  itSupportsMargins(MultiSelect, defaultProps);
   itSupportsRef(MultiSelect, defaultProps, HTMLInputElement, 'elementRef');
   itSupportsStylesApi(
     MultiSelect,

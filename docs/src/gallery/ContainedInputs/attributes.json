@@ -1,0 +1,10 @@
+{
+  "title": "Inputs with label inside input",
+  "category": "inputs",
+  "author": "rtivital",
+  "dependencies": ["/core/select/", "/core/text-input/", "/dates/date-picker/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

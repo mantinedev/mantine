@@ -6,6 +6,7 @@ import {
   itSupportsRef,
   itRendersChildren,
   itSupportsStyle,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Paper } from '../Paper/Paper';
 import { Card } from './Card';
@@ -16,6 +17,7 @@ describe('@mantine/core/Card', () => {
   itSupportsRef(Card, {}, HTMLDivElement, 'elementRef');
   itRendersChildren(Card, {});
   itSupportsStyle(Card, {});
+  itSupportsMargins(Card, {});
 
   it('accepts component from component prop', () => {
     const TestComponent = (props: any) => <span data-test-prop {...props} />;

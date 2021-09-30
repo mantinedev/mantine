@@ -18,8 +18,10 @@ import {
   getSizeValue,
   MantineShadow,
   ClassNames,
+  useUuid,
+  useExtractedMargins,
 } from '@mantine/core';
-import { useId, useClickOutside, useFocusTrap, useMergedRef, useWindowEvent } from '@mantine/hooks';
+import { useClickOutside, useFocusTrap, useMergedRef, useWindowEvent } from '@mantine/hooks';
 import { CalendarStylesNames } from '../Calendar/Calendar';
 import useStyles from './DatePickerBase.styles';
 
@@ -142,10 +144,11 @@ export function DatePickerBase({
 }: DatePickerBaseProps) {
   const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
-  const uuid = useId(id);
+  const uuid = useUuid(id);
 
   const focusTrapRef = useFocusTrap();
   const inputRef = useRef<HTMLButtonElement>();
@@ -182,7 +185,7 @@ export function DatePickerBase({
       error={error}
       description={description}
       className={className}
-      style={style}
+      style={mergedStyles}
       classNames={classNames}
       styles={styles}
       size={size}
@@ -205,7 +208,7 @@ export function DatePickerBase({
             invalid={!!error}
             rightSection={rightSection}
             rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
-            {...others}
+            {...rest}
           >
             {inputLabel || (
               <Text style={_styles.placeholder} className={classes.placeholder} size={size}>

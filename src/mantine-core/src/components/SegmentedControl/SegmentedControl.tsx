@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useId, useReducedMotion, useUncontrolled } from '@mantine/hooks';
+import { useReducedMotion, useUncontrolled } from '@mantine/hooks';
 import {
   mergeStyles,
   DefaultProps,
@@ -7,6 +7,8 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
+  useUuid,
+  useExtractedMargins,
 } from '@mantine/styles';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
@@ -101,8 +103,9 @@ export function SegmentedControl({
   );
 
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, rootStyle: _styles.root, style });
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
-  const uuid = useId(name);
+  const uuid = useUuid(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -158,12 +161,7 @@ export function SegmentedControl({
   ));
 
   return (
-    <div
-      className={cx(classes.root, className)}
-      ref={wrapperRef}
-      style={{ ...style, ..._styles.root }}
-      {...others}
-    >
+    <div className={cx(classes.root, className)} ref={wrapperRef} style={mergedStyles} {...rest}>
       {!!_value && (
         <span
           className={classes.active}

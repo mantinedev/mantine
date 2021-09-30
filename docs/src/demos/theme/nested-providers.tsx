@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
-import { Group, Button, Text, MantineProvider } from '@mantine/core';
-import { ColorSchemeContext } from '../../components/Layout/ColorScheme.context';
+import React from 'react';
+import { Group, Button, Text, MantineProvider, useMantineColorScheme } from '@mantine/core';
 import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
 const code = `import { Button, MantineProvider, Text } from '@mantine/core';
@@ -18,7 +17,8 @@ function Demo() {
 }`;
 
 export function NestedProvidersDemo() {
-  const { colorScheme } = useContext(ColorSchemeContext);
+  const { colorScheme } = useMantineColorScheme();
+
   return (
     <CodeDemo code={code} language="tsx">
       <MantineProvider theme={{ fontFamily: 'Georgia, serif', colorScheme }}>

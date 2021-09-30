@@ -1,9 +1,6 @@
 const remarkSlug = require('remark-slug');
 
 module.exports = {
-  flags: {
-    DEV_SSR: false,
-  },
   siteMetadata: {
     title: 'Mantine Docs',
     description: 'Mantine documentation',

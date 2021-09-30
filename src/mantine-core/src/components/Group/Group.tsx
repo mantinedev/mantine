@@ -1,12 +1,8 @@
 import React, { Children } from 'react';
-import { mergeStyles, DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
 import useStyles, { GroupPosition } from './Group.styles';
 
-export type GroupStylesNames = ClassNames<typeof useStyles>;
-
-export interface GroupProps
-  extends DefaultProps<GroupStylesNames>,
-    React.ComponentPropsWithoutRef<'div'> {
+export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Defines justify-content property */
   position?: GroupPosition;
 
@@ -40,8 +36,6 @@ export function Group({
   spacing = 'md',
   direction = 'row',
   withGutter = false,
-  classNames,
-  styles,
   ...others
 }: GroupProps) {
   const count = Children.count(children);
@@ -56,21 +50,20 @@ export function Group({
       count,
       withGutter,
     },
-    classNames,
+    null,
     'group'
   );
 
-  const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   const items = (Children.toArray(children) as React.ReactElement[]).map((child) =>
     React.cloneElement(child, {
       className: cx(classes.child, child.props.className),
-      style: { ...child.props.style, ..._styles.child },
     })
   );
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {items}
     </div>
   );

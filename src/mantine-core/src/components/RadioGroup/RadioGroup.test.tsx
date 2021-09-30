@@ -1,10 +1,18 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { checkAccessibility, itSupportsStylesApi } from '@mantine/tests';
+import { checkAccessibility, itSupportsStylesApi, itSupportsMargins } from '@mantine/tests';
 import { RadioGroup, Radio } from './index';
 import { RadioGroup as RadioGroupStylesApi } from './styles.api';
 
 describe('@mantine/core/RadioGroup', () => {
+  itSupportsMargins(RadioGroup, {
+    children: <Radio value="test-1">test-1</Radio>,
+    label: 'test-label',
+    error: 'test-error',
+    description: 'test-description',
+    required: true,
+  });
+
   checkAccessibility([
     mount(
       <RadioGroup>

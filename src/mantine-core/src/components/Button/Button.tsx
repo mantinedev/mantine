@@ -10,6 +10,7 @@ import {
   MantineGradient,
   MantineColor,
   ClassNames,
+  useExtractedMargins,
 } from '@mantine/styles';
 import useStyles, { heights, ButtonVariant } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader';
@@ -123,6 +124,7 @@ export function Button<
     'button'
   );
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const Element = component || 'button';
   const loader = (
     <Loader
@@ -134,13 +136,13 @@ export function Button<
 
   return (
     <Element
-      {...others}
+      {...rest}
       className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
       type={type}
       disabled={disabled || loading}
       ref={elementRef as any}
       onTouchStart={() => {}}
-      style={{ ...style, ..._styles.root }}
+      style={mergedStyles}
     >
       <div className={classes.inner} style={_styles.inner}>
         {(leftIcon || (loading && loaderPosition === 'left')) && (

@@ -14,7 +14,9 @@ bundleSize: '@mantine/decorations'
 license: MIT
 ---
 
-import { DotsDemos } from '@demos/decorations';
+import { DotsDemos, BlobsDemos } from '@demos/decorations';
+import { FaqWithBg } from '../../gallery/FaqWithBg/FaqWithBg';
+import { HeroText } from '../../gallery/HeroText/HeroText';
 
 ## Installation
 
@@ -32,6 +34,20 @@ Install with yarn:
 yarn add @mantine/decorations
 ```
 
-## Dots component
+## Dots
+
+Dots render a 10x10 grid of dots with configurable size and radius:
 
 <Demo data={DotsDemos.configurator} />
+
+Usage example:
+
+<HeroText />
+
+## Blobs
+
+<Demo data={BlobsDemos.usage} />
+
+Usage example:
+
+<FaqWithBg />

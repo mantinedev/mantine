@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, ClassNames } from '@mantine/styles';
+import { mergeStyles, DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
 import { Text } from '../Text/Text';
 import useStyles from './Breadcrumbs.styles';
 
@@ -26,6 +26,7 @@ export function Breadcrumbs({
 }: BreadcrumbsProps) {
   const { classes, cx } = useStyles(null, classNames, 'breadcrumbs');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   const items = React.Children.toArray(children).reduce((acc: any[], child: any, index, array) => {
     acc.push(
@@ -53,7 +54,7 @@ export function Breadcrumbs({
   }, []);
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {items}
     </div>
   );

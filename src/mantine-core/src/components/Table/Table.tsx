@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, useExtractedMargins } from '@mantine/styles';
 import useStyles from './Table.styles';
 
 export interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef<'table'> {
@@ -19,13 +19,16 @@ export function Table({
   striped = false,
   highlightOnHover = false,
   captionSide = 'top',
+  style,
   ...others
 }: TableProps) {
   const { classes, cx } = useStyles({ captionSide }, null, 'table');
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   return (
     <table
-      {...others}
+      {...rest}
+      style={mergedStyles}
       className={cx(
         classes.table,
         { [classes.striped]: striped, [classes.hover]: highlightOnHover },

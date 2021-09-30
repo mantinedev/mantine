@@ -1,5 +1,4 @@
 import React from 'react';
-import { useId } from '@mantine/hooks';
 import {
   mergeStyles,
   DefaultProps,
@@ -7,6 +6,8 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
+  useUuid,
+  useExtractedMargins,
 } from '@mantine/styles';
 import useStyles from './Switch.styles';
 
@@ -54,17 +55,13 @@ export function Switch({
 }: SwitchProps) {
   const { classes, cx } = useStyles({ size, color, radius }, classNames, 'switch');
   const _styles = mergeStyles(classes, styles);
-
-  const uuid = useId(id);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+  const uuid = useUuid(id);
 
   return (
-    <div
-      className={cx(classes.root, className)}
-      style={{ ...style, ..._styles.root }}
-      {...wrapperProps}
-    >
+    <div className={cx(classes.root, className)} style={mergedStyles} {...wrapperProps}>
       <input
-        {...others}
+        {...rest}
         id={uuid}
         ref={elementRef}
         type="checkbox"

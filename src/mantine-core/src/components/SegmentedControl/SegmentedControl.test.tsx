@@ -7,6 +7,7 @@ import {
   itSupportsStyle,
   mockResizeObserver,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { SegmentedControl } from './SegmentedControl';
 import { SegmentedControl as SegmentedControlStylesApi } from './styles.api';
@@ -28,6 +29,7 @@ describe('@mantine/core/SegmentedControl', () => {
   checkAccessibility([mount(<SegmentedControl {...defaultProps} />)]);
   itSupportsClassName(SegmentedControl, defaultProps);
   itSupportsOthers(SegmentedControl, defaultProps);
+  itSupportsMargins(SegmentedControl, defaultProps);
   itSupportsStyle(SegmentedControl, defaultProps);
   itSupportsStylesApi(
     SegmentedControl,

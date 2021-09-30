@@ -6,6 +6,7 @@ import {
   MantineNumberSize,
   MantineSize,
   ClassNames,
+  useExtractedMargins,
 } from '@mantine/styles';
 import useStyles from './Input.styles';
 
@@ -96,16 +97,13 @@ export function Input<
     __staticSelector
   );
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const Element: any = component;
 
   return (
     <div
       className={cx(classes.root, classes[_variant], className)}
-      style={{
-        ...style,
-        ..._styles.root,
-        ..._styles[variant],
-      }}
+      style={{ ...mergedStyles, ..._styles[variant] }}
       {...wrapperProps}
     >
       {icon && (
@@ -115,7 +113,7 @@ export function Input<
       )}
 
       <Element
-        {...others}
+        {...rest}
         ref={elementRef}
         aria-required={required}
         aria-invalid={invalid}

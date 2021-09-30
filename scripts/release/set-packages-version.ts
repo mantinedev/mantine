@@ -38,5 +38,12 @@ export async function setPackagesVersion(version: string) {
   );
 
   await writeVersionToPackageJson(path.join(__dirname, '../../package.json'), version);
-  await writeVersionToPackageJson(path.join(__dirname, '../../eslint/package.json'), version);
+  await writeVersionToPackageJson(
+    path.join(__dirname, '../../packages/eslint/package.json'),
+    version
+  );
+  await writeVersionToPackageJson(
+    path.join(__dirname, '../../packages/gatsby-plugin-mantine/package.json'),
+    version
+  );
 }

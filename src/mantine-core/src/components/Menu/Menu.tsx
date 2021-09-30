@@ -1,17 +1,13 @@
 import React, { useState, useRef, cloneElement } from 'react';
-import {
-  useId,
-  useClickOutside,
-  useMergedRef,
-  useWindowEvent,
-  useUncontrolled,
-} from '@mantine/hooks';
+import { useClickOutside, useMergedRef, useWindowEvent, useUncontrolled } from '@mantine/hooks';
 import {
   mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
   ClassNames,
+  useUuid,
+  MantineMargin,
 } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
@@ -24,7 +20,7 @@ import useStyles from './Menu.styles';
 export type MenuStylesNames = ClassNames<typeof useStyles> | MenuBodyStylesNames;
 
 export interface MenuProps
-  extends DefaultProps<MenuStylesNames>,
+  extends Omit<DefaultProps<MenuStylesNames>, MantineMargin>,
     SharedPopperProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** <MenuItem /> and <Divider /> components only, children are passed to MenuBody component  */
@@ -133,7 +129,7 @@ export function Menu({
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
   const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-  const uuid = useId(menuId);
+  const uuid = useUuid(menuId);
 
   const [_opened, setOpened] = useUncontrolled({
     value: opened,

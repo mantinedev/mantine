@@ -6,6 +6,7 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsRef,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Text } from './Text';
 
@@ -14,6 +15,7 @@ describe('@mantine/core/Text', () => {
   itSupportsStyle(Text, {});
   itSupportsClassName(Text, {});
   itSupportsOthers(Text, {});
+  itSupportsMargins(Text, {});
   itSupportsRef(Text, {}, HTMLDivElement, 'elementRef');
 
   it('has correct displayName', () => {

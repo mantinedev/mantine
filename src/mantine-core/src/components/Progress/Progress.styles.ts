@@ -38,17 +38,17 @@ export default createStyles((theme, { color, radius, size, striped }: ProgressSt
     height: '100%',
     backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
     transition: `width 200ms ${theme.transitionTimingFunction}`,
-    backgroundSize: [theme.spacing.md, theme.spacing.md],
+    backgroundSize: `${theme.spacing.md}px ${theme.spacing.md}px`,
     backgroundImage: striped
       ? 'linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)'
       : 'none',
 
-    '&:last-child': {
+    '&:last-of-type': {
       borderTopRightRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       borderBottomRightRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     },
 
-    '&:first-child': {
+    '&:first-of-type': {
       borderTopLeftRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       borderBottomLeftRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     },

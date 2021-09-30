@@ -1,6 +1,6 @@
 {
   "title": "Multiple countries select",
-  "category": "forms",
+  "category": "inputs",
   "author": "rtivital",
   "dependencies": ["/core/multi-select/", "/core/action-icon/#close-button", "react-flagpack"],
   "canvas": {

@@ -19,7 +19,7 @@ export default createStyles((theme, { sticky, stickyOffset }: ToolbarStyles) => 
     top: sticky ? stickyOffset : 0,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     borderBottom: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[4]
     }`,
     borderTopRightRadius: theme.radius.sm,
     borderTopLeftRadius: theme.radius.sm,
@@ -37,12 +37,12 @@ export default createStyles((theme, { sticky, stickyOffset }: ToolbarStyles) => 
       borderLeftWidth: 0,
     },
 
-    '&:first-child': {
+    '&:first-of-type': {
       borderTopLeftRadius: theme.radius.sm,
       borderBottomLeftRadius: theme.radius.sm,
     },
 
-    '&:last-child': {
+    '&:last-of-type': {
       borderTopRightRadius: theme.radius.sm,
       borderBottomRightRadius: theme.radius.sm,
     },

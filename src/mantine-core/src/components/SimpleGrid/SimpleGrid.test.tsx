@@ -1,5 +1,5 @@
 import React from 'react';
-import { itSupportsClassName, itRendersChildren } from '@mantine/tests';
+import { itSupportsClassName, itRendersChildren, itSupportsMargins } from '@mantine/tests';
 import { SimpleGrid } from './SimpleGrid';
 
 const defaultProps = {
@@ -9,6 +9,7 @@ const defaultProps = {
 
 describe('@mantine/core/SimpleGrid', () => {
   itSupportsClassName(SimpleGrid, defaultProps);
+  itSupportsMargins(SimpleGrid, defaultProps);
   itRendersChildren(SimpleGrid, defaultProps);
 
   it('has correct displayName', () => {

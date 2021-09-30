@@ -4,3 +4,4 @@ export { getSharedColorScheme } from './get-shared-color-scheme/get-shared-color
 export { getSizeValue } from './get-size-value/get-size-value';
 export { getThemeColor } from './get-theme-color/get-theme-color';
 export { hexToRgba } from './hex-to-rgba/hex-to-rgba';
+export { useExtractedMargins } from './use-extracted-margins/use-extracted-margins';

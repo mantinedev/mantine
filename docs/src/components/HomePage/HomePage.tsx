@@ -2,10 +2,11 @@ import React from 'react';
 import { useMantineTheme } from '@mantine/core';
 import Head from '../Head/Head';
 import { Jumbotron } from './Jumbotron/Jumbotron';
-import { Features } from './Features/Features';
+// import { Features } from './Features/Features';
 import { Footer } from '../Footer/Footer';
 import { Explore } from './Explore/Explore';
 import { Community } from './Community/Community';
+import { FeaturesSection } from './FeaturesSection/FeaturesSection';
 
 export function HomePage() {
   const theme = useMantineTheme();
@@ -14,7 +15,8 @@ export function HomePage() {
       <Head title="Mantine" disableTitleTemplate />
       <div style={{ position: 'relative', zIndex: 1, boxShadow: theme.shadows.sm }}>
         <Jumbotron />
-        <Features />
+        <FeaturesSection />
+        {/* <Features /> */}
         <Explore />
         <Community />
       </div>

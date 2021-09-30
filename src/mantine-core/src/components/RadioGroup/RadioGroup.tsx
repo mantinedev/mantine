@@ -1,6 +1,12 @@
 import React, { Children, cloneElement } from 'react';
-import { useId, useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+import { useUncontrolled } from '@mantine/hooks';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  MantineColor,
+  useUuid,
+} from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -58,7 +64,7 @@ export function RadioGroup({
   styles,
   ...others
 }: RadioGroupProps) {
-  const uuid = useId(name);
+  const uuid = useUuid(name);
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,

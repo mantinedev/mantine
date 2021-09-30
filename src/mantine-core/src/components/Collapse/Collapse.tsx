@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { useMantineTheme } from '@mantine/styles';
+import { useMantineTheme, useExtractedMargins } from '@mantine/styles';
 
 export interface CollapseProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** Content that should be collapsed */
@@ -28,6 +28,7 @@ export function Collapse({
   onTransitionEnd,
   ...others
 }: CollapseProps) {
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
   const collapseRef = useRef<HTMLDivElement>(null);
@@ -56,12 +57,13 @@ export function Collapse({
       ref={collapseRef}
       onTransitionEnd={handleTransitionEnd}
       style={{
-        ...style,
+        ...mergedStyles,
         overflow: 'hidden',
         transition: `height ${duration}ms ${timingFunction}`,
+        willChange: 'contents',
         height: isOpened ? height : '0px',
       }}
-      {...others}
+      {...rest}
     >
       <div
         ref={contentRef}

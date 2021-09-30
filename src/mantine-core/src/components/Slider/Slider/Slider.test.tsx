@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsStylesApi,
   checkAccessibility,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Slider } from './Slider';
 import { Slider as SliderStylesApi } from '../styles.api';
@@ -17,6 +18,7 @@ const defaultProps = {
 describe('@mantine/core/Slider', () => {
   checkAccessibility([mount(<Slider {...defaultProps} />)]);
   itSupportsStyle(Slider, defaultProps);
+  itSupportsMargins(Slider, defaultProps);
   itSupportsClassName(Slider, defaultProps);
   itSupportsOthers(Slider, defaultProps);
   itSupportsStylesApi(

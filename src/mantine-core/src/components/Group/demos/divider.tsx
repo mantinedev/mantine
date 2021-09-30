@@ -6,9 +6,9 @@ import { Divider } from '../../Divider/Divider';
 const code = `
 <Group position="center">
   <Badge>Badge</Badge>
-  <Divider orientation="vertical" margins="sm" />
+  <Divider orientation="vertical" mx="sm" />
   <Badge>Badge</Badge>
-  <Divider orientation="vertical" margins="sm" />
+  <Divider orientation="vertical" mx="sm" />
   <Badge>Badge</Badge>
 </Group>
 `;
@@ -17,9 +17,9 @@ function Demo() {
   return (
     <Group position="center">
       <Badge>Badge</Badge>
-      <Divider orientation="vertical" margins="sm" />
+      <Divider orientation="vertical" mx="sm" />
       <Badge>Badge</Badge>
-      <Divider orientation="vertical" margins="sm" />
+      <Divider orientation="vertical" mx="sm" />
       <Badge>Badge</Badge>
     </Group>
   );

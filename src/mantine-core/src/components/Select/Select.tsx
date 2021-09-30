@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useId, useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
-import { DefaultProps, MantineSize, MantineShadow } from '@mantine/styles';
+import { useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
+import {
+  DefaultProps,
+  MantineSize,
+  MantineShadow,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
@@ -138,12 +144,13 @@ export function Select({
   onCreate,
   ...others
 }: SelectProps) {
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
   const dropdownRef = useRef<HTMLDivElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const isCreatable = creatable && typeof getCreateLabel === 'function';
   let createLabel = null;
 
@@ -325,7 +332,7 @@ export function Select({
       description={description}
       size={size}
       className={className}
-      style={style}
+      style={mergedStyles}
       classNames={classNames}
       styles={styles}
       __staticSelector="select"
@@ -341,7 +348,7 @@ export function Select({
         tabIndex={-1}
       >
         <Input<'input'>
-          {...others}
+          {...rest}
           type="text"
           required={required}
           elementRef={useMergedRef(elementRef, inputRef)}

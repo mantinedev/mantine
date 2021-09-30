@@ -111,16 +111,6 @@ function Demo() {
 }
 ```
 
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<NumberInput /> // -> random id generated both on client and server, props mismatch warning
-<NumberInput id="my-number-input" /> // -> id is static, no mismatches
-```
-
 ## Accessibility
 
 NumberInput renders regular input with `type="number"`.

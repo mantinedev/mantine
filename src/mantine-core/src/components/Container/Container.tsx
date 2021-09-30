@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
 import useStyles from './Container.styles';
 
 export interface ContainerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -13,9 +13,17 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
   fluid?: boolean;
 }
 
-export function Container({ className, padding = 'md', fluid, size, ...others }: ContainerProps) {
+export function Container({
+  className,
+  padding = 'md',
+  fluid,
+  size,
+  style,
+  ...others
+}: ContainerProps) {
   const { classes, cx } = useStyles({ padding, fluid, size }, null, 'container');
-  return <div className={cx(classes.container, className)} {...others} />;
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+  return <div className={cx(classes.container, className)} style={mergedStyles} {...rest} />;
 }
 
 Container.displayName = '@mantine/core/Container';

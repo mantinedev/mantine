@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, getSizeValue, ClassNames } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineSize,
+  getSizeValue,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { ColorSliderStylesNames } from './ColorSlider/ColorSlider';
@@ -99,6 +106,7 @@ export function ColorPicker({
 }: ColorPickerProps) {
   const { classes, cx } = useStyles({ size, fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const formatRef = useRef(format);
   const valueRef = useRef<string>(null);
   const withAlpha = format === 'rgba' || format === 'hsla';
@@ -141,7 +149,7 @@ export function ColorPicker({
   }, [format]);
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {withPicker && (
         <>
           <Saturation

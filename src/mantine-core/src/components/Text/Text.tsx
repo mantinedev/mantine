@@ -1,5 +1,11 @@
 import React from 'react';
-import { DefaultProps, MantineSize, MantineGradient, MantineColor } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineSize,
+  MantineGradient,
+  MantineColor,
+  useExtractedMargins,
+} from '@mantine/styles';
 import useStyles from './Text.styles';
 
 export interface SharedTextProps extends DefaultProps {
@@ -80,6 +86,7 @@ export function Text<C extends React.ElementType = 'div', R extends HTMLElement 
     null,
     'text'
   );
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const Element = component || 'div';
 
   return React.createElement(
@@ -90,10 +97,10 @@ export function Text<C extends React.ElementType = 'div', R extends HTMLElement 
         fontWeight: inherit ? 'inherit' : weight,
         textTransform: transform,
         textAlign: align,
-        ...style,
+        ...mergedStyles,
       },
       ref: elementRef,
-      ...others,
+      ...rest,
     },
     children
   );

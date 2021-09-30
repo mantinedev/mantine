@@ -3,6 +3,7 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Mark } from './Mark';
 
@@ -15,6 +16,7 @@ describe('@mantine/core/Mark', () => {
   itSupportsClassName(Mark, defaultProps);
   itSupportsOthers(Mark, defaultProps);
   itSupportsStyle(Mark, defaultProps);
+  itSupportsMargins(Mark, defaultProps);
 
   it('has correct displayName', () => {
     expect(Mark.displayName).toEqual('@mantine/core/Mark');

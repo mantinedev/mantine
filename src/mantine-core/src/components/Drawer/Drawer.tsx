@@ -7,6 +7,7 @@ import {
   MantineNumberSize,
   MantineShadow,
   ClassNames,
+  MantineMargin,
 } from '@mantine/styles';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
@@ -22,7 +23,7 @@ export type DrawerStylesNames = Exclude<
 >;
 
 export interface DrawerProps
-  extends DefaultProps<DrawerStylesNames>,
+  extends Omit<DefaultProps<DrawerStylesNames>, MantineMargin>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** If true drawer is mounted to the dom */
   opened: boolean;

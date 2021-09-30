@@ -1,6 +1,12 @@
 import React from 'react';
-import { useId } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, MantineColor, ClassNames } from '@mantine/styles';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineSize,
+  MantineColor,
+  ClassNames,
+  useUuid,
+} from '@mantine/styles';
 import useStyles from './Radio.styles';
 
 export type RadioStylesNames = Exclude<ClassNames<typeof useStyles>, 'labelDisabled'>;
@@ -40,7 +46,7 @@ export function Radio({
 }: RadioProps) {
   const { classes, cx } = useStyles({ color, size }, classNames, 'radio-group');
   const _styles = mergeStyles(classes, styles);
-  const uuid = useId(id);
+  const uuid = useUuid(id);
 
   return (
     <div

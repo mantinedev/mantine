@@ -6,6 +6,7 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
@@ -30,6 +31,7 @@ const data = Array(50)
 describe('@mantine/core/Select', () => {
   itSupportsClassName(Select, defaultProps);
   itSupportsStyle(Select, defaultProps);
+  itSupportsMargins(Select, defaultProps);
   itSupportsRef(Select, defaultProps, HTMLInputElement, 'elementRef');
 
   checkAccessibility([

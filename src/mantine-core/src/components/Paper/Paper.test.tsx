@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   itSupportsRef,
   itSupportsOthers,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Paper } from './Paper';
 
@@ -15,6 +16,7 @@ describe('@mantine/core/Paper', () => {
   itSupportsStyle(Paper, {});
   itSupportsRef(Paper, {}, HTMLDivElement, 'elementRef');
   itSupportsOthers(Paper, {});
+  itSupportsMargins(Paper, {});
 
   it('accepts component from component prop', () => {
     const TestComponent = (props: any) => <span data-test-prop {...props} />;

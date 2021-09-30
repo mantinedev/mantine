@@ -35,9 +35,8 @@ export default createStyles((theme) => ({
 
   title: {
     fontSize: 44,
-    marginBottom: theme.spacing.xs,
-    fontFamily: `Dosis, ${theme.headings.fontFamily}`,
-    fontWeight: 800,
+    marginBottom: theme.spacing.xs / 2,
+    fontWeight: 900,
 
     [`@media (max-width: ${BREAKPOINT}px)`]: {
       fontSize: 32,

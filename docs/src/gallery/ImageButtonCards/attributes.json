@@ -1,0 +1,16 @@
+{
+  "title": "Category cards with image",
+  "category": "cards",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": [
+    "/core/button//#unstyled-button",
+    "/core/text/",
+    "/core/overlay/",
+    "/core/simple-grid/"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 980
+  }
+}

@@ -1,10 +1,9 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/styles';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { useTransition } from './use-transition';
 import { MantineTransition } from './transitions';
 
-export interface TransitionProps extends Omit<DefaultProps, 'className'> {
+export interface TransitionProps {
   /** Predefined transition name or transition styles */
   transition: MantineTransition;
 

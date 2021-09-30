@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
 import useStyles from './ColorSwatch.styles';
 
 interface _ColorSwatchProps<C extends React.ElementType, R extends HTMLElement>
@@ -36,14 +36,16 @@ export function ColorSwatch<
   radius = 25,
   className,
   children,
+  style,
   ...others
 }: ColorSwatchProps<C, R>) {
   const { classes, cx } = useStyles({ radius, size }, null, 'color-swatch');
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   const Element = component || 'div';
 
   return (
-    <Element className={cx(classes.colorSwatch, className)} {...others}>
+    <Element className={cx(classes.colorSwatch, className)} style={mergedStyles} {...rest}>
       <div className={cx(classes.alphaOverlay, classes.overlay)} />
       <div className={cx(classes.shadowOverlay, classes.overlay)} />
       <div className={classes.overlay} style={{ backgroundColor: color }} />

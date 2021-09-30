@@ -8,6 +8,7 @@ import {
   itSupportsOthers,
   itRendersChildren,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Loader } from '../Loader/Loader';
@@ -28,6 +29,7 @@ describe('@mantine/core/Notification', () => {
   itSupportsOthers(Notification, defaultProps);
   itSupportsStyle(Notification, defaultProps);
   itSupportsClassName(Notification, defaultProps);
+  itSupportsMargins(Notification, defaultProps);
   itRendersChildren(Notification, defaultProps);
   checkAccessibility([mount(<Notification {...defaultProps} />)]);
 

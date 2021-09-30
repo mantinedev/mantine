@@ -22,7 +22,6 @@ export * from './hooks/use-logger';
 export * from './hooks/use-mouse';
 export * from './hooks/use-move';
 
-export * from './inputs-guide/color-input';
-export * from './inputs-guide/json-input';
-
 export * from './theme';
+
+export * as CreateStylesDemos from './create-styles';

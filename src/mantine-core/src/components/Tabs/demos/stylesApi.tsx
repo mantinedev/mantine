@@ -14,7 +14,7 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]
     }\`,
     fontSize: theme.fontSizes.md,
-    padding: [theme.spacing.lg, theme.spacing.xl],
+    padding: \`\${theme.spacing.lg}px \${theme.spacing.xl}px\`,
 
     '& + &': {
       borderLeft: 0,
@@ -62,7 +62,7 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]
     }`,
     fontSize: theme.fontSizes.md,
-    padding: [theme.spacing.lg, theme.spacing.xl],
+    padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
 
     '& + &': {
       borderLeft: 0,

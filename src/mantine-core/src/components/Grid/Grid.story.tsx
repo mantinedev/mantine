@@ -8,6 +8,9 @@ storiesOf('@mantine/core/Grid', module)
     <div style={{ padding: 40 }}>
       <div style={{ background: 'blue' }}>
         <Grid gutter="xl" align="center">
+          <Col span={10} offset={2}>
+            <Card shadow="md">Col with offset</Card>
+          </Col>
           <Col sm={4} lg={6} span={12}>
             <Card shadow="md">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto illo pariatur
