@@ -2,8 +2,12 @@ import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
   wrapper: {
-    paddingTop: theme.spacing.xl,
+    marginTop: theme.spacing.xl * 5,
     display: 'flex',
+
+    '&:first-of-type': {
+      marginTop: theme.spacing.xl * 2,
+    },
   },
 
   body: {

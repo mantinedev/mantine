@@ -2,6 +2,7 @@ import { Container } from '@mantine/core';
 import React from 'react';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
 import { CoreComponents } from './CoreComponents/CoreComponents';
+import { Theming } from './Theming/Theming';
 import useStyles from './FeaturesSection.styles';
 
 export function FeaturesSection() {
@@ -23,6 +24,7 @@ export function FeaturesSection() {
         <Container size={1100}>
           <SectionTitle className={classes.title}>Explore examples</SectionTitle>
           <CoreComponents />
+          <Theming />
         </Container>
       </div>
 
