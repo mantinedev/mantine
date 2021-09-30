@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import { MailIcon } from '@primer/octicons-react';
 import {
-  TextInput,
-  Textarea,
   NumberInput,
-  NativeSelect,
   Slider,
   InputWrapper,
   RangeSlider,
@@ -21,7 +17,7 @@ import {
 } from '@mantine/core';
 import { CustomSelectDemo } from '@mantine/core/src/components/Select/demos/itemComponent';
 import { CountriesSelect } from '@mantine/core/src/components/MultiSelect/demos/countries';
-import { DatePicker, TimeInput, DateRangePicker } from '@mantine/dates';
+import { DatePicker, DateRangePicker } from '@mantine/dates';
 
 const BREAKPOINT = '@media (max-width: 960px)';
 
@@ -98,28 +94,7 @@ export function InputsDemo() {
           style={{ marginTop: 15 }}
         />
 
-        <TextInput style={{ marginTop: 15 }} label="Text input" placeholder="General text input" />
-
-        <NativeSelect
-          style={{ marginTop: 15 }}
-          label="Native select"
-          data={[
-            { value: 'react', label: 'React' },
-            { value: 'vue', label: 'Vue' },
-            { value: 'ng', label: 'Angular' },
-            { value: 'svelte', label: 'Svelte' },
-          ]}
-        />
-
         <CountriesSelect label="Multi select" style={{ marginTop: 15 }} defaultValue={[]} />
-
-        <TextInput
-          style={{ marginTop: 15 }}
-          label="Invalid state"
-          placeholder="Your email"
-          icon={<MailIcon size={12} />}
-          error="Please enter a valid email"
-        />
 
         <RadioGroup label="Radio group" style={{ marginTop: 15 }} defaultValue="react">
           <Radio value="react">React</Radio>
@@ -133,9 +108,7 @@ export function InputsDemo() {
       </div>
 
       <div className={classes.column}>
-        <TimeInput label="Time input" defaultValue={new Date()} />
-
-        <CustomSelectDemo label="Custom select" style={{ marginTop: 15 }} />
+        <CustomSelectDemo label="Custom select" />
 
         <Autocomplete
           label="Autocomplete"
@@ -153,18 +126,6 @@ export function InputsDemo() {
           format="rgba"
           style={{ marginTop: 15 }}
         />
-
-        <Textarea
-          style={{ marginTop: 15 }}
-          label="Autosize textarea"
-          placeholder="Textarea will grow when you type"
-          autosize
-          minRows={2}
-        />
-
-        <InputWrapper labelElement="div" label="Segmented control" style={{ marginTop: 15 }}>
-          <SegmentedControlWrapper fullWidth />
-        </InputWrapper>
 
         <InputWrapper labelElement="div" label="Slider and RangeSlider" style={{ marginTop: 15 }}>
           <Slider defaultValue={40} style={{ marginTop: 10 }} />
