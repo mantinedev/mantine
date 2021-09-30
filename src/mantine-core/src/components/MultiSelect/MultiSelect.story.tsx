@@ -16,6 +16,14 @@ const data = [
   { value: 'blitz', label: 'Blitz.js' },
 ];
 
+const groupedData = [
+  { value: 'react', label: 'React', disabled: true, group: 'FB' },
+  { value: 'ng', label: 'Angular', group: 'Google' },
+  { value: 'lit', label: 'Lit', group: 'Google' },
+  { value: 'svelte', label: 'Svelte' },
+  { value: 'vue', label: 'Vue', group: 'Evan' },
+];
+
 const stringData = ['React', 'Angular', 'Svelte', 'Vue'];
 
 const largeData = Array(1000)
@@ -90,13 +98,37 @@ storiesOf('@mantine/core/MultiSelect', module)
         <TextInput label="Text input" placeholder="Select items" />
         <MultiSelect
           label="Multi select with seperator and disabled items"
-          data={[...data, { seperator: true, label: 'Google' }, { label: 'Lit', value: 'lit', disabled: true }]}
+          data={[...data, { label: 'Lit', value: 'lit', disabled: true }]}
           defaultValue={['react', 'ng']}
           placeholder="Select items"
           nothingFound="Nothing found"
         />
       </Group>
     </>
+  ))
+  .add('Grouped and Disabled Data', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={groupedData}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+      />
+    </div>
+  ))
+  .add('Creatable MultiSelect', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={stringData}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+        creatable
+        getCreateLabel={(query) => `create ${query}`}
+      />
+    </div>
   ))
   .add('String data', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -134,7 +166,7 @@ storiesOf('@mantine/core/MultiSelect', module)
       />
       <MultiSelect
         label="Multi select with disabled and seperator items"
-        data={[...data, { seperator: true, label: 'Google' }, { label: 'Lit', value: 'lit', disabled: true }]}
+        data={[...data, { label: 'Lit', value: 'lit', disabled: true }]}
         defaultValue={['react', 'ng']}
         placeholder="Select items"
         nothingFound="Nothing found"

@@ -9,6 +9,14 @@ const data = [
   { value: 'vue', label: 'Vue' },
 ];
 
+const groupedData = [
+  { value: 'react', label: 'React', disabled: true, group: 'FB' },
+  { value: 'ng', label: 'Angular', group: 'Google' },
+  { value: 'lit', label: 'Lit', group: 'Google' },
+  { value: 'svelte', label: 'Svelte' },
+  { value: 'vue', label: 'Vue', group: 'Evan' },
+];
+
 const stringData = ['React', 'Angular', 'Svelte', 'Vue'];
 
 const largeData = Array(50)
@@ -71,9 +79,18 @@ storiesOf('@mantine/core/Select', module)
         style={{ marginTop: 20 }}
       />
       <Select
-        label="With Seperators"
+        label="With Grouped and Disabled Data"
         placeholder="Choose value"
-        data={[...data, { seperator: true, label: 'Google' }, { value: 'lit', label: 'Lit', disabled: true }]}
+        data={groupedData}
+        style={{ marginTop: 20 }}
+        searchable
+      />
+      <Select
+        creatable
+        getCreateLabel={(query) => `create ${query}`}
+        label="Creatable Select"
+        placeholder="Choose value"
+        data={data}
         style={{ marginTop: 20 }}
         searchable
       />
@@ -160,6 +177,16 @@ storiesOf('@mantine/core/Select', module)
         data={stringData}
         style={{ marginTop: 20 }}
         nothingFound="No options"
+      />
+      <Select
+        clearable
+        creatable
+        getCreateLabel={(query) => `create ${query}`}
+        label="Creatable Select"
+        placeholder="Choose value"
+        searchable
+        data={stringData}
+        style={{ marginTop: 20 }}
       />
       <Select
         clearable
