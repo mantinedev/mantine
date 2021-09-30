@@ -1,45 +1,44 @@
 import { createStyles } from '@mantine/core';
 
-const BREAKPOINT = '@media (max-width: 600px)';
+const BREAKPOINT = '@media (max-width: 755px)';
 
 export default createStyles((theme) => ({
   jumbotron: {
     position: 'relative',
     boxSizing: 'border-box',
-    marginTop: 25,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
   },
 
   inner: {
     position: 'relative',
-    paddingTop: 180,
-    paddingBottom: 180,
+    paddingTop: 200,
+    paddingBottom: 160,
 
     [BREAKPOINT]: {
-      paddingBottom: 80,
-      paddingTop: 80,
+      paddingBottom: 70,
+      paddingTop: 90,
     },
   },
 
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontWeight: 900,
-    fontSize: 86,
-    lineHeight: 1.05,
+    fontSize: 104,
+    lineHeight: 1,
     margin: 0,
     padding: 0,
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
     [BREAKPOINT]: {
-      fontSize: 42,
+      fontSize: 38,
       lineHeight: 1.2,
     },
   },
 
   highlight: {
-    backgroundImage: `linear-gradient(45deg, ${
-      theme.colors.blue[theme.colorScheme === 'dark' ? 4 : 7]
-    } 3%, ${theme.colors.grape[5]} 97%)`,
+    backgroundImage: `linear-gradient(52deg, ${
+      theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
+    } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
   },
@@ -64,9 +63,10 @@ export default createStyles((theme) => ({
   },
 
   control: {
-    height: 54,
-    paddingLeft: 38,
-    paddingRight: 38,
+    height: 64,
+    paddingLeft: 46,
+    paddingRight: 46,
+    fontSize: 22,
 
     [BREAKPOINT]: {
       height: 54,
@@ -76,9 +76,16 @@ export default createStyles((theme) => ({
     },
   },
 
+  controlPrimary: {
+    border: 0,
+    backgroundImage: `linear-gradient(52deg, ${
+      theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
+    } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
+  },
+
   githubControl: {
     borderWidth: 2,
-    borderColor: theme.colorScheme === 'dark' ? 'transparent' : theme.colors.dark[9],
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : 'transparent',
+    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.dark[9],
+    backgroundColor: 'transparent',
   },
 }));
