@@ -1,7 +1,7 @@
 import type { SelectItem } from '../types';
 
 interface FilterData {
-  data: (SelectItem)[];
+  data: SelectItem[];
   limit: number;
   searchable: boolean;
   searchValue: string;
