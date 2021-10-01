@@ -12,8 +12,8 @@ export function useHover<T extends HTMLElement = HTMLDivElement>() {
       ref.current.addEventListener('mouseleave', onMouseLeave);
 
       return () => {
-        ref.current.removeEventListener('mouseenter', onMouseEnter);
-        ref.current.removeEventListener('mouseleave', onMouseLeave);
+        ref.current?.removeEventListener('mouseenter', onMouseEnter);
+        ref.current?.removeEventListener('mouseleave', onMouseLeave);
       };
     }
 
