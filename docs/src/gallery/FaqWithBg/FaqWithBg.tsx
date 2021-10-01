@@ -9,8 +9,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
   return {
     wrapper: {
       paddingTop: theme.spacing.xl * 2,
-      paddingBottom: theme.spacing.xl * 4,
-      minHeight: 720,
+      minHeight: 820,
       backgroundImage: `linear-gradient(162deg, ${theme.colors.blue[6]} 0%, ${theme.colors.violet[5]} 100%)`,
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'top left',
