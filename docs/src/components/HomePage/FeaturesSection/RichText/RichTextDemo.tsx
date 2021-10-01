@@ -9,7 +9,8 @@ export function RichTextDemo() {
     <Component
       style={{
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[4],
+        borderColor: 'transparent',
+        boxShadow: theme.shadows.md,
       }}
       controls={[
         ['bold', 'italic', 'underline', 'strike', 'clean'],

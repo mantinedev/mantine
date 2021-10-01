@@ -4,7 +4,7 @@ import Head from '../Head/Head';
 import { Jumbotron } from './Jumbotron/Jumbotron';
 // import { Features } from './Features/Features';
 import { Footer } from '../Footer/Footer';
-import { Explore } from './Explore/Explore';
+// import { Explore } from './Explore/Explore';
 import { Community } from './Community/Community';
 import { Customize } from './Customize/Customize';
 import { FeaturesSection } from './FeaturesSection/FeaturesSection';
@@ -19,7 +19,7 @@ export function HomePage() {
         <FeaturesSection />
         <Customize />
         {/* <Features /> */}
-        <Explore />
+        {/* <Explore /> */}
         <Community />
       </div>
       <Footer />
