@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { ArrowRightIcon } from '@modulz/radix-icons';
-import { Container, Text, SimpleGrid, Slider, useMantineTheme, Anchor } from '@mantine/core';
+import { Container, Text, SimpleGrid, Slider, useMantineTheme, Button } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import * as CORE_STYLES_API from '@mantine/core/src/styles.api';
 import DataTable from '../../MdxPage/MdxProvider/DataTable/DataTable';
@@ -107,10 +107,15 @@ export function Customize() {
               {code}
             </Prism>
 
-            <Anchor component={Link} to="/theming/styles-api" className={classes.link} mt={15}>
+            <Button
+              mt={15}
+              size="md"
+              component={Link}
+              to="/theming/styles-api"
+              rightIcon={<ArrowRightIcon style={{ width: 16, height: 16 }} />}
+            >
               Learn more about Styles API
-              <ArrowRightIcon style={{ marginLeft: 8 }} />
-            </Anchor>
+            </Button>
           </div>
         </SimpleGrid>
       </Container>
