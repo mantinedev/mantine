@@ -1,4 +1,4 @@
-import React, { Children, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -23,7 +23,6 @@ export function SimpleGrid({
   className,
   breakpoints = [],
   cols,
-  id,
   spacing = 'md',
   children,
   style,
@@ -46,13 +45,9 @@ export function SimpleGrid({
     'simple-grid'
   );
 
-  const columns = (Children.toArray(children) as React.ReactElement[]).map((column) =>
-    React.cloneElement(column, { className: cx(classes.col, column.props.className) })
-  );
-
   return (
-    <div className={cx(classes.grid, className)} id={id} style={mergedStyles} {...rest}>
-      {columns}
+    <div className={cx(classes.grid, className)} style={mergedStyles} {...rest}>
+      {children}
     </div>
   );
 }
