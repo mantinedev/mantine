@@ -38,8 +38,13 @@ export default createStyles((theme) => ({
     },
 
     '@media (max-width: 600px)': {
-      fontSize: 30,
+      fontSize: 28,
       marginBottom: theme.spacing.xl * 2,
+      marginLeft: 0,
+
+      '&::before, &::after': {
+        display: 'none',
+      },
     },
   },
 
