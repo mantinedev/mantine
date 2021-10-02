@@ -37,7 +37,7 @@ export function Customize() {
     <div className={classes.wrapper}>
       <Container size={1100}>
         <SectionTitle>Components customization</SectionTitle>
-        <Text size="xl" mb={40} style={{ lineHeight: 1.6 }}>
+        <Text size="xl" mb={40} className={classes.description}>
           Each Mantine component supports styles overriding for every internal element inside with
           classes or inline styles. This feature alongside other customization options allows you to
           implement any visual modifications to components and adapt them to fit almost any design

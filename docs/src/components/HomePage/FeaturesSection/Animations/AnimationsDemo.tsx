@@ -29,15 +29,13 @@ export function AnimationsDemo() {
   const [modalOpened, setModalOpened] = useState(false);
   return (
     <Paper shadow="md" padding={30} radius="md">
-      <Title order={3} style={{ marginBottom: 15 }}>
+      <Title order={4} style={{ marginBottom: 15 }}>
         Use premade transitions with any component
       </Title>
 
-      <div style={{ maxWidth: 520 }}>
-        <Transitions />
-      </div>
+      <Transitions />
 
-      <Title order={3} style={{ marginBottom: 10, marginTop: 30 }}>
+      <Title order={4} style={{ marginBottom: 10, marginTop: 30 }}>
         Or create your own transitions
       </Title>
 
