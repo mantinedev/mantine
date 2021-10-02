@@ -25,9 +25,9 @@ export function Community() {
             </Text>
 
             <Group mt={30}>
-              <SocialButton service="github" />
-              <SocialButton service="discord" />
-              <SocialButton service="twitter" />
+              <SocialButton className={classes.control} service="github" />
+              <SocialButton className={classes.control} service="discord" />
+              <SocialButton className={classes.control} service="twitter" />
             </Group>
           </div>
         </div>

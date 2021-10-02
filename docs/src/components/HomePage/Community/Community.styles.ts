@@ -27,4 +27,10 @@ export default createStyles((theme) => ({
     color: theme.white,
     lineHeight: 1.6,
   },
+
+  control: {
+    '@media (max-width: 960px)': {
+      flex: 1,
+    },
+  },
 }));
