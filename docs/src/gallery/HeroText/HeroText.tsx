@@ -67,7 +67,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   control: {
-    '& + &': {
+    '&:not(:first-of-type)': {
       marginLeft: theme.spacing.md,
     },
 
@@ -75,7 +75,7 @@ const useStyles = createStyles((theme) => ({
       height: 42,
       fontSize: theme.fontSizes.md,
 
-      '& + &': {
+      '&:not(:first-of-type)': {
         marginTop: theme.spacing.md,
         marginLeft: 0,
       },
@@ -84,8 +84,9 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function HeroText() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const theme = useMantineTheme();
+
   return (
     <Container className={classes.wrapper} size={1400}>
       <Dots className={classes.dots} style={{ left: 0, top: 0 }} />

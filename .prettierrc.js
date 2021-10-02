@@ -1,3 +1,3 @@
-const config = require('./eslint/prettier.config');
+const config = require('./packages/eslint/prettier.config');
 
 module.exports = config;

@@ -1,13 +1,20 @@
 import React from 'react';
-import { useMantineTheme, DefaultProps, getThemeColor, MantineColor } from '../../theme';
+import {
+  useMantineTheme,
+  DefaultProps,
+  getThemeColor,
+  MantineColor,
+  useExtractedMargins,
+} from '@mantine/styles';
 
 export interface MarkProps extends DefaultProps, React.ComponentPropsWithoutRef<'mark'> {
   /** Background color from theme.colors */
   color?: MantineColor;
 }
 
-export function Mark({ color = 'yellow', style, themeOverride, ...others }: MarkProps) {
-  const theme = useMantineTheme(themeOverride);
+export function Mark({ color = 'yellow', style, ...others }: MarkProps) {
+  const theme = useMantineTheme();
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   return (
     <mark
@@ -18,9 +25,9 @@ export function Mark({ color = 'yellow', style, themeOverride, ...others }: Mark
           shade: theme.colorScheme === 'dark' ? 5 : 2,
         }),
         color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
-        ...style,
+        ...mergedStyles,
       }}
-      {...others}
+      {...rest}
     />
   );
 }

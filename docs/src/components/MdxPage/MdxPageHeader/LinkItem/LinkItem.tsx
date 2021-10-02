@@ -11,7 +11,7 @@ interface LinkItemProps {
 }
 
 export function LinkItem({ label, icon, children, link }: LinkItemProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <HeaderItem label={label}>

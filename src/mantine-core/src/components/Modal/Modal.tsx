@@ -1,34 +1,27 @@
-import React, { useState } from 'react';
-import cx from 'clsx';
+import React from 'react';
+import { useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import {
-  useReducedMotion,
-  useId,
-  useScrollLock,
-  useFocusTrap,
-  useFocusReturn,
-} from '@mantine/hooks';
-import {
-  DefaultProps,
   useMantineTheme,
   mergeStyles,
+  DefaultProps,
   MantineNumberSize,
   MantineShadow,
-} from '../../theme';
+  ClassNames,
+  useUuid,
+  MantineMargin,
+} from '@mantine/styles';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { Portal } from '../Portal/Portal';
-import { GroupedTransition, MantineTransition } from '../Transition/Transition';
-import { ClickOutsideProvider } from '../../utils';
-import useStyles, { sizes } from './Modal.styles';
+import { GroupedTransition, MantineTransition } from '../Transition';
+import useStyles from './Modal.styles';
 
-export const MODAL_SIZES = sizes;
-
-export type ModalStylesNames = keyof ReturnType<typeof useStyles>;
+export type ModalStylesNames = Exclude<ClassNames<typeof useStyles>, 'clickOutsideOverlay'>;
 
 export interface ModalProps
-  extends DefaultProps<ModalStylesNames>,
+  extends Omit<DefaultProps<ModalStylesNames>, MantineMargin>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Mounts modal if true */
   opened: boolean;
@@ -83,7 +76,6 @@ export function MantineModal({
   className,
   style,
   opened,
-  themeOverride,
   title,
   onClose,
   children,
@@ -103,16 +95,13 @@ export function MantineModal({
   styles,
   ...others
 }: ModalProps) {
-  const baseId = useId(id);
+  const baseId = useUuid(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
-  const reduceMotion = useReducedMotion();
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, overflow, theme }, classNames, 'modal');
+  const theme = useMantineTheme();
+  const { classes, cx } = useStyles({ size, overflow }, classNames, 'modal');
   const _styles = mergeStyles(classes, styles);
-  const [modalBodyElement, setModalBodyElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap();
-  const duration = reduceMotion ? 1 : transitionDuration;
   const _overlayOpacity =
     typeof overlayOpacity === 'number'
       ? overlayOpacity
@@ -128,8 +117,8 @@ export function MantineModal({
     <GroupedTransition
       mounted={opened}
       transitions={{
-        modal: { duration, transition },
-        overlay: { duration: duration / 2, transition: 'fade', timingFunction: 'ease' },
+        modal: { duration: transitionDuration, transition },
+        overlay: { duration: transitionDuration / 2, transition: 'fade', timingFunction: 'ease' },
       }}
     >
       {(transitionStyles) => (
@@ -148,50 +137,36 @@ export function MantineModal({
             style={{ zIndex: zIndex + 1, ..._styles.inner }}
             ref={focusTrapRef}
           >
-            <ClickOutsideProvider
-              onClickOutside={() => onClose()}
-              componentNodes={[modalBodyElement]}
+            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
+            <div onClick={onClose} className={classes.clickOutsideOverlay} />
+
+            <Paper<'div', HTMLDivElement>
+              className={classes.modal}
+              shadow={shadow}
+              padding={padding}
+              role="dialog"
+              aria-labelledby={titleId}
+              aria-describedby={bodyId}
+              aria-modal
+              style={{ ..._styles.modal, ...transitionStyles.modal }}
+              tabIndex={-1}
             >
-              <Paper<'div', HTMLDivElement>
-                themeOverride={themeOverride}
-                className={classes.modal}
-                shadow={shadow}
-                padding={padding}
-                role="dialog"
-                aria-labelledby={titleId}
-                aria-describedby={bodyId}
-                aria-modal
-                style={{ ..._styles.modal, ...transitionStyles.modal }}
-                elementRef={setModalBodyElement}
-                tabIndex={-1}
-              >
-                {(title || !hideCloseButton) && (
-                  <div className={classes.header} style={_styles.header}>
-                    <Text
-                      id={titleId}
-                      className={classes.title}
-                      style={_styles.title}
-                      themeOverride={themeOverride}
-                    >
-                      {title}
-                    </Text>
+              {(title || !hideCloseButton) && (
+                <div className={classes.header} style={_styles.header}>
+                  <Text id={titleId} className={classes.title} style={_styles.title}>
+                    {title}
+                  </Text>
 
-                    {!hideCloseButton && (
-                      <CloseButton
-                        iconSize={16}
-                        onClick={onClose}
-                        aria-label={closeButtonLabel}
-                        themeOverride={themeOverride}
-                      />
-                    )}
-                  </div>
-                )}
-
-                <div id={bodyId} className={classes.body} style={_styles.body}>
-                  {children}
+                  {!hideCloseButton && (
+                    <CloseButton iconSize={16} onClick={onClose} aria-label={closeButtonLabel} />
+                  )}
                 </div>
-              </Paper>
-            </ClickOutsideProvider>
+              )}
+
+              <div id={bodyId} className={classes.body} style={_styles.body}>
+                {children}
+              </div>
+            </Paper>
           </div>
 
           <div style={transitionStyles.overlay}>

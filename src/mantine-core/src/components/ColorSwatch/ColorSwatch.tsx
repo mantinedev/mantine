@@ -1,6 +1,5 @@
 import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../theme';
+import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
 import useStyles from './ColorSwatch.styles';
 
 interface _ColorSwatchProps<C extends React.ElementType, R extends HTMLElement>
@@ -36,20 +35,17 @@ export function ColorSwatch<
   size = 25,
   radius = 25,
   className,
-  themeOverride,
   children,
+  style,
   ...others
 }: ColorSwatchProps<C, R>) {
-  const classes = useStyles(
-    { radius, size, theme: useMantineTheme(themeOverride) },
-    null,
-    'color-swatch'
-  );
+  const { classes, cx } = useStyles({ radius, size }, null, 'color-swatch');
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   const Element = component || 'div';
 
   return (
-    <Element className={cx(classes.colorSwatch, className)} {...others}>
+    <Element className={cx(classes.colorSwatch, className)} style={mergedStyles} {...rest}>
       <div className={cx(classes.alphaOverlay, classes.overlay)} />
       <div className={cx(classes.shadowOverlay, classes.overlay)} />
       <div className={classes.overlay} style={{ backgroundColor: color }} />

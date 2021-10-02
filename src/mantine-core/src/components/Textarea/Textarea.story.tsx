@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MantineProvider } from '../../theme';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
 import { Textarea } from './Textarea';
 
 function WrappedTextarea(props: Omit<React.ComponentProps<typeof Textarea>, 'value' | 'onChange'>) {

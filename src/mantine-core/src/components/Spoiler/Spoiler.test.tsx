@@ -7,6 +7,7 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Spoiler } from './Spoiler';
 import { Spoiler as SpoilerStylesApi } from './styles.api';
@@ -25,6 +26,7 @@ describe('@mantine/core/Spoiler', () => {
   ]);
 
   itSupportsOthers(Spoiler, defaultProps);
+  itSupportsMargins(Spoiler, defaultProps);
   itSupportsClassName(Spoiler, defaultProps);
   itRendersChildren(Spoiler, defaultProps);
   itSupportsStyle(Spoiler, defaultProps);

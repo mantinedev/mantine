@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useUncontrolled, useReducedMotion, useDidUpdate, useId } from '@mantine/hooks';
-import { DefaultProps, getSizeValue, mergeStyles, useMantineTheme } from '../../theme';
+import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
+import {
+  mergeStyles,
+  DefaultProps,
+  getSizeValue,
+  ClassNames,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -9,7 +16,7 @@ import {
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { Popper } from '../Popper/Popper';
-import { MantineTransition } from '../Transition/Transition';
+import { MantineTransition } from '../Transition';
 import { Paper } from '../Paper/Paper';
 import {
   ColorPicker,
@@ -17,14 +24,13 @@ import {
   ColorPickerStylesNames,
 } from '../ColorPicker/ColorPicker';
 import { convertHsvaTo, isColorValid, parseColor } from '../ColorPicker/converters';
-import { useClickOutsideRegister } from '../../utils';
 import useStyles from './ColorInput.styles';
 
 export type ColorInputStylesNames =
   | InputWrapperStylesNames
   | InputStylesNames
   | ColorPickerStylesNames
-  | keyof ReturnType<typeof useStyles>;
+  | ClassNames<typeof useStyles>;
 
 export interface ColorInputProps
   extends InputWrapperBaseProps,
@@ -85,7 +91,6 @@ export function ColorInput({
   defaultValue,
   classNames,
   styles,
-  themeOverride,
   disallowInput = false,
   fixOnBlur = true,
   withPreview = true,
@@ -102,15 +107,13 @@ export function ColorInput({
   swatches,
   ...others
 }: ColorInputProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'color-input');
+  const { classes } = useStyles(null, classNames, 'color-input');
   const _styles = mergeStyles(classes, styles);
-  const uuid = useId(id);
-  const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+  const uuid = useUuid(id);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const [lastValidValue, setLastValidValue] = useState('');
-  const clickOutsideRegister = useClickOutsideRegister();
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -129,10 +132,6 @@ export function ColorInput({
     setDropdownOpened(false);
     fixOnBlur && setValue(lastValidValue);
   };
-
-  useEffect(() => {
-    clickOutsideRegister(`${uuid}-dropdown`, dropdownElement);
-  }, [dropdownElement]);
 
   useEffect(() => {
     if (isColorValid(_value)) {
@@ -157,13 +156,13 @@ export function ColorInput({
       size={size}
       id={uuid}
       className={className}
-      style={style}
+      style={mergedStyles}
       __staticSelector="color-input"
       {...wrapperProps}
     >
       <div ref={setReferenceElement}>
         <Input<'input'>
-          {...others}
+          {...rest}
           __staticSelector="color-input"
           id={uuid}
           onFocus={handleInputFocus}
@@ -194,7 +193,7 @@ export function ColorInput({
 
       <Popper
         referenceElement={referenceElement}
-        transitionDuration={useReducedMotion() ? 0 : transitionDuration}
+        transitionDuration={transitionDuration}
         transitionTimingFunction={transitionTimingFunction}
         transition={transition}
         mounted={dropdownOpened}
@@ -207,7 +206,7 @@ export function ColorInput({
         arrowClassName={classes.arrow}
         arrowStyle={{ ..._styles.arrow, left: getSizeValue({ size, sizes: ARROW_OFFSET }) }}
       >
-        <div style={{ pointerEvents: 'all' }} ref={setDropdownElement}>
+        <div style={{ pointerEvents: 'all' }}>
           <Paper
             shadow="sm"
             padding={size}

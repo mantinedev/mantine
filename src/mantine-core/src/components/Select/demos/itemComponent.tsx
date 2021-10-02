@@ -6,21 +6,43 @@ const code = `
 import { Group, Avatar, Text, Select } from '@mantine/core';
 
 const data = [
-  { value: 'bob@handsome.inc', image: 'image-link', label: 'bob@handsome.inc', name: 'Bob Handsome' },
-  { value: 'bill@outlook.com', image: 'image-link', label: 'bill@outlook.com', name: 'Bill Rataconda' },
-  { value: 'amy@wong.cn', image: 'image-link', label: 'amy@wong.cn', name: 'Amy Wong' },
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',
+    label: 'Bender Bending Rodríguez',
+    value: 'Bender Bending Rodríguez',
+    description: 'Fascinated with cooking',
+  },
+
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
+    label: 'Carol Miller',
+    value: 'Carol Miller',
+    description: 'One of the richest people on Earth',
+  },
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
+    label: 'Homer Simpson',
+    value: 'Homer Simpson',
+    description: 'Overweight, lazy, and often ignorant',
+  },
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
+    label: 'Spongebob Squarepants',
+    value: 'Spongebob Squarepants',
+    description: 'Not just a sponge',
+  },
 ];
 
-function SelectItem({ image, label, name, elementRef, ...others }) {
+function SelectItem({ image, label, description, elementRef, ...others }) {
   return (
     <div ref={elementRef} {...others}>
       <Group>
-        <Avatar src={image} radius="xl" />
+        <Avatar src={image} />
 
         <div>
-          <Text>{name}</Text>
-          <Text size="xs" color="blue">
-            {label}
+          <Text>{label}</Text>
+          <Text size="xs" color="dimmed">
+            {description}
           </Text>
         </div>
       </Group>
@@ -36,50 +58,62 @@ function Demo() {
       itemComponent={AutoCompleteItem}
       data={data}
       searchable
+      maxDropdownHeight={400}
       nothingFound="Nobody here"
       filter={(value, item) =>
-        item.name.toLowerCase().includes(value.toLowerCase().trim()) ||
-        item.email.toLowerCase().includes(value.toLowerCase().trim())
+        item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
+        item.description.toLowerCase().includes(value.toLowerCase().trim())
       }
     />
   );
 }
 `;
 
-const images = [
-  'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80',
-  'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80',
-  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80',
-];
-
 const data = [
-  { value: 'bob@handsome.inc', image: images[0], label: 'bob@handsome.inc', name: 'Bob Handsome' },
   {
-    value: 'bill@outlook.com',
-    image: images[1],
-    label: 'bill@outlook.com',
-    name: 'Bill Rataconda',
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',
+    label: 'Bender Bending Rodríguez',
+    value: 'Bender Bending Rodríguez',
+    description: 'Fascinated with cooking',
   },
-  { value: 'amy@wong.cn', image: images[2], label: 'amy@wong.cn', name: 'Amy Wong' },
+
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
+    label: 'Carol Miller',
+    value: 'Carol Miller',
+    description: 'One of the richest people on Earth',
+  },
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
+    label: 'Homer Simpson',
+    value: 'Homer Simpson',
+    description: 'Overweight, lazy, and often ignorant',
+  },
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
+    label: 'Spongebob Squarepants',
+    value: 'Spongebob Squarepants',
+    description: 'Not just a sponge',
+  },
 ];
 
 interface ItemProps extends React.ComponentProps<'div'> {
   image: string;
   label: string;
-  name: string;
+  description: string;
   elementRef: any;
 }
 
-function SelectItem({ image, label, name, elementRef, ...others }: ItemProps) {
+function SelectItem({ image, label, description, elementRef, ...others }: ItemProps) {
   return (
     <div ref={elementRef} {...others}>
       <Group>
-        <Avatar src={image} radius="xl" />
+        <Avatar src={image} />
 
         <div>
-          <Text>{name}</Text>
-          <Text size="xs" color="blue">
-            {label}
+          <Text>{label}</Text>
+          <Text size="xs" color="dimmed">
+            {description}
           </Text>
         </div>
       </Group>
@@ -95,10 +129,11 @@ export function CustomSelectDemo(props: any) {
       itemComponent={SelectItem}
       data={data}
       searchable
+      maxDropdownHeight={400}
       nothingFound="Nobody here"
       filter={(value, item) =>
-        item.name.toLowerCase().includes(value.toLowerCase().trim()) ||
-        item.label.toLowerCase().includes(value.toLowerCase().trim())
+        item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
+        item.description.toLowerCase().includes(value.toLowerCase().trim())
       }
       {...props}
     />

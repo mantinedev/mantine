@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsClassName,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Title } from './Title';
 
@@ -18,6 +19,7 @@ describe('@mantine/core/Title', () => {
   itRendersChildren(Title, {});
   itSupportsOthers(Title, {});
   itSupportsStyle(Title, {});
+  itSupportsMargins(Title, {});
   itSupportsClassName(Title, {});
 
   it('has correct displayName', () => {

@@ -24,17 +24,12 @@ const { argv }: { argv: any } = yargs(hideBin(process.argv))
     default: true,
     description: 'Generate sourcemap.',
   })
-  .option('minify', {
-    type: 'boolean',
-    default: false,
-    description: 'Minify umd files.',
-  })
   .option('formats', {
     type: 'string',
     array: true,
-    choices: ['es', 'cjs', 'umd'],
-    default: ['es', 'cjs', 'umd'],
-    description: "Specify module code generation: 'es', 'cjs', 'umd'.",
+    choices: ['es', 'cjs'],
+    default: ['es', 'cjs'],
+    description: "Specify module code generation: 'es', 'cjs'.",
   })
   .example([
     ['$0 all --formats umd cjs', 'Building only umd and cjs packages.'],

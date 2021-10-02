@@ -1,11 +1,16 @@
 import React from 'react';
-import cx from 'clsx';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { Curve } from './Curve/Curve';
-import { DefaultProps, mergeStyles, MantineColor } from '../../theme';
 import { getCurves } from './get-curves/get-curves';
 import useStyles from './RingProgress.styles';
 
-export type RingProgressStylesNames = keyof ReturnType<typeof useStyles>;
+export type RingProgressStylesNames = ClassNames<typeof useStyles>;
 
 export interface RingProgressProps
   extends DefaultProps<RingProgressStylesNames>,
@@ -30,13 +35,13 @@ export function RingProgress({
   sections,
   size = 120,
   thickness = size / 10,
-  themeOverride,
   classNames,
   styles,
   ...others
 }: RingProgressProps) {
-  const classes = useStyles(null, classNames, 'ring-progress');
+  const { classes, cx } = useStyles(null, classNames, 'ring-progress');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   const curves = getCurves({ size, thickness, sections }).map((curve, index) => (
     <Curve
@@ -48,15 +53,14 @@ export function RingProgress({
       offset={curve.offset}
       color={curve.data?.color}
       root={curve.root}
-      themeOverride={themeOverride}
     />
   ));
 
   return (
     <div
-      style={{ width: size, height: size, ...style, ..._styles.root }}
+      style={{ width: size, height: size, ...mergedStyles }}
       className={cx(classes.root, className)}
-      {...others}
+      {...rest}
     >
       <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
         {curves}

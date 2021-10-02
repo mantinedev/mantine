@@ -6,6 +6,8 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsStylesApi,
+  defaultInputProps,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
@@ -25,6 +27,7 @@ const data = Array(50)
 describe('@mantine/core/Autocomplete', () => {
   itSupportsClassName(Autocomplete, defaultProps);
   itSupportsStyle(Autocomplete, defaultProps);
+  itSupportsMargins(Autocomplete, defaultProps);
   itSupportsRef(Autocomplete, defaultProps, HTMLInputElement, 'elementRef');
 
   checkAccessibility([
@@ -34,15 +37,7 @@ describe('@mantine/core/Autocomplete', () => {
 
   itSupportsStylesApi(
     Autocomplete,
-    {
-      ...defaultProps,
-      icon: '$',
-      rightSection: '$',
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-    },
+    { ...defaultProps, ...defaultInputProps },
     Object.keys(AutocompleteStylesApi).filter((key) => key !== 'hovered' && key !== 'nothingFound'),
     'autocomplete'
   );

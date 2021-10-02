@@ -5,6 +5,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Divider } from './Divider';
 
@@ -12,6 +13,7 @@ describe('@mantine/core/Divider', () => {
   itSupportsClassName(Divider, {});
   itSupportsStyle(Divider, {});
   itSupportsOthers(Divider, {});
+  itSupportsMargins(Divider, {});
   itSupportsStylesApi(Divider, { label: 'test' }, ['label'], 'divider');
 
   it('renders given label in horizontal orientation', () => {

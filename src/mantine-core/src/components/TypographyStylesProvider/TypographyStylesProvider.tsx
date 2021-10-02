@@ -1,6 +1,5 @@
 import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '../../theme';
+import { DefaultProps, useExtractedMargins } from '@mantine/styles';
 import useStyles from './TypographyStylesProvider.styles';
 
 export interface TypographyStylesProviderProps
@@ -12,12 +11,12 @@ export interface TypographyStylesProviderProps
 
 export function TypographyStylesProvider({
   className,
-  themeOverride,
+  style,
   ...others
 }: TypographyStylesProviderProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, null, 'typography-styles-provider');
-  return <div className={cx(classes.root, className)} {...others} />;
+  const { classes, cx } = useStyles(null, null, 'typography-styles-provider');
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+  return <div className={cx(classes.root, className)} style={mergedStyles} {...rest} />;
 }
 
 TypographyStylesProvider.displayName = '@mantine/core/TypographyStylesProvider';

@@ -1,12 +1,8 @@
-import { createMemoStyles, MantineTheme } from '../../theme';
+import { createStyles } from '@mantine/styles';
 
-interface MenuStyles {
-  theme: MantineTheme;
-}
-
-export default createMemoStyles({
-  arrow: ({ theme }: MenuStyles) => ({
+export default createStyles((theme) => ({
+  arrow: {
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-  }),
-});
+  },
+}));

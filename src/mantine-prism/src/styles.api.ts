@@ -1,6 +1,6 @@
-import useStyles from './Prism.styles';
+import type { PrismStylesNames } from './Prism';
 
-export const Prism: MantineClasses<typeof useStyles> = {
+export const Prism: Record<PrismStylesNames, string> = {
   root: 'Root element',
   code: 'Pre element which contains code',
   copy: 'Copy button wrapper',

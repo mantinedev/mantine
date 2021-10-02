@@ -1,18 +1,16 @@
 import React from 'react';
-import cx from 'clsx';
-import { useReducedMotion } from '@mantine/hooks';
 import {
-  DefaultProps,
-  MantineNumberSize,
   useMantineTheme,
   mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
   MantineColor,
-} from '../../theme';
-import useStyles, { sizes } from './Burger.styles';
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
+import useStyles from './Burger.styles';
 
-export const BURGER_SIZES = sizes;
-
-export type BurgerStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'opened'>;
+export type BurgerStylesNames = Exclude<ClassNames<typeof useStyles>, 'opened'>;
 
 export interface BurgerProps
   extends DefaultProps<BurgerStylesNames>,
@@ -36,25 +34,24 @@ export function Burger({
   opened,
   color,
   size = 'md',
-  themeOverride,
   elementRef,
   classNames,
   styles,
   ...others
 }: BurgerProps) {
-  const theme = useMantineTheme(themeOverride);
-  const reduceMotion = useReducedMotion();
+  const theme = useMantineTheme();
   const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
-  const classes = useStyles({ color: _color, size, theme, reduceMotion }, classNames, 'burger');
+  const { classes, cx } = useStyles({ color: _color, size }, classNames, 'burger');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   return (
     <button
       type="button"
       className={cx(classes.root, className)}
       ref={elementRef}
-      style={{ ...style, ..._styles.root }}
-      {...others}
+      style={mergedStyles}
+      {...rest}
     >
       <div className={cx(classes.burger, { [classes.opened]: opened })} style={_styles.burger} />
     </button>

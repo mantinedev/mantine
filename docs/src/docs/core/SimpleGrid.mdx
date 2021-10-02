@@ -42,6 +42,12 @@ In this example:
 - screen width < 755px and > 680px – cols = 2, spacing = sm
 - screen width < 680px – cols = 1, spacing = sm
 
+You can also use breakpoints from theme to set `maxWidth`:
+
+<Demo data={SimpleGridDemos.themeBreakpoints} />
+
+You can configure theme breakpoint values in [MantineProvider](/theming/extend-theme/#breakpoints).
+
 ## Spacing
 
 You can use either `theme.spacing` value or number value for spacing in px:
@@ -64,12 +70,7 @@ Spacing also works in `breakpoints`:
 <SimpleGrid breakpoints={[{ maxWidth: 755, cols: 2, spacing: 12 }]} />;
 ```
 
-## Server side rendering
+## Browser support
 
-Component uses [use-id](/hooks/use-id/) hook to generate unique classes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<SimpleGrid /> // -> random id generated both on client and server, props mismatch warning
-<SimpleGrid id="my-grid" /> // -> id is static, no mismatches
-```
+Simple grid uses [CSS Grid Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout),
+check [caniuse](https://caniuse.com/css-grid) to find out information about browser support.

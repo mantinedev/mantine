@@ -1,6 +1,10 @@
 import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, useMantineTheme, MantineShadow } from '../../theme';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineShadow,
+  useExtractedMargins,
+} from '@mantine/styles';
 import useStyles from './Paper.styles';
 
 export interface SharedPaperProps extends DefaultProps {
@@ -38,16 +42,21 @@ export function Paper<C extends React.ElementType = 'div', R extends HTMLElement
   radius = 'sm',
   withBorder = false,
   shadow,
-  themeOverride,
   elementRef,
+  style,
   ...others
 }: PaperProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, shadow, padding, theme, withBorder }, null, 'paper');
+  const { classes, cx } = useStyles({ radius, shadow, padding, withBorder }, null, 'paper');
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const Element = component || 'div';
 
   return (
-    <Element className={cx(classes.paper, className)} ref={elementRef as any} {...others}>
+    <Element
+      className={cx(classes.paper, className)}
+      ref={elementRef as any}
+      style={mergedStyles}
+      {...rest}
+    >
       {children}
     </Element>
   );

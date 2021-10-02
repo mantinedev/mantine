@@ -1,14 +1,18 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
-import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, mergeStyles, useMantineTheme, MantineColor } from '../../theme';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  MantineMargin,
+} from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 
-export type TooltipStylesNames = keyof ReturnType<typeof useStyles>;
+export type TooltipStylesNames = ClassNames<typeof useStyles>;
 
 export interface TooltipProps
-  extends DefaultProps<TooltipStylesNames>,
+  extends Omit<DefaultProps<TooltipStylesNames>, MantineMargin>,
     SharedPopperProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** Tooltip content */
@@ -57,7 +61,6 @@ export interface TooltipProps
 export function Tooltip({
   className,
   style,
-  themeOverride,
   label,
   children,
   opened,
@@ -84,8 +87,7 @@ export function Tooltip({
   styles,
   ...others
 }: TooltipProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color }, classNames, 'tooltip');
+  const { classes, cx } = useStyles({ color }, classNames, 'tooltip');
   const _styles = mergeStyles(classes, styles);
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
@@ -116,7 +118,7 @@ export function Tooltip({
     >
       <Popper
         referenceElement={referenceElement}
-        transitionDuration={useReducedMotion() ? 0 : transitionDuration}
+        transitionDuration={transitionDuration}
         transition={transition}
         mounted={visible}
         position={position}

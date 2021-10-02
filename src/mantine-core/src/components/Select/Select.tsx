@@ -1,21 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, MantineSize, MantineShadow } from '../../theme';
+import { useUncontrolled, useMergedRef } from '@mantine/hooks';
+import {
+  DefaultProps,
+  MantineSize,
+  MantineShadow,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { scrollIntoView } from '../../utils';
-import { InputWrapper } from '../InputWrapper/InputWrapper';
-import { Input } from '../Input/Input';
-import { MantineTransition } from '../Transition/Transition';
-import { DefaultItem, SelectItemProps } from './DefaultItem/DefaultItem';
+import { InputWrapper } from '../InputWrapper';
+import { Input } from '../Input';
+import { MantineTransition } from '../Transition';
+import { DefaultItem } from './DefaultItem/DefaultItem';
 import { getSelectRightSectionProps } from './SelectRightSection/get-select-right-section-props';
 import { SelectItems } from './SelectItems/SelectItems';
 import { SelectDropdown } from './SelectDropdown/SelectDropdown';
 import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
 
-export type SelectStylesNames = BaseSelectStylesNames;
-export type { SelectItemProps };
-
-export interface SelectProps extends DefaultProps<SelectStylesNames>, BaseSelectProps {
+export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSelectProps {
   /** Input size */
   size?: MantineSize;
 
@@ -105,7 +108,6 @@ export function Select({
   transitionTimingFunction,
   wrapperProps,
   elementRef,
-  themeOverride,
   classNames,
   styles,
   filter = defaultFilter,
@@ -121,12 +123,13 @@ export function Select({
   rightSectionWidth,
   ...others
 }: SelectProps) {
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
   const dropdownRef = useRef<HTMLDivElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const [_value, handleChange, inputMode] = useUncontrolled({
     value,
     defaultValue,
@@ -268,8 +271,7 @@ export function Select({
       description={description}
       size={size}
       className={className}
-      style={style}
-      themeOverride={themeOverride}
+      style={mergedStyles}
       classNames={classNames}
       styles={styles}
       __staticSelector="select"
@@ -285,7 +287,7 @@ export function Select({
         tabIndex={-1}
       >
         <Input<'input'>
-          {...others}
+          {...rest}
           type="text"
           required={required}
           elementRef={useMergedRef(elementRef, inputRef)}
@@ -293,7 +295,6 @@ export function Select({
           invalid={!!error}
           size={size}
           onKeyDown={handleInputKeydown}
-          themeOverride={themeOverride}
           classNames={classNames}
           __staticSelector="select"
           value={inputValue}
@@ -319,7 +320,6 @@ export function Select({
             },
             size,
             shouldClear: clearable && !!selectedValue,
-            themeOverride,
             clearButtonLabel,
             onClear: handleClear,
             error,
@@ -327,7 +327,6 @@ export function Select({
         />
 
         <SelectDropdown
-          themeOverride={themeOverride}
           mounted={dropdownOpened}
           transition={transition}
           transitionDuration={transitionDuration}
@@ -343,7 +342,6 @@ export function Select({
           <SelectItems
             data={filteredData}
             hovered={hovered}
-            themeOverride={themeOverride}
             classNames={classNames}
             styles={styles}
             isItemSelected={(val) => val === _value}

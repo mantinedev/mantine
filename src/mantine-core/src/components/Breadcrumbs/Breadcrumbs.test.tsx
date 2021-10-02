@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Text } from '../Text/Text';
 import { Breadcrumbs } from './Breadcrumbs';
@@ -29,10 +30,7 @@ describe('@mantine/core/Breadcrumbs', () => {
   itSupportsClassName(Breadcrumbs, defaultProps);
   itSupportsOthers(Breadcrumbs, defaultProps);
   itSupportsStyle(Breadcrumbs, defaultProps);
-
-  it('has correct displayName', () => {
-    expect(Breadcrumbs.displayName).toEqual('@mantine/core/Breadcrumbs');
-  });
+  itSupportsMargins(Breadcrumbs, defaultProps);
 
   it('renders correct amount of children and separators', () => {
     const element = shallow(<Breadcrumbs {...defaultProps} />);
@@ -47,5 +45,9 @@ describe('@mantine/core/Breadcrumbs', () => {
   it('accepts separator from props', () => {
     const element = shallow(<Breadcrumbs separator="test" {...defaultProps} />);
     expect(element.render().find('.mantine-breadcrumbs-separator').first().text()).toBe('test');
+  });
+
+  it('has correct displayName', () => {
+    expect(Breadcrumbs.displayName).toEqual('@mantine/core/Breadcrumbs');
   });
 });

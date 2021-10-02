@@ -125,13 +125,3 @@ To specify initial focus element add `data-autofocus` attribute:
   <input />
 </Popover>
 ```
-
-## Server side rendering
-
-By default Popover uses random id to connect title and body via aria- attributes.
-This will result in hydration mismatch if you use **opened** popover (closed popover do not require this step) during ssr.
-To avoid that set static id:
-
-```tsx
-<Popover id="my-popover" opened />
-```

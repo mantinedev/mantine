@@ -1,25 +1,21 @@
 import React, { useRef } from 'react';
-import cx from 'clsx';
 import { useUncontrolled, clamp } from '@mantine/hooks';
 import {
-  DefaultProps,
-  useMantineTheme,
   mergeStyles,
+  DefaultProps,
   MantineNumberSize,
   MantineColor,
-} from '../../theme';
-import { Group, GroupPosition } from '../Group/Group';
-import { Tab, TabType, TabProps } from './Tab/Tab';
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
+import { Group, GroupPosition } from '../Group';
+import { Tab, TabType } from './Tab/Tab';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
 
-export { Tab };
-export type { TabProps };
-
-export const TABS_VARIANTS = ['default', 'outline', 'pills', 'unstyled'] as const;
-export type TabsVariant = typeof TABS_VARIANTS[number];
+export type TabsVariant = 'default' | 'outline' | 'pills' | 'unstyled';
 export type TabsStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>, TabsVariant>
+  | Exclude<ClassNames<typeof useStyles>, TabsVariant>
   | TabControlStylesNames;
 
 export interface TabsProps
@@ -47,7 +43,7 @@ export interface TabsProps
   onTabChange?(tabIndex: number): void;
 
   /** Controls appearance */
-  variant?: 'default' | 'outline' | 'pills' | 'unstyled';
+  variant?: TabsVariant;
 
   /** Controls tab content padding-top */
   tabPadding?: MantineNumberSize;
@@ -91,7 +87,6 @@ export function Tabs({
   children,
   style,
   initialTab,
-  themeOverride,
   active,
   position = 'left',
   grow = false,
@@ -104,9 +99,9 @@ export function Tabs({
   orientation = 'horizontal',
   ...others
 }: TabsProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, tabPadding, orientation }, classNames, 'tabs');
+  const { classes, cx } = useStyles({ tabPadding, orientation }, classNames, 'tabs');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
 
@@ -165,7 +160,7 @@ export function Tabs({
   const content = tabs[activeTab].props.children;
 
   return (
-    <div {...others} className={cx(classes.root, className)} style={{ ...style, ..._styles.root }}>
+    <div {...rest} className={cx(classes.root, className)} style={mergedStyles}>
       <div
         className={cx(classes.tabsListWrapper, classes[variant])}
         style={{ ..._styles.tabsListWrapper, ..._styles[variant] }}

@@ -35,6 +35,7 @@ export * as ListDemos from './components/List/demos';
 export * as LoaderDemos from './components/Loader/demos';
 export * as LoadingOverlayDemos from './components/LoadingOverlay/demos';
 export * as MarkDemos from './components/Mark/demos';
+export * as MediaQueryDemos from './components/MediaQuery/demos';
 export * as MenuDemos from './components/Menu/demos';
 export * as ModalDemos from './components/Modal/demos';
 export * as MultiSelectDemos from './components/MultiSelect/demos';

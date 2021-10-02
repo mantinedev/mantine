@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { Text } from '../Text/Text';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
 
-export type ImageStylesNames = keyof ReturnType<typeof useStyles>;
+export type ImageStylesNames = ClassNames<typeof useStyles>;
 
 export interface ImageProps
   extends DefaultProps<ImageStylesNames>,
@@ -50,7 +55,6 @@ export interface ImageProps
 export function Image({
   className,
   style,
-  themeOverride,
   alt,
   src,
   fit = 'cover',
@@ -67,9 +71,9 @@ export function Image({
   caption,
   ...others
 }: ImageProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, theme }, classNames, 'image');
+  const { classes, cx } = useStyles({ radius }, classNames, 'image');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(!src);
   const isPlaceholder = withPlaceholder && (!loaded || error);
@@ -87,9 +91,9 @@ export function Image({
   return (
     <div
       className={cx(classes.root, className)}
-      style={{ width, height, ...style, ..._styles.root }}
+      style={{ width, height, ...mergedStyles }}
       ref={elementRef}
-      {...others}
+      {...rest}
     >
       {isPlaceholder && (
         <div className={classes.placeholder} title={alt} style={_styles.placeholder}>

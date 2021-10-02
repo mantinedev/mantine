@@ -10,16 +10,16 @@ export function Installation({ dependencies }: InstallationProps) {
   return (
     <>
       <div style={{ marginTop: 15 }}>
-        <Text style={{ marginBottom: 5 }}>Install with yarn</Text>
+        <Text mb={5}>Install with yarn</Text>
         <Prism language="bash">
-          {`yarn add ${dependencies || 'react-jss @mantine/core @mantine/hooks'}`}
+          {`yarn add ${dependencies || '@mantine/core @mantine/hooks'}`}
         </Prism>
       </div>
 
       <div style={{ marginTop: 15 }}>
-        <Text style={{ marginBottom: 5 }}>Install with npm</Text>
+        <Text mb={5}>Install with npm</Text>
         <Prism language="bash">
-          {`npm install ${dependencies || 'react-jss @mantine/core @mantine/hooks'}`}
+          {`npm install ${dependencies || '@mantine/core @mantine/hooks'}`}
         </Prism>
       </div>
     </>

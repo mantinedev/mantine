@@ -6,9 +6,11 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { TabControl } from './TabControl/TabControl';
-import { Tabs, Tab } from './Tabs';
+import { Tabs } from './Tabs';
+import { Tab } from './Tab/Tab';
 import { Tabs as TabsStylesApi } from './styles.api';
 
 const content = [
@@ -33,6 +35,7 @@ describe('@mantine/core/Tabs', () => {
   checkAccessibility([mount(<Tabs>{content}</Tabs>), mount(<Tabs initialTab={2}>{content}</Tabs>)]);
   itSupportsOthers(Tabs, defaultProps);
   itSupportsStyle(Tabs, defaultProps);
+  itSupportsMargins(Tabs, defaultProps);
   itSupportsClassName(Tabs, defaultProps);
   itSupportsStylesApi(Tabs, defaultProps, Object.keys(TabsStylesApi), 'tabs');
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import { HashIcon } from '@primer/octicons-react';
+import { FrameIcon } from '@modulz/radix-icons';
 import { Autocomplete } from '../Autocomplete';
 
 const code = `
-<Autocomplete icon={<HashIcon />} />
+<Autocomplete icon={<FrameIcon />} />
 `;
 
 function Demo() {
@@ -13,7 +13,7 @@ function Demo() {
         label="Enter a hashtag"
         placeholder="Enter a hashtag"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        icon={<HashIcon />}
+        icon={<FrameIcon />}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { LockClosedIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME, MantineProvider } from '../../theme';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
 import { TextInput } from './TextInput';
 
 function WrappedTextInput(

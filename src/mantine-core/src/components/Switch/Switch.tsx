@@ -1,19 +1,17 @@
 import React from 'react';
-import cx from 'clsx';
-import { useId, useReducedMotion } from '@mantine/hooks';
 import {
+  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  mergeStyles,
-  useMantineTheme,
   MantineColor,
-} from '../../theme';
-import useStyles, { sizes } from './Switch.styles';
+  ClassNames,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
+import useStyles from './Switch.styles';
 
-export const SWITCH_SIZES = sizes;
-
-export type SwitchStylesNames = keyof ReturnType<typeof useStyles>;
+export type SwitchStylesNames = ClassNames<typeof useStyles>;
 
 export interface SwitchProps
   extends DefaultProps<SwitchStylesNames>,
@@ -48,7 +46,6 @@ export function Switch({
   style,
   size = 'sm',
   radius = 'xl',
-  themeOverride,
   wrapperProps,
   elementRef,
   children,
@@ -56,21 +53,15 @@ export function Switch({
   styles,
   ...others
 }: SwitchProps) {
-  const reduceMotion = useReducedMotion();
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, color, radius, reduceMotion, theme }, classNames, 'switch');
+  const { classes, cx } = useStyles({ size, color, radius }, classNames, 'switch');
   const _styles = mergeStyles(classes, styles);
-
-  const uuid = useId(id);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+  const uuid = useUuid(id);
 
   return (
-    <div
-      className={cx(classes.root, className)}
-      style={{ ...style, ..._styles.root }}
-      {...wrapperProps}
-    >
+    <div className={cx(classes.root, className)} style={mergedStyles} {...wrapperProps}>
       <input
-        {...others}
+        {...rest}
         id={uuid}
         ref={elementRef}
         type="checkbox"

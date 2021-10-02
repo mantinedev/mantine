@@ -1,6 +1,5 @@
 import React from 'react';
-import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineSize } from '../../theme';
+import { DefaultProps, MantineSize, useUuid, useExtractedMargins } from '@mantine/styles';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import {
   InputWrapperBaseProps,
@@ -47,7 +46,6 @@ export function TextInput({
   style,
   icon,
   description,
-  themeOverride,
   wrapperProps,
   elementRef,
   size = 'sm',
@@ -56,7 +54,8 @@ export function TextInput({
   __staticSelector = 'text-input',
   ...others
 }: TextInputProps) {
-  const uuid = useId(id);
+  const uuid = useUuid(id);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   return (
     <InputWrapper
@@ -67,15 +66,14 @@ export function TextInput({
       description={description}
       size={size}
       className={className}
-      style={style}
-      themeOverride={themeOverride}
+      style={mergedStyles}
       classNames={classNames}
       styles={styles}
       __staticSelector={__staticSelector}
       {...wrapperProps}
     >
       <Input<'input', HTMLInputElement>
-        {...others}
+        {...rest}
         required={required}
         elementRef={elementRef}
         id={uuid}
@@ -83,7 +81,6 @@ export function TextInput({
         invalid={!!error}
         icon={icon}
         size={size}
-        themeOverride={themeOverride}
         classNames={classNames}
         styles={styles}
         __staticSelector={__staticSelector}

@@ -1,10 +1,15 @@
 import React, { createElement } from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineSize } from '../../theme';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineSize,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
-export type InputWrapperStylesNames = keyof ReturnType<typeof useStyles>;
+export type InputWrapperStylesNames = ClassNames<typeof useStyles>;
 
 export interface InputWrapperBaseProps {
   /** Input label, displayed before input */
@@ -58,7 +63,6 @@ export function InputWrapper({
   id,
   error,
   description,
-  themeOverride,
   labelElement = 'label',
   labelProps,
   descriptionProps,
@@ -69,9 +73,9 @@ export function InputWrapper({
   __staticSelector = 'input-wrapper',
   ...others
 }: InputWrapperProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
   const inputLabel = createElement(
     labelElement,
@@ -94,13 +98,12 @@ export function InputWrapper({
   );
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {label && inputLabel}
 
       {description && (
         <Text
           {...descriptionProps}
-          themeOverride={themeOverride}
           color="gray"
           className={classes.description}
           style={_styles.description}
@@ -112,13 +115,7 @@ export function InputWrapper({
       {children}
 
       {typeof error !== 'boolean' && error && (
-        <Text
-          {...errorProps}
-          themeOverride={themeOverride}
-          size={size}
-          className={classes.error}
-          style={_styles.error}
-        >
+        <Text {...errorProps} size={size} className={classes.error} style={_styles.error}>
           {error}
         </Text>
       )}

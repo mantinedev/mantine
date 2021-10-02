@@ -1,15 +1,11 @@
-import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
-export default createUseStyles(
-  (theme) => ({
-    code: {
-      marginBottom: 0,
-    },
+export default createStyles((theme) => ({
+  code: {
+    marginBottom: 0,
+  },
 
-    copy: {
-      marginLeft: theme.spacing.xl,
-    },
-  }),
-  { theming }
-);
+  copy: {
+    marginLeft: theme.spacing.xl,
+  },
+}));

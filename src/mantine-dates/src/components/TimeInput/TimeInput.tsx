@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
 import {
   InputBaseProps,
   InputWrapperBaseProps,
@@ -9,10 +8,12 @@ import {
   Input,
   InputWrapper,
   MantineSize,
-  useMantineTheme,
   mergeStyles,
+  ClassNames,
+  useUuid,
+  useExtractedMargins,
 } from '@mantine/core';
-import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
+import { useMergedRef, useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { TimeField } from './TimeField/TimeField';
 import { createTimeHandler } from './create-time-handler/create-time-handler';
@@ -20,7 +21,7 @@ import { getTimeValues } from './get-time-values/get-time-value';
 import useStyles from './TimeInput.styles';
 
 export type TimeInputStylesNames =
-  | keyof ReturnType<typeof useStyles>
+  | ClassNames<typeof useStyles>
   | InputStylesNames
   | InputWrapperStylesNames;
 
@@ -70,7 +71,6 @@ export function TimeInput({
   description,
   className,
   style,
-  themeOverride,
   size = 'sm',
   wrapperProps,
   classNames,
@@ -88,10 +88,10 @@ export function TimeInput({
   disabled = false,
   ...others
 }: TimeInputProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'time-input');
+  const { classes, cx } = useStyles({ size }, classNames, 'time-input');
   const _styles = mergeStyles(classes, styles);
-  const uuid = useId(id);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+  const uuid = useUuid(id);
 
   const [_value, handleChange] = useUncontrolled({
     value,
@@ -145,8 +145,7 @@ export function TimeInput({
       error={error}
       description={description}
       className={className}
-      style={style}
-      themeOverride={themeOverride}
+      style={mergedStyles}
       classNames={classNames}
       styles={styles}
       size={size}
@@ -157,7 +156,6 @@ export function TimeInput({
       <Input
         component="div"
         __staticSelector="time-input"
-        themeOverride={themeOverride}
         required={required}
         invalid={!!error}
         onClick={() => hoursRef.current.focus()}
@@ -166,7 +164,7 @@ export function TimeInput({
         classNames={classNames}
         styles={styles}
         disabled={disabled}
-        {...others}
+        {...rest}
       >
         <div className={classes.controls} style={_styles.controls}>
           <TimeField

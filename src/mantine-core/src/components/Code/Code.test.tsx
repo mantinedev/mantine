@@ -5,6 +5,7 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Code } from './Code';
 
@@ -13,6 +14,7 @@ describe('@mantine/core/Code', () => {
   itSupportsClassName(Code, {});
   itSupportsOthers(Code, {});
   itSupportsStyle(Code, {});
+  itSupportsMargins(Code, {});
 
   it('renders code element for inline code and pre element for block', () => {
     const inline = shallow(<Code block={false}>Code</Code>);

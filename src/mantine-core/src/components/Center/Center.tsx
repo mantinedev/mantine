@@ -1,5 +1,6 @@
 import React from 'react';
-import cx from 'clsx';
+import clsx from 'clsx';
+import { useExtractedMargins } from '@mantine/styles';
 
 export interface CenterProps extends React.ComponentPropsWithoutRef<'div'> {
   /** Content that should be centered vertically and horizontally */
@@ -10,16 +11,18 @@ export interface CenterProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 export function Center({ style, className, inline = false, ...others }: CenterProps) {
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+
   return (
     <div
+      {...rest}
+      className={clsx('mantine-center', className)}
       style={{
         display: inline ? 'inline-flex' : 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        ...style,
+        ...mergedStyles,
       }}
-      className={cx('mantine-center', className)}
-      {...others}
     />
   );
 }

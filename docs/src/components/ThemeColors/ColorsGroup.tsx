@@ -9,7 +9,7 @@ interface ColorsGroupProps {
 
 export function ColorsGroup({ group, noTitle }: ColorsGroupProps) {
   const theme = useMantineTheme();
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   const colors = theme.colors[group].map((color, index) => (
     <div key={color} className={classes.color}>

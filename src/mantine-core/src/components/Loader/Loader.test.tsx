@@ -1,13 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsClassName, itSupportsStyle, itSupportsOthers } from '@mantine/tests';
-import { DEFAULT_THEME } from '../../theme';
+import {
+  itSupportsClassName,
+  itSupportsStyle,
+  itSupportsOthers,
+  itSupportsMargins,
+} from '@mantine/tests';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Loader } from './Loader';
 
 describe('@mantine/core/Loader', () => {
   itSupportsOthers(Loader, {});
   itSupportsClassName(Loader, {});
   itSupportsStyle(Loader, {});
+  itSupportsMargins(Loader, {});
 
   it('has correct displayName', () => {
     expect(Loader.displayName).toEqual('@mantine/core/Loader');

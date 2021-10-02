@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, useMantineTheme } from '@mantine/core';
+import { MarkGithubIcon } from '@primer/octicons-react';
 import { TwitterIcon } from './TwitterIcon';
 import { DiscordIcon } from './DiscordIcon';
 import { MailIcon } from './MailIcon';
@@ -72,18 +73,43 @@ function EmailButton({ style, ...others }: SocialButtonProps) {
   );
 }
 
+function GithubButton({ style, ...others }: SocialButtonProps) {
+  const theme = useMantineTheme();
+  return (
+    <Button<'a', HTMLAnchorElement>
+      component="a"
+      target="_blank"
+      rel="noopener noreferrer"
+      href="https://github.com/mantinedev/mantine/discussions"
+      leftIcon={<MarkGithubIcon size={14} />}
+      style={{ ...style, ...baseStyles, color: theme.black, backgroundColor: theme.white }}
+      styles={{
+        leftIcon: {
+          marginRight: 16,
+        },
+      }}
+      {...others}
+    >
+      Github Discussions
+    </Button>
+  );
+}
+
 export function SocialButton({
   service,
-  style,
   ...others
-}: SocialButtonProps & { service: 'twitter' | 'discord' | 'email' }) {
+}: SocialButtonProps & { service: 'twitter' | 'discord' | 'email' | 'github' }) {
   if (service === 'discord') {
-    return <DiscordButton style={style} {...others} />;
+    return <DiscordButton {...others} />;
   }
 
   if (service === 'twitter') {
-    return <TwitterButton style={style} {...others} />;
+    return <TwitterButton {...others} />;
   }
 
-  return <EmailButton style={style} {...others} />;
+  if (service === 'github') {
+    return <GithubButton {...others} />;
+  }
+
+  return <EmailButton {...others} />;
 }

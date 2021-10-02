@@ -1,17 +1,13 @@
-import { createUseStyles } from 'react-jss';
-import { theming, MantineTheme, getFocusStyles } from '@mantine/core';
+import { createStyles, getFocusStyles } from '@mantine/core';
 
-export default createUseStyles(
-  (theme: MantineTheme) => ({
-    link: {
-      ...getFocusStyles(theme),
-      color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6],
-      textDecoration: 'none',
+export default createStyles((theme) => ({
+  link: {
+    ...getFocusStyles(theme),
+    color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6],
+    textDecoration: 'none',
 
-      '&:hover': {
-        textDecoration: 'underline',
-      },
+    '&:hover': {
+      textDecoration: 'underline',
     },
-  }),
-  { theming }
-);
+  },
+}));

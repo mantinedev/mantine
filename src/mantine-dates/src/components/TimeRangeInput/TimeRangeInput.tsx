@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
 import {
   InputBaseProps,
   InputWrapperBaseProps,
@@ -9,10 +8,12 @@ import {
   Input,
   InputWrapper,
   MantineSize,
-  useMantineTheme,
   mergeStyles,
+  ClassNames,
+  useUuid,
+  useExtractedMargins,
 } from '@mantine/core';
-import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
+import { useMergedRef, useUncontrolled } from '@mantine/hooks';
 import dayjs, { UnitType } from 'dayjs';
 import { TimeField } from '../TimeInput/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInput/create-time-handler/create-time-handler';
@@ -20,7 +21,7 @@ import { getTimeValues } from '../TimeInput/get-time-values/get-time-value';
 import useStyles from './TimeRangeInput.styles';
 
 export type TimeRangeInputStylesNames =
-  | Exclude<keyof ReturnType<typeof useStyles>, 'disabled'>
+  | Exclude<ClassNames<typeof useStyles>, 'disabled'>
   | InputStylesNames
   | InputWrapperStylesNames;
 
@@ -73,7 +74,6 @@ export function TimeRangeInput({
   description,
   className,
   style,
-  themeOverride,
   size = 'sm',
   wrapperProps,
   classNames,
@@ -92,10 +92,10 @@ export function TimeRangeInput({
   disabled = false,
   ...others
 }: TimeRangeInputProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'time-range-input');
+  const { classes, cx } = useStyles({ size }, classNames, 'time-range-input');
   const _styles = mergeStyles(classes, styles);
-  const uuid = useId(id);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+  const uuid = useUuid(id);
   const fromDate = new Date();
   const toDate = new Date(new Date().valueOf() + 1000);
 
@@ -176,8 +176,7 @@ export function TimeRangeInput({
       error={error}
       description={description}
       className={className}
-      style={style}
-      themeOverride={themeOverride}
+      style={mergedStyles}
       classNames={classNames}
       styles={styles}
       size={size}
@@ -188,7 +187,6 @@ export function TimeRangeInput({
       <Input
         component="div"
         __staticSelector="time-range-input"
-        themeOverride={themeOverride}
         required={required}
         invalid={!!error}
         onClick={() => {
@@ -200,7 +198,7 @@ export function TimeRangeInput({
         classNames={classNames}
         styles={styles}
         disabled={disabled}
-        {...others}
+        {...rest}
       >
         <div className={classes.inputWrapper} style={_styles.inputWrapper}>
           <TimeField

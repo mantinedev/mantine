@@ -1,17 +1,16 @@
-import React, { Children } from 'react';
-import cx from 'clsx';
-import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, useMantineTheme, getSizeValue } from '../../theme';
-
-interface GridBreakpoint {
-  maxWidth: number;
-  cols: number;
-  spacing?: MantineNumberSize;
-}
+import React, { useMemo } from 'react';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  useExtractedMargins,
+  getSizeValue,
+  useMantineTheme,
+} from '@mantine/styles';
+import useStyles, { SimpleGridBreakpoint } from './SimpleGrid.styles';
 
 export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Breakpoints data to change items per row and spacing based on max-width */
-  breakpoints?: GridBreakpoint[];
+  breakpoints?: SimpleGridBreakpoint[];
 
   /** Default amount of columns, used when none of breakpoints can be applied  */
   cols: number;
@@ -24,63 +23,32 @@ export function SimpleGrid({
   className,
   breakpoints = [],
   cols,
-  id,
   spacing = 'md',
-  themeOverride,
   children,
+  style,
   ...others
 }: SimpleGridProps) {
-  const uuid = useId(id);
-  const theme = useMantineTheme(themeOverride);
-  const sortedBreakpoints = [...breakpoints].sort((a, b) => b.maxWidth - a.maxWidth);
-  const gridClassName = `grid-${uuid}`;
-  const colClassName = `col-${uuid}`;
-
-  const columns = (Children.toArray(children) as React.ReactElement[]).map((column) =>
-    React.cloneElement(column, { className: cx(colClassName, column.props.className) })
+  const theme = useMantineTheme();
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+  const sortedBreakpoints = useMemo(
+    () =>
+      [...breakpoints].sort(
+        (a, b) =>
+          getSizeValue({ size: b.maxWidth, sizes: theme.breakpoints }) -
+          getSizeValue({ size: a.maxWidth, sizes: theme.breakpoints })
+      ),
+    []
+  );
+  const { classes, cx } = useStyles(
+    { breakpoints: sortedBreakpoints, cols, spacing },
+    null,
+    'simple-grid'
   );
 
-  const baseSpacing = getSizeValue({ size: spacing, sizes: theme.spacing });
-  const baseStyles = `
-    .${gridClassName} {
-      box-sizing: border-box;
-      display: flex;
-      flex-wrap: wrap;
-      margin: ${-baseSpacing / 2}px;
-    }
-
-    .${colClassName} {
-      box-sizing: border-box;
-      width: 100%;
-      margin: ${baseSpacing / 2}px;
-      max-width: calc(${100 / cols}% - ${baseSpacing}px);
-    }
-  `;
-
-  const queries = sortedBreakpoints.reduce((acc, query) => {
-    const querySpacing = getSizeValue({ size: query.spacing || spacing, sizes: theme.spacing });
-    return `${acc}
-      @media (max-width: ${query.maxWidth}px) {
-        .${gridClassName} {
-          margin: ${-querySpacing / 2}px;
-        }
-
-        .${colClassName} {
-          margin: ${querySpacing / 2}px;
-          max-width: calc(${100 / query.cols}% - ${querySpacing}px);
-        }
-      }
-    `;
-  }, baseStyles);
-
   return (
-    <>
-      {/* Usage of style tag is required due to bug in jss which does not allow to implement this */}
-      <style>{queries}</style>
-      <div className={cx(gridClassName, className)} id={id} {...others}>
-        {columns}
-      </div>
-    </>
+    <div className={cx(classes.grid, className)} style={mergedStyles} {...rest}>
+      {children}
+    </div>
   );
 }
 

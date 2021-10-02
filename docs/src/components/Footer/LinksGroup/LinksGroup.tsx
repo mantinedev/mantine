@@ -13,7 +13,7 @@ export interface LinksGroupProps {
 }
 
 export function LinksGroup({ data, title }: LinksGroupProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const links = data.map((link, index) => {
     const props = link.type === 'gatsby' ? { to: link.link } : { href: link.link };
     return (

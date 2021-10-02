@@ -1,12 +1,11 @@
 import React from 'react';
-import cx from 'clsx';
 import { Link } from 'gatsby';
 import { Container, Group, Button, Text, useMantineTheme } from '@mantine/core';
 import { MarkGithubIcon } from '@primer/octicons-react';
 import useStyles from './Jumbotron.styles';
 
 export function Jumbotron() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const theme = useMantineTheme();
 
   return (
@@ -17,8 +16,8 @@ export function Jumbotron() {
         </h1>
 
         <Text className={classes.description}>
-          Build fully functional accessible web applications with ease – Mantine includes more than
-          100 customizable components and hooks to cover you in any situation
+          Build fully functional accessible web applications faster than ever – Mantine includes
+          more than 120 customizable components and hooks to cover you in any situation
         </Text>
 
         <Group className={classes.controls}>
@@ -26,8 +25,8 @@ export function Jumbotron() {
             component={Link}
             to="/getting-started/"
             size="xl"
-            className={classes.control}
-            color={theme.colorScheme === 'dark' ? 'blue' : 'dark'}
+            className={cx(classes.control, classes.controlPrimary)}
+            variant="gradient"
           >
             Get started
           </Button>
@@ -39,7 +38,7 @@ export function Jumbotron() {
             variant="outline"
             className={cx(classes.control, classes.githubControl)}
             color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
-            leftIcon={<MarkGithubIcon size={18} />}
+            leftIcon={<MarkGithubIcon size={20} />}
             styles={{ leftIcon: { marginRight: 12 } }}
           >
             Github

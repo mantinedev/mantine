@@ -1,0 +1,48 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+title: 'use-mouse'
+category: 'dom'
+order: 1
+slug: /hooks/use-mouse/
+description: 'Get mouse position relative to viewport or given element'
+import: "import { useMouse } from '@mantine/hooks';"
+docs: 'hooks/use-mouse.mdx'
+source: 'mantine-hooks/src/use-mouse/use-mouse.ts'
+---
+
+import { useMouseUsage, useMouseRef } from '@docs/demos';
+
+## Usage
+
+Provide ref to track mouse position over any element:
+
+<Demo data={useMouseRef} />
+
+If you do not provide ref mouse position will be captured relative to document element:
+
+<Demo data={useMouseUsage} />
+
+## API
+
+Hook returns object with ref and x, y mouse coordinates:
+
+```tsx
+const {
+  ref, // -> pass ref to target element, if not used document element will be used as target element
+  x, // -> mouse x position
+  y, // -> mouse y position
+} = useMouse();
+```
+
+On the first render (as well as during SSR), both `x` and `y` values are equal to `0`.
+
+## Definition
+
+```tsx
+function useMouse<T extends HTMLElement = any>(): {
+  x: number;
+  y: number;
+  ref: React.MutableRefObject<T>;
+};
+```

@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../src/theme';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { AuthenticationForm } from './AuthenticationForm';
 
 storiesOf('@mantine/core/demos/AuthenticationForm', module).add('General usage', () => (

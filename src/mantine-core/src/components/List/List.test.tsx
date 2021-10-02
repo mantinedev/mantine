@@ -4,6 +4,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { List } from './List';
 import { List as ListStylesApi } from './styles.api';
@@ -19,6 +20,7 @@ const defaultProps = {
 
 describe('@mantine/core/List', () => {
   itSupportsClassName(List, defaultProps);
+  itSupportsMargins(List, defaultProps);
   itSupportsOthers(List, defaultProps);
   itSupportsStyle(List, defaultProps);
   itSupportsStylesApi(List, defaultProps, Object.keys(ListStylesApi), 'list');

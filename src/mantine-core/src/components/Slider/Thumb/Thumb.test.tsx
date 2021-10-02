@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { itSupportsStylesApi, itSupportsRef, checkAccessibility } from '@mantine/tests';
-import { Transition } from '../../Transition/Transition';
+import { Transition } from '../../Transition';
 import { Thumb } from './Thumb';
 
 const defaultProps = {

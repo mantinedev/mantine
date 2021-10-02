@@ -13,12 +13,12 @@ const code = `
 function Demo() {
   return (
     <>
-      <Divider margins="xs" size="xs" />
-      <Divider margins="xs" size="sm" />
-      <Divider margins="xs" size="md" />
-      <Divider margins="xs" size="lg" />
-      <Divider margins="xs" size="xl" />
-      <Divider margins="xs" size={10} />
+      <Divider my="xs" size="xs" />
+      <Divider my="xs" size="sm" />
+      <Divider my="xs" size="md" />
+      <Divider my="xs" size="lg" />
+      <Divider my="xs" size="xl" />
+      <Divider my="xs" size={10} />
     </>
   );
 }

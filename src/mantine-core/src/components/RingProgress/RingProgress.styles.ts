@@ -1,6 +1,6 @@
-import { createMemoStyles } from '../../theme';
+import { createStyles } from '@mantine/styles';
 
-export default createMemoStyles({
+export default createStyles({
   root: {
     position: 'relative',
   },

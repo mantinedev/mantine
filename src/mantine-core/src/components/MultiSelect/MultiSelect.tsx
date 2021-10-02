@@ -1,22 +1,19 @@
 import React, { useState, useRef } from 'react';
-import cx from 'clsx';
-import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
+import { useUncontrolled, useMergedRef } from '@mantine/hooks';
 import {
+  mergeStyles,
   DefaultProps,
   MantineSize,
-  mergeStyles,
-  useMantineTheme,
   MantineShadow,
-} from '../../theme';
+  ClassNames,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { scrollIntoView } from '../../utils';
-import { InputWrapper } from '../InputWrapper/InputWrapper';
-import { Input } from '../Input/Input';
-import { MantineTransition } from '../Transition/Transition';
-import {
-  DefaultValue,
-  DefaultValueStylesNames,
-  MultiSelectValueProps,
-} from './DefaultValue/DefaultValue';
+import { InputWrapper } from '../InputWrapper';
+import { Input } from '../Input';
+import { MantineTransition } from '../Transition';
+import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
@@ -30,12 +27,10 @@ import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { SelectDropdown } from '../Select/SelectDropdown/SelectDropdown';
 import useStyles from './MultiSelect.styles';
 
-export type { MultiSelectValueProps };
-
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
   | Exclude<
-      keyof ReturnType<typeof useStyles>,
+      ClassNames<typeof useStyles>,
       'searchInputEmpty' | 'searchInputInputHidden' | 'searchInputPointer'
     >
   | Exclude<BaseSelectStylesNames, 'selected'>;
@@ -125,7 +120,6 @@ export function defaultFilter(value: string, selected: boolean, item: SelectItem
 export function MultiSelect({
   className,
   style,
-  themeOverride,
   required,
   label,
   description,
@@ -168,13 +162,13 @@ export function MultiSelect({
   rightSectionWidth,
   ...others
 }: MultiSelectProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size, variant, invalid: !!error }, classNames, 'multi-select');
+  const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, 'multi-select');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const dropdownRef = useRef<HTMLDivElement>();
   const inputRef = useRef<HTMLInputElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
-  const uuid = useId(id);
+  const uuid = useUuid(id);
   const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const [searchValue, setSearchValue] = useState('');
@@ -297,7 +291,6 @@ export function MultiSelect({
         style={_styles.value}
         onRemove={() => handleValueRemove(item.value)}
         key={item.value}
-        themeOverride={themeOverride}
         size={size}
         styles={styles}
         classNames={classNames}
@@ -324,8 +317,7 @@ export function MultiSelect({
       description={description}
       size={size}
       className={className}
-      style={style}
-      themeOverride={themeOverride}
+      style={mergedStyles}
       classNames={classNames}
       styles={styles}
       __staticSelector="multi-select"
@@ -372,7 +364,6 @@ export function MultiSelect({
             },
             size,
             shouldClear: clearable && _value.length > 0,
-            themeOverride,
             clearButtonLabel,
             onClear: handleClear,
             error,
@@ -401,13 +392,12 @@ export function MultiSelect({
               placeholder={_value.length === 0 ? placeholder : undefined}
               disabled={disabled}
               data-mantine-stop-propagation={dropdownOpened}
-              {...others}
+              {...rest}
             />
           </div>
         </Input>
 
         <SelectDropdown
-          themeOverride={themeOverride}
           mounted={dropdownOpened && shouldRenderDropdown}
           transition={transition}
           transitionDuration={transitionDuration}
@@ -423,7 +413,6 @@ export function MultiSelect({
           <SelectItems
             data={filteredData}
             hovered={hovered}
-            themeOverride={themeOverride}
             classNames={classNames}
             styles={styles}
             uuid={uuid}

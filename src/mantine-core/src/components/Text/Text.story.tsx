@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../theme';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Text } from './Text';
 
 const CustomComponent = ({
@@ -91,18 +91,5 @@ storiesOf('@mantine/core/Text', module)
       <Text component="a" href="https://mantine.dev" variant="link">
         Link
       </Text>
-    </div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <Text themeOverride={{ colorScheme: 'dark' }}>Default text</Text>
-      <Text themeOverride={{ colorScheme: 'dark' }} weight={500}>
-        Semibold text
-      </Text>
-      <Text themeOverride={{ colorScheme: 'dark' }} weight={700}>
-        Bold text
-      </Text>
-
-      {getThemes({ themeOverride: { colorScheme: 'dark' } })}
     </div>
   ));

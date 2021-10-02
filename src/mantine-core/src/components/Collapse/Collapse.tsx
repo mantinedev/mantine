@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import type { TransitionEvent } from 'react';
-import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
-
-import { useMantineTheme } from '../../theme';
+import { useReducedMotion } from '@mantine/hooks';
+import { useMantineTheme, useExtractedMargins } from '@mantine/styles';
 
 export interface CollapseProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** Content that should be collapsed */
@@ -30,18 +28,16 @@ export function Collapse({
   onTransitionEnd,
   ...others
 }: CollapseProps) {
-  const forceUpdate = useForceUpdate();
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
-
   const collapseRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-
   const [height, setHeight] = useState<`${number}px` | 'auto'>('auto');
+  const duration = reduceMotion ? 0 : transitionDuration;
+  const timingFunction = transitionTimingFunction || theme.transitionTimingFunction;
 
-  useWindowEvent('resize', forceUpdate);
-
-  const handleTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
+  const handleTransitionEnd = (event: React.TransitionEvent<HTMLDivElement>) => {
     if (typeof onTransitionEnd === 'function' && event.propertyName === 'height') {
       onTransitionEnd();
     }
@@ -61,22 +57,19 @@ export function Collapse({
       ref={collapseRef}
       onTransitionEnd={handleTransitionEnd}
       style={{
-        ...style,
+        ...mergedStyles,
         overflow: 'hidden',
-        transition: `height ${reduceMotion ? 0 : transitionDuration}ms ${
-          transitionTimingFunction || theme.transitionTimingFunction
-        }`,
+        transition: `height ${duration}ms ${timingFunction}`,
+        willChange: 'contents',
         height: isOpened ? height : '0px',
       }}
-      {...others}
+      {...rest}
     >
       <div
         ref={contentRef}
         style={{
           opacity: isOpened ? 1 : 0,
-          transition: `opacity ${reduceMotion ? 0 : transitionDuration}ms ${
-            transitionTimingFunction || theme.transitionTimingFunction
-          }`,
+          transition: `opacity ${duration}ms ${timingFunction}`,
         }}
       >
         {children}

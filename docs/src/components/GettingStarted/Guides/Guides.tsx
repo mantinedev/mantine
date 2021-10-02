@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
-import { CheckIcon } from '@modulz/radix-icons';
-import { Text, Title, ThemeIcon } from '@mantine/core';
+import { Text, Title } from '@mantine/core';
 import { GUIDES_DATA } from './data';
 import { CraGuide } from './guides/CraGuide';
 import { NextGuide } from './guides/NextGuide';
@@ -24,7 +22,7 @@ const guides = {
 
 export function Guides({ dependencies }: GuidesProps) {
   const [selected, setSelected] = useState('cra');
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const Guide = guides[selected];
 
   const controls = GUIDES_DATA.map((guide) => (
@@ -34,12 +32,6 @@ export function Guides({ dependencies }: GuidesProps) {
       key={guide.id}
       onClick={() => setSelected(guide.id)}
     >
-      {selected === guide.id && (
-        <ThemeIcon className={classes.checked} radius={0}>
-          <CheckIcon />
-        </ThemeIcon>
-      )}
-
       <guide.icon />
       <Text className={classes.controlTitle}>{guide.title}</Text>
     </button>

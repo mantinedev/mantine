@@ -1,9 +1,14 @@
 import React from 'react';
-import cx from 'clsx';
-import { MantineNumberSize, DefaultProps, mergeStyles, useMantineTheme } from '../../../theme';
+import {
+  mergeStyles,
+  MantineNumberSize,
+  DefaultProps,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import useStyles from './SliderRoot.styles';
 
-export type SliderRootStylesNames = keyof ReturnType<typeof useStyles>;
+export type SliderRootStylesNames = ClassNames<typeof useStyles>;
 
 interface SliderRootProps
   extends DefaultProps<SliderRootStylesNames>,
@@ -20,20 +25,19 @@ export function SliderRoot({
   size,
   classNames,
   styles,
-  themeOverride,
   ...others
 }: SliderRootProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'slider');
+  const { classes, cx } = useStyles({ size }, classNames, 'slider');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   return (
     <div
-      {...others}
+      {...rest}
       tabIndex={-1}
       className={cx(classes.root, className)}
       ref={elementRef}
-      style={{ ...style, ..._styles.root }}
+      style={mergedStyles}
     />
   );
 }

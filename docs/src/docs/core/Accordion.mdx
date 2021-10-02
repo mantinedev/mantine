@@ -30,6 +30,22 @@ You can use any react component as label:
 
 <Demo data={AccordionDemos.label} />
 
+## Change icons
+
+You can change icons for all items by setting `icon` prop on Accordion component:
+
+<Demo data={AccordionDemos.icon} />
+
+Or you can set icon individually for each item:
+
+<Demo data={AccordionDemos.icons} />
+
+## Icon position
+
+Change icon position by setting `iconPosition` prop, it can be either `left` (default) or `right`:
+
+<Demo data={AccordionDemos.iconPosition} />
+
 ## Styles API
 
 Default Accordion has bare minimum styles to make customization more simple,
@@ -66,14 +82,4 @@ function Demo() {
   const [state, onChange] = useState({ 0: false, 1: true, 2: false });
   return <Accordion state={state} onChange={onChange} />;
 }
-```
-
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<Accordion /> // -> random id generated both on client and server, props mismatch warning
-<Accordion id="my-accordion" /> // -> id is static, no mismatches
 ```

@@ -1,38 +1,26 @@
-import React, { useState, useRef, cloneElement, useEffect } from 'react';
+import React, { useState, useRef, cloneElement } from 'react';
+import { useClickOutside, useMergedRef, useWindowEvent, useUncontrolled } from '@mantine/hooks';
 import {
-  useId,
-  useClickOutside,
-  useMergedRef,
-  useWindowEvent,
-  useUncontrolled,
-  useReducedMotion,
-} from '@mantine/hooks';
-import {
+  mergeStyles,
   DefaultProps,
   MantineNumberSize,
-  mergeStyles,
-  useMantineTheme,
   MantineShadow,
-} from '../../theme';
+  ClassNames,
+  useUuid,
+  MantineMargin,
+} from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
-import { useClickOutsideRegister } from '../../utils';
 import { MenuIcon } from './MenuIcon';
-import { MenuBody, MenuBodyProps, MenuBodyStylesNames } from './MenuBody/MenuBody';
-import { sizes } from './MenuBody/MenuBody.styles';
-import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
-import { MenuLabel, MenuLabelProps } from './MenuLabel/MenuLabel';
+import { MenuBody, MenuBodyStylesNames } from './MenuBody/MenuBody';
+import { MenuItem } from './MenuItem/MenuItem';
+import { MenuLabel } from './MenuLabel/MenuLabel';
 import useStyles from './Menu.styles';
 
-export { MenuBody, MenuItem, MenuLabel };
-export type { MenuBodyProps, MenuItemProps, MenuLabelProps };
-
-export type MenuStylesNames = keyof ReturnType<typeof useStyles> | MenuBodyStylesNames;
-
-export const MENU_SIZES = sizes;
+export type MenuStylesNames = ClassNames<typeof useStyles> | MenuBodyStylesNames;
 
 export interface MenuProps
-  extends DefaultProps<MenuStylesNames>,
+  extends Omit<DefaultProps<MenuStylesNames>, MantineMargin>,
     SharedPopperProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** <MenuItem /> and <Divider /> components only, children are passed to MenuBody component  */
@@ -105,7 +93,6 @@ export function Menu({
   onClose,
   onOpen,
   opened,
-  themeOverride,
   style,
   menuId,
   menuBodyProps = {},
@@ -135,17 +122,14 @@ export function Menu({
   onChange,
   ...others
 }: MenuProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'menu');
+  const { classes } = useStyles(null, classNames, 'menu');
   const _styles = mergeStyles(classes, styles);
   const controlRefFocusTimeout = useRef<number>();
   const delayTimeout = useRef<number>();
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
   const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-  const _transitionDuration = useReducedMotion() ? 0 : transitionDuration;
-  const clickOutsideRegister = useClickOutsideRegister();
-  const uuid = useId(menuId);
+  const uuid = useUuid(menuId);
 
   const [_opened, setOpened] = useUncontrolled({
     value: opened,
@@ -179,10 +163,6 @@ export function Menu({
   useWindowEvent('scroll', () => closeOnScroll && handleClose(true));
 
   useClickOutside(() => _opened && handleClose(), null, [dropdownElement, wrapperElement]);
-
-  useEffect(() => {
-    clickOutsideRegister(`${uuid}-menu`, dropdownElement);
-  }, [dropdownElement]);
 
   const toggleMenu = () => {
     _opened ? handleClose() : handleOpen();
@@ -233,7 +213,7 @@ export function Menu({
 
       <Popper
         referenceElement={referenceElement}
-        transitionDuration={_transitionDuration}
+        transitionDuration={transitionDuration}
         transitionTimingFunction={transitionTimingFunction}
         transition={transition}
         mounted={_opened}
@@ -251,7 +231,6 @@ export function Menu({
           opened={_opened}
           onClose={handleClose}
           id={uuid}
-          themeOverride={themeOverride}
           closeOnItemClick={closeOnItemClick}
           size={size}
           shadow={shadow}
@@ -259,7 +238,7 @@ export function Menu({
           styles={styles}
           radius={radius}
           trapFocus={trigger !== 'hover' && trapFocus}
-          transitionDuration={_transitionDuration}
+          transitionDuration={transitionDuration}
           elementRef={setDropdownElement}
         >
           {children}

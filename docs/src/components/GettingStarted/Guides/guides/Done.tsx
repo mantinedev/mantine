@@ -13,7 +13,7 @@ export function MyApp() {
 export function Done() {
   return (
     <div>
-      <Text weight={700} style={{ marginTop: 20, marginBottom: 10 }}>
+      <Text weight={700} mt={20} mb={10}>
         You are ready to build your application with Mantine!
       </Text>
       <Prism language="tsx">{code}</Prism>

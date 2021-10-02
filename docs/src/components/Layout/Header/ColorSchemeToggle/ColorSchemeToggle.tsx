@@ -1,21 +1,19 @@
-import React, { useContext } from 'react';
-import cx from 'clsx';
+import React from 'react';
 import { MoonIcon, SunIcon } from '@modulz/radix-icons';
-import { UnstyledButton, Text, Center } from '@mantine/core';
+import { UnstyledButton, Text, Center, useMantineColorScheme } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
-import { ColorSchemeContext } from '../../ColorScheme.context';
 import useStyles from './ColorSchemeToggle.styles';
 
 export function ColorSchemeToggle({ className, ...others }: React.ComponentProps<'button'>) {
-  const classes = useStyles();
-  const { colorScheme, onChange } = useContext(ColorSchemeContext);
+  const { classes, cx } = useStyles();
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const Icon = colorScheme === 'dark' ? SunIcon : MoonIcon;
 
   return (
     <UnstyledButton
       aria-label="Toggle theme"
       className={cx(classes.control, className)}
-      onClick={() => onChange(colorScheme === 'light' ? 'dark' : 'light')}
+      onClick={() => toggleColorScheme()}
       title="Ctrl + J"
       {...others}
     >

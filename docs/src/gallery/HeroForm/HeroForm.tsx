@@ -9,7 +9,7 @@ const useStyles = createStyles((theme) => ({
 
   imageSection: {
     '& *': {
-      color: theme.white,
+      color: `${theme.white} !important`,
       textAlign: 'center',
     },
 
@@ -76,7 +76,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function HeroForm() {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <div className={classes.wrapper}>

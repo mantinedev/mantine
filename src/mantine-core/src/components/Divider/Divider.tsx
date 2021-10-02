@@ -1,18 +1,16 @@
 import React from 'react';
-import cx from 'clsx';
 import {
   useMantineTheme,
+  mergeStyles,
   DefaultProps,
   MantineNumberSize,
-  mergeStyles,
   MantineColor,
-} from '../../theme';
-import useStyles, { sizes } from './Divider.styles';
+  useExtractedMargins,
+} from '@mantine/styles';
+import useStyles from './Divider.styles';
 import { Text } from '../Text/Text';
 
-export const DIVIDER_SIZES = sizes;
-
-export type DividerStylesNames = 'label' | 'root';
+export type DividerStylesNames = 'label';
 
 export interface DividerProps
   extends DefaultProps<DividerStylesNames>,
@@ -37,9 +35,6 @@ export interface DividerProps
 
   /** Divider borderStyle */
   variant?: 'solid' | 'dashed' | 'dotted';
-
-  /** Top and bottom margins for horizontal variant, left and right for vertical, xs, sm, md, lg, xl for value from theme.spacing, number for margins in px */
-  margins?: MantineNumberSize;
 }
 
 export function Divider({
@@ -51,26 +46,15 @@ export function Divider({
   label,
   labelPosition = 'left',
   labelProps,
-  themeOverride,
   variant = 'solid',
-  margins = 0,
   styles,
   classNames,
   ...others
 }: DividerProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
-  const classes = useStyles(
-    {
-      color: _color,
-      theme,
-      margins,
-      size,
-      variant,
-    },
-    classNames,
-    'divider'
-  );
+  const { classes, cx } = useStyles({ color: _color, size, variant }, classNames, 'divider');
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const _styles = mergeStyles(classes, styles);
 
   const vertical = orientation === 'vertical';
@@ -87,12 +71,8 @@ export function Divider({
         },
         className
       )}
-      style={{
-        ...style,
-        ...(horizontal ? _styles.horizontal : _styles.vertical),
-        ...(withLabel ? _styles.withLabel : null),
-      }}
-      {...others}
+      style={mergedStyles}
+      {...rest}
     >
       {!!label && horizontal && (
         <Text

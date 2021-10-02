@@ -1,0 +1,16 @@
+{
+  "title": "Faq with image",
+  "category": "faq",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": [
+    "/core/container/",
+    "/core/title/",
+    "/core/text/",
+    "/gallery/component/contact-icons/",
+    "/gallery/component/image-button-cards/"
+  ],
+  "canvas": {
+    "center": false
+  }
+}

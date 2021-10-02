@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'gatsby';
-import cx from 'clsx';
 import { ChevronDownIcon } from '@modulz/radix-icons';
 import { Text } from '@mantine/core';
 import { useLocation } from '@reach/router';
@@ -13,7 +12,7 @@ interface NavbarDocsCategoryProps {
 }
 
 export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCategoryProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const [collapsed, setCollapsed] = useState(group.group === 'changelog');
   const activeCoreItemRef = useRef(null);
   const location = useLocation();

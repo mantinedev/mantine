@@ -15,24 +15,27 @@ export function NextGuide({ dependencies }: CraGuideProps) {
         component="a"
         href="https://github.com/mantinedev/mantine-next-template"
         target="_blank"
-        size="lg"
+        size="xl"
+        fullWidth
+        variant="default"
+        mb={25}
       >
-        Get stared with Github template
+        Get stared with Next.js Github template
       </Button>
 
-      <Text weight={700} style={{ marginBottom: 15, marginTop: 30 }}>
+      <Text weight={700} mb={15}>
         Or init new application
       </Text>
 
       <Prism language="bash">npx create-next-app --ts</Prism>
 
-      <Text weight={700} style={{ marginTop: 30 }}>
+      <Text weight={700} mt={30}>
         Install dependencies
       </Text>
 
       <Installation dependencies={dependencies} />
 
-      <Text weight={700} style={{ marginTop: 30, marginBottom: 5 }}>
+      <Text weight={700} mt={30} mb={5}>
         Next steps
       </Text>
 

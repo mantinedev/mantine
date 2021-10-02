@@ -13,11 +13,10 @@ function Value({
   value,
   label,
   onRemove,
-  themeOverride,
   classNames,
   ...others
 }: MultiSelectValueProps & { value: string }) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
 
   return (
     <div {...others}>

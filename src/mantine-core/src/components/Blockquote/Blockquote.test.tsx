@@ -7,30 +7,28 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Blockquote } from './Blockquote';
 import { Blockquote as BlockquoteStylesApi } from './styles.api';
 
 describe('@mantine/core/Blockquote', () => {
-  checkAccessibility([
-    mount(<Blockquote>test-quote</Blockquote>),
-    mount(<Blockquote cite="test-cite">test-quote</Blockquote>),
-  ]);
-
+  itRendersChildren(Blockquote, {});
+  itSupportsClassName(Blockquote, {});
+  itSupportsOthers(Blockquote, {});
+  itSupportsStyle(Blockquote, {});
+  itSupportsMargins(Blockquote, {});
   itSupportsStylesApi(
     Blockquote,
     { cite: 'test-cite', children: 'test-quote' },
     Object.keys(BlockquoteStylesApi),
     'blockquote'
   );
-  itRendersChildren(Blockquote, {});
-  itSupportsClassName(Blockquote, {});
-  itSupportsOthers(Blockquote, {});
-  itSupportsStyle(Blockquote, {});
 
-  it('has correct displayName', () => {
-    expect(Blockquote.displayName).toEqual('@mantine/core/Blockquote');
-  });
+  checkAccessibility([
+    mount(<Blockquote>test-quote</Blockquote>),
+    mount(<Blockquote cite="test-cite">test-quote</Blockquote>),
+  ]);
 
   it('renders given icon based on icon prop', () => {
     const withIcon = shallow(<Blockquote icon="$" />);
@@ -46,5 +44,9 @@ describe('@mantine/core/Blockquote', () => {
 
     expect(withCite.render().find('cite').text()).toBe('test-cite');
     expect(withoutCite.render().find('cite')).toHaveLength(0);
+  });
+
+  it('has correct displayName', () => {
+    expect(Blockquote.displayName).toEqual('@mantine/core/Blockquote');
   });
 });

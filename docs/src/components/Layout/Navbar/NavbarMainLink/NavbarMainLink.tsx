@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import cx from 'clsx';
 import { ThemeIcon, useMantineTheme } from '@mantine/core';
 import useStyles from './NavbarMainLink.styles';
 
@@ -21,7 +20,7 @@ export default function NavbarMainLink({
   color,
   onClick,
 }: NavbarMainLinkProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const theme = useMantineTheme();
 
   return (

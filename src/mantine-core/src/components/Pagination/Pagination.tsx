@@ -1,21 +1,19 @@
 import React from 'react';
-import cx from 'clsx';
 import { usePagination } from '@mantine/hooks';
-import { Group, GroupProps } from '../Group/Group';
 import {
-  DefaultProps,
   mergeStyles,
   useMantineTheme,
+  DefaultProps,
   MantineNumberSize,
   getSizeValue,
   MantineColor,
-} from '../../theme';
-import useStyles from './Pagination.styles';
+  ClassNames,
+} from '@mantine/styles';
+import { Group, GroupProps } from '../Group/Group';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
+import useStyles from './Pagination.styles';
 
-export type { PaginationItemProps } from './DefaultItem/DefaultItem';
-
-export type PaginationStylesNames = keyof ReturnType<typeof useStyles>;
+export type PaginationStylesNames = ClassNames<typeof useStyles>;
 
 export interface PaginationProps
   extends DefaultProps<PaginationStylesNames>,
@@ -45,7 +43,9 @@ export interface PaginationProps
   onChange?: (page: number) => void;
 
   /** Callback to control aria-labels */
-  getItemAriaLabel?: (page: number | 'dots' | 'prev' | 'next') => string | undefined;
+  getItemAriaLabel?: (
+    page: number | 'dots' | 'prev' | 'next' | 'first' | 'last'
+  ) => string | undefined;
 
   /** Spacing between items from theme or number to set value in px, defaults to theme.spacing.xs / 2 */
   spacing?: MantineNumberSize;
@@ -55,13 +55,15 @@ export interface PaginationProps
 
   /** Predefined item radius or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Whether to render buttons that would allow to jump to start/end of pagination */
+  withEdges?: boolean;
 }
 
 export function Pagination({
   itemComponent: Item = DefaultItem,
   classNames,
   styles,
-  themeOverride,
   page,
   initialPage = 1,
   color,
@@ -73,13 +75,14 @@ export function Pagination({
   onChange,
   getItemAriaLabel,
   spacing,
+  withEdges = false,
   ...others
 }: PaginationProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, color, size, radius }, classNames, 'pagination');
+  const theme = useMantineTheme();
+  const { classes, cx } = useStyles({ color, size, radius }, classNames, 'pagination');
   const _styles = mergeStyles(classes, styles);
 
-  const { range, setPage, next, previous, active } = usePagination({
+  const { range, setPage, next, previous, active, first, last } = usePagination({
     page,
     siblings,
     total,
@@ -110,6 +113,18 @@ export function Pagination({
 
   return (
     <Group spacing={spacing || getSizeValue({ size, sizes: theme.spacing }) / 2} {...others}>
+      {withEdges && (
+        <Item
+          page="first"
+          onClick={first}
+          aria-label={getItemAriaLabel ? getItemAriaLabel('first') : undefined}
+          aria-disabled={active === 1}
+          style={_styles.item}
+          className={classes.item}
+          disabled={active === 1}
+        />
+      )}
+
       <Item
         page="prev"
         onClick={previous}
@@ -131,6 +146,18 @@ export function Pagination({
         className={classes.item}
         disabled={active === total}
       />
+
+      {withEdges && (
+        <Item
+          page="last"
+          onClick={last}
+          aria-label={getItemAriaLabel ? getItemAriaLabel('last') : undefined}
+          aria-disabled={active === total}
+          style={_styles.item}
+          className={classes.item}
+          disabled={active === total}
+        />
+      )}
     </Group>
   );
 }

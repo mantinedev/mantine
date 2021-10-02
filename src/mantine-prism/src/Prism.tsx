@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import {
   ActionIcon,
@@ -10,13 +9,15 @@ import {
   getThemeColor,
   hexToRgba,
   MantineColor,
+  ClassNames,
+  useExtractedMargins,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
 import { getPrismTheme } from './prism-theme';
 import useStyles from './Prism.styles';
 
-export type PrismStylesNames = keyof ReturnType<typeof useStyles>;
+export type PrismStylesNames = ClassNames<typeof useStyles>;
 
 export interface PrismProps
   extends DefaultProps<PrismStylesNames>,
@@ -41,6 +42,9 @@ export interface PrismProps
 
   /** Highlight line at given line number with color from theme.colors */
   highlightLines?: Record<string, { color: MantineColor; label?: string }>;
+
+  /** Force color scheme, defaults to theme.colorScheme */
+  colorScheme?: 'dark' | 'light';
 }
 
 export function Prism({
@@ -49,27 +53,32 @@ export function Prism({
   children,
   language,
   noCopy = false,
-  themeOverride,
   classNames,
   styles,
   copyLabel = 'Copy code',
   copiedLabel = 'Copied',
   withLineNumbers = false,
   highlightLines = {},
+  colorScheme,
   ...others
 }: PrismProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme }, classNames, 'prism');
+  const theme = useMantineTheme();
+  const { classes, cx } = useStyles(
+    { colorScheme: colorScheme || theme.colorScheme },
+    classNames,
+    'prism'
+  );
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const clipboard = useClipboard();
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {!noCopy && (
         <Tooltip
           data-mantine-copy
-          className={classes.copy}
           style={_styles.copy}
+          className={classes.copy}
           label={clipboard.copied ? copiedLabel : copyLabel}
           position="left"
           placement="center"
@@ -78,19 +87,22 @@ export function Prism({
           arrowSize={4}
           gutter={8}
           color={clipboard.copied ? 'teal' : undefined}
-          themeOverride={themeOverride}
         >
           <ActionIcon
             aria-label={clipboard.copied ? copiedLabel : copyLabel}
             onClick={() => clipboard.copy(children)}
-            themeOverride={themeOverride}
           >
             <CopyIcon copied={clipboard.copied} />
           </ActionIcon>
         </Tooltip>
       )}
 
-      <Highlight {...defaultProps} theme={getPrismTheme(theme)} code={children} language={language}>
+      <Highlight
+        {...defaultProps}
+        theme={getPrismTheme(theme, colorScheme || theme.colorScheme)}
+        code={children}
+        language={language}
+      >
         {({
           className: inheritedClassName,
           style: inheritedStyle,

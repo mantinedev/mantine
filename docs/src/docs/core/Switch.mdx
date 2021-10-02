@@ -85,16 +85,6 @@ function Demo() {
 }
 ```
 
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<Switch /> // -> random id generated both on client and server, props mismatch warning
-<Switch id="my-switch" /> // -> id is static, no mismatches
-```
-
 ## Accessibility
 
 Switch is a regular input with checkbox type. Provide `aria-label` in case you use switch without label for screen reader support:

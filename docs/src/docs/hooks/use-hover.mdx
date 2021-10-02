@@ -1,0 +1,27 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'dom'
+title: 'use-hover'
+order: 1
+slug: /hooks/use-hover/
+description: 'Detect if mouse is over given element'
+import: "import { useHover } from '@mantine/hooks';"
+docs: 'hooks/use-hover.mdx'
+source: 'mantine-hooks/src/use-hover/use-hover.ts'
+---
+
+import { useHoverHookDemo } from '@docs/demos';
+
+## Usage
+
+<Demo data={useHoverHookDemo} />
+
+## Definition
+
+```tsx
+function useHover<T extends HTMLElement = HTMLDivElement>(): {
+  ref: React.MutableRefObject<T>;
+  hovered: boolean;
+};
+```

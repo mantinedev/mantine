@@ -1,6 +1,5 @@
 import React from 'react';
-import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineSize } from '../../theme';
+import { DefaultProps, MantineSize, useUuid, useExtractedMargins } from '@mantine/styles';
 import {
   InputWrapperBaseProps,
   InputWrapper,
@@ -48,7 +47,6 @@ export function NativeSelect({
   style,
   data,
   placeholder,
-  themeOverride,
   wrapperProps,
   inputStyle,
   description,
@@ -63,7 +61,8 @@ export function NativeSelect({
   rightSectionWidth,
   ...others
 }: NativeSelectProps) {
-  const uuid = useId(id);
+  const uuid = useUuid(id);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   const formattedData = data.map((item) =>
     typeof item === 'string' ? { label: item, value: item } : item
@@ -91,8 +90,7 @@ export function NativeSelect({
       label={label}
       error={error}
       className={className}
-      style={style}
-      themeOverride={themeOverride}
+      style={mergedStyles}
       description={description}
       size={size}
       styles={styles}
@@ -100,7 +98,7 @@ export function NativeSelect({
       __staticSelector="select"
     >
       <Input<'select', HTMLSelectElement>
-        {...others}
+        {...rest}
         onChange={onChange}
         component="select"
         invalid={!!error}
@@ -109,7 +107,6 @@ export function NativeSelect({
         elementRef={elementRef}
         id={uuid}
         required={required}
-        themeOverride={themeOverride}
         value={value === null ? '' : value}
         size={size}
         classNames={classNames}
@@ -117,7 +114,6 @@ export function NativeSelect({
         {...getSelectRightSectionProps({
           rightSection,
           rightSectionWidth,
-          themeOverride,
           styles,
           shouldClear: false,
           size,

@@ -1,10 +1,15 @@
 import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineColor } from '../../theme';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
-export type BlockquoteStylesNames = keyof ReturnType<typeof useStyles>;
+export type BlockquoteStylesNames = ClassNames<typeof useStyles>;
 
 export interface BlockquoteProps
   extends DefaultProps<BlockquoteStylesNames>,
@@ -28,21 +33,16 @@ export function Blockquote({
   icon = defaultIcon,
   cite,
   children,
-  themeOverride,
   classNames,
   styles,
   ...others
 }: BlockquoteProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, theme }, classNames, 'blockquote');
+  const { classes, cx } = useStyles({ color }, classNames, 'blockquote');
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
   return (
-    <blockquote
-      className={cx(classes.root, className)}
-      style={{ ...style, ..._styles.root }}
-      {...others}
-    >
+    <blockquote className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       <div className={classes.inner} style={_styles.inner}>
         {icon && (
           <div className={classes.icon} style={_styles.icon}>

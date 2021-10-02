@@ -1,18 +1,20 @@
 import React from 'react';
-import cx from 'clsx';
-import { useUncontrolled, useId } from '@mantine/hooks';
+import { useUncontrolled } from '@mantine/hooks';
 import {
-  DefaultProps,
+  mergeStyles,
   useMantineTheme,
+  DefaultProps,
   MantineNumberSize,
   MantineSize,
-  mergeStyles,
   MantineColor,
-} from '../../../theme';
-import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
+  ClassNames,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
+import { CheckboxIcon } from '../../Checkbox';
 import useStyles from './Chip.styles';
 
-export type ChipStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'filled' | 'outline'>;
+export type ChipStylesNames = Exclude<ClassNames<typeof useStyles>, 'filled' | 'outline'>;
 
 export interface ChipProps
   extends DefaultProps<ChipStylesNames>,
@@ -75,13 +77,13 @@ export function Chip({
   checked,
   defaultChecked,
   onChange,
-  themeOverride,
   ...others
 }: ChipProps) {
-  const uuid = useId(id);
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, radius, size, color }, classNames, __staticSelector);
+  const uuid = useUuid(id);
+  const theme = useMantineTheme();
+  const { classes, cx } = useStyles({ radius, size, color }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const [value, setValue] = useUncontrolled({
     value: checked,
     defaultValue: defaultChecked,
@@ -103,7 +105,7 @@ export function Chip({
         id={uuid}
         disabled={disabled}
         ref={elementRef}
-        {...others}
+        {...rest}
       />
       <label
         className={cx(
@@ -113,7 +115,7 @@ export function Chip({
           className
         )}
         style={{
-          ...style,
+          ...mergedStyles,
           ..._styles.label,
           ...(value ? _styles.checked : null),
           ...(disabled ? _styles.disabled : null),

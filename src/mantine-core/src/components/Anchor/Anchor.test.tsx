@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Anchor } from './Anchor';
 
@@ -14,6 +15,7 @@ describe('@mantine/core/Anchor', () => {
   itRendersChildren(Anchor, {});
   itSupportsOthers(Anchor, {});
   itSupportsStyle(Anchor, {});
+  itSupportsMargins(Anchor, {});
   itSupportsRef(Anchor, {}, HTMLAnchorElement, 'elementRef');
 
   it('accepts component from component prop', () => {

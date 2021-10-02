@@ -7,6 +7,7 @@ import {
   itSupportsClassName,
   itRendersChildren,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Text } from '../Text/Text';
 import { Alert } from './Alert';
@@ -24,6 +25,7 @@ describe('@mantine/core/Alert', () => {
   itSupportsClassName(Alert, defaultProps);
   itSupportsOthers(Alert, defaultProps);
   itSupportsStyle(Alert, defaultProps);
+  itSupportsMargins(Alert, defaultProps);
   itRendersChildren(Alert, {});
   checkAccessibility([
     mount(

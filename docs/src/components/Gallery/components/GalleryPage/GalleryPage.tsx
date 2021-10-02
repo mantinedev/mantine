@@ -7,7 +7,7 @@ interface GalleryPageProps {
 }
 
 export function GalleryPage({ children }: GalleryPageProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <div className={classes.wrapper}>

@@ -1,12 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsStyle, itSupportsClassName, itSupportsOthers } from '@mantine/tests';
+import {
+  itSupportsStyle,
+  itSupportsClassName,
+  itSupportsOthers,
+  itSupportsMargins,
+} from '@mantine/tests';
 import { highlighter, Highlight } from './Highlight';
 
+const defaultProps = { children: 'Hello', highlight: 'He' };
+
 describe('@mantine/core/Highlight', () => {
-  itSupportsStyle(Highlight, { children: 'Hello', highlight: 'He' });
-  itSupportsClassName(Highlight, { children: 'Hello', highlight: 'He' });
-  itSupportsOthers(Highlight, { children: 'Hello', highlight: 'He' });
+  itSupportsStyle(Highlight, defaultProps);
+  itSupportsClassName(Highlight, defaultProps);
+  itSupportsOthers(Highlight, defaultProps);
+  itSupportsMargins(Highlight, defaultProps);
 
   it('has correct displayName', () => {
     expect(Highlight.displayName).toEqual('@mantine/core/Highlight');

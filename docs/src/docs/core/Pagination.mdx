@@ -46,6 +46,12 @@ Control amount of items displayed after previous and before next buttons with `b
 
 <Demo data={PaginationDemos.boundaries} />
 
+## Jumping to the first/last page in a pagination
+
+Use the `withEdges` prop to render buttons that allows a user to jump to the start/end page in a pagination.
+
+<Demo data={PaginationDemos.edges} />
+
 ## Accessibility
 
 Pagination renders a regular button element. To include aria-label for screen reader support
@@ -62,6 +68,10 @@ provide `getItemAriaLabel` function to generate aria-labels:
         return 'previous page button aria-label';
       case 'next':
         return 'next page button aria-label';
+      case 'first':
+        return 'first page button aria-label';
+      case 'last':
+        return 'last page button aria-label';
       default:
         return `${page} item aria-label`;
     }
