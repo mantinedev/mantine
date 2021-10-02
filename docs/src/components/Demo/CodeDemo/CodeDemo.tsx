@@ -11,7 +11,7 @@ interface CodeDemoProps {
   language?: Language;
   demoBackground?: string;
   demoBorder?: boolean;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   toggle?: boolean;
   inline?: boolean;
   zIndex?: number;
