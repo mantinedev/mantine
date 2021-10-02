@@ -16,7 +16,7 @@ export default createStyles((theme, { spacing, breakpoints, cols }: SimpleGridSt
   const gridBreakpoints = breakpoints.reduce((acc, breakpoint) => {
     const breakpointSize = getSizeValue({ size: breakpoint.maxWidth, sizes: theme.breakpoints });
     acc[`@media (max-width: ${breakpointSize}px)`] = {
-      gridTemplateColumns: `repeat(${breakpoint.cols}, minmax(auto, ${100 / breakpoint.cols}%))`,
+      gridTemplateColumns: `repeat(${breakpoint.cols}, minmax(0, 1fr))`,
       gap: getSizeValue({
         size: breakpoint.spacing || spacing,
         sizes: theme.spacing,
@@ -30,7 +30,7 @@ export default createStyles((theme, { spacing, breakpoints, cols }: SimpleGridSt
     grid: {
       boxSizing: 'border-box',
       display: 'grid',
-      gridTemplateColumns: `repeat(${cols}, minmax(auto, ${100 / cols}%))`,
+      gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
       gap: getSizeValue({ size: spacing, sizes: theme.spacing }),
       ...gridBreakpoints,
     },
