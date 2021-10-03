@@ -62,7 +62,6 @@ export const Text: TextComponent & { displayName?: string } = forwardRef(
       align,
       variant = 'text',
       lineClamp,
-      elementRef,
       gradient = { from: 'blue', to: 'cyan', deg: 45 },
       inline = false,
       inherit = false,

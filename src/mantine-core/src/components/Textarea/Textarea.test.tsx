@@ -33,7 +33,7 @@ describe('@mantine/core/Textarea', () => {
   itSupportsStyle(Textarea, {});
   itSupportsClassName(Textarea, {});
   itSupportsMargins(Textarea, {});
-  itSupportsRef(Textarea, {}, HTMLTextAreaElement, 'elementRef');
+  itSupportsRef(Textarea, {}, HTMLTextAreaElement);
 
   itSupportsStylesApi(
     Textarea,
