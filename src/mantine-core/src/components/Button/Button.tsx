@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   useMantineTheme,
   mergeStyles,
@@ -11,20 +11,15 @@ import {
   MantineColor,
   ClassNames,
   useExtractedMargins,
+  PolymorphicComponentProps,
+  PolymorphicRef,
 } from '@mantine/styles';
 import useStyles, { heights, ButtonVariant } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader';
 
 export type ButtonStylesNames = Exclude<ClassNames<typeof useStyles>, ButtonVariant | 'loading'>;
 
-interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
-  extends DefaultProps<ButtonStylesNames> {
-  /** Root element or custom component */
-  component?: C;
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<R>;
-
+interface _ButtonProps extends DefaultProps<ButtonStylesNames> {
   /** Predefined button size */
   size?: MantineSize;
 
@@ -68,110 +63,112 @@ interface _ButtonProps<C extends React.ElementType, R extends HTMLElement>
   loaderPosition?: 'left' | 'right';
 }
 
-export type ButtonProps<
-  C extends React.ElementType = 'button',
-  R extends HTMLElement = HTMLButtonElement
-> = _ButtonProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _ButtonProps<C, R>>;
+export type ButtonProps<C extends React.ElementType> = PolymorphicComponentProps<C, _ButtonProps>;
 
-export function Button<
-  C extends React.ElementType = 'button',
-  R extends HTMLElement = HTMLButtonElement
->({
-  className,
-  style,
-  size = 'sm',
-  color,
-  type = 'button',
-  disabled = false,
-  children,
-  leftIcon,
-  rightIcon,
-  fullWidth = false,
-  variant = 'filled',
-  radius = 'sm',
-  component,
-  elementRef,
-  uppercase = false,
-  compact = false,
-  loading = false,
-  loaderPosition = 'left',
-  loaderProps,
-  gradient = { from: 'blue', to: 'cyan', deg: 45 },
-  classNames,
-  styles,
-  ...others
-}: ButtonProps<C, R>) {
-  const theme = useMantineTheme();
-  const colors = getSharedColorScheme({
-    color,
-    theme,
-    variant: variant === 'link' ? 'light' : variant,
-  });
+type ButtonComponent = <C extends React.ElementType = 'button'>(
+  props: ButtonProps<C>
+) => React.ReactElement;
 
-  const { classes, cx } = useStyles(
+export const Button: ButtonComponent & { displayName?: string } = forwardRef(
+  <C extends React.ElementType = 'button'>(
     {
-      radius,
+      className,
+      style,
+      size = 'sm',
       color,
-      size,
-      fullWidth,
-      compact,
-      gradientFrom: gradient.from,
-      gradientTo: gradient.to,
-      gradientDeg: gradient.deg,
-      variant,
-    },
-    classNames,
-    'button'
-  );
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
-  const Element = component || 'button';
-  const loader = (
-    <Loader
-      color={colors.color}
-      size={getSizeValue({ size, sizes: heights }) - 12}
-      {...loaderProps}
-    />
-  );
+      type = 'button',
+      disabled = false,
+      children,
+      leftIcon,
+      rightIcon,
+      fullWidth = false,
+      variant = 'filled',
+      radius = 'sm',
+      component,
+      uppercase = false,
+      compact = false,
+      loading = false,
+      loaderPosition = 'left',
+      loaderProps,
+      gradient = { from: 'blue', to: 'cyan', deg: 45 },
+      classNames,
+      styles,
+      ...others
+    }: ButtonProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const theme = useMantineTheme();
+    const colors = getSharedColorScheme({
+      color,
+      theme,
+      variant: variant === 'link' ? 'light' : variant,
+    });
 
-  return (
-    <Element
-      {...rest}
-      className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
-      type={type}
-      disabled={disabled || loading}
-      ref={elementRef as any}
-      onTouchStart={() => {}}
-      style={mergedStyles}
-    >
-      <div className={classes.inner} style={_styles.inner}>
-        {(leftIcon || (loading && loaderPosition === 'left')) && (
+    const { classes, cx } = useStyles(
+      {
+        radius,
+        color,
+        size,
+        fullWidth,
+        compact,
+        gradientFrom: gradient.from,
+        gradientTo: gradient.to,
+        gradientDeg: gradient.deg,
+        variant,
+      },
+      classNames,
+      'button'
+    );
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const Element = component || 'button';
+    const loader = (
+      <Loader
+        color={colors.color}
+        size={getSizeValue({ size, sizes: heights }) - 12}
+        {...loaderProps}
+      />
+    );
+
+    return (
+      <Element
+        {...rest}
+        className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
+        type={type}
+        disabled={disabled || loading}
+        ref={ref}
+        onTouchStart={() => {}}
+        style={mergedStyles}
+      >
+        <div className={classes.inner} style={_styles.inner}>
+          {(leftIcon || (loading && loaderPosition === 'left')) && (
+            <span
+              className={cx(classes.icon, classes.leftIcon)}
+              style={{ ..._styles.icon, ..._styles.leftIcon }}
+            >
+              {loading && loaderPosition === 'left' ? loader : leftIcon}
+            </span>
+          )}
+
           <span
-            className={cx(classes.icon, classes.leftIcon)}
-            style={{ ..._styles.icon, ..._styles.leftIcon }}
+            className={classes.label}
+            style={{ textTransform: uppercase ? 'uppercase' : undefined, ..._styles.label }}
           >
-            {loading && loaderPosition === 'left' ? loader : leftIcon}
+            {children}
           </span>
-        )}
 
-        <span
-          className={classes.label}
-          style={{ textTransform: uppercase ? 'uppercase' : undefined, ..._styles.label }}
-        >
-          {children}
-        </span>
-
-        {(rightIcon || (loading && loaderPosition === 'right')) && (
-          <span
-            className={cx(classes.icon, classes.rightIcon)}
-            style={{ ..._styles.icon, ..._styles.rightIcon }}
-          >
-            {loading && loaderPosition === 'right' ? loader : rightIcon}
-          </span>
-        )}
-      </div>
-    </Element>
-  );
-}
+          {(rightIcon || (loading && loaderPosition === 'right')) && (
+            <span
+              className={cx(classes.icon, classes.rightIcon)}
+              style={{ ..._styles.icon, ..._styles.rightIcon }}
+            >
+              {loading && loaderPosition === 'right' ? loader : rightIcon}
+            </span>
+          )}
+        </div>
+      </Element>
+    );
+  }
+);
 
 Button.displayName = '@mantine/core/Button';
