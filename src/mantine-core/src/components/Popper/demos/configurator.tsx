@@ -13,7 +13,7 @@ function Wrapper(props: PopperProps<HTMLDivElement>) {
 
   return (
     <Group position="center">
-      <Button elementRef={setReferenceElement} onClick={() => setVisible((m) => !m)}>
+      <Button ref={setReferenceElement} onClick={() => setVisible((m) => !m)}>
         Reference element
       </Button>
 
@@ -52,7 +52,7 @@ function Demo() {
 
   return (
     <Group position="center">
-      <Button elementRef={setReferenceElement} onClick={() => setVisible((m) => !m)}>
+      <Button ref={setReferenceElement} onClick={() => setVisible((m) => !m)}>
         Reference element
       </Button>
 
