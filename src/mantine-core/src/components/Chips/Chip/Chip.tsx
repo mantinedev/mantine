@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import {
   mergeStyles,
@@ -49,9 +49,6 @@ export interface ChipProps
   /** Static id to bind input with label */
   id?: string;
 
-  /** Get input ref */
-  elementRef?: React.ForwardedRef<HTMLInputElement>;
-
   /** Static selector base */
   __staticSelector?: string;
 
@@ -59,82 +56,86 @@ export interface ChipProps
   value: string;
 }
 
-export function Chip({
-  radius = 'xl',
-  type = 'checkbox',
-  size = 'sm',
-  variant,
-  disabled = false,
-  __staticSelector = 'chip',
-  elementRef,
-  id,
-  color,
-  children,
-  className,
-  classNames,
-  style,
-  styles,
-  checked,
-  defaultChecked,
-  onChange,
-  ...others
-}: ChipProps) {
-  const uuid = useUuid(id);
-  const theme = useMantineTheme();
-  const { classes, cx } = useStyles({ radius, size, color }, classNames, __staticSelector);
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const [value, setValue] = useUncontrolled({
-    value: checked,
-    defaultValue: defaultChecked,
-    finalValue: true,
-    onChange,
-    rule: (val) => typeof val === 'boolean',
-  });
+export const Chip = forwardRef<HTMLInputElement, ChipProps>(
+  (
+    {
+      radius = 'xl',
+      type = 'checkbox',
+      size = 'sm',
+      variant,
+      disabled = false,
+      __staticSelector = 'chip',
+      id,
+      color,
+      children,
+      className,
+      classNames,
+      style,
+      styles,
+      checked,
+      defaultChecked,
+      onChange,
+      ...others
+    }: ChipProps,
+    ref
+  ) => {
+    const uuid = useUuid(id);
+    const theme = useMantineTheme();
+    const { classes, cx } = useStyles({ radius, size, color }, classNames, __staticSelector);
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const [value, setValue] = useUncontrolled({
+      value: checked,
+      defaultValue: defaultChecked,
+      finalValue: true,
+      onChange,
+      rule: (val) => typeof val === 'boolean',
+    });
 
-  const defaultVariant = theme.colorScheme === 'dark' ? 'filled' : 'outline';
+    const defaultVariant = theme.colorScheme === 'dark' ? 'filled' : 'outline';
 
-  return (
-    <>
-      <input
-        type={type}
-        className={classes.input}
-        style={_styles.input}
-        checked={value}
-        onChange={(event) => setValue(event.currentTarget.checked)}
-        id={uuid}
-        disabled={disabled}
-        ref={elementRef}
-        {...rest}
-      />
-      <label
-        className={cx(
-          classes.label,
-          { [classes.checked]: value, [classes.disabled]: disabled },
-          classes[variant || defaultVariant],
-          className
-        )}
-        style={{
-          ...mergedStyles,
-          ..._styles.label,
-          ...(value ? _styles.checked : null),
-          ...(disabled ? _styles.disabled : null),
-        }}
-        htmlFor={uuid}
-      >
-        {value && (
-          <span className={classes.iconWrapper} style={_styles.iconWrapper}>
-            <CheckboxIcon
-              indeterminate={false}
-              className={classes.checkIcon}
-              style={{ ..._styles.checkIcon }}
-            />
-          </span>
-        )}
-        {children}
-      </label>
-    </>
-  );
-}
+    return (
+      <>
+        <input
+          type={type}
+          className={classes.input}
+          style={_styles.input}
+          checked={value}
+          onChange={(event) => setValue(event.currentTarget.checked)}
+          id={uuid}
+          disabled={disabled}
+          ref={ref}
+          {...rest}
+        />
+        <label
+          className={cx(
+            classes.label,
+            { [classes.checked]: value, [classes.disabled]: disabled },
+            classes[variant || defaultVariant],
+            className
+          )}
+          style={{
+            ...mergedStyles,
+            ..._styles.label,
+            ...(value ? _styles.checked : null),
+            ...(disabled ? _styles.disabled : null),
+          }}
+          htmlFor={uuid}
+        >
+          {value && (
+            <span className={classes.iconWrapper} style={_styles.iconWrapper}>
+              <CheckboxIcon
+                indeterminate={false}
+                className={classes.checkIcon}
+                style={{ ..._styles.checkIcon }}
+              />
+            </span>
+          )}
+          {children}
+        </label>
+      </>
+    );
+  }
+);
 
 Chip.displayName = '@mantine/core/Chip';
