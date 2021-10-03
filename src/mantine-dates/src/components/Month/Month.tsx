@@ -186,7 +186,7 @@ export function Month({
       return (
         <td className={classes.cell} style={_styles.cell} key={cellIndex}>
           <Day
-            elementRef={(button) => {
+            ref={(button) => {
               daysRefs.current[date.toISOString()] = button;
             }}
             onClick={() => typeof onChange === 'function' && onChange(date)}
