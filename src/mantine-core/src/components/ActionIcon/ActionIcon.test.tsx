@@ -18,7 +18,7 @@ describe('@mantine/core/ActionIcon', () => {
   itSupportsOthers(ActionIcon, {});
   itSupportsStyle(ActionIcon, {});
   itSupportsMargins(ActionIcon, {});
-  itSupportsRef(ActionIcon, {}, HTMLButtonElement, 'elementRef');
+  itSupportsRef(ActionIcon, {}, HTMLButtonElement, 'ref');
   itRendersChildren(ActionIcon, {});
   checkAccessibility([
     mount(
@@ -51,13 +51,11 @@ describe('@mantine/core/ActionIcon', () => {
   it('accepts component from component prop', () => {
     const TestComponent = (props: any) => <span data-test-prop {...props} />;
     const withTag = shallow(
-      <ActionIcon<'a'> component="a" href="https://mantine.dev">
+      <ActionIcon component="a" href="https://mantine.dev">
         $
       </ActionIcon>
     );
-    const withComponent = shallow(
-      <ActionIcon<typeof TestComponent> component={TestComponent}>$</ActionIcon>
-    );
+    const withComponent = shallow(<ActionIcon component={TestComponent}>$</ActionIcon>);
 
     expect(withTag.type()).toBe('a');
     expect(withTag.render().attr('href')).toBe('https://mantine.dev');
@@ -66,6 +64,6 @@ describe('@mantine/core/ActionIcon', () => {
   });
 
   it('has correct displayName', () => {
-    expect(ActionIcon.displayName).toEqual('@mantine/core/ActionIcon');
+    expect((ActionIcon as any).displayName).toEqual('@mantine/core/ActionIcon');
   });
 });
