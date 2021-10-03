@@ -149,7 +149,7 @@ export function Popover({
           bodyId={bodyId}
           closeButtonLabel={closeButtonLabel}
           onClose={handleClose}
-          elementRef={useMergedRef(focusTrapRef, setDropdownElement)}
+          ref={useMergedRef(focusTrapRef, setDropdownElement)}
           onKeyDownCapture={handleKeydown}
           classNames={classNames}
           styles={styles}

@@ -21,7 +21,6 @@ const defaultProps = {
   shadow: 'sm',
   radius: 'sm' as const,
   spacing: 'sm' as const,
-  elementRef: () => {},
   titleId: 'test-title-id',
   bodyId: 'test-body-id',
 };
@@ -33,7 +32,7 @@ describe('@mantine/core/PopoverBody', () => {
   itSupportsClassName(PopoverBody, defaultProps);
   itSupportsOthers(PopoverBody, defaultProps);
   itSupportsStyle(PopoverBody, defaultProps);
-  itSupportsRef(PopoverBody, defaultProps, HTMLDivElement, 'elementRef');
+  itSupportsRef(PopoverBody, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     PopoverBody,
     defaultProps,
