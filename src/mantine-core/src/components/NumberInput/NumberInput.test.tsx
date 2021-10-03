@@ -33,7 +33,7 @@ describe('@mantine/core/NumberInput', () => {
   itSupportsClassName(NumberInput, defaultProps);
   itSupportsMargins(NumberInput, defaultProps);
   itSupportsStyle(NumberInput, defaultProps);
-  itSupportsRef(NumberInput, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsRef(NumberInput, defaultProps, HTMLInputElement);
   itSupportsStylesApi(
     NumberInput,
     {

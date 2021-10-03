@@ -26,9 +26,6 @@ export interface TextInputProps
   /** Props passed to root element (InputWrapper component) */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<HTMLInputElement>;
-
   /** Input size */
   size?: MantineSize;
 
@@ -49,7 +46,6 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       icon,
       description,
       wrapperProps,
-      elementRef,
       size = 'sm',
       classNames,
       styles,
