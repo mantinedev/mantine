@@ -33,7 +33,7 @@ function Demo() {
           <Paper
             shadow="md"
             style={{ ...styles, position: 'absolute', top: 0, left: 0, right: 0, height: 120 }}
-            elementRef={clickOutsideRef}
+            ref={clickOutsideRef}
           >
             Dropdown
           </Paper>
@@ -70,6 +70,7 @@ export function Demo() {
         {(styles) => (
           <Paper
             shadow="md"
+            ref={clickOutsideRef}
             style={{
               ...styles,
               position: 'absolute',
@@ -80,7 +81,6 @@ export function Demo() {
               padding: theme.spacing.xl,
               backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
             }}
-            elementRef={clickOutsideRef}
           >
             Dropdown
           </Paper>
