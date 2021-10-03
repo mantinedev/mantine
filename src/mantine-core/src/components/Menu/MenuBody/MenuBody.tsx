@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import { useFocusTrap } from '@mantine/hooks';
 import {
   mergeStyles,
@@ -57,9 +57,6 @@ export interface MenuBodyProps
 
   /** Trap focus inside menu */
   trapFocus?: boolean;
-
-  /** Get body ref */
-  elementRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
 function getNextItem(active: number, items: MenuItemType[]) {
@@ -96,148 +93,152 @@ function getPreviousItem(active: number, items: MenuItemType[]) {
   return active;
 }
 
-export function MenuBody({
-  className,
-  style,
-  opened,
-  onClose,
-  children,
-  size = 'md',
-  shadow = 'md',
-  closeOnItemClick = true,
-  transitionDuration = 150,
-  classNames,
-  styles,
-  radius,
-  trapFocus = true,
-  elementRef,
-  ...others
-}: MenuBodyProps) {
-  const items = React.Children.toArray(children).filter(
-    (item: MenuItemType) =>
-      item.type === MenuItem || item.type === Divider || item.type === MenuLabel
-  ) as MenuItemType[];
+export const MenuBody = forwardRef<HTMLDivElement, MenuBodyProps>(
+  (
+    {
+      className,
+      style,
+      opened,
+      onClose,
+      children,
+      size = 'md',
+      shadow = 'md',
+      closeOnItemClick = true,
+      transitionDuration = 150,
+      classNames,
+      styles,
+      radius,
+      trapFocus = true,
+      ...others
+    }: MenuBodyProps,
+    ref
+  ) => {
+    const items = React.Children.toArray(children).filter(
+      (item: MenuItemType) =>
+        item.type === MenuItem || item.type === Divider || item.type === MenuLabel
+    ) as MenuItemType[];
 
-  const hoveredTimeout = useRef<number>();
-  const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
-  const theme = useMantineTheme();
-  const { classes, cx } = useStyles({ size }, classNames, 'menu');
-  const _styles = mergeStyles(classes, styles);
-  const [hovered, setHovered] = useState(-1);
-  const focusTrapRef = useFocusTrap(trapFocus);
+    const hoveredTimeout = useRef<number>();
+    const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
+    const theme = useMantineTheme();
+    const { classes, cx } = useStyles({ size }, classNames, 'menu');
+    const _styles = mergeStyles(classes, styles);
+    const [hovered, setHovered] = useState(-1);
+    const focusTrapRef = useFocusTrap(trapFocus);
 
-  useEffect(() => {
-    if (!opened) {
-      hoveredTimeout.current = window.setTimeout(() => {
-        setHovered(-1);
-      }, transitionDuration);
-    } else {
-      window.clearTimeout(hoveredTimeout.current);
+    useEffect(() => {
+      if (!opened) {
+        hoveredTimeout.current = window.setTimeout(() => {
+          setHovered(-1);
+        }, transitionDuration);
+      } else {
+        window.clearTimeout(hoveredTimeout.current);
+      }
+
+      return () => window.clearTimeout(hoveredTimeout.current);
+    }, [opened]);
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+      const { code } = event.nativeEvent;
+
+      if (code === 'Escape') {
+        onClose();
+      }
+
+      if (code === 'Tab' && trapFocus) {
+        event.preventDefault();
+      }
+
+      if (code === 'ArrowUp') {
+        event.preventDefault();
+        const prevIndex = getPreviousItem(hovered, items);
+        setHovered(prevIndex);
+        buttonsRefs.current[prevIndex].focus();
+      }
+
+      if (code === 'ArrowDown') {
+        event.preventDefault();
+        const nextIndex = getNextItem(hovered, items);
+        setHovered(nextIndex);
+        buttonsRefs.current[nextIndex].focus();
+      }
+    };
+
+    if (items.length === 0) {
+      return null;
     }
 
-    return () => window.clearTimeout(hoveredTimeout.current);
-  }, [opened]);
+    const buttons = items.map((item, index) => {
+      if (item.type === MenuItem) {
+        return (
+          <MenuButton<'button'>
+            {...item.props}
+            key={index}
+            hovered={hovered === index}
+            onHover={() => setHovered(index)}
+            radius={radius}
+            classNames={classNames}
+            styles={styles}
+            onMouseLeave={() => setHovered(-1)}
+            onClick={(event) => {
+              if (closeOnItemClick) {
+                onClose();
+              }
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { code } = event.nativeEvent;
+              if (typeof item.props.onClick === 'function') {
+                item.props.onClick(event);
+              }
+            }}
+            ref={(node) => {
+              buttonsRefs.current[index] = node;
+            }}
+          />
+        );
+      }
 
-    if (code === 'Escape') {
-      onClose();
-    }
+      if (item.type === MenuLabel) {
+        return (
+          <Text
+            key={index}
+            className={classes.label}
+            style={_styles.label}
+            {...(item.props as any)}
+          />
+        );
+      }
 
-    if (code === 'Tab' && trapFocus) {
-      event.preventDefault();
-    }
+      if (item.type === Divider) {
+        return (
+          <Divider
+            variant="solid"
+            className={classes.divider}
+            my={theme.spacing.xs / 2}
+            style={_styles.divider}
+            key={index}
+          />
+        );
+      }
 
-    if (code === 'ArrowUp') {
-      event.preventDefault();
-      const prevIndex = getPreviousItem(hovered, items);
-      setHovered(prevIndex);
-      buttonsRefs.current[prevIndex].focus();
-    }
+      return null;
+    });
 
-    if (code === 'ArrowDown') {
-      event.preventDefault();
-      const nextIndex = getNextItem(hovered, items);
-      setHovered(nextIndex);
-      buttonsRefs.current[nextIndex].focus();
-    }
-  };
-
-  if (items.length === 0) {
-    return null;
+    return (
+      <Paper
+        shadow={shadow}
+        className={cx(classes.body, className)}
+        style={{ ...style, ..._styles.body }}
+        onKeyDownCapture={handleKeyDown}
+        role="menu"
+        aria-orientation="vertical"
+        radius={radius}
+        onMouseLeave={() => setHovered(-1)}
+        ref={ref}
+        {...others}
+      >
+        <div ref={focusTrapRef}>{buttons}</div>
+      </Paper>
+    );
   }
-
-  const buttons = items.map((item, index) => {
-    if (item.type === MenuItem) {
-      return (
-        <MenuButton<'button'>
-          {...item.props}
-          key={index}
-          hovered={hovered === index}
-          onHover={() => setHovered(index)}
-          radius={radius}
-          classNames={classNames}
-          styles={styles}
-          onMouseLeave={() => setHovered(-1)}
-          onClick={(event) => {
-            if (closeOnItemClick) {
-              onClose();
-            }
-
-            if (typeof item.props.onClick === 'function') {
-              item.props.onClick(event);
-            }
-          }}
-          elementRef={(node) => {
-            buttonsRefs.current[index] = node;
-          }}
-        />
-      );
-    }
-
-    if (item.type === MenuLabel) {
-      return (
-        <Text
-          key={index}
-          className={classes.label}
-          style={_styles.label}
-          {...(item.props as any)}
-        />
-      );
-    }
-
-    if (item.type === Divider) {
-      return (
-        <Divider
-          variant="solid"
-          className={classes.divider}
-          my={theme.spacing.xs / 2}
-          style={_styles.divider}
-          key={index}
-        />
-      );
-    }
-
-    return null;
-  });
-
-  return (
-    <Paper
-      shadow={shadow}
-      className={cx(classes.body, className)}
-      style={{ ...style, ..._styles.body }}
-      onKeyDownCapture={handleKeyDown}
-      role="menu"
-      aria-orientation="vertical"
-      radius={radius}
-      onMouseLeave={() => setHovered(-1)}
-      elementRef={elementRef}
-      {...others}
-    >
-      <div ref={focusTrapRef}>{buttons}</div>
-    </Paper>
-  );
-}
+);
 
 MenuBody.displayName = '@mantine/core/MenuBody';
