@@ -115,6 +115,7 @@
     "prism-react-renderer": "^1.2.1",
     "react": "^17.0.2",
     "react-custom-scrollbars": "^4.2.1",
+    "react-dropzone": "^11.4.2",
     "react-feather": "^2.0.9",
     "react-flagpack": "^0.1.1",
     "react-popper": "^2.2.5",
