@@ -10,7 +10,6 @@ const defaultProps = {
   value: 10,
   position: 10,
   label: 'test-label',
-  elementRef: () => {},
   dragging: false,
   onMouseDown: () => {},
   color: 'blue',
@@ -25,7 +24,7 @@ const defaultProps = {
 describe('@mantine/core/Thumb', () => {
   checkAccessibility([mount(<Thumb {...defaultProps} />)]);
   itSupportsStylesApi(Thumb, defaultProps, ['label'], 'slider');
-  itSupportsRef(Thumb, defaultProps, HTMLDivElement, 'elementRef');
+  itSupportsRef(Thumb, defaultProps, HTMLDivElement);
 
   it('sets left property based on position prop', () => {
     const element = shallow(<Thumb {...defaultProps} position={62} />);

@@ -10,7 +10,6 @@ import {
 import { SliderRoot } from './SliderRoot';
 
 const defaultProps = {
-  elementRef: () => {},
   size: 10,
   children: <div />,
 };
@@ -20,7 +19,7 @@ describe('@mantine/core/SliderRoot', () => {
   itSupportsOthers(SliderRoot, defaultProps);
   itSupportsStyle(SliderRoot, defaultProps);
   itSupportsMargins(SliderRoot, defaultProps);
-  itSupportsRef(SliderRoot, defaultProps, HTMLDivElement, 'elementRef');
+  itSupportsRef(SliderRoot, defaultProps, HTMLDivElement);
   itSupportsStylesApi(SliderRoot, defaultProps, ['root'], 'slider');
 
   it('has correct displayName', () => {

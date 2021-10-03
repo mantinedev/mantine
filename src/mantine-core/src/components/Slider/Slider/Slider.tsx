@@ -192,7 +192,7 @@ export function Slider({
     <SliderRoot
       {...others}
       size={size}
-      elementRef={container}
+      ref={container}
       onTouchStart={handleTrackMouseDown}
       onMouseDown={handleTrackMouseDown}
       onTouchStartCapture={() => setDragging(true)}
@@ -226,7 +226,7 @@ export function Slider({
           color={color}
           size={size}
           label={_label}
-          elementRef={thumb}
+          ref={thumb}
           onMouseDown={handleThumbMouseDown}
           labelTransition={labelTransition}
           labelTransitionDuration={labelTransitionDuration}
