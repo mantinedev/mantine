@@ -137,7 +137,7 @@ storiesOf('@mantine/core/Button', module)
   .add('React router', () => (
     <MemoryRouter>
       <Group style={{ padding: 20 }}>
-        <Button<typeof Link, HTMLAnchorElement> component={Link} to="/hello">
+        <Button component={Link} to="/hello">
           Mantine button
         </Button>
       </Group>

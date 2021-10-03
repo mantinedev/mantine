@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar, AvatarProps } from '../Avatar';
 import { Group } from '../../Group/Group';
 
-function Wrapper(props: AvatarProps) {
+function Wrapper(props: AvatarProps<'div'>) {
   return (
     <Group position="center">
       <Avatar {...props} />

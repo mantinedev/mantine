@@ -42,7 +42,7 @@ export function UseClickOutsideDemo({ events }: { events?: string[] }) {
 
         {opened && (
           <Paper
-            elementRef={ref}
+            ref={ref}
             shadow="sm"
             style={{
               width: 300,

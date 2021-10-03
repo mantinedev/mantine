@@ -290,7 +290,7 @@ export function Select({
           {...rest}
           type="text"
           required={required}
-          elementRef={useMergedRef(elementRef, inputRef)}
+          ref={useMergedRef(elementRef, inputRef)}
           id={uuid}
           invalid={!!error}
           size={size}

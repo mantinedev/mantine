@@ -12,12 +12,12 @@ const baseStyles = {
   paddingRight: 20,
 };
 
-type SocialButtonProps = Omit<React.ComponentProps<'a'>, 'type'>;
+type SocialButtonProps = Omit<React.ComponentPropsWithoutRef<'a'>, 'type'>;
 
 function DiscordButton({ style, ...others }: SocialButtonProps) {
   const theme = useMantineTheme();
   return (
-    <Button<'a', HTMLAnchorElement>
+    <Button
       component="a"
       target="_blank"
       rel="noopener noreferrer"
@@ -38,7 +38,7 @@ function DiscordButton({ style, ...others }: SocialButtonProps) {
 function TwitterButton({ style, ...others }: SocialButtonProps) {
   const theme = useMantineTheme();
   return (
-    <Button<'a', HTMLAnchorElement>
+    <Button
       component="a"
       target="_blank"
       rel="noopener noreferrer"
@@ -58,7 +58,7 @@ function TwitterButton({ style, ...others }: SocialButtonProps) {
 
 function EmailButton({ style, ...others }: SocialButtonProps) {
   return (
-    <Button<'a', HTMLAnchorElement>
+    <Button
       component="a"
       target="_blank"
       rel="noopener noreferrer"
@@ -76,7 +76,7 @@ function EmailButton({ style, ...others }: SocialButtonProps) {
 function GithubButton({ style, ...others }: SocialButtonProps) {
   const theme = useMantineTheme();
   return (
-    <Button<'a', HTMLAnchorElement>
+    <Button
       component="a"
       target="_blank"
       rel="noopener noreferrer"

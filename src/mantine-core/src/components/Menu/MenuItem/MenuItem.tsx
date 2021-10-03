@@ -21,7 +21,7 @@ export type MenuItemProps<C extends React.ElementType> = PolymorphicComponentPro
   SharedMenuItemProps
 >;
 
-type MenuItemComponent = <C extends React.ElementType = 'div'>(
+export type MenuItemComponent = <C extends React.ElementType = 'div'>(
   props: MenuItemProps<C>
 ) => React.ReactElement;
 

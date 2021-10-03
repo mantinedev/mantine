@@ -1,3 +1,5 @@
+import type { Tuple } from './types';
+
 export const DEFAULT_COLORS = {
   dark: [
     '#E7E9EE',
@@ -180,4 +182,4 @@ export const DEFAULT_COLORS = {
     '#e8590c',
     '#d9480f',
   ],
-} as const;
+} as Record<string, Tuple<string, 10>>;

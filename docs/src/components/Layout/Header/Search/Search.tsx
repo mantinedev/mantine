@@ -110,7 +110,7 @@ export default function Search({ data, isMacOS }: SearchProps) {
       <Autocomplete
         className={classes.input}
         data={filteredPages}
-        elementRef={inputRef}
+        ref={inputRef}
         value={query}
         itemComponent={({ slug, title, package: mantinePackage, group, ...others }) => (
           <SearchItem

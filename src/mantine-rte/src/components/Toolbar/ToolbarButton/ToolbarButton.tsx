@@ -2,7 +2,7 @@ import React from 'react';
 import { ActionIcon, ActionIconProps } from '@mantine/core';
 import useStyles from './ToolbarButton.styles';
 
-interface ToolbarButtonProps extends ActionIconProps<'button', HTMLButtonElement> {
+interface ToolbarButtonProps extends ActionIconProps<'button'> {
   /** Control icon */
   children: React.ReactNode;
 

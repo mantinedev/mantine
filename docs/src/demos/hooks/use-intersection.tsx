@@ -44,10 +44,10 @@ function Demo() {
   });
 
   return (
-    <Paper elementRef={containerRef} style={{ overflowY: 'scroll', height: 300 }}>
+    <Paper ref={containerRef} style={{ overflowY: 'scroll', height: 300 }}>
       <div style={{ paddingTop: 260, paddingBottom: 280 }}>
         <Paper
-          elementRef={ref}
+          ref={ref}
           padding="xl"
           style={{
             backgroundColor: observer?.isIntersecting ? theme.colors.green[9] : theme.colors.red[9],

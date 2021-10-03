@@ -4,7 +4,7 @@ import { Button, ButtonProps, Group, useMantineTheme } from '@mantine/core';
 import { GoogleIcon } from './GoogleIcon';
 import { TwitterIcon } from './TwitterIcon';
 
-export function GoogleButton({ style, ...props }: ButtonProps) {
+export function GoogleButton({ style, ...props }: ButtonProps<'button'>) {
   const theme = useMantineTheme();
   return (
     <Button
@@ -22,18 +22,16 @@ export function GoogleButton({ style, ...props }: ButtonProps) {
   );
 }
 
-export function FacebookButton({ style, ...props }: ButtonProps) {
+export function FacebookButton({ style, ...props }: ButtonProps<'button'>) {
   return <Button style={{ ...style, backgroundColor: '#4267B2', color: '#fff' }} {...props} />;
 }
 
-// Generic arguments are used to support custom component in TypeScript
-export function TwitterButton<
-  C extends React.ElementType = 'button',
-  R extends HTMLElement = HTMLButtonElement
->({ style, ...props }: ButtonProps<C, R>) {
+// Twitter button as anchor
+export function TwitterButton({ style, component, ...others }: ButtonProps<'a'>) {
   const theme = useMantineTheme();
   return (
     <Button
+      component="a"
       leftIcon={<TwitterIcon />}
       variant="outline"
       style={{
@@ -42,12 +40,12 @@ export function TwitterButton<
         borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       }}
-      {...props}
+      {...others}
     />
   );
 }
 
-export function GithubButton({ style, ...props }: ButtonProps) {
+export function GithubButton({ style, ...props }: ButtonProps<'button'>) {
   return (
     <Button
       {...props}
@@ -65,11 +63,7 @@ export function SocialButtons() {
   return (
     <Group position="center" withGutter>
       <GoogleButton>Continue with Google</GoogleButton>
-      <TwitterButton<'a', HTMLAnchorElement>
-        component="a"
-        href="https://twitter.com/mantinedev"
-        target="_blank"
-      >
+      <TwitterButton href="https://twitter.com/mantinedev" target="_blank">
         Follow on Twitter
       </TwitterButton>
       <FacebookButton>Sign in with Facebook</FacebookButton>

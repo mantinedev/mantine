@@ -1,7 +1,7 @@
 import React from 'react';
 import { Highlight, HighlightProps } from '../Highlight';
 
-function Wrapper(props: HighlightProps<'div', HTMLDivElement>) {
+function Wrapper(props: HighlightProps<'div'>) {
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
       <Highlight {...props} />

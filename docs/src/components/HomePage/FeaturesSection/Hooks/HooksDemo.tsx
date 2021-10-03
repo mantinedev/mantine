@@ -41,7 +41,7 @@ function Demo() {
   return (
     <>
       <Button onClick={() => setOpened(true)}>Open dropdown</Button>
-      {opened && <Paper elementRef={ref} shadow="sm">Click outside to close</Paper>}
+      {opened && <Paper ref={ref} shadow="sm">Click outside to close</Paper>}
     </>
   );
 }
@@ -83,7 +83,7 @@ export function HooksDemo() {
 
         {opened && (
           <Paper
-            elementRef={ref}
+            ref={ref}
             shadow="sm"
             style={{ position: 'absolute', top: -15, left: -15, right: -15, bottom: -15 }}
           >

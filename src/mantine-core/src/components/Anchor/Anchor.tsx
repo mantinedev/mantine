@@ -7,7 +7,7 @@ export type AnchorProps<C extends React.ElementType> = PolymorphicComponentProps
   SharedTextProps
 >;
 
-type AnchorComponent = <C extends React.ElementType = 'div'>(
+type AnchorComponent = <C extends React.ElementType = 'a'>(
   props: AnchorProps<C>
 ) => React.ReactElement;
 

@@ -60,7 +60,7 @@ function RefDemo() {
   return (
     <Group position="center" direction="column">
       <Image
-        elementRef={ref}
+        ref={ref}
         src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80"
         alt="Unsplash Image to make Fullscreen"
         width={200}

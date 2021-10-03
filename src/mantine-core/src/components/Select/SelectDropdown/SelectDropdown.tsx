@@ -51,7 +51,7 @@ export function SelectDropdown({
             role="listbox"
             className={classes.dropdown}
             shadow={shadow}
-            elementRef={elementRef}
+            ref={elementRef}
             style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
             onMouseDown={(event) => event.preventDefault()}
           >

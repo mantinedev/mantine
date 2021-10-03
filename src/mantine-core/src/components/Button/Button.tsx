@@ -19,7 +19,7 @@ import { Loader, LoaderProps } from '../Loader';
 
 export type ButtonStylesNames = Exclude<ClassNames<typeof useStyles>, ButtonVariant | 'loading'>;
 
-interface _ButtonProps extends DefaultProps<ButtonStylesNames> {
+export interface SharedButtonProps extends DefaultProps<ButtonStylesNames> {
   /** Predefined button size */
   size?: MantineSize;
 
@@ -63,7 +63,10 @@ interface _ButtonProps extends DefaultProps<ButtonStylesNames> {
   loaderPosition?: 'left' | 'right';
 }
 
-export type ButtonProps<C extends React.ElementType> = PolymorphicComponentProps<C, _ButtonProps>;
+export type ButtonProps<C extends React.ElementType> = PolymorphicComponentProps<
+  C,
+  SharedButtonProps
+>;
 
 type ButtonComponent = <C extends React.ElementType = 'button'>(
   props: ButtonProps<C>

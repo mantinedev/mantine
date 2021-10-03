@@ -13,7 +13,7 @@ import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { MenuIcon } from './MenuIcon';
 import { MenuBody, MenuBodyStylesNames } from './MenuBody/MenuBody';
-import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
+import { MenuItem, MenuItemComponent } from './MenuItem/MenuItem';
 import { MenuLabel, MenuLabelProps } from './MenuLabel/MenuLabel';
 import useStyles from './Menu.styles';
 
@@ -86,7 +86,7 @@ const defaultControl = (
 
 type MenuComponent = {
   displayName?: string;
-  Item: React.FC<MenuItemProps>;
+  Item: MenuItemComponent;
   Label: React.FC<MenuLabelProps>;
 } & ((props: MenuProps) => React.ReactElement);
 

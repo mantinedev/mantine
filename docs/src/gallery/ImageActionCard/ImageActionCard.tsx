@@ -61,8 +61,7 @@ export function ImageActionCard({
   style,
   className,
   ...others
-}: ImageActionCardProps &
-  Omit<CardProps<'div', HTMLDivElement>, keyof ImageActionCardProps | 'children'>) {
+}: ImageActionCardProps & Omit<CardProps<'div'>, keyof ImageActionCardProps | 'children'>) {
   const { classes, cx } = useStyles();
   const theme = useMantineTheme();
 
