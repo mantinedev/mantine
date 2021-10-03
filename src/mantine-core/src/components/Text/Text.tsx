@@ -48,7 +48,7 @@ type TextComponent = <C extends React.ElementType = 'div'>(
   props: TextProps<C>
 ) => React.ReactElement;
 
-export const Text: TextComponent = forwardRef(
+export const Text: TextComponent & { displayName?: string } = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       className,
@@ -106,4 +106,4 @@ export const Text: TextComponent = forwardRef(
   }
 );
 
-(Text as any).displayName = '@mantine/core/Text';
+Text.displayName = '@mantine/core/Text';

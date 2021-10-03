@@ -60,15 +60,14 @@ interface _InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {
 
 export type InputProps<C extends React.ElementType> = PolymorphicComponentProps<C, _InputProps>;
 
-type InputComponent = <C extends React.ElementType = 'div'>(
+type InputComponent = <C extends React.ElementType = 'input'>(
   props: InputProps<C>
 ) => React.ReactElement;
 
-export const Input: InputComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
+export const Input: InputComponent & { displayName?: string } = forwardRef(
+  <C extends React.ElementType = 'input'>(
     {
-      // @ts-ignore
-      component = 'input',
+      component,
       className,
       invalid = false,
       required = false,
@@ -99,7 +98,7 @@ export const Input: InputComponent = forwardRef(
     );
     const _styles = mergeStyles(classes, styles);
     const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
-    const Element: any = component;
+    const Element: any = component || 'input';
 
     return (
       <div
@@ -141,4 +140,4 @@ export const Input: InputComponent = forwardRef(
   }
 );
 
-(Input as any).displayName = '@mantine/core/Input';
+Input.displayName = '@mantine/core/Input';

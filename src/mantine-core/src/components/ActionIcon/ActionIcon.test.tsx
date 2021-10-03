@@ -64,6 +64,6 @@ describe('@mantine/core/ActionIcon', () => {
   });
 
   it('has correct displayName', () => {
-    expect((ActionIcon as any).displayName).toEqual('@mantine/core/ActionIcon');
+    expect(ActionIcon.displayName).toEqual('@mantine/core/ActionIcon');
   });
 });

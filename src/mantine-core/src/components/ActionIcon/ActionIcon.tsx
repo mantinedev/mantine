@@ -45,7 +45,7 @@ type ActionIconComponent = <C extends React.ElementType = 'button'>(
   props: ActionIconProps<C>
 ) => React.ReactElement;
 
-export const ActionIcon: ActionIconComponent = forwardRef(
+export const ActionIcon: ActionIconComponent & { displayName?: string } = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       className,
@@ -88,4 +88,4 @@ export const ActionIcon: ActionIconComponent = forwardRef(
   }
 );
 
-(ActionIcon as any).displayName = '@mantine/core/ActionIcon';
+ActionIcon.displayName = '@mantine/core/ActionIcon';
