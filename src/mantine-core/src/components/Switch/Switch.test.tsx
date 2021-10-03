@@ -27,7 +27,7 @@ describe('@mantine/core/Switch', () => {
   itSupportsClassName(Switch, defaultProps);
   itSupportsStyle(Switch, defaultProps);
   itSupportsMargins(Switch, defaultProps);
-  itSupportsRef(Switch, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsRef(Switch, defaultProps, HTMLInputElement);
   itSupportsStylesApi(Switch, defaultProps, Object.keys(SwitchStylesApi), 'switch');
 
   it('has correct displayName', () => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   mergeStyles,
   DefaultProps,
@@ -33,49 +33,50 @@ export interface SwitchProps
 
   /** Props spread to wrapper element */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
-export function Switch({
-  className,
-  color,
-  label,
-  id,
-  style,
-  size = 'sm',
-  radius = 'xl',
-  wrapperProps,
-  elementRef,
-  children,
-  classNames,
-  styles,
-  ...others
-}: SwitchProps) {
-  const { classes, cx } = useStyles({ size, color, radius }, classNames, 'switch');
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
-  const uuid = useUuid(id);
+export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
+  (
+    {
+      className,
+      color,
+      label,
+      id,
+      style,
+      size = 'sm',
+      radius = 'xl',
+      wrapperProps,
+      children,
+      classNames,
+      styles,
+      ...others
+    }: SwitchProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ size, color, radius }, classNames, 'switch');
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const uuid = useUuid(id);
 
-  return (
-    <div className={cx(classes.root, className)} style={mergedStyles} {...wrapperProps}>
-      <input
-        {...rest}
-        id={uuid}
-        ref={elementRef}
-        type="checkbox"
-        className={classes.input}
-        style={_styles.input}
-      />
+    return (
+      <div className={cx(classes.root, className)} style={mergedStyles} {...wrapperProps}>
+        <input
+          {...rest}
+          id={uuid}
+          ref={ref}
+          type="checkbox"
+          className={classes.input}
+          style={_styles.input}
+        />
 
-      {label && (
-        <label className={classes.label} htmlFor={uuid} style={_styles.label}>
-          {label}
-        </label>
-      )}
-    </div>
-  );
-}
+        {label && (
+          <label className={classes.label} htmlFor={uuid} style={_styles.label}>
+            {label}
+          </label>
+        )}
+      </div>
+    );
+  }
+);
 
 Switch.displayName = '@mantine/core/Switch';

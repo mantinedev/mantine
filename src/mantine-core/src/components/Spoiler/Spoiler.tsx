@@ -69,7 +69,7 @@ export function Spoiler({
       {spoiler && (
         <Button
           variant="link"
-          elementRef={controlRef}
+          ref={controlRef}
           onClick={() => setShowState((opened) => !opened)}
           className={classes.control}
           style={_styles.control}
