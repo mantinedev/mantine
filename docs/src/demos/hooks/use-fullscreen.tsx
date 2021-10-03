@@ -40,7 +40,7 @@ function Demo() {
   return (
     <>
       <Image
-        elementRef={ref}
+        ref={ref}
         src="https://unsplash.com/image.jpg"
         alt="Unsplash Image to make Fullscreen"
         width={200}

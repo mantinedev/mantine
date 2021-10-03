@@ -86,9 +86,9 @@ use special `headless` variant which does not include any Mantine styles but sti
 
 <Demo data={InputDemos.headless} />
 
-## Get element ref
+## Get input ref
 
-You can get input ref by passing `elementRef` prop to Input component:
+You can get input ref by passing `ref` prop to Input component:
 
 ```tsx
 import { useRef } from 'react';
@@ -96,28 +96,28 @@ import { Input } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
-  return <Input elementRef={ref} />;
+  return <Input ref={ref} />;
 }
 ```
 
 ## TypeScript
 
-You need to pass additional types to use custom component with TypeScript
-in case you need full type coverage for events and `elementRef`:
+You need to pass additional type to use custom component with TypeScript
+in case you need full type coverage for events and `ref`:
 
 ```tsx
-<Input<'button', HTMLButtonElement>
+<Input<'button'>
   component="button"
   onClick={(event) => console.log(event)}
-  elementRef={(node) => {
+  ref={(node) => {
     window.myRef = node;
   }}
 />
 
-<Input<typeof YourTextarea, HTMLTextareaElement>
+<Input<typeof YourTextarea>
   component={YourTextarea}
   onClick={(event) => console.log(event)}
-  elementRef={(node) => {
+  ref={(node) => {
     window.myRef = node;
   }}
 />

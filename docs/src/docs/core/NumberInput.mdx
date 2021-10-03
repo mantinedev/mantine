@@ -97,9 +97,9 @@ You can use any React node as icon:
 
 <Demo data={NumberInputDemos.icon} />
 
-## Get element ref
+## Get input ref
 
-You can get input ref with `elementRef` prop:
+You can get input ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -107,7 +107,7 @@ import { NumberInput } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
-  return <NumberInput elementRef={ref} />;
+  return <NumberInput ref={ref} />;
 }
 ```
 

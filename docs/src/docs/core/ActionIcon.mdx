@@ -99,26 +99,9 @@ function Demo() {
 }
 ```
 
-## Usage with Next Link
-
-Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
-to make ActionIcon and other similar components work with Next Link use `NextLink` component from @mantine/next package:
-
-```tsx
-import { NextLink } from '@mantine/next';
-
-function Demo() {
-  return (
-    <ActionIcon component={NextLink} href="/hello">
-      <MyIcon />
-    </ActionIcon>
-  );
-}
-```
-
 ## Get element ref
 
-You can get button ref with `elementRef` prop:
+You can get button ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -126,19 +109,15 @@ import { ActionIcon } from '@mantine/core';
 
 function Demo() {
   const ref = useRef();
-  return <ActionIcon elementRef={ref} />;
+  return <ActionIcon ref={ref} />;
 }
 ```
 
-To use `elementRef` with custom component in TypeScript you will need to specify generic types:
+To use `ref` with custom component in TypeScript you will need to specify generic types:
 
 ```tsx
 // Simple variant with function ref – specify type on node itself:
-<ActionIcon component="a" elementRef={(node: HTMLAnchorElement) => {}} />;
-
-// Variant with ref object – provide generic arguments:
-const myRef = useRef<HTMLAnchorElement>();
-<ActionIcon<'a', HTMLAnchorElement> component="a" elementRef={myRef} />;
+<ActionIcon component="a" ref={(node) => {}} />
 ```
 
 ## Close button

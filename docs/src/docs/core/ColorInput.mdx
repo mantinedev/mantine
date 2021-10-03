@@ -87,9 +87,9 @@ for example, you can add random color button there:
 
 <Demo data={ColorInputDemos.validation} />
 
-## Get element ref
+## Get input ref
 
-You can get input ref with `elementRef` prop:
+You can get input ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -97,7 +97,7 @@ import { ColorInput } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
-  return <ColorInput elementRef={ref} />;
+  return <ColorInput ref={ref} />;
 }
 ```
 

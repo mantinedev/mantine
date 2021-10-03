@@ -70,9 +70,9 @@ function Demo() {
 }
 ```
 
-## Get element ref
+## Get input ref
 
-You can get input ref by setting `elementRef` prop:
+You can get input ref by setting `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -80,7 +80,7 @@ import { Checkbox } from '@mantine/core';
 
 function Demo() {
   const ref = useRef();
-  return <Checkbox elementRef={ref} />;
+  return <Checkbox ref={ref} />;
 }
 ```
 

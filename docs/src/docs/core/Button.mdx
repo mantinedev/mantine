@@ -132,26 +132,9 @@ function Demo() {
 }
 ```
 
-## Usage with Next Link
+## Get button ref
 
-Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
-to make Button and other similar components work with Next Link use `NextLink` component from @mantine/next package:
-
-```tsx
-import { NextLink } from '@mantine/next';
-
-function Demo() {
-  return (
-    <Button component={NextLink} href="/hello">
-      My button as next link
-    </Button>
-  );
-}
-```
-
-## Get element ref
-
-You can get root element ref with `elementRef` prop:
+You can get root element ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -159,7 +142,7 @@ import { Button } from '@mantine/core';
 
 function Demo() {
   const ref = useRef();
-  return <Button elementRef={ref} />;
+  return <Button ref={ref} />;
 }
 ```
 
@@ -172,24 +155,24 @@ it renders regular button without default browser styles and with Mantine focus 
 
 ## TypeScript
 
-You need to pass additional types to use custom component with TypeScript
-in case you need full type coverage for events and `elementRef`:
+You need to pass additional type to use custom component with TypeScript
+in case you need full type coverage for events and `ref`:
 
 ```tsx
 // With element
-<Button<'button', HTMLButtonElement>
+<Button<'button'>
   component="button"
   onClick={(event) => console.log(event)}
-  elementRef={(node) => {
+  ref={(node) => {
     window.myRef = node;
   }}
 />
 
 // With component
-<Button<typeof Link, HTMLAnchorElement>
+<Button<typeof Link>
   component={Link}
   onClick={(event) => console.log(event)}
-  elementRef={(node) => {
+  ref={(node) => {
     window.myRef = node;
   }}
 />

@@ -56,16 +56,16 @@ You can use any React node as icon:
 
 <Demo data={TimeInputDemos.disabled} />
 
-## Get elementRef
+## Get input ref
 
-You can get hours input ref with `elementRef` prop:
+You can get hours input ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
 
 function Demo() {
   const inputRef = useRef();
-  return <TimeInput elementRef={inputRef} />;
+  return <TimeInput ref={inputRef} />;
 }
 ```
 

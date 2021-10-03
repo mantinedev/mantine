@@ -242,7 +242,7 @@ Later when you use Mantine components you can reference these values in `shadow`
 
 ## Getting element ref
 
-You can get ref of most components with `elementRef` prop:
+You can get ref of most components with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -255,9 +255,9 @@ function Demo() {
 
   return (
     <>
-      <Button elementRef={buttonRef} />
-      <Paper elementRef={paperRef} />
-      <TextInput elementRef={inputRef} />
+      <Button ref={buttonRef} />
+      <Paper ref={paperRef} />
+      <TextInput ref={inputRef} />
     </>
   );
 }
