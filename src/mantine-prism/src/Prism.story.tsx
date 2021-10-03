@@ -19,9 +19,6 @@ export interface BurgerProps
 
   /** Predefined burger size or number to set width and height in px */
   size?: MantineNumberSize;
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
 export function Burger({
@@ -30,7 +27,7 @@ export function Burger({
   opened,
   color = 'gray',
   size = 'md',
-  elementRef,
+  ref,
   classNames,
   styles,
   ...others
@@ -43,7 +40,7 @@ export function Burger({
     <button
       type="button"
       className={cx(classes.root, className)}
-      ref={elementRef}
+      ref={ref}
       style={{ ...style, ..._styles.root }}
       {...others}
     >
