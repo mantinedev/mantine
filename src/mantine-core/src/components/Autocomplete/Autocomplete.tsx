@@ -1,5 +1,5 @@
-import React, { useState, useRef, forwardRef } from 'react';
-import { useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
+import React, { useState, forwardRef } from 'react';
+import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import {
   mergeStyles,
   DefaultProps,
@@ -129,7 +129,6 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
-    const inputRef = useRef<HTMLInputElement>();
     const uuid = useUuid(id);
     const [_value, handleChange] = useUncontrolled({
       value,
@@ -147,7 +146,6 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       handleChange(item.value);
       typeof onItemSubmit === 'function' && onItemSubmit(item);
       setTimeout(() => setDropdownOpened(false));
-      inputRef.current.focus();
     };
 
     const formattedData = data.map((item) => (typeof item === 'string' ? { value: item } : item));
@@ -235,7 +233,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             {...rest}
             data-mantine-stop-propagation={dropdownOpened}
             required={required}
-            elementRef={useMergedRef(ref, inputRef)}
+            ref={ref}
             id={uuid}
             type="string"
             invalid={!!error}
