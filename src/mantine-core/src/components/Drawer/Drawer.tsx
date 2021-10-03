@@ -181,9 +181,9 @@ export function MantineDrawer({
             />
           )}
 
-          <Paper<'div', HTMLDivElement>
+          <Paper<'div'>
             className={cx(classes.drawer, className)}
-            elementRef={focusTrapRef}
+            ref={focusTrapRef}
             style={{ ...transitionStyles.drawer, ..._styles.drawer, zIndex: zIndex + 2 }}
             radius={0}
             tabIndex={-1}
