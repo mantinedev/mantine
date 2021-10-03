@@ -170,7 +170,7 @@ describe('@mantine/core/Tabs', () => {
     const ref = React.createRef<HTMLButtonElement>();
     mount(
       <Tabs>
-        <Tab elementRef={ref} label="test" />
+        <Tab ref={ref} label="test" />
       </Tabs>
     );
     expect(ref.current instanceof HTMLButtonElement).toBe(true);

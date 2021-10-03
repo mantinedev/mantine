@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useUncontrolled, clamp } from '@mantine/hooks';
+import { useUncontrolled, useMergedRef, clamp } from '@mantine/hooks';
 import {
   mergeStyles,
   DefaultProps,
@@ -148,9 +148,9 @@ export function Tabs({
       color={color}
       variant={variant}
       orientation={orientation}
-      elementRef={(node) => {
+      buttonRef={useMergedRef((node: HTMLButtonElement) => {
         controlRefs.current[index] = node;
-      }}
+      }, tab.ref)}
       onClick={() => activeTab !== index && handleActiveTabChange(index)}
       classNames={classNames}
       styles={styles}
