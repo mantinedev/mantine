@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   mergeStyles,
   DefaultProps,
@@ -25,53 +25,54 @@ export interface RadioProps
 
   /** Predefined label fontSize, radio width, height and border-radius */
   size?: MantineSize;
-
-  /** Get input ref */
-  elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
-export function Radio({
-  className,
-  style,
-  id,
-  children,
-  size,
-  elementRef,
-  title,
-  disabled,
-  color,
-  classNames,
-  styles,
-  ...others
-}: RadioProps) {
-  const { classes, cx } = useStyles({ color, size }, classNames, 'radio-group');
-  const _styles = mergeStyles(classes, styles);
-  const uuid = useUuid(id);
+export const Radio = forwardRef<HTMLInputElement, RadioProps>(
+  (
+    {
+      className,
+      style,
+      id,
+      children,
+      size,
+      title,
+      disabled,
+      color,
+      classNames,
+      styles,
+      ...others
+    }: RadioProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ color, size }, classNames, 'radio-group');
+    const _styles = mergeStyles(classes, styles);
+    const uuid = useUuid(id);
 
-  return (
-    <div
-      className={cx(classes.radioWrapper, className)}
-      style={{ ...style, ..._styles.radioWrapper }}
-      title={title}
-    >
-      <label
-        className={cx(classes.label, { [classes.labelDisabled]: disabled })}
-        htmlFor={uuid}
-        style={_styles.label}
+    return (
+      <div
+        className={cx(classes.radioWrapper, className)}
+        style={{ ...style, ..._styles.radioWrapper }}
+        title={title}
       >
-        <input
-          ref={elementRef}
-          className={classes.radio}
-          type="radio"
-          id={uuid}
-          disabled={disabled}
-          style={_styles.radio}
-          {...others}
-        />
-        <span>{children}</span>
-      </label>
-    </div>
-  );
-}
+        <label
+          className={cx(classes.label, { [classes.labelDisabled]: disabled })}
+          htmlFor={uuid}
+          style={_styles.label}
+        >
+          <input
+            ref={ref}
+            className={classes.radio}
+            type="radio"
+            id={uuid}
+            disabled={disabled}
+            style={_styles.radio}
+            {...others}
+          />
+          <span>{children}</span>
+        </label>
+      </div>
+    );
+  }
+);
 
 Radio.displayName = '@mantine/core/Radio';
