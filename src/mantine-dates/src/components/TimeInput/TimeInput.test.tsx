@@ -17,7 +17,7 @@ describe('@mantine/dates/TimeInput', () => {
   itSupportsClassName(TimeInput, {});
   itSupportsStyle(TimeInput, {});
   itSupportsMargins(TimeInput, {});
-  itSupportsRef(TimeInput, {}, HTMLInputElement, 'elementRef');
+  itSupportsRef(TimeInput, {}, HTMLInputElement);
 
   checkAccessibility([
     mount(

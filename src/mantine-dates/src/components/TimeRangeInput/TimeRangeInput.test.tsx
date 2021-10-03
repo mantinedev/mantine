@@ -17,7 +17,7 @@ describe('@mantine/dates/TimeRangeInput', () => {
   itSupportsClassName(TimeRangeInput, {});
   itSupportsStyle(TimeRangeInput, {});
   itSupportsMargins(TimeRangeInput, {});
-  itSupportsRef(TimeRangeInput, {}, HTMLInputElement, 'elementRef');
+  itSupportsRef(TimeRangeInput, {}, HTMLInputElement);
 
   itSupportsStylesApi(
     TimeRangeInput,

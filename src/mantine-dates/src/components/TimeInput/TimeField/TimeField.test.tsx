@@ -18,7 +18,7 @@ describe('@mantine/dates/TimeField', () => {
   itSupportsClassName(TimeField, defaultProps);
   itSupportsOthers(TimeField, defaultProps);
   itSupportsStyle(TimeField, defaultProps);
-  itSupportsRef(TimeField, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsRef(TimeField, defaultProps, HTMLInputElement);
 
   it('renders separator when withSeparator prop set to true', () => {
     const withSeparator = shallow(<TimeField {...defaultProps} withSeparator />);

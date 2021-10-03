@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, forwardRef } from 'react';
 import {
   InputBaseProps,
   InputWrapperBaseProps,
@@ -33,9 +33,6 @@ export interface TimeRangeInputProps
   /** Input size */
   size?: MantineSize;
 
-  /** Get element ref of hours input */
-  elementRef?: React.ForwardedRef<HTMLInputElement>;
-
   /** Controlled input value */
   value?: [Date | null, Date | null];
 
@@ -67,256 +64,260 @@ export interface TimeRangeInputProps
   labelSeparator?: string;
 }
 
-export function TimeRangeInput({
-  required,
-  label,
-  error,
-  description,
-  className,
-  style,
-  size = 'sm',
-  wrapperProps,
-  classNames,
-  styles,
-  id,
-  elementRef,
-  value,
-  defaultValue,
-  onChange,
-  withSeconds = false,
-  name,
-  hoursLabel,
-  minutesLabel,
-  secondsLabel,
-  labelSeparator = '–',
-  disabled = false,
-  ...others
-}: TimeRangeInputProps) {
-  const { classes, cx } = useStyles({ size }, classNames, 'time-range-input');
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const uuid = useUuid(id);
-  const fromDate = new Date();
-  const toDate = new Date(new Date().valueOf() + 1000);
-
-  const [_value, handleChange] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: [fromDate, toDate],
-    rule: (val) => val && val.length === 2 && val.every((v) => v instanceof Date),
-    onChange,
-  });
-
-  const hoursRef = useRef<HTMLInputElement[]>([]);
-  const minutesRef = useRef<HTMLInputElement[]>([]);
-  const secondsRef = useRef<HTMLInputElement[]>([]);
-  const [fromTime, setFromTime] = useState(getTimeValues(_value[0]));
-  const [toTime, setToTime] = useState(getTimeValues(_value[1]));
-  const [selectedFieldIndex, setSelectedFieldIndex] = useState<0 | 1>(0);
-
-  const setTime = (
-    cb: (val: ReturnType<typeof getTimeValues>) => ReturnType<typeof getTimeValues>
+export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
+  (
+    {
+      required,
+      label,
+      error,
+      description,
+      className,
+      style,
+      size = 'sm',
+      wrapperProps,
+      classNames,
+      styles,
+      id,
+      value,
+      defaultValue,
+      onChange,
+      withSeconds = false,
+      name,
+      hoursLabel,
+      minutesLabel,
+      secondsLabel,
+      labelSeparator = '–',
+      disabled = false,
+      ...others
+    }: TimeRangeInputProps,
+    ref
   ) => {
-    selectedFieldIndex === 0 ? setFromTime(cb) : setToTime(cb);
-  };
+    const { classes, cx } = useStyles({ size }, classNames, 'time-range-input');
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const uuid = useUuid(id);
+    const fromDate = new Date();
+    const toDate = new Date(new Date().valueOf() + 1000);
 
-  const constructDayjsValue = (fieldName: UnitType, val: string) => {
-    const index = selectedFieldIndex;
-    const newTime = [..._value];
-    newTime[index] = dayjs(newTime[index]).set(fieldName, parseInt(val, 10)).toDate();
-    return newTime;
-  };
+    const [_value, handleChange] = useUncontrolled({
+      value,
+      defaultValue,
+      finalValue: [fromDate, toDate],
+      rule: (val) => val && val.length === 2 && val.every((v) => v instanceof Date),
+      onChange,
+    });
 
-  const handleHoursChange = createTimeHandler({
-    onChange: (val) => {
-      setTime((current) => ({ ...current, hours: val }));
-      handleChange(constructDayjsValue('hours', val));
-    },
-    min: 0,
-    max: 23,
-    maxValue: 2,
-    nextRef: {
-      current: minutesRef.current[selectedFieldIndex],
-    },
-  });
+    const hoursRef = useRef<HTMLInputElement[]>([]);
+    const minutesRef = useRef<HTMLInputElement[]>([]);
+    const secondsRef = useRef<HTMLInputElement[]>([]);
+    const [fromTime, setFromTime] = useState(getTimeValues(_value[0]));
+    const [toTime, setToTime] = useState(getTimeValues(_value[1]));
+    const [selectedFieldIndex, setSelectedFieldIndex] = useState<0 | 1>(0);
 
-  const handleMinutesChange = createTimeHandler({
-    onChange: (val) => {
-      setTime((current) => ({ ...current, minutes: val }));
-      handleChange(constructDayjsValue('minutes', val));
-    },
-    min: 0,
-    max: 59,
-    maxValue: 5,
-    nextRef: {
-      current:
-        !withSeconds && selectedFieldIndex === 0
-          ? hoursRef.current[1]
-          : secondsRef.current[selectedFieldIndex],
-    },
-  });
+    const setTime = (
+      cb: (val: ReturnType<typeof getTimeValues>) => ReturnType<typeof getTimeValues>
+    ) => {
+      selectedFieldIndex === 0 ? setFromTime(cb) : setToTime(cb);
+    };
 
-  const handleSecondsChange = createTimeHandler({
-    onChange: (val) => {
-      setTime((current) => ({ ...current, seconds: val }));
-      handleChange(constructDayjsValue('seconds', val));
-    },
-    min: 0,
-    max: 59,
-    maxValue: 5,
-    nextRef: {
-      current: selectedFieldIndex === 0 ? hoursRef.current[1] : undefined,
-    },
-  });
+    const constructDayjsValue = (fieldName: UnitType, val: string) => {
+      const index = selectedFieldIndex;
+      const newTime = [..._value];
+      newTime[index] = dayjs(newTime[index]).set(fieldName, parseInt(val, 10)).toDate();
+      return newTime;
+    };
 
-  return (
-    <InputWrapper
-      required={required}
-      label={label}
-      error={error}
-      description={description}
-      className={className}
-      style={mergedStyles}
-      classNames={classNames}
-      styles={styles}
-      size={size}
-      __staticSelector="time-range-input"
-      id={uuid}
-      {...wrapperProps}
-    >
-      <Input
-        component="div"
-        __staticSelector="time-range-input"
+    const handleHoursChange = createTimeHandler({
+      onChange: (val) => {
+        setTime((current) => ({ ...current, hours: val }));
+        handleChange(constructDayjsValue('hours', val));
+      },
+      min: 0,
+      max: 23,
+      maxValue: 2,
+      nextRef: {
+        current: minutesRef.current[selectedFieldIndex],
+      },
+    });
+
+    const handleMinutesChange = createTimeHandler({
+      onChange: (val) => {
+        setTime((current) => ({ ...current, minutes: val }));
+        handleChange(constructDayjsValue('minutes', val));
+      },
+      min: 0,
+      max: 59,
+      maxValue: 5,
+      nextRef: {
+        current:
+          !withSeconds && selectedFieldIndex === 0
+            ? hoursRef.current[1]
+            : secondsRef.current[selectedFieldIndex],
+      },
+    });
+
+    const handleSecondsChange = createTimeHandler({
+      onChange: (val) => {
+        setTime((current) => ({ ...current, seconds: val }));
+        handleChange(constructDayjsValue('seconds', val));
+      },
+      min: 0,
+      max: 59,
+      maxValue: 5,
+      nextRef: {
+        current: selectedFieldIndex === 0 ? hoursRef.current[1] : undefined,
+      },
+    });
+
+    return (
+      <InputWrapper
         required={required}
-        invalid={!!error}
-        onClick={() => {
-          setSelectedFieldIndex(0);
-          hoursRef.current[selectedFieldIndex].focus();
-        }}
-        size={size}
-        className={cx({ [classes.disabled]: disabled })}
+        label={label}
+        error={error}
+        description={description}
+        className={className}
+        style={mergedStyles}
         classNames={classNames}
         styles={styles}
-        disabled={disabled}
-        {...rest}
+        size={size}
+        __staticSelector="time-range-input"
+        id={uuid}
+        {...wrapperProps}
       >
-        <div className={classes.inputWrapper} style={_styles.inputWrapper}>
-          <TimeField
-            elementRef={useMergedRef((node: HTMLInputElement) => {
-              hoursRef.current[0] = node;
-            }, elementRef)}
-            value={fromTime.hours}
-            onChange={handleHoursChange}
-            setValue={(val) => handleHoursChange(val, false)}
-            id={uuid}
-            className={classes.timeField}
-            style={_styles.timeField}
-            withSeparator
-            size={size}
-            max={23}
-            aria-label={`from ${hoursLabel}`}
-            disabled={disabled}
-            onFocus={() => setSelectedFieldIndex(0)}
-          />
-
-          <TimeField
-            elementRef={(node) => {
-              minutesRef.current[0] = node;
-            }}
-            value={fromTime.minutes}
-            onChange={handleMinutesChange}
-            setValue={(val) => setFromTime((c) => ({ ...c, minutes: val }))}
-            className={classes.timeField}
-            style={_styles.timeField}
-            withSeparator={withSeconds}
-            size={size}
-            max={59}
-            aria-label={`from ${minutesLabel}`}
-            disabled={disabled}
-            onFocus={() => setSelectedFieldIndex(0)}
-          />
-
-          {withSeconds && (
-            <TimeField
-              elementRef={(node) => {
-                secondsRef.current[0] = node;
-              }}
-              value={fromTime.seconds}
-              onChange={handleSecondsChange}
-              setValue={(val) => setFromTime((c) => ({ ...c, seconds: val }))}
-              className={classes.timeField}
-              style={_styles.timeField}
-              size={size}
-              max={59}
-              aria-label={`from ${secondsLabel}`}
-              disabled={disabled}
-              onFocus={() => setSelectedFieldIndex(0)}
-            />
-          )}
-
-          <span className={classes.separator} style={_styles.separator}>
-            {labelSeparator}
-          </span>
-
+        <Input
+          component="div"
+          __staticSelector="time-range-input"
+          required={required}
+          invalid={!!error}
+          onClick={() => {
+            setSelectedFieldIndex(0);
+            hoursRef.current[selectedFieldIndex].focus();
+          }}
+          size={size}
+          className={cx({ [classes.disabled]: disabled })}
+          classNames={classNames}
+          styles={styles}
+          disabled={disabled}
+          {...rest}
+        >
           <div className={classes.inputWrapper} style={_styles.inputWrapper}>
             <TimeField
-              elementRef={(node) => {
-                hoursRef.current[1] = node;
-              }}
-              value={toTime.hours}
+              ref={useMergedRef((node: HTMLInputElement) => {
+                hoursRef.current[0] = node;
+              }, ref)}
+              value={fromTime.hours}
               onChange={handleHoursChange}
               setValue={(val) => handleHoursChange(val, false)}
+              id={uuid}
               className={classes.timeField}
               style={_styles.timeField}
               withSeparator
               size={size}
               max={23}
-              aria-label={`to ${hoursLabel}`}
+              aria-label={`from ${hoursLabel}`}
               disabled={disabled}
-              onFocus={() => setSelectedFieldIndex(1)}
+              onFocus={() => setSelectedFieldIndex(0)}
             />
 
             <TimeField
-              elementRef={(node) => {
-                minutesRef.current[1] = node;
+              ref={(node) => {
+                minutesRef.current[0] = node;
               }}
-              value={toTime.minutes}
+              value={fromTime.minutes}
               onChange={handleMinutesChange}
-              setValue={(val) => setToTime((c) => ({ ...c, minutes: val }))}
+              setValue={(val) => setFromTime((c) => ({ ...c, minutes: val }))}
               className={classes.timeField}
               style={_styles.timeField}
               withSeparator={withSeconds}
               size={size}
               max={59}
-              aria-label={`to ${minutesLabel}`}
+              aria-label={`from ${minutesLabel}`}
               disabled={disabled}
-              onFocus={() => setSelectedFieldIndex(1)}
+              onFocus={() => setSelectedFieldIndex(0)}
             />
 
             {withSeconds && (
               <TimeField
-                elementRef={(node) => {
-                  secondsRef.current[1] = node;
+                ref={(node) => {
+                  secondsRef.current[0] = node;
                 }}
-                value={toTime.seconds}
+                value={fromTime.seconds}
                 onChange={handleSecondsChange}
-                setValue={(val) => setToTime((c) => ({ ...c, seconds: val }))}
+                setValue={(val) => setFromTime((c) => ({ ...c, seconds: val }))}
                 className={classes.timeField}
                 style={_styles.timeField}
                 size={size}
                 max={59}
-                aria-label={`to ${secondsLabel}`}
+                aria-label={`from ${secondsLabel}`}
+                disabled={disabled}
+                onFocus={() => setSelectedFieldIndex(0)}
+              />
+            )}
+
+            <span className={classes.separator} style={_styles.separator}>
+              {labelSeparator}
+            </span>
+
+            <div className={classes.inputWrapper} style={_styles.inputWrapper}>
+              <TimeField
+                ref={(node) => {
+                  hoursRef.current[1] = node;
+                }}
+                value={toTime.hours}
+                onChange={handleHoursChange}
+                setValue={(val) => handleHoursChange(val, false)}
+                className={classes.timeField}
+                style={_styles.timeField}
+                withSeparator
+                size={size}
+                max={23}
+                aria-label={`to ${hoursLabel}`}
                 disabled={disabled}
                 onFocus={() => setSelectedFieldIndex(1)}
               />
-            )}
+
+              <TimeField
+                ref={(node) => {
+                  minutesRef.current[1] = node;
+                }}
+                value={toTime.minutes}
+                onChange={handleMinutesChange}
+                setValue={(val) => setToTime((c) => ({ ...c, minutes: val }))}
+                className={classes.timeField}
+                style={_styles.timeField}
+                withSeparator={withSeconds}
+                size={size}
+                max={59}
+                aria-label={`to ${minutesLabel}`}
+                disabled={disabled}
+                onFocus={() => setSelectedFieldIndex(1)}
+              />
+
+              {withSeconds && (
+                <TimeField
+                  ref={(node) => {
+                    secondsRef.current[1] = node;
+                  }}
+                  value={toTime.seconds}
+                  onChange={handleSecondsChange}
+                  setValue={(val) => setToTime((c) => ({ ...c, seconds: val }))}
+                  className={classes.timeField}
+                  style={_styles.timeField}
+                  size={size}
+                  max={59}
+                  aria-label={`to ${secondsLabel}`}
+                  disabled={disabled}
+                  onFocus={() => setSelectedFieldIndex(1)}
+                />
+              )}
+            </div>
+            {name && <input type="hidden" name={`${name}-from`} value={_value[0].toISOString()} />}
+            {name && <input type="hidden" name={`${name}-to`} value={_value[1].toISOString()} />}
           </div>
-          {name && <input type="hidden" name={`${name}-from`} value={_value[0].toISOString()} />}
-          {name && <input type="hidden" name={`${name}-to`} value={_value[1].toISOString()} />}
-        </div>
-      </Input>
-    </InputWrapper>
-  );
-}
+        </Input>
+      </InputWrapper>
+    );
+  }
+);
 
 TimeRangeInput.displayName = '@mantine/dates/TimeRangeInput';
