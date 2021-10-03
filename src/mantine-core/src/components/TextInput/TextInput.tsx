@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps, MantineSize, useUuid, useExtractedMargins } from '@mantine/styles';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import {
@@ -36,57 +36,62 @@ export interface TextInputProps
   __staticSelector?: string;
 }
 
-export function TextInput({
-  className,
-  id,
-  label,
-  error,
-  required,
-  type = 'text',
-  style,
-  icon,
-  description,
-  wrapperProps,
-  elementRef,
-  size = 'sm',
-  classNames,
-  styles,
-  __staticSelector = 'text-input',
-  ...others
-}: TextInputProps) {
-  const uuid = useUuid(id);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
+  (
+    {
+      className,
+      id,
+      label,
+      error,
+      required,
+      type = 'text',
+      style,
+      icon,
+      description,
+      wrapperProps,
+      elementRef,
+      size = 'sm',
+      classNames,
+      styles,
+      __staticSelector = 'text-input',
+      ...others
+    }: TextInputProps,
+    ref
+  ) => {
+    const uuid = useUuid(id);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
-  return (
-    <InputWrapper
-      required={required}
-      id={uuid}
-      label={label}
-      error={error}
-      description={description}
-      size={size}
-      className={className}
-      style={mergedStyles}
-      classNames={classNames}
-      styles={styles}
-      __staticSelector={__staticSelector}
-      {...wrapperProps}
-    >
-      <Input<'input', HTMLInputElement>
-        {...rest}
+    return (
+      <InputWrapper
         required={required}
-        elementRef={elementRef}
         id={uuid}
-        type={type}
-        invalid={!!error}
-        icon={icon}
+        label={label}
+        error={error}
+        description={description}
         size={size}
+        className={className}
+        style={mergedStyles}
         classNames={classNames}
         styles={styles}
         __staticSelector={__staticSelector}
-      />
-    </InputWrapper>
-  );
-}
+        {...wrapperProps}
+      >
+        <Input<'input'>
+          {...rest}
+          required={required}
+          ref={ref}
+          id={uuid}
+          type={type}
+          invalid={!!error}
+          icon={icon}
+          size={size}
+          classNames={classNames}
+          styles={styles}
+          __staticSelector={__staticSelector}
+        />
+      </InputWrapper>
+    );
+  }
+);
 
 TextInput.displayName = '@mantine/core/TextInput';
