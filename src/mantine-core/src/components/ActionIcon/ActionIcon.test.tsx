@@ -18,7 +18,7 @@ describe('@mantine/core/ActionIcon', () => {
   itSupportsOthers(ActionIcon, {});
   itSupportsStyle(ActionIcon, {});
   itSupportsMargins(ActionIcon, {});
-  itSupportsRef(ActionIcon, {}, HTMLButtonElement, 'ref');
+  itSupportsRef(ActionIcon, {}, HTMLButtonElement);
   itRendersChildren(ActionIcon, {});
   checkAccessibility([
     mount(

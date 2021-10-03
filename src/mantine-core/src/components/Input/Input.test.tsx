@@ -28,7 +28,7 @@ describe('@mantine/core/Input', () => {
   itSupportsClassName(Input, {});
   itSupportsMargins(Input, {});
   itSupportsStyle(Input, {});
-  itSupportsRef(Input, {}, HTMLInputElement, 'ref');
+  itSupportsRef(Input, {}, HTMLInputElement);
   itSupportsStylesApi(
     Input,
     {

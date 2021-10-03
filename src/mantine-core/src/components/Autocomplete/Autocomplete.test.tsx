@@ -28,7 +28,7 @@ describe('@mantine/core/Autocomplete', () => {
   itSupportsClassName(Autocomplete, defaultProps);
   itSupportsStyle(Autocomplete, defaultProps);
   itSupportsMargins(Autocomplete, defaultProps);
-  itSupportsRef(Autocomplete, defaultProps, HTMLInputElement, 'ref');
+  itSupportsRef(Autocomplete, defaultProps, HTMLInputElement);
 
   checkAccessibility([
     mount(<Autocomplete {...defaultProps} />),

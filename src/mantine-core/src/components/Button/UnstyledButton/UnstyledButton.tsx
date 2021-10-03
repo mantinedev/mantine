@@ -1,25 +1,24 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps } from '@mantine/styles';
 import useStyles from './UnstyledButton.styles';
 
 export interface UnstyledButtonProps
   extends DefaultProps,
-    React.ComponentPropsWithoutRef<'button'> {
-  /** Get button ref */
-  elementRef?: React.ForwardedRef<HTMLButtonElement>;
-}
+    React.ComponentPropsWithoutRef<'button'> {}
 
-export function UnstyledButton({ className, elementRef, ...others }: UnstyledButtonProps) {
-  const { classes, cx } = useStyles();
+export const UnstyledButton = forwardRef<HTMLButtonElement, UnstyledButtonProps>(
+  ({ className, ...others }: UnstyledButtonProps, ref) => {
+    const { classes, cx } = useStyles();
 
-  return (
-    <button
-      ref={elementRef}
-      className={cx(classes.button, 'mantine-unstyled-button', className)}
-      type="button"
-      {...others}
-    />
-  );
-}
+    return (
+      <button
+        ref={ref}
+        className={cx(classes.button, 'mantine-unstyled-button', className)}
+        type="button"
+        {...others}
+      />
+    );
+  }
+);
 
 UnstyledButton.displayName = '@mantine/core/UnstyledButton';

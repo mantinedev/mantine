@@ -16,7 +16,7 @@ describe('@mantine/core/Anchor', () => {
   itSupportsOthers(Anchor, {});
   itSupportsStyle(Anchor, {});
   itSupportsMargins(Anchor, {});
-  itSupportsRef(Anchor, {}, HTMLAnchorElement, 'ref');
+  itSupportsRef(Anchor, {}, HTMLAnchorElement);
 
   it('accepts component from component prop', () => {
     const TestComponent = (props: any) => <span data-test-prop {...props} />;

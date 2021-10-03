@@ -46,7 +46,7 @@ type ActionIconComponent = <C extends React.ElementType = 'button'>(
 ) => React.ReactElement;
 
 export const ActionIcon: ActionIconComponent & { displayName?: string } = forwardRef(
-  <C extends React.ElementType = 'div'>(
+  <C extends React.ElementType = 'button'>(
     {
       className,
       color = 'gray',

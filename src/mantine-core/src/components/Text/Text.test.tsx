@@ -16,7 +16,7 @@ describe('@mantine/core/Text', () => {
   itSupportsClassName(Text, {});
   itSupportsOthers(Text, {});
   itSupportsMargins(Text, {});
-  itSupportsRef(Text, {}, HTMLDivElement, 'ref');
+  itSupportsRef(Text, {}, HTMLDivElement);
 
   it('has correct displayName', () => {
     expect(Text.displayName).toEqual('@mantine/core/Text');
