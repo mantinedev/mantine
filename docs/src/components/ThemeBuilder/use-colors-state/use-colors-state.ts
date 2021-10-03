@@ -1,16 +1,10 @@
 import { useState } from 'react';
-import { Tuple, DEFAULT_THEME } from '@mantine/core';
-
-type MantineColors = Record<string, Tuple<string, 10>>;
-
-interface UseThemeColors {
-  initialValues: MantineColors;
-}
+import { DEFAULT_THEME, Tuple } from '@mantine/core';
 
 let counter = 1;
 
-export function useColorState({ initialValues }: UseThemeColors) {
-  const [state, setState] = useState(Object.entries(initialValues));
+export function useColorsState() {
+  const [state, setState] = useState(Object.entries(DEFAULT_THEME.colors));
 
   const addColor = () =>
     setState((current) => {
@@ -19,13 +13,13 @@ export function useColorState({ initialValues }: UseThemeColors) {
       return [...current, [name, DEFAULT_THEME.colors.blue]];
     });
 
-  const removeColor = (colorName: string) =>
-    setState((current) => current.filter((color) => color[0] !== colorName));
+  const removeColor = (colorIndex: number) =>
+    setState((current) => current.filter((_color, index) => index !== colorIndex));
 
   const setColors = (colorIndex: number, hexValue: string) =>
     setState((current) => {
       const clone = [...current];
-      clone[colorIndex] = Array(10).fill(hexValue) as any;
+      clone[colorIndex] = [clone[colorIndex][0], Array(10).fill(hexValue) as Tuple<string, 10>];
       return clone;
     });
 
@@ -38,6 +32,13 @@ export function useColorState({ initialValues }: UseThemeColors) {
       return clone;
     });
 
+  const setName = (colorIndex: number, name: string) =>
+    setState((current) => {
+      const clone = [...current];
+      clone[colorIndex] = [name, clone[colorIndex][1]];
+      return clone;
+    });
+
   return {
     colors: Object.fromEntries(state),
     colorsState: state,
@@ -46,6 +47,7 @@ export function useColorState({ initialValues }: UseThemeColors) {
       removeColor,
       setColors,
       setColor,
+      setName,
     },
   };
 }
