@@ -14,7 +14,7 @@ describe('@mantine/dates/DateRangePicker', () => {
   itSupportsClassName(DateRangePicker, {});
   itSupportsStyle(DateRangePicker, {});
   itSupportsMargins(DateRangePicker, {});
-  itSupportsRef(DateRangePicker, {}, HTMLButtonElement, 'elementRef');
+  itSupportsRef(DateRangePicker, {}, HTMLButtonElement);
 
   it('passes correct __staticSelector to Calendar and DatePickerBase components', () => {
     const element = shallow(<DateRangePicker initiallyOpened />);
