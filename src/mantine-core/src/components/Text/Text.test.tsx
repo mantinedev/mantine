@@ -16,10 +16,10 @@ describe('@mantine/core/Text', () => {
   itSupportsClassName(Text, {});
   itSupportsOthers(Text, {});
   itSupportsMargins(Text, {});
-  itSupportsRef(Text, {}, HTMLDivElement, 'elementRef');
+  itSupportsRef(Text, {}, HTMLDivElement, 'ref');
 
   it('has correct displayName', () => {
-    expect(Text.displayName).toEqual('@mantine/core/Text');
+    expect((Text as any).displayName).toEqual('@mantine/core/Text');
   });
 
   it('sets font-weight, test-transform and text-align based on props', () => {
