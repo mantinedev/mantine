@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { ColorSlider, BaseColorSliderProps } from '../ColorSlider/ColorSlider';
 
 export type HueSliderProps = BaseColorSliderProps;
 
-export function HueSlider({ value, onChange, ...others }: HueSliderProps) {
-  return (
+export const HueSlider = forwardRef<HTMLDivElement, HueSliderProps>(
+  ({ value, onChange, ...others }: HueSliderProps, ref) => (
     <ColorSlider
       {...others}
+      ref={ref}
       value={value}
       onChange={onChange}
       maxValue={360}
@@ -22,7 +23,7 @@ export function HueSlider({ value, onChange, ...others }: HueSliderProps) {
         },
       ]}
     />
-  );
-}
+  )
+);
 
 HueSlider.displayName = '@mantine/core/HueSlider';

@@ -21,7 +21,7 @@ describe('@mantine/core/AlphaSlider', () => {
   itSupportsClassName(AlphaSlider, defaultProps);
   itSupportsOthers(AlphaSlider, defaultProps);
   itSupportsStyle(AlphaSlider, defaultProps);
-  itSupportsRef(AlphaSlider, defaultProps, HTMLDivElement, 'elementRef');
+  itSupportsRef(AlphaSlider, defaultProps, HTMLDivElement);
 
   it('has correct displayName', () => {
     expect(AlphaSlider.displayName).toEqual('@mantine/core/AlphaSlider');
