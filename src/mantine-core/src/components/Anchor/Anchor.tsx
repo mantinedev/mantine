@@ -1,24 +1,21 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
+import { PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
 import { Text, SharedTextProps } from '../Text/Text';
 
-interface _AnchorProps<C extends React.ElementType, R extends HTMLElement> extends SharedTextProps {
-  /** Root element or custom component */
-  component?: C;
+export type AnchorProps<C extends React.ElementType> = PolymorphicComponentProps<
+  C,
+  SharedTextProps
+>;
 
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<R>;
-}
+type AnchorComponent = <C extends React.ElementType = 'div'>(
+  props: AnchorProps<C>
+) => React.ReactElement;
 
-export type AnchorProps<
-  C extends React.ElementType = 'a',
-  R extends HTMLElement = HTMLAnchorElement
-> = _AnchorProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof SharedTextProps>;
-
-export function Anchor<
-  C extends React.ElementType = 'a',
-  R extends HTMLElement = HTMLAnchorElement
->({ component, ...others }: AnchorProps<C, R>) {
-  return <Text component={(component || 'a') as any} variant="link" {...others} />;
-}
+export const Anchor: AnchorComponent & { displayName?: string } = forwardRef(
+  <C extends React.ElementType = 'a'>(
+    { component, ...others }: AnchorProps<C>,
+    ref: PolymorphicRef<C>
+  ) => <Text component={(component || 'a') as any} variant="link" ref={ref} {...others} />
+);
 
 Anchor.displayName = '@mantine/core/Anchor';
