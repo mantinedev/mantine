@@ -308,6 +308,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             readOnly={!searchable}
             disabled={disabled}
             data-mantine-stop-propagation={dropdownOpened}
+            autoComplete="off"
             {...getSelectRightSectionProps({
               rightSection,
               rightSectionWidth,
