@@ -33,9 +33,11 @@ const code = `
 
 function Demo() {
   return (
-    <TypographyStylesProvider>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
-    </TypographyStylesProvider>
+    <div style={{ maxWidth: 560, marginLeft: 'auto', marginRight: 'auto' }}>
+      <TypographyStylesProvider>
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </TypographyStylesProvider>
+    </div>
   );
 }
 

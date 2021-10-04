@@ -5,8 +5,8 @@ export default createStyles((theme) => {
     acc[`& ${h}`] = {
       fontFamily: theme.headings.fontFamily,
       fontWeight: theme.headings.fontWeight,
-      marginTop: theme.spacing.lg * theme.headings.sizes[h].lineHeight,
-      marginBottom: theme.spacing.xs * theme.headings.sizes[h].lineHeight,
+      marginTop: theme.spacing.xl * theme.headings.sizes[h].lineHeight,
+      marginBottom: theme.spacing.sm,
       ...theme.headings.sizes[h],
 
       '@media (max-width: 755px)': {
@@ -39,7 +39,7 @@ export default createStyles((theme) => {
 
       '& p': {
         marginTop: 0,
-        marginBottom: theme.spacing.sm,
+        marginBottom: theme.spacing.lg,
       },
 
       '& hr': {
