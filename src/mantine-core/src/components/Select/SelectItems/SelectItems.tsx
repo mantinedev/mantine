@@ -51,8 +51,6 @@ export function SelectItems({
     return (
       <Item
         key={item.value}
-        label={item.label}
-        value={item.value}
         className={cx(classes.item, {
           [classes.hovered]: !item.disabled && hovered === index,
           [classes.selected]: !item.disabled && selected,
@@ -80,12 +78,13 @@ export function SelectItems({
           onItemSelect(item);
         } : null}
         disabled={item.disabled}
+        {...item}
       />
       );
   };
 
   const createSeperator = (label?: string) => (
-    <div className={classes.seperator} style={_styles.seperator}>
+    <div className={classes.seperator} style={_styles.seperator} key={label}>
       <Divider
         classNames={{
           label: classes.seperatorLabel,
@@ -115,12 +114,18 @@ export function SelectItems({
     const creatableDataItem = data[creatableDataIndex];
     const selected = typeof isItemSelected === 'function' ? isItemSelected(data[creatableDataIndex].value) : false;
     ungroupedItems.push(
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         key={creatableDataItem.value}
         className={cx(classes.item, {
           [classes.hovered]: hovered === creatableDataIndex,
           [classes.selected]: selected,
         })}
+        onMouseEnter={() => onItemHover(creatableDataIndex)}
+        onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {
+          event.preventDefault();
+          onItemSelect(creatableDataItem);
+        }}
         style={{
           ..._styles.item,
           ...(hovered === creatableDataIndex ? _styles.hovered : null),
