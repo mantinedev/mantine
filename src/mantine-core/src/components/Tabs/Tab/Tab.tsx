@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps } from '@mantine/styles';
 
-export interface TabProps extends DefaultProps, React.ComponentProps<'button'> {
+export interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   /** Tab control label */
   label?: React.ReactNode;
 

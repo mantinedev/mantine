@@ -3,7 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
 import { Textarea } from './Textarea';
 
-function WrappedTextarea(props: Omit<React.ComponentProps<typeof Textarea>, 'value' | 'onChange'>) {
+function WrappedTextarea(
+  props: Omit<React.ComponentPropsWithoutRef<typeof Textarea>, 'value' | 'onChange'>
+) {
   const [value, onChange] = useState('');
   return (
     <Textarea value={value} onChange={(event) => onChange(event.currentTarget.value)} {...props} />

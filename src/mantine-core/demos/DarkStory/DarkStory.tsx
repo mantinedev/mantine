@@ -1,7 +1,7 @@
 import React from 'react';
 import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
 
-export function DarkStory({ children }: React.ComponentProps<'div'>) {
+export function DarkStory({ children }: React.ComponentPropsWithoutRef<'div'>) {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: DEFAULT_THEME.colors.dark[7] }}>
       <MantineProvider theme={{ colorScheme: 'dark' }}>{children}</MantineProvider>

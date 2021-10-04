@@ -97,7 +97,7 @@ const data = [
   },
 ];
 
-interface ItemProps extends React.ComponentProps<'div'> {
+interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
   image: string;
   label: string;
   description: string;

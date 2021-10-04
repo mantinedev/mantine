@@ -8,7 +8,7 @@ import {
 } from '@mantine/styles';
 import useStyles, { ThemeIconVariant } from './ThemeIcon.styles';
 
-export interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'> {
+export interface ThemeIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Icon */
   children: React.ReactNode;
 

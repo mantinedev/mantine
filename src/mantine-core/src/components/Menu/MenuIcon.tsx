@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function MenuIcon(props: React.ComponentProps<'svg'>) {
+export function MenuIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
       width="15"

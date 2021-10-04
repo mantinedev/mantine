@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Burger } from '../Burger';
 
 export function WrappedBurger(
-  props: Omit<React.ComponentProps<typeof Burger>, 'opened' | 'onChange'>
+  props: Omit<React.ComponentPropsWithoutRef<typeof Burger>, 'opened' | 'onChange'>
 ) {
   const [opened, onChange] = useState(false);
   return (

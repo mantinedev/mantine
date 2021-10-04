@@ -9,7 +9,7 @@ const sizes = MANTINE_SIZES.map((size) => (
 ));
 
 function WrappedPasswordInput(
-  props: Omit<React.ComponentProps<typeof PasswordInput>, 'value' | 'onChange'>
+  props: Omit<React.ComponentPropsWithoutRef<typeof PasswordInput>, 'value' | 'onChange'>
 ) {
   const [value, onChange] = useState('');
   return (

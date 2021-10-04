@@ -64,7 +64,7 @@ const data = [
   { value: 'amy@wong.cn', image: images[2], label: 'amy@wong.cn', name: 'Amy Wong' },
 ];
 
-interface ItemProps extends React.ComponentProps<'div'> {
+interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
   image: string;
   label: string;
   name: string;

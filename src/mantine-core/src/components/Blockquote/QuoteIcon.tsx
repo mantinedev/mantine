@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function QuoteIcon(props: React.ComponentProps<'svg'>) {
+export function QuoteIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
       width="20"
