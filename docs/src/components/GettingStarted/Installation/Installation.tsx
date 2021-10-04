@@ -48,7 +48,7 @@ export function Installation({ setDependencies }: InstallationProps) {
 
   return (
     <div className={classes.wrapper}>
-      <Title>Choose packages</Title>
+      <Title order={2}>Choose packages</Title>
       <div className={classes.controls}>{items}</div>
     </div>
   );
