@@ -18,16 +18,18 @@ export interface PortalProps {
 
 export function Portal({ children, zIndex = 1, target, className }: PortalProps): ReactPortal {
   const [mounted, setMounted] = useState(false);
-  const elementRef = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>();
 
   useIsomorphicEffect(() => {
     setMounted(true);
-    elementRef.current = target || document.createElement('div');
+    ref.current = target || document.createElement('div');
+
     if (!target) {
-      document.body.appendChild(elementRef.current);
+      document.body.appendChild(ref.current);
     }
+
     return () => {
-      !target && document.body.removeChild(elementRef.current);
+      !target && document.body.removeChild(ref.current);
     };
   }, [target]);
 
@@ -39,7 +41,7 @@ export function Portal({ children, zIndex = 1, target, className }: PortalProps)
     <div className={className} style={{ position: 'relative', zIndex }}>
       {children}
     </div>,
-    elementRef.current
+    ref.current
   );
 }
 

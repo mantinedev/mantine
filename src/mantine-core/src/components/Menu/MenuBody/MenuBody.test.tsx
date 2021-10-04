@@ -5,6 +5,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Divider } from '../../Divider/Divider';
 import { Paper } from '../../Paper/Paper';
@@ -23,6 +24,7 @@ describe('@mantine/core/MenuBody', () => {
   itSupportsStyle(MenuBody, defaultProps);
   itSupportsClassName(MenuBody, defaultProps);
   itSupportsOthers(MenuBody, defaultProps);
+  itSupportsRef(MenuBody, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     MenuBody,
     { ...defaultProps, children: [<Divider />, <MenuLabel>label</MenuLabel>] },

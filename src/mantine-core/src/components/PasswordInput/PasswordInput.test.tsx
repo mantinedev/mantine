@@ -29,7 +29,7 @@ describe('@mantine/core/PasswordInput', () => {
   itSupportsClassName(PasswordInput, {});
   itSupportsStyle(PasswordInput, {});
   itSupportsMargins(PasswordInput, {});
-  itSupportsRef(PasswordInput, {}, HTMLInputElement, 'elementRef');
+  itSupportsRef(PasswordInput, {}, HTMLInputElement);
 
   itSupportsStylesApi(
     PasswordInput,

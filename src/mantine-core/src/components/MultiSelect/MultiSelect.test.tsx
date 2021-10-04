@@ -22,7 +22,7 @@ describe('@mantine/core/MultiSelect', () => {
   itSupportsClassName(MultiSelect, defaultProps);
   itSupportsStyle(MultiSelect, defaultProps);
   itSupportsMargins(MultiSelect, defaultProps);
-  itSupportsRef(MultiSelect, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsRef(MultiSelect, defaultProps, HTMLInputElement);
   itSupportsStylesApi(
     MultiSelect,
     {

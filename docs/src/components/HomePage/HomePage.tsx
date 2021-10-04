@@ -4,8 +4,10 @@ import Head from '../Head/Head';
 import { Jumbotron } from './Jumbotron/Jumbotron';
 // import { Features } from './Features/Features';
 import { Footer } from '../Footer/Footer';
-import { Explore } from './Explore/Explore';
+// import { Explore } from './Explore/Explore';
 import { Community } from './Community/Community';
+import { Customize } from './Customize/Customize';
+import { Usage } from './Usage/Usage';
 import { FeaturesSection } from './FeaturesSection/FeaturesSection';
 
 export function HomePage() {
@@ -16,8 +18,10 @@ export function HomePage() {
       <div style={{ position: 'relative', zIndex: 1, boxShadow: theme.shadows.sm }}>
         <Jumbotron />
         <FeaturesSection />
+        <Customize />
+        <Usage />
         {/* <Features /> */}
-        <Explore />
+        {/* <Explore /> */}
         <Community />
       </div>
       <Footer />

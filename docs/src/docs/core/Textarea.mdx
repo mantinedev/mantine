@@ -45,9 +45,9 @@ function Demo() {
 
 <Demo data={TextareaDemos.validation} />
 
-## Get element ref
+## Get input ref
 
-You can get input ref with `elementRef` prop:
+You can get input ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -55,7 +55,7 @@ import { Textarea } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
-  return <Textarea elementRef={ref} />;
+  return <Textarea ref={ref} />;
 }
 ```
 

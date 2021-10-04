@@ -70,7 +70,7 @@ export default function TableOfContents({ headings, withTabs }: TableOfContentsP
   const items = filteredHeadings.map((heading, index) => {
     const slug = slugger.slug(heading.value);
     return (
-      <Text<'a', HTMLAnchorElement>
+      <Text<'a'>
         key={slug}
         component="a"
         size="sm"

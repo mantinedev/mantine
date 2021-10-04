@@ -23,7 +23,7 @@ describe('@mantine/core/Burger', () => {
   itSupportsClassName(Burger, defaultProps);
   itSupportsStyle(Burger, defaultProps);
   itSupportsMargins(Burger, defaultProps);
-  itSupportsRef(Burger, defaultProps, HTMLButtonElement, 'elementRef');
+  itSupportsRef(Burger, defaultProps, HTMLButtonElement);
   itSupportsStylesApi(Burger, defaultProps, Object.keys(BurgerStylesApi), 'burger');
 
   it('has correct displayName', () => {

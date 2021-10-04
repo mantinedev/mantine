@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { RangeCalendar } from './RangeCalendar';
 import { Month } from '../Month/Month';
@@ -25,6 +26,7 @@ describe('@mantine/dates/RangeCalendar', () => {
   itSupportsOthers(RangeCalendar, defaultProps);
   itSupportsStyle(RangeCalendar, defaultProps);
   itSupportsMargins(RangeCalendar, defaultProps);
+  itSupportsRef(RangeCalendar, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     RangeCalendar,
     defaultProps,

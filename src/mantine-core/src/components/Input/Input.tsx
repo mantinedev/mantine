@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   useMantineTheme,
   mergeStyles,
@@ -7,6 +7,8 @@ import {
   MantineSize,
   ClassNames,
   useExtractedMargins,
+  PolymorphicComponentProps,
+  PolymorphicRef,
 } from '@mantine/styles';
 import useStyles from './Input.styles';
 
@@ -46,97 +48,96 @@ export interface InputBaseProps {
 
   /** Disabled input state */
   disabled?: boolean;
+
+  /** Input size */
+  size?: MantineSize;
 }
 
-export interface InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {
+interface _InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {
   /** Static css selector base */
   __staticSelector?: string;
 }
 
-export function Input<
-  T extends React.ElementType = 'input',
-  U extends HTMLElement = HTMLInputElement
->({
-  // @ts-ignore
-  component = 'input',
-  className,
-  invalid = false,
-  required = false,
-  disabled = false,
-  variant,
-  icon,
-  style,
-  rightSectionWidth = 36,
-  rightSection,
-  rightSectionProps = {},
-  radius = 'sm',
-  size = 'sm',
-  wrapperProps,
-  elementRef,
-  classNames,
-  styles,
-  __staticSelector = 'input',
-  multiline = false,
-  ...others
-}: InputProps &
-  Omit<React.ComponentPropsWithoutRef<T>, 'size'> & {
-    /** Element or component that will be used as root element */
-    component?: T;
+export type InputProps<C extends React.ElementType> = PolymorphicComponentProps<C, _InputProps>;
 
-    /** Input size */
-    size?: MantineSize;
+type InputComponent = <C extends React.ElementType = 'input'>(
+  props: InputProps<C>
+) => React.ReactElement;
 
-    /** Get element ref */
-    elementRef?: React.ForwardedRef<U>;
-  }) {
-  const theme = useMantineTheme();
-  const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
-  const { classes, cx } = useStyles(
-    { radius, size, multiline, variant: _variant, invalid, disabled },
-    classNames,
-    __staticSelector
-  );
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
-  const Element: any = component;
+export const Input: InputComponent & { displayName?: string } = forwardRef(
+  <C extends React.ElementType = 'input'>(
+    {
+      component,
+      className,
+      invalid = false,
+      required = false,
+      disabled = false,
+      variant,
+      icon,
+      style,
+      rightSectionWidth = 36,
+      rightSection,
+      rightSectionProps = {},
+      radius = 'sm',
+      size = 'sm',
+      wrapperProps,
+      classNames,
+      styles,
+      __staticSelector = 'input',
+      multiline = false,
+      ...others
+    }: InputProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const theme = useMantineTheme();
+    const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
+    const { classes, cx } = useStyles(
+      { radius, size, multiline, variant: _variant, invalid, disabled },
+      classNames,
+      __staticSelector
+    );
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const Element: any = component || 'input';
 
-  return (
-    <div
-      className={cx(classes.root, classes[_variant], className)}
-      style={{ ...mergedStyles, ..._styles[variant] }}
-      {...wrapperProps}
-    >
-      {icon && (
-        <div className={classes.icon} style={_styles.icon}>
-          {icon}
-        </div>
-      )}
+    return (
+      <div
+        className={cx(classes.root, classes[_variant], className)}
+        style={{ ...mergedStyles, ..._styles[variant] }}
+        {...wrapperProps}
+      >
+        {icon && (
+          <div className={classes.icon} style={_styles.icon}>
+            {icon}
+          </div>
+        )}
 
-      <Element
-        {...rest}
-        ref={elementRef}
-        aria-required={required}
-        aria-invalid={invalid}
-        className={cx({ [classes.withIcon]: icon }, classes.input)}
-        disabled={disabled}
-        style={{
-          paddingRight: rightSection ? rightSectionWidth : theme.spacing.md,
-          ..._styles.input,
-          ...(icon ? _styles.withIcon : null),
-        }}
-      />
+        <Element
+          {...rest}
+          ref={ref}
+          aria-required={required}
+          aria-invalid={invalid}
+          className={cx({ [classes.withIcon]: icon }, classes.input)}
+          disabled={disabled}
+          style={{
+            paddingRight: rightSection ? rightSectionWidth : theme.spacing.md,
+            ..._styles.input,
+            ...(icon ? _styles.withIcon : null),
+          }}
+        />
 
-      {rightSection && (
-        <div
-          {...rightSectionProps}
-          style={{ ..._styles.rightSection, width: rightSectionWidth }}
-          className={classes.rightSection}
-        >
-          {rightSection}
-        </div>
-      )}
-    </div>
-  );
-}
+        {rightSection && (
+          <div
+            {...rightSectionProps}
+            style={{ ..._styles.rightSection, width: rightSectionWidth }}
+            className={classes.rightSection}
+          >
+            {rightSection}
+          </div>
+        )}
+      </div>
+    );
+  }
+);
 
 Input.displayName = '@mantine/core/Input';

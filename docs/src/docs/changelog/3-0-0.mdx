@@ -13,6 +13,7 @@ import {
   useViewportSizeDemo,
   useMouseRef,
   CreateStylesDemos,
+  useHoverHookDemo,
 } from '@docs/demos';
 
 ## Breaking changes
@@ -20,6 +21,7 @@ import {
 - Mantine was migrated to [emotion](https://emotion.sh/) from react-jss and no longer supports react-jss
 - `@mantine/core` package no longer exports react-jss `theming` context, use [createStyles](https://mantine.dev/theming/create-styles/) instead
 - All components no longer support `themeOverride` prop due to performance reasons
+- `elementRef` prop was replaced with `ref` in all components
 
 ## Migration to emotion
 
@@ -60,6 +62,24 @@ Follow these guides to get started with ssr:
 - [SSR with Next.js](https://mantine.dev/theming/next/)
 - [SSR with Gatsby.js](https://mantine.dev/theming/gatsby/)
 - [General approach to SSR](https://mantine.dev/theming/ssr/)
+
+## Ref forwarding
+
+All components that previously used `elementRef` were rebuilt with `React.forwardRef`, use `ref` prop to access element ref:
+
+```tsx
+<TextInput ref={(node) => {}} />
+```
+
+## Unique ids during ssr
+
+It's no longer required to set static ids on [Grid](https://mantine.dev/core/grid/), [Menu](https://mantine.dev/core/menu/), all inputs and some other components
+if you wrap your application in MantineProvider.
+
+```tsx
+<TextInput /> // -> will render fine during ssr
+<TextInput id="not-necessary" /> // -> id is no longer necessary
+```
 
 ## ColorSchemeProvider
 
@@ -183,6 +203,10 @@ function Demo() {
 [use-mouse](https://mantine.dev/hooks/use-mouse/) hook tracks mouse position over given element:
 
 <Demo data={useMouseRef} demoProps={{ toggle: true }} />
+
+[use-hover](https://mantine.dev/hooks/use-hover/) hook detects if mouse is over given element:
+
+<Demo data={useHoverHookDemo} demoProps={{ toggle: true }} />
 
 ## Other changes
 

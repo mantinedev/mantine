@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   useMantineTheme,
   mergeStyles,
@@ -37,56 +37,62 @@ export interface DividerProps
   variant?: 'solid' | 'dashed' | 'dotted';
 }
 
-export function Divider({
-  className,
-  style,
-  color,
-  orientation = 'horizontal',
-  size = 'xs',
-  label,
-  labelPosition = 'left',
-  labelProps,
-  variant = 'solid',
-  styles,
-  classNames,
-  ...others
-}: DividerProps) {
-  const theme = useMantineTheme();
-  const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
-  const { classes, cx } = useStyles({ color: _color, size, variant }, classNames, 'divider');
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const _styles = mergeStyles(classes, styles);
+export const Divider = forwardRef<HTMLDivElement, DividerProps>(
+  (
+    {
+      className,
+      style,
+      color,
+      orientation = 'horizontal',
+      size = 'xs',
+      label,
+      labelPosition = 'left',
+      labelProps,
+      variant = 'solid',
+      styles,
+      classNames,
+      ...others
+    }: DividerProps,
+    ref
+  ) => {
+    const theme = useMantineTheme();
+    const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
+    const { classes, cx } = useStyles({ color: _color, size, variant }, classNames, 'divider');
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const _styles = mergeStyles(classes, styles);
 
-  const vertical = orientation === 'vertical';
-  const horizontal = !vertical;
-  const withLabel = !!label && horizontal;
+    const vertical = orientation === 'vertical';
+    const horizontal = !vertical;
+    const withLabel = !!label && horizontal;
 
-  return (
-    <div
-      className={cx(
-        {
-          [classes.vertical]: vertical,
-          [classes.horizontal]: horizontal,
-          [classes.withLabel]: withLabel,
-        },
-        className
-      )}
-      style={mergedStyles}
-      {...rest}
-    >
-      {!!label && horizontal && (
-        <Text
-          {...labelProps}
-          color={_color}
-          size={labelProps?.size || 'xs'}
-          style={{ marginTop: 2, ..._styles.label, ..._styles[labelPosition] }}
-          className={cx(classes.label, classes[labelPosition])}
-        >
-          {label}
-        </Text>
-      )}
-    </div>
-  );
-}
+    return (
+      <div
+        ref={ref}
+        className={cx(
+          {
+            [classes.vertical]: vertical,
+            [classes.horizontal]: horizontal,
+            [classes.withLabel]: withLabel,
+          },
+          className
+        )}
+        style={mergedStyles}
+        {...rest}
+      >
+        {!!label && horizontal && (
+          <Text
+            {...labelProps}
+            color={_color}
+            size={labelProps?.size || 'xs'}
+            style={{ marginTop: 2, ..._styles.label, ..._styles[labelPosition] }}
+            className={cx(classes.label, classes[labelPosition])}
+          >
+            {label}
+          </Text>
+        )}
+      </div>
+    );
+  }
+);
 
 Divider.displayName = '@mantine/core/Divider';

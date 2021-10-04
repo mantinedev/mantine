@@ -11,7 +11,7 @@ const data = [
 ];
 
 function WrappedSelect(
-  props: Omit<React.ComponentProps<typeof NativeSelect>, 'value' | 'onChange' | 'data'>
+  props: Omit<React.ComponentPropsWithoutRef<typeof NativeSelect>, 'value' | 'onChange' | 'data'>
 ) {
   const [value, onChange] = useState(null);
   return (

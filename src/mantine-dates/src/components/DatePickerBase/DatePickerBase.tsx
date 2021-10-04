@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, forwardRef } from 'react';
 import {
   DefaultProps,
   mergeStyles,
@@ -57,9 +57,6 @@ export interface DatePickerBaseSharedProps
   /** Dropdown shadow from theme or css value for custom box-shadow */
   shadow?: MantineShadow;
 
-  /** Get input button ref */
-  elementRef?: React.ForwardedRef<HTMLButtonElement>;
-
   /** Input name, useful fon uncontrolled variant to capture data with native form */
   name?: string;
 
@@ -110,149 +107,153 @@ const RIGHT_SECTION_WIDTH = {
   xl: 44,
 };
 
-export function DatePickerBase({
-  classNames,
-  className,
-  style,
-  styles,
-  wrapperProps,
-  required,
-  label,
-  error,
-  id,
-  description,
-  placeholder,
-  shadow = 'sm',
-  transition = 'pop-top-left',
-  transitionDuration = 200,
-  transitionTimingFunction,
-  elementRef,
-  closeDropdownOnScroll = true,
-  size = 'sm',
-  children,
-  inputLabel,
-  __staticSelector = 'date-picker',
-  dropdownOpened,
-  setDropdownOpened,
-  dropdownType = 'popover',
-  clearable = true,
-  clearButtonLabel,
-  onClear,
-  positionDependencies = [],
-  zIndex = 3,
-  ...others
-}: DatePickerBaseProps) {
-  const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, __staticSelector);
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-  const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
-  const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
-  const uuid = useUuid(id);
+export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>(
+  (
+    {
+      classNames,
+      className,
+      style,
+      styles,
+      wrapperProps,
+      required,
+      label,
+      error,
+      id,
+      description,
+      placeholder,
+      shadow = 'sm',
+      transition = 'pop-top-left',
+      transitionDuration = 200,
+      transitionTimingFunction,
+      closeDropdownOnScroll = true,
+      size = 'sm',
+      children,
+      inputLabel,
+      __staticSelector = 'date-picker',
+      dropdownOpened,
+      setDropdownOpened,
+      dropdownType = 'popover',
+      clearable = true,
+      clearButtonLabel,
+      onClear,
+      positionDependencies = [],
+      zIndex = 3,
+      ...others
+    }: DatePickerBaseProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, __staticSelector);
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
+    const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
+    const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
+    const uuid = useUuid(id);
 
-  const focusTrapRef = useFocusTrap();
-  const inputRef = useRef<HTMLButtonElement>();
-  const closeDropdown = () => {
-    if (dropdownOpened) {
-      setDropdownOpened(false);
-      setTimeout(() => inputRef.current?.focus(), transitionDuration + 20);
-    }
-  };
-  const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
-    event.nativeEvent.code === 'Escape' && closeDropdown();
+    const focusTrapRef = useFocusTrap();
+    const inputRef = useRef<HTMLButtonElement>();
+    const closeDropdown = () => {
+      if (dropdownOpened) {
+        setDropdownOpened(false);
+        setTimeout(() => inputRef.current?.focus(), transitionDuration + 20);
+      }
+    };
+    const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
+      event.nativeEvent.code === 'Escape' && closeDropdown();
 
-  useClickOutside(() => dropdownType === 'popover' && closeDropdown(), null, [
-    dropdownElement,
-    rootElement,
-  ]);
+    useClickOutside(() => dropdownType === 'popover' && closeDropdown(), null, [
+      dropdownElement,
+      rootElement,
+    ]);
 
-  useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
+    useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
 
-  const rightSection = clearable ? (
-    <CloseButton
-      variant="transparent"
-      aria-label={clearButtonLabel}
-      onClick={onClear}
-      size={size}
-    />
-  ) : null;
+    const rightSection = clearable ? (
+      <CloseButton
+        variant="transparent"
+        aria-label={clearButtonLabel}
+        onClick={onClear}
+        size={size}
+      />
+    ) : null;
 
-  return (
-    <InputWrapper
-      required={required}
-      id={uuid}
-      label={label}
-      error={error}
-      description={description}
-      className={className}
-      style={mergedStyles}
-      classNames={classNames}
-      styles={styles}
-      size={size}
-      __staticSelector={__staticSelector}
-      {...wrapperProps}
-    >
-      <div ref={setRootElement}>
-        <div className={classes.wrapper} style={_styles.wrapper} ref={setReferenceElement}>
-          <Input
-            component="button"
-            type="button"
-            classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
-            styles={{ ...styles, input: { ...styles?.input, cursor: 'pointer' } }}
-            onClick={() => setDropdownOpened(!dropdownOpened)}
-            id={uuid}
-            elementRef={useMergedRef(elementRef, inputRef)}
-            __staticSelector={__staticSelector}
-            size={size}
-            required={required}
-            invalid={!!error}
-            rightSection={rightSection}
-            rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
-            {...rest}
-          >
-            {inputLabel || (
-              <Text style={_styles.placeholder} className={classes.placeholder} size={size}>
-                {placeholder}
-              </Text>
-            )}
-          </Input>
-        </div>
-
-        {dropdownType === 'popover' ? (
-          <Popper
-            referenceElement={referenceElement}
-            transitionDuration={transitionDuration}
-            transitionTimingFunction={transitionTimingFunction}
-            forceUpdateDependencies={positionDependencies}
-            transition={transition}
-            mounted={dropdownOpened}
-            position="bottom"
-            placement="start"
-            gutter={0}
-            withArrow
-            arrowSize={3}
-            zIndex={zIndex}
-          >
-            <div
-              className={classes.dropdownWrapper}
-              style={_styles.dropdownWrapper}
-              ref={useMergedRef(focusTrapRef, setDropdownElement)}
-              data-mantine-stop-propagation={dropdownType === 'popover' && dropdownOpened}
-              onKeyDownCapture={closeOnEscape}
+    return (
+      <InputWrapper
+        required={required}
+        id={uuid}
+        label={label}
+        error={error}
+        description={description}
+        className={className}
+        style={mergedStyles}
+        classNames={classNames}
+        styles={styles}
+        size={size}
+        __staticSelector={__staticSelector}
+        {...wrapperProps}
+      >
+        <div ref={setRootElement}>
+          <div className={classes.wrapper} style={_styles.wrapper} ref={setReferenceElement}>
+            <Input
+              component="button"
+              type="button"
+              classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
+              styles={{ ...styles, input: { ...styles?.input, cursor: 'pointer' } }}
+              onClick={() => setDropdownOpened(!dropdownOpened)}
+              id={uuid}
+              ref={useMergedRef(ref, inputRef)}
+              __staticSelector={__staticSelector}
+              size={size}
+              required={required}
+              invalid={!!error}
+              rightSection={rightSection}
+              rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
+              {...rest}
             >
-              <Paper className={classes.dropdown} style={_styles.dropdown} shadow={shadow}>
-                {children}
-              </Paper>
-            </div>
-          </Popper>
-        ) : (
-          <Modal opened={dropdownOpened} onClose={closeDropdown} hideCloseButton>
-            {children}
-          </Modal>
-        )}
-      </div>
-    </InputWrapper>
-  );
-}
+              {inputLabel || (
+                <Text style={_styles.placeholder} className={classes.placeholder} size={size}>
+                  {placeholder}
+                </Text>
+              )}
+            </Input>
+          </div>
+
+          {dropdownType === 'popover' ? (
+            <Popper
+              referenceElement={referenceElement}
+              transitionDuration={transitionDuration}
+              transitionTimingFunction={transitionTimingFunction}
+              forceUpdateDependencies={positionDependencies}
+              transition={transition}
+              mounted={dropdownOpened}
+              position="bottom"
+              placement="start"
+              gutter={0}
+              withArrow
+              arrowSize={3}
+              zIndex={zIndex}
+            >
+              <div
+                className={classes.dropdownWrapper}
+                style={_styles.dropdownWrapper}
+                ref={useMergedRef(focusTrapRef, setDropdownElement)}
+                data-mantine-stop-propagation={dropdownType === 'popover' && dropdownOpened}
+                onKeyDownCapture={closeOnEscape}
+              >
+                <Paper className={classes.dropdown} style={_styles.dropdown} shadow={shadow}>
+                  {children}
+                </Paper>
+              </div>
+            </Popper>
+          ) : (
+            <Modal opened={dropdownOpened} onClose={closeDropdown} hideCloseButton>
+              {children}
+            </Modal>
+          )}
+        </div>
+      </InputWrapper>
+    );
+  }
+);
 
 DatePickerBase.displayName = '@mantine/dates/DatePickerBase';

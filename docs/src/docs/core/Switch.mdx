@@ -71,9 +71,9 @@ function Demo() {
 }
 ```
 
-## Get element ref
+## Get input ref
 
-You can get input ref with `elementRef` prop to:
+You can get input ref with `ref` prop to:
 
 ```tsx
 import { useRef } from 'react';
@@ -81,7 +81,7 @@ import { Switch } from '@mantine/core';
 
 function Demo() {
   const ref = useRef();
-  return <Switch elementRef={ref} />;
+  return <Switch ref={ref} />;
 }
 ```
 

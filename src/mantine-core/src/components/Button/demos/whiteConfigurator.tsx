@@ -4,7 +4,7 @@ import { DEFAULT_THEME } from '@mantine/styles';
 import { Button, ButtonProps } from '../Button';
 import { Group } from '../../Group/Group';
 
-function Wrapper(props: ButtonProps) {
+function Wrapper(props: ButtonProps<'button'>) {
   return (
     <Group position="center">
       <Button leftIcon={<DatabaseIcon size={14} />} variant="white" {...props}>

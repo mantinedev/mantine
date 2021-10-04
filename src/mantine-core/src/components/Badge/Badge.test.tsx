@@ -8,6 +8,7 @@ import {
   itSupportsOthers,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Badge } from './Badge';
 import { Badge as BadgeStylesApi } from './styles.api';
@@ -19,6 +20,7 @@ describe('@mantine/core/Badge', () => {
   itRendersChildren(Badge, {});
   itSupportsStyle(Badge, {});
   itSupportsMargins(Badge, {});
+  itSupportsRef(Badge, {}, HTMLDivElement);
   itSupportsStylesApi(
     Badge,
     { children: 'test', leftSection: 'l', rightSection: 'r' },

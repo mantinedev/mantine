@@ -36,7 +36,7 @@ describe('@mantine/core/Menu', () => {
   itSupportsClassName(Menu, defaultProps);
   itSupportsStyle(Menu, defaultProps);
   itSupportsOthers(Menu, defaultProps);
-  itSupportsRef(Menu, defaultProps, HTMLButtonElement, 'elementRef');
+  itSupportsRef(Menu, defaultProps, HTMLButtonElement);
 
   it('passes props to MenuBody component', () => {
     const element = shallow(

@@ -54,9 +54,9 @@ import { BURGER_SIZES } from '@mantine/core';
   data={Object.keys(BURGER_SIZES).map((size) => [size, `${BURGER_SIZES[size]}px`])}
 />
 
-## Get element ref
+## Get button ref
 
-You can get burger button ref by setting `elementRef` prop:
+You can get burger button ref by setting `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -64,7 +64,7 @@ import { Burger } from '@mantine/core';
 
 function Demo() {
   const ref = useRef();
-  return <Burger elementRef={ref} />;
+  return <Burger ref={ref} />;
 }
 ```
 

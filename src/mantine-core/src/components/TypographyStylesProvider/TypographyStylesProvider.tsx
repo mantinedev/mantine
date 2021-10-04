@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps, useExtractedMargins } from '@mantine/styles';
 import useStyles from './TypographyStylesProvider.styles';
 
@@ -9,14 +9,12 @@ export interface TypographyStylesProviderProps
   children: React.ReactNode;
 }
 
-export function TypographyStylesProvider({
-  className,
-  style,
-  ...others
-}: TypographyStylesProviderProps) {
-  const { classes, cx } = useStyles(null, null, 'typography-styles-provider');
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  return <div className={cx(classes.root, className)} style={mergedStyles} {...rest} />;
-}
+export const TypographyStylesProvider = forwardRef<HTMLDivElement, TypographyStylesProviderProps>(
+  ({ className, style, ...others }: TypographyStylesProviderProps, ref) => {
+    const { classes, cx } = useStyles(null, null, 'typography-styles-provider');
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    return <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest} />;
+  }
+);
 
 TypographyStylesProvider.displayName = '@mantine/core/TypographyStylesProvider';

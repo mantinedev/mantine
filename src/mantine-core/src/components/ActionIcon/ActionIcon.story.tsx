@@ -15,7 +15,7 @@ const getThemes = (props?: any, iconProps?: any) =>
     </ActionIcon>
   ));
 
-const getVariants = (props?: Partial<ActionIconProps>) =>
+const getVariants = (props?: Partial<ActionIconProps<'button'>>) =>
   VARIANTS.map((variant) => (
     <ActionIcon key={variant} variant={variant} {...props}>
       <GearIcon />

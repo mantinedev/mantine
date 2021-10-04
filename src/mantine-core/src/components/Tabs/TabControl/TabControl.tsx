@@ -1,5 +1,4 @@
 import React from 'react';
-import { useMergedRef } from '@mantine/hooks';
 import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { TabProps } from '../Tab/Tab';
 import type { TabsVariant } from '../Tabs';
@@ -11,19 +10,19 @@ export interface TabControlProps
   extends DefaultProps<TabControlStylesNames>,
     React.ComponentPropsWithoutRef<'button'> {
   active: boolean;
-  elementRef(node: HTMLButtonElement): void;
   tabProps: TabProps;
   color?: MantineColor;
   variant?: TabsVariant;
   orientation?: 'horizontal' | 'vertical';
   icon?: React.ReactNode;
+  buttonRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
 export function TabControl({
   className,
   style,
   active,
-  elementRef,
+  buttonRef,
   tabProps,
   color,
   variant = 'default',
@@ -33,7 +32,7 @@ export function TabControl({
   icon: __,
   ...others
 }: TabControlProps) {
-  const { label, icon, color: overrideColor, elementRef: _, ...props } = tabProps;
+  const { label, icon, color: overrideColor, ...props } = tabProps;
   const { classes, cx } = useStyles(
     { color: overrideColor || color, orientation },
     classNames,
@@ -56,7 +55,7 @@ export function TabControl({
       type="button"
       role="tab"
       aria-selected={active}
-      ref={useMergedRef(elementRef, tabProps.elementRef)}
+      ref={buttonRef}
       style={{
         ...style,
         ..._styles.tabControl,

@@ -38,7 +38,7 @@ describe('@mantine/core/NativeSelect', () => {
   itSupportsClassName(NativeSelect, defaultProps);
   itSupportsStyle(NativeSelect, defaultProps);
   itSupportsMargins(NativeSelect, defaultProps);
-  itSupportsRef(NativeSelect, defaultProps, HTMLSelectElement, 'elementRef');
+  itSupportsRef(NativeSelect, defaultProps, HTMLSelectElement);
 
   itSupportsStylesApi(
     NativeSelect,

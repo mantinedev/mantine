@@ -7,6 +7,7 @@ import {
   itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { ColorPicker } from './ColorPicker';
@@ -22,6 +23,7 @@ describe('@mantine/core/ColorPicker', () => {
   itSupportsStyle(ColorPicker, {});
   itSupportsOthers(ColorPicker, {});
   itSupportsMargins(ColorPicker, {});
+  itSupportsRef(ColorPicker, {}, HTMLDivElement);
   itSupportsStylesApi(
     ColorPicker,
     { swatches, format: 'rgba' },

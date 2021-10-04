@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Group, Avatar, Text, MantineColor } from '../../../index';
 import { SelectItemProps } from '../../Select';
 import { LABELS_DATA } from '../../Accordion/demos/_mockdata';
@@ -21,9 +21,9 @@ export const LABELS_DATA = [
   // ... other items
 ]
 
-function AutoCompleteItem({ description, value, image, elementRef, ...others }) {
-  return (
-    <div {...others}>
+const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
+  ({ description, value, image, ...others }: ItemProps, ref) => (
+    <div ref={ref} {...others}>
       <Group noWrap>
         <Avatar src={image} />
 
@@ -35,8 +35,8 @@ function AutoCompleteItem({ description, value, image, elementRef, ...others }) 
         </div>
       </Group>
     </div>
-  );
-}
+  )
+);
 
 function Demo() {
   return (
@@ -62,9 +62,9 @@ interface ItemProps extends SelectItemProps {
   image: string;
 }
 
-function AutoCompleteItem({ description, value, image, elementRef, ...others }: ItemProps) {
-  return (
-    <div {...others}>
+const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
+  ({ description, value, image, ...others }: ItemProps, ref) => (
+    <div ref={ref} {...others}>
       <Group noWrap>
         <Avatar src={image} />
 
@@ -76,8 +76,8 @@ function AutoCompleteItem({ description, value, image, elementRef, ...others }: 
         </div>
       </Group>
     </div>
-  );
-}
+  )
+);
 
 function Demo() {
   return (

@@ -21,7 +21,7 @@ describe('@mantine/core/HueSlider', () => {
   itSupportsClassName(HueSlider, defaultProps);
   itSupportsOthers(HueSlider, defaultProps);
   itSupportsStyle(HueSlider, defaultProps);
-  itSupportsRef(HueSlider, defaultProps, HTMLDivElement, 'elementRef');
+  itSupportsRef(HueSlider, defaultProps, HTMLDivElement);
 
   it('sets thumb color based on given hue value', () => {
     const element = shallow(<HueSlider {...defaultProps} value={324} />);

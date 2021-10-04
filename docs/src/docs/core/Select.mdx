@@ -158,20 +158,32 @@ To do so you will need to:
 You can add any other fields to your data:
 
 ```tsx
-[
+const data = [
   {
-    value: 'bob@handsome.inc',
-    image: 'image-link',
-    label: 'bob@handsome.inc',
-    name: 'Bob Handsome',
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',
+    label: 'Bender Bending Rodríguez',
+    value: 'Bender Bending Rodríguez',
+    description: 'Fascinated with cooking',
+  },
+
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
+    label: 'Carol Miller',
+    value: 'Carol Miller',
+    description: 'One of the richest people on Earth',
   },
   {
-    value: 'bill@outlook.com',
-    image: 'image-link',
-    label: 'bill@outlook.com',
-    name: 'Bill Rataconda',
+    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
+    label: 'Homer Simpson',
+    value: 'Homer Simpson',
+    description: 'Overweight, lazy, and often ignorant',
   },
-  { value: 'amy@wong.cn', image: 'image-link', label: 'amy@wong.cn', name: 'Amy Wong' },
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
+    label: 'Spongebob Squarepants',
+    value: 'Spongebob Squarepants',
+    description: 'Not just a sponge',
+  },
 ];
 ```
 
@@ -217,9 +229,9 @@ Component supports all props from [Input](/core/input/) and [InputWrapper](/core
 
 <Demo data={SelectDemos.configurator} />
 
-## Get element ref
+## Get input element ref
 
-You can get input ref by passing `elementRef` prop to Select component:
+You can get input ref by passing `ref` prop to Select component:
 
 ```tsx
 import { useRef } from 'react';
@@ -227,7 +239,7 @@ import { Select } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
-  return <Select elementRef={ref} />;
+  return <Select ref={ref} />;
 }
 ```
 

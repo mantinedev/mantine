@@ -7,6 +7,7 @@ import {
   itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Calendar } from './Calendar';
 import { Month } from '../Month/Month';
@@ -21,6 +22,7 @@ describe('@mantine/dates/Calendar', () => {
   itSupportsOthers(Calendar, defaultProps);
   itSupportsMargins(Calendar, defaultProps);
   itSupportsStyle(Calendar, defaultProps);
+  itSupportsRef(Calendar, defaultProps, HTMLDivElement);
   checkAccessibility([
     mount(
       <Calendar

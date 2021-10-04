@@ -4,7 +4,9 @@ import { DEFAULT_THEME } from '@mantine/styles';
 import { Checkbox } from './Checkbox';
 import { DarkStory } from '../../../demos';
 
-function CheckboxWrapper(props: Omit<React.ComponentProps<typeof Checkbox>, 'value' | 'onChange'>) {
+function CheckboxWrapper(
+  props: Omit<React.ComponentPropsWithoutRef<typeof Checkbox>, 'value' | 'onChange'>
+) {
   const [value, onChange] = useState(true);
   return (
     <Checkbox

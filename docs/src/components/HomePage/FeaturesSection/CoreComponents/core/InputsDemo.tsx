@@ -108,7 +108,9 @@ export function InputsDemo() {
       </div>
 
       <div className={classes.column}>
-        <CustomSelectDemo label="Custom select" />
+        <div style={{ position: 'relative', zIndex: 3 }}>
+          <CustomSelectDemo label="Custom select" />
+        </div>
 
         <Autocomplete
           label="Autocomplete"

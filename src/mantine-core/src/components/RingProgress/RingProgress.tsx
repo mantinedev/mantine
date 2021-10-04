@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   mergeStyles,
   DefaultProps,
@@ -28,58 +28,64 @@ export interface RingProgressProps
   sections: { value: number; color: MantineColor }[];
 }
 
-export function RingProgress({
-  className,
-  style,
-  label,
-  sections,
-  size = 120,
-  thickness = size / 10,
-  classNames,
-  styles,
-  ...others
-}: RingProgressProps) {
-  const { classes, cx } = useStyles(null, classNames, 'ring-progress');
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>(
+  (
+    {
+      className,
+      style,
+      label,
+      sections,
+      size = 120,
+      thickness = size / 10,
+      classNames,
+      styles,
+      ...others
+    }: RingProgressProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles(null, classNames, 'ring-progress');
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
-  const curves = getCurves({ size, thickness, sections }).map((curve, index) => (
-    <Curve
-      key={index}
-      value={curve.data?.value}
-      size={size}
-      thickness={thickness}
-      sum={curve.sum}
-      offset={curve.offset}
-      color={curve.data?.color}
-      root={curve.root}
-    />
-  ));
+    const curves = getCurves({ size, thickness, sections }).map((curve, index) => (
+      <Curve
+        key={index}
+        value={curve.data?.value}
+        size={size}
+        thickness={thickness}
+        sum={curve.sum}
+        offset={curve.offset}
+        color={curve.data?.color}
+        root={curve.root}
+      />
+    ));
 
-  return (
-    <div
-      style={{ width: size, height: size, ...mergedStyles }}
-      className={cx(classes.root, className)}
-      {...rest}
-    >
-      <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
-        {curves}
-      </svg>
+    return (
+      <div
+        style={{ width: size, height: size, ...mergedStyles }}
+        className={cx(classes.root, className)}
+        ref={ref}
+        {...rest}
+      >
+        <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
+          {curves}
+        </svg>
 
-      {label && (
-        <div
-          className={classes.label}
-          style={{
-            right: thickness * 2,
-            left: thickness * 2,
-            ..._styles.label,
-          }}
-        >
-          {label}
-        </div>
-      )}
-    </div>
-  );
-}
+        {label && (
+          <div
+            className={classes.label}
+            style={{
+              right: thickness * 2,
+              left: thickness * 2,
+              ..._styles.label,
+            }}
+          >
+            {label}
+          </div>
+        )}
+      </div>
+    );
+  }
+);
 
 RingProgress.displayName = '@mantine/core/RingProgress';

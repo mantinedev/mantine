@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
 import useStyles from './Container.styles';
 
@@ -13,17 +13,14 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
   fluid?: boolean;
 }
 
-export function Container({
-  className,
-  padding = 'md',
-  fluid,
-  size,
-  style,
-  ...others
-}: ContainerProps) {
-  const { classes, cx } = useStyles({ padding, fluid, size }, null, 'container');
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  return <div className={cx(classes.container, className)} style={mergedStyles} {...rest} />;
-}
+export const Container = forwardRef<HTMLDivElement, ContainerProps>(
+  ({ className, padding = 'md', fluid, size, style, ...others }: ContainerProps, ref) => {
+    const { classes, cx } = useStyles({ padding, fluid, size }, null, 'container');
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    return (
+      <div className={cx(classes.container, className)} style={mergedStyles} ref={ref} {...rest} />
+    );
+  }
+);
 
 Container.displayName = '@mantine/core/Container';

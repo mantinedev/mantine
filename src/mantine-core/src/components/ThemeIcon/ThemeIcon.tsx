@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -8,7 +8,7 @@ import {
 } from '@mantine/styles';
 import useStyles, { ThemeIconVariant } from './ThemeIcon.styles';
 
-export interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'> {
+export interface ThemeIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Icon */
   children: React.ReactNode;
 
@@ -28,38 +28,43 @@ export interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'
   gradient?: MantineGradient;
 }
 
-export function ThemeIcon({
-  className,
-  size = 'md',
-  radius = 'sm',
-  variant = 'filled',
-  color,
-  children,
-  gradient = { from: 'blue', to: 'cyan', deg: 45 },
-  style,
-  ...others
-}: ThemeIconProps) {
-  const { classes, cx } = useStyles(
+export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>(
+  (
     {
-      variant,
-      radius,
+      className,
+      size = 'md',
+      radius = 'sm',
+      variant = 'filled',
       color,
-      size,
-      gradientFrom: gradient.from,
-      gradientTo: gradient.to,
-      gradientDeg: gradient.deg,
-    },
-    null,
-    'theme-icon'
-  );
+      children,
+      gradient = { from: 'blue', to: 'cyan', deg: 45 },
+      style,
+      ...others
+    }: ThemeIconProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles(
+      {
+        variant,
+        radius,
+        color,
+        size,
+        gradientFrom: gradient.from,
+        gradientTo: gradient.to,
+        gradientDeg: gradient.deg,
+      },
+      null,
+      'theme-icon'
+    );
 
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
-  return (
-    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
-      {children}
-    </div>
-  );
-}
+    return (
+      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+        {children}
+      </div>
+    );
+  }
+);
 
 ThemeIcon.displayName = '@mantine/core/ThemeIcon';

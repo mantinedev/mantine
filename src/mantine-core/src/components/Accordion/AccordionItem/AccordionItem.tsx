@@ -14,7 +14,6 @@ export interface PublicAccordionItemProps extends React.ComponentPropsWithoutRef
   label?: React.ReactNode;
   icon?: React.ReactNode;
   children?: React.ReactNode;
-  elementRef?: React.ForwardedRef<HTMLButtonElement>;
   disableIconRotation?: boolean;
   iconPosition?: AccordionIconPosition;
 }

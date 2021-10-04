@@ -24,6 +24,7 @@ export default createStyles((theme) => ({
     transform: 'rotate(180deg)',
     marginBottom: -5,
     filter: 'none',
+    fill: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
   },
 
   inner: {

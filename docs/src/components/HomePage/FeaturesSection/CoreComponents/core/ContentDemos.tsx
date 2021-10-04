@@ -1,7 +1,7 @@
 import React from 'react';
-import { ChatBubbleIcon, ImageIcon, GearIcon } from '@modulz/radix-icons';
-import { Text, Tabs, Tab, Paper } from '@mantine/core';
+import { Text, Paper } from '@mantine/core';
 import { AccordionDemo } from '@mantine/core/src/components/Accordion/demos/label';
+import { TimelineBase } from '@mantine/core/src/components/Timeline/demos/_base';
 
 export function ContentDemos() {
   return (
@@ -14,21 +14,11 @@ export function ContentDemos() {
       </div>
 
       <div style={{ marginTop: 30 }}>
-        <Text size="lg" style={{ marginBottom: 5 }}>
-          Tabs component
+        <Text size="lg" mb={15}>
+          Timeline component
         </Text>
 
-        <Tabs grow>
-          <Tab label="Messages" icon={<ChatBubbleIcon />} />
-          <Tab label="Gallery" icon={<ImageIcon />} />
-          <Tab label="Settings" icon={<GearIcon />} />
-        </Tabs>
-
-        <Tabs grow variant="outline" style={{ marginTop: 30 }}>
-          <Tab label="Messages" icon={<ChatBubbleIcon />} />
-          <Tab label="Gallery" icon={<ImageIcon />} />
-          <Tab label="Settings" icon={<GearIcon />} />
-        </Tabs>
+        <TimelineBase />
       </div>
     </Paper>
   );

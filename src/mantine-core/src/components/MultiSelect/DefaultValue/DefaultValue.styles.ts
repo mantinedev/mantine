@@ -32,14 +32,14 @@ export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyl
         : theme.colors.gray[3]
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[7]
-      : theme.colors[theme.primaryColor][1],
+      : theme.colors.gray[1],
     color: disabled
       ? theme.colorScheme === 'dark'
         ? theme.colors.dark[1]
         : theme.colors.gray[7]
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[0]
-      : theme.colors[theme.primaryColor][9],
+      : theme.colors.gray[7],
     lineHeight: 1,
     height: getSizeValue({ size, sizes }),
     paddingLeft: getSizeValue({ size, sizes: theme.spacing }),
@@ -52,8 +52,7 @@ export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyl
   },
 
   defaultValueRemove: {
-    color:
-      theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors[theme.primaryColor][9],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
     marginLeft: getSizeValue({ size, sizes: theme.spacing }) / 6,
   },
 }));

@@ -22,7 +22,7 @@ describe('@mantine/core/ColorSlider', () => {
   itSupportsClassName(ColorSlider, defaultProps);
   itSupportsOthers(ColorSlider, defaultProps);
   itSupportsStyle(ColorSlider, defaultProps);
-  itSupportsRef(ColorSlider, defaultProps, HTMLDivElement, 'elementRef');
+  itSupportsRef(ColorSlider, defaultProps, HTMLDivElement);
 
   it('provides thumbColor and size to Thumb component', () => {
     const element = shallow(<ColorSlider {...defaultProps} thumbColor="#FEFCDE" size="xl" />);

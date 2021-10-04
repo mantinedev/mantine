@@ -5,6 +5,7 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { highlighter, Highlight } from './Highlight';
 
@@ -15,6 +16,7 @@ describe('@mantine/core/Highlight', () => {
   itSupportsClassName(Highlight, defaultProps);
   itSupportsOthers(Highlight, defaultProps);
   itSupportsMargins(Highlight, defaultProps);
+  itSupportsRef(Highlight, defaultProps, HTMLDivElement);
 
   it('has correct displayName', () => {
     expect(Highlight.displayName).toEqual('@mantine/core/Highlight');
@@ -29,13 +31,13 @@ describe('@mantine/core/Highlight', () => {
     const TestComponent = (props: any) => <span data-test-prop {...props} />;
 
     const withTag = shallow(
-      <Highlight<'a'> component="a" href="https://mantine.dev" highlight="Ma">
+      <Highlight component="a" href="https://mantine.dev" highlight="Ma">
         Mantine
       </Highlight>
     );
 
     const withComponent = shallow(
-      <Highlight<typeof TestComponent> component={TestComponent} highlight="Ma">
+      <Highlight component={TestComponent} highlight="Ma">
         Mantine
       </Highlight>
     );

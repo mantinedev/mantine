@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   mergeStyles,
   useMantineTheme,
@@ -17,7 +17,7 @@ export type DialogStylesNames = ClassNames<typeof useStyles>;
 
 export interface DialogProps
   extends Omit<DefaultProps<DialogStylesNames>, MantineMargin>,
-    Omit<PaperProps<'div', HTMLDivElement>, 'classNames' | 'styles'> {
+    Omit<PaperProps<'div'>, 'classNames' | 'styles'> {
   /** Display close button at the top right corner */
   withCloseButton?: boolean;
 
@@ -107,17 +107,18 @@ export function MantineDialog({
   );
 }
 
-export function Dialog(props: DialogProps) {
+export const Dialog = forwardRef<HTMLDivElement, DialogProps>((props: DialogProps, ref) => {
   const theme = useMantineTheme();
 
   return (
     <Affix
       zIndex={props.zIndex}
       position={props.position || { bottom: theme.spacing.xl, right: theme.spacing.xl }}
+      ref={ref}
     >
       <MantineDialog {...props} />
     </Affix>
   );
-}
+});
 
 Dialog.displayName = '@mantine/core/Dialog';

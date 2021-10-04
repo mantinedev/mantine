@@ -19,7 +19,7 @@ describe('@mantine/core/CloseButton', () => {
   itSupportsClassName(CloseButton, {});
   itSupportsOthers(CloseButton, {});
   itSupportsStyle(CloseButton, {});
-  itSupportsRef(CloseButton, {}, HTMLButtonElement, 'elementRef');
+  itSupportsRef(CloseButton, {}, HTMLButtonElement);
 
   it('sets width and height on CloseIcon based on iconSize prop', () => {
     const element = shallow(<CloseButton iconSize={45} />);

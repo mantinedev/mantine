@@ -27,7 +27,7 @@ describe('@mantine/core/Image', () => {
   itSupportsMargins(Image, defaultProps);
   itSupportsOthers(Image, defaultProps);
   itSupportsStyle(Image, defaultProps);
-  itSupportsRef(Image, defaultProps, HTMLImageElement, 'imageRef');
+  itSupportsRef(Image, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     Image,
     { src: null, withPlaceholder: true },

@@ -6,38 +6,38 @@ import type { DeepPartial } from './DeepPartial';
 export type LoaderType = 'bars' | 'oval' | 'dots';
 
 export interface HeadingStyle {
-  readonly fontSize: CSSProperties['fontSize'];
-  readonly lineHeight: CSSProperties['lineHeight'];
+  fontSize: CSSProperties['fontSize'];
+  lineHeight: CSSProperties['lineHeight'];
 }
 
 export interface MantineTheme {
-  readonly loader: LoaderType;
-  readonly colorScheme: 'light' | 'dark';
-  readonly white: string;
-  readonly black: string;
-  readonly colors: Record<string, Tuple<string, 10>>;
-  readonly fontFamily: CSSProperties['fontFamily'];
-  readonly lineHeight: CSSProperties['lineHeight'];
-  readonly transitionTimingFunction: CSSProperties['transitionTimingFunction'];
-  readonly fontFamilyMonospace: CSSProperties['fontFamily'];
-  readonly primaryColor: string;
+  loader: LoaderType;
+  colorScheme: 'light' | 'dark';
+  white: string;
+  black: string;
+  colors: Record<string, Tuple<string, 10>>;
+  fontFamily: CSSProperties['fontFamily'];
+  lineHeight: CSSProperties['lineHeight'];
+  transitionTimingFunction: CSSProperties['transitionTimingFunction'];
+  fontFamilyMonospace: CSSProperties['fontFamily'];
+  primaryColor: string;
 
-  readonly fontSizes: MantineSizes;
-  readonly radius: MantineSizes;
-  readonly spacing: MantineSizes;
-  readonly breakpoints: MantineSizes;
-  readonly shadows: Record<MantineSize, string>;
+  fontSizes: MantineSizes;
+  radius: MantineSizes;
+  spacing: MantineSizes;
+  breakpoints: MantineSizes;
+  shadows: Record<MantineSize, string>;
 
-  readonly headings: {
-    readonly fontFamily: CSSProperties['fontFamily'];
-    readonly fontWeight: CSSProperties['fontWeight'];
-    readonly sizes: {
-      readonly h1: HeadingStyle;
-      readonly h2: HeadingStyle;
-      readonly h3: HeadingStyle;
-      readonly h4: HeadingStyle;
-      readonly h5: HeadingStyle;
-      readonly h6: HeadingStyle;
+  headings: {
+    fontFamily: CSSProperties['fontFamily'];
+    fontWeight: CSSProperties['fontWeight'];
+    sizes: {
+      h1: HeadingStyle;
+      h2: HeadingStyle;
+      h3: HeadingStyle;
+      h4: HeadingStyle;
+      h5: HeadingStyle;
+      h6: HeadingStyle;
     };
   };
 }

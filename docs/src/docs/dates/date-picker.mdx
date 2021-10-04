@@ -178,9 +178,9 @@ You can use any React node as icon:
 
 <Demo data={DatePickerDemos.disabled} />
 
-## Get element ref
+## Get input ref
 
-You can get input ref with `elementRef` prop:
+You can get input ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -188,7 +188,7 @@ import { DatePicker } from '@mantine/dates';
 
 function Demo() {
   const ref = useRef(null);
-  return <DatePicker elementRef={ref} />;
+  return <DatePicker ref={ref} />;
 }
 ```
 

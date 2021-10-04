@@ -45,7 +45,7 @@ describe('@mantine/core/SelectItems', () => {
     const element = shallow(
       <SelectItems
         {...defaultProps}
-        itemComponent={({ elementRef, ...props }: any) => <span data-custom-item {...props} />}
+        itemComponent={(props: any) => <span data-custom-item {...props} />}
       />
     );
     expect(element.find('[role="option"]')).toHaveLength(defaultProps.data.length);

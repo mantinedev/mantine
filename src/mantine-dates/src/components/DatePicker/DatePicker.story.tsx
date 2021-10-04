@@ -4,7 +4,9 @@ import { MANTINE_SIZES, Group, Modal, Button } from '@mantine/core';
 import dayjs from 'dayjs';
 import { DatePicker } from './DatePicker';
 
-function WrappedModal(props: Omit<React.ComponentProps<typeof Modal>, 'opened' | 'onClose'>) {
+function WrappedModal(
+  props: Omit<React.ComponentPropsWithoutRef<typeof Modal>, 'opened' | 'onClose'>
+) {
   const [opened, setOpened] = useState(true);
 
   return (

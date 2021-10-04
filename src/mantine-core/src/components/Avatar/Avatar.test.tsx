@@ -24,7 +24,7 @@ describe('@mantine/core/Avatar', () => {
   itSupportsMargins(Avatar, { src: img });
   itSupportsOthers(Avatar, { src: img });
   itSupportsStyle(Avatar, { src: img });
-  itSupportsRef(Avatar, { src: img }, HTMLDivElement, 'elementRef');
+  itSupportsRef(Avatar, { src: img }, HTMLDivElement);
 
   itSupportsStylesApi(Avatar, { src: img }, ['root', 'image'], 'avatar', 'with-image');
   itSupportsStylesApi(

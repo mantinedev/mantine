@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TextProps } from '../Text';
 
-function Wrapper(props: TextProps) {
+function Wrapper(props: TextProps<'div'>) {
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
       <Text {...props}>

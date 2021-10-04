@@ -18,7 +18,7 @@ describe('@mantine/core/Button', () => {
   itSupportsOthers(Button, {});
   itRendersChildren(Button, {});
   itSupportsStyle(Button, {});
-  itSupportsRef(Button, {}, HTMLButtonElement, 'elementRef');
+  itSupportsRef(Button, {}, HTMLButtonElement);
   itSupportsClassName(Button, {});
   itSupportsMargins(Button, {});
 

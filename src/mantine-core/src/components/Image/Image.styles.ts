@@ -8,7 +8,6 @@ export default createStyles((theme, { radius }: ImageStyles) => ({
   root: {
     position: 'relative',
     overflow: 'hidden',
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   },
 
   figure: {
@@ -21,6 +20,7 @@ export default createStyles((theme, { radius }: ImageStyles) => ({
     width: '100%',
     height: '100%',
     border: 0,
+    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   },
 
   caption: {

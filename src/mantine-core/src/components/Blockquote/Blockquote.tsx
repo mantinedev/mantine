@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   mergeStyles,
   DefaultProps,
@@ -26,41 +26,46 @@ export interface BlockquoteProps
 
 const defaultIcon = <QuoteIcon />;
 
-export function Blockquote({
-  className,
-  style,
-  color = 'gray',
-  icon = defaultIcon,
-  cite,
-  children,
-  classNames,
-  styles,
-  ...others
-}: BlockquoteProps) {
-  const { classes, cx } = useStyles({ color }, classNames, 'blockquote');
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+export const Blockquote = forwardRef<HTMLQuoteElement, BlockquoteProps>(
+  (
+    {
+      className,
+      style,
+      color = 'gray',
+      icon = defaultIcon,
+      cite,
+      children,
+      classNames,
+      styles,
+      ...others
+    }: BlockquoteProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ color }, classNames, 'blockquote');
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
-  return (
-    <blockquote className={cx(classes.root, className)} style={mergedStyles} {...rest}>
-      <div className={classes.inner} style={_styles.inner}>
-        {icon && (
-          <div className={classes.icon} style={_styles.icon}>
-            {icon}
-          </div>
-        )}
-
-        <div className={classes.body} style={_styles.body}>
-          {children}
-          {cite && (
-            <cite className={classes.cite} style={_styles.cite}>
-              {cite}
-            </cite>
+    return (
+      <blockquote className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+        <div className={classes.inner} style={_styles.inner}>
+          {icon && (
+            <div className={classes.icon} style={_styles.icon}>
+              {icon}
+            </div>
           )}
+
+          <div className={classes.body} style={_styles.body}>
+            {children}
+            {cite && (
+              <cite className={classes.cite} style={_styles.cite}>
+                {cite}
+              </cite>
+            )}
+          </div>
         </div>
-      </div>
-    </blockquote>
-  );
-}
+      </blockquote>
+    );
+  }
+);
 
 Blockquote.displayName = '@mantine/core/Blockquote';

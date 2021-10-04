@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function CloseIcon(props: React.ComponentProps<'svg'>) {
+export function CloseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
       width="20"

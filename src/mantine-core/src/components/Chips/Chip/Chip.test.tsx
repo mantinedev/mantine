@@ -22,7 +22,7 @@ describe('@mantine/core/Chip', () => {
   itSupportsClassName(Chip, defaultProps);
   itSupportsOthers(Chip, defaultProps);
   itRendersChildren(Chip, defaultProps);
-  itSupportsRef(Chip, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsRef(Chip, defaultProps, HTMLInputElement);
 
   itSupportsStylesApi(
     Chip,

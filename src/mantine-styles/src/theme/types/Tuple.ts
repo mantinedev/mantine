@@ -1,9 +1,9 @@
-type _TupleOf<T, N extends number, R extends readonly unknown[]> = R['length'] extends N
+type _TupleOf<T, N extends number, R extends unknown[]> = R['length'] extends N
   ? R
-  : _TupleOf<T, N, readonly [T, ...R]>;
+  : _TupleOf<T, N, [T, ...R]>;
 
 export type Tuple<T, N extends number> = N extends N
   ? number extends N
-    ? readonly T[]
+    ? T[]
     : _TupleOf<T, N, []>
   : never;

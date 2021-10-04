@@ -4,7 +4,10 @@ import { UnstyledButton, Text, Center, useMantineColorScheme } from '@mantine/co
 import { upperFirst } from '@mantine/hooks';
 import useStyles from './ColorSchemeToggle.styles';
 
-export function ColorSchemeToggle({ className, ...others }: React.ComponentProps<'button'>) {
+export function ColorSchemeToggle({
+  className,
+  ...others
+}: React.ComponentPropsWithoutRef<'button'>) {
   const { classes, cx } = useStyles();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const Icon = colorScheme === 'dark' ? SunIcon : MoonIcon;

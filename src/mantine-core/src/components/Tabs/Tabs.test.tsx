@@ -7,6 +7,7 @@ import {
   itSupportsOthers,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { TabControl } from './TabControl/TabControl';
 import { Tabs } from './Tabs';
@@ -37,6 +38,7 @@ describe('@mantine/core/Tabs', () => {
   itSupportsStyle(Tabs, defaultProps);
   itSupportsMargins(Tabs, defaultProps);
   itSupportsClassName(Tabs, defaultProps);
+  itSupportsRef(Tabs, defaultProps, HTMLDivElement);
   itSupportsStylesApi(Tabs, defaultProps, Object.keys(TabsStylesApi), 'tabs');
 
   it('has correct displayName', () => {
@@ -170,7 +172,7 @@ describe('@mantine/core/Tabs', () => {
     const ref = React.createRef<HTMLButtonElement>();
     mount(
       <Tabs>
-        <Tab elementRef={ref} label="test" />
+        <Tab ref={ref} label="test" />
       </Tabs>
     );
     expect(ref.current instanceof HTMLButtonElement).toBe(true);

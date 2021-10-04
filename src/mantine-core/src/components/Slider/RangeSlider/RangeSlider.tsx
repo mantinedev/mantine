@@ -293,7 +293,7 @@ export function RangeSlider({
     <SliderRoot
       {...others}
       size={size}
-      elementRef={container}
+      ref={container}
       onTouchStart={handleTrackMouseDown}
       onMouseDown={handleTrackMouseDown}
       onTouchStartCapture={handleTrackMouseDownCapture}
@@ -329,7 +329,7 @@ export function RangeSlider({
           position={positions[0]}
           dragging={dragging === 0}
           label={typeof label === 'function' ? label(_value[0]) : label}
-          elementRef={(node) => {
+          ref={(node) => {
             thumbs.current[0] = node;
           }}
           thumbLabel={thumbFromLabel}
@@ -344,7 +344,7 @@ export function RangeSlider({
           position={positions[1]}
           dragging={dragging === 1}
           label={typeof label === 'function' ? label(_value[1]) : label}
-          elementRef={(node) => {
+          ref={(node) => {
             thumbs.current[1] = node;
           }}
           onMouseDown={(event) => handleThumbMouseDown(event, 1)}

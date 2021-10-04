@@ -24,7 +24,7 @@ describe('@mantine/core/ColorInput', () => {
   itSupportsClassName(ColorInput, {});
   itSupportsMargins(ColorInput, {});
   itSupportsStyle(ColorInput, {});
-  itSupportsRef(ColorInput, {}, HTMLInputElement, 'elementRef');
+  itSupportsRef(ColorInput, {}, HTMLInputElement);
 
   itSupportsStylesApi(
     ColorInput,

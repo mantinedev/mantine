@@ -9,7 +9,7 @@ export default createStyles((theme) => ({
   },
 
   notification: {
-    '& + &': {
+    '&:not(:first-of-type)': {
       marginTop: theme.spacing.sm,
     },
   },

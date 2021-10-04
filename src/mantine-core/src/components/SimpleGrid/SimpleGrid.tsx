@@ -1,4 +1,4 @@
-import React, { Children, useMemo } from 'react';
+import React, { useMemo, forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -19,42 +19,42 @@ export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWitho
   spacing?: MantineNumberSize;
 }
 
-export function SimpleGrid({
-  className,
-  breakpoints = [],
-  cols,
-  id,
-  spacing = 'md',
-  children,
-  style,
-  ...others
-}: SimpleGridProps) {
-  const theme = useMantineTheme();
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const sortedBreakpoints = useMemo(
-    () =>
-      [...breakpoints].sort(
-        (a, b) =>
-          getSizeValue({ size: b.maxWidth, sizes: theme.breakpoints }) -
-          getSizeValue({ size: a.maxWidth, sizes: theme.breakpoints })
-      ),
-    []
-  );
-  const { classes, cx } = useStyles(
-    { breakpoints: sortedBreakpoints, cols, spacing },
-    null,
-    'simple-grid'
-  );
+export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>(
+  (
+    {
+      className,
+      breakpoints = [],
+      cols,
+      spacing = 'md',
+      children,
+      style,
+      ...others
+    }: SimpleGridProps,
+    ref
+  ) => {
+    const theme = useMantineTheme();
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const sortedBreakpoints = useMemo(
+      () =>
+        [...breakpoints].sort(
+          (a, b) =>
+            getSizeValue({ size: b.maxWidth, sizes: theme.breakpoints }) -
+            getSizeValue({ size: a.maxWidth, sizes: theme.breakpoints })
+        ),
+      []
+    );
+    const { classes, cx } = useStyles(
+      { breakpoints: sortedBreakpoints, cols, spacing },
+      null,
+      'simple-grid'
+    );
 
-  const columns = (Children.toArray(children) as React.ReactElement[]).map((column) =>
-    React.cloneElement(column, { className: cx(classes.col, column.props.className) })
-  );
-
-  return (
-    <div className={cx(classes.grid, className)} id={id} style={mergedStyles} {...rest}>
-      {columns}
-    </div>
-  );
-}
+    return (
+      <div className={cx(classes.grid, className)} style={mergedStyles} ref={ref} {...rest}>
+        {children}
+      </div>
+    );
+  }
+);
 
 SimpleGrid.displayName = '@mantine/core/SimpleGrid';

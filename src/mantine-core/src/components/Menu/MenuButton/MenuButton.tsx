@@ -1,18 +1,17 @@
-import React from 'react';
-import { mergeStyles, MantineNumberSize, ClassNames } from '@mantine/styles';
+import React, { forwardRef } from 'react';
+import {
+  mergeStyles,
+  MantineNumberSize,
+  ClassNames,
+  PolymorphicComponentProps,
+  PolymorphicRef,
+} from '@mantine/styles';
 import { SharedMenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 
 export type MenuButtonStylesNames = ClassNames<typeof useStyles>;
 
-interface _MenuButtonProps<C extends React.ElementType, R extends HTMLElement>
-  extends SharedMenuItemProps {
-  /** Root element or custom component */
-  component?: C;
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<R>;
-
+interface _MenuButtonProps extends SharedMenuItemProps {
   /** Menu item label */
   children: React.ReactNode;
 
@@ -26,62 +25,67 @@ interface _MenuButtonProps<C extends React.ElementType, R extends HTMLElement>
   radius?: MantineNumberSize;
 }
 
-export type MenuButtonProps<
-  C extends React.ElementType = 'div',
-  R extends HTMLElement = HTMLDivElement
-> = _MenuButtonProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _MenuButtonProps<C, R>>;
+export type MenuButtonProps<C extends React.ElementType> = PolymorphicComponentProps<
+  C,
+  _MenuButtonProps
+>;
 
-export function MenuButton<
-  C extends React.ElementType = 'button',
-  R extends HTMLElement = HTMLButtonElement
->({
-  className,
-  style,
-  children,
-  onHover,
-  hovered,
-  elementRef,
-  icon,
-  color,
-  disabled,
-  rightSection,
-  component,
-  classNames,
-  styles,
-  radius,
-  ...others
-}: MenuButtonProps<C, R>) {
-  const { classes, cx } = useStyles({ color, radius }, classNames, 'menu');
-  const _styles = mergeStyles(classes, styles);
-  const Element = component || 'button';
+type MenuButtonComponent = <C extends React.ElementType = 'button'>(
+  props: MenuButtonProps<C>
+) => React.ReactElement;
 
-  return (
-    <Element
-      type="button"
-      role="menuitem"
-      className={cx(classes.item, { [classes.itemHovered]: hovered }, className)}
-      onMouseEnter={() => !disabled && onHover()}
-      ref={elementRef as any}
-      disabled={disabled}
-      style={{ ...style, ..._styles.item, ...(hovered ? _styles.itemHovered : null) }}
-      {...others}
-    >
-      <div className={classes.itemInner} style={_styles.itemInner}>
-        {icon && (
-          <div className={classes.itemIcon} style={_styles.itemIcon}>
-            {icon}
+export const MenuButton: MenuButtonComponent & { displayName?: string } = forwardRef(
+  <C extends React.ElementType = 'button'>(
+    {
+      className,
+      style,
+      children,
+      onHover,
+      hovered,
+      icon,
+      color,
+      disabled,
+      rightSection,
+      component,
+      classNames,
+      styles,
+      radius,
+      ...others
+    }: MenuButtonProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const { classes, cx } = useStyles({ color, radius }, classNames, 'menu');
+    const _styles = mergeStyles(classes, styles);
+    const Element = component || 'button';
+
+    return (
+      <Element
+        type="button"
+        role="menuitem"
+        className={cx(classes.item, { [classes.itemHovered]: hovered }, className)}
+        onMouseEnter={() => !disabled && onHover()}
+        ref={ref}
+        disabled={disabled}
+        style={{ ...style, ..._styles.item, ...(hovered ? _styles.itemHovered : null) }}
+        {...others}
+      >
+        <div className={classes.itemInner} style={_styles.itemInner}>
+          {icon && (
+            <div className={classes.itemIcon} style={_styles.itemIcon}>
+              {icon}
+            </div>
+          )}
+
+          <div className={classes.itemBody} style={_styles.itemBody}>
+            <div className={classes.itemLabel} style={_styles.itemLabel}>
+              {children}
+            </div>
+            {rightSection}
           </div>
-        )}
-
-        <div className={classes.itemBody} style={_styles.itemBody}>
-          <div className={classes.itemLabel} style={_styles.itemLabel}>
-            {children}
-          </div>
-          {rightSection}
         </div>
-      </div>
-    </Element>
-  );
-}
+      </Element>
+    );
+  }
+);
 
 MenuButton.displayName = '@mantine/core/MenuButton';

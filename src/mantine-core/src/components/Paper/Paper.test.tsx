@@ -14,7 +14,7 @@ describe('@mantine/core/Paper', () => {
   itRendersChildren(Paper, {});
   itSupportsClassName(Paper, {});
   itSupportsStyle(Paper, {});
-  itSupportsRef(Paper, {}, HTMLDivElement, 'elementRef');
+  itSupportsRef(Paper, {}, HTMLDivElement);
   itSupportsOthers(Paper, {});
   itSupportsMargins(Paper, {});
 

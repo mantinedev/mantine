@@ -52,7 +52,7 @@ export function OverlaysDemos() {
         <AuthenticationForm noShadow noPadding />
       </Drawer>
 
-      <Group grow align="flex-start">
+      <Group align="flex-start" spacing={30}>
         <div>
           <Text size="lg" style={{ marginBottom: 15 }}>
             Modal and Drawer

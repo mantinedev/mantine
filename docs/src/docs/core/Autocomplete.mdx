@@ -131,9 +131,9 @@ Component supports all props from [Input](/core/input/) and [InputWrapper](/core
 
 <Demo data={AutocompleteDemos.configurator} />
 
-## Get element ref
+## Get input ref
 
-You can get input ref with `elementRef` prop:
+You can get input ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -141,7 +141,7 @@ import { Autocomplete } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
-  return <Autocomplete elementRef={ref} />;
+  return <Autocomplete ref={ref} />;
 }
 ```
 

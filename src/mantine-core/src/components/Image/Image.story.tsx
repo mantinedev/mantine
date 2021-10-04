@@ -9,9 +9,9 @@ function BaseStory() {
     <div style={{ padding: 40, maxWidth: 500 }}>
       <Image
         withPlaceholder
-        radius="sm"
         src="https://images.unsplash.com/photo-1490855680410-49b201432be4?crop=entropy&cs=srgb&fm=jpg&ixid=MnwyNDF8MHwxfHJhbmRvbXx8fHx8fHx8fDE2MTk3MDQyMDI&ixlib=rb-1.2.1&q=85&dl=unsplash-bantersnaps.jpg"
         caption="Hello there"
+        radius="md"
       />
       <Image height={200} withPlaceholder radius="sm" src={null} style={{ marginTop: 20 }} />
       <Image

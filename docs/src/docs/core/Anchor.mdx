@@ -37,20 +37,3 @@ function Demo() {
   );
 }
 ```
-
-## Usage with Next Link
-
-Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
-to make Anchor and other similar components work with Next Link use `NextLink` component from @mantine/next package:
-
-```tsx
-import { NextLink } from '@mantine/next';
-
-function Demo() {
-  return (
-    <Anchor component={NextLink} href="/hello">
-      My link
-    </Anchor>
-  );
-}
-```

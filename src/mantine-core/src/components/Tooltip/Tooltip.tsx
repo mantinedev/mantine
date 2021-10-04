@@ -45,9 +45,6 @@ export interface TooltipProps
   /** Allow pointer events on tooltip, warning: this may break some animations */
   allowPointerEvents?: boolean;
 
-  /** Get wrapper ref */
-  elementRef?: React.ForwardedRef<HTMLDivElement>;
-
   /** Get tooltip ref */
   tooltipRef?: React.ForwardedRef<HTMLDivElement>;
 
@@ -80,7 +77,6 @@ export function Tooltip({
   wrapLines = false,
   allowPointerEvents = false,
   positionDependencies = [],
-  elementRef,
   tooltipRef,
   tooltipId,
   classNames,
@@ -110,12 +106,7 @@ export function Tooltip({
   };
 
   return (
-    <div
-      className={cx(classes.root, className)}
-      ref={elementRef}
-      style={{ ...style, ..._styles.root }}
-      {...others}
-    >
+    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
       <Popper
         referenceElement={referenceElement}
         transitionDuration={transitionDuration}

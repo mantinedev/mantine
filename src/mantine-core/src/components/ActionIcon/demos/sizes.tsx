@@ -13,14 +13,14 @@ const iconSizes = {
   xl: 34,
 };
 
-const getSizes = (props: Omit<ActionIconProps, 'children'>) =>
+const getSizes = (props: Omit<ActionIconProps<'button'>, 'children'>) =>
   MANTINE_SIZES.map((size) => (
     <ActionIcon key={size} size={size} {...props}>
       <ImageIcon style={{ width: iconSizes[size], height: iconSizes[size] }} />
     </ActionIcon>
   ));
 
-const getRadius = (props: Omit<ActionIconProps, 'children'>) =>
+const getRadius = (props: Omit<ActionIconProps<'button'>, 'children'>) =>
   MANTINE_SIZES.map((size) => (
     <ActionIcon key={size} radius={size} {...props}>
       <ImageIcon style={{ width: 14, height: 14 }} />

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function ChevronIcon(props: React.ComponentProps<'svg'>) {
+export function ChevronIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
       viewBox="0 0 15 15"

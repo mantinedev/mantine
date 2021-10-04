@@ -31,7 +31,9 @@ function PopoverWrapper() {
   );
 }
 
-function WrappedModal(props: Omit<React.ComponentProps<typeof Modal>, 'opened' | 'onClose'>) {
+function WrappedModal(
+  props: Omit<React.ComponentPropsWithoutRef<typeof Modal>, 'opened' | 'onClose'>
+) {
   const [opened, setOpened] = useState(false);
 
   return (

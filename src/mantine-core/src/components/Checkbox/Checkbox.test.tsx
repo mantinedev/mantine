@@ -21,7 +21,7 @@ describe('@mantine/core/Checkbox', () => {
   itSupportsStyle(Checkbox, defaultProps);
   itSupportsClassName(Checkbox, defaultProps);
   itSupportsMargins(Checkbox, defaultProps);
-  itSupportsRef(Checkbox, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsRef(Checkbox, defaultProps, HTMLInputElement);
   itSupportsStylesApi(Checkbox, defaultProps, Object.keys(CheckboxStylesApi), 'checkbox');
   checkAccessibility([
     mount(<Checkbox aria-label="Checkbox without label" />),

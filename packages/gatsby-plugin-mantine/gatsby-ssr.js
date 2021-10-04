@@ -6,6 +6,8 @@ const stylesServer = createStylesServer();
 
 export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadComponents }) => {
   const html = renderToString(bodyComponent);
-  setHeadComponents([React.createElement(ServerStyles, { html: html, server: stylesServer })]);
+  setHeadComponents([
+    React.createElement(ServerStyles, { html: html, server: stylesServer, key: 'mantine-styles' }),
+  ]);
   replaceBodyHTMLString(html);
 };

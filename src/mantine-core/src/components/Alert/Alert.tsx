@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   mergeStyles,
   DefaultProps,
@@ -36,54 +36,59 @@ export interface AlertProps
   closeButtonLabel?: string;
 }
 
-export function Alert({
-  className,
-  title,
-  children,
-  color,
-  style,
-  classNames,
-  icon,
-  styles,
-  withCloseButton,
-  ...others
-}: AlertProps) {
-  const { classes, cx } = useStyles({ color, withIcon: !!icon }, classNames, 'alert');
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+export const Alert = forwardRef<HTMLDivElement, AlertProps>(
+  (
+    {
+      className,
+      title,
+      children,
+      color,
+      style,
+      classNames,
+      icon,
+      styles,
+      withCloseButton,
+      ...others
+    }: AlertProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ color, withIcon: !!icon }, classNames, 'alert');
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
-  return (
-    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
-      <div className={classes.wrapper} style={_styles.wrapper}>
-        {icon && (
-          <div className={classes.icon} style={_styles.icon}>
-            {icon}
-          </div>
-        )}
-
-        <div className={classes.body} style={_styles.body}>
-          {title && (
-            <div className={classes.title} style={_styles.title}>
-              <span>{title}</span>
-              {withCloseButton && (
-                <CloseButton
-                  className={classes.closeButton}
-                  style={_styles.closeButton}
-                  variant="transparent"
-                  size={16}
-                  iconSize={16}
-                />
-              )}
+    return (
+      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+        <div className={classes.wrapper} style={_styles.wrapper}>
+          {icon && (
+            <div className={classes.icon} style={_styles.icon}>
+              {icon}
             </div>
           )}
 
-          <div className={classes.message} style={_styles.message}>
-            {children}
+          <div className={classes.body} style={_styles.body}>
+            {title && (
+              <div className={classes.title} style={_styles.title}>
+                <span>{title}</span>
+                {withCloseButton && (
+                  <CloseButton
+                    className={classes.closeButton}
+                    style={_styles.closeButton}
+                    variant="transparent"
+                    size={16}
+                    iconSize={16}
+                  />
+                )}
+              </div>
+            )}
+
+            <div className={classes.message} style={_styles.message}>
+              {children}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+);
 
 Alert.displayName = '@mantine/core/Alert';

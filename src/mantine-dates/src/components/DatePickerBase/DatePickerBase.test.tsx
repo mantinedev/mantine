@@ -26,7 +26,7 @@ describe('@mantine/dates/DatePickerBase', () => {
   itSupportsClassName(DatePickerBase, defaultProps);
   itSupportsStyle(DatePickerBase, defaultProps);
   itSupportsMargins(DatePickerBase, defaultProps);
-  itSupportsRef(DatePickerBase, defaultProps, HTMLButtonElement, 'elementRef');
+  itSupportsRef(DatePickerBase, defaultProps, HTMLButtonElement);
 
   it('passes __staticSelector prop to InputWrapper and Input components', () => {
     const element = shallow(<DatePickerBase {...defaultProps} __staticSelector="test-selector" />);

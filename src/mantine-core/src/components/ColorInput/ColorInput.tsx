@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import {
   mergeStyles,
@@ -76,159 +76,165 @@ const ARROW_OFFSET = {
   xl: 25,
 };
 
-export function ColorInput({
-  label,
-  description,
-  error,
-  required,
-  wrapperProps,
-  size = 'sm',
-  format = 'hex',
-  onChange,
-  onFocus,
-  onBlur,
-  value,
-  defaultValue,
-  classNames,
-  styles,
-  disallowInput = false,
-  fixOnBlur = true,
-  withPreview = true,
-  swatchesPerRow = 10,
-  withPicker = true,
-  icon,
-  transition = 'pop-top-left',
-  id,
-  dropdownZIndex = 1,
-  transitionDuration = 0,
-  transitionTimingFunction,
-  className,
-  style,
-  swatches,
-  ...others
-}: ColorInputProps) {
-  const { classes } = useStyles(null, classNames, 'color-input');
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const uuid = useUuid(id);
-  const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
-  const [dropdownOpened, setDropdownOpened] = useState(false);
-  const [lastValidValue, setLastValidValue] = useState('');
-  const [_value, setValue] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: '',
-    rule: (val) => !!val && val.trim().length > 0,
-    onChange,
-  });
+export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
+  (
+    {
+      label,
+      description,
+      error,
+      required,
+      wrapperProps,
+      size = 'sm',
+      format = 'hex',
+      onChange,
+      onFocus,
+      onBlur,
+      value,
+      defaultValue,
+      classNames,
+      styles,
+      disallowInput = false,
+      fixOnBlur = true,
+      withPreview = true,
+      swatchesPerRow = 10,
+      withPicker = true,
+      icon,
+      transition = 'pop-top-left',
+      id,
+      dropdownZIndex = 1,
+      transitionDuration = 0,
+      transitionTimingFunction,
+      className,
+      style,
+      swatches,
+      ...others
+    }: ColorInputProps,
+    ref
+  ) => {
+    const { classes } = useStyles(null, classNames, 'color-input');
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const uuid = useUuid(id);
+    const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
+    const [dropdownOpened, setDropdownOpened] = useState(false);
+    const [lastValidValue, setLastValidValue] = useState('');
+    const [_value, setValue] = useUncontrolled({
+      value,
+      defaultValue,
+      finalValue: '',
+      rule: (val) => !!val && val.trim().length > 0,
+      onChange,
+    });
 
-  const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    typeof onFocus === 'function' && onFocus(event);
-    setDropdownOpened(true);
-  };
+    const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+      typeof onFocus === 'function' && onFocus(event);
+      setDropdownOpened(true);
+    };
 
-  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    typeof onBlur === 'function' && onBlur(event);
-    setDropdownOpened(false);
-    fixOnBlur && setValue(lastValidValue);
-  };
+    const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+      typeof onBlur === 'function' && onBlur(event);
+      setDropdownOpened(false);
+      fixOnBlur && setValue(lastValidValue);
+    };
 
-  useEffect(() => {
-    if (isColorValid(_value)) {
-      setLastValidValue(_value);
-    }
-  }, [_value]);
+    useEffect(() => {
+      if (isColorValid(_value)) {
+        setLastValidValue(_value);
+      }
+    }, [_value]);
 
-  useDidUpdate(() => {
-    if (isColorValid(_value)) {
-      setValue(convertHsvaTo(format, parseColor(_value)));
-    }
-  }, [format]);
+    useDidUpdate(() => {
+      if (isColorValid(_value)) {
+        setValue(convertHsvaTo(format, parseColor(_value)));
+      }
+    }, [format]);
 
-  return (
-    <InputWrapper
-      label={label}
-      description={description}
-      error={error}
-      required={required}
-      classNames={classNames}
-      styles={styles}
-      size={size}
-      id={uuid}
-      className={className}
-      style={mergedStyles}
-      __staticSelector="color-input"
-      {...wrapperProps}
-    >
-      <div ref={setReferenceElement}>
-        <Input<'input'>
-          {...rest}
-          __staticSelector="color-input"
-          id={uuid}
-          onFocus={handleInputFocus}
-          onBlur={handleInputBlur}
-          spellCheck={false}
-          size={size}
-          value={_value}
-          onChange={(event) => setValue(event.currentTarget.value)}
-          invalid={!!error}
-          required={required}
-          icon={
-            icon ||
-            (withPreview ? (
-              <ColorSwatch
-                color={isColorValid(_value) ? _value : '#fff'}
-                size={getSizeValue({ size, sizes: SWATCH_SIZES })}
-              />
-            ) : null)
-          }
-          readOnly={disallowInput}
-          classNames={classNames}
-          styles={{
-            ...styles,
-            input: { ...styles?.input, cursor: disallowInput ? 'pointer' : undefined },
-          }}
-        />
-      </div>
-
-      <Popper
-        referenceElement={referenceElement}
-        transitionDuration={transitionDuration}
-        transitionTimingFunction={transitionTimingFunction}
-        transition={transition}
-        mounted={dropdownOpened}
-        position="bottom"
-        placement="start"
-        gutter={5}
-        withArrow
-        arrowSize={3}
-        zIndex={dropdownZIndex}
-        arrowClassName={classes.arrow}
-        arrowStyle={{ ..._styles.arrow, left: getSizeValue({ size, sizes: ARROW_OFFSET }) }}
+    return (
+      <InputWrapper
+        label={label}
+        description={description}
+        error={error}
+        required={required}
+        classNames={classNames}
+        styles={styles}
+        size={size}
+        id={uuid}
+        className={className}
+        style={mergedStyles}
+        __staticSelector="color-input"
+        {...wrapperProps}
       >
-        <div style={{ pointerEvents: 'all' }}>
-          <Paper
-            shadow="sm"
-            padding={size}
-            className={classes.dropdownBody}
-            onMouseDown={(event) => event.preventDefault()}
-          >
-            <ColorPicker
-              __staticSelector="color-input"
-              value={_value}
-              onChange={setValue}
-              format={format}
-              swatches={swatches}
-              swatchesPerRow={swatchesPerRow}
-              withPicker={withPicker}
-              size={size}
-              focusable={false}
-            />
-          </Paper>
+        <div ref={setReferenceElement}>
+          <Input<'input'>
+            {...rest}
+            ref={ref}
+            __staticSelector="color-input"
+            id={uuid}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            spellCheck={false}
+            size={size}
+            value={_value}
+            onChange={(event) => setValue(event.currentTarget.value)}
+            invalid={!!error}
+            required={required}
+            icon={
+              icon ||
+              (withPreview ? (
+                <ColorSwatch
+                  color={isColorValid(_value) ? _value : '#fff'}
+                  size={getSizeValue({ size, sizes: SWATCH_SIZES })}
+                />
+              ) : null)
+            }
+            readOnly={disallowInput}
+            classNames={classNames}
+            styles={{
+              ...styles,
+              input: { ...styles?.input, cursor: disallowInput ? 'pointer' : undefined },
+            }}
+          />
         </div>
-      </Popper>
-    </InputWrapper>
-  );
-}
+
+        <Popper
+          referenceElement={referenceElement}
+          transitionDuration={transitionDuration}
+          transitionTimingFunction={transitionTimingFunction}
+          transition={transition}
+          mounted={dropdownOpened}
+          position="bottom"
+          placement="start"
+          gutter={5}
+          withArrow
+          arrowSize={3}
+          zIndex={dropdownZIndex}
+          arrowClassName={classes.arrow}
+          arrowStyle={{ ..._styles.arrow, left: getSizeValue({ size, sizes: ARROW_OFFSET }) }}
+        >
+          <div style={{ pointerEvents: 'all' }}>
+            <Paper<'div'>
+              shadow="sm"
+              padding={size}
+              className={classes.dropdownBody}
+              onMouseDown={(event) => event.preventDefault()}
+            >
+              <ColorPicker
+                __staticSelector="color-input"
+                value={_value}
+                onChange={setValue}
+                format={format}
+                swatches={swatches}
+                swatchesPerRow={swatchesPerRow}
+                withPicker={withPicker}
+                size={size}
+                focusable={false}
+              />
+            </Paper>
+          </div>
+        </Popper>
+      </InputWrapper>
+    );
+  }
+);
 
 ColorInput.displayName = '@mantine/core/ColorInput';

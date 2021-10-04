@@ -101,26 +101,3 @@ export default class _Document extends Document {
   };
 }
 ```
-
-## NextLink component
-
-Some Mantine components support changing root element via `component` prop (e.g. [Button](/core/button/) and [ActionIcon](/core/action-icon/)).
-In order to make this prop work correctly with Next Link component use `NextLink` wrapper from `@mantine/next` package:
-
-```tsx
-import { Button, ActionIcon } from '@mantine/core';
-import { NextLink } from '@mantine/next';
-
-function Demo() {
-  return (
-    <>
-      <Button component={NextLink} href="/hello">
-        My next link button
-      </Button>
-      <ActionIcon component={NextLink} href="/hello">
-        $
-      </ActionIcon>
-    </>
-  );
-}
-```

@@ -4,6 +4,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Mark } from './Mark';
 
@@ -17,6 +18,7 @@ describe('@mantine/core/Mark', () => {
   itSupportsOthers(Mark, defaultProps);
   itSupportsStyle(Mark, defaultProps);
   itSupportsMargins(Mark, defaultProps);
+  itSupportsRef(Mark, defaultProps, HTMLElement);
 
   it('has correct displayName', () => {
     expect(Mark.displayName).toEqual('@mantine/core/Mark');

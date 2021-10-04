@@ -3,7 +3,7 @@ import { MANTINE_COLORS } from '@mantine/styles';
 import { Badge, BadgeProps } from '../Badge';
 import { Group } from '../../Group/Group';
 
-const getThemes = (props?: BadgeProps) =>
+const getThemes = (props?: BadgeProps<'div'>) =>
   MANTINE_COLORS.map((color) => (
     <Badge key={color} color={color} {...props}>
       {color}
