@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React, { Children, forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, useUuid, useExtractedMargins } from '@mantine/styles';
 import useStyles from './Grid.styles';
 
@@ -22,31 +22,36 @@ export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<
   columns?: number;
 }
 
-export function Grid({
-  gutter = 'md',
-  children,
-  grow = false,
-  justify = 'flex-start',
-  align = 'stretch',
-  style,
-  columns = 12,
-  className,
-  id,
-  ...others
-}: GridProps) {
-  const uuid = useUuid(id);
-  const { classes, cx } = useStyles({ gutter, justify, align }, null, 'grid');
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+export const Grid = forwardRef<HTMLDivElement, GridProps>(
+  (
+    {
+      gutter = 'md',
+      children,
+      grow = false,
+      justify = 'flex-start',
+      align = 'stretch',
+      style,
+      columns = 12,
+      className,
+      id,
+      ...others
+    }: GridProps,
+    ref
+  ) => {
+    const uuid = useUuid(id);
+    const { classes, cx } = useStyles({ gutter, justify, align }, null, 'grid');
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
-  const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
-    React.cloneElement(col, { gutter, grow, columns, key: index, id: uuid })
-  );
+    const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
+      React.cloneElement(col, { gutter, grow, columns, key: index, id: uuid })
+    );
 
-  return (
-    <div style={mergedStyles} className={cx(classes.grid, className)} {...rest}>
-      {cols}
-    </div>
-  );
-}
+    return (
+      <div style={mergedStyles} className={cx(classes.grid, className)} ref={ref} {...rest}>
+        {cols}
+      </div>
+    );
+  }
+);
 
 Grid.displayName = '@mantine/core/Grid';

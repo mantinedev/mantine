@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Center } from './Center';
 
@@ -15,6 +16,7 @@ describe('@mantine/core/Center', () => {
   itSupportsStyle(Center, {});
   itSupportsOthers(Center, {});
   itSupportsMargins(Center, {});
+  itSupportsRef(Center, {}, HTMLDivElement);
 
   it('supports inline prop', () => {
     const inline = shallow(<Center inline>test</Center>);

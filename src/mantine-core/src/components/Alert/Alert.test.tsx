@@ -8,6 +8,7 @@ import {
   itRendersChildren,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Text } from '../Text/Text';
 import { Alert } from './Alert';
@@ -27,6 +28,8 @@ describe('@mantine/core/Alert', () => {
   itSupportsStyle(Alert, defaultProps);
   itSupportsMargins(Alert, defaultProps);
   itRendersChildren(Alert, {});
+  itSupportsRef(Alert, {}, HTMLDivElement);
+
   checkAccessibility([
     mount(
       <Alert title="Error happened" color="red">

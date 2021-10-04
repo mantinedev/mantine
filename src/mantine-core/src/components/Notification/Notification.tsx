@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   mergeStyles,
   DefaultProps,
@@ -41,66 +41,77 @@ export interface NotificationProps
   closeButtonProps?: React.ComponentPropsWithoutRef<'button'> & { [key: string]: any };
 }
 
-export function Notification({
-  className,
-  style,
-  color = 'blue',
-  loading = false,
-  disallowClose = false,
-  title,
-  icon,
-  children,
-  onClose,
-  closeButtonProps,
-  classNames,
-  styles,
-  ...others
-}: NotificationProps) {
-  const { classes, cx } = useStyles({ color, disallowClose }, classNames, 'notification');
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
-  const withIcon = icon || loading;
+export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
+  (
+    {
+      className,
+      style,
+      color = 'blue',
+      loading = false,
+      disallowClose = false,
+      title,
+      icon,
+      children,
+      onClose,
+      closeButtonProps,
+      classNames,
+      styles,
+      ...others
+    }: NotificationProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ color, disallowClose }, classNames, 'notification');
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const withIcon = icon || loading;
 
-  return (
-    <div
-      className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
-      role="alert"
-      style={{ ...mergedStyles, ...(withIcon ? _styles.withIcon : null) }}
-      {...rest}
-    >
-      {icon && !loading && (
-        <div className={classes.icon} style={_styles.icon}>
-          {icon}
-        </div>
-      )}
-
-      {loading && (
-        <Loader size={28} color={color} className={classes.loader} style={_styles.loader} />
-      )}
-
-      <div className={classes.body} style={_styles.body}>
-        {title && (
-          <Text className={classes.title} size="sm" weight={500} style={_styles.title}>
-            {title}
-          </Text>
+    return (
+      <div
+        className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
+        role="alert"
+        style={{ ...mergedStyles, ...(withIcon ? _styles.withIcon : null) }}
+        ref={ref}
+        {...rest}
+      >
+        {icon && !loading && (
+          <div className={classes.icon} style={_styles.icon}>
+            {icon}
+          </div>
         )}
 
-        <Text color="dimmed" className={classes.description} size="sm" style={_styles.description}>
-          {children}
-        </Text>
-      </div>
+        {loading && (
+          <Loader size={28} color={color} className={classes.loader} style={_styles.loader} />
+        )}
 
-      {!disallowClose && (
-        <CloseButton
-          {...closeButtonProps}
-          iconSize={16}
-          color="gray"
-          onClick={onClose}
-          variant="hover"
-        />
-      )}
-    </div>
-  );
-}
+        <div className={classes.body} style={_styles.body}>
+          {title && (
+            <Text className={classes.title} size="sm" weight={500} style={_styles.title}>
+              {title}
+            </Text>
+          )}
+
+          <Text
+            color="dimmed"
+            className={classes.description}
+            size="sm"
+            style={_styles.description}
+          >
+            {children}
+          </Text>
+        </div>
+
+        {!disallowClose && (
+          <CloseButton
+            {...closeButtonProps}
+            iconSize={16}
+            color="gray"
+            onClick={onClose}
+            variant="hover"
+          />
+        )}
+      </div>
+    );
+  }
+);
 
 Notification.displayName = '@mantine/core/Notification';

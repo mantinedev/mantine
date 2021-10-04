@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 import { useExtractedMargins } from '@mantine/styles';
 
@@ -10,21 +10,24 @@ export interface CenterProps extends React.ComponentPropsWithoutRef<'div'> {
   inline?: boolean;
 }
 
-export function Center({ style, className, inline = false, ...others }: CenterProps) {
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+export const Center = forwardRef<HTMLDivElement, CenterProps>(
+  ({ style, className, inline = false, ...others }: CenterProps, ref) => {
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
-  return (
-    <div
-      {...rest}
-      className={clsx('mantine-center', className)}
-      style={{
-        display: inline ? 'inline-flex' : 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        ...mergedStyles,
-      }}
-    />
-  );
-}
+    return (
+      <div
+        {...rest}
+        ref={ref}
+        className={clsx('mantine-center', className)}
+        style={{
+          display: inline ? 'inline-flex' : 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          ...mergedStyles,
+        }}
+      />
+    );
+  }
+);
 
 Center.displayName = '@mantine/core/Center';

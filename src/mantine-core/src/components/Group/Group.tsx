@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React, { Children, forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
 import useStyles, { GroupPosition } from './Group.styles';
 
@@ -25,48 +25,53 @@ export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef
   withGutter?: boolean;
 }
 
-export function Group({
-  className,
-  style,
-  position = 'left',
-  align,
-  children,
-  noWrap = false,
-  grow = false,
-  spacing = 'md',
-  direction = 'row',
-  withGutter = false,
-  ...others
-}: GroupProps) {
-  const count = Children.count(children);
-  const { classes, cx } = useStyles(
+export const Group = forwardRef<HTMLDivElement, GroupProps>(
+  (
     {
+      className,
+      style,
+      position = 'left',
       align,
-      grow,
-      noWrap,
-      spacing,
-      position,
-      direction,
-      count,
-      withGutter,
-    },
-    null,
-    'group'
-  );
+      children,
+      noWrap = false,
+      grow = false,
+      spacing = 'md',
+      direction = 'row',
+      withGutter = false,
+      ...others
+    }: GroupProps,
+    ref
+  ) => {
+    const count = Children.count(children);
+    const { classes, cx } = useStyles(
+      {
+        align,
+        grow,
+        noWrap,
+        spacing,
+        position,
+        direction,
+        count,
+        withGutter,
+      },
+      null,
+      'group'
+    );
 
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
-  const items = (Children.toArray(children) as React.ReactElement[]).map((child) =>
-    React.cloneElement(child, {
-      className: cx(classes.child, child.props.className),
-    })
-  );
+    const items = (Children.toArray(children) as React.ReactElement[]).map((child) =>
+      React.cloneElement(child, {
+        className: cx(classes.child, child.props.className),
+      })
+    );
 
-  return (
-    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
-      {items}
-    </div>
-  );
-}
+    return (
+      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+        {items}
+      </div>
+    );
+  }
+);
 
 Group.displayName = '@mantine/core/Group';
