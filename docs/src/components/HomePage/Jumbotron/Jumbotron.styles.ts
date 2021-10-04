@@ -30,7 +30,7 @@ export default createStyles((theme) => ({
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
     [BREAKPOINT]: {
-      fontSize: 38,
+      fontSize: 40,
       lineHeight: 1.2,
     },
   },
