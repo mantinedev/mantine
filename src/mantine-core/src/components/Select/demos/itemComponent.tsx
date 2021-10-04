@@ -33,10 +33,11 @@ const data = [
   },
 ];
 
+// !important: Forwarding ref is required
 const SelectItem = forwardRef(
   ({ image, label, description, ...others }, ref) => (
     <div ref={ref} {...others}>
-      <Group>
+      <Group noWrap>
         <Avatar src={image} />
 
         <div>
@@ -106,7 +107,7 @@ interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
 const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
   ({ image, label, description, ...others }: ItemProps, ref) => (
     <div ref={ref} {...others}>
-      <Group>
+      <Group noWrap>
         <Avatar src={image} />
 
         <div>
