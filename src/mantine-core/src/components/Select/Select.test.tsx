@@ -32,7 +32,7 @@ describe('@mantine/core/Select', () => {
   itSupportsClassName(Select, defaultProps);
   itSupportsStyle(Select, defaultProps);
   itSupportsMargins(Select, defaultProps);
-  itSupportsRef(Select, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsRef(Select, defaultProps, HTMLInputElement);
 
   checkAccessibility([
     mount(<Select {...defaultProps} />),

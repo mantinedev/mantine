@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Group, Avatar, Text } from '../../../index';
 import { Select } from '../Select';
 
@@ -33,9 +33,9 @@ const data = [
   },
 ];
 
-function SelectItem({ image, label, description, elementRef, ...others }) {
-  return (
-    <div ref={elementRef} {...others}>
+const SelectItem = forwardRef(
+  ({ image, label, description, ...others }, ref) => (
+    <div ref={ref} {...others}>
       <Group>
         <Avatar src={image} />
 
@@ -47,8 +47,8 @@ function SelectItem({ image, label, description, elementRef, ...others }) {
         </div>
       </Group>
     </div>
-  );
-}
+  )
+);
 
 function Demo() {
   return (
@@ -101,12 +101,11 @@ interface ItemProps extends React.ComponentProps<'div'> {
   image: string;
   label: string;
   description: string;
-  elementRef: any;
 }
 
-function SelectItem({ image, label, description, elementRef, ...others }: ItemProps) {
-  return (
-    <div ref={elementRef} {...others}>
+const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
+  ({ image, label, description, ...others }: ItemProps, ref) => (
+    <div ref={ref} {...others}>
       <Group>
         <Avatar src={image} />
 
@@ -118,8 +117,8 @@ function SelectItem({ image, label, description, elementRef, ...others }: ItemPr
         </div>
       </Group>
     </div>
-  );
-}
+  )
+);
 
 export function CustomSelectDemo(props: any) {
   return (

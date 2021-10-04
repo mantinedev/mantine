@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { itSupportsRef } from '@mantine/tests';
 import { Transition } from '../../Transition';
 import { SelectDropdown } from './SelectDropdown';
 
@@ -14,10 +15,11 @@ const defaultProps = {
   children: null,
   __staticSelector: 'test-selector',
   size: 'xs' as const,
-  elementRef: () => {},
 };
 
 describe('@mantine/core/SelectDropdown', () => {
+  itSupportsRef(SelectDropdown, defaultProps, HTMLDivElement);
+
   it('passes mounted transition, duration and timingFunction props to Transition component', () => {
     const props = shallow(<SelectDropdown {...defaultProps} />)
       .find(Transition)

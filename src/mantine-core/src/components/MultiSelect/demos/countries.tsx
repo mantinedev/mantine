@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import Flag from 'react-flagpack';
 import { useMantineTheme } from '@mantine/styles';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
@@ -34,18 +34,16 @@ function Value({ value, label, onRemove, classNames, ...others }) {
   );
 }
 
-function Item({ label, value, elementRef, ...others }) {
-  return (
-    <div ref={elementRef} {...others}>
-      <div style={{ display: 'flex' }}>
-        <div style={{ marginRight: 10 }}>
-          <Flag code={value} size="S" />
-        </div>
-        <div>{label}</div>
+const Item = forwardRef(({ label, value, ...others }, ref) => (
+  <div ref={ref} {...others}>
+    <div style={{ display: 'flex' }}>
+      <div style={{ marginRight: 10 }}>
+        <Flag code={value} size="S" />
       </div>
+      <div>{label}</div>
     </div>
-  );
-}
+  </div>
+));
 
 export function CountriesSelect() {
   return (
@@ -91,18 +89,16 @@ function Value({ value, label, onRemove, classNames, ...others }: any) {
   );
 }
 
-function Item({ label, value, elementRef, ...others }: any) {
-  return (
-    <div ref={elementRef} {...others}>
-      <div style={{ display: 'flex' }}>
-        <div style={{ marginRight: 10 }}>
-          <Flag code={value} size="S" />
-        </div>
-        <div>{label}</div>
+const Item = forwardRef<HTMLDivElement, any>(({ label, value, ...others }: any, ref) => (
+  <div ref={ref} {...others}>
+    <div style={{ display: 'flex' }}>
+      <div style={{ marginRight: 10 }}>
+        <Flag code={value} size="S" />
       </div>
+      <div>{label}</div>
     </div>
-  );
-}
+  </div>
+));
 
 export function CountriesSelect(props: Partial<MultiSelectProps>) {
   return (

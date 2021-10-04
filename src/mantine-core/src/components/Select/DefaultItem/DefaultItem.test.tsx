@@ -1,14 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
+import {
+  itSupportsClassName,
+  itSupportsOthers,
+  itSupportsStyle,
+  itSupportsRef,
+} from '@mantine/tests';
 import { DefaultItem } from './DefaultItem';
 
-const defaultProps = { label: 'test', elementRef: () => {} };
+const defaultProps = { label: 'test' };
 
 describe('@mantine/core/Autocomplete/DefaultItem', () => {
   itSupportsClassName(DefaultItem, defaultProps);
   itSupportsOthers(DefaultItem, defaultProps);
   itSupportsStyle(DefaultItem, defaultProps);
+  itSupportsRef(DefaultItem, defaultProps, HTMLDivElement);
 
   it('renders given label as children', () => {
     const element = shallow(<DefaultItem {...defaultProps} label="test" />);

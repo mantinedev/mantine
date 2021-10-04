@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { mergeStyles, DefaultProps, MantineShadow, ClassNames } from '@mantine/styles';
 import { Transition, MantineTransition } from '../../Transition';
 import { Paper } from '../../Paper';
@@ -16,51 +16,54 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   maxDropdownHeight?: number | string;
   children: React.ReactNode;
   __staticSelector: string;
-  elementRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
-export function SelectDropdown({
-  mounted,
-  transition,
-  transitionDuration,
-  transitionTimingFunction,
-  uuid,
-  shadow,
-  maxDropdownHeight,
-  children,
-  classNames,
-  styles,
-  elementRef,
-  __staticSelector,
-}: SelectDropdownProps) {
-  const { classes } = useStyles(null, classNames, __staticSelector);
-  const _styles = mergeStyles(classes, styles);
+export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
+  (
+    {
+      mounted,
+      transition,
+      transitionDuration,
+      transitionTimingFunction,
+      uuid,
+      shadow,
+      maxDropdownHeight,
+      children,
+      classNames,
+      styles,
+      __staticSelector,
+    }: SelectDropdownProps,
+    ref
+  ) => {
+    const { classes } = useStyles(null, classNames, __staticSelector);
+    const _styles = mergeStyles(classes, styles);
 
-  return (
-    <Transition
-      mounted={mounted}
-      transition={transition}
-      duration={transitionDuration}
-      timingFunction={transitionTimingFunction}
-    >
-      {(transitionStyles) => (
-        <div style={{ position: 'relative' }}>
-          <Paper
-            id={`${uuid}-items`}
-            aria-labelledby={`${uuid}-label`}
-            role="listbox"
-            className={classes.dropdown}
-            shadow={shadow}
-            ref={elementRef}
-            style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
-            onMouseDown={(event) => event.preventDefault()}
-          >
-            {children}
-          </Paper>
-        </div>
-      )}
-    </Transition>
-  );
-}
+    return (
+      <Transition
+        mounted={mounted}
+        transition={transition}
+        duration={transitionDuration}
+        timingFunction={transitionTimingFunction}
+      >
+        {(transitionStyles) => (
+          <div style={{ position: 'relative' }}>
+            <Paper
+              id={`${uuid}-items`}
+              aria-labelledby={`${uuid}-label`}
+              role="listbox"
+              className={classes.dropdown}
+              shadow={shadow}
+              ref={ref}
+              style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
+              onMouseDown={(event) => event.preventDefault()}
+            >
+              {children}
+            </Paper>
+          </div>
+        )}
+      </Transition>
+    );
+  }
+);
 
 SelectDropdown.displayName = '@mantine/core/SelectDropdown';

@@ -58,7 +58,7 @@ export function SelectItems({
         role="option"
         tabIndex={-1}
         aria-selected={hovered === index}
-        elementRef={(node: HTMLDivElement) => {
+        ref={(node: HTMLDivElement) => {
           if (itemsRefs && itemsRefs.current) {
             // eslint-disable-next-line no-param-reassign
             itemsRefs.current[item.value] = node;
