@@ -21,7 +21,9 @@ const guides = {
 };
 
 export function Guides({ dependencies }: GuidesProps) {
-  const [selected, setSelected] = useState('cra');
+  const initialGuide =
+    typeof window !== 'undefined' ? window.location.search?.replace('?g=', '') : 'cra';
+  const [selected, setSelected] = useState(initialGuide in guides ? initialGuide : 'cra');
   const { classes, cx } = useStyles();
   const Guide = guides[selected];
 
