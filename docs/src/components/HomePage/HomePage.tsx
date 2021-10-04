@@ -7,6 +7,7 @@ import { Footer } from '../Footer/Footer';
 // import { Explore } from './Explore/Explore';
 import { Community } from './Community/Community';
 import { Customize } from './Customize/Customize';
+import { Usage } from './Usage/Usage';
 import { FeaturesSection } from './FeaturesSection/FeaturesSection';
 
 export function HomePage() {
@@ -18,6 +19,7 @@ export function HomePage() {
         <Jumbotron />
         <FeaturesSection />
         <Customize />
+        <Usage />
         {/* <Features /> */}
         {/* <Explore /> */}
         <Community />
