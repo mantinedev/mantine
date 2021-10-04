@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Avatar, Group, Text } from '../../../index';
 import { MultiSelect } from '../MultiSelect';
 
 const code = `
+import { forwardRef } from 'react';
 import { Group, Avatar, Text, MultiSelect } from '@mantine/core';
 
 const data = [
@@ -11,9 +12,9 @@ const data = [
   { value: 'amy@wong.cn', image: 'image-link', label: 'amy@wong.cn', name: 'Amy Wong' },
 ];
 
-function SelectItem({ image, label, name, ...others }) {
-  return (
-    <div {...others}>
+const SelectItem = forwardRef(
+  ({ image, label, name, ...others }, ref) => (
+    <div ref={ref} {...others}>
       <Group style={{ cursor: 'pointer' }}>
         <Avatar src={image} radius="xl" />
 
@@ -25,8 +26,8 @@ function SelectItem({ image, label, name, ...others }) {
         </div>
       </Group>
     </div>
-  );
-}
+  )
+);
 
 function Demo() {
   return (
@@ -70,9 +71,9 @@ interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
   name: string;
 }
 
-function SelectItem({ image, label, name, ...others }: ItemProps) {
-  return (
-    <div {...others}>
+const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
+  ({ image, label, name, ...others }: ItemProps, ref) => (
+    <div ref={ref} {...others}>
       <Group style={{ cursor: 'pointer' }}>
         <Avatar src={image} radius="xl" />
 
@@ -84,8 +85,8 @@ function SelectItem({ image, label, name, ...others }: ItemProps) {
         </div>
       </Group>
     </div>
-  );
-}
+  )
+);
 
 function Demo() {
   return (

@@ -392,6 +392,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
                 placeholder={_value.length === 0 ? placeholder : undefined}
                 disabled={disabled}
                 data-mantine-stop-propagation={dropdownOpened}
+                autoComplete="off"
                 {...rest}
               />
             </div>
