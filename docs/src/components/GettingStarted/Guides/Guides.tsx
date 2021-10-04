@@ -40,11 +40,12 @@ export function Guides({ dependencies }: GuidesProps) {
 
   return (
     <div>
-      <Title order={2}>And get started with</Title>
+      <Title order={2} mb="lg">
+        And get started with
+      </Title>
 
       <SimpleGrid
         cols={5}
-        mt={30}
         breakpoints={[
           { maxWidth: 1100, cols: 3 },
           { maxWidth: 755, cols: 1 },
