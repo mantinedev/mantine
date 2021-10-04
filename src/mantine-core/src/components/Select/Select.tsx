@@ -150,7 +150,9 @@ export function Select({
   const inputRef = useRef<HTMLInputElement>();
   const dropdownRef = useRef<HTMLDivElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
+  const [creatableDataValue, setCreatableDataValue] = useState<string | undefined>(undefined);
   const uuid = useUuid(id);
+
   const isCreatable = creatable && typeof getCreateLabel === 'function';
   let createLabel = null;
 
@@ -159,7 +161,7 @@ export function Select({
   );
 
   /*sorting data by groups while maintaining the insertion order
-  for consistent behaviour on keydown events. */
+  for consistent behaviour on keypress events. */
   const sortedData = groupSortData({ data: formattedData });
 
   const [_value, handleChange, inputMode] = useUncontrolled({
@@ -193,7 +195,7 @@ export function Select({
 
     if (newSelectedValue) {
       handleSearchChange(newSelectedValue.label);
-    } else if (!creatable) {
+    } else if (!isCreatable) {
       handleSearchChange('');
     }
   }, [_value]);
@@ -201,12 +203,13 @@ export function Select({
   const handleItemSelect = (item: SelectItem) => {
     handleChange(item.value);
     if (item.creatable) {
+      setCreatableDataValue(item.value);
       typeof onCreate === 'function' && onCreate(item.value);
     }
-    setHovered(-1);
     if (inputMode === 'uncontrolled') {
       handleSearchChange(item.label);
     }
+    setHovered(-1);
     setTimeout(() => setDropdownOpened(false));
     inputRef.current.focus();
   };
@@ -216,6 +219,7 @@ export function Select({
     searchable,
     limit,
     searchValue: inputValue,
+    creatable: !!creatableDataValue && creatableDataValue === inputValue,
     filter,
   });
 
@@ -307,7 +311,7 @@ export function Select({
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onBlur === 'function' && onBlur(event);
     const selected = sortedData.find((item) => item.value === _value);
-    handleSearchChange(selected?.label || '');
+    if (!isCreatable) handleSearchChange(selected?.label || '');
     setDropdownOpened(false);
   };
 
@@ -414,7 +418,7 @@ export function Select({
             itemComponent={itemComponent}
             size={size}
             nothingFound={nothingFound}
-            creatable={creatable && !!createLabel}
+            creatable={isCreatable && !!createLabel}
             createLabel={createLabel}
           />
         </SelectDropdown>
