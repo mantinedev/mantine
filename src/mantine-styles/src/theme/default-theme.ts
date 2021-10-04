@@ -11,7 +11,7 @@ export const DEFAULT_THEME: MantineTheme = {
   black: '#000',
   transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21)',
   colors: DEFAULT_COLORS,
-  lineHeight: 1.4,
+  lineHeight: 1.55,
   fontFamily:
     '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
   fontFamilyMonospace:
