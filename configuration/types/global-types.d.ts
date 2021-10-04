@@ -66,7 +66,7 @@ interface Frontmatter {
   pageTitle: string;
   license: string;
   styles: string[];
-  group: string;
+  group?: string;
   order: number;
   slug: string;
   category: string;
