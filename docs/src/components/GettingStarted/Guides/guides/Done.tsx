@@ -12,11 +12,12 @@ export function MyApp() {
 
 export function Done() {
   return (
-    <div>
-      <Text weight={700} mt={20} mb={10}>
-        You are ready to build your application with Mantine!
+    <>
+      <Text weight={500} mt={30} mb={5} size="lg">
+        All done!
       </Text>
+
       <Prism language="tsx">{code}</Prism>
-    </div>
+    </>
   );
 }

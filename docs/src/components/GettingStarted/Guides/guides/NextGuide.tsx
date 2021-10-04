@@ -10,7 +10,7 @@ interface CraGuideProps {
 
 export function NextGuide({ dependencies }: CraGuideProps) {
   return (
-    <div>
+    <>
       <Button
         component="a"
         href="https://github.com/mantinedev/mantine-next-template"
@@ -18,28 +18,24 @@ export function NextGuide({ dependencies }: CraGuideProps) {
         size="xl"
         fullWidth
         variant="default"
-        mb={25}
+        mb={30}
       >
         Get stared with Next.js Github template
       </Button>
 
-      <Text weight={700} mb={15}>
+      <Text weight={500} mb={5} size="lg">
         Or init new application
       </Text>
 
       <Prism language="bash">npx create-next-app --ts</Prism>
 
-      <Text weight={700} mt={30}>
-        Install dependencies
-      </Text>
-
       <Installation dependencies={dependencies} />
 
-      <Text weight={700} mt={30} mb={5}>
-        Next steps
+      <Text weight={500} mt={30} mb={5} size="lg">
+        And follow Next.js guide
       </Text>
 
       <GatsbyLink to="/theming/next/">Follow Next.js getting started guide</GatsbyLink>
-    </div>
+    </>
   );
 }

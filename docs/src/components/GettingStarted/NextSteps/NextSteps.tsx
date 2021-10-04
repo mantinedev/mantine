@@ -22,12 +22,13 @@ export function NextSteps() {
             {item.title}
           </Text>
         </Group>
-        <Text size="sm" color="dimmed" mt="xs" style={{ lineHeight: 1.6 }}>
+        <Text size="sm" color="dimmed" mt="md" style={{ lineHeight: 1.6 }}>
           {item.description}
         </Text>
       </LinkComponent>
     );
   });
+
   return (
     <div className={classes.wrapper}>
       <Title order={2}>Next steps</Title>

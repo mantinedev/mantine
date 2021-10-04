@@ -9,19 +9,23 @@ interface InstallationProps {
 export function Installation({ dependencies }: InstallationProps) {
   return (
     <>
-      <div style={{ marginTop: 15 }}>
-        <Text mb={5}>Install with yarn</Text>
-        <Prism language="bash">
-          {`yarn add ${dependencies || '@mantine/core @mantine/hooks'}`}
-        </Prism>
-      </div>
+      <Text weight={500} size="lg" mt={30}>
+        Install dependencies
+      </Text>
 
-      <div style={{ marginTop: 15 }}>
-        <Text mb={5}>Install with npm</Text>
-        <Prism language="bash">
-          {`npm install ${dependencies || '@mantine/core @mantine/hooks'}`}
-        </Prism>
-      </div>
+      <Text mb={5} mt={5} size="sm">
+        With yarn
+      </Text>
+
+      <Prism language="bash">{`yarn add ${dependencies || '@mantine/core @mantine/hooks'}`}</Prism>
+
+      <Text mb={5} mt={15} size="sm">
+        With npm
+      </Text>
+
+      <Prism language="bash">
+        {`npm install ${dependencies || '@mantine/core @mantine/hooks'}`}
+      </Prism>
     </>
   );
 }

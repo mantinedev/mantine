@@ -10,7 +10,7 @@ interface CraGuideProps {
 
 export function GatsbyGuide({ dependencies }: CraGuideProps) {
   return (
-    <div>
+    <>
       <Button
         component="a"
         href="https://github.com/mantinedev/mantine-gatsby-template"
@@ -22,19 +22,20 @@ export function GatsbyGuide({ dependencies }: CraGuideProps) {
       >
         Get stared with Gatsby Github template
       </Button>
-      <Text weight={700} mb={15}>
+
+      <Text weight={500} mb={5} size="lg">
         Init application
       </Text>
+
       <Prism language="bash">gatsby new</Prism>
-      <Text weight={700} mt={30}>
-        Install dependencies
-      </Text>
+
       <Installation dependencies={`${dependencies} gatsby-plugin-mantine`} />
-      <Text weight={700} mt={30} mb={10}>
+
+      <Text weight={500} mt={30} mb={5} size="lg">
         Add gatsby-plugin-mantine in your gatsby.config.js file:
       </Text>
-      <Prism language="tsx">plugins: [`gatsby-plugin-mantine`]</Prism>
+      <Prism language="tsx">plugins: [&apos;gatsby-plugin-mantine&apos;]</Prism>
       <Done />
-    </div>
+    </>
   );
 }

@@ -10,16 +10,16 @@ interface CraGuideProps {
 
 export function CraGuide({ dependencies }: CraGuideProps) {
   return (
-    <div>
-      <Text weight={700} mt={15}>
+    <>
+      <Text weight={500} size="lg" mb={5}>
         Init application
       </Text>
+
       <Prism language="bash">npx create-react-app my-app --template typescript</Prism>
-      <Text weight={700} mt={30}>
-        Install dependencies
-      </Text>
+
       <Installation dependencies={dependencies} />
+
       <Done />
-    </div>
+    </>
   );
 }
