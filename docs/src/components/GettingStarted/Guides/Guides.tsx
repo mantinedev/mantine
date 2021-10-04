@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, Title } from '@mantine/core';
+import { Text, Title, UnstyledButton, SimpleGrid } from '@mantine/core';
 import { GUIDES_DATA } from './data';
 import { CraGuide } from './guides/CraGuide';
 import { NextGuide } from './guides/NextGuide';
@@ -28,21 +28,31 @@ export function Guides({ dependencies }: GuidesProps) {
   const Guide = guides[selected];
 
   const controls = GUIDES_DATA.map((guide) => (
-    <button
-      type="button"
+    <UnstyledButton
       className={cx(classes.control, { [classes.active]: guide.id === selected })}
       key={guide.id}
       onClick={() => setSelected(guide.id)}
     >
       <guide.icon />
-      <Text className={classes.controlTitle}>{guide.title}</Text>
-    </button>
+      <Text mt="md">{guide.title}</Text>
+    </UnstyledButton>
   ));
 
   return (
     <div>
-      <Title>And get started with</Title>
-      <div className={classes.controls}>{controls}</div>
+      <Title order={2}>And get started with</Title>
+
+      <SimpleGrid
+        cols={5}
+        mt={30}
+        breakpoints={[
+          { maxWidth: 1100, cols: 3 },
+          { maxWidth: 755, cols: 1 },
+        ]}
+      >
+        {controls}
+      </SimpleGrid>
+
       <div className={classes.guide}>
         <Guide dependencies={dependencies} />
       </div>
