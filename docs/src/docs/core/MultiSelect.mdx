@@ -100,6 +100,17 @@ MultiSelect support two different data formats:
 />
 ```
 
+For data as array of objects, Select supports additional properties:
+
+1. `disabled` property to disable the Select items.
+
+<Demo data={MultiSelectDemos.disabledItems} />
+
+2. `group` property to group the Select items.
+
+<Demo data={MultiSelectDemos.groups} />
+
+
 ## Searchable
 
 Set `searchable` prop to enable search in select and `nothingFound` prop to provide label that will be shown when no options were found:
@@ -112,6 +123,13 @@ Set `clearable` prop to enable clearing all values at once.
 When prop is true and at least value is selected clear button will replace chevron in right section:
 
 <Demo data={MultiSelectDemos.clearable} />
+
+## Creatable
+
+Set `creatable` prop to enable creating new select item.
+`getCreateLabel` prop is also required for a `creatable` Select.
+
+<Demo data={MultiSelectDemos.creatable} />
 
 ## Large data set
 
