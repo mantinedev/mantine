@@ -53,6 +53,25 @@ function Controlled() {
   );
 }
 
+function Creatable() {
+  const [creatableData, setData] = useState(stringData);
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Creatable Select"
+        data={creatableData}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+        creatable
+        onCreate={(query) => setData((c) => [...c, query])}
+        getCreateLabel={(query) => `+ Create ${query}`}
+      />
+    </div>
+  );
+}
+
 const sizes = MANTINE_SIZES.map((size) => (
   <Group grow key={size} style={{ marginTop: 30 }} direction="column">
     <MultiSelect
@@ -117,19 +136,6 @@ storiesOf('@mantine/core/MultiSelect', module)
       />
     </div>
   ))
-  .add('Creatable MultiSelect', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <MultiSelect
-        label="Multi select"
-        data={stringData}
-        placeholder="Select items"
-        nothingFound="Nothing found"
-        searchable
-        creatable
-        getCreateLabel={(query) => `create ${query}`}
-      />
-    </div>
-  ))
   .add('String data', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <MultiSelect
@@ -154,6 +160,7 @@ storiesOf('@mantine/core/MultiSelect', module)
     </div>
   ))
   .add('Controlled', () => <Controlled />)
+  .add('Creatable', () => <Creatable />)
   .add('Searchable', () => (
     <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
       <MultiSelect

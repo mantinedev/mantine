@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { Select } from './Select';
 
 const data = [
-  { value: 'react', label: 'React', disabled: true },
+  { value: 'react', label: 'React' },
   { value: 'ng', label: 'Angular' },
   { value: 'svelte', label: 'Svelte' },
   { value: 'vue', label: 'Vue' },
@@ -38,12 +38,30 @@ function Controlled({ clearable = false }: { clearable?: boolean }) {
         value={value}
         onChange={setValue}
         data={data}
-        style={{ marginTop: 30 }}
+        style={{ marginTop: 20 }}
       />
       <button type="button" onClick={() => setValue('react')}>
         Fill value
       </button>
     </div>
+  );
+}
+
+function Creatable({ inputData = stringData }: { inputData: any }) {
+  const [creatableData, setData] = useState(inputData);
+
+  return (
+    <Select
+      label="Creatable Select"
+      data={creatableData}
+      placeholder="Select items"
+      nothingFound="Nothing found"
+      searchable
+      creatable
+      onCreate={(query) => setData((c) => [...c, query])}
+      getCreateLabel={(query) => `+ Create ${query}`}
+      style={{ marginTop: 20 }}
+    />
   );
 }
 
@@ -86,21 +104,13 @@ storiesOf('@mantine/core/Select', module)
         searchable
       />
       <Select
-        creatable
-        getCreateLabel={(query) => `create ${query}`}
-        label="Creatable Select"
-        placeholder="Choose value"
-        data={data}
-        style={{ marginTop: 20 }}
-        searchable
-      />
-      <Select
         label="Large data set"
         placeholder="Choose value"
         searchable
         data={largeData}
         style={{ marginTop: 20 }}
       />
+      <Creatable inputData={data} />
     </div>
   ))
   .add('Clearable', () => (
@@ -115,7 +125,6 @@ storiesOf('@mantine/core/Select', module)
         style={{ marginTop: 20 }}
         nothingFound="No options"
       />
-
       <Select
         clearable
         label="Choose your favorite library/framework"
@@ -197,5 +206,6 @@ storiesOf('@mantine/core/Select', module)
         data={stringData}
         style={{ marginTop: 20 }}
       />
+      <Creatable inputData={stringData} />
     </div>
   ));
