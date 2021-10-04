@@ -3,6 +3,7 @@ import { usePopper } from 'react-popper';
 import { useDidUpdate } from '@mantine/hooks';
 import { Portal } from '../Portal';
 import { Transition, MantineTransition } from '../Transition';
+import { parsePopperPosition } from './parse-popper-position/parse-popper-position';
 import useStyles from './Popper.styles';
 
 export interface SharedPopperProps {
@@ -52,20 +53,6 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
 
   /** useEffect dependencies to force update popper position */
   forceUpdateDependencies?: any[];
-}
-
-function parsePopperPosition(position: string) {
-  if (typeof position !== 'string') {
-    return { position: 'top', placement: 'center' };
-  }
-
-  const splitted = position.split('-');
-
-  if (splitted.length === 1) {
-    return { position, placement: 'center' };
-  }
-
-  return { position: splitted[0], placement: splitted[1] };
 }
 
 export function Popper<T extends HTMLElement = HTMLDivElement>({
