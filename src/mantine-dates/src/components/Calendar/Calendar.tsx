@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import dayjs from 'dayjs';
 import { DefaultProps } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
@@ -59,85 +59,90 @@ export interface CalendarProps
   __staticSelector?: string;
 }
 
-export function Calendar({
-  classNames,
-  styles,
-  locale = 'en',
-  nextMonthLabel,
-  previousMonthLabel,
-  initialMonth,
-  month,
-  onMonthChange,
-  value,
-  onChange,
-  labelFormat = 'MMMM YYYY',
-  withSelect = false,
-  yearsRange = { from: 2020, to: 2030 },
-  dayClassName,
-  dayStyle,
-  disableOutsideEvents,
-  minDate,
-  maxDate,
-  excludeDate,
-  fullWidth = false,
-  size = 'sm',
-  __staticSelector = 'calendar',
-  monthLabel,
-  yearLabel,
-  ...others
-}: CalendarProps) {
-  const [_month, setMonth] = useUncontrolled({
-    value: month,
-    defaultValue: initialMonth,
-    finalValue: new Date(),
-    onChange: onMonthChange,
-    rule: (val) => val instanceof Date,
-  });
+export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
+  (
+    {
+      classNames,
+      styles,
+      locale = 'en',
+      nextMonthLabel,
+      previousMonthLabel,
+      initialMonth,
+      month,
+      onMonthChange,
+      value,
+      onChange,
+      labelFormat = 'MMMM YYYY',
+      withSelect = false,
+      yearsRange = { from: 2020, to: 2030 },
+      dayClassName,
+      dayStyle,
+      disableOutsideEvents,
+      minDate,
+      maxDate,
+      excludeDate,
+      fullWidth = false,
+      size = 'sm',
+      __staticSelector = 'calendar',
+      monthLabel,
+      yearLabel,
+      ...others
+    }: CalendarProps,
+    ref
+  ) => {
+    const [_month, setMonth] = useUncontrolled({
+      value: month,
+      defaultValue: initialMonth,
+      finalValue: new Date(),
+      onChange: onMonthChange,
+      rule: (val) => val instanceof Date,
+    });
 
-  const disabledState = getDisabledState({ month: _month, minDate, maxDate });
+    const disabledState = getDisabledState({ month: _month, minDate, maxDate });
 
-  return (
-    <CalendarWrapper size={size} fullWidth={fullWidth} {...others}>
-      <CalendarHeader
-        size={size}
-        nextMonthLabel={nextMonthLabel}
-        previousMonthLabel={previousMonthLabel}
-        previousMonthDisabled={disabledState.previousDisabled}
-        nextMonthDisabled={disabledState.nextDisabled}
-        onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
-        onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
-        classNames={classNames}
-        styles={styles}
-        locale={locale}
-        withSelect={withSelect}
-        yearsRange={yearsRange}
-        month={_month}
-        setMonth={setMonth}
-        labelFormat={labelFormat}
-        __staticSelector={__staticSelector}
-        monthLabel={monthLabel}
-        yearLabel={yearLabel}
-      />
+    return (
+      <CalendarWrapper size={size} fullWidth={fullWidth} ref={ref} {...others}>
+        <CalendarHeader
+          size={size}
+          nextMonthLabel={nextMonthLabel}
+          previousMonthLabel={previousMonthLabel}
+          previousMonthDisabled={disabledState.previousDisabled}
+          nextMonthDisabled={disabledState.nextDisabled}
+          onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
+          onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
+          classNames={classNames}
+          styles={styles}
+          locale={locale}
+          withSelect={withSelect}
+          yearsRange={yearsRange}
+          month={_month}
+          setMonth={setMonth}
+          labelFormat={labelFormat}
+          __staticSelector={__staticSelector}
+          monthLabel={monthLabel}
+          yearLabel={yearLabel}
+        />
 
-      <Month
-        month={_month}
-        value={value}
-        onChange={onChange}
-        dayClassName={dayClassName}
-        dayStyle={dayStyle}
-        disableOutsideEvents={disableOutsideEvents}
-        minDate={minDate}
-        maxDate={maxDate}
-        excludeDate={excludeDate}
-        classNames={classNames}
-        styles={styles}
-        fullWidth={fullWidth}
-        size={size}
-        locale={locale}
-        __staticSelector={__staticSelector}
-      />
-    </CalendarWrapper>
-  );
-}
+        <Month
+          month={_month}
+          value={value}
+          onChange={onChange}
+          dayClassName={dayClassName}
+          dayStyle={dayStyle}
+          disableOutsideEvents={disableOutsideEvents}
+          minDate={minDate}
+          maxDate={maxDate}
+          excludeDate={excludeDate}
+          classNames={classNames}
+          styles={styles}
+          fullWidth={fullWidth}
+          size={size}
+          locale={locale}
+          __staticSelector={__staticSelector}
+        />
+      </CalendarWrapper>
+    );
+  }
+);
 
 Calendar.displayName = '@mantine/dates/Calendar';
