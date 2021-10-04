@@ -111,7 +111,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
         <Avatar src={image} />
 
         <div>
-          <Text>{label}</Text>
+          <Text size="sm">{label}</Text>
           <Text size="xs" color="dimmed">
             {description}
           </Text>
