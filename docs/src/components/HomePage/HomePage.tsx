@@ -7,7 +7,7 @@ import { Community } from './Community/Community';
 import { Customize } from './Customize/Customize';
 import { Usage } from './Usage/Usage';
 import { Emotion } from './Emotion/Emotion';
-import { FeaturesSection } from './FeaturesSection/FeaturesSection';
+import { Explore } from './Explore/Explore';
 
 export function HomePage() {
   const theme = useMantineTheme();
@@ -16,7 +16,7 @@ export function HomePage() {
       <Head title="Mantine" disableTitleTemplate />
       <div style={{ position: 'relative', zIndex: 1, boxShadow: theme.shadows.sm }}>
         <Jumbotron />
-        <FeaturesSection />
+        <Explore />
         <Customize />
         <Emotion />
         <Usage />

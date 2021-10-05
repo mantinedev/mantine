@@ -8,9 +8,9 @@ import { Hooks } from './Hooks/Hooks';
 import { RichText } from './RichText/RichText';
 import { Animations } from './Animations/Animations';
 import { Notifications } from './Notifications/Notifications';
-import useStyles from './FeaturesSection.styles';
+import useStyles from './Explore.styles';
 
-export function FeaturesSection() {
+export function Explore() {
   const { classes, cx } = useStyles();
   return (
     <div className={classes.wrapper}>
