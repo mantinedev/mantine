@@ -55,7 +55,7 @@ export default createStyles((theme) => ({
   },
 
   controls: {
-    marginTop: theme.spacing.xl * 2,
+    marginTop: theme.spacing.xl * 1.5,
 
     [BREAKPOINT]: {
       marginTop: theme.spacing.xl,
@@ -87,5 +87,41 @@ export default createStyles((theme) => ({
     borderWidth: 2,
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.dark[9],
     backgroundColor: 'transparent',
+  },
+
+  feature: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+
+    '@media (max-width: 800px)': {
+      flexDirection: 'row',
+    },
+  },
+
+  featureBody: {
+    marginTop: theme.spacing.xs,
+
+    '@media (max-width: 800px)': {
+      marginTop: 0,
+      marginLeft: theme.spacing.lg,
+    },
+  },
+
+  featureIcon: {
+    color: theme.white,
+    borderRadius: theme.radius.md,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: 50,
+    height: 50,
+    backgroundImage: `linear-gradient(52deg, ${
+      theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
+    } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
+
+    '& svg': {
+      display: 'block',
+    },
   },
 }));
