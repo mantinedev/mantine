@@ -9,6 +9,7 @@ export default createStyles((theme, { color, withIcon }: AlertStyles) => ({
   root: {
     ...getFontStyles(theme),
     position: 'relative',
+    overflow: 'hidden',
     padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
     borderRadius: theme.radius.sm,
     backgroundColor:
