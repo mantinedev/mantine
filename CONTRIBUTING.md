@@ -54,3 +54,29 @@ Examples:
 - To start storybook – `npm run storybook`
 - To start docs – `npm run docs`
 - To rebuild props descriptions – `npm run docs:docgen`
+
+## npm scripts
+
+All npm scripts are located at [main package.json](https://github.com/mantinedev/mantine/blob/master/package.json),
+individual packages do not have dedicated scripts.
+
+### Development scripts
+
+- `storybook` – starts storybook development server
+- `docs` – starts docs development server
+
+### Testing scripts
+
+- `syncpack` – runs [syncpack](https://www.npmjs.com/package/syncpack)
+- `typecheck` – runs TypeScript typechecking with `tsc --noEmit` on all packages and docs
+- `lint` – runs ESLint on src folder
+- `jest` – runs tests with jest
+- `test` – runs all above testing scripts
+
+### Docs scripts
+
+- `docs:docgen` – generates components types information with [docgen script](https://github.com/mantinedev/mantine/blob/master/scripts/docgen.ts)
+- `docs:sizes` – generates bundle size information for all packages
+- `docs:clean` – runs `gatsby clean`
+- `docs:build` – runs all above docs scripts and build production docs bundle
+- `docs:deploy` – runs all above docs scripts and deploys docs to Github Pages
