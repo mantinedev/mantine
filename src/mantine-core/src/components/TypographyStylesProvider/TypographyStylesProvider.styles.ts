@@ -76,7 +76,7 @@ export default createStyles((theme) => {
 
       '& code': {
         lineHeight: theme.lineHeight,
-        padding: [1, theme.spacing.xs / 2],
+        padding: `1px ${theme.spacing.xs / 1}`,
         borderRadius: theme.radius.sm,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
@@ -113,7 +113,7 @@ export default createStyles((theme) => {
           fontWeight: 'bold',
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
           fontSize: 14,
-          padding: [7, 10],
+          padding: '7px 10px',
         },
 
         '& thead th': {
@@ -129,7 +129,7 @@ export default createStyles((theme) => {
         },
 
         '& td': {
-          padding: [7, 10],
+          padding: '7px 10px',
           borderBottom: `1px solid ${
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
           }`,
