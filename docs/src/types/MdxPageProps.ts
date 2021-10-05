@@ -9,4 +9,9 @@ export interface MdxPageProps {
   body: string;
 
   frontmatter: Frontmatter;
+
+  siblings: {
+    next: Frontmatter;
+    prev: Frontmatter;
+  };
 }
