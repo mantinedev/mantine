@@ -50,5 +50,3 @@ interface MantineConfiguratorDemo extends MantineDemoBase {
 }
 
 type MantineDemo = MantineCodeDemo | MantineConfiguratorDemo;
-
-type MantineClasses<T extends (...args: any) => any> = Record<keyof ReturnType<T>, string>;
