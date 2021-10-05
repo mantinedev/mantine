@@ -11,7 +11,7 @@ export default createStyles((theme) => ({
     margin: 0,
     padding: 0,
     textAlign: 'left',
-    marginBottom: theme.spacing.xl * 2.5,
+    marginBottom: theme.spacing.xl * 2,
     letterSpacing: 1,
     marginLeft: 22,
     textTransform: 'uppercase',
