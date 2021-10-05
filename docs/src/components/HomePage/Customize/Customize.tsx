@@ -36,7 +36,7 @@ export function Customize() {
       title="Components customization"
       description="Each Mantine component supports styles overriding for every internal element inside with classes or inline styles. This feature alongside other customization options allows you to implement any visual modifications to components and adapt them to fit almost any design requirements."
     >
-      <SimpleGrid cols={2} breakpoints={[{ maxWidth: 960, cols: 1 }]} spacing={30}>
+      <SimpleGrid cols={2} breakpoints={[{ maxWidth: 960, cols: 1 }]} spacing={30} mt={30}>
         <div>
           <Text mb={15} weight={500} size="lg">
             Default slider styles
