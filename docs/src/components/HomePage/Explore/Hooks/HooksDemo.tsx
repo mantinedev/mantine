@@ -84,8 +84,15 @@ export function HooksDemo() {
         {opened && (
           <Paper
             ref={ref}
-            shadow="sm"
-            style={{ position: 'absolute', top: -15, left: -15, right: -15, bottom: -15 }}
+            shadow="md"
+            style={{
+              position: 'absolute',
+              top: -15,
+              left: -15,
+              right: -15,
+              bottom: -15,
+              zIndex: 3,
+            }}
           >
             <Center style={{ height: '100%' }}>Click outside to close</Center>
           </Paper>
