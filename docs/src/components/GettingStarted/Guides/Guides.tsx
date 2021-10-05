@@ -1,29 +1,13 @@
 import React, { useState } from 'react';
 import { Text, Title, UnstyledButton, SimpleGrid } from '@mantine/core';
 import { GUIDES_DATA } from './data';
-import { CraGuide } from './guides/CraGuide';
-import { NextGuide } from './guides/NextGuide';
-import { ViteGuide } from './guides/ViteGuide';
-import { GatsbyGuide } from './guides/GatsbyGuide';
-import { PreactGuide } from './guides/PreactGuide';
+import { guides, GuideProps } from './Guide';
 import useStyles from './Guides.styles';
 
-interface GuidesProps {
-  dependencies: string;
-}
-
-const guides = {
-  cra: CraGuide,
-  next: NextGuide,
-  vite: ViteGuide,
-  gatsby: GatsbyGuide,
-  preact: PreactGuide,
-};
-
-export function Guides({ dependencies }: GuidesProps) {
+export function Guides({ dependencies }: GuideProps) {
   const initialGuide =
-    typeof window !== 'undefined' ? window.location.search?.replace('?g=', '') : 'cra';
-  const [selected, setSelected] = useState(initialGuide in guides ? initialGuide : 'cra');
+    typeof window !== 'undefined' ? window.location.search?.replace('?g=', '') : 'next';
+  const [selected, setSelected] = useState(initialGuide in guides ? initialGuide : 'next');
   const { classes, cx } = useStyles();
   const Guide = guides[selected];
 
