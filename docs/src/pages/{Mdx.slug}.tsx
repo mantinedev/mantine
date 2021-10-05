@@ -2,20 +2,23 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Head from '../components/Head/Head';
 import { MdxPage } from '../components/MdxPage/MdxPage';
+import { getDocsData, DocsQuery } from '../components/Layout/get-docs-data';
+import { MdxPageProps } from '../types';
 
 interface DocPageProps {
-  data: {
-    mdx: MdxPage;
+  data: DocsQuery & {
+    mdx: MdxPageProps;
   };
 }
 
 export default function DocPage({ data }: DocPageProps) {
   const { mdx } = data;
+  const allMdx = getDocsData(data);
 
   return (
     <article>
       <Head title={mdx.frontmatter.title} description={mdx.frontmatter.description} />
-      <MdxPage {...mdx} />
+      <MdxPage {...mdx} allMdx={allMdx} />
     </article>
   );
 }
@@ -45,6 +48,22 @@ export const query = graphql`
         date
       }
       body
+    }
+
+    allMdx {
+      edges {
+        node {
+          id
+          frontmatter {
+            group
+            title
+            order
+            slug
+            category
+            package
+          }
+        }
+      }
     }
   }
 `;

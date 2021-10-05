@@ -5,13 +5,14 @@ import { ImportStatement } from './ImportStatement/ImportStatement';
 import { BundleSize } from './BundleSize/BundleSize';
 import { NpmIcon } from './NpmIcon';
 import { LinkItem } from './LinkItem/LinkItem';
+import { MdxPageProps } from '../../../types';
 import useStyles from './MdxPageHeader.styles';
 
 const REPO_BASE = 'https://github.com/mantinedev/mantine/blob/master';
 const DOCS_BASE = `${REPO_BASE}/docs/src/docs`;
 const SOURCE_BASE = `${REPO_BASE}/src`;
 
-export function MdxPageHeader({ frontmatter }: MdxPage) {
+export function MdxPageHeader({ frontmatter }: MdxPageProps) {
   const { classes, cx } = useStyles();
 
   const hasTabs = Array.isArray(frontmatter.props);
