@@ -10,7 +10,6 @@ import {
 } from '@mantine/core';
 
 const code = `
-import React from 'react';
 import { Badge, Button, MantineProvider } from '@mantine/core';
 
 function Demo() {
