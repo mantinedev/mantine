@@ -6,7 +6,7 @@ import { DarkStory } from '../../../demos';
 storiesOf('@mantine/core/Pagination', module)
   .add('General usage', () => (
     <div style={{ padding: 40 }}>
-      <Pagination total={10} color="cyan" size="xs" />
+      <Pagination total={10} color="cyan" size="xs" withControls={false} />
       <Pagination style={{ marginTop: 15 }} total={1000} color="cyan" size="sm" />
       <Pagination style={{ marginTop: 15 }} total={10} color="cyan" size="md" />
       <Pagination style={{ marginTop: 15 }} total={10} color="cyan" size="lg" />
@@ -19,9 +19,9 @@ storiesOf('@mantine/core/Pagination', module)
     <Pagination siblings={2} boundaries={2} total={20} initialPage={12} />
   ))
   .add('With jump to first/last buttons', () => (
-      <div style={{ padding: 40 }}>
-        <Pagination total={20} boundaries={2} initialPage={12} withEdges />
-      </div>
+    <div style={{ padding: 40 }}>
+      <Pagination total={20} boundaries={2} initialPage={12} withEdges />
+    </div>
   ))
   .add('Dark theme', () => (
     <DarkStory>

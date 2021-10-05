@@ -56,8 +56,11 @@ export interface PaginationProps
   /** Predefined item radius or number to set border-radius in px */
   radius?: MantineNumberSize;
 
-  /** Whether to render buttons that would allow to jump to start/end of pagination */
+  /** Show/hide jump to start/end controls */
   withEdges?: boolean;
+
+  /** Show/hide prev/next controls */
+  withControls?: boolean;
 }
 
 export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
@@ -78,6 +81,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
       getItemAriaLabel,
       spacing,
       withEdges = false,
+      withControls = true,
       ...others
     }: PaginationProps,
     ref
@@ -133,27 +137,31 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
           />
         )}
 
-        <Item
-          page="prev"
-          onClick={previous}
-          aria-label={getItemAriaLabel ? getItemAriaLabel('prev') : undefined}
-          aria-disabled={active === 1}
-          style={_styles.item}
-          className={classes.item}
-          disabled={active === 1}
-        />
+        {withControls && (
+          <Item
+            page="prev"
+            onClick={previous}
+            aria-label={getItemAriaLabel ? getItemAriaLabel('prev') : undefined}
+            aria-disabled={active === 1}
+            style={_styles.item}
+            className={classes.item}
+            disabled={active === 1}
+          />
+        )}
 
         {items}
 
-        <Item
-          page="next"
-          onClick={next}
-          aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
-          aria-disabled={active === total}
-          style={_styles.item}
-          className={classes.item}
-          disabled={active === total}
-        />
+        {withControls && (
+          <Item
+            page="next"
+            onClick={next}
+            aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
+            aria-disabled={active === total}
+            style={_styles.item}
+            className={classes.item}
+            disabled={active === total}
+          />
+        )}
 
         {withEdges && (
           <Item
