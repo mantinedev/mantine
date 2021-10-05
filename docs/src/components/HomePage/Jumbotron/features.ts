@@ -10,7 +10,7 @@ export const FEATURES_DATA = [
   {
     icon: FileCodeIcon,
     title: 'TypeScript based',
-    description: 'Build safer application, all components and hooks export types',
+    description: 'Build type safe applications, all components and hooks export types',
   },
 
   {
