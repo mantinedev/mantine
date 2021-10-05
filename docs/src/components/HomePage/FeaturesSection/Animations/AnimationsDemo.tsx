@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Prism } from '@mantine/prism';
-import { Title, Modal, Button, Paper } from '@mantine/core';
+import { Title, Modal, Button, Paper, createStyles } from '@mantine/core';
 import { AuthenticationForm } from '@mantine/core/demos/AuthenticationForm/AuthenticationForm';
 import { transitions as TransitionDemo } from '@mantine/core/src/components/Tooltip/demos/transitions';
 
@@ -24,9 +24,26 @@ const scaleY = {
 </Modal>
 `.trim();
 
+const useStyles = createStyles((theme) => ({
+  prism: {
+    '& pre': {
+      backgroundColor: `${
+        theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white
+      } !important`,
+      borderRadius: theme.radius.md,
+      padding: 14,
+      paddingTop: 0,
+      paddingBottom: 10,
+      marginLeft: -30,
+      marginRight: -30,
+    },
+  },
+}));
+
 export function AnimationsDemo() {
   const Transitions = TransitionDemo.component;
   const [modalOpened, setModalOpened] = useState(false);
+  const { classes } = useStyles();
   return (
     <Paper shadow="md" padding={30} radius="md">
       <Title order={4} style={{ marginBottom: 15 }}>
@@ -39,7 +56,7 @@ export function AnimationsDemo() {
         Or create your own transitions
       </Title>
 
-      <Prism language="tsx" noCopy>
+      <Prism language="tsx" noCopy className={classes.prism}>
         {code}
       </Prism>
 
