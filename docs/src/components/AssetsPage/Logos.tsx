@@ -65,7 +65,7 @@ function LogoAsset({ image, code, fileName, imageWidth, background, ...others }:
 
 export function Logos() {
   return (
-    <SimpleGrid cols={3} spacing={40}>
+    <SimpleGrid cols={3} spacing={40} breakpoints={[{ maxWidth: 900, cols: 1 }]}>
       <LogoAsset
         image={logoImage}
         code={logoCode}

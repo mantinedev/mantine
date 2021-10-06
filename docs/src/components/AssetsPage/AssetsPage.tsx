@@ -3,6 +3,7 @@ import { Container, Title } from '@mantine/core';
 import Head from '../Head/Head';
 import { Footer } from '../Footer/Footer';
 import { Logos } from './Logos';
+import { Images } from './Images';
 import useStyles from './AssetsPage.styles';
 
 export function AssetsPage() {
@@ -18,6 +19,11 @@ export function AssetsPage() {
             Mantine logo
           </Title>
           <Logos />
+
+          <Title order={2} mb="md" mt={50}>
+            Screenshots and social media
+          </Title>
+          <Images />
         </Container>
       </div>
 
