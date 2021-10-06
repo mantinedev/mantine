@@ -125,8 +125,8 @@ When prop is true and value is selected clear button will replace chevron in rig
 
 ## Creatable
 
-Set `creatable` prop to enable creating new select item.
-`getCreateLabel` prop is also required for a `creatable` Select.
+Set `creatable` and `getCreateLabel` props to enable creating new select item.
+Note that you will need to handle data state to manage item creation correctly:
 
 <Demo data={SelectDemos.creatable} />
 
