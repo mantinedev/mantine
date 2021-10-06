@@ -34,7 +34,8 @@ describe('@mantine/core/MultiSelect', () => {
       error: 'test-error',
       required: true,
     },
-    Object.keys(MultiSelectStylesApi).filter((key) => key !== 'hovered' && key !== 'nothingFound'),
+    Object.keys(MultiSelectStylesApi).filter((key) =>
+      key !== 'hovered' && key !== 'nothingFound' && key !== 'disabled' && key !== 'seperator' && key !== 'seperatorLabel'),
     'multi-select'
   );
 

@@ -9,6 +9,14 @@ const data = [
   { value: 'vue', label: 'Vue' },
 ];
 
+const groupedData = [
+  { value: 'react', label: 'React', disabled: true, group: 'FB' },
+  { value: 'ng', label: 'Angular', group: 'Google' },
+  { value: 'lit', label: 'Lit', group: 'Google' },
+  { value: 'svelte', label: 'Svelte' },
+  { value: 'vue', label: 'Vue', group: 'Evan' },
+];
+
 const stringData = ['React', 'Angular', 'Svelte', 'Vue'];
 
 const largeData = Array(50)
@@ -30,12 +38,30 @@ function Controlled({ clearable = false }: { clearable?: boolean }) {
         value={value}
         onChange={setValue}
         data={data}
-        style={{ marginTop: 30 }}
+        style={{ marginTop: 20 }}
       />
       <button type="button" onClick={() => setValue('react')}>
         Fill value
       </button>
     </div>
+  );
+}
+
+function Creatable({ inputData = stringData }: { inputData: any }) {
+  const [creatableData, setData] = useState(inputData);
+
+  return (
+    <Select
+      label="Creatable Select"
+      data={creatableData}
+      placeholder="Select items"
+      nothingFound="Nothing found"
+      searchable
+      creatable
+      onCreate={(query) => setData((c) => [...c, query])}
+      getCreateLabel={(query) => `+ Create ${query}`}
+      style={{ marginTop: 20 }}
+    />
   );
 }
 
@@ -51,7 +77,6 @@ storiesOf('@mantine/core/Select', module)
         searchable
         label="Choose your favorite library/framework"
         placeholder="Choose value"
-        limit={2}
         data={data}
         style={{ marginTop: 20 }}
         nothingFound="No options"
@@ -61,9 +86,22 @@ storiesOf('@mantine/core/Select', module)
         label="Controlled (fixed value)"
         placeholder="Choose value"
         searchable
-        value="react"
+        value="ng"
         data={data}
         style={{ marginTop: 20 }}
+      />
+      <Select
+        label="Disabled Elements"
+        placeholder="Choose value"
+        data={[...data, { value: 'lit', label: 'Lit', disabled: true }]}
+        style={{ marginTop: 20 }}
+      />
+      <Select
+        label="With Grouped and Disabled Data"
+        placeholder="Choose value"
+        data={groupedData}
+        style={{ marginTop: 20 }}
+        searchable
       />
       <Select
         label="Large data set"
@@ -72,6 +110,7 @@ storiesOf('@mantine/core/Select', module)
         data={largeData}
         style={{ marginTop: 20 }}
       />
+      <Creatable inputData={data} />
     </div>
   ))
   .add('Clearable', () => (
@@ -86,7 +125,6 @@ storiesOf('@mantine/core/Select', module)
         style={{ marginTop: 20 }}
         nothingFound="No options"
       />
-
       <Select
         clearable
         label="Choose your favorite library/framework"
@@ -151,6 +189,16 @@ storiesOf('@mantine/core/Select', module)
       />
       <Select
         clearable
+        creatable
+        getCreateLabel={(query) => `create ${query}`}
+        label="Creatable Select"
+        placeholder="Choose value"
+        searchable
+        data={stringData}
+        style={{ marginTop: 20 }}
+      />
+      <Select
+        clearable
         label="Controlled (fixed value)"
         placeholder="Choose value"
         searchable
@@ -158,5 +206,6 @@ storiesOf('@mantine/core/Select', module)
         data={stringData}
         style={{ marginTop: 20 }}
       />
+      <Creatable inputData={stringData} />
     </div>
   ));

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { useUncontrolled, useMergedRef } from '@mantine/hooks';
+import { useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineSize,
@@ -17,6 +17,7 @@ import { SelectItems } from './SelectItems/SelectItems';
 import { SelectDropdown } from './SelectDropdown/SelectDropdown';
 import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
+import { groupSortData } from './group-sort-data/group-sort-data';
 
 export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSelectProps {
   /** Input size */
@@ -75,10 +76,26 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
 
   /** Called each time search value changes */
   onSearchChange?(query: string): void;
+
+  /** Allow creatable option  */
+  creatable?: boolean;
+
+  /** Function to get create Label */
+  getCreateLabel?: (query: string) => React.ReactNode;
+
+  /** Function to determine if create label should be displayed */
+  shouldCreate?: (query: string, data: SelectItem[]) => boolean;
+
+  /** Called when create option is selected */
+  onCreate?: (query: string) => void;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
   return item.label.toLowerCase().trim().includes(value.toLowerCase().trim());
+}
+
+export function defaultShouldCreate(query: string, data: SelectItem[]) {
+  return !!query && !data.some((item) => item.value.toLowerCase() === query.toLowerCase());
 }
 
 export const Select = forwardRef<HTMLInputElement, SelectProps>(
@@ -119,6 +136,10 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       onSearchChange,
       rightSection,
       rightSectionWidth,
+      creatable = false,
+      getCreateLabel,
+      shouldCreate = defaultShouldCreate,
+      onCreate,
       ...others
     }: SelectProps,
     ref
@@ -129,7 +150,20 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const inputRef = useRef<HTMLInputElement>();
     const dropdownRef = useRef<HTMLDivElement>();
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
+    const [creatableDataValue, setCreatableDataValue] = useState<string | undefined>(undefined);
     const uuid = useUuid(id);
+
+    const isCreatable = creatable && typeof getCreateLabel === 'function';
+    let createLabel = null;
+
+    const formattedData = data.map((item) =>
+      typeof item === 'string' ? { label: item, value: item } : item
+    );
+
+    /*sorting data by groups while maintaining the insertion order
+    for consistent behaviour on keypress events. */
+    const sortedData = groupSortData({ data: formattedData });
+
     const [_value, handleChange, inputMode] = useUncontrolled({
       value,
       defaultValue,
@@ -138,11 +172,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       rule: (val) => typeof val === 'string',
     });
 
-    const formattedData = data.map((item) =>
-      typeof item === 'string' ? { label: item, value: item } : item
-    );
-
-    const selectedValue = formattedData.find((item) => item.value === _value);
+    const selectedValue = sortedData.find((item) => item.value === _value);
     const [inputValue, setInputValue] = useState(selectedValue?.label || '');
 
     const handleSearchChange = (val: string) => {
@@ -161,31 +191,61 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     };
 
     useEffect(() => {
-      const newSelectedValue = formattedData.find((item) => item.value === _value);
+      const newSelectedValue = sortedData.find((item) => item.value === _value);
+
       if (newSelectedValue) {
         handleSearchChange(newSelectedValue.label);
-      } else {
+      } else if (!isCreatable) {
         handleSearchChange('');
       }
     }, [_value]);
 
     const handleItemSelect = (item: SelectItem) => {
       handleChange(item.value);
-      setHovered(-1);
+      if (item.creatable) {
+        setCreatableDataValue(item.value);
+        typeof onCreate === 'function' && onCreate(item.value);
+      }
       if (inputMode === 'uncontrolled') {
         handleSearchChange(item.label);
       }
+      setHovered(-1);
       setTimeout(() => setDropdownOpened(false));
       inputRef.current.focus();
     };
 
     const filteredData = filterData({
-      data: formattedData,
+      data: sortedData,
       searchable,
       limit,
       searchValue: inputValue,
+      creatable: !!creatableDataValue && creatableDataValue === inputValue,
       filter,
     });
+
+    if (isCreatable && shouldCreate(inputValue, filteredData)) {
+      createLabel = getCreateLabel(inputValue);
+      filteredData.push({ label: inputValue, value: inputValue, creatable: true });
+    }
+
+    const getNextIndex = (
+      index: number,
+      nextItem: (index: number) => number,
+      compareFn: (index: number) => boolean) => {
+      let i = index;
+      while (compareFn(i)) {
+        i = nextItem(i);
+        if (!filteredData[i].disabled) return i;
+      }
+      return index;
+    };
+
+    useDidUpdate(() => {
+      setHovered(getNextIndex(
+        -1,
+        (index) => index + 1,
+        (index) => index < filteredData.length - 1));
+    }, [inputValue]);
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       typeof onKeyDown === 'function' && onKeyDown(event);
@@ -195,7 +255,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           event.preventDefault();
           setDropdownOpened(true);
           setHovered((current) => {
-            const nextIndex = current > 0 ? current - 1 : current;
+            const nextIndex = getNextIndex(current, (index) => index - 1, (index) => index > 0);
             scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
             return nextIndex;
           });
@@ -206,7 +266,10 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           event.preventDefault();
           setDropdownOpened(true);
           setHovered((current) => {
-            const nextIndex = current < filteredData.length - 1 ? current + 1 : current;
+            const nextIndex = getNextIndex(
+              current,
+              (index) => index + 1,
+              (index) => index < filteredData.length - 1);
             scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
             return nextIndex;
           });
@@ -224,7 +287,10 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           if (!searchable && !dropdownOpened) {
             event.preventDefault();
             setDropdownOpened(true);
-            setHovered(0);
+            setHovered(getNextIndex(
+              -1,
+              (index) => index + 1,
+              (index) => index < filteredData.length - 1));
           }
           break;
         }
@@ -244,8 +310,10 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
-      const selected = formattedData.find((item) => item.value === _value);
-      handleSearchChange(selected?.label || '');
+      const selected = sortedData.find((item) => item.value === _value);
+      if (!isCreatable) {
+        handleSearchChange(selected?.label || '');
+      }
       setDropdownOpened(false);
     };
 
@@ -354,6 +422,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               itemComponent={itemComponent}
               size={size}
               nothingFound={nothingFound}
+              creatable={isCreatable && !!createLabel}
+              createLabel={createLabel}
             />
           </SelectDropdown>
         </div>

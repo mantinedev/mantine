@@ -38,10 +38,15 @@ function constructPages(data: ReturnType<typeof getDocsData>): AutocompleteItem[
     return acc;
   }, []) as AutocompleteItem[];
 
-  return pages.map((page) => ({
-    value: page.title,
-    ...page,
-  }));
+  return pages.map((page) => {
+    const { group, ...pageData } = page;
+    return {
+    value: pageData.title,
+    mantineGroup: group,
+    ...pageData,
+  };
+  }
+  );
 }
 
 function filterPages(query: string, pages: AutocompleteItem[]) {
@@ -113,13 +118,13 @@ export default function Search({ data, isMacOS }: SearchProps) {
         data={filteredPages}
         ref={inputRef}
         value={query}
-        itemComponent={({ slug, title, package: mantinePackage, group, ...others }) => (
+        itemComponent={({ slug, title, package: mantinePackage, mantineGroup, ...others }) => (
           <SearchItem
             query={query}
             slug={slug}
             title={title}
             mantinePackage={mantinePackage}
-            group={group}
+            group={mantineGroup}
             {...others}
           />
         )}

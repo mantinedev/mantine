@@ -36,4 +36,23 @@ export default createStyles((theme, { size }: SelectItemsStyles) => ({
     paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
     textAlign: 'center',
   },
+
+  disabled: {
+    cursor: 'default',
+    color: theme.colors.dark[2],
+  },
+
+  seperator: {
+    boxSizing: 'border-box',
+    textAlign: 'left',
+    width: '100%',
+    padding: `${getSizeValue({ size, sizes: theme.spacing }) / 1.5}px ${getSizeValue({
+      size,
+      sizes: theme.spacing,
+    })}px`,
+  },
+
+  seperatorLabel: {
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+  },
 }));
