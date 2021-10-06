@@ -1,44 +1,43 @@
 import { createStyles } from '@mantine/core';
 
-export const BREAKPOINT = '@media (max-width: 960px)';
+const BREAKPOINT = '@media (max-width: 960px)';
 
 export default createStyles((theme) => ({
   wrapper: {
-    position: 'relative',
-    paddingTop: 120,
-    paddingBottom: 120,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+  },
+
+  waves: {
+    fill: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+    width: '150%',
+    height: 56,
+    transform: 'scaleX(-1)',
+    filter: 'drop-shadow(10px 5px 5px rgba(0, 0, 0, 0.05))',
+
+    [BREAKPOINT]: {
+      height: 18,
+    },
+  },
+
+  wavesBottom: {
+    height: 34,
+    transform: 'rotate(180deg)',
+    marginBottom: -5,
+    filter: 'none',
+    fill: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
   },
 
   inner: {
-    display: 'flex',
+    paddingTop: 120,
+    paddingBottom: 200,
 
     [BREAKPOINT]: {
-      flexDirection: 'column',
+      paddingTop: 60,
+      paddingBottom: 80,
     },
   },
 
-  tabs: {
-    flex: '0 0 40%',
-    maxWidth: '40%',
-
-    [BREAKPOINT]: {
-      flex: 1,
-      maxWidth: '100%',
-    },
-  },
-
-  main: {
-    boxSizing: 'border-box',
-    paddingLeft: theme.spacing.xl * 1.5,
-    flex: '0 0 60%',
-    maxWidth: '60%',
-    paddingTop: theme.spacing.md,
-
-    [BREAKPOINT]: {
-      flex: 1,
-      paddingLeft: 0,
-      maxWidth: '100%',
-    },
+  title: {
+    marginBottom: theme.spacing.xl * 2,
   },
 }));

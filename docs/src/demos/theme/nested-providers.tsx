@@ -9,8 +9,8 @@ function Demo() {
     <MantineProvider theme={{ fontFamily: 'Georgia, serif' }}>
       <Text style={{ textAlign: 'center', marginBottom: 10 }}>Georgia or serif text</Text>
 
-      <MantineProvider theme={{ fontFamily: 'Verdana, sans-serif' }}>
-        <Button>Verdana button</Button>
+      <MantineProvider theme={{ fontFamily: 'Greycliff CF, sans-serif' }}>
+        <Button>Greycliff CF button</Button>
       </MantineProvider>
     </MantineProvider>
   );
@@ -24,9 +24,9 @@ export function NestedProvidersDemo() {
       <MantineProvider theme={{ fontFamily: 'Georgia, serif', colorScheme }}>
         <Text style={{ textAlign: 'center', marginBottom: 10 }}>Georgia or serif text</Text>
 
-        <MantineProvider theme={{ fontFamily: 'Verdana, sans-serif', colorScheme }}>
+        <MantineProvider theme={{ fontFamily: 'Greycliff CF, sans-serif', colorScheme }}>
           <Group position="center">
-            <Button>Verdana button</Button>
+            <Button>Greycliff CF button</Button>
           </Group>
         </MantineProvider>
       </MantineProvider>

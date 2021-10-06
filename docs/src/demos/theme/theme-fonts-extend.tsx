@@ -8,12 +8,12 @@ function Demo() {
   return (
     <MantineProvider theme={{
       fontFamily: 'Verdana, sans-serif',
-      fontFamilyMonospace: 'Courier, monospace',
-      headings: { fontFamily: 'Georgia, serif' },
+      fontFamilyMonospace: 'Monaco, Courier, monospace',
+      headings: { fontFamily: 'Greycliff CF, sans-serif' },
     }}>
-      <Title order={3}>Georgia or serif title</Title>
+      <Title order={3}>Greycliff CF or sans-serif title</Title>
       <Button>Verdana button</Button>
-      <Code>Courier Code</Code>
+      <Code>Monaco, Courier Code</Code>
     </MantineProvider>
   );
 }`;
@@ -27,17 +27,17 @@ export function ThemeFontsExtendDemo() {
         theme={{
           colorScheme,
           fontFamily: 'Verdana, sans-serif',
-          fontFamilyMonospace: 'Courier, monospace',
-          headings: { fontFamily: 'Georgia, serif' },
+          fontFamilyMonospace: 'Monaco, Courier, monospace',
+          headings: { fontFamily: 'Greycliff CF, sans-serif' },
         }}
       >
         <Title style={{ textAlign: 'center', marginBottom: 10 }} order={3}>
-          Georgia or serif title
+          Greycliff CF or sans-serif title
         </Title>
 
         <Group position="center">
           <Button>Verdana button</Button>
-          <Code data-mantine-composable>Courier Code</Code>
+          <Code>Monaco, Courier Code</Code>
         </Group>
       </MantineProvider>
     </CodeDemo>

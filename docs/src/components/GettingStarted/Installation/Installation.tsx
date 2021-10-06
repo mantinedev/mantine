@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Title } from '@mantine/core';
+import { Title, SimpleGrid } from '@mantine/core';
 import { PACKAGES_DATA } from './data';
-import { PackageItem } from './PackageItem/PackageItem';
-import useStyles from './Installation.styles';
+import { CheckboxCard } from '../../../gallery/CheckboxCard/CheckboxCard';
 
 interface InstallationProps {
   setDependencies(dependencies: string): void;
 }
 
 export function Installation({ setDependencies }: InstallationProps) {
-  const { classes } = useStyles();
   const [values, setValues] = useState({
     '@mantine/hooks': true,
     '@mantine/core': true,
     '@mantine/dates': false,
     '@mantine/notifications': false,
     '@mantine/prism': false,
+    '@mantine/rte': false,
   });
 
   const items = PACKAGES_DATA.map((item) => (
-    <PackageItem
+    <CheckboxCard
       key={item.package}
+      checked={values[item.package]}
       title={item.package}
       description={item.description}
-      checked={values[item.package]}
       onChange={() => setValues((c) => ({ ...c, [item.package]: !c[item.package] }))}
+      style={{ minHeight: 90 }}
     />
   ));
 
@@ -47,9 +47,14 @@ export function Installation({ setDependencies }: InstallationProps) {
   }, [dependencies]);
 
   return (
-    <div className={classes.wrapper}>
-      <Title>Choose packages</Title>
-      <div className={classes.controls}>{items}</div>
+    <div style={{ marginBottom: 50 }}>
+      <Title order={2} mb="lg">
+        Choose packages
+      </Title>
+
+      <SimpleGrid cols={2} breakpoints={[{ maxWidth: 1000, cols: 1 }]}>
+        {items}
+      </SimpleGrid>
     </div>
   );
 }

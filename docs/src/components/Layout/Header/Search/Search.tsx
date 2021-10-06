@@ -4,6 +4,7 @@ import { Kbd, Autocomplete } from '@mantine/core';
 import { useShallowEffect, useWindowEvent } from '@mantine/hooks';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { getDocsData } from '../../get-docs-data';
+import { Frontmatter } from '../../../../types';
 import useStyles from './Search.styles';
 import SearchItem from './SearchItem';
 

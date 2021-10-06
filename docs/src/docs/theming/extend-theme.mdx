@@ -17,11 +17,11 @@ import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
 By default Mantine uses system fonts. It brings fast and familiar experience to users.
 You can change fonts and other text styles for headings, code and all other components:
 
-- **theme.fontFamilyMonospace** – controls components with monospace font-family, for example, [Code](/core/code/) and [Kbd](/core/kbd/)
-- **theme.fontFamily** – controls font-family in all other cases
-- **theme.lineHeight** – controls line-height property in all components except headings
-- **theme.fontSizes** – controls font-size in all components except headings
-- **theme.headings** – controls font-family, line-heigh and font-size of h1-h6 tags in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components
+- `theme.fontFamilyMonospace` – controls components with monospace font-family, for example, [Code](/core/code/) and [Kbd](/core/kbd/)
+- `theme.fontFamily` – controls font-family in all other cases
+- `theme.lineHeight` – controls line-height property in all components except headings
+- `theme.fontSizes` – controls font-size in all components except headings
+- `theme.headings` – controls font-family, line-heigh and font-size of h1-h6 tags in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components
 
 <ThemeFontsExtendDemo />
 
@@ -67,7 +67,7 @@ Primary color is used:
 - to define focus styles for all interactive elements.
 
 For example, [Button](/core/button/) Component
-by default will use **theme.primaryColor** (press any key on keyboard to see focus ring):
+by default will use `theme.primaryColor` (press any key on keyboard to see focus ring):
 
 <PrimaryColorDemo />
 
@@ -76,9 +76,9 @@ by default will use **theme.primaryColor** (press any key on keyboard to see foc
 Mantine supports 5 sizes for spacing, radius and shadows: xs, sm, md, lg, xl.
 These values are exposed on theme:
 
-- **theme.spacing** – general spacing values used for paddings and margins, for example, to set padding on [Paper](/core/paper/) or [Container](/core/container/) components or to calculate margins in [TypographyStylesProvider](/core/typography-styles-provider/) component.
-- **theme.shadows** – box-shadow values – used with components which extend [Paper](/core/paper/): [Modal](/core/modal/), [Menu](/core/menu/) and others
-- **theme.radius** – border-radius values – used in all components which support radius: [Paper](/core/paper/), [Button](/core/button/), [Input](/core/input/) and others
+- `theme.spacing` – general spacing values used for paddings and margins, for example, to set padding on [Paper](/core/paper/) or [Container](/core/container/) components or to calculate margins in [TypographyStylesProvider](/core/typography-styles-provider/) component.
+- `theme.shadows` – box-shadow values – used with components which extend [Paper](/core/paper/): [Modal](/core/modal/), [Menu](/core/menu/) and others
+- `theme.radius` – border-radius values – used in all components which support radius: [Paper](/core/paper/), [Button](/core/button/), [Input](/core/input/) and others
 
 Example with [Paper](/core/paper/) component (padding is set with `theme.spacing`):
 
@@ -113,7 +113,7 @@ function YourApp() {
 
 ## Breakpoints
 
-Mantine supports 5 sizes for breakpoints (`xs`, `sm`, `md`, `lg`, `xl`), which are used for example in the [Grid](/core/grid/) component.
+Mantine supports 5 sizes for breakpoints (`xs`, `sm`, `md`, `lg`, `xl`), which are used in [Grid](/core/grid/), [SimpleGrid](/core/simple-grid/) and other components.
 
 You can change the breakpoints by setting corresponding properties.
 In this example:

@@ -155,7 +155,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
     const closeDropdown = () => {
       if (dropdownOpened) {
         setDropdownOpened(false);
-        setTimeout(() => inputRef.current?.focus(), transitionDuration + 20);
+        setTimeout(() => inputRef.current?.focus(), transitionDuration + 50);
       }
     };
     const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>

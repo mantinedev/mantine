@@ -1,46 +1,43 @@
 import React, { useState } from 'react';
-import { Text, Title } from '@mantine/core';
+import { Text, Title, UnstyledButton, SimpleGrid } from '@mantine/core';
 import { GUIDES_DATA } from './data';
-import { CraGuide } from './guides/CraGuide';
-import { NextGuide } from './guides/NextGuide';
-import { ViteGuide } from './guides/ViteGuide';
-import { GatsbyGuide } from './guides/GatsbyGuide';
-import { PreactGuide } from './guides/PreactGuide';
+import { guides, GuideProps } from './Guide';
 import useStyles from './Guides.styles';
 
-interface GuidesProps {
-  dependencies: string;
-}
-
-const guides = {
-  cra: CraGuide,
-  next: NextGuide,
-  vite: ViteGuide,
-  gatsby: GatsbyGuide,
-  preact: PreactGuide,
-};
-
-export function Guides({ dependencies }: GuidesProps) {
-  const [selected, setSelected] = useState('cra');
+export function Guides({ dependencies }: GuideProps) {
+  const initialGuide =
+    typeof window !== 'undefined' ? window.location.search?.replace('?g=', '') : 'next';
+  const [selected, setSelected] = useState(initialGuide in guides ? initialGuide : 'next');
   const { classes, cx } = useStyles();
   const Guide = guides[selected];
 
   const controls = GUIDES_DATA.map((guide) => (
-    <button
-      type="button"
+    <UnstyledButton
       className={cx(classes.control, { [classes.active]: guide.id === selected })}
       key={guide.id}
       onClick={() => setSelected(guide.id)}
     >
       <guide.icon />
-      <Text className={classes.controlTitle}>{guide.title}</Text>
-    </button>
+      <Text mt="md">{guide.title}</Text>
+    </UnstyledButton>
   ));
 
   return (
     <div>
-      <Title>And get started with</Title>
-      <div className={classes.controls}>{controls}</div>
+      <Title order={2} mb="lg">
+        And get started with
+      </Title>
+
+      <SimpleGrid
+        cols={5}
+        breakpoints={[
+          { maxWidth: 1100, cols: 3 },
+          { maxWidth: 755, cols: 1 },
+        ]}
+      >
+        {controls}
+      </SimpleGrid>
+
       <div className={classes.guide}>
         <Guide dependencies={dependencies} />
       </div>

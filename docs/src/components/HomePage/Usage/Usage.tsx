@@ -1,8 +1,8 @@
 import React from 'react';
-import { Container, Text, SimpleGrid } from '@mantine/core';
+import { Text, SimpleGrid } from '@mantine/core';
 import { Link } from 'gatsby';
-import { SectionTitle } from '../SectionTitle/SectionTitle';
 import { GUIDES_DATA } from '../../GettingStarted/Guides/data';
+import { PageSection } from '../PageSection/PageSection';
 import useStyles from './Usage.styles';
 
 export function Usage() {
@@ -18,25 +18,20 @@ export function Usage() {
   });
 
   return (
-    <div className={classes.wrapper}>
-      <Container size={1100}>
-        <SectionTitle>Use anywhere</SectionTitle>
-        <Text className={classes.description} size="xl">
-          Mantine works in all modern environments – get started instantly with Next.js, Gatsby.js,
-          create-react-app, Vite or Preact by following getting started guide:
-        </Text>
-
-        <SimpleGrid
-          cols={5}
-          mt={30}
-          breakpoints={[
-            { maxWidth: 1100, cols: 3 },
-            { maxWidth: 755, cols: 1 },
-          ]}
-        >
-          {guides}
-        </SimpleGrid>
-      </Container>
-    </div>
+    <PageSection
+      title="Use anywhere"
+      description="Mantine works in all modern environments – get started instantly with Next.js, Gatsby.js, create-react-app, Vite or Preact by following getting started guide:"
+    >
+      <SimpleGrid
+        cols={5}
+        mt={30}
+        breakpoints={[
+          { maxWidth: 1100, cols: 3 },
+          { maxWidth: 755, cols: 1 },
+        ]}
+      >
+        {guides}
+      </SimpleGrid>
+    </PageSection>
   );
 }

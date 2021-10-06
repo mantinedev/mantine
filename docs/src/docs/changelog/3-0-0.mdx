@@ -4,7 +4,7 @@ title: 'Version 3.0.0'
 order: 1
 slug: /changelog/3-0-0/
 release: https://github.com/mantinedev/mantine/releases/tag/3.0.0
-date: 'September 16th, 2021'
+date: 'October 11th, 2021'
 ---
 
 import { AccordionDemos, AvatarDemos, MediaQueryDemos, SelectDemos, MultiSelectDemos } from '@demos/core';
@@ -22,6 +22,7 @@ import {
 - `@mantine/core` package no longer exports react-jss `theming` context, use [createStyles](https://mantine.dev/theming/create-styles/) instead
 - All components no longer support `themeOverride` prop due to performance reasons
 - `elementRef` prop was replaced with `ref` in all components
+- Default line-height (`theme.lineHeight`) was increased from 1.4 to 1.55
 
 ## Migration to emotion
 
@@ -211,6 +212,7 @@ function Demo() {
 ## Other changes
 
 - [ActionIcon](https://mantine.dev/core/action-icon/) and [Button](https://mantine.dev/core/button/) components now support new `default` variant
-- [Pagination](https://mantine.dev/core/pagination/) component now supports adding first and last controls
+- [Pagination](https://mantine.dev/core/pagination/) component now supports adding first and last controls and removing next/prev buttons
 - [SimpleGrid](https://mantine.dev/core/simple-grid/) component now supports `theme.breakpoints` usage in `breakpoints` prop
 - [Group](https://mantine.dev/core/group/) component no longer supports Styles API, you can add styles directly to element and children instead
+- New [Space](https://mantine.dev/core/space/) component lets you add spacing between elements without directly subscribing to theme

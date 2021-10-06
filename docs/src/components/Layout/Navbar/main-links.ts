@@ -20,5 +20,5 @@ export default [
   //   theme: DEFAULT_THEME.colors.pink[6],
   //   icon: BlendingModeIcon,
   // },
-  { to: '/contribute/', label: 'Contribute', theme: '#000', icon: GitHubLogoIcon },
+  { to: '/pages/contributing/', label: 'Contribute', theme: '#000', icon: GitHubLogoIcon },
 ];

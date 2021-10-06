@@ -2,13 +2,12 @@ import React from 'react';
 import { useMantineTheme } from '@mantine/core';
 import Head from '../Head/Head';
 import { Jumbotron } from './Jumbotron/Jumbotron';
-// import { Features } from './Features/Features';
 import { Footer } from '../Footer/Footer';
-// import { Explore } from './Explore/Explore';
 import { Community } from './Community/Community';
 import { Customize } from './Customize/Customize';
 import { Usage } from './Usage/Usage';
-import { FeaturesSection } from './FeaturesSection/FeaturesSection';
+import { Emotion } from './Emotion/Emotion';
+import { Explore } from './Explore/Explore';
 
 export function HomePage() {
   const theme = useMantineTheme();
@@ -17,11 +16,10 @@ export function HomePage() {
       <Head title="Mantine" disableTitleTemplate />
       <div style={{ position: 'relative', zIndex: 1, boxShadow: theme.shadows.sm }}>
         <Jumbotron />
-        <FeaturesSection />
+        <Explore />
         <Customize />
+        <Emotion />
         <Usage />
-        {/* <Features /> */}
-        {/* <Explore /> */}
         <Community />
       </div>
       <Footer />

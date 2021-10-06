@@ -55,6 +55,7 @@ export * as SegmentedControlDemos from './components/SegmentedControl/demos';
 export * as SelectDemos from './components/Select/demos';
 export * as SimpleGridDemos from './components/SimpleGrid/demos';
 export * as SliderDemos from './components/Slider/demos';
+export * as SpaceDemos from './components/Space/demos';
 export * as SpoilerDemos from './components/Spoiler/demos';
 export * as SwitchDemos from './components/Switch/demos';
 export * as TableDemos from './components/Table/demos';

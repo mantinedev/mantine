@@ -1,22 +1,24 @@
-import { BlendingModeIcon, LightningBoltIcon } from '@modulz/radix-icons';
+import { BlendingModeIcon, StarFilledIcon } from '@modulz/radix-icons';
 import { MarkGithubIcon } from '@primer/octicons-react';
 import { DEFAULT_THEME } from '@mantine/core';
 
 export const NEXT_STEPS_DATA = [
   {
-    title: 'Learn about theming',
-    description: 'Change fonts, shadows, colors and many other default properties',
-    link: '/theming/theming-context/',
+    title: 'Learn the basics',
+    description:
+      'Read a 5 minute tutorial to get an overview of all core features, please start your journey with Mantine here',
+    link: '/pages/basics/',
     type: 'gatsby',
-    icon: BlendingModeIcon,
-    color: DEFAULT_THEME.colors.teal[6],
+    icon: StarFilledIcon,
+    color: DEFAULT_THEME.colors.violet[6],
   },
   {
-    title: 'Learn about Styles API',
-    description: 'Styles API allows you to add your styles to any part of component',
-    link: '/theming/styles-api/',
+    title: 'Learn about theming',
+    description:
+      'Learn how to change colors, fonts, shadows, spacing and other theme values with MantineProvider',
+    link: '/theming/mantine-provider/',
     type: 'gatsby',
-    icon: LightningBoltIcon,
+    icon: BlendingModeIcon,
     color: DEFAULT_THEME.colors.pink[6],
   },
   {
