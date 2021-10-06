@@ -7,7 +7,13 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.0.0
 date: 'October 11th, 2021'
 ---
 
-import { AccordionDemos, AvatarDemos, MediaQueryDemos, SelectDemos, MultiSelectDemos } from '@demos/core';
+import {
+  AccordionDemos,
+  AvatarDemos,
+  MediaQueryDemos,
+  SelectDemos,
+  MultiSelectDemos,
+} from '@demos/core';
 import {
   useResizeObserverDemo,
   useViewportSizeDemo,
@@ -161,6 +167,14 @@ function Demo() {
 
 ## New features
 
+[Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) components now support creating new items, items grouping and disabling:
+
+<Demo data={MultiSelectDemos.creatable} demoProps={{ toggle: true, zIndex: 6 }} />
+
+<Demo data={MultiSelectDemos.disabledItems} demoProps={{ toggle: true, zIndex: 5 }} />
+
+<Demo data={MultiSelectDemos.groups} demoProps={{ toggle: true, zIndex: 4 }} />
+
 [Accordion](https://mantine.dev/core/accordion/) component now supports more options to customize icons and labels:
 
 - `iconPosition` prop let's you choose where chevron icon will be rendered: right or left
@@ -172,25 +186,6 @@ function Demo() {
 
 <Demo data={AvatarDemos.avatarsGroup} demoProps={{ toggle: true }} />
 
-[Select](https://mantine.dev/core/select) component now supports `creatable` feature.
-
-<Demo data={SelectDemos.creatable} demoProps={{ toggle: true }} />
-
-[Select](https://mantine.dev/core/select) component data prop now supports `disabled` and `group` properties.
-
-<Demo data={SelectDemos.disabledItems} demoProps={{ toggle: true }} />
-
-<Demo data={SelectDemos.groups} demoProps={{ toggle: true }} />
-
-[MultiSelect](https://mantine.dev/core/multiselect) component now supports `creatable` feature.
-
-<Demo data={MultiSelectDemos.creatable} demoProps={{ toggle: true }} />
-
-[MultiSelect](https://mantine.dev/core/select) component data prop now supports `disabled` and `group` properties.
-
-<Demo data={MultiSelectDemos.disabledItems} demoProps={{ toggle: true }} />
-
-<Demo data={MultiSelectDemos.groups} demoProps={{ toggle: true }} />
 ## New hooks
 
 [use-resize-observer](https://mantine.dev/hooks/use-resize-observer/) lets you subscribe to element size and position changes with [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver):
