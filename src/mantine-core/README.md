@@ -25,7 +25,6 @@ Mantine is a MIT licensed open source react components and hooks library with fo
 - **Ready for production** – mantine is well tested and works in all modern browsers
 - **Developer experience** – mantine comes with more than 50 components and 15 hooks to cover you in most cases
 - **No annoying focus ring** – with new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard
-- **React JSS** – take advantage of all react-jss features: automatic critical css extraction during ssr, lazy evaluation, dynamic theming and others
 - **React and Preact** – mantine works flawlessly with preact
 
 ## Installation

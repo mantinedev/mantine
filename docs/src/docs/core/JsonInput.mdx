@@ -40,9 +40,9 @@ Component supports all props from [Input](/core/input/) and [InputWrapper](/core
 
 <Demo data={JsonInputDemos.configurator} />
 
-## Get element ref
+## Get input ref
 
-You can get textarea ref with `elementRef` prop:
+You can get textarea ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -50,18 +50,8 @@ import { JsonInput } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
-  return <JsonInput elementRef={ref} />;
+  return <JsonInput ref={ref} />;
 }
-```
-
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<JsonInput /> // -> random id generated both on client and server, props mismatch warning
-<JsonInput id="my-json" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility

@@ -24,7 +24,7 @@ const getSelector = (str: string) =>
   lowerFirst(str).replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
 
 export function StylesApiItem({ component }: StylesApiItemProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const COMPONENT_STYLES = STYLES_API[component];
 
   if (!COMPONENT_STYLES || typeof COMPONENT_STYLES !== 'object') {

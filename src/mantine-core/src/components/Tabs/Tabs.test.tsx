@@ -6,9 +6,12 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsStylesApi,
+  itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { TabControl } from './TabControl/TabControl';
-import { Tabs, Tab } from './Tabs';
+import { Tabs } from './Tabs';
+import { Tab } from './Tab/Tab';
 import { Tabs as TabsStylesApi } from './styles.api';
 
 const content = [
@@ -33,7 +36,9 @@ describe('@mantine/core/Tabs', () => {
   checkAccessibility([mount(<Tabs>{content}</Tabs>), mount(<Tabs initialTab={2}>{content}</Tabs>)]);
   itSupportsOthers(Tabs, defaultProps);
   itSupportsStyle(Tabs, defaultProps);
+  itSupportsMargins(Tabs, defaultProps);
   itSupportsClassName(Tabs, defaultProps);
+  itSupportsRef(Tabs, defaultProps, HTMLDivElement);
   itSupportsStylesApi(Tabs, defaultProps, Object.keys(TabsStylesApi), 'tabs');
 
   it('has correct displayName', () => {
@@ -167,7 +172,7 @@ describe('@mantine/core/Tabs', () => {
     const ref = React.createRef<HTMLButtonElement>();
     mount(
       <Tabs>
-        <Tab elementRef={ref} label="test" />
+        <Tab ref={ref} label="test" />
       </Tabs>
     );
     expect(ref.current instanceof HTMLButtonElement).toBe(true);

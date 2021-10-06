@@ -1,7 +1,21 @@
 import path from 'path';
 import { withCustomConfig, PropItem } from 'react-docgen-typescript';
 
-const EXCLUDE_PROPS = ['className', 'classNames', 'styles', 'key', 'ref', 'style', 'themeOverride'];
+const EXCLUDE_PROPS = [
+  'className',
+  'classNames',
+  'styles',
+  'key',
+  'ref',
+  'style',
+  'm',
+  'mx',
+  'my',
+  'mt',
+  'ml',
+  'mr',
+  'mb',
+];
 
 export const docgenParser = withCustomConfig(path.join(__dirname, '../../tsconfig.json'), {
   savePropValueAsString: true,

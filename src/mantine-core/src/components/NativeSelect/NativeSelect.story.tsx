@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { RocketIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME } from '../../theme';
 import { NativeSelect } from './NativeSelect';
 
 const data = [
@@ -12,7 +11,7 @@ const data = [
 ];
 
 function WrappedSelect(
-  props: Omit<React.ComponentProps<typeof NativeSelect>, 'value' | 'onChange' | 'data'>
+  props: Omit<React.ComponentPropsWithoutRef<typeof NativeSelect>, 'value' | 'onChange' | 'data'>
 ) {
   const [value, onChange] = useState(null);
   return (
@@ -111,17 +110,5 @@ storiesOf('@mantine/core/NativeSelect', module)
         required
         placeholder="Your favorite library"
       />
-    </div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40, minHeight: '100vh' }}>
-      <div style={{ width: 300, padding: 20 }}>
-        <NativeSelect
-          label="Your favorite library"
-          placeholder="Your favorite library"
-          data={data}
-          themeOverride={{ colorScheme: 'dark' }}
-        />
-      </div>
     </div>
   ));

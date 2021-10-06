@@ -1,16 +1,14 @@
-import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../theme';
+import React, { forwardRef } from 'react';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  useExtractedMargins,
+  PolymorphicComponentProps,
+  PolymorphicRef,
+} from '@mantine/styles';
 import useStyles from './ColorSwatch.styles';
 
-interface _ColorSwatchProps<C extends React.ElementType, R extends HTMLElement>
-  extends DefaultProps {
-  /** Root element or custom component */
-  component?: C;
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<R>;
-
+interface _ColorSwatchProps extends DefaultProps {
   /** Swatch color value in any css valid format (hex, rgb, etc.) */
   color: string;
 
@@ -21,41 +19,48 @@ interface _ColorSwatchProps<C extends React.ElementType, R extends HTMLElement>
   radius?: MantineNumberSize;
 }
 
-export type ColorSwatchProps<
-  C extends React.ElementType = 'div',
-  R extends HTMLElement = HTMLDivElement
-> = _ColorSwatchProps<C, R> &
-  Omit<React.ComponentPropsWithoutRef<C>, keyof _ColorSwatchProps<C, R>>;
+export type ColorSwatchProps<C extends React.ElementType> = PolymorphicComponentProps<
+  C,
+  _ColorSwatchProps
+>;
 
-export function ColorSwatch<
-  C extends React.ElementType = 'div',
-  R extends HTMLElement = HTMLDivElement
->({
-  component,
-  color,
-  size = 25,
-  radius = 25,
-  className,
-  themeOverride,
-  children,
-  ...others
-}: ColorSwatchProps<C, R>) {
-  const classes = useStyles(
-    { radius, size, theme: useMantineTheme(themeOverride) },
-    null,
-    'color-swatch'
-  );
+type ColorSwatchComponent = <C extends React.ElementType = 'div'>(
+  props: ColorSwatchProps<C>
+) => React.ReactElement;
 
-  const Element = component || 'div';
+export const ColorSwatch: ColorSwatchComponent & { displayName?: string } = forwardRef(
+  <C extends React.ElementType = 'div'>(
+    {
+      component,
+      color,
+      size = 25,
+      radius = 25,
+      className,
+      children,
+      style,
+      ...others
+    }: ColorSwatchProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const { classes, cx } = useStyles({ radius, size }, null, 'color-swatch');
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
-  return (
-    <Element className={cx(classes.colorSwatch, className)} {...others}>
-      <div className={cx(classes.alphaOverlay, classes.overlay)} />
-      <div className={cx(classes.shadowOverlay, classes.overlay)} />
-      <div className={classes.overlay} style={{ backgroundColor: color }} />
-      <div className={cx(classes.children, classes.overlay)}>{children}</div>
-    </Element>
-  );
-}
+    const Element = component || 'div';
+
+    return (
+      <Element
+        className={cx(classes.colorSwatch, className)}
+        style={mergedStyles}
+        ref={ref}
+        {...rest}
+      >
+        <div className={cx(classes.alphaOverlay, classes.overlay)} />
+        <div className={cx(classes.shadowOverlay, classes.overlay)} />
+        <div className={classes.overlay} style={{ backgroundColor: color }} />
+        <div className={cx(classes.children, classes.overlay)}>{children}</div>
+      </Element>
+    );
+  }
+);
 
 ColorSwatch.displayName = '@mantine/core/ColorSwatch';

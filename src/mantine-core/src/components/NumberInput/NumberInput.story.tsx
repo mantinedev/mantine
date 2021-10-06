@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MantineProvider, MANTINE_SIZES } from '../../theme';
+import { MantineProvider, DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
+
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Group } from '../Group/Group';
 import { NumberInput, NumberInputHandlers } from './NumberInput';
@@ -9,7 +10,9 @@ const sizes = MANTINE_SIZES.map((size) => (
   <NumberInput defaultValue={0} label={size} size={size} key={size} style={{ marginTop: 30 }} />
 ));
 
-function Wrapper(props: Omit<React.ComponentProps<typeof NumberInput>, 'value' | 'onChange'>) {
+function Wrapper(
+  props: Omit<React.ComponentPropsWithoutRef<typeof NumberInput>, 'value' | 'onChange'>
+) {
   const [value, setValue] = useState(0);
   return <NumberInput value={value} onChange={(val) => setValue(val)} {...props} />;
 }

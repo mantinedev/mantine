@@ -94,7 +94,7 @@ import { itSupportsRef } from '@mantine/tests';
 import { Button } from '@mantine/core';
 
 describe('@mantine/core/Button', () => {
-  itSupportsRef(Button, { children: 'test' }, HTMLButtonElement, 'elementRef');
+  itSupportsRef(Button, { children: 'test' }, HTMLButtonElement, 'customRefPath');
 });
 ```
 

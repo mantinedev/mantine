@@ -1,32 +1,25 @@
-import {
-  createMemoStyles,
-  MantineTheme,
-  INPUT_SIZES,
-  MantineSize,
-  getSizeValue,
-} from '@mantine/core';
+import { createStyles, INPUT_SIZES, MantineSize, getSizeValue } from '@mantine/core';
 
 import { inputSizes } from '../TimeInput/TimeInput.styles';
 
 interface TimeRangeInputStyles {
-  theme: MantineTheme;
   size: MantineSize;
 }
 
-export default createMemoStyles({
+export default createStyles((theme, { size }: TimeRangeInputStyles) => ({
   disabled: {
     opacity: 0.6,
     cursor: 'not-allowed',
   },
 
-  inputWrapper: ({ size }: TimeRangeInputStyles) => ({
+  inputWrapper: {
     display: 'inline-flex',
     alignItems: 'center',
     // -2 for border offset
     height: getSizeValue({ size, sizes: INPUT_SIZES }) - 2,
-  }),
+  },
 
-  timeField: ({ theme, size }: TimeRangeInputStyles) => ({
+  timeField: {
     width: getSizeValue({ size, sizes: inputSizes }),
     appearance: 'none',
     backgroundColor: 'transparent',
@@ -42,12 +35,12 @@ export default createMemoStyles({
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
       cursor: 'not-allowed',
     },
-  }),
+  },
 
-  separator: ({ theme, size }: TimeRangeInputStyles) => ({
+  separator: {
     paddingLeft: getSizeValue({ size, sizes: theme.spacing }) / 2,
     paddingRight: getSizeValue({ size, sizes: theme.spacing }) / 2,
     lineHeight: 1,
     marginBottom: 3,
-  }),
-});
+  },
+}));

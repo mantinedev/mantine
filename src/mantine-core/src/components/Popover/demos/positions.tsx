@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { Popover, Badge, Group } from '../../../index';
 
 function Wrapper(
-  props: Omit<React.ComponentProps<typeof Popover>, 'opened' | 'onClose' | 'target' | 'children'>
+  props: Omit<
+    React.ComponentPropsWithoutRef<typeof Popover>,
+    'opened' | 'onClose' | 'target' | 'children'
+  >
 ) {
   const [opened, setOpened] = useState(false);
   return (

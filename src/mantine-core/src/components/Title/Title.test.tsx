@@ -6,6 +6,8 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsClassName,
+  itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Title } from './Title';
 
@@ -18,7 +20,9 @@ describe('@mantine/core/Title', () => {
   itRendersChildren(Title, {});
   itSupportsOthers(Title, {});
   itSupportsStyle(Title, {});
+  itSupportsMargins(Title, {});
   itSupportsClassName(Title, {});
+  itSupportsRef(Title, {}, HTMLHeadingElement);
 
   it('has correct displayName', () => {
     expect(Title.displayName).toEqual('@mantine/core/Title');

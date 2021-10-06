@@ -1,17 +1,23 @@
-import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, mergeStyles, useMantineTheme } from '../../theme';
-import { Transition, MantineTransition } from '../Transition/Transition';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { Affix } from '../Affix/Affix';
+import React, { forwardRef } from 'react';
+import {
+  mergeStyles,
+  useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
+  ClassNames,
+  MantineMargin,
+} from '@mantine/styles';
+import { Transition, MantineTransition } from '../Transition';
+import { CloseButton } from '../ActionIcon';
+import { Affix } from '../Affix';
 import { Paper, PaperProps } from '../Paper/Paper';
 import useStyles from './Dialog.styles';
 
-export type DialogStylesNames = keyof ReturnType<typeof useStyles>;
+export type DialogStylesNames = ClassNames<typeof useStyles>;
 
 export interface DialogProps
-  extends DefaultProps<DialogStylesNames>,
-    Omit<PaperProps<'div', HTMLDivElement>, 'classNames' | 'styles'> {
+  extends Omit<DefaultProps<DialogStylesNames>, MantineMargin>,
+    Omit<PaperProps<'div'>, 'classNames' | 'styles'> {
   /** Display close button at the top right corner */
   withCloseButton?: boolean;
 
@@ -56,7 +62,6 @@ export function MantineDialog({
   padding = 'md',
   zIndex,
   children,
-  themeOverride,
   className,
   style,
   classNames,
@@ -69,8 +74,7 @@ export function MantineDialog({
   transitionTimingFunction,
   ...others
 }: DialogProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, 'dialog');
+  const { classes, cx } = useStyles({ size }, classNames, 'dialog');
   const _styles = mergeStyles(classes, styles);
 
   return (
@@ -86,14 +90,12 @@ export function MantineDialog({
           style={{ ...style, ..._styles.root, ...transitionStyles }}
           shadow={shadow}
           padding={padding}
-          themeOverride={themeOverride}
           withBorder={withBorder}
           {...others}
         >
           {withCloseButton && (
             <CloseButton
               onClick={onClose}
-              themeOverride={themeOverride}
               className={classes.closeButton}
               style={_styles.closeButton}
             />
@@ -105,17 +107,18 @@ export function MantineDialog({
   );
 }
 
-export function Dialog(props: DialogProps) {
-  const theme = useMantineTheme(props.themeOverride);
+export const Dialog = forwardRef<HTMLDivElement, DialogProps>((props: DialogProps, ref) => {
+  const theme = useMantineTheme();
 
   return (
     <Affix
       zIndex={props.zIndex}
       position={props.position || { bottom: theme.spacing.xl, right: theme.spacing.xl }}
+      ref={ref}
     >
       <MantineDialog {...props} />
     </Affix>
   );
-}
+});
 
 Dialog.displayName = '@mantine/core/Dialog';

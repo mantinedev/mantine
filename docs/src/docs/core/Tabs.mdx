@@ -92,7 +92,7 @@ To remove all default styles set `variant` prop to `unstyled`:
 
 ## Get tab control ref
 
-You can get tab control ref by passing `elementRef` prop to `Tab` component
+You can get tab control ref by passing `ref` prop to `Tab` component
 
 ```tsx
 import { useRef } from 'react';
@@ -104,7 +104,7 @@ function TabsDemo() {
   return (
     <Tabs>
       <Tab label="First">First tab content</Tab>
-      <Tab label="Second" elementRef={secondTabRef}>
+      <Tab label="Second" ref={secondTabRef}>
         Second tab content
       </Tab>
       <Tab label="Third">Third tab content</Tab>

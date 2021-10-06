@@ -1,6 +1,7 @@
 import { CATEGORIZED, Category } from '../../settings';
+import { Frontmatter } from '../../types';
 
-interface DocsQuery {
+export interface DocsQuery {
   allMdx: {
     edges: {
       node: { frontmatter: Frontmatter };

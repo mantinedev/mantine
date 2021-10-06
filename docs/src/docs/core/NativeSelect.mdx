@@ -58,9 +58,9 @@ Note that in this case `clearable` option will not work and will need to handle 
 
 <Demo data={NativeSelectDemos.rightSection} />
 
-## Get element ref
+## Get input ref
 
-You can get input ref by passing `elementRef` prop to NativeSelect component:
+You can get input ref by passing `ref` prop to NativeSelect component:
 
 ```tsx
 import { useRef } from 'react';
@@ -68,18 +68,8 @@ import { NativeSelect } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
-  return <NativeSelect elementRef={ref} />;
+  return <NativeSelect ref={ref} />;
 }
-```
-
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<NativeSelect /> // -> random id generated both on client and server, props mismatch warning
-<NativeSelect id="my-select" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility

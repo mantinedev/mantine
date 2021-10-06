@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import Flag from 'react-flagpack';
 import {
   useMantineTheme,
@@ -13,11 +13,10 @@ function Value({
   value,
   label,
   onRemove,
-  themeOverride,
   classNames,
   ...others
 }: MultiSelectValueProps & { value: string }) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
 
   return (
     <div {...others}>
@@ -44,9 +43,9 @@ function Value({
   );
 }
 
-function Item({ label, value, elementRef, ...others }: SelectItemProps) {
-  return (
-    <div ref={elementRef} {...others}>
+const Item = forwardRef<HTMLDivElement, SelectItemProps>(
+  ({ label, value, ...others }: SelectItemProps, ref) => (
+    <div ref={ref} {...others}>
       <div style={{ display: 'flex' }}>
         <div style={{ marginRight: 10 }}>
           <Flag code={value} size="S" />
@@ -54,8 +53,8 @@ function Item({ label, value, elementRef, ...others }: SelectItemProps) {
         <div>{label}</div>
       </div>
     </div>
-  );
-}
+  )
+);
 
 export function CountriesSelect() {
   return (

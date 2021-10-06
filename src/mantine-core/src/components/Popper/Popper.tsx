@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import { usePopper } from 'react-popper';
 import { useDidUpdate } from '@mantine/hooks';
+import { Portal } from '../Portal';
+import { Transition, MantineTransition } from '../Transition';
+import { parsePopperPosition } from './parse-popper-position/parse-popper-position';
 import useStyles from './Popper.styles';
-import { Portal } from '../Portal/Portal';
-import { Transition, MantineTransition } from '../Transition/Transition';
 
 export interface SharedPopperProps {
   /** Position relative to reference element */
@@ -55,20 +55,6 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
   forceUpdateDependencies?: any[];
 }
 
-function parsePopperPosition(position: string) {
-  if (typeof position !== 'string') {
-    return { position: 'top', placement: 'center' };
-  }
-
-  const splitted = position.split('-');
-
-  if (splitted.length === 1) {
-    return { position, placement: 'center' };
-  }
-
-  return { position: splitted[0], placement: splitted[1] };
-}
-
 export function Popper<T extends HTMLElement = HTMLDivElement>({
   position = 'top',
   placement = 'center',
@@ -83,11 +69,11 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   transitionTimingFunction,
   arrowClassName,
   arrowStyle,
-  zIndex = 1,
+  zIndex = 100,
   forceUpdateDependencies = [],
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
-  const classes = useStyles({ arrowSize });
+  const { classes, cx } = useStyles({ arrowSize });
   const [popperElement, setPopperElement] = useState(null);
 
   const { styles, attributes, forceUpdate } = usePopper(referenceElement, popperElement, {

@@ -50,9 +50,9 @@ Use any component or element with ColorSwatch by setting `component` prop:
 
 <Demo data={ColorSwatchDemos.component} />
 
-## Get element ref
+## Get root element ref
 
-You can get root element ref with `elementRef` prop:
+You can get root element ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -60,28 +60,28 @@ import { ColorSwatch } from '@mantine/core';
 
 function Demo() {
   const ref = useRef();
-  return <ColorSwatch elementRef={ref} />;
+  return <ColorSwatch ref={ref} />;
 }
 ```
 
 ## TypeScript
 
-You need to pass additional types to use custom component with TypeScript
-in case you need full type coverage for events and `elementRef`:
+You need to pass additional type to use custom component with TypeScript
+in case you need full type coverage for events and `ref`:
 
 ```tsx
-<ColorSwatch<'button', HTMLButtonElement>
+<ColorSwatch<'button'>
   component="button"
   onClick={(event) => console.log(event)}
-  elementRef={(node) => {
+  ref={(node) => {
     window.myRef = node;
   }}
 />
 
-<ColorSwatch<typeof Link, HTMLAnchorElement>
+<ColorSwatch<typeof Link>
   component={Link}
   onClick={(event) => console.log(event)}
-  elementRef={(node) => {
+  ref={(node) => {
     window.myRef = node;
   }}
 />

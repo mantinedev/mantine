@@ -1,11 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineNumberSize, mergeStyles } from '../../theme';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineNumberSize,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { Text } from '../Text/Text';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
 
-export type ImageStylesNames = keyof ReturnType<typeof useStyles>;
+export type ImageStylesNames = ClassNames<typeof useStyles>;
 
 export interface ImageProps
   extends DefaultProps<ImageStylesNames>,
@@ -37,9 +42,6 @@ export interface ImageProps
   /** Props spread to img element */
   imageProps?: React.ComponentPropsWithoutRef<'img'>;
 
-  /** Get root element ref */
-  elementRef?: React.ForwardedRef<HTMLDivElement>;
-
   /** Get image element ref */
   imageRef?: React.ForwardedRef<HTMLImageElement>;
 
@@ -47,88 +49,91 @@ export interface ImageProps
   caption?: React.ReactNode;
 }
 
-export function Image({
-  className,
-  style,
-  themeOverride,
-  alt,
-  src,
-  fit = 'cover',
-  width = '100%',
-  height = 'auto',
-  radius = 0,
-  imageProps,
-  withPlaceholder = false,
-  placeholder,
-  imageRef,
-  elementRef,
-  classNames,
-  styles,
-  caption,
-  ...others
-}: ImageProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, theme }, classNames, 'image');
-  const _styles = mergeStyles(classes, styles);
-  const [loaded, setLoaded] = useState(false);
-  const [error, setError] = useState(!src);
-  const isPlaceholder = withPlaceholder && (!loaded || error);
-  const firstUpdate = useRef(true);
+export const Image = forwardRef<HTMLDivElement, ImageProps>(
+  (
+    {
+      className,
+      style,
+      alt,
+      src,
+      fit = 'cover',
+      width = '100%',
+      height = 'auto',
+      radius = 0,
+      imageProps,
+      withPlaceholder = false,
+      placeholder,
+      imageRef,
+      classNames,
+      styles,
+      caption,
+      ...others
+    }: ImageProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ radius }, classNames, 'image');
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const [loaded, setLoaded] = useState(false);
+    const [error, setError] = useState(!src);
+    const isPlaceholder = withPlaceholder && (!loaded || error);
+    const firstUpdate = useRef(true);
 
-  useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-    } else {
-      setLoaded(false);
-      setError(false);
-    }
-  }, [src]);
+    useEffect(() => {
+      if (firstUpdate.current) {
+        firstUpdate.current = false;
+      } else {
+        setLoaded(false);
+        setError(false);
+      }
+    }, [src]);
 
-  return (
-    <div
-      className={cx(classes.root, className)}
-      style={{ width, height, ...style, ..._styles.root }}
-      ref={elementRef}
-      {...others}
-    >
-      {isPlaceholder && (
-        <div className={classes.placeholder} title={alt} style={_styles.placeholder}>
-          {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
-        </div>
-      )}
-
-      <figure className={classes.figure}>
-        <img
-          className={classes.image}
-          src={src}
-          alt={alt}
-          style={{ ..._styles.image, objectFit: fit }}
-          ref={imageRef}
-          onLoad={(event) => {
-            setLoaded(true);
-            typeof imageProps?.onLoad === 'function' && imageProps.onLoad(event);
-          }}
-          onError={(event) => {
-            setError(true);
-            typeof imageProps?.onError === 'function' && imageProps.onError(event);
-          }}
-          {...imageProps}
-        />
-
-        {!!caption && (
-          <Text
-            component="figcaption"
-            size="sm"
-            align="center"
-            className={classes.caption}
-            style={_styles.caption}
-          >
-            {caption}
-          </Text>
+    return (
+      <div
+        className={cx(classes.root, className)}
+        style={{ width, height, ...mergedStyles }}
+        ref={ref}
+        {...rest}
+      >
+        {isPlaceholder && (
+          <div className={classes.placeholder} title={alt} style={_styles.placeholder}>
+            {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
+          </div>
         )}
-      </figure>
-    </div>
-  );
-}
+
+        <figure className={classes.figure}>
+          <img
+            className={classes.image}
+            src={src}
+            alt={alt}
+            style={{ ..._styles.image, objectFit: fit }}
+            ref={imageRef}
+            onLoad={(event) => {
+              setLoaded(true);
+              typeof imageProps?.onLoad === 'function' && imageProps.onLoad(event);
+            }}
+            onError={(event) => {
+              setError(true);
+              typeof imageProps?.onError === 'function' && imageProps.onError(event);
+            }}
+            {...imageProps}
+          />
+
+          {!!caption && (
+            <Text
+              component="figcaption"
+              size="sm"
+              align="center"
+              className={classes.caption}
+              style={_styles.caption}
+            >
+              {caption}
+            </Text>
+          )}
+        </figure>
+      </div>
+    );
+  }
+);
 
 Image.displayName = '@mantine/core/Image';

@@ -1,22 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
-import cx from 'clsx';
-import { useId, useReducedMotion, useUncontrolled } from '@mantine/hooks';
+import { useReducedMotion, useUncontrolled } from '@mantine/hooks';
 import {
+  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  mergeStyles,
-  useMantineTheme,
   MantineColor,
-} from '../../theme';
+  ClassNames,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
-interface SegmentedControlItem {
+export interface SegmentedControlItem {
   value: string;
   label: React.ReactNode;
 }
 
-export type SegmentedControlStylesNames = keyof ReturnType<typeof useStyles>;
+export type SegmentedControlStylesNames = ClassNames<typeof useStyles>;
 
 export interface SegmentedControlProps
   extends DefaultProps<SegmentedControlStylesNames>,
@@ -58,7 +59,6 @@ export interface SegmentedControlProps
 export function SegmentedControl({
   className,
   style,
-  themeOverride,
   data: _data,
   name,
   value,
@@ -74,11 +74,8 @@ export function SegmentedControl({
   defaultValue,
   ...others
 }: SegmentedControlProps) {
-  // reduce motion should be implemented via js, there is a bug in jss with media queries
-  // https://github.com/cssinjs/jss/issues/1320
   const reduceMotion = useReducedMotion();
-  const theme = useMantineTheme(themeOverride);
-  const data = _data.map((item) =>
+  const data = _data.map((item: any) =>
     typeof item === 'string' ? { label: item, value: item } : item
   );
 
@@ -91,14 +88,13 @@ export function SegmentedControl({
     rule: (val) => !!val,
   });
 
-  const classes = useStyles(
+  const { classes, cx } = useStyles(
     {
-      theme,
       size,
       fullWidth,
       color,
       radius,
-      reduceMotion: reduceMotion || !shouldAnimate,
+      shouldAnimate: reduceMotion || !shouldAnimate,
       transitionDuration,
       transitionTimingFunction,
     },
@@ -107,8 +103,9 @@ export function SegmentedControl({
   );
 
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, rootStyle: _styles.root, style });
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
-  const uuid = useId(name);
+  const uuid = useUuid(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -164,12 +161,7 @@ export function SegmentedControl({
   ));
 
   return (
-    <div
-      className={cx(classes.root, className)}
-      ref={wrapperRef}
-      style={{ ...style, ..._styles.root }}
-      {...others}
-    >
+    <div className={cx(classes.root, className)} ref={wrapperRef} style={mergedStyles} {...rest}>
       {!!_value && (
         <span
           className={classes.active}

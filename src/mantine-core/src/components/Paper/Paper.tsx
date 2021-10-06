@@ -1,6 +1,12 @@
-import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, useMantineTheme, MantineShadow } from '../../theme';
+import React, { forwardRef } from 'react';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineShadow,
+  useExtractedMargins,
+  PolymorphicComponentProps,
+  PolymorphicRef,
+} from '@mantine/styles';
 import useStyles from './Paper.styles';
 
 export interface SharedPaperProps extends DefaultProps {
@@ -17,40 +23,40 @@ export interface SharedPaperProps extends DefaultProps {
   withBorder?: boolean;
 }
 
-interface _PaperProps<C extends React.ElementType, R extends HTMLElement> extends SharedPaperProps {
-  /** Root element or custom component */
-  component?: C;
+export type PaperProps<C extends React.ElementType> = PolymorphicComponentProps<
+  C,
+  SharedPaperProps
+>;
 
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<R>;
-}
+type PaperComponent = <C extends React.ElementType = 'div'>(
+  props: PaperProps<C>
+) => React.ReactElement;
 
-export type PaperProps<
-  C extends React.ElementType = 'div',
-  R extends HTMLElement = HTMLDivElement
-> = _PaperProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _PaperProps<C, R>>;
+export const Paper: PaperComponent & { displayName?: string } = forwardRef(
+  <C extends React.ElementType = 'div'>(
+    {
+      component,
+      className,
+      children,
+      padding = 0,
+      radius = 'sm',
+      withBorder = false,
+      shadow,
+      style,
+      ...others
+    }: PaperProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const { classes, cx } = useStyles({ radius, shadow, padding, withBorder }, null, 'paper');
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const Element = component || 'div';
 
-export function Paper<C extends React.ElementType = 'div', R extends HTMLElement = HTMLDivElement>({
-  component,
-  className,
-  children,
-  padding = 0,
-  radius = 'sm',
-  withBorder = false,
-  shadow,
-  themeOverride,
-  elementRef,
-  ...others
-}: PaperProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ radius, shadow, padding, theme, withBorder }, null, 'paper');
-  const Element = component || 'div';
-
-  return (
-    <Element className={cx(classes.paper, className)} ref={elementRef as any} {...others}>
-      {children}
-    </Element>
-  );
-}
+    return (
+      <Element className={cx(classes.paper, className)} ref={ref} style={mergedStyles} {...rest}>
+        {children}
+      </Element>
+    );
+  }
+);
 
 Paper.displayName = '@mantine/core/Paper';

@@ -7,11 +7,12 @@ import TableOfContents from '../TableOfContents/TableOfContents';
 import { MdxPageBase } from '../MdxPageBase/MdxPageBase';
 import PropsTable from './PropsTable/PropsTable';
 import { StylesApi } from './StylesApi/StylesApi';
+import { MdxPageProps } from '../../../types';
 import useStyles from './MdxPageTabs.styles';
 
-export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
+export function MdxPageTabs({ body, frontmatter, headings }: MdxPageProps) {
   const [query, setQuery] = useState('');
-  const classes = useStyles();
+  const { classes } = useStyles();
   const mobile = useMediaQuery('(max-width: 500px)');
   const hasProps = Array.isArray(frontmatter.props);
   const hasStyles = Array.isArray(frontmatter.styles);
@@ -35,12 +36,7 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPage) {
     <MdxPageBase>
       <Tabs
         variant="outline"
-        className={classes.tabs}
-        classNames={{
-          root: classes.tabs,
-          tabsList: classes.tabsList,
-          tabsListWrapper: classes.tabsWrapper,
-        }}
+        classNames={{ tabsList: classes.tabsList, tabsListWrapper: classes.tabsWrapper }}
       >
         <Tab label="Documentation" className={classes.tab}>
           <div

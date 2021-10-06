@@ -106,22 +106,6 @@ it is controlled and can be closed with control inside tooltip:
 
 <Demo data={TooltipDemos.pointerEvents} />
 
-## Get element ref
-
-You can get both tooltip and root element refs with `elementRef` and `tooltipRef` props.
-Use it to customize behavior, for example, with [use-click-outside](/hooks/use-click-outside/) hook.
-
-```tsx
-import { useRef } from 'react';
-import { Tooltip } from '@mantine/core';
-
-function Demo() {
-  const tooltipRef = useRef();
-  const rootElementRef = useRef();
-  return <Tooltip elementRef={rootElementRef} tooltipRef={tooltipRef} />;
-}
-```
-
 ## Accessibility
 
 Do not place any important information in tooltip.

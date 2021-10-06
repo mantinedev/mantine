@@ -1,10 +1,11 @@
-import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 const BREAKPOINT = '@media (max-width: 755px)';
 
-export default createUseStyles(
-  (theme) => ({
+export default createStyles((theme, _params, getRef) => {
+  const preview = getRef('preview');
+
+  return {
     canvas: {
       borderRadius: theme.radius.md,
       border: `1px solid ${
@@ -12,14 +13,14 @@ export default createUseStyles(
       }`,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
 
-      '& + &': {
+      '&:not(:first-of-type)': {
         marginTop: theme.spacing.xl * 2,
       },
     },
 
     body: {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-      padding: [theme.spacing.xs, theme.spacing.md],
+      padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
       borderBottomRightRadius: theme.radius.md - 1,
       borderBottomLeftRadius: theme.radius.md - 1,
 
@@ -31,7 +32,7 @@ export default createUseStyles(
     bodyRaw: {
       padding: 0,
 
-      '& $preview': {
+      [`& .${preview}`]: {
         padding: 4,
         borderTopRightRadius: 0,
         borderTopLeftRadius: 0,
@@ -51,6 +52,7 @@ export default createUseStyles(
     },
 
     preview: {
+      ref: preview,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       padding: theme.spacing.md,
       borderRadius: theme.radius.md,
@@ -62,6 +64,5 @@ export default createUseStyles(
         borderTopLeftRadius: 0,
       },
     },
-  }),
-  { theming }
-);
+  };
+});

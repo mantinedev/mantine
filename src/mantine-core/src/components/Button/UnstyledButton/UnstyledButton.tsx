@@ -1,29 +1,24 @@
-import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme } from '../../../theme';
+import React, { forwardRef } from 'react';
+import { DefaultProps } from '@mantine/styles';
 import useStyles from './UnstyledButton.styles';
 
-interface UnstyledButtonProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
-  elementRef?: React.ForwardedRef<HTMLButtonElement>;
-}
+export interface UnstyledButtonProps
+  extends DefaultProps,
+    React.ComponentPropsWithoutRef<'button'> {}
 
-export function UnstyledButton({
-  className,
-  themeOverride,
-  elementRef,
-  ...others
-}: UnstyledButtonProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme });
+export const UnstyledButton = forwardRef<HTMLButtonElement, UnstyledButtonProps>(
+  ({ className, ...others }: UnstyledButtonProps, ref) => {
+    const { classes, cx } = useStyles();
 
-  return (
-    <button
-      ref={elementRef}
-      className={cx(classes.button, 'mantine-unstyled-button', className)}
-      type="button"
-      {...others}
-    />
-  );
-}
+    return (
+      <button
+        ref={ref}
+        className={cx(classes.button, 'mantine-unstyled-button', className)}
+        type="button"
+        {...others}
+      />
+    );
+  }
+);
 
 UnstyledButton.displayName = '@mantine/core/UnstyledButton';

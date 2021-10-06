@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { useBooleanToggle } from '@mantine/hooks';
-import { getSizeValue } from '../../theme';
+import { getSizeValue } from '@mantine/styles';
 import type { InputStylesNames } from '../Input/Input';
 import type { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
@@ -48,54 +48,57 @@ const rightSectionWidth = {
   xl: 54,
 };
 
-export function PasswordInput({
-  radius,
-  disabled,
-  hidePasswordLabel,
-  showPasswordLabel,
-  themeOverride,
-  size = 'sm',
-  toggleTabIndex = -1,
-  ...others
-}: PasswordInputProps) {
-  const [reveal, toggle] = useBooleanToggle(false);
+export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
+  (
+    {
+      radius,
+      disabled,
+      hidePasswordLabel,
+      showPasswordLabel,
+      size = 'sm',
+      toggleTabIndex = -1,
+      ...others
+    }: PasswordInputProps,
+    ref
+  ) => {
+    const [reveal, toggle] = useBooleanToggle(false);
 
-  const rightSection = (
-    <ActionIcon<'button'>
-      onMouseDown={(event) => {
-        event.preventDefault();
-        toggle();
-      }}
-      onKeyDown={(event) => {
-        if (event.nativeEvent.code === 'Space') {
+    const rightSection = (
+      <ActionIcon<'button'>
+        onMouseDown={(event) => {
           event.preventDefault();
           toggle();
-        }
-      }}
-      tabIndex={toggleTabIndex}
-      themeOverride={themeOverride}
-      title={reveal ? hidePasswordLabel : showPasswordLabel}
-      aria-label={reveal ? hidePasswordLabel : showPasswordLabel}
-      radius={radius}
-      size={getSizeValue({ size, sizes: buttonSizes })}
-    >
-      <PasswordToggleIcon reveal={reveal} size={getSizeValue({ size, sizes: iconSizes })} />
-    </ActionIcon>
-  );
+        }}
+        onKeyDown={(event) => {
+          if (event.nativeEvent.code === 'Space') {
+            event.preventDefault();
+            toggle();
+          }
+        }}
+        tabIndex={toggleTabIndex}
+        title={reveal ? hidePasswordLabel : showPasswordLabel}
+        aria-label={reveal ? hidePasswordLabel : showPasswordLabel}
+        radius={radius}
+        size={getSizeValue({ size, sizes: buttonSizes })}
+      >
+        <PasswordToggleIcon reveal={reveal} size={getSizeValue({ size, sizes: iconSizes })} />
+      </ActionIcon>
+    );
 
-  return (
-    <TextInput
-      {...others}
-      disabled={disabled}
-      themeOverride={themeOverride}
-      type={reveal ? 'text' : 'password'}
-      rightSection={disabled ? null : rightSection}
-      rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
-      size={size}
-      radius={radius}
-      __staticSelector="password-input"
-    />
-  );
-}
+    return (
+      <TextInput
+        {...others}
+        ref={ref}
+        disabled={disabled}
+        type={reveal ? 'text' : 'password'}
+        rightSection={disabled ? null : rightSection}
+        rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
+        size={size}
+        radius={radius}
+        __staticSelector="password-input"
+      />
+    );
+  }
+);
 
 PasswordInput.displayName = '@mantine/core/PasswordInput';

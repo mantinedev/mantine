@@ -1,6 +1,6 @@
-import { TimelineStylesNames } from './Timeline';
+import { TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 
-export const Timeline: Record<TimelineStylesNames, string> = {
+export const Timeline: Record<TimelineItemStylesNames, string> = {
   item: 'Item root element',
   itemBody: 'Item body, wraps title and content',
   itemTitle: 'Item title, controlled by title prop',

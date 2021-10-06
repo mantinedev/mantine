@@ -1,16 +1,18 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsOthers, itSupportsClassName, itSupportsStyle } from '@mantine/tests';
+import {
+  itSupportsOthers,
+  itSupportsClassName,
+  itSupportsStyle,
+  itSupportsRef,
+} from '@mantine/tests';
 import { Overlay } from './Overlay';
 
 describe('@mantine/core/Overlay', () => {
   itSupportsStyle(Overlay, {});
   itSupportsClassName(Overlay, {});
   itSupportsOthers(Overlay, {});
-
-  it('has correct displayName', () => {
-    expect(Overlay.displayName).toEqual('@mantine/core/Overlay');
-  });
+  itSupportsRef(Overlay, {}, HTMLDivElement);
 
   it('sets background-color, opacity and z-index from props', () => {
     const element = shallow(<Overlay opacity={0.99} color="#cecece" zIndex={5} />);
@@ -28,5 +30,9 @@ describe('@mantine/core/Overlay', () => {
     expect(withTag.render().attr('href')).toBe('https://mantine.dev');
     expect(withComponent.type()).toBe(TestComponent);
     expect(withComponent.render().attr('data-test-prop')).toBe('true');
+  });
+
+  it('has correct displayName', () => {
+    expect(Overlay.displayName).toEqual('@mantine/core/Overlay');
   });
 });

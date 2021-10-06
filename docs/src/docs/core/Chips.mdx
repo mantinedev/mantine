@@ -74,25 +74,6 @@ You can use Chip component outside of Chips:
 
 <Demo data={ChipsDemos.chip} />
 
-## Server side rendering
-
-Both Chip and Chips component use [use-id](/hooks/use-id/) hook to generate unique ids to connect inputs with labels,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<Chips /> // random id generated both on client and server, props mismatch warning
-<Chip /> // random id generated both on client and server, props mismatch warning
-
-// -> id is static, no mismatches
-<Chip id="my-chip" />
-
-// -> id is static, no mismatches
-<Chips id="my-chips-picker">
-  {/* It's not required to set id on Chip component when it is used inside Chips */}
-  <Chip value="react">React</Chip>
-</Chips>
-```
-
 ## Accessibility
 
 Chip and Chips components are accessible by default since they are built with native radio/checkbox inputs,

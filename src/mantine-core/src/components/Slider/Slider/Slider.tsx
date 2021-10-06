@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineColor } from '../../../theme';
-import { MantineTransition } from '../../Transition/Transition';
+import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { MantineTransition } from '../../Transition';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
 import { getPosition } from '../utils/get-position/get-position';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';
@@ -73,7 +73,6 @@ export interface SliderProps
 }
 
 export function Slider({
-  themeOverride,
   classNames,
   styles,
   color,
@@ -193,7 +192,7 @@ export function Slider({
     <SliderRoot
       {...others}
       size={size}
-      elementRef={container}
+      ref={container}
       onTouchStart={handleTrackMouseDown}
       onMouseDown={handleTrackMouseDown}
       onTouchStartCapture={() => setDragging(true)}
@@ -201,7 +200,6 @@ export function Slider({
       onMouseDownCapture={() => setDragging(true)}
       onMouseUpCapture={() => setDragging(false)}
       onKeyDownCapture={handleTrackKeydownCapture}
-      themeOverride={themeOverride}
       classNames={classNames}
       styles={styles}
     >
@@ -215,7 +213,6 @@ export function Slider({
         min={min}
         max={max}
         value={_value}
-        themeOverride={themeOverride}
         onChange={setValue}
         styles={styles}
         classNames={classNames}
@@ -229,13 +226,12 @@ export function Slider({
           color={color}
           size={size}
           label={_label}
-          elementRef={thumb}
+          ref={thumb}
           onMouseDown={handleThumbMouseDown}
           labelTransition={labelTransition}
           labelTransitionDuration={labelTransitionDuration}
           labelTransitionTimingFunction={labelTransitionTimingFunction}
           labelAlwaysOn={labelAlwaysOn}
-          themeOverride={themeOverride}
           classNames={classNames}
           styles={styles}
           thumbLabel={thumbLabel}

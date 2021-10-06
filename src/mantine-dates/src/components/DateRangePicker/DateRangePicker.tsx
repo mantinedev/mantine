@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { CalendarSettings } from '../Calendar/Calendar';
@@ -36,130 +36,136 @@ export interface DateRangePickerProps
 const validationRule = (val: any) =>
   Array.isArray(val) && val.length === 2 && val.every((v) => v instanceof Date);
 
-export function DateRangePicker({
-  value,
-  onChange,
-  defaultValue,
-  themeOverride,
-  classNames,
-  styles,
-  shadow = 'sm',
-  locale = 'en',
-  inputFormat = 'MMMM D, YYYY',
-  transitionDuration = 200,
-  transitionTimingFunction,
-  nextMonthLabel,
-  previousMonthLabel,
-  closeCalendarOnChange = true,
-  labelFormat = 'MMMM YYYY',
-  withSelect = false,
-  yearsRange,
-  dayClassName,
-  dayStyle,
-  disableOutsideEvents,
-  minDate,
-  maxDate,
-  excludeDate,
-  elementRef,
-  initialMonth,
-  initiallyOpened = false,
-  name = 'date',
-  size = 'sm',
-  dropdownType = 'popover',
-  labelSeparator = '–',
-  clearable = true,
-  clearButtonLabel,
-  ...others
-}: DateRangePickerProps) {
-  const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
-  const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
-  const inputRef = useRef<HTMLInputElement>();
-  const [_value, setValue] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: [null, null],
-    onChange,
-    rule: validationRule,
-  });
+export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProps>(
+  (
+    {
+      value,
+      onChange,
+      defaultValue,
+      classNames,
+      styles,
+      shadow = 'sm',
+      locale = 'en',
+      inputFormat = 'MMMM D, YYYY',
+      transitionDuration = 200,
+      transitionTimingFunction,
+      nextMonthLabel,
+      previousMonthLabel,
+      closeCalendarOnChange = true,
+      labelFormat = 'MMMM YYYY',
+      withSelect = false,
+      yearsRange,
+      dayClassName,
+      dayStyle,
+      disableOutsideEvents,
+      minDate,
+      maxDate,
+      excludeDate,
+      initialMonth,
+      initiallyOpened = false,
+      name = 'date',
+      size = 'sm',
+      dropdownType = 'popover',
+      labelSeparator = '–',
+      clearable = true,
+      clearButtonLabel,
+      ...others
+    }: DateRangePickerProps,
+    ref
+  ) => {
+    const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
+    const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
+    const inputRef = useRef<HTMLInputElement>();
+    const [_value, setValue] = useUncontrolled({
+      value,
+      defaultValue,
+      finalValue: [null, null],
+      onChange,
+      rule: validationRule,
+    });
 
-  const closeDropdown = () => {
-    setDropdownOpened(false);
-    setTimeout(() => inputRef.current?.focus(), transitionDuration + 20);
-  };
+    const closeDropdown = () => {
+      setDropdownOpened(false);
+      setTimeout(() => inputRef.current?.focus(), transitionDuration + 20);
+    };
 
-  const handleValueChange = (range: [Date, Date]) => {
-    setValue(range);
-    closeCalendarOnChange && validationRule(range) && closeDropdown();
-  };
+    const handleValueChange = (range: [Date, Date]) => {
+      setValue(range);
+      closeCalendarOnChange && validationRule(range) && closeDropdown();
+    };
 
-  const valueValid = validationRule(_value);
+    const valueValid = validationRule(_value);
 
-  const handleClear = () => {
-    setValue([null, null]);
-    inputRef.current?.focus();
-  };
+    const handleClear = () => {
+      setValue([null, null]);
+      inputRef.current?.focus();
+    };
 
-  return (
-    <>
-      <DatePickerBase
-        dropdownOpened={dropdownOpened}
-        setDropdownOpened={setDropdownOpened}
-        shadow={shadow}
-        transitionDuration={transitionDuration}
-        elementRef={useMergedRef(elementRef, inputRef)}
-        size={size}
-        styles={styles}
-        classNames={classNames}
-        inputLabel={
-          valueValid
-            ? `${upperFirst(
-                dayjs(_value[0]).locale(locale).format(inputFormat)
-              )} ${labelSeparator} ${upperFirst(
-                dayjs(_value[1]).locale(locale).format(inputFormat)
-              )}`
-            : null
-        }
-        __staticSelector="date-range-picker"
-        dropdownType={dropdownType}
-        clearable={clearable && valueValid}
-        clearButtonLabel={clearButtonLabel}
-        onClear={handleClear}
-        {...others}
-      >
-        <RangeCalendar
-          classNames={classNames}
+    return (
+      <>
+        <DatePickerBase
+          dropdownOpened={dropdownOpened}
+          setDropdownOpened={setDropdownOpened}
+          shadow={shadow}
+          transitionDuration={transitionDuration}
+          ref={useMergedRef(ref, inputRef)}
+          size={size}
           styles={styles}
-          locale={locale}
-          themeOverride={themeOverride}
-          nextMonthLabel={nextMonthLabel}
-          previousMonthLabel={previousMonthLabel}
-          initialMonth={valueValid ? _value[0] : initialMonth}
-          value={_value}
-          onChange={handleValueChange}
-          labelFormat={labelFormat}
-          withSelect={withSelect}
-          yearsRange={yearsRange}
-          dayClassName={dayClassName}
-          dayStyle={dayStyle}
-          disableOutsideEvents={disableOutsideEvents}
-          minDate={minDate}
-          maxDate={maxDate}
-          excludeDate={excludeDate}
+          classNames={classNames}
+          inputLabel={
+            valueValid
+              ? `${upperFirst(
+                  dayjs(_value[0]).locale(locale).format(inputFormat)
+                )} ${labelSeparator} ${upperFirst(
+                  dayjs(_value[1]).locale(locale).format(inputFormat)
+                )}`
+              : null
+          }
           __staticSelector="date-range-picker"
-          fullWidth={dropdownType === 'modal'}
-          size={dropdownType === 'modal' ? 'lg' : calendarSize}
+          dropdownType={dropdownType}
+          clearable={clearable && valueValid}
+          clearButtonLabel={clearButtonLabel}
+          onClear={handleClear}
+          {...others}
+        >
+          <RangeCalendar
+            classNames={classNames}
+            styles={styles}
+            locale={locale}
+            nextMonthLabel={nextMonthLabel}
+            previousMonthLabel={previousMonthLabel}
+            initialMonth={valueValid ? _value[0] : initialMonth}
+            value={_value}
+            onChange={handleValueChange}
+            labelFormat={labelFormat}
+            withSelect={withSelect}
+            yearsRange={yearsRange}
+            dayClassName={dayClassName}
+            dayStyle={dayStyle}
+            disableOutsideEvents={disableOutsideEvents}
+            minDate={minDate}
+            maxDate={maxDate}
+            excludeDate={excludeDate}
+            __staticSelector="date-range-picker"
+            fullWidth={dropdownType === 'modal'}
+            size={dropdownType === 'modal' ? 'lg' : calendarSize}
+          />
+        </DatePickerBase>
+
+        <input
+          type="hidden"
+          name={`${name}-from`}
+          value={valueValid ? _value[0].toISOString() : ''}
         />
-      </DatePickerBase>
 
-      <input
-        type="hidden"
-        name={`${name}-from`}
-        value={valueValid ? _value[0].toISOString() : ''}
-      />
-
-      <input type="hidden" name={`${name}-to`} value={valueValid ? _value[1].toISOString() : ''} />
-    </>
-  );
-}
+        <input
+          type="hidden"
+          name={`${name}-to`}
+          value={valueValid ? _value[1].toISOString() : ''}
+        />
+      </>
+    );
+  }
+);
 
 DateRangePicker.displayName = '@mantine/dates/DateRangePicker';

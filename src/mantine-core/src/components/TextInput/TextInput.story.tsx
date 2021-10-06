@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { LockClosedIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME, MantineProvider } from '../../theme';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
 import { TextInput } from './TextInput';
 
 function WrappedTextInput(
-  props: Omit<React.ComponentProps<typeof TextInput>, 'value' | 'onChange'>
+  props: Omit<React.ComponentPropsWithoutRef<typeof TextInput>, 'value' | 'onChange'>
 ) {
   const [value, onChange] = useState('');
   return (

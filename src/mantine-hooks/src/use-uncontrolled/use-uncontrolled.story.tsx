@@ -23,8 +23,9 @@ function CustomInput({ label, value, defaultValue, onChange }: CustomInputProps)
 
   return (
     <div style={{ padding: '1rem' }}>
-      <label htmlFor={id}>{label}</label><br />
-      <input id={id} type="text" value={_value} onChange={e => handleChange(e.target.value)} />
+      <label htmlFor={id}>{label}</label>
+      <br />
+      <input id={id} type="text" value={_value} onChange={(e) => handleChange(e.target.value)} />
     </div>
   );
 }

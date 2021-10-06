@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../theme';
 import { Button } from '../Button/Button';
 import { Group } from '../Group/Group';
 import { Text } from '../Text/Text';
 import { Drawer } from './Drawer';
+import { DarkStory } from '../../../demos';
 
 function Wrapper(
   props: Omit<React.ComponentPropsWithoutRef<typeof Drawer>, 'opened' | 'onClose' | 'position'>
@@ -18,7 +18,13 @@ function Wrapper(
 
   return (
     <div style={{ padding: 40 }}>
-      <Drawer opened={opened} onClose={() => setOpened(false)} position={position} {...props} />
+      <Drawer
+        opened={opened}
+        onClose={() => setOpened(false)}
+        position={position}
+        title="hello"
+        {...props}
+      />
       <Group>
         <Button onClick={() => open('top')}>top</Button>
         <Button onClick={() => open('bottom')}>bottom</Button>
@@ -42,9 +48,7 @@ storiesOf('@mantine/core/Drawer', module)
   .add('General usage', () => <Wrapper>Drawer</Wrapper>)
   .add('Sizes', () => <div style={{ padding: 20 }}>{sizes}</div>)
   .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <Wrapper themeOverride={{ colorScheme: 'dark' }}>
-        <Button>Hello</Button>
-      </Wrapper>
-    </div>
+    <DarkStory>
+      <Wrapper>Dark theme</Wrapper>
+    </DarkStory>
   ));

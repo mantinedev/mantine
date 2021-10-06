@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { BookmarkIcon, HeartIcon, ShareIcon } from '@primer/octicons-react';
 import {
   Card,
@@ -37,7 +36,8 @@ const useStyles = createStyles((theme) => ({
   },
 
   footer: {
-    marginTop: theme.spacing.xs,
+    marginTop: theme.spacing.xs / 2,
+    marginBottom: -theme.spacing.md,
   },
 }));
 
@@ -63,7 +63,7 @@ export function ArticleCard({
   rating,
   ...others
 }: ArticleCardProps & Omit<React.ComponentPropsWithoutRef<'div'>, keyof ArticleCardProps>) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const theme = useMantineTheme();
 
   return (

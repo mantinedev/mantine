@@ -6,6 +6,8 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   checkAccessibility,
+  itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Calendar } from './Calendar';
 import { Month } from '../Month/Month';
@@ -18,7 +20,9 @@ const defaultProps = { month: new Date(), value: new Date(), withSelect: true };
 describe('@mantine/dates/Calendar', () => {
   itSupportsClassName(Calendar, defaultProps);
   itSupportsOthers(Calendar, defaultProps);
+  itSupportsMargins(Calendar, defaultProps);
   itSupportsStyle(Calendar, defaultProps);
+  itSupportsRef(Calendar, defaultProps, HTMLDivElement);
   checkAccessibility([
     mount(
       <Calendar
@@ -44,7 +48,7 @@ describe('@mantine/dates/Calendar', () => {
     Object.keys(CalendarStylesApi).filter(
       (prop) =>
         prop !== 'calendar' &&
-        prop !== 'label' &&
+        prop !== 'calendarLabel' &&
         prop !== 'inRange' &&
         prop !== 'firstInRange' &&
         prop !== 'lastInRange'
@@ -59,8 +63,8 @@ describe('@mantine/dates/Calendar', () => {
     Object.keys(CalendarStylesApi).filter(
       (prop) =>
         prop !== 'calendar' &&
-        prop !== 'select' &&
-        prop !== 'selectGroup' &&
+        prop !== 'calendarSelect' &&
+        prop !== 'calendarSelectGroup' &&
         prop !== 'inRange' &&
         prop !== 'firstInRange' &&
         prop !== 'lastInRange'

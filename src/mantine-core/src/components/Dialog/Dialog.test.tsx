@@ -6,6 +6,7 @@ import {
   itRendersChildren,
   itSupportsOthers,
   itSupportsStylesApi,
+  itSupportsRef,
 } from '@mantine/tests';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Dialog, MantineDialog } from './Dialog';
@@ -22,6 +23,7 @@ describe('@mantine/core/Dialog', () => {
   itSupportsClassName(MantineDialog, defaultProps);
   itRendersChildren(MantineDialog, defaultProps);
   itSupportsOthers(MantineDialog, defaultProps);
+  itSupportsRef(Dialog, defaultProps, HTMLDivElement);
   itSupportsStylesApi(MantineDialog, defaultProps, Object.keys(DialogStylesNames), 'dialog');
 
   it('renders close button based on withCloseButton prop', () => {

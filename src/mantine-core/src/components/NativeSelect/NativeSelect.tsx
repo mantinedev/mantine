@@ -1,6 +1,5 @@
-import React from 'react';
-import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineSize } from '../../theme';
+import React, { forwardRef } from 'react';
+import { DefaultProps, MantineSize, useUuid, useExtractedMargins } from '@mantine/styles';
 import {
   InputWrapperBaseProps,
   InputWrapper,
@@ -32,102 +31,100 @@ export interface NativeSelectProps
   /** Props passed to root element (InputWrapper component) */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<HTMLSelectElement>;
-
   /** Input size */
   size?: MantineSize;
 }
 
-export function NativeSelect({
-  id,
-  className,
-  required,
-  label,
-  error,
-  style,
-  data,
-  placeholder,
-  themeOverride,
-  wrapperProps,
-  inputStyle,
-  description,
-  elementRef,
-  defaultValue,
-  onChange,
-  value,
-  classNames,
-  styles,
-  size = 'sm',
-  rightSection,
-  rightSectionWidth,
-  ...others
-}: NativeSelectProps) {
-  const uuid = useId(id);
+export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
+  (
+    {
+      id,
+      className,
+      required,
+      label,
+      error,
+      style,
+      data,
+      placeholder,
+      wrapperProps,
+      inputStyle,
+      description,
+      defaultValue,
+      onChange,
+      value,
+      classNames,
+      styles,
+      size = 'sm',
+      rightSection,
+      rightSectionWidth,
+      ...others
+    }: NativeSelectProps,
+    ref
+  ) => {
+    const uuid = useUuid(id);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
-  const formattedData = data.map((item) =>
-    typeof item === 'string' ? { label: item, value: item } : item
-  );
-
-  const options = formattedData.map((item) => (
-    <option key={item.value} value={item.value} disabled={item.disabled}>
-      {item.label}
-    </option>
-  ));
-
-  if (placeholder) {
-    options.unshift(
-      <option key="placeholder" value="" disabled hidden>
-        {placeholder}
-      </option>
+    const formattedData = data.map((item) =>
+      typeof item === 'string' ? { label: item, value: item } : item
     );
-  }
 
-  return (
-    <InputWrapper
-      {...wrapperProps}
-      required={required}
-      id={uuid}
-      label={label}
-      error={error}
-      className={className}
-      style={style}
-      themeOverride={themeOverride}
-      description={description}
-      size={size}
-      styles={styles}
-      classNames={classNames}
-      __staticSelector="select"
-    >
-      <Input<'select', HTMLSelectElement>
-        {...others}
-        onChange={onChange}
-        component="select"
-        invalid={!!error}
-        style={inputStyle}
-        aria-required={required}
-        elementRef={elementRef}
-        id={uuid}
+    const options = formattedData.map((item) => (
+      <option key={item.value} value={item.value} disabled={item.disabled}>
+        {item.label}
+      </option>
+    ));
+
+    if (placeholder) {
+      options.unshift(
+        <option key="placeholder" value="" disabled hidden>
+          {placeholder}
+        </option>
+      );
+    }
+
+    return (
+      <InputWrapper
+        {...wrapperProps}
         required={required}
-        themeOverride={themeOverride}
-        value={value === null ? '' : value}
+        id={uuid}
+        label={label}
+        error={error}
+        className={className}
+        style={mergedStyles}
+        description={description}
         size={size}
+        styles={styles}
         classNames={classNames}
         __staticSelector="select"
-        {...getSelectRightSectionProps({
-          rightSection,
-          rightSectionWidth,
-          themeOverride,
-          styles,
-          shouldClear: false,
-          size,
-          error,
-        })}
       >
-        {options}
-      </Input>
-    </InputWrapper>
-  );
-}
+        <Input<'select'>
+          {...rest}
+          onChange={onChange}
+          component="select"
+          invalid={!!error}
+          style={inputStyle}
+          aria-required={required}
+          ref={ref}
+          id={uuid}
+          required={required}
+          value={value === null ? '' : value}
+          size={size}
+          classNames={classNames}
+          __staticSelector="select"
+          {...getSelectRightSectionProps({
+            rightSection,
+            rightSectionWidth,
+            styles,
+            shouldClear: false,
+            size,
+            error,
+          })}
+        >
+          {options}
+        </Input>
+      </InputWrapper>
+    );
+  }
+);
 
 NativeSelect.displayName = '@mantine/core/NativeSelect';

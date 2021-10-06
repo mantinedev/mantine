@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Prism } from './Prism';
 import { Prism as PrismStylesApi } from './styles.api';
@@ -25,6 +26,7 @@ const defaultProps = {
 
 describe('@mantine/prism/Prism', () => {
   itSupportsClassName(Prism, defaultProps);
+  itSupportsMargins(Prism, defaultProps);
   itSupportsOthers(Prism, defaultProps);
   itSupportsStyle(Prism, defaultProps);
   itSupportsStylesApi(Prism, defaultProps, Object.keys(PrismStylesApi), 'prism');

@@ -1,0 +1,30 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'dom'
+title: 'use-viewport-size'
+order: 1
+slug: /hooks/use-viewport-size/
+description: 'Get viewport width and height'
+import: "import { useViewportSize } from '@mantine/hooks';"
+docs: 'hooks/use-viewport-size.mdx'
+source: 'mantine-hooks/src/use-viewport-size/use-viewport-size.ts'
+---
+
+import { useViewportSizeDemo } from '@docs/demos';
+
+## Usage
+
+Hook returns current viewport width and height, it subscribes to `resize` and `orientationchange` events,
+during ssr hook will return `{ width: 0, height: 0 }`:
+
+<Demo data={useViewportSizeDemo} />
+
+## Definition
+
+```tsx
+function useViewportSize(): {
+  height: number;
+  width: number;
+};
+```

@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button } from '../Button/Button';
 import { Container } from '../Container/Container';
+import { Title } from '../Title/Title';
 import { Group } from './Group';
 
 const positions = (['left', 'center', 'apart', 'right'] as const).map((position) => (
@@ -28,6 +29,12 @@ const spacings = ([0, 'xs', 'sm', 'md', 'lg', 'xl', 50] as const).map((spacing) 
 storiesOf('@mantine/core/Group', module)
   .add('Positions', () => <>{positions}</>)
   .add('Spacing', () => <>{spacings}</>)
+  .add('With title', () => (
+    <Group>
+      <Title>1</Title>
+      <Title>2</Title>
+    </Group>
+  ))
   .add('Within container', () => (
     <div style={{ maxWidth: 400 }}>
       <Container>

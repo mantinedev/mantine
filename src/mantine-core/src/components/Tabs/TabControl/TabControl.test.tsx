@@ -6,19 +6,13 @@ import { TabControl } from './TabControl';
 const defaultProps = { active: true, tabProps: { label: 'test', icon: '$' } };
 
 describe('@mantine/core/TabControl', () => {
-  itSupportsStyle(TabControl, { ...defaultProps, elementRef: () => {} });
-  itSupportsOthers(TabControl, { ...defaultProps, elementRef: () => {} });
-  itSupportsRef(TabControl, defaultProps, HTMLButtonElement, 'elementRef');
-
-  it('has correct displayName', () => {
-    expect(TabControl.displayName).toEqual('@mantine/core/TabControl');
-  });
+  itSupportsStyle(TabControl, defaultProps);
+  itSupportsOthers(TabControl, defaultProps);
+  itSupportsRef(TabControl, defaultProps, HTMLButtonElement, 'buttonRef');
 
   it('sets correct accessibility attributes based on active prop', () => {
-    const active = shallow(<TabControl {...defaultProps} active elementRef={() => {}} />).render();
-    const inactive = shallow(
-      <TabControl {...defaultProps} active={false} elementRef={() => {}} />
-    ).render();
+    const active = shallow(<TabControl {...defaultProps} active />).render();
+    const inactive = shallow(<TabControl {...defaultProps} active={false} />).render();
 
     expect(active.attr('tabindex')).toBe('0');
     expect(active.attr('role')).toBe('tab');
@@ -29,16 +23,10 @@ describe('@mantine/core/TabControl', () => {
   });
 
   it('renders icon from tabProps', () => {
-    const withIcon = shallow(
-      <TabControl {...defaultProps} elementRef={() => {}} tabProps={{ icon: '$' }} />
-    ).render();
+    const withIcon = shallow(<TabControl {...defaultProps} tabProps={{ icon: '$' }} />).render();
 
     const withoutIcon = shallow(
-      <TabControl
-        {...defaultProps}
-        elementRef={() => {}}
-        tabProps={{ icon: null, label: 'test' }}
-      />
+      <TabControl {...defaultProps} tabProps={{ icon: null, label: 'test' }} />
     ).render();
 
     expect(withIcon.find('.mantine-tabs-tabIcon').text()).toBe('$');
@@ -47,11 +35,11 @@ describe('@mantine/core/TabControl', () => {
 
   it('renders label from tabProps', () => {
     const withLabel = shallow(
-      <TabControl {...defaultProps} elementRef={() => {}} tabProps={{ label: 'test' }} />
+      <TabControl {...defaultProps} tabProps={{ label: 'test' }} />
     ).render();
 
     const withoutLabel = shallow(
-      <TabControl {...defaultProps} elementRef={() => {}} tabProps={{ icon: '$', label: null }} />
+      <TabControl {...defaultProps} tabProps={{ icon: '$', label: null }} />
     ).render();
 
     expect(withLabel.find('.mantine-tabs-tabLabel').text()).toBe('test');
@@ -62,7 +50,6 @@ describe('@mantine/core/TabControl', () => {
     const element = shallow(
       <TabControl
         {...defaultProps}
-        elementRef={() => {}}
         tabProps={{
           label: 'test',
           disabled: true,
@@ -73,5 +60,9 @@ describe('@mantine/core/TabControl', () => {
 
     expect(element.attr('disabled')).toBe('disabled');
     expect(element.attr('title')).toBe('test-title');
+  });
+
+  it('has correct displayName', () => {
+    expect(TabControl.displayName).toEqual('@mantine/core/TabControl');
   });
 });

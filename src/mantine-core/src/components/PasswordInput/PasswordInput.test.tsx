@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   itSupportsRef,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Input } from '../Input/Input';
 import { TextInput } from '../TextInput/TextInput';
@@ -27,7 +28,8 @@ describe('@mantine/core/PasswordInput', () => {
 
   itSupportsClassName(PasswordInput, {});
   itSupportsStyle(PasswordInput, {});
-  itSupportsRef(PasswordInput, {}, HTMLInputElement, 'elementRef');
+  itSupportsMargins(PasswordInput, {});
+  itSupportsRef(PasswordInput, {}, HTMLInputElement);
 
   itSupportsStylesApi(
     PasswordInput,

@@ -66,9 +66,9 @@ Alternatively, you can use a number to set border-radius in px:
 
 Radius is applied both to image and placeholder.
 
-## Get element ref
+## Get refs
 
-You can get both image and root element (div) refs with `elementRef` and `imageRef` props:
+You can get both image and root element (div) refs with `ref` and `imageRef` props:
 
 ```tsx
 import { useRef } from 'react';
@@ -76,7 +76,7 @@ import { Image } from '@mantine/core';
 
 function Demo() {
   const imageRef = useRef();
-  const rootElementRef = useRef();
-  return <Image elementRef={rootElementRef} imageRef={imageRef} />;
+  const rootRef = useRef();
+  return <Image ref={rootRef} imageRef={imageRef} />;
 }
 ```

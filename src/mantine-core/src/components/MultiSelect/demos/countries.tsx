@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import Flag from 'react-flagpack';
-import { useMantineTheme } from '../../../theme';
+import { useMantineTheme } from '@mantine/styles';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import { countriesData } from './_countries-data';
 import { MultiSelect, MultiSelectProps } from '../MultiSelect';
@@ -9,7 +9,7 @@ const code = `
 import Flag from 'react-flagpack';
 import { CloseButton, MultiSelect } from '@mantine/core';
 
-function Value({ value, label, onRemove, themeOverride, classNames, ...others }) {
+function Value({ value, label, onRemove, classNames, ...others }) {
   const theme = useMantineTheme();
 
   return (
@@ -34,18 +34,16 @@ function Value({ value, label, onRemove, themeOverride, classNames, ...others })
   );
 }
 
-function Item({ label, value, elementRef, ...others }) {
-  return (
-    <div ref={elementRef} {...others}>
-      <div style={{ display: 'flex' }}>
-        <div style={{ marginRight: 10 }}>
-          <Flag code={value} size="S" />
-        </div>
-        <div>{label}</div>
+const Item = forwardRef(({ label, value, ...others }, ref) => (
+  <div ref={ref} {...others}>
+    <div style={{ display: 'flex' }}>
+      <div style={{ marginRight: 10 }}>
+        <Flag code={value} size="S" />
       </div>
+      <div>{label}</div>
     </div>
-  );
-}
+  </div>
+));
 
 export function CountriesSelect() {
   return (
@@ -63,8 +61,8 @@ export function CountriesSelect() {
 }
 `;
 
-function Value({ value, label, onRemove, themeOverride, classNames, ...others }: any) {
-  const theme = useMantineTheme(themeOverride);
+function Value({ value, label, onRemove, classNames, ...others }: any) {
+  const theme = useMantineTheme();
 
   return (
     <div {...others}>
@@ -91,18 +89,16 @@ function Value({ value, label, onRemove, themeOverride, classNames, ...others }:
   );
 }
 
-function Item({ label, value, elementRef, ...others }: any) {
-  return (
-    <div ref={elementRef} {...others}>
-      <div style={{ display: 'flex' }}>
-        <div style={{ marginRight: 10 }}>
-          <Flag code={value} size="S" />
-        </div>
-        <div>{label}</div>
+const Item = forwardRef<HTMLDivElement, any>(({ label, value, ...others }: any, ref) => (
+  <div ref={ref} {...others}>
+    <div style={{ display: 'flex' }}>
+      <div style={{ marginRight: 10 }}>
+        <Flag code={value} size="S" />
       </div>
+      <div>{label}</div>
     </div>
-  );
-}
+  </div>
+));
 
 export function CountriesSelect(props: Partial<MultiSelectProps>) {
   return (

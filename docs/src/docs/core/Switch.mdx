@@ -71,9 +71,9 @@ function Demo() {
 }
 ```
 
-## Get element ref
+## Get input ref
 
-You can get input ref with `elementRef` prop to:
+You can get input ref with `ref` prop to:
 
 ```tsx
 import { useRef } from 'react';
@@ -81,18 +81,8 @@ import { Switch } from '@mantine/core';
 
 function Demo() {
   const ref = useRef();
-  return <Switch elementRef={ref} />;
+  return <Switch ref={ref} />;
 }
-```
-
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<Switch /> // -> random id generated both on client and server, props mismatch warning
-<Switch id="my-switch" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility

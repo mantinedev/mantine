@@ -1,14 +1,18 @@
-import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineColor } from '../../theme';
-import { Text } from '../Text/Text';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
+import React, { forwardRef } from 'react';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
+import { CloseButton } from '../ActionIcon';
 import useStyles from './Alert.styles';
 
-export type AlertStylesName = keyof ReturnType<typeof useStyles>;
+export type AlertStylesNames = ClassNames<typeof useStyles>;
 
 export interface AlertProps
-  extends DefaultProps<AlertStylesName>,
+  extends DefaultProps<AlertStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Optional alert title */
   title?: React.ReactNode;
@@ -32,61 +36,59 @@ export interface AlertProps
   closeButtonLabel?: string;
 }
 
-export function Alert({
-  className,
-  title,
-  children,
-  themeOverride,
-  color,
-  style,
-  classNames,
-  icon,
-  styles,
-  withCloseButton,
-  ...others
-}: AlertProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, theme, withIcon: !!icon }, classNames, 'alert');
-  const _styles = mergeStyles(classes, styles);
+export const Alert = forwardRef<HTMLDivElement, AlertProps>(
+  (
+    {
+      className,
+      title,
+      children,
+      color,
+      style,
+      classNames,
+      icon,
+      styles,
+      withCloseButton,
+      ...others
+    }: AlertProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ color, withIcon: !!icon }, classNames, 'alert');
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
-  return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
-      <div className={classes.wrapper} style={_styles.wrapper}>
-        {icon && (
-          <div className={classes.icon} style={_styles.icon}>
-            {icon}
-          </div>
-        )}
-
-        <div className={classes.body} style={_styles.body}>
-          {title && (
-            <Text
-              themeOverride={themeOverride}
-              weight={700}
-              className={classes.title}
-              style={_styles.title}
-              size="sm"
-            >
-              <span>{title}</span>
-              {withCloseButton && (
-                <CloseButton
-                  className={classes.closeButton}
-                  style={_styles.closeButton}
-                  variant="transparent"
-                  size={16}
-                  iconSize={16}
-                />
-              )}
-            </Text>
+    return (
+      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+        <div className={classes.wrapper} style={_styles.wrapper}>
+          {icon && (
+            <div className={classes.icon} style={_styles.icon}>
+              {icon}
+            </div>
           )}
 
-          <div className={classes.message} style={_styles.message}>
-            {children}
+          <div className={classes.body} style={_styles.body}>
+            {title && (
+              <div className={classes.title} style={_styles.title}>
+                <span>{title}</span>
+                {withCloseButton && (
+                  <CloseButton
+                    className={classes.closeButton}
+                    style={_styles.closeButton}
+                    variant="transparent"
+                    size={16}
+                    iconSize={16}
+                  />
+                )}
+              </div>
+            )}
+
+            <div className={classes.message} style={_styles.message}>
+              {children}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+);
 
 Alert.displayName = '@mantine/core/Alert';

@@ -1,5 +1,4 @@
 import React from 'react';
-import { DefaultProps } from '../../theme';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { useTransition } from './use-transition';
 import { MantineTransition } from './transitions';
@@ -10,7 +9,7 @@ interface GroupedTransitionItem {
   transition: MantineTransition;
 }
 
-export interface GroupedTransitionProps extends Omit<DefaultProps, 'className'> {
+export interface GroupedTransitionProps {
   /** Transitions group */
   transitions: Record<string, GroupedTransitionItem>;
 
@@ -44,7 +43,6 @@ export function GroupedTransition({
   duration = 250,
   mounted,
   children,
-  themeOverride,
   timingFunction,
   onExit,
   onEntered,
@@ -54,7 +52,6 @@ export function GroupedTransition({
   const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
     mounted,
     duration,
-    themeOverride,
     timingFunction,
     onExit,
     onEntered,

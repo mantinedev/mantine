@@ -1,19 +1,17 @@
-import React from 'react';
-import cx from 'clsx';
-import { useId, useReducedMotion } from '@mantine/hooks';
+import React, { forwardRef } from 'react';
 import {
+  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  mergeStyles,
-  useMantineTheme,
   MantineColor,
-} from '../../theme';
-import useStyles, { sizes } from './Switch.styles';
+  ClassNames,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
+import useStyles from './Switch.styles';
 
-export const SWITCH_SIZES = sizes;
-
-export type SwitchStylesNames = keyof ReturnType<typeof useStyles>;
+export type SwitchStylesNames = ClassNames<typeof useStyles>;
 
 export interface SwitchProps
   extends DefaultProps<SwitchStylesNames>,
@@ -35,56 +33,50 @@ export interface SwitchProps
 
   /** Props spread to wrapper element */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
-export function Switch({
-  className,
-  color,
-  label,
-  id,
-  style,
-  size = 'sm',
-  radius = 'xl',
-  themeOverride,
-  wrapperProps,
-  elementRef,
-  children,
-  classNames,
-  styles,
-  ...others
-}: SwitchProps) {
-  const reduceMotion = useReducedMotion();
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, color, radius, reduceMotion, theme }, classNames, 'switch');
-  const _styles = mergeStyles(classes, styles);
+export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
+  (
+    {
+      className,
+      color,
+      label,
+      id,
+      style,
+      size = 'sm',
+      radius = 'xl',
+      wrapperProps,
+      children,
+      classNames,
+      styles,
+      ...others
+    }: SwitchProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ size, color, radius }, classNames, 'switch');
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const uuid = useUuid(id);
 
-  const uuid = useId(id);
+    return (
+      <div className={cx(classes.root, className)} style={mergedStyles} {...wrapperProps}>
+        <input
+          {...rest}
+          id={uuid}
+          ref={ref}
+          type="checkbox"
+          className={classes.input}
+          style={_styles.input}
+        />
 
-  return (
-    <div
-      className={cx(classes.root, className)}
-      style={{ ...style, ..._styles.root }}
-      {...wrapperProps}
-    >
-      <input
-        {...others}
-        id={uuid}
-        ref={elementRef}
-        type="checkbox"
-        className={classes.input}
-        style={_styles.input}
-      />
-
-      {label && (
-        <label className={classes.label} htmlFor={uuid} style={_styles.label}>
-          {label}
-        </label>
-      )}
-    </div>
-  );
-}
+        {label && (
+          <label className={classes.label} htmlFor={uuid} style={_styles.label}>
+            {label}
+          </label>
+        )}
+      </div>
+    );
+  }
+);
 
 Switch.displayName = '@mantine/core/Switch';

@@ -1,6 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsClassName, itSupportsRef, itSupportsStyle } from '@mantine/tests';
+import {
+  itSupportsClassName,
+  itSupportsRef,
+  itSupportsStyle,
+  itSupportsMargins,
+} from '@mantine/tests';
 import { DateRangePicker } from './DateRangePicker';
 import { DatePickerBase } from '../DatePickerBase/DatePickerBase';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
@@ -8,7 +13,8 @@ import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 describe('@mantine/dates/DateRangePicker', () => {
   itSupportsClassName(DateRangePicker, {});
   itSupportsStyle(DateRangePicker, {});
-  itSupportsRef(DateRangePicker, {}, HTMLButtonElement, 'elementRef');
+  itSupportsMargins(DateRangePicker, {});
+  itSupportsRef(DateRangePicker, {}, HTMLButtonElement);
 
   it('passes correct __staticSelector to Calendar and DatePickerBase components', () => {
     const element = shallow(<DateRangePicker initiallyOpened />);

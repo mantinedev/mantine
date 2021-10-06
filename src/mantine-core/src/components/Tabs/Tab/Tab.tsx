@@ -1,7 +1,7 @@
-import React from 'react';
-import { DefaultProps } from '../../../theme';
+import React, { forwardRef } from 'react';
+import { DefaultProps } from '@mantine/styles';
 
-export interface TabProps extends DefaultProps, React.ComponentProps<'button'> {
+export interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   /** Tab control label */
   label?: React.ReactNode;
 
@@ -12,18 +12,15 @@ export interface TabProps extends DefaultProps, React.ComponentProps<'button'> {
   children?: React.ReactNode;
 
   /** Get tab control ref */
-  elementRef?: React.ForwardedRef<HTMLButtonElement>;
+  ref?: React.ForwardedRef<HTMLButtonElement>;
 }
 
 export interface TabType {
   type: any;
   props: TabProps;
+  ref: React.ForwardedRef<HTMLButtonElement>;
 }
 
-// Props should be kept for ts integration
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function Tab(props: TabProps) {
-  return null;
-}
+export const Tab = forwardRef<HTMLButtonElement, TabProps>(() => null);
 
 Tab.displayName = '@mantine/core/Tab';

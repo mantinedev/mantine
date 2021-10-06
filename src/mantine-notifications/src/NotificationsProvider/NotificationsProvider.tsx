@@ -1,7 +1,6 @@
 import React from 'react';
-import cx from 'clsx';
 import { Transition, TransitionGroup } from 'react-transition-group';
-import { DefaultProps, useMantineTheme, Portal } from '@mantine/core';
+import { DefaultProps, useMantineTheme, Portal, MantineMargin } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 import { NotificationsContext } from '../Notifications.context';
 import { NotificationsProviderPositioning } from '../types';
@@ -21,7 +20,7 @@ const POSITIONS = [
 ] as const;
 
 export interface NotificationProviderProps
-  extends DefaultProps,
+  extends Omit<DefaultProps, MantineMargin>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Notifications position */
   position?:
@@ -54,7 +53,6 @@ export interface NotificationProviderProps
 export function NotificationsProvider({
   className,
   position = 'bottom-right',
-  themeOverride,
   autoClose = 4000,
   transitionDuration = 250,
   containerWidth = 440,
@@ -74,10 +72,10 @@ export function NotificationsProvider({
     clean,
     cleanQueue,
   } = useNotificationsState({ limit });
+  const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 1 : transitionDuration;
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme });
+  const { classes, cx } = useStyles();
   const positioning = (POSITIONS.includes(position) ? position : 'bottom-right').split(
     '-'
   ) as NotificationsProviderPositioning;

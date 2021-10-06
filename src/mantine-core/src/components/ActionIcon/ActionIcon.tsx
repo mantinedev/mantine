@@ -1,5 +1,4 @@
-import React from 'react';
-import cx from 'clsx';
+import React, { forwardRef } from 'react';
 import {
   useMantineTheme,
   DefaultProps,
@@ -7,33 +6,19 @@ import {
   getSizeValue,
   getSharedColorScheme,
   MantineColor,
-} from '../../theme';
-import useStyles, { sizes } from './ActionIcon.styles';
-import { Loader, LoaderProps } from '../Loader/Loader';
+  useExtractedMargins,
+  PolymorphicComponentProps,
+  PolymorphicRef,
+} from '@mantine/styles';
+import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
+import { Loader, LoaderProps } from '../Loader';
 
-export const ACTION_ICON_SIZES = sizes;
-
-const LOADER_SIZES = {
-  xs: 12,
-  sm: 14,
-  md: 16,
-  lg: 18,
-  xl: 20,
-};
-
-interface _ActionIconProps<C extends React.ElementType, R extends HTMLElement>
-  extends DefaultProps {
-  /** Root element or custom component */
-  component?: C;
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<R>;
-
+interface _ActionIconProps extends DefaultProps {
   /** Icon rendered inside button */
   children: React.ReactNode;
 
   /** Controls appearance */
-  variant?: 'transparent' | 'hover' | 'filled' | 'outline' | 'light';
+  variant?: ActionIconVariant;
 
   /** Button hover, active and icon colors from theme */
   color?: MantineColor;
@@ -51,57 +36,56 @@ interface _ActionIconProps<C extends React.ElementType, R extends HTMLElement>
   loading?: boolean;
 }
 
-export type ActionIconProps<
-  C extends React.ElementType = 'button',
-  R extends HTMLElement = HTMLButtonElement
-> = _ActionIconProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _ActionIconProps<C, R>>;
+export type ActionIconProps<C extends React.ElementType> = PolymorphicComponentProps<
+  C,
+  _ActionIconProps
+>;
 
-export function ActionIcon<
-  C extends React.ElementType = 'button',
-  R extends HTMLElement = HTMLButtonElement
->({
-  className,
-  color = 'gray',
-  children,
-  radius = 'sm',
-  size = 'md',
-  variant = 'hover',
-  disabled = false,
-  loaderProps,
-  loading = false,
-  themeOverride,
-  elementRef,
-  component,
-  ...others
-}: ActionIconProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ size, radius, color, theme }, null, 'action-icon');
-  const Element = component || 'button';
-  const colors = getSharedColorScheme({
-    color,
-    theme,
-    variant: 'light',
-  });
+type ActionIconComponent = <C extends React.ElementType = 'button'>(
+  props: ActionIconProps<C>
+) => React.ReactElement;
 
-  const loader = (
-    <Loader
-      color={colors.color}
-      size={getSizeValue({ size, sizes: LOADER_SIZES })}
-      {...loaderProps}
-    />
-  );
+export const ActionIcon: ActionIconComponent & { displayName?: string } = forwardRef(
+  <C extends React.ElementType = 'button'>(
+    {
+      className,
+      color = 'gray',
+      children,
+      radius = 'sm',
+      size = 'md',
+      variant = 'hover',
+      disabled = false,
+      loaderProps,
+      loading = false,
+      component,
+      style,
+      ...others
+    }: ActionIconProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const theme = useMantineTheme();
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles({ size, radius, color, variant }, null, 'action-icon');
+    const Element = component || 'button';
+    const colors = getSharedColorScheme({ color, theme, variant: 'light' });
 
-  return (
-    <Element
-      {...others}
-      className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
-      type="button"
-      ref={elementRef as any}
-      disabled={disabled || loading}
-    >
-      {loading ? loader : children}
-    </Element>
-  );
-}
+    const loader = (
+      <Loader color={colors.color} size={getSizeValue({ size, sizes }) - 12} {...loaderProps} />
+    );
+
+    return (
+      <Element
+        {...rest}
+        style={mergedStyles}
+        className={cx(classes.root, { [classes.loading]: loading }, className)}
+        type="button"
+        ref={ref}
+        disabled={disabled || loading}
+      >
+        {loading ? loader : children}
+      </Element>
+    );
+  }
+);
 
 ActionIcon.displayName = '@mantine/core/ActionIcon';

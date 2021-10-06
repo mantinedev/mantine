@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Text, Group, Button } from '@mantine/core';
-import cx from 'clsx';
 import { Logo } from '../Logo/Logo';
 import { SocialButton } from '../SocialButton/SocialButton';
 import { LinksGroup } from './LinksGroup/LinksGroup';
@@ -12,7 +11,7 @@ interface FooterProps {
 }
 
 export function Footer({ withNavbar }: FooterProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const groups = FOOTER_LINKS_DATA.map((group) => (
     <LinksGroup data={group.data} title={group.title} key={group.title} />
   ));

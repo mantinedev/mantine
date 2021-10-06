@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChatBubbleIcon } from '@modulz/radix-icons';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../theme';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Blockquote } from './Blockquote';
 
 const getThemes = (props?: any) =>
@@ -46,11 +46,4 @@ storiesOf('@mantine/core/Blockquote', module)
   ))
   .add('Themes', () => (
     <div style={{ maxWidth: 500, padding: 50 }}>{getThemes({ style: { marginTop: 20 } })}</div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh' }}>
-      <div style={{ maxWidth: 500, padding: 50 }}>
-        {getThemes({ style: { marginTop: 20 }, themeOverride: { colorScheme: 'dark' } })}
-      </div>
-    </div>
   ));

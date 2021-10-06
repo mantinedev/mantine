@@ -10,7 +10,10 @@ import {
 import { Divider } from '../Divider/Divider';
 import { Button } from '../Button/Button';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
-import { Menu, MenuBody, MenuItem } from './Menu';
+import { MenuBody } from './MenuBody/MenuBody';
+import { MenuItem } from './MenuItem/MenuItem';
+import { MenuLabel } from './MenuLabel/MenuLabel';
+import { Menu } from './Menu';
 
 const defaultProps = {
   opened: true,
@@ -21,10 +24,10 @@ describe('@mantine/core/Menu', () => {
   checkAccessibility([
     mount(
       <Menu menuButtonLabel="test menu">
-        <MenuItem>test-1</MenuItem>
-        <MenuItem>test-2</MenuItem>
+        <Menu.Item>test-1</Menu.Item>
+        <Menu.Item>test-2</Menu.Item>
         <Divider />
-        <MenuItem>test-3</MenuItem>
+        <Menu.Item>test-3</Menu.Item>
         <Divider />
       </Menu>
     ),
@@ -33,10 +36,7 @@ describe('@mantine/core/Menu', () => {
   itSupportsClassName(Menu, defaultProps);
   itSupportsStyle(Menu, defaultProps);
   itSupportsOthers(Menu, defaultProps);
-  itSupportsRef(Menu, defaultProps, HTMLButtonElement, 'elementRef');
-  it('has correct displayName', () => {
-    expect(Menu.displayName).toEqual('@mantine/core/Menu');
-  });
+  itSupportsRef(Menu, defaultProps, HTMLButtonElement);
 
   it('passes props to MenuBody component', () => {
     const element = shallow(
@@ -48,9 +48,9 @@ describe('@mantine/core/Menu', () => {
         closeOnItemClick={false}
         menuBodyProps={{ 'data-test-menu': true, style: { color: 'red' } }}
       >
-        <MenuItem>test-item</MenuItem>
-        <MenuItem>test-item</MenuItem>
-        <MenuItem>test-item</MenuItem>
+        <Menu.Item>test-item</Menu.Item>
+        <Menu.Item>test-item</Menu.Item>
+        <Menu.Item>test-item</Menu.Item>
       </Menu>
     ).find(MenuBody);
 
@@ -69,9 +69,9 @@ describe('@mantine/core/Menu', () => {
 
     const element = shallow(
       <Menu onOpen={onOpen} onClose={onClose}>
-        <MenuItem>test-item</MenuItem>
-        <MenuItem>test-item</MenuItem>
-        <MenuItem>test-item</MenuItem>
+        <Menu.Item>test-item</Menu.Item>
+        <Menu.Item>test-item</Menu.Item>
+        <Menu.Item>test-item</Menu.Item>
       </Menu>
     );
 
@@ -85,9 +85,9 @@ describe('@mantine/core/Menu', () => {
   it('accepts control from props', () => {
     const element = shallow(
       <Menu control={<Button>Test button</Button>}>
-        <MenuItem>test-item</MenuItem>
-        <MenuItem>test-item</MenuItem>
-        <MenuItem>test-item</MenuItem>
+        <Menu.Item>test-item</Menu.Item>
+        <Menu.Item>test-item</Menu.Item>
+        <Menu.Item>test-item</Menu.Item>
       </Menu>
     );
 
@@ -98,13 +98,22 @@ describe('@mantine/core/Menu', () => {
   it('uses menuId prop to bind control and menu body', () => {
     const element = shallow(
       <Menu menuId="test-id">
-        <MenuItem>test-item</MenuItem>
-        <MenuItem>test-item</MenuItem>
-        <MenuItem>test-item</MenuItem>
+        <Menu.Item>test-item</Menu.Item>
+        <Menu.Item>test-item</Menu.Item>
+        <Menu.Item>test-item</Menu.Item>
       </Menu>
     );
 
     expect(element.find(ActionIcon).prop('aria-controls')).toBe('test-id');
     expect(element.find(MenuBody).prop('id')).toBe('test-id');
+  });
+
+  it('exports Menu.Item and Menu.Label components', () => {
+    expect(Menu.Item).toBe(MenuItem);
+    expect(Menu.Label).toBe(MenuLabel);
+  });
+
+  it('has correct displayName', () => {
+    expect(Menu.displayName).toEqual('@mantine/core/Menu');
   });
 });

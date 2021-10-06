@@ -50,37 +50,3 @@ interface MantineConfiguratorDemo extends MantineDemoBase {
 }
 
 type MantineDemo = MantineCodeDemo | MantineConfiguratorDemo;
-
-type MantineClasses<T extends (...args: any) => any> = Record<keyof ReturnType<T>, string>;
-
-interface Frontmatter {
-  title: string;
-  description?: string;
-  props: string[];
-  import: string;
-  docs: string;
-  source: string;
-  package: string;
-  bundleSize: string;
-  installation: string;
-  pageTitle: string;
-  license: string;
-  styles: string[];
-  group: string;
-  order: number;
-  slug: string;
-  category: string;
-  release: string;
-  date: string;
-}
-
-interface MdxPage {
-  headings: {
-    depth: number;
-    value: string;
-  }[];
-
-  body: string;
-
-  frontmatter: Frontmatter;
-}

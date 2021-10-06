@@ -6,6 +6,7 @@ import {
   itSupportsRef,
   itRendersChildren,
   itSupportsStyle,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Paper } from '../Paper/Paper';
 import { Card } from './Card';
@@ -13,19 +14,18 @@ import { Card } from './Card';
 describe('@mantine/core/Card', () => {
   itSupportsOthers(Card, {});
   itSupportsClassName(Card, {});
-  itSupportsRef(Card, {}, HTMLDivElement, 'elementRef');
+  itSupportsRef(Card, {}, HTMLDivElement);
   itRendersChildren(Card, {});
   itSupportsStyle(Card, {});
+  itSupportsMargins(Card, {});
 
   it('accepts component from component prop', () => {
     const TestComponent = (props: any) => <span data-test-prop {...props} />;
+    const withComponent = shallow(<Card component={TestComponent}>Card</Card>);
     const withTag = shallow(
-      <Card<'a'> component="a" href="https://mantine.dev">
+      <Card component="a" href="https://mantine.dev">
         Card
       </Card>
-    );
-    const withComponent = shallow(
-      <Card<typeof TestComponent> component={TestComponent}>Card</Card>
     );
 
     expect(withTag.dive().type()).toBe('a');

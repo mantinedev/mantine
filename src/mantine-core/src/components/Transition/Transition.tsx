@@ -1,17 +1,9 @@
 import React from 'react';
-import { DefaultProps } from '../../theme';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { useTransition } from './use-transition';
-import { MantineTransition, transitions } from './transitions';
+import { MantineTransition } from './transitions';
 
-export { GroupedTransition } from './GroupedTransition';
-export type { GroupedTransitionProps } from './GroupedTransition';
-
-export const AVAILABLE_TRANSITIONS = Object.keys(transitions) as Array<keyof typeof transitions>;
-
-export type { MantineTransition };
-
-export interface TransitionProps extends Omit<DefaultProps, 'className'> {
+export interface TransitionProps {
   /** Predefined transition name or transition styles */
   transition: MantineTransition;
 
@@ -45,7 +37,6 @@ export function Transition({
   duration = 250,
   mounted,
   children,
-  themeOverride,
   timingFunction,
   onExit,
   onEntered,
@@ -55,7 +46,6 @@ export function Transition({
   const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
     mounted,
     duration,
-    themeOverride,
     timingFunction,
     onExit,
     onEntered,

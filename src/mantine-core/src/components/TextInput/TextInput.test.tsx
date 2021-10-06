@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   checkAccessibility,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
@@ -26,7 +27,8 @@ describe('@mantine/core/Input', () => {
   ]);
 
   itSupportsClassName(TextInput, {});
-  itSupportsRef(TextInput, {}, HTMLInputElement, 'elementRef');
+  itSupportsMargins(TextInput, {});
+  itSupportsRef(TextInput, {}, HTMLInputElement);
   itSupportsStyle(TextInput, {});
   itSupportsStylesApi(
     TextInput,

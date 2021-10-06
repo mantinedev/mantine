@@ -37,34 +37,3 @@ function Demo() {
   );
 }
 ```
-
-## Usage with Next Link
-
-Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
-to make Anchor and other similar components work with Next Link, create wrapper component in your components folder:
-
-```tsx
-// This component can be reused in every Mantine component which supports component pass through
-import React, { forwardRef } from 'react';
-import Link from 'next/link';
-
-export const NextLink = forwardRef(
-  (
-    { href, ...others }: React.ComponentPropsWithoutRef<typeof Link>,
-    ref: React.ForwardedRef<HTMLAnchorElement>
-  ) => (
-    <Link href={href}>
-      {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
-      <a {...others} ref={ref} />
-    </Link>
-  )
-);
-```
-
-And then pass it to Button or other component:
-
-```tsx
-<Anchor component={NextLink} href="/hello">
-  Next Link
-</Anchor>
-```

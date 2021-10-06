@@ -8,7 +8,7 @@ import {
   itSupportsStylesApi,
 } from '@mantine/tests';
 import { Chip } from './Chip';
-import { CheckboxIcon } from '../../Checkbox/CheckboxIcon';
+import { CheckboxIcon } from '../../Checkbox';
 import { Chip as ChipStylesApi } from './styles.api';
 
 const defaultProps = {
@@ -22,7 +22,7 @@ describe('@mantine/core/Chip', () => {
   itSupportsClassName(Chip, defaultProps);
   itSupportsOthers(Chip, defaultProps);
   itRendersChildren(Chip, defaultProps);
-  itSupportsRef(Chip, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsRef(Chip, defaultProps, HTMLInputElement);
 
   itSupportsStylesApi(
     Chip,

@@ -1,12 +1,6 @@
-import React, { Children } from 'react';
-import cx from 'clsx';
-import { useId } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, useMantineTheme, getSizeValue } from '../../theme';
-import { Col, ColProps, breakpoints } from './Col';
-import { getResponsiveStyles } from './get-responsive-styles';
-
-export { Col };
-export type { ColProps };
+import React, { Children, forwardRef } from 'react';
+import { DefaultProps, MantineNumberSize, useUuid, useExtractedMargins } from '@mantine/styles';
+import useStyles from './Grid.styles';
 
 export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** <Col /> components only */
@@ -28,44 +22,36 @@ export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<
   columns?: number;
 }
 
-export function Grid({
-  themeOverride,
-  gutter = 'md',
-  children,
-  grow = false,
-  justify = 'flex-start',
-  align = 'stretch',
-  style,
-  columns = 12,
-  className,
-  id,
-  ...others
-}: GridProps) {
-  const uuid = useId(id);
-  const theme = useMantineTheme(themeOverride);
-  const spacing = getSizeValue({ size: gutter, sizes: theme.spacing });
+export const Grid = forwardRef<HTMLDivElement, GridProps>(
+  (
+    {
+      gutter = 'md',
+      children,
+      grow = false,
+      justify = 'flex-start',
+      align = 'stretch',
+      style,
+      columns = 12,
+      className,
+      id,
+      ...others
+    }: GridProps,
+    ref
+  ) => {
+    const uuid = useUuid(id);
+    const { classes, cx } = useStyles({ gutter, justify, align }, null, 'grid');
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
-  const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
-    React.cloneElement(col, { gutter, grow, columns, key: index, id: uuid })
-  );
+    const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
+      React.cloneElement(col, { gutter, grow, columns, key: index, id: uuid })
+    );
 
-  let styles: React.CSSProperties = {};
-
-  styles = {
-    margin: -spacing / 2,
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: justify,
-    alignItems: align,
-    ...style,
-  };
-
-  return (
-    <div style={styles} className={cx('mantine-grid', className)} {...others}>
-      <style>{getResponsiveStyles({ uuid, breakpoints, columns, grow, theme })}</style>
-      {cols}
-    </div>
-  );
-}
+    return (
+      <div style={mergedStyles} className={cx(classes.grid, className)} ref={ref} {...rest}>
+        {cols}
+      </div>
+    );
+  }
+);
 
 Grid.displayName = '@mantine/core/Grid';

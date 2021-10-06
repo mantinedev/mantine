@@ -1,6 +1,6 @@
 import { Chip } from './Chip/styles.api';
-import { ChipsStylesNames } from './Chips';
+import { ChipStylesNames } from './Chip/Chip';
 
 export { Chip };
 
-export const Chips: Record<ChipsStylesNames, string> = Chip;
+export const Chips: Record<ChipStylesNames, string> = Chip;

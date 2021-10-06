@@ -1,7 +1,6 @@
-import { createMemoStyles, getSizeValue, MantineNumberSize, MantineTheme } from '../../../theme';
+import { createStyles, getSizeValue, MantineNumberSize } from '@mantine/styles';
 
 interface MenuBodyStyles {
-  theme: MantineTheme;
   size: MantineNumberSize;
 }
 
@@ -15,8 +14,8 @@ export const sizes = {
 
 const MENU_PADDING = 4;
 
-export default createMemoStyles({
-  body: ({ theme, size }: MenuBodyStyles) => ({
+export default createStyles((theme, { size }: MenuBodyStyles) => ({
+  body: {
     width: getSizeValue({ size, sizes }),
     overflow: 'hidden',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
@@ -25,18 +24,18 @@ export default createMemoStyles({
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
     padding: MENU_PADDING,
-  }),
+  },
 
-  divider: ({ theme }: MenuBodyStyles) => ({
+  divider: {
     borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2],
-    margin: [theme.spacing.xs / 2, -MENU_PADDING],
-  }),
+    margin: `${theme.spacing.xs / 2}px -${MENU_PADDING}px`,
+  },
 
-  label: ({ theme }: MenuBodyStyles) => ({
+  label: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     fontWeight: 500,
     fontSize: theme.fontSizes.xs,
-    padding: [theme.spacing.xs / 2, theme.spacing.sm],
+    padding: `${theme.spacing.xs / 2}px ${theme.spacing.sm}px`,
     cursor: 'default',
-  }),
-});
+  },
+}));

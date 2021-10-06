@@ -4,6 +4,8 @@ import {
   itSupportsOthers,
   itSupportsClassName,
   itSupportsStylesApi,
+  itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { shallow } from 'enzyme';
 import { Curve } from './Curve/Curve';
@@ -17,8 +19,10 @@ const defaultProps = {
 
 describe('@mantine/core/RingProgress', () => {
   itSupportsClassName(RingProgress, defaultProps);
+  itSupportsMargins(RingProgress, defaultProps);
   itSupportsStyle(RingProgress, defaultProps);
   itSupportsOthers(RingProgress, defaultProps);
+  itSupportsRef(RingProgress, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     RingProgress,
     defaultProps,

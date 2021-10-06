@@ -3,12 +3,12 @@ import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { Divider } from '../Divider';
 
 const code = `
-<Divider margins="xs" label="Label on the left" />
-<Divider margins="xs" label="Label in the center" labelPosition="center" />
-<Divider margins="xs" label="Label on the right" labelPosition="right" />
+<Divider my="xs" label="Label on the left" />
+<Divider my="xs" label="Label in the center" labelPosition="center" />
+<Divider my="xs" label="Label on the right" labelPosition="right" />
 
 <Divider
-  margins="xs"
+  my="xs"
   variant="dashed"
   labelPosition="center"
   label={
@@ -20,7 +20,7 @@ const code = `
 />
 
 <Divider
-  margins="xs"
+  my="xs"
   label="Link label"
   labelProps={{ component: 'a', href: 'https://mantine.dev', variant: 'link', color: 'blue' }}
 />
@@ -29,11 +29,11 @@ const code = `
 function Demo() {
   return (
     <>
-      <Divider margins="xs" label="Label on the left" />
-      <Divider margins="xs" label="Label in the center" labelPosition="center" />
-      <Divider margins="xs" label="Label on the right" labelPosition="right" />
+      <Divider my="xs" label="Label on the left" />
+      <Divider my="xs" label="Label in the center" labelPosition="center" />
+      <Divider my="xs" label="Label on the right" labelPosition="right" />
       <Divider
-        margins="xs"
+        my="xs"
         variant="dashed"
         labelPosition="center"
         label={
@@ -44,7 +44,7 @@ function Demo() {
         }
       />
       <Divider
-        margins="xs"
+        my="xs"
         label="Link label"
         labelProps={{ component: 'a', href: 'https://mantine.dev', variant: 'link', color: 'blue' }}
       />

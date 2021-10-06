@@ -15,11 +15,16 @@ const GALLERY_CATEGORIES = [
     categories: [
       { slug: 'hero', name: 'Hero headers' },
       { slug: 'features', name: 'Features section' },
+      { slug: 'faq', name: 'Frequently asked questions' },
+      { slug: 'contact', name: 'Contact us section' },
     ],
   },
   {
     name: 'Application UI',
-    categories: [{ slug: 'forms', name: 'Forms and inputs' }],
+    categories: [
+      { slug: 'authentication', name: 'Authentication' },
+      { slug: 'inputs', name: 'Inputs' },
+    ],
   },
   {
     name: 'Blog',

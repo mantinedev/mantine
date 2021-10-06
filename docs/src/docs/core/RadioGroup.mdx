@@ -70,9 +70,9 @@ function Demo() {
 }
 ```
 
-## Get element ref
+## Get input ref
 
-You can get input ref with `elementRef` prop on Radio component:
+You can get input ref with `ref` prop on Radio component:
 
 ```tsx
 import { useRef } from 'react';
@@ -84,7 +84,7 @@ function Demo() {
   return (
     <RadioGroup>
       <Radio value="react">React</Radio>
-      <Radio value="svelte" elementRef={ref}>
+      <Radio value="svelte" ref={ref}>
         Svelte
       </Radio>
     </RadioGroup>

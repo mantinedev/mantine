@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function ImageIcon(props: React.ComponentProps<'svg'>) {
+export function ImageIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
       width="15"
