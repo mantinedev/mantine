@@ -1,30 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MultiSelect } from '../MultiSelect';
 
 const code = `
-  <MultiSelect
-    label="Creatalbe Multiselect"
-    data={creatableData}
-    placeholder="Select items"
-    nothingFound="Nothing found"
-    searchable
-    creatable
-  />;
-`;
+import { useState } from 'react';
+import { MultiSelect } from '@mantine/core';
 
-const stringData = ['React', 'Angular', 'Svelte', 'Vue'];
+function Demo() {
+  const [data, setData] = useState(['React', 'Angular', 'Svelte', 'Vue']);
 
-export function Demo() {
   return (
     <MultiSelect
-      label="Creatalbe Multiselect"
-      data={stringData}
+      label="Creatable MultiSelect"
+      data={data}
       placeholder="Select items"
-      nothingFound="Nothing found"
       searchable
       creatable
-      getCreateLabel={(query) => `+ Create ${query}`}
+      getCreateLabel={(query) => \`+ Create \${query}\`}
+      onCreate={(query) => setData((current) => [...current, query])}
     />
+  );
+}
+`;
+
+export function Demo() {
+  const [data, setData] = useState(['React', 'Angular', 'Svelte', 'Vue']);
+
+  return (
+    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
+      <MultiSelect
+        label="Creatable MultiSelect"
+        data={data}
+        placeholder="Select items"
+        searchable
+        creatable
+        getCreateLabel={(query) => `+ Create ${query}`}
+        onCreate={(query) => setData((current) => [...current, query])}
+      />
+    </div>
   );
 }
 

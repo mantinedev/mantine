@@ -2,36 +2,32 @@ import React from 'react';
 import { MultiSelect } from '../MultiSelect';
 
 const code = `
-  <MultiSelect
-    label="Select with Grouped Items"
-    data={[
-      { value: 'red', label: 'Red', group: 'Primary Colors' },
-      { value: 'green', label: 'Green', group: 'Secondary Colors' },
-      { value: 'blue', label: 'Blue', group: 'Primary Colors' },
-      { value: 'yellow', label: 'Yellow', group: 'Primary Colors' },
-      { value: 'orange', label: 'Orange', group: 'Secondary Colors' },
-      { value: 'violet', label: 'Violet', group: 'Secondary Colors' },
-    ]}
-    placeholder="Select items"
-    nothingFound="Nothing found"
-  />;
+<MultiSelect
+  label="Your favorite Rick and Morty character"
+  placeholder="Pick all that you like"
+  data={[
+    { value: 'rick', label: 'Rick', group: 'Used to be a pickle' },
+    { value: 'morty', label: 'Morty', group: 'Never was a pickle' },
+    { value: 'beth', label: 'Beth', group: 'Never was a pickle' },
+    { value: 'summer', label: 'Summer', group: 'Never was a pickle' },
+  ]}
+/>
 `;
 
 export function Demo() {
   return (
-    <MultiSelect
-      label="MultiSelect with Grouped Items"
-      data={[
-        { value: 'red', label: 'Red', group: 'Primary Colors' },
-        { value: 'green', label: 'Green', group: 'Secondary Colors' },
-        { value: 'blue', label: 'Blue', group: 'Primary Colors' },
-        { value: 'yellow', label: 'Yellow', group: 'Primary Colors' },
-        { value: 'orange', label: 'Orange', group: 'Secondary Colors' },
-        { value: 'violet', label: 'Violet', group: 'Secondary Colors' },
-      ]}
-      placeholder="Select items"
-      nothingFound="Nothing found"
-    />
+    <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
+      <MultiSelect
+        label="Your favorite Rick and Morty character"
+        placeholder="Pick all that you like"
+        data={[
+          { value: 'rick', label: 'Rick', group: 'Used to be a pickle' },
+          { value: 'morty', label: 'Morty', group: 'Never was a pickle' },
+          { value: 'beth', label: 'Beth', group: 'Never was a pickle' },
+          { value: 'summer', label: 'Summer', group: 'Never was a pickle' },
+        ]}
+      />
+    </div>
   );
 }
 

@@ -100,17 +100,6 @@ MultiSelect support two different data formats:
 />
 ```
 
-For data as array of objects, Select supports additional properties:
-
-1. `disabled` property to disable the Select items.
-
-<Demo data={MultiSelectDemos.disabledItems} />
-
-2. `group` property to group the Select items.
-
-<Demo data={MultiSelectDemos.groups} />
-
-
 ## Searchable
 
 Set `searchable` prop to enable search in select and `nothingFound` prop to provide label that will be shown when no options were found:
@@ -126,10 +115,18 @@ When prop is true and at least value is selected clear button will replace chevr
 
 ## Creatable
 
-Set `creatable` prop to enable creating new select item.
-`getCreateLabel` prop is also required for a `creatable` Select.
+Set `creatable` and `getCreateLabel` props to enable creating new select item.
+Note that you will need to handle data state to manage item creation correctly:
 
 <Demo data={MultiSelectDemos.creatable} />
+
+## Group items
+
+<Demo data={MultiSelectDemos.groups} />
+
+## Disable items
+
+<Demo data={MultiSelectDemos.disabledItems} />
 
 ## Large data set
 
