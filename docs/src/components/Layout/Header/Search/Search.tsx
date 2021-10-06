@@ -41,12 +41,11 @@ function constructPages(data: ReturnType<typeof getDocsData>): AutocompleteItem[
   return pages.map((page) => {
     const { group, ...pageData } = page;
     return {
-    value: pageData.title,
-    mantineGroup: group,
-    ...pageData,
-  };
-  }
-  );
+      value: pageData.title,
+      mantineGroup: group,
+      ...pageData,
+    };
+  });
 }
 
 function filterPages(query: string, pages: AutocompleteItem[]) {

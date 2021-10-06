@@ -19,18 +19,15 @@ describe('@mantine/hooks/use-uncontrolled', () => {
 
   it('calls onChange handler when setValue is called', () => {
     const spy = jest.fn();
-    const hook = renderHook(
-      (props: UncontrolledOptions<string>) => useUncontrolled(props),
-      {
-        initialProps: {
-          value: 'test-value',
-          defaultValue: null,
-          finalValue: null,
-          onChange: spy,
-          rule: (f) => !!f,
-        },
-      }
-    );
+    const hook = renderHook((props: UncontrolledOptions<string>) => useUncontrolled(props), {
+      initialProps: {
+        value: 'test-value',
+        defaultValue: null,
+        finalValue: null,
+        onChange: spy,
+        rule: (f) => !!f,
+      },
+    });
 
     act(() => hook.result.current[1]('test-value-2'));
     // simulate receiving the new value from onChange callback
@@ -78,18 +75,15 @@ describe('@mantine/hooks/use-uncontrolled', () => {
 
   it('uses finalValue when transitioning to uncontrolled state from controlled state', () => {
     const spy = jest.fn();
-    const hook = renderHook(
-      (props: UncontrolledOptions<string>) => useUncontrolled(props),
-      {
-        initialProps: {
-          value: 'foo',
-          defaultValue: null,
-          finalValue: 'test-final-value',
-          onChange: spy,
-          rule: (f) => !!f,
-        },
-      }
-    );
+    const hook = renderHook((props: UncontrolledOptions<string>) => useUncontrolled(props), {
+      initialProps: {
+        value: 'foo',
+        defaultValue: null,
+        finalValue: 'test-final-value',
+        onChange: spy,
+        rule: (f) => !!f,
+      },
+    });
 
     expect(hook.result.current[0]).toBe('foo');
     expect(hook.result.current[2]).toBe('controlled');

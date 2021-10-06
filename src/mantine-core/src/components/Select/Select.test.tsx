@@ -53,7 +53,12 @@ describe('@mantine/core/Select', () => {
     },
     Object.keys(SelectStylesApi).filter(
       (key) =>
-        key !== 'hovered' && key !== 'selected' && key !== 'nothingFound' && key !== 'disabled' && key !== 'seperator' && key !== 'seperatorLabel'
+        key !== 'hovered' &&
+        key !== 'selected' &&
+        key !== 'nothingFound' &&
+        key !== 'disabled' &&
+        key !== 'seperator' &&
+        key !== 'seperatorLabel'
     ),
     'select'
   );
@@ -82,13 +87,11 @@ describe('@mantine/core/Select', () => {
       <Select
         data={Array(50)
           .fill(0)
-          .map((_, index) =>
-          (
-            { value: index.toString(),
-              label: index.toString(),
-              disabled: index % 2 === 0,
-            }
-          ))}
+          .map((_, index) => ({
+            value: index.toString(),
+            label: index.toString(),
+            disabled: index % 2 === 0,
+          }))}
         initiallyOpened
         searchable
       />
@@ -102,16 +105,12 @@ describe('@mantine/core/Select', () => {
       <Select
         data={Array(50)
           .fill(0)
-          .map((_, index) =>
-          (
-            {
-              value: index.toString(),
-              label: index.toString(),
-              disabled: index % 2 === 0,
-              group: `${index % 2}`,
-            }
-          )
-        )}
+          .map((_, index) => ({
+            value: index.toString(),
+            label: index.toString(),
+            disabled: index % 2 === 0,
+            group: `${index % 2}`,
+          }))}
         initiallyOpened
         searchable
       />

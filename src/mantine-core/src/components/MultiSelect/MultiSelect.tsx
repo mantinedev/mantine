@@ -31,9 +31,9 @@ import useStyles from './MultiSelect.styles';
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
   | Exclude<
-    ClassNames<typeof useStyles>,
-    'searchInputEmpty' | 'searchInputInputHidden' | 'searchInputPointer'
-  >
+      ClassNames<typeof useStyles>,
+      'searchInputEmpty' | 'searchInputInputHidden' | 'searchInputPointer'
+    >
   | Exclude<BaseSelectStylesNames, 'selected'>;
 
 export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, BaseSelectProps {
@@ -246,7 +246,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     const getNextIndex = (
       index: number,
       nextItem: (index: number) => number,
-      compareFn: (index: number) => boolean) => {
+      compareFn: (index: number) => boolean
+    ) => {
       let i = index;
       while (compareFn(i)) {
         i = nextItem(i);
@@ -256,10 +257,13 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     };
 
     useDidUpdate(() => {
-      setHovered(getNextIndex(
-        -1,
-        (index) => index + 1,
-        (index) => index < filteredData.length - 1));
+      setHovered(
+        getNextIndex(
+          -1,
+          (index) => index + 1,
+          (index) => index < filteredData.length - 1
+        )
+      );
     }, [searchValue]);
 
     const handleItemSelect = (item: SelectItem) => {
@@ -285,7 +289,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           event.preventDefault();
           setDropdownOpened(true);
           setHovered((current) => {
-            const nextIndex = getNextIndex(current, (index) => index - 1, (index) => index > 0);
+            const nextIndex = getNextIndex(
+              current,
+              (index) => index - 1,
+              (index) => index > 0
+            );
             scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
             return nextIndex;
           });
@@ -299,7 +307,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             const nextIndex = getNextIndex(
               current,
               (index) => index + 1,
-              (index) => index < filteredData.length - 1);
+              (index) => index < filteredData.length - 1
+            );
             scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
             return nextIndex;
           });

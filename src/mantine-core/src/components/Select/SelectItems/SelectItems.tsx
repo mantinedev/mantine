@@ -73,14 +73,18 @@ export function SelectItems({
             itemsRefs.current[item.value] = node;
           }
         }}
-        onMouseDown={!item.disabled ? (event: React.MouseEvent<HTMLDivElement>) => {
-          event.preventDefault();
-          onItemSelect(item);
-        } : null}
+        onMouseDown={
+          !item.disabled
+            ? (event: React.MouseEvent<HTMLDivElement>) => {
+                event.preventDefault();
+                onItemSelect(item);
+              }
+            : null
+        }
         disabled={item.disabled}
         {...item}
       />
-      );
+    );
   };
 
   const createSeperator = (label?: string) => (
@@ -112,7 +116,8 @@ export function SelectItems({
 
   if (creatable) {
     const creatableDataItem = data[creatableDataIndex];
-    const selected = typeof isItemSelected === 'function' ? isItemSelected(data[creatableDataIndex].value) : false;
+    const selected =
+      typeof isItemSelected === 'function' ? isItemSelected(data[creatableDataIndex].value) : false;
     ungroupedItems.push(
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div

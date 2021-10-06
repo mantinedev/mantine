@@ -231,7 +231,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const getNextIndex = (
       index: number,
       nextItem: (index: number) => number,
-      compareFn: (index: number) => boolean) => {
+      compareFn: (index: number) => boolean
+    ) => {
       let i = index;
       while (compareFn(i)) {
         i = nextItem(i);
@@ -241,10 +242,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     };
 
     useDidUpdate(() => {
-      setHovered(getNextIndex(
-        -1,
-        (index) => index + 1,
-        (index) => index < filteredData.length - 1));
+      setHovered(
+        getNextIndex(
+          -1,
+          (index) => index + 1,
+          (index) => index < filteredData.length - 1
+        )
+      );
     }, [inputValue]);
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -255,7 +259,11 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           event.preventDefault();
           setDropdownOpened(true);
           setHovered((current) => {
-            const nextIndex = getNextIndex(current, (index) => index - 1, (index) => index > 0);
+            const nextIndex = getNextIndex(
+              current,
+              (index) => index - 1,
+              (index) => index > 0
+            );
             scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
             return nextIndex;
           });
@@ -269,7 +277,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             const nextIndex = getNextIndex(
               current,
               (index) => index + 1,
-              (index) => index < filteredData.length - 1);
+              (index) => index < filteredData.length - 1
+            );
             scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
             return nextIndex;
           });
@@ -287,10 +296,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           if (!searchable && !dropdownOpened) {
             event.preventDefault();
             setDropdownOpened(true);
-            setHovered(getNextIndex(
-              -1,
-              (index) => index + 1,
-              (index) => index < filteredData.length - 1));
+            setHovered(
+              getNextIndex(
+                -1,
+                (index) => index + 1,
+                (index) => index < filteredData.length - 1
+              )
+            );
           }
           break;
         }

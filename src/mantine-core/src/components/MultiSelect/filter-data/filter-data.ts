@@ -17,7 +17,7 @@ export function filterData({ data, searchable, limit, searchValue, filter, value
   if (!searchable) {
     const result = [];
     for (let i = 0; i < data.length; i += 1) {
-      if (!value.some((val) => (val === data[i].value) && !data[i].disabled)) {
+      if (!value.some((val) => val === data[i].value && !data[i].disabled)) {
         result.push(data[i]);
       }
     }
@@ -30,7 +30,7 @@ export function filterData({ data, searchable, limit, searchValue, filter, value
     if (
       filter(
         searchValue,
-        value.some((val) => (val === data[i].value) && !data[i].disabled),
+        value.some((val) => val === data[i].value && !data[i].disabled),
         data[i]
       )
     ) {
