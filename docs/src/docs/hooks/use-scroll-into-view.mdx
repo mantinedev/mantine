@@ -21,14 +21,13 @@ Basic usage works just as `element.scrollIntoView()`.
 
 ## API
 
-Hook accepts 6 arguments:
+Hook accepts 5 arguments:
 
-- `target` – HTML node that parent is scrolled to
-- `parent` – optional any parent scrollable HTML node, default to `document`
 - `onScrollFinish` – optional function that will be called after scroll animation
 - `easing` – optional custom math easing function
 - `duration` - optional duration of scroll animation
 - `axis` - optional axis of scroll
+- `offset` - optional additional distance from the beginning of the axis
 
 Hook returns React methods `scrollIntoView` and `cancel`.
 
@@ -37,11 +36,21 @@ const {
   scrollIntoView, // -> scroll to target HTML node
   cancel, // -> cancel scroll animation at anytime
 } = useScrollIntoView({
-  target: someDomElement,
-  parent: parentScrollableDomElement,
   duration: 1.5,
   axis: 'y',
 });
+```
+
+`scrollIntoView` method accepts 2 arguments:
+
+- `target` – HTML node that parent is scrolled to
+- `parent` – optional any parent scrollable HTML node, default to `document`
+
+```tsx
+scrollIntoView({
+  target: someDomElement,
+  parent: parentScrollableDomElement,
+})
 ```
 
 ## Easing
@@ -73,14 +82,16 @@ useScrollIntoView({
 
 ```tsx
 function useScrollIntoView({
-  target: HTMLElement;
-  parent?: HTMLElement;
   onScrollFinish?: () => void;
   duration?: number;
   axis?: 'x' | 'y';
   easing?: (t: number) => number;
+  offset?: number;
 }): {
-  scrollIntoView: () => void;
+  scrollIntoView: ({
+    target: HTMLElement;
+    parent?: HTMLElement;
+  }) => void;
   cancel: () => void;
 };
 ```

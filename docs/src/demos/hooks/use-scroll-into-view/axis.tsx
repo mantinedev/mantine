@@ -12,8 +12,6 @@ function Demo() {
   const scrollableRef = useRef<HTMLDivElement>(null);
 
   const { scrollIntoView } = useScrollIntoView({
-    parent: scrollableRef.current,
-    target: targetRef.current,
     axis: 'x',
   });
 
@@ -33,7 +31,14 @@ function Demo() {
           </Paper>
         </div>
       </Paper>
-      <Button onClick={scrollIntoView}>Scroll to target</Button>
+      <Button
+        onClick={() => scrollIntoView({
+          parent: scrollableRef.current,
+          target: targetRef.current,
+        })}
+      >
+        Scroll to target
+      </Button>
     </Group>
   );
 }
@@ -45,8 +50,6 @@ function Demo() {
   const scrollableRef = useRef<HTMLDivElement>(null);
 
   const { scrollIntoView } = useScrollIntoView({
-    parent: scrollableRef.current,
-    target: targetRef.current,
     axis: 'x',
   });
 
@@ -66,7 +69,14 @@ function Demo() {
           </Paper>
         </div>
       </Paper>
-      <Button onClick={scrollIntoView}>Scroll to target</Button>
+      <Button
+        onClick={() => scrollIntoView({
+          parent: scrollableRef.current,
+          target: targetRef.current,
+        })}
+      >
+        Scroll to target
+      </Button>
     </Group>
   );
 }

@@ -7,13 +7,15 @@ import { getRelativePosition } from './utils/get-relative-position';
 import { getScrollStart } from './utils/get-scroll-start';
 import { setScrollParam } from './utils/set-scroll-param';
 
+interface ScrollIntoViewAnimation {
+   /** target node to be scrolled yo */
+   target: HTMLElement;
+
+   /** scrollable parent node default to document */
+   parent?: HTMLElement;
+}
+
 interface ScrollIntoViewParams {
-  /** target node to be scrolled yo */
-  target: HTMLElement;
-
-  /** scrollable parent node default to document */
-  parent?: HTMLElement;
-
   /** callback fired after scroll */
   onScrollFinish?: () => void;
 
@@ -25,24 +27,27 @@ interface ScrollIntoViewParams {
 
   /** custom mathematical easing function */
   easing?: (t: number) => number
+
+  /** additional distance from the beginning of the axis */
+  offset?: number;
 }
 
 export function useScrollIntoView({
-  target,
-  parent,
   duration = 1.25,
   axis = 'y',
   onScrollFinish,
   easing = easeInOutQuad,
-}: ScrollIntoViewParams) {
+  offset = 0,
+}: ScrollIntoViewParams = {}) {
   const forceRerender = useForceUpdate();
   const frameID = useRef(0);
   const startTime = useRef(0);
 
   const scrollIntoView = useCallback(
-    () => {
+    ({ target, parent }: ScrollIntoViewAnimation) => {
       const start = getScrollStart({ parent, axis }) ?? 0;
       const change = getRelativePosition({ parent, target, axis }) - (parent ? 0 : start);
+      const totalChange = change !== 0 ? change - offset : change;
 
       function animateScroll() {
         if (startTime.current === 0) {
@@ -55,7 +60,7 @@ export function useScrollIntoView({
         // easing timing progress
         const t = elapsed / duration;
 
-        const distance = start + change * easing(t);
+        const distance = start + totalChange * easing(t);
 
         setScrollParam({ parent, axis, distance });
 
@@ -70,7 +75,7 @@ export function useScrollIntoView({
 
       animateScroll();
     },
-    [parent, target]
+    []
   );
 
   const cancel = (): void => {

@@ -9,13 +9,21 @@ import { Button, Text, Group, useMantineTheme } from '@mantine/core';
 function Demo() {
   const theme = useMantineTheme();
   const targetRef = useRef<HTMLDivElement>(null);
+
+  const navbarHeight = 60;
   const { scrollIntoView } = useScrollIntoView({
-    target: targetRef.current,
+    offset: navbarHeight,
   });
 
   return (
     <Group position="center">
-      <Button onClick={scrollIntoView}>Scroll to target</Button>
+      <Button
+        onClick={() => scrollIntoView({
+          target: targetRef.current,
+        })}
+      >
+        Scroll to target
+      </Button>
       <div
         style={{
           width: '100%',
@@ -33,13 +41,21 @@ function Demo() {
 function Demo() {
   const theme = useMantineTheme();
   const targetRef = useRef<HTMLDivElement>(null);
+
+  const navbarHeight = 60;
   const { scrollIntoView } = useScrollIntoView({
-    target: targetRef.current,
+    offset: navbarHeight,
   });
 
   return (
     <Group position="center">
-      <Button onClick={scrollIntoView}>Scroll to target</Button>
+      <Button
+        onClick={() => scrollIntoView({
+          target: targetRef.current,
+        })}
+      >
+        Scroll to target
+      </Button>
       <div
         style={{
           width: '100%',
