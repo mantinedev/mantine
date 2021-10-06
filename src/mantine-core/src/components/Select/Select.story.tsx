@@ -47,8 +47,8 @@ function Controlled({ clearable = false }: { clearable?: boolean }) {
   );
 }
 
-function Creatable({ inputData = stringData }: { inputData: any }) {
-  const [creatableData, setData] = useState(inputData);
+function Creatable() {
+  const [creatableData, setData] = useState(stringData);
 
   return (
     <Select
@@ -110,39 +110,11 @@ storiesOf('@mantine/core/Select', module)
         data={largeData}
         style={{ marginTop: 20 }}
       />
-      <Creatable inputData={data} />
     </div>
   ))
   .add('Clearable', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
-      <Select
-        size="xl"
-        searchable
-        clearable
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        data={data}
-        style={{ marginTop: 20 }}
-        nothingFound="No options"
-      />
-      <Select
-        clearable
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        data={data}
-        style={{ marginTop: 20 }}
-        nothingFound="No options"
-      />
-      <Controlled clearable />
-      <Select
-        clearable
-        label="Controlled (fixed value)"
-        placeholder="Choose value"
-        searchable
-        value="react"
-        data={data}
-        style={{ marginTop: 20 }}
-      />
+      <Creatable />
     </div>
   ))
   .add('String as data', () => (
@@ -206,6 +178,5 @@ storiesOf('@mantine/core/Select', module)
         data={stringData}
         style={{ marginTop: 20 }}
       />
-      <Creatable inputData={stringData} />
     </div>
   ));

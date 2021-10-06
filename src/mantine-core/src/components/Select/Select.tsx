@@ -160,8 +160,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       typeof item === 'string' ? { label: item, value: item } : item
     );
 
-    /*sorting data by groups while maintaining the insertion order
-    for consistent behaviour on keypress events. */
     const sortedData = groupSortData({ data: formattedData });
 
     const [_value, handleChange, inputMode] = useUncontrolled({
@@ -323,9 +321,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
       const selected = sortedData.find((item) => item.value === _value);
-      if (!isCreatable) {
-        handleSearchChange(selected?.label || '');
-      }
+      handleSearchChange(selected?.label || '');
       setDropdownOpened(false);
     };
 
