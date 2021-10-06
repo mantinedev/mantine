@@ -100,16 +100,6 @@ Select support two different data formats:
 />
 ```
 
-For data as array of objects, Select supports additional properties:
-
-1. `disabled` property to disable the Select items.
-
-<Demo data={SelectDemos.disabledItems} />
-
-2. `group` property to group the Select items.
-
-<Demo data={SelectDemos.groups} />
-
 ## Searchable
 
 Set `searchable` prop to enable search in select and `nothingFound` prop to provide label that will be shown when no options were found:
@@ -133,6 +123,10 @@ Note that you will need to handle data state to manage item creation correctly:
 ## Grouping items
 
 <Demo data={SelectDemos.group} />
+
+## Disable items
+
+<Demo data={SelectDemos.disabledItems} />
 
 ## Large data set
 

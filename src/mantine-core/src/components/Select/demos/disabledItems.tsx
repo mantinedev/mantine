@@ -2,32 +2,32 @@ import React from 'react';
 import { Select } from '../Select';
 
 const code = `
-  <Select
-    label="Select with Disabled Items"
-    data={[
-      { value: 'react', label: 'React' },
-      { value: 'ng', label: 'Angular' },
-      { value: 'svelte', label: 'Svelte' },
-      { value: 'vue', label: 'Vue' },
-    ]}
-    placeholder="Select items"
-    nothingFound="Nothing found"
-  />;
+<Select
+  label="Select with disabled items"
+  placeholder="Select something"
+  data={[
+    { value: 'react', label: 'React', disabled: true },
+    { value: 'ng', label: 'Angular', disabled: true },
+    { value: 'svelte', label: 'Svelte' },
+    { value: 'vue', label: 'Vue' },
+  ]}
+/>
 `;
 
 export function Demo() {
   return (
-    <Select
-      label="Select with Disabled Items"
-      data={[
-        { value: 'react', label: 'React' },
-        { value: 'ng', label: 'Angular', disabled: true },
-        { value: 'svelte', label: 'Svelte' },
-        { value: 'vue', label: 'Vue' },
-      ]}
-      placeholder="Select items"
-      nothingFound="Nothing found"
-    />
+    <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
+      <Select
+        label="Select with disabled items"
+        placeholder="Select something"
+        data={[
+          { value: 'react', label: 'React', disabled: true },
+          { value: 'ng', label: 'Angular', disabled: true },
+          { value: 'svelte', label: 'Svelte' },
+          { value: 'vue', label: 'Vue' },
+        ]}
+      />
+    </div>
   );
 }
 
