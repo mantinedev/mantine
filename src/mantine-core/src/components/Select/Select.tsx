@@ -291,9 +291,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
         }
 
         case 'Space': {
-          if (!searchable && !dropdownOpened) {
+          if (!searchable) {
             event.preventDefault();
-            setDropdownOpened(true);
+            setDropdownOpened((o) => !o);
             setHovered(
               getNextIndex(
                 -1,
