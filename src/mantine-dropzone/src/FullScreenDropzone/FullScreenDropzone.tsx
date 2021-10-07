@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
-import { Portal, Transition, MantineNumberSize } from '@mantine/core';
+import {
+  Portal,
+  Transition,
+  MantineNumberSize,
+  ClassNames,
+  DefaultProps,
+  mergeStyles,
+} from '@mantine/core';
 import { useIsomorphicEffect } from '@mantine/hooks';
-import { Dropzone, DropzoneProps } from '../Dropzone';
+import { Dropzone, DropzoneProps, DropzoneStylesNames } from '../Dropzone';
 import useStyles from './FullscreenDropzone.styles';
 
-export interface FullScreenDropzoneProps extends DropzoneProps {
+export type FullScreenDropzoneStylesNames =
+  | Exclude<ClassNames<typeof useStyles>, 'dropzone'>
+  | DropzoneStylesNames;
+
+export interface FullScreenDropzoneProps
+  extends Omit<DropzoneProps, 'styles' | 'classNames'>,
+    DefaultProps<FullScreenDropzoneStylesNames> {
   /** Space between dropzone and viewport edges */
   offset?: MantineNumberSize;
 }
@@ -13,9 +26,12 @@ export function FullScreenDropzone({
   className,
   style,
   offset = 'xl',
+  classNames,
+  styles,
   ...others
 }: FullScreenDropzoneProps) {
-  const { classes, cx } = useStyles({ offset });
+  const { classes, cx } = useStyles({ offset }, classNames, 'full-screen-dropzone');
+  const _styles = mergeStyles(classes, styles);
   const [visible, setVisible] = useState(false);
 
   const handleDragOver = (event: DragEvent) => {
@@ -44,7 +60,10 @@ export function FullScreenDropzone({
     <Portal>
       <Transition transition="fade" duration={200} timingFunction="ease" mounted={visible}>
         {(transitionStyles) => (
-          <div style={{ ...style, ...transitionStyles }} className={cx(classes.wrapper, className)}>
+          <div
+            style={{ ...style, ..._styles.wrapper, ...transitionStyles }}
+            className={cx(classes.wrapper, className)}
+          >
             <Dropzone {...others} className={classes.dropzone} />
           </div>
         )}
