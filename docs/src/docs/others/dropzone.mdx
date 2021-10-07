@@ -112,3 +112,21 @@ import { IMAGE_MIME_TYPE, Dropzone } from '@mantine/dropzone';
 // Same as an example above
 <Dropzone accept={IMAGE_MIME_TYPE}>{/* children */}</Dropzone>;
 ```
+
+## Get ref
+
+```tsx
+import { useRef, useEffect } from 'react';
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  const dropzoneRef = useRef(); // will contain div element
+
+  useEffect(() => {
+    // do anything with ref
+    dropzoneRef.current.focus();
+  }, []);
+
+  return <Dropzone ref={dropzoneRef}>{/* children */}</Dropzone>;
+}
+```
