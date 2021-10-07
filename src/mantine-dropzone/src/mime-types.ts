@@ -8,6 +8,7 @@ export const MIME_TYPES = {
 
   // Documents
   mp4: 'video/mp4',
+  csv: 'text/csv',
   pdf: 'application/pdf',
   doc: 'application/msword',
   docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
