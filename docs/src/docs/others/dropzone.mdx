@@ -16,10 +16,43 @@ styles: ['Dropzone', 'single-node']
 
 import * as DropzoneDemos from '@demos/dropzone';
 
+## Installation
+
+Package depends on @mantine/core and @mantine/hooks.
+
+Install with npm:
+
+```sh
+npm install @mantine/dropzone @mantine/core @mantine/hooks
+```
+
+Install with yarn:
+
+```sh
+yarn add @mantine/dropzone @mantine/core @mantine/hooks
+```
+
 ## Usage
+
+Dropzone lets you capture one or more files from user.
+Component is built with [react-dropzone](https://react-dropzone.js.org/) and support all of its core features:
+
+- Accepts/rejects files based on provided mime types
+- Limits individual file size
+- Renders any content within dropzone with children function
 
 <Demo data={DropzoneDemos.usage} />
 
 ## Loading state
 
+Set `loading` prop to indicate loading state with [LoadingOverlay](/core/loading-overlay/) component.
+When `loading` is set to true user cannot drop or select new files (Dropzone becomes disabled):
+
 <Demo data={DropzoneDemos.loading} />
+
+## Disabled state
+
+If you want to implement your own loading state you can disable Dropzone without LoadingOverlay.
+Same as with `loading`, when Dropzone is disabled user user cannot drop or select new files:
+
+<Demo data={DropzoneDemos.disabled} />

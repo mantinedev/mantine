@@ -4,7 +4,6 @@ import { BaseDemo } from './_base';
 const code = `
 import { Group, Text, useMantineTheme } from '@mantine/core';
 import { ImageIcon, UploadIcon, CrossCircledIcon } from '@modulz/radix-icons';
-import { ImageIcon } from '@modulz/radix-icons';
 
 function ImageUploadIcon({ status, ...props }) {
   if (status.accepted) {
@@ -17,7 +16,6 @@ function ImageUploadIcon({ status, ...props }) {
 
   return <ImageIcon {...props} />;
 }
-
 
 function getIconColor(status, theme) {
   return status.accepted
@@ -33,6 +31,7 @@ function Demo() {
   const theme = useMantineTheme();
 
   return (
+    // See results in console after dropping files to Dropzone
     <Dropzone onDrop={console.log} maxSize={3 * 1024 ** 2} accept={IMAGE_MIME_TYPE}>
       {(status) => (
         <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
