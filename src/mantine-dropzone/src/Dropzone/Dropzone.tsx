@@ -12,7 +12,7 @@ import useStyles from './Dropzone.styles';
 
 export type DropzoneStylesNames = ClassNames<typeof useStyles>;
 
-interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
+export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
   /** Padding from theme.spacing, or number to set padding in px */
   padding?: MantineNumberSize;
 
