@@ -15,6 +15,7 @@ export default createStyles((theme, { padding, radius }: DropzoneStyles) => ({
   root: {
     ...getFontStyles(theme),
     ...getFocusStyles(theme),
+    boxSizing: 'border-box',
     backgroundColor: theme.white,
     border: `1px dashed ${theme.colors.gray[4]}`,
     padding: getSizeValue({ size: padding, sizes: theme.spacing }),
