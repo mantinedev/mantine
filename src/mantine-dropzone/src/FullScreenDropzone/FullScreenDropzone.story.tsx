@@ -2,9 +2,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { FullScreenDropzone } from './FullScreenDropzone';
+import { DropzoneStatus } from '../Dropzone';
 
-const children = (isDragging: boolean) =>
-  isDragging ? <div>Drop files here</div> : <div>Drag and drop files here</div>;
+const children = (status: DropzoneStatus) =>
+  status.accepted ? <div>Drop files here</div> : <div>Drag and drop files here</div>;
 
 storiesOf('@mantine/dropzone/FullScreenDropzone', module).add('General usage', () => (
   <div>

@@ -52,13 +52,18 @@ export default createStyles((theme, { padding, radius }: DropzoneStyles) => {
         theme.colorScheme === 'dark' ? accepted.border : theme.colors[theme.primaryColor][4],
 
       '&:hover': {
-        backgroundColor: theme.colors[theme.primaryColor][0],
+        backgroundColor:
+          theme.colorScheme === 'dark' ? accepted.background : theme.colors[theme.primaryColor][0],
       },
     },
 
     reject: {
       backgroundColor: theme.colorScheme === 'dark' ? rejected.background : theme.colors.red[0],
       borderColor: theme.colorScheme === 'dark' ? rejected.border : theme.colors.red[4],
+
+      '&:hover': {
+        backgroundColor: theme.colorScheme === 'dark' ? rejected.background : theme.colors.red[0],
+      },
     },
   };
 });
