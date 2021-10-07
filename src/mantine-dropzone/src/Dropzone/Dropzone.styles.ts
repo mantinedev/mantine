@@ -37,6 +37,14 @@ export default createStyles((theme, { padding, radius }: DropzoneStyles) => {
       },
     },
 
+    loading: {
+      cursor: 'default',
+
+      '&:hover': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      },
+    },
+
     active: {
       backgroundColor:
         theme.colorScheme === 'dark' ? accepted.background : theme.colors[theme.primaryColor][0],

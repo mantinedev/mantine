@@ -93,10 +93,15 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
           ...mergedStyles,
           ...(isDragAccept ? _styles.active : null),
           ...(isDragReject ? _styles.reject : null),
+          ...(loading ? _styles.loading : null),
         }}
         className={cx(
           classes.root,
-          { [classes.active]: isDragAccept, [classes.reject]: isDragReject },
+          {
+            [classes.active]: isDragAccept,
+            [classes.reject]: isDragReject,
+            [classes.loading]: loading,
+          },
           className
         )}
       >
