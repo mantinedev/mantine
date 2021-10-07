@@ -21,6 +21,12 @@ export default createStyles((theme, { padding, radius }: DropzoneStyles) => ({
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     cursor: 'pointer',
     userSelect: 'none',
+    transition: 'background-color 150ms ease',
+    position: 'relative',
+
+    '&:hover': {
+      backgroundColor: theme.colors.gray[0],
+    },
   },
 
   active: {

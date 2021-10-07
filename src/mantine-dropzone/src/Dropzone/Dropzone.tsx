@@ -6,6 +6,7 @@ import {
   MantineNumberSize,
   mergeStyles,
   useExtractedMargins,
+  LoadingOverlay,
 } from '@mantine/core';
 import useStyles from './Dropzone.styles';
 
@@ -26,6 +27,9 @@ interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
 
   /** Called when files are dropped into dropzone */
   onDrop(files: File[]): void;
+
+  /** Display loading overlay over dropzone */
+  loading?: boolean;
 }
 
 export function Dropzone({
@@ -36,6 +40,7 @@ export function Dropzone({
   classNames,
   style,
   styles,
+  loading = false,
   children,
   onDrop,
   ...others
@@ -46,7 +51,7 @@ export function Dropzone({
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (files) => onDrop(files),
-    disabled,
+    disabled: disabled || loading,
   });
 
   return (
@@ -56,6 +61,7 @@ export function Dropzone({
       style={mergedStyles}
       {...rest}
     >
+      <LoadingOverlay visible={loading} />
       <input {...getInputProps()} />
       {children(isDragActive)}
     </div>
