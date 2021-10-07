@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-import { useForceUpdate } from '@mantine/hooks';
 import { useCallback, useRef, useEffect } from 'react';
 
 import { easeInOutQuad } from './utils/ease-in-out-quad';
@@ -39,7 +38,6 @@ export function useScrollIntoView({
   easing = easeInOutQuad,
   offset = 0,
 }: ScrollIntoViewParams = {}) {
-  const forceRerender = useForceUpdate();
   const frameID = useRef(0);
   const startTime = useRef(0);
 
@@ -58,7 +56,7 @@ export function useScrollIntoView({
         const elapsed = (now - startTime.current) / 1000;
 
         // easing timing progress
-        const t = elapsed / duration;
+        const t = duration === 0 ? 1 : elapsed / duration;
 
         const distance = start + totalChange * easing(t);
 
@@ -72,7 +70,6 @@ export function useScrollIntoView({
           cancelAnimationFrame(frameID.current);
         }
       }
-
       animateScroll();
     },
     []
@@ -82,14 +79,8 @@ export function useScrollIntoView({
     cancelAnimationFrame(frameID.current);
   };
 
-  useEffect(() => {
-    // since that hook doesn't cause any rerenders we need to force
-    // it once to get proper refs for target and parent
-    forceRerender();
-
-    // cleanup RAF
-    return cancel;
-  }, []);
+  // cleanup RAF
+  useEffect(() => cancel, []);
 
   return {
     scrollIntoView,

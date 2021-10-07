@@ -1,5 +1,5 @@
 import React, { useState, useRef, forwardRef } from 'react';
-import { useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
+import { useUncontrolled, useMergedRef, useDidUpdate, useScrollIntoView } from '@mantine/hooks';
 import {
   mergeStyles,
   DefaultProps,
@@ -9,7 +9,6 @@ import {
   useUuid,
   useExtractedMargins,
 } from '@mantine/styles';
-import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { MantineTransition } from '../Transition';
@@ -195,6 +194,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const [searchValue, setSearchValue] = useState('');
+    const { scrollIntoView } = useScrollIntoView({
+      duration: 0,
+      offset: 5,
+    });
     const isCreatable = creatable && typeof getCreateLabel === 'function';
     let createLabel = null;
 
@@ -294,7 +297,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               (index) => index - 1,
               (index) => index > 0
             );
-            scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
+            scrollIntoView({
+              parent: dropdownRef.current,
+              target: itemsRefs.current[filteredData[nextIndex]?.value],
+            });
             return nextIndex;
           });
           break;
@@ -309,7 +315,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               (index) => index + 1,
               (index) => index < filteredData.length - 1
             );
-            scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
+            scrollIntoView({
+              parent: dropdownRef.current,
+              target: itemsRefs.current[filteredData[nextIndex]?.value],
+            });
             return nextIndex;
           });
           break;
