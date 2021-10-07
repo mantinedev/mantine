@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 import {
   DefaultProps,
@@ -8,6 +8,7 @@ import {
   useExtractedMargins,
   LoadingOverlay,
 } from '@mantine/core';
+import { assignRef } from '@mantine/hooks';
 import useStyles from './Dropzone.styles';
 
 export type DropzoneStylesNames = ClassNames<typeof useStyles>;
@@ -33,46 +34,59 @@ export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
 
   /** File types to accept  */
   accept?: string[];
+
+  /** Get open function as ref */
+  openRef?: React.ForwardedRef<() => void>;
 }
 
-export function Dropzone({
-  className,
-  padding = 'md',
-  radius = 'sm',
-  disabled,
-  classNames,
-  style,
-  styles,
-  loading = false,
-  accept,
-  children,
-  onDrop,
-  ...others
-}: DropzoneProps) {
-  const { classes, cx } = useStyles({ radius, padding });
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
+  (
+    {
+      className,
+      padding = 'md',
+      radius = 'sm',
+      disabled,
+      classNames,
+      style,
+      styles,
+      loading = false,
+      accept,
+      children,
+      onDrop,
+      openRef,
+      ...others
+    }: DropzoneProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ radius, padding });
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
-  const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
-    onDropAccepted: (files) => onDrop(files),
-    disabled: disabled || loading,
-    accept,
-  });
+    const { getRootProps, getInputProps, isDragActive, isDragReject, open } = useDropzone({
+      onDropAccepted: (files) => onDrop(files),
+      disabled: disabled || loading,
+      accept,
+    });
 
-  return (
-    <div
-      {...rest}
-      {...getRootProps()}
-      style={mergedStyles}
-      className={cx(
-        classes.root,
-        { [classes.active]: isDragActive, [classes.reject]: isDragReject },
-        className
-      )}
-    >
-      <LoadingOverlay visible={loading} />
-      <input {...getInputProps()} />
-      {children(isDragActive)}
-    </div>
-  );
-}
+    assignRef(openRef, open);
+
+    return (
+      <div
+        {...rest}
+        {...getRootProps({ ref })}
+        style={mergedStyles}
+        className={cx(
+          classes.root,
+          { [classes.active]: isDragActive, [classes.reject]: isDragReject },
+          className
+        )}
+      >
+        <LoadingOverlay visible={loading} />
+        <input {...getInputProps()} />
+        {children(isDragActive)}
+      </div>
+    );
+  }
+);
+
+Dropzone.displayName = '@mantine/dropzone/Dropzone';
