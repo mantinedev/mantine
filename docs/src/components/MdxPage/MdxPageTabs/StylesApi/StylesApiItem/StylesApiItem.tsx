@@ -6,6 +6,7 @@ import * as CORE_STYLES_API from '@mantine/core/src/styles.api';
 import * as PRISM_STYLES_API from '@mantine/prism/src/styles.api';
 import * as DATES_STYLES_API from '@mantine/dates/src/styles.api';
 import * as RTE_STYLES_API from '@mantine/rte/src/styles.api';
+import * as DROPZONE_STYLES_API from '@mantine/dropzone/src/styles.api';
 import { generateStylesCode, generateClassNamesCode } from '../generate-styles-code';
 import useStyles from './StylesApiItem.styles';
 
@@ -14,6 +15,7 @@ const STYLES_API = {
   ...PRISM_STYLES_API,
   ...DATES_STYLES_API,
   ...RTE_STYLES_API,
+  ...DROPZONE_STYLES_API,
 };
 
 interface StylesApiItemProps {
