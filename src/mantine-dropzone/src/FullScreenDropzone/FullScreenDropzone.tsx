@@ -20,6 +20,9 @@ export interface FullScreenDropzoneProps
     DefaultProps<FullScreenDropzoneStylesNames> {
   /** Space between dropzone and viewport edges */
   offset?: MantineNumberSize;
+
+  /** Overlay z-index */
+  zIndex?: number;
 }
 
 export function FullScreenDropzone({
@@ -28,6 +31,8 @@ export function FullScreenDropzone({
   offset = 'xl',
   classNames,
   styles,
+  disabled,
+  zIndex = 1000,
   ...others
 }: FullScreenDropzoneProps) {
   const { classes, cx } = useStyles({ offset }, classNames, 'full-screen-dropzone');
@@ -57,8 +62,13 @@ export function FullScreenDropzone({
   }, []);
 
   return (
-    <Portal>
-      <Transition transition="fade" duration={200} timingFunction="ease" mounted={visible}>
+    <Portal zIndex={zIndex}>
+      <Transition
+        transition="fade"
+        duration={200}
+        timingFunction="ease"
+        mounted={visible && !disabled}
+      >
         {(transitionStyles) => (
           <div
             style={{ ...style, ..._styles.wrapper, ...transitionStyles }}
