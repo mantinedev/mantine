@@ -91,7 +91,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
           className
         )}
       >
-        <LoadingOverlay visible={loading} />
+        <LoadingOverlay visible={loading} radius={radius} />
         <input {...getInputProps()} />
         {children(isDragActive)}
       </div>
