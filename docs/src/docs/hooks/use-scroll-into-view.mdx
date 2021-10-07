@@ -51,6 +51,7 @@ const {
 scrollIntoView({
   target: someDomElement,
   parent: parentScrollableDomElement,
+  alignment: 'center'
 })
 ```
 
@@ -92,6 +93,7 @@ function useScrollIntoView({
   scrollIntoView: ({
     target: HTMLElement;
     parent?: HTMLElement;
+    alignment?: 'start' | 'end' | 'center';
   }) => void;
   cancel: () => void;
 };
