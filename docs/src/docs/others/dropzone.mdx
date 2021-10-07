@@ -14,6 +14,14 @@ license: MIT
 styles: ['Dropzone', 'single-node']
 ---
 
+import {
+  MIME_TYPES,
+  IMAGE_MIME_TYPE,
+  PDF_MINE_TYPE,
+  MS_WORD_MIME_TYPE,
+  MS_EXCEL_MIME_TYPE,
+  MS_POWERPOINT_MIME_TYPE,
+} from '@mantine/dropzone';
 import * as DropzoneDemos from '@demos/dropzone';
 
 ## Installation
@@ -56,3 +64,51 @@ If you want to implement your own loading state you can disable Dropzone without
 Same as with `loading`, when Dropzone is disabled user user cannot drop or select new files:
 
 <Demo data={DropzoneDemos.disabled} />
+
+## Mime types
+
+To specify specific file types provide an array of mime types to `accept` prop:
+
+```tsx
+<Dropzone accept={['image/png', 'image/jpeg', 'image/sgv+xml', 'image/gif']}>
+  {/* children */}
+</Dropzone>
+```
+
+To save some research time you can use `MIME_TYPES` variable exported from `@mantine/dropzone`:
+
+```tsx
+import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
+
+// Same as an example above
+<Dropzone accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.svg]}>
+  {/* children */}
+</Dropzone>;
+```
+
+`MIME_TYPES` includes following data:
+
+<DataTable
+  head={['Key', 'Mime type']}
+  data={Object.keys(MIME_TYPES).map((key) => [key, MIME_TYPES[key]])}
+/>
+
+Additionally you can use grouped mime types:
+
+<DataTable
+  head={['Variable', 'Mime types']}
+  data={[
+    ['IMAGE_MIME_TYPE', IMAGE_MIME_TYPE.join(', ')],
+    ['PDF_MINE_TYPE', PDF_MINE_TYPE.join(', ')],
+    ['MS_WORD_MIME_TYPE', MS_WORD_MIME_TYPE.join(', ')],
+    ['MS_EXCEL_MIME_TYPE', MS_EXCEL_MIME_TYPE.join(', ')],
+    ['MS_POWERPOINT_MIME_TYPE', MS_POWERPOINT_MIME_TYPE.join(', ')],
+  ]}
+/>
+
+```tsx
+import { IMAGE_MIME_TYPE, Dropzone } from '@mantine/dropzone';
+
+// Same as an example above
+<Dropzone accept={IMAGE_MIME_TYPE}>{/* children */}</Dropzone>;
+```
