@@ -37,6 +37,12 @@ export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
 
   /** Get open function as ref */
   openRef?: React.ForwardedRef<() => void>;
+
+  /** Allow selection of multiple files */
+  multiple?: boolean;
+
+  /** Set maximum file size in bytes */
+  maxSize?: number;
 }
 
 export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
@@ -50,6 +56,8 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
       style,
       styles,
       loading = false,
+      multiple = true,
+      maxSize = Infinity,
       accept,
       children,
       onDrop,
@@ -66,6 +74,8 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
       onDropAccepted: (files) => onDrop(files),
       disabled: disabled || loading,
       accept,
+      multiple,
+      maxSize,
     });
 
     assignRef(openRef, open);
