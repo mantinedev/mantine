@@ -30,6 +30,9 @@ interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
 
   /** Display loading overlay over dropzone */
   loading?: boolean;
+
+  /** File types to accept  */
+  accept?: string[];
 }
 
 export function Dropzone({
@@ -41,6 +44,7 @@ export function Dropzone({
   style,
   styles,
   loading = false,
+  accept,
   children,
   onDrop,
   ...others
@@ -49,17 +53,22 @@ export function Dropzone({
   const _styles = mergeStyles(classes, styles);
   const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: (files) => onDrop(files),
+  const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
+    onDropAccepted: (files) => onDrop(files),
     disabled: disabled || loading,
+    accept,
   });
 
   return (
     <div
-      {...getRootProps()}
-      className={cx(classes.root, { [classes.active]: isDragActive }, className)}
-      style={mergedStyles}
       {...rest}
+      {...getRootProps()}
+      style={mergedStyles}
+      className={cx(
+        classes.root,
+        { [classes.active]: isDragActive, [classes.reject]: isDragReject },
+        className
+      )}
     >
       <LoadingOverlay visible={loading} />
       <input {...getInputProps()} />

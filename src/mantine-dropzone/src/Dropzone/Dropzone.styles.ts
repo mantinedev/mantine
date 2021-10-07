@@ -33,4 +33,9 @@ export default createStyles((theme, { padding, radius }: DropzoneStyles) => ({
     backgroundColor: theme.colors[theme.primaryColor][0],
     borderColor: theme.colors[theme.primaryColor][4],
   },
+
+  reject: {
+    backgroundColor: theme.colors.red[0],
+    borderColor: theme.colors.red[4],
+  },
 }));

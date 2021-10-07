@@ -11,6 +11,13 @@ storiesOf('@mantine/dropzone/Dropzone', module)
       <Dropzone onDrop={() => {}}>{children}</Dropzone>
     </div>
   ))
+  .add('Accept only images', () => (
+    <div style={{ padding: 40 }}>
+      <Dropzone onDrop={console.log} accept={['image/png', 'image/svg+xml']}>
+        {children}
+      </Dropzone>
+    </div>
+  ))
   .add('Loading', () => (
     <div style={{ padding: 40 }}>
       <Dropzone onDrop={() => {}} loading>
