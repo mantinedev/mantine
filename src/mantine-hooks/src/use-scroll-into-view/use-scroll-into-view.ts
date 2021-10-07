@@ -7,11 +7,14 @@ import { getScrollStart } from './utils/get-scroll-start';
 import { setScrollParam } from './utils/set-scroll-param';
 
 interface ScrollIntoViewAnimation {
-   /** target node to be scrolled yo */
-   target: HTMLElement;
+  /** target node to be scrolled yo */
+  target: HTMLElement;
 
-   /** scrollable parent node default to document */
-   parent?: HTMLElement;
+  /** scrollable parent node default to document */
+  parent?: HTMLElement;
+
+  /** target element alignment relatively to parent based on current axis */
+  alignment?: 'start' | 'end' | 'center';
 }
 
 interface ScrollIntoViewParams {
@@ -22,12 +25,12 @@ interface ScrollIntoViewParams {
   duration?: number;
 
   /** axis of scroll */
-  axis?: 'x' | 'y'
+  axis?: 'x' | 'y';
 
   /** custom mathematical easing function */
-  easing?: (t: number) => number
+  easing?: (t: number) => number;
 
-  /** additional distance from the beginning of the axis */
+  /** additional distance between nearest edge and element */
   offset?: number;
 }
 
@@ -41,11 +44,19 @@ export function useScrollIntoView({
   const frameID = useRef(0);
   const startTime = useRef(0);
 
+  const cancel = (): void => {
+    cancelAnimationFrame(frameID.current);
+  };
+
   const scrollIntoView = useCallback(
-    ({ target, parent }: ScrollIntoViewAnimation) => {
+    ({ target, parent, alignment = 'start' }: ScrollIntoViewAnimation) => {
+      if (frameID.current) {
+        cancel();
+      }
+
       const start = getScrollStart({ parent, axis }) ?? 0;
-      const change = getRelativePosition({ parent, target, axis }) - (parent ? 0 : start);
-      const totalChange = change !== 0 ? change - offset : change;
+      const change =
+        getRelativePosition({ parent, target, axis, alignment, offset }) - (parent ? 0 : start);
 
       function animateScroll() {
         if (startTime.current === 0) {
@@ -58,8 +69,7 @@ export function useScrollIntoView({
         // easing timing progress
         const t = duration === 0 ? 1 : elapsed / duration;
 
-        const distance = start + totalChange * easing(t);
-
+        const distance = start + change * easing(t);
         setScrollParam({ parent, axis, distance });
 
         if (t < 1) {
@@ -67,17 +77,13 @@ export function useScrollIntoView({
         } else {
           typeof onScrollFinish === 'function' && onScrollFinish();
           startTime.current = 0;
-          cancelAnimationFrame(frameID.current);
+          cancel();
         }
       }
       animateScroll();
     },
     []
   );
-
-  const cancel = (): void => {
-    cancelAnimationFrame(frameID.current);
-  };
 
   // cleanup RAF
   useEffect(() => cancel, []);

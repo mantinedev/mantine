@@ -195,8 +195,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     const [hovered, setHovered] = useState(-1);
     const [searchValue, setSearchValue] = useState('');
     const { scrollIntoView } = useScrollIntoView({
-      duration: 0,
-      offset: 5,
+      duration: 0.25,
+      offset: dropdownRef.current?.clientHeight ?? 5,
     });
     const isCreatable = creatable && typeof getCreateLabel === 'function';
     let createLabel = null;
@@ -300,6 +300,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             scrollIntoView({
               parent: dropdownRef.current,
               target: itemsRefs.current[filteredData[nextIndex]?.value],
+              alignment: 'start',
             });
             return nextIndex;
           });
@@ -318,6 +319,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             scrollIntoView({
               parent: dropdownRef.current,
               target: itemsRefs.current[filteredData[nextIndex]?.value],
+              alignment: 'end',
             });
             return nextIndex;
           });

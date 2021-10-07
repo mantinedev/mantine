@@ -17,10 +17,10 @@ function Demo() {
 
   return (
     <Group position="center">
-      <Paper elementRef={scrollableRef} style={{ overflowX: 'scroll', height: 150, width: 300 }}>
+      <Paper ref={scrollableRef} style={{ overflowX: 'scroll', height: 150, width: 300 }}>
         <div style={{ paddingLeft: 260, paddingRight: 450 }}>
           <Paper
-            elementRef={targetRef}
+            ref={targetRef}
             padding="md"
             style={{
               backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
@@ -55,10 +55,10 @@ function Demo() {
 
   return (
     <Group position="center">
-      <Paper elementRef={scrollableRef} style={{ overflowX: 'scroll', height: 150, width: 300 }}>
+      <Paper ref={scrollableRef} style={{ overflowX: 'scroll', height: 150, width: 300 }}>
         <div style={{ paddingLeft: 260, paddingRight: 450 }}>
           <Paper
-            elementRef={targetRef}
+            ref={targetRef}
             padding="md"
             style={{
               backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],

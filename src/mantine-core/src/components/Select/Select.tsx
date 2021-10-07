@@ -152,7 +152,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const [creatableDataValue, setCreatableDataValue] = useState<string | undefined>(undefined);
     const uuid = useUuid(id);
     const { scrollIntoView } = useScrollIntoView({
-      duration: 0,
+      duration: 0.25,
       offset: 5,
     });
 
@@ -268,6 +268,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             scrollIntoView({
               parent: dropdownRef.current,
               target: itemsRefs.current[filteredData[nextIndex]?.value],
+              alignment: 'start',
             });
             return nextIndex;
           });
@@ -286,6 +287,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             scrollIntoView({
               parent: dropdownRef.current,
               target: itemsRefs.current[filteredData[nextIndex]?.value],
+              alignment: 'end',
             });
             return nextIndex;
           });

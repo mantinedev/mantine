@@ -32,7 +32,7 @@ function Demo() {
             theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
         }}
       />
-      <Text elementRef={targetRef}>Hello there</Text>
+      <Text ref={targetRef}>Hello there</Text>
     </Group>
   );
 }
@@ -52,6 +52,7 @@ function Demo() {
       <Button
         onClick={() => scrollIntoView({
           target: targetRef.current,
+          alignment: 'center',
         })}
       >
         Scroll to target
@@ -64,7 +65,7 @@ function Demo() {
             theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
         }}
       />
-      <Text elementRef={targetRef}>Hello there</Text>
+      <Text ref={targetRef}>Hello there</Text>
     </Group>
   );
 }

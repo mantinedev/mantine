@@ -27,7 +27,7 @@ Hook accepts 5 arguments:
 - `easing` – optional custom math easing function
 - `duration` - optional duration of scroll animation
 - `axis` - optional axis of scroll
-- `offset` - optional additional distance from the beginning of the axis
+- `offset` - additional distance between nearest edge and element
 
 Hook returns React methods `scrollIntoView` and `cancel`.
 
@@ -45,6 +45,7 @@ const {
 
 - `target` – HTML node that parent is scrolled to
 - `parent` – optional any parent scrollable HTML node, default to `document`
+- `alignment` - optional target element alignment relatively to parent based on current axis
 
 ```tsx
 scrollIntoView({
