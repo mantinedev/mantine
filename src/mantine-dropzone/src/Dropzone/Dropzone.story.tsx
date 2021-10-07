@@ -2,11 +2,11 @@
 import React, { useRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button } from '@mantine/core';
-import { Dropzone } from './Dropzone';
+import { Dropzone, DropzoneStatus } from './Dropzone';
 import { IMAGE_MIME_TYPE } from '../mime-types';
 
-const children = (isDragging: boolean) =>
-  isDragging ? <div>Drop files here</div> : <div>Drag and drop files here</div>;
+const children = (status: DropzoneStatus) =>
+  status.accepted ? <div>Drop files here</div> : <div>Drag and drop files here</div>;
 
 function ManualTrigger() {
   const openRef = useRef<() => void>(() => {});

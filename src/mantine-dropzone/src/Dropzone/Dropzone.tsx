@@ -13,6 +13,11 @@ import useStyles from './Dropzone.styles';
 
 export type DropzoneStylesNames = ClassNames<typeof useStyles>;
 
+export interface DropzoneStatus {
+  accepted: boolean;
+  rejected: boolean;
+}
+
 export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
   /** Padding from theme.spacing, or number to set padding in px */
   padding?: MantineNumberSize;
@@ -21,7 +26,7 @@ export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
   radius?: MantineNumberSize;
 
   /** Render children based on dragging state */
-  children(isDragging?: boolean): React.ReactNode;
+  children(status: DropzoneStatus): React.ReactNode;
 
   /** Disable files capturing */
   disabled?: boolean;
@@ -97,7 +102,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
       >
         <LoadingOverlay visible={loading} radius={radius} />
         <input {...getInputProps()} />
-        {children(isDragAccept)}
+        {children({ accepted: isDragAccept, rejected: isDragReject })}
       </div>
     );
   }
