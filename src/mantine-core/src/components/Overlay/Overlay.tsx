@@ -1,6 +1,12 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
-import { PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
+import {
+  PolymorphicComponentProps,
+  PolymorphicRef,
+  MantineNumberSize,
+  getSizeValue,
+  useMantineTheme,
+} from '@mantine/styles';
 
 interface _OverlayProps {
   /** Overlay opacity */
@@ -14,6 +20,9 @@ interface _OverlayProps {
 
   /** Overlay z-index */
   zIndex?: React.CSSProperties['zIndex'];
+
+  /** Value from theme.radius or number to set border-radius in px */
+  radius?: MantineNumberSize;
 }
 
 export type OverlayProps<C extends React.ElementType> = PolymorphicComponentProps<C, _OverlayProps>;
@@ -32,12 +41,13 @@ export const Overlay: OverlayComponent & { displayName?: string } = forwardRef(
       gradient,
       zIndex = 1000,
       component,
+      radius = 0,
       ...others
     }: OverlayProps<C>,
     ref: PolymorphicRef<C>
   ) => {
+    const theme = useMantineTheme();
     const Element = component || 'div';
-
     const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
 
     return (
@@ -52,6 +62,7 @@ export const Overlay: OverlayComponent & { displayName?: string } = forwardRef(
           bottom: 0,
           left: 0,
           right: 0,
+          borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
           zIndex,
           ...style,
         }}
