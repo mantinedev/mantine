@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button } from '@mantine/core';
 import { Dropzone } from './Dropzone';
+import { IMAGE_MIME_TYPE } from '../mime-types';
 
 const children = (isDragging: boolean) =>
   isDragging ? <div>Drop files here</div> : <div>Drag and drop files here</div>;
@@ -29,7 +30,7 @@ storiesOf('@mantine/dropzone/Dropzone', module)
   .add('Manual open trigger', () => <ManualTrigger />)
   .add('Accept only images', () => (
     <div style={{ padding: 40 }}>
-      <Dropzone onDrop={console.log} accept={['image/png', 'image/svg+xml']}>
+      <Dropzone onDrop={console.log} accept={IMAGE_MIME_TYPE}>
         {children}
       </Dropzone>
     </div>

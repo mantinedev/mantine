@@ -33,6 +33,10 @@ export default createStyles((theme, { padding, radius }: DropzoneStyles) => ({
   active: {
     backgroundColor: theme.colors[theme.primaryColor][0],
     borderColor: theme.colors[theme.primaryColor][4],
+
+    '&:hover': {
+      backgroundColor: theme.colors[theme.primaryColor][0],
+    },
   },
 
   reject: {

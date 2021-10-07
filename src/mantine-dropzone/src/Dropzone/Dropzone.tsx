@@ -70,7 +70,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
     const _styles = mergeStyles(classes, styles);
     const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
-    const { getRootProps, getInputProps, isDragActive, isDragReject, open } = useDropzone({
+    const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
       onDropAccepted: (files) => onDrop(files),
       disabled: disabled || loading,
       accept,
@@ -86,18 +86,18 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
         {...getRootProps({ ref })}
         style={{
           ...mergedStyles,
-          ...(isDragActive ? _styles.active : null),
+          ...(isDragAccept ? _styles.active : null),
           ...(isDragReject ? _styles.reject : null),
         }}
         className={cx(
           classes.root,
-          { [classes.active]: isDragActive, [classes.reject]: isDragReject },
+          { [classes.active]: isDragAccept, [classes.reject]: isDragReject },
           className
         )}
       >
         <LoadingOverlay visible={loading} radius={radius} />
         <input {...getInputProps()} />
-        {children(isDragActive)}
+        {children(isDragAccept)}
       </div>
     );
   }
