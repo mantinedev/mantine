@@ -33,6 +33,13 @@ Mantine is a MIT licensed open source react components and hooks library with fo
 - [`gatsby-plugin-mantine`](https://mantine.dev/theming/gatsby/) – Gatsby plugin to setup server side rendering
 - `@mantine/eslint-config` – ESLint and Prettier configuration that is used in all Mantine project
 
+## Getting help
+
+Mantine has a very friendly community, we are always happy to help you get started:
+
+- [Join Discord community](https://discord.gg/eUZpPbpxb4) – it is an easiest way to get help, all questions are usually answered in about 30 minutes
+- [Github Discussions](https://github.com/mantinedev/mantine/discussions) – ask anything about the project or give feedback
+
 ## Contributors
 
 <a href="https://github.com/mantinedev/mantine/graphs/contributors">
