@@ -17,22 +17,37 @@ interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
 
   /** Border radius from theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Render children based on dragging state */
+  children(isDragging?: boolean): React.ReactNode;
+
+  /** Disable files capturing */
+  disabled?: boolean;
+
+  /** Called when files are dropped into dropzone */
+  onDrop(files: File[]): void;
 }
 
 export function Dropzone({
   className,
   padding = 'md',
   radius = 'sm',
+  disabled,
   classNames,
   style,
   styles,
+  children,
+  onDrop,
   ...others
 }: DropzoneProps) {
   const { classes, cx } = useStyles({ radius, padding });
   const _styles = mergeStyles(classes, styles);
   const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop: console.log });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: (files) => onDrop(files),
+    disabled,
+  });
 
   return (
     <div
@@ -42,11 +57,7 @@ export function Dropzone({
       {...rest}
     >
       <input {...getInputProps()} />
-      {isDragActive ? (
-        <div>Drop the files here ...</div>
-      ) : (
-        <div>Drag n drop some files here, or click to select files</div>
-      )}
+      {children(isDragActive)}
     </div>
   );
 }
