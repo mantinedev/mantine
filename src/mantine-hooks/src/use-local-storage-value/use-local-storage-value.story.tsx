@@ -1,6 +1,5 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import { Container, TextInput } from '@mantine/core';
 import { useLocalStorageValue } from './use-local-storage-value';
 
 export default {
@@ -14,8 +13,8 @@ export function Example() {
   });
 
   return (
-    <Container size="xs" style={{ padding: 20 }}>
-      <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
-    </Container>
+    <div style={{ padding: 20 }}>
+      <input value={value} onChange={(e) => setValue(e.target.value)} />
+    </div>
   );
 }
