@@ -37,3 +37,23 @@ function Demo() {
   );
 }
 ```
+
+## Typescript
+
+Import component props type:
+
+```tsx
+import type { AnchorProps } from '@mantine/core';
+```
+
+`AnchorProps` is a generic type, it accepts either a string or component type as single type argument:
+
+```tsx
+// AnchorProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
+type MyAnchorProps = AnchorProps<'a'>;
+
+// AnchorProps with custom component, will extend React.ComponentPropsWithoutRef<typeof Link>
+type CustomAnchorProps = AnchorProps<typeof Link>;
+```
+
+See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.
