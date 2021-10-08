@@ -21,6 +21,7 @@ import {
   CreateStylesDemos,
   useHoverHookDemo,
 } from '@docs/demos';
+import * as DropzoneDemos from '@demos/dropzone';
 
 ## Breaking changes
 
@@ -158,6 +159,19 @@ function Demo() {
   );
 }
 ```
+
+## @mantine/dropzone package
+
+[@mantine/dropzone](https://mantine.dev/others/dropzone/) is a new package that includes Dropzone and FullScreenDropzone components.
+
+Dropzone components lets you capture files from user with drag 'n' drop:
+
+<Demo data={DropzoneDemos.usage} demoProps={{ toggle: true }} />
+
+FullScreenDropzone works the same way as dropzone but instead of capturing dropped files from specific area it
+uses browser window as dropzone:
+
+<Demo data={DropzoneDemos.fullScreen} demoProps={{ toggle: true }} />
 
 ## New components
 
