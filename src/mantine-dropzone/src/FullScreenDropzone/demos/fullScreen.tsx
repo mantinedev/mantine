@@ -22,7 +22,6 @@ function Demo() {
       <FullScreenDropzone
         disabled={disabled}
         accept={IMAGE_MIME_TYPE}
-        maxSize={3 * 1024 ** 2}
         onDrop={(files) => {
           console.log(files);
           setDisabled(true);
@@ -47,7 +46,6 @@ function Demo() {
       <FullScreenDropzone
         disabled={disabled}
         accept={IMAGE_MIME_TYPE}
-        maxSize={3 * 1024 ** 2}
         onDrop={(files) => {
           console.log(files);
           setDisabled(true);

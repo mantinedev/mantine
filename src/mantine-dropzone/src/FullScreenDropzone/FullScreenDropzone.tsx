@@ -102,16 +102,20 @@ export function FullScreenDropzone({
   };
 
   useIsomorphicEffect(() => {
-    document.addEventListener('dragover', handleDragOver, false);
-    document.addEventListener('dragleave', handleDragLeave, false);
-    document.addEventListener('drop', handleDrop, false);
+    if (!disabled) {
+      document.addEventListener('dragover', handleDragOver, false);
+      document.addEventListener('dragleave', handleDragLeave, false);
+      document.addEventListener('drop', handleDrop, false);
 
-    return () => {
-      document.removeEventListener('dragover', handleDragOver, false);
-      document.removeEventListener('dragleave', handleDragLeave, false);
-      document.removeEventListener('drop', handleDrop, false);
-    };
-  }, []);
+      return () => {
+        document.removeEventListener('dragover', handleDragOver, false);
+        document.removeEventListener('dragleave', handleDragLeave, false);
+        document.removeEventListener('drop', handleDrop, false);
+      };
+    }
+
+    return undefined;
+  }, [disabled]);
 
   return (
     <Portal zIndex={zIndex}>
