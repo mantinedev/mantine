@@ -1,25 +1,15 @@
 import React, { forwardRef } from 'react';
 import { useBooleanToggle } from '@mantine/hooks';
 import { getSizeValue } from '@mantine/styles';
-import type { InputStylesNames } from '../Input/Input';
-import type { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { TextInput } from '../TextInput/TextInput';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
-
-export type PasswordInputStylesNames = InputStylesNames | InputWrapperStylesNames;
 
 export interface PasswordInputProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof TextInput>,
     'rightSection' | 'rightSectionProps' | 'rightSectionWidth'
   > {
-  /** Title for visibility toggle button in hidden state */
-  showPasswordLabel?: string;
-
-  /** Title for visibility toggle button in visible state */
-  hidePasswordLabel?: string;
-
   /** Toggle button tabIndex, set to 0 to make button focusable with tab key */
   toggleTabIndex?: -1 | 0;
 }
@@ -49,22 +39,15 @@ const rightSectionWidth = {
 };
 
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
-  (
-    {
-      radius,
-      disabled,
-      hidePasswordLabel,
-      showPasswordLabel,
-      size = 'sm',
-      toggleTabIndex = -1,
-      ...others
-    }: PasswordInputProps,
-    ref
-  ) => {
+  ({ radius, disabled, size = 'sm', toggleTabIndex = -1, ...others }: PasswordInputProps, ref) => {
     const [reveal, toggle] = useBooleanToggle(false);
 
     const rightSection = (
       <ActionIcon<'button'>
+        tabIndex={toggleTabIndex}
+        radius={radius}
+        size={getSizeValue({ size, sizes: buttonSizes })}
+        aria-hidden="true"
         onMouseDown={(event) => {
           event.preventDefault();
           toggle();
@@ -75,11 +58,6 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             toggle();
           }
         }}
-        tabIndex={toggleTabIndex}
-        title={reveal ? hidePasswordLabel : showPasswordLabel}
-        aria-label={reveal ? hidePasswordLabel : showPasswordLabel}
-        radius={radius}
-        size={getSizeValue({ size, sizes: buttonSizes })}
       >
         <PasswordToggleIcon reveal={reveal} size={getSizeValue({ size, sizes: iconSizes })} />
       </ActionIcon>
