@@ -154,3 +154,46 @@ Provide `aria-label` in case you use component without label for screen reader s
 <Autocomplete />; // not ok, input is not labeled
 <Autocomplete aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
 ```
+
+## TypeScript
+
+### AutocompleteProps type
+
+Import component props type:
+
+```tsx
+import type { AutocompleteProps } from '@mantine/core';
+```
+
+`AutocompleteProps` extends `React.ComponentPropsWithoutRef<'input'>`, all other props are available under _Component props_ tab.
+
+### AutocompleteItem type
+
+`AutocompleteItem` type lets you validate object items that will be passed to Autocomplete `data` prop:
+
+```tsx
+import type { AutocompleteItem } from '@mantine/core';
+
+const autocompleteData: AutocompleteItem[] = [
+  { value: 'John' },
+  { value: 'Jake' },
+  { value: 'Amy' },
+];
+```
+
+### AutocompleteStylesNames type
+
+`AutocompleteStylesNames` type is a union with Autocomplete [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { AutocompleteStylesNames } from '@mantine/core';
+
+const autocompleteClasses: Partial<Record<AutocompleteStylesNames, 'string'>> = {
+  dropdown: 'autocomplete-dropdown',
+  input: 'autocomplete-input',
+};
+
+<Autocomplete classNames={autocompleteClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

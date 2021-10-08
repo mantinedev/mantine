@@ -69,3 +69,32 @@ To make component visible for screen readers provide following props:
 ```tsx
 <ColorPicker saturationLabel="Saturation" hueLabel="Hue" alphaLabel="Alpha" />
 ```
+
+## TypeScript
+
+### Component props
+
+Import component props type:
+
+```tsx
+import type { ColorPickerProps, HueSliderProps, AlphaSliderProps } from '@mantine/core';
+```
+
+All props types above extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### ColorPickerNames type
+
+`ColorPickerNames` type is a union with ColorPicker [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { ColorPickerNames } from '@mantine/core';
+
+const colorPickerClasses: Partial<Record<ColorPickerNames, 'string'>> = {
+  body: 'color-picker-body',
+  thumb: 'slider-thumb',
+};
+
+<ColorPicker classNames={colorPickerClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
