@@ -8,6 +8,7 @@ export const MIME_TYPES = {
 
   // Documents
   mp4: 'video/mp4',
+  zip: 'application/zip',
   csv: 'text/csv',
   pdf: 'application/pdf',
   doc: 'application/msword',

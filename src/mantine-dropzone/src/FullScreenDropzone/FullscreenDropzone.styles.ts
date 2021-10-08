@@ -1,11 +1,21 @@
-import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/core';
+import {
+  createStyles,
+  MantineNumberSize,
+  getSizeValue,
+  getSharedColorScheme,
+  getFontStyles,
+} from '@mantine/core';
 
 interface FullScreenDropzoneStyles {
   offset: MantineNumberSize;
+  padding: MantineNumberSize;
+  radius: MantineNumberSize;
 }
 
-export default createStyles((theme, { offset }: FullScreenDropzoneStyles) => {
+export default createStyles((theme, { offset, padding, radius }: FullScreenDropzoneStyles) => {
   const spacing = getSizeValue({ size: offset, sizes: theme.spacing });
+  const rejected = getSharedColorScheme({ color: 'red', theme, variant: 'light' });
+  const accepted = getSharedColorScheme({ color: theme.primaryColor, theme, variant: 'light' });
 
   return {
     wrapper: {
@@ -19,7 +29,40 @@ export default createStyles((theme, { offset }: FullScreenDropzoneStyles) => {
     },
 
     dropzone: {
+      ...getFontStyles(theme),
+      boxSizing: 'border-box',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      border: `2px dashed ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+      }`,
+      padding: getSizeValue({ size: padding, sizes: theme.spacing }),
+      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      cursor: 'pointer',
+      userSelect: 'none',
+      transition: 'background-color 150ms ease',
+      position: 'relative',
       height: `calc(100vh - ${spacing * 2}px)`,
+    },
+
+    active: {
+      backgroundColor:
+        theme.colorScheme === 'dark' ? accepted.background : theme.colors[theme.primaryColor][0],
+      borderColor:
+        theme.colorScheme === 'dark' ? accepted.border : theme.colors[theme.primaryColor][4],
+
+      '&:hover': {
+        backgroundColor:
+          theme.colorScheme === 'dark' ? accepted.background : theme.colors[theme.primaryColor][0],
+      },
+    },
+
+    reject: {
+      backgroundColor: theme.colorScheme === 'dark' ? rejected.background : theme.colors.red[0],
+      borderColor: theme.colorScheme === 'dark' ? rejected.border : theme.colors.red[4],
+
+      '&:hover': {
+        backgroundColor: theme.colorScheme === 'dark' ? rejected.background : theme.colors.red[0],
+      },
     },
   };
 });
