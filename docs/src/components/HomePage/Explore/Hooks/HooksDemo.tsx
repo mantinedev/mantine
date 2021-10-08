@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useScrollLock, useClickOutside } from '@mantine/hooks';
-import { Title, Button, Paper, Center, createStyles } from '@mantine/core';
+import { Title, Button, Paper, Center, createStyles, useMantineTheme } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 
@@ -52,6 +52,7 @@ export function HooksDemo() {
   const [lockScroll, setLockScroll] = useScrollLock();
   const [opened, setOpened] = useState(false);
   const ref = useClickOutside(() => setOpened(false));
+  const theme = useMantineTheme();
 
   return (
     <>
@@ -85,6 +86,7 @@ export function HooksDemo() {
           <Paper
             ref={ref}
             shadow="md"
+            padding="xl"
             style={{
               position: 'absolute',
               top: -15,
@@ -92,6 +94,8 @@ export function HooksDemo() {
               right: -15,
               bottom: -15,
               zIndex: 3,
+              fontSize: 12,
+              color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
             }}
           >
             <Center style={{ height: '100%' }}>Click outside to close</Center>
