@@ -148,3 +148,46 @@ window.ResizeObserver = ResizeObserver;
 
 SegmentedControl uses radio inputs under the hood, it is accessible by default with no extra steps required.
 Component support the same keyboard events as regular radio group.
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { SegmentedControlProps } from '@mantine/core';
+```
+
+`SegmentedControlProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### SegmentedControlStylesNames type
+
+`SegmentedControlStylesNames` type is a union with SegmentedControl [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { SegmentedControlStylesNames } from '@mantine/core';
+
+const segmentedClasses: Partial<Record<SegmentedControlStylesNames, 'string'>> = {
+  label: 'segmented-label',
+  control: 'segmented-control',
+};
+
+<SegmentedControl classNames={segmentedClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
+
+### SegmentedControlItem type
+
+`SegmentedControlItem` type lets you validate object items that will be passed to SegmentedControl `data` prop:
+
+```tsx
+import type { SegmentedControlItem } from '@mantine/core';
+
+const autocompleteData: SegmentedControlItem[] = [
+  { value: 'John', label: <div>John</div> },
+  { value: 'Jake', label: <div>Jake</div> },
+  { value: 'Amy', label: <div>Amy</div> },
+];
+```

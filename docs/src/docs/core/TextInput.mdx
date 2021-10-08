@@ -77,3 +77,32 @@ Provide `aria-label` in case you use component without label for screen reader s
 <TextInput />; // not ok, input is not labeled
 <TextInput aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { TextInputProps } from '@mantine/core';
+```
+
+`TextInputProps` extends `React.ComponentPropsWithoutRef<'input'>`, all other props are available under _Component props_ tab.
+
+### TextInputStylesNames type
+
+`TextInputStylesNames` type is a union with TextInput [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { TextInputStylesNames } from '@mantine/core';
+
+const inputClasses: Partial<Record<TextInputStylesNames, 'string'>> = {
+  label: 'input-label',
+  description: 'input-description',
+};
+
+<TextInput classNames={inputClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

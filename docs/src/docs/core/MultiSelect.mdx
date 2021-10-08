@@ -343,3 +343,22 @@ const multiSelectClasses: Partial<Record<MultiSelectStylesNames, 'string'>> = {
 ```
 
 See full styles descriptions list under _Styles API_ tab.
+
+### SelectItemProps type
+
+`SelectItemProps` type provides props for custom `itemComponent`,
+it can be used both with [MultiSelect](/core/multi-select/) and [Select](/core/select/) components `data`:
+
+```tsx
+import type { SelectItemProps } from '@mantine/core';
+
+const Item = forwardRef<HTMLDivElement, SelectItemProps>(
+  ({ label, value, ...others }: SelectItemProps, ref) => (
+    <div ref={ref} {...others}>
+      {/* Custom item component */}
+    </div>
+  )
+);
+
+<MultiSelect itemComponent={Item} />;
+```
