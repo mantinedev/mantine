@@ -7,6 +7,7 @@ import {
   itSupportsRef,
   itSupportsStylesApi,
   itSupportsMargins,
+  defaultInputProps,
 } from '@mantine/tests';
 import { Input } from '../Input/Input';
 import { TextInput } from '../TextInput/TextInput';
@@ -31,14 +32,7 @@ describe('@mantine/core/PasswordInput', () => {
 
   itSupportsStylesApi(
     PasswordInput,
-    {
-      icon: '$',
-      rightSection: '$',
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-    },
+    defaultInputProps,
     Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
     'password-input'
   );
