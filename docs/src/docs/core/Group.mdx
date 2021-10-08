@@ -50,3 +50,13 @@ const MyButton => ({ label, ...others }) => <button {...others}>{label}</button>
 You can use [Divider](/core/divider/) component to add additional visual separation and spacing:
 
 <Demo data={GroupDemos.divider} />
+
+## Types
+
+Import component props type:
+
+```tsx
+import type { GroupProps } from '@mantine/core';
+```
+
+`GroupProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

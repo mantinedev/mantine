@@ -5,15 +5,34 @@ import useStyles from './Col.styles';
 export interface ColProps
   extends Omit<DefaultProps, MantineMargin>,
     React.ComponentPropsWithoutRef<'div'> {
+  /** Default col span */
   span: number;
+
+  /** Total amount of columns, controlled by Grid component */
   columns?: number;
+
+  /** Column left offset */
   offset?: number;
+
+  /** Space between columns from theme, or number to set value in px, controlled by Grid component */
   gutter?: MantineNumberSize;
+
+  /** sets flex-grow to 1 if true, controlled by Grid component */
   grow?: boolean;
+
+  /** Col span at (min-width: theme.breakpoints.xs) */
   xs?: number;
+
+  /** Col span at (min-width: theme.breakpoints.sm) */
   sm?: number;
+
+  /** Col span at (min-width: theme.breakpoints.md) */
   md?: number;
+
+  /** Col span at (min-width: theme.breakpoints.lg) */
   lg?: number;
+
+  /** Col span at (min-width: theme.breakpoints.xl) */
   xl?: number;
 }
 

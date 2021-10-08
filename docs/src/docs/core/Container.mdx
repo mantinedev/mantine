@@ -39,3 +39,13 @@ import { CONTAINER_SIZES } from '@mantine/core';
   head={['Size', 'max-width']}
   data={Object.keys(CONTAINER_SIZES).map((size) => [size, `${CONTAINER_SIZES[size]}px`])}
 />
+
+## Types
+
+Import component props type:
+
+```tsx
+import type { ContainerProps } from '@mantine/core';
+```
+
+`ContainerProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
