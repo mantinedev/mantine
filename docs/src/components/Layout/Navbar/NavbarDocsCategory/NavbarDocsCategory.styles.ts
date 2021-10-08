@@ -105,5 +105,9 @@ export default createStyles((theme) => ({
 
   title: {
     userSelect: 'none',
+    fontWeight: 700,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    lineHeight: 1,
+    paddingTop: 4,
   },
 }));
