@@ -7,11 +7,11 @@ interface ContainerStyles {
 }
 
 export const sizes = {
-  xs: 570,
-  sm: 770,
-  md: 970,
-  lg: 1170,
-  xl: 1370,
+  xs: 540,
+  sm: 720,
+  md: 960,
+  lg: 1140,
+  xl: 1320,
 };
 
 export default createStyles((theme, { fluid, size, padding }: ContainerStyles) => ({
