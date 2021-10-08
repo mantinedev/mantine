@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Text, Group, Button } from '@mantine/core';
+import { ArrowRightIcon } from '@primer/octicons-react';
 import { Logo } from '../Logo/Logo';
 import { SocialButton } from '../SocialButton/SocialButton';
 import { LinksGroup } from './LinksGroup/LinksGroup';
@@ -25,7 +26,7 @@ export function Footer({ withNavbar }: FooterProps) {
             <div className={classes.logoSection}>
               <Logo />
               <Text className={classes.description} size="sm">
-                Build fully functional accessible web applications with ease
+                Build fully functional accessible web applications faster than ever
               </Text>
             </div>
 
@@ -33,7 +34,7 @@ export function Footer({ withNavbar }: FooterProps) {
               {groups}
 
               <div className={classes.feedback}>
-                <Text size="lg" weight={500} style={{ marginBottom: 12 }}>
+                <Text className={classes.feedbackTitle}>
                   Feedback
                 </Text>
                 <Text className={classes.feedbackDescription} size="sm">
@@ -44,9 +45,9 @@ export function Footer({ withNavbar }: FooterProps) {
                 <Button
                   component="a"
                   href="https://github.com/mantinedev/mantine/discussions/new"
-                  variant="outline"
-                  color="gray"
-                  size="sm"
+                  variant="default"
+                  rightIcon={<ArrowRightIcon size={14} />}
+                  style={{ paddingRight: 12 }}
                 >
                   Leave feedback
                 </Button>
