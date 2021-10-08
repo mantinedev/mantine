@@ -30,31 +30,29 @@ function ImageUploadIcon({
   return <ImageIcon {...props} />;
 }
 
-export const dropzoneChildren = (status: DropzoneStatus) => {
-  const theme = useMantineTheme();
-  return (
-    <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
-      <ImageUploadIcon
-        status={status}
-        style={{ width: 80, height: 80, color: getIconColor(status, theme) }}
-      />
+export const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) => (
+  <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
+    <ImageUploadIcon
+      status={status}
+      style={{ width: 80, height: 80, color: getIconColor(status, theme) }}
+    />
 
-      <div>
-        <Text size="xl" inline>
-          Drag images here or click to select files
-        </Text>
-        <Text size="sm" color="dimmed" inline mt={7}>
-          Attach as many files as you like, each file should not exceed 5mb
-        </Text>
-      </div>
-    </Group>
-  );
-};
+    <div>
+      <Text size="xl" inline>
+        Drag images here or click to select files
+      </Text>
+      <Text size="sm" color="dimmed" inline mt={7}>
+        Attach as many files as you like, each file should not exceed 5mb
+      </Text>
+    </div>
+  </Group>
+);
 
 export function BaseDemo(props: Partial<DropzoneProps>) {
+  const theme = useMantineTheme();
   return (
     <Dropzone onDrop={console.log} maxSize={3 * 1024 ** 2} accept={IMAGE_MIME_TYPE} {...props}>
-      {dropzoneChildren}
+      {(status) => dropzoneChildren(status, theme)}
     </Dropzone>
   );
 }

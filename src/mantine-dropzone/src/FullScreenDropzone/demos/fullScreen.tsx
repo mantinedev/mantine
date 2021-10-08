@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
-import { Button } from '@mantine/core';
+import { Button, useMantineTheme } from '@mantine/core';
 import { dropzoneChildren } from '../../Dropzone/demos/_base';
 import { FullScreenDropzone } from '../FullScreenDropzone';
 import { IMAGE_MIME_TYPE } from '../../mime-types';
@@ -36,6 +36,7 @@ function Demo() {
 
 function Demo() {
   const [disabled, setDisabled] = useState(true);
+  const theme = useMantineTheme();
 
   return (
     <>
@@ -51,7 +52,7 @@ function Demo() {
           setDisabled(true);
         }}
       >
-        {dropzoneChildren}
+        {(status) => dropzoneChildren(status, theme)}
       </FullScreenDropzone>
     </>
   );
