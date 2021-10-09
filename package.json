@@ -17,6 +17,7 @@
     "lint": "eslint src --ext .ts,.tsx",
     "build": "esno scripts/build",
     "jest": "jest",
+    "exports": "esno scripts/check-exports",
     "prettier:test": "prettier --check '**/*.{ts,tsx}'",
     "prettier:write": "prettier --write '**/*.{ts,tsx}'",
     "clean": "rimraf src/*/{esm,cjs,lib,dist} src/**/*.tsbuildinfo",

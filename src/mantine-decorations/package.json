@@ -14,7 +14,10 @@
     "type": "git",
     "directory": "src/mantine-dressing"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
   "dependencies": {
     "clsx": "^1.1.1"
   },
