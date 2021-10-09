@@ -1,7 +1,7 @@
 {
   "name": "@mantine/styles",
   "description": "Mantine css-in-js styles engine, based on emotion",
-  "version": "2.6.0-alpha.5",
+  "version": "2.6.0-alpha.6",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
