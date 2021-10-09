@@ -23,7 +23,7 @@ export default createStyles((theme: MantineTheme) => ({
 
   active: {
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
   },
 
   body: {

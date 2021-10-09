@@ -1,4 +1,10 @@
-import { createStyles, MantineNumberSize, getSizeValue, MantineShadow } from '@mantine/styles';
+import {
+  createStyles,
+  MantineNumberSize,
+  getSizeValue,
+  MantineShadow,
+  getFocusStyles,
+} from '@mantine/styles';
 
 interface PopoverBodyStyles {
   shadow: MantineShadow;
@@ -8,7 +14,10 @@ interface PopoverBodyStyles {
 
 export default createStyles((theme, { radius, shadow, spacing }: PopoverBodyStyles) => ({
   title: {},
-  wrapper: {},
+
+  wrapper: {
+    ...getFocusStyles(theme),
+  },
 
   popover: {
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,

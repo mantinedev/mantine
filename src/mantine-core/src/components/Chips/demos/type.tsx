@@ -18,7 +18,7 @@ function Demo() {
         <Chip value="3">At a time</Chip>
       </Chips>
 
-      <Chips position="center" multiple style={{ marginTop: 15 }}>
+      <Chips position="center" multiple mt={15}>
         <Chip value="1">Multiple chips</Chip>
         <Chip value="2">Can be selected</Chip>
         <Chip value="3">At a time</Chip>

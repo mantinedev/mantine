@@ -3,6 +3,7 @@ import {
   itSupportsClassName,
   itSupportsStylesApi,
   itSupportsMargins,
+  defaultInputProps,
 } from '@mantine/tests';
 import { JsonInput } from './JsonInput';
 import { Input as InputStylesApi } from '../Input/styles.api';
@@ -14,14 +15,7 @@ describe('@mantine/core/JsonInput', () => {
   itSupportsMargins(JsonInput, {});
   itSupportsStylesApi(
     JsonInput,
-    {
-      icon: '$',
-      rightSection: '$',
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-    },
+    defaultInputProps,
     Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
     'json-input'
   );

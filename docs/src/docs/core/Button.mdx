@@ -155,13 +155,15 @@ it renders regular button without default browser styles and with Mantine focus 
 
 ## TypeScript
 
+### Usage with custom component
+
 You need to pass additional type to use custom component with TypeScript
 in case you need full type coverage for events and `ref`:
 
 ```tsx
 // With element
-<Button<'button'>
-  component="button"
+<Button<'a'>
+  component="a"
   onClick={(event) => console.log(event)}
   ref={(node) => {
     window.myRef = node;
@@ -176,4 +178,54 @@ in case you need full type coverage for events and `ref`:
     window.myRef = node;
   }}
 />
+```
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { ButtonProps, UnstyledButtonProps } from '@mantine/core';
+```
+
+`ButtonProps` is a generic type, it accepts either a string or component type as single type argument:
+
+```tsx
+// ButtonProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
+type AnchorButtonProps = ButtonProps<'a'>;
+
+// ButtonProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
+type CustomButtonProps = ButtonProps<typeof MyOtherComponent>;
+```
+
+See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.
+
+`UnstyledButtonProps` unlike `ButtonProps` is not a generic as component is always considered to be a button,
+it extends `React.ComponentPropsWithoutRef<'button'>`.
+
+### ButtonStylesNames type
+
+`ButtonStylesNames` type is a union with Button [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { ButtonStylesNames } from '@mantine/core';
+
+const buttonClasses: Partial<Record<ButtonStylesNames, 'string'>> = {
+  icon: 'button-icon',
+  label: 'button-label',
+};
+
+<Button classNames={buttonClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
+
+### ButtonVariant type
+
+`ButtonVariant` is a union, it includes all Button variants:
+
+```tsx
+import type { ButtonVariant } from '@mantine/core';
+
+const myVariant: ButtonVariant = 'outline';
 ```

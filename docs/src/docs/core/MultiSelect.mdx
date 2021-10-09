@@ -279,3 +279,86 @@ If you use `clearable` option set `clearButtonLabel`:
 ```tsx
 <MultiSelect clearable clearButtonLabel="Clear select field" />
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { MultiSelectProps } from '@mantine/core';
+```
+
+`MultiSelectProps` extends `React.ComponentPropsWithoutRef<'input'>`, all other props are available under _Component props_ tab.
+
+### MultiSelectValueProps type
+
+`MultiSelectValueProps` will help you build custom value component:
+
+```tsx
+import type { MultiSelectValueProps } from '@mantine/core';
+
+function CustomMultiSelectValue({
+  value,
+  label,
+  onRemove,
+  classNames,
+  ...others
+}: MultiSelectValueProps) {
+  return <div {...others}>{/* custom value component */}</div>;
+}
+
+<MultiSelect valueComponent={CustomMultiSelectValue} />;
+```
+
+### SelectItem type
+
+`SelectItem` type lets you validate object items that will be passed to MultiSelect `data` prop,
+it can be used both with [MultiSelect](/core/multi-select/) and [Select](/core/select/) components `data`:
+
+```tsx
+import type { SelectItem } from '@mantine/core';
+
+const data: SelectItem[] = [
+  { value: 'john', label: 'John', group: 'Users' },
+  { value: 'jake', label: 'Jake', group: 'Users' },
+  { value: 'amy', label: 'Amy', group: 'Deleted users', disabled: true },
+];
+```
+
+### MultiSelectStylesNames type
+
+`MultiSelectStylesNames` type is a union with MultiSelect [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { MultiSelectStylesNames } from '@mantine/core';
+
+const multiSelectClasses: Partial<Record<MultiSelectStylesNames, 'string'>> = {
+  label: 'multi-select-label',
+  description: 'multi-select-description',
+};
+
+<MultiSelect classNames={multiSelectClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
+
+### SelectItemProps type
+
+`SelectItemProps` type provides props for custom `itemComponent`,
+it can be used both with [MultiSelect](/core/multi-select/) and [Select](/core/select/) components `data`:
+
+```tsx
+import type { SelectItemProps } from '@mantine/core';
+
+const Item = forwardRef<HTMLDivElement, SelectItemProps>(
+  ({ label, value, ...others }: SelectItemProps, ref) => (
+    <div ref={ref} {...others}>
+      {/* Custom item component */}
+    </div>
+  )
+);
+
+<MultiSelect itemComponent={Item} />;
+```

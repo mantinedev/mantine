@@ -7,17 +7,12 @@ import {
   useUuid,
   useExtractedMargins,
 } from '@mantine/styles';
-import {
-  InputWrapperBaseProps,
-  InputWrapper,
-  InputWrapperStylesNames,
-} from '../InputWrapper/InputWrapper';
-import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-
-export type TextareaStylesNames = InputStylesNames | InputWrapperStylesNames;
+import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
+import { TextInputStylesNames } from '../TextInput/TextInput';
+import { Input, InputBaseProps } from '../Input/Input';
 
 export interface TextareaProps
-  extends DefaultProps<TextareaStylesNames>,
+  extends DefaultProps<TextInputStylesNames>,
     InputWrapperBaseProps,
     InputBaseProps,
     React.ComponentPropsWithoutRef<'textarea'> {

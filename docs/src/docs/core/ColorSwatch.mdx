@@ -66,10 +66,13 @@ function Demo() {
 
 ## TypeScript
 
+### Usage with custom component
+
 You need to pass additional type to use custom component with TypeScript
 in case you need full type coverage for events and `ref`:
 
 ```tsx
+// With element
 <ColorSwatch<'button'>
   component="button"
   onClick={(event) => console.log(event)}
@@ -78,6 +81,7 @@ in case you need full type coverage for events and `ref`:
   }}
 />
 
+// With component
 <ColorSwatch<typeof Link>
   component={Link}
   onClick={(event) => console.log(event)}
@@ -86,3 +90,23 @@ in case you need full type coverage for events and `ref`:
   }}
 />
 ```
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { ColorSwatchProps } from '@mantine/core';
+```
+
+`ColorSwatchProps` is a generic type, it accepts either a string or component type as single type argument:
+
+```tsx
+// ColorSwatchProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
+type AnchorColorSwatchProps = ColorSwatchProps<'a'>;
+
+// ColorSwatchProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
+type CustomColorSwatchProps = ColorSwatchProps<typeof MyOtherComponent>;
+```
+
+See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.

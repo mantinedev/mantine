@@ -93,3 +93,32 @@ Provide `aria-label` in case you use checkbox without label for screen reader su
 <Checkbox />; // not ok, input is not labeled
 <Checkbox aria-label="My checkbox" />; // -> ok, label is not visible but will be announced by screen reader
 ```
+
+## TypeScript
+
+### Component props
+
+Import component props type:
+
+```tsx
+import type { CheckboxProps } from '@mantine/core';
+```
+
+`CheckboxProps` extends `React.ComponentPropsWithoutRef<'input'>`, all other props are available under _Component props_ tab.
+
+### CheckboxStylesNames type
+
+`CheckboxStylesNames` type is a union with Checkbox [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { CheckboxStylesNames } from '@mantine/core';
+
+const checkboxClasses: Partial<Record<CheckboxStylesNames, 'string'>> = {
+  icon: 'checkbox-icon',
+  label: 'checkbox-label',
+};
+
+<Checkbox classNames={checkboxClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

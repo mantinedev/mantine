@@ -7,6 +7,7 @@ import {
   checkAccessibility,
   itSupportsStylesApi,
   itSupportsMargins,
+  defaultInputProps,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
@@ -32,14 +33,7 @@ describe('@mantine/core/Input', () => {
   itSupportsStyle(TextInput, {});
   itSupportsStylesApi(
     TextInput,
-    {
-      icon: '$',
-      rightSection: '$',
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-    },
+    defaultInputProps,
     Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
     'text-input'
   );

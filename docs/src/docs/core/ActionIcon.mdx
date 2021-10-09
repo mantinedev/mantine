@@ -144,3 +144,63 @@ as by design element does not associated label.
   <GearIcon />
 </ActionIcon>
 ```
+
+## TypeScript
+
+### Usage with custom component
+
+You need to pass additional type to use custom component with TypeScript
+in case you need full type coverage for events and `ref`:
+
+```tsx
+// With element
+<ActionIcon<'a'>
+  component="a"
+  onClick={(event) => console.log(event)}
+  ref={(node) => {
+    window.myRef = node;
+  }}
+/>
+
+// With component
+<ActionIcon<typeof Link>
+  component={Link}
+  onClick={(event) => console.log(event)}
+  ref={(node) => {
+    window.myRef = node;
+  }}
+/>
+```
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { ActionIconProps, CloseButtonProps } from '@mantine/core';
+```
+
+`ActionIconProps` is a generic type, it accepts either a string or component type as single type argument:
+
+```tsx
+// ActionIconProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
+type AnchorIconProps = ActionIconProps<'a'>;
+
+// ActionIconProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
+type CustomIconProps = ActionIconProps<typeof MyOtherComponent>;
+```
+
+See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.
+
+`CloseButtonProps` unlike `ActionIconProps` is not a generic as component is always considered to be a button,
+it extends `React.ComponentPropsWithoutRef<'button'>`.
+
+### ActionIconVariant type
+
+`ActionIconVariant` is a union, it includes all ActionIcon variants:
+
+```tsx
+import type { ActionIconVariant } from '@mantine/core';
+
+const myVariant: ActionIconVariant = 'filled';
+```

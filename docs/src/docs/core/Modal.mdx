@@ -112,3 +112,32 @@ For better screen reader support set `closeButtonLabel` prop:
 // sets title attribute on close button
 <Modal closeButtonLabel="Close authentication modal" />
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { ModalProps } from '@mantine/core';
+```
+
+`ModalProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### ModalStylesNames type
+
+`ModalStylesNames` type is a union with Modal [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { ModalStylesNames } from '@mantine/core';
+
+const modalClasses: Partial<Record<ModalStylesNames, 'string'>> = {
+  header: 'modal-header',
+  title: 'modal-title',
+};
+
+<Modal classNames={modalClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

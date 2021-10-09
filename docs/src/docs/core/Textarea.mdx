@@ -68,3 +68,13 @@ Provide `aria-label` in case you use component without label for screen reader s
 <Textarea />; // not ok, textarea is not labeled
 <Textarea aria-label="My textarea" />; // -> ok, label is not visible but will be announced by screen reader
 ```
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { TextareaProps } from '@mantine/core';
+```
+
+`TextareaProps` extends `React.ComponentPropsWithoutRef<'textarea'>`, all other props are available under _Component props_ tab.

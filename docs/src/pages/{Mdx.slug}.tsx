@@ -54,7 +54,6 @@ export const query = graphql`
         docs
         source
         description
-        bundleSize
         installation
         pageTitle
         license

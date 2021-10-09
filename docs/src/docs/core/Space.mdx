@@ -55,3 +55,13 @@ Space component in order to skip direct theme subscription:
 // Width will be set to 30px
 <Space w={30} />
 ```
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { SpaceProps } from '@mantine/core';
+```
+
+`SpaceProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

@@ -38,3 +38,50 @@ You can highlight multiple substrings by providing an array of values:
 Highlight accepts the same props as [Text](/core/text/) component:
 
 <Demo data={HighlightDemos.props} />
+
+## TypeScript
+
+### Usage with custom component
+
+You need to pass additional type to use custom component with TypeScript
+in case you need full type coverage for events and `ref`:
+
+```tsx
+// With element
+<Highlight<'a'>
+  component="a"
+  onClick={(event) => console.log(event)}
+  ref={(node) => {
+    window.myRef = node;
+  }}
+/>
+
+// With component
+<Highlight<typeof Link>
+  component={Link}
+  onClick={(event) => console.log(event)}
+  ref={(node) => {
+    window.myRef = node;
+  }}
+/>
+```
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { HighlightProps } from '@mantine/core';
+```
+
+`HighlightProps` is a generic type, it accepts either a string or component type as single type argument:
+
+```tsx
+// HighlightProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
+type AnchorHighlightProps = HighlightProps<'a'>;
+
+// HighlightProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
+type CustomHighlightProps = HighlightProps<typeof MyOtherComponent>;
+```
+
+See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.

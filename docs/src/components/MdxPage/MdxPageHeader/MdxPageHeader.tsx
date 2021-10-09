@@ -2,7 +2,6 @@ import React from 'react';
 import { Title, Text } from '@mantine/core';
 import { MarkGithubIcon, PencilIcon, LawIcon, CalendarIcon } from '@primer/octicons-react';
 import { ImportStatement } from './ImportStatement/ImportStatement';
-import { BundleSize } from './BundleSize/BundleSize';
 import { NpmIcon } from './NpmIcon';
 import { LinkItem } from './LinkItem/LinkItem';
 import { MdxPageProps } from '../../../types';
@@ -86,7 +85,6 @@ export function MdxPageHeader({ frontmatter }: MdxPageProps) {
           </LinkItem>
         )}
 
-        {frontmatter.bundleSize && <BundleSize package={frontmatter.bundleSize} />}
         {frontmatter.license && (
           <LinkItem
             label="License"

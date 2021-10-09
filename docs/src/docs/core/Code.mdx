@@ -41,3 +41,13 @@ In case you need syntax highlight like in all code examples on Mantine website,
 use [@mantine/prism](/others/prism/) package:
 
 <Demo data={PrismDemos.usage} />
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { CodeProps } from '@mantine/core';
+```
+
+`CodeProps` extends `React.ComponentPropsWithoutRef<'code'>`, all other props are available under _Component props_ tab.

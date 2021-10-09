@@ -68,3 +68,32 @@ To change transition provide following props:
 Component is not accessible and most likely will not be announced by screen reader,
 make sure you do not put any important information. In most cases it would be much better
 to select [Modal](/core/modal/), [Drawer](/core/drawer/) or [Notifications](/others/notifications/).
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { DialogProps } from '@mantine/core';
+```
+
+`DialogProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### DialogStylesNames type
+
+`DialogStylesNames` type is a union with Dialog [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { DialogStylesNames } from '@mantine/core';
+
+const dialogClasses: Partial<Record<DialogStylesNames, 'string'>> = {
+  root: 'dialog-root',
+  closeButton: 'dialog-closeButton',
+};
+
+<Dialog classNames={dialogClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

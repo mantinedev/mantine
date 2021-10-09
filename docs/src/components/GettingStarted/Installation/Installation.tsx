@@ -15,6 +15,7 @@ export function Installation({ setDependencies }: InstallationProps) {
     '@mantine/notifications': false,
     '@mantine/prism': false,
     '@mantine/rte': false,
+    '@mantine/dropzone': false,
   });
 
   const items = PACKAGES_DATA.map((item) => (

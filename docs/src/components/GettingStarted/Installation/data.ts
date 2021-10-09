@@ -29,4 +29,9 @@ export const PACKAGES_DATA = [
     description: 'Rich text editor based on Quill.js',
     dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/rte'],
   },
+  {
+    package: '@mantine/dropzone',
+    description: 'Capture files with drag and drop',
+    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/dropzone'],
+  },
 ];

@@ -37,3 +37,32 @@ By default Alert will have `theme.primaryColor` color:
 
 - Root element role set to `alert`
 - Set `closeButtonLabel` prop to make close button visible for screen readers
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { AlertProps } from '@mantine/core';
+```
+
+`AlertProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### AlertStylesNames type
+
+`AlertStylesNames` type is a union with Alert [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { AlertStylesNames } from '@mantine/core';
+
+const alertClasses: Partial<Record<AlertStylesNames, 'string'>> = {
+  title: 'alert-title',
+  body: 'alert-body',
+};
+
+<Alert classNames={alertClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

@@ -14,28 +14,28 @@ export interface TimelineItemProps
   /** React node that should be rendered inside bullet – icon, image, avatar, etc. */
   bullet?: React.ReactNode;
 
-  /** Bullet width, height and border-radius in px */
+  /** Bullet width, height and border-radius in px, controlled by Timeline component */
   bulletSize?: number;
 
   /** React node that will be rendered after title */
   children?: React.ReactNode;
 
-  /** Should this item be highlighted */
+  /** Should this item be highlighted, controlled by Timeline component */
   active?: boolean;
 
-  /** Should line of this item be highlighted */
+  /** Should line of this item be highlighted, controlled by Timeline component */
   lineActive?: boolean;
 
   /** Highlight color for active item */
   color?: MantineColor;
 
-  /** Line and bullet position relative to item content */
+  /** Line and bullet position relative to item content, controlled by Timeline component */
   align?: 'right' | 'left';
 
   /** Line border style */
   lineVariant?: 'solid' | 'dashed' | 'dotted';
 
-  /** Line border width in px */
+  /** Line border width in px, controlled by Timeline component */
   lineWidth?: number;
 }
 

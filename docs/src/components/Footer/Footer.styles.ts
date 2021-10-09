@@ -148,4 +148,11 @@ export default createStyles((theme) => ({
       },
     },
   },
+
+  feedbackTitle: {
+    fontSize: theme.fontSizes.lg,
+    fontWeight: 700,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    marginBottom: theme.spacing.xs / 2,
+  },
 }));

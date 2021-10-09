@@ -4,10 +4,6 @@
     "lib",
     "esm",
     "cjs",
-    "**/*.story.ts",
-    "**/*.story.tsx",
-    "**/*.test.ts",
-    "**/*.test.tsx",
     "jest-config.js",
     "configuration/storybook/main.js"
   ],

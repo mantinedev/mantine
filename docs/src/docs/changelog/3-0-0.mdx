@@ -21,6 +21,7 @@ import {
   CreateStylesDemos,
   useHoverHookDemo,
 } from '@docs/demos';
+import * as DropzoneDemos from '@demos/dropzone';
 
 ## Breaking changes
 
@@ -29,6 +30,7 @@ import {
 - All components no longer support `themeOverride` prop due to performance reasons
 - `elementRef` prop was replaced with `ref` in all components
 - Default line-height (`theme.lineHeight`) was increased from 1.4 to 1.55
+- Default [Container](https://mantine.dev/core/container/) sizes were changed
 
 ## Migration to emotion
 
@@ -159,6 +161,19 @@ function Demo() {
 }
 ```
 
+## @mantine/dropzone package
+
+[@mantine/dropzone](https://mantine.dev/others/dropzone/) is a new package that includes Dropzone and FullScreenDropzone components.
+
+Dropzone components lets you capture files from user with drag 'n' drop:
+
+<Demo data={DropzoneDemos.usage} demoProps={{ toggle: true }} />
+
+FullScreenDropzone works the same way as dropzone but instead of capturing dropped files from specific area it
+uses browser window as dropzone:
+
+<Demo data={DropzoneDemos.fullScreen} demoProps={{ toggle: true }} />
+
 ## New components
 
 [MediaQuery](https://mantine.dev/core/media-query/) component provides a simple API to manage breakpoints in jsx:
@@ -209,5 +224,7 @@ function Demo() {
 - [ActionIcon](https://mantine.dev/core/action-icon/) and [Button](https://mantine.dev/core/button/) components now support new `default` variant
 - [Pagination](https://mantine.dev/core/pagination/) component now supports adding first and last controls and removing next/prev buttons
 - [SimpleGrid](https://mantine.dev/core/simple-grid/) component now supports `theme.breakpoints` usage in `breakpoints` prop
+- [SimpleGrid](https://mantine.dev/core/simple-grid/) was migrated to use CSS Grid Layout instead of flexbox
 - [Group](https://mantine.dev/core/group/) component no longer supports Styles API, you can add styles directly to element and children instead
 - New [Space](https://mantine.dev/core/space/) component lets you add spacing between elements without directly subscribing to theme
+- [Overlay](https://mantine.dev/core/overlay/) and [LoadingOverlay](https://mantine.dev/core/loading-overlay/) components now support `radius` prop
