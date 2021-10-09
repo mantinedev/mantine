@@ -46,3 +46,13 @@ You can make table striped by passing `striped` prop to `Table`.
 If `highlightOnHover` prop is true rows will be highlighted with gray color on hover.
 
 <Demo data={TableDemos.configurator} />
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { TableProps } from '@mantine/core';
+```
+
+`TableProps` extends `React.ComponentPropsWithoutRef<'table'>`, all other props are available under _Component props_ tab.
