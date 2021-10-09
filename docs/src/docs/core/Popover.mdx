@@ -125,3 +125,32 @@ To specify initial focus element add `data-autofocus` attribute:
   <input />
 </Popover>
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { PopoverProps } from '@mantine/core';
+```
+
+`PopoverProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### PopoverStylesNames type
+
+`PopoverStylesNames` type is a union with Popover [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { PopoverStylesNames } from '@mantine/core';
+
+const popoverClasses: Partial<Record<PopoverStylesNames, 'string'>> = {
+  header: 'popover-header',
+  title: 'popover-title',
+};
+
+<Popover classNames={popoverClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
