@@ -80,3 +80,32 @@ function Demo() {
   return <Image ref={rootRef} imageRef={imageRef} />;
 }
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { ImageProps } from '@mantine/core';
+```
+
+`ImageProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### ImageStylesNames type
+
+`ImageStylesNames` type is a union with Image [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { ImageStylesNames } from '@mantine/core';
+
+const imageClasses: Partial<Record<ImageStylesNames, 'string'>> = {
+  figure: 'image-figure',
+  caption: 'image-caption',
+};
+
+<Image classNames={imageClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

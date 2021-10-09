@@ -84,3 +84,13 @@ Alternatively, you can use a number to set radius in px:
 Default radius from xs to xl for xl size:
 
 <Demo data={ThemeIconDemos.radius} />
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { ThemeIconProps } from '@mantine/core';
+```
+
+`ThemeIconProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
