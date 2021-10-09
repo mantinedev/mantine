@@ -1,11 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import React, { useRef, useState } from 'react';
+import { useMove, useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
 import { getPosition } from '../utils/get-position/get-position';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';
-import { getDragEventsAssigner } from '../utils/get-drag-events-assigner/get-drag-events-assigner';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import { Track, TrackStylesNames } from '../Track/Track';
 import { MarksStylesNames } from '../Marks/Marks';
@@ -108,7 +107,7 @@ export function RangeSlider({
   showLabelOnHover = true,
   ...others
 }: RangeSliderProps) {
-  const [dragging, setDragging] = useState(-1);
+  //const [dragging, setDragging] = useState(-1);
   const [focused, setFocused] = useState(-1);
   const [hovered, setHovered] = useState(false);
   const [_value, setValue] = useUncontrolled<Value>({
@@ -119,10 +118,8 @@ export function RangeSlider({
     onChange,
   });
   const _valueRef = useRef(_value);
-  const container = useRef<HTMLDivElement>();
   const thumbs = useRef<HTMLDivElement[]>([]);
-  const start = useRef<number>();
-  const offset = useRef<number>();
+  const thumbIndex = useRef<number>(undefined);
   const positions = [
     getPosition({ value: _value[0], min, max }),
     getPosition({ value: _value[1], min, max }),
@@ -160,28 +157,11 @@ export function RangeSlider({
   };
 
   const handleChange = (val: number, index: number) => {
-    if (container.current) {
-      const containerWidth = container.current.getBoundingClientRect().width;
-      const nextValue = getChangeValue({ value: val, containerWidth, min, max, step });
-      setRangedValue(nextValue, index);
-    }
+    const nextValue = getChangeValue({ value: val, min, max, step });
+    setRangedValue(nextValue, index);
   };
 
-  const onDrag = (event: any) => {
-    container.current && container.current.focus();
-    handleChange(getClientPosition(event) + start.current - offset.current, dragging);
-  };
-
-  const onDragEnd = () => {
-    setDragging(-1);
-  };
-
-  const { assignEvents, removeEvents } = getDragEventsAssigner({
-    onDrag,
-    onDragEnd,
-  });
-
-  useEffect(() => removeEvents, []);
+  const { ref: container, active } = useMove(({ x }) => handleChange(x, thumbIndex.current));
 
   function handleThumbMouseDown(
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
@@ -192,28 +172,8 @@ export function RangeSlider({
       event.stopPropagation();
     }
 
-    start.current = thumbs.current[index].offsetLeft;
-    offset.current = getClientPosition(event as any);
-
-    assignEvents();
+    thumbIndex.current = index;
   }
-
-  const handleTrackMouseDown = (
-    event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) => {
-    if (event.cancelable) {
-      event.preventDefault();
-    }
-
-    const changePosition = getClientPosition(event.nativeEvent);
-    const rect = container.current.getBoundingClientRect();
-
-    start.current = changePosition - rect.left;
-    offset.current = changePosition;
-
-    assignEvents();
-    handleChange(changePosition - rect.left, dragging);
-  };
 
   const handleTrackMouseDownCapture = (
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
@@ -236,7 +196,7 @@ export function RangeSlider({
     const nearestHandle =
       Math.abs(_value[0] - changeValue) > Math.abs(_value[1] - changeValue) ? 1 : 0;
 
-    setDragging(nearestHandle);
+    thumbIndex.current = nearestHandle;
   };
 
   const getFocusedThumbIndex = () => {
@@ -299,12 +259,14 @@ export function RangeSlider({
       {...others}
       size={size}
       ref={container}
-      onTouchStart={handleTrackMouseDown}
-      onMouseDown={handleTrackMouseDown}
       onTouchStartCapture={handleTrackMouseDownCapture}
-      onTouchEndCapture={() => setDragging(-1)}
+      onTouchEndCapture={() => {
+        thumbIndex.current = -1;
+      }}
       onMouseDownCapture={handleTrackMouseDownCapture}
-      onMouseUpCapture={() => setDragging(-1)}
+      onMouseUpCapture={() => {
+        thumbIndex.current = -1;
+      }}
       onKeyDownCapture={handleTrackKeydownCapture}
       onMouseOver={showLabelOnHover ? () => setHovered(true) : null}
       onMouseOut={showLabelOnHover ? () => setHovered(false) : null}
@@ -334,7 +296,7 @@ export function RangeSlider({
           {...sharedThumbProps}
           value={_value[0]}
           position={positions[0]}
-          dragging={dragging === 0}
+          dragging={active && thumbIndex.current === 0}
           label={typeof label === 'function' ? label(_value[0]) : label}
           ref={(node) => {
             thumbs.current[0] = node;
@@ -350,7 +312,7 @@ export function RangeSlider({
           thumbLabel={thumbToLabel}
           value={_value[1]}
           position={positions[1]}
-          dragging={dragging === 1}
+          dragging={active && thumbIndex.current === 1}
           label={typeof label === 'function' ? label(_value[1]) : label}
           ref={(node) => {
             thumbs.current[1] = node;
