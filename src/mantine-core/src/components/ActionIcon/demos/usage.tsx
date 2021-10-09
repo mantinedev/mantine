@@ -4,11 +4,7 @@ import { PasswordInput } from '../../PasswordInput/PasswordInput';
 function Demo() {
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
-      <PasswordInput
-        placeholder="Password"
-        hidePasswordLabel="Hide password"
-        showPasswordLabel="Show password"
-      />
+      <PasswordInput placeholder="Password" />
     </div>
   );
 }

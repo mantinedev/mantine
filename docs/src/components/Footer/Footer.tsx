@@ -34,9 +34,7 @@ export function Footer({ withNavbar }: FooterProps) {
               {groups}
 
               <div className={classes.feedback}>
-                <Text className={classes.feedbackTitle}>
-                  Feedback
-                </Text>
+                <Text className={classes.feedbackTitle}>Feedback</Text>
                 <Text className={classes.feedbackDescription} size="sm">
                   Your feedback is most valuable contribution to the project, please share how you
                   use Mantine, what features are missing and what is done good
