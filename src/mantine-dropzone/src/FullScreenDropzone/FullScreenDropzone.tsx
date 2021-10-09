@@ -41,6 +41,16 @@ export interface FullScreenDropzoneProps
   children(status: DropzoneStatus): React.ReactNode;
 }
 
+function isVisible(event: DragEvent) {
+  for (let i = 0; i < event.dataTransfer.items.length; i += 1) {
+    if (event.dataTransfer.items[i].kind !== 'file') {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 function isValidDrop(event: DragEvent, mime: string[]) {
   const items = event?.dataTransfer?.items;
 
@@ -84,7 +94,7 @@ export function FullScreenDropzone({
   const handleDragOver = (event: DragEvent) => {
     event.preventDefault();
     setError(!isValidDrop(event, accept));
-    setVisible(true);
+    setVisible(isVisible(event));
   };
 
   const handleDragLeave = (event: DragEvent) => {
