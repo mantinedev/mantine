@@ -70,6 +70,9 @@ export interface SliderProps
 
   /** Thumb aria-label */
   thumbLabel?: string;
+
+  /**If true slider label will appear on hover */
+  showLabelOnHover?: boolean;
 }
 
 export function Slider({
@@ -92,9 +95,11 @@ export function Slider({
   labelTransitionTimingFunction,
   labelAlwaysOn = false,
   thumbLabel = '',
+  showLabelOnHover = true,
   ...others
 }: SliderProps) {
   const [dragging, setDragging] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -200,6 +205,8 @@ export function Slider({
       onMouseDownCapture={() => setDragging(true)}
       onMouseUpCapture={() => setDragging(false)}
       onKeyDownCapture={handleTrackKeydownCapture}
+      onMouseOver={showLabelOnHover ? () => setHovered(true) : null}
+      onMouseOut={showLabelOnHover ? () => setHovered(false) : null}
       classNames={classNames}
       styles={styles}
     >
@@ -235,6 +242,7 @@ export function Slider({
           classNames={classNames}
           styles={styles}
           thumbLabel={thumbLabel}
+          showLabelOnHover={showLabelOnHover && hovered}
         />
       </Track>
 

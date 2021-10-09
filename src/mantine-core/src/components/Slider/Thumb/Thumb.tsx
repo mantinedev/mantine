@@ -29,6 +29,7 @@ interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   thumbLabel: string;
   onFocus?(): void;
   onBlur?(): void;
+  showLabelOnHover?: boolean;
 }
 
 export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
@@ -52,6 +53,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
       thumbLabel,
       onFocus,
       onBlur,
+      showLabelOnHover,
     }: ThumbProps,
     ref
   ) => {
@@ -59,6 +61,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
     const { classes, cx } = useStyles({ color, size }, classNames, 'slider');
     const _styles = mergeStyles(classes, styles);
     const [focused, setFocused] = useState(false);
+    const isVisible = labelAlwaysOn || dragging || focused || showLabelOnHover;
 
     return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
@@ -85,7 +88,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
         style={{ ..._styles.thumb, ...(dragging ? _styles.dragging : null), left: `${position}%` }}
       >
         <Transition
-          mounted={label != null && (labelAlwaysOn || dragging || focused)}
+          mounted={label != null && isVisible}
           duration={labelTransitionDuration}
           transition={labelTransition}
           timingFunction={labelTransitionTimingFunction || theme.transitionTimingFunction}

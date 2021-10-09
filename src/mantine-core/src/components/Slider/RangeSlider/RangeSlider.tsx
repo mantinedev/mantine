@@ -78,6 +78,9 @@ export interface RangeSliderProps
 
   /** Second thumb aria-label */
   thumbToLabel?: string;
+
+  /**If true slider label will appear on hover */
+  showLabelOnHover?: boolean;
 }
 
 export function RangeSlider({
@@ -102,10 +105,12 @@ export function RangeSlider({
   labelAlwaysOn = false,
   thumbFromLabel = '',
   thumbToLabel = '',
+  showLabelOnHover = true,
   ...others
 }: RangeSliderProps) {
   const [dragging, setDragging] = useState(-1);
   const [focused, setFocused] = useState(-1);
+  const [hovered, setHovered] = useState(false);
   const [_value, setValue] = useUncontrolled<Value>({
     value,
     defaultValue,
@@ -301,6 +306,8 @@ export function RangeSlider({
       onMouseDownCapture={handleTrackMouseDownCapture}
       onMouseUpCapture={() => setDragging(-1)}
       onKeyDownCapture={handleTrackKeydownCapture}
+      onMouseOver={showLabelOnHover ? () => setHovered(true) : null}
+      onMouseOut={showLabelOnHover ? () => setHovered(false) : null}
       styles={styles}
       classNames={classNames}
     >
@@ -335,6 +342,7 @@ export function RangeSlider({
           thumbLabel={thumbFromLabel}
           onMouseDown={(event) => handleThumbMouseDown(event, 0)}
           onFocus={() => setFocused(0)}
+          showLabelOnHover={showLabelOnHover && hovered}
         />
 
         <Thumb
@@ -349,6 +357,7 @@ export function RangeSlider({
           }}
           onMouseDown={(event) => handleThumbMouseDown(event, 1)}
           onFocus={() => setFocused(1)}
+          showLabelOnHover={showLabelOnHover && hovered}
         />
       </Track>
 
