@@ -40,3 +40,50 @@ import { Link } from 'react-router-dom';
 <Overlay component="a" href="https://mantine.dev" />
 <Overlay component={Link} to="/mantine" />
 ```
+
+## TypeScript
+
+### Usage with custom component
+
+You need to pass additional type to use custom component with TypeScript
+in case you need full type coverage for events and `ref`:
+
+```tsx
+// With element
+<Overlay<'a'>
+  component="a"
+  onClick={(event) => console.log(event)}
+  ref={(node) => {
+    window.myRef = node;
+  }}
+/>
+
+// With component
+<Overlay<typeof Link>
+  component={Link}
+  onClick={(event) => console.log(event)}
+  ref={(node) => {
+    window.myRef = node;
+  }}
+/>
+```
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { OverlayProps } from '@mantine/core';
+```
+
+`OverlayProps` is a generic type, it accepts either a string or component type as single type argument:
+
+```tsx
+// OverlayProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
+type AnchorOverlayProps = OverlayProps<'a'>;
+
+// OverlayProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
+type CustomOverlayProps = OverlayProps<typeof MyOtherComponent>;
+```
+
+See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.

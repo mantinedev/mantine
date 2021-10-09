@@ -123,3 +123,32 @@ To specify initial focus element add `data-autofocus` attribute:
   <input />
 </Drawer>
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { DrawerProps } from '@mantine/core';
+```
+
+`DrawerProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### DrawerStylesNames type
+
+`DrawerStylesNames` type is a union with Drawer [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { DrawerStylesNames } from '@mantine/core';
+
+const drawerClasses: Partial<Record<DrawerStylesNames, 'string'>> = {
+  header: 'drawer-header',
+  title: 'drawer-title',
+};
+
+<Drawer classNames={drawerClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
