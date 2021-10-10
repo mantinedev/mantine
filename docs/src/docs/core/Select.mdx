@@ -52,8 +52,8 @@ Note that Select value should always be either **string** or **null**:
 
 Select support two different data formats:
 
-1. An array of strings – use when you do not need to customize item component or display `label` different than `value`
-2. An array of objects with required `value` and `label` properties and any other additional properties
+1. An array of strings – use when you do not need to customize item component or display `label` different than `value`.
+2. An array of objects with required `value` and `label` properties and any other additional properties.
 
 ```tsx
 // Data as an array of strings, will be mapped to
@@ -113,6 +113,21 @@ When prop is true and value is selected clear button will replace chevron in rig
 
 <Demo data={SelectDemos.clearable} />
 
+## Creatable
+
+Set `creatable` and `getCreateLabel` props to enable creating new select item.
+Note that you will need to handle data state to manage item creation correctly:
+
+<Demo data={SelectDemos.creatable} />
+
+## Grouping items
+
+<Demo data={SelectDemos.group} />
+
+## Disable items
+
+<Demo data={SelectDemos.disabledItems} />
+
 ## Large data set
 
 When dropdown height is exceeded dropdown becomes scrollable, to change max-height set `maxDropdownHeight` prop with value in px:
@@ -141,20 +156,32 @@ To do so you will need to:
 You can add any other fields to your data:
 
 ```tsx
-[
+const data = [
   {
-    value: 'bob@handsome.inc',
-    image: 'image-link',
-    label: 'bob@handsome.inc',
-    name: 'Bob Handsome',
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',
+    label: 'Bender Bending Rodríguez',
+    value: 'Bender Bending Rodríguez',
+    description: 'Fascinated with cooking',
+  },
+
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
+    label: 'Carol Miller',
+    value: 'Carol Miller',
+    description: 'One of the richest people on Earth',
   },
   {
-    value: 'bill@outlook.com',
-    image: 'image-link',
-    label: 'bill@outlook.com',
-    name: 'Bill Rataconda',
+    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
+    label: 'Homer Simpson',
+    value: 'Homer Simpson',
+    description: 'Overweight, lazy, and often ignorant',
   },
-  { value: 'amy@wong.cn', image: 'image-link', label: 'amy@wong.cn', name: 'Amy Wong' },
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
+    label: 'Spongebob Squarepants',
+    value: 'Spongebob Squarepants',
+    description: 'Not just a sponge',
+  },
 ];
 ```
 
@@ -200,9 +227,9 @@ Component supports all props from [Input](/core/input/) and [InputWrapper](/core
 
 <Demo data={SelectDemos.configurator} />
 
-## Get element ref
+## Get input element ref
 
-You can get input ref by passing `elementRef` prop to Select component:
+You can get input ref by passing `ref` prop to Select component:
 
 ```tsx
 import { useRef } from 'react';
@@ -210,18 +237,8 @@ import { Select } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
-  return <Select elementRef={ref} />;
+  return <Select ref={ref} />;
 }
-```
-
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<Select /> // -> random id generated both on client and server, props mismatch warning
-<Select id="my-select" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility
@@ -238,4 +255,67 @@ If you use `clearable` option set `clearButtonLabel`:
 
 ```tsx
 <Select clearable clearButtonLabel="Clear select field" />
+```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { SelectProps } from '@mantine/core';
+```
+
+`SelectProps` extends `React.ComponentPropsWithoutRef<'input'>`, all other props are available under _Component props_ tab.
+
+### SelectStylesNames type
+
+`SelectStylesNames` type is a union with Select [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { SelectStylesNames } from '@mantine/core';
+
+const selectClasses: Partial<Record<SelectStylesNames, 'string'>> = {
+  label: 'select-label',
+  description: 'select-description',
+};
+
+<Select classNames={selectClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
+
+### SelectItem type
+
+`SelectItem` type lets you validate object items that will be passed to MultiSelect `data` prop,
+it can be used both with [MultiSelect](/core/multi-select/) and [Select](/core/select/) components `data`:
+
+```tsx
+import type { SelectItem } from '@mantine/core';
+
+const data: SelectItem[] = [
+  { value: 'john', label: 'John', group: 'Users' },
+  { value: 'jake', label: 'Jake', group: 'Users' },
+  { value: 'amy', label: 'Amy', group: 'Deleted users', disabled: true },
+];
+```
+
+### SelectItemProps type
+
+`SelectItemProps` type provides props for custom `itemComponent`,
+it can be used both with [MultiSelect](/core/multi-select/) and [Select](/core/select/) components `data`:
+
+```tsx
+import type { SelectItemProps } from '@mantine/core';
+
+const Item = forwardRef<HTMLDivElement, SelectItemProps>(
+  ({ label, value, ...others }: SelectItemProps, ref) => (
+    <div ref={ref} {...others}>
+      {/* Custom item component */}
+    </div>
+  )
+);
+
+<Select itemComponent={Item} />;
 ```

@@ -11,7 +11,7 @@ const iconSizes = {
   xl: 34,
 };
 
-function Wrapper(props: ActionIconProps) {
+function Wrapper(props: ActionIconProps<'button'>) {
   return (
     <Group position="center">
       <ActionIcon {...props}>
@@ -42,6 +42,7 @@ export const configurator: MantineDemo = {
         { label: 'filled', value: 'filled' },
         { label: 'light', value: 'light' },
         { label: 'outline', value: 'outline' },
+        { label: 'default', value: 'default' },
       ],
       initialValue: 'hover',
       defaultValue: 'hover',

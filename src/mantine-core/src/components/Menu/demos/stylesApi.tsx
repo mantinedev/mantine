@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles } from '../../../theme';
+import { createStyles } from '@mantine/styles';
 import { Menu } from '../Menu';
 import { Group } from '../../Group/Group';
 import { menuItems } from './_menu-items';
@@ -15,7 +15,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Demo() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <Menu classNames={classes}>
       {/* Menu items... */}
@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Demo() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const items = [...menuItems];
   items.splice(4, 1);
   return (

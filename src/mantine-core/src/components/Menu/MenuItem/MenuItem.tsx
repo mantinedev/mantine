@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineColor } from '../../../theme';
+import { DefaultProps, MantineColor, PolymorphicComponentProps } from '@mantine/styles';
 import type { MenuButtonStylesNames } from '../MenuButton/MenuButton';
 
 export interface SharedMenuItemProps extends DefaultProps<MenuButtonStylesNames> {
@@ -16,35 +16,24 @@ export interface SharedMenuItemProps extends DefaultProps<MenuButtonStylesNames>
   rightSection?: React.ReactNode;
 }
 
-interface _MenuItemProps<C extends React.ElementType, R extends HTMLElement>
-  extends SharedMenuItemProps {
-  /** Root element or custom component */
-  component?: C;
+export type MenuItemProps<C extends React.ElementType> = PolymorphicComponentProps<
+  C,
+  SharedMenuItemProps
+>;
 
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<R>;
-}
-
-export type MenuItemProps<
-  C extends React.ElementType = 'button',
-  R extends HTMLElement = HTMLButtonElement
-> = _MenuItemProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _MenuItemProps<C, R>>;
+export type MenuItemComponent = <C extends React.ElementType = 'div'>(
+  props: MenuItemProps<C>
+) => React.ReactElement;
 
 export interface MenuItemType {
   type: any;
-  props: MenuItemProps;
+  props: MenuItemProps<'button'>;
   ref?: React.RefObject<HTMLButtonElement> | ((instance: HTMLButtonElement) => void);
 }
 
-export function MenuItem<
-  C extends React.ElementType = 'button',
-  R extends HTMLElement = HTMLButtonElement
->(
-  // Props should be kept for ts integration
+export const MenuItem: MenuItemComponent & { displayName?: string } = ((
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  props: MenuItemProps<C, R>
-) {
-  return null;
-}
+  _props: MenuItemProps<'button'>
+) => null) as any;
 
 MenuItem.displayName = '@mantine/core/MenuItem';

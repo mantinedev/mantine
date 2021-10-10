@@ -5,6 +5,7 @@ import {
   itRendersChildren,
   itSupportsOthers,
   itSupportsStyle,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { ListItem } from './ListItem';
 
@@ -18,6 +19,7 @@ describe('@mantine/core/ListItem', () => {
   itRendersChildren(ListItem, defaultProps);
   itSupportsOthers(ListItem, defaultProps);
   itSupportsStyle(ListItem, defaultProps);
+  itSupportsMargins(ListItem, defaultProps);
 
   it('renders icon based on prop', () => {
     const withIcon = shallow(<ListItem icon="$">test-item</ListItem>);

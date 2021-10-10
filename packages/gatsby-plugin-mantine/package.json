@@ -1,0 +1,23 @@
+{
+  "name": "gatsby-plugin-mantine",
+  "version": "2.6.0-alpha.6",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev/hooks/getting-started/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-hooks"
+  },
+  "peerDependencies": {
+    "gatsby": "*",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "@mantine/ssr": "2.6.0-alpha.6"
+  },
+  "devDependencies": {}
+}

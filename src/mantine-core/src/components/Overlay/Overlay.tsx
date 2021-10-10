@@ -1,13 +1,14 @@
-import React from 'react';
-import cx from 'clsx';
+import React, { forwardRef } from 'react';
+import clsx from 'clsx';
+import {
+  PolymorphicComponentProps,
+  PolymorphicRef,
+  MantineNumberSize,
+  getSizeValue,
+  useMantineTheme,
+} from '@mantine/styles';
 
-interface _OverlayProps<C extends React.ElementType, R extends HTMLElement> {
-  /** Root element or custom component */
-  component?: C;
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<R>;
-
+interface _OverlayProps {
   /** Overlay opacity */
   opacity?: React.CSSProperties['opacity'];
 
@@ -19,49 +20,56 @@ interface _OverlayProps<C extends React.ElementType, R extends HTMLElement> {
 
   /** Overlay z-index */
   zIndex?: React.CSSProperties['zIndex'];
+
+  /** Value from theme.radius or number to set border-radius in px */
+  radius?: MantineNumberSize;
 }
 
-export type OverlayProps<
-  C extends React.ElementType = 'div',
-  R extends HTMLElement = HTMLDivElement
-> = _OverlayProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _OverlayProps<C, R>>;
+export type OverlayProps<C extends React.ElementType> = PolymorphicComponentProps<C, _OverlayProps>;
 
-export function Overlay<
-  C extends React.ElementType = 'div',
-  R extends HTMLElement = HTMLDivElement
->({
-  className,
-  style,
-  opacity = 0.6,
-  color = '#fff',
-  gradient,
-  zIndex = 1000,
-  component,
-  elementRef,
-  ...others
-}: OverlayProps<C, R>) {
-  const Element = component || 'div';
+type OverlayComponent = <C extends React.ElementType = 'div'>(
+  props: OverlayProps<C>
+) => React.ReactElement;
 
-  const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
+export const Overlay: OverlayComponent & { displayName?: string } = forwardRef(
+  <C extends React.ElementType = 'div'>(
+    {
+      className,
+      style,
+      opacity = 0.6,
+      color = '#fff',
+      gradient,
+      zIndex = 1000,
+      component,
+      radius = 0,
+      ...others
+    }: OverlayProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const theme = useMantineTheme();
+    const Element = component || 'div';
+    const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
 
-  return (
-    <Element
-      className={cx('mantine-overlay', className)}
-      ref={elementRef as any}
-      style={{
-        ...background,
-        opacity,
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex,
-        ...style,
-      }}
-      {...others}
-    />
-  );
-}
+    return (
+      <Element
+        className={clsx('mantine-overlay', className)}
+        ref={ref}
+        style={{
+          ...background,
+          opacity,
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+          zIndex,
+          ...style,
+        }}
+        {...others}
+      />
+    );
+  }
+);
 
 Overlay.displayName = '@mantine/core/Overlay';

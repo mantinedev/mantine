@@ -21,7 +21,7 @@ export default function SearchItem({
   elementRef,
   ...others
 }: SearchItemProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <button type="button" key={slug} tabIndex={-1} ref={elementRef} {...others}>
       <Highlight highlight={query}>{title}</Highlight>

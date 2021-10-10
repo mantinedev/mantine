@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES, DEFAULT_THEME, MantineProvider } from '../../theme';
+import { MantineProvider, MANTINE_SIZES, DEFAULT_THEME } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { TextInput } from '../TextInput/TextInput';
 import { MultiSelect } from './MultiSelect';
@@ -14,6 +14,14 @@ const data = [
   { value: 'riot', label: 'Riot' },
   { value: 'next', label: 'Next.js' },
   { value: 'blitz', label: 'Blitz.js' },
+];
+
+const groupedData = [
+  { value: 'react', label: 'React', disabled: true, group: 'FB' },
+  { value: 'ng', label: 'Angular', group: 'Google' },
+  { value: 'lit', label: 'Lit', group: 'Google' },
+  { value: 'svelte', label: 'Svelte' },
+  { value: 'vue', label: 'Vue', group: 'Evan' },
 ];
 
 const stringData = ['React', 'Angular', 'Svelte', 'Vue'];
@@ -41,6 +49,25 @@ function Controlled() {
       <button type="button" onClick={() => setValue(['react', 'ng'])}>
         Set value
       </button>
+    </div>
+  );
+}
+
+function Creatable() {
+  const [creatableData, setData] = useState(stringData);
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Creatable Select"
+        data={creatableData}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+        creatable
+        onCreate={(query) => setData((c) => [...c, query])}
+        getCreateLabel={(query) => `+ Create ${query}`}
+      />
     </div>
   );
 }
@@ -89,14 +116,25 @@ storiesOf('@mantine/core/MultiSelect', module)
       <Group style={{ padding: 40, paddingTop: 0 }} grow align="flex-start">
         <TextInput label="Text input" placeholder="Select items" />
         <MultiSelect
-          label="Multi select"
-          data={data}
+          label="Multi select with seperator and disabled items"
+          data={[...data, { label: 'Lit', value: 'lit', disabled: true }]}
           defaultValue={['react', 'ng']}
           placeholder="Select items"
           nothingFound="Nothing found"
         />
       </Group>
     </>
+  ))
+  .add('Grouped and Disabled Data', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={groupedData}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+      />
+    </div>
   ))
   .add('String data', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -122,8 +160,9 @@ storiesOf('@mantine/core/MultiSelect', module)
     </div>
   ))
   .add('Controlled', () => <Controlled />)
+  .add('Creatable', () => <Creatable />)
   .add('Searchable', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
+    <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
       <MultiSelect
         label="Multi select"
         data={data}
@@ -132,7 +171,15 @@ storiesOf('@mantine/core/MultiSelect', module)
         nothingFound="Nothing found"
         searchable
       />
-    </div>
+      <MultiSelect
+        label="Multi select with disabled and seperator items"
+        data={[...data, { label: 'Lit', value: 'lit', disabled: true }]}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+      />
+    </Group>
   ))
   .add('Clearable', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>

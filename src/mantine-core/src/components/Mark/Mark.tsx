@@ -1,28 +1,38 @@
-import React from 'react';
-import { useMantineTheme, DefaultProps, getThemeColor, MantineColor } from '../../theme';
+import React, { forwardRef } from 'react';
+import {
+  useMantineTheme,
+  DefaultProps,
+  getThemeColor,
+  MantineColor,
+  useExtractedMargins,
+} from '@mantine/styles';
 
 export interface MarkProps extends DefaultProps, React.ComponentPropsWithoutRef<'mark'> {
   /** Background color from theme.colors */
   color?: MantineColor;
 }
 
-export function Mark({ color = 'yellow', style, themeOverride, ...others }: MarkProps) {
-  const theme = useMantineTheme(themeOverride);
+export const Mark = forwardRef<HTMLElement, MarkProps>(
+  ({ color = 'yellow', style, ...others }: MarkProps, ref) => {
+    const theme = useMantineTheme();
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
-  return (
-    <mark
-      style={{
-        backgroundColor: getThemeColor({
-          theme,
-          color,
-          shade: theme.colorScheme === 'dark' ? 5 : 2,
-        }),
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
-        ...style,
-      }}
-      {...others}
-    />
-  );
-}
+    return (
+      <mark
+        ref={ref}
+        style={{
+          backgroundColor: getThemeColor({
+            theme,
+            color,
+            shade: theme.colorScheme === 'dark' ? 5 : 2,
+          }),
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
+          ...mergedStyles,
+        }}
+        {...rest}
+      />
+    );
+  }
+);
 
 Mark.displayName = '@mantine/core/Mark';

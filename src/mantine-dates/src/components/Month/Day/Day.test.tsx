@@ -16,7 +16,6 @@ const defaultProps = {
   fullWidth: false,
   firstInMonth: false,
   size: 'sm' as const,
-  elementRef: () => {},
   onKeyDown: () => {},
   onMouseEnter: () => {},
 };
@@ -24,7 +23,7 @@ const defaultProps = {
 describe('@mantine/core/Month/Day', () => {
   checkAccessibility([mount(<Day {...defaultProps} />)]);
   itSupportsClassName(Day, defaultProps);
-  itSupportsRef(Day, defaultProps, HTMLButtonElement, 'elementRef');
+  itSupportsRef(Day, defaultProps, HTMLButtonElement);
 
   it('has correct displayName', () => {
     expect(Day.displayName).toEqual('@mantine/core/Day');

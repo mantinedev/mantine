@@ -9,7 +9,7 @@ interface HeaderItemProps {
 }
 
 export function HeaderItem({ label, children, align }: HeaderItemProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return (
     <div className={classes.item} style={{ alignItems: align }}>
       <Text className={classes.label} size="sm">

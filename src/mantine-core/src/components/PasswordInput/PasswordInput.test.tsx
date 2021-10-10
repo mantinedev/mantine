@@ -6,6 +6,8 @@ import {
   itSupportsStyle,
   itSupportsRef,
   itSupportsStylesApi,
+  itSupportsMargins,
+  defaultInputProps,
 } from '@mantine/tests';
 import { Input } from '../Input/Input';
 import { TextInput } from '../TextInput/TextInput';
@@ -21,24 +23,16 @@ const getInput = (element: any) => element.find(TextInput).dive().find(Input);
 const getActionIcon = (element: any) => getInput(element).dive().find(ActionIcon);
 
 describe('@mantine/core/PasswordInput', () => {
-  checkAccessibility([
-    mount(<PasswordInput label="test" showPasswordLabel="Hide" hidePasswordLabel="Show" />),
-  ]);
+  checkAccessibility([mount(<PasswordInput label="test" />)]);
 
   itSupportsClassName(PasswordInput, {});
   itSupportsStyle(PasswordInput, {});
-  itSupportsRef(PasswordInput, {}, HTMLInputElement, 'elementRef');
+  itSupportsMargins(PasswordInput, {});
+  itSupportsRef(PasswordInput, {}, HTMLInputElement);
 
   itSupportsStylesApi(
     PasswordInput,
-    {
-      icon: '$',
-      rightSection: '$',
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-    },
+    defaultInputProps,
     Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
     'password-input'
   );
@@ -48,9 +42,7 @@ describe('@mantine/core/PasswordInput', () => {
   });
 
   it('sets input type based on password visibility state', () => {
-    const element = shallow(
-      <PasswordInput hidePasswordLabel="test-hide" showPasswordLabel="test-show" />
-    );
+    const element = shallow(<PasswordInput />);
     expect(getInput(element).prop('type')).toBe('password');
     getActionIcon(element).simulate('mousedown', { preventDefault: jest.fn() });
     expect(getInput(element).prop('type')).toBe('text');
@@ -62,19 +54,5 @@ describe('@mantine/core/PasswordInput', () => {
 
     expect(getActionIcon(focusable).prop('tabIndex')).toBe(0);
     expect(getActionIcon(notFocusable).prop('tabIndex')).toBe(-1);
-  });
-
-  it('sets correct title and aria-label attributes on hide/show button based on state', () => {
-    const element = shallow(
-      <PasswordInput hidePasswordLabel="test-hide" showPasswordLabel="test-show" />
-    );
-
-    expect(getActionIcon(element).prop('title')).toBe('test-show');
-    expect(getActionIcon(element).prop('aria-label')).toBe('test-show');
-
-    getActionIcon(element).simulate('mousedown', { preventDefault: jest.fn() });
-
-    expect(getActionIcon(element).prop('title')).toBe('test-hide');
-    expect(getActionIcon(element).prop('aria-label')).toBe('test-hide');
   });
 });

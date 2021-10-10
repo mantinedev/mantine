@@ -70,9 +70,9 @@ function Demo() {
 }
 ```
 
-## Get element ref
+## Get input ref
 
-You can get input ref with `elementRef` prop on Radio component:
+You can get input ref with `ref` prop on Radio component:
 
 ```tsx
 import { useRef } from 'react';
@@ -84,10 +84,42 @@ function Demo() {
   return (
     <RadioGroup>
       <Radio value="react">React</Radio>
-      <Radio value="svelte" elementRef={ref}>
+      <Radio value="svelte" ref={ref}>
         Svelte
       </Radio>
     </RadioGroup>
   );
 }
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { RadioGroupProps, RadioProps } from '@mantine/core';
+```
+
+- `RadioGroupProps` extends `React.ComponentPropsWithoutRef<'div'>`
+- `RadioProps` extends `React.ComponentPropsWithoutRef<'input'>`
+
+All other props are available under _Component props_ tab.
+
+### RadioGroupStylesNames type
+
+`RadioGroupStylesNames` type is a union with RadioGroup [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { RadioGroupStylesNames } from '@mantine/core';
+
+const selectClasses: Partial<Record<RadioGroupStylesNames, 'string'>> = {
+  label: 'select-label',
+  description: 'select-description',
+};
+
+<RadioGroup classNames={selectClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

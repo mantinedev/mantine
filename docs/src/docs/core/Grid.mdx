@@ -104,18 +104,19 @@ function ColWrapper(props: React.ComponentProps<typeof Col>) {
 }
 
 // Later
-<Grid id="my-grid">
+<Grid>
   <ColWrapper span={4}>1</ColWrapper>
   <ColWrapper span={4}>2</ColWrapper>
   <ColWrapper span={4}>3</ColWrapper>
 </Grid>;
 ```
 
-## Server side rendering
+## TypeScript
 
-Grid component uses [use-id](/hooks/use-id/) hook to generate classes, provide static id prop to make it work with ssr:
+Import components props types:
 
 ```tsx
-<Grid /> // -> will not work during ssr
-<Grid id="my-grid" /> // -> works fine during ssr
+import type { GridProps, ColProps } from '@mantine/core';
 ```
+
+Both `GridProps` and `ColProps` extend `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

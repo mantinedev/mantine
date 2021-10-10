@@ -21,3 +21,13 @@ Affix renders div element with fixed position inside [Portal](/core/portal) comp
 Use component to display elements fixed at any position on screen, e.g. scroll to top button:
 
 <Demo data={AffixDemos.usage} />
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { AffixProps } from '@mantine/core';
+```
+
+`AffixProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

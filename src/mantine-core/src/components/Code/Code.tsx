@@ -1,6 +1,5 @@
-import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, MantineColor } from '../../theme';
+import React, { forwardRef } from 'react';
+import { useMantineTheme, DefaultProps, MantineColor, useExtractedMargins } from '@mantine/styles';
 import useStyles from './Code.styles';
 
 export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<'code'> {
@@ -14,31 +13,32 @@ export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<
   block?: boolean;
 }
 
-export function Code({
-  className,
-  children,
-  themeOverride,
-  block = false,
-  color,
-  ...others
-}: CodeProps) {
-  const theme = useMantineTheme(themeOverride);
-  const themeColor = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
-  const classes = useStyles({ color: themeColor, theme }, null, 'code');
+export const Code = forwardRef<HTMLElement, CodeProps>(
+  ({ className, children, block = false, color, style, ...others }: CodeProps, ref) => {
+    const theme = useMantineTheme();
+    const themeColor = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
+    const { classes, cx } = useStyles({ color: themeColor }, null, 'code');
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
-  if (block) {
+    if (block) {
+      return (
+        <pre
+          className={cx(classes.root, classes.block, className)}
+          style={mergedStyles}
+          ref={ref as any}
+          {...rest}
+        >
+          {children}
+        </pre>
+      );
+    }
+
     return (
-      <pre className={cx(classes.root, classes.block, className)} {...others}>
+      <code className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
         {children}
-      </pre>
+      </code>
     );
   }
-
-  return (
-    <code className={cx(classes.root, className)} {...others}>
-      {children}
-    </code>
-  );
-}
+);
 
 Code.displayName = '@mantine/core/Code';

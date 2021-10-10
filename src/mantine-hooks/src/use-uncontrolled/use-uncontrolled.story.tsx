@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { Container } from '@mantine/core';
 import { useUncontrolled } from './use-uncontrolled';
 import { useId } from '../use-id/use-id';
 
@@ -23,8 +22,9 @@ function CustomInput({ label, value, defaultValue, onChange }: CustomInputProps)
 
   return (
     <div style={{ padding: '1rem' }}>
-      <label htmlFor={id}>{label}</label><br />
-      <input id={id} type="text" value={_value} onChange={e => handleChange(e.target.value)} />
+      <label htmlFor={id}>{label}</label>
+      <br />
+      <input id={id} type="text" value={_value} onChange={(e) => handleChange(e.target.value)} />
     </div>
   );
 }
@@ -33,11 +33,11 @@ function Example() {
   const [controlledValue, setControlledValue] = useState('controlled');
 
   return (
-    <Container size="xs" style={{ padding: 20 }}>
+    <div style={{ padding: 20 }}>
       <CustomInput label="Uncontrolled" defaultValue="uncontrolled" />
       <CustomInput label="Controlled" value={controlledValue} onChange={setControlledValue} />
       <CustomInput label="Controlled (fixed value)" value="fixed" onChange={setControlledValue} />
-    </Container>
+    </div>
   );
 }
 

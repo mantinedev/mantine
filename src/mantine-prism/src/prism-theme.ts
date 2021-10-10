@@ -183,5 +183,5 @@ export const light = (theme: MantineTheme): PrismTheme => ({
   ],
 });
 
-export const getPrismTheme = (theme: MantineTheme) =>
-  theme.colorScheme === 'dark' ? dark(theme) : light(theme);
+export const getPrismTheme = (theme: MantineTheme, colorScheme: 'light' | 'dark') =>
+  colorScheme === 'dark' ? dark(theme) : light(theme);

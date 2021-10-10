@@ -97,9 +97,9 @@ You can use any React node as icon:
 
 <Demo data={NumberInputDemos.icon} />
 
-## Get element ref
+## Get input ref
 
-You can get input ref with `elementRef` prop:
+You can get input ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -107,18 +107,8 @@ import { NumberInput } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
-  return <NumberInput elementRef={ref} />;
+  return <NumberInput ref={ref} />;
 }
-```
-
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<NumberInput /> // -> random id generated both on client and server, props mismatch warning
-<NumberInput id="my-number-input" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility
@@ -129,7 +119,50 @@ Increment/decrement controls have `aria-hidden` attribute and cannot be focused.
 Provide `aria-label` in case you use component without label for screen reader support:
 
 ```tsx
-<NumberInput label="My input" />; // -> ok, input and label is connected
+<NumberInput label="Your age" />; // -> ok, input and label is connected
 <NumberInput />; // not ok, input is not labeled
-<NumberInput aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
+<NumberInput aria-label="Your age" />; // -> ok, label is not visible but will be announced by screen reader
+```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { NumberInputProps } from '@mantine/core';
+```
+
+`NumberInputProps` extends `React.ComponentPropsWithoutRef<'input'>`, all other props are available under _Component props_ tab.
+
+### NumberInputStylesNames type
+
+`NumberInputStylesNames` type is a union with NumberInput [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { NumberInputStylesNames } from '@mantine/core';
+
+const numberInputClasses: Partial<Record<NumberInputStylesNames, 'string'>> = {
+  label: 'select-label',
+  description: 'select-description',
+};
+
+<NumberInput classNames={numberInputClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
+
+### NumberInputHandlers type
+
+`NumberInputHandlers` type contains increment and decrement functions that you can get with `handlersRef` prop,
+most likely you will use it with `useRef` hook:
+
+```tsx
+import { useRef } from 'react';
+import type { NumberInputHandlers } from '@mantine/core';
+
+const handlersRef = useRef<NumberInputHandlers | undefined>();
+
+<NumberInput handlersRef={handlersRef} />;
 ```

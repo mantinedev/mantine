@@ -126,12 +126,31 @@ To specify initial focus element add `data-autofocus` attribute:
 </Popover>
 ```
 
-## Server side rendering
+## TypeScript
 
-By default Popover uses random id to connect title and body via aria- attributes.
-This will result in hydration mismatch if you use **opened** popover (closed popover do not require this step) during ssr.
-To avoid that set static id:
+### Component props type
+
+Import component props type:
 
 ```tsx
-<Popover id="my-popover" opened />
+import type { PopoverProps } from '@mantine/core';
 ```
+
+`PopoverProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### PopoverStylesNames type
+
+`PopoverStylesNames` type is a union with Popover [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { PopoverStylesNames } from '@mantine/core';
+
+const popoverClasses: Partial<Record<PopoverStylesNames, 'string'>> = {
+  header: 'popover-header',
+  title: 'popover-title',
+};
+
+<Popover classNames={popoverClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

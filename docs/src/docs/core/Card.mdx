@@ -82,38 +82,9 @@ function Demo() {
 }
 ```
 
-## Usage with Next Link
+## Get root element ref
 
-Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
-to make Card and other similar components work with Next Link, create wrapper component in your components folder:
-
-```tsx
-// This component can be reused in every Mantine component which supports component pass through
-import React, { forwardRef } from 'react';
-import Link from 'next/link';
-
-export const NextLink = forwardRef(
-  (
-    { href, ...others }: React.ComponentPropsWithoutRef<typeof Link>,
-    ref: React.ForwardedRef<HTMLAnchorElement>
-  ) => (
-    <Link href={href}>
-      {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
-      <a {...others} ref={ref} />
-    </Link>
-  )
-);
-```
-
-And then pass it to Card or other component:
-
-```tsx
-<Card component={NextLink} href="/hello" />
-```
-
-## Get element ref
-
-You can get root element ref by setting `elementRef` prop:
+You can get root element ref by setting `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -121,31 +92,53 @@ import { Card } from '@mantine/core';
 
 function Demo() {
   const ref = useRef();
-  return <Card elementRef={ref} />;
+  return <Card ref={ref} />;
 }
 ```
 
 ## TypeScript
 
-You need to pass additional types to use custom component with TypeScript
-in case you need full type coverage for events and `elementRef`:
+### Usage with custom component
+
+You need to pass additional type to use custom component with TypeScript
+in case you need full type coverage for events and `ref`:
 
 ```tsx
 // With element
-<Card<'a', HTMLAnchorElement>
+<Card<'a'>
   component="a"
   onClick={(event) => console.log(event)}
-  elementRef={(node) => {
+  ref={(node) => {
     window.myRef = node;
   }}
 />
 
 // With component
-<Card<typeof Link, HTMLAnchorElement>
+<Card<typeof Link>
   component={Link}
   onClick={(event) => console.log(event)}
-  elementRef={(node) => {
+  ref={(node) => {
     window.myRef = node;
   }}
 />
 ```
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { CardProps } from '@mantine/core';
+```
+
+`CardProps` is a generic type, it accepts either a string or component type as single type argument:
+
+```tsx
+// CardProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
+type AnchorCardProps = CardProps<'a'>;
+
+// CardProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
+type CustomCardProps = CardProps<typeof MyOtherComponent>;
+```
+
+See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.

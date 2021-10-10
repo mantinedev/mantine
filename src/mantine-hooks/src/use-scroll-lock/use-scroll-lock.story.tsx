@@ -1,7 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Container, Text, Button, Group } from '@mantine/core';
-import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 import { useScrollLock } from './use-scroll-lock';
 
 const lorem =
@@ -12,26 +10,16 @@ function Example() {
 
   const items = Array(10)
     .fill(0)
-    .map((_, index) => (
-      <Text component="p" key={index}>
-        {lorem}
-      </Text>
-    ));
+    .map((_, index) => <p key={index}>{lorem}</p>);
 
   return (
-    <Container size="xs" style={{ padding: 20 }}>
+    <div style={{ padding: 20 }}>
       {items}
-      <Group position="center">
-        <Button
-          onClick={() => setLockScroll((c) => !c)}
-          variant="outline"
-          leftIcon={lockScroll ? <LockClosedIcon /> : <LockOpen2Icon />}
-        >
-          {lockScroll ? 'Unlock scroll' : 'Lock scroll'}
-        </Button>
-      </Group>
+      <button type="button" onClick={() => setLockScroll((c) => !c)}>
+        {lockScroll ? 'Unlock scroll' : 'Lock scroll'}
+      </button>
       {items}
-    </Container>
+    </div>
   );
 }
 

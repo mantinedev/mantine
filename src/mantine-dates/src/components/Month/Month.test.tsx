@@ -4,6 +4,7 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
+  itSupportsMargins,
   itSupportsStylesApi,
 } from '@mantine/tests';
 import { Month } from './Month';
@@ -15,6 +16,7 @@ describe('@mantine/core/Month', () => {
   itSupportsStyle(Month, defaultProps);
   itSupportsClassName(Month, defaultProps);
   itSupportsOthers(Month, defaultProps);
+  itSupportsMargins(Month, defaultProps);
   itSupportsStylesApi(
     Month,
     defaultProps,

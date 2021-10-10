@@ -1,9 +1,9 @@
 import React from 'react';
 import { ImageIcon } from '@modulz/radix-icons';
+import { MANTINE_SIZES } from '@mantine/styles';
 import { ActionIcon, ActionIconProps } from '../ActionIcon';
 import { Group } from '../../Group/Group';
 import { Text } from '../../Text/Text';
-import { MANTINE_SIZES } from '../../../theme';
 
 const iconSizes = {
   xs: 12,
@@ -13,14 +13,14 @@ const iconSizes = {
   xl: 34,
 };
 
-const getSizes = (props: Omit<ActionIconProps, 'children'>) =>
+const getSizes = (props: Omit<ActionIconProps<'button'>, 'children'>) =>
   MANTINE_SIZES.map((size) => (
     <ActionIcon key={size} size={size} {...props}>
       <ImageIcon style={{ width: iconSizes[size], height: iconSizes[size] }} />
     </ActionIcon>
   ));
 
-const getRadius = (props: Omit<ActionIconProps, 'children'>) =>
+const getRadius = (props: Omit<ActionIconProps<'button'>, 'children'>) =>
   MANTINE_SIZES.map((size) => (
     <ActionIcon key={size} radius={size} {...props}>
       <ImageIcon style={{ width: 14, height: 14 }} />

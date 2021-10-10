@@ -1,80 +1,66 @@
-import React, { useContext } from 'react';
-import { Group, Button, Badge, Switch, MantineProvider } from '@mantine/core';
-import { ColorSchemeContext } from '../../components/Layout/ColorScheme.context';
+import React from 'react';
+import { Group, Button, Badge, MantineProvider, useMantineColorScheme } from '@mantine/core';
 import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
-const code = `import { Badge, Button, MantineProvider, Switch } from '@mantine/core';
+const code = `
+import { Badge, Button, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
     <MantineProvider theme={{
       colors: {
-        'deep-blue': ['#E9EDFC', '#C1CCF6', '#99ABF0', '#7189EA', '#4968E4', '#2147DE', '#1A39B2', '#142B85', '#0D1D59', '#070E2C'],
-        asphalt: ['#F0F4F5', '#D4E0E2', '#B9CCD0', '#9EB8BD', '#82A4AB', '#679098', '#52747A', '#3E575B', '#293A3D', '#151D1E']
+        'ocean-blue': ['#7AD1DD', '#5FCCDB', '#44CADC', '#2AC9DE', '#1AC2D9', '#11B7CD', '#09ADC3', '#0E99AC', '#128797', '#147885'],
+        'bright-pink': ['#F0BBDD', '#ED9BCF', '#EC7CC3', '#ED5DB8', '#F13EAF', '#F71FA7', '#FF00A1', '#E00890', '#C50E82', '#AD1374]',
       },
     }}>
-      <Button color="deep-blue">Deep blue button</Button>
-
-      <Badge color="asphalt" variant="filled">
-        Asphalt badge
-      </Badge>
-
-      <Switch
-        color="deep-blue"
-        label="Deep blue switch"
-        defaultChecked
-      />
+      <Button color="ocean-blue">Ocean blue button</Button>
+      <Badge color="bright-pink" variant="filled">Bright pink badge</Badge>
     </MantineProvider>
   );
-}`;
+}
+`.trim();
 
 export function ThemeColorExtendDemo() {
-  const { colorScheme } = useContext(ColorSchemeContext);
+  const { colorScheme } = useMantineColorScheme();
+
   return (
     <CodeDemo code={code} language="tsx">
       <MantineProvider
         theme={{
           colorScheme,
           colors: {
-            'deep-blue': [
-              '#E9EDFC',
-              '#C1CCF6',
-              '#99ABF0',
-              '#7189EA',
-              '#4968E4',
-              '#2147DE',
-              '#1A39B2',
-              '#142B85',
-              '#0D1D59',
-              '#070E2C',
+            'ocean-blue': [
+              '#7AD1DD',
+              '#5FCCDB',
+              '#44CADC',
+              '#2AC9DE',
+              '#1AC2D9',
+              '#11B7CD',
+              '#09ADC3',
+              '#0E99AC',
+              '#128797',
+              '#147885',
             ],
-
-            asphalt: [
-              '#F0F4F5',
-              '#D4E0E2',
-              '#B9CCD0',
-              '#9EB8BD',
-              '#82A4AB',
-              '#679098',
-              '#52747A',
-              '#3E575B',
-              '#293A3D',
-              '#151D1E',
+            'bright-pink': [
+              '#F0BBDD',
+              '#ED9BCF',
+              '#EC7CC3',
+              '#ED5DB8',
+              '#F13EAF',
+              '#F71FA7',
+              '#FF00A1',
+              '#E00890',
+              '#C50E82',
+              '#AD1374',
             ],
           },
         }}
       >
         <Group position="center">
-          <Button color="deep-blue">Deep blue button</Button>
-          <Badge color="asphalt" variant="filled">
-            Asphalt badge
+          <Button color="ocean-blue">Ocean blue button</Button>
+          <Badge color="bright-pink" variant="filled" size="lg">
+            Bright pink badge
           </Badge>
-          <Switch
-            color="deep-blue"
-            label="Deep blue switch"
-            defaultChecked
-            wrapperProps={{ 'data-mantine-composable': true }}
-          />
         </Group>
       </MantineProvider>
     </CodeDemo>

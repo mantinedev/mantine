@@ -82,8 +82,7 @@ You can change it by setting `control` and `controlRefProp` props:
 <Demo data={MenuDemos.controls} />
 
 `controlRefProp` is the prop name with which element ref can be accessed.
-It defaults to `elementRef` as all interactive Mantine components use it to get ref.
-For regular html element it will be `controlRefProp="ref"`
+It defaults to `ref`, to change that set `controlRefProp="customRefProp"`
 
 ## Change menu position
 
@@ -149,37 +148,6 @@ By default menu items render as button, to change that set `component` prop on M
 
 <Demo data={MenuDemos.component} />
 
-## Menu.Item as Next.js Link
-
-Next Link component requires `ref` prop usage, however all Mantine components use `elementRef`,
-to make Menu.Item and other similar components work with Next Link, create wrapper component in your components folder:
-
-```tsx
-// This component can be reused in every Mantine component which supports component pass through
-import React, { forwardRef } from 'react';
-import Link from 'next/link';
-
-export const NextLink = forwardRef(
-  (
-    { href, ...others }: React.ComponentPropsWithoutRef<typeof Link>,
-    ref: React.ForwardedRef<HTMLAnchorElement>
-  ) => (
-    <Link href={href}>
-      {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
-      <a {...others} ref={ref} />
-    </Link>
-  )
-);
-```
-
-And then pass it to Menu.Item or other component:
-
-```tsx
-<Menu.Item component={NextLink} href="/hello">
-  Next Link menu item
-</Menu.Item>
-```
-
 ## Customize behavior
 
 You can control menu behavior with following props:
@@ -228,9 +196,9 @@ for example, change hovered item color:
 
 <Demo data={MenuDemos.stylesApi} />
 
-## Get element ref
+## Get control element ref
 
-You can get menu control ref by passing `elementRef` prop to Menu component:
+You can get menu control ref by passing `ref` prop to Menu component:
 
 ```tsx
 import { useRef } from 'react';
@@ -238,18 +206,8 @@ import { Menu } from '@mantine/core';
 
 function Demo() {
   const menuControlRef = useRef();
-  return <Menu elementRef={menuControlRef} />;
+  return <Menu ref={menuControlRef} />;
 }
-```
-
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `menuId` prop to prevent props mismatch:
-
-```tsx
-<Menu /> // -> random id generated both on client and server, props mismatch warning
-<Menu menuId="my-menu" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility and usability
@@ -267,3 +225,33 @@ Component behavior and properties:
 - Menu control has `aria-haspopup`, `aria-expanded`, `aria-controls` and `aria-label` attributes, `aria-label` is defined by `menuButtonLabel` prop
 - Menu body has `menu` role, `aria-orientation` is always set to `vertical`
 - Menu item has `menuitem` role
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { MenuProps, MenuItemProps, MenuLabelProps } from '@mantine/core';
+```
+
+`MenuProps`, `MenuItemProps` and `MenuLabelProps` extend `React.ComponentPropsWithoutRef<'div'>`,
+all other props are available under _Component props_ tab.
+
+### MenuStylesNames type
+
+`MenuStylesNames` type is a union with Menu [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { MenuStylesNames } from '@mantine/core';
+
+const menuClasses: Partial<Record<MenuStylesNames, 'string'>> = {
+  item: 'menu-item',
+  arrow: 'menu-arrow',
+};
+
+<Menu classNames={menuClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

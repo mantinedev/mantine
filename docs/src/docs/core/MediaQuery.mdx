@@ -1,0 +1,86 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: MediaQuery
+order: 1
+slug: /core/media-query/
+category: 'layout'
+description: 'Flexbox grid system with variable amount of columns'
+props: ['MediaQuery']
+import: "import { MediaQuery, Col } from '@mantine/core';"
+source: 'mantine-core/src/components/MediaQuery/MediaQuery.tsx'
+docs: 'core/MediaQuery.mdx'
+styles: ['MediaQuery', 'single-node']
+---
+
+import { DEFAULT_THEME } from '@mantine/core';
+import { MediaQueryDemos } from '@demos/core';
+
+## Usage
+
+MediaQuery hides child element if does not match given viewport size. Elements are hidden with `display: none`.
+Resize browser to see badges appearing at specified breakpoints:
+
+<Demo data={MediaQueryDemos.usage} />
+
+## MediaQuery children
+
+MediaQuery always work with single child and uses `className` prop to add styles,
+child component must accept it otherwise unexpected negative margins will be applied the element:
+
+```tsx
+// Will not work with MediaQuery – component does not handle className
+const MyButton => ({ label }) => <button>{label}</button>
+
+// Will work with MediaQuery – handle className
+const MyButton => ({ label, className }) => <button className={className}>{label}</button>
+
+// Will work with MediaQuery – handle className
+const MyButton => ({ label, ...others }) => <button {...others}>{label}</button>
+```
+
+## Configure breakpoints
+
+Mantine uses Bootstrap's breakpoint values as defaults:
+
+<DataTable
+  head={['Breakpoint', 'Viewport width']}
+  data={Object.keys(DEFAULT_THEME.breakpoints).map((size) => [
+    size,
+    `${DEFAULT_THEME.breakpoints[size]}px`,
+  ])}
+/>
+
+To change these values wrap your application with MantineProvider and set `breakpoints` prop on theme:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function YourApp() {
+  return (
+    <MantineProvider
+      theme={{
+        breakpoints: {
+          xs: 500,
+          sm: 800,
+          md: 1000,
+          lg: 1275,
+          xl: 1800,
+        },
+      }}
+    >
+      Hello World
+    </MantineProvider>
+  );
+}
+```
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { MediaQueryProps } from '@mantine/core';
+```
+
+`MediaQueryProps` does not extends any interfaces, props descriptions are available under _Component props_ tab.

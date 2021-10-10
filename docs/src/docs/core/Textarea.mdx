@@ -45,9 +45,9 @@ function Demo() {
 
 <Demo data={TextareaDemos.validation} />
 
-## Get element ref
+## Get input ref
 
-You can get input ref with `elementRef` prop:
+You can get input ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -55,18 +55,8 @@ import { Textarea } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
-  return <Textarea elementRef={ref} />;
+  return <Textarea ref={ref} />;
 }
-```
-
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<Textarea /> // -> random id generated both on client and server, props mismatch warning
-<Textarea id="my-textarea" /> // -> id is static, no mismatches
 ```
 
 ## Accessibility
@@ -78,3 +68,13 @@ Provide `aria-label` in case you use component without label for screen reader s
 <Textarea />; // not ok, textarea is not labeled
 <Textarea aria-label="My textarea" />; // -> ok, label is not visible but will be announced by screen reader
 ```
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { TextareaProps } from '@mantine/core';
+```
+
+`TextareaProps` extends `React.ComponentPropsWithoutRef<'textarea'>`, all other props are available under _Component props_ tab.

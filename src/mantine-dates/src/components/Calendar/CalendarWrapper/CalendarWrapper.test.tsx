@@ -5,6 +5,8 @@ import {
   itSupportsStyle,
   itSupportsClassName,
   itSupportsOthers,
+  itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { sizes as DAY_SIZES } from '../../Month/Day/Day.styles';
 import { CalendarWrapper } from './CalendarWrapper';
@@ -17,7 +19,9 @@ const defaultProps = {
 describe('@mantine/dates/CalendarWrapper', () => {
   itRendersChildren(CalendarWrapper, defaultProps);
   itSupportsStyle(CalendarWrapper, defaultProps);
+  itSupportsRef(CalendarWrapper, defaultProps, HTMLDivElement);
   itSupportsClassName(CalendarWrapper, defaultProps);
+  itSupportsMargins(CalendarWrapper, defaultProps);
   itSupportsOthers(CalendarWrapper, defaultProps);
 
   it('sets max-width based on size value', () => {

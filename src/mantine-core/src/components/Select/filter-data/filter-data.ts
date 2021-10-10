@@ -5,15 +5,23 @@ interface FilterData {
   limit: number;
   searchable: boolean;
   searchValue: string;
+  creatable?: boolean;
   filter(value: string, item: SelectItem): boolean;
 }
 
-export function filterData({ data, searchable, limit, searchValue, filter }: FilterData) {
+export function filterData({
+  data,
+  searchable,
+  limit,
+  searchValue,
+  filter,
+  creatable = false,
+}: FilterData) {
   if (!searchable) {
     return data;
   }
 
-  if (data.some((item) => item.label === searchValue)) {
+  if (data.some((item) => item.label === searchValue) || creatable) {
     return data;
   }
 

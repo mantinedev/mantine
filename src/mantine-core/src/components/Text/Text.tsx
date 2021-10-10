@@ -1,12 +1,13 @@
-import React from 'react';
-import cx from 'clsx';
+import React, { forwardRef } from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineSize,
   MantineGradient,
   MantineColor,
-} from '../../theme';
+  useExtractedMargins,
+  PolymorphicComponentProps,
+  PolymorphicRef,
+} from '@mantine/styles';
 import useStyles from './Text.styles';
 
 export interface SharedTextProps extends DefaultProps {
@@ -41,72 +42,67 @@ export interface SharedTextProps extends DefaultProps {
   gradient?: MantineGradient;
 }
 
-interface _TextProps<C extends React.ElementType, R extends HTMLElement> extends SharedTextProps {
-  /** Root element or custom component */
-  component?: C;
+export type TextProps<C extends React.ElementType> = PolymorphicComponentProps<C, SharedTextProps>;
 
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<R>;
-}
+type TextComponent = <C extends React.ElementType = 'div'>(
+  props: TextProps<C>
+) => React.ReactElement;
 
-export type TextProps<
-  C extends React.ElementType = 'div',
-  R extends HTMLElement = HTMLDivElement
-> = _TextProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof SharedTextProps>;
-
-export function Text<C extends React.ElementType = 'div', R extends HTMLElement = HTMLDivElement>({
-  className,
-  component,
-  children,
-  size = 'md',
-  weight,
-  transform,
-  style,
-  color,
-  align,
-  variant = 'text',
-  lineClamp,
-  themeOverride,
-  elementRef,
-  gradient = { from: 'blue', to: 'cyan', deg: 45 },
-  inline = false,
-  inherit = false,
-  ...others
-}: TextProps<C, R>): JSX.Element {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles(
+export const Text: TextComponent & { displayName?: string } = forwardRef(
+  <C extends React.ElementType = 'div'>(
     {
-      variant,
+      className,
+      component,
+      children,
+      size = 'md',
+      weight,
+      transform,
+      style,
       color,
-      size,
-      theme,
+      align,
+      variant = 'text',
       lineClamp,
-      inline,
-      inherit,
-      gradientFrom: gradient.from,
-      gradientTo: gradient.to,
-      gradientDeg: gradient.deg,
-    },
-    null,
-    'text'
-  );
-  const Element = component || 'div';
-
-  return React.createElement(
-    Element,
-    {
-      className: cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className),
-      style: {
-        fontWeight: inherit ? 'inherit' : weight,
-        textTransform: transform,
-        textAlign: align,
-        ...style,
+      gradient = { from: 'blue', to: 'cyan', deg: 45 },
+      inline = false,
+      inherit = false,
+      ...others
+    }: TextProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const { classes, cx } = useStyles(
+      {
+        variant,
+        color,
+        size,
+        lineClamp,
+        inline,
+        inherit,
+        gradientFrom: gradient.from,
+        gradientTo: gradient.to,
+        gradientDeg: gradient.deg,
       },
-      ref: elementRef,
-      ...others,
-    },
-    children
-  );
-}
+      null,
+      'text'
+    );
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const Element = component || 'div';
+
+    return React.createElement(
+      Element,
+      {
+        ref,
+        className: cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className),
+        style: {
+          fontWeight: inherit ? 'inherit' : weight,
+          textTransform: transform,
+          textAlign: align,
+          ...mergedStyles,
+        },
+        ...rest,
+      },
+      children
+    );
+  }
+);
 
 Text.displayName = '@mantine/core/Text';

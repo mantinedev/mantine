@@ -4,6 +4,7 @@ import { Kbd, Autocomplete } from '@mantine/core';
 import { useShallowEffect, useWindowEvent } from '@mantine/hooks';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { getDocsData } from '../../get-docs-data';
+import { Frontmatter } from '../../../../types';
 import useStyles from './Search.styles';
 import SearchItem from './SearchItem';
 
@@ -37,10 +38,14 @@ function constructPages(data: ReturnType<typeof getDocsData>): AutocompleteItem[
     return acc;
   }, []) as AutocompleteItem[];
 
-  return pages.map((page) => ({
-    value: page.title,
-    ...page,
-  }));
+  return pages.map((page) => {
+    const { group, ...pageData } = page;
+    return {
+      value: pageData.title,
+      mantineGroup: group,
+      ...pageData,
+    };
+  });
 }
 
 function filterPages(query: string, pages: AutocompleteItem[]) {
@@ -50,7 +55,7 @@ function filterPages(query: string, pages: AutocompleteItem[]) {
 }
 
 export default function Search({ data, isMacOS }: SearchProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [query, setQuery] = useState('');
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const closeDropdown = () => setDropdownOpened(false);
@@ -110,15 +115,15 @@ export default function Search({ data, isMacOS }: SearchProps) {
       <Autocomplete
         className={classes.input}
         data={filteredPages}
-        elementRef={inputRef}
+        ref={inputRef}
         value={query}
-        itemComponent={({ slug, title, package: mantinePackage, group, ...others }) => (
+        itemComponent={({ slug, title, package: mantinePackage, mantineGroup, ...others }) => (
           <SearchItem
             query={query}
             slug={slug}
             title={title}
             mantinePackage={mantinePackage}
-            group={group}
+            group={mantineGroup}
             {...others}
           />
         )}

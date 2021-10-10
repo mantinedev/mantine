@@ -6,6 +6,8 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   checkAccessibility,
+  itSupportsMargins,
+  defaultInputProps,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
@@ -21,19 +23,13 @@ describe('@mantine/core/ColorInput', () => {
   });
 
   itSupportsClassName(ColorInput, {});
+  itSupportsMargins(ColorInput, {});
   itSupportsStyle(ColorInput, {});
-  itSupportsRef(ColorInput, {}, HTMLInputElement, 'elementRef');
+  itSupportsRef(ColorInput, {}, HTMLInputElement);
 
   itSupportsStylesApi(
     ColorInput,
-    {
-      icon: '$',
-      rightSection: '$',
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-    },
+    defaultInputProps,
     Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
     'color-input'
   );

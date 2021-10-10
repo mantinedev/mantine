@@ -1,11 +1,10 @@
 import React from 'react';
-import cx from 'clsx';
 import { Text, Center } from '@mantine/core';
 import { DiscordIcon } from './DiscordIcon';
 import useStyles from './Discord.styles';
 
 export function Discord({ className, ...others }: React.ComponentProps<'a'>) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
     <a className={cx(classes.wrapper, className)} href="https://discord.gg/eUZpPbpxb4" {...others}>

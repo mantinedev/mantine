@@ -28,3 +28,13 @@ It is used in other Mantine components, for example, in [Highlight](/core/highli
 ## Change color
 
 <Demo data={MarkDemos.configurator} />
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { MarkProps } from '@mantine/core';
+```
+
+`MarkProps` extends `React.ComponentPropsWithoutRef<'mark'>`, all other props are available under _Component props_ tab.

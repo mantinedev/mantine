@@ -3,7 +3,10 @@ const remarkSlug = require('remark-slug');
 module.exports = {
   flags: {
     DEV_SSR: false,
+    FAST_DEV: true,
+    LMDB_STORE: true,
   },
+
   siteMetadata: {
     title: 'Mantine Docs',
     description: 'Mantine documentation',

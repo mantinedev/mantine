@@ -62,9 +62,47 @@ provide `getItemAriaLabel` function to generate aria-labels:
         return 'previous page button aria-label';
       case 'next':
         return 'next page button aria-label';
+      case 'first':
+        return 'first page button aria-label';
+      case 'last':
+        return 'last page button aria-label';
       default:
         return `${page} item aria-label`;
     }
   }}
 />
 ```
+
+## use-pagination hook
+
+If you need more flexibility @mantine/hooks exports [use-pagination](/hooks/use-pagination/) hook,
+you can use it to create your own pagination component.
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { PaginationProps } from '@mantine/core';
+```
+
+`PaginationProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### PaginationStylesNames type
+
+`PaginationStylesNames` type is a union with Pagination [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { PaginationStylesNames } from '@mantine/core';
+
+const paginationClasses: Partial<Record<PaginationStylesNames, 'string'>> = {
+  item: 'pagination-item',
+  active: 'pagination-active',
+};
+
+<Pagination classNames={paginationClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

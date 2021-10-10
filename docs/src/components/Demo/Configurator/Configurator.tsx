@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import cx from 'clsx';
 import { useMantineTheme } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import DocsSection from '../../DocsSection/DocsSection';
@@ -29,7 +28,7 @@ export default function Configurator({
   filter = [],
 }: ConfiguratorProps) {
   const theme = useMantineTheme();
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const initialState = componentProps.reduce((acc, prop) => {
     acc[prop.name] = prop.initialValue || controls[prop.type].initialValue;
     return acc;

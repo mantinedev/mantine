@@ -66,9 +66,9 @@ Alternatively, you can use a number to set border-radius in px:
 
 Radius is applied both to image and placeholder.
 
-## Get element ref
+## Get refs
 
-You can get both image and root element (div) refs with `elementRef` and `imageRef` props:
+You can get both image and root element (div) refs with `ref` and `imageRef` props:
 
 ```tsx
 import { useRef } from 'react';
@@ -76,7 +76,36 @@ import { Image } from '@mantine/core';
 
 function Demo() {
   const imageRef = useRef();
-  const rootElementRef = useRef();
-  return <Image elementRef={rootElementRef} imageRef={imageRef} />;
+  const rootRef = useRef();
+  return <Image ref={rootRef} imageRef={imageRef} />;
 }
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { ImageProps } from '@mantine/core';
+```
+
+`ImageProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### ImageStylesNames type
+
+`ImageStylesNames` type is a union with Image [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { ImageStylesNames } from '@mantine/core';
+
+const imageClasses: Partial<Record<ImageStylesNames, 'string'>> = {
+  figure: 'image-figure',
+  caption: 'image-caption',
+};
+
+<Image classNames={imageClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

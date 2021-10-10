@@ -1,0 +1,67 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Space
+order: 1
+slug: /core/space/
+category: 'layout'
+description: 'Add horizontal or vertical spacing from theme'
+props: ['Space']
+import: "import { Space } from '@mantine/core';"
+source: 'mantine-core/src/components/Space/Space.tsx'
+docs: 'core/Space.mdx'
+styles: ['Space', 'single-node']
+---
+
+import { SpaceDemos } from '@demos/core';
+
+## Usage
+
+Use Space component to add horizontal or vertical spacing between elements:
+
+<Demo data={SpaceDemos.horizontal} />
+
+<Demo data={SpaceDemos.vertical} />
+
+## Where to use
+
+In most cases you would want to use margin props instead of Space when working with Mantine components:
+
+```tsx
+<Text>First line</Text>
+// <Space h="md" /> is not required as the same can be achieved with margin
+<Text mt="md">Second line</Text>
+```
+
+But when you work with regular html elements you do not have access to `theme.spacing` and you may want to use
+Space component in order to skip direct theme subscription:
+
+```tsx
+<div>First line</div>
+<Space h="md" />
+// Margin props are not available on div, use Space to add spacing from theme
+<div>Second line</div>
+```
+
+## h and w props
+
+`h` and `w` are shortcuts for height and width, you can use values from [theme.spacing](/theming/extend-theme/#spacing-radius-and-shadows)
+(xs, sm, md, lg, xl) or number to set width or height in px:
+
+```tsx
+// Height will be set from theme.spacing.md
+<Space h="md" />
+
+// Width will be set to 30px
+<Space w={30} />
+```
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { SpaceProps } from '@mantine/core';
+```
+
+`SpaceProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

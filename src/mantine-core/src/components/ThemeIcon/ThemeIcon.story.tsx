@@ -1,9 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { RocketIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME, MantineProvider } from '../../theme';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { ThemeIcon } from './ThemeIcon';
+import { DarkStory } from '../../../demos';
 
 const getThemes = (props?: any) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (
@@ -31,12 +32,10 @@ storiesOf('@mantine/core/ThemeIcon', module)
     </Group>
   ))
   .add('Dark theme', () => (
-    <MantineProvider theme={{ colorScheme: 'dark' }}>
-      <div
-        style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40, minHeight: '100vh' }}
-      >
+    <DarkStory>
+      <div style={{ padding: 40 }}>
         <Group style={{ padding: 20 }}>{getThemes()}</Group>
         <Group style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</Group>
       </div>
-    </MantineProvider>
+    </DarkStory>
   ));

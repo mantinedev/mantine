@@ -8,14 +8,17 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itRendersChildren,
+  itSupportsMargins,
 } from '@mantine/tests';
+import { Loader } from '../Loader/Loader';
 import { ActionIcon } from './ActionIcon';
 
 describe('@mantine/core/ActionIcon', () => {
   itSupportsClassName(ActionIcon, {});
   itSupportsOthers(ActionIcon, {});
   itSupportsStyle(ActionIcon, {});
-  itSupportsRef(ActionIcon, {}, HTMLButtonElement, 'elementRef');
+  itSupportsMargins(ActionIcon, {});
+  itSupportsRef(ActionIcon, {}, HTMLButtonElement);
   itRendersChildren(ActionIcon, {});
   checkAccessibility([
     mount(
@@ -25,16 +28,34 @@ describe('@mantine/core/ActionIcon', () => {
     ),
   ]);
 
+  it('replaces icon with Loader when loading is set to true', () => {
+    const loading = shallow(
+      <ActionIcon loading>
+        <span className="test-icon" />
+      </ActionIcon>
+    );
+
+    const notLoading = shallow(
+      <ActionIcon loading={false}>
+        <span className="test-icon" />
+      </ActionIcon>
+    );
+
+    expect(notLoading.find('.test-icon')).toHaveLength(1);
+    expect(notLoading.find(Loader)).toHaveLength(0);
+
+    expect(loading.find('.test-icon')).toHaveLength(0);
+    expect(loading.find(Loader)).toHaveLength(1);
+  });
+
   it('accepts component from component prop', () => {
     const TestComponent = (props: any) => <span data-test-prop {...props} />;
     const withTag = shallow(
-      <ActionIcon<'a'> component="a" href="https://mantine.dev">
+      <ActionIcon component="a" href="https://mantine.dev">
         $
       </ActionIcon>
     );
-    const withComponent = shallow(
-      <ActionIcon<typeof TestComponent> component={TestComponent}>$</ActionIcon>
-    );
+    const withComponent = shallow(<ActionIcon component={TestComponent}>$</ActionIcon>);
 
     expect(withTag.type()).toBe('a');
     expect(withTag.render().attr('href')).toBe('https://mantine.dev');

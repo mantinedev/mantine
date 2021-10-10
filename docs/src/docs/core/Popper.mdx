@@ -100,3 +100,15 @@ By default Popper has `z-index: 1`, you can change that with `zIndex` prop:
 ```tsx
 <Popper zIndex={100} {...otherProps} />
 ```
+
+## TypeScript
+
+```tsx
+import type { PopperProps } from '@mantine/core';
+```
+
+`PopperProps` is a generic, it accepts reference element type as single argument:
+
+```tsx
+type MyPopperProps = PopperProps<HTMLDivElement>;
+```

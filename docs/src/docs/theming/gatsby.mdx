@@ -1,0 +1,62 @@
+---
+group: 'theming'
+title: Usage with Gatsby.js
+slug: /theming/gatsby/
+order: 6
+---
+
+# Usage with Gatsby.js
+
+Mantine is fully compatible with Gatsby.js, follow following guide to setup your application
+
+## Using a plugin
+
+The simplest way to get started with Mantine in Gatsby is to use a plugin:
+
+1. Install plugin:
+
+```bash
+yarn add gatsby-plugin-mantine
+
+npm install gatsby-plugin-mantine
+```
+
+2. Add plugin to your `gatsby-config.js`
+
+```tsx
+module.exports = {
+  plugins: ['gatsby-plugin-mantine' /* ...other plugins */],
+};
+```
+
+3. All done! Server side rendering is fully functional
+
+## Without plugin
+
+To setup server side rendering without `gatsby-plugin-mantine`:
+
+1. Install `@mantine/ssr`
+
+```bash
+yarn add @mantine/ssr
+
+npm install @mantine/ssr
+```
+
+2. Create `gatsby-ssr.js` file with following code:
+
+```tsx
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { createStylesServer, ServerStyles } from '@mantine/ssr';
+
+const stylesServer = createStylesServer();
+
+export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadComponents }) => {
+  const html = renderToString(bodyComponent);
+  setHeadComponents([<ServerStyles html={html} server={stylesServer} />]);
+  replaceBodyHTMLString(html);
+};
+```
+
+3. All done! Server side rendering is fully functional

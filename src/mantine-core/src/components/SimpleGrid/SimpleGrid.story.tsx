@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { SimpleGrid } from './SimpleGrid';
 
 storiesOf('@mantine/core/SimpleGrid', module).add('General usage', () => (
-  <div style={{ padding: 40 }}>
+  <>
     <div style={{ backgroundColor: 'gray' }}>
       <SimpleGrid
         cols={3}
@@ -17,5 +17,5 @@ storiesOf('@mantine/core/SimpleGrid', module).add('General usage', () => (
         <div style={{ backgroundColor: 'red' }}>third</div>
       </SimpleGrid>
     </div>
-  </div>
+  </>
 ));

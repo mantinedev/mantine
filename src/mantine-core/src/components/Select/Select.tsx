@@ -1,26 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useId, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, MantineSize, MantineShadow } from '../../theme';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
+import { useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
+import {
+  DefaultProps,
+  MantineSize,
+  MantineShadow,
+  useUuid,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { scrollIntoView } from '../../utils';
-import { InputWrapper } from '../InputWrapper/InputWrapper';
-import { Input } from '../Input/Input';
-import { MantineTransition } from '../Transition/Transition';
-import { DefaultItem, SelectItemProps } from './DefaultItem/DefaultItem';
+import { InputWrapper } from '../InputWrapper';
+import { Input } from '../Input';
+import { MantineTransition } from '../Transition';
+import { DefaultItem } from './DefaultItem/DefaultItem';
 import { getSelectRightSectionProps } from './SelectRightSection/get-select-right-section-props';
 import { SelectItems } from './SelectItems/SelectItems';
 import { SelectDropdown } from './SelectDropdown/SelectDropdown';
 import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
+import { groupSortData } from './group-sort-data/group-sort-data';
 
-export type SelectStylesNames = BaseSelectStylesNames;
-export type { SelectItemProps };
-
-export interface SelectProps extends DefaultProps<SelectStylesNames>, BaseSelectProps {
+export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSelectProps {
   /** Input size */
   size?: MantineSize;
-
-  /** Get input ref */
-  elementRef?: React.ForwardedRef<HTMLInputElement>;
 
   /** Select data used to renderer items in dropdown */
   data: SelectDataItem[];
@@ -75,291 +76,368 @@ export interface SelectProps extends DefaultProps<SelectStylesNames>, BaseSelect
 
   /** Called each time search value changes */
   onSearchChange?(query: string): void;
+
+  /** Allow creatable option  */
+  creatable?: boolean;
+
+  /** Function to get create Label */
+  getCreateLabel?: (query: string) => React.ReactNode;
+
+  /** Function to determine if create label should be displayed */
+  shouldCreate?: (query: string, data: SelectItem[]) => boolean;
+
+  /** Called when create option is selected */
+  onCreate?: (query: string) => void;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
   return item.label.toLowerCase().trim().includes(value.toLowerCase().trim());
 }
 
-export function Select({
-  className,
-  style,
-  required = false,
-  label,
-  id,
-  error,
-  description,
-  size = 'sm',
-  shadow = 'sm',
-  data,
-  value,
-  defaultValue,
-  onChange,
-  itemComponent = DefaultItem,
-  onKeyDown,
-  onFocus,
-  onBlur,
-  transition = 'fade',
-  transitionDuration = 0,
-  initiallyOpened = false,
-  transitionTimingFunction,
-  wrapperProps,
-  elementRef,
-  themeOverride,
-  classNames,
-  styles,
-  filter = defaultFilter,
-  maxDropdownHeight = 220,
-  searchable = false,
-  clearable = false,
-  nothingFound,
-  clearButtonLabel,
-  limit = Infinity,
-  disabled = false,
-  onSearchChange,
-  rightSection,
-  rightSectionWidth,
-  ...others
-}: SelectProps) {
-  const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
-  const [hovered, setHovered] = useState(-1);
-  const inputRef = useRef<HTMLInputElement>();
-  const dropdownRef = useRef<HTMLDivElement>();
-  const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
-  const uuid = useId(id);
-  const [_value, handleChange, inputMode] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: null,
-    onChange,
-    rule: (val) => typeof val === 'string',
-  });
+export function defaultShouldCreate(query: string, data: SelectItem[]) {
+  return !!query && !data.some((item) => item.value.toLowerCase() === query.toLowerCase());
+}
 
-  const formattedData = data.map((item) =>
-    typeof item === 'string' ? { label: item, value: item } : item
-  );
+export const Select = forwardRef<HTMLInputElement, SelectProps>(
+  (
+    {
+      className,
+      style,
+      required = false,
+      label,
+      id,
+      error,
+      description,
+      size = 'sm',
+      shadow = 'sm',
+      data,
+      value,
+      defaultValue,
+      onChange,
+      itemComponent = DefaultItem,
+      onKeyDown,
+      onFocus,
+      onBlur,
+      transition = 'fade',
+      transitionDuration = 0,
+      initiallyOpened = false,
+      transitionTimingFunction,
+      wrapperProps,
+      classNames,
+      styles,
+      filter = defaultFilter,
+      maxDropdownHeight = 220,
+      searchable = false,
+      clearable = false,
+      nothingFound,
+      clearButtonLabel,
+      limit = Infinity,
+      disabled = false,
+      onSearchChange,
+      rightSection,
+      rightSectionWidth,
+      creatable = false,
+      getCreateLabel,
+      shouldCreate = defaultShouldCreate,
+      onCreate,
+      ...others
+    }: SelectProps,
+    ref
+  ) => {
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
+    const [hovered, setHovered] = useState(-1);
+    const inputRef = useRef<HTMLInputElement>();
+    const dropdownRef = useRef<HTMLDivElement>();
+    const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
+    const [creatableDataValue, setCreatableDataValue] = useState<string | undefined>(undefined);
+    const uuid = useUuid(id);
 
-  const selectedValue = formattedData.find((item) => item.value === _value);
-  const [inputValue, setInputValue] = useState(selectedValue?.label || '');
+    const isCreatable = creatable && typeof getCreateLabel === 'function';
+    let createLabel = null;
 
-  const handleSearchChange = (val: string) => {
-    setInputValue(val);
-    if (searchable && typeof onSearchChange === 'function') {
-      onSearchChange(val);
-    }
-  };
+    const formattedData = data.map((item) =>
+      typeof item === 'string' ? { label: item, value: item } : item
+    );
 
-  const handleClear = () => {
-    handleChange(null);
-    if (inputMode === 'uncontrolled') {
-      handleSearchChange('');
-    }
-    inputRef.current?.focus();
-  };
+    const sortedData = groupSortData({ data: formattedData });
 
-  useEffect(() => {
-    const newSelectedValue = formattedData.find((item) => item.value === _value);
-    if (newSelectedValue) {
-      handleSearchChange(newSelectedValue.label);
-    } else {
-      handleSearchChange('');
-    }
-  }, [_value]);
+    const [_value, handleChange, inputMode] = useUncontrolled({
+      value,
+      defaultValue,
+      finalValue: null,
+      onChange,
+      rule: (val) => typeof val === 'string',
+    });
 
-  const handleItemSelect = (item: SelectItem) => {
-    handleChange(item.value);
-    setHovered(-1);
-    if (inputMode === 'uncontrolled') {
-      handleSearchChange(item.label);
-    }
-    setTimeout(() => setDropdownOpened(false));
-    inputRef.current.focus();
-  };
+    const selectedValue = sortedData.find((item) => item.value === _value);
+    const [inputValue, setInputValue] = useState(selectedValue?.label || '');
 
-  const filteredData = filterData({
-    data: formattedData,
-    searchable,
-    limit,
-    searchValue: inputValue,
-    filter,
-  });
-
-  const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    typeof onKeyDown === 'function' && onKeyDown(event);
-
-    switch (event.nativeEvent.code) {
-      case 'ArrowUp': {
-        event.preventDefault();
-        setDropdownOpened(true);
-        setHovered((current) => {
-          const nextIndex = current > 0 ? current - 1 : current;
-          scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
-          return nextIndex;
-        });
-        break;
+    const handleSearchChange = (val: string) => {
+      setInputValue(val);
+      if (searchable && typeof onSearchChange === 'function') {
+        onSearchChange(val);
       }
+    };
 
-      case 'ArrowDown': {
-        event.preventDefault();
-        setDropdownOpened(true);
-        setHovered((current) => {
-          const nextIndex = current < filteredData.length - 1 ? current + 1 : current;
-          scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
-          return nextIndex;
-        });
-        break;
-      }
-
-      case 'Escape': {
-        event.preventDefault();
-        setDropdownOpened(false);
-        setHovered(-1);
-        break;
-      }
-
-      case 'Space': {
-        if (!searchable && !dropdownOpened) {
-          event.preventDefault();
-          setDropdownOpened(true);
-          setHovered(0);
-        }
-        break;
-      }
-
-      case 'Enter': {
-        if (filteredData[hovered]) {
-          event.preventDefault();
-          handleItemSelect(filteredData[hovered]);
-        }
-      }
-    }
-  };
-
-  const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    typeof onFocus === 'function' && onFocus(event);
-  };
-
-  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    typeof onBlur === 'function' && onBlur(event);
-    const selected = formattedData.find((item) => item.value === _value);
-    handleSearchChange(selected?.label || '');
-    setDropdownOpened(false);
-  };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (clearable && event.currentTarget.value === '') {
+    const handleClear = () => {
       handleChange(null);
       if (inputMode === 'uncontrolled') {
         handleSearchChange('');
       }
-    } else {
-      handleSearchChange(event.currentTarget.value);
+      inputRef.current?.focus();
+    };
+
+    useEffect(() => {
+      const newSelectedValue = sortedData.find((item) => item.value === _value);
+
+      if (newSelectedValue) {
+        handleSearchChange(newSelectedValue.label);
+      } else if (!isCreatable) {
+        handleSearchChange('');
+      }
+    }, [_value]);
+
+    const handleItemSelect = (item: SelectItem) => {
+      handleChange(item.value);
+      if (item.creatable) {
+        setCreatableDataValue(item.value);
+        typeof onCreate === 'function' && onCreate(item.value);
+      }
+      if (inputMode === 'uncontrolled') {
+        handleSearchChange(item.label);
+      }
+      setHovered(-1);
+      setTimeout(() => setDropdownOpened(false));
+      inputRef.current.focus();
+    };
+
+    const filteredData = filterData({
+      data: sortedData,
+      searchable,
+      limit,
+      searchValue: inputValue,
+      creatable: !!creatableDataValue && creatableDataValue === inputValue,
+      filter,
+    });
+
+    if (isCreatable && shouldCreate(inputValue, filteredData)) {
+      createLabel = getCreateLabel(inputValue);
+      filteredData.push({ label: inputValue, value: inputValue, creatable: true });
     }
-    setHovered(0);
-    setDropdownOpened(true);
-  };
 
-  return (
-    <InputWrapper
-      required={required}
-      id={uuid}
-      label={label}
-      error={error}
-      description={description}
-      size={size}
-      className={className}
-      style={style}
-      themeOverride={themeOverride}
-      classNames={classNames}
-      styles={styles}
-      __staticSelector="select"
-      {...wrapperProps}
-    >
-      <div
-        role="combobox"
-        aria-haspopup="listbox"
-        aria-owns={`${uuid}-items`}
-        aria-controls={uuid}
-        aria-expanded={dropdownOpened}
-        onMouseLeave={() => setHovered(-1)}
-        tabIndex={-1}
+    const getNextIndex = (
+      index: number,
+      nextItem: (index: number) => number,
+      compareFn: (index: number) => boolean
+    ) => {
+      let i = index;
+      while (compareFn(i)) {
+        i = nextItem(i);
+        if (!filteredData[i].disabled) return i;
+      }
+      return index;
+    };
+
+    useDidUpdate(() => {
+      setHovered(
+        getNextIndex(
+          -1,
+          (index) => index + 1,
+          (index) => index < filteredData.length - 1
+        )
+      );
+    }, [inputValue]);
+
+    const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      typeof onKeyDown === 'function' && onKeyDown(event);
+
+      switch (event.nativeEvent.code) {
+        case 'ArrowUp': {
+          event.preventDefault();
+          setDropdownOpened(true);
+          setHovered((current) => {
+            const nextIndex = getNextIndex(
+              current,
+              (index) => index - 1,
+              (index) => index > 0
+            );
+            scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
+            return nextIndex;
+          });
+          break;
+        }
+
+        case 'ArrowDown': {
+          event.preventDefault();
+          setDropdownOpened(true);
+          setHovered((current) => {
+            const nextIndex = getNextIndex(
+              current,
+              (index) => index + 1,
+              (index) => index < filteredData.length - 1
+            );
+            scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
+            return nextIndex;
+          });
+          break;
+        }
+
+        case 'Escape': {
+          event.preventDefault();
+          setDropdownOpened(false);
+          setHovered(-1);
+          break;
+        }
+
+        case 'Space': {
+          if (!searchable) {
+            event.preventDefault();
+            setDropdownOpened((o) => !o);
+            setHovered(
+              getNextIndex(
+                -1,
+                (index) => index + 1,
+                (index) => index < filteredData.length - 1
+              )
+            );
+          }
+          break;
+        }
+
+        case 'Enter': {
+          if (filteredData[hovered]) {
+            event.preventDefault();
+            handleItemSelect(filteredData[hovered]);
+          }
+        }
+      }
+    };
+
+    const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+      typeof onFocus === 'function' && onFocus(event);
+    };
+
+    const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+      typeof onBlur === 'function' && onBlur(event);
+      const selected = sortedData.find((item) => item.value === _value);
+      handleSearchChange(selected?.label || '');
+      setDropdownOpened(false);
+    };
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (clearable && event.currentTarget.value === '') {
+        handleChange(null);
+        if (inputMode === 'uncontrolled') {
+          handleSearchChange('');
+        }
+      } else {
+        handleSearchChange(event.currentTarget.value);
+      }
+      setHovered(0);
+      setDropdownOpened(true);
+    };
+
+    return (
+      <InputWrapper
+        required={required}
+        id={uuid}
+        label={label}
+        error={error}
+        description={description}
+        size={size}
+        className={className}
+        style={mergedStyles}
+        classNames={classNames}
+        styles={styles}
+        __staticSelector="select"
+        {...wrapperProps}
       >
-        <Input<'input'>
-          {...others}
-          type="text"
-          required={required}
-          elementRef={useMergedRef(elementRef, inputRef)}
-          id={uuid}
-          invalid={!!error}
-          size={size}
-          onKeyDown={handleInputKeydown}
-          themeOverride={themeOverride}
-          classNames={classNames}
-          __staticSelector="select"
-          value={inputValue}
-          onChange={handleInputChange}
-          aria-autocomplete="list"
-          aria-controls={dropdownOpened ? `${uuid}-items` : null}
-          aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
-          onClick={() => setDropdownOpened((o) => !o)}
-          onFocus={handleInputFocus}
-          onBlur={handleInputBlur}
-          readOnly={!searchable}
-          disabled={disabled}
-          data-mantine-stop-propagation={dropdownOpened}
-          {...getSelectRightSectionProps({
-            rightSection,
-            rightSectionWidth,
-            styles: {
-              ...styles,
-              input: {
-                cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
-                ...styles?.input,
-              },
-            },
-            size,
-            shouldClear: clearable && !!selectedValue,
-            themeOverride,
-            clearButtonLabel,
-            onClear: handleClear,
-            error,
-          })}
-        />
-
-        <SelectDropdown
-          themeOverride={themeOverride}
-          mounted={dropdownOpened}
-          transition={transition}
-          transitionDuration={transitionDuration}
-          transitionTimingFunction={transitionTimingFunction}
-          uuid={uuid}
-          shadow={shadow}
-          maxDropdownHeight={maxDropdownHeight}
-          classNames={classNames}
-          styles={styles}
-          elementRef={dropdownRef}
-          __staticSelector="select"
+        <div
+          role="combobox"
+          aria-haspopup="listbox"
+          aria-owns={`${uuid}-items`}
+          aria-controls={uuid}
+          aria-expanded={dropdownOpened}
+          onMouseLeave={() => setHovered(-1)}
+          tabIndex={-1}
         >
-          <SelectItems
-            data={filteredData}
-            hovered={hovered}
-            themeOverride={themeOverride}
+          <Input<'input'>
+            {...rest}
+            type="text"
+            required={required}
+            ref={useMergedRef(ref, inputRef)}
+            id={uuid}
+            invalid={!!error}
+            size={size}
+            onKeyDown={handleInputKeydown}
+            classNames={classNames}
+            __staticSelector="select"
+            value={inputValue}
+            onChange={handleInputChange}
+            aria-autocomplete="list"
+            aria-controls={dropdownOpened ? `${uuid}-items` : null}
+            aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
+            onClick={() => setDropdownOpened((o) => !o)}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            readOnly={!searchable}
+            disabled={disabled}
+            data-mantine-stop-propagation={dropdownOpened}
+            autoComplete="off"
+            {...getSelectRightSectionProps({
+              rightSection,
+              rightSectionWidth,
+              styles: {
+                ...styles,
+                input: {
+                  cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
+                  ...styles?.input,
+                },
+              },
+              size,
+              shouldClear: clearable && !!selectedValue,
+              clearButtonLabel,
+              onClear: handleClear,
+              error,
+            })}
+          />
+
+          <SelectDropdown
+            mounted={dropdownOpened}
+            transition={transition}
+            transitionDuration={transitionDuration}
+            transitionTimingFunction={transitionTimingFunction}
+            uuid={uuid}
+            shadow={shadow}
+            maxDropdownHeight={maxDropdownHeight}
             classNames={classNames}
             styles={styles}
-            isItemSelected={(val) => val === _value}
-            uuid={uuid}
+            ref={dropdownRef}
             __staticSelector="select"
-            onItemHover={setHovered}
-            onItemSelect={handleItemSelect}
-            itemsRefs={itemsRefs}
-            itemComponent={itemComponent}
-            size={size}
-            nothingFound={nothingFound}
-          />
-        </SelectDropdown>
-      </div>
-    </InputWrapper>
-  );
-}
+          >
+            <SelectItems
+              data={filteredData}
+              hovered={hovered}
+              classNames={classNames}
+              styles={styles}
+              isItemSelected={(val) => val === _value}
+              uuid={uuid}
+              __staticSelector="select"
+              onItemHover={setHovered}
+              onItemSelect={handleItemSelect}
+              itemsRefs={itemsRefs}
+              itemComponent={itemComponent}
+              size={size}
+              nothingFound={nothingFound}
+              creatable={isCreatable && !!createLabel}
+              createLabel={createLabel}
+            />
+          </SelectDropdown>
+        </div>
+      </InputWrapper>
+    );
+  }
+);
 
 Select.displayName = '@mantine/core/Select';

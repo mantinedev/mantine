@@ -74,6 +74,12 @@ SegmentedControl support two different data formats:
 ]} />
 ```
 
+## React node as label
+
+You can use any React node as label in `data` prop:
+
+<Demo data={SegmentedControlDemos.labels} />
+
 ## Full width
 
 By default SegmentedControl is inline and will take only the amount of space which is required to render elements.
@@ -125,20 +131,6 @@ Change transition properties with:
 
 <Demo data={SegmentedControlDemos.transitions} />
 
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook
-to generate random id which is used to bind inputs to labels.
-If you want to avoid id mismatch during hydration provide static name value:
-
-```tsx
-// -> oh-oh, id on elements is mismatched, won't break anything, but shows nasty error
-<SegmentedControl />
-
-// -> ok, inputs ids are static and will match during hydration
-<SegmentedControl name="my-control" />
-```
-
 ## Resize observer
 
 SegmentedControl uses [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)
@@ -156,3 +148,46 @@ window.ResizeObserver = ResizeObserver;
 
 SegmentedControl uses radio inputs under the hood, it is accessible by default with no extra steps required.
 Component support the same keyboard events as regular radio group.
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { SegmentedControlProps } from '@mantine/core';
+```
+
+`SegmentedControlProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### SegmentedControlStylesNames type
+
+`SegmentedControlStylesNames` type is a union with SegmentedControl [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { SegmentedControlStylesNames } from '@mantine/core';
+
+const segmentedClasses: Partial<Record<SegmentedControlStylesNames, 'string'>> = {
+  label: 'segmented-label',
+  control: 'segmented-control',
+};
+
+<SegmentedControl classNames={segmentedClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
+
+### SegmentedControlItem type
+
+`SegmentedControlItem` type lets you validate object items that will be passed to SegmentedControl `data` prop:
+
+```tsx
+import type { SegmentedControlItem } from '@mantine/core';
+
+const autocompleteData: SegmentedControlItem[] = [
+  { value: 'John', label: <div>John</div> },
+  { value: 'Jake', label: <div>Jake</div> },
+  { value: 'Amy', label: <div>Amy</div> },
+];
+```

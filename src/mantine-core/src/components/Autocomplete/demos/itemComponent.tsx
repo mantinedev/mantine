@@ -1,38 +1,42 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Group, Avatar, Text, MantineColor } from '../../../index';
-import { SelectItemProps } from '../../Select/Select';
+import { SelectItemProps } from '../../Select';
+import { LABELS_DATA } from '../../Accordion/demos/_mockdata';
 import { Autocomplete } from '../Autocomplete';
 
 const code = `
 import { Group, Avatar, Text, Autocomplete } from '@mantine/core';
 
-const data = [
-  { value: 'bob@handsome.inc', color: 'red', email: 'bob@handsome.inc', name: 'Bob Handsome' },
-  { value: 'bill@outlook.com', color: 'teal', email: 'bill@outlook.com', name: 'Bill Gates' },
-  { value: 'amy@wong.cn', color: 'blue', email: 'amy@wong.cn', name: 'Amy Wong' },
-];
+export const LABELS_DATA = [
+  {
+    image: 'avatar.png',
+    value: 'Bender Bending Rodríguez',
+    description: 'Fascinated with cooking, though has no sense of taste',
+  },
+  {
+    image: 'avatar.png',
+    value: 'Carol Miller',
+    description: 'One of the richest people on Earth',
+  },
+  // ... other items
+]
 
-function AutoCompleteItem({ color, email, name, ...others }) {
-  return (
-    <div {...others}>
-      <Group>
-        <Avatar color={color}>
-          {name
-            .split(' ')
-            .map((part) => part.charAt(0).toUpperCase())
-            .join('')}
-        </Avatar>
+const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
+  ({ description, value, image, ...others }: ItemProps, ref) => (
+    <div ref={ref} {...others}>
+      <Group noWrap>
+        <Avatar src={image} />
 
         <div>
-          <Text>{name}</Text>
-          <Text size="xs" color="blue">
-            {email}
+          <Text>{value}</Text>
+          <Text size="xs" color="dimmed">
+            {description}
           </Text>
         </div>
       </Group>
     </div>
-  );
-}
+  )
+);
 
 function Demo() {
   return (
@@ -42,47 +46,38 @@ function Demo() {
       itemComponent={AutoCompleteItem}
       data={data}
       filter={(value, item) =>
-        item.name.toLowerCase().includes(value.toLowerCase().trim()) ||
-        item.email.toLowerCase().includes(value.toLowerCase().trim())
+        item.value.toLowerCase().includes(value.toLowerCase().trim()) ||
+        item.description.toLowerCase().includes(value.toLowerCase().trim())
       }
     />
   );
 }
 `;
 
-const data = [
-  { value: 'bob@handsome.inc', color: 'red', email: 'bob@handsome.inc', name: 'Bob Handsome' },
-  { value: 'bill@outlook.com', color: 'teal', email: 'bill@outlook.com', name: 'Bill Gates' },
-  { value: 'amy@wong.cn', color: 'blue', email: 'amy@wong.cn', name: 'Amy Wong' },
-];
+const data = LABELS_DATA.map((item) => ({ ...item, value: item.label }));
 
 interface ItemProps extends SelectItemProps {
   color: MantineColor;
-  email: string;
-  name: string;
+  description: string;
+  image: string;
 }
 
-function AutoCompleteItem({ color, email, name, ...others }: ItemProps) {
-  return (
-    <div {...others}>
-      <Group>
-        <Avatar color={color}>
-          {name
-            .split(' ')
-            .map((part) => part.charAt(0).toUpperCase())
-            .join('')}
-        </Avatar>
+const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
+  ({ description, value, image, ...others }: ItemProps, ref) => (
+    <div ref={ref} {...others}>
+      <Group noWrap>
+        <Avatar src={image} />
 
         <div>
-          <Text>{name}</Text>
-          <Text size="xs" color="blue">
-            {email}
+          <Text>{value}</Text>
+          <Text size="xs" color="dimmed">
+            {description}
           </Text>
         </div>
       </Group>
     </div>
-  );
-}
+  )
+);
 
 function Demo() {
   return (
@@ -93,8 +88,8 @@ function Demo() {
         itemComponent={AutoCompleteItem}
         data={data}
         filter={(value, item) =>
-          item.name.toLowerCase().includes(value.toLowerCase().trim()) ||
-          item.email.toLowerCase().includes(value.toLowerCase().trim())
+          item.value.toLowerCase().includes(value.toLowerCase().trim()) ||
+          item.description.toLowerCase().includes(value.toLowerCase().trim())
         }
       />
     </div>

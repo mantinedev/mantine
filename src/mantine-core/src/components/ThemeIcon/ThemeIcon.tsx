@@ -1,17 +1,14 @@
-import React from 'react';
-import cx from 'clsx';
+import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
-  useMantineTheme,
   MantineGradient,
   MantineColor,
-} from '../../theme';
-import useStyles, { sizes } from './ThemeIcon.styles';
+  useExtractedMargins,
+} from '@mantine/styles';
+import useStyles, { ThemeIconVariant } from './ThemeIcon.styles';
 
-export const THEME_ICON_SIZES = sizes;
-
-export interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'> {
+export interface ThemeIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Icon */
   children: React.ReactNode;
 
@@ -25,43 +22,49 @@ export interface ThemeIconProps extends DefaultProps, React.ComponentProps<'div'
   color?: MantineColor;
 
   /** Controls appearance */
-  variant?: 'filled' | 'light' | 'gradient';
+  variant?: ThemeIconVariant;
 
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
 }
 
-export function ThemeIcon({
-  className,
-  size = 'md',
-  radius = 'sm',
-  variant = 'filled',
-  color,
-  children,
-  gradient = { from: 'blue', to: 'cyan', deg: 45 },
-  themeOverride,
-  ...others
-}: ThemeIconProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles(
+export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>(
+  (
     {
-      theme,
-      radius,
+      className,
+      size = 'md',
+      radius = 'sm',
+      variant = 'filled',
       color,
-      size,
-      gradientFrom: gradient.from,
-      gradientTo: gradient.to,
-      gradientDeg: gradient.deg,
-    },
-    null,
-    'theme-icon'
-  );
+      children,
+      gradient = { from: 'blue', to: 'cyan', deg: 45 },
+      style,
+      ...others
+    }: ThemeIconProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles(
+      {
+        variant,
+        radius,
+        color,
+        size,
+        gradientFrom: gradient.from,
+        gradientTo: gradient.to,
+        gradientDeg: gradient.deg,
+      },
+      null,
+      'theme-icon'
+    );
 
-  return (
-    <div className={cx(classes.root, classes[variant], className)} {...others}>
-      {children}
-    </div>
-  );
-}
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+
+    return (
+      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+        {children}
+      </div>
+    );
+  }
+);
 
 ThemeIcon.displayName = '@mantine/core/ThemeIcon';

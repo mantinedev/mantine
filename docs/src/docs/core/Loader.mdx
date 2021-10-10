@@ -25,7 +25,7 @@ You can choose any color defined in [theme.colors](/theming/extend-theme/#defaul
 
 ## Configure default loader
 
-You can configure default loader in [MantineProvider](/theming/theming-context/),
+You can configure default loader in [MantineProvider](/theming/mantine-provider/),
 it will be used in Loader and [LoadingOverlay](/core/loading-overlay/) components by default:
 
 ```tsx
@@ -55,3 +55,13 @@ import { LOADER_SIZES } from '@mantine/core';
   head={['Size', 'Height or width']}
   data={Object.keys(LOADER_SIZES).map((size) => [size, `${LOADER_SIZES[size]}px`])}
 />
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { LoaderProps } from '@mantine/core';
+```
+
+`LoaderProps` extends `React.ComponentPropsWithoutRef<'svg'>`, all other props are available under _Component props_ tab.

@@ -7,6 +7,8 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStylesApi,
+  itSupportsMargins,
+  defaultInputProps,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
@@ -31,18 +33,12 @@ describe('@mantine/core/Textarea', () => {
 
   itSupportsStyle(Textarea, {});
   itSupportsClassName(Textarea, {});
-  itSupportsRef(Textarea, {}, HTMLTextAreaElement, 'elementRef');
+  itSupportsMargins(Textarea, {});
+  itSupportsRef(Textarea, {}, HTMLTextAreaElement);
 
   itSupportsStylesApi(
     Textarea,
-    {
-      icon: '$',
-      rightSection: '$',
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-    },
+    defaultInputProps,
     Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
     'textarea'
   );

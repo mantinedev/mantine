@@ -1,20 +1,21 @@
-import React, { Children, cloneElement } from 'react';
-import { useId, useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '../../theme';
+import React, { Children, cloneElement, forwardRef } from 'react';
+import { useUncontrolled } from '@mantine/hooks';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  MantineColor,
+  useUuid,
+} from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../InputWrapper/InputWrapper';
-import { Radio, RadioProps, RadioStylesNames } from './Radio/Radio';
+import { Radio, RadioStylesNames } from './Radio/Radio';
 import { Group } from '../Group/Group';
-import { sizes } from './Radio/Radio.styles';
 
-export { Radio };
-export type { RadioProps };
 export type RadioGroupStylesNames = InputWrapperStylesNames | RadioStylesNames;
-
-export const RADIO_SIZES = sizes;
 
 export interface RadioGroupProps
   extends DefaultProps<RadioGroupStylesNames>,
@@ -48,66 +49,71 @@ export interface RadioGroupProps
   size?: MantineSize;
 }
 
-export function RadioGroup({
-  className,
-  themeOverride,
-  name,
-  children,
-  value,
-  defaultValue,
-  onChange,
-  variant = 'horizontal',
-  spacing = 'sm',
-  color,
-  size,
-  classNames,
-  styles,
-  ...others
-}: RadioGroupProps) {
-  const uuid = useId(name);
-  const [_value, setValue] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: '',
-    onChange,
-    rule: (val) => typeof val === 'string',
-  });
+export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
+  (
+    {
+      className,
+      name,
+      children,
+      value,
+      defaultValue,
+      onChange,
+      variant = 'horizontal',
+      spacing = 'sm',
+      color,
+      size,
+      classNames,
+      styles,
+      ...others
+    }: RadioGroupProps,
+    ref
+  ) => {
+    const uuid = useUuid(name);
+    const [_value, setValue] = useUncontrolled({
+      value,
+      defaultValue,
+      finalValue: '',
+      onChange,
+      rule: (val) => typeof val === 'string',
+    });
 
-  const radios: any = (Children.toArray(children) as React.ReactElement[])
-    .filter((item) => item.type === Radio)
-    .map((radio, index) =>
-      cloneElement(radio, {
-        key: index,
-        checked: _value === radio.props.value,
-        name: uuid,
-        color,
-        size,
-        classNames,
-        styles,
-        onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-          setValue(event.currentTarget.value),
-      })
-    );
+    const radios: any = (Children.toArray(children) as React.ReactElement[])
+      .filter((item) => item.type === Radio)
+      .map((radio, index) =>
+        cloneElement(radio, {
+          key: index,
+          checked: _value === radio.props.value,
+          name: uuid,
+          color,
+          size,
+          classNames,
+          styles,
+          onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+            setValue(event.currentTarget.value),
+        })
+      );
 
-  return (
-    <InputWrapper
-      labelElement="div"
-      size={size}
-      __staticSelector="radio-group"
-      classNames={classNames}
-      styles={styles}
-      {...others}
-    >
-      <Group
-        role="radiogroup"
-        spacing={spacing}
-        direction={variant === 'horizontal' ? 'row' : 'column'}
-        style={{ paddingTop: 5 }}
+    return (
+      <InputWrapper
+        labelElement="div"
+        size={size}
+        __staticSelector="radio-group"
+        classNames={classNames}
+        styles={styles}
+        ref={ref}
+        {...others}
       >
-        {radios}
-      </Group>
-    </InputWrapper>
-  );
-}
+        <Group
+          role="radiogroup"
+          spacing={spacing}
+          direction={variant === 'horizontal' ? 'row' : 'column'}
+          style={{ paddingTop: 5 }}
+        >
+          {radios}
+        </Group>
+      </InputWrapper>
+    );
+  }
+);
 
 RadioGroup.displayName = '@mantine/core/RadioGroup';

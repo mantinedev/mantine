@@ -1,8 +1,9 @@
-import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
-export default createUseStyles(
-  (theme) => ({
+export default createStyles((theme, _params, getRef) => {
+  const image = getRef('image');
+
+  return {
     card: {
       position: 'relative',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
@@ -10,7 +11,7 @@ export default createUseStyles(
         theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
       }`,
 
-      '&:hover $image': {
+      [`&:hover .${image}`]: {
         transform: 'scale(1.025)',
       },
     },
@@ -29,8 +30,8 @@ export default createUseStyles(
     },
 
     image: {
+      ref: image,
       transition: 'transform 500ms ease',
     },
-  }),
-  { theming }
-);
+  };
+});

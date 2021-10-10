@@ -1,7 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '../../theme';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Highlight } from './Highlight';
+import { DarkStory } from '../../../demos';
 
 const themes = Object.keys(DEFAULT_THEME.colors).map((color) => (
   <Highlight key={color} highlightColor={color} highlight="light">
@@ -38,16 +39,4 @@ storiesOf('@mantine/core/Highlight', module)
       Highlight this
     </Highlight>
   ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <Highlight highlightColor="teal" highlight="light" themeOverride={{ colorScheme: 'dark' }}>
-        Highlight this
-      </Highlight>
-      <Highlight highlight="that" themeOverride={{ colorScheme: 'dark' }}>
-        Nothing nothing
-      </Highlight>
-      <Highlight highlight="Highlight all" themeOverride={{ colorScheme: 'dark' }}>
-        Highlight all
-      </Highlight>
-    </div>
-  ));
+  .add('Dark theme', () => <DarkStory>{themes}</DarkStory>);

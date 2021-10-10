@@ -1,27 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import cx from 'clsx';
+import React, { useEffect, useState, forwardRef } from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
-  mergeStyles,
   MantineColor,
-} from '../../theme';
-import { PlaceholderIcon } from './PlaceholderIcon';
-import useStyles, { sizes } from './Avatar.styles';
+  mergeStyles,
+  ClassNames,
+  useExtractedMargins,
+  PolymorphicComponentProps,
+  PolymorphicRef,
+} from '@mantine/styles';
+import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
+import useStyles from './Avatar.styles';
 
-export const AVATAR_SIZES = sizes;
+export type AvatarStylesNames = ClassNames<typeof useStyles>;
 
-export type AvatarStylesNames = keyof ReturnType<typeof useStyles>;
-
-interface _AvatarProps<C extends React.ElementType, R extends HTMLElement>
-  extends DefaultProps<AvatarStylesNames> {
-  /** Root element or custom component */
-  component?: C;
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<R>;
-
+interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
   /** Image url */
   src?: string;
 
@@ -38,64 +31,63 @@ interface _AvatarProps<C extends React.ElementType, R extends HTMLElement>
   color?: MantineColor;
 }
 
-export type AvatarProps<
-  C extends React.ElementType = 'div',
-  R extends HTMLElement = HTMLDivElement
-> = _AvatarProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _AvatarProps<C, R>>;
+export type AvatarProps<C extends React.ElementType> = PolymorphicComponentProps<C, _AvatarProps>;
 
-export function Avatar<
-  C extends React.ElementType = 'div',
-  R extends HTMLElement = HTMLDivElement
->({
-  component,
-  className,
-  style,
-  size = 'md',
-  src,
-  alt,
-  radius = 'sm',
-  children,
-  color = 'gray',
-  themeOverride,
-  classNames,
-  styles,
-  elementRef,
-  ...others
-}: AvatarProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, radius, size, theme }, classNames, 'avatar');
-  const _styles = mergeStyles(classes, styles);
-  const [error, setError] = useState(!src);
-  const Element = component || 'div';
+type AvatarComponent = <C extends React.ElementType = 'div'>(
+  props: AvatarProps<C>
+) => React.ReactElement;
 
-  useEffect(() => {
-    !src ? setError(true) : setError(false);
-  }, [src]);
+export const Avatar: AvatarComponent & { displayName?: string } = forwardRef(
+  <C extends React.ElementType = 'div'>(
+    {
+      component,
+      className,
+      style,
+      size = 'md',
+      src,
+      alt,
+      radius = 'sm',
+      children,
+      color = 'gray',
+      classNames,
+      styles,
+      ...others
+    }: AvatarProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const { classes, cx } = useStyles({ color, radius, size }, classNames, 'avatar');
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const [error, setError] = useState(!src);
+    const Element = component || 'div';
 
-  return (
-    <Element
-      {...others}
-      className={cx(classes.root, className)}
-      style={{ ..._styles.root, ...style }}
-      ref={elementRef as any}
-    >
-      {error ? (
-        <div className={classes.placeholder} title={alt} style={_styles.placeholder}>
-          {children || (
-            <PlaceholderIcon className={classes.placeholderIcon} style={_styles.placeholderIcon} />
-          )}
-        </div>
-      ) : (
-        <img
-          className={classes.image}
-          src={src}
-          alt={alt}
-          onError={() => setError(true)}
-          style={_styles.image}
-        />
-      )}
-    </Element>
-  );
-}
+    useEffect(() => {
+      !src ? setError(true) : setError(false);
+    }, [src]);
+
+    return (
+      <Element {...rest} className={cx(classes.root, className)} style={mergedStyles} ref={ref}>
+        {error ? (
+          <div className={classes.placeholder} title={alt} style={_styles.placeholder}>
+            {children || (
+              <AvatarPlaceholderIcon
+                className={classes.placeholderIcon}
+                style={_styles.placeholderIcon}
+              />
+            )}
+          </div>
+        ) : (
+          <img
+            className={classes.image}
+            src={src}
+            alt={alt}
+            onError={() => setError(true)}
+            style={_styles.image}
+          />
+        )}
+      </Element>
+    );
+  }
+);
 
 Avatar.displayName = '@mantine/core/Avatar';

@@ -1,34 +1,27 @@
-import React from 'react';
-import cx from 'clsx';
+import React, { forwardRef } from 'react';
 import {
-  useMantineTheme,
+  mergeStyles,
   DefaultProps,
   MantineSize,
   MantineNumberSize,
-  mergeStyles,
   MantineGradient,
   MantineColor,
-} from '../../theme';
-import useStyles, { heights } from './Badge.styles';
+  ClassNames,
+  useExtractedMargins,
+  PolymorphicComponentProps,
+  PolymorphicRef,
+} from '@mantine/styles';
+import useStyles from './Badge.styles';
 
-export const BADGE_SIZES = heights;
-export const BADGE_VARIANTS = ['light', 'filled', 'outline', 'dot', 'gradient'] as const;
-export type BadgeVariant = typeof BADGE_VARIANTS[number];
-export type BadgeStylesNames = Exclude<keyof ReturnType<typeof useStyles>, BadgeVariant>;
+export type BadgeVariant = 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
+export type BadgeStylesNames = Exclude<ClassNames<typeof useStyles>, BadgeVariant>;
 
-interface _BadgeProps<C extends React.ElementType, R extends HTMLElement>
-  extends DefaultProps<BadgeStylesNames> {
-  /** Root element or custom component */
-  component?: C;
-
-  /** Get element ref */
-  elementRef?: React.ForwardedRef<R>;
-
+interface _BadgeProps extends DefaultProps<BadgeStylesNames> {
   /** Badge color from theme */
   color?: MantineColor;
 
   /** Controls badge background, color and border styles */
-  variant?: 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
+  variant?: BadgeVariant;
 
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
@@ -49,72 +42,75 @@ interface _BadgeProps<C extends React.ElementType, R extends HTMLElement>
   rightSection?: React.ReactNode;
 }
 
-export type BadgeProps<
-  C extends React.ElementType = 'div',
-  R extends HTMLElement = HTMLDivElement
-> = _BadgeProps<C, R> & Omit<React.ComponentPropsWithoutRef<C>, keyof _BadgeProps<C, R>>;
+export type BadgeProps<C extends React.ElementType> = PolymorphicComponentProps<C, _BadgeProps>;
 
-export function Badge<C extends React.ElementType = 'div', R extends HTMLElement = HTMLDivElement>({
-  component,
-  className,
-  style,
-  color,
-  elementRef,
-  variant = 'light',
-  fullWidth,
-  children,
-  themeOverride,
-  size = 'md',
-  leftSection,
-  rightSection,
-  radius = 'xl',
-  gradient = { from: 'blue', to: 'cyan', deg: 45 },
-  classNames,
-  styles,
-  ...others
-}: BadgeProps<C, R>) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles(
+type BadgeComponent = <C extends React.ElementType = 'div'>(
+  props: BadgeProps<C>
+) => React.ReactElement;
+
+export const Badge: BadgeComponent & { displayName?: string } = forwardRef(
+  <C extends React.ElementType = 'div'>(
     {
-      size,
-      fullWidth,
+      component,
+      className,
+      style,
       color,
-      radius,
-      theme,
-      gradientFrom: gradient.from,
-      gradientTo: gradient.to,
-      gradientDeg: gradient.deg,
-    },
-    classNames,
-    'badge'
-  );
-  const _styles = mergeStyles(classes, styles);
-  const Element = component || 'div';
+      variant = 'light',
+      fullWidth,
+      children,
+      size = 'md',
+      leftSection,
+      rightSection,
+      radius = 'xl',
+      gradient = { from: 'blue', to: 'cyan', deg: 45 },
+      classNames,
+      styles,
+      ...others
+    }: BadgeProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const { classes, cx } = useStyles(
+      {
+        size,
+        fullWidth,
+        color,
+        radius,
+        gradientFrom: gradient.from,
+        gradientTo: gradient.to,
+        gradientDeg: gradient.deg,
+      },
+      classNames,
+      'badge'
+    );
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, rootStyle: _styles.root, style });
+    const Element = component || 'div';
 
-  return (
-    <Element
-      {...others}
-      className={cx(classes.root, classes[variant], className)}
-      style={{ ...style, ..._styles.root, ..._styles[variant] }}
-      ref={elementRef as any}
-    >
-      {leftSection && (
-        <span className={classes.leftSection} style={_styles.leftSection}>
-          {leftSection}
+    return (
+      <Element
+        {...rest}
+        className={cx(classes.root, classes[variant], className)}
+        style={mergedStyles}
+        ref={ref}
+      >
+        {leftSection && (
+          <span className={classes.leftSection} style={_styles.leftSection}>
+            {leftSection}
+          </span>
+        )}
+
+        <span className={classes.inner} style={_styles.inner}>
+          {children}
         </span>
-      )}
 
-      <span className={classes.inner} style={_styles.inner}>
-        {children}
-      </span>
-
-      {rightSection && (
-        <span className={classes.rightSection} style={_styles.rightSection}>
-          {rightSection}
-        </span>
-      )}
-    </Element>
-  );
-}
+        {rightSection && (
+          <span className={classes.rightSection} style={_styles.rightSection}>
+            {rightSection}
+          </span>
+        )}
+      </Element>
+    );
+  }
+);
 
 Badge.displayName = '@mantine/core/Badge';

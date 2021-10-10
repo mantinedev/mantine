@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Anchor } from './Anchor';
 
@@ -14,7 +15,8 @@ describe('@mantine/core/Anchor', () => {
   itRendersChildren(Anchor, {});
   itSupportsOthers(Anchor, {});
   itSupportsStyle(Anchor, {});
-  itSupportsRef(Anchor, {}, HTMLAnchorElement, 'elementRef');
+  itSupportsMargins(Anchor, {});
+  itSupportsRef(Anchor, {}, HTMLAnchorElement);
 
   it('accepts component from component prop', () => {
     const TestComponent = (props: any) => <span data-test-prop {...props} />;

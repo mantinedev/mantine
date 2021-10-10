@@ -48,3 +48,32 @@ To support screen readers set close button aria-label or title with `closeButton
 <Notification closeButtonProps={{ 'aria-label': 'Hide notification' }} />
 <Notification closeButtonProps={{ title: 'Hide notification' }} />
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { NotificationProps } from '@mantine/core';
+```
+
+`NotificationProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### NotificationStylesNames type
+
+`NotificationStylesNames` type is a union with Notification [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { NotificationStylesNames } from '@mantine/core';
+
+const notificationClasses: Partial<Record<NotificationStylesNames, 'string'>> = {
+  title: 'notification-title',
+  description: 'notification-description',
+};
+
+<Notification classNames={notificationClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

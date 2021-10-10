@@ -21,6 +21,12 @@ describe('@mantine/core/Pagination/DefaultItem', () => {
     const prevPage = shallow(<DefaultItem page="prev" />);
     expect(prevPage.render().find('svg')).toHaveLength(1);
 
+    const firstPage = shallow(<DefaultItem page="first" />);
+    expect(firstPage.render().find('svg')).toHaveLength(1);
+
+    const lastPage = shallow(<DefaultItem page="last" />);
+    expect(lastPage.render().find('svg')).toHaveLength(1);
+
     const dotsElement = shallow(<DefaultItem page="dots" />);
     expect(dotsElement.render().find('svg')).toHaveLength(1);
   });

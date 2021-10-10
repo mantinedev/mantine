@@ -1,0 +1,53 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'dom'
+title: 'use-resize-observer'
+order: 1
+slug: /hooks/use-resize-observer/
+description: 'Subscribe to element size and position changes with ResizeObserver'
+import: "import { useResizeObserver } from '@mantine/hooks';"
+docs: 'hooks/use-resize-observer.mdx'
+source: 'mantine-hooks/src/use-resize-observer/use-resize-observer.ts'
+---
+
+import { useResizeObserverDemo } from '@docs/demos';
+
+## Usage
+
+<Demo data={useResizeObserverDemo} />
+
+## API
+
+Hook returns ref function that should be passed to the observed element, and the current element content rect, as returned by `ResizeObserver`'s callback `entry.contentRect`.
+See [Resize Observer API](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) documentation to learn more.
+
+On the first render (as well as during SSR), or when no element is being observed, all of the properties are equal to `0`.
+
+```tsx
+const [ref, rect] = useResizeObserver();
+
+// With regular element:
+<div ref={ref}>Observed</div>
+
+// With Mantine component:
+<Paper ref={ref}>Observed</Paper>
+```
+
+## Definition
+
+```tsx
+function useResizeObserver<T extends HTMLElement = any>(): [
+  MutableRefObject<T>,
+  {
+    x: number;
+    y: number;
+    top: number;
+    left: number;
+    right: number;
+    bottom: number;
+    height: number;
+    width: number;
+  }
+];
+```

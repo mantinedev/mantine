@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineColor } from '../../../theme';
-import { MantineTransition } from '../../Transition/Transition';
+import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { MantineTransition } from '../../Transition';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
 import { getPosition } from '../utils/get-position/get-position';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';
@@ -81,7 +81,6 @@ export interface RangeSliderProps
 }
 
 export function RangeSlider({
-  themeOverride,
   classNames,
   styles,
   color,
@@ -285,7 +284,6 @@ export function RangeSlider({
     labelTransitionDuration,
     labelTransitionTimingFunction,
     labelAlwaysOn,
-    themeOverride,
     onBlur: () => setFocused(-1),
     classNames,
     styles,
@@ -295,7 +293,7 @@ export function RangeSlider({
     <SliderRoot
       {...others}
       size={size}
-      elementRef={container}
+      ref={container}
       onTouchStart={handleTrackMouseDown}
       onMouseDown={handleTrackMouseDown}
       onTouchStartCapture={handleTrackMouseDownCapture}
@@ -303,7 +301,6 @@ export function RangeSlider({
       onMouseDownCapture={handleTrackMouseDownCapture}
       onMouseUpCapture={() => setDragging(-1)}
       onKeyDownCapture={handleTrackKeydownCapture}
-      themeOverride={themeOverride}
       styles={styles}
       classNames={classNames}
     >
@@ -317,7 +314,6 @@ export function RangeSlider({
         min={min}
         max={max}
         value={_value[1]}
-        themeOverride={themeOverride}
         styles={styles}
         classNames={classNames}
         onChange={(val) => {
@@ -333,7 +329,7 @@ export function RangeSlider({
           position={positions[0]}
           dragging={dragging === 0}
           label={typeof label === 'function' ? label(_value[0]) : label}
-          elementRef={(node) => {
+          ref={(node) => {
             thumbs.current[0] = node;
           }}
           thumbLabel={thumbFromLabel}
@@ -348,7 +344,7 @@ export function RangeSlider({
           position={positions[1]}
           dragging={dragging === 1}
           label={typeof label === 'function' ? label(_value[1]) : label}
-          elementRef={(node) => {
+          ref={(node) => {
             thumbs.current[1] = node;
           }}
           onMouseDown={(event) => handleThumbMouseDown(event, 1)}

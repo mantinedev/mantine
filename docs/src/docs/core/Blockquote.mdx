@@ -33,3 +33,32 @@ or [react-icons](https://react-icons.github.io/react-icons):
 By default blockquote uses quote icon, to disable it, set `icon` prop to null:
 
 <Demo data={BlockquoteDemos.noIcon} />
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { BlockquoteProps } from '@mantine/core';
+```
+
+`BlockquoteProps` extends `React.ComponentPropsWithoutRef<'blockquote'>`, all other props are available under _Component props_ tab.
+
+### BlockquoteStylesNames type
+
+`BlockquoteStylesNames` type is a union with Blockquote [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { BlockquoteStylesNames } from '@mantine/core';
+
+const blockquoteClasses: Partial<Record<BlockquoteStylesNames, 'string'>> = {
+  icon: 'blockquote-icon',
+  cite: 'blockquote-cite',
+};
+
+<Blockquote classNames={blockquoteClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

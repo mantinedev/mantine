@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
+import { useMantineTheme, DefaultProps, getSizeValue } from '@mantine/styles';
 import { validateJson } from './validate-json/validate-json';
-import { DefaultProps, getSizeValue, useMantineTheme } from '../../theme';
-import { Textarea, TextareaProps, TextareaStylesNames } from '../Textarea/Textarea';
+import { Textarea, TextareaProps } from '../Textarea';
+import { TextInputStylesNames } from '../TextInput';
 
-export type JsonInputStylesNames = TextareaStylesNames;
+export type JsonInputStylesNames = TextInputStylesNames;
 
 export interface JsonInputProps
   extends DefaultProps<JsonInputStylesNames>,
@@ -36,10 +37,9 @@ export function JsonInput({
   formatOnBlur = false,
   size = 'sm',
   validationError,
-  themeOverride,
   ...others
 }: JsonInputProps) {
-  const theme = useMantineTheme(themeOverride);
+  const theme = useMantineTheme();
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -67,7 +67,6 @@ export function JsonInput({
 
   return (
     <Textarea
-      themeOverride={themeOverride}
       value={_value}
       onChange={(event) => setValue(event.currentTarget.value)}
       onFocus={handleFocus}

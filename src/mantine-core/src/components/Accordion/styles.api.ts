@@ -1,4 +1,4 @@
-import { AccordionStylesNames } from './Accordion';
+import type { AccordionStylesNames } from './index';
 
 export const Accordion: Record<AccordionStylesNames, string> = {
   item: 'Accordion item',

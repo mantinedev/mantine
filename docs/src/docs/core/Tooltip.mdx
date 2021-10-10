@@ -106,22 +106,6 @@ it is controlled and can be closed with control inside tooltip:
 
 <Demo data={TooltipDemos.pointerEvents} />
 
-## Get element ref
-
-You can get both tooltip and root element refs with `elementRef` and `tooltipRef` props.
-Use it to customize behavior, for example, with [use-click-outside](/hooks/use-click-outside/) hook.
-
-```tsx
-import { useRef } from 'react';
-import { Tooltip } from '@mantine/core';
-
-function Demo() {
-  const tooltipRef = useRef();
-  const rootElementRef = useRef();
-  return <Tooltip elementRef={rootElementRef} tooltipRef={tooltipRef} />;
-}
-```
-
 ## Accessibility
 
 Do not place any important information in tooltip.
@@ -150,3 +134,32 @@ function Demo() {
   );
 }
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { TooltipProps } from '@mantine/core';
+```
+
+`TooltipProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### TooltipStylesNames type
+
+`TooltipStylesNames` type is a union with Tooltip [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { TooltipStylesNames } from '@mantine/core';
+
+const tooltipClasses: Partial<Record<TooltipStylesNames, 'string'>> = {
+  tooltip: 'tooltip-tooltip',
+  arrow: 'tooltip-arrow',
+};
+
+<Tooltip classNames={tooltipClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

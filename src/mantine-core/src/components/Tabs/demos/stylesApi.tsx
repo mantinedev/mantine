@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageIcon, ChatBubbleIcon, GearIcon } from '@modulz/radix-icons';
-import { createStyles } from '../../../theme';
-import { Tabs, TabsProps, Tab } from '../Tabs';
+import { createStyles } from '@mantine/styles';
+import { Tabs, TabsProps, Tab } from '../index';
 
 const code = `
 import { createStyles, Tabs, Tab } from '@mantine/core';
@@ -14,7 +14,7 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]
     }\`,
     fontSize: theme.fontSizes.md,
-    padding: [theme.spacing.lg, theme.spacing.xl],
+    padding: \`\${theme.spacing.lg}px \${theme.spacing.xl}px\`,
 
     '& + &': {
       borderLeft: 0,
@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StyledTabs(props: TabsProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   return <Tabs variant="unstyled" classNames={classes} {...props} />;
 }
 
@@ -62,7 +62,7 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]
     }`,
     fontSize: theme.fontSizes.md,
-    padding: [theme.spacing.lg, theme.spacing.xl],
+    padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
 
     '& + &': {
       borderLeft: 0,
@@ -87,8 +87,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function StyledTabs(props: TabsProps) {
-  const classes = useStyles();
-  return <Tabs variant="unstyled" classNames={classes} {...props} />;
+  const { classes } = useStyles();
+  return <Tabs variant="unstyled" classNames={classes as any} {...props} />;
 }
 
 function Demo() {

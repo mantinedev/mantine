@@ -26,7 +26,7 @@ async function exitFullscreen() {
 export function useFullscreen<T extends HTMLElement = any>() {
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
-  const elementRef = useRef<T>();
+  const _ref = useRef<T>();
 
   const handleFullscreenChange = useCallback(
     (event: Event) => {
@@ -48,34 +48,34 @@ export function useFullscreen<T extends HTMLElement = any>() {
 
   const toggle = useCallback(async () => {
     if (!getFullscreenElement()) {
-      await elementRef.current.requestFullscreen();
+      await _ref.current.requestFullscreen();
     } else {
       await exitFullscreen();
     }
   }, []);
 
   const ref = useCallback((element: T | null) => {
-    if (elementRef.current) {
-      elementRef.current.removeEventListener('fullscreenchange', handleFullscreenChange);
-      elementRef.current.removeEventListener('fullscreenerror', handleFullscreenError);
-      elementRef.current = null;
+    if (_ref.current) {
+      _ref.current.removeEventListener('fullscreenchange', handleFullscreenChange);
+      _ref.current.removeEventListener('fullscreenerror', handleFullscreenError);
+      _ref.current = null;
     }
 
     if (element === null) {
-      elementRef.current = window.document.documentElement as T;
+      _ref.current = window.document.documentElement as T;
     } else {
-      elementRef.current = element;
+      _ref.current = element;
     }
 
-    elementRef.current.addEventListener('fullscreenchange', handleFullscreenChange);
-    elementRef.current.addEventListener('fullscreenerror', handleFullscreenError);
+    _ref.current.addEventListener('fullscreenchange', handleFullscreenChange);
+    _ref.current.addEventListener('fullscreenerror', handleFullscreenError);
   }, []);
 
   useEffect(() => {
-    if (!elementRef.current && window.document) {
-      elementRef.current = window.document.documentElement as T;
-      elementRef.current.addEventListener('fullscreenchange', handleFullscreenChange);
-      elementRef.current.addEventListener('fullscreenerror', handleFullscreenError);
+    if (!_ref.current && window.document) {
+      _ref.current = window.document.documentElement as T;
+      _ref.current.addEventListener('fullscreenchange', handleFullscreenChange);
+      _ref.current.addEventListener('fullscreenerror', handleFullscreenError);
     }
   }, []);
 

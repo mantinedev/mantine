@@ -1,9 +1,6 @@
-import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '../../theme';
-import useStyles, { sizes } from './Container.styles';
-
-export const CONTAINER_SIZES = sizes;
+import React, { forwardRef } from 'react';
+import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
+import useStyles from './Container.styles';
 
 export interface ContainerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Predefined container max-width or number for max-width in px */
@@ -16,16 +13,14 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
   fluid?: boolean;
 }
 
-export function Container({
-  className,
-  padding = 'md',
-  fluid,
-  size,
-  themeOverride,
-  ...others
-}: ContainerProps) {
-  const classes = useStyles({ padding, fluid, size, theme: useMantineTheme(themeOverride) });
-  return <div className={cx(classes.container, className)} {...others} />;
-}
+export const Container = forwardRef<HTMLDivElement, ContainerProps>(
+  ({ className, padding = 'md', fluid, size, style, ...others }: ContainerProps, ref) => {
+    const { classes, cx } = useStyles({ padding, fluid, size }, null, 'container');
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    return (
+      <div className={cx(classes.container, className)} style={mergedStyles} ref={ref} {...rest} />
+    );
+  }
+);
 
 Container.displayName = '@mantine/core/Container';

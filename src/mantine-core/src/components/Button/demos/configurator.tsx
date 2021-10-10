@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ButtonProps } from '../Button';
 import { Group } from '../../Group/Group';
 
-function Wrapper(props: ButtonProps) {
+function Wrapper(props: ButtonProps<'button'>) {
   return (
     <Group position="center">
       <Button {...props} />
@@ -27,6 +27,7 @@ export const configurator: MantineDemo = {
         { label: 'light', value: 'light' },
         { label: 'outline', value: 'outline' },
         { label: 'link', value: 'link' },
+        { label: 'default', value: 'default' },
       ],
       initialValue: 'filled',
       defaultValue: 'filled',

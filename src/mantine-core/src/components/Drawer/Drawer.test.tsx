@@ -8,7 +8,7 @@ import {
   itSupportsOthers,
   itSupportsStylesApi,
 } from '@mantine/tests';
-import { GroupedTransition } from '../Transition/Transition';
+import { GroupedTransition } from '../Transition';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
@@ -104,7 +104,7 @@ describe('@mantine/core/Drawer', () => {
 
   it('sets correct z-index on drawer and overlay', () => {
     const element = mount(<MantineDrawer {...defaultProps} zIndex={547} />);
-    expect((element.find(Paper).prop('style') as any).zIndex).toBe(548);
+    expect((element.find(Paper).prop('style') as any).zIndex).toBe(549);
     expect(element.find(Overlay).prop('zIndex')).toBe(547);
   });
 

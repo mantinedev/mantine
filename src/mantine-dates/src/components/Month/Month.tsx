@@ -1,6 +1,12 @@
 import React, { useRef, useEffect } from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles, Text, MantineSize } from '@mantine/core';
+import {
+  DefaultProps,
+  mergeStyles,
+  Text,
+  MantineSize,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
@@ -37,7 +43,7 @@ export interface MonthSettings {
   fullWidth?: boolean;
 }
 
-export type MonthStylesNames = keyof ReturnType<typeof useStyles> | DayStylesNames;
+export type MonthStylesNames = ClassNames<typeof useStyles> | DayStylesNames;
 
 export interface MonthProps
   extends DefaultProps<MonthStylesNames>,
@@ -81,7 +87,6 @@ export function Month({
   locale = 'en',
   dayClassName,
   dayStyle,
-  themeOverride,
   classNames,
   styles,
   minDate,
@@ -95,9 +100,9 @@ export function Month({
   fullWidth = false,
   ...others
 }: MonthProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, fullWidth }, classNames, __staticSelector);
+  const { classes, cx } = useStyles({ fullWidth }, classNames, __staticSelector);
   const _styles = mergeStyles(classes, styles);
+  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
 
@@ -181,7 +186,7 @@ export function Month({
       return (
         <td className={classes.cell} style={_styles.cell} key={cellIndex}>
           <Day
-            elementRef={(button) => {
+            ref={(button) => {
               daysRefs.current[date.toISOString()] = button;
             }}
             onClick={() => typeof onChange === 'function' && onChange(date)}
@@ -195,7 +200,6 @@ export function Month({
             selected={dayProps.selected || dayProps.selectedInRange}
             hasValue={hasValueInMonthRange}
             onKeyDown={handleKeyDown}
-            themeOverride={themeOverride}
             className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
             style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
             styles={styles}
@@ -214,11 +218,7 @@ export function Month({
   });
 
   return (
-    <table
-      className={cx(classes.root, className)}
-      style={{ ...style, ..._styles.root }}
-      {...others}
-    >
+    <table className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {!hideWeekdays && (
         <thead>
           <tr>{weekdays}</tr>

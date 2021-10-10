@@ -1,12 +1,7 @@
-import { createUseStyles } from 'react-jss';
-import { getFocusStyles, getFontStyles, MantineTheme } from '../../../theme';
+import { createStyles, getFocusStyles, getFontStyles } from '@mantine/styles';
 
-interface UnstyledButtonStyles {
-  theme: MantineTheme;
-}
-
-export default createUseStyles({
-  button: ({ theme }: UnstyledButtonStyles) => ({
+export default createStyles((theme) => ({
+  button: {
     ...getFocusStyles(theme),
     ...getFontStyles(theme),
     cursor: 'pointer',
@@ -16,5 +11,5 @@ export default createUseStyles({
     fontSize: theme.fontSizes.md,
     backgroundColor: 'transparent',
     textAlign: 'left',
-  }),
-});
+  },
+}));

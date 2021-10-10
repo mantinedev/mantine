@@ -1,27 +1,22 @@
-import {
-  createMemoStyles,
-  MantineTheme,
-  getThemeColor,
-  getFontStyles,
-  MantineColor,
-} from '../../theme';
+import { createStyles, getThemeColor, getFontStyles, MantineColor } from '@mantine/styles';
 
 interface AlertStyles {
   color: MantineColor;
-  theme: MantineTheme;
   withIcon: boolean;
 }
 
-export default createMemoStyles({
-  root: ({ color, theme }: AlertStyles) => ({
+export default createStyles((theme, { color, withIcon }: AlertStyles) => ({
+  root: {
+    ...getFontStyles(theme),
     position: 'relative',
-    padding: [theme.spacing.sm, theme.spacing.md],
+    overflow: 'hidden',
+    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
     borderRadius: theme.radius.sm,
     backgroundColor:
       theme.colorScheme === 'dark'
         ? theme.colors.dark[5]
         : getThemeColor({ theme, color, shade: 0 }),
-  }),
+  },
 
   wrapper: {
     display: 'flex',
@@ -31,7 +26,7 @@ export default createMemoStyles({
     flex: 1,
   },
 
-  title: ({ color, theme, withIcon }: AlertStyles) => ({
+  title: {
     boxSizing: 'border-box',
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
     margin: 0,
@@ -42,9 +37,11 @@ export default createMemoStyles({
     alignItems: 'center',
     justifyContent: 'space-between',
     lineHeight: withIcon ? theme.lineHeight : 1,
-  }),
+    fontSize: theme.fontSizes.sm,
+    fontWeight: 700,
+  },
 
-  icon: ({ theme, color }: AlertStyles) => ({
+  icon: {
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
     lineHeight: 1,
     width: 20,
@@ -53,13 +50,9 @@ export default createMemoStyles({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginRight: theme.spacing.md,
+  },
 
-    '& svg': {
-      display: 'block',
-    },
-  }),
-
-  message: ({ theme }: AlertStyles) => ({
+  message: {
     ...getFontStyles(theme),
     lineHeight: theme.lineHeight,
     borderBottomLeftRadius: theme.radius.sm,
@@ -73,9 +66,9 @@ export default createMemoStyles({
       borderTopRightRadius: theme.radius.sm,
       borderTopLeftRadius: theme.radius.sm,
     },
-  }),
+  },
 
   closeButton: {
     marginTop: 2,
   },
-});
+}));

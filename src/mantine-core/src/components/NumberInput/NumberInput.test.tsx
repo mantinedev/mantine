@@ -7,6 +7,8 @@ import {
   itSupportsStyle,
   itSupportsRef,
   itSupportsStylesApi,
+  itSupportsMargins,
+  defaultInputProps,
 } from '@mantine/tests';
 import { TextInput } from '../TextInput/TextInput';
 import { NumberInput, NumberInputHandlers } from './NumberInput';
@@ -30,18 +32,12 @@ describe('@mantine/core/NumberInput', () => {
   ]);
 
   itSupportsClassName(NumberInput, defaultProps);
+  itSupportsMargins(NumberInput, defaultProps);
   itSupportsStyle(NumberInput, defaultProps);
-  itSupportsRef(NumberInput, defaultProps, HTMLInputElement, 'elementRef');
+  itSupportsRef(NumberInput, defaultProps, HTMLInputElement);
   itSupportsStylesApi(
     NumberInput,
-    {
-      icon: '$',
-      rightSection: '$',
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-    },
+    defaultInputProps,
     Object.keys(NumberInputStylesApi),
     'number-input'
   );

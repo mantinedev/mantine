@@ -43,7 +43,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-    fontFamily: 'Dosis, sans-serif',
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontWeight: 900,
     marginBottom: theme.spacing.md,
     textAlign: 'center',
@@ -63,7 +63,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   features: {
-    marginTop: [[theme.spacing.xl], '!important'],
+    marginTop: `${theme.spacing.xl}px !important`,
   },
 }));
 
@@ -74,7 +74,7 @@ interface FeaturesGridProps {
 }
 
 export function FeaturesGrid({ title, description, data = MOCKDATA }: FeaturesGridProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const theme = useMantineTheme();
   const features = data.map((feature, index) => <Feature {...feature} key={index} />);
 

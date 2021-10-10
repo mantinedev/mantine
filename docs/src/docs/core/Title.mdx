@@ -24,3 +24,13 @@ You can change headings font-size and line-height properties in [theme](/theming
 Pass `order` prop to render specific element (h1-h6), default order is 1:
 
 <Demo data={TitleDemos.usage} />
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { TitleProps } from '@mantine/core';
+```
+
+`TitleProps` extends `React.ComponentPropsWithoutRef<'h1'>`, all other props are available under _Component props_ tab.

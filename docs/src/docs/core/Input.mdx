@@ -16,6 +16,22 @@ styles: ['Input']
 import { INPUT_SIZES } from '@mantine/core';
 import { InputDemos, ActionIconDemos, KbdDemos } from '@demos/core';
 
+## Disclaimer
+
+**!important:** In most cases you should not used Input component in your application.
+This component is a base for other inputs and was not designed to be used directly.
+
+```tsx
+// Incorrect usage, input is not accessible
+<InputWrapper label="Input label">
+  <Input />
+</InputWrapper>
+
+// Use TextInput instead of Input everywhere you want to use Input,
+// it is accessible by default and includes InputWrapper
+<TextInput label="Input label" description="Input description" />
+```
+
 ## Usage
 
 Input component is used as base for all other inputs ([Select](/core/select/), [TextInput](/core/text-input/), [Textarea](/core/textarea/) and others).
@@ -86,9 +102,9 @@ use special `headless` variant which does not include any Mantine styles but sti
 
 <Demo data={InputDemos.headless} />
 
-## Get element ref
+## Get input ref
 
-You can get input ref by passing `elementRef` prop to Input component:
+You can get input ref by passing `ref` prop to Input component:
 
 ```tsx
 import { useRef } from 'react';
@@ -96,29 +112,78 @@ import { Input } from '@mantine/core';
 
 function Demo() {
   const ref = useRef(null);
-  return <Input elementRef={ref} />;
+  return <Input ref={ref} />;
 }
 ```
 
 ## TypeScript
 
-You need to pass additional types to use custom component with TypeScript
-in case you need full type coverage for events and `elementRef`:
+### Usage with custom component
+
+You need to pass additional type to use custom component with TypeScript
+in case you need full type coverage for events and `ref`:
 
 ```tsx
-<Input<'button', HTMLButtonElement>
+<Input<'button'>
   component="button"
   onClick={(event) => console.log(event)}
-  elementRef={(node) => {
+  ref={(node) => {
     window.myRef = node;
   }}
 />
 
-<Input<typeof YourTextarea, HTMLTextareaElement>
+<Input<typeof YourTextarea>
   component={YourTextarea}
   onClick={(event) => console.log(event)}
-  elementRef={(node) => {
+  ref={(node) => {
     window.myRef = node;
   }}
 />
+```
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { InputProps } from '@mantine/core';
+```
+
+`InputProps` is a generic type, it accepts either a string or component type as single type argument:
+
+```tsx
+// InputProps with html tag, will extend React.ComponentPropsWithoutRef<'button'>
+type ButtonInputProps = InputProps<'button'>;
+
+// InputProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
+type CustomInputProps = InputProps<typeof MyOtherComponent>;
+```
+
+See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.
+
+### InputStylesNames type
+
+`InputStylesNames` type is a union with Button [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { InputStylesNames } from '@mantine/core';
+
+const inputClasses: Partial<Record<InputStylesNames, 'string'>> = {
+  icon: 'input-icon',
+  rightSection: 'input-rightSection',
+};
+
+<Input classNames={inputClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
+
+### InputVariant type
+
+`InputVariant` is a union, it includes all Input variants:
+
+```tsx
+import type { InputVariant } from '@mantine/core';
+
+const myVariant: InputVariant = 'unstyled';
 ```

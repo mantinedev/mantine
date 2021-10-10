@@ -6,11 +6,11 @@ order: 1
 slug: /core/avatar/
 category: 'data-display'
 description: 'Display user profile image, initials or fallback icon'
-props: ['Avatar']
-import: "import { Avatar } from '@mantine/core';"
+props: ['Avatar', 'AvatarsGroup']
+import: "import { Avatar, AvatarsGroup } from '@mantine/core';"
 source: 'mantine-core/src/components/Avatar/Avatar.tsx'
 docs: 'core/Avatar.mdx'
-styles: ['Avatar']
+styles: ['Avatar', 'AvatarsGroup']
 ---
 
 import { AvatarDemos } from '@demos/core';
@@ -76,6 +76,12 @@ function Demo() {
 }
 ```
 
+## Avatars Group
+
+You can use AvatarsGroup to stack avatar components, set `limit` prop to truncate avatars:
+
+<Demo data={AvatarDemos.avatarsGroup} />
+
 ## Accessibility
 
 Avatar renders img html element. It is important to add alt text.
@@ -88,3 +94,67 @@ In case of image load failing alt will be used as `title` for placeholder.
 // alt is used as title attribute
 <Avatar alt="Rob Johnson">RJ</Avatar>
 ```
+
+## TypeScript
+
+### Usage with custom component
+
+You need to pass additional type to use custom component with TypeScript
+in case you need full type coverage for events and `ref`:
+
+```tsx
+// With element
+<Avatar<'a'>
+  component="a"
+  onClick={(event) => console.log(event)}
+  ref={(node) => {
+    window.myRef = node;
+  }}
+/>
+
+// With component
+<Avatar<typeof Link>
+  component={Link}
+  onClick={(event) => console.log(event)}
+  ref={(node) => {
+    window.myRef = node;
+  }}
+/>
+```
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { AvatarProps, AvatarsGroupProps } from '@mantine/core';
+```
+
+`AvatarProps` is a generic type, it accepts either a string or component type as single type argument:
+
+```tsx
+// AvatarProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
+type AnchorAvatarProps = AvatarProps<'a'>;
+
+// AvatarProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
+type CustomAvatarProps = AvatarProps<typeof MyOtherComponent>;
+```
+
+See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.
+
+### AvatarStylesNames type
+
+`AvatarStylesNames` type is a union with Avatar [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { AvatarStylesNames } from '@mantine/core';
+
+const avatarClasses: Partial<Record<AvatarStylesNames, 'string'>> = {
+  image: 'avatar-image',
+  placeholder: 'avatar-placeholder',
+};
+
+<Avatar classNames={avatarClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

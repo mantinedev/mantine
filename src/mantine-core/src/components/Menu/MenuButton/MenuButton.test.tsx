@@ -12,14 +12,13 @@ import { MenuButton } from './MenuButton';
 const defaultProps = {
   onHover: () => {},
   hovered: false,
-  elementRef: () => {},
 };
 
 describe('@mantine/core/MenuButton', () => {
   itSupportsClassName(MenuButton, defaultProps);
   itSupportsStyle(MenuButton, defaultProps);
   itSupportsOthers(MenuButton, defaultProps);
-  itSupportsRef(MenuButton, defaultProps, HTMLButtonElement, 'elementRef');
+  itSupportsRef(MenuButton, defaultProps, HTMLButtonElement);
   itRendersChildren(MenuButton, defaultProps);
 
   it('has correct displayName', () => {

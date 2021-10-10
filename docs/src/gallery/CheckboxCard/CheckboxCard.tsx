@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'clsx';
 import { UnstyledButton, Checkbox, Text, createStyles } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 
@@ -46,7 +45,7 @@ export function CheckboxCard({
   className,
   ...others
 }: CheckboxCardProps & Omit<React.ComponentPropsWithoutRef<'button'>, keyof CheckboxCardProps>) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   const [value, handleChange] = useUncontrolled({
     value: checked,

@@ -92,7 +92,7 @@ To remove all default styles set `variant` prop to `unstyled`:
 
 ## Get tab control ref
 
-You can get tab control ref by passing `elementRef` prop to `Tab` component
+You can get tab control ref by passing `ref` prop to `Tab` component
 
 ```tsx
 import { useRef } from 'react';
@@ -104,7 +104,7 @@ function TabsDemo() {
   return (
     <Tabs>
       <Tab label="First">First tab content</Tab>
-      <Tab label="Second" elementRef={secondTabRef}>
+      <Tab label="Second" ref={secondTabRef}>
         Second tab content
       </Tab>
       <Tab label="Third">Third tab content</Tab>
@@ -123,3 +123,45 @@ Component fully supports keyboard events handling and has correct aria-roles:
 - Only selected tab control can be focused
 - All elements have correct roles: tab, tablist and tabpanel
 - aria-orientation is set based off `orientation` prop (default is horizontal)
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { TabsProps, TabProps } from '@mantine/core';
+```
+
+- `TabsProps` extends `React.ComponentPropsWithoutRef<'select'>`
+- `TabProps` extends `React.ComponentPropsWithoutRef<'button'>`
+
+All other props are available under _Component props_ tab.
+
+### TabsStylesNames type
+
+`TabsStylesNames` type is a union with Tabs [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { TabsStylesNames } from '@mantine/core';
+
+const tabsClasses: Partial<Record<TabsStylesNames, 'string'>> = {
+  control: 'tabs-tabControl',
+  active: 'tabs-tabActive',
+};
+
+<Tabs classNames={tabsClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
+
+### TabsVariant type
+
+`TabsVariant` is a union, it includes all Tabs variants:
+
+```tsx
+import type { TabsVariant } from '@mantine/core';
+
+const myVariant: TabsVariant = 'pills';
+```

@@ -1,12 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsClassName, itSupportsStyle, itSupportsOthers } from '@mantine/tests';
+import {
+  itSupportsClassName,
+  itSupportsStyle,
+  itSupportsOthers,
+  itSupportsMargins,
+  itSupportsRef,
+} from '@mantine/tests';
 import { ColorSwatch } from './ColorSwatch';
 
 describe('@mantine/core/ColorSwatch', () => {
   itSupportsOthers(ColorSwatch, { color: '#fff' });
   itSupportsClassName(ColorSwatch, { color: '#fff' });
   itSupportsStyle(ColorSwatch, { color: '#fff' });
+  itSupportsMargins(ColorSwatch, { color: '#fff' });
+  itSupportsRef(ColorSwatch, { color: '#fff' }, HTMLDivElement);
 
   it('has correct displayName', () => {
     expect(ColorSwatch.displayName).toEqual('@mantine/core/ColorSwatch');

@@ -3,6 +3,7 @@ import { Link } from 'gatsby';
 import { ThemeIcon, Text, Group, useMantineTheme } from '@mantine/core';
 import { groupPages } from '../Layout/get-docs-data';
 import { Category } from '../../settings';
+import { Frontmatter } from '../../types';
 import useStyles from './IndexGroups.styles';
 
 interface DocsQuery {
@@ -23,7 +24,7 @@ interface IndexGroupsProps {
 }
 
 export function IndexGroups(props: IndexGroupsProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const data = groupPages(props);
   const theme = useMantineTheme();
 

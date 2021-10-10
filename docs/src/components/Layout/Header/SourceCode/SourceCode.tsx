@@ -1,11 +1,10 @@
 import React from 'react';
-import cx from 'clsx';
 import { Text, Center } from '@mantine/core';
 import { MarkGithubIcon } from '@primer/octicons-react';
 import useStyles from './SourceCode.styles';
 
 export function SourceCode({ className, ...others }: React.ComponentProps<'a'>) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
     <a

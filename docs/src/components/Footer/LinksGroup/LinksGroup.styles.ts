@@ -1,37 +1,34 @@
-import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
-export default createUseStyles(
-  (theme) => ({
-    wrapper: {
+export default createStyles((theme) => ({
+  wrapper: {
+    '& + &': {
+      marginLeft: 60,
+    },
+
+    '@media (max-width: 1000px)': {
       '& + &': {
-        marginLeft: 60,
-      },
-
-      '@media (max-width: 1000px)': {
-        '& + &': {
-          marginLeft: 40,
-        },
+        marginLeft: 40,
       },
     },
+  },
 
-    link: {
-      display: 'block',
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
-      fontSize: theme.fontSizes.sm,
-      paddingTop: 3,
-      paddingBottom: 3,
+  link: {
+    display: 'block',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
+    fontSize: theme.fontSizes.sm,
+    paddingTop: 3,
+    paddingBottom: 3,
 
-      '&:hover': {
-        textDecoration: 'underline',
-      },
+    '&:hover': {
+      textDecoration: 'underline',
     },
+  },
 
-    title: {
-      fontSize: theme.fontSizes.lg,
-      fontWeight: 500,
-      marginBottom: theme.spacing.xs,
-    },
-  }),
-  { theming }
-);
+  title: {
+    fontSize: theme.fontSizes.lg,
+    fontWeight: 700,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    marginBottom: theme.spacing.xs / 2,
+  },
+}));

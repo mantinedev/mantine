@@ -1,10 +1,15 @@
-import React, { createElement } from 'react';
-import cx from 'clsx';
-import { DefaultProps, useMantineTheme, mergeStyles, MantineSize } from '../../theme';
+import React, { createElement, forwardRef } from 'react';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineSize,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
-export type InputWrapperStylesNames = keyof ReturnType<typeof useStyles>;
+export type InputWrapperStylesNames = ClassNames<typeof useStyles>;
 
 export interface InputWrapperBaseProps {
   /** Input label, displayed before input */
@@ -49,81 +54,78 @@ export interface InputWrapperProps
   __staticSelector?: string;
 }
 
-export function InputWrapper({
-  className,
-  style,
-  label,
-  children,
-  required,
-  id,
-  error,
-  description,
-  themeOverride,
-  labelElement = 'label',
-  labelProps,
-  descriptionProps,
-  errorProps,
-  classNames,
-  styles,
-  size = 'sm',
-  __staticSelector = 'input-wrapper',
-  ...others
-}: InputWrapperProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ theme, size }, classNames, __staticSelector);
-  const _styles = mergeStyles(classes, styles);
-  const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
-  const inputLabel = createElement(
-    labelElement,
+export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
+  (
     {
-      ..._labelProps,
-      ...labelProps,
-      id: id ? `${id}-label` : undefined,
-      className: classes.label,
-      style: _styles.label,
-    },
-    <>
-      {label}
-      {required && (
-        <span className={classes.required} style={_styles.required}>
-          {' '}
-          *
-        </span>
-      )}
-    </>
-  );
+      className,
+      style,
+      label,
+      children,
+      required,
+      id,
+      error,
+      description,
+      labelElement = 'label',
+      labelProps,
+      descriptionProps,
+      errorProps,
+      classNames,
+      styles,
+      size = 'sm',
+      __staticSelector = 'input-wrapper',
+      ...others
+    }: InputWrapperProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
+    const inputLabel = createElement(
+      labelElement,
+      {
+        ..._labelProps,
+        ...labelProps,
+        id: id ? `${id}-label` : undefined,
+        className: classes.label,
+        style: _styles.label,
+      },
+      <>
+        {label}
+        {required && (
+          <span className={classes.required} style={_styles.required}>
+            {' '}
+            *
+          </span>
+        )}
+      </>
+    );
 
-  return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
-      {label && inputLabel}
+    return (
+      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+        {label && inputLabel}
 
-      {description && (
-        <Text
-          {...descriptionProps}
-          themeOverride={themeOverride}
-          color="gray"
-          className={classes.description}
-          style={_styles.description}
-        >
-          {description}
-        </Text>
-      )}
+        {description && (
+          <Text
+            {...descriptionProps}
+            color="gray"
+            className={classes.description}
+            style={_styles.description}
+          >
+            {description}
+          </Text>
+        )}
 
-      {children}
+        {children}
 
-      {typeof error !== 'boolean' && error && (
-        <Text
-          {...errorProps}
-          themeOverride={themeOverride}
-          size={size}
-          className={classes.error}
-          style={_styles.error}
-        >
-          {error}
-        </Text>
-      )}
-    </div>
-  );
-}
+        {typeof error !== 'boolean' && error && (
+          <Text {...errorProps} size={size} className={classes.error} style={_styles.error}>
+            {error}
+          </Text>
+        )}
+      </div>
+    );
+  }
+);
 
 InputWrapper.displayName = '@mantine/core/InputWrapper';

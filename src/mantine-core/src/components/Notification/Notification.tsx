@@ -1,13 +1,17 @@
-import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, mergeStyles, useMantineTheme, MantineColor } from '../../theme';
-import { Paper } from '../Paper/Paper';
+import React, { forwardRef } from 'react';
+import {
+  mergeStyles,
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { Text } from '../Text/Text';
 import { Loader } from '../Loader/Loader';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import useStyles from './Notification.styles';
 
-export type NotificationStylesNames = Exclude<keyof ReturnType<typeof useStyles>, 'withIcon'>;
+export type NotificationStylesNames = Exclude<ClassNames<typeof useStyles>, 'withIcon'>;
 
 export interface NotificationProps
   extends DefaultProps<NotificationStylesNames>,
@@ -37,81 +41,77 @@ export interface NotificationProps
   closeButtonProps?: React.ComponentPropsWithoutRef<'button'> & { [key: string]: any };
 }
 
-export function Notification({
-  className,
-  style,
-  color = 'blue',
-  loading = false,
-  disallowClose = false,
-  title,
-  icon,
-  children,
-  onClose,
-  closeButtonProps,
-  themeOverride,
-  classNames,
-  styles,
-  ...others
-}: NotificationProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles({ color, disallowClose, theme }, classNames, 'notification');
-  const _styles = mergeStyles(classes, styles);
-  const withIcon = icon || loading;
+export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
+  (
+    {
+      className,
+      style,
+      color = 'blue',
+      loading = false,
+      disallowClose = false,
+      title,
+      icon,
+      children,
+      onClose,
+      closeButtonProps,
+      classNames,
+      styles,
+      ...others
+    }: NotificationProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ color, disallowClose }, classNames, 'notification');
+    const _styles = mergeStyles(classes, styles);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const withIcon = icon || loading;
 
-  return (
-    <Paper
-      shadow="lg"
-      padding="sm"
-      className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
-      role="alert"
-      themeOverride={themeOverride}
-      style={{ ...style, ..._styles.root, ...(withIcon ? _styles.withIcon : null) }}
-      {...others}
-    >
-      {icon && !loading && (
-        <div className={classes.icon} style={_styles.icon}>
-          {icon}
-        </div>
-      )}
-
-      {loading && (
-        <Loader size={28} color={color} className={classes.loader} style={_styles.loader} />
-      )}
-
-      <div className={classes.body} style={_styles.body}>
-        {title && (
-          <Text
-            className={classes.title}
-            size="sm"
-            weight={500}
-            themeOverride={themeOverride}
-            style={_styles.title}
-          >
-            {title}
-          </Text>
+    return (
+      <div
+        className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
+        role="alert"
+        style={{ ...mergedStyles, ...(withIcon ? _styles.withIcon : null) }}
+        ref={ref}
+        {...rest}
+      >
+        {icon && !loading && (
+          <div className={classes.icon} style={_styles.icon}>
+            {icon}
+          </div>
         )}
 
-        <Text
-          className={classes.description}
-          size="sm"
-          themeOverride={themeOverride}
-          style={_styles.description}
-        >
-          {children}
-        </Text>
-      </div>
+        {loading && (
+          <Loader size={28} color={color} className={classes.loader} style={_styles.loader} />
+        )}
 
-      {!disallowClose && (
-        <CloseButton
-          {...closeButtonProps}
-          iconSize={16}
-          color="gray"
-          onClick={onClose}
-          themeOverride={themeOverride}
-        />
-      )}
-    </Paper>
-  );
-}
+        <div className={classes.body} style={_styles.body}>
+          {title && (
+            <Text className={classes.title} size="sm" weight={500} style={_styles.title}>
+              {title}
+            </Text>
+          )}
+
+          <Text
+            color="dimmed"
+            className={classes.description}
+            size="sm"
+            style={_styles.description}
+          >
+            {children}
+          </Text>
+        </div>
+
+        {!disallowClose && (
+          <CloseButton
+            {...closeButtonProps}
+            iconSize={16}
+            color="gray"
+            onClick={onClose}
+            variant="hover"
+          />
+        )}
+      </div>
+    );
+  }
+);
 
 Notification.displayName = '@mantine/core/Notification';

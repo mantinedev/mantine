@@ -1,20 +1,20 @@
-import React from 'react';
 import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsOthers,
   itRendersChildren,
-  itSupportsStylesApi,
+  itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Group } from './Group';
-import { Group as GroupStylesApi } from './styles.api';
 
 describe('@mantine/core/Group', () => {
   itSupportsOthers(Group, {});
   itSupportsClassName(Group, {});
   itSupportsStyle(Group, {});
   itRendersChildren(Group, {});
-  itSupportsStylesApi(Group, { children: <div /> }, Object.keys(GroupStylesApi), 'group');
+  itSupportsMargins(Group, {});
+  itSupportsRef(Group, {}, HTMLDivElement);
 
   it('has correct displayName', () => {
     expect(Group.displayName).toEqual('@mantine/core/Group');

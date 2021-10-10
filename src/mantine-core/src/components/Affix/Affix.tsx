@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Portal } from '../Portal/Portal';
 
 export interface AffixProps extends React.ComponentPropsWithoutRef<'div'> {
@@ -17,18 +17,15 @@ export interface AffixProps extends React.ComponentPropsWithoutRef<'div'> {
   };
 }
 
-export function Affix({
-  target,
-  style,
-  position = { bottom: 0, right: 0 },
-  zIndex = 1000,
-  ...others
-}: AffixProps) {
-  return (
+export const Affix = forwardRef<HTMLDivElement, AffixProps>(
+  (
+    { target, style, position = { bottom: 0, right: 0 }, zIndex = 1000, ...others }: AffixProps,
+    ref
+  ) => (
     <Portal zIndex={zIndex} target={target}>
-      <div style={{ position: 'fixed', ...position, ...style }} {...others} />
+      <div style={{ position: 'fixed', ...position, ...style }} ref={ref} {...others} />
     </Portal>
-  );
-}
+  )
+);
 
 Affix.displayName = '@mantine/core/Affix';

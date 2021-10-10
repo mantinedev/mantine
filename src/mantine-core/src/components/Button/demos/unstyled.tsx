@@ -1,5 +1,5 @@
 import React from 'react';
-import { UnstyledButton } from '../Button';
+import { UnstyledButton } from '../UnstyledButton/UnstyledButton';
 import { Group } from '../../Group/Group';
 import { Avatar } from '../../Avatar/Avatar';
 import { Text } from '../../Text/Text';

@@ -1,10 +1,9 @@
 import React from 'react';
-import cx from 'clsx';
-import { DefaultProps, mergeStyles, useMantineTheme, MantineColor } from '../../../theme';
+import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import useStyles from './TimelineItem.styles';
 
-export type TimelineItemStylesNames = keyof ReturnType<typeof useStyles>;
+export type TimelineItemStylesNames = ClassNames<typeof useStyles>;
 
 export interface TimelineItemProps
   extends DefaultProps<TimelineItemStylesNames>,
@@ -15,35 +14,34 @@ export interface TimelineItemProps
   /** React node that should be rendered inside bullet – icon, image, avatar, etc. */
   bullet?: React.ReactNode;
 
-  /** Bullet width, height and border-radius in px */
+  /** Bullet width, height and border-radius in px, controlled by Timeline component */
   bulletSize?: number;
 
   /** React node that will be rendered after title */
   children?: React.ReactNode;
 
-  /** Should this item be highlighted */
+  /** Should this item be highlighted, controlled by Timeline component */
   active?: boolean;
 
-  /** Should line of this item be highlighted */
+  /** Should line of this item be highlighted, controlled by Timeline component */
   lineActive?: boolean;
 
   /** Highlight color for active item */
   color?: MantineColor;
 
-  /** Line and bullet position relative to item content */
+  /** Line and bullet position relative to item content, controlled by Timeline component */
   align?: 'right' | 'left';
 
   /** Line border style */
   lineVariant?: 'solid' | 'dashed' | 'dotted';
 
-  /** Line border width in px */
+  /** Line border width in px, controlled by Timeline component */
   lineWidth?: number;
 }
 
 export function TimelineItem({
   className,
   style,
-  themeOverride,
   bullet,
   title,
   bulletSize = 20,
@@ -58,9 +56,8 @@ export function TimelineItem({
   lineVariant = 'solid',
   ...others
 }: TimelineItemProps) {
-  const theme = useMantineTheme(themeOverride);
-  const classes = useStyles(
-    { theme, bulletSize, color, align, lineVariant, lineWidth },
+  const { classes, cx } = useStyles(
+    { bulletSize, color, align, lineVariant, lineWidth },
     classNames,
     'timeline'
   );

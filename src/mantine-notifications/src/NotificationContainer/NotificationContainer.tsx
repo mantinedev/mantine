@@ -12,7 +12,6 @@ export interface NotificationContainerProps extends DefaultProps {
 export default function NotificationContainer({
   className,
   style,
-  themeOverride,
   notification,
   autoClose,
   onHide,
@@ -51,7 +50,6 @@ export default function NotificationContainer({
       style={style}
       className={className}
       title={notification.title}
-      themeOverride={themeOverride}
       onClose={handleHide}
       color={notification.color}
       icon={notification.icon}

@@ -6,8 +6,9 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
-import { DEFAULT_THEME } from '../../theme';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Input } from './Input';
 import { Input as InputStylesApi } from './styles.api';
 
@@ -25,8 +26,9 @@ describe('@mantine/core/Input', () => {
   ]);
 
   itSupportsClassName(Input, {});
+  itSupportsMargins(Input, {});
   itSupportsStyle(Input, {});
-  itSupportsRef(Input, {}, HTMLInputElement, 'elementRef');
+  itSupportsRef(Input, {}, HTMLInputElement);
   itSupportsStylesApi(
     Input,
     {

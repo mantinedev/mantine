@@ -12,7 +12,7 @@ describe('@mantine/core/UnstyledButton', () => {
   itSupportsClassName(UnstyledButton, {});
   itSupportsOthers(UnstyledButton, {});
   itSupportsStyle(UnstyledButton, {});
-  itSupportsRef(UnstyledButton, {}, HTMLButtonElement, 'elementRef');
+  itSupportsRef(UnstyledButton, {}, HTMLButtonElement);
 
   it('has correct displayName', () => {
     expect(UnstyledButton.displayName).toEqual('@mantine/core/UnstyledButton');

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio, RadioGroup, RadioProps } from '../RadioGroup';
+import { Radio, RadioGroup, RadioProps } from '../index';
 
 const getSizes = (props?: RadioProps) =>
   (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size, index) => (

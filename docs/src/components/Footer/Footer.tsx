@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Text, Group, Button } from '@mantine/core';
-import cx from 'clsx';
+import { ArrowRightIcon } from '@primer/octicons-react';
 import { Logo } from '../Logo/Logo';
 import { SocialButton } from '../SocialButton/SocialButton';
 import { LinksGroup } from './LinksGroup/LinksGroup';
@@ -12,7 +12,7 @@ interface FooterProps {
 }
 
 export function Footer({ withNavbar }: FooterProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const groups = FOOTER_LINKS_DATA.map((group) => (
     <LinksGroup data={group.data} title={group.title} key={group.title} />
   ));
@@ -26,7 +26,7 @@ export function Footer({ withNavbar }: FooterProps) {
             <div className={classes.logoSection}>
               <Logo />
               <Text className={classes.description} size="sm">
-                Build fully functional accessible web applications with ease
+                Build fully functional accessible web applications faster than ever
               </Text>
             </div>
 
@@ -34,9 +34,7 @@ export function Footer({ withNavbar }: FooterProps) {
               {groups}
 
               <div className={classes.feedback}>
-                <Text size="lg" weight={500} style={{ marginBottom: 12 }}>
-                  Feedback
-                </Text>
+                <Text className={classes.feedbackTitle}>Feedback</Text>
                 <Text className={classes.feedbackDescription} size="sm">
                   Your feedback is most valuable contribution to the project, please share how you
                   use Mantine, what features are missing and what is done good
@@ -45,9 +43,9 @@ export function Footer({ withNavbar }: FooterProps) {
                 <Button
                   component="a"
                   href="https://github.com/mantinedev/mantine/discussions/new"
-                  variant="outline"
-                  color="gray"
-                  size="sm"
+                  variant="default"
+                  rightIcon={<ArrowRightIcon size={14} />}
+                  style={{ paddingRight: 12 }}
                 >
                   Leave feedback
                 </Button>

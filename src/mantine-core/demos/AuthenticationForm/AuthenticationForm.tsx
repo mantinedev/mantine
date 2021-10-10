@@ -125,8 +125,6 @@ export function AuthenticationForm({
           required
           placeholder="Password"
           label="Password"
-          showPasswordLabel="Show password"
-          hidePasswordLabel="Hide password"
           icon={<LockClosedIcon />}
           value={form.values.password}
           onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
