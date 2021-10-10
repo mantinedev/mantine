@@ -90,7 +90,36 @@ function Demo() {
 Switch is a regular input with checkbox type. Provide `aria-label` in case you use switch without label for screen reader support:
 
 ```tsx
-<Switch label="My switch" />; // -> ok, input and label is connected
+<Switch label="I agree to everything" />; // -> ok, input and label is connected
 <Switch />; // not ok, input is not labeled
-<Switch aria-label="My switch" />; // -> ok, label is not visible but will be announced by screen reader
+<Switch aria-label="I agree to everything" />; // -> ok, label is not visible but will be announced by screen reader
 ```
+
+## TypeScript
+
+### Component props
+
+Import component props type:
+
+```tsx
+import type { SwitchProps } from '@mantine/core';
+```
+
+`SwitchProps` extends `React.ComponentPropsWithoutRef<'input'>`, all other props are available under _Component props_ tab.
+
+### SwitchStylesNames type
+
+`SwitchStylesNames` type is a union with Switch [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { SwitchStylesNames } from '@mantine/core';
+
+const checkboxClasses: Partial<Record<SwitchStylesNames, 'string'>> = {
+  icon: 'checkbox-icon',
+  label: 'checkbox-label',
+};
+
+<Switch classNames={checkboxClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

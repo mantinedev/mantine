@@ -110,3 +110,13 @@ function ColWrapper(props: React.ComponentProps<typeof Col>) {
   <ColWrapper span={4}>3</ColWrapper>
 </Grid>;
 ```
+
+## TypeScript
+
+Import components props types:
+
+```tsx
+import type { GridProps, ColProps } from '@mantine/core';
+```
+
+Both `GridProps` and `ColProps` extend `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

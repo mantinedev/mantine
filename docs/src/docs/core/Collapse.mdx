@@ -28,3 +28,13 @@ Set following props to control transition:
 - `onTransitionEnd` – called when transition ends (both open and close)
 
 <Demo data={CollapseDemos.transition} />
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { CollapseProps } from '@mantine/core';
+```
+
+`CollapseProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

@@ -36,3 +36,32 @@ You can replace list bullets with icon. To do so provide following props:
 Set `withPadding` prop to offset nested lists and `listStyleType` to control bullet type:
 
 <Demo data={ListDemos.nested} />
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { ListProps } from '@mantine/core';
+```
+
+`ListProps` extends `React.ComponentPropsWithoutRef<'ul'>`, all other props are available under _Component props_ tab.
+
+### ListStylesNames type
+
+`ListStylesNames` type is a union with List [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { ListStylesNames } from '@mantine/core';
+
+const listClasses: Partial<Record<ListStylesNames, 'string'>> = {
+  item: 'list-item',
+  icon: 'list-itemIcon',
+};
+
+<List classNames={listClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

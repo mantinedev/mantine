@@ -74,3 +74,25 @@ Spacing also works in `breakpoints`:
 
 Simple grid uses [CSS Grid Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout),
 check [caniuse](https://caniuse.com/css-grid) to find out information about browser support.
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { SimpleGridProps } from '@mantine/core';
+```
+
+`SimpleGridProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+Additionally you can import `SimpleGridBreakpoint` to create a variable with component breakpoints:
+
+```tsx
+import type { SimpleGridBreakpoint } from '@mantine/core';
+
+const breakpoints: SimpleGridBreakpoint[] = [
+  { maxWidth: 'md', cols: 3, spacing: 'md' },
+  { maxWidth: 'sm', cols: 2, spacing: 'sm' },
+  { maxWidth: 'xs', cols: 1, spacing: 'sm' },
+];
+```

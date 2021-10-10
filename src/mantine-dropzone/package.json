@@ -1,7 +1,7 @@
 {
   "name": "@mantine/dropzone",
   "description": "Dropzone component built with Mantine theme and components",
-  "version": "2.6.0-alpha.4",
+  "version": "2.6.0-alpha.6",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -15,8 +15,8 @@
     "directory": "src/mantine-prism"
   },
   "peerDependencies": {
-    "@mantine/core": "2.6.0-alpha.4",
-    "@mantine/hooks": "2.6.0-alpha.4",
+    "@mantine/core": "2.6.0-alpha.6",
+    "@mantine/hooks": "2.6.0-alpha.6",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

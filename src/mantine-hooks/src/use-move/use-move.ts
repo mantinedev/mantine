@@ -83,11 +83,14 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
 
     const onTouchStart = (event: TouchEvent) => {
       startScrubbing();
+      event?.preventDefault();
       onTouchMove(event);
     };
 
-    const onTouchMove = (event: TouchEvent) =>
+    const onTouchMove = (event: TouchEvent) => {
+      event?.preventDefault();
       onScrub({ x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY });
+    };
 
     ref.current.addEventListener('mousedown', onMouseDown);
     ref.current.addEventListener('touchstart', onTouchStart);

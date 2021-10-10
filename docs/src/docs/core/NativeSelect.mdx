@@ -81,3 +81,32 @@ Provide `aria-label` in case you use component without label for screen reader s
 <NativeSelect />; // not ok, select is not labeled
 <NativeSelect aria-label="My select" />; // -> ok, label is not visible but will be announced by screen reader
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { NativeSelectProps } from '@mantine/core';
+```
+
+`NativeSelectProps` extends `React.ComponentPropsWithoutRef<'select'>`, all other props are available under _Component props_ tab.
+
+### NativeSelectStylesNames type
+
+`NativeSelectStylesNames` type is a union with NativeSelect [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { NativeSelectStylesNames } from '@mantine/core';
+
+const selectClasses: Partial<Record<NativeSelectStylesNames, 'string'>> = {
+  label: 'select-label',
+  description: 'select-description',
+};
+
+<NativeSelect classNames={selectClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

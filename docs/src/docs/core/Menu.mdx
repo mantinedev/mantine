@@ -225,3 +225,33 @@ Component behavior and properties:
 - Menu control has `aria-haspopup`, `aria-expanded`, `aria-controls` and `aria-label` attributes, `aria-label` is defined by `menuButtonLabel` prop
 - Menu body has `menu` role, `aria-orientation` is always set to `vertical`
 - Menu item has `menuitem` role
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { MenuProps, MenuItemProps, MenuLabelProps } from '@mantine/core';
+```
+
+`MenuProps`, `MenuItemProps` and `MenuLabelProps` extend `React.ComponentPropsWithoutRef<'div'>`,
+all other props are available under _Component props_ tab.
+
+### MenuStylesNames type
+
+`MenuStylesNames` type is a union with Menu [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { MenuStylesNames } from '@mantine/core';
+
+const menuClasses: Partial<Record<MenuStylesNames, 'string'>> = {
+  item: 'menu-item',
+  arrow: 'menu-arrow',
+};
+
+<Menu classNames={menuClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

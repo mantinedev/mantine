@@ -1,8 +1,3 @@
-import { PasswordInputStylesNames } from './PasswordInput';
-import { Input } from '../Input/styles.api';
-import { InputWrapper } from '../InputWrapper/styles.api';
+import { TextInput } from '../TextInput/styles.api';
 
-export const PasswordInput: Record<PasswordInputStylesNames, string> = {
-  ...Input,
-  ...InputWrapper,
-};
+export const PasswordInput = TextInput;

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import { useReducedMotion, useMergedRef } from '@mantine/hooks';
 import { useMantineTheme, useExtractedMargins } from '@mantine/styles';
 
-export interface CollapseProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
+export interface CollapseProps extends React.ComponentPropsWithoutRef<'div'> {
   /** Content that should be collapsed */
   children: React.ReactNode;
 

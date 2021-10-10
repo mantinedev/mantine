@@ -11,7 +11,7 @@ export default createStyles((theme) => ({
 
   header: {
     ...getFocusStyles(theme),
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
     outline: 0,
     display: 'flex',
     alignItems: 'center',
@@ -58,7 +58,7 @@ export default createStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     fontSize: theme.fontSizes.xs,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     borderTopRightRadius: theme.radius.sm,
     borderBottomRightRadius: theme.radius.sm,
@@ -105,5 +105,9 @@ export default createStyles((theme) => ({
 
   title: {
     userSelect: 'none',
+    fontWeight: 700,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    lineHeight: 1,
+    paddingTop: 4,
   },
 }));

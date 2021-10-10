@@ -83,3 +83,32 @@ function Demo() {
   return <Accordion state={state} onChange={onChange} />;
 }
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { AccordionProps } from '@mantine/core';
+```
+
+`AccordionProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
+
+### AccordionStylesNames type
+
+`AccordionStylesNames` type is a union with Accordion [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { AccordionStylesNames } from '@mantine/core';
+
+const accordionClasses: Partial<Record<AccordionStylesNames, 'string'>> = {
+  item: 'accordion-item',
+  itemOpened: 'accordion-itemOpened',
+};
+
+<Accordion classNames={accordionClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

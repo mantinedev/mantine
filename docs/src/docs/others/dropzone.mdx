@@ -1,0 +1,148 @@
+---
+group: 'Other packages'
+package: '@mantine/dropzone'
+title: 'Dropzone'
+order: 1
+slug: /others/dropzone/
+description: 'Capture files from user with drag and drop'
+props: ['Dropzone', 'FullScreenDropzone']
+import: "import { Dropzone, FullScreenDropzone } from '@mantine/dropzone';"
+source: 'mantine-dropzone/src'
+docs: 'others/dropzone.mdx'
+installation: '@mantine/dropzone'
+license: MIT
+styles: ['Dropzone', 'FullScreenDropzone']
+---
+
+import {
+  MIME_TYPES,
+  IMAGE_MIME_TYPE,
+  PDF_MINE_TYPE,
+  MS_WORD_MIME_TYPE,
+  MS_EXCEL_MIME_TYPE,
+  MS_POWERPOINT_MIME_TYPE,
+} from '@mantine/dropzone';
+import * as DropzoneDemos from '@demos/dropzone';
+
+## Installation
+
+Package depends on @mantine/core and @mantine/hooks.
+
+Install with npm:
+
+```sh
+npm install @mantine/dropzone @mantine/core @mantine/hooks
+```
+
+Install with yarn:
+
+```sh
+yarn add @mantine/dropzone @mantine/core @mantine/hooks
+```
+
+## Usage
+
+Dropzone lets you capture one or more files from user.
+Component is built with [react-dropzone](https://react-dropzone.js.org/) and support all of its core features:
+
+- Accepts/rejects files based on provided mime types
+- Limits individual file size
+- Renders any content within dropzone with children function
+
+<Demo data={DropzoneDemos.usage} />
+
+## Loading state
+
+Set `loading` prop to indicate loading state with [LoadingOverlay](/core/loading-overlay/) component.
+When `loading` is set to true user cannot drop or select new files (Dropzone becomes disabled):
+
+<Demo data={DropzoneDemos.loading} />
+
+## Disabled state
+
+If you want to implement your own loading state you can disable Dropzone without LoadingOverlay.
+Same as with `loading`, when Dropzone is disabled user user cannot drop or select new files:
+
+<Demo data={DropzoneDemos.disabled} />
+
+## Open file browser manually
+
+To open files browser from outside of component use `openRef` prop to get function that will trigger file browser:
+
+<Demo data={DropzoneDemos.manual} />
+
+## Mime types
+
+To specify specific file types provide an array of mime types to `accept` prop:
+
+```tsx
+<Dropzone accept={['image/png', 'image/jpeg', 'image/sgv+xml', 'image/gif']}>
+  {/* children */}
+</Dropzone>
+```
+
+To save some research time you can use `MIME_TYPES` variable exported from `@mantine/dropzone`:
+
+```tsx
+import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
+
+// Same as an example above
+<Dropzone accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.svg]}>
+  {/* children */}
+</Dropzone>;
+```
+
+`MIME_TYPES` includes following data:
+
+<DataTable
+  head={['Key', 'Mime type']}
+  data={Object.keys(MIME_TYPES).map((key) => [key, MIME_TYPES[key]])}
+/>
+
+Additionally you can use grouped mime types:
+
+<DataTable
+  head={['Variable', 'Mime types']}
+  data={[
+    ['IMAGE_MIME_TYPE', IMAGE_MIME_TYPE.join(', ')],
+    ['PDF_MINE_TYPE', PDF_MINE_TYPE.join(', ')],
+    ['MS_WORD_MIME_TYPE', MS_WORD_MIME_TYPE.join(', ')],
+    ['MS_EXCEL_MIME_TYPE', MS_EXCEL_MIME_TYPE.join(', ')],
+    ['MS_POWERPOINT_MIME_TYPE', MS_POWERPOINT_MIME_TYPE.join(', ')],
+  ]}
+/>
+
+```tsx
+import { IMAGE_MIME_TYPE, Dropzone } from '@mantine/dropzone';
+
+// Same as an example above
+<Dropzone accept={IMAGE_MIME_TYPE}>{/* children */}</Dropzone>;
+```
+
+## Get ref
+
+```tsx
+import { useRef, useEffect } from 'react';
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  const dropzoneRef = useRef(); // will contain div element
+
+  useEffect(() => {
+    // do anything with ref
+    dropzoneRef.current.focus();
+  }, []);
+
+  return <Dropzone ref={dropzoneRef}>{/* children */}</Dropzone>;
+}
+```
+
+## FullScreenDropzone component
+
+FullScreenDropzone lets you capture files dropped to browser window instead of specific area.
+Component is build without react-dropzone (due to some bugs in mime types detections) but supports the same props
+and features as Dropzone component shown above (except `maxSize` and `loading` props).
+
+To preview component click button and drop images to browser window:
+
+<Demo data={DropzoneDemos.fullScreen} />

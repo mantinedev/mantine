@@ -98,6 +98,8 @@ function Demo() {
 
 ## TypeScript
 
+### Usage with custom component
+
 You need to pass additional type to use custom component with TypeScript
 in case you need full type coverage for events and `ref`:
 
@@ -120,3 +122,23 @@ in case you need full type coverage for events and `ref`:
   }}
 />
 ```
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { CardProps } from '@mantine/core';
+```
+
+`CardProps` is a generic type, it accepts either a string or component type as single type argument:
+
+```tsx
+// CardProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
+type AnchorCardProps = CardProps<'a'>;
+
+// CardProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
+type CustomCardProps = CardProps<typeof MyOtherComponent>;
+```
+
+See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.

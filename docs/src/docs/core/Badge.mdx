@@ -83,3 +83,77 @@ Use it to add interactive parts (for example, remove button) or additional infor
 You can change badge root element by passing React element to `component` prop.
 
 <Demo data={BadgeDemos.component} />
+
+## TypeScript
+
+### Usage with custom component
+
+You need to pass additional type to use custom component with TypeScript
+in case you need full type coverage for events and `ref`:
+
+```tsx
+// With element
+<Badge<'a'>
+  component="a"
+  onClick={(event) => console.log(event)}
+  ref={(node) => {
+    window.myRef = node;
+  }}
+/>
+
+// With component
+<Badge<typeof Link>
+  component={Link}
+  onClick={(event) => console.log(event)}
+  ref={(node) => {
+    window.myRef = node;
+  }}
+/>
+```
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { BadgeProps } from '@mantine/core';
+```
+
+`BadgeProps` is a generic type, it accepts either a string or component type as single type argument:
+
+```tsx
+// BadgeProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
+type AnchorBadgeProps = BadgeProps<'a'>;
+
+// BadgeProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
+type CustomBadgeProps = BadgeProps<typeof MyOtherComponent>;
+```
+
+See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.
+
+### BadgeStylesNames type
+
+`BadgeStylesNames` type is a union with Badge [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { BadgeStylesNames } from '@mantine/core';
+
+const badgeClasses: Partial<Record<BadgeStylesNames, 'string'>> = {
+  inner: 'badge-inner',
+  leftSection: 'badge-leftSection',
+};
+
+<Badge classNames={badgeClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
+
+### BadgeVariant type
+
+`BadgeVariant` is a union, it includes all Badge variants:
+
+```tsx
+import type { BadgeVariant } from '@mantine/core';
+
+const myVariant: BadgeVariant = 'light';
+```

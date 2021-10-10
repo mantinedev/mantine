@@ -74,7 +74,55 @@ You can use Chip component outside of Chips:
 
 <Demo data={ChipsDemos.chip} />
 
+## Change styles with Styles API
+
+Chip and Chips components use the same [Styles API](/theming/styles-api/) schema,
+you can use `classNames` and `styles` listed under Styles API tab in both components:
+
+<Demo data={ChipsDemos.stylesApi} />
+
 ## Accessibility
 
 Chip and Chips components are accessible by default since they are built with native radio/checkbox inputs,
 all keyboard events works the same as with native controls.
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { ChipsProps, ChipsProps } from '@mantine/core';
+```
+
+`ChipsProps` is a generic type that accepts a boolean type as an argument (single or multiple):
+
+```tsx
+type MySingleChipsProps = ChipsProps<false>;
+type MyMultipleChipsProps = ChipsProps<false>;
+```
+
+- `ChipsProps` extends `React.ComponentPropsWithoutRef<'div'>`
+- `ChipProps` extends `React.ComponentPropsWithoutRef<'input'>`
+
+All other props are available under _Component props_ tab.
+
+### ChipStylesNames type
+
+`ChipStylesNames` type is a union with Chip [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { ChipStylesNames } from '@mantine/core';
+
+const chipClasses: Partial<Record<ChipStylesNames, 'string'>> = {
+  icon: 'chip-icon',
+  input: 'chip-input',
+};
+
+// classNames and styles are usable with both Chip and Chips components
+<Chip classNames={chipClasses} />;
+<Chips classNames={chipClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

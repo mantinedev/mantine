@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme, DefaultProps, MantineMargin } from '@mantine/styles';
+import { useMantineTheme, DefaultProps, MantineMargin, MantineNumberSize } from '@mantine/styles';
 import { Overlay } from '../Overlay/Overlay';
 import { Transition } from '../Transition';
 import { Loader, LoaderProps } from '../Loader/Loader';
@@ -28,6 +28,9 @@ export interface LoadingOverlayProps
 
   /** Appear and disappear animation duration */
   transitionDuration?: number;
+
+  /** Value from theme.radius or number to set border-radius in px */
+  radius?: MantineNumberSize;
 }
 
 export function LoadingOverlay({
@@ -40,6 +43,7 @@ export function LoadingOverlay({
   zIndex = 1000,
   style,
   loader,
+  radius,
   ...others
 }: LoadingOverlayProps) {
   const theme = useMantineTheme();
@@ -62,6 +66,7 @@ export function LoadingOverlay({
           <Overlay
             opacity={overlayOpacity}
             zIndex={zIndex}
+            radius={radius}
             color={
               overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white)
             }

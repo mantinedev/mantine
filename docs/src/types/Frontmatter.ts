@@ -6,7 +6,6 @@ export interface Frontmatter {
   docs: string;
   source: string;
   package: string;
-  bundleSize: string;
   installation: string;
   pageTitle: string;
   license: string;

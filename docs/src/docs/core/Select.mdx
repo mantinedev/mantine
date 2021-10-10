@@ -256,3 +256,66 @@ If you use `clearable` option set `clearButtonLabel`:
 ```tsx
 <Select clearable clearButtonLabel="Clear select field" />
 ```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { SelectProps } from '@mantine/core';
+```
+
+`SelectProps` extends `React.ComponentPropsWithoutRef<'input'>`, all other props are available under _Component props_ tab.
+
+### SelectStylesNames type
+
+`SelectStylesNames` type is a union with Select [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { SelectStylesNames } from '@mantine/core';
+
+const selectClasses: Partial<Record<SelectStylesNames, 'string'>> = {
+  label: 'select-label',
+  description: 'select-description',
+};
+
+<Select classNames={selectClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.
+
+### SelectItem type
+
+`SelectItem` type lets you validate object items that will be passed to MultiSelect `data` prop,
+it can be used both with [MultiSelect](/core/multi-select/) and [Select](/core/select/) components `data`:
+
+```tsx
+import type { SelectItem } from '@mantine/core';
+
+const data: SelectItem[] = [
+  { value: 'john', label: 'John', group: 'Users' },
+  { value: 'jake', label: 'Jake', group: 'Users' },
+  { value: 'amy', label: 'Amy', group: 'Deleted users', disabled: true },
+];
+```
+
+### SelectItemProps type
+
+`SelectItemProps` type provides props for custom `itemComponent`,
+it can be used both with [MultiSelect](/core/multi-select/) and [Select](/core/select/) components `data`:
+
+```tsx
+import type { SelectItemProps } from '@mantine/core';
+
+const Item = forwardRef<HTMLDivElement, SelectItemProps>(
+  ({ label, value, ...others }: SelectItemProps, ref) => (
+    <div ref={ref} {...others}>
+      {/* Custom item component */}
+    </div>
+  )
+);
+
+<Select itemComponent={Item} />;
+```

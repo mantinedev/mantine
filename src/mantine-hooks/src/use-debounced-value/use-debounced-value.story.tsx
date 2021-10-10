@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { TextInput, Text } from '@mantine/core';
 import { useDebouncedValue } from './use-debounced-value';
 
 function Example() {
@@ -8,8 +7,8 @@ function Example() {
   const [debounced] = useDebouncedValue(value, 200);
   return (
     <div>
-      <TextInput value={value} onChange={(event) => setValue(event.currentTarget.value)} />
-      <Text style={{ marginTop: 20 }}>Debounced value: {debounced}</Text>
+      <input value={value} onChange={(event) => setValue(event.currentTarget.value)} />
+      <div style={{ marginTop: 20 }}>Debounced value: {debounced}</div>
     </div>
   );
 }

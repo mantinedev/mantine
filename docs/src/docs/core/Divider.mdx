@@ -53,3 +53,13 @@ import { DIVIDER_SIZES } from '@mantine/core';
   head={['Prop value', 'Height or width']}
   data={Object.keys(DIVIDER_SIZES).map((size) => [size, `${DIVIDER_SIZES[size]}px`])}
 />
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { DividerProps } from '@mantine/core';
+```
+
+`DividerProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

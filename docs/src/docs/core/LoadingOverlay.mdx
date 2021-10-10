@@ -69,3 +69,13 @@ it will be used in [Loader](/core/loader/) and LoadingOverlay components by defa
 You can use any other loader with LoadingOverlay by setting `loader` prop:
 
 <Demo data={LoadingOverlayDemos.loader} />
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { LoadingOverlayProps } from '@mantine/core';
+```
+
+`LoadingOverlayProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
