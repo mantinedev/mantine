@@ -280,3 +280,64 @@ To setup server side rendering follow one of these guides
 - [Server side rendering with express server](/theming/ssr/)
 
 ## TypeScript
+
+### Exported types
+
+@mantine/core package export types to help you build components and styles with TypeScript:
+
+- `MantineTheme` – theme interface defined in MantineProvider
+- `ColorScheme` – union `'light' | 'dark'`
+- `MantineColor` – union of all default colors, also accepts any string
+- `MantineGradient` – gradient interface used in [Button](/core/button/), [ThemeIcon](/core/theme-icon/) and other components
+- `MantineShadow` – union of all default shadows
+- `MantineSize` – union of `'xs' | 'sm' | 'md' | 'lg' | 'xl'`
+- `MantineNumberSize` – union of `MantineSize | number`
+
+### Components props
+
+You can import props type of any component by adding `Props` to component name:
+
+```tsx
+import type { ButtonProps } from '@mantine/core';
+```
+
+### Polymorphic components
+
+@mantine/core package exports `PolymorphicRef` and `PolymorphicComponentProps` types to help you build
+custom components with ref forwarding:
+
+```tsx
+import { forwardRef } from 'react';
+import type { PolymorphicRef, PolymorphicComponentProps } from '@mantine/core';
+
+// Define all component specific props here
+interface _TextProps {
+  bold: boolean;
+}
+
+type TextProps<C extends React.ElementType> = PolymorphicComponentProps<C, _TextProps>;
+
+type TextComponent = <C extends React.ElementType = 'div'>(
+  props: TextProps<C>
+) => React.ReactElement;
+
+const Text: TextComponent = forwardRef(
+  <C extends React.ElementType = 'div'>(
+    { bold, component, ...others }: TextProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const Element = component || 'div';
+    return <Element style={{ fontWeight: bold ? 700 : 400 }} {...others} />
+  }
+);
+
+// Default div text, props will have type React.ComponentPropsWithoutRef<'div'> & _TextProps
+<Text bold>Bold text</Text>
+
+// Text as an anchor, props will have type React.ComponentPropsWithoutRef<'a'> & _TextProps
+<Text component="a" href="https://mantine.dev">Mantine website</Text>
+
+// Text as component, props will have type React.ComponentPropsWithoutRef<typeof Link> & _TextProps
+import { Link } from 'react-router-dom';
+<Text component={Link} to="/route">Router link</Text>
+```
