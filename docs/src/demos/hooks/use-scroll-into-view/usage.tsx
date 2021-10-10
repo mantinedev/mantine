@@ -50,10 +50,12 @@ function Demo() {
   return (
     <Group position="center">
       <Button
-        onClick={() => scrollIntoView({
-          target: targetRef.current,
-          alignment: 'center',
-        })}
+        onClick={() =>
+          scrollIntoView({
+            target: targetRef.current,
+            alignment: 'center',
+          })
+        }
       >
         Scroll to target
       </Button>

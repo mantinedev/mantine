@@ -57,7 +57,8 @@ function Demo() {
             ref={targetRef}
             padding="xl"
             style={{
-              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+              backgroundColor:
+                theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
               width: '100%',
             }}
           >
@@ -66,10 +67,12 @@ function Demo() {
         </div>
       </Paper>
       <Button
-        onClick={() => scrollIntoView({
-          parent: scrollableRef.current,
-          target: targetRef.current,
-        })}
+        onClick={() =>
+          scrollIntoView({
+            parent: scrollableRef.current,
+            target: targetRef.current,
+          })
+        }
       >
         Scroll to target
       </Button>
