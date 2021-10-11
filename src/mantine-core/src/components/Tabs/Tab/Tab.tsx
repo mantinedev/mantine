@@ -21,6 +21,10 @@ export interface TabType {
   ref: React.ForwardedRef<HTMLButtonElement>;
 }
 
-export const Tab = forwardRef<HTMLButtonElement, TabProps>(() => null);
+type TabComponent = (props: TabProps) => React.ReactElement;
+
+export const Tab: TabComponent & { displayName?: string } = forwardRef<HTMLButtonElement, TabProps>(
+  () => null
+);
 
 Tab.displayName = '@mantine/core/Tab';

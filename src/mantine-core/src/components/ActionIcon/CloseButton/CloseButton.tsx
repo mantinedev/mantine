@@ -16,16 +16,19 @@ const iconSizes = {
   xl: 24,
 };
 
-export const CloseButton = forwardRef<HTMLButtonElement, CloseButtonProps>(
-  ({ iconSize, size = 'md', ...others }: CloseButtonProps, ref) => {
-    const _iconSize = iconSize || getSizeValue({ size, sizes: iconSizes });
+type CloseButtonComponent = (props: CloseButtonProps) => React.ReactElement;
 
-    return (
-      <ActionIcon size={size} ref={ref} {...others}>
-        <CloseIcon style={{ width: _iconSize, height: _iconSize }} />
-      </ActionIcon>
-    );
-  }
-);
+export const CloseButton: CloseButtonComponent & { displayName?: string } = forwardRef<
+  HTMLButtonElement,
+  CloseButtonProps
+>(({ iconSize, size = 'md', ...others }: CloseButtonProps, ref) => {
+  const _iconSize = iconSize || getSizeValue({ size, sizes: iconSizes });
+
+  return (
+    <ActionIcon size={size} ref={ref} {...others}>
+      <CloseIcon style={{ width: _iconSize, height: _iconSize }} />
+    </ActionIcon>
+  );
+});
 
 CloseButton.displayName = '@mantine/core/CloseButton';
