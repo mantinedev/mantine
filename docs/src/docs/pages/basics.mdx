@@ -15,34 +15,34 @@ to learn about all available theming features and components props.
 
 Mantine has a very friendly community, we are always happy to help you get started:
 
-- [Join Discord community](https://discord.gg/eUZpPbpxb4) – it is an easiest way to get help, all questions are usually answered in about 30 minutes
-- [Github Discussions](https://github.com/mantinedev/mantine/discussions) – ask anything about the project or give feedback
+- [Join the Discord community](https://discord.gg/eUZpPbpxb4) – it is the easiest way to get help, all questions are usually answered in about 30 minutes.
+- [Github Discussions](https://github.com/mantinedev/mantine/discussions) – ask anything about the project or give feedback.
 
 ## Using documentation
 
-Mantine documentation includes more that 150 pages to use it efficiently remember 2 keyboard shortcuts:
+Mantine documentation includes more that 150 pages so to use it efficiently remember 2 keyboard shortcuts:
 
-- `⌘ + K` or `Ctrl + K` – focus search field, searching components and hooks is the best way to jump straight to the page your are looking for
+- `⌘ + K` or `Ctrl + K` – focus search field, searching components and hooks is the best way to jump straight to the page your are looking for.
 - `⌘ + J` or `Ctrl + J` – toggle color scheme (light/dark). All components support both color schemes and using this shortcut is the easiest way to preview both color schemes.
 
 ## Mantine packages
 
-- `@mantine/hooks` – collection of [30+ react hooks](/hooks/getting-started/) for state and UI management
-- `@mantine/styles` – [emotion](https://emotion.sh/) based css-in-js library that is used in all Mantine components, usually this package is installed automatically and exported from `@mantine/core` – there is no need to install it separately, [learn more about createStyles](/theming/create-styles/)
-- `@mantine/core` – core components library – 100+ components, exports everything from `@mantine/styles`
-- `@mantine/notifications` – a fully featured [notifications system](/others/notifications/)
-- `@mantine/prism` – [code highlight](/others/prism/) built with [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer)
-- `@mantine/rte` – a Quill based [rich text editor](/others/rte/)
-- `@mantine/dropzone` – manages [files drag 'n' drop](/others/dropzone/) to area or entire screen
-- `@mantine/ssr` – [server side rendering](/theming/ssr/) utilities
-- `@mantine/next` – components and ssr utils for [Next.js integration](/theming/next/)
-- `gatsby-plugin-mantine` – [Gatsby plugin](/theming/gatsby/) to setup ssr
-- `@mantine/eslint-config` – ESLint and Prettier configuration that is used in all Mantine project
+- `@mantine/hooks` – collection of [30+ react hooks](/hooks/getting-started/) for state and UI management.
+- `@mantine/styles` – [emotion](https://emotion.sh/) based css-in-js library that is used in all Mantine components. Usually this package is installed automatically and exported from `@mantine/core` – there is no need to install it separately, [learn more about createStyles here](/theming/create-styles/).
+- `@mantine/core` – core components library – 100+ components, exports everything from `@mantine/styles`.
+- `@mantine/notifications` – a fully featured [notifications system](/others/notifications/).
+- `@mantine/prism` – [code highlight](/others/prism/) built with [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer).
+- `@mantine/rte` – a Quill based [rich text editor](/others/rte/).
+- `@mantine/dropzone` – manages [files drag 'n' drop](/others/dropzone/) of files to an area or the entire screen.
+- `@mantine/ssr` – [server side rendering](/theming/ssr/) utilities.
+- `@mantine/next` – components and ssr utils for [Next.js integration](/theming/next/).
+- `gatsby-plugin-mantine` – [Gatsby plugin](/theming/gatsby/) to setup ssr.
+- `@mantine/eslint-config` – ESLint and Prettier configuration that the Mantine project uses.
 
 ## Theming
 
-Mantine support changing colors, spacing, box-shadows, font families, font sizes and many other properties.
-To configure theme wrap your app with [MantineProvider](/theming/mantine-provider/) component:
+Mantine theming supports changing colors, spacing, box-shadows, font families, font sizes and many other properties.
+To configure the theme wrap your app with a [MantineProvider](/theming/mantine-provider/) component:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -67,7 +67,7 @@ Learn more about [MantineProvider](/theming/mantine-provider/) and [extending th
 ## Dark color scheme
 
 All Mantine components support light and dark color scheme out of the box.
-You can set color scheme in [MantineProvider](/theming/mantine-provider/):
+You can edit the details of each color scheme via [MantineProvider](/theming/mantine-provider/):
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -87,8 +87,8 @@ To learn how to implement color scheme changes via context follow [dark theme gu
 
 ### createStyles
 
-Mantine is built with css-in-js library based on [emotion](https://emotion.sh/).
-You can use any other styling solution bu we recommend to work with [createStyles](/theming/create-styles/)
+Mantine is built with a css-in-js library based on [emotion](https://emotion.sh/).
+You can use any other styling solution but we recommend working with [createStyles](/theming/create-styles/)
 to avoid styles collisions.
 
 `createStyles` usage demo:
@@ -97,7 +97,7 @@ to avoid styles collisions.
 
 ### Styling components internals with Styles API
 
-[Styles API](/theming/styles-api/) lets you add styles to any internal part of component:
+[Styles API](/theming/styles-api/) lets you add styles to any internal part of a component:
 
 <Demo data={SliderDemos.customize} />
 
@@ -107,16 +107,16 @@ to avoid styles collisions.
 
 All Mantine components support these props:
 
-- `className` – adds class to root element
-- `style` – adds style to root element
+- `className` – adds class to root element.
+- `style` – adds style to root element.
 - Margins:
-  - `m` – sets `margin` property on root element
-  - `my` – sets `margin-top` and `margin-bottom` properties on root element
-  - `mx` – sets `margin-right` and `margin-left` properties on root element
-  - `mt` – sets `margin-top` property on root element
-  - `mb` – sets `margin-bottom` property on root element
-  - `ml` – sets `margin-left` property on root element
-  - `mr` – sets `margin-right` property on root element
+  - `m` – sets `margin` property on root element.
+  - `my` – sets `margin-top` and `margin-bottom` properties on root element.
+  - `mx` – sets `margin-right` and `margin-left` properties on root element.
+  - `mt` – sets `margin-top` property on root element.
+  - `mb` – sets `margin-bottom` property on root element.
+  - `ml` – sets `margin-left` property on root element.
+  - `mr` – sets `margin-right` property on root element.
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -140,7 +140,7 @@ Mantine components work with colors defined in [theme.colors](/theming/extend-th
 <Button color="violet" />
 ```
 
-You can [extend theme](/theming/extend-theme/) with any amount of your colors:
+You can [extend each color theme](/theming/extend-theme/) with any amount of your colors:
 
 ```tsx
 // Theme is deeply merged with default theme
@@ -169,8 +169,8 @@ Most Mantine components support `size` prop with xs, sm, md, lg and xl values:
 <Badge size="xs" />
 ```
 
-`size` prop controls various css properties across all supported components,
-in some components where size is associated with only one value, you can set it in px:
+The `size` prop controls various css properties across all supported components.
+In some components where size is associated with only one value, you can set it in px:
 
 ```tsx
 <Slider size="xs" /> // Predefined xs size
@@ -194,7 +194,7 @@ To change these values set `spacing` property on [theme](/theming/extend-theme/)
 </MantineProvider>
 ```
 
-Later when you use Mantine components you can reference these values in `spacing` or `padding` props or set spacing in px:
+Later when you use Mantine components you can reference these values in `spacing` or `padding` props or set the spacing in px:
 
 ```tsx
 <Paper padding="xl" /> // -> xl padding from theme.spacing
@@ -206,7 +206,7 @@ Later when you use Mantine components you can reference these values in `spacing
 
 ### Shadows
 
-Components that use box-shadow property get values from [theme.shadows](/theming/extend-theme/#spacing-radius-and-shadows),
+Components that use the box-shadow property get values from [theme.shadows](/theming/extend-theme/#spacing-radius-and-shadows),
 default values are:
 
 ```tsx
@@ -219,7 +219,7 @@ default values are:
 }
 ```
 
-To change these values set `shadows` property on [theme](/theming/extend-theme/):
+To change these values set the `shadows` property on [theme](/theming/extend-theme/):
 
 ```tsx
 <MantineProvider
@@ -250,7 +250,7 @@ Later when you use Mantine components you can reference these values in `shadow`
 
 ## Getting element ref
 
-You can get ref of most components with `ref` prop:
+You can get ref of most components with their `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -285,17 +285,17 @@ To setup server side rendering follow one of these guides
 
 @mantine/core package export types to help you build components and styles with TypeScript:
 
-- `MantineTheme` – theme interface defined in MantineProvider
-- `ColorScheme` – union `'light' | 'dark'`
-- `MantineColor` – union of all default colors, also accepts any string
-- `MantineGradient` – gradient interface used in [Button](/core/button/), [ThemeIcon](/core/theme-icon/) and other components
-- `MantineShadow` – union of all default shadows
-- `MantineSize` – union of `'xs' | 'sm' | 'md' | 'lg' | 'xl'`
-- `MantineNumberSize` – union of `MantineSize | number`
+- `MantineTheme` – theme interface defined in MantineProvider.
+- `ColorScheme` – union of `'light' | 'dark'`.
+- `MantineColor` – union of all default colors, also accepts any string.
+- `MantineGradient` – gradient interface used in [Button](/core/button/), [ThemeIcon](/core/theme-icon/) and other components.
+- `MantineShadow` – union of all default shadows.
+- `MantineSize` – union of `'xs' | 'sm' | 'md' | 'lg' | 'xl'`.
+- `MantineNumberSize` – union of `MantineSize | number`.
 
 ### Components props
 
-You can import props type of any component by adding `Props` to component name:
+You can import props type of any component by adding `Props` to the component name:
 
 ```tsx
 import type { ButtonProps } from '@mantine/core';
