@@ -22,7 +22,7 @@ function Wrapper(
         opened={opened}
         onClose={() => setOpened(false)}
         position={position}
-        title="hello"
+        title="Title so large that it will overflow to the next line"
         {...props}
       />
       <Group>
