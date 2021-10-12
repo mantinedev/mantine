@@ -20,6 +20,7 @@ export type MantineTransitionName =
   | 'scale-y'
   | 'scale-x'
   | 'scale'
+  | 'pop'
   | 'pop-top-left'
   | 'pop-top-right'
   | 'pop-bottom-left'
@@ -115,6 +116,11 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
     out: { opacity: 0, transform: 'translateX(-100%)' },
     common: { transformOrigin: 'right' },
     transitionProperty: 'transform, opacity',
+  },
+
+  pop: {
+    ...popIn,
+    common: { transformOrigin: 'center center' },
   },
 
   'pop-bottom-left': {

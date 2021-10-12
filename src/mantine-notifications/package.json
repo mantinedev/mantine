@@ -1,7 +1,7 @@
 {
   "name": "@mantine/notifications",
   "description": "Notification system based on Mantine components",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -15,8 +15,8 @@
     "directory": "src/mantine-notifications"
   },
   "peerDependencies": {
-    "@mantine/core": "3.0.1",
-    "@mantine/hooks": "3.0.1",
+    "@mantine/core": "3.0.2",
+    "@mantine/hooks": "3.0.2",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

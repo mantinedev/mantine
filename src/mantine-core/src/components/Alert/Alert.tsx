@@ -52,7 +52,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
     }: AlertProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color, withIcon: !!icon }, classNames, 'alert');
+    const { classes, cx } = useStyles({ color }, classNames, 'alert');
     const _styles = mergeStyles(classes, styles);
     const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
 
@@ -68,7 +68,10 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
           <div className={classes.body} style={_styles.body}>
             {title && (
               <div className={classes.title} style={_styles.title}>
-                <span>{title}</span>
+                <span className={classes.label} style={_styles.label}>
+                  {title}
+                </span>
+
                 {withCloseButton && (
                   <CloseButton
                     className={classes.closeButton}

@@ -29,6 +29,8 @@ export default createStyles((theme, { color }: TooltipStyles) => ({
     padding: `${theme.spacing.xs / 2}px ${theme.spacing.xs}px`,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
     position: 'relative',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
 
   tooltip: {

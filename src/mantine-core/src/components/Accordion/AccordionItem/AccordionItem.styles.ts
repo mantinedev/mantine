@@ -34,6 +34,8 @@ export default createStyles(
         color: 'inherit',
         fontWeight: 500,
         flex: 1,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
       },
 
       item: {
