@@ -94,7 +94,12 @@ export function InputsDemo() {
           style={{ marginTop: 15 }}
         />
 
-        <CountriesSelect label="Multi select" style={{ marginTop: 15 }} defaultValue={[]} />
+        <CountriesSelect
+          label="Multi select"
+          style={{ marginTop: 15 }}
+          defaultValue={[]}
+          styles={{ dropdown: { zIndex: 5 } }}
+        />
 
         <RadioGroup label="Radio group" style={{ marginTop: 15 }} defaultValue="react">
           <Radio value="react">React</Radio>
