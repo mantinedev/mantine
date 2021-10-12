@@ -64,6 +64,11 @@ storiesOf('@mantine/dates/DatePicker', module)
     </div>
   ))
   .add('Sizes', () => <div style={{ maxWidth: 300, padding: 40 }}>{sizes}</div>)
+  .add('Placeholder overflow', () => (
+    <div style={{ maxWidth: 200, padding: 30 }}>
+      <DatePicker placeholder="Placeholder so large it overflows" />
+    </div>
+  ))
   .add('Within Group', () => (
     <div style={{ padding: 40 }}>
       <Group grow>
