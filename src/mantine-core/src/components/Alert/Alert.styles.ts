@@ -53,6 +53,7 @@ export default createStyles((theme, { color }: AlertStyles) => ({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginRight: theme.spacing.md,
+    marginTop: 1,
   },
 
   message: {
