@@ -183,7 +183,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       setFocused(true);
-      typeof onFocus === 'function' && onBlur(event);
+      typeof onFocus === 'function' && onFocus(event);
     };
 
     return (
