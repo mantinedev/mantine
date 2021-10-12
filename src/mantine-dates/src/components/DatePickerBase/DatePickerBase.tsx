@@ -210,7 +210,9 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
               rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
               {...rest}
             >
-              {inputLabel || (
+              {inputLabel ? (
+                <div className={classes.value}>{inputLabel}</div>
+              ) : (
                 <Text style={_styles.placeholder} className={classes.placeholder} size={size}>
                   {placeholder}
                 </Text>

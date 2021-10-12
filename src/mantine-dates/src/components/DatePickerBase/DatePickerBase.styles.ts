@@ -21,6 +21,11 @@ export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => 
       : theme.colors.gray[5],
   },
 
+  value: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+
   dropdownWrapper: {
     position: 'relative',
     pointerEvents: 'all',
