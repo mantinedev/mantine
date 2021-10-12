@@ -128,7 +128,7 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
     const loader = (
       <Loader
         color={colors.color}
-        size={getSizeValue({ size, sizes: heights }) - 12}
+        size={getSizeValue({ size, sizes: heights }) / 2}
         {...loaderProps}
       />
     );
