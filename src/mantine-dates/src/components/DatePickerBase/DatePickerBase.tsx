@@ -211,7 +211,9 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
               {...rest}
             >
               {inputLabel ? (
-                <div className={classes.value}>{inputLabel}</div>
+                <div className={classes.value} style={_styles.placeholder}>
+                  {inputLabel}
+                </div>
               ) : (
                 <Text style={_styles.placeholder} className={classes.placeholder} size={size}>
                   {placeholder}

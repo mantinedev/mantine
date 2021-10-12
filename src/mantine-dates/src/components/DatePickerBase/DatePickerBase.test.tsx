@@ -44,7 +44,7 @@ describe('@mantine/dates/DatePickerBase', () => {
   it('does not render placeholder if inputLabel is set', () => {
     const element = shallow(<DatePickerBase {...defaultProps} inputLabel="test-label" />);
     expect(element.render().find('.mantine-date-picker-placeholder')).toHaveLength(0);
-    expect(element.find(Input).prop('children')).toBe('test-label');
+    expect(element.find(Input).find('.mantine-date-picker-value').text()).toBe('test-label');
   });
 
   it('does not render dropdown if dropdownOpened is set to false', () => {
