@@ -206,11 +206,11 @@ export default createStyles(
       },
 
       label: {
-        display: 'flex',
-        alignItems: 'center',
         whiteSpace: 'nowrap',
         height: '100%',
         overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        lineHeight: `${getSizeStyles({ size, compact }).height}px`,
       },
 
       link: {
