@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Title, SimpleGrid } from '@mantine/core';
 import { PACKAGES_DATA } from './data';
-import { CheckboxCard } from '../../../gallery/CheckboxCard/CheckboxCard';
+import { CheckboxCard } from '../../../../../gallery/src/gallery/CheckboxCard/CheckboxCard';
 
 interface InstallationProps {
   setDependencies(dependencies: string): void;
