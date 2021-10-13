@@ -11,7 +11,7 @@
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "npm run docs:docgen && cd docs && yarn",
+    "postinstall": "npm run docs:docgen && cd docs && yarn && cd ../gallery && yarn",
     "syncpack": "syncpack list-mismatches",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
