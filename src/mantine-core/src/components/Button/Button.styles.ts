@@ -159,7 +159,7 @@ export default createStyles(
         position: 'relative',
         lineHeight: 1,
         fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
-        border: `1px solid ${colors.border}`,
+        border: variant === 'gradient' ? 0 : `1px solid ${colors.border}`,
         backgroundColor: colors.background,
         backgroundImage: variant === 'gradient' ? colors.background : null,
         color: colors.color,
