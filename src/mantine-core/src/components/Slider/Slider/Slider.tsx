@@ -96,7 +96,6 @@ export function Slider({
   showLabelOnHover = true,
   ...others
 }: SliderProps) {
-  //const [dragging, setDragging] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [_value, setValue] = useUncontrolled({
     value,
@@ -155,8 +154,8 @@ export function Slider({
       size={size}
       ref={container}
       onKeyDownCapture={handleTrackKeydownCapture}
-      onMouseOver={showLabelOnHover ? () => setHovered(true) : null}
-      onMouseOut={showLabelOnHover ? () => setHovered(false) : null}
+      onMouseOver={showLabelOnHover ? () => setHovered(true) : undefined}
+      onMouseOut={showLabelOnHover ? () => setHovered(false) : undefined}
       classNames={classNames}
       styles={styles}
     >

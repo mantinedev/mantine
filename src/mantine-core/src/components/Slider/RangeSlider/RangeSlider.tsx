@@ -107,7 +107,6 @@ export function RangeSlider({
   showLabelOnHover = true,
   ...others
 }: RangeSliderProps) {
-  //const [dragging, setDragging] = useState(-1);
   const [focused, setFocused] = useState(-1);
   const [hovered, setHovered] = useState(false);
   const [_value, setValue] = useUncontrolled<Value>({
@@ -156,12 +155,12 @@ export function RangeSlider({
     _setValue(clone);
   };
 
-  const handleChange = (val: number, index: number) => {
+  const handleChange = (val: number) => {
     const nextValue = getChangeValue({ value: val, min, max, step });
-    setRangedValue(nextValue, index);
+    setRangedValue(nextValue, thumbIndex.current);
   };
 
-  const { ref: container, active } = useMove(({ x }) => handleChange(x, thumbIndex.current));
+  const { ref: container, active } = useMove(({ x }) => handleChange(x));
 
   function handleThumbMouseDown(
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
@@ -268,8 +267,8 @@ export function RangeSlider({
         thumbIndex.current = -1;
       }}
       onKeyDownCapture={handleTrackKeydownCapture}
-      onMouseOver={showLabelOnHover ? () => setHovered(true) : null}
-      onMouseOut={showLabelOnHover ? () => setHovered(false) : null}
+      onMouseOver={showLabelOnHover ? () => setHovered(true) : undefined}
+      onMouseOut={showLabelOnHover ? () => setHovered(false) : undefined}
       styles={styles}
       classNames={classNames}
     >
