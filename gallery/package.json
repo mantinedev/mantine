@@ -1,0 +1,33 @@
+{
+  "name": "mantine-gallery",
+  "private": true,
+  "description": "Mantine gallery",
+  "version": "1.0.0",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "dependencies": {
+    "@types/react-helmet": "^6.1.1",
+    "gatsby": "^3.8.1",
+    "gatsby-plugin-cname": "^1.0.0",
+    "gatsby-plugin-manifest": "^3.8.0",
+    "gatsby-plugin-nprogress": "^3.8.0",
+    "gatsby-plugin-react-helmet": "^4.6.0",
+    "gatsby-plugin-tsconfig-paths": "^1.0.3",
+    "gatsby-source-filesystem": "^3.8.0",
+    "react-helmet": "^6.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@types/github-slugger": "^1.3.0",
+    "lmdb-store": "^1.6.8",
+    "typescript": "4.3.5"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "start": "gatsby develop -H 0.0.0.0 -p 7002",
+    "serve": "gatsby serve -H 0.0.0.0 -p 9002",
+    "clean": "gatsby clean",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx"
+  }
+}

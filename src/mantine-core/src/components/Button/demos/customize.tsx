@@ -19,6 +19,10 @@ const code = `
       paddingRight: 20,
     },
 
+    label: {
+      lineHeight: '42px',
+    },
+
     leftIcon: {
       marginRight: 15,
     },
@@ -44,6 +48,10 @@ function Demo() {
             height: 42,
             paddingLeft: 20,
             paddingRight: 20,
+          },
+
+          label: {
+            lineHeight: '42px',
           },
 
           leftIcon: {
