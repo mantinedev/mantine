@@ -144,6 +144,21 @@ describe('@mantine/hooks/use-list-state', () => {
     ]);
   });
 
+  it('applies given function to respective item with handlers.applyWhere', () => {
+    const hook = renderHook(() => useListState(TEST_STATE));
+
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.applyWhere(
+        (item) => item.age > 30,
+        (item) => ({ ...item, experienced: true })
+      );
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual([TEST_STATE[0], TEST_STATE[1], { ...TEST_STATE[2], experienced: true }]);
+  });
+
   it('reorders item at given position with handlers.reorder', () => {
     const hook = renderHook(() => useListState(TEST_STATE));
 
