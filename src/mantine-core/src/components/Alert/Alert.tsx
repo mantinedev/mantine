@@ -47,6 +47,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
       classNames,
       icon,
       styles,
+      onClose,
       withCloseButton,
       ...others
     }: AlertProps,
@@ -76,6 +77,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
                   <CloseButton
                     className={classes.closeButton}
                     style={_styles.closeButton}
+                    onClick={() => onClose?.()}
                     variant="transparent"
                     size={16}
                     iconSize={16}
