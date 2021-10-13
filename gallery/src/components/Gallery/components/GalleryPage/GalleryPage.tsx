@@ -1,5 +1,4 @@
 import React from 'react';
-import { Footer } from '../../../Footer/Footer';
 import useStyles from './GalleryPage.styles';
 
 interface GalleryPageProps {
@@ -12,7 +11,6 @@ export function GalleryPage({ children }: GalleryPageProps) {
   return (
     <div className={classes.wrapper}>
       <div className={classes.content}>{children}</div>
-      <Footer />
     </div>
   );
 }

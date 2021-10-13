@@ -11,7 +11,7 @@
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "npm run docs:docgen && cd docs && yarn",
+    "postinstall": "npm run docs:docgen && cd docs && yarn && cd ../gallery && yarn",
     "syncpack": "syncpack list-mismatches",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
@@ -22,6 +22,7 @@
     "prettier:write": "prettier --write '**/*.{ts,tsx}'",
     "clean": "rimraf src/*/{esm,cjs,lib,dist} src/**/*.tsbuildinfo",
     "storybook": "esno scripts/storybook-start",
+    "storybook:gallery": "esno scripts/storybook-start --gallery",
     "test": "npm run prettier:test && npm run syncpack && npm run typecheck && npm run lint && npm run jest",
     "docs": "npm run docs:clean && npm run docs:docgen && cd docs && npm start",
     "docs:typecheck": "cd docs && npm run typecheck",
