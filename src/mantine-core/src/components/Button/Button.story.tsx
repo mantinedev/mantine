@@ -33,6 +33,12 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
   </Button>
 ));
 
+const compact = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
+  <Button color="blue" key={size} size={size} compact>
+    Button {size}
+  </Button>
+));
+
 const loading = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
   <Button color="blue" key={size} size={size} loading>
     Button {size}
@@ -78,6 +84,7 @@ storiesOf('@mantine/core/Button', module)
     </>
   ))
   .add('Sizes', () => <Group style={{ padding: 20 }}>{sizes}</Group>)
+  .add('Compact', () => <Group style={{ padding: 20 }}>{compact}</Group>)
   .add('Icons', () => (
     <>
       <Group style={{ padding: 20 }}>

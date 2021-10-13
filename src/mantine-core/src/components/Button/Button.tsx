@@ -157,7 +157,7 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
             className={classes.label}
             style={{ textTransform: uppercase ? 'uppercase' : undefined, ..._styles.label }}
           >
-            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{children}</span>
+            {children}
           </span>
 
           {(rightIcon || (loading && loaderPosition === 'right')) && (
