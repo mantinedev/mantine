@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useScrollIntoView } from '@mantine/hooks';
 import { Button, Text, Group, useMantineTheme, Paper } from '@mantine/core';
 
@@ -8,13 +8,15 @@ import { Button, Text, Group, useMantineTheme, Paper } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
-  const targetRef = useRef<HTMLDivElement>(null);
-  const scrollableRef = useRef<HTMLDivElement>(null);
 
-  const { scrollIntoView } = useScrollIntoView({
+  const {
+    scrollIntoView,
+    targetRef,
+    scrollableRef,
+  } = useScrollIntoView<HTMLDivElement, HTMLDivElement>({
     axis: 'x',
   });
-
+ 
   return (
     <Group position="center">
       <Paper ref={scrollableRef} style={{ overflowX: 'scroll', height: 150, width: 300 }}>
@@ -23,7 +25,8 @@ function Demo() {
             ref={targetRef}
             padding="md"
             style={{
-              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
+              backgroundColor:
+                theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
               width: 'max-content',
             }}
           >
@@ -31,14 +34,7 @@ function Demo() {
           </Paper>
         </div>
       </Paper>
-      <Button
-        onClick={() => scrollIntoView({
-          parent: scrollableRef.current,
-          target: targetRef.current,
-        })}
-      >
-        Scroll to target
-      </Button>
+      <Button onClick={() => scrollIntoView()}>Scroll to target</Button>
     </Group>
   );
 }
@@ -46,10 +42,12 @@ function Demo() {
 
 function Demo() {
   const theme = useMantineTheme();
-  const targetRef = useRef<HTMLDivElement>(null);
-  const scrollableRef = useRef<HTMLDivElement>(null);
 
-  const { scrollIntoView } = useScrollIntoView({
+  const {
+    scrollIntoView,
+    targetRef,
+    scrollableRef,
+  } = useScrollIntoView<HTMLDivElement, HTMLDivElement>({
     axis: 'x',
   });
 
@@ -70,16 +68,7 @@ function Demo() {
           </Paper>
         </div>
       </Paper>
-      <Button
-        onClick={() =>
-          scrollIntoView({
-            parent: scrollableRef.current,
-            target: targetRef.current,
-          })
-        }
-      >
-        Scroll to target
-      </Button>
+      <Button onClick={() => scrollIntoView()}>Scroll to target</Button>
     </Group>
   );
 }

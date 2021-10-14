@@ -1,3 +1,4 @@
+import { useReducedMotion } from '@mantine/hooks';
 /* eslint-disable no-param-reassign */
 import { useCallback, useRef, useEffect } from 'react';
 
@@ -6,13 +7,12 @@ import { getRelativePosition } from './utils/get-relative-position';
 import { getScrollStart } from './utils/get-scroll-start';
 import { setScrollParam } from './utils/set-scroll-param';
 
+// /** target node to be scrolled yo */
+// target: HTMLElement;
+
+// /** scrollable parent node default to document */
+// parent?: HTMLElement;
 interface ScrollIntoViewAnimation {
-  /** target node to be scrolled yo */
-  target: HTMLElement;
-
-  /** scrollable parent node default to document */
-  parent?: HTMLElement;
-
   /** target element alignment relatively to parent based on current axis */
   alignment?: 'start' | 'end' | 'center';
 }
@@ -34,7 +34,10 @@ interface ScrollIntoViewParams {
   offset?: number;
 }
 
-export function useScrollIntoView({
+export function useScrollIntoView<
+  Target extends HTMLElement,
+  Parent extends HTMLElement | null = null
+>({
   duration = 1.25,
   axis = 'y',
   onScrollFinish,
@@ -43,52 +46,70 @@ export function useScrollIntoView({
 }: ScrollIntoViewParams = {}) {
   const frameID = useRef(0);
   const startTime = useRef(0);
+  const scrollableRef = useRef<Parent>(null);
+  const targetRef = useRef<Target>(null);
+
+  const reducedMotion = useReducedMotion();
 
   const cancel = (): void => {
-    cancelAnimationFrame(frameID.current);
+    if (frameID.current) {
+      cancelAnimationFrame(frameID.current);
+    }
   };
 
-  const scrollIntoView = useCallback(
-    ({ target, parent, alignment = 'start' }: ScrollIntoViewAnimation) => {
-      if (frameID.current) {
+  const scrollIntoView = useCallback(({ alignment = 'start' }: ScrollIntoViewAnimation = {}) => {
+    if (frameID.current) {
+      cancel();
+    }
+
+    const start = getScrollStart({ parent: scrollableRef.current, axis }) ?? 0;
+
+    const change =
+      getRelativePosition({
+        parent: scrollableRef.current,
+        target: targetRef.current,
+        axis,
+        alignment,
+        offset,
+      }) - (scrollableRef.current ? 0 : start);
+
+    function animateScroll() {
+      if (startTime.current === 0) {
+        startTime.current = performance.now();
+      }
+
+      const now = performance.now();
+      const elapsed = (now - startTime.current) / 1000;
+
+      // easing timing progress
+      const t = reducedMotion || duration === 0 ? 1 : elapsed / duration;
+
+      const distance = start + change * easing(t);
+
+      setScrollParam({
+        parent: scrollableRef.current,
+        axis,
+        distance,
+      });
+
+      if (t < 1) {
+        frameID.current = requestAnimationFrame(animateScroll);
+      } else {
+        typeof onScrollFinish === 'function' && onScrollFinish();
+        startTime.current = 0;
+        frameID.current = 0;
         cancel();
       }
-
-      const start = getScrollStart({ parent, axis }) ?? 0;
-      const change =
-        getRelativePosition({ parent, target, axis, alignment, offset }) - (parent ? 0 : start);
-
-      function animateScroll() {
-        if (startTime.current === 0) {
-          startTime.current = performance.now();
-        }
-
-        const now = performance.now();
-        const elapsed = (now - startTime.current) / 1000;
-
-        // easing timing progress
-        const t = duration === 0 ? 1 : elapsed / duration;
-
-        const distance = start + change * easing(t);
-        setScrollParam({ parent, axis, distance });
-
-        if (t < 1) {
-          frameID.current = requestAnimationFrame(animateScroll);
-        } else {
-          typeof onScrollFinish === 'function' && onScrollFinish();
-          startTime.current = 0;
-          cancel();
-        }
-      }
-      animateScroll();
-    },
-    []
-  );
+    }
+    animateScroll();
+  }, []);
 
   // cleanup RAF
   useEffect(() => cancel, []);
 
   return {
+    scrollableRef,
+    targetRef,
     scrollIntoView,
     cancel,
   };

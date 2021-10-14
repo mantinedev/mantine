@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useScrollIntoView } from '@mantine/hooks';
 import { Button, Text, Group, useMantineTheme } from '@mantine/core';
 
@@ -8,19 +8,20 @@ import { Button, Text, Group, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
-  const targetRef = useRef<HTMLDivElement>(null);
 
   const navbarHeight = 60;
-  const { scrollIntoView } = useScrollIntoView({
+  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
     offset: navbarHeight,
   });
 
   return (
     <Group position="center">
       <Button
-        onClick={() => scrollIntoView({
-          target: targetRef.current,
-        })}
+        onClick={() =>
+          scrollIntoView({
+            alignment: 'center',
+          })
+        }
       >
         Scroll to target
       </Button>
@@ -36,14 +37,14 @@ function Demo() {
     </Group>
   );
 }
+
 `;
 
 function Demo() {
   const theme = useMantineTheme();
-  const targetRef = useRef<HTMLDivElement>(null);
 
   const navbarHeight = 60;
-  const { scrollIntoView } = useScrollIntoView({
+  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
     offset: navbarHeight,
   });
 
@@ -52,7 +53,6 @@ function Demo() {
       <Button
         onClick={() =>
           scrollIntoView({
-            target: targetRef.current,
             alignment: 'center',
           })
         }

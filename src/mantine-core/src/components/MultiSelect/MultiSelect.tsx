@@ -194,7 +194,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const [searchValue, setSearchValue] = useState('');
-    const { scrollIntoView } = useScrollIntoView({
+    const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
       duration: 0.25,
       offset: dropdownRef.current?.clientHeight ?? 5,
     });
@@ -297,9 +297,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               (index) => index - 1,
               (index) => index > 0
             );
+
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
             scrollIntoView({
-              parent: dropdownRef.current,
-              target: itemsRefs.current[filteredData[nextIndex]?.value],
               alignment: 'start',
             });
             return nextIndex;
@@ -316,9 +317,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               (index) => index + 1,
               (index) => index < filteredData.length - 1
             );
+
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
             scrollIntoView({
-              parent: dropdownRef.current,
-              target: itemsRefs.current[filteredData[nextIndex]?.value],
               alignment: 'end',
             });
             return nextIndex;
@@ -493,7 +495,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             maxDropdownHeight={maxDropdownHeight}
             classNames={classNames}
             styles={styles}
-            ref={dropdownRef}
+            ref={useMergedRef(dropdownRef, scrollableRef)}
             __staticSelector="multi-select"
           >
             <SelectItems
