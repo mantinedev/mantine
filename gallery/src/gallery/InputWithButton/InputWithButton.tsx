@@ -9,7 +9,7 @@ export function InputWithButton(props: TextInputProps) {
       radius="xl"
       size="md"
       rightSection={
-        <Button radius="xl" style={{ height: 32 }}>
+        <Button radius="xl" styles={{ root: { height: 32 }, label: { lineHeight: '32px' } }}>
           Search
         </Button>
       }

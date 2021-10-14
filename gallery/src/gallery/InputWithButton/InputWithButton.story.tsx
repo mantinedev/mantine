@@ -1,11 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import attributes from './attributes.json';
-import { GalleryPreview } from '../../components/Gallery/components/GalleryPreview/GalleryPreview';
+import { GalleryStory } from '../../components/GalleryStory/GalleryStory';
 import { InputWithButton } from './InputWithButton';
 
 storiesOf('Gallery/InputWithButton', module).add('InputWithButton', () => (
-  <GalleryPreview canvas={attributes.canvas} withSpacing>
-    <InputWithButton />
-  </GalleryPreview>
+  <GalleryStory attributes={attributes} component={InputWithButton} />
 ));

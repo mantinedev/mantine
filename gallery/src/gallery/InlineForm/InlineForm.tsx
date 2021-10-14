@@ -81,7 +81,6 @@ const useStyles = createStyles((theme, _params, getRef) => {
     },
 
     control: {
-      height: 60,
       borderTopLeftRadius: 0,
       borderBottomLeftRadius: 0,
 
@@ -143,7 +142,12 @@ export function InlineForm({ labelClassName, ...props }: InlineFormProps) {
           classNames={{ input: classes.input, label: cx(classes.inputLabel, labelClassName) }}
         />
 
-        <Button className={classes.control} radius="md" size="lg">
+        <Button
+          className={classes.control}
+          radius="md"
+          size="lg"
+          styles={{ root: { height: 60 }, label: { lineHeight: '60px' } }}
+        >
           Search
         </Button>
       </div>
