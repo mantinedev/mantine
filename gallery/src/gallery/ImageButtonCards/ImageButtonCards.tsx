@@ -12,12 +12,17 @@ const useStyles = createStyles((theme) => ({
   card: {
     height: 160,
     position: 'relative',
-    backgroundSize: 'cover',
+    backgroundSize: '100%',
     backgroundPosition: 'center',
     color: theme.white,
     borderRadius: theme.radius.lg,
     padding: theme.spacing.xl,
     overflow: 'hidden',
+    transition: 'background-size 300ms ease',
+
+    '&:hover': {
+      backgroundSize: '105%',
+    },
   },
 
   label: {
@@ -32,12 +37,12 @@ interface CardProps extends React.ComponentPropsWithoutRef<'button'> {
   children: React.ReactNode;
 }
 
-export function ImageButtonCard({ image, children, style, className, ...others }: CardProps) {
+export function ImageButtonCard({ image, children, className, ...others }: CardProps) {
   const { classes, cx } = useStyles();
   return (
     <UnstyledButton
       {...others}
-      style={{ backgroundImage: `url(${image})`, ...style }}
+      style={{ backgroundImage: `url(${image})` }}
       className={cx(classes.card, className)}
     >
       <Overlay color="#000" opacity={0.6} zIndex={1} />
