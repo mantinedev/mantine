@@ -1,13 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import attributes from './attributes.json';
-import { GalleryPreview } from '../../components/Gallery/components/GalleryPreview/GalleryPreview';
+import { GalleryStory } from '../../components/GalleryStory/GalleryStory';
 import { HeroImageBackground } from './HeroImageBackground';
 
 storiesOf('Gallery/HeroImageBackground', module).add('HeroImageBackground', () => (
-  <>
-    <GalleryPreview canvas={attributes.canvas} withSpacing>
-      <HeroImageBackground />
-    </GalleryPreview>
-  </>
+  <GalleryStory attributes={attributes} component={HeroImageBackground} />
 ));

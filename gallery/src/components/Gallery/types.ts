@@ -11,7 +11,7 @@ export interface GalleryCanvasAttributes {
   category: string;
   dependencies: string[];
   title: string;
-  props: Record<string, any>;
+  props?: Record<string, any>;
 }
 
 export interface GalleryComponent {
