@@ -30,6 +30,9 @@ interface ScrollIntoViewParams {
 
   /** indicator if animation may be interrupted by user scrolling */
   cancelable?: boolean;
+
+  /** prevents content jumping in scrolling lists with multiple targets */
+  isList?: boolean;
 }
 
 export function useScrollIntoView<
@@ -42,6 +45,7 @@ export function useScrollIntoView<
   easing = easeInOutQuad,
   offset = 0,
   cancelable = true,
+  isList = false,
 }: ScrollIntoViewParams = {}) {
   const frameID = useRef(0);
   const startTime = useRef(0);
@@ -74,6 +78,7 @@ export function useScrollIntoView<
         axis,
         alignment,
         offset,
+        isList,
       }) - (scrollableRef.current ? 0 : start);
 
     function animateScroll() {

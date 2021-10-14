@@ -198,6 +198,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       duration: 0.25,
       offset: 5,
       cancelable: false,
+      isList: true,
     });
     const isCreatable = creatable && typeof getCreateLabel === 'function';
     let createLabel = null;

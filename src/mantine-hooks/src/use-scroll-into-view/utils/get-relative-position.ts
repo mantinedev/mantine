@@ -1,4 +1,11 @@
-export const getRelativePosition = ({ axis, target, parent, alignment, offset }): number => {
+export const getRelativePosition = ({
+  axis,
+  target,
+  parent,
+  alignment,
+  offset,
+  isList,
+}): number => {
   if (!target || (!parent && typeof document === 'undefined')) {
     return 0;
   }
@@ -16,13 +23,19 @@ export const getRelativePosition = ({ axis, target, parent, alignment, offset })
     if (diff === 0) return 0;
 
     if (alignment === 'start') {
-      return diff - offset;
+      const distance = diff - offset;
+      const shouldScroll = distance <= targetPosition.height || !isList;
+
+      return shouldScroll ? distance : 0;
     }
 
     const parentHeight = isCustomParent ? parentPosition.height : window.innerHeight;
 
     if (alignment === 'end') {
-      return diff + offset - parentHeight + targetPosition.height;
+      const distance = diff + offset - parentHeight + targetPosition.height;
+      const shouldScroll = distance >= -targetPosition.height || !isList;
+
+      return shouldScroll ? distance : 0;
     }
 
     if (alignment === 'center') {
@@ -38,13 +51,19 @@ export const getRelativePosition = ({ axis, target, parent, alignment, offset })
     if (diff === 0) return 0;
 
     if (alignment === 'start') {
-      return diff - offset;
+      const distance = diff - offset;
+      const shouldScroll = distance <= targetPosition.width || !isList;
+
+      return shouldScroll ? distance : 0;
     }
 
     const parentWidth = isCustomParent ? parentPosition.width : window.innerWidth;
 
     if (alignment === 'end') {
-      return diff + offset - parentWidth + targetPosition.width;
+      const distance = diff + offset - parentWidth + targetPosition.width;
+      const shouldScroll = distance >= -targetPosition.width || !isList;
+
+      return shouldScroll ? distance : 0;
     }
 
     if (alignment === 'center') {

@@ -30,7 +30,8 @@ Hook accepts 5 arguments:
 - `duration` - optional duration of scroll animation
 - `axis` - optional axis of scroll
 - `cancelable` - optional indicator if animation may be interrupted by user scrolling
-- `offset` - additional distance between nearest edge and element
+- `offset` - optional additional distance between nearest edge and element
+- `isList` - optional indicator that prevents content jumping in scrolling lists with multiple targets eg. Select, Carousel
 
 Hook returns object with 4 elements methods `scrollIntoView` and `cancel`.
 
@@ -87,6 +88,7 @@ function useScrollIntoView<
   easing?: (t: number) => number;
   offset?: number;
   cancelable?: boolean;
+  isList?: boolean;
 }): { 
   targetRef: MutableRefObject<Target>;
   scrollableRef: MutableRefObject<Parent>;
