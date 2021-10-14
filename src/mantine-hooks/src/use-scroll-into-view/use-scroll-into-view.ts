@@ -1,4 +1,4 @@
-import { useReducedMotion } from '@mantine/hooks';
+import { useReducedMotion, useWindowEvent } from '@mantine/hooks';
 /* eslint-disable no-param-reassign */
 import { useCallback, useRef, useEffect } from 'react';
 
@@ -7,11 +7,6 @@ import { getRelativePosition } from './utils/get-relative-position';
 import { getScrollStart } from './utils/get-scroll-start';
 import { setScrollParam } from './utils/set-scroll-param';
 
-// /** target node to be scrolled yo */
-// target: HTMLElement;
-
-// /** scrollable parent node default to document */
-// parent?: HTMLElement;
 interface ScrollIntoViewAnimation {
   /** target element alignment relatively to parent based on current axis */
   alignment?: 'start' | 'end' | 'center';
@@ -32,6 +27,9 @@ interface ScrollIntoViewParams {
 
   /** additional distance between nearest edge and element */
   offset?: number;
+
+  /** indicator if animation may be interrupted by user scrolling */
+  cancelable?: boolean;
 }
 
 export function useScrollIntoView<
@@ -43,9 +41,12 @@ export function useScrollIntoView<
   onScrollFinish,
   easing = easeInOutQuad,
   offset = 0,
+  cancelable = true,
 }: ScrollIntoViewParams = {}) {
   const frameID = useRef(0);
   const startTime = useRef(0);
+  const shouldStop = useRef(false);
+
   const scrollableRef = useRef<Parent>(null);
   const targetRef = useRef<Target>(null);
 
@@ -58,6 +59,8 @@ export function useScrollIntoView<
   };
 
   const scrollIntoView = useCallback(({ alignment = 'start' }: ScrollIntoViewAnimation = {}) => {
+    shouldStop.current = false;
+
     if (frameID.current) {
       cancel();
     }
@@ -92,7 +95,7 @@ export function useScrollIntoView<
         distance,
       });
 
-      if (t < 1) {
+      if (!shouldStop.current && t < 1) {
         frameID.current = requestAnimationFrame(animateScroll);
       } else {
         typeof onScrollFinish === 'function' && onScrollFinish();
@@ -104,7 +107,27 @@ export function useScrollIntoView<
     animateScroll();
   }, []);
 
-  // cleanup RAF
+  const handleStop = () => {
+    if (cancelable) {
+      shouldStop.current = true;
+    }
+  };
+
+  /**
+   * detection of one of these events stops scroll animation
+   * wheel - mouse wheel / touch pad
+   * touchmove - any touchable device
+   */
+
+  useWindowEvent('wheel', handleStop, {
+    passive: true,
+  });
+
+  useWindowEvent('touchmove', handleStop, {
+    passive: true,
+  });
+
+  // cleanup requestAnimationFrame
   useEffect(() => cancel, []);
 
   return {

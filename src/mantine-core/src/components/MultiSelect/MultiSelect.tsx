@@ -196,7 +196,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     const [searchValue, setSearchValue] = useState('');
     const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
       duration: 0.25,
-      offset: dropdownRef.current?.clientHeight ?? 5,
+      offset: 5,
+      cancelable: false,
     });
     const isCreatable = creatable && typeof getCreateLabel === 'function';
     let createLabel = null;

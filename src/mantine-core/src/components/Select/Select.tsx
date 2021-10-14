@@ -151,9 +151,10 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
     const [creatableDataValue, setCreatableDataValue] = useState<string | undefined>(undefined);
     const uuid = useUuid(id);
-    const { scrollIntoView } = useScrollIntoView({
+    const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
       duration: 0.25,
       offset: 5,
+      cancelable: false,
     });
 
     const isCreatable = creatable && typeof getCreateLabel === 'function';
@@ -265,11 +266,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               (index) => index - 1,
               (index) => index > 0
             );
+
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
             scrollIntoView({
-              parent: dropdownRef.current,
-              target: itemsRefs.current[filteredData[nextIndex]?.value],
               alignment: 'start',
             });
+
             return nextIndex;
           });
           break;
@@ -284,11 +287,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               (index) => index + 1,
               (index) => index < filteredData.length - 1
             );
+
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
             scrollIntoView({
-              parent: dropdownRef.current,
-              target: itemsRefs.current[filteredData[nextIndex]?.value],
               alignment: 'end',
             });
+
             return nextIndex;
           });
           break;
@@ -424,7 +429,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             maxDropdownHeight={maxDropdownHeight}
             classNames={classNames}
             styles={styles}
-            ref={dropdownRef}
+            ref={useMergedRef(dropdownRef, scrollableRef)}
             __staticSelector="select"
           >
             <SelectItems

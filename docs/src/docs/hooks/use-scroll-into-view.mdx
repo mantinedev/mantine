@@ -15,7 +15,9 @@ import { useScrollIntoViewUsage, useScrollIntoViewParent, useScrollIntoViewAxis 
 ## Usage
 
 use-scroll-into-view handles scroll behavior over any scrollable element.
-Basic usage works just as `element.scrollIntoView()`.
+Basic usage works just as `element.scrollIntoView()`. 
+
+It allows you adjust the scrolling animation with respect to the `reduced-motion` user preference.
 
 <Demo data={useScrollIntoViewUsage} />
 
@@ -27,30 +29,22 @@ Hook accepts 5 arguments:
 - `easing` – optional custom math easing function
 - `duration` - optional duration of scroll animation
 - `axis` - optional axis of scroll
+- `cancelable` - optional indicator if animation may be interrupted by user scrolling
 - `offset` - additional distance between nearest edge and element
 
-Hook returns React methods `scrollIntoView` and `cancel`.
+Hook returns object with 4 elements methods `scrollIntoView` and `cancel`.
 
-```tsx
-const {
-  scrollIntoView, // -> scroll to target HTML node
-  cancel, // -> cancel scroll animation at anytime
-} = useScrollIntoView({
-  duration: 1.5,
-  axis: 'y',
-});
-```
+- `scrollIntoView` – function that starts scroll animation
+- `cancel` – function that stops scroll animation
+- `targetRef` - ref of target HTML node
+- `scrollableRef` - ref of scrollable parent HTML element, if not used document element will be used
 
-`scrollIntoView` method accepts 2 arguments:
+`scrollIntoView` method accepts 1 argument:
 
-- `target` – HTML node that parent is scrolled to
-- `parent` – optional any parent scrollable HTML node, default to `document`
 - `alignment` - optional target element alignment relatively to parent based on current axis
 
 ```tsx
 scrollIntoView({
-  target: someDomElement,
-  parent: parentScrollableDomElement,
   alignment: 'center'
 })
 ```
@@ -83,16 +77,20 @@ useScrollIntoView({
 ## Definition
 
 ```tsx
-function useScrollIntoView({
+function useScrollIntoView<
+  Target extends HTMLElement,
+  Parent extends HTMLElement | null = null
+>({
   onScrollFinish?: () => void;
   duration?: number;
   axis?: 'x' | 'y';
   easing?: (t: number) => number;
   offset?: number;
-}): {
+  cancelable?: boolean;
+}): { 
+  targetRef: MutableRefObject<Target>;
+  scrollableRef: MutableRefObject<Parent>;
   scrollIntoView: ({
-    target: HTMLElement;
-    parent?: HTMLElement;
     alignment?: 'start' | 'end' | 'center';
   }) => void;
   cancel: () => void;

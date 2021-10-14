@@ -45,11 +45,10 @@ function Demo() {
 function Demo() {
   const theme = useMantineTheme();
 
-  const {
-    scrollIntoView,
-    targetRef,
-    scrollableRef,
-  } = useScrollIntoView<HTMLDivElement, HTMLDivElement>();
+  const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView<
+    HTMLDivElement,
+    HTMLDivElement
+  >();
 
   return (
     <Group position="center">
@@ -68,11 +67,7 @@ function Demo() {
           </Paper>
         </div>
       </Paper>
-      <Button
-        onClick={() => scrollIntoView()}
-      >
-        Scroll to target
-      </Button>
+      <Button onClick={() => scrollIntoView()}>Scroll to target</Button>
     </Group>
   );
 }
