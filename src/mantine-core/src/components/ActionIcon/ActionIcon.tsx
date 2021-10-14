@@ -65,7 +65,7 @@ export const ActionIcon: ActionIconComponent & { displayName?: string } = forwar
   ) => {
     const theme = useMantineTheme();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const { classes, cx } = useStyles({ size, radius, color, variant }, null, 'action-icon');
+    const { classes, cx } = useStyles({ size, radius, color, variant });
     const Element = component || 'button';
     const colors = getSharedColorScheme({ color, theme, variant: 'light' });
 
