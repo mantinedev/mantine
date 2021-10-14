@@ -1,25 +1,11 @@
 import React from 'react';
 import { GitHubLogoIcon } from '@modulz/radix-icons';
-import { Button, ButtonProps, Group, useMantineTheme } from '@mantine/core';
+import { Button, ButtonProps, Group } from '@mantine/core';
 import { GoogleIcon } from './GoogleIcon';
 import { TwitterIcon } from './TwitterIcon';
 
-export function GoogleButton({ style, ...props }: ButtonProps<'button'>) {
-  const theme = useMantineTheme();
-  return (
-    <Button
-      leftIcon={<GoogleIcon />}
-      variant="outline"
-      color="gray"
-      style={{
-        ...style,
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
-      }}
-      {...props}
-    />
-  );
+export function GoogleButton(props: ButtonProps<'button'>) {
+  return <Button leftIcon={<GoogleIcon />} variant="default" color="gray" {...props} />;
 }
 
 export function FacebookButton({ style, ...props }: ButtonProps<'button'>) {
@@ -27,22 +13,8 @@ export function FacebookButton({ style, ...props }: ButtonProps<'button'>) {
 }
 
 // Twitter button as anchor
-export function TwitterButton({ style, component, ...others }: ButtonProps<'a'>) {
-  const theme = useMantineTheme();
-  return (
-    <Button
-      component="a"
-      leftIcon={<TwitterIcon />}
-      variant="outline"
-      style={{
-        ...style,
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
-        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      }}
-      {...others}
-    />
-  );
+export function TwitterButton({ component, ...others }: ButtonProps<'a'>) {
+  return <Button component="a" leftIcon={<TwitterIcon />} variant="default" {...others} />;
 }
 
 export function GithubButton({ style, ...props }: ButtonProps<'button'>) {
@@ -50,11 +22,7 @@ export function GithubButton({ style, ...props }: ButtonProps<'button'>) {
     <Button
       {...props}
       leftIcon={<GitHubLogoIcon />}
-      style={{
-        ...style,
-        backgroundColor: '#000',
-        color: '#fff',
-      }}
+      style={{ ...style, backgroundColor: '#000', color: '#fff' }}
     />
   );
 }
