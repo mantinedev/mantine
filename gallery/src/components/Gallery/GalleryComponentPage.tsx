@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MantineProvider, useMantineTheme } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import Head from '../Head/Head';
+import { Layout } from '../Layout/Layout';
 import * as GalleryComponents from '../../gallery';
 import { GalleryPreview } from './components/GalleryPreview/GalleryPreview';
 import { ComponentPreviewControls } from './components/ComponentPreviewControls/ComponentPreviewControls';
@@ -18,7 +19,7 @@ export default function GalleryComponentPage({ pageContext }: GalleryComponentPa
   const Component = GalleryComponents[pageContext._component];
 
   return (
-    <div style={{ paddingBottom: 50, marginTop: -34 }}>
+    <Layout>
       <Head title={pageContext.attributes.title} />
 
       <ComponentPreviewControls
@@ -43,6 +44,6 @@ export default function GalleryComponentPage({ pageContext }: GalleryComponentPa
       ) : (
         <Prism language="tsx">{pageContext.code}</Prism>
       )}
-    </div>
+    </Layout>
   );
 }

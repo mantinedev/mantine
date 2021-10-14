@@ -54,14 +54,14 @@ exports.createPages = async function ({ actions }) {
         const galleryCategory = getCategory(attributes.category);
         const category = {
           name: galleryCategory.name,
-          path: `/gallery/category/${attributes.category}/`,
+          path: `/category/${attributes.category}/`,
         };
 
         return {
           _component: componentName,
           code,
           category,
-          url: `/gallery/component/${convertCase(componentName)}`,
+          url: `/component/${convertCase(componentName)}`,
           attributes: attributes,
         };
       }
@@ -91,7 +91,7 @@ exports.createPages = async function ({ actions }) {
 
   Object.keys(categories).forEach((category) => {
     actions.createPage({
-      path: `/gallery/category/${category}/`,
+      path: `/category/${category}/`,
       component: require.resolve('./src/components/Gallery/GalleryCategoryPage.tsx'),
       context: {
         category: getCategory(category),
@@ -101,7 +101,7 @@ exports.createPages = async function ({ actions }) {
   });
 
   actions.createPage({
-    path: '/gallery/',
+    path: '/',
     component: require.resolve('./src/components/Gallery/Gallery.tsx'),
     context: {
       componentsCount,
@@ -117,7 +117,7 @@ exports.createPages = async function ({ actions }) {
           groups: category.categories.map((cat) => ({
             ...cat,
             category: cat.slug,
-            url: `/gallery/category/${cat.slug}/`,
+            url: `/category/${cat.slug}/`,
             count: categories[cat.slug].length,
           })),
         };
