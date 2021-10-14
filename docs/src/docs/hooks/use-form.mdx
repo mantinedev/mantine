@@ -70,15 +70,27 @@ keys from `initialValues` that do not have corresponding validation rule will al
 const form = useForm({
   initialValues: {
     name: '',
-    confirmName: '',
     age: 0, // age field is always valid
   },
   validationRules: {
     // imposter validation rule is noop and will be ignored, ts will complain
     imposter: (value) => value.trim().length >= 2,
     name: (value) => value.trim().length >= 2,
-    confirmName: (value, values) => value === values.name,
   },
+});
+
+//validation rules can also be compared against other values in the form.
+const signUpForm = useForm({
+  initialValues: {
+    name: '',
+    password: '',
+    confirmPassword: '',
+  },
+  validationRules: {
+    name: (value) => value.trim().length >= 2,
+    password: (password) => password.trim().length >= 8,
+    confirmPassword: (confirmPassword, values) => confirmPassword === values.password,
+  }
 });
 ```
 
