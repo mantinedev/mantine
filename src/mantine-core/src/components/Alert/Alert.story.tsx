@@ -38,7 +38,6 @@ storiesOf('@mantine/core/Alert', module)
 
       <Alert
         classNames={{ title: 'hello', root: 'there' }}
-        styles={{ root: { background: 'lightgray' }, title: { color: 'red' } }}
         title="AlertTitleWithoutSpacesThatWillNotBreakToAnotherLineAndWillDamageTheLayout"
         mt={20}
       >

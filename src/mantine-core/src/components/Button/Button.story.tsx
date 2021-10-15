@@ -33,6 +33,18 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
   </Button>
 ));
 
+const compact = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
+  <Button color="blue" key={size} size={size} compact>
+    Button {size}
+  </Button>
+));
+
+const loading = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
+  <Button color="blue" key={size} size={size} loading>
+    Button {size}
+  </Button>
+));
+
 storiesOf('@mantine/core/Button', module)
   .add('UnstyledButton', () => (
     <div style={{ padding: 20 }}>
@@ -72,6 +84,7 @@ storiesOf('@mantine/core/Button', module)
     </>
   ))
   .add('Sizes', () => <Group style={{ padding: 20 }}>{sizes}</Group>)
+  .add('Compact', () => <Group style={{ padding: 20 }}>{compact}</Group>)
   .add('Icons', () => (
     <>
       <Group style={{ padding: 20 }}>
@@ -131,7 +144,7 @@ storiesOf('@mantine/core/Button', module)
   ))
   .add('Loading', () => (
     <div style={{ padding: 40 }}>
-      <Button loading>Loading</Button>
+      <Group>{loading}</Group>
     </div>
   ))
   .add('React router', () => (

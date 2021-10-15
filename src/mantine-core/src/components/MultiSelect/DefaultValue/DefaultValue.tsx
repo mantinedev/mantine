@@ -50,7 +50,7 @@ export function DefaultValue({
       style={{ ...style, ..._styles.defaultValue }}
       {...others}
     >
-      <span>{label}</span>
+      <span className={classes.label}>{label}</span>
 
       {!disabled && (
         <CloseButton

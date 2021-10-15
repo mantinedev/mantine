@@ -2,10 +2,9 @@ import { createStyles, getThemeColor, getFontStyles, MantineColor } from '@manti
 
 interface AlertStyles {
   color: MantineColor;
-  withIcon: boolean;
 }
 
-export default createStyles((theme, { color, withIcon }: AlertStyles) => ({
+export default createStyles((theme, { color }: AlertStyles) => ({
   root: {
     ...getFontStyles(theme),
     position: 'relative',
@@ -31,14 +30,18 @@ export default createStyles((theme, { color, withIcon }: AlertStyles) => ({
     color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
     margin: 0,
     marginBottom: 7,
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    lineHeight: withIcon ? theme.lineHeight : 1,
+    lineHeight: theme.lineHeight,
     fontSize: theme.fontSizes.sm,
     fontWeight: 700,
+  },
+
+  label: {
+    display: 'block',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
 
   icon: {
@@ -50,6 +53,7 @@ export default createStyles((theme, { color, withIcon }: AlertStyles) => ({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginRight: theme.spacing.md,
+    marginTop: 1,
   },
 
   message: {
