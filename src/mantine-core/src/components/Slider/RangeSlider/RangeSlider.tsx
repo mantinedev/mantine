@@ -282,8 +282,8 @@ export function RangeSlider({
         value={_value[1]}
         styles={styles}
         classNames={classNames}
-        onMouseOver={showLabelOnHover ? () => setHovered(true) : undefined}
-        onMouseOut={showLabelOnHover ? () => setHovered(false) : undefined}
+        onMouseEnter={showLabelOnHover ? () => setHovered(true) : undefined}
+        onMouseLeave={showLabelOnHover ? () => setHovered(false) : undefined}
         onChange={(val) => {
           const nearestValue = Math.abs(_value[0] - val) > Math.abs(_value[1] - val) ? 1 : 0;
           const clone: Value = [..._value];

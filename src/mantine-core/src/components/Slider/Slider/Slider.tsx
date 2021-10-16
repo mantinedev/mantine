@@ -169,8 +169,8 @@ export function Slider({
         value={_value}
         onChange={setValue}
         styles={styles}
-        onMouseOver={showLabelOnHover ? () => setHovered(true) : undefined}
-        onMouseOut={showLabelOnHover ? () => setHovered(false) : undefined}
+        onMouseEnter={showLabelOnHover ? () => setHovered(true) : undefined}
+        onMouseLeave={showLabelOnHover ? () => setHovered(false) : undefined}
         classNames={classNames}
       >
         <Thumb

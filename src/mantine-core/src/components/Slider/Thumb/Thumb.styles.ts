@@ -23,6 +23,7 @@ export default createStyles((theme, { color, size }: ThumbStyles) => ({
     padding: theme.spacing.xs / 2,
     borderRadius: theme.radius.sm,
     whiteSpace: 'nowrap',
+    pointerEvents: 'none',
   },
 
   thumb: {
@@ -50,7 +51,7 @@ export default createStyles((theme, { color, size }: ThumbStyles) => ({
   },
 
   dragging: {
-    transform: 'translate(-50%, -50%) scale(1.1)',
-    boxShadow: theme.shadows.md,
+    transform: 'translate(-50%, -50%) scale(1.05)',
+    boxShadow: theme.shadows.sm,
   },
 }));

@@ -23,8 +23,8 @@ interface TrackProps extends DefaultProps<TrackStylesNames> {
   value: number;
   children: React.ReactNode;
   onChange(value: number): void;
-  onMouseOver?(event?: React.MouseEvent<HTMLDivElement>): void;
-  onMouseOut?(event?: React.MouseEvent<HTMLDivElement>): void;
+  onMouseEnter?(event?: React.MouseEvent<HTMLDivElement>): void;
+  onMouseLeave?(event?: React.MouseEvent<HTMLDivElement>): void;
 }
 
 export function Track({
@@ -36,8 +36,8 @@ export function Track({
   radius,
   children,
   offset,
-  onMouseOut,
-  onMouseOver,
+  onMouseLeave,
+  onMouseEnter,
   ...others
 }: TrackProps) {
   const { classes } = useStyles({ color, size, radius }, classNames, 'slider');
@@ -47,8 +47,8 @@ export function Track({
     <div
       className={classes.track}
       style={_styles.track}
-      onMouseOut={onMouseOut}
-      onMouseOver={onMouseOver}
+      onMouseLeave={onMouseLeave}
+      onMouseEnter={onMouseEnter}
     >
       <div
         className={classes.bar}
