@@ -29,7 +29,7 @@ describe('@mantine/core/AccordionItem', () => {
     AccordionItem,
     defaultProps,
     Object.keys(AccordionStylesApi).filter((key) => key !== 'item' && key !== 'itemOpened'),
-    'accordion'
+    'Accordion'
   );
 
   it('renders given label', () => {
