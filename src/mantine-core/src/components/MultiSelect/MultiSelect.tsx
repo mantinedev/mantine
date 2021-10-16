@@ -1,7 +1,6 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
 import {
-  mergeStyles,
   DefaultProps,
   MantineSize,
   MantineShadow,
@@ -185,8 +184,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     }: MultiSelectProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, 'multi-select');
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles(
+      { size, invalid: !!error },
+      { classNames, styles, name: 'MultiSelect' }
+    );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const dropdownRef = useRef<HTMLDivElement>();
     const inputRef = useRef<HTMLInputElement>();
@@ -356,7 +357,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           {...item}
           disabled={disabled}
           className={classes.value}
-          style={_styles.value}
           onRemove={() => handleValueRemove(item.value)}
           key={item.value}
           size={size}
@@ -394,12 +394,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         style={mergedStyles}
         classNames={classNames}
         styles={styles}
-        __staticSelector="multi-select"
+        __staticSelector="MultiSelect"
         {...wrapperProps}
       >
         <div
           className={classes.wrapper}
-          style={_styles.wrapper}
           role="combobox"
           aria-haspopup="listbox"
           aria-owns={`${uuid}-items`}
@@ -409,7 +408,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           tabIndex={-1}
         >
           <Input<'div'>
-            __staticSelector="multi-select"
+            __staticSelector="MultiSelect"
             style={{ overflow: 'hidden' }}
             classNames={classNames}
             component="div"
@@ -432,7 +431,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               styles: {
                 ...styles,
                 input: {
-                  ...styles?.input,
+                  ...(styles as any)?.input,
                   cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
                 },
               },
@@ -443,14 +442,13 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               error,
             })}
           >
-            <div className={classes.values} style={_styles.values}>
+            <div className={classes.values}>
               {selectedItems}
 
               <input
                 ref={useMergedRef(ref, inputRef)}
                 type="text"
                 id={uuid}
-                style={_styles.searchInput}
                 className={cx(classes.searchInput, {
                   [classes.searchInputPointer]: !searchable,
                   [classes.searchInputInputHidden]:
@@ -483,7 +481,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             classNames={classNames}
             styles={styles}
             ref={dropdownRef}
-            __staticSelector="multi-select"
+            __staticSelector="MultiSelect"
           >
             <SelectItems
               data={filteredData}
@@ -491,7 +489,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               classNames={classNames}
               styles={styles}
               uuid={uuid}
-              __staticSelector="multi-select"
+              __staticSelector="MultiSelect"
               onItemHover={setHovered}
               onItemSelect={handleItemSelect}
               itemsRefs={itemsRefs}

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineNumberSize,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, ClassNames, useExtractedMargins } from '@mantine/styles';
 import useStyles from './ListItem.styles';
 
 export type ListItemStylesNames = ClassNames<typeof useStyles>;
@@ -37,22 +31,17 @@ export function ListItem({
   center,
   ...others
 }: ListItemProps) {
-  const { classes, cx } = useStyles({ spacing, center }, classNames, 'list');
-  const _styles = mergeStyles(classes, styles);
+  const { classes, cx } = useStyles({ spacing, center }, { classNames, styles, name: 'List' });
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   return (
     <li
       className={cx(classes.item, { [classes.withIcon]: icon }, className)}
-      style={{ ...mergedStyles, ..._styles.item, ...(icon ? _styles.withIcon : null) }}
+      style={mergedStyles}
       {...rest}
     >
-      <div className={classes.itemWrapper} style={_styles.itemWrapper}>
-        {icon && (
-          <span className={classes.itemIcon} style={_styles.itemIcon}>
-            {icon}
-          </span>
-        )}
+      <div className={classes.itemWrapper}>
+        {icon && <span className={classes.itemIcon}>{icon}</span>}
         <span>{children}</span>
       </div>
     </li>

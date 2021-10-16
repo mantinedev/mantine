@@ -72,11 +72,11 @@ export function JsonInput({
       onFocus={handleFocus}
       onBlur={handleBlur}
       error={valid ? error : validationError || true}
-      __staticSelector="json-input"
+      __staticSelector="JsonInput"
       styles={{
         ...styles,
         input: {
-          ...styles?.input,
+          ...(styles as any)?.input,
           fontFamily: theme.fontFamilyMonospace,
           fontSize: getSizeValue({ size, sizes: theme.fontSizes }) - 2,
         },

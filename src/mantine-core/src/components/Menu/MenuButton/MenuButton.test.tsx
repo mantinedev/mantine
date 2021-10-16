@@ -21,10 +21,6 @@ describe('@mantine/core/MenuButton', () => {
   itSupportsRef(MenuButton, defaultProps, HTMLButtonElement);
   itRendersChildren(MenuButton, defaultProps);
 
-  it('has correct displayName', () => {
-    expect(MenuButton.displayName).toEqual('@mantine/core/MenuButton');
-  });
-
   it('sets disabled attribute based on disabled prop', () => {
     const disabled = shallow(
       <MenuButton {...defaultProps} disabled>
@@ -57,8 +53,8 @@ describe('@mantine/core/MenuButton', () => {
       </MenuButton>
     );
 
-    expect(withoutIcon.render().find('.mantine-menu-itemIcon')).toHaveLength(0);
-    expect(withIcon.render().find('.mantine-menu-itemIcon').text()).toBe('$$$');
+    expect(withoutIcon.render().find('.mantine-Menu-itemIcon')).toHaveLength(0);
+    expect(withIcon.render().find('.mantine-Menu-itemIcon').text()).toBe('$$$');
   });
 
   it('renders given right section', () => {
@@ -90,5 +86,9 @@ describe('@mantine/core/MenuButton', () => {
     expect(withTag.render().attr('href')).toBe('https://mantine.dev');
     expect(withComponent.type()).toBe(TestComponent);
     expect(withComponent.render().attr('data-test-prop')).toBe('true');
+  });
+
+  it('has correct displayName', () => {
+    expect(MenuButton.displayName).toEqual('@mantine/core/MenuButton');
   });
 });

@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import {
-  mergeStyles,
   useMantineTheme,
   DefaultProps,
   MantineNumberSize,
@@ -64,7 +63,7 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>(
       size = 'sm',
       variant,
       disabled = false,
-      __staticSelector = 'chip',
+      __staticSelector = 'Chip',
       id,
       color,
       children,
@@ -81,8 +80,10 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>(
   ) => {
     const uuid = useUuid(id);
     const theme = useMantineTheme();
-    const { classes, cx } = useStyles({ radius, size, color }, classNames, __staticSelector);
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles(
+      { radius, size, color },
+      { classNames, styles, name: __staticSelector }
+    );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [value, setValue] = useUncontrolled({
       value: checked,
@@ -99,7 +100,6 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>(
         <input
           type={type}
           className={classes.input}
-          style={_styles.input}
           checked={value}
           onChange={(event) => setValue(event.currentTarget.checked)}
           id={uuid}
@@ -114,21 +114,12 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>(
             classes[variant || defaultVariant],
             className
           )}
-          style={{
-            ...mergedStyles,
-            ..._styles.label,
-            ...(value ? _styles.checked : null),
-            ...(disabled ? _styles.disabled : null),
-          }}
+          style={mergedStyles}
           htmlFor={uuid}
         >
           {value && (
-            <span className={classes.iconWrapper} style={_styles.iconWrapper}>
-              <CheckboxIcon
-                indeterminate={false}
-                className={classes.checkIcon}
-                style={{ ..._styles.checkIcon }}
-              />
+            <span className={classes.iconWrapper}>
+              <CheckboxIcon indeterminate={false} className={classes.checkIcon} />
             </span>
           )}
           {children}

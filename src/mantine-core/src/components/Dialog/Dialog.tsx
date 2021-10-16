@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import {
-  mergeStyles,
   useMantineTheme,
   DefaultProps,
   MantineNumberSize,
@@ -74,8 +73,7 @@ export function MantineDialog({
   transitionTimingFunction,
   ...others
 }: DialogProps) {
-  const { classes, cx } = useStyles({ size }, classNames, 'dialog');
-  const _styles = mergeStyles(classes, styles);
+  const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Dialog' });
 
   return (
     <Transition
@@ -87,19 +85,13 @@ export function MantineDialog({
       {(transitionStyles) => (
         <Paper
           className={cx(classes.root, className)}
-          style={{ ...style, ..._styles.root, ...transitionStyles }}
+          style={{ ...style, ...transitionStyles }}
           shadow={shadow}
           padding={padding}
           withBorder={withBorder}
           {...others}
         >
-          {withCloseButton && (
-            <CloseButton
-              onClick={onClose}
-              className={classes.closeButton}
-              style={_styles.closeButton}
-            />
-          )}
+          {withCloseButton && <CloseButton onClick={onClose} className={classes.closeButton} />}
           {children}
         </Paper>
       )}

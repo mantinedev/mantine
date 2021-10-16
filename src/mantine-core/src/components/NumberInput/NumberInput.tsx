@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, getSizeValue, ClassNames } from '@mantine/styles';
+import { DefaultProps, getSizeValue, ClassNames } from '@mantine/styles';
 import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
@@ -85,8 +85,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     }: NumberInputProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ radius, size }, classNames, 'number-input');
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles(
+      { radius, size },
+      { classNames, styles, name: 'NumberInput' }
+    );
     const [focused, setFocused] = useState(false);
     const [_value, setValue] = useState(
       typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : 0
@@ -126,14 +128,13 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     }, [value]);
 
     const rightSection = (
-      <div className={classes.rightSection} style={_styles.rightSection}>
+      <div className={classes.rightSection}>
         <button
           type="button"
           tabIndex={-1}
           aria-hidden
           disabled={finalValue >= max}
           className={cx(classes.control, classes.controlUp)}
-          style={{ ..._styles.control, ..._styles.controlUp }}
           onMouseDown={(event) => {
             event.preventDefault();
             increment();
@@ -146,7 +147,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           aria-hidden
           disabled={finalValue <= min}
           className={cx(classes.control, classes.controlDown)}
-          style={{ ..._styles.control, ..._styles.controlDown }}
           onMouseDown={(event) => {
             event.preventDefault();
             decrement();
@@ -206,7 +206,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         size={size}
         styles={styles}
         classNames={classNames}
-        __staticSelector="number-input"
+        __staticSelector="NumberInput"
       />
     );
   }

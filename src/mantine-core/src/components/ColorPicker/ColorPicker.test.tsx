@@ -28,7 +28,7 @@ describe('@mantine/core/ColorPicker', () => {
     ColorPicker,
     { swatches, format: 'rgba' },
     Object.keys(ColorPickerStylesApi),
-    'color-picker'
+    'ColorPicker'
   );
 
   checkAccessibility([

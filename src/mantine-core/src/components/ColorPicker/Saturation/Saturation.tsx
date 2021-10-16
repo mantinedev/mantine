@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useMove, clampUseMovePosition, UseMovePosition } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
 import { HsvaColor } from '../types';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './Saturation.styles';
@@ -31,8 +31,7 @@ export function Saturation({
   classNames,
   styles,
 }: SaturationProps) {
-  const { classes } = useStyles({ size }, classNames, __staticSelector);
-  const _styles = mergeStyles(classes, styles);
+  const { classes } = useStyles({ size }, { classNames, styles, name: __staticSelector });
   const [position, setPosition] = useState({ x: value.s / 100, y: 1 - value.v / 100 });
 
   const { ref } = useMove(({ x, y }) => {
@@ -77,7 +76,6 @@ export function Saturation({
     <div
       className={classes.saturation}
       ref={ref}
-      style={{ ..._styles.saturation }}
       role="slider"
       aria-label={saturationLabel}
       aria-valuenow={position.x}
@@ -92,18 +90,12 @@ export function Saturation({
 
       <div
         className={classes.saturationOverlay}
-        style={{
-          ..._styles.saturationOverlay,
-          backgroundImage: 'linear-gradient(90deg, #fff, transparent)',
-        }}
+        style={{ backgroundImage: 'linear-gradient(90deg, #fff, transparent)' }}
       />
 
       <div
         className={classes.saturationOverlay}
-        style={{
-          ..._styles.saturationOverlay,
-          backgroundImage: 'linear-gradient(0deg, #000, transparent)',
-        }}
+        style={{ backgroundImage: 'linear-gradient(0deg, #000, transparent)' }}
       />
 
       <Thumb

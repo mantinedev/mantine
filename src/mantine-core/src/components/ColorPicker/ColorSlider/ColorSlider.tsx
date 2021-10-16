@@ -6,7 +6,7 @@ import {
   UseMovePosition,
   useMergedRef,
 } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
 
@@ -40,7 +40,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
       round,
       size,
       thumbColor = 'transparent',
-      __staticSelector = 'color-slider',
+      __staticSelector = 'ColorSlider',
       focusable = true,
       overlays,
       classNames,
@@ -51,8 +51,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
     }: ColorSliderProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
     const [position, setPosition] = useState({ y: 0, x: value / maxValue });
     const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);
     const { ref: sliderRef } = useMove(({ x }) => onChange(getChangeValue(x)));
@@ -82,11 +81,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
     };
 
     const layers = overlays.map((overlay, index) => (
-      <div
-        className={classes.sliderOverlay}
-        style={{ ..._styles.sliderOverlay, ...overlay }}
-        key={index}
-      />
+      <div className={classes.sliderOverlay} style={overlay} key={index} />
     ));
 
     return (
@@ -94,7 +89,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
         {...others}
         ref={useMergedRef(sliderRef, ref)}
         className={cx(classes.slider, className)}
-        style={{ ..._styles.slider, ...style }}
+        style={{ ...style }}
         role="slider"
         aria-valuenow={value}
         aria-valuemax={maxValue}

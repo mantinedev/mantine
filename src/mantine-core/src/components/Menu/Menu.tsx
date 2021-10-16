@@ -1,7 +1,6 @@
 import React, { useState, useRef, cloneElement, forwardRef } from 'react';
 import { useClickOutside, useMergedRef, useWindowEvent, useUncontrolled } from '@mantine/hooks';
 import {
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
@@ -128,8 +127,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
     }: MenuProps,
     ref
   ) => {
-    const { classes } = useStyles(null, classNames, 'menu');
-    const _styles = mergeStyles(classes, styles);
+    const { classes } = useStyles(null, { classNames, styles, name: 'Menu' });
     const controlRefFocusTimeout = useRef<number>();
     const delayTimeout = useRef<number>();
     const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
@@ -232,7 +230,6 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
           arrowSize={3}
           zIndex={zIndex}
           arrowClassName={classes.arrow}
-          arrowStyle={_styles.arrow}
         >
           <MenuBody
             {...menuBodyProps}
