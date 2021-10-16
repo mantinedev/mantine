@@ -1,7 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import {
-  mergeStyles,
   DefaultProps,
   MantineSize,
   MantineShadow,
@@ -124,8 +123,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     }: AutocompleteProps,
     ref
   ) => {
-    const { classes } = useStyles({ size }, classNames, 'autocomplete');
-    const _styles = mergeStyles(classes, styles);
+    const { classes } = useStyles({ size }, { classNames, styles, name: 'Autocomplete' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
@@ -215,12 +213,11 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         classNames={classNames}
         styles={styles}
         style={mergedStyles}
-        __staticSelector="autocomplete"
+        __staticSelector="Autocomplete"
         {...wrapperProps}
       >
         <div
           className={classes.wrapper}
-          style={_styles.wrapper}
           role="combobox"
           aria-haspopup="listbox"
           aria-owns={`${uuid}-items`}
@@ -241,7 +238,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             onKeyDown={handleInputKeydown}
             classNames={classNames}
             styles={styles}
-            __staticSelector="autocomplete"
+            __staticSelector="Autocomplete"
             value={_value}
             onChange={(event) => {
               handleChange(event.currentTarget.value);
@@ -265,7 +262,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             maxDropdownHeight="auto"
             classNames={classNames}
             styles={styles}
-            __staticSelector="autocomplete"
+            __staticSelector="Autocomplete"
           >
             <SelectItems
               data={filteredData}
@@ -273,7 +270,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
               classNames={classNames}
               styles={styles}
               uuid={uuid}
-              __staticSelector="autocomplete"
+              __staticSelector="Autocomplete"
               onItemHover={setHovered}
               onItemSelect={handleItemClick}
               itemComponent={itemComponent}

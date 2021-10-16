@@ -42,7 +42,7 @@ export default createStyles((theme, { size }: SelectItemsStyles) => ({
     color: theme.colors.dark[2],
   },
 
-  seperator: {
+  separator: {
     boxSizing: 'border-box',
     textAlign: 'left',
     width: '100%',
@@ -52,7 +52,7 @@ export default createStyles((theme, { size }: SelectItemsStyles) => ({
     })}px`,
   },
 
-  seperatorLabel: {
+  separatorLabel: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
   },
 }));

@@ -350,7 +350,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
         style={mergedStyles}
         classNames={classNames}
         styles={styles}
-        __staticSelector="select"
+        __staticSelector="Select"
         {...wrapperProps}
       >
         <div
@@ -372,7 +372,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             size={size}
             onKeyDown={handleInputKeydown}
             classNames={classNames}
-            __staticSelector="select"
+            __staticSelector="Select"
             value={inputValue}
             onChange={handleInputChange}
             aria-autocomplete="list"
@@ -392,7 +392,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
                 ...styles,
                 input: {
                   cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
-                  ...styles?.input,
+                  ...(styles as any)?.input,
                 },
               },
               size,
@@ -414,7 +414,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             classNames={classNames}
             styles={styles}
             ref={dropdownRef}
-            __staticSelector="select"
+            __staticSelector="Select"
           >
             <SelectItems
               data={filteredData}
@@ -423,7 +423,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               styles={styles}
               isItemSelected={(val) => val === _value}
               uuid={uuid}
-              __staticSelector="select"
+              __staticSelector="Select"
               onItemHover={setHovered}
               onItemSelect={handleItemSelect}
               itemsRefs={itemsRefs}
