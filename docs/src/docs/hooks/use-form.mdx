@@ -79,18 +79,20 @@ const form = useForm({
   },
 });
 
-//validation rules can also be compared against other values in the form.
 const signUpForm = useForm({
   initialValues: {
     name: '',
     password: '',
     confirmPassword: '',
   },
+
   validationRules: {
     name: (value) => value.trim().length >= 2,
     password: (password) => password.trim().length >= 8,
+
+    // you can also get values as second argument in validation rule
     confirmPassword: (confirmPassword, values) => confirmPassword === values.password,
-  }
+  },
 });
 ```
 
