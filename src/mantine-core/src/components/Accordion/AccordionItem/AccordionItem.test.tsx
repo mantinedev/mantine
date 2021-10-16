@@ -34,7 +34,7 @@ describe('@mantine/core/AccordionItem', () => {
 
   it('renders given label', () => {
     const element = shallow(<AccordionItem {...defaultProps} label="test-label" />);
-    expect(element.find('.mantine-accordion-label').text()).toBe('test-label');
+    expect(element.find('.mantine-Accordion-label').text()).toBe('test-label');
   });
 
   it('has correct displayName', () => {
