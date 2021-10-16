@@ -17,14 +17,7 @@ const getThemes = (props?: any, iconProps?: any) =>
 
 const getVariants = (props?: Partial<ActionIconProps<'button'>>) =>
   VARIANTS.map((variant) => (
-    <ActionIcon
-      key={variant}
-      variant={variant}
-      {...props}
-      styles={{
-        root: { '&:not(:disabled):hover': { backgroundColor: 'red' } },
-      }}
-    >
+    <ActionIcon key={variant} variant={variant} {...props}>
       <GearIcon />
     </ActionIcon>
   ));
