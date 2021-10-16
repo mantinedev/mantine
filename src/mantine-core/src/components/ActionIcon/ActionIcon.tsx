@@ -13,7 +13,7 @@ import {
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader';
 
-interface _ActionIconProps extends DefaultProps {
+interface _ActionIconProps extends DefaultProps<'loading' | 'root'> {
   /** Icon rendered inside button */
   children: React.ReactNode;
 
@@ -59,13 +59,19 @@ export const ActionIcon: ActionIconComponent & { displayName?: string } = forwar
       loading = false,
       component,
       style,
+      styles,
+      classNames,
       ...others
     }: ActionIconProps<C>,
     ref: PolymorphicRef<C>
   ) => {
     const theme = useMantineTheme();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const { classes, cx } = useStyles({ size, radius, color, variant });
+    const { classes, cx } = useStyles(
+      { size, radius, color, variant },
+      { name: 'ActionIcon', classNames, styles }
+    );
+
     const Element = component || 'button';
     const colors = getSharedColorScheme({ color, theme, variant: 'light' });
 
