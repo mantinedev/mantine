@@ -267,8 +267,6 @@ export function RangeSlider({
         thumbIndex.current = -1;
       }}
       onKeyDownCapture={handleTrackKeydownCapture}
-      onMouseOver={showLabelOnHover ? () => setHovered(true) : undefined}
-      onMouseOut={showLabelOnHover ? () => setHovered(false) : undefined}
       styles={styles}
       classNames={classNames}
     >
@@ -284,6 +282,8 @@ export function RangeSlider({
         value={_value[1]}
         styles={styles}
         classNames={classNames}
+        onMouseOver={showLabelOnHover ? () => setHovered(true) : undefined}
+        onMouseOut={showLabelOnHover ? () => setHovered(false) : undefined}
         onChange={(val) => {
           const nearestValue = Math.abs(_value[0] - val) > Math.abs(_value[1] - val) ? 1 : 0;
           const clone: Value = [..._value];
@@ -295,7 +295,7 @@ export function RangeSlider({
           {...sharedThumbProps}
           value={_value[0]}
           position={positions[0]}
-          dragging={active && thumbIndex.current === 0}
+          dragging={active}
           label={typeof label === 'function' ? label(_value[0]) : label}
           ref={(node) => {
             thumbs.current[0] = node;
@@ -311,7 +311,7 @@ export function RangeSlider({
           thumbLabel={thumbToLabel}
           value={_value[1]}
           position={positions[1]}
-          dragging={active && thumbIndex.current === 1}
+          dragging={active}
           label={typeof label === 'function' ? label(_value[1]) : label}
           ref={(node) => {
             thumbs.current[1] = node;

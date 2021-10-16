@@ -154,8 +154,6 @@ export function Slider({
       size={size}
       ref={container}
       onKeyDownCapture={handleTrackKeydownCapture}
-      onMouseOver={showLabelOnHover ? () => setHovered(true) : undefined}
-      onMouseOut={showLabelOnHover ? () => setHovered(false) : undefined}
       classNames={classNames}
       styles={styles}
     >
@@ -171,6 +169,8 @@ export function Slider({
         value={_value}
         onChange={setValue}
         styles={styles}
+        onMouseOver={showLabelOnHover ? () => setHovered(true) : undefined}
+        onMouseOut={showLabelOnHover ? () => setHovered(false) : undefined}
         classNames={classNames}
       >
         <Thumb
