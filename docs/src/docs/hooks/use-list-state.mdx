@@ -69,6 +69,7 @@ Hook provides handlers to work with array data:
 - `remove` – remove items at given indices
 - `reorder` – move item from one position to another
 - `apply` – apply given function to all items in the list
+- `applyWhere` - apply given function to selective items using condition
 - `setItem` – replace item at given index
 - `setItemProp` – set item property at given index
 - `setState` – set list state with react action
@@ -90,6 +91,10 @@ function useListState<T>(initialValue: T[] = []): [
     prepend: (...items: T[]) => void;
     insert: (index: number, ...items: T[]) => void;
     apply: (fn: (item: T, index?: number) => T) => void;
+    applyWhere: (
+      condition: (item: T, index?: number) => boolean,
+      fn: (item: T, index?: number) => T)
+    ) => void;
     remove: (...indices: number[]) => void;
     reorder: ({ from, to }: { from: number; to: number }) => void;
     setItem: (index: number, item: T) => void;
