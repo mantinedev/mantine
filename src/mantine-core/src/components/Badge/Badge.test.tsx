@@ -11,7 +11,6 @@ import {
   itSupportsRef,
 } from '@mantine/tests';
 import { Badge } from './Badge';
-import { Badge as BadgeStylesApi } from './styles.api';
 
 describe('@mantine/core/Badge', () => {
   checkAccessibility([mount(<Badge>this is badge</Badge>)]);
@@ -24,8 +23,8 @@ describe('@mantine/core/Badge', () => {
   itSupportsStylesApi(
     Badge,
     { children: 'test', leftSection: 'l', rightSection: 'r' },
-    Object.keys(BadgeStylesApi),
-    'badge'
+    ['root', 'inner', 'leftSection', 'rightSection'],
+    'Badge'
   );
 
   it('has correct displayName', () => {
@@ -49,7 +48,7 @@ describe('@mantine/core/Badge', () => {
         test
       </Badge>
     );
-    expect(element.render().find('.mantine-badge-rightSection').text()).toBe('test-right');
-    expect(element.render().find('.mantine-badge-leftSection').text()).toBe('test-left');
+    expect(element.render().find('.mantine-Badge-rightSection').text()).toBe('test-right');
+    expect(element.render().find('.mantine-Badge-leftSection').text()).toBe('test-left');
   });
 });
