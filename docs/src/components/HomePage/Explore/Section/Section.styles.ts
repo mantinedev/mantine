@@ -40,6 +40,7 @@ export default createStyles((theme) => ({
 
   title: {
     marginBottom: theme.spacing.xs,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
   },
 
   description: {

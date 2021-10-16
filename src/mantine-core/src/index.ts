@@ -38,6 +38,7 @@ export * from './components/List';
 export * from './components/Loader';
 export * from './components/LoadingOverlay';
 export * from './components/Mark';
+export * from './components/MediaQuery';
 export * from './components/Menu';
 export * from './components/Modal';
 export * from './components/MultiSelect';

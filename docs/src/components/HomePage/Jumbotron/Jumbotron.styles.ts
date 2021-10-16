@@ -108,6 +108,10 @@ export default createStyles((theme) => ({
     },
   },
 
+  featureTitle: {
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+  },
+
   featureIcon: {
     color: theme.white,
     borderRadius: theme.radius.md,
