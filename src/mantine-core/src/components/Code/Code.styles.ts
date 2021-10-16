@@ -12,9 +12,14 @@ export default createStyles((theme, { color }: CodeStyles) => {
       lineHeight: theme.lineHeight,
       padding: `2px ${theme.spacing.xs / 2}px`,
       borderRadius: theme.radius.sm,
-      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+      color:
+        theme.colorScheme === 'dark'
+          ? color === 'dark'
+            ? theme.colors.dark[0]
+            : theme.white
+          : theme.black,
       backgroundColor:
-        theme.colorScheme === 'dark' && color === 'dark' ? theme.colors.dark[5] : colors.background,
+        theme.colorScheme === 'dark' && color === 'dark' ? theme.colors.dark[4] : colors.background,
       fontFamily: theme.fontFamilyMonospace,
       fontSize: theme.fontSizes.xs,
     },

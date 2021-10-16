@@ -16,7 +16,7 @@ export default createStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     width: `calc(100% + ${theme.spacing.md}px)`,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+    color: theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[7],
     height: 32,
     border: 0,
     padding: `0 ${theme.spacing.md}px`,
@@ -109,5 +109,6 @@ export default createStyles((theme) => ({
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     lineHeight: 1,
     paddingTop: 4,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[7],
   },
 }));
