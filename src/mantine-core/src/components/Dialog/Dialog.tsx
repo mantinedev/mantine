@@ -107,7 +107,12 @@ export function MantineDialog({
   );
 }
 
-export const Dialog = forwardRef<HTMLDivElement, DialogProps>((props: DialogProps, ref) => {
+type DialogComponent = (props: DialogProps) => React.ReactElement;
+
+export const Dialog: DialogComponent & { displayName?: string } = forwardRef<
+  HTMLDivElement,
+  DialogProps
+>((props: DialogProps, ref) => {
   const theme = useMantineTheme();
 
   return (

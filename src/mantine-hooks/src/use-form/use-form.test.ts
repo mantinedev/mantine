@@ -4,12 +4,14 @@ import { useForm } from './use-form';
 const TEST_FORM = {
   initialValues: {
     email: 'hello@mantine.dev',
+    confirmEmail: '',
     name: 'Mantine',
     age: 1,
   },
 
   validationRules: {
     email: (email: string) => email === 'test@email.dev',
+    confirmEmail: (email: string, values) => email === values.email,
     name: (name: string) => name === 'test-name',
   },
 };
@@ -52,12 +54,21 @@ describe('@mantine/hooks/use-form', () => {
   it('validates field with given function with validateField handler', () => {
     const hook = renderHook(() => useForm(TEST_FORM));
 
+    //email
     act(() => hook.result.current.validateField('email'));
     expect(hook.result.current.errors.email).toBe(true);
 
     act(() => hook.result.current.setFieldValue('email', 'test@email.dev'));
     act(() => hook.result.current.validateField('email'));
     expect(hook.result.current.errors.email).toBe(false);
+
+    //confirm email
+    act(() => hook.result.current.validateField('confirmEmail'));
+    expect(hook.result.current.errors.confirmEmail).toBe(true);
+
+    act(() => hook.result.current.setFieldValue('confirmEmail', 'test@email.dev'));
+    act(() => hook.result.current.validateField('confirmEmail'));
+    expect(hook.result.current.errors.confirmEmail).toBe(false);
   });
 
   it('validates all fields with given functions with validate handler', () => {
@@ -66,19 +77,45 @@ describe('@mantine/hooks/use-form', () => {
     act(() => {
       hook.result.current.validate();
     });
-    expect(hook.result.current.errors).toEqual({ age: false, name: true, email: true });
+    expect(hook.result.current.errors).toEqual({
+      age: false,
+      name: true,
+      email: true,
+      confirmEmail: true,
+    });
 
     act(() => hook.result.current.setFieldValue('email', 'test@email.dev'));
     act(() => {
       hook.result.current.validate();
     });
-    expect(hook.result.current.errors).toEqual({ age: false, name: true, email: false });
+    expect(hook.result.current.errors).toEqual({
+      age: false,
+      name: true,
+      email: false,
+      confirmEmail: true,
+    });
+
+    act(() => hook.result.current.setFieldValue('confirmEmail', 'test@email.dev'));
+    act(() => {
+      hook.result.current.validate();
+    });
+    expect(hook.result.current.errors).toEqual({
+      age: false,
+      name: true,
+      email: false,
+      confirmEmail: false,
+    });
 
     act(() => hook.result.current.setFieldValue('name', 'test-name'));
     act(() => {
       hook.result.current.validate();
     });
-    expect(hook.result.current.errors).toEqual({ age: false, name: false, email: false });
+    expect(hook.result.current.errors).toEqual({
+      age: false,
+      name: false,
+      email: false,
+      confirmEmail: false,
+    });
   });
 
   it('calls given onSubmit callback only with valid values', () => {
@@ -89,17 +126,28 @@ describe('@mantine/hooks/use-form', () => {
       hook.result.current.onSubmit(spy)();
     });
 
-    expect(hook.result.current.errors).toEqual({ age: false, name: true, email: true });
+    expect(hook.result.current.errors).toEqual({
+      age: false,
+      name: true,
+      email: true,
+      confirmEmail: true,
+    });
     expect(spy).not.toHaveBeenCalled();
 
     act(() => hook.result.current.setFieldValue('email', 'test@email.dev'));
+    act(() => hook.result.current.setFieldValue('confirmEmail', 'test@email.dev'));
     act(() => hook.result.current.setFieldValue('name', 'test-name'));
 
     act(() => {
       hook.result.current.onSubmit(spy)();
     });
 
-    expect(spy).toHaveBeenCalledWith({ email: 'test@email.dev', name: 'test-name', age: 1 });
+    expect(spy).toHaveBeenCalledWith({
+      email: 'test@email.dev',
+      confirmEmail: 'test@email.dev',
+      name: 'test-name',
+      age: 1,
+    });
   });
 
   it('resets state to default with reset handler', () => {
@@ -124,11 +172,17 @@ describe('@mantine/hooks/use-form', () => {
   it('sets form values with setValues handler', () => {
     const hook = renderHook(() => useForm(TEST_FORM));
     act(() => {
-      hook.result.current.setValues({ email: 'hello@mantine.dev', name: 'Mantine', age: 1 });
+      hook.result.current.setValues({
+        email: 'hello@mantine.dev',
+        confirmEmail: 'hello@mantine.dev',
+        name: 'Mantine',
+        age: 1,
+      });
     });
 
     expect(hook.result.current.values).toEqual({
       email: 'hello@mantine.dev',
+      confirmEmail: 'hello@mantine.dev',
       name: 'Mantine',
       age: 1,
     });
@@ -141,23 +195,43 @@ describe('@mantine/hooks/use-form', () => {
       hook.result.current.validate();
     });
 
-    expect(hook.result.current.errors).toEqual({ age: false, name: true, email: true });
+    expect(hook.result.current.errors).toEqual({
+      age: false,
+      name: true,
+      email: true,
+      confirmEmail: true,
+    });
 
     act(() => {
       hook.result.current.resetErrors();
     });
 
-    expect(hook.result.current.errors).toEqual({ age: false, name: false, email: false });
+    expect(hook.result.current.errors).toEqual({
+      age: false,
+      name: false,
+      email: false,
+      confirmEmail: false,
+    });
   });
 
   it('allows to set errors object with setErrors handler', () => {
     const hook = renderHook(() => useForm(TEST_FORM));
-    expect(hook.result.current.errors).toEqual({ age: false, name: false, email: false });
-
-    act(() => {
-      hook.result.current.setErrors({ age: true, name: false, email: true });
+    expect(hook.result.current.errors).toEqual({
+      age: false,
+      name: false,
+      email: false,
+      confirmEmail: false,
     });
 
-    expect(hook.result.current.errors).toEqual({ age: true, name: false, email: true });
+    act(() => {
+      hook.result.current.setErrors({ age: true, name: false, email: true, confirmEmail: false });
+    });
+
+    expect(hook.result.current.errors).toEqual({
+      age: true,
+      name: false,
+      email: true,
+      confirmEmail: false,
+    });
   });
 });

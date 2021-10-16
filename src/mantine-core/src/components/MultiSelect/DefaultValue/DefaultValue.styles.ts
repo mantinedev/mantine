@@ -49,10 +49,18 @@ export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyl
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     cursor: disabled ? 'not-allowed' : 'default',
     userSelect: 'none',
+    maxWidth: 'calc(100% - 20px)',
   },
 
   defaultValueRemove: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
     marginLeft: getSizeValue({ size, sizes: theme.spacing }) / 6,
+  },
+
+  label: {
+    display: 'block',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 }));

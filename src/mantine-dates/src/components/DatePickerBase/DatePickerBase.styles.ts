@@ -14,11 +14,19 @@ export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => 
 
   placeholder: {
     lineHeight: `${getSizeValue({ size, sizes: INPUT_SIZES }) - 2}px`,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     color: invalid
       ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[3]
       : theme.colors.gray[5],
+  },
+
+  value: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
 
   dropdownWrapper: {

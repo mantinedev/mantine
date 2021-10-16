@@ -1,11 +1,12 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["src", "../configuration/types"],
+  "include": ["src", "../configuration/types", "../gallery/src"],
   "compilerOptions": {
     "paths": {
       "@docs/demos": ["./docs/src/demos"],
       "@mantine/*": ["src/mantine-*/src"],
-      "@demos/*": ["src/mantine-*/src/demos"]
+      "@demos/*": ["src/mantine-*/src/demos"],
+      "@gallery/*": ["../gallery/src/gallery"]
     }
   }
 }

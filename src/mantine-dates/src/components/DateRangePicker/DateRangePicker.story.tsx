@@ -6,7 +6,7 @@ import { DateRangePicker } from './DateRangePicker';
 storiesOf('@mantine/dates/DateRangePicker', module)
   .add('General usage', () => (
     <div style={{ padding: 40 }}>
-      <DateRangePicker placeholder="Dates range" dropdownType="modal" />
+      <DateRangePicker placeholder="Dates range" defaultValue={[new Date(), new Date()]} />
     </div>
   ))
   .add('Within Group', () => (

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mantine",
-  "version": "2.6.0-alpha.6",
+  "version": "3.0.4",
   "main": "index.js",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
@@ -17,7 +17,7 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@mantine/ssr": "2.6.0-alpha.6"
+    "@mantine/ssr": "3.0.4"
   },
   "devDependencies": {}
 }
