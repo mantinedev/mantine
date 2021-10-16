@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Title, SimpleGrid } from '@mantine/core';
+import { Title, SimpleGrid, useMantineTheme } from '@mantine/core';
 import { PACKAGES_DATA } from './data';
 import { CheckboxCard } from '../../../gallery/CheckboxCard/CheckboxCard';
 
@@ -8,6 +8,8 @@ interface InstallationProps {
 }
 
 export function Installation({ setDependencies }: InstallationProps) {
+  const theme = useMantineTheme();
+
   const [values, setValues] = useState({
     '@mantine/hooks': true,
     '@mantine/core': true,
@@ -49,7 +51,11 @@ export function Installation({ setDependencies }: InstallationProps) {
 
   return (
     <div style={{ marginBottom: 50 }}>
-      <Title order={2} mb="lg">
+      <Title
+        order={2}
+        mb="lg"
+        style={{ color: theme.colorScheme === 'dark' ? theme.white : theme.black }}
+      >
         Choose packages
       </Title>
 

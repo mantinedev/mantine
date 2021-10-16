@@ -16,7 +16,9 @@ export function Jumbotron() {
       </div>
 
       <div className={classes.featureBody}>
-        <Text weight={500}>{feature.title}</Text>
+        <Text weight={500} className={classes.featureTitle}>
+          {feature.title}
+        </Text>
         <Text size="sm" color="dimmed" mt={4}>
           {feature.description}
         </Text>

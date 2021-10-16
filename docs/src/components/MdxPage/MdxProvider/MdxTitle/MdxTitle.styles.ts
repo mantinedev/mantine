@@ -6,6 +6,7 @@ export default createStyles((theme) => ({
     marginBottom: theme.spacing.md,
     wordBreak: 'break-word',
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
   },
 
   link: {
