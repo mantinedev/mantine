@@ -26,7 +26,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
     }: TableProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ captionSide }, null, 'table');
+    const { classes, cx } = useStyles({ captionSide }, { name: 'Table' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (

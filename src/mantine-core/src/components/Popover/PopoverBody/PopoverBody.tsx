@@ -1,11 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineNumberSize,
-  MantineShadow,
-  ClassNames,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineShadow, ClassNames } from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import useStyles from './PopoverBody.styles';
@@ -44,8 +38,10 @@ export const PopoverBody = forwardRef<HTMLDivElement, PopoverBodyProps>(
     }: PopoverBodyProps,
     ref
   ) => {
-    const { classes } = useStyles({ shadow, radius, spacing }, classNames, 'popover');
-    const _styles = mergeStyles(classes, styles);
+    const { classes } = useStyles(
+      { shadow, radius, spacing },
+      { classNames, styles, name: 'Popover' }
+    );
 
     return (
       <div
@@ -54,15 +50,14 @@ export const PopoverBody = forwardRef<HTMLDivElement, PopoverBodyProps>(
         aria-labelledby={titleId}
         aria-describedby={bodyId}
         className={classes.wrapper}
-        style={_styles.wrapper}
         ref={ref}
         {...others}
       >
-        <div className={classes.popover} style={_styles.popover}>
-          <div className={classes.body} style={_styles.body}>
+        <div className={classes.popover}>
+          <div className={classes.body}>
             {!!title && (
-              <div className={classes.header} style={_styles.header}>
-                <Text size="sm" id={titleId} className={classes.title} style={_styles.title}>
+              <div className={classes.header}>
+                <Text size="sm" id={titleId} className={classes.title}>
                   {title}
                 </Text>
               </div>
@@ -74,11 +69,10 @@ export const PopoverBody = forwardRef<HTMLDivElement, PopoverBodyProps>(
                 onClick={onClose}
                 aria-label={closeButtonLabel}
                 className={classes.close}
-                style={_styles.close}
               />
             )}
 
-            <div className={classes.inner} id={bodyId} style={_styles.inner}>
+            <div className={classes.inner} id={bodyId}>
               {children}
             </div>
           </div>

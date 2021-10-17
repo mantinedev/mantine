@@ -55,7 +55,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       classNames,
       styles,
       size = 'sm',
-      __staticSelector = 'textarea',
+      __staticSelector = 'Textarea',
       ...others
     }: TextareaProps,
     ref
@@ -69,7 +69,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       input: {
         paddingTop: theme.spacing.xs,
         paddingBottom: theme.spacing.xs,
-        ...styles?.input,
+        ...(styles as any)?.input,
       },
     };
 

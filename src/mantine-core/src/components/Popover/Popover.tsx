@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useClickOutside, useFocusTrap, useMergedRef } from '@mantine/hooks';
 import {
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
@@ -67,7 +66,6 @@ export interface PopoverProps
 
 export function Popover({
   className,
-  style,
   children,
   target,
   title,
@@ -97,8 +95,7 @@ export function Popover({
   styles,
   ...others
 }: PopoverProps) {
-  const { classes, cx } = useStyles(null, classNames, 'popover');
-  const _styles = mergeStyles(classes, styles);
+  const { classes, cx } = useStyles(null, { classNames, styles, name: 'Popover' });
   const handleClose = () => typeof onClose === 'function' && onClose();
   const [referenceElement, setReferenceElement] = useState(null);
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
@@ -118,13 +115,7 @@ export function Popover({
   const bodyId = `${uuid}-body`;
 
   return (
-    <div
-      className={cx(classes.root, className)}
-      id={id}
-      style={{ ...style, ..._styles.root }}
-      ref={setRootElement}
-      {...others}
-    >
+    <div className={cx(classes.root, className)} id={id} ref={setRootElement} {...others}>
       <Popper
         referenceElement={referenceElement}
         transitionDuration={transitionDuration}
@@ -137,7 +128,6 @@ export function Popover({
         arrowSize={arrowSize}
         zIndex={zIndex}
         arrowClassName={classes.arrow}
-        arrowStyle={_styles.arrow}
         forceUpdateDependencies={[radius, shadow, spacing, ...positionDependencies]}
       >
         <PopoverBody
@@ -158,7 +148,7 @@ export function Popover({
         </PopoverBody>
       </Popper>
 
-      <div className={classes.target} style={_styles.target} ref={setReferenceElement}>
+      <div className={classes.target} ref={setReferenceElement}>
         {target}
       </div>
     </div>

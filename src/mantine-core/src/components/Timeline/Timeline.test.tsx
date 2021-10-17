@@ -30,7 +30,7 @@ describe('@mantine/core/Timeline', () => {
     Timeline,
     { ...defaultProps, active: 1 },
     Object.keys(TimelineStylesApi),
-    'timeline'
+    'Timeline'
   );
 
   it('exports Timeline.Item', () => {

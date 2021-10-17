@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineNumberSize,
-  MantineColor,
-  ClassNames,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
 import { Marks, MarksStylesNames } from '../Marks/Marks';
 import useStyles from './Track.styles';
 
@@ -40,20 +34,11 @@ export function Track({
   onMouseEnter,
   ...others
 }: TrackProps) {
-  const { classes } = useStyles({ color, size, radius }, classNames, 'slider');
-  const _styles = mergeStyles(classes, styles);
+  const { classes } = useStyles({ color, size, radius }, { classNames, styles, name: 'Slider' });
 
   return (
-    <div
-      className={classes.track}
-      style={_styles.track}
-      onMouseLeave={onMouseLeave}
-      onMouseEnter={onMouseEnter}
-    >
-      <div
-        className={classes.bar}
-        style={{ ..._styles.bar, left: `${offset}%`, width: `${filled}%` }}
-      />
+    <div className={classes.track} onMouseLeave={onMouseLeave} onMouseEnter={onMouseEnter}>
+      <div className={classes.bar} style={{ left: `${offset}%`, width: `${filled}%` }} />
 
       {children}
 

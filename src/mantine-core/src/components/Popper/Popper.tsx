@@ -73,7 +73,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   forceUpdateDependencies = [],
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
-  const { classes, cx } = useStyles({ arrowSize });
+  const { classes, cx } = useStyles({ arrowSize }, { name: 'Popper' });
   const [popperElement, setPopperElement] = useState(null);
 
   const { styles, attributes, forceUpdate } = usePopper(referenceElement, popperElement, {

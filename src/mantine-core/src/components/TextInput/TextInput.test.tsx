@@ -35,7 +35,7 @@ describe('@mantine/core/Input', () => {
     TextInput,
     defaultInputProps,
     Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
-    'text-input'
+    'TextInput'
   );
 
   it('has correct displayName', () => {

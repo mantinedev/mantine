@@ -1,11 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  mergeStyles,
-  MantineNumberSize,
-  DefaultProps,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { MantineNumberSize, DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
 import useStyles from './SliderRoot.styles';
 
 export type SliderRootStylesNames = ClassNames<typeof useStyles>;
@@ -19,9 +13,8 @@ interface SliderRootProps
 
 export const SliderRoot = forwardRef<HTMLDivElement, SliderRootProps>(
   ({ className, style, size, classNames, styles, ...others }: SliderRootProps, ref) => {
-    const { classes, cx } = useStyles({ size }, classNames, 'slider');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Slider' });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (
       <div

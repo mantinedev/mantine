@@ -1,7 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 import {
   useMantineTheme,
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineColor,
@@ -58,8 +57,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
     ref
   ) => {
     const theme = useMantineTheme();
-    const { classes, cx } = useStyles({ color, size }, classNames, 'slider');
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles({ color, size }, { classNames, styles, name: 'Slider' });
     const [focused, setFocused] = useState(false);
     const isVisible = labelAlwaysOn || dragging || focused || showLabelOnHover;
 
@@ -85,7 +83,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
         onTouchStart={onMouseDown}
         onMouseDown={onMouseDown}
         onClick={(event) => event.stopPropagation()}
-        style={{ ..._styles.thumb, ...(dragging ? _styles.dragging : null), left: `${position}%` }}
+        style={{ left: `${position}%` }}
       >
         <Transition
           mounted={label != null && isVisible}
@@ -94,7 +92,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
           timingFunction={labelTransitionTimingFunction || theme.transitionTimingFunction}
         >
           {(transitionStyles) => (
-            <div style={{ ..._styles.label, ...transitionStyles }} className={classes.label}>
+            <div style={transitionStyles} className={classes.label}>
               {label}
             </div>
           )}
