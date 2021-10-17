@@ -23,7 +23,7 @@ describe('@mantine/core/Month', () => {
     Object.keys(MonthStylesApi).filter(
       (key) => key !== 'inRange' && key !== 'firstInRange' && key !== 'lastInRange'
     ),
-    'month'
+    'Month'
   );
 
   it('has correct displayName', () => {
@@ -32,7 +32,7 @@ describe('@mantine/core/Month', () => {
 
   it('renders correct amount of weekdays', () => {
     const element = shallow(<Month month={new Date()} />);
-    expect(element.render().find('.mantine-month-weekdayCell')).toHaveLength(7);
+    expect(element.render().find('.mantine-Month-weekdayCell')).toHaveLength(7);
   });
 
   it('renders correct amount of days', () => {

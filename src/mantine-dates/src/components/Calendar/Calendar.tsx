@@ -83,7 +83,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       excludeDate,
       fullWidth = false,
       size = 'sm',
-      __staticSelector = 'calendar',
+      __staticSelector = 'Calendar',
       monthLabel,
       yearLabel,
       ...others

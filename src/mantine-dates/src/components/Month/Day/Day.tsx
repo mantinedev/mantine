@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineSize, mergeStyles, ClassNames } from '@mantine/core';
+import { DefaultProps, MantineSize, ClassNames } from '@mantine/core';
 import useStyles from './Day.styles';
 
 export type DayStylesNames = ClassNames<typeof useStyles>;
@@ -29,7 +29,6 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
   (
     {
       className,
-      style,
       value,
       selected,
       weekend,
@@ -52,8 +51,10 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
     }: DayProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size, fullWidth }, classNames, __staticSelector);
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles(
+      { size, fullWidth },
+      { classNames, styles, name: __staticSelector }
+    );
 
     return (
       <button
@@ -66,16 +67,6 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
         tabIndex={hasValue ? (selected ? 0 : -1) : firstInMonth ? 0 : -1}
         data-autofocus={hasValue ? (selected ? true : undefined) : firstInMonth ? true : undefined}
         data-mantine-stop-propagation
-        style={{
-          ..._styles.day,
-          ...(outside ? _styles.outside : null),
-          ...(weekend ? _styles.weekend : null),
-          ...(selected ? _styles.selected : null),
-          ...(inRange ? _styles.inRange : null),
-          ...(firstInRange ? _styles.firstInRange : null),
-          ...(lastInRange ? _styles.lastInRange : null),
-          ...style,
-        }}
         disabled={disabled}
         className={cx(
           classes.day,

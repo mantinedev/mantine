@@ -46,13 +46,13 @@ describe('@mantine/dates/TimeInput', () => {
       disabled: true,
     },
     Object.keys(TimeInputStylesApi).filter((key) => key !== 'invalid'),
-    'time-input'
+    'TimeInput'
   );
 
-  it('passes correct __staticSelector to Calendar and DatePickerBase components', () => {
+  it('passes correct __staticSelector to Image and InputWrapper components', () => {
     const element = shallow(<TimeInput />);
-    expect(element.find(Input).prop('__staticSelector')).toBe('time-input');
-    expect(element.find(InputWrapper).prop('__staticSelector')).toBe('time-input');
+    expect(element.find(Input).prop('__staticSelector')).toBe('TimeInput');
+    expect(element.find(InputWrapper).prop('__staticSelector')).toBe('TimeInput');
   });
 
   it('passes required, id, label, error and description props to InputWrapper component', () => {
