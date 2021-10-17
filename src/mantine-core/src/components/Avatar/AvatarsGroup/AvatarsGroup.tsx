@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, mergeStyles, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
 import { Avatar } from '../Avatar';
 import { Center } from '../../Center';
 import useStyles from './AvatarsGroup.styles';
@@ -27,7 +27,6 @@ export interface AvatarsGroupProps
 
 export function AvatarsGroup({
   className,
-  style,
   children,
   size = 'md',
   radius = 'xl',
@@ -37,41 +36,32 @@ export function AvatarsGroup({
   spacing = 'lg',
   ...others
 }: AvatarsGroupProps) {
-  const { classes, cx } = useStyles({ spacing }, classNames, 'avatars-group');
-  const _styles = mergeStyles(classes, styles);
+  const { classes, cx } = useStyles({ spacing }, { classNames, styles, name: 'AvatarsGroup' });
 
   const avatars = React.Children.toArray(children)
     .filter((child: React.ReactElement) => child.type === Avatar)
-    .map((child: React.ReactElement, index) => {
-      const childStyle = {
-        ...child.props.style,
-        zIndex: index + 1,
-      };
-      return React.cloneElement(child, {
+    .map((child: React.ReactElement, index) =>
+      React.cloneElement(child, {
         size,
         radius,
         key: index,
         className: cx(classes.child, child.props.className),
-        style: { ...childStyle, ..._styles.child },
-      });
-    });
+        style: {
+          ...child.props.style,
+          zIndex: index + 1,
+        },
+      })
+    );
 
   const clampedMax = limit < 2 ? 2 : limit;
   const extraAvatars = avatars.length > clampedMax ? avatars.length - clampedMax : 0;
 
   return (
-    <div className={cx(className, classes.root)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(className, classes.root)} {...others}>
       {avatars.slice(0, avatars.length - extraAvatars)}
       {extraAvatars ? (
-        <Avatar
-          size={size}
-          radius={radius}
-          className={classes.child}
-          style={{ ..._styles.child, zIndex: limit + 1 }}
-        >
-          <Center className={classes.truncated} style={_styles.truncated}>
-            +{extraAvatars}
-          </Center>
+        <Avatar size={size} radius={radius} className={classes.child} style={{ zIndex: limit + 1 }}>
+          <Center className={classes.truncated}>+{extraAvatars}</Center>
         </Avatar>
       ) : null}
     </div>

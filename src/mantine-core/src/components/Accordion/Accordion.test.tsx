@@ -26,7 +26,7 @@ describe('@mantine/core/Accordion', () => {
   itSupportsStyle(Accordion, defaultProps);
   itSupportsMargins(Accordion, defaultProps);
   checkAccessibility([mount(<Accordion {...defaultProps} />)]);
-  itSupportsStylesApi(Accordion, defaultProps, Object.keys(AccordionStylesApi), 'accordion');
+  itSupportsStylesApi(Accordion, defaultProps, Object.keys(AccordionStylesApi), 'Accordion');
 
   it('renders correct amount of items', () => {
     const element = shallow(<Accordion {...defaultProps} />);

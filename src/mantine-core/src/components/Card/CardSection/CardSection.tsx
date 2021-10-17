@@ -7,7 +7,7 @@ export interface CardSectionProps extends DefaultProps, React.ComponentPropsWith
 }
 
 export function CardSection({ className, padding = 0, ...others }: CardSectionProps) {
-  const { classes, cx } = useStyles({ padding }, null, 'card');
+  const { classes, cx } = useStyles({ padding }, { name: 'Card' });
   return <div className={cx(classes.cardSection, className)} {...others} />;
 }
 
