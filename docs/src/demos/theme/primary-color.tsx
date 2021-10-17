@@ -1,8 +1,8 @@
 import React from 'react';
 import { Group, Button, MantineProvider, useMantineTheme } from '@mantine/core';
-import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
-const code = `import { Button, MantineProvider } from '@mantine/core';
+const code = `
+import { Button, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -11,19 +11,24 @@ function Demo() {
       <Button color="red">Red button</Button>
     </MantineProvider>
   );
-}`;
+}
+`;
 
-export function PrimaryColorDemo() {
+function Demo() {
   const theme = useMantineTheme();
 
   return (
-    <CodeDemo code={code} language="tsx">
-      <MantineProvider theme={{ primaryColor: 'cyan', colorScheme: theme.colorScheme }}>
-        <Group position="center">
-          <Button>Primary button</Button>
-          <Button color="red">Red button</Button>
-        </Group>
-      </MantineProvider>
-    </CodeDemo>
+    <MantineProvider theme={{ primaryColor: 'cyan', colorScheme: theme.colorScheme }}>
+      <Group position="center">
+        <Button>Primary button</Button>
+        <Button color="red">Red button</Button>
+      </Group>
+    </MantineProvider>
   );
 }
+
+export const primaryColor: MantineDemo = {
+  type: 'demo',
+  component: Demo,
+  code,
+};
