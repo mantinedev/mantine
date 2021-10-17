@@ -132,7 +132,7 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
     return (
       <Element
         {...rest}
-        className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
+        className={cx(classes[variant], classes.root, { [classes.loading]: loading }, className)}
         type={type}
         disabled={disabled || loading}
         ref={ref}
