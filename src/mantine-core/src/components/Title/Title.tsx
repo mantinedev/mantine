@@ -19,7 +19,7 @@ export const Title = forwardRef<HTMLHeadingElement, TitleProps>(
     }
 
     const element = `h${order}` as const;
-    const { classes, cx } = useStyles({ element }, null, 'title');
+    const { classes, cx } = useStyles({ element }, { name: 'Title' });
     const styles: React.CSSProperties = { ...style };
 
     if (align) {

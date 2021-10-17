@@ -18,11 +18,11 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Slider/Track', () => {
-  itSupportsStylesApi(Track, defaultProps, ['bar'], 'slider');
+  itSupportsStylesApi(Track, defaultProps, ['bar'], 'Slider');
 
   it('sets left and width bar styles based on filled and offset props', () => {
     const element = shallow(<Track {...defaultProps} filled={34} offset={12} />);
-    const bar = element.find('.mantine-slider-bar');
+    const bar = element.find('.mantine-Slider-bar');
     expect(bar.prop('style').left).toBe('12%');
     expect(bar.prop('style').width).toBe('34%');
   });

@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import {
-  mergeStyles,
   DefaultProps,
   MantineSize,
   MantineNumberSize,
@@ -14,7 +13,7 @@ import {
 import useStyles from './Badge.styles';
 
 export type BadgeVariant = 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
-export type BadgeStylesNames = Exclude<ClassNames<typeof useStyles>, BadgeVariant>;
+export type BadgeStylesNames = ClassNames<typeof useStyles>;
 
 interface _BadgeProps extends DefaultProps<BadgeStylesNames> {
   /** Badge color from theme */
@@ -79,11 +78,9 @@ export const Badge: BadgeComponent & { displayName?: string } = forwardRef(
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
       },
-      classNames,
-      'badge'
+      { classNames, styles, name: 'Badge' }
     );
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, rootStyle: _styles.root, style });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element = component || 'div';
 
     return (
@@ -93,21 +90,9 @@ export const Badge: BadgeComponent & { displayName?: string } = forwardRef(
         style={mergedStyles}
         ref={ref}
       >
-        {leftSection && (
-          <span className={classes.leftSection} style={_styles.leftSection}>
-            {leftSection}
-          </span>
-        )}
-
-        <span className={classes.inner} style={_styles.inner}>
-          {children}
-        </span>
-
-        {rightSection && (
-          <span className={classes.rightSection} style={_styles.rightSection}>
-            {rightSection}
-          </span>
-        )}
+        {leftSection && <span className={classes.leftSection}>{leftSection}</span>}
+        <span className={classes.inner}>{children}</span>
+        {rightSection && <span className={classes.rightSection}>{rightSection}</span>}
       </Element>
     );
   }

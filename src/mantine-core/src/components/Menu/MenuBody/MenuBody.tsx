@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import { useFocusTrap } from '@mantine/hooks';
 import {
-  mergeStyles,
   useMantineTheme,
   DefaultProps,
   MantineNumberSize,
@@ -97,7 +96,6 @@ export const MenuBody = forwardRef<HTMLDivElement, MenuBodyProps>(
   (
     {
       className,
-      style,
       opened,
       onClose,
       children,
@@ -121,8 +119,7 @@ export const MenuBody = forwardRef<HTMLDivElement, MenuBodyProps>(
     const hoveredTimeout = useRef<number>();
     const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
     const theme = useMantineTheme();
-    const { classes, cx } = useStyles({ size }, classNames, 'menu');
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Menu' });
     const [hovered, setHovered] = useState(-1);
     const focusTrapRef = useFocusTrap(trapFocus);
 
@@ -197,14 +194,7 @@ export const MenuBody = forwardRef<HTMLDivElement, MenuBodyProps>(
       }
 
       if (item.type === MenuLabel) {
-        return (
-          <Text
-            key={index}
-            className={classes.label}
-            style={_styles.label}
-            {...(item.props as any)}
-          />
-        );
+        return <Text key={index} className={classes.label} {...(item.props as any)} />;
       }
 
       if (item.type === Divider) {
@@ -213,7 +203,6 @@ export const MenuBody = forwardRef<HTMLDivElement, MenuBodyProps>(
             variant="solid"
             className={classes.divider}
             my={theme.spacing.xs / 2}
-            style={_styles.divider}
             key={index}
           />
         );
@@ -226,7 +215,6 @@ export const MenuBody = forwardRef<HTMLDivElement, MenuBodyProps>(
       <Paper
         shadow={shadow}
         className={cx(classes.body, className)}
-        style={{ ...style, ..._styles.body }}
         onKeyDownCapture={handleKeyDown}
         role="menu"
         aria-orientation="vertical"

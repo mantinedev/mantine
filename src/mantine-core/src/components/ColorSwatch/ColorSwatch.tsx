@@ -42,7 +42,7 @@ export const ColorSwatch: ColorSwatchComponent & { displayName?: string } = forw
     }: ColorSwatchProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { classes, cx } = useStyles({ radius, size }, null, 'color-swatch');
+    const { classes, cx } = useStyles({ radius, size }, { name: 'ColorSwatch' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const Element = component || 'div';

@@ -60,8 +60,7 @@ export function Col({
 }: ColProps) {
   const { classes, cx } = useStyles(
     { gutter, offset, xs, sm, md, lg, xl, grow, columns, span },
-    null,
-    'grid'
+    { name: 'Grid' }
   );
 
   if (!isValidSpan(span) || span > columns) {

@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import {
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
@@ -53,24 +52,19 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     }: SwitchProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size, color, radius }, classNames, 'switch');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles(
+      { size, color, radius },
+      { classNames, styles, name: 'Switch' }
+    );
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const uuid = useUuid(id);
 
     return (
       <div className={cx(classes.root, className)} style={mergedStyles} {...wrapperProps}>
-        <input
-          {...rest}
-          id={uuid}
-          ref={ref}
-          type="checkbox"
-          className={classes.input}
-          style={_styles.input}
-        />
+        <input {...rest} id={uuid} ref={ref} type="checkbox" className={classes.input} />
 
         {label && (
-          <label className={classes.label} htmlFor={uuid} style={_styles.label}>
+          <label className={classes.label} htmlFor={uuid}>
             {label}
           </label>
         )}

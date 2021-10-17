@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
 import useStyles, { THUMB_SIZES } from './Thumb.styles';
 
 export type ThumbStylesNames = ClassNames<typeof useStyles>;
@@ -24,14 +24,12 @@ export function Thumb({
   size,
   __staticSelector,
 }: ThumbProps) {
-  const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
-  const _styles = mergeStyles(classes, styles);
+  const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
 
   return (
     <div
       className={cx(classes.thumb, className)}
       style={{
-        ..._styles.thumb,
         left: `calc(${position.x * 100}% - ${THUMB_SIZES[size] / 2}px)`,
         top: `calc(${position.y * 100}% - ${THUMB_SIZES[size] / 2}px)`,
         ...style,

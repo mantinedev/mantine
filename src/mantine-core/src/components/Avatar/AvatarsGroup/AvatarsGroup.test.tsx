@@ -22,7 +22,7 @@ describe('@mantine/core/AvatarsGroup', () => {
     AvatarsGroup,
     defaultProps,
     Object.keys(AvatarsGroupStylesApi),
-    'avatars-group'
+    'AvatarsGroup'
   );
 
   it('renders avatars based on limit prop', () => {

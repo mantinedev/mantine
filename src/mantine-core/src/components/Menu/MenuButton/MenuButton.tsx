@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import {
-  mergeStyles,
   MantineNumberSize,
   ClassNames,
   PolymorphicComponentProps,
@@ -38,7 +37,6 @@ export const MenuButton: MenuButtonComponent & { displayName?: string } = forwar
   <C extends React.ElementType = 'button'>(
     {
       className,
-      style,
       children,
       onHover,
       hovered,
@@ -54,8 +52,7 @@ export const MenuButton: MenuButtonComponent & { displayName?: string } = forwar
     }: MenuButtonProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { classes, cx } = useStyles({ color, radius }, classNames, 'menu');
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Menu' });
     const Element = component || 'button';
 
     return (
@@ -66,20 +63,13 @@ export const MenuButton: MenuButtonComponent & { displayName?: string } = forwar
         onMouseEnter={() => !disabled && onHover()}
         ref={ref}
         disabled={disabled}
-        style={{ ...style, ..._styles.item, ...(hovered ? _styles.itemHovered : null) }}
         {...others}
       >
-        <div className={classes.itemInner} style={_styles.itemInner}>
-          {icon && (
-            <div className={classes.itemIcon} style={_styles.itemIcon}>
-              {icon}
-            </div>
-          )}
+        <div className={classes.itemInner}>
+          {icon && <div className={classes.itemIcon}>{icon}</div>}
 
-          <div className={classes.itemBody} style={_styles.itemBody}>
-            <div className={classes.itemLabel} style={_styles.itemLabel}>
-              {children}
-            </div>
+          <div className={classes.itemBody}>
+            <div className={classes.itemLabel}>{children}</div>
             {rightSection}
           </div>
         </div>

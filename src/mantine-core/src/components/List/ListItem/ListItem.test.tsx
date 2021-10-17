@@ -25,8 +25,8 @@ describe('@mantine/core/ListItem', () => {
     const withIcon = shallow(<ListItem icon="$">test-item</ListItem>);
     const withoutIcon = shallow(<ListItem>test-item</ListItem>);
 
-    expect(withIcon.find('.mantine-list-itemIcon')).toHaveLength(1);
-    expect(withoutIcon.find('.mantine-list-itemIcon')).toHaveLength(0);
+    expect(withIcon.find('.mantine-List-itemIcon')).toHaveLength(1);
+    expect(withoutIcon.find('.mantine-List-itemIcon')).toHaveLength(0);
   });
 
   it('has correct displayName', () => {

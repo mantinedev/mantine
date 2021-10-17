@@ -97,7 +97,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       <InputWrapper
         labelElement="div"
         size={size}
-        __staticSelector="radio-group"
+        __staticSelector="RadioGroup"
         classNames={classNames}
         styles={styles}
         ref={ref}

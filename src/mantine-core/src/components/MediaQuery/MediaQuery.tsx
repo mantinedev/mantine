@@ -16,7 +16,7 @@ export interface MediaQueryProps {
 }
 
 export function MediaQuery({ children, smallerThan, largerThan, className }: MediaQueryProps) {
-  const { classes, cx } = useStyles({ smallerThan, largerThan });
+  const { classes, cx } = useStyles({ smallerThan, largerThan }, { name: 'MediaQuery' });
   const child = Children.only(children) as React.ReactElement;
   return React.cloneElement(child, {
     className: cx(classes.media, child.props?.className, className),

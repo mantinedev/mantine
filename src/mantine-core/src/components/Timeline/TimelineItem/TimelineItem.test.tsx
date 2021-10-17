@@ -18,12 +18,12 @@ describe('@mantine/core/TimelineItem', () => {
 
   it('renders given bullet', () => {
     const element = shallow(<TimelineItem bullet="test-bullet" />);
-    expect(element.find('.mantine-timeline-itemBullet').text()).toBe('test-bullet');
+    expect(element.find('.mantine-Timeline-itemBullet').text()).toBe('test-bullet');
   });
 
   it('renders given title', () => {
     const element = shallow(<TimelineItem title="test-title" />);
-    expect(element.render().find('.mantine-timeline-itemTitle').text()).toBe('test-title');
+    expect(element.render().find('.mantine-Timeline-itemTitle').text()).toBe('test-title');
   });
 
   it('has correct displayName', () => {

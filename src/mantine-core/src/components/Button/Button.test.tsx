@@ -11,7 +11,6 @@ import {
   itSupportsMargins,
 } from '@mantine/tests';
 import { Button } from './Button';
-import { Button as ButtonStylesApi } from './styles.api';
 
 describe('@mantine/core/Button', () => {
   checkAccessibility([mount(<Button>Mantine button</Button>)]);
@@ -25,8 +24,8 @@ describe('@mantine/core/Button', () => {
   itSupportsStylesApi(
     Button,
     { children: 'test', leftIcon: 'l', rightIcon: 'r' },
-    Object.keys(ButtonStylesApi),
-    'button'
+    ['root', 'icon', 'leftIcon', 'rightIcon', 'inner', 'label'],
+    'Button'
   );
 
   it('has correct displayName', () => {
@@ -47,14 +46,14 @@ describe('@mantine/core/Button', () => {
       </Button>
     );
 
-    expect(leftIcon.render().find('.mantine-button-leftIcon').text()).toBe('$');
-    expect(rightIcon.render().find('.mantine-button-rightIcon').text()).toBe('%');
-    expect(bothIcons.render().find('.mantine-button-leftIcon').text()).toBe('$');
-    expect(bothIcons.render().find('.mantine-button-rightIcon').text()).toBe('%');
+    expect(leftIcon.render().find('.mantine-Button-leftIcon').text()).toBe('$');
+    expect(rightIcon.render().find('.mantine-Button-rightIcon').text()).toBe('%');
+    expect(bothIcons.render().find('.mantine-Button-leftIcon').text()).toBe('$');
+    expect(bothIcons.render().find('.mantine-Button-rightIcon').text()).toBe('%');
 
-    expect(leftIcon.render().find('.mantine-button-label').text()).toBe('left-icon-test');
-    expect(rightIcon.render().find('.mantine-button-label').text()).toBe('right-icon-test');
-    expect(bothIcons.render().find('.mantine-button-label').text()).toBe('both-icon-test');
+    expect(leftIcon.render().find('.mantine-Button-label').text()).toBe('left-icon-test');
+    expect(rightIcon.render().find('.mantine-Button-label').text()).toBe('right-icon-test');
+    expect(bothIcons.render().find('.mantine-Button-label').text()).toBe('both-icon-test');
   });
 
   it('sets disabled attribute based on prop', () => {

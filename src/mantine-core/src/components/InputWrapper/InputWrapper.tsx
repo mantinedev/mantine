@@ -1,11 +1,5 @@
 import React, { createElement, forwardRef } from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineSize,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineSize, ClassNames, useExtractedMargins } from '@mantine/styles';
 import { Text } from '../Text/Text';
 import useStyles from './InputWrapper.styles';
 
@@ -72,14 +66,13 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
       classNames,
       styles,
       size = 'sm',
-      __staticSelector = 'input-wrapper',
+      __staticSelector = 'InputWrapper',
       ...others
     }: InputWrapperProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
     const inputLabel = createElement(
       labelElement,
@@ -88,16 +81,10 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
         ...labelProps,
         id: id ? `${id}-label` : undefined,
         className: classes.label,
-        style: _styles.label,
       },
       <>
         {label}
-        {required && (
-          <span className={classes.required} style={_styles.required}>
-            {' '}
-            *
-          </span>
-        )}
+        {required && <span className={classes.required}> *</span>}
       </>
     );
 
@@ -106,12 +93,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
         {label && inputLabel}
 
         {description && (
-          <Text
-            {...descriptionProps}
-            color="gray"
-            className={classes.description}
-            style={_styles.description}
-          >
+          <Text {...descriptionProps} color="gray" className={classes.description}>
             {description}
           </Text>
         )}
@@ -119,7 +101,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
         {children}
 
         {typeof error !== 'boolean' && error && (
-          <Text {...errorProps} size={size} className={classes.error} style={_styles.error}>
+          <Text {...errorProps} size={size} className={classes.error}>
             {error}
           </Text>
         )}

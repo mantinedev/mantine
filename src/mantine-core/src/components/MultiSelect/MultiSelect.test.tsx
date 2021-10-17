@@ -39,10 +39,10 @@ describe('@mantine/core/MultiSelect', () => {
         key !== 'hovered' &&
         key !== 'nothingFound' &&
         key !== 'disabled' &&
-        key !== 'seperator' &&
-        key !== 'seperatorLabel'
+        key !== 'separator' &&
+        key !== 'separatorLabel'
     ),
-    'multi-select'
+    'MultiSelect'
   );
 
   checkAccessibility([

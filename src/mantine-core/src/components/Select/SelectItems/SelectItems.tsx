@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import { Divider } from '../../Divider/Divider';
 import { SelectItem } from '../types';
@@ -40,9 +40,8 @@ export function SelectItems({
   creatable,
   createLabel,
 }: SelectItemsProps) {
-  const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
-  const _styles = mergeStyles(classes, styles);
-  const ungroupedItems: React.ReactElement<any>[] = [];
+  const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+  const unGroupedItems: React.ReactElement<any>[] = [];
   const groupedItems: React.ReactElement<any>[] = [];
   let creatableDataIndex = null;
 
@@ -56,12 +55,6 @@ export function SelectItems({
           [classes.selected]: !item.disabled && selected,
           [classes.disabled]: item.disabled,
         })}
-        style={{
-          ..._styles.item,
-          ...(hovered === index && !item.disabled ? _styles.hovered : null),
-          ...(selected && !item.disabled ? _styles.selected : null),
-          ...(item.disabled ? _styles.disabled : null),
-        }}
         onMouseEnter={() => onItemHover(index)}
         id={`${uuid}-${index}`}
         role="option"
@@ -87,28 +80,20 @@ export function SelectItems({
     );
   };
 
-  const createSeperator = (label?: string) => (
-    <div className={classes.seperator} style={_styles.seperator} key={label}>
-      <Divider
-        classNames={{
-          label: classes.seperatorLabel,
-        }}
-        styles={{
-          label: { ..._styles.seperatorLabel },
-        }}
-        label={label}
-      />
+  const createSeparator = (label?: string) => (
+    <div className={classes.separator} key={label}>
+      <Divider classNames={{ label: classes.separatorLabel }} label={label} />
     </div>
   );
 
   let groupName = null;
   data.forEach((item, index) => {
     if (item.creatable) creatableDataIndex = index;
-    else if (!item.group) ungroupedItems.push(constructItemComponent(item, index));
+    else if (!item.group) unGroupedItems.push(constructItemComponent(item, index));
     else {
       if (groupName !== item.group) {
         groupName = item.group;
-        groupedItems.push(createSeperator(groupName));
+        groupedItems.push(createSeparator(groupName));
       }
       groupedItems.push(constructItemComponent(item, index));
     }
@@ -118,7 +103,7 @@ export function SelectItems({
     const creatableDataItem = data[creatableDataIndex];
     const selected =
       typeof isItemSelected === 'function' ? isItemSelected(data[creatableDataIndex].value) : false;
-    ungroupedItems.push(
+    unGroupedItems.push(
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         key={creatableDataItem.value}
@@ -130,11 +115,6 @@ export function SelectItems({
         onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {
           event.preventDefault();
           onItemSelect(creatableDataItem);
-        }}
-        style={{
-          ..._styles.item,
-          ...(hovered === creatableDataIndex ? _styles.hovered : null),
-          ...(selected ? _styles.selected : null),
         }}
         tabIndex={-1}
         ref={(node: HTMLDivElement) => {
@@ -149,17 +129,17 @@ export function SelectItems({
     );
   }
 
-  if (groupedItems.length > 0 && ungroupedItems.length > 0) {
-    ungroupedItems.unshift(createSeperator());
+  if (groupedItems.length > 0 && unGroupedItems.length > 0) {
+    unGroupedItems.unshift(createSeparator());
   }
 
-  return groupedItems.length > 0 || ungroupedItems.length > 0 ? (
+  return groupedItems.length > 0 || unGroupedItems.length > 0 ? (
     <>
       {groupedItems}
-      {ungroupedItems}
+      {unGroupedItems}
     </>
   ) : (
-    <Text size={size} className={classes.nothingFound} style={_styles.nothingFound}>
+    <Text size={size} className={classes.nothingFound}>
       {nothingFound}
     </Text>
   );

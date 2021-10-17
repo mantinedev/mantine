@@ -45,8 +45,7 @@ export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>(
     );
     const { classes, cx } = useStyles(
       { breakpoints: sortedBreakpoints, cols, spacing },
-      null,
-      'simple-grid'
+      { name: 'SimpleGrid' }
     );
 
     return (

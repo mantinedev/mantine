@@ -28,7 +28,7 @@ const content = [
 
 const defaultProps = { children: content };
 
-const tabContent = (element: any) => element.render().find('.mantine-tabs-body').text();
+const tabContent = (element: any) => element.render().find('.mantine-Tabs-body').text();
 const activateTab = (element: any, position: number) =>
   element.find(TabControl).at(position).simulate('click');
 
@@ -39,7 +39,7 @@ describe('@mantine/core/Tabs', () => {
   itSupportsMargins(Tabs, defaultProps);
   itSupportsClassName(Tabs, defaultProps);
   itSupportsRef(Tabs, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(Tabs, defaultProps, Object.keys(TabsStylesApi), 'tabs');
+  itSupportsStylesApi(Tabs, defaultProps, Object.keys(TabsStylesApi), 'Tabs');
 
   it('has correct displayName', () => {
     expect(Tabs.displayName).toEqual('@mantine/core/Tabs');

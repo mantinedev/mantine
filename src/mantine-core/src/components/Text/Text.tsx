@@ -81,8 +81,7 @@ export const Text: TextComponent & { displayName?: string } = forwardRef(
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
       },
-      null,
-      'text'
+      { classNames: null, styles: null, name: 'Text' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element = component || 'div';

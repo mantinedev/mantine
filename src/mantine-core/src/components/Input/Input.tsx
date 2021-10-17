@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import {
   useMantineTheme,
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
@@ -83,7 +82,7 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
       wrapperProps,
       classNames,
       styles,
-      __staticSelector = 'input',
+      __staticSelector = 'Input',
       multiline = false,
       ...others
     }: InputProps<C>,
@@ -93,24 +92,18 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
     const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
     const { classes, cx } = useStyles(
       { radius, size, multiline, variant: _variant, invalid, disabled },
-      classNames,
-      __staticSelector
+      { classNames, styles, name: __staticSelector }
     );
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element: any = component || 'input';
 
     return (
       <div
         className={cx(classes.root, classes[_variant], className)}
-        style={{ ...mergedStyles, ..._styles[variant] }}
+        style={mergedStyles}
         {...wrapperProps}
       >
-        {icon && (
-          <div className={classes.icon} style={_styles.icon}>
-            {icon}
-          </div>
-        )}
+        {icon && <div className={classes.icon}>{icon}</div>}
 
         <Element
           {...rest}
@@ -119,17 +112,13 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
           aria-invalid={invalid}
           className={cx({ [classes.withIcon]: icon }, classes.input)}
           disabled={disabled}
-          style={{
-            paddingRight: rightSection ? rightSectionWidth : theme.spacing.md,
-            ..._styles.input,
-            ...(icon ? _styles.withIcon : null),
-          }}
+          style={{ paddingRight: rightSection ? rightSectionWidth : theme.spacing.md }}
         />
 
         {rightSection && (
           <div
             {...rightSectionProps}
-            style={{ ..._styles.rightSection, width: rightSectionWidth }}
+            style={{ width: rightSectionWidth }}
             className={classes.rightSection}
           >
             {rightSection}

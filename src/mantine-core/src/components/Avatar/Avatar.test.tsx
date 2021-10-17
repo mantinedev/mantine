@@ -26,12 +26,12 @@ describe('@mantine/core/Avatar', () => {
   itSupportsStyle(Avatar, { src: img });
   itSupportsRef(Avatar, { src: img }, HTMLDivElement);
 
-  itSupportsStylesApi(Avatar, { src: img }, ['root', 'image'], 'avatar', 'with-image');
+  itSupportsStylesApi(Avatar, { src: img }, ['root', 'image'], 'Avatar', 'with-image');
   itSupportsStylesApi(
     Avatar,
     { src: null },
     ['root', 'placeholder', 'placeholderIcon'],
-    'avatar',
+    'Avatar',
     'with-placeholder'
   );
 
@@ -45,8 +45,8 @@ describe('@mantine/core/Avatar', () => {
 
   it('renders placeholder if src was not provided', () => {
     const element = shallow(<Avatar src={null} alt="no-image-test" />);
-    expect(element.render().find('.mantine-avatar-placeholder')).toHaveLength(1);
-    expect(element.render().find('.mantine-avatar-placeholder').attr('title')).toBe(
+    expect(element.render().find('.mantine-Avatar-placeholder')).toHaveLength(1);
+    expect(element.render().find('.mantine-Avatar-placeholder').attr('title')).toBe(
       'no-image-test'
     );
   });
@@ -58,7 +58,7 @@ describe('@mantine/core/Avatar', () => {
       </Avatar>
     );
 
-    expect(element.render().find('.mantine-avatar-placeholder').find('.test').text()).toBe(
+    expect(element.render().find('.mantine-Avatar-placeholder').find('.test').text()).toBe(
       'test-placeholder'
     );
   });

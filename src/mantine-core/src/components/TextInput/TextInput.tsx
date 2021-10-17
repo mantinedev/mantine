@@ -49,7 +49,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       size = 'sm',
       classNames,
       styles,
-      __staticSelector = 'text-input',
+      __staticSelector = 'TextInput',
       ...others
     }: TextInputProps,
     ref
