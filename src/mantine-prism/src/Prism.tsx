@@ -5,7 +5,6 @@ import {
   useMantineTheme,
   Tooltip,
   DefaultProps,
-  mergeStyles,
   getThemeColor,
   hexToRgba,
   MantineColor,
@@ -65,11 +64,9 @@ export function Prism({
   const theme = useMantineTheme();
   const { classes, cx } = useStyles(
     { colorScheme: colorScheme || theme.colorScheme },
-    classNames,
-    'prism'
+    { classNames, styles, name: 'Prism' }
   );
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const clipboard = useClipboard();
 
   return (
@@ -77,7 +74,6 @@ export function Prism({
       {!noCopy && (
         <Tooltip
           data-mantine-copy
-          style={_styles.copy}
           className={classes.copy}
           label={clipboard.copied ? copiedLabel : copyLabel}
           position="left"
@@ -110,10 +106,7 @@ export function Prism({
           getLineProps,
           getTokenProps,
         }) => (
-          <pre
-            className={cx(classes.code, inheritedClassName, className)}
-            style={{ ...inheritedStyle, ..._styles.code }}
-          >
+          <pre className={cx(classes.code, inheritedClassName, className)} style={inheritedStyle}>
             {tokens
               .map((line, index) => {
                 if (index === tokens.length - 1 && line.length === 1 && line[0].content === '\n') {
@@ -143,17 +136,13 @@ export function Prism({
                   <div
                     {...lineProps}
                     className={cx(classes.line, lineProps.className)}
-                    style={{
-                      ..._styles.line,
-                      ...(shouldHighlight ? { backgroundColor: lineColor } : null),
-                    }}
+                    style={{ ...(shouldHighlight ? { backgroundColor: lineColor } : null) }}
                   >
                     {withLineNumbers && (
                       <div
                         className={classes.lineNumber}
                         data-mantine-line-number
                         style={{
-                          ..._styles.lineNumber,
                           color: shouldHighlight
                             ? getThemeColor({
                                 theme,
@@ -167,7 +156,7 @@ export function Prism({
                       </div>
                     )}
 
-                    <div className={classes.lineContent} style={_styles.lineContent}>
+                    <div className={classes.lineContent}>
                       {line.map((token, key) => {
                         const tokenProps = getTokenProps({ token, key });
                         return (
