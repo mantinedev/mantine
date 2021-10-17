@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, mergeStyles, ClassNames } from '@mantine/core';
+import { DefaultProps, ClassNames } from '@mantine/core';
 import type { RichTextEditorLabels } from '../RichTextEditor/default-labels';
 import { ToolbarButton } from './ToolbarButton/ToolbarButton';
 import { CONTROLS, ToolbarControl } from './controls';
@@ -30,14 +30,15 @@ export function Toolbar({
   stickyOffset = 0,
   sticky = true,
   className,
-  style,
   classNames,
   styles,
   id,
   ...others
 }: ToolbarProps) {
-  const { classes, cx } = useStyles({ sticky, stickyOffset }, classNames, 'rte');
-  const _styles = mergeStyles(classes, styles);
+  const { classes, cx } = useStyles(
+    { sticky, stickyOffset },
+    { classNames, styles, name: 'RichTextEditor' }
+  );
 
   const groups = controls.map((group, index) => {
     const items = group
@@ -48,7 +49,6 @@ export function Toolbar({
         return (
           <ToolbarButton
             className={classes.toolbarControl}
-            style={_styles.toolbarControl}
             controls={CONTROLS[item].controls}
             value={(CONTROLS[item] as any).value}
             key={item}
@@ -61,22 +61,15 @@ export function Toolbar({
       });
 
     return (
-      <div className={classes.toolbarGroup} style={_styles.toolbarGroup} key={index}>
+      <div className={classes.toolbarGroup} key={index}>
         {items}
       </div>
     );
   });
 
   return (
-    <div
-      id={id}
-      className={cx(classes.toolbar, className)}
-      style={{ ...style, ..._styles.toolbar }}
-      {...others}
-    >
-      <div className={classes.toolbarInner} style={_styles.toolbarInner}>
-        {groups}
-      </div>
+    <div id={id} className={cx(classes.toolbar, className)} {...others}>
+      <div className={classes.toolbarInner}>{groups}</div>
     </div>
   );
 }
