@@ -110,7 +110,10 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
     }: ColorInputProps,
     ref
   ) => {
-    const { classes } = useStyles(null, { classNames, styles, name: 'ColorInput' });
+    const { classes, cx } = useStyles(
+      { disallowInput },
+      { classNames, styles, name: 'ColorInput' }
+    );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const uuid = useUuid(id);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
@@ -186,11 +189,8 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
               ) : null)
             }
             readOnly={disallowInput}
-            classNames={classNames}
-            styles={{
-              ...styles,
-              input: { ...(styles as any)?.input, cursor: disallowInput ? 'pointer' : undefined },
-            }}
+            classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
+            styles={styles}
           />
         </div>
 

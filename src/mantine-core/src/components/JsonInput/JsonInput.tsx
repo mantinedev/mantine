@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { useMantineTheme, DefaultProps, getSizeValue } from '@mantine/styles';
+import { DefaultProps } from '@mantine/styles';
 import { validateJson } from './validate-json/validate-json';
 import { Textarea, TextareaProps } from '../Textarea';
 import { TextInputStylesNames } from '../TextInput';
+import useStyles from './JsonInput.styles';
 
 export type JsonInputStylesNames = TextInputStylesNames;
 
@@ -34,12 +35,13 @@ export function JsonInput({
   onBlur,
   error,
   styles,
+  classNames,
   formatOnBlur = false,
   size = 'sm',
   validationError,
   ...others
 }: JsonInputProps) {
-  const theme = useMantineTheme();
+  const { classes, cx } = useStyles({ size }, { name: 'JsonInput' });
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -73,14 +75,7 @@ export function JsonInput({
       onBlur={handleBlur}
       error={valid ? error : validationError || true}
       __staticSelector="JsonInput"
-      styles={{
-        ...styles,
-        input: {
-          ...(styles as any)?.input,
-          fontFamily: theme.fontFamilyMonospace,
-          fontSize: getSizeValue({ size, sizes: theme.fontSizes }) - 2,
-        },
-      }}
+      classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
       {...others}
     />
   );

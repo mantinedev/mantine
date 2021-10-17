@@ -1,15 +1,10 @@
 import React, { forwardRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineSize,
-  useUuid,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineSize, useUuid, useExtractedMargins } from '@mantine/styles';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import { TextInputStylesNames } from '../TextInput/TextInput';
 import { Input, InputBaseProps } from '../Input/Input';
+import useStyles from './Textarea.styles';
 
 export interface TextareaProps
   extends DefaultProps<TextInputStylesNames>,
@@ -61,17 +56,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     ref
   ) => {
     const uuid = useUuid(id);
-    const theme = useMantineTheme();
+    const { classes, cx } = useStyles();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-
-    const inputStyles = {
-      ...styles,
-      input: {
-        paddingTop: theme.spacing.xs,
-        paddingBottom: theme.spacing.xs,
-        ...(styles as any)?.input,
-      },
-    };
+    const _classNames = { ...classNames, input: cx(classes.input, classNames?.input) };
 
     return (
       <InputWrapper
@@ -97,8 +84,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             minRows={minRows}
             id={uuid}
             ref={ref}
-            classNames={classNames}
-            styles={inputStyles}
+            classNames={_classNames}
+            styles={styles}
             size={size}
             multiline
             {...rest}
@@ -111,8 +98,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             invalid={!!error}
             rows={minRows}
             ref={ref}
-            classNames={classNames}
-            styles={inputStyles}
+            classNames={_classNames}
+            styles={styles}
             size={size}
             __staticSelector={__staticSelector}
             multiline

@@ -18,6 +18,7 @@ import { SelectDropdown } from './SelectDropdown/SelectDropdown';
 import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
 import { groupSortData } from './group-sort-data/group-sort-data';
+import useStyles from './Select.styles';
 
 export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSelectProps {
   /** Input size */
@@ -144,6 +145,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     }: SelectProps,
     ref
   ) => {
+    const { classes, cx } = useStyles();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
@@ -371,7 +373,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             invalid={!!error}
             size={size}
             onKeyDown={handleInputKeydown}
-            classNames={classNames}
             __staticSelector="Select"
             value={inputValue}
             onChange={handleInputChange}
@@ -385,16 +386,14 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             disabled={disabled}
             data-mantine-stop-propagation={dropdownOpened}
             autoComplete="off"
+            classNames={{
+              ...classNames,
+              input: cx({ [classes.input]: !searchable }, classNames?.input),
+            }}
             {...getSelectRightSectionProps({
               rightSection,
               rightSectionWidth,
-              styles: {
-                ...styles,
-                input: {
-                  cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
-                  ...(styles as any)?.input,
-                },
-              },
+              styles,
               size,
               shouldClear: clearable && !!selectedValue,
               clearButtonLabel,

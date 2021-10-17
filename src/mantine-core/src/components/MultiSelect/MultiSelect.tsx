@@ -410,7 +410,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           <Input<'div'>
             __staticSelector="MultiSelect"
             style={{ overflow: 'hidden' }}
-            classNames={classNames}
             component="div"
             multiline
             size={size}
@@ -425,16 +424,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               !disabled && setDropdownOpened((o) => !o);
               inputRef.current?.focus();
             }}
+            classNames={{
+              ...classNames,
+              input: cx({ [classes.input]: !searchable }, classNames?.input),
+            }}
             {...getSelectRightSectionProps({
               rightSection,
               rightSectionWidth,
-              styles: {
-                ...styles,
-                input: {
-                  ...(styles as any)?.input,
-                  cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
-                },
-              },
+              styles,
               size,
               shouldClear: clearable && _value.length > 0,
               clearButtonLabel,

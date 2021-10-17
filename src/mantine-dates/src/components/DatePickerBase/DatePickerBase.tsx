@@ -199,7 +199,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
               component="button"
               type="button"
               classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
-              styles={{ ...styles, input: { ...(styles as any)?.input, cursor: 'pointer' } }}
+              styles={styles}
               onClick={() => setDropdownOpened(!dropdownOpened)}
               id={uuid}
               ref={useMergedRef(ref, inputRef)}
