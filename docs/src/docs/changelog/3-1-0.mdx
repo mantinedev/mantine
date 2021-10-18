@@ -41,6 +41,26 @@ This means that you now can subscribe to `theme` and use nested selectors in `st
 </Button>
 ```
 
+## use-css hook
+
+New use-css hook is a simpler alternative to `createStyles` function.
+Hook returns `css` and `cx` functions. `css` function accepts styles object and returns class name:
+
+```tsx
+import { useCss, Button } from '@mantine/core';
+
+function Demo({ active }) {
+  const { css, cx } = useCss();
+  return (
+    <Button
+      className={cx(css({ backgroundColor: 'red', opacity: 1 }), { [css({ opacity: 1 })]: active })}
+    >
+      Custom button
+    </Button>
+  );
+}
+```
+
 ## Other changes
 
 - [use-list-state](https://mantine.dev/hooks/use-list-state/) hook now has new `applyWhere` handler
