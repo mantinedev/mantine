@@ -66,3 +66,5 @@ function Demo({ active }) {
 - [use-list-state](https://mantine.dev/hooks/use-list-state/) hook now has new `applyWhere` handler
 - [use-form](https://mantine.dev/hooks/use-form/) hook now supports `values` on validation rule
 - [Slider and RangeSlider](https://mantine.dev/core/slider/) components were migrated to [use-move](https://mantine.dev/hooks/use-move/) hook and now supports showing label on hover (new default behavior)
+- Add better focus management to [Popover](https://mantine.dev/core/popover/) – now focus will be returned to last active element (made with [use-focus-return](https://mantine.dev/hooks/use-focus-return/) hook)
+- Fix incorrect focus handling in [Menu](https://mantine.dev/core/menu/), [DatePicker](https://mantine.dev/dates/date-picker/) and [DateRangePicker](https://mantine.dev/dates/date-range-picker/) which resulted in focus not being shifted to control/input when dropdown was closed
