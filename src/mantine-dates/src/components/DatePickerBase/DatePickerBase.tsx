@@ -151,14 +151,9 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
     const uuid = useUuid(id);
 
-    const focusTrapRef = useFocusTrap();
+    const focusTrapRef = useFocusTrap(dropdownOpened);
     const inputRef = useRef<HTMLButtonElement>();
-    const closeDropdown = () => {
-      if (dropdownOpened) {
-        setDropdownOpened(false);
-        setTimeout(() => inputRef.current?.focus(), transitionDuration + 50);
-      }
-    };
+    const closeDropdown = () => setDropdownOpened(false);
     const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
       event.nativeEvent.code === 'Escape' && closeDropdown();
 
@@ -167,7 +162,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
       rootElement,
     ]);
 
-    useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
+    useWindowEvent('scroll', () => closeDropdownOnScroll && closeDropdown());
 
     const rightSection = clearable ? (
       <CloseButton
@@ -235,6 +230,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
               withArrow
               arrowSize={3}
               zIndex={zIndex}
+              onTransitionEnd={() => inputRef.current?.focus()}
             >
               <div
                 className={classes.dropdownWrapper}
