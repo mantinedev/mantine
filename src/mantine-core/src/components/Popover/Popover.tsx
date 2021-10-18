@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useClickOutside, useFocusTrap, useMergedRef } from '@mantine/hooks';
+import { useClickOutside, useFocusTrap, useMergedRef, useFocusReturn } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -103,6 +103,7 @@ export function Popover({
   const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
 
   useClickOutside(() => !noClickOutside && handleClose(), null, [rootElement, dropdownElement]);
+  useFocusReturn({ opened: opened || noFocusTrap, transitionDuration });
 
   const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!noEscape && event.nativeEvent.code === 'Escape') {
