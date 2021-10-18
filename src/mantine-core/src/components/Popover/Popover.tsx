@@ -100,7 +100,7 @@ export function Popover({
   const [referenceElement, setReferenceElement] = useState(null);
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-  const focusTrapRef = useFocusTrap(!noFocusTrap);
+  const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
 
   useClickOutside(() => !noClickOutside && handleClose(), null, [rootElement, dropdownElement]);
 

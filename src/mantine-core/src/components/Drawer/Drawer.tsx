@@ -122,7 +122,7 @@ export function MantineDrawer({
 }: DrawerProps) {
   const theme = useMantineTheme();
   const { classes, cx } = useStyles({ size, position }, { classNames, styles, name: 'Drawer' });
-  const focusTrapRef = useFocusTrap(!noFocusTrap);
+  const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
   useScrollLock(opened && !noScrollLock);
 
   const drawerTransition = transition || transitions[position];
