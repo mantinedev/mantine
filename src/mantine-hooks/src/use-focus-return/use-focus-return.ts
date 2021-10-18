@@ -13,6 +13,14 @@ export function useFocusReturn({ opened, transitionDuration }: UseFocusReturn) {
   useDidUpdate(() => {
     let timeout = -1;
 
+    const clearFocusTimeout = (event: KeyboardEvent) => {
+      if (event.code === 'Tab') {
+        window.clearTimeout(timeout);
+      }
+    };
+
+    document.addEventListener('keydown', clearFocusTimeout);
+
     if (opened) {
       returnFocus.current = document.activeElement as HTMLElement;
     } else {
@@ -27,6 +35,9 @@ export function useFocusReturn({ opened, transitionDuration }: UseFocusReturn) {
       }, transitionDuration + 10);
     }
 
-    return () => window.clearTimeout(timeout);
+    return () => {
+      window.clearTimeout(timeout);
+      document.removeEventListener('keydown', clearFocusTimeout);
+    };
   }, [opened]);
 }
