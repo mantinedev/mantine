@@ -44,6 +44,14 @@ const apply = () => handlers.apply((item, index) => ({ a: item.a * index }));
 const reorder = () => handlers.reorder({ from: 2, to: 0 });
 // values -> [{ a: 4 }, { a: 0 }, { a: 5 }]
 
+// apply function to each element that matches condition
+const applyWhere = () =>
+  handlers.applyWhere(
+    (item) => item.a > 0,
+    (item) => ({ a: item.a + 2 })
+  );
+// values -> [{ a: 6 }, { a: 0 }, { a: 7 }]
+
 // set entirely new state
 const setState = () => handlers.setState([{ a: 6 }, { a: 7 }]);
 // values -> [{ a: 6 }, { a: 7 }]
