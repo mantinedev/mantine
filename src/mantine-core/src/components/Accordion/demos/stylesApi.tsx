@@ -13,14 +13,13 @@ const useStyles = createStyles((theme, _params, getRef) => {
   const iconRef = getRef('icon');
 
   return {
-    icon: {
-      ref: iconRef,
-    },
+    icon: { ref: iconRef },
 
     control: {
       ref: controlRef,
       border: 0,
       opacity: 0.6,
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
       '&:hover': {
         backgroundColor: 'transparent',
@@ -74,14 +73,13 @@ const useStyles = createStyles((theme, _params, getRef) => {
   const iconRef = getRef('icon');
 
   return {
-    icon: {
-      ref: iconRef,
-    },
+    icon: { ref: iconRef },
 
     control: {
       ref: controlRef,
       border: 0,
       opacity: 0.6,
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
       '&:hover': {
         backgroundColor: 'transparent',
