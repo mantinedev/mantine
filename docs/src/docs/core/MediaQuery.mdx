@@ -5,7 +5,7 @@ title: MediaQuery
 order: 1
 slug: /core/media-query/
 category: 'layout'
-description: 'Hide children if viewport size does not match given value'
+description: 'Apply styles to children if media query matches'
 props: ['MediaQuery']
 import: "import { MediaQuery } from '@mantine/core';"
 source: 'mantine-core/src/components/MediaQuery/MediaQuery.tsx'
@@ -18,28 +18,17 @@ import { MediaQueryDemos } from '@demos/core';
 
 ## Usage
 
-MediaQuery hides child element if does not match given viewport size. Elements are hidden with `display: none`.
-Resize browser to see badges appearing at specified breakpoints:
+MediaQuery component adds styles to child element if given media query matches:
+
+<Demo data={MediaQueryDemos.query} />
+
+## largerThan and smallerThan props
+
+`largerThan` and `smallerThan` props lets you use `theme.breakpoints`:
 
 <Demo data={MediaQueryDemos.usage} />
 
-## MediaQuery children
-
-MediaQuery always work with single child and uses `className` prop to add styles,
-child component must accept it otherwise unexpected negative margins will be applied the element:
-
-```tsx
-// Will not work with MediaQuery – component does not handle className
-const MyButton => ({ label }) => <button>{label}</button>
-
-// Will work with MediaQuery – handle className
-const MyButton => ({ label, className }) => <button className={className}>{label}</button>
-
-// Will work with MediaQuery – handle className
-const MyButton => ({ label, ...others }) => <button {...others}>{label}</button>
-```
-
-## Configure breakpoints
+### Configure breakpoints
 
 Mantine uses Bootstrap's breakpoint values as defaults:
 
@@ -73,6 +62,22 @@ function YourApp() {
     </MantineProvider>
   );
 }
+```
+
+## MediaQuery children
+
+MediaQuery always work with single child and uses `className` prop to add styles,
+child component must accept it otherwise styles will not be applied the element:
+
+```tsx
+// Will not work with MediaQuery – component does not handle className
+const MyButton => ({ label }) => <button>{label}</button>
+
+// Will work with MediaQuery – handle className
+const MyButton => ({ label, className }) => <button className={className}>{label}</button>
+
+// Will work with MediaQuery – handle className
+const MyButton => ({ label, ...others }) => <button {...others}>{label}</button>
 ```
 
 ## TypeScript
