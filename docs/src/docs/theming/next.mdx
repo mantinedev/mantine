@@ -76,28 +76,28 @@ In some cases you would want to have access to `getInitialProps` in Next Documen
 to do so you will need to setup Mantine ssr styles extraction on your own:
 
 ```tsx
-import Document from 'next/document';
-import NextDocument, { DocumentContext } from 'next/document';
-import { ServerStyles, createStylesServer } from '@mantine/next';
+import Document from "next/document";
+import NextDocument from "next/document";
+import { ServerStyles, createStylesServer } from "@mantine/next";
 
 const stylesServer = createStylesServer();
 
-export default class _Document extends Document {
-  static async function getInitialProps(ctx: DocumentContext) {
-    const page = await ctx.renderPage();
-    const initialProps = await NextDocument.getInitialProps(ctx);
+export default class _Document extends Document {}
 
-    // Add your app specific logic here
+_Document.getInitialProps = async (ctx) => {
+  const page = await ctx.renderPage();
+  const initialProps = await NextDocument.getInitialProps(ctx);
 
-    return {
-      ...initialProps,
-      styles: (
-        <>
-          {initialProps.styles}
-          <ServerStyles html={page.html} server={stylesServer} />
-        </>
-      ),
-    };
+  // Add your app specific logic here
+
+  return {
+    ...initialProps,
+    styles: (
+      <>
+        {initialProps.styles}
+        <ServerStyles html={page.html} server={stylesServer} />
+      </>
+    ),
   };
-}
+};
 ```
