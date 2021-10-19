@@ -17,17 +17,16 @@ export interface MediaQueryProps {
   /** Any other media query */
   query?: string;
 
-  styles?: CSSObject;
+  /** Styles applied to child when breakpoint matches */
+  styles: CSSObject;
 }
-
-const DEFAULT_STYLES = { display: 'none' };
 
 export function MediaQuery({
   children,
   smallerThan,
   largerThan,
   query,
-  styles = DEFAULT_STYLES,
+  styles,
   className,
 }: MediaQueryProps) {
   const { classes, cx } = useStyles(
