@@ -8,6 +8,11 @@ date: 'November 10th, 2021'
 ---
 
 import { providerStyles } from '@docs/demos';
+import { MediaQueryDemos } from '@demos/core';
+
+## Breaking changes
+
+- [MediaQuery](https://mantine.dev/core/media-query/) now requires passing `styles` object and does not hide child element by default
 
 ## Styles API improvements
 
@@ -60,6 +65,12 @@ function Demo({ active }) {
   );
 }
 ```
+
+## New features
+
+[MediaQuery](https://mantine.dev/core/media-query/) component now supports adding custom styles and subscribing to custom media queries:
+
+<Demo data={MediaQueryDemos.query} />
 
 ## Other changes
 
