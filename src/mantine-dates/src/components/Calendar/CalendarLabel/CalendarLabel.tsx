@@ -1,14 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import {
-  DefaultProps,
-  mergeStyles,
-  NativeSelect,
-  Group,
-  Text,
-  MantineSize,
-  ClassNames,
-} from '@mantine/core';
+import { DefaultProps, NativeSelect, Group, Text, MantineSize, ClassNames } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import { getMonthsNames, getYearsRange } from '../../../utils';
 import useStyles from './CalendarLabel.styles';
@@ -43,20 +35,13 @@ export function CalendarLabel({
   yearLabel,
 }: CalendarLabelProps) {
   const selectSize = size === 'lg' || size === 'xl' ? 'md' : 'xs';
-  const { classes } = useStyles(null, classNames, __staticSelector);
-  const _styles = mergeStyles(classes, styles);
+  const { classes } = useStyles(null, { classNames, styles, name: __staticSelector });
 
   return withSelect ? (
-    <Group
-      spacing={5}
-      noWrap
-      className={classes.calendarSelectGroup}
-      style={_styles.calendarSelectGroup}
-    >
+    <Group spacing={5} noWrap className={classes.calendarSelectGroup}>
       <NativeSelect
         aria-label={monthLabel}
         className={classes.calendarSelect}
-        style={_styles.calendarSelect}
         size={selectSize}
         value={value.getMonth()}
         onChange={(event) =>
@@ -71,7 +56,6 @@ export function CalendarLabel({
       <NativeSelect
         aria-label={yearLabel}
         className={classes.calendarSelect}
-        style={_styles.calendarSelect}
         size={selectSize}
         value={value.getFullYear()}
         onChange={(event) =>
@@ -84,7 +68,7 @@ export function CalendarLabel({
       />
     </Group>
   ) : (
-    <Text className={classes.calendarLabel} style={_styles.calendarLabel} size={size}>
+    <Text className={classes.calendarLabel} size={size}>
       {upperFirst(dayjs(value).locale(locale).format(labelFormat))}
     </Text>
   );

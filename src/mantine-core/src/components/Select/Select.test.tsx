@@ -57,15 +57,15 @@ describe('@mantine/core/Select', () => {
         key !== 'selected' &&
         key !== 'nothingFound' &&
         key !== 'disabled' &&
-        key !== 'seperator' &&
-        key !== 'seperatorLabel'
+        key !== 'separator' &&
+        key !== 'separatorLabel'
     ),
-    'select'
+    'Select'
   );
 
   it('renders correct amount of items based on data prop', () => {
     const element = shallow(<Select data={data.slice(0, 5)} initiallyOpened />);
-    expect(element.render().find('.mantine-select-item')).toHaveLength(5);
+    expect(element.render().find('.mantine-Select-item')).toHaveLength(5);
   });
 
   it('renders correct amount of items based on filter prop', () => {
@@ -79,7 +79,7 @@ describe('@mantine/core/Select', () => {
     );
 
     // Numbers 0-50 which include 2
-    expect(element.render().find('.mantine-select-item')).toHaveLength(14);
+    expect(element.render().find('.mantine-Select-item')).toHaveLength(14);
   });
 
   it('renders correct amount of disabled items', () => {
@@ -97,7 +97,7 @@ describe('@mantine/core/Select', () => {
       />
     );
 
-    expect(element.render().find('.mantine-select-item[disabled]')).toHaveLength(25);
+    expect(element.render().find('.mantine-Select-item[disabled]')).toHaveLength(25);
   });
 
   it('renders correct grouped items', () => {
@@ -116,9 +116,9 @@ describe('@mantine/core/Select', () => {
       />
     );
 
-    expect(element.render().find('.mantine-select-item')).toHaveLength(50);
-    expect(element.render().find('.mantine-select-item[disabled]')).toHaveLength(25);
-    expect(element.render().find('.mantine-divider-horizontal')).toHaveLength(2);
+    expect(element.render().find('.mantine-Select-item')).toHaveLength(50);
+    expect(element.render().find('.mantine-Select-item[disabled]')).toHaveLength(25);
+    expect(element.render().find('.mantine-Divider-horizontal')).toHaveLength(2);
   });
 
   it('passes wrapperProps to InputWrapper', () => {

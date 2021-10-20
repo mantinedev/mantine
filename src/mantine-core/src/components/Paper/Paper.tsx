@@ -47,7 +47,7 @@ export const Paper: PaperComponent & { displayName?: string } = forwardRef(
     }: PaperProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { classes, cx } = useStyles({ radius, shadow, padding, withBorder }, null, 'paper');
+    const { classes, cx } = useStyles({ radius, shadow, padding, withBorder }, { name: 'Paper' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element = component || 'div';
 

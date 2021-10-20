@@ -39,7 +39,7 @@ describe('@mantine/core/Notification', () => {
     Notification,
     defaultProps,
     Object.keys(NotificationStylesApi).filter((item) => item !== 'loader'),
-    'notification',
+    'Notification',
     'with-icon'
   );
 
@@ -47,7 +47,7 @@ describe('@mantine/core/Notification', () => {
     Notification,
     { ...defaultProps, loading: true },
     Object.keys(NotificationStylesApi).filter((item) => item !== 'icon'),
-    'notification',
+    'Notification',
     'with-loader'
   );
 
@@ -67,8 +67,8 @@ describe('@mantine/core/Notification', () => {
     const withIcon = shallow(<Notification {...defaultProps} icon="$$$" />);
     const withoutIcon = shallow(<Notification {...defaultProps} icon={null} />);
 
-    expect(withIcon.find('.mantine-notification-icon').text()).toBe('$$$');
-    expect(withoutIcon.find('.mantine-notification-icon')).toHaveLength(0);
+    expect(withIcon.find('.mantine-Notification-icon').text()).toBe('$$$');
+    expect(withoutIcon.find('.mantine-Notification-icon')).toHaveLength(0);
   });
 
   it('displays loader when loading prop is true', () => {
@@ -76,19 +76,19 @@ describe('@mantine/core/Notification', () => {
     const notLoading = shallow(<Notification {...defaultProps} loading={false} icon="$$$" />);
 
     expect(loading.find(Loader)).toHaveLength(1);
-    expect(loading.find('.mantine-notification-icon')).toHaveLength(0);
+    expect(loading.find('.mantine-Notification-icon')).toHaveLength(0);
 
     expect(notLoading.find(Loader)).toHaveLength(0);
-    expect(notLoading.find('.mantine-notification-icon')).toHaveLength(1);
-    expect(notLoading.find('.mantine-notification-icon').text()).toBe('$$$');
+    expect(notLoading.find('.mantine-Notification-icon')).toHaveLength(1);
+    expect(notLoading.find('.mantine-Notification-icon').text()).toBe('$$$');
   });
 
   it('renders given title', () => {
     const withTitle = shallow(<Notification {...defaultProps} title="test-title" />);
     const withoutTitle = shallow(<Notification {...defaultProps} title={null} />);
 
-    expect(withTitle.find('.mantine-notification-title').prop('children')).toBe('test-title');
-    expect(withoutTitle.find('.mantine-notification-title')).toHaveLength(0);
+    expect(withTitle.find('.mantine-Notification-title').prop('children')).toBe('test-title');
+    expect(withoutTitle.find('.mantine-Notification-title')).toHaveLength(0);
   });
 
   it('spreads closeButtonProps to close button', () => {

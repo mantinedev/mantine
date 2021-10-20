@@ -18,7 +18,7 @@ export const Center = forwardRef<HTMLDivElement, CenterProps>(
       <div
         {...rest}
         ref={ref}
-        className={clsx('mantine-center', className)}
+        className={clsx('mantine-Center', className)}
         style={{
           display: inline ? 'inline-flex' : 'flex',
           alignItems: 'center',

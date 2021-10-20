@@ -67,6 +67,27 @@ defined via [MantineProvider](/theming/extend-theme/#breakpoints) or just static
 
 <Demo data={CreateStylesDemos.createStylesKeyframes} />
 
+## use-css hook
+
+use-css hook is a simpler alternative to `createStyles` function.
+Hook returns `css` and `cx` functions. `css` function accepts styles object and returns class name.
+Note that `css` function cannot subscribe to `theme`, if you need this use `useMantineTheme` hook or `createStyles` function:
+
+```tsx
+import { useCss, Button } from '@mantine/core';
+
+function Demo({ active }) {
+  const { css, cx } = useCss();
+  return (
+    <Button
+      className={cx(css({ backgroundColor: 'red', opacity: 1 }), { [css({ opacity: 1 })]: active })}
+    >
+      Custom button
+    </Button>
+  );
+}
+```
+
 ## getFocusStyles
 
 `getFocusStyles` function returns mantine focus styles in jss format for interactive elements.

@@ -73,7 +73,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
         size={size}
         radius={radius}
-        __staticSelector="password-input"
+        __staticSelector="PasswordInput"
       />
     );
   }

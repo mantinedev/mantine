@@ -26,7 +26,7 @@ describe('@mantine/core/RangeSlider', () => {
     RangeSlider,
     { label: 'test-label', labelAlwaysOn: true, marks: [{ value: 10, label: 'test' }], value: 50 },
     Object.keys(RangeSliderStylesApi).filter((item) => item !== 'dragging'),
-    'slider'
+    'Slider'
   );
 
   it('provides name and value to hidden inputs', () => {

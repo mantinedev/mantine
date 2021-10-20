@@ -19,7 +19,7 @@ describe('@mantine/core/Pagination', () => {
   itSupportsOthers(Pagination, defaultProps);
   itSupportsStyle(Pagination, defaultProps);
   itSupportsRef(Pagination, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(Pagination, defaultProps, Object.keys(PaginationStylesApi), 'pagination');
+  itSupportsStylesApi(Pagination, defaultProps, Object.keys(PaginationStylesApi), 'Pagination');
 
   it('has correct displayName', () => {
     expect(Pagination.displayName).toEqual('@mantine/core/Pagination');

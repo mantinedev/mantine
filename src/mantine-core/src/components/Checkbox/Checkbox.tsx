@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import {
-  mergeStyles,
   DefaultProps,
   MantineSize,
   MantineColor,
@@ -61,33 +60,31 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     ref
   ) => {
     const uuid = useUuid(id);
-    const { classes, cx } = useStyles({ size, color, transitionDuration }, classNames, 'checkbox');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles(
+      { size, color, transitionDuration },
+      { classNames, styles, name: 'Checkbox' }
+    );
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (
       <div className={cx(classes.root, className)} style={mergedStyles} {...wrapperProps}>
-        <div className={classes.inner} style={_styles.inner}>
+        <div className={classes.inner}>
           <input
             id={uuid}
             ref={ref}
             type="checkbox"
             className={classes.input}
-            style={_styles.input}
             checked={indeterminate || checked}
             onChange={onChange}
             disabled={disabled}
             {...rest}
           />
-          <CheckboxIcon
-            indeterminate={indeterminate}
-            className={classes.icon}
-            style={_styles.icon}
-          />
+
+          <CheckboxIcon indeterminate={indeterminate} className={classes.icon} />
         </div>
 
         {label && (
-          <label className={classes.label} htmlFor={uuid} style={_styles.label}>
+          <label className={classes.label} htmlFor={uuid}>
             {label}
           </label>
         )}

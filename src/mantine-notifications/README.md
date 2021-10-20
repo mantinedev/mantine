@@ -13,7 +13,7 @@ Notifications system built on top of [Mantine](https://mantine.dev/) components 
 yarn add @mantine/notifications @mantine/core @mantine/hooks
 
 # With npm
-yarn add @mantine/notifications @mantine/core @mantine/hooks
+npm install @mantine/notifications @mantine/core @mantine/hooks
 
 # With install-peerdeps
 npx install-peerdeps @mantine/notifications

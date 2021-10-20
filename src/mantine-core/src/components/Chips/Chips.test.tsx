@@ -28,7 +28,7 @@ describe('@mantine/core/Chips', () => {
   itSupportsMargins(Chips, defaultProps);
   itSupportsOthers(Chips, defaultProps);
   itSupportsStyle(Chips, defaultProps);
-  itSupportsStylesApi(Chips, defaultProps, Object.keys(ChipsStylesApi), 'chips');
+  itSupportsStylesApi(Chips, defaultProps, Object.keys(ChipsStylesApi), 'Chips');
   checkAccessibility([mount(<Chips {...defaultProps} />)]);
 
   it('sets chip type based on multiple prop', () => {

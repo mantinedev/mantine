@@ -1,11 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineColor,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, useExtractedMargins } from '@mantine/styles';
 import { Text } from '../Text/Text';
 import { Loader } from '../Loader/Loader';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
@@ -60,42 +54,33 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
     }: NotificationProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color, disallowClose }, classNames, 'notification');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles(
+      { color, disallowClose },
+      { classNames, styles, name: 'Notification' }
+    );
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const withIcon = icon || loading;
 
     return (
       <div
         className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
         role="alert"
-        style={{ ...mergedStyles, ...(withIcon ? _styles.withIcon : null) }}
+        style={mergedStyles}
         ref={ref}
         {...rest}
       >
-        {icon && !loading && (
-          <div className={classes.icon} style={_styles.icon}>
-            {icon}
-          </div>
-        )}
+        {icon && !loading && <div className={classes.icon}>{icon}</div>}
 
-        {loading && (
-          <Loader size={28} color={color} className={classes.loader} style={_styles.loader} />
-        )}
+        {loading && <Loader size={28} color={color} className={classes.loader} />}
 
-        <div className={classes.body} style={_styles.body}>
+        <div className={classes.body}>
           {title && (
-            <Text className={classes.title} size="sm" weight={500} style={_styles.title}>
+            <Text className={classes.title} size="sm" weight={500}>
               {title}
             </Text>
           )}
 
-          <Text
-            color="dimmed"
-            className={classes.description}
-            size="sm"
-            style={_styles.description}
-          >
+          <Text color="dimmed" className={classes.description} size="sm">
             {children}
           </Text>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import useStyles from './TimelineItem.styles';
 
@@ -41,7 +41,6 @@ export interface TimelineItemProps
 
 export function TimelineItem({
   className,
-  style,
   bullet,
   title,
   bulletSize = 20,
@@ -58,10 +57,8 @@ export function TimelineItem({
 }: TimelineItemProps) {
   const { classes, cx } = useStyles(
     { bulletSize, color, align, lineVariant, lineWidth },
-    classNames,
-    'timeline'
+    { classNames, styles, name: 'Timeline' }
   );
-  const _styles = mergeStyles(classes, styles);
 
   return (
     <div
@@ -70,31 +67,15 @@ export function TimelineItem({
         { [classes.itemLineActive]: lineActive, [classes.itemActive]: active },
         className
       )}
-      style={{
-        ...style,
-        ..._styles.item,
-        ...(lineActive ? _styles.itemLineActive : null),
-        ...(active ? _styles.itemActive : null),
-      }}
       {...others}
     >
-      <div
-        className={cx(classes.itemBullet, { [classes.itemBulletWithChild]: bullet })}
-        style={{ ..._styles.itemBullet, ...(bullet ? _styles.itemBulletWithChild : null) }}
-      >
+      <div className={cx(classes.itemBullet, { [classes.itemBulletWithChild]: bullet })}>
         {bullet}
       </div>
 
-      <div className={classes.itemBody} style={_styles.itemBody}>
-        {title && (
-          <Text className={classes.itemTitle} style={_styles.itemTitle}>
-            {title}
-          </Text>
-        )}
-
-        <div className={classes.itemContent} style={_styles.itemContent}>
-          {children}
-        </div>
+      <div className={classes.itemBody}>
+        {title && <Text className={classes.itemTitle}>{title}</Text>}
+        <div className={classes.itemContent}>{children}</div>
       </div>
     </div>
   );

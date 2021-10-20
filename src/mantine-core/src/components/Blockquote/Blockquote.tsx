@@ -1,11 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineColor,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, useExtractedMargins } from '@mantine/styles';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
@@ -41,26 +35,16 @@ export const Blockquote = forwardRef<HTMLQuoteElement, BlockquoteProps>(
     }: BlockquoteProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color }, classNames, 'blockquote');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles({ color }, { classNames, styles, name: 'Blockquote' });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (
       <blockquote className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
-        <div className={classes.inner} style={_styles.inner}>
-          {icon && (
-            <div className={classes.icon} style={_styles.icon}>
-              {icon}
-            </div>
-          )}
-
-          <div className={classes.body} style={_styles.body}>
+        <div className={classes.inner}>
+          {icon && <div className={classes.icon}>{icon}</div>}
+          <div className={classes.body}>
             {children}
-            {cite && (
-              <cite className={classes.cite} style={_styles.cite}>
-                {cite}
-              </cite>
-            )}
+            {cite && <cite className={classes.cite}>{cite}</cite>}
           </div>
         </div>
       </blockquote>

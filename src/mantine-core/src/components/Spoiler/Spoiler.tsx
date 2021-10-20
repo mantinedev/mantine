@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, forwardRef } from 'react';
-import { mergeStyles, DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
 import { Button } from '../Button/Button';
 import useStyles from './Spoiler.styles';
 
@@ -45,9 +45,11 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>(
     }: SpoilerProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ transitionDuration }, classNames, 'spoiler');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles(
+      { transitionDuration },
+      { classNames, styles, name: 'Spoiler' }
+    );
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [show, setShowState] = useState(initialState);
     const [spoiler, setSpoilerState] = useState(initialState);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -63,7 +65,6 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>(
         <div
           className={classes.content}
           style={{
-            ..._styles.content,
             maxHeight: !show ? maxHeight : contentRef.current && contentRef.current.clientHeight,
           }}
         >
@@ -76,7 +77,6 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>(
             ref={controlRef}
             onClick={() => setShowState((opened) => !opened)}
             className={classes.control}
-            style={_styles.control}
           >
             {spoilerMoreContent}
           </Button>

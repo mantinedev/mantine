@@ -9,11 +9,14 @@ import {
   useExtractedMargins,
   PolymorphicComponentProps,
   PolymorphicRef,
+  ClassNames,
 } from '@mantine/styles';
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader';
 
-interface _ActionIconProps extends DefaultProps {
+export type ActionIconStylesNames = ClassNames<typeof useStyles>;
+
+interface _ActionIconProps extends DefaultProps<ActionIconStylesNames> {
   /** Icon rendered inside button */
   children: React.ReactNode;
 
@@ -59,13 +62,19 @@ export const ActionIcon: ActionIconComponent & { displayName?: string } = forwar
       loading = false,
       component,
       style,
+      styles,
+      classNames,
       ...others
     }: ActionIconProps<C>,
     ref: PolymorphicRef<C>
   ) => {
     const theme = useMantineTheme();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const { classes, cx } = useStyles({ size, radius, color, variant }, null, 'action-icon');
+    const { classes, cx } = useStyles(
+      { size, radius, color },
+      { name: 'ActionIcon', classNames, styles }
+    );
+
     const Element = component || 'button';
     const colors = getSharedColorScheme({ color, theme, variant: 'light' });
 
@@ -77,7 +86,7 @@ export const ActionIcon: ActionIconComponent & { displayName?: string } = forwar
       <Element
         {...rest}
         style={mergedStyles}
-        className={cx(classes.root, { [classes.loading]: loading }, className)}
+        className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
         type="button"
         ref={ref}
         disabled={disabled || loading}

@@ -1,0 +1,81 @@
+---
+group: 'changelog'
+title: 'Version 3.1.0'
+order: 1
+slug: /changelog/3-1-0/
+release: https://github.com/mantinedev/mantine/releases/tag/3.1.0
+date: 'November 10th, 2021'
+---
+
+import { providerStyles } from '@docs/demos';
+import { MediaQueryDemos } from '@demos/core';
+
+## Breaking changes
+
+- [MediaQuery](https://mantine.dev/core/media-query/) now requires passing `styles` object and does not hide child element by default
+
+## Styles API improvements
+
+### Styles API on MantineProvider
+
+You can now add styles to components with MantineProvider.
+Styles will be added to every matching component rendered inside MantineProvider:
+
+<Demo data={providerStyles} />
+
+### Inline styles with emotion
+
+`styles` prop will no longer add inline styles, instead styles will be converted to emotion format.
+This means that you now can subscribe to `theme` and use nested selectors in `styles`:
+
+```tsx
+<Button
+  styles={(theme) => ({
+    outline: {
+      '&:hover': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.dark[0],
+      },
+    },
+
+    root: {
+      height: 56,
+    },
+  })}
+>
+  My custom button
+</Button>
+```
+
+## use-css hook
+
+New use-css hook is a simpler alternative to `createStyles` function.
+Hook returns `css` and `cx` functions. `css` function accepts styles object and returns class name:
+
+```tsx
+import { useCss, Button } from '@mantine/core';
+
+function Demo({ active }) {
+  const { css, cx } = useCss();
+  return (
+    <Button
+      className={cx(css({ backgroundColor: 'red', opacity: 1 }), { [css({ opacity: 1 })]: active })}
+    >
+      Custom button
+    </Button>
+  );
+}
+```
+
+## New features
+
+[MediaQuery](https://mantine.dev/core/media-query/) component now supports adding custom styles and subscribing to custom media queries:
+
+<Demo data={MediaQueryDemos.query} />
+
+## Other changes
+
+- [use-list-state](https://mantine.dev/hooks/use-list-state/) hook now has new `applyWhere` handler
+- [use-form](https://mantine.dev/hooks/use-form/) hook now supports `values` on validation rule
+- [Slider and RangeSlider](https://mantine.dev/core/slider/) components were migrated to [use-move](https://mantine.dev/hooks/use-move/) hook and now supports showing label on hover (new default behavior)
+- Add better focus management to [Popover](https://mantine.dev/core/popover/) – now focus will be returned to last active element (made with [use-focus-return](https://mantine.dev/hooks/use-focus-return/) hook)
+- Fix incorrect focus handling in [Menu](https://mantine.dev/core/menu/), [DatePicker](https://mantine.dev/dates/date-picker/) and [DateRangePicker](https://mantine.dev/dates/date-range-picker/) which resulted in focus not being shifted to control/input when dropdown was closed

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import {
-  mergeStyles,
   DefaultProps,
   getSizeValue,
   ClassNames,
@@ -111,8 +110,10 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
     }: ColorInputProps,
     ref
   ) => {
-    const { classes } = useStyles(null, classNames, 'color-input');
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles(
+      { disallowInput },
+      { classNames, styles, name: 'ColorInput' }
+    );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const uuid = useUuid(id);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
@@ -161,14 +162,14 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         id={uuid}
         className={className}
         style={mergedStyles}
-        __staticSelector="color-input"
+        __staticSelector="ColorInput"
         {...wrapperProps}
       >
         <div ref={setReferenceElement}>
           <Input<'input'>
             {...rest}
             ref={ref}
-            __staticSelector="color-input"
+            __staticSelector="ColorInput"
             id={uuid}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
@@ -188,11 +189,8 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
               ) : null)
             }
             readOnly={disallowInput}
-            classNames={classNames}
-            styles={{
-              ...styles,
-              input: { ...styles?.input, cursor: disallowInput ? 'pointer' : undefined },
-            }}
+            classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
+            styles={styles}
           />
         </div>
 
@@ -209,7 +207,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           arrowSize={3}
           zIndex={dropdownZIndex}
           arrowClassName={classes.arrow}
-          arrowStyle={{ ..._styles.arrow, left: getSizeValue({ size, sizes: ARROW_OFFSET }) }}
+          arrowStyle={{ left: getSizeValue({ size, sizes: ARROW_OFFSET }) }}
         >
           <div style={{ pointerEvents: 'all' }}>
             <Paper<'div'>
@@ -219,7 +217,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
               onMouseDown={(event) => event.preventDefault()}
             >
               <ColorPicker
-                __staticSelector="color-input"
+                __staticSelector="ColorInput"
                 value={_value}
                 onChange={setValue}
                 format={format}

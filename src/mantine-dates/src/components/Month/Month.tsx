@@ -1,12 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import {
-  DefaultProps,
-  mergeStyles,
-  Text,
-  MantineSize,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/core';
+import { DefaultProps, Text, MantineSize, ClassNames, useExtractedMargins } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
@@ -95,14 +88,13 @@ export function Month({
   onDayMouseEnter,
   range,
   hideWeekdays = false,
-  __staticSelector = 'month',
+  __staticSelector = 'Month',
   size = 'sm',
   fullWidth = false,
   ...others
 }: MonthProps) {
-  const { classes, cx } = useStyles({ fullWidth }, classNames, __staticSelector);
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+  const { classes, cx } = useStyles({ fullWidth }, { classNames, styles, name: __staticSelector });
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);
 
@@ -156,8 +148,8 @@ export function Month({
   }, []);
 
   const weekdays = getWeekdaysNames(locale).map((weekday) => (
-    <th className={classes.weekdayCell} style={_styles.weekdayCell} key={weekday}>
-      <Text size={size} className={classes.weekday} style={_styles.weekday}>
+    <th className={classes.weekdayCell} key={weekday}>
+      <Text size={size} className={classes.weekday}>
         {upperFirst(weekday)}
       </Text>
     </th>
@@ -184,7 +176,7 @@ export function Month({
       });
 
       return (
-        <td className={classes.cell} style={_styles.cell} key={cellIndex}>
+        <td className={classes.cell} key={cellIndex}>
           <Day
             ref={(button) => {
               daysRefs.current[date.toISOString()] = button;

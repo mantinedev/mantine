@@ -40,7 +40,7 @@ describe('@mantine/core/Textarea', () => {
     Textarea,
     defaultInputProps,
     Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
-    'textarea'
+    'Textarea'
   );
 
   it('renders correct component based on autosize prop', () => {

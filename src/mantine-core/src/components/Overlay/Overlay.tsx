@@ -52,7 +52,7 @@ export const Overlay: OverlayComponent & { displayName?: string } = forwardRef(
 
     return (
       <Element
-        className={clsx('mantine-overlay', className)}
+        className={clsx('mantine-Overlay', className)}
         ref={ref}
         style={{
           ...background,

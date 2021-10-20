@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { GearIcon } from '@modulz/radix-icons';
-import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
+import { DEFAULT_THEME, MANTINE_SIZES, MantineProvider } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { ActionIcon, ActionIconProps } from './ActionIcon';
 import { DarkStory } from '../../../demos';
@@ -23,6 +23,23 @@ const getVariants = (props?: Partial<ActionIconProps<'button'>>) =>
   ));
 
 storiesOf('@mantine/core/ActionIcon', module)
+  .add('Styles with MantineProvider', () => (
+    <MantineProvider
+      styles={{
+        ActionIcon: (theme) => ({
+          root: {
+            '&:hover': {
+              backgroundColor: theme.colors.red[5],
+            },
+          },
+        }),
+      }}
+    >
+      <ActionIcon>
+        <GearIcon />
+      </ActionIcon>
+    </MantineProvider>
+  ))
   .add('Variants', () => (
     <>
       <Group style={{ padding: 10 }}>{getVariants({ color: 'blue' })}</Group>

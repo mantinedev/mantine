@@ -2,7 +2,6 @@ import React from 'react';
 import { useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import {
   useMantineTheme,
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
@@ -74,7 +73,6 @@ export interface ModalProps
 
 export function MantineModal({
   className,
-  style,
   opened,
   title,
   onClose,
@@ -99,9 +97,8 @@ export function MantineModal({
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const theme = useMantineTheme();
-  const { classes, cx } = useStyles({ size, overflow }, classNames, 'modal');
-  const _styles = mergeStyles(classes, styles);
-  const focusTrapRef = useFocusTrap();
+  const { classes, cx } = useStyles({ size, overflow }, { classNames, styles, name: 'Modal' });
+  const focusTrapRef = useFocusTrap(opened);
   const _overlayOpacity =
     typeof overlayOpacity === 'number'
       ? overlayOpacity
@@ -122,11 +119,7 @@ export function MantineModal({
       }}
     >
       {(transitionStyles) => (
-        <div
-          className={cx(classes.root, className)}
-          style={{ ...style, ..._styles.root }}
-          {...others}
-        >
+        <div className={cx(classes.root, className)} {...others}>
           <div
             className={classes.inner}
             onKeyDownCapture={(event) => {
@@ -134,7 +127,7 @@ export function MantineModal({
                 (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
               shouldTrigger && event.nativeEvent.code === 'Escape' && onClose();
             }}
-            style={{ zIndex: zIndex + 1, ..._styles.inner }}
+            style={{ zIndex: zIndex + 1 }}
             ref={focusTrapRef}
           >
             {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
@@ -148,13 +141,13 @@ export function MantineModal({
               aria-labelledby={titleId}
               aria-describedby={bodyId}
               aria-modal
-              style={{ ..._styles.modal, ...transitionStyles.modal }}
+              style={transitionStyles.modal}
               tabIndex={-1}
               ref={contentRef}
             >
               {(title || !hideCloseButton) && (
-                <div className={classes.header} style={_styles.header}>
-                  <Text id={titleId} className={classes.title} style={_styles.title}>
+                <div className={classes.header}>
+                  <Text id={titleId} className={classes.title}>
                     {title}
                   </Text>
 
@@ -164,7 +157,7 @@ export function MantineModal({
                 </div>
               )}
 
-              <div id={bodyId} className={classes.body} style={_styles.body}>
+              <div id={bodyId} className={classes.body}>
                 {children}
               </div>
             </Paper>

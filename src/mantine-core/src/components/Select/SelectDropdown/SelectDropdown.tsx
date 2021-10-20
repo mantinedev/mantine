@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { mergeStyles, DefaultProps, MantineShadow, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineShadow, ClassNames } from '@mantine/styles';
 import { Transition, MantineTransition } from '../../Transition';
 import { Paper } from '../../Paper';
 import useStyles from './SelectDropdown.styles';
@@ -35,8 +35,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
     }: SelectDropdownProps,
     ref
   ) => {
-    const { classes } = useStyles(null, classNames, __staticSelector);
-    const _styles = mergeStyles(classes, styles);
+    const { classes } = useStyles(null, { classNames, styles, name: __staticSelector });
 
     return (
       <Transition
@@ -47,14 +46,14 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       >
         {(transitionStyles) => (
           <div style={{ position: 'relative' }}>
-            <Paper
+            <Paper<'div'>
               id={`${uuid}-items`}
               aria-labelledby={`${uuid}-label`}
               role="listbox"
               className={classes.dropdown}
               shadow={shadow}
               ref={ref}
-              style={{ ..._styles.dropdown, ...transitionStyles, maxHeight: maxDropdownHeight }}
+              style={{ ...transitionStyles, maxHeight: maxDropdownHeight }}
               onMouseDown={(event) => event.preventDefault()}
             >
               {children}

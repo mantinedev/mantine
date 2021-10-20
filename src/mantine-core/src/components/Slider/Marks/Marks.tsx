@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineNumberSize,
-  MantineColor,
-  ClassNames,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
 import { getPosition } from '../utils/get-position/get-position';
 import { isMarkFilled } from './is-mark-filled';
 import useStyles from './Marks.styles';
@@ -35,17 +29,15 @@ export function Marks({
   offset,
   onChange,
 }: MarksProps) {
-  const { classes, cx } = useStyles({ size, color }, classNames, 'slider');
-  const _styles = mergeStyles(classes, styles);
+  const { classes, cx } = useStyles({ size, color }, { classNames, styles, name: 'Slider' });
 
   const items = marks.map((mark, index) => (
     <div
       className={classes.markWrapper}
-      style={{ ..._styles.markWrapper, left: `${getPosition({ value: mark.value, min, max })}%` }}
+      style={{ left: `${getPosition({ value: mark.value, min, max })}%` }}
       key={index}
     >
       <div
-        style={{ ..._styles.mark, ...(mark.value <= value ? _styles.markFilled : null) }}
         className={cx(classes.mark, {
           [classes.markFilled]: isMarkFilled({ mark, value, offset }),
         })}
@@ -54,7 +46,6 @@ export function Marks({
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
           className={classes.markLabel}
-          style={_styles.markLabel}
           onMouseDown={(event) => {
             event.stopPropagation();
             onChange(mark.value);

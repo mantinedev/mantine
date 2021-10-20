@@ -30,7 +30,7 @@ describe('@mantine/core/Chip', () => {
     Object.keys(ChipStylesApi).filter(
       (key) => key !== 'checked' && key !== 'label' && key !== 'disabled' && key !== 'input'
     ),
-    'chip'
+    'Chip'
   );
 
   it('displays checked icon based on checked prop', () => {

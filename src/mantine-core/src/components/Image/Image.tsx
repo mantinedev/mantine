@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineNumberSize,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, ClassNames, useExtractedMargins } from '@mantine/styles';
 import { Text } from '../Text/Text';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
@@ -71,9 +65,8 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
     }: ImageProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ radius }, classNames, 'image');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles({ radius }, { classNames, styles, name: 'Image' });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(!src);
     const isPlaceholder = withPlaceholder && (!loaded || error);
@@ -96,7 +89,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
         {...rest}
       >
         {isPlaceholder && (
-          <div className={classes.placeholder} title={alt} style={_styles.placeholder}>
+          <div className={classes.placeholder} title={alt}>
             {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
           </div>
         )}
@@ -106,7 +99,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
             className={classes.image}
             src={src}
             alt={alt}
-            style={{ ..._styles.image, objectFit: fit }}
+            style={{ objectFit: fit }}
             ref={imageRef}
             onLoad={(event) => {
               setLoaded(true);
@@ -120,13 +113,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
           />
 
           {!!caption && (
-            <Text
-              component="figcaption"
-              size="sm"
-              align="center"
-              className={classes.caption}
-              style={_styles.caption}
-            >
+            <Text component="figcaption" size="sm" align="center" className={classes.caption}>
               {caption}
             </Text>
           )}

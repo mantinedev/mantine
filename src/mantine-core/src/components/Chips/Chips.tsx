@@ -79,7 +79,7 @@ export function Chips<T extends boolean>({
         variant,
         radius,
         color,
-        __staticSelector: 'chips',
+        __staticSelector: 'Chips',
         classNames,
         styles,
         name: uuid,

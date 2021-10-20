@@ -15,7 +15,7 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
   ({ className, padding = 'md', fluid, size, style, ...others }: ContainerProps, ref) => {
-    const { classes, cx } = useStyles({ padding, fluid, size }, null, 'container');
+    const { classes, cx } = useStyles({ padding, fluid, size }, { name: 'Container' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     return (
       <div className={cx(classes.container, className)} style={mergedStyles} ref={ref} {...rest} />

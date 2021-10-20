@@ -24,7 +24,7 @@ describe('@mantine/core/Burger', () => {
   itSupportsStyle(Burger, defaultProps);
   itSupportsMargins(Burger, defaultProps);
   itSupportsRef(Burger, defaultProps, HTMLButtonElement);
-  itSupportsStylesApi(Burger, defaultProps, Object.keys(BurgerStylesApi), 'burger');
+  itSupportsStylesApi(Burger, defaultProps, Object.keys(BurgerStylesApi), 'Burger');
 
   it('has correct displayName', () => {
     expect(Burger.displayName).toEqual('@mantine/core/Burger');

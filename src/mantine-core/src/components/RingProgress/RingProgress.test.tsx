@@ -27,7 +27,7 @@ describe('@mantine/core/RingProgress', () => {
     RingProgress,
     defaultProps,
     Object.keys(RingProgressStylesApi),
-    'ring-progress'
+    'RingProgress'
   );
 
   it('renders given amount of curves', () => {
@@ -47,7 +47,7 @@ describe('@mantine/core/RingProgress', () => {
 
   it('renders given label', () => {
     const element = shallow(<RingProgress {...defaultProps} label="test-label" />);
-    expect(element.render().find('.mantine-ring-progress-label').text()).toBe('test-label');
+    expect(element.render().find('.mantine-RingProgress-label').text()).toBe('test-label');
   });
 
   it('has correct displayName', () => {

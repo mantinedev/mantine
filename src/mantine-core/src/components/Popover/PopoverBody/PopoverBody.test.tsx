@@ -37,7 +37,7 @@ describe('@mantine/core/PopoverBody', () => {
     PopoverBody,
     defaultProps,
     Object.keys(PopoverBodyStylesApi).filter((key) => !excludedNames.includes(key)),
-    'popover'
+    'Popover'
   );
 
   it('correctly handles id prop', () => {
@@ -50,8 +50,8 @@ describe('@mantine/core/PopoverBody', () => {
       />
     ).render();
 
-    expect(element.find('.mantine-popover-title').attr('id')).toBe('test-title-id');
-    expect(element.find('.mantine-popover-inner').attr('id')).toBe('test-body-id');
+    expect(element.find('.mantine-Popover-title').attr('id')).toBe('test-title-id');
+    expect(element.find('.mantine-Popover-inner').attr('id')).toBe('test-body-id');
     expect(element.attr('aria-labelledby')).toBe('test-title-id');
     expect(element.attr('aria-describedby')).toBe('test-body-id');
   });
@@ -62,8 +62,8 @@ describe('@mantine/core/PopoverBody', () => {
       <PopoverBody {...defaultProps} withCloseButton={false} />
     ).render();
 
-    expect(withCloseButton.find('.mantine-popover-close')).toHaveLength(1);
-    expect(withoutCloseButton.find('.mantine-popover-close')).toHaveLength(0);
+    expect(withCloseButton.find('.mantine-Popover-close')).toHaveLength(1);
+    expect(withoutCloseButton.find('.mantine-Popover-close')).toHaveLength(0);
   });
 
   it('sets correct close button label', () => {
@@ -71,19 +71,19 @@ describe('@mantine/core/PopoverBody', () => {
       <PopoverBody {...defaultProps} withCloseButton closeButtonLabel="test-close" />
     ).render();
 
-    expect(element.find('.mantine-popover-close').attr('aria-label')).toBe('test-close');
+    expect(element.find('.mantine-Popover-close').attr('aria-label')).toBe('test-close');
   });
 
   it('renders title based on title prop', () => {
     const element = shallow(<PopoverBody {...defaultProps} title="test-title" />).render();
-    expect(element.find('.mantine-popover-title').text()).toBe('test-title');
+    expect(element.find('.mantine-Popover-title').text()).toBe('test-title');
   });
 
   it('does not render header if title is not passed', () => {
     const withoutHeader = shallow(<PopoverBody {...defaultProps} title={null} />).render();
     const withHeader = shallow(<PopoverBody {...defaultProps} title="Hello" />).render();
-    expect(withoutHeader.find('.mantine-popover-header')).toHaveLength(0);
-    expect(withHeader.find('.mantine-popover-header')).toHaveLength(1);
+    expect(withoutHeader.find('.mantine-Popover-header')).toHaveLength(0);
+    expect(withHeader.find('.mantine-Popover-header')).toHaveLength(1);
   });
 
   it('has correct displayName', () => {

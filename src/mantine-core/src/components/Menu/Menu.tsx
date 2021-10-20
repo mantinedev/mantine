@@ -1,7 +1,6 @@
 import React, { useState, useRef, cloneElement, forwardRef } from 'react';
 import { useClickOutside, useMergedRef, useWindowEvent, useUncontrolled } from '@mantine/hooks';
 import {
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
@@ -128,9 +127,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
     }: MenuProps,
     ref
   ) => {
-    const { classes } = useStyles(null, classNames, 'menu');
-    const _styles = mergeStyles(classes, styles);
-    const controlRefFocusTimeout = useRef<number>();
+    const { classes } = useStyles(null, { classNames, styles, name: 'Menu' });
     const delayTimeout = useRef<number>();
     const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
     const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
@@ -150,25 +147,19 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
 
     const openedRef = useRef(_opened);
 
-    const handleClose = (scroll = false) => {
+    const handleClose = () => {
       if (openedRef.current) {
         openedRef.current = false;
         setOpened(false);
-        if (trigger === 'click') {
-          controlRefFocusTimeout.current = window.setTimeout(() => {
-            !scroll && typeof referenceElement?.focus === 'function' && referenceElement.focus();
-          }, transitionDuration + 10);
-        }
       }
     };
 
     const handleOpen = () => {
       openedRef.current = true;
       setOpened(true);
-      window.clearTimeout(controlRefFocusTimeout.current);
     };
 
-    useWindowEvent('scroll', () => closeOnScroll && handleClose(true));
+    useWindowEvent('scroll', () => closeOnScroll && handleClose());
 
     useClickOutside(() => _opened && handleClose(), null, [dropdownElement, wrapperElement]);
 
@@ -186,9 +177,9 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
 
       if (trigger === 'hover') {
         if (delay > 0) {
-          delayTimeout.current = window.setTimeout(() => handleClose(true), delay);
+          delayTimeout.current = window.setTimeout(() => handleClose(), delay);
         } else {
-          handleClose(true);
+          handleClose();
         }
       }
     };
@@ -232,7 +223,6 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
           arrowSize={3}
           zIndex={zIndex}
           arrowClassName={classes.arrow}
-          arrowStyle={_styles.arrow}
         >
           <MenuBody
             {...menuBodyProps}

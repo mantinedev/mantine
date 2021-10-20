@@ -68,4 +68,10 @@ export default createStyles((theme, { size, invalid }: MultiSelectStyles) => ({
       cursor: 'not-allowed',
     },
   },
+
+  input: {
+    '&:not(:disabled)': {
+      cursor: 'pointer',
+    },
+  },
 }));
