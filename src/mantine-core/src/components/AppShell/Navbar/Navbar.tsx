@@ -1,5 +1,6 @@
 import React from 'react';
-import { ClassNames, DefaultProps, useExtractedMargins } from '@mantine/styles';
+import { ClassNames, DefaultProps, useExtractedMargins, MantineNumberSize } from '@mantine/styles';
+import { NavbarSection } from './NavbarSection/NavbarSection';
 import useStyles from './Navbar.styles';
 
 export type NavbarStylesNames = ClassNames<typeof useStyles>;
@@ -10,6 +11,12 @@ interface NavbarProps extends DefaultProps<NavbarStylesNames> {
 
   /** Navbar height */
   height?: string | number;
+
+  /** Navbar content */
+  children?: React.ReactNode;
+
+  /** Navbar padding from theme.spacing or number to set padding in px */
+  padding?: MantineNumberSize;
 }
 
 export function Navbar({
@@ -19,13 +26,18 @@ export function Navbar({
   classNames,
   style,
   styles,
+  children,
   ...others
 }: NavbarProps) {
   const { classes, cx } = useStyles({ width, height }, { classNames, styles, name: 'Navbar' });
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   return (
     <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
-      Navbar
+      {children}
     </div>
   );
 }
+
+Navbar.Section = NavbarSection;
+
+Navbar.displayName = '@mantine/core/Navbar';
