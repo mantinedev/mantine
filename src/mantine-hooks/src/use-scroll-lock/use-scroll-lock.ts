@@ -1,25 +1,44 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function useScrollLock(lock?: boolean) {
+import { getLockStyles } from './utils/get-lock-styles';
+import { injectStyles } from './utils/inject-style-tag';
+import { insertStyleTag } from './utils/insert-style-tag';
+import { makeStyleTag } from './utils/make-style-tag';
+
+export function useScrollLock(
+  lock?: boolean,
+  options = {
+    disableBodyPadding: false,
+  }
+) {
   const [scrollLocked, setScrollLocked] = useState(lock || false);
+  const scrollTop = useRef(0);
 
-  // value is stored to prevent body overflow styles override with initial useScrollLock(false)
-  const locked = useRef(false);
+  const { disableBodyPadding } = options;
 
-  // after scroll is unlocked body overflow style returns to the previous known value
-  const bodyOverflow = useRef<React.CSSProperties['overflow']>(null);
-
-  const unlockScroll = () => {
-    if (locked.current) {
-      locked.current = false;
-      document.body.style.overflow = bodyOverflow.current || '';
-    }
-  };
+  const stylesheet = useRef<CSSStyleSheet | any | null>(null);
 
   const lockScroll = () => {
-    locked.current = true;
-    bodyOverflow.current = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+    scrollTop.current = window.scrollY;
+
+    const styles = getLockStyles({ disableBodyPadding });
+
+    const sheet = makeStyleTag();
+    if (!sheet) return;
+
+    injectStyles(sheet, styles);
+    insertStyleTag(sheet);
+
+    stylesheet.current = sheet;
+  };
+
+  const unlockScroll = () => {
+    if (!stylesheet?.current || typeof window === 'undefined' || typeof document === 'undefined') return;
+
+    stylesheet.current.parentNode.removeChild(stylesheet.current);
+    stylesheet.current = null;
   };
 
   useEffect(() => {

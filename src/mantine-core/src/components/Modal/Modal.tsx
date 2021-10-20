@@ -150,6 +150,7 @@ export function MantineModal({
               aria-modal
               style={{ ..._styles.modal, ...transitionStyles.modal }}
               tabIndex={-1}
+              ref={scrollableRef}
             >
               {(title || !hideCloseButton) && (
                 <div className={classes.header} style={_styles.header}>
