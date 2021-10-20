@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, forwardRef } from 'react';
-import { useReducedMotion, useMergedRef } from '@mantine/hooks';
+import { useReducedMotion, useMergedRef, useResizeObserver } from '@mantine/hooks';
 import { useMantineTheme, useExtractedMargins } from '@mantine/styles';
 
 export interface CollapseProps extends React.ComponentPropsWithoutRef<'div'> {
@@ -36,6 +36,7 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
     }: CollapseProps,
     ref
   ) => {
+    const [resizeRef, rect] = useResizeObserver();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const theme = useMantineTheme();
     const reduceMotion = useReducedMotion();
@@ -58,7 +59,7 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
         const { height: boundingHeight } = content.getBoundingClientRect();
         setHeight(`${boundingHeight}px`);
       }
-    }, [children]);
+    }, [children, rect.height]);
 
     return (
       <div
@@ -74,7 +75,7 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
         {...rest}
       >
         <div
-          ref={contentRef}
+          ref={useMergedRef(contentRef, resizeRef)}
           style={{
             opacity: isOpened ? 1 : 0,
             transition: animateOpacity ? `opacity ${duration}ms ${timingFunction}` : 'none',

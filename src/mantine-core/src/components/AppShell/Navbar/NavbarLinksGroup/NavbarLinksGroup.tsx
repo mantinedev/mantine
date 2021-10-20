@@ -41,7 +41,7 @@ export function NavbarLinksGroup({
   });
 
   const filteredLinks = React.Children.toArray(children).filter(
-    (item: any) => item.type === NavbarLink
+    (item: any) => item.type === NavbarLink || item.type === NavbarLinksGroup
   ) as React.ReactElement[];
 
   const links = filteredLinks.map((link, index) => (

@@ -109,6 +109,21 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
         <Navbar.Link active>Third link</Navbar.Link>
         <Navbar.Link>Fourth link</Navbar.Link>
         <Navbar.Link>Fifth link</Navbar.Link>
+        <Navbar.LinksGroup
+          transitionDuration={0}
+          label="Links group nested"
+          icon={
+            <ThemeIcon color="violet" variant="light" size="md">
+              <FileSubmoduleIcon size={14} />
+            </ThemeIcon>
+          }
+        >
+          <Navbar.Link>First link</Navbar.Link>
+          <Navbar.Link>Second link</Navbar.Link>
+          <Navbar.Link active>Third link</Navbar.Link>
+          <Navbar.Link>Fourth link</Navbar.Link>
+          <Navbar.Link>Fifth link</Navbar.Link>
+        </Navbar.LinksGroup>
       </Navbar.LinksGroup>
       <p>other content</p>
     </Navbar>
