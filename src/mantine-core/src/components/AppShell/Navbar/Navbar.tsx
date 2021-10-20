@@ -22,6 +22,7 @@ interface NavbarProps extends DefaultProps<NavbarStylesNames> {
 export function Navbar({
   width = 300,
   height = '100vh',
+  padding = 'md',
   className,
   classNames,
   style,
@@ -29,7 +30,10 @@ export function Navbar({
   children,
   ...others
 }: NavbarProps) {
-  const { classes, cx } = useStyles({ width, height }, { classNames, styles, name: 'Navbar' });
+  const { classes, cx } = useStyles(
+    { width, height, padding },
+    { classNames, styles, name: 'Navbar' }
+  );
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   return (
     <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
