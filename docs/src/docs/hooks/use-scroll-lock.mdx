@@ -20,28 +20,46 @@ Use this hook when you want to prevent user from scrolling on document level,
 for example, with modals and drawers.
 
 Example modal component, whenever modal is opened, scroll is locked at current scroll position.
-Hook accepts one argument – boolean value that controls if scroll is locked:
+After lock it adds padding to `body` equal to size of removed scrollbar and saves it ass `css-variable` as `--removed-scroll-width` which is reseted after unlock. 
 
+To prevent move on layout components like `Navbar` component you can add `padding-right: var(--removed-scroll-width, 0px))`.
+
+Hook accepts two arguments:
+
+ – boolean value that controls if scroll is locked
+
+ – on options object:
+ - `disableBodyPadding` optional boolean that controls if `--removed-scroll-width` should be handled, default to `false`
+ - `disableTouchEvents` optional boolean that controls if touch events should be disabled on ios devices, default to `true`
+
+Hooks returns an object that has keys:
+ - `scrollLocked` - boolean value that points if scroll is locked 
+ - `setScrollLocked` - function that controls `scrollLocked`property
+ - `contentRef` - optional in use to allow scrolling on ios devices inside element
 ```tsx
 import { useScrollLock } from '@mantine/hooks';
 
 function Modal({ opened }) {
-  useScrollLock(opened);
+  const { contentRef } = useScrollLock(opened);
 
   if (!opened) {
     return null;
   }
 
-  return <div>My modal</div>;
+  return <div ref={contentRef}>My modal</div>;
 }
 ```
 
 ## Examples
 
-When hooks is called with `true`, it sets `document.body.style.overflow` to `hidden`.
+### Basic
+
+When hooks is called with `true`, it sets `document.body.style.overflow` to `hidden`. 
 When component is unmounted, scroll lock is automatically removed:
 
 <Demo data={useScrollLockHook} />
+
+### Modal
 
 use-scroll-lock is used in some components in @mantine/core,
 example with [Modal](/core/modal/) component:
@@ -51,7 +69,14 @@ example with [Modal](/core/modal/) component:
 ## Definition
 
 ```tsx
-function useScrollLock(
-  lock?: boolean
-): readonly [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+function useScrollLock<T extends HTMLElement = HTMLDivElement>(
+  lock?: boolean, 
+  options?: {
+    disableBodyPadding?: boolean;
+    disableTouchEvents?: boolean;
+}): {
+    scrollLocked: boolean;
+    setScrollLocked: Dispatch<SetStateAction<boolean>>;
+    contentRef: MutableRefObject<T>;
+}
 ```

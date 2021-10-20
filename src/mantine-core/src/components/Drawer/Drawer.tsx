@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
+import { useScrollLock, useFocusTrap, useFocusReturn, useMergedRef } from '@mantine/hooks';
 import {
   useMantineTheme,
   mergeStyles,
@@ -125,7 +125,7 @@ export function MantineDrawer({
   const { classes, cx } = useStyles({ size, position }, classNames, 'drawer');
   const _styles = mergeStyles(classes, styles);
   const focusTrapRef = useFocusTrap(!noFocusTrap);
-  useScrollLock(opened && !noScrollLock);
+  const { contentRef } = useScrollLock(opened && !noScrollLock);
 
   const drawerTransition = transition || transitions[position];
   const _overlayOpacity =
@@ -183,7 +183,7 @@ export function MantineDrawer({
 
           <Paper<'div'>
             className={cx(classes.drawer, className)}
-            ref={focusTrapRef}
+            ref={useMergedRef(focusTrapRef, contentRef)}
             style={{ ...transitionStyles.drawer, ..._styles.drawer, zIndex: zIndex + 2 }}
             radius={0}
             tabIndex={-1}
