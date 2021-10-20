@@ -93,4 +93,23 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
         SuperLargeWordThatCanOverflowAndBreakSuchAGreatLayout
       </Navbar.Link>
     </Navbar>
+  ))
+  .add('Links group', () => (
+    <Navbar>
+      <Navbar.LinksGroup
+        label="Links group"
+        icon={
+          <ThemeIcon color="violet" variant="light" size="md">
+            <FileSubmoduleIcon size={14} />
+          </ThemeIcon>
+        }
+      >
+        <Navbar.Link>First link</Navbar.Link>
+        <Navbar.Link>Second link</Navbar.Link>
+        <Navbar.Link active>Third link</Navbar.Link>
+        <Navbar.Link>Fourth link</Navbar.Link>
+        <Navbar.Link>Fifth link</Navbar.Link>
+      </Navbar.LinksGroup>
+      <p>other content</p>
+    </Navbar>
   ));

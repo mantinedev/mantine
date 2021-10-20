@@ -20,6 +20,8 @@ export default createStyles((theme, { size }: NavbarLinkStyles) => {
       ...getFontStyles(theme),
       ...getFocusStyles(theme),
       backgroundColor: 'transparent',
+      width: '100%',
+      boxSizing: 'border-box',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',

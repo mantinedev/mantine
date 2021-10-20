@@ -17,6 +17,9 @@ export interface CollapseProps extends React.ComponentPropsWithoutRef<'div'> {
 
   /** Transition timing function */
   transitionTimingFunction?: string;
+
+  /** Should opacity be animated */
+  animateOpacity?: boolean;
 }
 
 export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
@@ -28,6 +31,7 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
       transitionTimingFunction = 'ease',
       style,
       onTransitionEnd,
+      animateOpacity = true,
       ...others
     }: CollapseProps,
     ref
@@ -73,7 +77,7 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
           ref={contentRef}
           style={{
             opacity: isOpened ? 1 : 0,
-            transition: `opacity ${duration}ms ${timingFunction}`,
+            transition: animateOpacity ? `opacity ${duration}ms ${timingFunction}` : 'none',
           }}
         >
           {children}
