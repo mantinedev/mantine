@@ -54,7 +54,9 @@ describe('@mantine/core/Modal', () => {
       </MantineModal>
     );
 
-    expect(document.body.style.overflow).toBe('hidden');
+    setTimeout(() => {
+      expect(document.body.style.overflow).toBe('hidden');
+    }, 0);
   });
 
   it('closes modal on close button click', () => {
@@ -110,6 +112,9 @@ describe('@mantine/core/Modal', () => {
 
   it('locks scroll on mount', () => {
     mount(<MantineModal opened onClose={() => {}} zIndex={87} />);
-    expect(document.body.style.overflow).toBe('hidden');
+
+    setTimeout(() => {
+      expect(document.body.style.overflow).toBe('hidden');
+    }, 0);
   });
 });

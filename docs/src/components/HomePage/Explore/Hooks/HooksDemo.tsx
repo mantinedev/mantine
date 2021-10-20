@@ -24,13 +24,13 @@ import { useScrollLock } from '@mantine/hooks';
 import { Button } from '@mantine/core';
 
 function Demo() {
-  const [lockScroll, setLockScroll] = useScrollLock();
-  const label = lockScroll ? 'Unlock scroll' : 'Lock scroll';
-  return <Button onClick={() => setLockScroll((c) => !c)}>{label}</Button>;
+  const { scrollLocked, setScrollLocked } = useScrollLock();
+  const label = scrollLocked ? 'Unlock scroll' : 'Lock scroll';
+  return <Button onClick={() => setScrollLocked((c) => !c)}>{label}</Button>;
 }
 `.trim();
 
-const clickOutsideCode = `
+const clickOutsideCode = ` 
 import { useState } from 'react';
 import { Paper, Button } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
@@ -49,7 +49,7 @@ function Demo() {
 
 export function HooksDemo() {
   const { classes } = useStyles();
-  const [lockScroll, setLockScroll] = useScrollLock();
+  const { scrollLocked, setScrollLocked } = useScrollLock();
   const [opened, setOpened] = useState(false);
   const ref = useClickOutside(() => setOpened(false));
   const theme = useMantineTheme();
@@ -59,12 +59,12 @@ export function HooksDemo() {
       <Title order={4}>use-scroll-lock hook</Title>
 
       <Button
-        onClick={() => setLockScroll((c) => !c)}
+        onClick={() => setScrollLocked((c) => !c)}
         variant="outline"
-        leftIcon={lockScroll ? <LockClosedIcon /> : <LockOpen2Icon />}
+        leftIcon={scrollLocked ? <LockClosedIcon /> : <LockOpen2Icon />}
         style={{ marginTop: 10, marginBottom: 15 }}
       >
-        {lockScroll ? 'Unlock scroll' : 'Lock scroll'}
+        {scrollLocked ? 'Unlock scroll' : 'Lock scroll'}
       </Button>
 
       <Prism language="tsx" noCopy className={classes.prism}>

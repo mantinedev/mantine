@@ -33,9 +33,7 @@ export function useScrollLock<T extends HTMLElement = HTMLDivElement>(
        * we check if touch shares position with ref element
        * if not we prevent that event
        */
-      const sharedY =
-        scrollTop.current + top <= pageY &&
-        scrollTop.current + top + height >= pageY;
+      const sharedY = scrollTop.current + top <= pageY && scrollTop.current + top + height >= pageY;
       const sharedX = left <= pageX && left + width >= pageX;
 
       if (sharedX && sharedY) {
@@ -63,8 +61,6 @@ export function useScrollLock<T extends HTMLElement = HTMLDivElement>(
   };
 
   const lockScroll = () => {
-    if (typeof window === 'undefined' || typeof document === 'undefined') return;
-
     scrollTop.current = window.scrollY;
 
     const styles = getLockStyles({ disableBodyPadding });
@@ -97,7 +93,7 @@ export function useScrollLock<T extends HTMLElement = HTMLDivElement>(
   };
 
   const unlockScroll = () => {
-    if (!stylesheet?.current || typeof window === 'undefined' || typeof document === 'undefined') return;
+    if (!stylesheet?.current) return;
 
     stylesheet.current.parentNode.removeChild(stylesheet.current);
     stylesheet.current = null;
@@ -126,7 +122,8 @@ export function useScrollLock<T extends HTMLElement = HTMLDivElement>(
 
   useEffect(() => {
     if (lock === undefined && typeof window !== 'undefined') {
-      window.document.body.style.overflow === 'hidden' && setScrollLocked(true);
+      window.document.body.style.overflow === 'hidden';
+      setScrollLocked(true);
     }
   }, [setScrollLocked]);
 

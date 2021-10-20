@@ -1,5 +1,5 @@
 export function insertStyleTag(tag) {
-    const head = document.head || document.getElementsByTagName('head')[0];
+  const head = document.head || document.getElementsByTagName('head')[0];
 
-    head.appendChild(tag);
-  }
+  head.appendChild(tag);
+}
