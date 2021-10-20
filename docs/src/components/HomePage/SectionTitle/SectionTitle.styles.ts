@@ -15,6 +15,7 @@ export default createStyles((theme) => ({
     letterSpacing: 1,
     marginLeft: 22,
     textTransform: 'uppercase',
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
     '&::before, &::after': {
       content: '""',

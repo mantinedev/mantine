@@ -209,8 +209,8 @@ export default createStyles(
         whiteSpace: 'nowrap',
         height: '100%',
         overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        lineHeight: `${getSizeStyles({ size, compact }).height}px`,
+        display: 'flex',
+        alignItems: 'center',
       },
 
       link: {

@@ -9,7 +9,7 @@ export function GridItem(props: React.ComponentPropsWithoutRef<'div'>) {
     <div
       {...props}
       style={{
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.blue[0],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.blue[0],
         padding: theme.spacing.md,
         ...props.style,
       }}

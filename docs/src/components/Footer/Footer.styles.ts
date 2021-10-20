@@ -154,5 +154,6 @@ export default createStyles((theme) => ({
     fontWeight: 700,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     marginBottom: theme.spacing.xs / 2,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
   },
 }));

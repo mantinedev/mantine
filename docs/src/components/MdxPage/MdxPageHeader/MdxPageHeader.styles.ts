@@ -37,6 +37,7 @@ export default createStyles((theme) => ({
     fontSize: 44,
     marginBottom: theme.spacing.xs / 2,
     fontWeight: 900,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
     [`@media (max-width: ${BREAKPOINT}px)`]: {
       fontSize: 32,
