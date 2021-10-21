@@ -27,7 +27,7 @@ interface NavbarProps extends DefaultProps<NavbarStylesNames> {
 
 export function Navbar({
   size = { width: 300, height: '100vh' },
-  padding = 'md',
+  padding = 0,
   fixed = false,
   position = { top: 0, left: 0 },
   className,
