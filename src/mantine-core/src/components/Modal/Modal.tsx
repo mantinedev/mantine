@@ -87,7 +87,7 @@ export function MantineModal({
   overlayColor,
   zIndex = 1000,
   overflow = 'outside',
-  transition = 'slide-down',
+  transition = 'pop',
   padding = 'lg',
   shadow = 'lg',
   id,

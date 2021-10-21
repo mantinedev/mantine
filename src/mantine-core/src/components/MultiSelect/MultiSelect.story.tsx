@@ -25,6 +25,11 @@ const groupedData = [
 ];
 
 const stringData = ['React', 'Angular', 'Svelte', 'Vue'];
+const longData = [
+  'Item that is so long that it can produce overflow',
+  'Another item that is so long that it can produce overflow',
+  'Even longer item that is so long that it can produce overflow',
+];
 
 const largeData = Array(1000)
   .fill(0)
@@ -116,7 +121,7 @@ storiesOf('@mantine/core/MultiSelect', module)
       <Group style={{ padding: 40, paddingTop: 0 }} grow align="flex-start">
         <TextInput label="Text input" placeholder="Select items" />
         <MultiSelect
-          label="Multi select with seperator and disabled items"
+          label="Multi select with separator and disabled items"
           data={[...data, { label: 'Lit', value: 'lit', disabled: true }]}
           defaultValue={['react', 'ng']}
           placeholder="Select items"
@@ -124,6 +129,11 @@ storiesOf('@mantine/core/MultiSelect', module)
         />
       </Group>
     </>
+  ))
+  .add('Overflow value and items', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect label="Multi select" data={longData} placeholder="Select items" searchable />
+    </div>
   ))
   .add('Grouped and Disabled Data', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -172,7 +182,7 @@ storiesOf('@mantine/core/MultiSelect', module)
         searchable
       />
       <MultiSelect
-        label="Multi select with disabled and seperator items"
+        label="Multi select with disabled and separator items"
         data={[...data, { label: 'Lit', value: 'lit', disabled: true }]}
         defaultValue={['react', 'ng']}
         placeholder="Select items"

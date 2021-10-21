@@ -34,6 +34,7 @@ storiesOf('@mantine/core/Tooltip', module)
         label="Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit minima ducimus, nobis numquam ea, iusto possimus repellat in debitis soluta molestiae facilis inventore aut rerum sequi quaerat! Sunt, quia minima."
         position="right"
         opened
+        wrapLines
         width={220}
       >
         <div style={{ height: 50, width: 200 }}>right-center</div>
