@@ -3,6 +3,7 @@ import { ClassNames, DefaultProps, useExtractedMargins, MantineNumberSize } from
 import { NavbarSection } from './NavbarSection/NavbarSection';
 import { NavbarLink } from './NavbarLink/NavbarLink';
 import { NavbarLinksGroup } from './NavbarLinksGroup/NavbarLinksGroup';
+import { NavbarContext } from './Navbar.context';
 import useStyles, { NavbarPosition } from './Navbar.styles';
 
 export type NavbarStylesNames = ClassNames<typeof useStyles>;
@@ -46,9 +47,11 @@ export function Navbar({
   );
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   return (
-    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
-      {children}
-    </div>
+    <NavbarContext.Provider value={{ padding }}>
+      <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
+        {children}
+      </div>
+    </NavbarContext.Provider>
   );
 }
 
