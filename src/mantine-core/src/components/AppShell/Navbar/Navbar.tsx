@@ -4,16 +4,13 @@ import { NavbarSection } from './NavbarSection/NavbarSection';
 import { NavbarLink } from './NavbarLink/NavbarLink';
 import { NavbarLinksGroup } from './NavbarLinksGroup/NavbarLinksGroup';
 import { NavbarContext } from './Navbar.context';
-import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
+import useStyles, { NavbarPosition, NavbarSize } from './Navbar.styles';
 
 export type NavbarStylesNames = ClassNames<typeof useStyles>;
 
 interface NavbarProps extends DefaultProps<NavbarStylesNames> {
-  /** Navbar width */
-  width?: NavbarWidth;
-
-  /** Navbar height */
-  height?: string | number;
+  /** Navbar width and height with breakpoints */
+  size?: NavbarSize;
 
   /** Navbar content */
   children?: React.ReactNode;
@@ -29,8 +26,7 @@ interface NavbarProps extends DefaultProps<NavbarStylesNames> {
 }
 
 export function Navbar({
-  width = { base: 300 },
-  height = '100vh',
+  size = { width: 300, height: '100vh' },
   padding = 'md',
   fixed = false,
   position = { top: 0, left: 0 },
@@ -42,9 +38,10 @@ export function Navbar({
   ...others
 }: NavbarProps) {
   const { classes, cx } = useStyles(
-    { width, height, padding, fixed, position },
+    { size, padding, fixed, position },
     { classNames, styles, name: 'Navbar' }
   );
+
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   return (
     <NavbarContext.Provider value={{ padding }}>

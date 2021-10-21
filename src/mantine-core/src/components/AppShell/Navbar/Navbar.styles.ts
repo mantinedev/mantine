@@ -6,9 +6,13 @@ import {
   MantineSize,
 } from '@mantine/styles';
 
-export interface NavbarWidth {
-  base: number | string;
-  breakpoints?: Partial<Record<MantineSize | (string & {}), string | number>>;
+interface NavbarSizeBase {
+  width?: number | string;
+  height?: number | string;
+}
+
+export interface NavbarSize extends NavbarSizeBase {
+  breakpoints?: Partial<Record<MantineSize | (string & {}), NavbarSizeBase>>;
 }
 
 export interface NavbarPosition {
@@ -19,21 +23,21 @@ export interface NavbarPosition {
 }
 
 interface NavbarStyles {
-  width: NavbarWidth;
-  height: number | string;
+  size: NavbarSize;
   padding: MantineNumberSize;
   position: NavbarPosition;
   fixed: boolean;
 }
 
-export default createStyles((theme, { width, height, padding, fixed, position }: NavbarStyles) => {
+export default createStyles((theme, { size, padding, fixed, position }: NavbarStyles) => {
   const breakpoints =
-    typeof width?.breakpoints === 'object' && width.breakpoints !== null
-      ? Object.keys(width.breakpoints).reduce((acc, breakpoint) => {
+    typeof size?.breakpoints === 'object' && size.breakpoints !== null
+      ? Object.keys(size.breakpoints).reduce((acc, breakpoint) => {
           acc[
             `@media (max-width: ${getSizeValue({ size: breakpoint, sizes: theme.breakpoints })}px)`
           ] = {
-            width: width.breakpoints[breakpoint],
+            width: size.breakpoints[breakpoint].width,
+            height: size.breakpoints[breakpoint].height,
           };
 
           return acc;
@@ -44,8 +48,8 @@ export default createStyles((theme, { width, height, padding, fixed, position }:
     root: {
       ...getFontStyles(theme),
       ...position,
-      width: width.base,
-      height,
+      width: size.width,
+      height: size.height,
       position: fixed ? 'fixed' : 'static',
       boxSizing: 'border-box',
       padding: getSizeValue({ size: padding, sizes: theme.spacing }),
