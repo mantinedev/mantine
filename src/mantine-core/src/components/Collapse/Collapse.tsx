@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect, forwardRef } from 'react';
-import { useReducedMotion, useMergedRef, useResizeObserver } from '@mantine/hooks';
-import { useMantineTheme, useExtractedMargins } from '@mantine/styles';
+import React from 'react';
+import { useReducedMotion } from '@mantine/hooks';
+import { useExtractedMargins } from '@mantine/styles';
+import { useCollapse } from './use-collapse';
 
 export interface CollapseProps extends React.ComponentPropsWithoutRef<'div'> {
   /** Content that should be collapsed */
@@ -22,70 +23,38 @@ export interface CollapseProps extends React.ComponentPropsWithoutRef<'div'> {
   animateOpacity?: boolean;
 }
 
-export const Collapse = forwardRef<HTMLDivElement, CollapseProps>(
-  (
-    {
-      children,
-      in: isOpened,
-      transitionDuration = 200,
-      transitionTimingFunction = 'ease',
-      style,
-      onTransitionEnd,
-      animateOpacity = true,
-      ...others
-    }: CollapseProps,
-    ref
-  ) => {
-    const [resizeRef, rect] = useResizeObserver();
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const theme = useMantineTheme();
-    const reduceMotion = useReducedMotion();
-    const collapseRef = useRef<HTMLDivElement>(null);
-    const contentRef = useRef<HTMLDivElement>(null);
-    const [height, setHeight] = useState<`${number}px` | 'auto'>('auto');
-    const duration = reduceMotion ? 0 : transitionDuration;
-    const timingFunction = transitionTimingFunction || theme.transitionTimingFunction;
+export function Collapse({
+  children,
+  in: opened,
+  transitionDuration = 200,
+  transitionTimingFunction = 'ease',
+  style,
+  onTransitionEnd,
+  animateOpacity = true,
+  ...others
+}: CollapseProps) {
+  const reduceMotion = useReducedMotion();
+  const duration = reduceMotion ? 0 : transitionDuration;
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+  const getCollapseProps = useCollapse({
+    opened,
+    transitionDuration: duration,
+    transitionTimingFunction,
+    onTransitionEnd,
+  });
 
-    const handleTransitionEnd = (event: React.TransitionEvent<HTMLDivElement>) => {
-      if (typeof onTransitionEnd === 'function' && event.propertyName === 'height') {
-        onTransitionEnd();
-      }
-    };
-
-    useEffect(() => {
-      const content = contentRef?.current;
-
-      if (content) {
-        const { height: boundingHeight } = content.getBoundingClientRect();
-        setHeight(`${boundingHeight}px`);
-      }
-    }, [children, rect.height]);
-
-    return (
+  return (
+    <div {...getCollapseProps({ style: mergedStyles, ...rest })}>
       <div
-        ref={useMergedRef(collapseRef, ref)}
-        onTransitionEnd={handleTransitionEnd}
         style={{
-          ...mergedStyles,
-          overflow: 'hidden',
-          transition: `height ${duration}ms ${timingFunction}`,
-          willChange: 'contents',
-          height: isOpened ? height : '0px',
+          opacity: opened ? 1 : 0,
+          transition: animateOpacity ? `opacity ${duration}ms ${transitionTimingFunction}` : 'none',
         }}
-        {...rest}
       >
-        <div
-          ref={useMergedRef(contentRef, resizeRef)}
-          style={{
-            opacity: isOpened ? 1 : 0,
-            transition: animateOpacity ? `opacity ${duration}ms ${timingFunction}` : 'none',
-          }}
-        >
-          {children}
-        </div>
+        {children}
       </div>
-    );
-  }
-);
+    </div>
+  );
+}
 
 Collapse.displayName = '@mantine/core/Collapse';

@@ -110,7 +110,6 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
         <Navbar.Link>Fourth link</Navbar.Link>
         <Navbar.Link>Fifth link</Navbar.Link>
         <Navbar.LinksGroup
-          transitionDuration={0}
           label="Links group nested"
           icon={
             <ThemeIcon color="violet" variant="light" size="md">
