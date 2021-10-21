@@ -126,4 +126,12 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
       </Navbar.LinksGroup>
       <p>other content</p>
     </Navbar>
+  ))
+  .add('With width breakpoints', () => (
+    <Navbar
+      style={{ background: 'silver' }}
+      width={{ base: 300, breakpoints: { md: 250, xs: '100%', 900: 400 } }}
+    >
+      This is navbar
+    </Navbar>
   ));

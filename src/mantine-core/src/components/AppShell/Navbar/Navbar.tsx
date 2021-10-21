@@ -4,13 +4,13 @@ import { NavbarSection } from './NavbarSection/NavbarSection';
 import { NavbarLink } from './NavbarLink/NavbarLink';
 import { NavbarLinksGroup } from './NavbarLinksGroup/NavbarLinksGroup';
 import { NavbarContext } from './Navbar.context';
-import useStyles, { NavbarPosition } from './Navbar.styles';
+import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
 
 export type NavbarStylesNames = ClassNames<typeof useStyles>;
 
 interface NavbarProps extends DefaultProps<NavbarStylesNames> {
   /** Navbar width */
-  width?: string | number;
+  width?: NavbarWidth;
 
   /** Navbar height */
   height?: string | number;
@@ -29,7 +29,7 @@ interface NavbarProps extends DefaultProps<NavbarStylesNames> {
 }
 
 export function Navbar({
-  width = 300,
+  width = { base: 300 },
   height = '100vh',
   padding = 'md',
   fixed = false,
