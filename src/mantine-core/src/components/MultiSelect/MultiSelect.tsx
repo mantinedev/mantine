@@ -195,7 +195,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     const [hovered, setHovered] = useState(-1);
     const [searchValue, setSearchValue] = useState('');
     const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
-      duration: 0.25,
+      duration: 100,
       offset: 5,
       cancelable: false,
       isList: true,

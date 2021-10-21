@@ -27,7 +27,7 @@ Hook accepts 5 arguments:
 
 - `onScrollFinish` – optional function that will be called after scroll animation
 - `easing` – optional custom math easing function
-- `duration` - optional duration of scroll animation
+- `duration` - optional duration of scroll animation in milliseconds
 - `axis` - optional axis of scroll
 - `cancelable` - optional indicator if animation may be interrupted by user scrolling
 - `offset` - optional additional distance between nearest edge and element
@@ -39,7 +39,7 @@ Hook returns object with 4 elements methods `scrollIntoView` and `cancel`.
 - `cancel` – function that stops scroll animation
 - `targetRef` - ref of target HTML node
 - `scrollableRef` - ref of scrollable parent HTML element, if not used document element will be used
-
+ 
 `scrollIntoView` method accepts 1 argument:
 
 - `alignment` - optional target element alignment relatively to parent based on current axis

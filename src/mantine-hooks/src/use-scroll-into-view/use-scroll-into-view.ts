@@ -1,5 +1,4 @@
 import { useReducedMotion, useWindowEvent } from '@mantine/hooks';
-/* eslint-disable no-param-reassign */
 import { useCallback, useRef, useEffect } from 'react';
 
 import { easeInOutQuad } from './utils/ease-in-out-quad';
@@ -16,7 +15,7 @@ interface ScrollIntoViewParams {
   /** callback fired after scroll */
   onScrollFinish?: () => void;
 
-  /** duration of scroll in seconds */
+  /** duration of scroll in milliseconds */
   duration?: number;
 
   /** axis of scroll */
@@ -39,7 +38,7 @@ export function useScrollIntoView<
   Target extends HTMLElement,
   Parent extends HTMLElement | null = null
 >({
-  duration = 1.25,
+  duration = 1250,
   axis = 'y',
   onScrollFinish,
   easing = easeInOutQuad,
@@ -87,7 +86,7 @@ export function useScrollIntoView<
       }
 
       const now = performance.now();
-      const elapsed = (now - startTime.current) / 1000;
+      const elapsed = now - startTime.current;
 
       // easing timing progress
       const t = reducedMotion || duration === 0 ? 1 : elapsed / duration;
