@@ -37,6 +37,7 @@ export default createStyles((theme, { size, padding, fixed, position }: NavbarSt
             `@media (max-width: ${getSizeValue({ size: breakpoint, sizes: theme.breakpoints })}px)`
           ] = {
             width: size.breakpoints[breakpoint].width,
+            minWidth: size.breakpoints[breakpoint].width,
             height: size.breakpoints[breakpoint].height,
           };
 

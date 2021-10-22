@@ -1,11 +1,14 @@
 import React from 'react';
+import { MantineNumberSize, DefaultProps } from '@mantine/styles';
+import useStyles from './AppShell.styles';
 
-interface AppShellProps {
+interface AppShellProps extends DefaultProps {
   navbar?: React.ReactElement;
   header?: React.ReactElement;
   zIndex?: number;
   fixed?: boolean;
   children: React.ReactNode;
+  padding?: MantineNumberSize;
 }
 
 function getHeaderHeight(element: React.ReactElement) {
@@ -19,22 +22,27 @@ export function AppShell({
   header,
   fixed = false,
   zIndex = 1000,
+  padding = 'md',
+  className,
 }: AppShellProps) {
+  const { classes, cx } = useStyles({ padding });
   const headerHeight = getHeaderHeight(header);
-  const _header = header ? React.cloneElement(header, { fixed }) : null;
+  const _header = header ? React.cloneElement(header, { fixed, zIndex }) : null;
   const _navbar = navbar
     ? React.cloneElement(navbar, {
         fixed,
-        size: { height: `calc(100vh - ${headerHeight})`, width: 300 },
+        zIndex,
+        size: { height: `calc(100vh - ${headerHeight})`, width: navbar.props?.size?.width },
       })
     : null;
 
   return (
-    <div>
+    <div className={cx(classes.root, className)}>
       {_header}
-      <div style={{ display: 'flex' }}>
+
+      <div className={classes.body}>
         {_navbar}
-        {children}
+        <main className={classes.main}>{children}</main>
       </div>
     </div>
   );

@@ -19,6 +19,7 @@ export default createStyles((theme, { height, padding, fixed, position }: Header
     ...getFontStyles(theme),
     ...position,
     height,
+    maxHeight: height,
     position: fixed ? 'fixed' : 'static',
     boxSizing: 'border-box',
     padding: getSizeValue({ size: padding, sizes: theme.spacing }),
