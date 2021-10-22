@@ -16,6 +16,11 @@ function getHeaderHeight(element: React.ReactElement) {
   return typeof height === 'number' ? `${height}px` : typeof height === 'string' ? height : '0px';
 }
 
+function getNavbarWidth(element: React.ReactElement) {
+  const width = element.props?.size?.width;
+  return typeof width === 'number' ? `${width}px` : typeof width === 'string' ? width : '0px';
+}
+
 export function AppShell({
   children,
   navbar,
@@ -25,14 +30,16 @@ export function AppShell({
   padding = 'md',
   className,
 }: AppShellProps) {
-  const { classes, cx } = useStyles({ padding });
+  const navbarWidth = getNavbarWidth(navbar);
   const headerHeight = getHeaderHeight(header);
+  const { classes, cx } = useStyles({ padding, fixed, navbarWidth, headerHeight });
   const _header = header ? React.cloneElement(header, { fixed, zIndex }) : null;
   const _navbar = navbar
     ? React.cloneElement(navbar, {
         fixed,
         zIndex,
-        size: { height: `calc(100vh - ${headerHeight})`, width: navbar.props?.size?.width },
+        size: { height: `calc(100vh - ${headerHeight})`, width: navbarWidth },
+        position: { top: headerHeight, left: 0 },
       })
     : null;
 
