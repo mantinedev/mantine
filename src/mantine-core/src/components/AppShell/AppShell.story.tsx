@@ -49,4 +49,22 @@ storiesOf('@mantine/core/AppShell/AppShell', module)
     >
       App shell
     </AppShell>
+  ))
+  .add('With offset breakpoint', () => (
+    <AppShell
+      fixed
+      navbarOffsetBreakpoint="sm"
+      navbar={
+        <Navbar
+          size={{
+            width: 300,
+            breakpoints: { sm: { width: '100%' }, md: { width: 350 }, lg: { width: 400 } },
+          }}
+        >
+          Navbar
+        </Navbar>
+      }
+    >
+      App shell
+    </AppShell>
   ));

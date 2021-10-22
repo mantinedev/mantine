@@ -10,6 +10,7 @@ interface AppShellProps extends DefaultProps {
   fixed?: boolean;
   children: React.ReactNode;
   padding?: MantineNumberSize;
+  navbarOffsetBreakpoint?: MantineNumberSize;
 }
 
 function getHeaderHeight(element: React.ReactElement) {
@@ -39,6 +40,7 @@ export function AppShell({
   fixed = false,
   zIndex = 1000,
   padding = 'md',
+  navbarOffsetBreakpoint,
   className,
 }: AppShellProps) {
   const theme = useMantineTheme();
@@ -51,6 +53,7 @@ export function AppShell({
     navbarWidth,
     headerHeight,
     navbarBreakpoints,
+    navbarOffsetBreakpoint,
   });
   const _header = header ? React.cloneElement(header, { fixed, zIndex }) : null;
   const _navbar = navbar
