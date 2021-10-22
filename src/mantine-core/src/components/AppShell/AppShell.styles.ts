@@ -10,6 +10,7 @@ interface AppShellStyles {
   padding: MantineNumberSize;
   fixed: boolean;
   headerHeight: string;
+  navbarBreakpoints: [number, { width: string | number }][];
   navbarWidth: string;
 }
 
@@ -20,10 +21,19 @@ function getPositionStyles(props: AppShellStyles, theme: MantineTheme): CSSObjec
     return { padding };
   }
 
+  const queries = props.navbarBreakpoints.reduce((acc, [breakpoint, breakpointSize]) => {
+    acc[`@media (max-width: ${breakpoint}px)`] = {
+      paddingLeft: `calc(${breakpointSize.width}px + ${padding}px)`,
+    };
+
+    return acc;
+  }, {});
+
   return {
     minHeight: '100vh',
     paddingTop: `calc(${props.headerHeight} + ${padding}px)`,
     paddingLeft: `calc(${props.navbarWidth} + ${padding}px)`,
+    ...queries,
   };
 }
 

@@ -37,4 +37,16 @@ storiesOf('@mantine/core/AppShell/AppShell', module)
     <AppShell fixed navbar={<Navbar size={{ width: 300 }}>Navbar</Navbar>}>
       App shell
     </AppShell>
+  ))
+  .add('Fixed with Navbar breakpoints', () => (
+    <AppShell
+      fixed
+      navbar={
+        <Navbar size={{ width: 400, breakpoints: { sm: { width: 200 }, md: { width: 300 } } }}>
+          Navbar
+        </Navbar>
+      }
+    >
+      App shell
+    </AppShell>
   ));
