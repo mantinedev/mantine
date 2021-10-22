@@ -11,11 +11,12 @@ import { createAriaHider } from './create-aria-hider';
 
 export function useFocusTrap(active = true): (instance: HTMLElement | null) => void {
   const ref = useRef<HTMLElement | null>();
+  const isTrapped = useRef(false);
   const restoreAria = useRef<Function | null>(null);
 
   const setRef = useCallback(
     (node: HTMLElement | null) => {
-      if (!active) {
+      if (isTrapped.current || !active) {
         return;
       }
 
@@ -45,6 +46,7 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
 
           if (focusElement) {
             focusElement.focus();
+            isTrapped.current = true;
           } else if (process.env.NODE_ENV === 'development') {
             // eslint-disable-next-line no-console
             console.warn(
@@ -67,6 +69,7 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
         ref.current = node;
       } else {
         ref.current = null;
+        isTrapped.current = false;
       }
     },
     [active]
