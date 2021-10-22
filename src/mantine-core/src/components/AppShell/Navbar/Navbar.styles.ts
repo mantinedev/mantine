@@ -5,6 +5,7 @@ import {
   getSizeValue,
   MantineSize,
 } from '@mantine/styles';
+import { getSortedBreakpoints } from '../get-sorted-breakpoints';
 
 interface NavbarSizeBase {
   width?: number | string;
@@ -32,17 +33,18 @@ interface NavbarStyles {
 export default createStyles((theme, { size, padding, fixed, position }: NavbarStyles) => {
   const breakpoints =
     typeof size?.breakpoints === 'object' && size.breakpoints !== null
-      ? Object.keys(size.breakpoints).reduce((acc, breakpoint) => {
-          acc[
-            `@media (max-width: ${getSizeValue({ size: breakpoint, sizes: theme.breakpoints })}px)`
-          ] = {
-            width: size.breakpoints[breakpoint].width,
-            minWidth: size.breakpoints[breakpoint].width,
-            height: size.breakpoints[breakpoint].height,
-          };
+      ? getSortedBreakpoints(size.breakpoints, theme).reduce(
+          (acc, [breakpoint, breakpointSize]) => {
+            acc[`@media (max-width: ${breakpoint}px)`] = {
+              width: breakpointSize.width,
+              minWidth: breakpointSize.width,
+              height: breakpointSize.height,
+            };
 
-          return acc;
-        }, {})
+            return acc;
+          },
+          {}
+        )
       : null;
 
   return {
