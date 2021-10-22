@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { Burger } from '../Burger';
+import { Text } from '../Text';
 import { MediaQuery } from '../MediaQuery';
 import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
@@ -11,15 +12,17 @@ function NavbarToggle() {
   const [opened, setOpened] = useState(false);
   return (
     <AppShell
+      styles={{ main: { background: '#e5e5e5' } }}
       navbarOffsetBreakpoint="sm"
+      fixed
       navbar={
         <Navbar
           padding="md"
           hiddenBreakpoint="sm"
           hidden={!opened}
-          size={{ width: 300, breakpoints: { sm: { width: '100%' } } }}
+          size={{ width: 400, breakpoints: { sm: { width: '100%' }, lg: { width: 300 } } }}
         >
-          Navbar
+          <Text>Application navbar</Text>
         </Navbar>
       }
       header={
@@ -31,13 +34,16 @@ function NavbarToggle() {
                 onClick={() => setOpened((o) => !o)}
                 size="sm"
                 color={DEFAULT_THEME.colors.gray[6]}
+                mr="xl"
               />
             </MediaQuery>
+
+            <Text>Application header</Text>
           </div>
         </Header>
       }
     >
-      My app
+      <Text>My app content</Text>
     </AppShell>
   );
 }

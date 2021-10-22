@@ -1,9 +1,17 @@
 import React from 'react';
-import { MantineNumberSize, DefaultProps, MantineTheme, useMantineTheme } from '@mantine/styles';
+import {
+  MantineNumberSize,
+  DefaultProps,
+  MantineTheme,
+  useMantineTheme,
+  ClassNames,
+} from '@mantine/styles';
 import { getSortedBreakpoints } from './get-sorted-breakpoints';
 import useStyles from './AppShell.styles';
 
-interface AppShellProps extends DefaultProps {
+export type AppShellStylesNames = ClassNames<typeof useStyles>;
+
+interface AppShellProps extends DefaultProps<AppShellStylesNames> {
   navbar?: React.ReactElement;
   header?: React.ReactElement;
   zIndex?: number;
@@ -42,19 +50,24 @@ export function AppShell({
   padding = 'md',
   navbarOffsetBreakpoint,
   className,
+  styles,
+  classNames,
 }: AppShellProps) {
   const theme = useMantineTheme();
   const navbarBreakpoints = getNavbarBreakpoints(navbar, theme);
   const navbarWidth = getNavbarWidth(navbar);
   const headerHeight = getHeaderHeight(header);
-  const { classes, cx } = useStyles({
-    padding,
-    fixed,
-    navbarWidth,
-    headerHeight,
-    navbarBreakpoints,
-    navbarOffsetBreakpoint,
-  });
+  const { classes, cx } = useStyles(
+    {
+      padding,
+      fixed,
+      navbarWidth,
+      headerHeight,
+      navbarBreakpoints,
+      navbarOffsetBreakpoint,
+    },
+    { styles, classNames, name: 'AppShell' }
+  );
   const _header = header ? React.cloneElement(header, { fixed, zIndex }) : null;
   const _navbar = navbar
     ? React.cloneElement(navbar, {
