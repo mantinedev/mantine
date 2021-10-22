@@ -23,6 +23,12 @@ interface NavbarProps extends DefaultProps<NavbarStylesNames> {
 
   /** Position for fixed Navbar */
   position?: NavbarPosition;
+
+  /** Breakpoint at which navbar will be hidden if hidden prop is true */
+  hiddenBreakpoint?: MantineNumberSize;
+
+  /** Set to true to hide breakpoint at hiddenBreakpoint */
+  hidden?: boolean;
 }
 
 export function Navbar({
@@ -30,6 +36,8 @@ export function Navbar({
   padding = 0,
   fixed = false,
   position = { top: 0, left: 0 },
+  hiddenBreakpoint = 'md',
+  hidden = false,
   className,
   classNames,
   style,
@@ -38,14 +46,18 @@ export function Navbar({
   ...others
 }: NavbarProps) {
   const { classes, cx } = useStyles(
-    { size, padding, fixed, position },
+    { size, padding, fixed, position, hiddenBreakpoint },
     { classNames, styles, name: 'Navbar' }
   );
 
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   return (
     <NavbarContext.Provider value={{ padding }}>
-      <nav className={cx(classes.root, className)} style={mergedStyles} {...rest}>
+      <nav
+        className={cx(classes.root, { [classes.hidden]: hidden }, className)}
+        style={mergedStyles}
+        {...rest}
+      >
         {children}
       </nav>
     </NavbarContext.Provider>

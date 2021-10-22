@@ -27,42 +27,54 @@ interface NavbarStyles {
   size: NavbarSize;
   padding: MantineNumberSize;
   position: NavbarPosition;
+  hiddenBreakpoint: MantineNumberSize;
   fixed: boolean;
 }
 
-export default createStyles((theme, { size, padding, fixed, position }: NavbarStyles) => {
-  const breakpoints =
-    typeof size?.breakpoints === 'object' && size.breakpoints !== null
-      ? getSortedBreakpoints(size.breakpoints, theme).reduce(
-          (acc, [breakpoint, breakpointSize]) => {
-            acc[`@media (max-width: ${breakpoint}px)`] = {
-              width: breakpointSize.width,
-              minWidth: breakpointSize.width,
-              height: breakpointSize.height,
-            };
+export default createStyles(
+  (theme, { size, padding, fixed, position, hiddenBreakpoint }: NavbarStyles) => {
+    const breakpoints =
+      typeof size?.breakpoints === 'object' && size.breakpoints !== null
+        ? getSortedBreakpoints(size.breakpoints, theme).reduce(
+            (acc, [breakpoint, breakpointSize]) => {
+              acc[`@media (max-width: ${breakpoint}px)`] = {
+                width: breakpointSize.width,
+                minWidth: breakpointSize.width,
+                height: breakpointSize.height,
+              };
 
-            return acc;
-          },
-          {}
-        )
-      : null;
+              return acc;
+            },
+            {}
+          )
+        : null;
 
-  return {
-    root: {
-      ...getFontStyles(theme),
-      ...position,
-      width: size.width,
-      height: size.height,
-      position: fixed ? 'fixed' : 'static',
-      boxSizing: 'border-box',
-      padding: getSizeValue({ size: padding, sizes: theme.spacing }),
-      display: 'flex',
-      flexDirection: 'column',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-      borderRight: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
-      }`,
-      ...breakpoints,
-    },
-  };
-});
+    return {
+      root: {
+        ...getFontStyles(theme),
+        ...position,
+        width: size.width,
+        height: size.height,
+        position: fixed ? 'fixed' : 'static',
+        boxSizing: 'border-box',
+        padding: getSizeValue({ size: padding, sizes: theme.spacing }),
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+        borderRight: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+        }`,
+        ...breakpoints,
+      },
+
+      hidden: {
+        [`@media (max-width: ${getSizeValue({
+          size: hiddenBreakpoint,
+          sizes: theme.breakpoints,
+        })}px)`]: {
+          display: 'none',
+        },
+      },
+    };
+  }
+);

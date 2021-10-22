@@ -1,8 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { DEFAULT_THEME } from '@mantine/styles';
+import { Burger } from '../Burger';
+import { MediaQuery } from '../MediaQuery';
 import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
 import { AppShell } from './AppShell';
+
+function NavbarToggle() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <AppShell
+      navbarOffsetBreakpoint="sm"
+      navbar={
+        <Navbar
+          padding="md"
+          hiddenBreakpoint="sm"
+          hidden={!opened}
+          size={{ width: 300, breakpoints: { sm: { width: '100%' } } }}
+        >
+          Navbar
+        </Navbar>
+      }
+      header={
+        <Header height={50} padding="md">
+          <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+            <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+              <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                size="sm"
+                color={DEFAULT_THEME.colors.gray[6]}
+              />
+            </MediaQuery>
+          </div>
+        </Header>
+      }
+    >
+      My app
+    </AppShell>
+  );
+}
 
 storiesOf('@mantine/core/AppShell/AppShell', module)
   .add('Static', () => (
@@ -67,4 +105,5 @@ storiesOf('@mantine/core/AppShell/AppShell', module)
     >
       App shell
     </AppShell>
-  ));
+  ))
+  .add('With navbar toggle', () => <NavbarToggle />);
