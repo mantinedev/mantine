@@ -109,7 +109,7 @@ export function MantineModal({
       ? 0.85
       : 0.75;
 
-  const { contentRef } = useScrollLock(opened);
+  useScrollLock(opened);
 
   useFocusReturn({ opened, transitionDuration });
 
@@ -150,7 +150,6 @@ export function MantineModal({
               aria-modal
               style={{ ..._styles.modal, ...transitionStyles.modal }}
               tabIndex={-1}
-              ref={contentRef}
             >
               {(title || !hideCloseButton) && (
                 <div className={classes.header} style={_styles.header}>

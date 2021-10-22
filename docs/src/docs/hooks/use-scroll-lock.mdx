@@ -20,33 +20,29 @@ Use this hook when you want to prevent user from scrolling on document level,
 for example, with modals and drawers.
 
 Example modal component, whenever modal is opened, scroll is locked at current scroll position.
-After lock it adds padding to `body` equal to size of removed scrollbar and saves it ass `css-variable` as `--removed-scroll-width` which is reseted after unlock. 
+After lock it adds padding to `body` equal to size of removed scrollbar and saves it ass `css-variable` as `--removed-scroll-width` which is removed after unlock. 
 
 To prevent move on layout components like `Navbar` component you can add `padding-right: var(--removed-scroll-width, 0px))`.
 
 Hook accepts two arguments:
 
- – boolean value that controls if scroll is locked
+ – optional boolean value that controls if scroll is locked
 
- – on options object:
+ – optional options object:
  - `disableBodyPadding` optional boolean that controls if `--removed-scroll-width` should be handled, default to `false`
- - `disableTouchEvents` optional boolean that controls if touch events should be disabled on ios devices, default to `true`
 
-Hooks returns an object that has keys:
- - `scrollLocked` - boolean value that points if scroll is locked 
- - `setScrollLocked` - function that controls `scrollLocked`property
- - `contentRef` - optional in use to allow scrolling on ios devices inside element
+Hooks returns an array of same usage as `useState` hook.
 ```tsx
 import { useScrollLock } from '@mantine/hooks';
 
 function Modal({ opened }) {
-  const { contentRef } = useScrollLock(opened);
+  useScrollLock(opened);
 
   if (!opened) {
     return null;
   }
 
-  return <div ref={contentRef}>My modal</div>;
+  return <div>My modal</div>;
 }
 ```
 
@@ -73,10 +69,5 @@ function useScrollLock<T extends HTMLElement = HTMLDivElement>(
   lock?: boolean, 
   options?: {
     disableBodyPadding?: boolean;
-    disableTouchEvents?: boolean;
-}): {
-    scrollLocked: boolean;
-    setScrollLocked: Dispatch<SetStateAction<boolean>>;
-    contentRef: MutableRefObject<T>;
-}
+}): readonly [boolean, Dispatch<SetStateAction<boolean>>]
 ```

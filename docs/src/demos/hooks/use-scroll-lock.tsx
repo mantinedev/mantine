@@ -9,7 +9,7 @@ import { Button } from '@mantine/core';
 import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 
 function Demo() {
-  const { scrollLocked, setScrollLocked } = useScrollLock();
+  const [scrollLocked, setScrollLocked] = useScrollLock();
 
   return (
     <Group position="center">
@@ -25,7 +25,7 @@ function Demo() {
 }`;
 
 function Demo() {
-  const { scrollLocked, setScrollLocked } = useScrollLock();
+  const [scrollLocked, setScrollLocked] = useScrollLock();
 
   return (
     <Group position="center">

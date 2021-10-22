@@ -24,7 +24,7 @@ import { useScrollLock } from '@mantine/hooks';
 import { Button } from '@mantine/core';
 
 function Demo() {
-  const { scrollLocked, setScrollLocked } = useScrollLock();
+  const [scrollLocked, setScrollLocked] = useScrollLock();
   const label = scrollLocked ? 'Unlock scroll' : 'Lock scroll';
   return <Button onClick={() => setScrollLocked((c) => !c)}>{label}</Button>;
 }
@@ -49,7 +49,7 @@ function Demo() {
 
 export function HooksDemo() {
   const { classes } = useStyles();
-  const { scrollLocked, setScrollLocked } = useScrollLock();
+  const [scrollLocked, setScrollLocked] = useScrollLock();
   const [opened, setOpened] = useState(false);
   const ref = useClickOutside(() => setOpened(false));
   const theme = useMantineTheme();
