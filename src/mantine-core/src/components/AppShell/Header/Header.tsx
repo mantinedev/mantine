@@ -4,7 +4,7 @@ import useStyles, { HeaderPosition } from './Header.styles';
 
 interface HeaderProps extends DefaultProps {
   children: React.ReactNode;
-  height?: number | string;
+  height: number | string;
   padding?: MantineNumberSize;
   fixed?: boolean;
   position?: HeaderPosition;
@@ -14,7 +14,7 @@ export function Header({
   children,
   className,
   style,
-  height = 60,
+  height,
   padding = 0,
   fixed = false,
   position = { top: 0, left: 0, right: 0 },
