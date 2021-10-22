@@ -46,7 +46,7 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
     </Navbar>
   ))
   .add('With links', () => (
-    <Navbar>
+    <Navbar padding="md">
       <Navbar.Link<'a'>
         href="#"
         onClick={(e) => e.preventDefault()}
@@ -95,7 +95,7 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
     </Navbar>
   ))
   .add('Links group', () => (
-    <Navbar>
+    <Navbar padding="md">
       <Navbar.LinksGroup
         label="Links group"
         icon={

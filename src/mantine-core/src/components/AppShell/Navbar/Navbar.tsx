@@ -45,9 +45,9 @@ export function Navbar({
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   return (
     <NavbarContext.Provider value={{ padding }}>
-      <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
+      <nav className={cx(classes.root, className)} style={mergedStyles} {...rest}>
         {children}
-      </div>
+      </nav>
     </NavbarContext.Provider>
   );
 }

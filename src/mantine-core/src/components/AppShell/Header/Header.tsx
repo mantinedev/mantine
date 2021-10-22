@@ -24,8 +24,8 @@ export function Header({
   const { classes, cx } = useStyles({ height, padding, fixed, position });
 
   return (
-    <header className={cx(classes.root, className)} style={mergedStyles} {...rest}>
+    <nav className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       {children}
-    </header>
+    </nav>
   );
 }
