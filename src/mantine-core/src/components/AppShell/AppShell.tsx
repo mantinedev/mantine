@@ -17,7 +17,7 @@ function getHeaderHeight(element: React.ReactElement) {
 }
 
 function getNavbarWidth(element: React.ReactElement) {
-  const width = element.props?.size?.width;
+  const width = element?.props?.size?.width;
   return typeof width === 'number' ? `${width}px` : typeof width === 'string' ? width : '0px';
 }
 
