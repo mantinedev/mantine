@@ -13,7 +13,7 @@ export default createStyles(
 
     if (smallerThan) {
       media[
-        `@media (min-width: ${getSizeValue({ size: smallerThan, sizes: theme.breakpoints })}px)`
+        `@media (min-width: ${getSizeValue({ size: smallerThan, sizes: theme.breakpoints }) + 1}px)`
       ] = styles;
     }
 
