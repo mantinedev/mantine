@@ -8,7 +8,7 @@ date: 'November 10th, 2021'
 ---
 
 import { providerStyles } from '@docs/demos';
-import { MediaQueryDemos } from '@demos/core';
+import { MediaQueryDemos, CollapseDemos } from '@demos/core';
 
 ## Breaking changes
 
@@ -67,6 +67,10 @@ function Demo({ active }) {
 ```
 
 ## New features
+
+[Collapse](https://mantine.dev/core/collapse/) component now supports dynamic children – you can now use this feature in all components that are built with Collapse: [Accordion](https://mantine.dev/core/accordion/), [Navbar](https://mantine.dev/core/navbar/), etc.
+
+<Demo data={CollapseDemos.nested} />
 
 [MediaQuery](https://mantine.dev/core/media-query/) component now supports adding custom styles and subscribing to custom media queries:
 
