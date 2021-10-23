@@ -52,9 +52,9 @@ export default createStyles(
         padding: getSizeValue({ size: padding, sizes: theme.spacing }),
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
         borderRight: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
+          theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
         }`,
         ...breakpoints,
       },

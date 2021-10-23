@@ -28,7 +28,7 @@ export default createStyles(
       padding: getSizeValue({ size: padding, sizes: theme.spacing }),
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       borderBottom: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
+        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
       }`,
     },
   })

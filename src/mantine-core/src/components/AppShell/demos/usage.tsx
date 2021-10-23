@@ -11,7 +11,7 @@ function Demo() {
       navbar={<Navbar width={{ base: 300 }} height={300} padding="md">Navbar</Navbar>}
       header={<Header height={60} padding="md">Header</Header>}
       styles={(theme) => ({
-        main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0] },
+        main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
       })}
     >
       Your application goes here
@@ -37,7 +37,7 @@ function Demo() {
       styles={(theme) => ({
         main: {
           backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+            theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
         },
       })}
     >
