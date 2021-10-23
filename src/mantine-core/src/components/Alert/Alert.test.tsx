@@ -11,6 +11,7 @@ import {
   itSupportsRef,
 } from '@mantine/tests';
 import { Text } from '../Text/Text';
+import { CloseButton } from '../ActionIcon';
 import { Alert } from './Alert';
 import { Alert as AlertStylesApi } from './styles.api';
 
@@ -42,6 +43,17 @@ describe('@mantine/core/Alert', () => {
       </Alert>
     ),
   ]);
+
+  it('calls onClose when CloseButton is Clicked', () => {
+    const spy = jest.fn();
+    const element = shallow(
+      <Alert title="test" withCloseButton onClose={spy}>
+        test
+      </Alert>
+    );
+    element.find(CloseButton).simulate('click');
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 
   it('renders given title', () => {
     const element = shallow(<Alert title="test-title">test-alert</Alert>);
