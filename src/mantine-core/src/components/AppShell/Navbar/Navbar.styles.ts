@@ -1,15 +1,9 @@
-import {
-  createStyles,
-  getFontStyles,
-  MantineNumberSize,
-  getSizeValue,
-  MantineSize,
-} from '@mantine/styles';
+import { createStyles, getFontStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
 import { getSortedBreakpoints } from '../get-sorted-breakpoints';
 
 export interface NavbarWidth {
   base: string | number;
-  breakpoints?: Partial<Record<MantineSize | (string & {}), string | number>>;
+  breakpoints?: Partial<Record<string, string | number>>;
 }
 
 export interface NavbarPosition {
