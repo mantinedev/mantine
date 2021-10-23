@@ -12,6 +12,7 @@ export default createStyles((theme, { spacing }: AvatarsGroupStyles) => ({
 
   child: {
     marginLeft: -getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
+    background: `${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
     border: `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
   },
 
