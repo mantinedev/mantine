@@ -3,6 +3,7 @@ import { mount, shallow } from 'enzyme';
 import {
   itSupportsClassName,
   itSupportsMargins,
+  itSupportsRef,
   itSupportsOthers,
   itSupportsStyle,
   itSupportsStylesApi,
@@ -25,6 +26,7 @@ describe('@mantine/core/Accordion', () => {
   itSupportsOthers(Accordion, defaultProps);
   itSupportsStyle(Accordion, defaultProps);
   itSupportsMargins(Accordion, defaultProps);
+  itSupportsRef(Accordion, defaultProps, HTMLDivElement);
   checkAccessibility([mount(<Accordion {...defaultProps} />)]);
   itSupportsStylesApi(Accordion, defaultProps, Object.keys(AccordionStylesApi), 'Accordion');
 

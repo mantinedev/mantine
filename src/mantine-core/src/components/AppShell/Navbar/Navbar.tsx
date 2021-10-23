@@ -34,8 +34,7 @@ export interface NavbarProps extends DefaultProps<NavbarStylesNames> {
   zIndex?: number;
 }
 
-type _NavbarComponent = (props: NavbarProps) => React.ReactElement;
-type NavbarComponent = _NavbarComponent & {
+type NavbarComponent = ((props: NavbarProps) => React.ReactElement) & {
   displayName: string;
   Section: typeof NavbarSection;
 };
