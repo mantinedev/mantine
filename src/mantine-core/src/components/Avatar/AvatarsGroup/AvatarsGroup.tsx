@@ -23,6 +23,9 @@ export interface AvatarsGroupProps
 
   /** Spacing between avatars */
   spacing?: MantineNumberSize;
+
+  /** Total number of Child Avatars, overrides the truncated length */
+  total?: number;
 }
 
 export function AvatarsGroup({
@@ -34,6 +37,7 @@ export function AvatarsGroup({
   classNames,
   styles,
   spacing = 'lg',
+  total,
   ...others
 }: AvatarsGroupProps) {
   const { classes, cx } = useStyles({ spacing }, { classNames, styles, name: 'AvatarsGroup' });
@@ -55,13 +59,14 @@ export function AvatarsGroup({
 
   const clampedMax = limit < 2 ? 2 : limit;
   const extraAvatars = avatars.length > clampedMax ? avatars.length - clampedMax : 0;
+  const truncatedAvatars = total ? total - Math.min(avatars.length, clampedMax) : extraAvatars;
 
   return (
     <div className={cx(className, classes.root)} {...others}>
       {avatars.slice(0, avatars.length - extraAvatars)}
-      {extraAvatars ? (
+      {truncatedAvatars ? (
         <Avatar size={size} radius={radius} className={classes.child} style={{ zIndex: limit + 1 }}>
-          <Center className={classes.truncated}>+{extraAvatars}</Center>
+          <Center className={classes.truncated}>+{truncatedAvatars}</Center>
         </Avatar>
       ) : null}
     </div>
