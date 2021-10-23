@@ -13,7 +13,7 @@ export interface NavbarProps extends DefaultProps<NavbarStylesNames> {
   height?: string | number;
 
   /** Navbar content */
-  children?: React.ReactNode;
+  children: React.ReactNode;
 
   /** Navbar padding from theme.spacing or number to set padding in px */
   padding?: MantineNumberSize;
