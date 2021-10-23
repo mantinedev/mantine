@@ -12,12 +12,25 @@ import useStyles from './AppShell.styles';
 export type AppShellStylesNames = ClassNames<typeof useStyles>;
 
 export interface AppShellProps extends DefaultProps<AppShellStylesNames> {
+  /** <Navbar /> component */
   navbar?: React.ReactElement;
+
+  /** <Header /> component */
   header?: React.ReactElement;
+
+  /** zIndex prop passed to Navbar and Header components */
   zIndex?: number;
+
+  /** Switch from static layout to fixed */
   fixed?: boolean;
+
+  /** AppShell content */
   children: React.ReactNode;
+
+  /** Content padding */
   padding?: MantineNumberSize;
+
+  /** Breakpoint at which Navbar component should no longer be offset with padding-left, applicable only for fixed position */
   navbarOffsetBreakpoint?: MantineNumberSize;
 }
 

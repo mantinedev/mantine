@@ -32,6 +32,9 @@ export interface NavbarProps extends DefaultProps<NavbarStylesNames> {
 
   /** Set to true to hide breakpoint at hiddenBreakpoint */
   hidden?: boolean;
+
+  /** z-index */
+  zIndex?: number;
 }
 
 export function Navbar({
@@ -40,6 +43,7 @@ export function Navbar({
   padding = 0,
   fixed = false,
   position = { top: 0, left: 0 },
+  zIndex = 1000,
   hiddenBreakpoint = 'md',
   hidden = false,
   className,
@@ -50,7 +54,7 @@ export function Navbar({
   ...others
 }: NavbarProps) {
   const { classes, cx } = useStyles(
-    { width, height, padding, fixed, position, hiddenBreakpoint },
+    { width, height, padding, fixed, position, hiddenBreakpoint, zIndex },
     { classNames, styles, name: 'Navbar' }
   );
 

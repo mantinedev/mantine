@@ -20,10 +20,11 @@ interface NavbarStyles {
   position: NavbarPosition;
   hiddenBreakpoint: MantineNumberSize;
   fixed: boolean;
+  zIndex: number;
 }
 
 export default createStyles(
-  (theme, { height, width, padding, fixed, position, hiddenBreakpoint }: NavbarStyles) => {
+  (theme, { height, width, padding, fixed, position, hiddenBreakpoint, zIndex }: NavbarStyles) => {
     const breakpoints =
       typeof width?.breakpoints === 'object' && width.breakpoints !== null
         ? getSortedBreakpoints(width.breakpoints, theme).reduce(
@@ -43,8 +44,9 @@ export default createStyles(
       root: {
         ...getFontStyles(theme),
         ...position,
-        width: width.base,
+        zIndex,
         height,
+        width: width.base,
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',
         padding: getSizeValue({ size: padding, sizes: theme.spacing }),
