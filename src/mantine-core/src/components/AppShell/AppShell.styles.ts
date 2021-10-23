@@ -27,7 +27,7 @@ function getPositionStyles(props: AppShellStyles, theme: MantineTheme): CSSObjec
 
   const queries = props.navbarBreakpoints.reduce((acc, [breakpoint, breakpointSize]) => {
     acc[`@media (max-width: ${breakpoint}px)`] = {
-      paddingLeft: `calc(${breakpointSize.width}px + ${padding}px)`,
+      paddingLeft: `calc(${breakpointSize}px + ${padding}px)`,
     };
 
     return acc;

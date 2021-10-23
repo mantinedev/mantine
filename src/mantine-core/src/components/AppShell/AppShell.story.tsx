@@ -20,7 +20,7 @@ function NavbarToggle() {
           padding="md"
           hiddenBreakpoint="sm"
           hidden={!opened}
-          size={{ width: 400, breakpoints: { sm: { width: '100%' }, lg: { width: 300 } } }}
+          width={{ base: 400, breakpoints: { sm: '100%', lg: 300 } }}
         >
           <Text>Application navbar</Text>
         </Navbar>
@@ -52,13 +52,13 @@ storiesOf('@mantine/core/AppShell/AppShell', module)
   .add('Static', () => (
     <AppShell
       header={<Header height={50}>Header</Header>}
-      navbar={<Navbar size={{ width: 300 }}>Navbar</Navbar>}
+      navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}
     >
       App shell
     </AppShell>
   ))
   .add('Static without Header', () => (
-    <AppShell navbar={<Navbar size={{ width: 300 }}>Navbar</Navbar>}>App shell</AppShell>
+    <AppShell navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}>App shell</AppShell>
   ))
   .add('Static without Navbar', () => (
     <AppShell header={<Header height={50}>Header</Header>}>App shell</AppShell>
@@ -67,7 +67,7 @@ storiesOf('@mantine/core/AppShell/AppShell', module)
     <AppShell
       fixed
       header={<Header height={50}>Header</Header>}
-      navbar={<Navbar size={{ width: 300 }}>Navbar</Navbar>}
+      navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}
     >
       App shell
     </AppShell>
@@ -78,18 +78,14 @@ storiesOf('@mantine/core/AppShell/AppShell', module)
     </AppShell>
   ))
   .add('Fixed without Header', () => (
-    <AppShell fixed navbar={<Navbar size={{ width: 300 }}>Navbar</Navbar>}>
+    <AppShell fixed navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}>
       App shell
     </AppShell>
   ))
   .add('Fixed with Navbar breakpoints', () => (
     <AppShell
       fixed
-      navbar={
-        <Navbar size={{ width: 400, breakpoints: { sm: { width: 200 }, md: { width: 300 } } }}>
-          Navbar
-        </Navbar>
-      }
+      navbar={<Navbar width={{ base: 400, breakpoints: { sm: 200, md: 300 } }}>Navbar</Navbar>}
     >
       App shell
     </AppShell>
@@ -100,9 +96,9 @@ storiesOf('@mantine/core/AppShell/AppShell', module)
       navbarOffsetBreakpoint="sm"
       navbar={
         <Navbar
-          size={{
-            width: 300,
-            breakpoints: { sm: { width: '100%' }, md: { width: 350 }, lg: { width: 400 } },
+          width={{
+            base: 300,
+            breakpoints: { sm: '100%', md: 350, lg: 400 },
           }}
         >
           Navbar

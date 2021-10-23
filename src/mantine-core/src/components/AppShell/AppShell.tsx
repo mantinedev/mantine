@@ -27,12 +27,12 @@ function getHeaderHeight(element: React.ReactElement) {
 }
 
 function getNavbarWidth(element: React.ReactElement) {
-  const width = element?.props?.size?.width;
+  const width = element?.props?.width?.base;
   return typeof width === 'number' ? `${width}px` : typeof width === 'string' ? width : '0px';
 }
 
 function getNavbarBreakpoints(element: React.ReactElement, theme: MantineTheme) {
-  const breakpoints = element?.props?.size?.breakpoints;
+  const breakpoints = element?.props?.width?.breakpoints;
   return breakpoints != null
     ? getSortedBreakpoints<{ width: number | string; height: number | string }>(
         breakpoints as any,
@@ -73,11 +73,7 @@ export function AppShell({
     ? React.cloneElement(navbar, {
         fixed,
         zIndex,
-        size: {
-          ...navbar?.props?.size,
-          height: `calc(100vh - ${headerHeight})`,
-          width: navbarWidth,
-        },
+        height: `calc(100vh - ${headerHeight})`,
         position: { top: headerHeight, left: 0 },
       })
     : null;

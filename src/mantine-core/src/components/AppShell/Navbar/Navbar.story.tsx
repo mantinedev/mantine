@@ -130,14 +130,9 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
   .add('With width breakpoints', () => (
     <Navbar
       style={{ background: 'silver' }}
-      size={{
-        width: 300,
-        height: '100vh',
-        breakpoints: {
-          md: { width: 250 },
-          xs: { width: '100%' },
-          900: { width: 400, height: 500 },
-        },
+      width={{
+        base: 400,
+        breakpoints: { 900: 300, md: 350, xs: '100%' },
       }}
     >
       This is navbar

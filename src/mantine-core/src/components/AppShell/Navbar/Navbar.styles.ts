@@ -7,13 +7,9 @@ import {
 } from '@mantine/styles';
 import { getSortedBreakpoints } from '../get-sorted-breakpoints';
 
-interface NavbarSizeBase {
-  width?: number | string;
-  height?: number | string;
-}
-
-export interface NavbarSize extends NavbarSizeBase {
-  breakpoints?: Partial<Record<MantineSize | (string & {}), NavbarSizeBase>>;
+export interface NavbarWidth {
+  base: string | number;
+  breakpoints?: Partial<Record<MantineSize | (string & {}), string | number>>;
 }
 
 export interface NavbarPosition {
@@ -24,7 +20,8 @@ export interface NavbarPosition {
 }
 
 interface NavbarStyles {
-  size: NavbarSize;
+  width: NavbarWidth;
+  height: string | number;
   padding: MantineNumberSize;
   position: NavbarPosition;
   hiddenBreakpoint: MantineNumberSize;
@@ -32,15 +29,14 @@ interface NavbarStyles {
 }
 
 export default createStyles(
-  (theme, { size, padding, fixed, position, hiddenBreakpoint }: NavbarStyles) => {
+  (theme, { height, width, padding, fixed, position, hiddenBreakpoint }: NavbarStyles) => {
     const breakpoints =
-      typeof size?.breakpoints === 'object' && size.breakpoints !== null
-        ? getSortedBreakpoints(size.breakpoints, theme).reduce(
+      typeof width?.breakpoints === 'object' && width.breakpoints !== null
+        ? getSortedBreakpoints(width.breakpoints, theme).reduce(
             (acc, [breakpoint, breakpointSize]) => {
               acc[`@media (max-width: ${breakpoint}px)`] = {
-                width: breakpointSize.width,
-                minWidth: breakpointSize.width,
-                height: breakpointSize.height,
+                width: breakpointSize,
+                minWidth: breakpointSize,
               };
 
               return acc;
@@ -53,8 +49,8 @@ export default createStyles(
       root: {
         ...getFontStyles(theme),
         ...position,
-        width: size.width,
-        height: size.height,
+        width: width.base,
+        height,
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',
         padding: getSizeValue({ size: padding, sizes: theme.spacing }),
