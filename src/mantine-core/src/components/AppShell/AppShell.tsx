@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   MantineNumberSize,
   DefaultProps,
@@ -54,51 +54,59 @@ function getNavbarBreakpoints(element: React.ReactElement, theme: MantineTheme) 
     : [];
 }
 
-export function AppShell({
-  children,
-  navbar,
-  header,
-  fixed = false,
-  zIndex = 1000,
-  padding = 'md',
-  navbarOffsetBreakpoint,
-  className,
-  styles,
-  classNames,
-}: AppShellProps) {
-  const theme = useMantineTheme();
-  const navbarBreakpoints = getNavbarBreakpoints(navbar, theme);
-  const navbarWidth = getNavbarWidth(navbar);
-  const headerHeight = getHeaderHeight(header);
-  const { classes, cx } = useStyles(
+export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
+  (
     {
-      padding,
-      fixed,
-      navbarWidth,
-      headerHeight,
-      navbarBreakpoints,
+      children,
+      navbar,
+      header,
+      fixed = false,
+      zIndex = 1000,
+      padding = 'md',
       navbarOffsetBreakpoint,
-    },
-    { styles, classNames, name: 'AppShell' }
-  );
-  const _header = header ? React.cloneElement(header, { fixed, zIndex }) : null;
-  const _navbar = navbar
-    ? React.cloneElement(navbar, {
+      className,
+      styles,
+      classNames,
+      ...others
+    }: AppShellProps,
+    ref
+  ) => {
+    const theme = useMantineTheme();
+    const navbarBreakpoints = getNavbarBreakpoints(navbar, theme);
+    const navbarWidth = getNavbarWidth(navbar);
+    const headerHeight = getHeaderHeight(header);
+    const { classes, cx } = useStyles(
+      {
+        padding,
         fixed,
-        zIndex,
-        height: `calc(100vh - ${headerHeight})`,
-        position: { top: headerHeight, left: 0 },
-      })
-    : null;
+        navbarWidth,
+        headerHeight,
+        navbarBreakpoints,
+        navbarOffsetBreakpoint,
+      },
+      { styles, classNames, name: 'AppShell' }
+    );
+    const _header = header ? React.cloneElement(header, { fixed, zIndex }) : null;
+    const _navbar = navbar
+      ? React.cloneElement(navbar, {
+          fixed,
+          zIndex,
+          height: `calc(100vh - ${headerHeight})`,
+          position: { top: headerHeight, left: 0 },
+        })
+      : null;
 
-  return (
-    <div className={cx(classes.root, className)}>
-      {_header}
+    return (
+      <div className={cx(classes.root, className)} ref={ref} {...others}>
+        {_header}
 
-      <div className={classes.body}>
-        {_navbar}
-        <main className={classes.main}>{children}</main>
+        <div className={classes.body}>
+          {_navbar}
+          <main className={classes.main}>{children}</main>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+);
+
+AppShell.displayName = '@mantine/core/AppShell';
