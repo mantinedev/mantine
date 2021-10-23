@@ -2,7 +2,7 @@ import React from 'react';
 import { DefaultProps, useExtractedMargins, MantineNumberSize } from '@mantine/styles';
 import useStyles, { HeaderPosition } from './Header.styles';
 
-interface HeaderProps extends DefaultProps {
+export interface HeaderProps extends DefaultProps {
   children: React.ReactNode;
   height: number | string;
   padding?: MantineNumberSize;

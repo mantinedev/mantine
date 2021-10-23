@@ -8,7 +8,7 @@ import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
 
 export type NavbarStylesNames = ClassNames<typeof useStyles>;
 
-interface NavbarProps extends DefaultProps<NavbarStylesNames> {
+export interface NavbarProps extends DefaultProps<NavbarStylesNames> {
   /** Navbar width with breakpoints */
   width?: NavbarWidth;
 

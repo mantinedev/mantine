@@ -11,7 +11,7 @@ import useStyles from './AppShell.styles';
 
 export type AppShellStylesNames = ClassNames<typeof useStyles>;
 
-interface AppShellProps extends DefaultProps<AppShellStylesNames> {
+export interface AppShellProps extends DefaultProps<AppShellStylesNames> {
   navbar?: React.ReactElement;
   header?: React.ReactElement;
   zIndex?: number;
