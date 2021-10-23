@@ -1,8 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { FileSubmoduleIcon, ChevronDownIcon } from '@primer/octicons-react';
-import { ThemeIcon } from '../../ThemeIcon';
 import { Navbar } from './Navbar';
 
 const lorem =
@@ -43,88 +41,6 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
         Grow section
       </Navbar.Section>
       <Navbar.Section>Last section</Navbar.Section>
-    </Navbar>
-  ))
-  .add('With links', () => (
-    <Navbar padding="md">
-      <Navbar.Link<'a'>
-        href="#"
-        onClick={(e) => e.preventDefault()}
-        icon={
-          <ThemeIcon color="violet" size="md">
-            <FileSubmoduleIcon size={12} />
-          </ThemeIcon>
-        }
-      >
-        With icon
-      </Navbar.Link>
-      <Navbar.Link<'a'> href="#" onClick={(e) => e.preventDefault()}>
-        Anchor link
-      </Navbar.Link>
-      <Navbar.Link component="button">Button link</Navbar.Link>
-      <Navbar.Link component="div">Div link</Navbar.Link>
-      <Navbar.Link component="div" rightSection={<ChevronDownIcon size={12} />}>
-        With right section
-      </Navbar.Link>
-      <Navbar.Link component="div" active>
-        Active link
-      </Navbar.Link>
-      <Navbar.Link component="div">
-        Link that is so large that it does not fit on a single line
-      </Navbar.Link>
-      <Navbar.Link
-        component="div"
-        icon={
-          <ThemeIcon color="violet" size="md">
-            <FileSubmoduleIcon size={12} />
-          </ThemeIcon>
-        }
-      >
-        Link that is so large that it does not fit on a single line with icon
-      </Navbar.Link>
-      <Navbar.Link
-        component="div"
-        icon={
-          <ThemeIcon color="violet" size="md">
-            <FileSubmoduleIcon size={12} />
-          </ThemeIcon>
-        }
-      >
-        SuperLargeWordThatCanOverflowAndBreakSuchAGreatLayout
-      </Navbar.Link>
-    </Navbar>
-  ))
-  .add('Links group', () => (
-    <Navbar padding="md">
-      <Navbar.LinksGroup
-        label="Links group"
-        icon={
-          <ThemeIcon color="violet" variant="light" size="md">
-            <FileSubmoduleIcon size={14} />
-          </ThemeIcon>
-        }
-      >
-        <Navbar.Link>First link</Navbar.Link>
-        <Navbar.Link>Second link</Navbar.Link>
-        <Navbar.Link active>Third link</Navbar.Link>
-        <Navbar.Link>Fourth link</Navbar.Link>
-        <Navbar.Link>Fifth link</Navbar.Link>
-        <Navbar.LinksGroup
-          label="Links group nested"
-          icon={
-            <ThemeIcon color="violet" variant="light" size="md">
-              <FileSubmoduleIcon size={14} />
-            </ThemeIcon>
-          }
-        >
-          <Navbar.Link>First link</Navbar.Link>
-          <Navbar.Link>Second link</Navbar.Link>
-          <Navbar.Link active>Third link</Navbar.Link>
-          <Navbar.Link>Fourth link</Navbar.Link>
-          <Navbar.Link>Fifth link</Navbar.Link>
-        </Navbar.LinksGroup>
-      </Navbar.LinksGroup>
-      <p>other content</p>
     </Navbar>
   ))
   .add('With width breakpoints', () => (

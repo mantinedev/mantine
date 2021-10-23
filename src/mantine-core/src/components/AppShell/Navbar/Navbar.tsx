@@ -1,8 +1,6 @@
 import React from 'react';
 import { ClassNames, DefaultProps, useExtractedMargins, MantineNumberSize } from '@mantine/styles';
 import { NavbarSection } from './NavbarSection/NavbarSection';
-import { NavbarLink } from './NavbarLink/NavbarLink';
-import { NavbarLinksGroup } from './NavbarLinksGroup/NavbarLinksGroup';
 import { NavbarContext } from './Navbar.context';
 import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
 
@@ -73,7 +71,5 @@ export function Navbar({
 }
 
 Navbar.Section = NavbarSection;
-Navbar.Link = NavbarLink;
-Navbar.LinksGroup = NavbarLinksGroup;
 
 Navbar.displayName = '@mantine/core/Navbar';
