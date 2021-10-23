@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { ClassNames, DefaultProps, useExtractedMargins, MantineNumberSize } from '@mantine/styles';
 import { NavbarSection } from './NavbarSection/NavbarSection';
 import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
@@ -34,38 +34,50 @@ export interface NavbarProps extends DefaultProps<NavbarStylesNames> {
   zIndex?: number;
 }
 
-export function Navbar({
-  width = { base: 300 },
-  height = '100vh',
-  padding = 0,
-  fixed = false,
-  position = { top: 0, left: 0 },
-  zIndex = 1000,
-  hiddenBreakpoint = 'md',
-  hidden = false,
-  className,
-  classNames,
-  style,
-  styles,
-  children,
-  ...others
-}: NavbarProps) {
-  const { classes, cx } = useStyles(
-    { width, height, padding, fixed, position, hiddenBreakpoint, zIndex },
-    { classNames, styles, name: 'Navbar' }
-  );
+type _NavbarComponent = (props: NavbarProps) => React.ReactElement;
+type NavbarComponent = _NavbarComponent & {
+  displayName: string;
+  Section: typeof NavbarSection;
+};
 
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  return (
-    <nav
-      className={cx(classes.root, { [classes.hidden]: hidden }, className)}
-      style={mergedStyles}
-      {...rest}
-    >
-      {children}
-    </nav>
-  );
-}
+export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
+  (
+    {
+      width = { base: 300 },
+      height = '100vh',
+      padding = 0,
+      fixed = false,
+      position = { top: 0, left: 0 },
+      zIndex = 1000,
+      hiddenBreakpoint = 'md',
+      hidden = false,
+      className,
+      classNames,
+      style,
+      styles,
+      children,
+      ...others
+    }: NavbarProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles(
+      { width, height, padding, fixed, position, hiddenBreakpoint, zIndex },
+      { classNames, styles, name: 'Navbar' }
+    );
+
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    return (
+      <nav
+        ref={ref}
+        className={cx(classes.root, { [classes.hidden]: hidden }, className)}
+        style={mergedStyles}
+        {...rest}
+      >
+        {children}
+      </nav>
+    );
+  }
+) as any;
 
 Navbar.Section = NavbarSection;
 
