@@ -1,14 +1,11 @@
-import React, { useContext, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   useExtractedMargins,
   useCss,
-  getSizeValue,
-  useMantineTheme,
   PolymorphicComponentProps,
   PolymorphicRef,
 } from '@mantine/styles';
-import { NavbarContext } from '../Navbar.context';
 
 interface _NavbarSectionProps extends DefaultProps {
   /** Section children */
@@ -33,26 +30,13 @@ export const NavbarSection: NavbarSectionComponent & { displayName?: string } = 
     ref: PolymorphicRef<C>
   ) => {
     const Element = component || 'div';
-    const ctx = useContext(NavbarContext);
-    const theme = useMantineTheme();
-    const spacing = getSizeValue({ size: ctx?.padding || 0, sizes: theme.spacing });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { css, cx } = useCss();
 
     return (
       <Element
         ref={ref}
-        className={cx(
-          css({
-            flex: grow ? 1 : 0,
-            boxSizing: 'border-box',
-            marginLeft: -spacing,
-            marginRight: -spacing,
-            paddingLeft: spacing,
-            paddingRight: spacing,
-          }),
-          className
-        )}
+        className={cx(css({ flex: grow ? 1 : 0, boxSizing: 'border-box' }), className)}
         style={mergedStyles}
         {...rest}
       >

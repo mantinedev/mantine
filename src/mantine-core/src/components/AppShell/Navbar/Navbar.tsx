@@ -1,7 +1,6 @@
 import React from 'react';
 import { ClassNames, DefaultProps, useExtractedMargins, MantineNumberSize } from '@mantine/styles';
 import { NavbarSection } from './NavbarSection/NavbarSection';
-import { NavbarContext } from './Navbar.context';
 import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
 
 export type NavbarStylesNames = ClassNames<typeof useStyles>;
@@ -58,15 +57,13 @@ export function Navbar({
 
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   return (
-    <NavbarContext.Provider value={{ padding }}>
-      <nav
-        className={cx(classes.root, { [classes.hidden]: hidden }, className)}
-        style={mergedStyles}
-        {...rest}
-      >
-        {children}
-      </nav>
-    </NavbarContext.Provider>
+    <nav
+      className={cx(classes.root, { [classes.hidden]: hidden }, className)}
+      style={mergedStyles}
+      {...rest}
+    >
+      {children}
+    </nav>
   );
 }
 
