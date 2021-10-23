@@ -34,7 +34,7 @@ export interface AppShellProps extends DefaultProps<AppShellStylesNames> {
   navbarOffsetBreakpoint?: MantineNumberSize;
 }
 
-function getHeaderHeight(element: React.ReactElement) {
+function getElementHeight(element: React.ReactElement) {
   const height = element?.props?.height;
   return typeof height === 'number' ? `${height}px` : typeof height === 'string' ? height : '0px';
 }
@@ -74,7 +74,8 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
     const theme = useMantineTheme();
     const navbarBreakpoints = getNavbarBreakpoints(navbar, theme);
     const navbarWidth = getNavbarWidth(navbar);
-    const headerHeight = getHeaderHeight(header);
+    const headerHeight = getElementHeight(header);
+    const navbarHeight = getElementHeight(navbar);
     const { classes, cx } = useStyles(
       {
         padding,
@@ -91,7 +92,7 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
       ? React.cloneElement(navbar, {
           fixed,
           zIndex,
-          height: `calc(100vh - ${headerHeight})`,
+          height: navbarHeight !== '0px' ? navbarHeight : `calc(100vh - ${headerHeight})`,
           position: { top: headerHeight, left: 0 },
         })
       : null;
