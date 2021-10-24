@@ -76,6 +76,7 @@ export function JsonInput({
       error={valid ? error : validationError || true}
       __staticSelector="JsonInput"
       classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
+      autoComplete="off"
       {...others}
     />
   );
