@@ -13,6 +13,8 @@ docs: 'core/AppShell.mdx'
 styles: ['AppShell', 'Navbar']
 ---
 
+import { ExternalLinkIcon } from '@modulz/radix-icons';
+import { Anchor, Center } from '@mantine/core';
 import { AppShellDemos } from '@demos/core';
 
 ## Usage
@@ -21,6 +23,65 @@ AppShell is a layout component that can be used to create common Header - Navbar
 AppShell, Header and Navbar components include bare minimum default styles to simplify customization.
 
 <Demo data={AppShellDemos.usage} />
+
+## Responsive styles
+
+<Anchor href="/app-shell-demo/" target="_blank" mb="xl" style={{ display: 'block' }}>
+  <Center inline>
+    <span style={{ marginRight: 7 }}>View responsive example in new tab</span>
+    <ExternalLinkIcon width={18} height={18} />
+  </Center>
+</Anchor>
+
+```tsx
+import { useState } from 'react';
+import { AppShell, Navbar, Header, Text, MediaQuery, Burger } from '@mantine/core';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <AppShell
+      // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
+      navbarOffsetBreakpoint="sm"
+      // fixed prop on AppShell will be automatically added to Header and Navbar
+      fixed
+      navbar={
+        <Navbar
+          padding="md"
+          // Breakpoint at which navbar will be hidden if hidden prop is true
+          hiddenBreakpoint="sm"
+          // Hides navbar when viewport size is less than value specified in hiddenBreakpoint
+          hidden={!opened}
+          width={{ base: 400, breakpoints: { sm: '100%', lg: 300 } }}
+        >
+          <Text>Application navbar</Text>
+        </Navbar>
+      }
+      header={
+        <Header height={70} padding="md">
+          {/* You can handle other responsive styles with MediaQuery component or createStyles function */}
+          <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+            <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+              <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                size="sm"
+                color={theme.colors.gray[6]}
+                mr="xl"
+              />
+            </MediaQuery>
+
+            <Text>Application header</Text>
+          </div>
+        </Header>
+      }
+    >
+      <Text>Resize app to see responsive navbar in action</Text>
+    </AppShell>
+  );
+}
+```
 
 ## Navbar component
 
