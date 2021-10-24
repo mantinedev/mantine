@@ -7,6 +7,7 @@ import { mergeClassNames } from './utils/merge-class-names/merge-class-names';
 
 export interface UseStylesOptions<Key extends string> {
   classNames?: Partial<Record<Key, string>>;
+  sx?: CSSObject | ((theme: MantineTheme) => CSSObject);
   styles?:
     | Partial<Record<Key, CSSObject>>
     | ((theme: MantineTheme) => Partial<Record<Key, CSSObject>>);
@@ -45,12 +46,14 @@ export function createStyles<Key extends string = string, Params = void>(
     const _styles =
       typeof options?.styles === 'function' ? options?.styles(theme) : options?.styles || {};
     const _themeStyles = typeof themeStyles === 'function' ? themeStyles(theme) : themeStyles || {};
+    const _sx = typeof options?.sx === 'function' ? options.sx(theme) : options?.sx;
 
     const classes = fromEntries(
-      Object.keys(cssObject).map((key) => [
-        key,
-        cx(css(cssObject[key]), css(_themeStyles[key]), css(_styles[key])),
-      ])
+      Object.keys(cssObject).map((key) => {
+        const _mergedStyles = cx(css(cssObject[key]), css(_themeStyles[key]), css(_styles[key]));
+        const mergedStyles = key === 'root' ? cx(_mergedStyles, css(_sx)) : _mergedStyles;
+        return [key, mergedStyles];
+      })
     ) as Record<Key, string>;
 
     return { classes: mergeClassNames(cx, classes, options?.classNames, options?.name), cx };
