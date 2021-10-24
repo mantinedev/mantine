@@ -235,7 +235,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
               <div
                 className={classes.dropdownWrapper}
                 ref={useMergedRef(focusTrapRef, setDropdownElement)}
-                data-mantine-stop-propagation={dropdownType === 'popover' && dropdownOpened}
+                data-mantine-stop-propagation={dropdownOpened}
                 onKeyDownCapture={closeOnEscape}
               >
                 <Paper className={classes.dropdown} shadow={shadow}>
