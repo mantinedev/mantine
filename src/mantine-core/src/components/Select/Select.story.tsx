@@ -40,8 +40,8 @@ function Controlled({ clearable = false }: { clearable?: boolean }) {
         data={data}
         style={{ marginTop: 20 }}
       />
-      <button type="button" onClick={() => setValue('react')}>
-        Fill value
+      <button type="button" onClick={() => setValue(null)}>
+        Set value to null
       </button>
     </div>
   );

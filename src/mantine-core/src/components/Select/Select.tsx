@@ -34,13 +34,13 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
   shadow?: MantineShadow;
 
   /** Controlled input value */
-  value?: string;
+  value?: string | null;
 
   /** Uncontrolled input defaultValue */
-  defaultValue?: string;
+  defaultValue?: string | null;
 
   /** Controlled input onChange handler */
-  onChange?(value: string): void;
+  onChange?(value: string | null): void;
 
   /** Dropdown body appear/disappear transition */
   transition?: MantineTransition;
@@ -169,7 +169,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       defaultValue,
       finalValue: null,
       onChange,
-      rule: (val) => typeof val === 'string',
+      rule: (val) => typeof val === 'string' || val === null,
     });
 
     const selectedValue = sortedData.find((item) => item.value === _value);
