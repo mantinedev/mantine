@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMantineColorScheme, useMantineTheme } from '@mantine/styles';
 import { SunIcon, MoonIcon } from '@modulz/radix-icons';
-import { Group, Image, ActionIcon } from '../../../index';
+import { Group, ActionIcon } from '../../../index';
 import logo from './logo.svg';
 import logoWhite from './logo-white.svg';
 
@@ -21,7 +21,7 @@ export function Brand() {
       }}
     >
       <Group position="apart">
-        <Image src={colorScheme === 'dark' ? logoWhite : logo} width={100} />
+        <img alt="" src={colorScheme === 'dark' ? logoWhite : logo} width={100} />
         <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
           {colorScheme === 'dark' ? <SunIcon /> : <MoonIcon />}
         </ActionIcon>

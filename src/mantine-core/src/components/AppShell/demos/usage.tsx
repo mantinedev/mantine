@@ -2,7 +2,7 @@ import React from 'react';
 import { SunIcon, MoonIcon } from '@modulz/radix-icons';
 import { useMantineColorScheme } from '@mantine/styles';
 import { AppShell, Navbar, Header } from '../index';
-import { Group, Image, ActionIcon } from '../../../index';
+import { Group, ActionIcon } from '../../../index';
 import { MainLinks } from './_mainLinks';
 import { User } from './_user';
 import logo from './logo.svg';
@@ -55,7 +55,7 @@ function Demo() {
             }}
             position="apart"
           >
-            <Image src={colorScheme === 'dark' ? logoWhite : logo} width={100} />
+            <img alt="" src={colorScheme === 'dark' ? logoWhite : logo} width={100} />
             <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
               {colorScheme === 'dark' ? <SunIcon /> : <MoonIcon />}
             </ActionIcon>
