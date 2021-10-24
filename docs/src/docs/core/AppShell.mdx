@@ -123,10 +123,17 @@ Navbar can be used outside of AppShell context:
 />
 ```
 
-## Fixed position
+### Fixed position
 
 To make Navbar fixed (like in Mantine docs) set `fixed` and `position` props:
 
 ```tsx
 <Navbar fixed position={{ top: 0, left: 0 }} />
 ```
+
+### Navbar with custom scrollbars
+
+You can use [react-custom-scrollbars](https://malte-wessel.com/react-custom-scrollbars/)
+package with `Navbar.Section`, set `grow` property and render `Scrollbars` component inside:
+
+<Demo data={AppShellDemos.scrollbars} />
