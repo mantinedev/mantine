@@ -35,7 +35,7 @@ function getBreakpointsStyles({
 }) {
   return MANTINE_SIZES.reduce((acc, size) => {
     if (typeof sizes[size] === 'number') {
-      acc[`@media (min-width: ${theme.breakpoints[size]}px)`] = {
+      acc[`@media (min-width: ${theme.breakpoints[size] + 1}px)`] = {
         flexBasis: getColumnWidth(sizes[size], columns),
         flexShrink: 0,
         maxWidth: grow ? 'unset' : getColumnWidth(sizes[size], columns),
