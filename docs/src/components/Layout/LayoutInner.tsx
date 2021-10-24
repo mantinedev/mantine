@@ -38,12 +38,12 @@ const query = graphql`
 `;
 
 export function LayoutInner({ children, location }: LayoutProps) {
-  const { classes, cx } = useStyles();
+  const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);
+  const shouldRenderHeader = !shouldExcludeHeader(location.pathname);
+  const shouldRenderNavbar = !shouldExcludeNavbar(location.pathname) || navbarCollapsed;
+  const { classes, cx } = useStyles({ shouldRenderHeader });
   const [navbarOpened, setNavbarState] = useState(false);
   const data = getDocsData(useStaticQuery(query));
-  const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);
-  const shouldRenderNavbar = !shouldExcludeNavbar(location.pathname) || navbarCollapsed;
-  const shouldRenderHeader = !shouldExcludeHeader(location.pathname);
 
   return (
     <div
