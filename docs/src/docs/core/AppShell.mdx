@@ -7,7 +7,7 @@ slug: /core/app-shell/
 category: 'layout'
 description: 'Responsive shell for your application with header and navbar'
 props: ['AppShell', 'Navbar', 'Header']
-import: "import { AppShell } from '@mantine/core';"
+import: "import { AppShell, Navbar, Header } from '@mantine/core';"
 source: 'mantine-core/src/components/AppShell/AppShell.tsx'
 docs: 'core/AppShell.mdx'
 styles: ['AppShell', 'Navbar']
@@ -17,8 +17,55 @@ import { AppShellDemos } from '@demos/core';
 
 ## Usage
 
+AppShell is a layout component that can be used to create common Header - Navbar - Content layout pattern.
+AppShell, Header and Navbar components include bare minimum default styles to simplify customization.
+
 <Demo data={AppShellDemos.usage} />
 
 ## Navbar component
 
+Navbar can be used outside of AppShell context:
+
 <Demo data={AppShellDemos.navbar} />
+
+### Navbar.Section
+
+```tsx
+<Navbar>
+  {/* First section with normal height (depends on section content) */}
+  <Navbar.Section>First section</Navbar.Section>
+
+  {/* Grow section will take all available space that is not taken by first and last sections */}
+  <Navbar.Section>Grow section</Navbar.Section>
+
+  {/* Last section with normal height (depends on section content) */}
+  <Navbar.Section>Last section</Navbar.Section>
+</Navbar>
+```
+
+### Responsive width
+
+```tsx
+<Navbar
+  width={{
+    // Base width – used when viewport is larger than theme.breakpoints.lg
+    base: 400,
+
+    breakpoints: {
+      // When viewport is smaller than theme.breakpoints.lg and larger than theme.breakpoints.sm
+      lg: 300,
+
+      // When viewport is smaller than theme.breakpoints.sm
+      sm: '100%',
+    },
+  }}
+/>
+```
+
+## Fixed position
+
+To make Navbar fixed (like in Mantine docs) set `fixed` and `position` props:
+
+```tsx
+<Navbar fixed position={{ top: 0, left: 0 }} />
+```
