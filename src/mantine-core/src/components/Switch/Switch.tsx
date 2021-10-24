@@ -48,13 +48,14 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       children,
       classNames,
       styles,
+      sx,
       ...others
     }: SwitchProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { size, color, radius },
-      { classNames, styles, name: 'Switch' }
+      { classNames, styles, sx, name: 'Switch' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const uuid = useUuid(id);
