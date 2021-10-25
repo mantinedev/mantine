@@ -35,7 +35,7 @@ storiesOf('@mantine/core/ActionIcon', module)
         }),
       }}
     >
-      <ActionIcon>
+      <ActionIcon sx={{ backgroundColor: 'silver' }}>
         <GearIcon />
       </ActionIcon>
     </MantineProvider>

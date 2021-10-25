@@ -61,6 +61,7 @@ export const ActionIcon: ActionIconComponent & { displayName?: string } = forwar
       loaderProps,
       loading = false,
       component,
+      sx,
       style,
       styles,
       classNames,
@@ -72,7 +73,7 @@ export const ActionIcon: ActionIconComponent & { displayName?: string } = forwar
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
       { size, radius, color },
-      { name: 'ActionIcon', classNames, styles }
+      { name: 'ActionIcon', classNames, styles, sx }
     );
 
     const Element = component || 'button';
@@ -86,7 +87,7 @@ export const ActionIcon: ActionIconComponent & { displayName?: string } = forwar
       <Element
         {...rest}
         style={mergedStyles}
-        className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
+        className={cx(classes[variant], classes.root, { [classes.loading]: loading }, className)}
         type="button"
         ref={ref}
         disabled={disabled || loading}
