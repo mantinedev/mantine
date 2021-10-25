@@ -103,13 +103,14 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       style,
       styles,
       classNames,
+      sx,
       ...others
     }: ColorPickerProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { size, fullWidth },
-      { classNames, styles, name: __staticSelector }
+      { classNames, styles, sx, name: __staticSelector }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const formatRef = useRef(format);

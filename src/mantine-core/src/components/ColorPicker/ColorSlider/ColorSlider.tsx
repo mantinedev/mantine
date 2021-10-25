@@ -6,7 +6,7 @@ import {
   UseMovePosition,
   useMergedRef,
 } from '@mantine/hooks';
-import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, ClassNames, useSx } from '@mantine/styles';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
 
@@ -46,11 +46,12 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
       classNames,
       styles,
       className,
-      style,
+      sx,
       ...others
     }: ColorSliderProps,
     ref
   ) => {
+    const { sxClassName } = useSx({ sx, className });
     const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
     const [position, setPosition] = useState({ y: 0, x: value / maxValue });
     const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);
@@ -88,8 +89,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
       <div
         {...others}
         ref={useMergedRef(sliderRef, ref)}
-        className={cx(classes.slider, className)}
-        style={{ ...style }}
+        className={cx(classes.slider, sxClassName, className)}
         role="slider"
         aria-valuenow={value}
         aria-valuemax={maxValue}

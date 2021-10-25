@@ -106,6 +106,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       className,
       style,
       swatches,
+      sx,
       ...others
     }: ColorInputProps,
     ref
@@ -163,6 +164,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         className={className}
         style={mergedStyles}
         __staticSelector="ColorInput"
+        sx={sx}
         {...wrapperProps}
       >
         <div ref={setReferenceElement}>
