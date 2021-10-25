@@ -71,9 +71,10 @@ export function MantineDialog({
   transition = 'pop-top-right',
   transitionDuration = 200,
   transitionTimingFunction,
+  sx,
   ...others
 }: DialogProps) {
-  const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Dialog' });
+  const { classes, cx } = useStyles({ size }, { sx, classNames, styles, name: 'Dialog' });
 
   return (
     <Transition

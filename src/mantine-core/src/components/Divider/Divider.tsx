@@ -50,6 +50,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
       variant = 'solid',
       styles,
       classNames,
+      sx,
       ...others
     }: DividerProps,
     ref
@@ -58,7 +59,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
     const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
     const { classes, cx } = useStyles(
       { color: _color, size, variant },
-      { classNames, styles, name: 'Divider' }
+      { classNames, styles, sx, name: 'Divider' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 

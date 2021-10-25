@@ -46,11 +46,12 @@ export function List({
   style,
   styles,
   classNames,
+  sx,
   ...others
 }: ListProps) {
   const { classes, cx } = useStyles(
     { withPadding, size, listStyleType },
-    { classNames, styles, name: 'List' }
+    { sx, classNames, styles, name: 'List' }
   );
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const Element = type === 'unordered' ? 'ul' : 'ol';

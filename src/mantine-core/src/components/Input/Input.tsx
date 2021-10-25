@@ -84,6 +84,7 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
       styles,
       __staticSelector = 'Input',
       multiline = false,
+      sx,
       ...others
     }: InputProps<C>,
     ref: PolymorphicRef<C>
@@ -92,7 +93,7 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
     const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
     const { classes, cx } = useStyles(
       { radius, size, multiline, variant: _variant, invalid, disabled },
-      { classNames, styles, name: __staticSelector }
+      { sx, classNames, styles, name: __staticSelector }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element: any = component || 'input';

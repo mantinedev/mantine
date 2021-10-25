@@ -38,6 +38,7 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
       spacing = 'md',
       direction = 'row',
       withGutter = false,
+      sx,
       ...others
     }: GroupProps,
     ref
@@ -54,7 +55,7 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
         count,
         withGutter,
       },
-      { name: 'Group' }
+      { sx, name: 'Group' }
     );
 
     const { mergedStyles, rest } = useExtractedMargins({ others, style });

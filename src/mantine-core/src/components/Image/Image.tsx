@@ -61,11 +61,12 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
       classNames,
       styles,
       caption,
+      sx,
       ...others
     }: ImageProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ radius }, { classNames, styles, name: 'Image' });
+    const { classes, cx } = useStyles({ radius }, { sx, classNames, styles, name: 'Image' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(!src);

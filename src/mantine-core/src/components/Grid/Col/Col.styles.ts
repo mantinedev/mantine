@@ -47,7 +47,7 @@ function getBreakpointsStyles({
 
 export default createStyles(
   (theme, { gutter, grow, offset, columns, span, xs, sm, md, lg, xl }: ColStyles) => ({
-    col: {
+    root: {
       boxSizing: 'border-box',
       flexGrow: grow ? 1 : 0,
       padding: getSizeValue({ size: gutter, sizes: theme.spacing }) / 2,

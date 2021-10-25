@@ -118,10 +118,11 @@ export function MantineDrawer({
   closeButtonLabel,
   classNames,
   styles,
+  sx,
   ...others
 }: DrawerProps) {
   const theme = useMantineTheme();
-  const { classes, cx } = useStyles({ size, position }, { classNames, styles, name: 'Drawer' });
+  const { classes, cx } = useStyles({ size, position }, { sx, classNames, styles, name: 'Drawer' });
   const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
   useScrollLock(opened && !noScrollLock);
 

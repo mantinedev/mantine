@@ -51,6 +51,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       styles,
       size = 'sm',
       __staticSelector = 'Textarea',
+      sx,
       ...others
     }: TextareaProps,
     ref
@@ -73,6 +74,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         styles={styles}
         size={size}
         __staticSelector={__staticSelector}
+        sx={sx}
         {...wrapperProps}
       >
         {autosize ? (

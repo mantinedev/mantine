@@ -9,7 +9,7 @@ export default createStyles((theme, { size, radius }: ColorSwatchStyles) => {
   const overlayColor = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3];
 
   return {
-    colorSwatch: {
+    root: {
       ...getFocusStyles(theme),
       width: size,
       height: size,

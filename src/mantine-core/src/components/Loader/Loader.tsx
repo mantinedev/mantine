@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import {
   useMantineTheme,
   DefaultProps,
@@ -9,6 +8,7 @@ import {
   MantineColor,
   MantineTheme,
   useExtractedMargins,
+  useSx,
 } from '@mantine/styles';
 import { Bars } from './loaders/Bars';
 import { Oval } from './loaders/Oval';
@@ -39,7 +39,16 @@ export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRe
   variant?: MantineTheme['loader'];
 }
 
-export function Loader({ size = 'md', color, className, variant, style, ...others }: LoaderProps) {
+export function Loader({
+  size = 'md',
+  color,
+  className,
+  variant,
+  style,
+  sx,
+  ...others
+}: LoaderProps) {
+  const { sxClassName } = useSx({ sx, className });
   const theme = useMantineTheme();
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const defaultLoader = variant in LOADERS ? variant : theme.loader;
@@ -56,7 +65,7 @@ export function Loader({ size = 'md', color, className, variant, style, ...other
           : color
       }
       role="presentation"
-      className={clsx('mantine-loader', className)}
+      className={sxClassName}
       {...rest}
     />
   );

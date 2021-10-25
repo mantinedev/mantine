@@ -8,12 +8,12 @@ export interface KbdProps extends DefaultProps, React.ComponentPropsWithoutRef<'
 }
 
 export const Kbd = forwardRef<HTMLElement, KbdProps>(
-  ({ className, children, style, ...others }: KbdProps, ref) => {
-    const { classes, cx } = useStyles(null, { name: 'Kbd' });
+  ({ className, children, style, sx, ...others }: KbdProps, ref) => {
+    const { classes, cx } = useStyles(null, { sx, name: 'Kbd' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (
-      <kbd className={cx(classes.kbd, className)} style={mergedStyles} ref={ref} {...rest}>
+      <kbd className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
         {children}
       </kbd>
     );
