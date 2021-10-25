@@ -10,8 +10,8 @@ export interface TypographyStylesProviderProps
 }
 
 export const TypographyStylesProvider = forwardRef<HTMLDivElement, TypographyStylesProviderProps>(
-  ({ className, style, ...others }: TypographyStylesProviderProps, ref) => {
-    const { classes, cx } = useStyles(null, null, 'typography-styles-provider');
+  ({ className, style, sx, ...others }: TypographyStylesProviderProps, ref) => {
+    const { classes, cx } = useStyles(null, { sx, name: 'TypographyStylesProvider' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     return <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest} />;
   }

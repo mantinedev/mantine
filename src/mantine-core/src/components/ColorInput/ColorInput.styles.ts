@@ -1,6 +1,10 @@
 import { createStyles } from '@mantine/styles';
 
-export default createStyles((theme) => ({
+interface ColorInputStyles {
+  disallowInput: boolean;
+}
+
+export default createStyles((theme, { disallowInput }: ColorInputStyles) => ({
   arrow: {
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
@@ -11,5 +15,9 @@ export default createStyles((theme) => ({
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
+  },
+
+  input: {
+    cursor: disallowInput ? 'pointer' : undefined,
   },
 }));

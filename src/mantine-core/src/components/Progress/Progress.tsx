@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import {
   useMantineTheme,
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   getThemeColor,
@@ -62,14 +61,17 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       classNames,
       styles,
       sections,
+      sx,
       ...others
     }: ProgressProps,
     ref
   ) => {
     const theme = useMantineTheme();
-    const { classes, cx } = useStyles({ color, size, radius, striped }, classNames, 'progress');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles(
+      { color, size, radius, striped },
+      { sx, classNames, styles, name: 'Progress' }
+    );
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const segments = Array.isArray(sections)
       ? getCumulativeSections(sections).map((section, index) => (
@@ -77,7 +79,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             key={index}
             className={classes.bar}
             style={{
-              ..._styles.bar,
               width: `${section.value}%`,
               left: `${section.accumulated}%`,
               backgroundColor: getThemeColor({ theme, color: section.color, shade: 7 }),
@@ -96,7 +97,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             aria-valuenow={value}
             aria-label={ariaLabel}
             className={classes.bar}
-            style={{ ..._styles.bar, width: `${value}%` }}
+            style={{ width: `${value}%` }}
           />
         )}
       </div>

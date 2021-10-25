@@ -27,7 +27,7 @@ const defaultProps = {
 
 describe('@mantine/core/Breadcrumbs', () => {
   checkAccessibility([mount(<Breadcrumbs {...defaultProps} />)]);
-  itSupportsStylesApi(Breadcrumbs, defaultProps, Object.keys(BreadcrumbsStylesApi), 'breadcrumbs');
+  itSupportsStylesApi(Breadcrumbs, defaultProps, Object.keys(BreadcrumbsStylesApi), 'Breadcrumbs');
   itSupportsClassName(Breadcrumbs, defaultProps);
   itSupportsOthers(Breadcrumbs, defaultProps);
   itSupportsStyle(Breadcrumbs, defaultProps);
@@ -36,17 +36,17 @@ describe('@mantine/core/Breadcrumbs', () => {
 
   it('renders correct amount of children and separators', () => {
     const element = shallow(<Breadcrumbs {...defaultProps} />);
-    expect(element.render().find('.mantine-breadcrumbs-breadcrumb')).toHaveLength(
+    expect(element.render().find('.mantine-Breadcrumbs-breadcrumb')).toHaveLength(
       defaultProps.children.length
     );
-    expect(element.render().find('.mantine-breadcrumbs-separator')).toHaveLength(
+    expect(element.render().find('.mantine-Breadcrumbs-separator')).toHaveLength(
       defaultProps.children.length - 1
     );
   });
 
   it('accepts separator from props', () => {
     const element = shallow(<Breadcrumbs separator="test" {...defaultProps} />);
-    expect(element.render().find('.mantine-breadcrumbs-separator').first().text()).toBe('test');
+    expect(element.render().find('.mantine-Breadcrumbs-separator').first().text()).toBe('test');
   });
 
   it('has correct displayName', () => {

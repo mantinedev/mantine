@@ -32,7 +32,7 @@ describe('@mantine/core/InputWrapper', () => {
     InputWrapper,
     defaultProps,
     Object.keys(InputWrapperStylesApi),
-    'input-wrapper'
+    'InputWrapper'
   );
 
   itSupportsStylesApi(
@@ -58,14 +58,14 @@ describe('@mantine/core/InputWrapper', () => {
     const withoutProps = shallow(<InputWrapper id="test-id">test-children</InputWrapper>);
 
     expect(withProps.render().find('label').text()).toBe('test-label');
-    expect(withProps.render().find('.mantine-input-wrapper-description').text()).toBe(
+    expect(withProps.render().find('.mantine-InputWrapper-description').text()).toBe(
       'test-description'
     );
-    expect(withProps.render().find('.mantine-input-wrapper-error').text()).toBe('test-error');
+    expect(withProps.render().find('.mantine-InputWrapper-error').text()).toBe('test-error');
 
     expect(withoutProps.render().find('label')).toHaveLength(0);
-    expect(withoutProps.render().find('.mantine-input-wrapper-description')).toHaveLength(0);
-    expect(withoutProps.render().find('.mantine-input-wrapper-error')).toHaveLength(0);
+    expect(withoutProps.render().find('.mantine-InputWrapper-description')).toHaveLength(0);
+    expect(withoutProps.render().find('.mantine-InputWrapper-error')).toHaveLength(0);
   });
 
   it('does not render error if error prop is boolean', () => {
@@ -74,7 +74,7 @@ describe('@mantine/core/InputWrapper', () => {
         test-children
       </InputWrapper>
     );
-    expect(element.render().find('.mantine-input-wrapper-error')).toHaveLength(0);
+    expect(element.render().find('.mantine-InputWrapper-error')).toHaveLength(0);
   });
 
   it('renders required asterisk with required prop is true', () => {
@@ -85,8 +85,8 @@ describe('@mantine/core/InputWrapper', () => {
     );
     const notRequired = shallow(<InputWrapper id="test-id">test-children</InputWrapper>);
 
-    expect(required.render().find('.mantine-input-wrapper-required').text()).toBe(' *');
-    expect(notRequired.render().find('.mantine-input-wrapper-required')).toHaveLength(0);
+    expect(required.render().find('.mantine-InputWrapper-required').text()).toBe(' *');
+    expect(notRequired.render().find('.mantine-InputWrapper-required')).toHaveLength(0);
   });
 
   it('passes id to label htmlFor prop', () => {
@@ -114,13 +114,13 @@ describe('@mantine/core/InputWrapper', () => {
       </InputWrapper>
     );
 
-    expect(element.render().find('.mantine-input-wrapper-label').attr('data-test-label')).toBe(
+    expect(element.render().find('.mantine-InputWrapper-label').attr('data-test-label')).toBe(
       'true'
     );
     expect(
-      element.render().find('.mantine-input-wrapper-description').attr('data-test-description')
+      element.render().find('.mantine-InputWrapper-description').attr('data-test-description')
     ).toBe('true');
-    expect(element.render().find('.mantine-input-wrapper-error').attr('data-test-error')).toBe(
+    expect(element.render().find('.mantine-InputWrapper-error').attr('data-test-error')).toBe(
       'true'
     );
   });
@@ -138,9 +138,9 @@ describe('@mantine/core/InputWrapper', () => {
       </InputWrapper>
     );
 
-    expect(label.find('.mantine-input-wrapper-label').type()).toBe('label');
-    expect(label.find('.mantine-input-wrapper-label').prop('htmlFor')).toBe('test-id');
-    expect(div.find('.mantine-input-wrapper-label').type()).toBe('div');
-    expect(div.find('.mantine-input-wrapper-label').prop('htmlFor')).toBe(undefined);
+    expect(label.find('.mantine-InputWrapper-label').type()).toBe('label');
+    expect(label.find('.mantine-InputWrapper-label').prop('htmlFor')).toBe('test-id');
+    expect(div.find('.mantine-InputWrapper-label').type()).toBe('div');
+    expect(div.find('.mantine-InputWrapper-label').prop('htmlFor')).toBe(undefined);
   });
 });

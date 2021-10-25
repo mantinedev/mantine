@@ -10,13 +10,15 @@ export function Jumbotron() {
   const theme = useMantineTheme();
 
   const features = FEATURES_DATA.map((feature) => (
-    <div className={classes.feature}>
+    <div className={classes.feature} key={feature.title}>
       <div className={classes.featureIcon}>
         <feature.icon size={28} />
       </div>
 
       <div className={classes.featureBody}>
-        <Text weight={500}>{feature.title}</Text>
+        <Text weight={500} className={classes.featureTitle}>
+          {feature.title}
+        </Text>
         <Text size="sm" color="dimmed" mt={4}>
           {feature.description}
         </Text>

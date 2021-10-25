@@ -8,7 +8,6 @@ import {
   Input,
   InputWrapper,
   MantineSize,
-  mergeStyles,
   ClassNames,
   useUuid,
   useExtractedMargins,
@@ -92,8 +91,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     }: TimeRangeInputProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size }, classNames, 'time-range-input');
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'TimeRangeInput' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const uuid = useUuid(id);
     const fromDate = new Date();
@@ -180,13 +178,13 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
         classNames={classNames}
         styles={styles}
         size={size}
-        __staticSelector="time-range-input"
+        __staticSelector="TimeRangeInput"
         id={uuid}
         {...wrapperProps}
       >
         <Input
           component="div"
-          __staticSelector="time-range-input"
+          __staticSelector="TimeRangeInput"
           required={required}
           invalid={!!error}
           onClick={() => {
@@ -200,7 +198,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
           disabled={disabled}
           {...rest}
         >
-          <div className={classes.inputWrapper} style={_styles.inputWrapper}>
+          <div className={classes.inputWrapper}>
             <TimeField
               ref={useMergedRef((node: HTMLInputElement) => {
                 hoursRef.current[0] = node;
@@ -210,7 +208,6 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               setValue={(val) => handleHoursChange(val, false)}
               id={uuid}
               className={classes.timeField}
-              style={_styles.timeField}
               withSeparator
               size={size}
               max={23}
@@ -227,7 +224,6 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               onChange={handleMinutesChange}
               setValue={(val) => setFromTime((c) => ({ ...c, minutes: val }))}
               className={classes.timeField}
-              style={_styles.timeField}
               withSeparator={withSeconds}
               size={size}
               max={59}
@@ -245,7 +241,6 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 onChange={handleSecondsChange}
                 setValue={(val) => setFromTime((c) => ({ ...c, seconds: val }))}
                 className={classes.timeField}
-                style={_styles.timeField}
                 size={size}
                 max={59}
                 aria-label={`from ${secondsLabel}`}
@@ -254,11 +249,9 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               />
             )}
 
-            <span className={classes.separator} style={_styles.separator}>
-              {labelSeparator}
-            </span>
+            <span className={classes.separator}>{labelSeparator}</span>
 
-            <div className={classes.inputWrapper} style={_styles.inputWrapper}>
+            <div className={classes.inputWrapper}>
               <TimeField
                 ref={(node) => {
                   hoursRef.current[1] = node;
@@ -267,7 +260,6 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 onChange={handleHoursChange}
                 setValue={(val) => handleHoursChange(val, false)}
                 className={classes.timeField}
-                style={_styles.timeField}
                 withSeparator
                 size={size}
                 max={23}
@@ -284,7 +276,6 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 onChange={handleMinutesChange}
                 setValue={(val) => setToTime((c) => ({ ...c, minutes: val }))}
                 className={classes.timeField}
-                style={_styles.timeField}
                 withSeparator={withSeconds}
                 size={size}
                 max={59}
@@ -302,7 +293,6 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                   onChange={handleSecondsChange}
                   setValue={(val) => setToTime((c) => ({ ...c, seconds: val }))}
                   className={classes.timeField}
-                  style={_styles.timeField}
                   size={size}
                   max={59}
                   aria-label={`to ${secondsLabel}`}

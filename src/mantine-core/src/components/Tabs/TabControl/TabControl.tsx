@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { TabProps } from '../Tab/Tab';
 import type { TabsVariant } from '../Tabs';
 import useStyles from './TabControl.styles';
@@ -20,7 +20,6 @@ export interface TabControlProps
 
 export function TabControl({
   className,
-  style,
   active,
   buttonRef,
   tabProps,
@@ -35,11 +34,8 @@ export function TabControl({
   const { label, icon, color: overrideColor, ...props } = tabProps;
   const { classes, cx } = useStyles(
     { color: overrideColor || color, orientation },
-    classNames,
-    'tabs'
+    { classNames, styles, name: 'Tabs' }
   );
-
-  const _styles = mergeStyles(classes, styles);
 
   return (
     <button
@@ -56,25 +52,10 @@ export function TabControl({
       role="tab"
       aria-selected={active}
       ref={buttonRef}
-      style={{
-        ...style,
-        ..._styles.tabControl,
-        ..._styles[variant],
-        ...(active ? _styles.tabActive : null),
-      }}
     >
-      <div className={classes.tabInner} style={_styles.tabInner}>
-        {icon && (
-          <div className={classes.tabIcon} style={_styles.tabIcon}>
-            {icon}
-          </div>
-        )}
-
-        {label && (
-          <div className={classes.tabLabel} style={_styles.tabLabel}>
-            {label}
-          </div>
-        )}
+      <div className={classes.tabInner}>
+        {icon && <div className={classes.tabIcon}>{icon}</div>}
+        {label && <div className={classes.tabLabel}>{label}</div>}
       </div>
     </button>
   );

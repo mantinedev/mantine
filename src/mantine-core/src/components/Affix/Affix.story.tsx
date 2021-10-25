@@ -4,6 +4,8 @@ import { Affix } from './Affix';
 
 storiesOf('@mantine/core/Affix', module).add('General usage', () => (
   <div style={{ padding: 40 }}>
-    <Affix position={{ bottom: 20, right: 20 }}>Hello</Affix>
+    <Affix position={{ bottom: 20, right: 20 }} sx={{ background: 'orange' }}>
+      Hello
+    </Affix>
   </div>
 ));

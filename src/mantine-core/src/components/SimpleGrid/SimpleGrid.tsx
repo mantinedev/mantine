@@ -1,4 +1,4 @@
-import React, { useMemo, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -28,29 +28,25 @@ export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>(
       spacing = 'md',
       children,
       style,
+      sx,
       ...others
     }: SimpleGridProps,
     ref
   ) => {
     const theme = useMantineTheme();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const sortedBreakpoints = useMemo(
-      () =>
-        [...breakpoints].sort(
-          (a, b) =>
-            getSizeValue({ size: b.maxWidth, sizes: theme.breakpoints }) -
-            getSizeValue({ size: a.maxWidth, sizes: theme.breakpoints })
-        ),
-      []
+    const sortedBreakpoints = [...breakpoints].sort(
+      (a, b) =>
+        getSizeValue({ size: b.maxWidth, sizes: theme.breakpoints }) -
+        getSizeValue({ size: a.maxWidth, sizes: theme.breakpoints })
     );
     const { classes, cx } = useStyles(
       { breakpoints: sortedBreakpoints, cols, spacing },
-      null,
-      'simple-grid'
+      { sx, name: 'SimpleGrid' }
     );
 
     return (
-      <div className={cx(classes.grid, className)} style={mergedStyles} ref={ref} {...rest}>
+      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
         {children}
       </div>
     );

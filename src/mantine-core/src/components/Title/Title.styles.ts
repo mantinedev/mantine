@@ -7,7 +7,7 @@ interface TitleStyles {
 }
 
 export default createStyles((theme, { element }: TitleStyles) => ({
-  title: {
+  root: {
     ...getFontStyles(theme),
     fontFamily: theme.headings.fontFamily,
     fontWeight: theme.headings.fontWeight,

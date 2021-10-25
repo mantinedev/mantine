@@ -2,9 +2,9 @@ import type { Tuple } from './types';
 
 export const DEFAULT_COLORS = {
   dark: [
-    '#E7E9EE',
-    '#D2D3D7',
-    '#9D9FA4',
+    '#C1C2C5',
+    '#A6A7AB',
+    '#909296',
     '#5c5f66',
     '#373A40',
     '#2C2E33',

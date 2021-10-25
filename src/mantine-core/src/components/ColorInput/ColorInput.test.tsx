@@ -31,7 +31,7 @@ describe('@mantine/core/ColorInput', () => {
     ColorInput,
     defaultInputProps,
     Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
-    'color-input'
+    'ColorInput'
   );
 
   checkAccessibility([

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Text, Title, UnstyledButton, SimpleGrid } from '@mantine/core';
+import { Text, Title, UnstyledButton, SimpleGrid, useMantineTheme } from '@mantine/core';
 import { GUIDES_DATA } from './data';
 import { guides, GuideProps } from './Guide';
 import useStyles from './Guides.styles';
 
 export function Guides({ dependencies }: GuideProps) {
+  const theme = useMantineTheme();
   const initialGuide =
     typeof window !== 'undefined' ? window.location.search?.replace('?g=', '') : 'next';
   const [selected, setSelected] = useState(initialGuide in guides ? initialGuide : 'next');
@@ -24,7 +25,11 @@ export function Guides({ dependencies }: GuideProps) {
 
   return (
     <div>
-      <Title order={2} mb="lg">
+      <Title
+        order={2}
+        mb="lg"
+        style={{ color: theme.colorScheme === 'dark' ? theme.white : theme.black }}
+      >
         And get started with
       </Title>
 

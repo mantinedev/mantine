@@ -1,11 +1,5 @@
 import React, { Children } from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineNumberSize,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, ClassNames, useExtractedMargins } from '@mantine/styles';
 import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 import useStyles from './List.styles';
 
@@ -52,11 +46,14 @@ export function List({
   style,
   styles,
   classNames,
+  sx,
   ...others
 }: ListProps) {
-  const { classes, cx } = useStyles({ withPadding, size, listStyleType }, classNames, 'list');
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+  const { classes, cx } = useStyles(
+    { withPadding, size, listStyleType },
+    { sx, classNames, styles, name: 'List' }
+  );
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const Element = type === 'unordered' ? 'ul' : 'ol';
 
   const items = Children.toArray(children)

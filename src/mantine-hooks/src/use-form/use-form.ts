@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export type ValidationRule<T> = {
-  readonly [P in keyof T]?: (value: T[P]) => boolean;
+  readonly [P in keyof T]?: (value: T[P], values?: T) => boolean;
 };
 
 export interface UseForm<T> {
@@ -37,7 +37,7 @@ export function useForm<T extends { [key: string]: any }>({
       if (
         validationRules &&
         typeof validationRules[field] === 'function' &&
-        !validationRules[field](values[field])
+        !validationRules[field](values[field], values)
       ) {
         acc[field as keyof T] = true;
         isValid = false;
@@ -57,7 +57,7 @@ export function useForm<T extends { [key: string]: any }>({
       ...currentErrors,
       [field]:
         typeof validationRules[field] === 'function'
-          ? !validationRules[field](values[field])
+          ? !validationRules[field](values[field], values)
           : false,
     }));
 

@@ -37,7 +37,7 @@ describe('@mantine/core/Modal', () => {
   itSupportsClassName(MantineModal, defaultProps);
   itRendersChildren(MantineModal, defaultProps);
   itSupportsStyle(MantineModal, defaultProps);
-  itSupportsStylesApi(MantineModal, defaultProps, Object.keys(ModalStylesApi), 'modal');
+  itSupportsStylesApi(MantineModal, defaultProps, Object.keys(ModalStylesApi), 'Modal');
 
   it('has correct displayName', () => {
     expect(Modal.displayName).toEqual('@mantine/core/Modal');
@@ -54,7 +54,9 @@ describe('@mantine/core/Modal', () => {
       </MantineModal>
     );
 
-    expect(document.body.style.overflow).toBe('hidden');
+    setTimeout(() => {
+      expect(document.body.style.overflow).toBe('hidden');
+    }, 0);
   });
 
   it('closes modal on close button click', () => {
@@ -75,7 +77,7 @@ describe('@mantine/core/Modal', () => {
       </MantineModal>
     );
 
-    expect(element.render().find('.mantine-modal-title').text()).toBe('test-title');
+    expect(element.render().find('.mantine-Modal-title').text()).toBe('test-title');
   });
 
   it('allows to hide close button with hideCloseButton prop', () => {
@@ -90,8 +92,8 @@ describe('@mantine/core/Modal', () => {
     const withHeader = mount(<MantineModal opened onClose={() => {}} title="With header" />);
     const withoutHeader = mount(<MantineModal opened onClose={() => {}} hideCloseButton />);
 
-    expect(withHeader.render().find('.mantine-modal-header')).toHaveLength(1);
-    expect(withoutHeader.render().find('.mantine-modal-header')).toHaveLength(0);
+    expect(withHeader.render().find('.mantine-Modal-header')).toHaveLength(1);
+    expect(withoutHeader.render().find('.mantine-Modal-header')).toHaveLength(0);
   });
 
   it('passes overlayOpacity and overlayColor to Overlay component', () => {
@@ -105,11 +107,14 @@ describe('@mantine/core/Modal', () => {
   it('sets correct z-index based on zIndex prop', () => {
     const element = mount(<MantineModal opened onClose={() => {}} zIndex={87} />);
     expect(element.find(Overlay).prop('zIndex')).toBe(87);
-    expect(element.render().find('.mantine-modal-inner').css('z-index')).toBe('88');
+    expect(element.render().find('.mantine-Modal-inner').css('z-index')).toBe('88');
   });
 
   it('locks scroll on mount', () => {
     mount(<MantineModal opened onClose={() => {}} zIndex={87} />);
-    expect(document.body.style.overflow).toBe('hidden');
+
+    setTimeout(() => {
+      expect(document.body.style.overflow).toBe('hidden');
+    }, 0);
   });
 });

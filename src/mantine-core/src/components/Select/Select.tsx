@@ -17,6 +17,7 @@ import { SelectDropdown } from './SelectDropdown/SelectDropdown';
 import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
 import { groupSortData } from './group-sort-data/group-sort-data';
+import useStyles from './Select.styles';
 
 export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSelectProps {
   /** Input size */
@@ -32,13 +33,13 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
   shadow?: MantineShadow;
 
   /** Controlled input value */
-  value?: string;
+  value?: string | null;
 
   /** Uncontrolled input defaultValue */
-  defaultValue?: string;
+  defaultValue?: string | null;
 
   /** Controlled input onChange handler */
-  onChange?(value: string): void;
+  onChange?(value: string | null): void;
 
   /** Dropdown body appear/disappear transition */
   transition?: MantineTransition;
@@ -139,10 +140,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       getCreateLabel,
       shouldCreate = defaultShouldCreate,
       onCreate,
+      sx,
       ...others
     }: SelectProps,
     ref
   ) => {
+    const { classes, cx } = useStyles();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
@@ -172,7 +175,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       defaultValue,
       finalValue: null,
       onChange,
-      rule: (val) => typeof val === 'string',
+      rule: (val) => typeof val === 'string' || val === null,
     });
 
     const selectedValue = sortedData.find((item) => item.value === _value);
@@ -367,7 +370,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
         style={mergedStyles}
         classNames={classNames}
         styles={styles}
-        __staticSelector="select"
+        __staticSelector="Select"
+        sx={sx}
         {...wrapperProps}
       >
         <div
@@ -388,8 +392,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             invalid={!!error}
             size={size}
             onKeyDown={handleInputKeydown}
-            classNames={classNames}
-            __staticSelector="select"
+            __staticSelector="Select"
             value={inputValue}
             onChange={handleInputChange}
             aria-autocomplete="list"
@@ -402,16 +405,14 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             disabled={disabled}
             data-mantine-stop-propagation={dropdownOpened}
             autoComplete="off"
+            classNames={{
+              ...classNames,
+              input: cx({ [classes.input]: !searchable }, classNames?.input),
+            }}
             {...getSelectRightSectionProps({
               rightSection,
               rightSectionWidth,
-              styles: {
-                ...styles,
-                input: {
-                  cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
-                  ...styles?.input,
-                },
-              },
+              styles,
               size,
               shouldClear: clearable && !!selectedValue,
               clearButtonLabel,
@@ -431,7 +432,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             classNames={classNames}
             styles={styles}
             ref={useMergedRef(dropdownRef, scrollableRef)}
-            __staticSelector="select"
+            __staticSelector="Select"
           >
             <SelectItems
               data={filteredData}
@@ -440,7 +441,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               styles={styles}
               isItemSelected={(val) => val === _value}
               uuid={uuid}
-              __staticSelector="select"
+              __staticSelector="Select"
               onItemHover={setHovered}
               onItemSelect={handleItemSelect}
               itemsRefs={itemsRefs}

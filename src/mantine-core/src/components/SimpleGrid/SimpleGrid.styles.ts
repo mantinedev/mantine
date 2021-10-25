@@ -27,7 +27,7 @@ export default createStyles((theme, { spacing, breakpoints, cols }: SimpleGridSt
   }, {});
 
   return {
-    grid: {
+    root: {
       boxSizing: 'border-box',
       display: 'grid',
       gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,

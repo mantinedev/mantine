@@ -10,6 +10,7 @@ import {
   getSharedColorScheme,
   hexToRgba,
   MantineColor,
+  MantineTheme,
 } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
@@ -31,7 +32,6 @@ interface ButtonStylesProps {
   gradientFrom: string;
   gradientTo: string;
   gradientDeg: number;
-  variant: ButtonVariant;
 }
 
 const sizes = {
@@ -104,6 +104,27 @@ const getWidthStyles = (fullWidth: boolean) => ({
   width: fullWidth ? '100%' : 'auto',
 });
 
+interface GetVariantStyles {
+  theme: MantineTheme;
+  color: MantineColor;
+  variant: 'filled' | 'outline' | 'light' | 'default' | 'white';
+}
+
+function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
+  const colors = getSharedColorScheme({
+    theme,
+    color,
+    variant,
+  });
+
+  return {
+    border: `1px solid ${colors.border}`,
+    backgroundColor: colors.background,
+    backgroundImage: colors.background,
+    color: colors.color,
+  };
+}
+
 export default createStyles(
   (
     theme,
@@ -114,7 +135,6 @@ export default createStyles(
       fullWidth,
       compact,
       gradientFrom,
-      variant,
       gradientTo,
       gradientDeg,
     }: ButtonStylesProps,
@@ -139,15 +159,27 @@ export default createStyles(
       },
     } as const;
 
-    const colors = getSharedColorScheme({
+    const gradient = getSharedColorScheme({
       theme,
       color,
-      variant: variant as any,
+      variant: 'gradient',
       gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
     });
 
     return {
       loading,
+
+      outline: getVariantStyles({ variant: 'outline', theme, color }),
+      filled: getVariantStyles({ variant: 'filled', theme, color }),
+      light: getVariantStyles({ variant: 'light', theme, color }),
+      default: getVariantStyles({ variant: 'default', theme, color }),
+      white: getVariantStyles({ variant: 'white', theme, color }),
+
+      gradient: {
+        border: 0,
+        backgroundImage: gradient.background,
+        color: gradient.color,
+      },
 
       root: {
         ...getSizeStyles({ compact, size }),
@@ -159,10 +191,6 @@ export default createStyles(
         position: 'relative',
         lineHeight: 1,
         fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
-        border: variant === 'gradient' ? 0 : `1px solid ${colors.border}`,
-        backgroundColor: colors.background,
-        backgroundImage: variant === 'gradient' ? colors.background : null,
-        color: colors.color,
         WebkitTapHighlightColor: 'transparent',
         userSelect: 'none',
         boxSizing: 'border-box',
@@ -209,8 +237,8 @@ export default createStyles(
         whiteSpace: 'nowrap',
         height: '100%',
         overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        lineHeight: `${getSizeStyles({ size, compact }).height}px`,
+        display: 'flex',
+        alignItems: 'center',
       },
 
       link: {

@@ -39,7 +39,7 @@ describe('@mantine/core/Autocomplete', () => {
     Autocomplete,
     { ...defaultProps, ...defaultInputProps },
     Object.keys(AutocompleteStylesApi).filter((key) => key !== 'hovered' && key !== 'nothingFound'),
-    'autocomplete'
+    'Autocomplete'
   );
 
   it('renders dropdown when value has both full match and partial match', () => {
@@ -47,12 +47,12 @@ describe('@mantine/core/Autocomplete', () => {
       <Autocomplete data={[{ value: 'AAA' }, { value: 'AA' }]} value="AA" initiallyOpened />
     );
 
-    expect(element.render().find('.mantine-autocomplete-dropdown')).toHaveLength(1);
+    expect(element.render().find('.mantine-Autocomplete-dropdown')).toHaveLength(1);
   });
 
   it('renders correct amount of items based on data prop', () => {
     const element = shallow(<Autocomplete data={data.slice(0, 5)} initiallyOpened limit={10} />);
-    expect(element.render().find('.mantine-autocomplete-item')).toHaveLength(5);
+    expect(element.render().find('.mantine-Autocomplete-item')).toHaveLength(5);
   });
 
   it('renders correct amount of items based on filter prop', () => {
@@ -66,12 +66,12 @@ describe('@mantine/core/Autocomplete', () => {
     );
 
     // Numbers 0-50 which include 2
-    expect(element.render().find('.mantine-autocomplete-item')).toHaveLength(10);
+    expect(element.render().find('.mantine-Autocomplete-item')).toHaveLength(10);
   });
 
   it('limits amount of shown items based on limit prop', () => {
     const element = shallow(<Autocomplete data={data} initiallyOpened limit={10} />);
-    expect(element.render().find('.mantine-autocomplete-item')).toHaveLength(10);
+    expect(element.render().find('.mantine-Autocomplete-item')).toHaveLength(10);
   });
 
   it('passes wrapperProps to InputWrapper', () => {

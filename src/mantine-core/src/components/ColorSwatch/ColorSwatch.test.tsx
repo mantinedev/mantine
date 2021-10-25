@@ -23,7 +23,7 @@ describe('@mantine/core/ColorSwatch', () => {
   it('sets correct background-color based on color property', () => {
     const element = shallow(<ColorSwatch color="red" />);
     expect(
-      element.find('.mantine-color-swatch-overlay').at(2).render().css('background-color')
+      element.find('.mantine-ColorSwatch-overlay').at(2).render().css('background-color')
     ).toBe('red');
   });
 

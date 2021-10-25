@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { mergeStyles, DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
 import { Text } from '../Text/Text';
 import useStyles from './Breadcrumbs.styles';
 
@@ -24,32 +24,21 @@ export const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
       separator = '/',
       classNames,
       styles,
+      sx,
       ...others
     }: BreadcrumbsProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(null, classNames, 'breadcrumbs');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles(null, { classNames, styles, sx, name: 'Breadcrumbs' });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const items = React.Children.toArray(children).reduce(
       (acc: any[], child: any, index, array) => {
-        acc.push(
-          React.cloneElement(child, {
-            className: classes.breadcrumb,
-            style: _styles.breadcrumb,
-            key: index,
-          })
-        );
+        acc.push(React.cloneElement(child, { className: classes.breadcrumb, key: index }));
 
         if (index !== array.length - 1) {
           acc.push(
-            <Text
-              size="sm"
-              className={classes.separator}
-              style={_styles.separator}
-              key={`separator-${index}`}
-            >
+            <Text size="sm" className={classes.separator} key={`separator-${index}`}>
               {separator}
             </Text>
           );

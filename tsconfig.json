@@ -5,6 +5,7 @@
     "src/mantine-*/demos",
     "./types",
     "./docs/src",
+    "./gallery/src",
     "./scripts",
     "./configuration",
     "./tests"

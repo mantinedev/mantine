@@ -24,7 +24,7 @@ export function ToolbarButton({
   noActive,
   ...others
 }: ToolbarButtonProps) {
-  const { classes, cx } = useStyles({ noActive }, null, 'rte');
+  const { classes, cx } = useStyles({ noActive }, { name: 'RichTextEditor' });
 
   return (
     <ActionIcon

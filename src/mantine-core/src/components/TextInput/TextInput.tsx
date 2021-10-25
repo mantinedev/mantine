@@ -49,7 +49,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       size = 'sm',
       classNames,
       styles,
-      __staticSelector = 'text-input',
+      __staticSelector = 'TextInput',
+      sx,
       ...others
     }: TextInputProps,
     ref
@@ -70,6 +71,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         classNames={classNames}
         styles={styles}
         __staticSelector={__staticSelector}
+        sx={sx}
         {...wrapperProps}
       >
         <Input<'input'>

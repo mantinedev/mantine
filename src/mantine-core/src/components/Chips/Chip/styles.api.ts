@@ -1,6 +1,7 @@
 import { ChipStylesNames } from './Chip';
 
 export const Chip: Record<ChipStylesNames, string> = {
+  root: 'Root element',
   label: 'Chip label, includes all other elements except input',
   input: 'Chip input, hidden by default',
   disabled: 'Chip label disabled modifier',

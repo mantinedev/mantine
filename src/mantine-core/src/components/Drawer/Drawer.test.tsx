@@ -41,7 +41,7 @@ describe('@mantine/core/Drawer', () => {
   itRendersChildren(MantineDrawer, defaultProps);
   itSupportsOthers(MantineDrawer, defaultProps);
   itSupportsStyle(MantineDrawer, defaultProps);
-  itSupportsStylesApi(MantineDrawer, defaultProps, Object.keys(DrawerStylesApi), 'drawer');
+  itSupportsStylesApi(MantineDrawer, defaultProps, Object.keys(DrawerStylesApi), 'Drawer');
 
   it('passes transition, transitionDuration and transitionTimingFunction to GropedTransition component', () => {
     const element = shallow(
@@ -77,7 +77,7 @@ describe('@mantine/core/Drawer', () => {
       </MantineDrawer>
     );
 
-    expect(element.render().find('.mantine-drawer-title').text()).toBe('test-title');
+    expect(element.render().find('.mantine-Drawer-title').text()).toBe('test-title');
   });
 
   it('allows to hide close button with hideCloseButton prop', () => {

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useReducedMotion, useUncontrolled } from '@mantine/hooks';
 import {
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
@@ -72,6 +71,7 @@ export function SegmentedControl({
   classNames,
   styles,
   defaultValue,
+  sx,
   ...others
 }: SegmentedControlProps) {
   const reduceMotion = useReducedMotion();
@@ -98,12 +98,10 @@ export function SegmentedControl({
       transitionDuration,
       transitionTimingFunction,
     },
-    classNames,
-    'segmented-control'
+    { sx, classNames, styles, name: 'SegmentedControl' }
   );
 
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, rootStyle: _styles.root, style });
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
   const uuid = useUuid(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
@@ -133,12 +131,10 @@ export function SegmentedControl({
   const controls = data.map((item) => (
     <div
       className={cx(classes.control, { [classes.controlActive]: _value === item.value })}
-      style={{ ..._styles.control, ...(_value === item.value ? _styles.controlActive : null) }}
       key={item.value}
     >
       <input
         className={classes.input}
-        style={_styles.input}
         type="radio"
         name={uuid}
         value={item.value}
@@ -149,7 +145,6 @@ export function SegmentedControl({
 
       <label
         className={cx(classes.label, { [classes.labelActive]: _value === item.value })}
-        style={{ ..._styles.label, ...(_value === item.value ? _styles.labelActive : null) }}
         htmlFor={`${uuid}-${item.value}`}
         ref={(node) => {
           refs.current[item.value] = node;
@@ -166,7 +161,6 @@ export function SegmentedControl({
         <span
           className={classes.active}
           style={{
-            ..._styles.active,
             width: activePosition.width,
             transform: `translateX(${activePosition.translate}px)`,
           }}

@@ -39,7 +39,7 @@ describe('@mantine/core/NumberInput', () => {
     NumberInput,
     defaultInputProps,
     Object.keys(NumberInputStylesApi),
-    'number-input'
+    'NumberInput'
   );
 
   it('has correct displayName', () => {
@@ -62,10 +62,10 @@ describe('@mantine/core/NumberInput', () => {
     const spy = jest.fn();
     const element = mount(<NumberInput value={0} step={10} onChange={spy} />);
 
-    element.find('.mantine-number-input-controlUp').simulate('mousedown');
+    element.find('.mantine-NumberInput-controlUp').simulate('mousedown');
     expect(spy).toHaveBeenLastCalledWith(10);
 
-    element.find('.mantine-number-input-controlDown').simulate('mousedown');
+    element.find('.mantine-NumberInput-controlDown').simulate('mousedown');
     expect(spy).toHaveBeenLastCalledWith(-10);
   });
 
@@ -73,10 +73,10 @@ describe('@mantine/core/NumberInput', () => {
     const spy = jest.fn();
     const element = mount(<NumberInput value={5} max={10} min={0} step={6} onChange={spy} />);
 
-    element.find('.mantine-number-input-controlUp').simulate('mousedown');
+    element.find('.mantine-NumberInput-controlUp').simulate('mousedown');
     expect(spy).toHaveBeenLastCalledWith(10);
 
-    element.find('.mantine-number-input-controlDown').simulate('mousedown');
+    element.find('.mantine-NumberInput-controlDown').simulate('mousedown');
     expect(spy).toHaveBeenLastCalledWith(0);
   });
 

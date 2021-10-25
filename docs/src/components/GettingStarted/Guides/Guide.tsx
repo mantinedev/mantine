@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Button } from '@mantine/core';
+import { Text, Button, useMantineTheme } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import GatsbyLink from '../../MdxPage/MdxProvider/GatsbyLink/GatsbyLink';
 
@@ -23,6 +23,7 @@ export function MyApp() {
 `.trim();
 
 function Guide({ dependencies, initScript, children, action, actionLink, withDone }: GuideProps) {
+  const theme = useMantineTheme();
   return (
     <>
       {actionLink && (
@@ -32,7 +33,7 @@ function Guide({ dependencies, initScript, children, action, actionLink, withDon
           target="_blank"
           size="xl"
           fullWidth
-          variant="default"
+          variant={theme.colorScheme === 'dark' ? 'outline' : 'default'}
           mb={30}
         >
           {action}
@@ -128,8 +129,8 @@ function NextGuide({ dependencies }: GuideProps) {
 function GatsbyGuide({ dependencies }: GuideProps) {
   return (
     <Guide
-      dependencies={dependencies}
-      initScript="npx create-next-app --ts"
+      dependencies={`${dependencies} gatsby-plugin-mantine`}
+      initScript="npm init gatsby"
       action="Get stared with Gatsby.js Github template"
       actionLink="https://github.com/mantinedev/mantine-gatsby-template"
       withDone

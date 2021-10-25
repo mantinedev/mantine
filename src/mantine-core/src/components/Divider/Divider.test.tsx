@@ -16,18 +16,18 @@ describe('@mantine/core/Divider', () => {
   itSupportsOthers(Divider, {});
   itSupportsMargins(Divider, {});
   itSupportsRef(Divider, {}, HTMLDivElement);
-  itSupportsStylesApi(Divider, { label: 'test' }, ['label'], 'divider');
+  itSupportsStylesApi(Divider, { label: 'test' }, ['label'], 'Divider');
 
   it('renders given label in horizontal orientation', () => {
     const withSubheader = shallow(<Divider label="test-label" />);
-    expect(withSubheader.find('.mantine-divider-label').dive().text()).toBe('test-label');
+    expect(withSubheader.find('.mantine-Divider-label').dive().text()).toBe('test-label');
   });
 
   it('does not render label if label prop is not set or orientation is set to vertical', () => {
     const noLabel = shallow(<Divider />);
     const vertical = shallow(<Divider label="test-label" orientation="vertical" />);
-    expect(noLabel.find('.mantine-divider-label')).toHaveLength(0);
-    expect(vertical.find('.mantine-divider-label')).toHaveLength(0);
+    expect(noLabel.find('.mantine-Divider-label')).toHaveLength(0);
+    expect(vertical.find('.mantine-Divider-label')).toHaveLength(0);
   });
 
   it('has correct displayName', () => {

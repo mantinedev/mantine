@@ -29,7 +29,7 @@ describe('@mantine/core/MenuBody', () => {
     MenuBody,
     { ...defaultProps, children: [<Divider />, <MenuLabel>label</MenuLabel>] },
     ['divider', 'label'],
-    'menu'
+    'Menu'
   );
 
   it('has correct displayName', () => {

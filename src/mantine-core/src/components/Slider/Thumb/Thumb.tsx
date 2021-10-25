@@ -1,7 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 import {
   useMantineTheme,
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineColor,
@@ -29,6 +28,7 @@ interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   thumbLabel: string;
   onFocus?(): void;
   onBlur?(): void;
+  showLabelOnHover?: boolean;
 }
 
 export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
@@ -52,13 +52,14 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
       thumbLabel,
       onFocus,
       onBlur,
+      showLabelOnHover,
     }: ThumbProps,
     ref
   ) => {
     const theme = useMantineTheme();
-    const { classes, cx } = useStyles({ color, size }, classNames, 'slider');
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles({ color, size }, { classNames, styles, name: 'Slider' });
     const [focused, setFocused] = useState(false);
+    const isVisible = labelAlwaysOn || dragging || focused || showLabelOnHover;
 
     return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
@@ -82,16 +83,16 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
         onTouchStart={onMouseDown}
         onMouseDown={onMouseDown}
         onClick={(event) => event.stopPropagation()}
-        style={{ ..._styles.thumb, ...(dragging ? _styles.dragging : null), left: `${position}%` }}
+        style={{ left: `${position}%` }}
       >
         <Transition
-          mounted={label != null && (labelAlwaysOn || dragging || focused)}
+          mounted={label != null && isVisible}
           duration={labelTransitionDuration}
           transition={labelTransition}
           timingFunction={labelTransitionTimingFunction || theme.transitionTimingFunction}
         >
           {(transitionStyles) => (
-            <div style={{ ..._styles.label, ...transitionStyles }} className={classes.label}>
+            <div style={transitionStyles} className={classes.label}>
               {label}
             </div>
           )}

@@ -1,5 +1,5 @@
-import React from 'react';
-import { DefaultProps, useUuid, useExtractedMargins } from '@mantine/styles';
+import React, { forwardRef } from 'react';
+import { DefaultProps, useUuid, useExtractedMargins, useSx } from '@mantine/styles';
 import {
   AccordionItem,
   AccordionItemStylesNames,
@@ -10,7 +10,7 @@ import { useAccordionState, AccordionState } from './use-accordion-state/use-acc
 
 export interface AccordionProps
   extends DefaultProps<AccordionItemStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
+    Omit<React.ComponentPropsWithRef<'div'>, 'onChange'> {
   /** <AccordionItem /> components only */
   children: React.ReactNode;
 
@@ -45,60 +45,73 @@ export interface AccordionProps
   iconPosition?: AccordionIconPosition;
 }
 
-export function Accordion({
-  children,
-  initialItem = -1,
-  initialState,
-  state,
-  onChange,
-  multiple = false,
-  disableIconRotation = false,
-  transitionDuration = 200,
-  iconPosition = 'left',
-  icon,
-  classNames,
-  styles,
-  style,
-  id,
-  ...others
-}: AccordionProps) {
-  const uuid = useUuid(id);
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const items = React.Children.toArray(children).filter(
-    (item: AccordionItemType) => item.type === AccordionItem
-  ) as AccordionItemType[];
+type AccordionComponent = ((props: AccordionProps) => React.ReactElement) & {
+  displayName: string;
+  Item: typeof AccordionItem;
+};
 
-  const [value, onToggle] = useAccordionState({
-    multiple,
-    items,
-    initialItem,
-    state,
-    initialState,
-    onChange,
-  });
+export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, AccordionProps>(
+  (
+    {
+      children,
+      initialItem = -1,
+      initialState,
+      state,
+      onChange,
+      multiple = false,
+      disableIconRotation = false,
+      transitionDuration = 200,
+      iconPosition = 'left',
+      icon,
+      classNames,
+      styles,
+      style,
+      className,
+      id,
+      sx,
+      ...others
+    }: AccordionProps,
+    ref
+  ) => {
+    const { sxClassName } = useSx({ sx, className });
+    const uuid = useUuid(id);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const items = React.Children.toArray(children).filter(
+      (item: AccordionItemType) => item.type === AccordionItem
+    ) as AccordionItemType[];
 
-  const controls = items.map((item, index) => (
-    <AccordionItem
-      {...item.props}
-      icon={item.props.icon || icon}
-      iconPosition={item.props.iconPosition || iconPosition}
-      disableIconRotation={disableIconRotation}
-      key={index}
-      transitionDuration={transitionDuration}
-      opened={value[index]}
-      onToggle={() => onToggle(index)}
-      classNames={classNames}
-      styles={styles}
-      id={`${uuid}-${index}`}
-    />
-  ));
+    const [value, onToggle] = useAccordionState({
+      multiple,
+      items,
+      initialItem,
+      state,
+      initialState,
+      onChange,
+    });
 
-  return (
-    <div style={mergedStyles} {...rest}>
-      {controls}
-    </div>
-  );
-}
+    const controls = items.map((item, index) => (
+      <AccordionItem
+        {...item.props}
+        icon={item.props.icon || icon}
+        iconPosition={item.props.iconPosition || iconPosition}
+        disableIconRotation={disableIconRotation}
+        key={index}
+        transitionDuration={transitionDuration}
+        opened={value[index]}
+        onToggle={() => onToggle(index)}
+        classNames={classNames}
+        styles={styles}
+        id={`${uuid}-${index}`}
+      />
+    ));
+
+    return (
+      <div style={mergedStyles} ref={ref} className={sxClassName} {...rest}>
+        {controls}
+      </div>
+    );
+  }
+) as any;
 
 Accordion.Item = AccordionItem;
 

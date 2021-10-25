@@ -41,7 +41,7 @@ describe('@mantine/core/RadioGroup', () => {
       required: true,
     },
     Object.keys(RadioGroupStylesApi),
-    'radio-group'
+    'RadioGroup'
   );
 
   it('has correct displayName', () => {

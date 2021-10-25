@@ -51,10 +51,11 @@ export function UseDebouncedValueCancelDemo() {
           style={{ flex: 1 }}
           onChange={(event) => setValue(event.currentTarget.value)}
         />
-        <Button onClick={cancel} size="lg" style={{ marginLeft: 15 }}>
+        <Button onClick={cancel} ml={15}>
           Cancel
         </Button>
       </div>
+
       <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15 }}>
         <Text>
           <Text component="span" color="gray" size="sm">

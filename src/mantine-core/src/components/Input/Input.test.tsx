@@ -37,7 +37,7 @@ describe('@mantine/core/Input', () => {
       rightSection: 'test',
     },
     Object.keys(InputStylesApi),
-    'input'
+    'Input'
   );
 
   itSupportsStylesApi(
@@ -57,8 +57,8 @@ describe('@mantine/core/Input', () => {
     const withIcon = shallow(<Input icon="$" />);
     const withoutIcon = shallow(<Input />);
 
-    expect(withIcon.render().find('.mantine-input-icon').text()).toBe('$');
-    expect(withoutIcon.render().find('.mantine-input-icon')).toHaveLength(0);
+    expect(withIcon.render().find('.mantine-Input-icon').text()).toBe('$');
+    expect(withoutIcon.render().find('.mantine-Input-icon')).toHaveLength(0);
   });
 
   it('sets aria-required attribute on input if required prop is true', () => {
@@ -89,8 +89,8 @@ describe('@mantine/core/Input', () => {
     const withRightSection = shallow(<Input rightSection="test-right-section" />);
     const withoutRightSection = shallow(<Input />);
 
-    expect(withoutRightSection.render().find('.mantine-input-rightSection')).toHaveLength(0);
-    expect(withRightSection.render().find('.mantine-input-rightSection').text()).toBe(
+    expect(withoutRightSection.render().find('.mantine-Input-rightSection')).toHaveLength(0);
+    expect(withRightSection.render().find('.mantine-Input-rightSection').text()).toBe(
       'test-right-section'
     );
   });
@@ -112,8 +112,8 @@ describe('@mantine/core/Input', () => {
     const withTag = shallow(<Input<'button'> component="button" />);
     const withComponent = shallow(<Input<typeof TestComponent> component={TestComponent} />);
 
-    expect(withTag.find('.mantine-input-input').type()).toBe('button');
-    expect(withComponent.find('.mantine-input-input').type()).toBe(TestComponent);
-    expect(withComponent.render().find('.mantine-input-input').attr('data-test-prop')).toBe('true');
+    expect(withTag.find('.mantine-Input-input').type()).toBe('button');
+    expect(withComponent.find('.mantine-Input-input').type()).toBe(TestComponent);
+    expect(withComponent.render().find('.mantine-Input-input').attr('data-test-prop')).toBe('true');
   });
 });

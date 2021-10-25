@@ -23,7 +23,7 @@ describe('@mantine/core/List', () => {
   itSupportsMargins(List, defaultProps);
   itSupportsOthers(List, defaultProps);
   itSupportsStyle(List, defaultProps);
-  itSupportsStylesApi(List, defaultProps, Object.keys(ListStylesApi), 'list');
+  itSupportsStylesApi(List, defaultProps, Object.keys(ListStylesApi), 'List');
 
   it('has correct displayName', () => {
     expect(List.displayName).toEqual('@mantine/core/List');

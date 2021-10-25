@@ -1,6 +1,6 @@
 import React from 'react';
 import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, mergeStyles, ClassNames } from '@mantine/styles';
+import { DefaultProps, ClassNames, useSx } from '@mantine/styles';
 import { Collapse } from '../../Collapse';
 import { UnstyledButton } from '../../Button';
 import { Center } from '../../Center';
@@ -40,61 +40,46 @@ export function AccordionItem({
   className,
   classNames,
   styles,
+  sx,
   transitionDuration,
   icon = <ChevronIcon />,
   disableIconRotation = false,
   iconPosition = 'left',
-  style,
   id,
   ...others
 }: AccordionItemProps) {
   const forceUpdate = useForceUpdate();
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
+  const { sxClassName } = useSx({ sx });
   const { classes, cx } = useStyles(
     { transitionDuration: duration, disableIconRotation, iconPosition },
-    classNames,
-    'accordion'
+    { classNames, styles, name: 'Accordion' }
   );
-  const _styles = mergeStyles(classes, styles);
 
   useWindowEvent('resize', () => forceUpdate());
 
   return (
     <div
-      className={cx(classes.item, { [classes.itemOpened]: opened }, className)}
-      style={{ ..._styles.item, ...(opened ? _styles.itemOpened : null), ...style }}
+      className={cx(classes.item, { [classes.itemOpened]: opened }, sxClassName, className)}
       {...others}
     >
       <UnstyledButton
         className={classes.control}
-        style={_styles.control}
         onClick={onToggle}
         type="button"
         aria-expanded={opened}
         aria-controls={`${id}-body`}
         id={id}
       >
-        <Center className={classes.icon} style={_styles.icon}>
-          {icon}
-        </Center>
+        <Center className={classes.icon}>{icon}</Center>
 
-        <div className={classes.label} style={_styles.label}>
-          {label}
-        </div>
+        <div className={classes.label}>{label}</div>
       </UnstyledButton>
 
       <Collapse in={opened} transitionDuration={duration}>
-        <div
-          className={classes.content}
-          role="region"
-          id={`${id}-body`}
-          aria-labelledby={id}
-          style={_styles.content}
-        >
-          <div className={classes.contentInner} style={_styles.contentInner}>
-            {children}
-          </div>
+        <div className={classes.content} role="region" id={`${id}-body`} aria-labelledby={id}>
+          <div className={classes.contentInner}>{children}</div>
         </div>
       </Collapse>
     </div>

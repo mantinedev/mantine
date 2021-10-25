@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeStyles, DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, ClassNames } from '@mantine/styles';
 import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
 import { parseColor } from '../converters/parsers';
 import { HsvaColor } from '../types';
@@ -24,12 +24,10 @@ export function Swatches({
   focusable = true,
   classNames,
   styles,
-  style,
   __staticSelector = 'color-picker',
   ...others
 }: SwatchesProps) {
-  const { classes } = useStyles({ swatchesPerRow }, classNames, __staticSelector);
-  const _styles = mergeStyles(classes, styles);
+  const { classes } = useStyles({ swatchesPerRow }, { classNames, styles, name: __staticSelector });
 
   const colors = data.map((color, index) => (
     <ColorSwatch
@@ -40,14 +38,14 @@ export function Swatches({
       key={index}
       radius="sm"
       onClick={() => onSelect(parseColor(color))}
-      style={{ cursor: 'pointer', ..._styles.swatch }}
+      style={{ cursor: 'pointer' }}
       aria-label={color}
       tabIndex={focusable ? 0 : -1}
     />
   ));
 
   return (
-    <div className={classes.swatches} style={{ ...style, ..._styles.swatches }} {...others}>
+    <div className={classes.swatches} {...others}>
       {colors}
     </div>
   );
