@@ -6,11 +6,21 @@ import { DarkStory } from '../../../demos';
 import { IconReplaceDemo } from './demos/icon';
 import { IconsReplacementDemo } from './demos/icons';
 import { AccordionDemo } from './demos/label';
+import { Accordion } from './Accordion';
 
 storiesOf('@mantine/core/Accordion', module)
   .add('General usage', () => (
     <div style={{ padding: 40, maxWidth: 540 }}>
       <BaseDemo />
+    </div>
+  ))
+  .add('With sx', () => (
+    <div style={{ padding: 40, maxWidth: 540 }}>
+      <Accordion sx={(theme) => ({ backgroundColor: theme.colors.blue[5] })}>
+        <Accordion.Item label="There" sx={{ backgroundColor: 'red' }}>
+          Hello
+        </Accordion.Item>
+      </Accordion>
     </div>
   ))
   .add('Multiple selected items', () => (

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useUuid, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, useUuid, useExtractedMargins, useSxClassName } from '@mantine/styles';
 import {
   AccordionItem,
   AccordionItemStylesNames,
@@ -66,11 +66,14 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
       classNames,
       styles,
       style,
+      className,
       id,
+      sx,
       ...others
     }: AccordionProps,
     ref
   ) => {
+    const sxClassName = useSxClassName({ sx, className });
     const uuid = useUuid(id);
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const items = React.Children.toArray(children).filter(
@@ -103,7 +106,7 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
     ));
 
     return (
-      <div style={mergedStyles} ref={ref} {...rest}>
+      <div style={mergedStyles} ref={ref} className={sxClassName} {...rest}>
         {controls}
       </div>
     );
