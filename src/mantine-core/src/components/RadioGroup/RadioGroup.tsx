@@ -64,6 +64,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       size,
       classNames,
       styles,
+      sx,
       ...others
     }: RadioGroupProps,
     ref
@@ -101,6 +102,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         classNames={classNames}
         styles={styles}
         ref={ref}
+        sx={sx}
         {...others}
       >
         <Group

@@ -44,10 +44,11 @@ export function LoadingOverlay({
   style,
   loader,
   radius,
+  sx,
   ...others
 }: LoadingOverlayProps) {
   const theme = useMantineTheme();
-  const { classes, cx } = useStyles(null, { name: 'LoadingOverlay' });
+  const { classes, cx } = useStyles(null, { sx, name: 'LoadingOverlay' });
 
   return (
     <Transition duration={transitionDuration} mounted={visible} transition="fade">

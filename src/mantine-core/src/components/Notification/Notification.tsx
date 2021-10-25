@@ -50,13 +50,14 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
       closeButtonProps,
       classNames,
       styles,
+      sx,
       ...others
     }: NotificationProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { color, disallowClose },
-      { classNames, styles, name: 'Notification' }
+      { sx, classNames, styles, name: 'Notification' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const withIcon = icon || loading;

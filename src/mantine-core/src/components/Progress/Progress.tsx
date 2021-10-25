@@ -61,6 +61,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       classNames,
       styles,
       sections,
+      sx,
       ...others
     }: ProgressProps,
     ref
@@ -68,7 +69,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     const theme = useMantineTheme();
     const { classes, cx } = useStyles(
       { color, size, radius, striped },
-      { classNames, styles, name: 'Progress' }
+      { sx, classNames, styles, name: 'Progress' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 

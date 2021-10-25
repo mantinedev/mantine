@@ -39,6 +39,7 @@ export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>(
       children,
       gradient = { from: 'blue', to: 'cyan', deg: 45 },
       style,
+      sx,
       ...others
     }: ThemeIconProps,
     ref
@@ -53,7 +54,7 @@ export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>(
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
       },
-      { name: 'ThemeIcon' }
+      { sx, name: 'ThemeIcon' }
     );
 
     const { mergedStyles, rest } = useExtractedMargins({ others, style });

@@ -91,13 +91,14 @@ export function MantineModal({
   id,
   classNames,
   styles,
+  sx,
   ...others
 }: ModalProps) {
   const baseId = useUuid(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const theme = useMantineTheme();
-  const { classes, cx } = useStyles({ size, overflow }, { classNames, styles, name: 'Modal' });
+  const { classes, cx } = useStyles({ size, overflow }, { sx, classNames, styles, name: 'Modal' });
   const focusTrapRef = useFocusTrap(opened);
   const _overlayOpacity =
     typeof overlayOpacity === 'number'

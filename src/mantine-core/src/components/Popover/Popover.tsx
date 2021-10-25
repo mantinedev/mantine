@@ -93,9 +93,10 @@ export function Popover({
   id,
   classNames,
   styles,
+  sx,
   ...others
 }: PopoverProps) {
-  const { classes, cx } = useStyles(null, { classNames, styles, name: 'Popover' });
+  const { classes, cx } = useStyles(null, { sx, classNames, styles, name: 'Popover' });
   const handleClose = () => typeof onClose === 'function' && onClose();
   const [referenceElement, setReferenceElement] = useState(null);
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);

@@ -71,6 +71,7 @@ export function SegmentedControl({
   classNames,
   styles,
   defaultValue,
+  sx,
   ...others
 }: SegmentedControlProps) {
   const reduceMotion = useReducedMotion();
@@ -97,7 +98,7 @@ export function SegmentedControl({
       transitionDuration,
       transitionTimingFunction,
     },
-    { classNames, styles, name: 'SegmentedControl' }
+    { sx, classNames, styles, name: 'SegmentedControl' }
   );
 
   const { mergedStyles, rest } = useExtractedMargins({ others, style });

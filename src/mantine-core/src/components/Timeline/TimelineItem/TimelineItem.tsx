@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, useSx } from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import useStyles from './TimelineItem.styles';
 
@@ -53,8 +53,10 @@ export function TimelineItem({
   color,
   align,
   lineVariant = 'solid',
+  sx,
   ...others
 }: TimelineItemProps) {
+  const { sxClassName } = useSx({ sx });
   const { classes, cx } = useStyles(
     { bulletSize, color, align, lineVariant, lineWidth },
     { classNames, styles, name: 'Timeline' }
@@ -65,6 +67,7 @@ export function TimelineItem({
       className={cx(
         classes.item,
         { [classes.itemLineActive]: lineActive, [classes.itemActive]: active },
+        sxClassName,
         className
       )}
       {...others}

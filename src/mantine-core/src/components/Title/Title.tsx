@@ -13,13 +13,13 @@ export interface TitleProps extends DefaultProps, React.ComponentPropsWithoutRef
 }
 
 export const Title = forwardRef<HTMLHeadingElement, TitleProps>(
-  ({ className, order = 1, children, align, style, ...others }: TitleProps, ref) => {
+  ({ className, order = 1, children, align, style, sx, ...others }: TitleProps, ref) => {
     if (![1, 2, 3, 4, 5, 6].includes(order)) {
       return null;
     }
 
     const element = `h${order}` as const;
-    const { classes, cx } = useStyles({ element }, { name: 'Title' });
+    const { classes, cx } = useStyles({ element }, { sx, name: 'Title' });
     const styles: React.CSSProperties = { ...style };
 
     if (align) {
@@ -31,7 +31,7 @@ export const Title = forwardRef<HTMLHeadingElement, TitleProps>(
     return React.createElement(
       element,
       {
-        className: cx(classes.title, className),
+        className: cx(classes.root, className),
         style: mergedStyles,
         ref,
         ...rest,

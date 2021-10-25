@@ -141,6 +141,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       getCreateLabel,
       shouldCreate = defaultShouldCreate,
       onCreate,
+      sx,
       ...others
     }: SelectProps,
     ref
@@ -353,6 +354,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
         classNames={classNames}
         styles={styles}
         __staticSelector="Select"
+        sx={sx}
         {...wrapperProps}
       >
         <div

@@ -41,13 +41,14 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>(
       initialState = false,
       classNames,
       styles,
+      sx,
       ...others
     }: SpoilerProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { transitionDuration },
-      { classNames, styles, name: 'Spoiler' }
+      { sx, classNames, styles, name: 'Spoiler' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [show, setShowState] = useState(initialState);

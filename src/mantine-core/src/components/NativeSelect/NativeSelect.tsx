@@ -57,6 +57,7 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
       size = 'sm',
       rightSection,
       rightSectionWidth,
+      sx,
       ...others
     }: NativeSelectProps,
     ref
@@ -95,6 +96,7 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
         size={size}
         styles={styles}
         classNames={classNames}
+        sx={sx}
         __staticSelector="NativeSelect"
       >
         <Input<'select'>

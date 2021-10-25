@@ -4,6 +4,7 @@ import {
   ClassNames,
   PolymorphicComponentProps,
   PolymorphicRef,
+  useSx,
 } from '@mantine/styles';
 import { SharedMenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
@@ -48,10 +49,12 @@ export const MenuButton: MenuButtonComponent & { displayName?: string } = forwar
       classNames,
       styles,
       radius,
+      sx,
       ...others
     }: MenuButtonProps<C>,
     ref: PolymorphicRef<C>
   ) => {
+    const { sxClassName } = useSx({ sx });
     const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Menu' });
     const Element = component || 'button';
 
@@ -59,7 +62,7 @@ export const MenuButton: MenuButtonComponent & { displayName?: string } = forwar
       <Element
         type="button"
         role="menuitem"
-        className={cx(classes.item, { [classes.itemHovered]: hovered }, className)}
+        className={cx(classes.item, { [classes.itemHovered]: hovered }, sxClassName, className)}
         onMouseEnter={() => !disabled && onHover()}
         ref={ref}
         disabled={disabled}

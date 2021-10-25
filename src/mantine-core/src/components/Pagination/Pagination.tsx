@@ -81,6 +81,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
       spacing,
       withEdges = false,
       withControls = true,
+      sx,
       ...others
     }: PaginationProps,
     ref
@@ -119,6 +120,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
       <Group
         spacing={spacing || getSizeValue({ size, sizes: theme.spacing }) / 2}
         ref={ref}
+        sx={sx}
         {...others}
       >
         {withEdges && (

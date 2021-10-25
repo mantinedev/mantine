@@ -180,6 +180,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       getCreateLabel,
       shouldCreate = defaultShouldCreate,
       onCreate,
+      sx,
       ...others
     }: MultiSelectProps,
     ref
@@ -395,6 +396,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         classNames={classNames}
         styles={styles}
         __staticSelector="MultiSelect"
+        sx={sx}
         {...wrapperProps}
       >
         <div

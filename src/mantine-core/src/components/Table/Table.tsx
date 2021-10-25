@@ -22,11 +22,12 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
       highlightOnHover = false,
       captionSide = 'top',
       style,
+      sx,
       ...others
     }: TableProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ captionSide }, { name: 'Table' });
+    const { classes, cx } = useStyles({ captionSide }, { sx, name: 'Table' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (
@@ -35,7 +36,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
         ref={ref}
         style={mergedStyles}
         className={cx(
-          classes.table,
+          classes.root,
           { [classes.striped]: striped, [classes.hover]: highlightOnHover },
           className
         )}

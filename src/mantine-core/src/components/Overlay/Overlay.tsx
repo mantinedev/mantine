@@ -1,14 +1,15 @@
 import React, { forwardRef } from 'react';
-import clsx from 'clsx';
 import {
   PolymorphicComponentProps,
   PolymorphicRef,
   MantineNumberSize,
   getSizeValue,
   useMantineTheme,
+  useSx,
+  DefaultProps,
 } from '@mantine/styles';
 
-interface _OverlayProps {
+interface _OverlayProps extends DefaultProps {
   /** Overlay opacity */
   opacity?: React.CSSProperties['opacity'];
 
@@ -35,37 +36,39 @@ export const Overlay: OverlayComponent & { displayName?: string } = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       className,
-      style,
       opacity = 0.6,
       color = '#fff',
       gradient,
       zIndex = 1000,
       component,
       radius = 0,
+      sx,
       ...others
     }: OverlayProps<C>,
     ref: PolymorphicRef<C>
   ) => {
+    const { css, sxClassName, cx } = useSx({ sx, className });
     const theme = useMantineTheme();
     const Element = component || 'div';
     const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
 
     return (
       <Element
-        className={clsx('mantine-Overlay', className)}
+        className={cx(
+          css({
+            ...background,
+            opacity,
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+            zIndex,
+          }),
+          sxClassName
+        )}
         ref={ref}
-        style={{
-          ...background,
-          opacity,
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-          zIndex,
-          ...style,
-        }}
         {...others}
       />
     );

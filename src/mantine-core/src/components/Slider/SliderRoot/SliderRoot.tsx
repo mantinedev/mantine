@@ -12,8 +12,8 @@ interface SliderRootProps
 }
 
 export const SliderRoot = forwardRef<HTMLDivElement, SliderRootProps>(
-  ({ className, style, size, classNames, styles, ...others }: SliderRootProps, ref) => {
-    const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Slider' });
+  ({ className, style, size, classNames, styles, sx, ...others }: SliderRootProps, ref) => {
+    const { classes, cx } = useStyles({ size }, { sx, classNames, styles, name: 'Slider' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (

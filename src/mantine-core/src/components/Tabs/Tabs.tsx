@@ -98,13 +98,14 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       styles,
       tabPadding = 'xs',
       orientation = 'horizontal',
+      sx,
       ...others
     }: TabsProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { tabPadding, orientation },
-      { classNames, styles, name: 'Tabs' }
+      { sx, classNames, styles, name: 'Tabs' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 

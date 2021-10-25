@@ -28,6 +28,7 @@ export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>(
       spacing = 'md',
       children,
       style,
+      sx,
       ...others
     }: SimpleGridProps,
     ref
@@ -41,11 +42,11 @@ export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>(
     );
     const { classes, cx } = useStyles(
       { breakpoints: sortedBreakpoints, cols, spacing },
-      { name: 'SimpleGrid' }
+      { sx, name: 'SimpleGrid' }
     );
 
     return (
-      <div className={cx(classes.grid, className)} style={mergedStyles} ref={ref} {...rest}>
+      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
         {children}
       </div>
     );

@@ -14,7 +14,7 @@ interface PaperStyles {
 }
 
 export default createStyles((theme, { radius, shadow, padding, withBorder }: PaperStyles) => ({
-  paper: {
+  root: {
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     display: 'block',

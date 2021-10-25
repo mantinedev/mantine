@@ -33,11 +33,12 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>(
       thickness = size / 10,
       classNames,
       styles,
+      sx,
       ...others
     }: RingProgressProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(null, { classNames, styles, name: 'RingProgress' });
+    const { classes, cx } = useStyles(null, { sx, classNames, styles, name: 'RingProgress' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const curves = getCurves({ size, thickness, sections }).map((curve, index) => (

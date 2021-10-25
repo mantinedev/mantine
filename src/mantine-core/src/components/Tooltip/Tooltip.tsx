@@ -74,9 +74,10 @@ export function Tooltip({
   tooltipId,
   classNames,
   styles,
+  sx,
   ...others
 }: TooltipProps) {
-  const { classes, cx } = useStyles({ color }, { classNames, styles, name: 'Tooltip' });
+  const { classes, cx } = useStyles({ color }, { sx, classNames, styles, name: 'Tooltip' });
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
   const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
