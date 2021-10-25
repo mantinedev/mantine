@@ -26,7 +26,17 @@ export interface BurgerProps
 
 export const Burger = forwardRef<HTMLButtonElement, BurgerProps>(
   (
-    { className, style, opened, color, size = 'md', classNames, styles, ...others }: BurgerProps,
+    {
+      className,
+      style,
+      opened,
+      color,
+      size = 'md',
+      classNames,
+      styles,
+      sx,
+      ...others
+    }: BurgerProps,
     ref
   ) => {
     const theme = useMantineTheme();
@@ -34,7 +44,7 @@ export const Burger = forwardRef<HTMLButtonElement, BurgerProps>(
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
       { color: _color, size },
-      { classNames, styles, name: 'Burger' }
+      { classNames, styles, sx, name: 'Burger' }
     );
 
     return (

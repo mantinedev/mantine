@@ -55,6 +55,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       classNames,
       styles,
       transitionDuration = 100,
+      sx,
       ...others
     }: CheckboxProps,
     ref
@@ -62,7 +63,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     const uuid = useUuid(id);
     const { classes, cx } = useStyles(
       { size, color, transitionDuration },
-      { classNames, styles, name: 'Checkbox' }
+      { classNames, styles, sx, name: 'Checkbox' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 

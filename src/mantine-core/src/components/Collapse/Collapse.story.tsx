@@ -18,11 +18,11 @@ storiesOf('@mantine/core/Collapse', module)
     const [open, setOpen] = useState(false);
     return (
       <div style={{ padding: 40, maxWidth: 400 }}>
-        <Button onClick={() => setOpen((prev) => !prev)} style={{ marginBottom: 20 }}>
+        <Button onClick={() => setOpen((prev) => !prev)} mb={20}>
           collapse
         </Button>
 
-        <Collapse in={open} style={{ maxWidth: '600px' }}>
+        <Collapse in={open} sx={{ maxWidth: 600, backgroundColor: '#e5d5e4' }}>
           {content}
         </Collapse>
       </div>
@@ -32,7 +32,7 @@ storiesOf('@mantine/core/Collapse', module)
     const [open, setOpen] = useState(true);
     return (
       <div style={{ padding: 40, maxWidth: 400 }}>
-        <Button onClick={() => setOpen((prev) => !prev)} style={{ marginBottom: 20 }}>
+        <Button onClick={() => setOpen((prev) => !prev)} mb={20}>
           collapse
         </Button>
 

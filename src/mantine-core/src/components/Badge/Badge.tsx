@@ -64,6 +64,7 @@ export const Badge: BadgeComponent & { displayName?: string } = forwardRef(
       gradient = { from: 'blue', to: 'cyan', deg: 45 },
       classNames,
       styles,
+      sx,
       ...others
     }: BadgeProps<C>,
     ref: PolymorphicRef<C>
@@ -78,7 +79,7 @@ export const Badge: BadgeComponent & { displayName?: string } = forwardRef(
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
       },
-      { classNames, styles, name: 'Badge' }
+      { classNames, styles, sx, name: 'Badge' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element = component || 'div';

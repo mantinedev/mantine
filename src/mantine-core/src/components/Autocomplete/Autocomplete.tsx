@@ -92,6 +92,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     {
       className,
       style,
+      sx,
       required = false,
       label,
       id,
@@ -214,6 +215,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         styles={styles}
         style={mergedStyles}
         __staticSelector="Autocomplete"
+        sx={sx}
         {...wrapperProps}
       >
         <div

@@ -95,6 +95,7 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
       gradient = { from: 'blue', to: 'cyan', deg: 45 },
       classNames,
       styles,
+      sx,
       ...others
     }: ButtonProps<C>,
     ref: PolymorphicRef<C>
@@ -117,7 +118,7 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
       },
-      { classNames, styles, name: 'Button' }
+      { classNames, styles, sx, name: 'Button' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element = component || 'button';

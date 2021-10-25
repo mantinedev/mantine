@@ -24,11 +24,12 @@ export const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
       separator = '/',
       classNames,
       styles,
+      sx,
       ...others
     }: BreadcrumbsProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(null, { classNames, styles, name: 'Breadcrumbs' });
+    const { classes, cx } = useStyles(null, { classNames, styles, sx, name: 'Breadcrumbs' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const items = React.Children.toArray(children).reduce(

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { useExtractedMargins } from '@mantine/styles';
+import { useExtractedMargins, useSx, DefaultProps } from '@mantine/styles';
 import { useCollapse } from './use-collapse';
 
-export interface CollapseProps extends React.ComponentPropsWithoutRef<'div'> {
+export interface CollapseProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Content that should be collapsed */
   children: React.ReactNode;
 
@@ -29,6 +29,8 @@ export function Collapse({
   transitionDuration = 200,
   transitionTimingFunction = 'ease',
   style,
+  sx,
+  className,
   onTransitionEnd,
   animateOpacity = true,
   ...others
@@ -36,6 +38,7 @@ export function Collapse({
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
+  const { sxClassName } = useSx({ sx, className });
   const getCollapseProps = useCollapse({
     opened,
     transitionDuration: duration,
@@ -44,7 +47,7 @@ export function Collapse({
   });
 
   return (
-    <div {...getCollapseProps({ style: mergedStyles, ...rest })}>
+    <div {...getCollapseProps({ style: mergedStyles, ...rest })} className={sxClassName}>
       <div
         style={{
           opacity: opened ? 1 : 0,

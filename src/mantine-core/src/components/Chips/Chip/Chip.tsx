@@ -96,7 +96,7 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>(
     const defaultVariant = theme.colorScheme === 'dark' ? 'filled' : 'outline';
 
     return (
-      <>
+      <div className={cx(classes.root, className)} style={mergedStyles}>
         <input
           type={type}
           className={classes.input}
@@ -111,10 +111,8 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>(
           className={cx(
             classes.label,
             { [classes.checked]: value, [classes.disabled]: disabled },
-            classes[variant || defaultVariant],
-            className
+            classes[variant || defaultVariant]
           )}
-          style={mergedStyles}
           htmlFor={uuid}
         >
           {value && (
@@ -124,7 +122,7 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>(
           )}
           {children}
         </label>
-      </>
+      </div>
     );
   }
 );

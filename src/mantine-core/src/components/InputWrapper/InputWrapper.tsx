@@ -65,13 +65,14 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
       errorProps,
       classNames,
       styles,
+      sx,
       size = 'sm',
       __staticSelector = 'InputWrapper',
       ...others
     }: InputWrapperProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+    const { classes, cx } = useStyles({ size }, { classNames, styles, sx, name: __staticSelector });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
     const inputLabel = createElement(

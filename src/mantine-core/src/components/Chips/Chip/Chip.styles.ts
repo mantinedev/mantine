@@ -104,6 +104,8 @@ export default createStyles((theme, { radius, size, color }: ChipStyles, getRef)
   } as const;
 
   return {
+    root: {},
+
     label,
     filled,
     iconWrapper,

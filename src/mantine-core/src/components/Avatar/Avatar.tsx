@@ -50,13 +50,14 @@ export const Avatar: AvatarComponent & { displayName?: string } = forwardRef(
       color = 'gray',
       classNames,
       styles,
+      sx,
       ...others
     }: AvatarProps<C>,
     ref: PolymorphicRef<C>
   ) => {
     const { classes, cx } = useStyles(
       { color, radius, size },
-      { classNames, styles, name: 'Avatar' }
+      { classNames, styles, sx, name: 'Avatar' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [error, setError] = useState(!src);

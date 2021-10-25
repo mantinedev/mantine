@@ -31,11 +31,12 @@ export const Blockquote = forwardRef<HTMLQuoteElement, BlockquoteProps>(
       children,
       classNames,
       styles,
+      sx,
       ...others
     }: BlockquoteProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color }, { classNames, styles, name: 'Blockquote' });
+    const { classes, cx } = useStyles({ color }, { classNames, styles, sx, name: 'Blockquote' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (
