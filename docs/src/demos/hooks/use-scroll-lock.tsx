@@ -3,35 +3,38 @@ import { useScrollLock } from '@mantine/hooks';
 import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 import { Group, Button } from '@mantine/core';
 
-const code = `import { useScrollLock } from '@mantine/hooks';
+const code = `
+import { useScrollLock } from '@mantine/hooks';
 import { Button } from '@mantine/core';
 import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 
-export function Demo() {
-  const [lockScroll, setLockScroll] = useScrollLock();
-
-  return (
-    <Button
-      onClick={() => setLockScroll((c) => !c)}
-      variant="outline"
-      leftIcon={lockScroll ? <LockClosedIcon /> : <LockOpen2Icon />}
-    >
-      {lockScroll ? 'Unlock scroll' : 'Lock scroll'}
-    </Button>
-  );
-}`;
-
 function Demo() {
-  const [lockScroll, setLockScroll] = useScrollLock();
+  const [scrollLocked, setScrollLocked] = useScrollLock();
 
   return (
     <Group position="center">
       <Button
-        onClick={() => setLockScroll((c) => !c)}
+        onClick={() => setScrollLocked((c) => !c)}
         variant="outline"
-        leftIcon={lockScroll ? <LockClosedIcon /> : <LockOpen2Icon />}
+        leftIcon={scrollLocked ? <LockClosedIcon /> : <LockOpen2Icon />}
       >
-        {lockScroll ? 'Unlock scroll' : 'Lock scroll'}
+        {scrollLocked ? 'Unlock scroll' : 'Lock scroll'}
+      </Button>
+    </Group>
+  );
+}`;
+
+function Demo() {
+  const [scrollLocked, setScrollLocked] = useScrollLock();
+
+  return (
+    <Group position="center">
+      <Button
+        onClick={() => setScrollLocked((c) => !c)}
+        variant="outline"
+        leftIcon={scrollLocked ? <LockClosedIcon /> : <LockOpen2Icon />}
+      >
+        {scrollLocked ? 'Unlock scroll' : 'Lock scroll'}
       </Button>
     </Group>
   );

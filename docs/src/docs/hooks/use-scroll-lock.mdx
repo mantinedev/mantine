@@ -20,8 +20,18 @@ Use this hook when you want to prevent user from scrolling on document level,
 for example, with modals and drawers.
 
 Example modal component, whenever modal is opened, scroll is locked at current scroll position.
-Hook accepts one argument – boolean value that controls if scroll is locked:
+After lock it adds padding to `body` equal to size of removed scrollbar and saves it ass `css-variable` as `--removed-scroll-width` which is removed after unlock. 
 
+To prevent move on layout components like `Navbar` component you can add `padding-right: var(--removed-scroll-width, 0px))`.
+
+Hook accepts two arguments:
+
+ – optional boolean value that controls if scroll is locked
+
+ – optional options object:
+ - `disableBodyPadding` optional boolean that controls if `--removed-scroll-width` should be handled, default to `false`
+
+Hooks returns an array of same usage as `useState` hook.
 ```tsx
 import { useScrollLock } from '@mantine/hooks';
 
@@ -38,10 +48,14 @@ function Modal({ opened }) {
 
 ## Examples
 
-When hooks is called with `true`, it sets `document.body.style.overflow` to `hidden`.
+### Basic
+
+When hooks is called with `true`, it sets `document.body.style.overflow` to `hidden`. 
 When component is unmounted, scroll lock is automatically removed:
 
 <Demo data={useScrollLockHook} />
+
+### Modal
 
 use-scroll-lock is used in some components in @mantine/core,
 example with [Modal](/core/modal/) component:
@@ -51,7 +65,9 @@ example with [Modal](/core/modal/) component:
 ## Definition
 
 ```tsx
-function useScrollLock(
-  lock?: boolean
-): readonly [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+function useScrollLock<T extends HTMLElement = HTMLDivElement>(
+  lock?: boolean, 
+  options?: {
+    disableBodyPadding?: boolean;
+}): readonly [boolean, Dispatch<SetStateAction<boolean>>]
 ```
