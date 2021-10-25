@@ -54,6 +54,7 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
       classNames,
       style,
       styles,
+      sx,
       children,
       ...others
     }: NavbarProps,
@@ -61,7 +62,7 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
   ) => {
     const { classes, cx } = useStyles(
       { width, height, padding, fixed, position, hiddenBreakpoint, zIndex },
-      { classNames, styles, name: 'Navbar' }
+      { classNames, styles, sx, name: 'Navbar' }
     );
 
     const { mergedStyles, rest } = useExtractedMargins({ others, style });

@@ -67,6 +67,7 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
       className,
       styles,
       classNames,
+      sx,
       ...others
     }: AppShellProps,
     ref
@@ -85,7 +86,7 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
         navbarBreakpoints,
         navbarOffsetBreakpoint,
       },
-      { styles, classNames, name: 'AppShell' }
+      { styles, classNames, sx, name: 'AppShell' }
     );
     const _header = header ? React.cloneElement(header, { fixed, zIndex }) : null;
     const _navbar = navbar

@@ -5,7 +5,9 @@ import { Header } from './Header';
 storiesOf('@mantine/core/AppShell/Header', module)
   .add('General usage', () => (
     <>
-      <Header height={50}>Just a header</Header>
+      <Header height={50} sx={{ background: 'silver' }}>
+        Just a header
+      </Header>
       <div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, modi quae optio numquam
         animi harum perferendis quibusdam in asperiores corporis delectus corrupti! Magnam magni

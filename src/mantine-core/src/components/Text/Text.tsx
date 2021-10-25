@@ -65,6 +65,7 @@ export const Text: TextComponent & { displayName?: string } = forwardRef(
       gradient = { from: 'blue', to: 'cyan', deg: 45 },
       inline = false,
       inherit = false,
+      sx,
       ...others
     }: TextProps<C>,
     ref: PolymorphicRef<C>
@@ -81,7 +82,7 @@ export const Text: TextComponent & { displayName?: string } = forwardRef(
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
       },
-      { classNames: null, styles: null, name: 'Text' }
+      { classNames: null, styles: null, sx, name: 'Text' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element = component || 'div';

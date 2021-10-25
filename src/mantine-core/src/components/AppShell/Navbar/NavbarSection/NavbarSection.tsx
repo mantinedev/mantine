@@ -2,9 +2,9 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   useExtractedMargins,
-  useCss,
   PolymorphicComponentProps,
   PolymorphicRef,
+  useSx,
 } from '@mantine/styles';
 
 interface _NavbarSectionProps extends DefaultProps {
@@ -26,17 +26,17 @@ type NavbarSectionComponent = <C extends React.ElementType = 'div'>(
 
 export const NavbarSection: NavbarSectionComponent & { displayName?: string } = forwardRef(
   <C extends React.ElementType = 'div'>(
-    { component, children, grow = false, style, className, ...others }: NavbarSectionProps<C>,
+    { component, children, grow = false, style, className, sx, ...others }: NavbarSectionProps<C>,
     ref: PolymorphicRef<C>
   ) => {
     const Element = component || 'div';
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const { css, cx } = useCss();
+    const { css, cx, sxClassName } = useSx({ sx, className });
 
     return (
       <Element
         ref={ref}
-        className={cx(css({ flex: grow ? 1 : 0, boxSizing: 'border-box' }), className)}
+        className={cx(css({ flex: grow ? 1 : 0, boxSizing: 'border-box' }), sxClassName)}
         style={mergedStyles}
         {...rest}
       >

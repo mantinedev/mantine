@@ -41,13 +41,14 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
       classNames,
       icon,
       styles,
+      sx,
       onClose,
       withCloseButton,
       ...others
     }: AlertProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color }, { classNames, styles, name: 'Alert' });
+    const { classes, cx } = useStyles({ color }, { classNames, styles, sx, name: 'Alert' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (

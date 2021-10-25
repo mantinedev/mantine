@@ -32,13 +32,17 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
       padding = 0,
       fixed = false,
       position = { top: 0, left: 0, right: 0 },
+      sx,
       zIndex = 1000,
       ...others
     }: HeaderProps,
     ref
   ) => {
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const { classes, cx } = useStyles({ height, padding, fixed, position, zIndex });
+    const { classes, cx } = useStyles(
+      { height, padding, fixed, position, zIndex },
+      { name: 'Header', sx }
+    );
 
     return (
       <nav className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
