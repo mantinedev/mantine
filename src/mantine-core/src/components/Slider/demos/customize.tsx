@@ -1,5 +1,4 @@
 import React from 'react';
-import { useMantineTheme } from '@mantine/styles';
 import { Slider } from '../Slider/Slider';
 
 const code = `
@@ -8,7 +7,7 @@ const code = `
   marks={marks}
   labelTransition="fade"
   size={2}
-  styles={{
+  styles={(theme) =>({
     track: {
       backgroundColor:
         theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
@@ -31,18 +30,17 @@ const code = `
       borderWidth: 1,
       boxShadow: theme.shadows.sm,
     },
-  }}
+  })}
 />
 `;
 
-function Demo() {
-  const theme = useMantineTheme();
-  const marks = [
-    { value: 20, label: '20%' },
-    { value: 50, label: '50%' },
-    { value: 80, label: '80%' },
-  ];
+const marks = [
+  { value: 20, label: '20%' },
+  { value: 50, label: '50%' },
+  { value: 80, label: '80%' },
+];
 
+function Demo() {
   return (
     <div style={{ paddingTop: 15, paddingBottom: 20, maxWidth: 400, margin: 'auto' }}>
       <Slider
@@ -50,7 +48,7 @@ function Demo() {
         marks={marks}
         labelTransition="fade"
         size={2}
-        styles={{
+        styles={(theme) => ({
           track: {
             backgroundColor:
               theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
@@ -73,7 +71,7 @@ function Demo() {
             borderWidth: 1,
             boxShadow: theme.shadows.sm,
           },
-        }}
+        })}
       />
     </div>
   );
