@@ -137,6 +137,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
       onClear,
       positionDependencies = [],
       zIndex = 3,
+      sx,
       ...others
     }: DatePickerBaseProps,
     ref
@@ -186,6 +187,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
         styles={styles}
         size={size}
         __staticSelector={__staticSelector}
+        sx={sx}
         {...wrapperProps}
       >
         <div ref={setRootElement}>

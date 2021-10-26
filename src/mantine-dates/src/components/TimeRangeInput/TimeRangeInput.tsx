@@ -87,6 +87,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       secondsLabel,
       labelSeparator = '–',
       disabled = false,
+      sx,
       ...others
     }: TimeRangeInputProps,
     ref
@@ -180,6 +181,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
         size={size}
         __staticSelector="TimeRangeInput"
         id={uuid}
+        sx={sx}
         {...wrapperProps}
       >
         <Input

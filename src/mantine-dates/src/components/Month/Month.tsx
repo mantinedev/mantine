@@ -91,9 +91,13 @@ export function Month({
   __staticSelector = 'Month',
   size = 'sm',
   fullWidth = false,
+  sx,
   ...others
 }: MonthProps) {
-  const { classes, cx } = useStyles({ fullWidth }, { classNames, styles, name: __staticSelector });
+  const { classes, cx } = useStyles(
+    { fullWidth },
+    { sx, classNames, styles, name: __staticSelector }
+  );
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month);

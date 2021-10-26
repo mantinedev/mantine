@@ -83,6 +83,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       minutesLabel,
       secondsLabel,
       disabled = false,
+      sx,
       ...others
     }: TimeInputProps,
     ref
@@ -149,6 +150,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         size={size}
         __staticSelector="TimeInput"
         id={uuid}
+        sx={sx}
         {...wrapperProps}
       >
         <Input
