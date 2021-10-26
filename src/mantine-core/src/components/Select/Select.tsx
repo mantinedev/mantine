@@ -155,7 +155,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const [creatableDataValue, setCreatableDataValue] = useState<string | undefined>(undefined);
     const uuid = useUuid(id);
     const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
-      duration: 100,
+      duration: 0,
       offset: 5,
       cancelable: false,
       isList: true,
