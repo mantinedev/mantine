@@ -30,7 +30,7 @@ export function StylesApiHeader({ component, singleNode }: StylesApiHeaderProps)
 
       {!singleNode && (
         <Text weight={500} style={{ marginBottom: 15 }}>
-          Add styles to root element with className or style:
+          Add styles to root element with className, style or sx:
         </Text>
       )}
 
