@@ -125,6 +125,15 @@ storiesOf('@mantine/core/Select', module)
       />
     </div>
   ))
+  .add('With custom scrollbars', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Select
+        data={largeData}
+        label="custom scrollbars"
+        placeholder="select with custom scrollbars"
+      />
+    </div>
+  ))
   .add('Clearable', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
       <Creatable />
