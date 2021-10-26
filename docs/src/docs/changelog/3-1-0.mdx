@@ -8,7 +8,7 @@ date: 'November 10th, 2021'
 ---
 
 import { providerStyles, CreateStylesDemos } from '@docs/demos';
-import { MediaQueryDemos, CollapseDemos, AppShellDemos } from '@demos/core';
+import { MediaQueryDemos, CollapseDemos, AppShellDemos, SelectDemos } from '@demos/core';
 
 ## Breaking changes
 
@@ -78,6 +78,11 @@ New [AppShell](https://mantine.dev/core/app-shell/) component allows you create 
 <Demo data={AppShellDemos.usage} />
 
 ## New features
+
+[Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) components now support
+custom scrollbars with [react-custom-scrollbars](https://github.com/malte-wessel/react-custom-scrollbars) package:
+
+<Demo data={SelectDemos.scrollbars} />
 
 [Collapse](https://mantine.dev/core/collapse/) component now supports dynamic children – you can now use this feature in all components that are built with Collapse: [Accordion](https://mantine.dev/core/accordion/), [Navbar](https://mantine.dev/core/navbar/), etc.
 
