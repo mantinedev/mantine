@@ -66,13 +66,14 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
       children,
       onDrop,
       openRef,
+      sx,
       ...others
     }: DropzoneProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { radius, padding },
-      { classNames, styles, name: 'Dropzone' }
+      { sx, classNames, styles, name: 'Dropzone' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 

@@ -18,7 +18,7 @@ export default createStyles((theme, { offset, padding, radius }: FullScreenDropz
   const accepted = getSharedColorScheme({ color: theme.primaryColor, theme, variant: 'light' });
 
   return {
-    wrapper: {
+    root: {
       position: 'fixed',
       top: 0,
       left: 0,

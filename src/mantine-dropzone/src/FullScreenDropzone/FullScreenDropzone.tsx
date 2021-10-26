@@ -73,11 +73,12 @@ export function FullScreenDropzone({
   zIndex = 1000,
   onDrop,
   children,
+  sx,
   ...others
 }: FullScreenDropzoneProps) {
   const { classes, cx } = useStyles(
     { offset, padding, radius },
-    { classNames, styles, name: 'FullScreenDropzone' }
+    { sx, classNames, styles, name: 'FullScreenDropzone' }
   );
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(false);
