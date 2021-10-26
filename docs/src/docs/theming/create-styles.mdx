@@ -5,6 +5,7 @@ slug: /theming/create-styles/
 order: 2
 ---
 
+import { TabsDemos } from '@demos/core';
 import { CreateStylesDemos } from '@docs/demos';
 
 # createStyles
@@ -186,6 +187,21 @@ function Demo() {
   );
 }
 ```
+
+## Inline styles
+
+Most of Mantine components support [Styles API](/theming/styles-api/).
+You can override default component styles inline or using [MantineProvider](/theming/mantine-provider/)
+the same way as with `createStyles`:
+
+<Demo data={TabsDemos.stylesApi} />
+
+## sx prop
+
+All Mantine components support `sx` prop, you can add styles to root element and subscribe to theme with this
+prop. This is useful when you want customize component without creating separate `createStyles` hook:
+
+<Demo data={CreateStylesDemos.createStylesSx} />
 
 ## Using createStyles without @mantine/core
 
