@@ -130,7 +130,7 @@ export function FullScreenDropzone({
         {(transitionStyles) => (
           <div
             style={{ ...style, ...transitionStyles }}
-            className={cx(classes.wrapper, className)}
+            className={cx(classes.root, className)}
             {...others}
           >
             <div

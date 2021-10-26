@@ -59,12 +59,13 @@ export function Prism({
   withLineNumbers = false,
   highlightLines = {},
   colorScheme,
+  sx,
   ...others
 }: PrismProps) {
   const theme = useMantineTheme();
   const { classes, cx } = useStyles(
     { colorScheme: colorScheme || theme.colorScheme },
-    { classNames, styles, name: 'Prism' }
+    { sx, classNames, styles, name: 'Prism' }
   );
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const clipboard = useClipboard();
