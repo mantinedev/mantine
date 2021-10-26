@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { Group, useMantineTheme } from '@mantine/core';
+import { Group } from '@mantine/core';
 import { Calendar } from '../Calendar';
 
 const code = `
 import { useState } from 'react';
-import { useMantineTheme } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
 function Demo() {
-  const theme = useMantineTheme();
   const [value, setValue] = useState(new Date());
 
   return (
@@ -18,7 +16,7 @@ function Demo() {
       month={value}
       fullWidth
       size="xl"
-      styles={{
+      styles={(theme) => ({
         cell: {
           border: \`1px solid \${
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
@@ -35,14 +33,13 @@ function Demo() {
           }\`,
           height: 70,
         },
-      }}
+      })}
     />
   );
 }
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
   const [value, setValue] = useState(new Date());
   return (
     <Group position="center">
@@ -52,7 +49,7 @@ function Demo() {
         month={value}
         fullWidth
         size="xl"
-        styles={{
+        styles={(theme) => ({
           cell: {
             border: `1px solid ${
               theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
@@ -69,7 +66,7 @@ function Demo() {
             }`,
             height: 70,
           },
-        }}
+        })}
       />
     </Group>
   );
