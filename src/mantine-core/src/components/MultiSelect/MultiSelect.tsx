@@ -1,5 +1,5 @@
 import React, { useState, useRef, forwardRef } from 'react';
-import { useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
+import { useUncontrolled, useMergedRef, useDidUpdate, useScrollIntoView } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineSize,
@@ -8,7 +8,6 @@ import {
   useUuid,
   useExtractedMargins,
 } from '@mantine/styles';
-import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { MantineTransition } from '../Transition';
@@ -197,6 +196,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const [searchValue, setSearchValue] = useState('');
+    const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
+      duration: 100,
+      offset: 5,
+      cancelable: false,
+      isList: true,
+    });
     const isCreatable = creatable && typeof getCreateLabel === 'function';
     let createLabel = null;
 
@@ -296,7 +301,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               (index) => index - 1,
               (index) => index > 0
             );
-            scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
+
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+            scrollIntoView({
+              alignment: 'start',
+            });
             return nextIndex;
           });
           break;
@@ -311,7 +321,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               (index) => index + 1,
               (index) => index < filteredData.length - 1
             );
-            scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
+
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+            scrollIntoView({
+              alignment: 'end',
+            });
             return nextIndex;
           });
           break;
@@ -479,7 +494,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             maxDropdownHeight={maxDropdownHeight}
             classNames={classNames}
             styles={styles}
-            ref={dropdownRef}
+            ref={useMergedRef(dropdownRef, scrollableRef)}
             __staticSelector="MultiSelect"
           >
             <SelectItems
