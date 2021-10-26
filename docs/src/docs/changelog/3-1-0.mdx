@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.1.0
 date: 'November 10th, 2021'
 ---
 
-import { providerStyles } from '@docs/demos';
+import { providerStyles, CreateStylesDemos } from '@docs/demos';
 import { MediaQueryDemos, CollapseDemos, AppShellDemos } from '@demos/core';
 
 ## Breaking changes
@@ -46,6 +46,12 @@ This means that you now can subscribe to `theme` and use nested selectors in `st
   My custom button
 </Button>
 ```
+
+## sx prop
+
+All components now support `sx` prop. You can add styles to root element and subscribe to theme with it:
+
+<Demo data={CreateStylesDemos.createStylesSx} />
 
 ## use-css hook
 
