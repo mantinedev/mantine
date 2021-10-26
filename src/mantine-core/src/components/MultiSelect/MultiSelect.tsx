@@ -118,6 +118,9 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
 
   /** Called when create option is selected */
   onCreate?: (query: string) => void;
+
+  /** Change dropdown component, can be used to add custom scrollbars */
+  dropdownComponent?: React.FC<any>;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -180,6 +183,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       shouldCreate = defaultShouldCreate,
       onCreate,
       sx,
+      dropdownComponent,
       ...others
     }: MultiSelectProps,
     ref
@@ -496,6 +500,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             styles={styles}
             ref={useMergedRef(dropdownRef, scrollableRef)}
             __staticSelector="MultiSelect"
+            dropdownComponent={dropdownComponent}
           >
             <SelectItems
               data={filteredData}
