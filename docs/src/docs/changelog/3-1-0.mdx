@@ -15,16 +15,14 @@ import { MediaQueryDemos, CollapseDemos, AppShellDemos } from '@demos/core';
 - [MediaQuery](https://mantine.dev/core/media-query/) now requires passing `styles` object and does not hide child element by default
 - [Styles API](https://mantine.dev/theming/styles-api/) static selectors no longer use kebab case (was `.mantine-text-input-root`, now `.mantine-TextInput-root`)
 
-## Styles API improvements
-
-### Styles API on MantineProvider
+## Styles API on MantineProvider
 
 You can now add styles to components with MantineProvider.
 Styles will be added to every matching component rendered inside MantineProvider:
 
 <Demo data={providerStyles} />
 
-### Inline styles with emotion
+## Inline styles with emotion
 
 `styles` prop will no longer add inline styles, instead styles will be converted to emotion format.
 This means that you now can subscribe to `theme` and use nested selectors in `styles`:
