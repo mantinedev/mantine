@@ -31,11 +31,7 @@ const CustomScrollbars = forwardRef<any, any>((props: any, ref: any) => (
   <Scrollbars
     {...props}
     style={{ ...props.style, height: 300 }}
-    ref={(scrollbars: any) => {
-      if (scrollbars?.view) {
-        ref(scrollbars.view);
-      }
-    }}
+    ref={(scrollbars: any) => scrollbars?.view && ref(scrollbars.view)}
   >
     <div style={{ padding: 3 }}>{props.children}</div>
   </Scrollbars>
