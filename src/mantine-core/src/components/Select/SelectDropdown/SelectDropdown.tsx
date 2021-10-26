@@ -16,6 +16,7 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   maxDropdownHeight?: number | string;
   children: React.ReactNode;
   __staticSelector: string;
+  dropdownComponent?: React.FC<any>;
 }
 
 export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
@@ -31,6 +32,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       children,
       classNames,
       styles,
+      dropdownComponent,
       __staticSelector,
     }: SelectDropdownProps,
     ref
@@ -47,6 +49,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         {(transitionStyles) => (
           <div style={{ position: 'relative' }}>
             <Paper<'div'>
+              component={(dropdownComponent || 'div') as any}
               id={`${uuid}-items`}
               aria-labelledby={`${uuid}-label`}
               role="listbox"

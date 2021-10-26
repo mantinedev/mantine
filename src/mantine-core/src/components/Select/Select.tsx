@@ -88,6 +88,9 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
 
   /** Called when create option is selected */
   onCreate?: (query: string) => void;
+
+  /** Change dropdown component, can be used to add custom scrollbars */
+  dropdownComponent?: React.FC<any>;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -141,6 +144,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       shouldCreate = defaultShouldCreate,
       onCreate,
       sx,
+      dropdownComponent,
       ...others
     }: SelectProps,
     ref
@@ -433,6 +437,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             styles={styles}
             ref={useMergedRef(dropdownRef, scrollableRef)}
             __staticSelector="Select"
+            dropdownComponent={dropdownComponent}
           >
             <SelectItems
               data={filteredData}
