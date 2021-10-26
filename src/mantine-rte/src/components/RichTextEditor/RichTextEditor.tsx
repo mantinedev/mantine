@@ -70,13 +70,14 @@ export function RichTextEditor({
   className,
   classNames,
   styles,
+  sx,
   ...others
 }: RichTextEditorProps) {
   const uuid = useUuid(id);
   const editorRef = useRef<any>();
   const { classes, cx } = useStyles(
     { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
-    { classNames, styles, name: 'RichTextEditor' }
+    { sx, classNames, styles, name: 'RichTextEditor' }
   );
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
