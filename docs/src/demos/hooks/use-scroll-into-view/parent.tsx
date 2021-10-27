@@ -4,40 +4,19 @@ import { Button, Text, Group, useMantineTheme, Paper } from '@mantine/core';
 
 const code = `
 import { useScrollIntoView } from '@mantine/hooks';
-import { Button, Text, Group, useMantineTheme, Paper } from '@mantine/core';
+import { Button, Paper } from '@mantine/core';
 
 function Demo() {
-  const theme = useMantineTheme();
-
-  const {
-    scrollIntoView,
-    targetRef,
-    scrollableRef,
-  } = useScrollIntoView<HTMLDivElement, HTMLDivElement>();
+  const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView();
 
   return (
-    <Group position="center">
+    <>
       <Paper ref={scrollableRef} style={{ overflowY: 'scroll', height: 300, flex: 1 }}>
-        <div style={{ paddingTop: 260, paddingBottom: 450 }}>
-          <Paper
-            ref={targetRef}
-            padding="xl"
-            style={{
-              backgroundColor:
-                theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
-              width: '100%',
-            }}
-          >
-            <Text>Hello there</Text>
-          </Paper>
-        </div>
+        <Paper ref={targetRef}>Scroll me into view<</Paper>
       </Paper>
-      <Button
-        onClick={() => scrollIntoView()}
-      >
-        Scroll to target
-      </Button>
-    </Group>
+
+      <Button onClick={() => scrollIntoView()}>Scroll to target</Button>
+    </>
   );
 }
 `;
@@ -63,7 +42,7 @@ function Demo() {
               width: '100%',
             }}
           >
-            <Text>Hello there</Text>
+            <Text>Scroll me into view</Text>
           </Paper>
         </div>
       </Paper>

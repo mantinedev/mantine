@@ -4,37 +4,22 @@ import { Button, Text, Group, useMantineTheme } from '@mantine/core';
 
 const code = `
 import { useScrollIntoView } from '@mantine/hooks';
-import { Button, Text, Group, useMantineTheme } from '@mantine/core';
+import { Button, Text } from '@mantine/core';
 
 function Demo() {
-  const theme = useMantineTheme();
-
   const navbarHeight = 60;
-  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
-    offset: navbarHeight,
-  });
+  const { scrollIntoView, targetRef } = useScrollIntoView({ offset: navbarHeight });
 
   return (
-    <Group position="center">
-      <Button
-        onClick={() =>
-          scrollIntoView({
-            alignment: 'center',
-          })
-        }
-      >
+    <>
+      <Button onClick={() => scrollIntoView({ alignment: 'center' })}>
         Scroll to target
       </Button>
-      <div
-        style={{
-          width: '100%',
-          height: '100vh',
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
-        }}
-      />
+
+      <div style={{ height: '50vh'}} />
+
       <Text ref={targetRef}>Hello there</Text>
-    </Group>
+    </>
   );
 }
 
@@ -62,7 +47,7 @@ function Demo() {
       <div
         style={{
           width: '100%',
-          height: '100vh',
+          height: '50vh',
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],
         }}
