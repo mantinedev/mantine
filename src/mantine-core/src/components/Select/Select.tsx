@@ -91,6 +91,12 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
 
   /** Change dropdown component, can be used to add custom scrollbars */
   dropdownComponent?: React.FC<any>;
+
+  /** Called when dropdown is opened */
+  onDropdownOpen?(): void;
+
+  /** Called when dropdown is closed */
+  onDropdownClose?(): void;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -145,13 +151,15 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       onCreate,
       sx,
       dropdownComponent,
+      onDropdownClose,
+      onDropdownOpen,
       ...others
     }: SelectProps,
     ref
   ) => {
     const { classes, cx } = useStyles();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
+    const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const inputRef = useRef<HTMLInputElement>();
     const dropdownRef = useRef<HTMLDivElement>();
@@ -164,6 +172,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       cancelable: false,
       isList: true,
     });
+
+    const setDropdownOpened = (opened: boolean) => {
+      _setDropdownOpened(opened);
+      const handler = opened ? onDropdownOpen : onDropdownClose;
+      typeof handler === 'function' && handler();
+    };
 
     const isCreatable = creatable && typeof getCreateLabel === 'function';
     let createLabel = null;
@@ -317,7 +331,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
         case 'Space': {
           if (!searchable) {
             event.preventDefault();
-            setDropdownOpened((o) => !o);
+            setDropdownOpened(!dropdownOpened);
             setHovered(
               getNextIndex(
                 -1,
@@ -404,7 +418,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             aria-autocomplete="list"
             aria-controls={dropdownOpened ? `${uuid}-items` : null}
             aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
-            onClick={() => setDropdownOpened((o) => !o)}
+            onClick={() => setDropdownOpened(!dropdownOpened)}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             readOnly={!searchable}
