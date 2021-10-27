@@ -10,6 +10,7 @@ export * from './components/Autocomplete';
 export * from './components/Avatar';
 export * from './components/Badge';
 export * from './components/Blockquote';
+export * from './components/Box';
 export * from './components/Breadcrumbs';
 export * from './components/Burger';
 export * from './components/Button';
