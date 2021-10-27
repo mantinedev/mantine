@@ -63,7 +63,7 @@ describe('@mantine/core/RadioGroup', () => {
   });
 
   it('passes correct name to Radio components', () => {
-    const withoutName = shallow(
+    const withoutName = mount(
       <RadioGroup>
         <Radio value="test-1">test-1</Radio>
         <Radio value="test-2">test-2</Radio>
@@ -71,7 +71,7 @@ describe('@mantine/core/RadioGroup', () => {
       </RadioGroup>
     );
 
-    const withName = shallow(
+    const withName = mount(
       <RadioGroup name="test-name">
         <Radio value="test-1">test-1</Radio>
         <Radio value="test-2">test-2</Radio>
