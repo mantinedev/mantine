@@ -6,7 +6,7 @@ export const { getCache } = (() => {
 
   function _getCache() {
     if (cache === undefined) {
-      cache = createCache({ key: 'mantine' });
+      cache = createCache({ key: 'mantine', prepend: true });
     }
 
     return cache;
