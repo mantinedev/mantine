@@ -81,6 +81,12 @@ export interface AutocompleteProps
 
   /** Message that will be displayed on zero search results  */
   nothingFound?: string;
+
+  /** Called when dropdown is opened */
+  onDropdownOpen?(): void;
+
+  /** Called when dropdown is closed */
+  onDropdownClose?(): void;
 }
 
 export function defaultFilter(value: string, item: AutocompleteItem) {
@@ -120,13 +126,15 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       styles,
       filter = defaultFilter,
       nothingFound,
+      onDropdownClose,
+      onDropdownOpen,
       ...others
     }: AutocompleteProps,
     ref
   ) => {
     const { classes } = useStyles({ size }, { classNames, styles, name: 'Autocomplete' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
+    const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const uuid = useUuid(id);
     const [_value, handleChange] = useUncontrolled({
@@ -136,6 +144,12 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       onChange,
       rule: (val) => typeof val === 'string',
     });
+
+    const setDropdownOpened = (opened: boolean) => {
+      _setDropdownOpened(opened);
+      const handler = opened ? onDropdownOpen : onDropdownClose;
+      typeof handler === 'function' && handler();
+    };
 
     useDidUpdate(() => {
       setHovered(0);
@@ -196,7 +210,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
 
     const handleInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
       typeof onClick === 'function' && onClick(event);
-      setDropdownOpened((o) => !o);
+      setDropdownOpened(!dropdownOpened);
     };
 
     const shouldRenderDropdown =

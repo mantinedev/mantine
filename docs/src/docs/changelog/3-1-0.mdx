@@ -100,3 +100,5 @@ custom scrollbars with [react-custom-scrollbars](https://github.com/malte-wessel
 - Add better focus management to [Popover](https://mantine.dev/core/popover/) – now focus will be returned to last active element (made with [use-focus-return](https://mantine.dev/hooks/use-focus-return/) hook)
 - Fix incorrect focus handling in [Menu](https://mantine.dev/core/menu/), [DatePicker](https://mantine.dev/dates/date-picker/) and [DateRangePicker](https://mantine.dev/dates/date-range-picker/) which resulted in focus not being shifted to control/input when dropdown was closed
 - [AvatarsGroup](https://mantine.dev/core/avatar/#avatars-group) - now supports `total` prop to explicitly override the truncated length.
+- Add `onDropdownOpen` and `onDropdownClose` handlers support to [Select](https://mantine.dev/core/select/), [MultiSelect](https://mantine.dev/core/multi-select/) and [Autocomplete](https://mantine.dev/core/autocomplete/) components
+- Fix incorrect [MultiSelect](https://mantine.dev/core/multi-select/) creatable filtering logic when the same item can be created multiple times
