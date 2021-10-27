@@ -135,3 +135,30 @@ You can add styles to components that support [Styles API](/theming/styles-api/)
 All components that are rendered inside MantineProvider will inherit those styles:
 
 <Demo data={providerStyles} />
+
+## Configure emotion
+
+You can configure [emotion cache options](https://emotion.sh/docs/@emotion/cache#options) in MantineProvider.
+These options are usually used to configure styles insertion point. By default Mantine components styles and
+styles created with `createStyles` function are prepended to head. To change that behavior set `prepend` option to `false`:
+
+```tsx
+<MantineProvider emotionOptions={{ key: 'mantine', prepend: false }}>
+  <App />
+</MantineProvider>
+```
+
+Emotion cache also allows you to use Stylis plugins. For example,
+you can use [stylis-plugin-rtl](https://github.com/styled-components/stylis-plugin-rtl)
+to add rtl support:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import rtlPlugin from 'stylis-plugin-rtl';
+
+function Demo() {
+  <MantineProvider emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}>
+    <App />
+  </MantineProvider>;
+}
+```

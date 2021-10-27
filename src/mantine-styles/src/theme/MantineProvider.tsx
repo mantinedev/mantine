@@ -14,13 +14,13 @@ type ProviderStyles = Record<
 interface MantineThemeContextType {
   theme: MantineTheme;
   styles: ProviderStyles;
-  emotionCacheOptions: EmotionCacheOptions;
+  emotionOptions: EmotionCacheOptions;
 }
 
 const MantineThemeContext = createContext<MantineThemeContextType>({
   theme: DEFAULT_THEME,
   styles: {},
-  emotionCacheOptions: { key: 'mantine', prepend: true },
+  emotionOptions: { key: 'mantine', prepend: true },
 });
 
 export function useMantineTheme() {
@@ -31,27 +31,27 @@ export function useMantineThemeStyles() {
   return useContext(MantineThemeContext)?.styles || {};
 }
 
-export function useMantineEmotionCacheOptions(): EmotionCacheOptions {
-  return useContext(MantineThemeContext)?.emotionCacheOptions || { key: 'mantine', prepend: true };
+export function useMantineEmotionOptions(): EmotionCacheOptions {
+  return useContext(MantineThemeContext)?.emotionOptions || { key: 'mantine', prepend: true };
 }
 
 interface MantineProviderProps {
   theme?: MantineThemeOverride;
   styles?: ProviderStyles;
-  emotionCacheOptions?: EmotionCacheOptions;
+  emotionOptions?: EmotionCacheOptions;
   children: React.ReactNode;
 }
 
 export function MantineProvider({
   theme,
   styles = {},
-  emotionCacheOptions,
+  emotionOptions,
   children,
 }: MantineProviderProps) {
   return (
     <SsrProvider>
       <MantineThemeContext.Provider
-        value={{ theme: mergeTheme(DEFAULT_THEME, theme), styles, emotionCacheOptions }}
+        value={{ theme: mergeTheme(DEFAULT_THEME, theme), styles, emotionOptions }}
       >
         {children}
       </MantineThemeContext.Provider>
