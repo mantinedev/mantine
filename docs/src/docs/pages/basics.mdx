@@ -248,6 +248,49 @@ Later when you use Mantine components you can reference these values in `shadow`
 
 <Demo data={PaperDemos.configurator} />
 
+## Polymorphic components
+
+Some Mantine components support changing root element with `component` prop,
+you can pass html element or React component to the prop:
+
+```tsx
+// with html element
+<Text component="a" href="https://mantine.dev">
+  My link text
+</Text>;
+
+// with custom component
+import { Link } from 'react-router-dom';
+<Text component={Link} to="/hello">
+  My link text
+</Text>;
+```
+
+To use Mantine components with Next.js Link:
+
+- set `component` prop to `a`
+- wrap it with Link
+
+```tsx
+import Link from 'next/link';
+
+<Link href="/hello">
+  <Button component="a">Next link button</Button>
+</Link>;
+```
+
+If you use polymorphic with TypeScript you will also need to set type for full types coverage,
+otherwise you will have untyped event handlers and ref props:
+
+```tsx
+// with html component
+<Button<'a'> component="a" />;
+
+// with custom component
+import { Link } from 'react-router-dom';
+<Button<typeof Link> component="a" />;
+```
+
 ## Getting element ref
 
 You can get ref of most components with their `ref` prop:
@@ -301,7 +344,7 @@ You can import props type of any component by adding `Props` to the component na
 import type { ButtonProps } from '@mantine/core';
 ```
 
-### Polymorphic components
+### Polymorphic components types
 
 @mantine/core package exports `PolymorphicRef` and `PolymorphicComponentProps` types to help you build
 custom components with ref forwarding:
