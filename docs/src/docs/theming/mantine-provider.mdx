@@ -157,8 +157,10 @@ import { MantineProvider } from '@mantine/core';
 import rtlPlugin from 'stylis-plugin-rtl';
 
 function Demo() {
-  <MantineProvider emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}>
-    <App />
-  </MantineProvider>;
+  return (
+    <MantineProvider emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}>
+      <App />
+    </MantineProvider>
+  );
 }
 ```

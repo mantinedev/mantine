@@ -15,6 +15,32 @@ import { MediaQueryDemos, CollapseDemos, AppShellDemos, SelectDemos, BoxDemos } 
 - [MediaQuery](https://mantine.dev/core/media-query/) now requires passing `styles` object and does not hide child element by default
 - [Styles API](https://mantine.dev/theming/styles-api/) static selectors no longer use kebab case (was `.mantine-text-input-root`, now `.mantine-TextInput-root`)
 
+## Configure emotion with MantineProvider
+
+You can now set emotion cache options via MantineProvider:
+
+```tsx
+<MantineProvider emotionOptions={{ key: 'mantine', prepend: false }}>
+  <App />
+</MantineProvider>
+```
+
+With these options you can change styles insertion point (from 3.1 styles are prepended to head)
+and configure stylis plugins. For example, you can use [stylis-plugin-rtl](https://github.com/styled-components/stylis-plugin-rtl) to add rtl support:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import rtlPlugin from 'stylis-plugin-rtl';
+
+function Demo() {
+  return (
+    <MantineProvider emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
 ## Styles API on MantineProvider
 
 You can now add styles to components with MantineProvider.
