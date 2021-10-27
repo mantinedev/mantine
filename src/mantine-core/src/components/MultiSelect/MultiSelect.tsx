@@ -121,6 +121,12 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
 
   /** Change dropdown component, can be used to add custom scrollbars */
   dropdownComponent?: React.FC<any>;
+
+  /** Called when dropdown is opened */
+  onDropdownOpen?(): void;
+
+  /** Called when dropdown is closed */
+  onDropdownClose?(): void;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -184,6 +190,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onCreate,
       sx,
       dropdownComponent,
+      onDropdownClose,
+      onDropdownOpen,
       ...others
     }: MultiSelectProps,
     ref
@@ -197,7 +205,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     const inputRef = useRef<HTMLInputElement>();
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
     const uuid = useUuid(id);
-    const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
+    const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const [searchValue, setSearchValue] = useState('');
     const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
@@ -208,6 +216,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     });
     const isCreatable = creatable && typeof getCreateLabel === 'function';
     let createLabel = null;
+
+    const setDropdownOpened = (opened: boolean) => {
+      _setDropdownOpened(opened);
+      const handler = opened ? onDropdownOpen : onDropdownClose;
+      typeof handler === 'function' && handler();
+    };
 
     const handleSearchChange = (val: string) => {
       typeof onSearchChange === 'function' && onSearchChange(val);
@@ -444,7 +458,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             icon={icon}
             onMouseDown={(event) => {
               event.preventDefault();
-              !disabled && setDropdownOpened((o) => !o);
+              !disabled && setDropdownOpened(!dropdownOpened);
               inputRef.current?.focus();
             }}
             classNames={{
