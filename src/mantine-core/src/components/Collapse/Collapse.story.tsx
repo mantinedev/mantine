@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Collapse } from './Collapse';
+import { Select } from '../Select';
 import { Button } from '../Button/Button';
 
 const content = `
@@ -12,6 +13,16 @@ sharp claws. On Bulbasaur&apos;s back is a green plant bulb, which is grown from
 planted there at birth. The bulb also conceals two slender, tentacle-like vines and provides
 it with energy through photosynthesis as well as from the nutrient-rich seeds contained
 within.`;
+
+const data = [
+  { value: 'react', label: 'React' },
+  { value: 'ng', label: 'Angular' },
+  { value: 'svelte', label: 'Svelte' },
+  { value: 'vue', label: 'Vue' },
+  { value: 'riot', label: 'Riot' },
+  { value: 'next', label: 'Next.js' },
+  { value: 'blitz', label: 'Blitz.js' },
+];
 
 storiesOf('@mantine/core/Collapse', module)
   .add('Initially closed', () => {
@@ -58,6 +69,21 @@ storiesOf('@mantine/core/Collapse', module)
           style={{ maxWidth: '600px' }}
         >
           {content}
+        </Collapse>
+      </div>
+    );
+  })
+  .add('With overflow children', () => {
+    const [open, setOpen] = useState(true);
+
+    return (
+      <div style={{ padding: 40, maxWidth: 400 }}>
+        <Button onClick={() => setOpen((prev) => !prev)} style={{ marginBottom: 20 }}>
+          collapse
+        </Button>
+
+        <Collapse in={open} transitionTimingFunction="ease" style={{ maxWidth: '600px' }}>
+          <Select label="Select" placeholder="Select" data={data} />
         </Collapse>
       </div>
     );
