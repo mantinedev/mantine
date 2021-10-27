@@ -21,7 +21,6 @@ export const Box: BoxComponent & { displayName?: string } = forwardRef(
     const { sxClassName } = useSx({ sx, className });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element = component || 'div';
-
     return <Element ref={ref} className={sxClassName} style={mergedStyles} {...rest} />;
   }
 );
