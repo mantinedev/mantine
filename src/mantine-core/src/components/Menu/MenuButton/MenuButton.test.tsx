@@ -5,6 +5,7 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itRendersChildren,
+  itIsPolymorphic,
 } from '@mantine/tests';
 import { shallow } from 'enzyme';
 import { MenuButton } from './MenuButton';
@@ -18,6 +19,7 @@ describe('@mantine/core/MenuButton', () => {
   itSupportsClassName(MenuButton, defaultProps);
   itSupportsStyle(MenuButton, defaultProps);
   itSupportsOthers(MenuButton, defaultProps);
+  itIsPolymorphic(MenuButton, defaultProps);
   itSupportsRef(MenuButton, defaultProps, HTMLButtonElement);
   itRendersChildren(MenuButton, defaultProps);
 
@@ -67,25 +69,6 @@ describe('@mantine/core/MenuButton', () => {
 
     expect(withoutCmd.render().find('span[data-cmd]')).toHaveLength(0);
     expect(withCmd.render().find('span[data-cmd]').text()).toBe('$$$');
-  });
-
-  it('accepts component from component prop', () => {
-    const TestComponent = (props: any) => <span data-test-prop {...props} />;
-    const withTag = shallow(
-      <MenuButton component={'a' as const} href="https://mantine.dev" {...defaultProps}>
-        test
-      </MenuButton>
-    );
-    const withComponent = shallow(
-      <MenuButton<typeof TestComponent> component={TestComponent} {...defaultProps}>
-        test
-      </MenuButton>
-    );
-
-    expect(withTag.type()).toBe('a');
-    expect(withTag.render().attr('href')).toBe('https://mantine.dev');
-    expect(withComponent.type()).toBe(TestComponent);
-    expect(withComponent.render().attr('data-test-prop')).toBe('true');
   });
 
   it('has correct displayName', () => {

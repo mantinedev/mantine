@@ -9,6 +9,7 @@ import {
   itSupportsRef,
   itRendersChildren,
   itSupportsMargins,
+  itIsPolymorphic,
 } from '@mantine/tests';
 import { Loader } from '../Loader/Loader';
 import { ActionIcon } from './ActionIcon';
@@ -18,6 +19,7 @@ describe('@mantine/core/ActionIcon', () => {
   itSupportsOthers(ActionIcon, {});
   itSupportsStyle(ActionIcon, {});
   itSupportsMargins(ActionIcon, {});
+  itIsPolymorphic(ActionIcon, {});
   itSupportsRef(ActionIcon, {}, HTMLButtonElement);
   itRendersChildren(ActionIcon, {});
   checkAccessibility([
@@ -46,21 +48,6 @@ describe('@mantine/core/ActionIcon', () => {
 
     expect(loading.find('.test-icon')).toHaveLength(0);
     expect(loading.find(Loader)).toHaveLength(1);
-  });
-
-  it('accepts component from component prop', () => {
-    const TestComponent = (props: any) => <span data-test-prop {...props} />;
-    const withTag = shallow(
-      <ActionIcon component="a" href="https://mantine.dev">
-        $
-      </ActionIcon>
-    );
-    const withComponent = shallow(<ActionIcon component={TestComponent}>$</ActionIcon>);
-
-    expect(withTag.type()).toBe('a');
-    expect(withTag.render().attr('href')).toBe('https://mantine.dev');
-    expect(withComponent.type()).toBe(TestComponent);
-    expect(withComponent.render().attr('data-test-prop')).toBe('true');
   });
 
   it('has correct displayName', () => {

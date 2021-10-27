@@ -8,6 +8,7 @@ import {
   itSupportsStylesApi,
   itSupportsRef,
   itSupportsMargins,
+  itIsPolymorphic,
 } from '@mantine/tests';
 import { Avatar } from './Avatar';
 
@@ -24,6 +25,7 @@ describe('@mantine/core/Avatar', () => {
   itSupportsMargins(Avatar, { src: img });
   itSupportsOthers(Avatar, { src: img });
   itSupportsStyle(Avatar, { src: img });
+  itIsPolymorphic(Avatar, { src: img });
   itSupportsRef(Avatar, { src: img }, HTMLDivElement);
 
   itSupportsStylesApi(Avatar, { src: img }, ['root', 'image'], 'Avatar', 'with-image');
@@ -61,17 +63,6 @@ describe('@mantine/core/Avatar', () => {
     expect(element.render().find('.mantine-Avatar-placeholder').find('.test').text()).toBe(
       'test-placeholder'
     );
-  });
-
-  it('accepts component from component prop', () => {
-    const TestComponent = (props: any) => <span data-test-prop {...props} />;
-    const withTag = shallow(<Avatar<'a'> component="a" href="https://mantine.dev" />);
-    const withComponent = shallow(<Avatar<typeof TestComponent> component={TestComponent} />);
-
-    expect(withTag.type()).toBe('a');
-    expect(withTag.render().attr('href')).toBe('https://mantine.dev');
-    expect(withComponent.type()).toBe(TestComponent);
-    expect(withComponent.render().attr('data-test-prop')).toBe('true');
   });
 
   it('has correct displayName', () => {

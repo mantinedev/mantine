@@ -107,7 +107,7 @@ describe('@mantine/core/Input', () => {
     );
   });
 
-  it('accepts component from component prop', () => {
+  it('accepts input component from component prop', () => {
     const TestComponent = (props: any) => <select data-test-prop {...props} />;
     const withTag = shallow(<Input<'button'> component="button" />);
     const withComponent = shallow(<Input<typeof TestComponent> component={TestComponent} />);
@@ -115,5 +115,9 @@ describe('@mantine/core/Input', () => {
     expect(withTag.find('.mantine-Input-input').type()).toBe('button');
     expect(withComponent.find('.mantine-Input-input').type()).toBe(TestComponent);
     expect(withComponent.render().find('.mantine-Input-input').attr('data-test-prop')).toBe('true');
+  });
+
+  it('has correct displayName', () => {
+    expect(Input.displayName).toEqual('@mantine/core/Input');
   });
 });
