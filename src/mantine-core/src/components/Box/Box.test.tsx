@@ -5,6 +5,7 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsStyle,
+  itIsPolymorphic,
 } from '@mantine/tests';
 import { Box } from './Box';
 
@@ -14,6 +15,7 @@ describe('@mantine/core/Box', () => {
   itSupportsMargins(Box, {});
   itSupportsOthers(Box, {});
   itSupportsStyle(Box, {});
+  itIsPolymorphic(Box, {});
   itSupportsRef(Box, {}, HTMLDivElement);
 
   it('has correct displayName', () => {
