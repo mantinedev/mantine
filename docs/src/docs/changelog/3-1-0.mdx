@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.1.0
 date: 'November 10th, 2021'
 ---
 
-import { providerStyles, CreateStylesDemos } from '@docs/demos';
+import { providerStyles, CreateStylesDemos, useScrollIntoViewParent } from '@docs/demos';
 import { MediaQueryDemos, CollapseDemos, AppShellDemos, SelectDemos } from '@demos/core';
 
 ## Breaking changes
@@ -71,11 +71,15 @@ function Demo({ active }) {
 }
 ```
 
-## New components
+## New components and hooks
 
 New [AppShell](https://mantine.dev/core/app-shell/) component allows you create responsive app shell with fixed or static position:
 
 <Demo data={AppShellDemos.usage} />
+
+New [use-scroll-into-view](https://mantine.dev/hooks/use-scroll-into-view/) hook lets you scroll given node into view within scrollable container or body element:
+
+<Demo data={useScrollIntoViewParent} />
 
 ## New features
 
