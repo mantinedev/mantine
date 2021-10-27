@@ -146,7 +146,7 @@ storiesOf('@mantine/core/Select', module)
       />
     </div>
   ))
-  .add('Clearable', () => (
+  .add('Creatable', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
       <Creatable />
     </div>

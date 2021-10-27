@@ -394,7 +394,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       inputRef.current?.focus();
     };
 
-    if (isCreatable && shouldCreate(searchValue, filteredData)) {
+    if (isCreatable && shouldCreate(searchValue, sortedData)) {
       createLabel = getCreateLabel(searchValue);
       filteredData.push({ label: searchValue, value: searchValue, creatable: true });
     }
