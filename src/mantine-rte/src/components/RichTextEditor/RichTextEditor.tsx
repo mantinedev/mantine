@@ -83,16 +83,18 @@ export function RichTextEditor({
 
   const modules = useMemo(
     () => ({
-      toolbar: { container: `#${uuid}` },
+      ...(uuid ? { toolbar: { container: `#${uuid}` } } : undefined),
       imageUploader: {
         upload: (file: File) => onImageUpload(file),
       },
     }),
-    []
+    [uuid]
   );
 
   useEffect(() => {
-    attachShortcuts(editorRef?.current?.editor?.keyboard);
+    if (editorRef.current) {
+      attachShortcuts(editorRef?.current?.editor?.keyboard);
+    }
   }, []);
 
   return (
