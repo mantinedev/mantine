@@ -86,7 +86,6 @@ export default createStyles((theme, { position, size }: DrawerStyles, getRef) =>
       alignItems: 'center',
       justifyContent: 'space-between',
       marginBottom: theme.spacing.md,
-      padding: theme.spacing.md,
     },
   };
 });
