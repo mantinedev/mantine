@@ -11,63 +11,25 @@ docs: 'hooks/use-scroll-lock.mdx'
 source: 'mantine-hooks/src/use-scroll-lock/use-scroll-lock.ts'
 ---
 
-import { ModalDemos } from '@demos/core';
 import { useScrollLockHook } from '@docs/demos';
 
 ## Usage
 
-Use this hook when you want to prevent user from scrolling on document level,
-for example, with modals and drawers.
-
-Example modal component, whenever modal is opened, scroll is locked at current scroll position.
-After lock it adds padding to `body` equal to size of removed scrollbar and saves it ass `css-variable` as `--removed-scroll-width` which is removed after unlock. 
-
-To prevent move on layout components like `Navbar` component you can add `padding-right: var(--removed-scroll-width, 0px))`.
-
-Hook accepts two arguments:
-
- – optional boolean value that controls if scroll is locked
-
- – optional options object:
- - `disableBodyPadding` optional boolean that controls if `--removed-scroll-width` should be handled, default to `false`
-
-Hooks returns an array of same usage as `useState` hook.
-```tsx
-import { useScrollLock } from '@mantine/hooks';
-
-function Modal({ opened }) {
-  useScrollLock(opened);
-
-  if (!opened) {
-    return null;
-  }
-
-  return <div>My modal</div>;
-}
-```
-
-## Examples
-
-### Basic
-
-When hooks is called with `true`, it sets `document.body.style.overflow` to `hidden`. 
-When component is unmounted, scroll lock is automatically removed:
+use-scroll-lock locks scroll at current position by setting `document.body` overflow to `hidden`.
 
 <Demo data={useScrollLockHook} />
 
-### Modal
+## Scrollbars offset
 
-use-scroll-lock is used in some components in @mantine/core,
-example with [Modal](/core/modal/) component:
-
-<Demo data={ModalDemos.usage} />
+In some operation systems scrollbars have width
+To offset that width use-scroll-lock adds `padding-right` equal to scrollbar width to body element when scroll is locked.
+However if you use elements with fixed position you will need to add right padding manually: `padding-right: var(--removed-scroll-width, 0px))`.
 
 ## Definition
 
 ```tsx
 function useScrollLock<T extends HTMLElement = HTMLDivElement>(
-  lock?: boolean, 
-  options?: {
-    disableBodyPadding?: boolean;
-}): readonly [boolean, Dispatch<SetStateAction<boolean>>]
+  lock?: boolean,
+  options?: { disableBodyPadding?: boolean }
+): readonly [boolean, Dispatch<SetStateAction<boolean>>];
 ```
