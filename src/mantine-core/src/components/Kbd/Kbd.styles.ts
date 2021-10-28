@@ -1,7 +1,7 @@
 import { createStyles } from '@mantine/styles';
 
 export default createStyles((theme) => ({
-  kbd: {
+  root: {
     lineHeight: theme.lineHeight,
     fontFamily: theme.fontFamilyMonospace,
     fontSize: theme.fontSizes.xs,

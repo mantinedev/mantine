@@ -6,7 +6,6 @@ import {
   itSupportsStyle,
   itRendersChildren,
   itSupportsMargins,
-  itSupportsRef,
 } from '@mantine/tests';
 import { Collapse } from './Collapse';
 
@@ -21,7 +20,6 @@ describe('@mantine/core/Collapse', () => {
   itSupportsOthers(Collapse, defaultProps);
   itSupportsStyle(Collapse, defaultProps);
   itSupportsMargins(Collapse, defaultProps);
-  itSupportsRef(Collapse, defaultProps, HTMLDivElement);
 
   it('transitionend event bubbling does not run onTransitionEnd twice', () => {
     const mockedFunction = jest.fn();

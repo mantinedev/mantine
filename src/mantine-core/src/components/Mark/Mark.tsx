@@ -5,6 +5,7 @@ import {
   getThemeColor,
   MantineColor,
   useExtractedMargins,
+  useSx,
 } from '@mantine/styles';
 
 export interface MarkProps extends DefaultProps, React.ComponentPropsWithoutRef<'mark'> {
@@ -13,22 +14,26 @@ export interface MarkProps extends DefaultProps, React.ComponentPropsWithoutRef<
 }
 
 export const Mark = forwardRef<HTMLElement, MarkProps>(
-  ({ color = 'yellow', style, ...others }: MarkProps, ref) => {
+  ({ color = 'yellow', style, sx, className, ...others }: MarkProps, ref) => {
     const theme = useMantineTheme();
+    const { sxClassName, css, cx } = useSx({ sx, className });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (
       <mark
         ref={ref}
-        style={{
-          backgroundColor: getThemeColor({
-            theme,
-            color,
-            shade: theme.colorScheme === 'dark' ? 5 : 2,
+        style={mergedStyles}
+        className={cx(
+          css({
+            backgroundColor: getThemeColor({
+              theme,
+              color,
+              shade: theme.colorScheme === 'dark' ? 5 : 2,
+            }),
+            color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
           }),
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
-          ...mergedStyles,
-        }}
+          sxClassName
+        )}
         {...rest}
       />
     );

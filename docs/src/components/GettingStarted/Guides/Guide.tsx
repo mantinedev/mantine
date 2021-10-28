@@ -129,8 +129,8 @@ function NextGuide({ dependencies }: GuideProps) {
 function GatsbyGuide({ dependencies }: GuideProps) {
   return (
     <Guide
-      dependencies={dependencies}
-      initScript="npx create-next-app --ts"
+      dependencies={`${dependencies} gatsby-plugin-mantine`}
+      initScript="npm init gatsby"
       action="Get stared with Gatsby.js Github template"
       actionLink="https://github.com/mantinedev/mantine-gatsby-template"
       withDone

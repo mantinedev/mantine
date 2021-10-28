@@ -32,4 +32,6 @@ docs/.docgen/
 
 # gatsby
 docs/.cache
+gallery/.cache
 docs/public
+gallery/public

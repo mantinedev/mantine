@@ -15,5 +15,14 @@ export function generateClassNamesCode(names: string[], component: string) {
 }
 
 export function generateRootCode(component: string) {
-  return `<${component} className="your-class-name" style={{ marginTop: 10 }} />`;
+  return `<${component}
+  className="your-class-name"
+  style={{ marginTop: 10 }}
+  sx={(theme) => ({
+    backgroundColor: theme.colors.gray[0],
+    '&:hover': {
+      backgroundColor: theme.colors.gray[1],
+    },
+  })}
+/>`;
 }

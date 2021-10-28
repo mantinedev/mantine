@@ -3,7 +3,6 @@ import { getSizeValue } from '../get-size-value/get-size-value';
 import type { MantineMargins } from '../../types';
 
 interface UseExtractedMargins {
-  rootStyle?: React.CSSProperties;
   style?: React.CSSProperties;
   others: MantineMargins & { [key: string]: any };
 }
@@ -20,9 +19,9 @@ const margins = {
   mr: 'marginRight',
 };
 
-export function useExtractedMargins({ others, rootStyle, style }: UseExtractedMargins) {
+export function useExtractedMargins({ others, style }: UseExtractedMargins) {
   const theme = useMantineTheme();
-  const mergedStyles: React.CSSProperties = { ...style, ...rootStyle };
+  const mergedStyles: React.CSSProperties = { ...style };
 
   if (isValidMargin(others.my)) {
     const margin = getSizeValue({ size: others.my, sizes: theme.spacing });

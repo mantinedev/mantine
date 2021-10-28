@@ -18,10 +18,18 @@ type CardComponent = <C extends React.ElementType = 'div'>(
 export const Card: CardComponent & { displayName?: string; Section: React.FC<CardSectionProps> } =
   forwardRef(
     <C extends React.ElementType = 'div'>(
-      { component, className, padding = 'md', radius = 'sm', children, ...others }: CardProps<C>,
+      {
+        component,
+        className,
+        padding = 'md',
+        radius = 'sm',
+        children,
+        sx,
+        ...others
+      }: CardProps<C>,
       ref: PolymorphicRef<C>
     ) => {
-      const { classes, cx } = useStyles(null, null, 'card');
+      const { classes, cx } = useStyles(null, { name: 'Card', sx });
 
       const content = Children.map(children, (child) => {
         if (typeof child === 'object' && child && 'type' in child && child.type === CardSection) {
@@ -33,7 +41,7 @@ export const Card: CardComponent & { displayName?: string; Section: React.FC<Car
 
       return (
         <Paper
-          className={cx(classes.card, className)}
+          className={cx(classes.root, className)}
           radius={radius}
           padding={padding}
           component={component as any}

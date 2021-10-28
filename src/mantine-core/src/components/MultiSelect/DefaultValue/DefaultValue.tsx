@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineSize,
-  MantineNumberSize,
-  ClassNames,
-} from '@mantine/styles';
+import { DefaultProps, MantineSize, MantineNumberSize, ClassNames } from '@mantine/styles';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import useStyles from './DefaultValue.styles';
 
@@ -34,22 +28,19 @@ export function DefaultValue({
   classNames,
   styles,
   className,
-  style,
   onRemove,
   disabled,
   size,
   radius,
   ...others
 }: MultiSelectValueProps) {
-  const { classes, cx } = useStyles({ size, disabled, radius }, classNames, 'multi-select');
-  const _styles = mergeStyles(classes, styles);
+  const { classes, cx } = useStyles(
+    { size, disabled, radius },
+    { classNames, styles, name: 'MultiSelect' }
+  );
 
   return (
-    <div
-      className={cx(classes.defaultValue, className)}
-      style={{ ...style, ..._styles.defaultValue }}
-      {...others}
-    >
+    <div className={cx(classes.defaultValue, className)} {...others}>
       <span className={classes.label}>{label}</span>
 
       {!disabled && (
@@ -62,7 +53,6 @@ export function DefaultValue({
           variant="transparent"
           iconSize={buttonSizes[size] / 2}
           className={classes.defaultValueRemove}
-          style={_styles.defaultValueRemove}
           tabIndex={-1}
         />
       )}

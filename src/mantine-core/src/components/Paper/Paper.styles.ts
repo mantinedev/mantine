@@ -14,12 +14,12 @@ interface PaperStyles {
 }
 
 export default createStyles((theme, { radius, shadow, padding, withBorder }: PaperStyles) => ({
-  paper: {
+  root: {
     ...getFocusStyles(theme),
     WebkitTapHighlightColor: 'transparent',
     display: 'block',
     textDecoration: 'none',
-    color: theme.black,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     boxSizing: 'border-box',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),

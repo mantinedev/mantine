@@ -1,6 +1,5 @@
 import React from 'react';
 import { Group, Button, Text, MantineProvider, useMantineColorScheme } from '@mantine/core';
-import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
 
 const code = `import { Button, MantineProvider, Text } from '@mantine/core';
 
@@ -16,20 +15,24 @@ function Demo() {
   );
 }`;
 
-export function NestedProvidersDemo() {
+function Demo() {
   const { colorScheme } = useMantineColorScheme();
 
   return (
-    <CodeDemo code={code} language="tsx">
-      <MantineProvider theme={{ fontFamily: 'Georgia, serif', colorScheme }}>
-        <Text style={{ textAlign: 'center', marginBottom: 10 }}>Georgia or serif text</Text>
+    <MantineProvider theme={{ fontFamily: 'Georgia, serif', colorScheme }}>
+      <Text style={{ textAlign: 'center', marginBottom: 10 }}>Georgia or serif text</Text>
 
-        <MantineProvider theme={{ fontFamily: 'Greycliff CF, sans-serif', colorScheme }}>
-          <Group position="center">
-            <Button>Greycliff CF button</Button>
-          </Group>
-        </MantineProvider>
+      <MantineProvider theme={{ fontFamily: 'Greycliff CF, sans-serif', colorScheme }}>
+        <Group position="center">
+          <Button>Greycliff CF button</Button>
+        </Group>
       </MantineProvider>
-    </CodeDemo>
+    </MantineProvider>
   );
 }
+
+export const nestedProviders: MantineDemo = {
+  type: 'demo',
+  component: Demo,
+  code,
+};

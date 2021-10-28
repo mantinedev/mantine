@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import {
   useMantineTheme,
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineColor,
@@ -51,15 +50,18 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
       variant = 'solid',
       styles,
       classNames,
+      sx,
       ...others
     }: DividerProps,
     ref
   ) => {
     const theme = useMantineTheme();
     const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
-    const { classes, cx } = useStyles({ color: _color, size, variant }, classNames, 'divider');
+    const { classes, cx } = useStyles(
+      { color: _color, size, variant },
+      { classNames, styles, sx, name: 'Divider' }
+    );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const _styles = mergeStyles(classes, styles);
 
     const vertical = orientation === 'vertical';
     const horizontal = !vertical;
@@ -84,7 +86,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
             {...labelProps}
             color={_color}
             size={labelProps?.size || 'xs'}
-            style={{ marginTop: 2, ..._styles.label, ..._styles[labelPosition] }}
+            style={{ marginTop: 2 }}
             className={cx(classes.label, classes[labelPosition])}
           >
             {label}

@@ -1,0 +1,44 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Skeleton
+order: 1
+slug: /core/skeleton/
+category: 'feedback'
+description: 'Indicate content loading state'
+props: ['Skeleton']
+import: "import { Skeleton } from '@mantine/core';"
+source: 'mantine-core/src/components/Skeleton/Skeleton.tsx'
+docs: 'core/Skeleton.mdx'
+styles: ['Skeleton', 'single-node']
+---
+
+import { SkeletonDemos } from '@demos/core';
+
+## Usage
+
+Use Skeleton to create a placeholder for loading content. Component support following props:
+
+- `height` – height in px (number) or string for other css values
+- `width` – width in px (number) or string for other css values
+- `radius` – value from `theme.radius` or number to set border-radius in px
+- `circle` – if true width, height and border-radius will equal to value specified in `height` prop
+
+<Demo data={SkeletonDemos.usage} />
+
+## With content
+
+If you want to indicate loading state of content that is already on page you can wrap it with Skeleton
+and control loading overlay visibility with `visible` prop:
+
+<Demo data={SkeletonDemos.content} />
+
+## TypeScript
+
+Import component props type:
+
+```tsx
+import type { SkeletonProps } from '@mantine/core';
+```
+
+`SkeletonProps` extends `React.ComponentPropsWithoutRef<'svg'>`, all other props are available under _Component props_ tab.

@@ -28,13 +28,21 @@ storiesOf('@mantine/core/Avatar', module)
     <Group style={{ padding: 15 }}>{getThemes({ children: 'VR', radius: 500 })}</Group>
   ))
   .add('AvatarsGroup', () => (
-    <div style={{ padding: 40 }}>
-      <AvatarsGroup size={40} spacing="lg" limit={2}>
-        <Avatar component="a" href="https://github.com/rtivital" src={image} />
-        <Avatar src={image} radius="xl" color="indigo" />
-        <Avatar radius="md" color="blue" />
-      </AvatarsGroup>
-    </div>
+    <Group style={{ padding: 15 }}>
+      <div style={{ padding: 40 }}>
+        <AvatarsGroup size={40} spacing="lg" limit={2}>
+          <Avatar component="a" href="https://github.com/rtivital" src={image} />
+          <Avatar src={image} radius="xl" color="indigo" />
+          <Avatar radius="md" color="blue" />
+        </AvatarsGroup>
+      </div>
+      <div style={{ padding: 40 }}>
+        <AvatarsGroup size={40} spacing="lg" limit={2} total={50}>
+          <Avatar component="a" href="https://github.com/rtivital" src={image} />
+          <Avatar radius="md" color="blue" />
+        </AvatarsGroup>
+      </div>
+    </Group>
   ))
   .add('Dark theme', () => (
     <DarkStory>

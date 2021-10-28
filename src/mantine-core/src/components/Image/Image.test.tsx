@@ -32,14 +32,14 @@ describe('@mantine/core/Image', () => {
     Image,
     { src: null, withPlaceholder: true },
     ['root', 'placeholder'],
-    'image',
+    'Image',
     'with placeholder'
   );
   itSupportsStylesApi(
     Image,
     { src: 'test.png', caption: 'test-caption' },
     ['root', 'image', 'caption'],
-    'image',
+    'Image',
     'with image'
   );
 
@@ -56,7 +56,7 @@ describe('@mantine/core/Image', () => {
 
   it('sets given width and height on wrapper element', () => {
     const element = shallow(<Image {...defaultProps} width={478} height={207} />);
-    const styles = element.find('.mantine-image-root').prop('style');
+    const styles = element.find('.mantine-Image-root').prop('style');
     expect(styles.width).toBe(478);
     expect(styles.height).toBe(207);
   });
@@ -65,8 +65,8 @@ describe('@mantine/core/Image', () => {
     const withPlaceholder = shallow(<Image src={null} withPlaceholder />);
     const withoutPlaceholder = shallow(<Image src={null} withPlaceholder={false} />);
 
-    expect(withPlaceholder.find('.mantine-image-placeholder')).toHaveLength(1);
-    expect(withoutPlaceholder.find('.mantine-image-placeholder')).toHaveLength(0);
+    expect(withPlaceholder.find('.mantine-Image-placeholder')).toHaveLength(1);
+    expect(withoutPlaceholder.find('.mantine-Image-placeholder')).toHaveLength(0);
   });
 
   it('renders given caption', () => {
@@ -83,6 +83,6 @@ describe('@mantine/core/Image', () => {
       <Image {...defaultProps} withPlaceholder placeholder="test-placeholder" />
     );
 
-    expect(element.find('.mantine-image-placeholder').text()).toBe('test-placeholder');
+    expect(element.find('.mantine-Image-placeholder').text()).toBe('test-placeholder');
   });
 });

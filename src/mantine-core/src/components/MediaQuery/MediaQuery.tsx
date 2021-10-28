@@ -1,5 +1,5 @@
 import React, { Children } from 'react';
-import { MantineNumberSize } from '@mantine/styles';
+import { MantineNumberSize, CSSObject } from '@mantine/styles';
 import useStyles from './MediaQuery.styles';
 
 export interface MediaQueryProps {
@@ -13,10 +13,26 @@ export interface MediaQueryProps {
 
   /** Larger than given breakpoint or value in px, will be hidden on smaller viewport */
   largerThan?: MantineNumberSize;
+
+  /** Any other media query */
+  query?: string;
+
+  /** Styles applied to child when breakpoint matches */
+  styles: CSSObject;
 }
 
-export function MediaQuery({ children, smallerThan, largerThan, className }: MediaQueryProps) {
-  const { classes, cx } = useStyles({ smallerThan, largerThan });
+export function MediaQuery({
+  children,
+  smallerThan,
+  largerThan,
+  query,
+  styles,
+  className,
+}: MediaQueryProps) {
+  const { classes, cx } = useStyles(
+    { smallerThan, largerThan, query, styles },
+    { name: 'MediaQuery' }
+  );
   const child = Children.only(children) as React.ReactElement;
   return React.cloneElement(child, {
     className: cx(classes.media, child.props?.className, className),

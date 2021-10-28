@@ -3,4 +3,6 @@ import { ChipStylesNames } from './Chip/Chip';
 
 export { Chip };
 
-export const Chips: Record<ChipStylesNames, string> = Chip;
+const { root, ...otherNames } = Chip;
+
+export const Chips: Record<Exclude<ChipStylesNames, 'root'>, string> = otherNames;

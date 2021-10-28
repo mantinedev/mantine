@@ -17,7 +17,7 @@ describe('@mantine/core/JsonInput', () => {
     JsonInput,
     defaultInputProps,
     Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
-    'json-input'
+    'JsonInput'
   );
 
   it('has correct displayName', () => {

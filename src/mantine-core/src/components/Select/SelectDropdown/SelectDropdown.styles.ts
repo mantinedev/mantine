@@ -4,7 +4,7 @@ export default createStyles((theme) => ({
   dropdown: {
     boxSizing: 'border-box',
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 10,
     top: theme.spacing.xs / 2,
     left: 0,
     right: 0,

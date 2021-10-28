@@ -14,12 +14,10 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
 }
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
-  ({ className, padding = 'md', fluid, size, style, ...others }: ContainerProps, ref) => {
-    const { classes, cx } = useStyles({ padding, fluid, size }, null, 'container');
+  ({ className, padding = 'md', fluid, size, style, sx, ...others }: ContainerProps, ref) => {
+    const { classes, cx } = useStyles({ padding, fluid, size }, { sx, name: 'Container' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    return (
-      <div className={cx(classes.container, className)} style={mergedStyles} ref={ref} {...rest} />
-    );
+    return <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest} />;
   }
 );
 

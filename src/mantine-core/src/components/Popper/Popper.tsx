@@ -53,6 +53,9 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
 
   /** useEffect dependencies to force update popper position */
   forceUpdateDependencies?: any[];
+
+  // Called when transition ends
+  onTransitionEnd?(): void;
 }
 
 export function Popper<T extends HTMLElement = HTMLDivElement>({
@@ -71,9 +74,10 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   arrowStyle,
   zIndex = 100,
   forceUpdateDependencies = [],
+  onTransitionEnd,
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
-  const { classes, cx } = useStyles({ arrowSize });
+  const { classes, cx } = useStyles({ arrowSize }, { name: 'Popper' });
   const [popperElement, setPopperElement] = useState(null);
 
   const { styles, attributes, forceUpdate } = usePopper(referenceElement, popperElement, {
@@ -93,6 +97,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
       duration={transitionDuration}
       transition={transition}
       timingFunction={transitionTimingFunction}
+      onExited={onTransitionEnd}
     >
       {(transitionStyles) => (
         <div>

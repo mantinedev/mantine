@@ -53,7 +53,7 @@ describe('@mantine/dates/Calendar', () => {
         prop !== 'firstInRange' &&
         prop !== 'lastInRange'
     ),
-    'calendar',
+    'Calendar',
     'with select'
   );
 
@@ -69,7 +69,7 @@ describe('@mantine/dates/Calendar', () => {
         prop !== 'firstInRange' &&
         prop !== 'lastInRange'
     ),
-    'calendar',
+    'Calendar',
     'with label'
   );
 

@@ -29,6 +29,7 @@ interface MantineDemoBase {
 interface MantineCodeDemo extends MantineDemoBase {
   type: 'demo';
   demoProps?: {
+    spacing?: boolean;
     demoBackground?: string;
     toggle?: boolean;
     githubLink?: string;

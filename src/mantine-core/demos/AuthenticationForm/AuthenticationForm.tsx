@@ -43,6 +43,7 @@ export function AuthenticationForm({
       lastName: '',
       email: '',
       password: '',
+      confirmPassword: '',
       termsOfService: true,
     },
 
@@ -51,6 +52,7 @@ export function AuthenticationForm({
       lastName: (value) => formType === 'login' || value.trim().length >= 2,
       email: (value) => /^\S+@\S+$/.test(value),
       password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
+      confirmPassword: (val, values) => val === values.password,
     },
   });
 
@@ -135,6 +137,19 @@ export function AuthenticationForm({
             'Password should contain 1 number, 1 letter and at least 6 characters'
           }
         />
+
+        {formType === 'register' && (
+          <PasswordInput
+            style={{ marginTop: 15 }}
+            required
+            label="Confirm Password"
+            placeholder="Confirm password"
+            icon={<LockClosedIcon />}
+            value={form.values.confirmPassword}
+            onChange={(event) => form.setFieldValue('confirmPassword', event.currentTarget.value)}
+            error={form.errors.confirmPassword && "Passwords don't match. Try again"}
+          />
+        )}
 
         {formType === 'register' && (
           <Checkbox

@@ -34,7 +34,7 @@ describe('@mantine/core/PasswordInput', () => {
     PasswordInput,
     defaultInputProps,
     Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
-    'password-input'
+    'PasswordInput'
   );
 
   it('has correct displayName', () => {

@@ -1,7 +1,6 @@
 import React, { useState, useRef, forwardRef } from 'react';
-import { useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
+import { useUncontrolled, useMergedRef, useDidUpdate, useScrollIntoView } from '@mantine/hooks';
 import {
-  mergeStyles,
   DefaultProps,
   MantineSize,
   MantineShadow,
@@ -9,7 +8,6 @@ import {
   useUuid,
   useExtractedMargins,
 } from '@mantine/styles';
-import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { MantineTransition } from '../Transition';
@@ -120,6 +118,15 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
 
   /** Called when create option is selected */
   onCreate?: (query: string) => void;
+
+  /** Change dropdown component, can be used to add custom scrollbars */
+  dropdownComponent?: React.FC<any>;
+
+  /** Called when dropdown is opened */
+  onDropdownOpen?(): void;
+
+  /** Called when dropdown is closed */
+  onDropdownClose?(): void;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -181,22 +188,40 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       getCreateLabel,
       shouldCreate = defaultShouldCreate,
       onCreate,
+      sx,
+      dropdownComponent,
+      onDropdownClose,
+      onDropdownOpen,
       ...others
     }: MultiSelectProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, 'multi-select');
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles(
+      { size, invalid: !!error },
+      { classNames, styles, name: 'MultiSelect' }
+    );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const dropdownRef = useRef<HTMLDivElement>();
     const inputRef = useRef<HTMLInputElement>();
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
     const uuid = useUuid(id);
-    const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
+    const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const [searchValue, setSearchValue] = useState('');
+    const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
+      duration: 0,
+      offset: 5,
+      cancelable: false,
+      isList: true,
+    });
     const isCreatable = creatable && typeof getCreateLabel === 'function';
     let createLabel = null;
+
+    const setDropdownOpened = (opened: boolean) => {
+      _setDropdownOpened(opened);
+      const handler = opened ? onDropdownOpen : onDropdownClose;
+      typeof handler === 'function' && handler();
+    };
 
     const handleSearchChange = (val: string) => {
       typeof onSearchChange === 'function' && onSearchChange(val);
@@ -294,7 +319,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               (index) => index - 1,
               (index) => index > 0
             );
-            scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
+
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+            scrollIntoView({
+              alignment: 'start',
+            });
             return nextIndex;
           });
           break;
@@ -309,16 +339,23 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               (index) => index + 1,
               (index) => index < filteredData.length - 1
             );
-            scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
+
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+            scrollIntoView({
+              alignment: 'end',
+            });
             return nextIndex;
           });
           break;
         }
 
         case 'Enter': {
-          if (filteredData[hovered]) {
+          if (filteredData[hovered] && dropdownOpened) {
             event.preventDefault();
             handleItemSelect(filteredData[hovered]);
+          } else {
+            setDropdownOpened(true);
           }
 
           break;
@@ -356,7 +393,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           {...item}
           disabled={disabled}
           className={classes.value}
-          style={_styles.value}
           onRemove={() => handleValueRemove(item.value)}
           key={item.value}
           size={size}
@@ -372,7 +408,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       inputRef.current?.focus();
     };
 
-    if (isCreatable && shouldCreate(searchValue, filteredData)) {
+    if (isCreatable && shouldCreate(searchValue, sortedData)) {
       createLabel = getCreateLabel(searchValue);
       filteredData.push({ label: searchValue, value: searchValue, creatable: true });
     }
@@ -394,12 +430,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         style={mergedStyles}
         classNames={classNames}
         styles={styles}
-        __staticSelector="multi-select"
+        __staticSelector="MultiSelect"
+        sx={sx}
         {...wrapperProps}
       >
         <div
           className={classes.wrapper}
-          style={_styles.wrapper}
           role="combobox"
           aria-haspopup="listbox"
           aria-owns={`${uuid}-items`}
@@ -409,9 +445,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           tabIndex={-1}
         >
           <Input<'div'>
-            __staticSelector="multi-select"
+            __staticSelector="MultiSelect"
             style={{ overflow: 'hidden' }}
-            classNames={classNames}
             component="div"
             multiline
             size={size}
@@ -423,19 +458,17 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             icon={icon}
             onMouseDown={(event) => {
               event.preventDefault();
-              !disabled && setDropdownOpened((o) => !o);
+              !disabled && setDropdownOpened(!dropdownOpened);
               inputRef.current?.focus();
+            }}
+            classNames={{
+              ...classNames,
+              input: cx({ [classes.input]: !searchable }, classNames?.input),
             }}
             {...getSelectRightSectionProps({
               rightSection,
               rightSectionWidth,
-              styles: {
-                ...styles,
-                input: {
-                  ...styles?.input,
-                  cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
-                },
-              },
+              styles,
               size,
               shouldClear: clearable && _value.length > 0,
               clearButtonLabel,
@@ -443,14 +476,13 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               error,
             })}
           >
-            <div className={classes.values} style={_styles.values}>
+            <div className={classes.values}>
               {selectedItems}
 
               <input
                 ref={useMergedRef(ref, inputRef)}
                 type="text"
                 id={uuid}
-                style={_styles.searchInput}
                 className={cx(classes.searchInput, {
                   [classes.searchInputPointer]: !searchable,
                   [classes.searchInputInputHidden]:
@@ -482,8 +514,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             maxDropdownHeight={maxDropdownHeight}
             classNames={classNames}
             styles={styles}
-            ref={dropdownRef}
-            __staticSelector="multi-select"
+            ref={useMergedRef(dropdownRef, scrollableRef)}
+            __staticSelector="MultiSelect"
+            dropdownComponent={dropdownComponent}
           >
             <SelectItems
               data={filteredData}
@@ -491,7 +524,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               classNames={classNames}
               styles={styles}
               uuid={uuid}
-              __staticSelector="multi-select"
+              __staticSelector="MultiSelect"
               onItemHover={setHovered}
               onItemSelect={handleItemSelect}
               itemsRefs={itemsRefs}

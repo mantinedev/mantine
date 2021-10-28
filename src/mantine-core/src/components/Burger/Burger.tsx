@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import {
   useMantineTheme,
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineColor,
@@ -27,14 +26,26 @@ export interface BurgerProps
 
 export const Burger = forwardRef<HTMLButtonElement, BurgerProps>(
   (
-    { className, style, opened, color, size = 'md', classNames, styles, ...others }: BurgerProps,
+    {
+      className,
+      style,
+      opened,
+      color,
+      size = 'md',
+      classNames,
+      styles,
+      sx,
+      ...others
+    }: BurgerProps,
     ref
   ) => {
     const theme = useMantineTheme();
     const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
-    const { classes, cx } = useStyles({ color: _color, size }, classNames, 'burger');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles(
+      { color: _color, size },
+      { classNames, styles, sx, name: 'Burger' }
+    );
 
     return (
       <button
@@ -44,7 +55,7 @@ export const Burger = forwardRef<HTMLButtonElement, BurgerProps>(
         style={mergedStyles}
         {...rest}
       >
-        <div className={cx(classes.burger, { [classes.opened]: opened })} style={_styles.burger} />
+        <div className={cx(classes.burger, { [classes.opened]: opened })} />
       </button>
     );
   }

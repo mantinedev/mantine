@@ -1,0 +1,17 @@
+import { MantineSize, MantineTheme, getSizeValue } from '@mantine/styles';
+
+type Breakpoints<T> = Partial<Record<MantineSize | (string & {}), T>>;
+
+export function getSortedBreakpoints<T>(breakpoints: Breakpoints<T>, theme: MantineTheme) {
+  if (!breakpoints) {
+    return [];
+  }
+
+  const values = Object.keys(breakpoints).map((breakpoint) => [
+    getSizeValue({ size: breakpoint, sizes: theme.breakpoints }),
+    breakpoints[breakpoint],
+  ]);
+
+  values.sort((a, b) => b[0] - a[0]);
+  return values as [number, T][];
+}

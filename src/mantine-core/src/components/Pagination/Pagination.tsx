@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import { usePagination } from '@mantine/hooks';
 import {
-  mergeStyles,
   useMantineTheme,
   DefaultProps,
   MantineNumberSize,
@@ -82,13 +81,16 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
       spacing,
       withEdges = false,
       withControls = true,
+      sx,
       ...others
     }: PaginationProps,
     ref
   ) => {
     const theme = useMantineTheme();
-    const { classes, cx } = useStyles({ color, size, radius }, classNames, 'pagination');
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles(
+      { color, size, radius },
+      { classNames, styles, name: 'Pagination' }
+    );
 
     const { range, setPage, next, previous, active, first, last } = usePagination({
       page,
@@ -106,11 +108,6 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
         active={pageNumber === active}
         aria-label={typeof getItemAriaLabel === 'function' ? getItemAriaLabel(pageNumber) : null}
         tabIndex={pageNumber === 'dots' ? -1 : 0}
-        style={{
-          ..._styles.item,
-          ...(pageNumber === active ? _styles.active : null),
-          ...(pageNumber === 'dots' ? _styles.dots : null),
-        }}
         className={cx(classes.item, {
           [classes.active]: pageNumber === active,
           [classes.dots]: pageNumber === 'dots',
@@ -123,6 +120,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
       <Group
         spacing={spacing || getSizeValue({ size, sizes: theme.spacing }) / 2}
         ref={ref}
+        sx={sx}
         {...others}
       >
         {withEdges && (
@@ -131,7 +129,6 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
             onClick={first}
             aria-label={getItemAriaLabel ? getItemAriaLabel('first') : undefined}
             aria-disabled={active === 1}
-            style={_styles.item}
             className={classes.item}
             disabled={active === 1}
           />
@@ -143,7 +140,6 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
             onClick={previous}
             aria-label={getItemAriaLabel ? getItemAriaLabel('prev') : undefined}
             aria-disabled={active === 1}
-            style={_styles.item}
             className={classes.item}
             disabled={active === 1}
           />
@@ -157,7 +153,6 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
             onClick={next}
             aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
             aria-disabled={active === total}
-            style={_styles.item}
             className={classes.item}
             disabled={active === total}
           />
@@ -169,7 +164,6 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
             onClick={last}
             aria-label={getItemAriaLabel ? getItemAriaLabel('last') : undefined}
             aria-disabled={active === total}
-            style={_styles.item}
             className={classes.item}
             disabled={active === total}
           />

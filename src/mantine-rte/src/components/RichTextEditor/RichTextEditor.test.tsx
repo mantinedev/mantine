@@ -18,7 +18,12 @@ describe('@mantine/core/RichTextEditor', () => {
   itSupportsOthers(RichTextEditor, defaultProps);
   itSupportsStyle(RichTextEditor, defaultProps);
   itSupportsMargins(RichTextEditor, defaultProps);
-  itSupportsStylesApi(RichTextEditor, defaultProps, Object.keys(RichTextEditorStylesApi), 'rte');
+  itSupportsStylesApi(
+    RichTextEditor,
+    defaultProps,
+    Object.keys(RichTextEditorStylesApi),
+    'RichTextEditor'
+  );
 
   it('has correct displayName', () => {
     expect(RichTextEditor.displayName).toEqual('@mantine/rte/RichTextEditor');

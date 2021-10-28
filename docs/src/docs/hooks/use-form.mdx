@@ -78,6 +78,22 @@ const form = useForm({
     name: (value) => value.trim().length >= 2,
   },
 });
+
+const signUpForm = useForm({
+  initialValues: {
+    name: '',
+    password: '',
+    confirmPassword: '',
+  },
+
+  validationRules: {
+    name: (value) => value.trim().length >= 2,
+    password: (password) => password.trim().length >= 8,
+
+    // you can also get values as second argument in validation rule
+    confirmPassword: (confirmPassword, values) => confirmPassword === values.password,
+  },
+});
 ```
 
 ### form.values
@@ -135,7 +151,7 @@ form.values; // -> { name: 'Bob', age: 35 }
 
 ### form.validate
 
-`validate` function runs all validation rules on corresponding `values` key:
+`validate` function runs all validation rules on corresponding `value's` key:
 
 ```tsx
 const form = useForm({
@@ -297,7 +313,7 @@ Submit form with `test@mantine.dev` email to see external validation error:
 function useForm<T extends { [key: string]: any }>(configuration: {
   initialValues: T;
   validationRules?: {
-    [P in keyof T]?: (value: T[P]) => boolean;
+    [P in keyof T]?: (value: T[P], values?: T) => boolean;
   };
 }): {
   values: T;

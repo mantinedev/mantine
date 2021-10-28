@@ -1,7 +1,6 @@
 import React, { useRef, useState, forwardRef } from 'react';
 import {
   DefaultProps,
-  mergeStyles,
   Input,
   InputWrapper,
   Text,
@@ -125,7 +124,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
       transition = 'pop-top-left',
       transitionDuration = 200,
       transitionTimingFunction,
-      closeDropdownOnScroll = true,
+      closeDropdownOnScroll = false,
       size = 'sm',
       children,
       inputLabel,
@@ -138,26 +137,24 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
       onClear,
       positionDependencies = [],
       zIndex = 3,
+      sx,
       ...others
     }: DatePickerBaseProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size, invalid: !!error }, classNames, __staticSelector);
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles(
+      { size, invalid: !!error },
+      { classNames, styles, name: __staticSelector }
+    );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
     const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
     const uuid = useUuid(id);
 
-    const focusTrapRef = useFocusTrap();
+    const focusTrapRef = useFocusTrap(dropdownOpened);
     const inputRef = useRef<HTMLButtonElement>();
-    const closeDropdown = () => {
-      if (dropdownOpened) {
-        setDropdownOpened(false);
-        setTimeout(() => inputRef.current?.focus(), transitionDuration + 50);
-      }
-    };
+    const closeDropdown = () => setDropdownOpened(false);
     const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
       event.nativeEvent.code === 'Escape' && closeDropdown();
 
@@ -166,7 +163,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
       rootElement,
     ]);
 
-    useWindowEvent('scroll', () => closeDropdownOnScroll && setDropdownOpened(false));
+    useWindowEvent('scroll', () => closeDropdownOnScroll && closeDropdown());
 
     const rightSection = clearable ? (
       <CloseButton
@@ -190,15 +187,17 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
         styles={styles}
         size={size}
         __staticSelector={__staticSelector}
+        sx={sx}
+        ref={setReferenceElement}
         {...wrapperProps}
       >
         <div ref={setRootElement}>
-          <div className={classes.wrapper} style={_styles.wrapper} ref={setReferenceElement}>
+          <div className={classes.wrapper}>
             <Input
               component="button"
               type="button"
               classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
-              styles={{ ...styles, input: { ...styles?.input, cursor: 'pointer' } }}
+              styles={styles}
               onClick={() => setDropdownOpened(!dropdownOpened)}
               id={uuid}
               ref={useMergedRef(ref, inputRef)}
@@ -211,11 +210,9 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
               {...rest}
             >
               {inputLabel ? (
-                <div className={classes.value} style={_styles.placeholder}>
-                  {inputLabel}
-                </div>
+                <div className={classes.value}>{inputLabel}</div>
               ) : (
-                <Text style={_styles.placeholder} className={classes.placeholder} size={size}>
+                <Text className={classes.placeholder} size={size}>
                   {placeholder}
                 </Text>
               )}
@@ -232,19 +229,20 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
               mounted={dropdownOpened}
               position="bottom"
               placement="start"
-              gutter={0}
+              gutter={10}
               withArrow
               arrowSize={3}
               zIndex={zIndex}
+              arrowClassName={classes.arrow}
+              onTransitionEnd={() => inputRef.current?.focus()}
             >
               <div
                 className={classes.dropdownWrapper}
-                style={_styles.dropdownWrapper}
                 ref={useMergedRef(focusTrapRef, setDropdownElement)}
-                data-mantine-stop-propagation={dropdownType === 'popover' && dropdownOpened}
+                data-mantine-stop-propagation={dropdownOpened}
                 onKeyDownCapture={closeOnEscape}
               >
-                <Paper className={classes.dropdown} style={_styles.dropdown} shadow={shadow}>
+                <Paper className={classes.dropdown} shadow={shadow}>
                   {children}
                 </Paper>
               </div>

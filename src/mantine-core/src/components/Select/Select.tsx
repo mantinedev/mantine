@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { useUncontrolled, useMergedRef, useDidUpdate } from '@mantine/hooks';
+import { useUncontrolled, useMergedRef, useDidUpdate, useScrollIntoView } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineSize,
@@ -7,7 +7,6 @@ import {
   useUuid,
   useExtractedMargins,
 } from '@mantine/styles';
-import { scrollIntoView } from '../../utils';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { MantineTransition } from '../Transition';
@@ -18,6 +17,7 @@ import { SelectDropdown } from './SelectDropdown/SelectDropdown';
 import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
 import { groupSortData } from './group-sort-data/group-sort-data';
+import useStyles from './Select.styles';
 
 export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSelectProps {
   /** Input size */
@@ -33,13 +33,13 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
   shadow?: MantineShadow;
 
   /** Controlled input value */
-  value?: string;
+  value?: string | null;
 
   /** Uncontrolled input defaultValue */
-  defaultValue?: string;
+  defaultValue?: string | null;
 
   /** Controlled input onChange handler */
-  onChange?(value: string): void;
+  onChange?(value: string | null): void;
 
   /** Dropdown body appear/disappear transition */
   transition?: MantineTransition;
@@ -88,6 +88,15 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
 
   /** Called when create option is selected */
   onCreate?: (query: string) => void;
+
+  /** Change dropdown component, can be used to add custom scrollbars */
+  dropdownComponent?: React.FC<any>;
+
+  /** Called when dropdown is opened */
+  onDropdownOpen?(): void;
+
+  /** Called when dropdown is closed */
+  onDropdownClose?(): void;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -140,18 +149,35 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       getCreateLabel,
       shouldCreate = defaultShouldCreate,
       onCreate,
+      sx,
+      dropdownComponent,
+      onDropdownClose,
+      onDropdownOpen,
       ...others
     }: SelectProps,
     ref
   ) => {
+    const { classes, cx } = useStyles();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
+    const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const inputRef = useRef<HTMLInputElement>();
     const dropdownRef = useRef<HTMLDivElement>();
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
     const [creatableDataValue, setCreatableDataValue] = useState<string | undefined>(undefined);
     const uuid = useUuid(id);
+    const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
+      duration: 0,
+      offset: 5,
+      cancelable: false,
+      isList: true,
+    });
+
+    const setDropdownOpened = (opened: boolean) => {
+      _setDropdownOpened(opened);
+      const handler = opened ? onDropdownOpen : onDropdownClose;
+      typeof handler === 'function' && handler();
+    };
 
     const isCreatable = creatable && typeof getCreateLabel === 'function';
     let createLabel = null;
@@ -167,7 +193,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       defaultValue,
       finalValue: null,
       onChange,
-      rule: (val) => typeof val === 'string',
+      rule: (val) => typeof val === 'string' || val === null,
     });
 
     const selectedValue = sortedData.find((item) => item.value === _value);
@@ -262,7 +288,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               (index) => index - 1,
               (index) => index > 0
             );
-            scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
+
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+            scrollIntoView({
+              alignment: 'start',
+            });
+
             return nextIndex;
           });
           break;
@@ -277,7 +309,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               (index) => index + 1,
               (index) => index < filteredData.length - 1
             );
-            scrollIntoView(dropdownRef.current, itemsRefs.current[filteredData[nextIndex]?.value]);
+
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+            scrollIntoView({
+              alignment: 'end',
+            });
+
             return nextIndex;
           });
           break;
@@ -293,7 +331,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
         case 'Space': {
           if (!searchable) {
             event.preventDefault();
-            setDropdownOpened((o) => !o);
+            setDropdownOpened(!dropdownOpened);
             setHovered(
               getNextIndex(
                 -1,
@@ -306,9 +344,11 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
         }
 
         case 'Enter': {
-          if (filteredData[hovered]) {
+          if (filteredData[hovered] && dropdownOpened) {
             event.preventDefault();
             handleItemSelect(filteredData[hovered]);
+          } else {
+            setDropdownOpened(true);
           }
         }
       }
@@ -350,7 +390,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
         style={mergedStyles}
         classNames={classNames}
         styles={styles}
-        __staticSelector="select"
+        __staticSelector="Select"
+        sx={sx}
         {...wrapperProps}
       >
         <div
@@ -371,30 +412,27 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             invalid={!!error}
             size={size}
             onKeyDown={handleInputKeydown}
-            classNames={classNames}
-            __staticSelector="select"
+            __staticSelector="Select"
             value={inputValue}
             onChange={handleInputChange}
             aria-autocomplete="list"
             aria-controls={dropdownOpened ? `${uuid}-items` : null}
             aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
-            onClick={() => setDropdownOpened((o) => !o)}
+            onClick={() => setDropdownOpened(!dropdownOpened)}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             readOnly={!searchable}
             disabled={disabled}
             data-mantine-stop-propagation={dropdownOpened}
             autoComplete="off"
+            classNames={{
+              ...classNames,
+              input: cx({ [classes.input]: !searchable }, classNames?.input),
+            }}
             {...getSelectRightSectionProps({
               rightSection,
               rightSectionWidth,
-              styles: {
-                ...styles,
-                input: {
-                  cursor: !searchable ? (disabled ? 'not-allowed' : 'pointer') : undefined,
-                  ...styles?.input,
-                },
-              },
+              styles,
               size,
               shouldClear: clearable && !!selectedValue,
               clearButtonLabel,
@@ -413,8 +451,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             maxDropdownHeight={maxDropdownHeight}
             classNames={classNames}
             styles={styles}
-            ref={dropdownRef}
-            __staticSelector="select"
+            ref={useMergedRef(dropdownRef, scrollableRef)}
+            __staticSelector="Select"
+            dropdownComponent={dropdownComponent}
           >
             <SelectItems
               data={filteredData}
@@ -423,7 +462,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               styles={styles}
               isItemSelected={(val) => val === _value}
               uuid={uuid}
-              __staticSelector="select"
+              __staticSelector="Select"
               onItemHover={setHovered}
               onItemSelect={handleItemSelect}
               itemsRefs={itemsRefs}

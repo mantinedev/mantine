@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { MantineProvider, MANTINE_SIZES, DEFAULT_THEME } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { TextInput } from '../TextInput/TextInput';
+import { SegmentedControl } from '../SegmentedControl/SegmentedControl';
 import { MultiSelect } from './MultiSelect';
 import { CountriesSelect } from './demos/countries';
 
@@ -133,6 +134,12 @@ storiesOf('@mantine/core/MultiSelect', module)
   .add('Overflow value and items', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <MultiSelect label="Multi select" data={longData} placeholder="Select items" searchable />
+    </div>
+  ))
+  .add('z-index', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect label="Multi select" data={data} placeholder="Select items" searchable />
+      <SegmentedControl data={data} />
     </div>
   ))
   .add('Grouped and Disabled Data', () => (

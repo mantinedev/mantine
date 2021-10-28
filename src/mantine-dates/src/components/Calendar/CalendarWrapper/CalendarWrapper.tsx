@@ -1,18 +1,20 @@
 import React, { forwardRef } from 'react';
-import { MantineSize, getSizeValue, useExtractedMargins } from '@mantine/core';
+import { MantineSize, getSizeValue, useExtractedMargins, useSx, DefaultProps } from '@mantine/core';
 import { sizes as DAY_SIZES } from '../../Month/Day/Day.styles';
 
-interface CalendarWrapperProps extends React.ComponentPropsWithoutRef<'div'> {
+interface CalendarWrapperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   size: MantineSize;
   fullWidth: boolean;
 }
 
 export const CalendarWrapper = forwardRef<HTMLDivElement, CalendarWrapperProps>(
-  ({ size, fullWidth, style, ...others }: CalendarWrapperProps, ref) => {
+  ({ size, fullWidth, style, sx, className, ...others }: CalendarWrapperProps, ref) => {
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { sxClassName } = useSx({ sx, className });
     return (
       <div
         ref={ref}
+        className={sxClassName}
         style={{
           maxWidth: fullWidth ? '100%' : getSizeValue({ size, sizes: DAY_SIZES }) * 7,
           ...mergedStyles,

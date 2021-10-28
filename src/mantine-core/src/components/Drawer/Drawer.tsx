@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import {
   useMantineTheme,
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
@@ -119,12 +118,12 @@ export function MantineDrawer({
   closeButtonLabel,
   classNames,
   styles,
+  sx,
   ...others
 }: DrawerProps) {
   const theme = useMantineTheme();
-  const { classes, cx } = useStyles({ size, position }, classNames, 'drawer');
-  const _styles = mergeStyles(classes, styles);
-  const focusTrapRef = useFocusTrap(!noFocusTrap);
+  const { classes, cx } = useStyles({ size, position }, { sx, classNames, styles, name: 'Drawer' });
+  const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
   useScrollLock(opened && !noScrollLock);
 
   const drawerTransition = transition || transitions[position];
@@ -169,7 +168,7 @@ export function MantineDrawer({
           className={cx(classes.root, { [classes.noOverlay]: noOverlay }, className)}
           role="dialog"
           aria-modal
-          style={{ ...style, ..._styles.root, ...(noOverlay ? _styles.noOverlay : null) }}
+          style={style}
           {...others}
         >
           {!noCloseOnClickOutside && (
@@ -184,7 +183,7 @@ export function MantineDrawer({
           <Paper<'div'>
             className={cx(classes.drawer, className)}
             ref={focusTrapRef}
-            style={{ ...transitionStyles.drawer, ..._styles.drawer, zIndex: zIndex + 2 }}
+            style={{ ...transitionStyles.drawer, zIndex: zIndex + 2 }}
             radius={0}
             tabIndex={-1}
             onKeyDownCapture={(event) => {
@@ -197,10 +196,8 @@ export function MantineDrawer({
             padding={padding}
           >
             {(title || !hideCloseButton) && (
-              <div className={classes.header} style={_styles.header}>
-                <Text className={classes.title} style={_styles.title}>
-                  {title}
-                </Text>
+              <div className={classes.header}>
+                <Text className={classes.title}>{title}</Text>
 
                 {!hideCloseButton && (
                   <CloseButton iconSize={16} onClick={onClose} aria-label={closeButtonLabel} />

@@ -38,22 +38,18 @@ export const ColorSwatch: ColorSwatchComponent & { displayName?: string } = forw
       className,
       children,
       style,
+      sx,
       ...others
     }: ColorSwatchProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { classes, cx } = useStyles({ radius, size }, null, 'color-swatch');
+    const { classes, cx } = useStyles({ radius, size }, { sx, name: 'ColorSwatch' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const Element = component || 'div';
 
     return (
-      <Element
-        className={cx(classes.colorSwatch, className)}
-        style={mergedStyles}
-        ref={ref}
-        {...rest}
-      >
+      <Element className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
         <div className={cx(classes.alphaOverlay, classes.overlay)} />
         <div className={cx(classes.shadowOverlay, classes.overlay)} />
         <div className={classes.overlay} style={{ backgroundColor: color }} />

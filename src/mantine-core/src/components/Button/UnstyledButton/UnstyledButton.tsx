@@ -7,17 +7,9 @@ export interface UnstyledButtonProps
     React.ComponentPropsWithoutRef<'button'> {}
 
 export const UnstyledButton = forwardRef<HTMLButtonElement, UnstyledButtonProps>(
-  ({ className, ...others }: UnstyledButtonProps, ref) => {
-    const { classes, cx } = useStyles();
-
-    return (
-      <button
-        ref={ref}
-        className={cx(classes.button, 'mantine-unstyled-button', className)}
-        type="button"
-        {...others}
-      />
-    );
+  ({ className, sx, ...others }: UnstyledButtonProps, ref) => {
+    const { classes, cx } = useStyles(null, { sx, name: 'UnstyledButton' });
+    return <button ref={ref} className={cx(classes.root, className)} type="button" {...others} />;
   }
 );
 
