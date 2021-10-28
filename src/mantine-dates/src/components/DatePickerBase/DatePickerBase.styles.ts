@@ -46,21 +46,10 @@ export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => 
     }`,
     zIndex: 4,
     padding: `${theme.spacing.md}px ${theme.spacing.xs}px`,
+  },
 
-    '&::before': {
-      content: '""',
-      position: 'absolute',
-      top: -5,
-      height: 8,
-      width: 8,
-      transform: 'rotate(45deg)',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-      borderTop: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
-      }`,
-      borderLeft: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
-      }`,
-    },
+  arrow: {
+    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
+    background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
   },
 }));

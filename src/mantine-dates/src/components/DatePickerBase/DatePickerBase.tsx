@@ -124,7 +124,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
       transition = 'pop-top-left',
       transitionDuration = 200,
       transitionTimingFunction,
-      closeDropdownOnScroll = true,
+      closeDropdownOnScroll = false,
       size = 'sm',
       children,
       inputLabel,
@@ -233,6 +233,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
               withArrow
               arrowSize={3}
               zIndex={zIndex}
+              arrowClassName={classes.arrow}
               onTransitionEnd={() => inputRef.current?.focus()}
             >
               <div
