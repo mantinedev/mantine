@@ -20,23 +20,27 @@ export interface SkeletonProps extends DefaultProps, React.ComponentPropsWithout
 }
 
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
-  ({
-    height = 'auto',
-    width = '100%',
-    visible = true,
-    sx,
-    className,
-    style,
-    circle,
-    radius = 'sm',
-    ...others
-  }: SkeletonProps) => {
+  (
+    {
+      height = 'auto',
+      width = '100%',
+      visible = true,
+      sx,
+      className,
+      style,
+      circle,
+      radius = 'sm',
+      ...others
+    }: SkeletonProps,
+    ref
+  ) => {
     const { classes, cx } = useStyles({ height, width, circle, radius }, { name: 'Skeleton', sx });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     return (
       <div
         className={cx(classes.root, { [classes.visible]: visible }, className)}
         style={mergedStyles}
+        ref={ref}
         {...rest}
       />
     );
