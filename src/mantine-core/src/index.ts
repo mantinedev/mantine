@@ -59,6 +59,7 @@ export * from './components/RingProgress';
 export * from './components/SegmentedControl';
 export * from './components/Select';
 export * from './components/SimpleGrid';
+export * from './components/Skeleton';
 export * from './components/Slider';
 export * from './components/Space';
 export * from './components/Spoiler';
