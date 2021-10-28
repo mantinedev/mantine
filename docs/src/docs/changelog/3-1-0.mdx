@@ -136,3 +136,4 @@ custom scrollbars with [react-custom-scrollbars](https://github.com/malte-wessel
 - [AvatarsGroup](https://mantine.dev/core/avatar/#avatars-group) - now supports `total` prop to explicitly override the truncated length.
 - Add `onDropdownOpen` and `onDropdownClose` handlers support to [Select](https://mantine.dev/core/select/), [MultiSelect](https://mantine.dev/core/multi-select/) and [Autocomplete](https://mantine.dev/core/autocomplete/) components
 - Fix incorrect [MultiSelect](https://mantine.dev/core/multi-select/) creatable filtering logic when the same item can be created multiple times
+- Fix layout jumping on Windows and Linux when overlay components with scroll lock are opened ([Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer)), see [use-scroll-lock](https://mantine.dev/hooks/use-scroll-lock/) documentation to learn how to offset elements with fixed position
