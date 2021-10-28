@@ -1,6 +1,6 @@
-import { useReducedMotion, useWindowEvent } from '@mantine/hooks';
 import { useCallback, useRef, useEffect } from 'react';
-
+import { useReducedMotion } from '../use-reduced-motion/use-reduced-motion';
+import { useWindowEvent } from '../use-window-event/use-window-event';
 import { easeInOutQuad } from './utils/ease-in-out-quad';
 import { getRelativePosition } from './utils/get-relative-position';
 import { getScrollStart } from './utils/get-scroll-start';
