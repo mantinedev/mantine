@@ -5,7 +5,7 @@ import { useMantineEmotionOptions } from '../theme/MantineProvider';
 export const { getCache } = (() => {
   let cache: EmotionCache;
 
-  function _getCache(options: Options) {
+  function _getCache(options?: Options) {
     if (cache === undefined) {
       cache = createCache(options || { key: 'mantine', prepend: true });
     }
