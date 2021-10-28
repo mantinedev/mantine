@@ -83,7 +83,6 @@ const stylesServer = createStylesServer();
 
 export default class _Document extends Document {
   static async getInitialProps(ctx: DocumentContext) {
-    const page = await ctx.renderPage();
     const initialProps = await Document.getInitialProps(ctx);
 
     // Add your app specific logic here
@@ -93,7 +92,7 @@ export default class _Document extends Document {
       styles: (
         <>
           {initialProps.styles}
-          <ServerStyles html={page.html} server={stylesServer} />
+          <ServerStyles html={initialProps.html} server={stylesServer} />
         </>
       ),
     };
