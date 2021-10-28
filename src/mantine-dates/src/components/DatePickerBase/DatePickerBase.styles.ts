@@ -40,9 +40,6 @@ export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => 
   },
 
   dropdown: {
-    position: 'absolute',
-    left: 0,
-    top: theme.spacing.xs,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]

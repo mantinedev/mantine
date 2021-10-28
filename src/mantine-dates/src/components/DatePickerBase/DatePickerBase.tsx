@@ -188,10 +188,11 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
         size={size}
         __staticSelector={__staticSelector}
         sx={sx}
+        ref={setReferenceElement}
         {...wrapperProps}
       >
         <div ref={setRootElement}>
-          <div className={classes.wrapper} ref={setReferenceElement}>
+          <div className={classes.wrapper}>
             <Input
               component="button"
               type="button"
@@ -228,7 +229,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
               mounted={dropdownOpened}
               position="bottom"
               placement="start"
-              gutter={0}
+              gutter={10}
               withArrow
               arrowSize={3}
               zIndex={zIndex}
