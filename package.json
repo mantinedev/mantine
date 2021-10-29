@@ -56,7 +56,7 @@
     "@types/fs-extra": "^9.0.11",
     "@types/jest": "^26.0.23",
     "@types/jest-axe": "^3.5.1",
-    "@types/react": "^17.0.8",
+    "@types/react": "17.0.8",
     "@types/react-custom-scrollbars": "^4.0.7",
     "@types/react-dom": "^17.0.5",
     "@types/react-router-dom": "^5.1.7",

@@ -1,9 +1,5 @@
 {
   "extends": "../tsconfig.json",
   "include": ["src", "../configuration/types"],
-  "compilerOptions": {
-    "paths": {
-      "@mantine/*": ["src/mantine-*/src"]
-    }
-  }
+  "compilerOptions": {}
 }
