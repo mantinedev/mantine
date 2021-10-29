@@ -3,17 +3,32 @@ import { Group, Button, Text } from '../../../index';
 import { Skeleton } from '../Skeleton';
 
 const code = `
-<Skeleton height={50} circle mb="xl" />
-<Skeleton height={8} radius="xl" />
-<Skeleton height={8} mt={6} radius="xl" />
-<Skeleton height={8} mt={6} width="70%" radius="xl" />
+import { useState } from 'react';
+import { Skeleton, Button } from '@mantine/core';
+
+function Demo() {
+  const [loading, setLoading] = useState(true);
+
+  return (
+    <>
+      <Skeleton visible={loading}>
+        Lorem ipsum dolor sit amet...
+        {/* other content */}
+      </Skeleton>
+
+      <Button onClick={() => setLoading((l) => !l)}>
+        Toggle Skeleton
+      </Button>
+    </>
+  );
+}
 `;
 
 function Demo() {
   const [loading, setLoading] = useState(true);
 
   return (
-    <div>
+    <>
       <Skeleton visible={loading}>
         <Text>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolor nihil amet tempore
@@ -30,7 +45,7 @@ function Demo() {
       <Group position="center" mt="xs">
         <Button onClick={() => setLoading((l) => !l)}>Toggle Skeleton</Button>
       </Group>
-    </div>
+    </>
   );
 }
 
