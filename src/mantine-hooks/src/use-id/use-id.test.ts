@@ -7,9 +7,15 @@ describe('@mantine/hooks/use-id', () => {
     expect(hook.result.current).toBe('test-id');
   });
 
-  it('returns random id when called without arguments', () => {
+  it('returns random id with prefix "mantine-" when called without arguments', () => {
     const hook = renderHook(() => useId());
     expect(hook.result.current.includes('mantine-')).toBe(true);
+  });
+
+  it('returns random id when called without arguments', () => {
+    const hook1 = renderHook(() => useId());
+    const hook2 = renderHook(() => useId());
+    expect(hook1.result.current).not.toEqual(hook2.result.current);
   });
 
   it('returns generated id if id was not provided', () => {
