@@ -68,9 +68,9 @@ export function ImageActionCard({
   return (
     <Card
       radius="md"
-      {...others}
       style={{ backgroundImage: `url(${image})`, ...style }}
       className={cx(classes.card, className)}
+      {...others}
     >
       <Overlay
         gradient={`linear-gradient(105deg, ${theme.black} 20%, #312f2f 50%, ${theme.colors.gray[4]} 100%)`}
@@ -92,8 +92,8 @@ export function ImageActionCard({
           variant="white"
           color="dark"
           component="a"
-          href={action.link}
           size="xs"
+          href={action.link}
         >
           {action.label}
         </Button>
