@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef } from 'react';
+import React, { useState, useRef, forwardRef, useEffect } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { Calendar, CalendarSettings } from '../Calendar/Calendar';
@@ -60,6 +60,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       clearable = true,
       disabled = false,
       clearButtonLabel,
+      fixOnBlur = true,
       ...others
     }: DatePickerProps,
     ref
@@ -67,6 +68,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
     const inputRef = useRef<HTMLInputElement>();
+
+    const [lastValidValue, setLastValidValue] = useState(defaultValue);
     const [_value, setValue] = useUncontrolled({
       value,
       defaultValue,
@@ -82,6 +85,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
 
     const handleValueChange = (date: Date) => {
       setValue(date);
+
+      setLastValidValue(date);
       closeCalendarOnChange && closeDropdown();
     };
 
@@ -89,6 +94,30 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       setValue(null);
       inputRef.current?.focus();
     };
+
+    const handleInputBlur = () => {
+      // @ts-expect-error - https://github.com/iamkun/dayjs/issues/320
+      const isInputValid = _value === dayjs(_value, inputFormat).format(inputFormat) || _value === '';
+
+      if (isInputValid) {
+        setValue(dayjs(_value).toDate());
+      } else {
+        fixOnBlur && setValue(lastValidValue ?? null);
+      }
+    };
+
+    const handleChange = (e) => {
+      setValue(e.target.value);
+    };
+
+    useEffect(() => {
+      // @ts-expect-error - https://github.com/iamkun/dayjs/issues/320
+      const isInputValid = _value === dayjs(_value, inputFormat).format(inputFormat) || _value === '';
+
+      if (isInputValid) {
+        setLastValidValue(_value);
+      }
+    }, [_value]);
 
     return (
       <>
@@ -101,10 +130,12 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           size={size}
           styles={styles}
           classNames={classNames}
+          onChange={handleChange}
+          onBlur={handleInputBlur}
           inputLabel={
             _value instanceof Date
               ? upperFirst(dayjs(_value).locale(locale).format(inputFormat))
-              : null
+              : _value
           }
           __staticSelector="date-picker"
           dropdownType={dropdownType}
