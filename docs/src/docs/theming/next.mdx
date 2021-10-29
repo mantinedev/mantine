@@ -99,3 +99,18 @@ export default class _Document extends Document {
   }
 }
 ```
+
+## Mantine components with Next Link
+
+You can use polymorphic components (Button, ActionIcon, Anchor, etc.) with Next Link, to do so:
+
+- set `component` prop to `a`
+- wrap it with Link
+
+```tsx
+import Link from 'next/link';
+
+<Link href="/hello">
+  <Button component="a">Next link button</Button>
+</Link>;
+```
