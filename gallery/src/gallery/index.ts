@@ -16,12 +16,10 @@ export { GetInTouch } from './GetInTouch/GetInTouch';
 export { CheckboxCard } from './CheckboxCard/CheckboxCard';
 export { ContainedInputs } from './ContainedInputs/ContainedInputs';
 export { CountriesSelect } from './CountriesSelect/CountriesSelect';
-export { InlineForm } from './InlineForm/InlineForm';
 export { InputWithButton } from './InputWithButton/InputWithButton';
 export { SliderInput } from './SliderInput/SliderInput';
 
 // Hero
-export { HeroForm } from './HeroForm/HeroForm';
 export { HeroImageBackground } from './HeroImageBackground/HeroImageBackground';
 export { HeroText } from './HeroText/HeroText';
 export { HeroTitle } from './HeroTitle/HeroTitle';
