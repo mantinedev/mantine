@@ -3,6 +3,7 @@ export { AuthenticationForm } from './AuthenticationForm/AuthenticationForm';
 export { SocialButtons } from './SocialButtons/SocialButtons';
 
 // Banners
+export { EmailBanner } from './EmailBanner/EmailBanner';
 export { ImageBanner } from './ImageBanner/ImageBanner';
 
 // Cards
