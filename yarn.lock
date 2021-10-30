@@ -11866,6 +11866,11 @@ table@^6.0.9:
     string-width "^4.2.0"
     strip-ansi "^6.0.0"
 
+tabler-icons-react@^1.35.0:
+  version "1.35.0"
+  resolved "https://registry.yarnpkg.com/tabler-icons-react/-/tabler-icons-react-1.35.0.tgz#b4e7f8da632314d002aa5e34931f2f824395b77c"
+  integrity sha512-WiJ+dYQ71HCsxKAQpCfPrFVwSfqE6CByYFjq9Gzikmp2RijJBsNpj0sE/T5G0H+nERS9odjAWJoSryvr4FymFg==
+
 tapable@^1.0.0, tapable@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-1.1.3.tgz#a1fccc06b58db61fd7a45da2da44f5f3a3e67ba2"

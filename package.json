@@ -126,7 +126,8 @@
     "react-quill": "2.0.0-beta.4",
     "react-router-dom": "^5.2.0",
     "react-textarea-autosize": "^8.3.2",
-    "react-transition-group": "^4.4.2"
+    "react-transition-group": "^4.4.2",
+    "tabler-icons-react": "^1.35.0"
   },
   "resolutions": {
     "**/@babel/preset-env": "~7.12.0"

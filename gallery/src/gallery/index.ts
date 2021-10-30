@@ -25,6 +25,7 @@ export { HeroText } from './HeroText/HeroText';
 export { HeroTitle } from './HeroTitle/HeroTitle';
 
 // Features
+export { FeaturesAsymmetrical } from './FeaturesAsymmetrical/FeaturesAsymmetrical';
 export { FeaturesGrid } from './FeaturesGrid/FeaturesGrid';
 export { FeaturesImages } from './FeaturesImages/FeaturesImages';
 
