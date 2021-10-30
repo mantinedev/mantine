@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'gatsby';
 import {
   EyeOpenIcon,
   CodeIcon,
@@ -24,6 +23,43 @@ import { ColorControl } from '../ColorControl/ColorControl';
 import { GalleryComponent } from '../../../types';
 import useStyles from './CanvasHeader.styles';
 
+function getDependencyInfo(url: string) {
+  if (url.startsWith('/core') || url.startsWith('/hooks')) {
+    const _name = url.split('/')[2];
+    const name = url.startsWith('/hooks') ? _name : _name.split('-').map(upperFirst).join('');
+
+    return {
+      name,
+      url: `https://mantine.dev${url}`,
+      icon: <MantineIcon color="blue" />,
+    };
+  }
+
+  if (url.startsWith('/component')) {
+    return {
+      name: url.split('/')[1].split('-').map(upperFirst).join(''),
+      url,
+      icon: <MantineIcon color="blue" />,
+    };
+  }
+
+  if (url.startsWith('https://')) {
+    const _name = url.replace('https://', '').replace('www.', '');
+    const name = _name.endsWith('/') ? _name.slice(0, -1) : _name;
+    return {
+      name,
+      url,
+      icon: <ExternalLinkIcon />,
+    };
+  }
+
+  return {
+    name: url,
+    url: `https://www.npmjs.com/package/${url}`,
+    icon: <NpmIcon />,
+  };
+}
+
 export interface CanvasHeaderProps extends GalleryComponent, React.ComponentPropsWithoutRef<'div'> {
   state: string;
   onStateChange(state: string): void;
@@ -31,18 +67,6 @@ export interface CanvasHeaderProps extends GalleryComponent, React.ComponentProp
   primaryColor: string;
   excludeExternal?: boolean;
   zIndex?: number;
-}
-
-function getDependencyName(url: string) {
-  if (url.startsWith('/hooks/')) {
-    return { name: url.split('/')[2], color: 'blue' };
-  }
-
-  if (url.startsWith('/gallery/component/')) {
-    return { name: url.split('/')[3].split('-').map(upperFirst).join(''), color: 'cyan' };
-  }
-
-  return { name: url.split('/')[2].split('-').map(upperFirst).join(''), color: 'blue' };
 }
 
 export function CanvasHeader({
@@ -58,52 +82,17 @@ export function CanvasHeader({
   ...others
 }: CanvasHeaderProps) {
   const { classes } = useStyles();
-  const dependencies = attributes.dependencies.map((dependency) => {
-    if (dependency.trim().startsWith('/')) {
-      const { color, name } = getDependencyName(dependency.trim());
-      return (
-        <Menu.Item
-          component={Link}
-          to={dependency}
-          icon={<MantineIcon color={color} />}
-          key={dependency}
-        >
-          {name}
-        </Menu.Item>
-      );
-    }
-
-    if (dependency.trim().startsWith('https://')) {
-      const _dependencyUrl = dependency.replace('https://', '').replace('www.', '');
-      const dependencyUrl = _dependencyUrl.endsWith('/')
-        ? _dependencyUrl.slice(0, -1)
-        : _dependencyUrl;
-
-      return (
-        <Menu.Item
-          component="a"
-          href={dependency}
-          target="_blank"
-          key={dependency}
-          icon={<ExternalLinkIcon />}
-        >
-          {dependencyUrl}
-        </Menu.Item>
-      );
-    }
-
-    return (
-      <Menu.Item
-        component="a"
-        href={`https://www.npmjs.com/package/${dependency}`}
-        target="_blank"
-        key={dependency}
-        icon={<NpmIcon />}
-      >
-        {dependency}
-      </Menu.Item>
-    );
-  });
+  const dependencies = attributes.dependencies.map(getDependencyInfo).map((dependency) => (
+    <Menu.Item
+      component="a"
+      href={dependency.url}
+      target="_blank"
+      key={dependency.url}
+      icon={dependency.icon}
+    >
+      {dependency.name}
+    </Menu.Item>
+  ));
 
   return (
     <div className={classes.header} {...others}>
