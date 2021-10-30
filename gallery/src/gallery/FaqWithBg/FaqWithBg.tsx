@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStyles, Title, Container, Accordion, ThemeIcon, Button } from '@mantine/core';
 import { PlusIcon } from '@primer/octicons-react';
-import { Blobs } from '@mantine/decorations';
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('control');
@@ -10,11 +9,22 @@ const useStyles = createStyles((theme, _params, getRef) => {
     wrapper: {
       paddingTop: theme.spacing.xl * 2,
       minHeight: 820,
-      backgroundImage: `linear-gradient(162deg, ${theme.colors.blue[6]} 0%, ${theme.colors.violet[5]} 100%)`,
+      backgroundImage: `linear-gradient(162deg, ${theme.colors.cyan[6]} 0%, ${theme.colors.blue[5]} 100%)`,
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'top left',
-      backgroundSize: '100%',
       position: 'relative',
+    },
+
+    overlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      opacity: 0.4,
+      pointerEvents: 'none',
+      backgroundImage:
+        "url(\"data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.18'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
     },
 
     title: {
@@ -54,7 +64,8 @@ const useStyles = createStyles((theme, _params, getRef) => {
     },
 
     gradient: {
-      backgroundImage: `linear-gradient(104deg, ${theme.colors.indigo[6]} 0%, ${theme.colors.violet[5]} 100%)`,
+      backgroundColor: theme.colors.cyan[6],
+      backgroundImage: `linear-gradient(45deg, ${theme.colors.cyan[6]} 0%, ${theme.colors.blue[5]} 100%)`,
     },
 
     itemOpened: {
@@ -82,7 +93,7 @@ export function FaqWithBg() {
   const { classes, cx } = useStyles();
   return (
     <div className={classes.wrapper}>
-      <Blobs />
+      <div className={classes.overlay} />
 
       <Container size="sm">
         <Title align="center" className={classes.title}>
