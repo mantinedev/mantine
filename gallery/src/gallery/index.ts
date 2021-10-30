@@ -2,6 +2,9 @@
 export { AuthenticationForm } from './AuthenticationForm/AuthenticationForm';
 export { SocialButtons } from './SocialButtons/SocialButtons';
 
+// Banners
+export { ImageBanner } from './ImageBanner/ImageBanner';
+
 // Cards
 export { ArticleCard } from './ArticleCard/ArticleCard';
 export { ImageActionCard } from './ImageActionCard/ImageActionCard';
