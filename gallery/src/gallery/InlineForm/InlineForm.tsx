@@ -1,5 +1,6 @@
 import React from 'react';
-import { createStyles, Autocomplete, NumberInput, Button } from '@mantine/core';
+import { MapPin, DollarSign, Calendar } from 'react-feather';
+import { createStyles, Autocomplete, TextInput, Button, Tabs, Tab } from '@mantine/core';
 import dayjs from 'dayjs';
 import { DateRangePicker } from '@mantine/dates';
 
@@ -7,89 +8,76 @@ const useStyles = createStyles((theme, _params, getRef) => {
   const input = getRef('input');
 
   return {
-    wrapper: {
-      '@media (max-width: 755px)': {
-        padding: theme.spacing.lg,
+    inputRoot: {
+      position: 'relative',
+    },
+
+    input: {
+      ref: input,
+      borderColor: 'transparent',
+      borderRadius: 0,
+      borderRightColor: theme.colors.gray[3],
+
+      '&:focus': {
+        borderColor: 'transparent',
+        borderRightColor: theme.colors.gray[3],
       },
+
+      '&::placeholder': {
+        color: theme.colors.gray[9],
+      },
+    },
+
+    inputLabel: {
+      position: 'absolute',
+      pointerEvents: 'none',
+      paddingLeft: 10,
+      fontSize: 18,
+      paddingTop: theme.spacing.sm / 2,
+      zIndex: 3,
     },
 
     fields: {
       display: 'flex',
-      alignItems: 'flex-end',
+      alignItems: 'center',
 
-      '@media (max-width: 755px)': {
-        display: 'block',
+      [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+        flexDirection: 'column',
+        alignItems: 'stretch',
       },
     },
 
     field: {
       flex: 1,
 
-      [`&:first-of-type .${input}`]: {
-        borderTopLeftRadius: theme.radius.md,
-        borderBottomLeftRadius: theme.radius.md,
-
-        '&:not(:focus)': {
-          borderLeftColor: theme.colors.gray[2],
+      '&:last-of-type': {
+        [`& .${input}`]: {
+          borderRight: 0,
         },
       },
 
-      [`&:not(:first-of-type) .${input}`]: {
-        borderLeftWidth: 0,
-
-        '@media (max-width: 755px)': {
-          borderLeftWidth: 1,
-          borderRightWidth: 1,
-        },
-      },
-
-      '@media (max-width: 755px)': {
-        width: '100%',
-        maxWidth: '100% !important',
-
-        '&:not(:last-of-type)': {
-          marginBottom: theme.spacing.md,
+      '&:first-of-type': {
+        [`& .${input}`]: {
+          borderTopLeftRadius: theme.radius.md,
+          borderBottomLeftRadius: theme.radius.md,
         },
       },
     },
 
-    input: {
-      ref: input,
-      borderColor: `${
-        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
-      } !important`,
-      height: 60,
-      paddingLeft: theme.spacing.xl,
-      fontSize: theme.fontSizes.md,
-      borderLeftColor: theme.colors.gray[4],
-
-      '@media (max-width: 755px)': {
-        borderRadius: theme.radius.md,
-      },
-    },
-
-    inputLabel: {
-      marginBottom: 9,
-    },
-
-    budgetField: {
-      maxWidth: 120,
-    },
-
-    destinationField: {
-      maxWidth: 280,
+    wrapper: {
+      backgroundColor: theme.white,
+      padding: theme.spacing.lg,
+      borderRadius: theme.radius.md,
+      border: `1px solid ${theme.colors.gray[2]}`,
     },
 
     control: {
-      borderTopLeftRadius: 0,
-      borderBottomLeftRadius: 0,
+      marginLeft: theme.spacing.md,
 
-      '@media (max-width: 755px)': {
-        width: '100%',
-        marginLeft: 0,
-        marginTop: theme.spacing.lg,
-        borderTopLeftRadius: theme.radius.md,
-        borderBottomLeftRadius: theme.radius.md,
+      [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+        marginTop: theme.spacing.md,
+        marginLeft: 12,
+        marginRight: 12,
       },
     },
   };
@@ -101,54 +89,54 @@ interface InlineFormProps extends React.ComponentPropsWithoutRef<'div'> {
 
 export function InlineForm({ labelClassName, ...props }: InlineFormProps) {
   const { classes, cx } = useStyles();
+  const inputClassNames = {
+    input: classes.input,
+    label: cx(classes.inputLabel, labelClassName),
+  };
 
   return (
     <div {...props} className={cx(classes.wrapper, props.className)}>
+      <Tabs>
+        <Tab label="Hotels" />
+        <Tab label="Flights" />
+        <Tab label="Car rental" />
+      </Tabs>
+
       <div className={classes.fields}>
         <Autocomplete
-          radius={0}
-          size="md"
+          icon={<MapPin size={16} />}
           data={['Australia', 'United Kingdom', 'Germany', 'Russia', 'Canada']}
-          className={cx(classes.field, classes.destinationField)}
+          className={classes.field}
           placeholder="Destination country"
-          label="Destination"
           variant="default"
-          classNames={{ input: classes.input, label: cx(classes.inputLabel, labelClassName) }}
+          classNames={inputClassNames}
+          sx={{ maxWidth: 200 }}
+        />
+
+        <TextInput
+          type="number"
+          icon={<DollarSign size={16} />}
+          className={classes.field}
+          placeholder="Budget"
+          variant="default"
+          classNames={inputClassNames}
+          sx={{ maxWidth: 140 }}
         />
 
         <DateRangePicker
-          radius={0}
-          size="md"
+          icon={<Calendar size={16} />}
           className={classes.field}
-          placeholder="Stay dates"
-          label="Stay dates"
+          placeholder="Travel dates"
           minDate={new Date()}
           initialMonth={dayjs(new Date()).add(1, 'month').toDate()}
-          inputFormat="MMM D"
           variant="default"
-          classNames={{ input: classes.input, label: cx(classes.inputLabel, labelClassName) }}
+          classNames={inputClassNames}
+          clearable={false}
+          transitionDuration={0}
         />
 
-        <NumberInput
-          radius={0}
-          size="md"
-          className={cx(classes.field, classes.budgetField)}
-          label="Budget"
-          min={150}
-          step={50}
-          defaultValue={500}
-          hideControls
-          variant="default"
-          classNames={{ input: classes.input, label: cx(classes.inputLabel, labelClassName) }}
-        />
-
-        <Button
-          className={classes.control}
-          radius="md"
-          size="lg"
-          styles={{ root: { height: 60 }, label: { lineHeight: '60px' } }}
-        >
-          Search
+        <Button className={classes.control} radius="md" size="md">
+          Find hotels
         </Button>
       </div>
     </div>
