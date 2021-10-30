@@ -25,6 +25,7 @@ const useStyles = createStyles((theme) => ({
 
   tabActive: {
     backgroundColor: `${theme.colors.blue[theme.colorScheme === 'dark' ? 8 : 6]} !important`,
+    color: `${theme.white} !important`,
   },
 }));
 
