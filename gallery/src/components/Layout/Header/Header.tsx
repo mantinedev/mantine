@@ -12,7 +12,7 @@ export function Header() {
     <div className={classes.header}>
       <Container size="xl" padding="md" className={classes.inner}>
         <Logo />
-        <Group>
+        <Group mr={-8}>
           <Discord />
           <SourceCode />
           <ColorSchemeToggle />
