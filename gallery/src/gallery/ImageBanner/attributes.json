@@ -3,6 +3,7 @@
   "category": "banners",
   "author": "rtivital",
   "responsive": true,
+  "withColor": true,
   "dependencies": ["/core/button/", "/core/text/", "/core/title/", "/core/image"],
   "props": {
     "image": "https://images.unsplash.com/photo-1616464916356-3a777b2b60b1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80",
