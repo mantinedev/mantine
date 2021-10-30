@@ -39,15 +39,8 @@ export default createStyles((theme) => ({
   body: {
     flex: '0 0 700px',
     paddingTop: 140,
-    paddingLeft: theme.spacing.xl * 2,
-    paddingRight: theme.spacing.xl * 2,
     position: 'relative',
     zIndex: 1,
-
-    '@media (max-width: 1310px)': {
-      paddingLeft: theme.spacing.xl,
-      paddingRight: theme.spacing.xl,
-    },
   },
 
   image: {

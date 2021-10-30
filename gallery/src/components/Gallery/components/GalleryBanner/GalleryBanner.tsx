@@ -40,7 +40,7 @@ export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
 
   return (
     <div className={classes.wrapper}>
-      <Container size="xl" padding={0}>
+      <Container size="xl" padding="md">
         <div className={classes.image} />
         <Overlay
           gradient={`linear-gradient(45deg, ${
