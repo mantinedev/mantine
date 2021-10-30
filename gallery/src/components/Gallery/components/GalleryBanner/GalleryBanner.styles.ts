@@ -19,10 +19,10 @@ export default createStyles((theme) => ({
 
   title: {
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontSize: 44,
-    letterSpacing: -1,
     lineHeight: 1.2,
-    fontWeight: 800,
+    fontWeight: 900,
   },
 
   highlight: {

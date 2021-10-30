@@ -1,6 +1,7 @@
 import React from 'react';
 import { MantineProvider, NormalizeCSS, GlobalStyles, ColorScheme } from '@mantine/core';
 import { useLocalStorageValue, useHotkeys } from '@mantine/hooks';
+import '../../fonts/GreycfifCF/styles.css';
 
 interface LayoutProps {
   children: React.ReactNode;
