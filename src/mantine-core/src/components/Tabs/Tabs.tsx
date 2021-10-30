@@ -173,7 +173,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
             role="tablist"
             direction={orientation === 'horizontal' ? 'row' : 'column'}
             aria-orientation={orientation}
-            spacing={variant === 'pills' ? 'md' : 0}
+            spacing={variant === 'pills' ? 5 : 0}
             position={position}
             grow={grow}
           >

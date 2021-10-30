@@ -65,7 +65,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
     },
 
     wrapper: {
-      backgroundColor: theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       padding: theme.spacing.lg,
       borderRadius: theme.radius.md,
       border: `1px solid ${theme.colors.gray[2]}`,
@@ -96,7 +96,7 @@ export function InlineForm({ labelClassName, ...props }: InlineFormProps) {
 
   return (
     <div {...props} className={cx(classes.wrapper, props.className)}>
-      <Tabs>
+      <Tabs variant="pills" mb="md">
         <Tab label="Hotels" />
         <Tab label="Flights" />
         <Tab label="Car rental" />
