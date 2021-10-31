@@ -21,6 +21,7 @@ export { AutocompleteLoading } from './AutocompleteLoading/AutocompleteLoading';
 export { CheckboxCard } from './CheckboxCard/CheckboxCard';
 export { ContainedInputs } from './ContainedInputs/ContainedInputs';
 export { CountriesSelect } from './CountriesSelect/CountriesSelect';
+export { CurrencyInput } from './CurrencyInput/CurrencyInput';
 export { FloatingLabelInput } from './FloatingLabelInput/FloatingLabelInput';
 export { InputValidation } from './InputValidation/InputValidation';
 export { InputWithButton } from './InputWithButton/InputWithButton';
