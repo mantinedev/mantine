@@ -1,0 +1,11 @@
+{
+  "title": "Input with custom validation styles",
+  "category": "inputs",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/text-input/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}
