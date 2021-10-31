@@ -33,7 +33,12 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
         getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
         theme.colorScheme === 'dark' ? 0.35 : 1
       ),
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 2 : 9 }),
+      color:
+        color === 'dark'
+          ? theme.colorScheme === 'dark'
+            ? theme.colors.dark[0]
+            : theme.colors.dark[9]
+          : getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 2 : 9 }),
     };
   }
 
