@@ -23,6 +23,7 @@ export { ContainedInputs } from './ContainedInputs/ContainedInputs';
 export { CountriesSelect } from './CountriesSelect/CountriesSelect';
 export { CurrencyInput } from './CurrencyInput/CurrencyInput';
 export { FloatingLabelInput } from './FloatingLabelInput/FloatingLabelInput';
+export { ForgotPasswordInput } from './ForgotPasswordInput/ForgotPasswordInput';
 export { InputValidation } from './InputValidation/InputValidation';
 export { InputWithButton } from './InputWithButton/InputWithButton';
 export { SliderInput } from './SliderInput/SliderInput';
