@@ -2,6 +2,7 @@
   "title": "Card with checkbox",
   "category": "inputs",
   "author": "rtivital",
+  "withColor": true,
   "dependencies": [
     "/core/card/",
     "/core/checkbox/",
