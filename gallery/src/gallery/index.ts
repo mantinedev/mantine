@@ -9,6 +9,7 @@ export { ImageBanner } from './ImageBanner/ImageBanner';
 
 // Cards
 export { ArticleCard } from './ArticleCard/ArticleCard';
+export { BadgeCard } from './BadgeCard/BadgeCard';
 export { ImageActionCard } from './ImageActionCard/ImageActionCard';
 export { ImageButtonCards } from './ImageButtonCards/ImageButtonCards';
 export { ImageCard } from './ImageCard/ImageCard';
