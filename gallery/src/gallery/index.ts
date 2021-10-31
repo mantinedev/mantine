@@ -1,5 +1,6 @@
 // Authentication
 export { AuthenticationForm } from './AuthenticationForm/AuthenticationForm';
+export { AuthenticationImage } from './AuthenticationImage/AuthenticationImage';
 export { SocialButtons } from './SocialButtons/SocialButtons';
 
 // Banners

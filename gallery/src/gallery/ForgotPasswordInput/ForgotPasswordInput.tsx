@@ -1,7 +1,7 @@
 import React from 'react';
-import { PasswordInput, Text, Group, UnstyledButton } from '@mantine/core';
+import { PasswordInput, Text, Group, UnstyledButton, PasswordInputProps } from '@mantine/core';
 
-export function ForgotPasswordInput() {
+export function ForgotPasswordInput(props: PasswordInputProps) {
   return (
     <>
       <Group position="apart" mb={-4}>
@@ -20,7 +20,7 @@ export function ForgotPasswordInput() {
           Forgot your password?
         </UnstyledButton>
       </Group>
-      <PasswordInput placeholder="Your password" id="your-password" />
+      <PasswordInput placeholder="Your password" id="your-password" {...props} />
     </>
   );
 }
