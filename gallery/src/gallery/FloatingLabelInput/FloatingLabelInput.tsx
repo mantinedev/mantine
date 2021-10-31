@@ -38,6 +38,7 @@ export function FloatingLabelInput() {
       onChange={(event) => setValue(event.currentTarget.value)}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
+      mt="md"
     />
   );
 }
