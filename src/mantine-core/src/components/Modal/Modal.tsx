@@ -107,18 +107,13 @@ export function MantineModal({
       ? 0.85
       : 0.75;
 
-  const setLocked = useScrollLock()[1];
-
+  const [, lockScroll] = useScrollLock();
   useFocusReturn({ opened, transitionDuration });
 
   return (
     <GroupedTransition
-      onExited={() => {
-        setLocked(false);
-      }}
-      onEntered={() => {
-        setLocked(true);
-      }}
+      onExited={() => lockScroll(false)}
+      onEntered={() => lockScroll(true)}
       mounted={opened}
       transitions={{
         modal: { duration: transitionDuration, transition },
