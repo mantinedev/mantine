@@ -17,6 +17,7 @@ export { ImageCard } from './ImageCard/ImageCard';
 
 // Contact us
 export { ContactIcons } from './ContactIcons/ContactIcons';
+export { ContactUs } from './ContactUs/ContactUs';
 export { GetInTouch } from './GetInTouch/GetInTouch';
 
 // Inputs
