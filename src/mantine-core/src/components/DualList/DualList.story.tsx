@@ -6,7 +6,7 @@ import { DarkStory } from '../../../demos';
 import { DualListProps } from '.';
 
 const Wrapper = (props: Partial<DualListProps>) => {
-  const available = ['123', 'abc', '321'];
+  const available = ['123', 'abc', '321', 'abc', '321', 'abc', '321'];
   const selected = ['def', 'ghi', 'jkl'];
 
   return <DualList {...props} available={available} selected={selected} />;

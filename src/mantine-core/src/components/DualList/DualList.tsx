@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
 import { useMantineTheme, DefaultProps, ClassNames } from '@mantine/styles';
 import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight, Icon } from 'react-feather';
+import { useId } from '@mantine/hooks';
 import useStyles from './DualList.styles';
 import { Text, TextProps } from '../Text/Text';
 
 export type DualListStylesNames = ClassNames<typeof useStyles>;
 
+interface IListItem {
+  id: string;
+  value: string;
+  disabled: boolean; // TODO: Handle disabled items
+}
+
 interface ListItemProps extends TextProps<'div'> {
+  item: IListItem;
   isSelected: boolean;
 }
 
-const ListItem = ({ isSelected, children, ...props }: ListItemProps) => {
+const ListItem = ({ item, isSelected, children, ...props }: ListItemProps) => {
   const { classes, cx } = useStyles();
 
   return (
@@ -20,28 +28,27 @@ const ListItem = ({ isSelected, children, ...props }: ListItemProps) => {
       })}
       {...props}
     >
-      {children}
+      {item.value}
     </Text>
   );
 };
 
 interface ListProps {
   label: string;
-  items: string[];
+  items: IListItem[];
   MoveIcon: JSX.Element;
   MoveAllIcon: JSX.Element;
-  onMove: (items: string[]) => void;
+  onMove: (items: IListItem[]) => void;
   onMoveAll: () => void;
 }
 
 const RenderList = ({ label, items, MoveIcon, MoveAllIcon, onMove, onMoveAll }: ListProps) => {
-  const [selectedItems, setSelectedItems] = useState<string[] | null>(null);
+  const [selectedItems, setSelectedItems] = useState<IListItem[] | null>(null);
   const [multiSelectionRootIdx, setMultiSelectionRootIdx] = useState<number | null>(null);
 
   const { classes } = useStyles();
 
-  // TODO: Allow duplicate items
-  const itemIsSelected = (item: string): boolean => selectedItems?.includes(item);
+  const itemIsSelected = (item: IListItem): boolean => selectedItems?.includes(item);
 
   const clearSelection = () => {
     setSelectedItems(null);
@@ -60,8 +67,8 @@ const RenderList = ({ label, items, MoveIcon, MoveAllIcon, onMove, onMoveAll }: 
     clearSelection();
   };
 
-  const handleClickItem = (e: React.MouseEvent, item: string) => {
-    const clickedItemIdx = items.indexOf(item);
+  const handleClickItem = (e: React.MouseEvent, item: IListItem) => {
+    const clickedItemIdx = items.findIndex((_item) => _item.id === item.id);
 
     if (!(multiSelectionRootIdx != null && e.shiftKey)) {
       setMultiSelectionRootIdx(clickedItemIdx);
@@ -77,7 +84,7 @@ const RenderList = ({ label, items, MoveIcon, MoveAllIcon, onMove, onMoveAll }: 
         setSelectedItems(newSelection);
       } else if (e.ctrlKey) {
         if (itemIsSelected(item)) {
-          setSelectedItems(selectedItems.filter((_item) => item !== _item));
+          setSelectedItems(selectedItems.filter((_item) => _item.id !== item.id));
         } else {
           setSelectedItems([...selectedItems, item]);
         }
@@ -103,9 +110,11 @@ const RenderList = ({ label, items, MoveIcon, MoveAllIcon, onMove, onMoveAll }: 
         </div>
         <div>
           {items.map((item) => (
-            <ListItem isSelected={itemIsSelected(item)} onClick={(e) => handleClickItem(e, item)}>
-              {item}
-            </ListItem>
+            <ListItem
+              item={item}
+              isSelected={itemIsSelected(item)}
+              onClick={(e) => handleClickItem(e, item)}
+            />
           ))}
         </div>
       </div>
@@ -116,9 +125,17 @@ const RenderList = ({ label, items, MoveIcon, MoveAllIcon, onMove, onMoveAll }: 
 export interface DualListProps extends DefaultProps {
   leftLabel?: string;
   rightLabel?: string;
-  available: string[];
-  selected: string[];
+  available: (IListItem | string)[];
+  selected: (IListItem | string)[];
 }
+
+const initializeItems = (items: (IListItem | string)[]): IListItem[] =>
+  items.map((item) => {
+    if (typeof item === 'string') {
+      return { id: useId(), value: item, disabled: false };
+    }
+    return item as IListItem;
+  });
 
 // TODO: properly respect theme
 
@@ -133,20 +150,20 @@ export function DualList({
   selected,
   ...others
 }: DualListProps) {
-  const [availableItems, setAvailableItems] = useState<string[]>(available);
-  const [selectedItems, setSelectedItems] = useState<string[]>(selected);
+  const [availableItems, setAvailableItems] = useState<IListItem[]>(initializeItems(available));
+  const [selectedItems, setSelectedItems] = useState<IListItem[]>(initializeItems(selected));
   const { classes } = useStyles();
 
   const theme = useMantineTheme();
 
-  const handleMoveAvailable = (items: string[]) => {
+  const handleMoveAvailable = (items: IListItem[]) => {
     setSelectedItems([...selectedItems, ...items]);
     setAvailableItems(availableItems.filter((item) => !items.includes(item)));
   };
 
   const handleMoveAllAvailable = () => handleMoveAvailable(availableItems);
 
-  const handleMoveSelected = (items: string[]) => {
+  const handleMoveSelected = (items: IListItem[]) => {
     setAvailableItems([...availableItems, ...items]);
     setSelectedItems(selectedItems.filter((item) => !items.includes(item)));
   };
