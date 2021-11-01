@@ -320,11 +320,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               (index) => index > 0
             );
 
-            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+            if (dropdownOpened) {
+              targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
 
-            scrollIntoView({
-              alignment: 'start',
-            });
+              scrollIntoView({
+                alignment: 'start',
+              });
+            }
+
             return nextIndex;
           });
           break;
@@ -340,11 +343,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               (index) => index < filteredData.length - 1
             );
 
-            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+            if (dropdownOpened) {
+              targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
 
-            scrollIntoView({
-              alignment: 'end',
-            });
+              scrollIntoView({
+                alignment: 'end',
+              });
+            }
+
             return nextIndex;
           });
           break;
