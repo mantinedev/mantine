@@ -18,9 +18,9 @@ export function getDependencyInfo(url: string) {
 
   if (url.startsWith('/component')) {
     return {
-      name: url.split('/')[1].split('-').map(upperFirst).join(''),
+      name: url.split('/')[2].split('-').map(upperFirst).join(''),
       url,
-      icon: <MantineIcon color="blue" />,
+      icon: <MantineIcon color="cyan" />,
     };
   }
 
