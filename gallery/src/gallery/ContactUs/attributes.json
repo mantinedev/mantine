@@ -13,8 +13,8 @@
     "/core/group/",
     "/core/simple-grid/",
     "/core/action-icon/",
-    "/gallery/component/contact-icons/",
-    "https://www.svgbackgrounds.com/"
+    "/component/contact-icons/",
+    "tabler-icons-react"
   ],
   "canvas": {
     "center": true,
