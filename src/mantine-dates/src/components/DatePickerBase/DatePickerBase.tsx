@@ -4,7 +4,6 @@ import {
   mergeStyles,
   Input,
   InputWrapper,
-  Text,
   InputBaseProps,
   InputWrapperBaseProps,
   Paper,
@@ -148,6 +147,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       onFocus,
       onBlur,
       onChange,
+      name = 'date',
       ...others
     }: DatePickerBaseProps,
     ref
@@ -225,11 +225,12 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               ref={useMergedRef(ref, inputRef)}
               __staticSelector={__staticSelector}
               size={size}
+              name={name}
               placeholder={placeholder}
               value={inputLabel}
               required={required}
               invalid={!!error}
-              readOnly={allowManualTyping}
+              readOnly={!allowManualTyping}
               rightSection={rightSection}
               rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
               onFocus={handleInputFocus}
@@ -238,7 +239,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               autoComplete="off"
               {...rest}
             />
-              {/* {inputLabel ? (
+            {/* {inputLabel ? (
                 <div className={classes.value} style={_styles.placeholder}>
                   {inputLabel}
                 </div>

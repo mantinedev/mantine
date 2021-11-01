@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef, useEffect } from 'react';
+import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { Calendar, CalendarSettings } from '../Calendar/Calendar';
@@ -9,7 +9,8 @@ export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<Calenda
   value?: Date;
 
   /** Called when date changes */
-  onChange?(value: Date | null): void;
+  // onChange?(value: Date | null): void;
+  onChange?: any;
 
   /** Default value for uncontrolled input */
   defaultValue?: Date | null;
@@ -22,9 +23,6 @@ export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<Calenda
 
   /** Control initial dropdown opened state */
   initiallyOpened?: boolean;
-
-  /** Input name, useful for uncontrolled variant to capture data with native form */
-  name?: string;
 }
 
 export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
@@ -61,6 +59,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       disabled = false,
       clearButtonLabel,
       fixOnBlur = true,
+      allowManualTyping,
       ...others
     }: DatePickerProps,
     ref
@@ -69,7 +68,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
     const inputRef = useRef<HTMLInputElement>();
 
-    const [lastValidValue, setLastValidValue] = useState(defaultValue);
+    const [lastValidValue, setLastValidValue] = useState(defaultValue ?? null);
     const [_value, setValue] = useUncontrolled({
       value,
       defaultValue,
@@ -92,17 +91,21 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
 
     const handleClear = () => {
       setValue(null);
+      setLastValidValue(null);
       inputRef.current?.focus();
     };
 
     const handleInputBlur = () => {
       // @ts-expect-error - https://github.com/iamkun/dayjs/issues/320
-      const isInputValid = _value === dayjs(_value, inputFormat).format(inputFormat) || _value === '';
+      const isInputValid = _value === dayjs(_value, inputFormat).format(inputFormat);
 
       if (isInputValid) {
-        setValue(dayjs(_value).toDate());
-      } else {
-        fixOnBlur && setValue(lastValidValue ?? null);
+        const date = dayjs(_value).toDate();
+
+        setValue(date);
+        setLastValidValue(date);
+      } else if (fixOnBlur) {
+        setValue(lastValidValue);
       }
     };
 
@@ -110,71 +113,56 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       setValue(e.target.value);
     };
 
-    useEffect(() => {
-      // @ts-expect-error - https://github.com/iamkun/dayjs/issues/320
-      const isInputValid = _value === dayjs(_value, inputFormat).format(inputFormat) || _value === '';
-
-      if (isInputValid) {
-        setLastValidValue(_value);
-      }
-    }, [_value]);
-
     return (
-      <>
-        <DatePickerBase
-          dropdownOpened={dropdownOpened}
-          setDropdownOpened={setDropdownOpened}
-          shadow={shadow}
-          transitionDuration={transitionDuration}
-          ref={useMergedRef(ref, inputRef)}
-          size={size}
-          styles={styles}
+      <DatePickerBase
+        allowManualTyping={allowManualTyping}
+        dropdownOpened={dropdownOpened}
+        setDropdownOpened={setDropdownOpened}
+        shadow={shadow}
+        transitionDuration={transitionDuration}
+        ref={useMergedRef(ref, inputRef)}
+        size={size}
+        styles={styles}
+        classNames={classNames}
+        onChange={handleChange}
+        onBlur={handleInputBlur}
+        name={name}
+        inputLabel={
+          _value instanceof Date
+            ? upperFirst(dayjs(_value).locale(locale).format(inputFormat))
+            : _value ?? ''
+        }
+        __staticSelector="date-picker"
+        dropdownType={dropdownType}
+        clearable={clearable && !!_value && !disabled}
+        clearButtonLabel={clearButtonLabel}
+        onClear={handleClear}
+        disabled={disabled}
+        {...others}
+      >
+        <Calendar
           classNames={classNames}
-          onChange={handleChange}
-          onBlur={handleInputBlur}
-          inputLabel={
-            _value instanceof Date
-              ? upperFirst(dayjs(_value).locale(locale).format(inputFormat))
-              : _value
-          }
+          styles={styles}
+          locale={locale}
+          nextMonthLabel={nextMonthLabel}
+          previousMonthLabel={previousMonthLabel}
+          initialMonth={_value instanceof Date ? _value : initialMonth}
+          value={_value instanceof Date ? _value : dayjs(_value).toDate()}
+          onChange={handleValueChange}
+          labelFormat={labelFormat}
+          withSelect={withSelect}
+          yearsRange={yearsRange}
+          dayClassName={dayClassName}
+          dayStyle={dayStyle}
+          disableOutsideEvents={disableOutsideEvents}
+          minDate={minDate}
+          maxDate={maxDate}
+          excludeDate={excludeDate}
           __staticSelector="date-picker"
-          dropdownType={dropdownType}
-          clearable={clearable && !!_value && !disabled}
-          clearButtonLabel={clearButtonLabel}
-          onClear={handleClear}
-          disabled={disabled}
-          {...others}
-        >
-          <Calendar
-            classNames={classNames}
-            styles={styles}
-            locale={locale}
-            nextMonthLabel={nextMonthLabel}
-            previousMonthLabel={previousMonthLabel}
-            initialMonth={_value instanceof Date ? _value : initialMonth}
-            value={_value}
-            onChange={handleValueChange}
-            labelFormat={labelFormat}
-            withSelect={withSelect}
-            yearsRange={yearsRange}
-            dayClassName={dayClassName}
-            dayStyle={dayStyle}
-            disableOutsideEvents={disableOutsideEvents}
-            minDate={minDate}
-            maxDate={maxDate}
-            excludeDate={excludeDate}
-            __staticSelector="date-picker"
-            fullWidth={dropdownType === 'modal'}
-            size={dropdownType === 'modal' ? 'lg' : calendarSize}
-          />
-        </DatePickerBase>
-
-        <input
-          type="hidden"
-          name={name}
-          value={_value instanceof Date ? _value.toISOString() : ''}
+          fullWidth={dropdownType === 'modal'}
+          size={dropdownType === 'modal' ? 'lg' : calendarSize}
         />
-      </>
+      </DatePickerBase>
     );
   }
 );
