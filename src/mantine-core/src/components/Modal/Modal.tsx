@@ -107,12 +107,13 @@ export function MantineModal({
       ? 0.85
       : 0.75;
 
-  useScrollLock(opened);
-
+  const [, lockScroll] = useScrollLock();
   useFocusReturn({ opened, transitionDuration });
 
   return (
     <GroupedTransition
+      onExited={() => lockScroll(false)}
+      onEntered={() => lockScroll(true)}
       mounted={opened}
       transitions={{
         modal: { duration: transitionDuration, transition },
@@ -142,7 +143,10 @@ export function MantineModal({
               aria-labelledby={titleId}
               aria-describedby={bodyId}
               aria-modal
-              style={transitionStyles.modal}
+              style={{
+                ...transitionStyles.modal,
+                marginLeft: 'calc(var(--removed-scroll-width, 0px) * -1)',
+              }}
               tabIndex={-1}
             >
               {(title || !hideCloseButton) && (

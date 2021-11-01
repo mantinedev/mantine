@@ -289,11 +289,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               (index) => index > 0
             );
 
-            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+            if (dropdownOpened) {
+              targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
 
-            scrollIntoView({
-              alignment: 'start',
-            });
+              scrollIntoView({
+                alignment: 'start',
+              });
+            }
 
             return nextIndex;
           });
@@ -310,11 +312,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               (index) => index < filteredData.length - 1
             );
 
-            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+            if (dropdownOpened) {
+              targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
 
-            scrollIntoView({
-              alignment: 'end',
-            });
+              scrollIntoView({
+                alignment: 'end',
+              });
+            }
 
             return nextIndex;
           });

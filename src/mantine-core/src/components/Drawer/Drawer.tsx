@@ -124,7 +124,8 @@ export function MantineDrawer({
   const theme = useMantineTheme();
   const { classes, cx } = useStyles({ size, position }, { sx, classNames, styles, name: 'Drawer' });
   const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
-  useScrollLock(opened && !noScrollLock);
+
+  const [, lockScroll] = useScrollLock();
 
   const drawerTransition = transition || transitions[position];
   const _overlayOpacity =
@@ -153,6 +154,8 @@ export function MantineDrawer({
 
   return (
     <GroupedTransition
+      onExited={() => lockScroll(false)}
+      onEntered={() => lockScroll(!noScrollLock && true)}
       mounted={opened}
       transitions={{
         overlay: { duration: transitionDuration / 2, transition: 'fade', timingFunction: 'ease' },

@@ -18,8 +18,8 @@ export const Title = forwardRef<HTMLHeadingElement, TitleProps>(
       return null;
     }
 
-    const element = `h${order}` as const;
-    const { classes, cx } = useStyles({ element }, { sx, name: 'Title' });
+    const Element = `h${order}` as const;
+    const { classes, cx } = useStyles({ element: Element }, { sx, name: 'Title' });
     const styles: React.CSSProperties = { ...style };
 
     if (align) {
@@ -29,7 +29,7 @@ export const Title = forwardRef<HTMLHeadingElement, TitleProps>(
     const { mergedStyles, rest } = useExtractedMargins({ others, style: styles });
 
     return React.createElement(
-      element,
+      Element,
       {
         className: cx(classes.root, className),
         style: mergedStyles,
