@@ -35,20 +35,58 @@ interface ListProps {
 }
 
 const RenderList = ({ label, items, MoveIcon, MoveAllIcon, onMove, onMoveAll }: ListProps) => {
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [selectedItems, setSelectedItems] = useState<string[] | null>(null);
+  const [multiSelectionRootIdx, setMultiSelectionRootIdx] = useState<number | null>(null);
+
   const { classes } = useStyles();
 
-  // TODO: onMove multiple items
+  // TODO: Allow duplicate items
+  const itemIsSelected = (item: string): boolean => selectedItems?.includes(item);
+
+  const clearSelection = () => {
+    setSelectedItems(null);
+    setMultiSelectionRootIdx(null);
+  };
+
   const handleMove = () => {
-    if (selectedItem) {
-      onMove([selectedItem]);
-      setSelectedItem(null);
+    if (selectedItems) {
+      onMove(selectedItems);
+      clearSelection();
     }
   };
 
   const handleMoveAll = () => {
     onMoveAll();
-    setSelectedItem(null);
+    clearSelection();
+  };
+
+  const handleClickItem = (e: React.MouseEvent, item: string) => {
+    const clickedItemIdx = items.indexOf(item);
+
+    if (!(multiSelectionRootIdx != null && e.shiftKey)) {
+      setMultiSelectionRootIdx(clickedItemIdx);
+    }
+
+    const hasSelectedItems = selectedItems && selectedItems.length > 0;
+    if (hasSelectedItems) {
+      if (e.shiftKey) {
+        const start = Math.min(multiSelectionRootIdx, clickedItemIdx);
+        const end = Math.max(multiSelectionRootIdx, clickedItemIdx) + 1;
+        const newSelection = items.slice(start, end);
+
+        setSelectedItems(newSelection);
+      } else if (e.ctrlKey) {
+        if (itemIsSelected(item)) {
+          setSelectedItems(selectedItems.filter((_item) => item !== _item));
+        } else {
+          setSelectedItems([...selectedItems, item]);
+        }
+      } else {
+        setSelectedItems([item]);
+      }
+    } else {
+      setSelectedItems([item]);
+    }
   };
 
   return (
@@ -65,7 +103,7 @@ const RenderList = ({ label, items, MoveIcon, MoveAllIcon, onMove, onMoveAll }: 
         </div>
         <div>
           {items.map((item) => (
-            <ListItem isSelected={item === selectedItem} onClick={() => setSelectedItem(item)}>
+            <ListItem isSelected={itemIsSelected(item)} onClick={(e) => handleClickItem(e, item)}>
               {item}
             </ListItem>
           ))}

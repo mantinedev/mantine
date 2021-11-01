@@ -34,8 +34,12 @@ export default createStyles((theme, _params, getRef) => {
         borderRight: border,
       },
     },
+    items: {
+      width: '100%',
+    },
     item: {
       padding: '0 10px',
+      userSelect: 'none',
     },
     selectedItem: {
       backgroundColor: theme.colors.gray[1],

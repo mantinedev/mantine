@@ -7,7 +7,7 @@ import { DualListProps } from '.';
 
 const Wrapper = (props: Partial<DualListProps>) => {
   const available = ['123', 'abc', '321'];
-  const selected = ['def'];
+  const selected = ['def', 'ghi', 'jkl'];
 
   return <DualList {...props} available={available} selected={selected} />;
 };
