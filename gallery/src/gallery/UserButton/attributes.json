@@ -1,6 +1,6 @@
 {
   "title": "User button",
-  "category": "inputs",
+  "category": "users",
   "author": "rtivital",
   "dependencies": ["/core/button/#unstyled-button", "/core/text/", "/core/avatar/"],
   "props": {

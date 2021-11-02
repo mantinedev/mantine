@@ -25,6 +25,9 @@ import bannersDark from './banners-dark.svg';
 import navbarsLight from './navbars-light.svg';
 import navbarsDark from './navbars-dark.svg';
 
+import usersLight from './users-light.svg';
+import usersDark from './users-dark.svg';
+
 export default {
   inputs: { light: inputsLight, dark: inputsDark },
   cards: { light: cardsLight, dark: cardsDark },
@@ -35,4 +38,5 @@ export default {
   contact: { light: contactLight, dark: contactDark },
   banners: { light: bannersLight, dark: bannersDark },
   navbars: { light: navbarsLight, dark: navbarsDark },
+  users: { light: usersLight, dark: usersDark },
 };
