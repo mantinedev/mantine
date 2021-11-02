@@ -53,3 +53,6 @@ export { FaqWithImage } from './FaqWithImage/FaqWithImage';
 // Navbar
 export { NavbarNested } from './NavbarNested/NavbarNested';
 export { NavbarSegmented } from './NavbarSegmented/NavbarSegmented';
+
+// Users
+export { UserButton } from './UserButton/UserButton';
