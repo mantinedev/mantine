@@ -22,6 +22,8 @@ import {
   DatabaseImport,
   Receipt2,
   ReceiptRefund,
+  Logout,
+  SwitchHorizontal,
 } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme, _params, getRef) => {
@@ -76,6 +78,11 @@ const useStyles = createStyles((theme, _params, getRef) => {
         },
       },
     },
+
+    footer: {
+      borderTop: `1px solid ${theme.colors.gray[3]}`,
+      paddingTop: theme.spacing.md,
+    },
   };
 });
 
@@ -123,7 +130,7 @@ export function NavbarSegmented() {
   ));
 
   return (
-    <Navbar height={600} padding="md" className={classes.navbar}>
+    <Navbar height={840} padding="md" className={classes.navbar}>
       <Navbar.Section>
         <Text weight={500} size="sm" className={classes.title} color="dimmed" mb="xs">
           bgluesticker@mantine.dev
@@ -140,8 +147,21 @@ export function NavbarSegmented() {
           ]}
         />
       </Navbar.Section>
+
       <Navbar.Section grow mt="xl">
         {links}
+      </Navbar.Section>
+
+      <Navbar.Section className={classes.footer}>
+        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+          <SwitchHorizontal className={classes.linkIcon} />
+          <span>Change account</span>
+        </a>
+
+        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+          <Logout className={classes.linkIcon} />
+          <span>Logout</span>
+        </a>
       </Navbar.Section>
     </Navbar>
   );
