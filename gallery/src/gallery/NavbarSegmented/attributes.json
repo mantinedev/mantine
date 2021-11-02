@@ -1,0 +1,9 @@
+{
+  "title": "Navbar with SegmentedControl",
+  "category": "navbars",
+  "author": "rtivital",
+  "dependencies": ["/core/app-shell/", "/core/segmented-control/"],
+  "canvas": {
+    "center": false
+  }
+}

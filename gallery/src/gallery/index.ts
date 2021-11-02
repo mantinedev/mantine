@@ -49,3 +49,6 @@ export { FaqSimple } from './FaqSimple/FaqSimple';
 export { FaqWithBg } from './FaqWithBg/FaqWithBg';
 export { FaqWithHeader } from './FaqWithHeader/FaqWithHeader';
 export { FaqWithImage } from './FaqWithImage/FaqWithImage';
+
+// Navbar
+export { NavbarSegmented } from './NavbarSegmented/NavbarSegmented';
