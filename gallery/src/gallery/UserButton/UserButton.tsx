@@ -13,7 +13,7 @@ const useStyles = createStyles((theme) => ({
   user: {
     display: 'block',
     width: '100%',
-    padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
+    padding: theme.spacing.md,
     borderRadius: theme.radius.sm,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 

@@ -150,6 +150,7 @@ const mockdata = [
 const useStyles = createStyles((theme) => ({
   navbar: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+    paddingBottom: 0,
   },
 
   header: {
@@ -171,7 +172,6 @@ const useStyles = createStyles((theme) => ({
   },
 
   footer: {
-    paddingTop: theme.spacing.xs,
     marginLeft: -theme.spacing.md,
     marginRight: -theme.spacing.md,
 
