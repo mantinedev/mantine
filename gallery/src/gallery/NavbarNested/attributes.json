@@ -1,0 +1,10 @@
+{
+  "title": "Navbar with nested links",
+  "category": "navbars",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/app-shell/", "/core/text/", "tabler-icons-react"],
+  "canvas": {
+    "center": false
+  }
+}
