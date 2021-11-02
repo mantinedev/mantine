@@ -3,7 +3,18 @@
   "category": "navbars",
   "author": "rtivital",
   "withColor": true,
-  "dependencies": ["/core/app-shell/", "/core/text/", "tabler-icons-react"],
+  "dependencies": [
+    "/core/app-shell/",
+    "/core/text/",
+    "/core/group/",
+    "/core/code/",
+    "/core/box/",
+    "/core/collapse/",
+    "/core/theme-icon/",
+    "/core/button/#unstyled-button",
+    "tabler-icons-react",
+    "react-custom-scrollbars"
+  ],
   "canvas": {
     "center": false
   }
