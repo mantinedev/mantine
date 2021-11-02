@@ -55,7 +55,7 @@ export interface SegmentedControlProps<T extends string>
   defaultValue?: string;
 }
 
-export function SegmentedControl<T extends string>({
+export function SegmentedControl<T extends string = string>({
   className,
   style,
   data: _data,

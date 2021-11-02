@@ -4,7 +4,7 @@ import { Link } from 'gatsby';
 import { LogoImage } from './LogoImage';
 import useStyles from './Logo.styles';
 
-export function Logo({ className, ...others }: React.ComponentPropsWithoutRef<'a'>) {
+export function Logo({ className, ...others }: any) {
   const { classes } = useStyles();
 
   return (
