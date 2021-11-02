@@ -3,13 +3,14 @@ import { Group, Box, Collapse, ThemeIcon, Text, UnstyledButton, createStyles } f
 import { ChevronRightIcon } from '@modulz/radix-icons';
 import { Icon as TablerIcon, CalendarStats } from 'tabler-icons-react';
 
-const useLinksGroupStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme) => ({
   control: {
     fontWeight: 500,
     display: 'block',
     width: '100%',
     padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    fontSize: theme.fontSizes.sm,
 
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
@@ -49,7 +50,7 @@ interface LinksGroupProps {
 }
 
 export function LinksGroup({ icon: Icon, label, initiallyOpened, links }: LinksGroupProps) {
-  const { classes } = useLinksGroupStyles();
+  const { classes } = useStyles();
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(initiallyOpened || false);
   const items = (hasLinks ? links : []).map((link) => (
@@ -72,9 +73,7 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links }: LinksG
             <ThemeIcon variant="light" size={30}>
               <Icon size={18} />
             </ThemeIcon>
-            <Text ml="md" size="sm">
-              {label}
-            </Text>
+            <Box ml="md">{label}</Box>
           </Box>
           {hasLinks && (
             <ChevronRightIcon
@@ -100,5 +99,15 @@ const mockdata = {
 };
 
 export function NavbarLinksGroup() {
-  return <LinksGroup {...mockdata} />;
+  return (
+    <Box
+      sx={(theme) => ({
+        minHeight: 220,
+        padding: theme.spacing.md,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+      })}
+    >
+      <LinksGroup {...mockdata} />
+    </Box>
+  );
 }
