@@ -13,12 +13,12 @@ const useStyles = createStyles((theme) => ({
   user: {
     display: 'block',
     width: '100%',
-    padding: theme.spacing.xs,
+    padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
     borderRadius: theme.radius.sm,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
     },
   },
 }));
@@ -47,7 +47,7 @@ export function UserButton({ image, name, email, ...others }: UserButtonProps) {
           </Text>
         </div>
 
-        <ChevronRightIcon width={18} height={18} />
+        <ChevronRightIcon />
       </Group>
     </UnstyledButton>
   );

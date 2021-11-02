@@ -22,6 +22,7 @@ import {
 } from 'tabler-icons-react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { ChevronRightIcon } from '@modulz/radix-icons';
+import { UserButton } from '../UserButton/UserButton';
 import { Logo } from './Logo';
 
 interface LinksGroupProps {
@@ -33,6 +34,7 @@ interface LinksGroupProps {
 
 const useLinksGroupStyles = createStyles((theme) => ({
   control: {
+    fontWeight: 500,
     display: 'block',
     width: '100%',
     padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
@@ -45,6 +47,7 @@ const useLinksGroupStyles = createStyles((theme) => ({
   },
 
   link: {
+    fontWeight: 500,
     display: 'block',
     textDecoration: 'none',
     padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
@@ -166,6 +169,16 @@ const useStyles = createStyles((theme) => ({
     paddingTop: theme.spacing.xl,
     paddingBottom: theme.spacing.xl,
   },
+
+  footer: {
+    paddingTop: theme.spacing.xs,
+    marginLeft: -theme.spacing.md,
+    marginRight: -theme.spacing.md,
+
+    borderTop: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+    }`,
+  },
 }));
 
 export function NavbarNested() {
@@ -183,7 +196,13 @@ export function NavbarNested() {
       <Navbar.Section grow className={classes.links}>
         <Scrollbars>{links}</Scrollbars>
       </Navbar.Section>
-      <Navbar.Section>user</Navbar.Section>
+      <Navbar.Section className={classes.footer}>
+        <UserButton
+          image="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
+          name="Ann Nullpointer"
+          email="anullpointer@yahoo.com"
+        />
+      </Navbar.Section>
     </Navbar>
   );
 }

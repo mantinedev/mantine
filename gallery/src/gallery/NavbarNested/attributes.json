@@ -12,6 +12,7 @@
     "/core/collapse/",
     "/core/theme-icon/",
     "/core/button/#unstyled-button",
+    "/component/user-button/",
     "tabler-icons-react",
     "react-custom-scrollbars"
   ],
