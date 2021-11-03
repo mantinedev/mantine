@@ -61,6 +61,7 @@ const ListItem = ({ item, isSelected, children, ...props }: ListItemProps) => {
 };
 
 interface IListProps {
+  emptyPlaceholder: string;
   position: 'left' | 'right';
   label: string;
   items: IListItem[];
@@ -79,6 +80,7 @@ type ListComponent = <C extends React.ElementType>(props: ListProps<C>) => React
 const RenderList: ListComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
+      emptyPlaceholder,
       component,
       position,
       label,
@@ -159,6 +161,7 @@ const RenderList: ListComponent = forwardRef(
       </ActionIcon>
     );
 
+    // TODO: Should MoveAll move _all_ items or only those shown (filtered)
     const RenderMoveAllIcon = () => (
       <ActionIcon className={classes.action} onClick={handleMoveAll} disabled={!hasItems()}>
         {MoveAllIcon}
@@ -172,13 +175,21 @@ const RenderList: ListComponent = forwardRef(
       return items.filter((item) => item.value.toLowerCase().includes(search));
     };
 
-    const RenderItems = () => (
-      <>
-        {filterItems().map((item) => (
-          <ListItem item={item} isSelected={itemIsSelected(item)} onClick={handleClickItem} />
-        ))}
-      </>
-    );
+    const RenderItems = () => {
+      const filtered = filterItems();
+
+      if (filtered.length === 0) {
+        return <Text className={cx(classes.item, classes.disabled)}>{emptyPlaceholder}</Text>;
+      }
+
+      return (
+        <>
+          {filtered.map((item) => (
+            <ListItem item={item} isSelected={itemIsSelected(item)} onClick={handleClickItem} />
+          ))}
+        </>
+      );
+    };
 
     return (
       <div>
@@ -221,6 +232,9 @@ export interface DualListProps extends DefaultProps {
   showRightSearchBar?: boolean;
   leftSearchBarProps?: TextInputProps;
   rightSearchBarProps?: TextInputProps;
+  emptyPlaceholder?: string;
+  leftEmptyPlaceholder?: string;
+  rightEmptyPlaceholder?: string;
   available: (IListItem | string)[];
   selected: (IListItem | string)[];
   onChange?: (data: DualListData) => void;
@@ -237,6 +251,9 @@ const initializeItems = (items: (IListItem | string)[]): IListItem[] =>
 
 export const DualList: DualListComponent & { displayName?: string } = ({
   className,
+  emptyPlaceholder = 'No items found...',
+  leftEmptyPlaceholder = emptyPlaceholder,
+  rightEmptyPlaceholder = emptyPlaceholder,
   leftLabel = 'Available',
   rightLabel = 'Selected',
   showLeftSearchBar = true,
@@ -289,6 +306,7 @@ export const DualList: DualListComponent & { displayName?: string } = ({
     <Paper padding="md" className={cx(classes.flex, className)} {...props}>
       <RenderList
         component={ListElement}
+        emptyPlaceholder={leftEmptyPlaceholder}
         position="left"
         label={leftLabel}
         items={data.available}
@@ -302,6 +320,7 @@ export const DualList: DualListComponent & { displayName?: string } = ({
       />
       <RenderList
         component={ListElement}
+        emptyPlaceholder={rightEmptyPlaceholder}
         position="right"
         label={rightLabel}
         items={data.selected}
