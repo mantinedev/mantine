@@ -33,11 +33,6 @@ export default createStyles((theme) => {
           ? theme.colors.dark[4]
           : getThemeColor({ theme, color: theme.primaryColor, shade: 0 }),
     },
-    searchBar: {
-      borderRadius: 0,
-      borderTop: border,
-      borderBottom: border,
-    },
     disabled: {
       color: theme.colors.gray[theme.colorScheme === 'dark' ? 7 : 4],
     },

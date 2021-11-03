@@ -206,7 +206,12 @@ const RenderList: ListComponent = forwardRef(
               {...searchBarProps}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className={cx(classes.searchBar, searchBarProps?.className)}
+              styles={(_theme) => ({
+                input: {
+                  borderRadius: 0,
+                  border: `1px solid ${_theme.colors.gray[3]}`,
+                },
+              })}
             />
           )}
           <Element {...props} ref={ref}>
