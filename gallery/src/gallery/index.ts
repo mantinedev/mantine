@@ -52,6 +52,7 @@ export { FaqWithImage } from './FaqWithImage/FaqWithImage';
 
 // Navbar
 export { NavbarLinksGroup } from './NavbarLinksGroup/NavbarLinksGroup';
+export { NavbarMinimal } from './NavbarMinimal/NavbarMinimal';
 export { NavbarNested } from './NavbarNested/NavbarNested';
 export { NavbarSegmented } from './NavbarSegmented/NavbarSegmented';
 
