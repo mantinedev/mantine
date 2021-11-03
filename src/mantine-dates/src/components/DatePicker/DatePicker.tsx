@@ -4,13 +4,14 @@ import dayjs from 'dayjs';
 import { Calendar, CalendarSettings } from '../Calendar/Calendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
-export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<CalendarSettings, 'size'> {
+export interface DatePickerProps
+  extends Omit<DatePickerBaseSharedProps, 'onChange'>,
+    Omit<CalendarSettings, 'size'> {
   /** Selected date, required with controlled input */
   value?: Date;
 
   /** Called when date changes */
-  // onChange?(value: Date | null): void;
-  onChange?: any;
+  onChange?(value: Date | null): void;
 
   /** Default value for uncontrolled input */
   defaultValue?: Date | null;
