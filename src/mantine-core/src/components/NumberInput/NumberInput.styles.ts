@@ -23,6 +23,7 @@ export default createStyles((theme, { radius, size }: NumberInputStyles) => ({
   },
 
   control: {
+    margin: 0,
     position: 'relative',
     flex: '0 0 50%',
     boxSizing: 'border-box',
