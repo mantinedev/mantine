@@ -11,25 +11,35 @@ export type DualListStylesNames = ClassNames<typeof useStyles>;
 interface IListItem {
   id: string;
   value: string;
-  disabled: boolean; // TODO: Handle disabled items
+  disabled: boolean;
 }
 
-interface ListItemProps extends TextProps<'div'> {
+interface ListItemProps extends Omit<TextProps<'div'>, 'onClick'> {
   item: IListItem;
   isSelected: boolean;
+  onClick?: (e: React.MouseEvent, item: IListItem) => void;
 }
 
 const ListItem = ({ item, isSelected, children, ...props }: ListItemProps) => {
   const { classes, cx } = useStyles();
+  const { value, disabled } = item;
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (!disabled) {
+      props.onClick?.(e, item);
+    }
+  };
 
   return (
     <Text
-      className={cx(classes.item, {
-        [classes.selectedItem]: isSelected,
-      })}
       {...props}
+      className={cx(props.className, classes.item, {
+        [classes.selectedItem]: isSelected,
+        [classes.disabled]: disabled,
+      })}
+      onClick={handleClick}
     >
-      {item.value}
+      {value}
     </Text>
   );
 };
@@ -114,11 +124,7 @@ const RenderList = ({
   );
 
   const RenderMoveAllIcon = () => (
-    <ActionIcon
-      className={classes.action}
-      onClick={handleMoveAll}
-      disabled={!hasItems()}
-    >
+    <ActionIcon className={classes.action} onClick={handleMoveAll} disabled={!hasItems()}>
       {MoveAllIcon}
     </ActionIcon>
   );
@@ -133,11 +139,7 @@ const RenderList = ({
         </div>
         <div>
           {items.map((item) => (
-            <ListItem
-              item={item}
-              isSelected={itemIsSelected(item)}
-              onClick={(e) => handleClickItem(e, item)}
-            />
+            <ListItem item={item} isSelected={itemIsSelected(item)} onClick={handleClickItem} />
           ))}
         </div>
       </div>

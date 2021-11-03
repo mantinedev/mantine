@@ -37,5 +37,8 @@ export default createStyles((theme, _params, getRef) => {
     selectedItem: {
       backgroundColor: theme.colors.gray[1],
     },
+    disabled: {
+      color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
+    },
   };
 });
