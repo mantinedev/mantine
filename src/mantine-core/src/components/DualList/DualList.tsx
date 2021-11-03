@@ -6,13 +6,21 @@ import {
   PolymorphicComponentProps,
   PolymorphicRef,
 } from '@mantine/styles';
-import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight, Icon } from 'react-feather';
+import {
+  ChevronLeft,
+  ChevronsLeft,
+  ChevronRight,
+  ChevronsRight,
+  Search as SearchIcon,
+  Icon,
+} from 'react-feather';
 import { useDidUpdate, useId } from '@mantine/hooks';
 import useStyles from './DualList.styles';
 import { Text, TextProps } from '../Text';
 import { ActionIcon } from '../ActionIcon';
 import { Title } from '../Title';
 import { Paper } from '../Paper';
+import { TextInput, TextInputProps } from '../TextInput';
 
 export type DualListStylesNames = ClassNames<typeof useStyles>;
 
@@ -56,6 +64,9 @@ interface IListProps {
   position: 'left' | 'right';
   label: string;
   items: IListItem[];
+  showSearchBar?: boolean;
+  searchBarProps?: TextInputProps;
+  searchItems?: (items: IListItem[], search: string) => IListItem[];
   MoveIcon: JSX.Element;
   MoveAllIcon: JSX.Element;
   onMove: (items: IListItem[]) => void;
@@ -72,6 +83,9 @@ const RenderList: ListComponent = forwardRef(
       position,
       label,
       items,
+      showSearchBar = true,
+      searchBarProps,
+      searchItems,
       MoveIcon,
       MoveAllIcon,
       onMove,
@@ -82,8 +96,11 @@ const RenderList: ListComponent = forwardRef(
   ) => {
     const [selectedItems, setSelectedItems] = useState<IListItem[] | null>(null);
     const [multiSelectionRootIdx, setMultiSelectionRootIdx] = useState<number | null>(null);
+    const [search, setSearch] = useState<string>('');
 
-    const { classes } = useStyles();
+    const { classes, cx } = useStyles();
+
+    const theme = useMantineTheme();
 
     const Element = component || 'div';
 
@@ -148,6 +165,21 @@ const RenderList: ListComponent = forwardRef(
       </ActionIcon>
     );
 
+    const filterItems = () => {
+      if (!showSearchBar) return items;
+      if (searchItems) return searchItems(items, search);
+
+      return items.filter((item) => item.value.toLowerCase().includes(search));
+    };
+
+    const RenderItems = () => (
+      <>
+        {filterItems().map((item) => (
+          <ListItem item={item} isSelected={itemIsSelected(item)} onClick={handleClickItem} />
+        ))}
+      </>
+    );
+
     return (
       <div>
         <Title order={4}>{label}</Title>
@@ -156,10 +188,18 @@ const RenderList: ListComponent = forwardRef(
             {position === 'left' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
             {position === 'right' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
           </div>
+          {showSearchBar && (
+            <TextInput
+              placeholder="Search..."
+              rightSection={<SearchIcon width={theme.fontSizes.lg} height={theme.fontSizes.lg} />}
+              {...searchBarProps}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className={cx(classes.searchBar, searchBarProps?.className)}
+            />
+          )}
           <Element {...props} ref={ref}>
-            {items.map((item) => (
-              <ListItem item={item} isSelected={itemIsSelected(item)} onClick={handleClickItem} />
-            ))}
+            <RenderItems />
           </Element>
         </div>
       </div>
@@ -174,8 +214,13 @@ export interface DualListData {
 
 export interface DualListProps extends DefaultProps {
   listComponent?: React.ElementType;
+  searchItems?: (items: IListItem[], search: string) => IListItem[];
   leftLabel?: string;
   rightLabel?: string;
+  showLeftSearchBar?: boolean;
+  showRightSearchBar?: boolean;
+  leftSearchBarProps?: TextInputProps;
+  rightSearchBarProps?: TextInputProps;
   available: (IListItem | string)[];
   selected: (IListItem | string)[];
   onChange?: (data: DualListData) => void;
@@ -194,7 +239,12 @@ export const DualList: DualListComponent & { displayName?: string } = ({
   className,
   leftLabel = 'Available',
   rightLabel = 'Selected',
+  showLeftSearchBar = true,
+  showRightSearchBar = true,
+  leftSearchBarProps,
+  rightSearchBarProps,
   listComponent,
+  searchItems,
   available,
   selected,
   onChange,
@@ -242,6 +292,9 @@ export const DualList: DualListComponent & { displayName?: string } = ({
         position="left"
         label={leftLabel}
         items={data.available}
+        showSearchBar={showLeftSearchBar}
+        searchBarProps={leftSearchBarProps}
+        searchItems={searchItems}
         MoveIcon={<RenderIcon icon={ChevronRight} />}
         MoveAllIcon={<RenderIcon icon={ChevronsRight} />}
         onMove={handleMoveAvailable}
@@ -252,6 +305,9 @@ export const DualList: DualListComponent & { displayName?: string } = ({
         position="right"
         label={rightLabel}
         items={data.selected}
+        showSearchBar={showRightSearchBar}
+        searchBarProps={rightSearchBarProps}
+        searchItems={searchItems}
         MoveIcon={<RenderIcon icon={ChevronLeft} />}
         MoveAllIcon={<RenderIcon icon={ChevronsLeft} />}
         onMove={handleMoveSelected}
