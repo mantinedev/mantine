@@ -19,17 +19,10 @@ export default createStyles((theme, _params, getRef) => {
       display: 'flex',
     },
     action: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-
       width: '100%',
       minHeight: 40,
 
       borderBottom: border,
-
-      cursor: 'pointer',
-
       '&:first-child': {
         borderRight: border,
       },

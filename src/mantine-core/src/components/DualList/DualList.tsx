@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight, Icon } from 're
 import { useId } from '@mantine/hooks';
 import useStyles from './DualList.styles';
 import { Text, TextProps } from '../Text/Text';
+import { ActionIcon } from '../ActionIcon';
 
 export type DualListStylesNames = ClassNames<typeof useStyles>;
 
@@ -34,6 +35,7 @@ const ListItem = ({ item, isSelected, children, ...props }: ListItemProps) => {
 };
 
 interface ListProps {
+  position: 'left' | 'right';
   label: string;
   items: IListItem[];
   MoveIcon: JSX.Element;
@@ -42,12 +44,22 @@ interface ListProps {
   onMoveAll: () => void;
 }
 
-const RenderList = ({ label, items, MoveIcon, MoveAllIcon, onMove, onMoveAll }: ListProps) => {
+const RenderList = ({
+  position,
+  label,
+  items,
+  MoveIcon,
+  MoveAllIcon,
+  onMove,
+  onMoveAll,
+}: ListProps) => {
   const [selectedItems, setSelectedItems] = useState<IListItem[] | null>(null);
   const [multiSelectionRootIdx, setMultiSelectionRootIdx] = useState<number | null>(null);
 
   const { classes } = useStyles();
 
+  const hasItems = (): boolean => items && items.length > 0;
+  const hasSelectedItems = (): boolean => selectedItems && selectedItems.length > 0;
   const itemIsSelected = (item: IListItem): boolean => selectedItems?.includes(item);
 
   const clearSelection = () => {
@@ -74,8 +86,7 @@ const RenderList = ({ label, items, MoveIcon, MoveAllIcon, onMove, onMoveAll }: 
       setMultiSelectionRootIdx(clickedItemIdx);
     }
 
-    const hasSelectedItems = selectedItems && selectedItems.length > 0;
-    if (hasSelectedItems) {
+    if (hasSelectedItems()) {
       if (e.shiftKey) {
         const start = Math.min(multiSelectionRootIdx, clickedItemIdx);
         const end = Math.max(multiSelectionRootIdx, clickedItemIdx) + 1;
@@ -96,17 +107,29 @@ const RenderList = ({ label, items, MoveIcon, MoveAllIcon, onMove, onMoveAll }: 
     }
   };
 
+  const RenderMoveIcon = () => (
+    <ActionIcon className={classes.action} onClick={handleMove} disabled={!hasSelectedItems()}>
+      {MoveIcon}
+    </ActionIcon>
+  );
+
+  const RenderMoveAllIcon = () => (
+    <ActionIcon
+      className={classes.action}
+      onClick={handleMoveAll}
+      disabled={!hasItems()}
+    >
+      {MoveAllIcon}
+    </ActionIcon>
+  );
+
   return (
     <div>
       <h3>{label}</h3>
       <div className={classes.list}>
         <div className={classes.actions}>
-          <Text className={classes.action} onClick={handleMove}>
-            {MoveIcon}
-          </Text>
-          <Text className={classes.action} onClick={handleMoveAll}>
-            {MoveAllIcon}
-          </Text>
+          {position === 'left' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
+          {position === 'right' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
         </div>
         <div>
           {items.map((item) => (
@@ -177,6 +200,7 @@ export function DualList({
   return (
     <div className={classes.container}>
       <RenderList
+        position="left"
         label={leftLabel}
         items={availableItems}
         MoveIcon={<RenderIcon icon={ChevronRight} />}
@@ -185,6 +209,7 @@ export function DualList({
         onMoveAll={handleMoveAllAvailable}
       />
       <RenderList
+        position="right"
         label={rightLabel}
         items={selectedItems}
         MoveIcon={<RenderIcon icon={ChevronLeft} />}
