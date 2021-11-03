@@ -161,13 +161,16 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     const [isFocused, setFocused] = useState(false);
     const uuid = useUuid(id);
 
-    const focusTrapRef = useFocusTrap(!isFocused);
+    const focusTrapRef = useFocusTrap(!allowManualTyping && !isFocused);
     const inputRef = useRef<HTMLButtonElement>();
 
     const closeDropdown = () => {
       if (dropdownOpened) {
         setDropdownOpened(false);
-        setTimeout(() => inputRef.current?.focus(), transitionDuration + 50);
+
+        if (!allowManualTyping) {
+          setTimeout(() => inputRef.current?.focus(), transitionDuration + 50);
+        }
       }
     };
 
@@ -239,16 +242,6 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               autoComplete="off"
               {...rest}
             />
-            {/* {inputLabel ? (
-                <div className={classes.value} style={_styles.placeholder}>
-                  {inputLabel}
-                </div>
-              ) : (
-                <Text style={_styles.placeholder} className={classes.placeholder} size={size}>
-                  {placeholder}
-                </Text>
-              )} */}
-            {/* </Input> */}
           </div>
 
           {dropdownType === 'popover' ? (
@@ -272,6 +265,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
                 ref={useMergedRef(focusTrapRef, setDropdownElement)}
                 data-mantine-stop-propagation={dropdownType === 'popover' && dropdownOpened}
                 onKeyDownCapture={closeOnEscape}
+                aria-hidden={allowManualTyping || undefined}
               >
                 <Paper className={classes.dropdown} style={_styles.dropdown} shadow={shadow}>
                   {children}

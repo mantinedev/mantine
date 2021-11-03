@@ -86,6 +86,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       __staticSelector = 'calendar',
       monthLabel,
       yearLabel,
+      preventFocus,
       ...others
     }: CalendarProps,
     ref
@@ -118,6 +119,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           month={_month}
           setMonth={setMonth}
           labelFormat={labelFormat}
+          preventFocus={preventFocus}
           __staticSelector={__staticSelector}
           monthLabel={monthLabel}
           yearLabel={yearLabel}
@@ -136,6 +138,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           classNames={classNames}
           styles={styles}
           fullWidth={fullWidth}
+          preventFocus={preventFocus}
           size={size}
           locale={locale}
           __staticSelector={__staticSelector}

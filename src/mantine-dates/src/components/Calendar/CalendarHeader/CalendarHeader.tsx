@@ -38,6 +38,7 @@ interface CalendarHeaderProps extends DefaultProps {
   __staticSelector: string;
   monthLabel?: string;
   yearLabel?: string;
+  preventFocus?: boolean;
 }
 
 export function CalendarHeader({
@@ -59,6 +60,7 @@ export function CalendarHeader({
   __staticSelector,
   monthLabel,
   yearLabel,
+  preventFocus = false,
 }: CalendarHeaderProps) {
   const theme = useMantineTheme();
   const iconSize = getSizeValue({ size, sizes: iconSizes });
@@ -69,6 +71,7 @@ export function CalendarHeader({
       <ActionIcon
         aria-label={previousMonthLabel}
         onClick={onPreviousMonth}
+        onMouseDown={(event) => preventFocus && event.preventDefault()}
         disabled={previousMonthDisabled}
         size={iconButtonSize}
         data-mantine-stop-propagation
@@ -89,11 +92,13 @@ export function CalendarHeader({
         __staticSelector={__staticSelector}
         monthLabel={monthLabel}
         yearLabel={yearLabel}
+        preventFocus={preventFocus}
       />
 
       <ActionIcon
         aria-label={nextMonthLabel}
         onClick={onNextMonth}
+        onMouseDown={(event) => preventFocus && event.preventDefault()}
         disabled={nextMonthDisabled}
         size={iconButtonSize}
         data-mantine-stop-propagation

@@ -23,6 +23,8 @@ export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<Calenda
 
   /** Control initial dropdown opened state */
   initiallyOpened?: boolean;
+
+  dateParser?: (value: string) => Date;
 }
 
 export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
@@ -60,6 +62,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       clearButtonLabel,
       fixOnBlur = true,
       allowManualTyping,
+      dateParser,
       ...others
     }: DatePickerProps,
     ref
@@ -69,7 +72,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const inputRef = useRef<HTMLInputElement>();
 
     const [lastValidValue, setLastValidValue] = useState(defaultValue ?? null);
-    const [_value, setValue] = useUncontrolled({
+    const [_value, setValue] = useUncontrolled<Date | string>({
       value,
       defaultValue,
       finalValue: null,
@@ -86,6 +89,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       setValue(date);
 
       setLastValidValue(date);
+
       closeCalendarOnChange && closeDropdown();
     };
 
@@ -95,13 +99,13 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       inputRef.current?.focus();
     };
 
+    const parseDate = (date: string) =>
+      dateParser ? dateParser(date) : dayjs(date, inputFormat, locale).toDate();
+
     const handleInputBlur = () => {
-      // @ts-expect-error - https://github.com/iamkun/dayjs/issues/320
-      const isInputValid = _value === dayjs(_value, inputFormat).format(inputFormat);
+      const date = typeof _value === 'string' ? parseDate(_value) : _value;
 
-      if (isInputValid) {
-        const date = dayjs(_value).toDate();
-
+      if (dayjs(date, inputFormat, locale).isValid()) {
         setValue(date);
         setLastValidValue(date);
       } else if (fixOnBlur) {
@@ -109,7 +113,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       }
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
     };
 
