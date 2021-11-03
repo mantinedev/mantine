@@ -7,6 +7,7 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsMargins,
+  itIsPolymorphic,
 } from '@mantine/tests';
 import { Text } from './Text';
 
@@ -16,6 +17,7 @@ describe('@mantine/core/Text', () => {
   itSupportsClassName(Text, {});
   itSupportsOthers(Text, {});
   itSupportsMargins(Text, {});
+  itIsPolymorphic(Text, {});
   itSupportsRef(Text, {}, HTMLDivElement);
 
   it('has correct displayName', () => {
@@ -30,16 +32,5 @@ describe('@mantine/core/Text', () => {
     expect(withWeight.render().css('font-weight')).toBe('600');
     expect(withTransform.render().css('text-transform')).toBe('uppercase');
     expect(withAlign.render().css('text-align')).toBe('right');
-  });
-
-  it('accepts component from component prop', () => {
-    const TestComponent = (props: any) => <span data-test-prop {...props} />;
-    const withTag = shallow(<Text<'a'> component="a" href="https://mantine.dev" />);
-    const withComponent = shallow(<Text<typeof TestComponent> component={TestComponent} />);
-
-    expect(withTag.type()).toBe('a');
-    expect(withTag.render().attr('href')).toBe('https://mantine.dev');
-    expect(withComponent.type()).toBe(TestComponent);
-    expect(withComponent.render().attr('data-test-prop')).toBe('true');
   });
 });

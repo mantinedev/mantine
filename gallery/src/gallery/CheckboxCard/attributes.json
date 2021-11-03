@@ -1,0 +1,21 @@
+{
+  "title": "Card with checkbox",
+  "category": "inputs",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": [
+    "/core/card/",
+    "/core/checkbox/",
+    "/core/text/",
+    "/core/button/#unstyled-button",
+    "/hooks/use-uncontrolled/"
+  ],
+  "props": {
+    "title": "@mantine/core",
+    "description": "Core components library: inputs, buttons, overlays, etc."
+  },
+  "canvas": {
+    "center": true,
+    "maxWidth": 400
+  }
+}

@@ -56,7 +56,7 @@ function Demo() {
     <Select
       label="Choose employee of the month"
       placeholder="Pick one"
-      itemComponent={AutoCompleteItem}
+      itemComponent={SelectItem}
       data={data}
       searchable
       maxDropdownHeight={400}

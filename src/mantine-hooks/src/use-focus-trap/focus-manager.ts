@@ -16,10 +16,6 @@ function handleFocus() {
       return;
     }
 
-    if (!focusElement) {
-      return;
-    }
-
     if (focusElement.contains(document.activeElement)) {
       return;
     }

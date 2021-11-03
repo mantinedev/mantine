@@ -76,16 +76,14 @@ In some cases you would want to have access to `getInitialProps` in Next Documen
 to do so you will need to setup Mantine ssr styles extraction on your own:
 
 ```tsx
-import Document from 'next/document';
-import NextDocument, { DocumentContext } from 'next/document';
+import Document, { DocumentContext } from 'next/document';
 import { ServerStyles, createStylesServer } from '@mantine/next';
 
 const stylesServer = createStylesServer();
 
 export default class _Document extends Document {
-  static async function getInitialProps(ctx: DocumentContext) {
-    const page = await ctx.renderPage();
-    const initialProps = await NextDocument.getInitialProps(ctx);
+  static async getInitialProps(ctx: DocumentContext) {
+    const initialProps = await Document.getInitialProps(ctx);
 
     // Add your app specific logic here
 
@@ -94,10 +92,25 @@ export default class _Document extends Document {
       styles: (
         <>
           {initialProps.styles}
-          <ServerStyles html={page.html} server={stylesServer} />
+          <ServerStyles html={initialProps.html} server={stylesServer} />
         </>
       ),
     };
-  };
+  }
 }
+```
+
+## Mantine components with Next Link
+
+You can use polymorphic components (Button, ActionIcon, Anchor, etc.) with Next Link, to do so:
+
+- set `component` prop to `a`
+- wrap it with Link
+
+```tsx
+import Link from 'next/link';
+
+<Link href="/hello">
+  <Button component="a">Next link button</Button>
+</Link>;
 ```

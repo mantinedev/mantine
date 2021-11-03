@@ -24,7 +24,7 @@ describe('@mantine/core/Blockquote', () => {
     Blockquote,
     { cite: 'test-cite', children: 'test-quote' },
     Object.keys(BlockquoteStylesApi),
-    'blockquote'
+    'Blockquote'
   );
 
   checkAccessibility([
@@ -36,8 +36,8 @@ describe('@mantine/core/Blockquote', () => {
     const withIcon = shallow(<Blockquote icon="$" />);
     const withoutIcon = shallow(<Blockquote icon={null} />);
 
-    expect(withIcon.render().find('.mantine-blockquote-icon').text()).toBe('$');
-    expect(withoutIcon.render().find('.mantine-blockquote-icon')).toHaveLength(0);
+    expect(withIcon.render().find('.mantine-Blockquote-icon').text()).toBe('$');
+    expect(withoutIcon.render().find('.mantine-Blockquote-icon')).toHaveLength(0);
   });
 
   it('renders given cite based on cite prop', () => {

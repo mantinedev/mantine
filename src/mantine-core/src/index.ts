@@ -1,15 +1,16 @@
 export * from '@mantine/styles';
-export * from './utils';
 
 export * from './components/Accordion';
 export * from './components/ActionIcon';
 export * from './components/Affix';
 export * from './components/Alert';
 export * from './components/Anchor';
+export * from './components/AppShell';
 export * from './components/Autocomplete';
 export * from './components/Avatar';
 export * from './components/Badge';
 export * from './components/Blockquote';
+export * from './components/Box';
 export * from './components/Breadcrumbs';
 export * from './components/Burger';
 export * from './components/Button';
@@ -58,6 +59,7 @@ export * from './components/RingProgress';
 export * from './components/SegmentedControl';
 export * from './components/Select';
 export * from './components/SimpleGrid';
+export * from './components/Skeleton';
 export * from './components/Slider';
 export * from './components/Space';
 export * from './components/Spoiler';

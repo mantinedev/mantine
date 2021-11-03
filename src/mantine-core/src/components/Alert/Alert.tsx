@@ -1,11 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineColor,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, useExtractedMargins } from '@mantine/styles';
 import { CloseButton } from '../ActionIcon';
 import useStyles from './Alert.styles';
 
@@ -47,36 +41,29 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
       classNames,
       icon,
       styles,
+      sx,
       onClose,
       withCloseButton,
       ...others
     }: AlertProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color }, classNames, 'alert');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles({ color }, { classNames, styles, sx, name: 'Alert' });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (
       <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
-        <div className={classes.wrapper} style={_styles.wrapper}>
-          {icon && (
-            <div className={classes.icon} style={_styles.icon}>
-              {icon}
-            </div>
-          )}
+        <div className={classes.wrapper}>
+          {icon && <div className={classes.icon}>{icon}</div>}
 
-          <div className={classes.body} style={_styles.body}>
+          <div className={classes.body}>
             {title && (
-              <div className={classes.title} style={_styles.title}>
-                <span className={classes.label} style={_styles.label}>
-                  {title}
-                </span>
+              <div className={classes.title}>
+                <span className={classes.label}>{title}</span>
 
                 {withCloseButton && (
                   <CloseButton
                     className={classes.closeButton}
-                    style={_styles.closeButton}
                     onClick={() => onClose?.()}
                     variant="transparent"
                     size={16}
@@ -86,9 +73,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
               </div>
             )}
 
-            <div className={classes.message} style={_styles.message}>
-              {children}
-            </div>
+            <div className={classes.message}>{children}</div>
           </div>
         </div>
       </div>

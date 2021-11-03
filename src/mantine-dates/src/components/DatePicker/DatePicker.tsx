@@ -25,6 +25,7 @@ export interface DatePickerProps
   /** Control initial dropdown opened state */
   initiallyOpened?: boolean;
 
+  /** Parser function for date provided by input typing */
   dateParser?: (value: string) => Date;
 }
 
@@ -81,17 +82,10 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       rule: (val) => val === null || val instanceof Date,
     });
 
-    const closeDropdown = () => {
-      setDropdownOpened(false);
-      setTimeout(() => inputRef.current?.focus(), transitionDuration + 20);
-    };
-
     const handleValueChange = (date: Date) => {
       setValue(date);
 
-      setLastValidValue(date);
-
-      closeCalendarOnChange && closeDropdown();
+      closeCalendarOnChange && setDropdownOpened(false);
     };
 
     const handleClear = () => {

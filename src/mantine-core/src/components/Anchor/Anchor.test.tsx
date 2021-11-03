@@ -1,5 +1,3 @@
-import React from 'react';
-import { shallow } from 'enzyme';
 import {
   itSupportsClassName,
   itRendersChildren,
@@ -7,6 +5,7 @@ import {
   itSupportsStyle,
   itSupportsRef,
   itSupportsMargins,
+  itIsPolymorphic,
 } from '@mantine/tests';
 import { Anchor } from './Anchor';
 
@@ -16,13 +15,8 @@ describe('@mantine/core/Anchor', () => {
   itSupportsOthers(Anchor, {});
   itSupportsStyle(Anchor, {});
   itSupportsMargins(Anchor, {});
+  itIsPolymorphic(Anchor, {}, { dive: true });
   itSupportsRef(Anchor, {}, HTMLAnchorElement);
-
-  it('accepts component from component prop', () => {
-    const TestComponent = (props: any) => <span data-test-prop {...props} />;
-    const anchor = shallow(<Anchor<typeof TestComponent> component={TestComponent} />);
-    expect(anchor.dive().type()).toBe(TestComponent);
-  });
 
   it('has correct displayName', () => {
     expect(Anchor.displayName).toEqual('@mantine/core/Anchor');

@@ -4,7 +4,6 @@ import {
   DefaultProps,
   ClassNames,
   MantineNumberSize,
-  mergeStyles,
   useExtractedMargins,
   LoadingOverlay,
 } from '@mantine/core';
@@ -67,13 +66,16 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
       children,
       onDrop,
       openRef,
+      sx,
       ...others
     }: DropzoneProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ radius, padding });
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles(
+      { radius, padding },
+      { sx, classNames, styles, name: 'Dropzone' }
+    );
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
       onDropAccepted: (files) => onDrop(files),
@@ -89,12 +91,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
       <div
         {...rest}
         {...getRootProps({ ref })}
-        style={{
-          ...mergedStyles,
-          ...(isDragAccept ? _styles.active : null),
-          ...(isDragReject ? _styles.reject : null),
-          ...(loading ? _styles.loading : null),
-        }}
+        style={mergedStyles}
         className={cx(
           classes.root,
           {

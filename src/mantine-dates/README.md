@@ -11,7 +11,7 @@ Calendars, date and time pickers based on Mantine components
 yarn add @mantine/core @mantine/hooks @mantine/dates dayjs
 
 # With npm
-yarn add @mantine/core @mantine/hooks @mantine/dates dayjs
+npm install @mantine/core @mantine/hooks @mantine/dates dayjs
 
 # With install-peerdeps
 npx install-peerdeps @mantine/dates

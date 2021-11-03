@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import {
-  mergeStyles,
   DefaultProps,
   MantineSize,
   getSizeValue,
@@ -96,7 +95,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       withPicker = true,
       fullWidth = false,
       focusable = true,
-      __staticSelector = 'color-picker',
+      __staticSelector = 'ColorPicker',
       saturationLabel,
       hueLabel,
       alphaLabel,
@@ -104,13 +103,16 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       style,
       styles,
       classNames,
+      sx,
       ...others
     }: ColorPickerProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size, fullWidth }, classNames, __staticSelector);
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles(
+      { size, fullWidth },
+      { classNames, styles, sx, name: __staticSelector }
+    );
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const formatRef = useRef(format);
     const valueRef = useRef<string>(null);
     const withAlpha = format === 'rgba' || format === 'hsla';
@@ -168,8 +170,8 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
               __staticSelector={__staticSelector}
             />
 
-            <div className={classes.body} style={_styles.body}>
-              <div className={classes.sliders} style={_styles.sliders}>
+            <div className={classes.body}>
+              <div className={classes.sliders}>
                 <HueSlider
                   value={parsed.h}
                   onChange={(h) => handleChange({ h })}
@@ -203,7 +205,6 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
                   radius="sm"
                   size={getSizeValue({ size, sizes: SWATCH_SIZES })}
                   className={classes.preview}
-                  style={_styles.preview}
                 />
               )}
             </div>

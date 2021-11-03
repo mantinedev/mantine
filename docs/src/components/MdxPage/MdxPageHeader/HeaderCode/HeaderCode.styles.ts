@@ -32,7 +32,7 @@ export default createStyles((theme) => ({
     display: 'block',
     width: '100%',
     flex: 1,
-    overflowX: 'scroll',
+    overflowX: 'hidden',
     WebkitTapHighlightColor: 'transparent',
   },
 }));

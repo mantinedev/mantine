@@ -5,7 +5,7 @@ slug: /theming/mantine-provider/
 order: 0
 ---
 
-import { NestedProvidersDemo } from '@docs/demos';
+import { nestedProviders, providerStyles } from '@docs/demos';
 
 # MantineProvider
 
@@ -127,4 +127,40 @@ you can wrap them in another MantineProvider.
 Nested MantineProvider components do not inherit theme properties from parents
 and merge theme prop with default theme.
 
-<NestedProvidersDemo />
+<Demo data={nestedProviders} />
+
+## Styles on MantineProvider
+
+You can add styles to components that support [Styles API](/theming/styles-api/) with MantineProvider.
+All components that are rendered inside MantineProvider will inherit those styles:
+
+<Demo data={providerStyles} />
+
+## Configure emotion
+
+You can configure [emotion cache options](https://emotion.sh/docs/@emotion/cache#options) in MantineProvider.
+These options are usually used to configure styles insertion point. By default Mantine components styles and
+styles created with `createStyles` function are prepended to head. To change that behavior set `prepend` option to `false`:
+
+```tsx
+<MantineProvider emotionOptions={{ key: 'mantine', prepend: false }}>
+  <App />
+</MantineProvider>
+```
+
+Emotion cache also allows you to use Stylis plugins. For example,
+you can use [stylis-plugin-rtl](https://github.com/styled-components/stylis-plugin-rtl)
+to add rtl support:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import rtlPlugin from 'stylis-plugin-rtl';
+
+function Demo() {
+  return (
+    <MantineProvider emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}>
+      <App />
+    </MantineProvider>
+  );
+}
+```

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { storiesOf } from '@storybook/react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { Select } from './Select';
 
 const data = [
@@ -26,6 +27,16 @@ const largeData = Array(50)
     label: `Item ${index}`,
   }));
 
+const CustomScrollbars = forwardRef<any, any>((props: any, ref: any) => (
+  <Scrollbars
+    {...props}
+    style={{ ...props.style, height: 300 }}
+    ref={(scrollbars: any) => scrollbars?.view && ref(scrollbars.view)}
+  >
+    <div style={{ padding: 3 }}>{props.children}</div>
+  </Scrollbars>
+));
+
 function Controlled({ clearable = false }: { clearable?: boolean }) {
   const [value, setValue] = useState(null);
 
@@ -40,8 +51,8 @@ function Controlled({ clearable = false }: { clearable?: boolean }) {
         data={data}
         style={{ marginTop: 20 }}
       />
-      <button type="button" onClick={() => setValue('react')}>
-        Fill value
+      <button type="button" onClick={() => setValue(null)}>
+        Set value to null
       </button>
     </div>
   );
@@ -72,6 +83,19 @@ storiesOf('@mantine/core/Select', module)
         label="Choose your favorite library/framework"
         placeholder="Choose value"
         data={data}
+      />
+      <Select
+        label="Choose your favorite library/framework"
+        placeholder="Choose value"
+        data={data}
+        disabled
+      />
+      <Select
+        label="Choose your favorite library/framework"
+        placeholder="Choose value"
+        data={data}
+        searchable
+        disabled
       />
       <Select
         searchable
@@ -112,7 +136,17 @@ storiesOf('@mantine/core/Select', module)
       />
     </div>
   ))
-  .add('Clearable', () => (
+  .add('With custom scrollbars', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Select
+        data={largeData}
+        label="custom scrollbars"
+        placeholder="select with custom scrollbars"
+        dropdownComponent={CustomScrollbars}
+      />
+    </div>
+  ))
+  .add('Creatable', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
       <Creatable />
     </div>

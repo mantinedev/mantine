@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import {
   itSupportsClassName,
   itSupportsStyle,
@@ -22,7 +22,7 @@ describe('@mantine/core/AvatarsGroup', () => {
     AvatarsGroup,
     defaultProps,
     Object.keys(AvatarsGroupStylesApi),
-    'avatars-group'
+    'AvatarsGroup'
   );
 
   it('renders avatars based on limit prop', () => {
@@ -33,6 +33,17 @@ describe('@mantine/core/AvatarsGroup', () => {
     expect(limit2.find(Avatar)).toHaveLength(3);
     expect(limit3.find(Avatar)).toHaveLength(4);
     expect(limit10.find(Avatar)).toHaveLength(4);
+  });
+
+  it('renders the truncated length properly', () => {
+    const total = mount(<AvatarsGroup {...defaultProps} limit={4} total={50} />);
+    const limit = mount(<AvatarsGroup {...defaultProps} limit={3} />);
+
+    let elementsArray = total.find(Avatar);
+    expect(elementsArray.at(elementsArray.length - 1).text()).toBe('+46');
+
+    elementsArray = limit.find(Avatar);
+    expect(elementsArray.at(elementsArray.length - 1).text()).toBe('+1');
   });
 
   it('has correct displayName', () => {

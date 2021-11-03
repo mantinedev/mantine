@@ -34,7 +34,7 @@ Mantine is a MIT licensed open source react components and hooks library with fo
 yarn add @mantine/core @mantine/hooks
 
 # With npm
-yarn add @mantine/core @mantine/hooks
+npm install @mantine/core @mantine/hooks
 
 # With install-peerdeps
 npx install-peerdeps @mantine/core

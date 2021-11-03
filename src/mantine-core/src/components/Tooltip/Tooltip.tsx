@@ -1,11 +1,5 @@
 import React, { useState, useRef } from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineColor,
-  ClassNames,
-  MantineMargin,
-} from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, MantineMargin } from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 
@@ -57,7 +51,6 @@ export interface TooltipProps
 
 export function Tooltip({
   className,
-  style,
   label,
   children,
   opened,
@@ -81,10 +74,10 @@ export function Tooltip({
   tooltipId,
   classNames,
   styles,
+  sx,
   ...others
 }: TooltipProps) {
-  const { classes, cx } = useStyles({ color }, classNames, 'tooltip');
-  const _styles = mergeStyles(classes, styles);
+  const { classes, cx } = useStyles({ color }, { sx, classNames, styles, name: 'Tooltip' });
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
   const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
@@ -106,7 +99,7 @@ export function Tooltip({
   };
 
   return (
-    <div className={cx(classes.root, className)} style={{ ...style, ..._styles.root }} {...others}>
+    <div className={cx(classes.root, className)} {...others}>
       <Popper
         referenceElement={referenceElement}
         transitionDuration={transitionDuration}
@@ -119,14 +112,12 @@ export function Tooltip({
         arrowSize={arrowSize}
         zIndex={zIndex}
         arrowClassName={classes.arrow}
-        arrowStyle={_styles.arrow}
         forceUpdateDependencies={[color, ...positionDependencies]}
       >
         <div
           className={classes.body}
           ref={tooltipRef}
           style={{
-            ..._styles.body,
             pointerEvents: allowPointerEvents ? 'all' : 'none',
             whiteSpace: wrapLines ? 'normal' : 'nowrap',
             width,

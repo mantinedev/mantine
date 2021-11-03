@@ -11,7 +11,7 @@ export const Dropzone: Record<DropzoneStylesNames, string> = {
 };
 
 export const FullScreenDropzone: Record<FullScreenDropzoneStylesNames, string> = {
-  wrapper: 'Wraps dropzone, root element',
+  root: 'Root element',
   dropzone: 'Dropzone itself',
   active:
     'Active state modifier, style is added to dropzone when valid files are dragged over browser window',

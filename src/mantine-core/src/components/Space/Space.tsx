@@ -5,6 +5,7 @@ import {
   MantineNumberSize,
   getSizeValue,
   useMantineTheme,
+  useSx,
 } from '@mantine/styles';
 
 export interface SpaceProps extends DefaultProps {
@@ -16,7 +17,8 @@ export interface SpaceProps extends DefaultProps {
 }
 
 export const Space = forwardRef<HTMLDivElement, SpaceProps>(
-  ({ w, h, style, ...others }: SpaceProps, ref) => {
+  ({ w, h, style, sx, className, ...others }: SpaceProps, ref) => {
+    const { sxClassName, css, cx } = useSx({ sx, className });
     const theme = useMantineTheme();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const width = getSizeValue({ size: w, sizes: theme.spacing });
@@ -25,13 +27,8 @@ export const Space = forwardRef<HTMLDivElement, SpaceProps>(
     return (
       <div
         ref={ref}
-        style={{
-          ...mergedStyles,
-          width,
-          height,
-          minWidth: width,
-          minHeight: height,
-        }}
+        style={mergedStyles}
+        className={cx(css({ width, height, minWidth: width, minHeight: height }), sxClassName)}
         {...rest}
       />
     );

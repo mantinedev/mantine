@@ -27,6 +27,7 @@ export default createStyles(
     { spacing, position, noWrap, direction, grow, align, withGutter, count }: GroupStyles
   ) => ({
     root: {
+      boxSizing: 'border-box',
       display: 'flex',
       flexDirection: direction,
       alignItems:
@@ -38,6 +39,7 @@ export default createStyles(
     },
 
     child: {
+      boxSizing: 'border-box',
       maxWidth:
         grow && direction === 'row'
           ? `calc(${100 / count}% - ${getSizeValue({ size: spacing, sizes: theme.spacing })}px)`

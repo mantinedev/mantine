@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useReducedMotion, useUncontrolled } from '@mantine/hooks';
 import {
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
@@ -12,24 +11,24 @@ import {
 } from '@mantine/styles';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
-export interface SegmentedControlItem {
-  value: string;
+export interface SegmentedControlItem<T extends string> {
+  value: T;
   label: React.ReactNode;
 }
 
 export type SegmentedControlStylesNames = ClassNames<typeof useStyles>;
 
-export interface SegmentedControlProps
+export interface SegmentedControlProps<T extends string>
   extends DefaultProps<SegmentedControlStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Data based on which controls are rendered */
-  data: string[] | SegmentedControlItem[];
+  data: T[] | SegmentedControlItem<T>[];
 
   /** Current selected value */
-  value?: string;
+  value?: T;
 
   /** Called when value changes */
-  onChange?(value: string): void;
+  onChange?(value: T): void;
 
   /** Name of the radio group, default to random id */
   name?: string;
@@ -56,7 +55,7 @@ export interface SegmentedControlProps
   defaultValue?: string;
 }
 
-export function SegmentedControl({
+export function SegmentedControl<T extends string = string>({
   className,
   style,
   data: _data,
@@ -72,8 +71,9 @@ export function SegmentedControl({
   classNames,
   styles,
   defaultValue,
+  sx,
   ...others
-}: SegmentedControlProps) {
+}: SegmentedControlProps<T>) {
   const reduceMotion = useReducedMotion();
   const data = _data.map((item: any) =>
     typeof item === 'string' ? { label: item, value: item } : item
@@ -98,12 +98,10 @@ export function SegmentedControl({
       transitionDuration,
       transitionTimingFunction,
     },
-    classNames,
-    'segmented-control'
+    { sx, classNames, styles, name: 'SegmentedControl' }
   );
 
-  const _styles = mergeStyles(classes, styles);
-  const { mergedStyles, rest } = useExtractedMargins({ others, rootStyle: _styles.root, style });
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
   const uuid = useUuid(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
@@ -133,12 +131,10 @@ export function SegmentedControl({
   const controls = data.map((item) => (
     <div
       className={cx(classes.control, { [classes.controlActive]: _value === item.value })}
-      style={{ ..._styles.control, ...(_value === item.value ? _styles.controlActive : null) }}
       key={item.value}
     >
       <input
         className={classes.input}
-        style={_styles.input}
         type="radio"
         name={uuid}
         value={item.value}
@@ -149,7 +145,6 @@ export function SegmentedControl({
 
       <label
         className={cx(classes.label, { [classes.labelActive]: _value === item.value })}
-        style={{ ..._styles.label, ...(_value === item.value ? _styles.labelActive : null) }}
         htmlFor={`${uuid}-${item.value}`}
         ref={(node) => {
           refs.current[item.value] = node;
@@ -166,7 +161,6 @@ export function SegmentedControl({
         <span
           className={classes.active}
           style={{
-            ..._styles.active,
             width: activePosition.width,
             transform: `translateX(${activePosition.translate}px)`,
           }}

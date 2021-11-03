@@ -8,6 +8,7 @@ export const DatePicker: Record<DatePickerStylesNames, string> = {
   dropdownWrapper: 'Wrapper around dropdown',
   dropdown: 'Dropdown with calendar',
   value: 'Value text',
+  arrow: 'Dropdown arrow',
   ...Input,
   ...InputWrapper,
   // Calendar styles api is included as all date pickers are used only with calendar

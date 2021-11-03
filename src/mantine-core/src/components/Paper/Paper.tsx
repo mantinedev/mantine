@@ -43,16 +43,20 @@ export const Paper: PaperComponent & { displayName?: string } = forwardRef(
       withBorder = false,
       shadow,
       style,
+      sx,
       ...others
     }: PaperProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { classes, cx } = useStyles({ radius, shadow, padding, withBorder }, null, 'paper');
+    const { classes, cx } = useStyles(
+      { radius, shadow, padding, withBorder },
+      { sx, name: 'Paper' }
+    );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element = component || 'div';
 
     return (
-      <Element className={cx(classes.paper, className)} ref={ref} style={mergedStyles} {...rest}>
+      <Element className={cx(classes.root, className)} ref={ref} style={mergedStyles} {...rest}>
         {children}
       </Element>
     );

@@ -7,6 +7,7 @@ import {
   itRendersChildren,
   itSupportsStyle,
   itSupportsMargins,
+  itIsPolymorphic,
 } from '@mantine/tests';
 import { Paper } from '../Paper/Paper';
 import { Card } from './Card';
@@ -18,21 +19,7 @@ describe('@mantine/core/Card', () => {
   itRendersChildren(Card, {});
   itSupportsStyle(Card, {});
   itSupportsMargins(Card, {});
-
-  it('accepts component from component prop', () => {
-    const TestComponent = (props: any) => <span data-test-prop {...props} />;
-    const withComponent = shallow(<Card component={TestComponent}>Card</Card>);
-    const withTag = shallow(
-      <Card component="a" href="https://mantine.dev">
-        Card
-      </Card>
-    );
-
-    expect(withTag.dive().type()).toBe('a');
-    expect(withTag.render().attr('href')).toBe('https://mantine.dev');
-    expect(withComponent.dive().type()).toBe(TestComponent);
-    expect(withComponent.render().attr('data-test-prop')).toBe('true');
-  });
+  itIsPolymorphic(Card, {}, { dive: true });
 
   it('passes padding and radius to Paper component', () => {
     const element = shallow(

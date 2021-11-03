@@ -56,19 +56,19 @@ export function Col({
   columns,
   className,
   id,
+  sx,
   ...others
 }: ColProps) {
   const { classes, cx } = useStyles(
     { gutter, offset, xs, sm, md, lg, xl, grow, columns, span },
-    null,
-    'grid'
+    { sx, name: 'Col' }
   );
 
   if (!isValidSpan(span) || span > columns) {
     return null;
   }
   return (
-    <div className={cx(classes.col, className)} {...others}>
+    <div className={cx(classes.root, className)} {...others}>
       {children}
     </div>
   );

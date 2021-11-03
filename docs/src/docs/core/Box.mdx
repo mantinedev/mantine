@@ -1,0 +1,91 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Box
+order: 1
+slug: /core/box/
+category: 'misc'
+description: 'Add inline styles to any element or component with sx'
+props: ['Box']
+import: "import { Box } from '@mantine/core';"
+source: 'mantine-core/src/components/Box/Box.tsx'
+docs: 'core/Box.mdx'
+styles: ['Box', 'single-node']
+---
+
+import { BoxDemos } from '@demos/core';
+
+## Usage
+
+Box allows you to use [sx prop](/theming/create-styles/#sx-prop) with any element or component.
+Box itself does not include any styles.
+
+<Demo data={BoxDemos.usage} />
+
+## Custom component
+
+To use Box with custom component or element set `component` prop to tag name or react component:
+
+```tsx
+// With custom element
+<Box component="a" href="https://mantine.dev/" />;
+
+// With custom component
+import { Link } from 'react-router-dom';
+<Box component={Link} to="/hello" />;
+
+// With Next.js Link
+import Link from 'next/link';
+<Link href="/next-link">
+  <Box component="a">Next link</Box>
+</Link>;
+```
+
+<Demo data={BoxDemos.link} />
+
+## TypeScript
+
+### Usage with custom component
+
+You need to pass additional type to use custom component with TypeScript
+in case you need full type coverage for events and `ref`:
+
+```tsx
+// With element
+<Box<'a'>
+  component="a"
+  onClick={(event) => console.log(event)}
+  ref={(node) => {
+    window.myRef = node;
+  }}
+/>
+
+// With component
+<Box<typeof Link>
+  component={Link}
+  onClick={(event) => console.log(event)}
+  ref={(node) => {
+    window.myRef = node;
+  }}
+/>
+```
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { BoxProps } from '@mantine/core';
+```
+
+`BoxProps` is a generic type, it accepts either a string or component type as single type argument:
+
+```tsx
+// BoxProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
+type AnchorBoxProps = BoxProps<'a'>;
+
+// BoxProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
+type CustomBoxProps = BoxProps<typeof MyOtherComponent>;
+```
+
+See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.

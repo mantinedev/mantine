@@ -29,7 +29,7 @@ describe('@mantine/prism/Prism', () => {
   itSupportsMargins(Prism, defaultProps);
   itSupportsOthers(Prism, defaultProps);
   itSupportsStyle(Prism, defaultProps);
-  itSupportsStylesApi(Prism, defaultProps, Object.keys(PrismStylesApi), 'prism');
+  itSupportsStylesApi(Prism, defaultProps, Object.keys(PrismStylesApi), 'Prism');
 
   it('renders tooltip based on noCopy prop', () => {
     const withCopy = shallow(<Prism {...defaultProps} noCopy={false} />);

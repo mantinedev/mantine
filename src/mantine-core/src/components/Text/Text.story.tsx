@@ -38,6 +38,7 @@ storiesOf('@mantine/core/Text', module)
       <Text transform="uppercase">uppercase</Text>
       <Text transform="lowercase">LOWERcase</Text>
       <Text component="i">italic</Text>
+      <Text sx={{ color: 'orange', fontWeight: 900 }}>sx</Text>
     </>
   ))
   .add('Custom component', () => (

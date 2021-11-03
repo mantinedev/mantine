@@ -7,7 +7,7 @@ interface GridStyles {
 }
 
 export default createStyles((theme, { justify, align, gutter }: GridStyles) => ({
-  grid: {
+  root: {
     margin: -getSizeValue({ size: gutter, sizes: theme.spacing }) / 2,
     display: 'flex',
     flexWrap: 'wrap',

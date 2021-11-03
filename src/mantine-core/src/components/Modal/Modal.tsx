@@ -2,7 +2,6 @@ import React from 'react';
 import { useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import {
   useMantineTheme,
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
@@ -70,11 +69,13 @@ export interface ModalProps
 
   /** Modal padding from theme or number value for padding in px */
   padding?: MantineNumberSize;
+
+  /** Should modal be closed when outside click was registered? */
+  closeOnClickOutside?: boolean;
 }
 
 export function MantineModal({
   className,
-  style,
   opened,
   title,
   onClose,
@@ -93,15 +94,16 @@ export function MantineModal({
   id,
   classNames,
   styles,
+  sx,
+  closeOnClickOutside = true,
   ...others
 }: ModalProps) {
   const baseId = useUuid(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const theme = useMantineTheme();
-  const { classes, cx } = useStyles({ size, overflow }, classNames, 'modal');
-  const _styles = mergeStyles(classes, styles);
-  const focusTrapRef = useFocusTrap();
+  const { classes, cx } = useStyles({ size, overflow }, { sx, classNames, styles, name: 'Modal' });
+  const focusTrapRef = useFocusTrap(opened);
   const _overlayOpacity =
     typeof overlayOpacity === 'number'
       ? overlayOpacity
@@ -109,12 +111,13 @@ export function MantineModal({
       ? 0.85
       : 0.75;
 
-  useScrollLock(opened);
-
+  const [, lockScroll] = useScrollLock();
   useFocusReturn({ opened, transitionDuration });
 
   return (
     <GroupedTransition
+      onExited={() => lockScroll(false)}
+      onEntered={() => lockScroll(true)}
       mounted={opened}
       transitions={{
         modal: { duration: transitionDuration, transition },
@@ -122,11 +125,7 @@ export function MantineModal({
       }}
     >
       {(transitionStyles) => (
-        <div
-          className={cx(classes.root, className)}
-          style={{ ...style, ..._styles.root }}
-          {...others}
-        >
+        <div className={cx(classes.root, className)} {...others}>
           <div
             className={classes.inner}
             onKeyDownCapture={(event) => {
@@ -134,11 +133,13 @@ export function MantineModal({
                 (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
               shouldTrigger && event.nativeEvent.code === 'Escape' && onClose();
             }}
-            style={{ zIndex: zIndex + 1, ..._styles.inner }}
+            style={{ zIndex: zIndex + 1 }}
             ref={focusTrapRef}
           >
-            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
-            <div onClick={onClose} className={classes.clickOutsideOverlay} />
+            {closeOnClickOutside && (
+              // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
+              <div onClick={onClose} className={classes.clickOutsideOverlay} />
+            )}
 
             <Paper<'div'>
               className={classes.modal}
@@ -148,12 +149,15 @@ export function MantineModal({
               aria-labelledby={titleId}
               aria-describedby={bodyId}
               aria-modal
-              style={{ ..._styles.modal, ...transitionStyles.modal }}
+              style={{
+                ...transitionStyles.modal,
+                marginLeft: 'calc(var(--removed-scroll-width, 0px) * -1)',
+              }}
               tabIndex={-1}
             >
               {(title || !hideCloseButton) && (
-                <div className={classes.header} style={_styles.header}>
-                  <Text id={titleId} className={classes.title} style={_styles.title}>
+                <div className={classes.header}>
+                  <Text id={titleId} className={classes.title}>
                     {title}
                   </Text>
 
@@ -163,7 +167,7 @@ export function MantineModal({
                 </div>
               )}
 
-              <div id={bodyId} className={classes.body} style={_styles.body}>
+              <div id={bodyId} className={classes.body}>
                 {children}
               </div>
             </Paper>

@@ -15,7 +15,7 @@ export const sizes = {
 };
 
 export default createStyles((theme, { fluid, size, padding }: ContainerStyles) => ({
-  container: {
+  root: {
     maxWidth: fluid ? '100%' : getSizeValue({ size, sizes }),
     marginLeft: 'auto',
     marginRight: 'auto',

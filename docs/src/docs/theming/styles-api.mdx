@@ -5,6 +5,7 @@ slug: /theming/styles-api/
 order: 4
 ---
 
+import { providerStyles } from '@docs/demos';
 import { ButtonDemos, SliderDemos, TabsDemos, AccordionDemos } from '@demos/core';
 import { CalendarDemos } from '@demos/dates';
 import * as CORE_STYLES_API from '@mantine/core/src/styles.api';
@@ -114,6 +115,13 @@ Styles names for button component:
 Here extra styles are required only for root element and left icon:
 
 <Demo data={ButtonDemos.customize} />
+
+## Styles API with MantineProvider
+
+You can also use Styles API in MantineProvider with `styles` prop.
+All styles defined there will be added to each component rendered inside provider.
+
+<Demo data={providerStyles} />
 
 ## Static class names
 

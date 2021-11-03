@@ -36,7 +36,7 @@ describe('@mantine/core/Spoiler', () => {
     Spoiler,
     { ...defaultProps, initialState: true },
     Object.keys(SpoilerStylesApi),
-    'spoiler'
+    'Spoiler'
   );
 
   it('has correct displayName', () => {

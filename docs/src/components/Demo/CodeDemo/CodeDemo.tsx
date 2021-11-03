@@ -14,6 +14,7 @@ interface CodeDemoProps {
   children?: React.ReactNode;
   toggle?: boolean;
   inline?: boolean;
+  spacing?: boolean;
   zIndex?: number;
 }
 
@@ -25,6 +26,7 @@ export default function CodeDemo({
   demoBorder = true,
   toggle = false,
   inline = false,
+  spacing = true,
   zIndex = 3,
 }: CodeDemoProps) {
   const { classes, cx } = useStyles();
@@ -38,7 +40,7 @@ export default function CodeDemo({
   return (
     <DocsSection>
       <Paper
-        padding="md"
+        padding={spacing ? 'md' : 0}
         className={cx(classes.demo, { [classes.withToggle]: toggle })}
         style={{
           backgroundColor:

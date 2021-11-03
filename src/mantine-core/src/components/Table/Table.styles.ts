@@ -12,7 +12,7 @@ export default createStyles((theme, { captionSide }: TableStyles, getRef) => {
     striped,
     hover,
 
-    table: {
+    root: {
       ...getFontStyles(theme),
       width: '100%',
       borderCollapse: 'collapse',

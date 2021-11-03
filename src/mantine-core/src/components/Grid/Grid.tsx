@@ -34,12 +34,13 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
       columns = 12,
       className,
       id,
+      sx,
       ...others
     }: GridProps,
     ref
   ) => {
     const uuid = useUuid(id);
-    const { classes, cx } = useStyles({ gutter, justify, align }, null, 'grid');
+    const { classes, cx } = useStyles({ gutter, justify, align }, { sx, name: 'Grid' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
@@ -47,7 +48,7 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
     );
 
     return (
-      <div style={mergedStyles} className={cx(classes.grid, className)} ref={ref} {...rest}>
+      <div style={mergedStyles} className={cx(classes.root, className)} ref={ref} {...rest}>
         {cols}
       </div>
     );

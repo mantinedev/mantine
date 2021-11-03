@@ -24,7 +24,7 @@ describe('@mantine/core/Dialog', () => {
   itRendersChildren(MantineDialog, defaultProps);
   itSupportsOthers(MantineDialog, defaultProps);
   itSupportsRef(Dialog, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(MantineDialog, defaultProps, Object.keys(DialogStylesNames), 'dialog');
+  itSupportsStylesApi(MantineDialog, defaultProps, Object.keys(DialogStylesNames), 'Dialog');
 
   it('renders close button based on withCloseButton prop', () => {
     const withButton = shallow(<MantineDialog opened withCloseButton />);

@@ -9,3 +9,4 @@ export { itSupportsStyle } from './it-supports-style';
 export { itSupportsStylesApi } from './it-supports-styles-api';
 export { mockResizeObserver } from './mock-resize-observer';
 export { itSupportsMargins } from './it-supports-margins';
+export { itIsPolymorphic } from './it-is-polymorphic';

@@ -144,7 +144,7 @@ To do so you will need to:
 - Provide `itemComponent` which will consume `data` objects
 
 ```tsx
-// Minimum data for default autocomplete used in previous examples
+// Minimum data for default select used in previous examples
 [
   { value: 'react', label: 'React' },
   { value: 'ng', label: 'Angular' },
@@ -199,6 +199,12 @@ You can enable them by setting optional props:
 - `transitionTimingFunction` – defaults to `theme.transitionTimingFunction`
 
 <Demo data={SelectDemos.animations} />
+
+## Custom scrollbars
+
+You can add custom scrollbars to dropdown with [react-custom-scrollbars](https://github.com/malte-wessel/react-custom-scrollbars) package:
+
+<Demo data={SelectDemos.scrollbars} />
 
 ## With icon
 

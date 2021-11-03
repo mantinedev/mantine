@@ -21,7 +21,7 @@ describe('@mantine/core/Progress', () => {
   itSupportsOthers(Progress, defaultProps);
   itSupportsRef(Progress, defaultProps, HTMLDivElement);
   checkAccessibility([mount(<Progress value={80} aria-label="test-progress" />)]);
-  itSupportsStylesApi(Progress, defaultProps, Object.keys(ProgressStylesApi), 'progress');
+  itSupportsStylesApi(Progress, defaultProps, Object.keys(ProgressStylesApi), 'Progress');
 
   it('has correct displayName', () => {
     expect(Progress.displayName).toEqual('@mantine/core/Progress');
@@ -39,7 +39,7 @@ describe('@mantine/core/Progress', () => {
       />
     );
 
-    expect(element.render().find('.mantine-progress-bar')).toHaveLength(3);
+    expect(element.render().find('.mantine-Progress-bar')).toHaveLength(3);
   });
 
   it('passes value prop to progressbar', () => {

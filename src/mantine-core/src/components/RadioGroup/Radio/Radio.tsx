@@ -1,12 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineSize,
-  MantineColor,
-  ClassNames,
-  useUuid,
-} from '@mantine/styles';
+import { DefaultProps, MantineSize, MantineColor, ClassNames, useUuid } from '@mantine/styles';
 import useStyles from './Radio.styles';
 
 export type RadioStylesNames = Exclude<ClassNames<typeof useStyles>, 'labelDisabled'>;
@@ -44,28 +37,18 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     }: RadioProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color, size }, classNames, 'radio-group');
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles({ color, size }, { classNames, styles, name: 'RadioGroup' });
     const uuid = useUuid(id);
 
     return (
-      <div
-        className={cx(classes.radioWrapper, className)}
-        style={{ ...style, ..._styles.radioWrapper }}
-        title={title}
-      >
-        <label
-          className={cx(classes.label, { [classes.labelDisabled]: disabled })}
-          htmlFor={uuid}
-          style={_styles.label}
-        >
+      <div className={cx(classes.radioWrapper, className)} style={style} title={title}>
+        <label className={cx(classes.label, { [classes.labelDisabled]: disabled })} htmlFor={uuid}>
           <input
             ref={ref}
             className={classes.radio}
             type="radio"
             id={uuid}
             disabled={disabled}
-            style={_styles.radio}
             {...others}
           />
           <span>{children}</span>

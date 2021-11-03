@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import {
   itSupportsClassName,
-  itSupportsOthers,
   itSupportsRef,
   itRendersChildren,
   itSupportsStylesApi,
@@ -20,17 +19,14 @@ const defaultProps = {
 
 describe('@mantine/core/Chip', () => {
   itSupportsClassName(Chip, defaultProps);
-  itSupportsOthers(Chip, defaultProps);
   itRendersChildren(Chip, defaultProps);
   itSupportsRef(Chip, defaultProps, HTMLInputElement);
 
   itSupportsStylesApi(
     Chip,
     defaultProps,
-    Object.keys(ChipStylesApi).filter(
-      (key) => key !== 'checked' && key !== 'label' && key !== 'disabled' && key !== 'input'
-    ),
-    'chip'
+    Object.keys(ChipStylesApi).filter((key) => key !== 'disabled'),
+    'Chip'
   );
 
   it('displays checked icon based on checked prop', () => {

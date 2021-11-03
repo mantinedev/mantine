@@ -18,7 +18,7 @@ describe('@mantine/core/Slider/Marks', () => {
     Marks,
     defaultProps,
     ['markWrapper', 'mark', 'markFilled', 'markLabel'],
-    'slider'
+    'Slider'
   );
 
   it('renders correct marks labels', () => {
@@ -32,9 +32,9 @@ describe('@mantine/core/Slider/Marks', () => {
       />
     );
 
-    expect(element.find('.mantine-slider-markWrapper')).toHaveLength(2);
-    expect(element.find('.mantine-slider-markLabel').at(0).text()).toBe('test-1');
-    expect(element.find('.mantine-slider-markLabel').at(1).text()).toBe('test-2');
+    expect(element.find('.mantine-Slider-markWrapper')).toHaveLength(2);
+    expect(element.find('.mantine-Slider-markLabel').at(0).text()).toBe('test-1');
+    expect(element.find('.mantine-Slider-markLabel').at(1).text()).toBe('test-2');
   });
 
   it('calls onChange with mark value when mark label is pressed', () => {
@@ -51,13 +51,13 @@ describe('@mantine/core/Slider/Marks', () => {
     );
 
     element
-      .find('.mantine-slider-markLabel')
+      .find('.mantine-Slider-markLabel')
       .at(0)
       .simulate('mousedown', new MouseEvent('mousedown'));
     expect(spy).toHaveBeenLastCalledWith(50);
 
     element
-      .find('.mantine-slider-markLabel')
+      .find('.mantine-Slider-markLabel')
       .at(1)
       .simulate('touchstart', new TouchEvent('touchstart'));
     expect(spy).toHaveBeenLastCalledWith(80);
@@ -76,8 +76,8 @@ describe('@mantine/core/Slider/Marks', () => {
       />
     );
 
-    expect(element.find('.mantine-slider-markWrapper').at(0).prop('style').left).toBe('25%');
-    expect(element.find('.mantine-slider-markWrapper').at(1).prop('style').left).toBe('50%');
+    expect(element.find('.mantine-Slider-markWrapper').at(0).prop('style').left).toBe('25%');
+    expect(element.find('.mantine-Slider-markWrapper').at(1).prop('style').left).toBe('50%');
   });
 
   it('has correct displayName', () => {

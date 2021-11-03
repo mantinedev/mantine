@@ -1,11 +1,9 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import React, { useRef, useState } from 'react';
+import { useUncontrolled, useMove } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
-import { getClientPosition } from '../utils/get-client-position/get-client-position';
 import { getPosition } from '../utils/get-position/get-position';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';
-import { getDragEventsAssigner } from '../utils/get-drag-events-assigner/get-drag-events-assigner';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import { Track, TrackStylesNames } from '../Track/Track';
 import { MarksStylesNames } from '../Marks/Marks';
@@ -70,6 +68,9 @@ export interface SliderProps
 
   /** Thumb aria-label */
   thumbLabel?: string;
+
+  /**If true slider label will appear on hover */
+  showLabelOnHover?: boolean;
 }
 
 export function Slider({
@@ -92,9 +93,10 @@ export function Slider({
   labelTransitionTimingFunction,
   labelAlwaysOn = false,
   thumbLabel = '',
+  showLabelOnHover = true,
   ...others
 }: SliderProps) {
-  const [dragging, setDragging] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -102,36 +104,16 @@ export function Slider({
     rule: (val) => typeof val === 'number',
     onChange,
   });
-  const container = useRef<HTMLDivElement>();
   const thumb = useRef<HTMLDivElement>();
-  const start = useRef<number>();
-  const offset = useRef<number>();
   const position = getPosition({ value: _value, min, max });
   const _label = typeof label === 'function' ? label(_value) : label;
 
   const handleChange = (val: number) => {
-    if (container.current) {
-      const containerWidth = container.current.getBoundingClientRect().width;
-      const nextValue = getChangeValue({ value: val, containerWidth, min, max, step });
-      setValue(nextValue);
-    }
+    const nextValue = getChangeValue({ value: val, min, max, step });
+    setValue(nextValue);
   };
 
-  const onDrag = useCallback((event: any) => {
-    container.current && container.current.focus();
-    handleChange(getClientPosition(event) + start.current - offset.current);
-  }, []);
-
-  const onDragEnd = useCallback(() => {
-    setDragging(false);
-  }, []);
-
-  const { assignEvents, removeEvents } = getDragEventsAssigner({
-    onDrag,
-    onDragEnd,
-  });
-
-  useEffect(() => removeEvents, []);
+  const { ref: container, active } = useMove(({ x }) => handleChange(x));
 
   function handleThumbMouseDown(
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
@@ -140,29 +122,7 @@ export function Slider({
       event.preventDefault();
       event.stopPropagation();
     }
-
-    start.current = thumb.current.offsetLeft;
-    offset.current = getClientPosition(event as any);
-
-    assignEvents();
   }
-
-  const handleTrackMouseDown = (
-    event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) => {
-    if (event.cancelable) {
-      event.preventDefault();
-    }
-
-    const changePosition = getClientPosition(event.nativeEvent);
-    const rect = container.current.getBoundingClientRect();
-
-    start.current = changePosition - rect.left;
-    offset.current = changePosition;
-
-    assignEvents();
-    handleChange(changePosition - rect.left);
-  };
 
   const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
     switch (event.nativeEvent.code) {
@@ -193,12 +153,6 @@ export function Slider({
       {...others}
       size={size}
       ref={container}
-      onTouchStart={handleTrackMouseDown}
-      onMouseDown={handleTrackMouseDown}
-      onTouchStartCapture={() => setDragging(true)}
-      onTouchEndCapture={() => setDragging(false)}
-      onMouseDownCapture={() => setDragging(true)}
-      onMouseUpCapture={() => setDragging(false)}
       onKeyDownCapture={handleTrackKeydownCapture}
       classNames={classNames}
       styles={styles}
@@ -215,6 +169,8 @@ export function Slider({
         value={_value}
         onChange={setValue}
         styles={styles}
+        onMouseEnter={showLabelOnHover ? () => setHovered(true) : undefined}
+        onMouseLeave={showLabelOnHover ? () => setHovered(false) : undefined}
         classNames={classNames}
       >
         <Thumb
@@ -222,7 +178,7 @@ export function Slider({
           min={min}
           value={_value}
           position={position}
-          dragging={dragging}
+          dragging={active}
           color={color}
           size={size}
           label={_label}
@@ -235,6 +191,7 @@ export function Slider({
           classNames={classNames}
           styles={styles}
           thumbLabel={thumbLabel}
+          showLabelOnHover={showLabelOnHover && hovered}
         />
       </Track>
 

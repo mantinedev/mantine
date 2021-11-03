@@ -52,7 +52,7 @@ describe('@mantine/core/NativeSelect', () => {
       required: true,
     },
     Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
-    'select'
+    'NativeSelect'
   );
 
   it('passes required and id props to select element', () => {

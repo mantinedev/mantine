@@ -61,6 +61,7 @@ export function Chips<T extends boolean>({
   id,
   classNames,
   styles,
+  sx,
   ...others
 }: ChipsProps<T>) {
   const uuid = useUuid(id);
@@ -79,7 +80,7 @@ export function Chips<T extends boolean>({
         variant,
         radius,
         color,
-        __staticSelector: 'chips',
+        __staticSelector: 'Chips',
         classNames,
         styles,
         name: uuid,
@@ -102,7 +103,7 @@ export function Chips<T extends boolean>({
     );
 
   return (
-    <Group spacing={spacing} id={uuid} {...others}>
+    <Group spacing={spacing} id={uuid} sx={sx} {...others}>
       {chips}
     </Group>
   );

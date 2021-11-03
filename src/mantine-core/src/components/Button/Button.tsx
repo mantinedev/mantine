@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import {
   useMantineTheme,
-  mergeStyles,
   DefaultProps,
   MantineSize,
   MantineNumberSize,
@@ -17,7 +16,7 @@ import {
 import useStyles, { heights, ButtonVariant } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader';
 
-export type ButtonStylesNames = Exclude<ClassNames<typeof useStyles>, ButtonVariant | 'loading'>;
+export type ButtonStylesNames = ClassNames<typeof useStyles>;
 
 export interface SharedButtonProps extends DefaultProps<ButtonStylesNames> {
   /** Predefined button size */
@@ -96,6 +95,7 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
       gradient = { from: 'blue', to: 'cyan', deg: 45 },
       classNames,
       styles,
+      sx,
       ...others
     }: ButtonProps<C>,
     ref: PolymorphicRef<C>
@@ -117,13 +117,10 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
         gradientFrom: gradient.from,
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
-        variant,
       },
-      classNames,
-      'button'
+      { classNames, styles, sx, name: 'Button' }
     );
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element = component || 'button';
     const loader = (
       <Loader
@@ -136,35 +133,29 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
     return (
       <Element
         {...rest}
-        className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
+        className={cx(classes[variant], { [classes.loading]: loading }, classes.root, className)}
         type={type}
         disabled={disabled || loading}
         ref={ref}
         onTouchStart={() => {}}
         style={mergedStyles}
       >
-        <div className={classes.inner} style={_styles.inner}>
+        <div className={classes.inner}>
           {(leftIcon || (loading && loaderPosition === 'left')) && (
-            <span
-              className={cx(classes.icon, classes.leftIcon)}
-              style={{ ..._styles.icon, ..._styles.leftIcon }}
-            >
+            <span className={cx(classes.icon, classes.leftIcon)}>
               {loading && loaderPosition === 'left' ? loader : leftIcon}
             </span>
           )}
 
           <span
             className={classes.label}
-            style={{ textTransform: uppercase ? 'uppercase' : undefined, ..._styles.label }}
+            style={{ textTransform: uppercase ? 'uppercase' : undefined }}
           >
             {children}
           </span>
 
           {(rightIcon || (loading && loaderPosition === 'right')) && (
-            <span
-              className={cx(classes.icon, classes.rightIcon)}
-              style={{ ..._styles.icon, ..._styles.rightIcon }}
-            >
+            <span className={cx(classes.icon, classes.rightIcon)}>
               {loading && loaderPosition === 'right' ? loader : rightIcon}
             </span>
           )}

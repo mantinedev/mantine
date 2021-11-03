@@ -29,8 +29,8 @@ describe('@mantine/core/TabControl', () => {
       <TabControl {...defaultProps} tabProps={{ icon: null, label: 'test' }} />
     ).render();
 
-    expect(withIcon.find('.mantine-tabs-tabIcon').text()).toBe('$');
-    expect(withoutIcon.find('.mantine-tabs-tabIcon')).toHaveLength(0);
+    expect(withIcon.find('.mantine-Tabs-tabIcon').text()).toBe('$');
+    expect(withoutIcon.find('.mantine-Tabs-tabIcon')).toHaveLength(0);
   });
 
   it('renders label from tabProps', () => {
@@ -42,8 +42,8 @@ describe('@mantine/core/TabControl', () => {
       <TabControl {...defaultProps} tabProps={{ icon: '$', label: null }} />
     ).render();
 
-    expect(withLabel.find('.mantine-tabs-tabLabel').text()).toBe('test');
-    expect(withoutLabel.find('.mantine-tabs-tabLabel')).toHaveLength(0);
+    expect(withLabel.find('.mantine-Tabs-tabLabel').text()).toBe('test');
+    expect(withoutLabel.find('.mantine-Tabs-tabLabel')).toHaveLength(0);
   });
 
   it('spreads tabProps to root element', () => {

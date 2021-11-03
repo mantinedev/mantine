@@ -1,11 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  mergeStyles,
-  DefaultProps,
-  MantineColor,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, useExtractedMargins } from '@mantine/styles';
 import { Curve } from './Curve/Curve';
 import { getCurves } from './get-curves/get-curves';
 import useStyles from './RingProgress.styles';
@@ -39,13 +33,13 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>(
       thickness = size / 10,
       classNames,
       styles,
+      sx,
       ...others
     }: RingProgressProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(null, classNames, 'ring-progress');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles(null, { sx, classNames, styles, name: 'RingProgress' });
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const curves = getCurves({ size, thickness, sections }).map((curve, index) => (
       <Curve
@@ -72,14 +66,7 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>(
         </svg>
 
         {label && (
-          <div
-            className={classes.label}
-            style={{
-              right: thickness * 2,
-              left: thickness * 2,
-              ..._styles.label,
-            }}
-          >
+          <div className={classes.label} style={{ right: thickness * 2, left: thickness * 2 }}>
             {label}
           </div>
         )}

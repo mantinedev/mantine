@@ -8,7 +8,6 @@ import {
   Input,
   InputWrapper,
   MantineSize,
-  mergeStyles,
   ClassNames,
   useUuid,
   useExtractedMargins,
@@ -84,12 +83,12 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       minutesLabel,
       secondsLabel,
       disabled = false,
+      sx,
       ...others
     }: TimeInputProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size }, classNames, 'time-input');
-    const _styles = mergeStyles(classes, styles);
+    const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'TimeInput' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const uuid = useUuid(id);
 
@@ -149,13 +148,14 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         classNames={classNames}
         styles={styles}
         size={size}
-        __staticSelector="time-input"
+        __staticSelector="TimeInput"
         id={uuid}
+        sx={sx}
         {...wrapperProps}
       >
         <Input
           component="div"
-          __staticSelector="time-input"
+          __staticSelector="TimeInput"
           required={required}
           invalid={!!error}
           onClick={() => hoursRef.current.focus()}
@@ -166,7 +166,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           disabled={disabled}
           {...rest}
         >
-          <div className={classes.controls} style={_styles.controls}>
+          <div className={classes.controls}>
             <TimeField
               ref={useMergedRef(hoursRef, ref)}
               value={time.hours}
@@ -174,7 +174,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               setValue={(val) => setTime((c) => ({ ...c, hours: val }))}
               id={uuid}
               className={classes.timeInput}
-              style={_styles.timeInput}
               withSeparator
               size={size}
               max={23}
@@ -188,7 +187,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               onChange={handleMinutesChange}
               setValue={(val) => setTime((c) => ({ ...c, minutes: val }))}
               className={classes.timeInput}
-              style={_styles.timeInput}
               withSeparator={withSeconds}
               size={size}
               max={59}
@@ -203,7 +201,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 onChange={handleSecondsChange}
                 setValue={(val) => setTime((c) => ({ ...c, seconds: val }))}
                 className={classes.timeInput}
-                style={_styles.timeInput}
                 size={size}
                 max={59}
                 aria-label={secondsLabel}

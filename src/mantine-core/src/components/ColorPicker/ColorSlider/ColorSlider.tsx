@@ -6,7 +6,7 @@ import {
   UseMovePosition,
   useMergedRef,
 } from '@mantine/hooks';
-import { mergeStyles, DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, ClassNames, useSx } from '@mantine/styles';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
 
@@ -40,19 +40,19 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
       round,
       size,
       thumbColor = 'transparent',
-      __staticSelector = 'color-slider',
+      __staticSelector = 'ColorSlider',
       focusable = true,
       overlays,
       classNames,
       styles,
       className,
-      style,
+      sx,
       ...others
     }: ColorSliderProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size }, classNames, __staticSelector);
-    const _styles = mergeStyles(classes, styles);
+    const { sxClassName } = useSx({ sx, className });
+    const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
     const [position, setPosition] = useState({ y: 0, x: value / maxValue });
     const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);
     const { ref: sliderRef } = useMove(({ x }) => onChange(getChangeValue(x)));
@@ -82,19 +82,14 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
     };
 
     const layers = overlays.map((overlay, index) => (
-      <div
-        className={classes.sliderOverlay}
-        style={{ ..._styles.sliderOverlay, ...overlay }}
-        key={index}
-      />
+      <div className={classes.sliderOverlay} style={overlay} key={index} />
     ));
 
     return (
       <div
         {...others}
         ref={useMergedRef(sliderRef, ref)}
-        className={cx(classes.slider, className)}
-        style={{ ..._styles.slider, ...style }}
+        className={cx(classes.slider, sxClassName, className)}
         role="slider"
         aria-valuenow={value}
         aria-valuemax={maxValue}

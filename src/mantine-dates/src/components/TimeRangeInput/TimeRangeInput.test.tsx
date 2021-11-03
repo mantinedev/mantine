@@ -24,7 +24,7 @@ describe('@mantine/dates/TimeRangeInput', () => {
     TimeRangeInput,
     defaultInputProps,
     Object.keys(TimeRangeInputStylesApi),
-    'time-range-input'
+    'TimeRangeInput'
   );
 
   checkAccessibility([
@@ -49,8 +49,8 @@ describe('@mantine/dates/TimeRangeInput', () => {
 
   it('passes correct __staticSelector to Calendar and DatePickerBase components', () => {
     const element = shallow(<TimeRangeInput />);
-    expect(element.find(Input).prop('__staticSelector')).toBe('time-range-input');
-    expect(element.find(InputWrapper).prop('__staticSelector')).toBe('time-range-input');
+    expect(element.find(Input).prop('__staticSelector')).toBe('TimeRangeInput');
+    expect(element.find(InputWrapper).prop('__staticSelector')).toBe('TimeRangeInput');
   });
 
   it('passes required, id, label, error and description props to InputWrapper component', () => {

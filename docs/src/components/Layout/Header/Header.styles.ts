@@ -20,6 +20,7 @@ export default createStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingRight: 'var(--removed-scroll-width, 0px)',
   },
 
   logo: {

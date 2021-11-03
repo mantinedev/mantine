@@ -1,0 +1,21 @@
+{
+  "title": "Get in touch form",
+  "category": "contact",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": [
+    "/core/paper/",
+    "/core/text-input/",
+    "/core/textarea/",
+    "/core/text/",
+    "/core/button/",
+    "/core/group/",
+    "/core/simple-grid/",
+    "/component/contact-icons/",
+    "https://www.svgbackgrounds.com/"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 800
+  }
+}

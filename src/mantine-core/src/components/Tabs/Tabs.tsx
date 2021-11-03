@@ -1,7 +1,6 @@
 import React, { useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, clamp } from '@mantine/hooks';
 import {
-  mergeStyles,
   DefaultProps,
   MantineNumberSize,
   MantineColor,
@@ -99,13 +98,16 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       styles,
       tabPadding = 'xs',
       orientation = 'horizontal',
+      sx,
       ...others
     }: TabsProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ tabPadding, orientation }, classNames, 'tabs');
-    const _styles = mergeStyles(classes, styles);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style, rootStyle: _styles.root });
+    const { classes, cx } = useStyles(
+      { tabPadding, orientation },
+      { sx, classNames, styles, name: 'Tabs' }
+    );
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
 
@@ -165,17 +167,13 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
 
     return (
       <div {...rest} ref={ref} className={cx(classes.root, className)} style={mergedStyles}>
-        <div
-          className={cx(classes.tabsListWrapper, classes[variant])}
-          style={{ ..._styles.tabsListWrapper, ..._styles[variant] }}
-        >
+        <div className={cx(classes.tabsListWrapper, classes[variant])}>
           <Group
             className={classes.tabsList}
-            style={_styles.tabsList}
             role="tablist"
             direction={orientation === 'horizontal' ? 'row' : 'column'}
             aria-orientation={orientation}
-            spacing={variant === 'pills' ? 'md' : 0}
+            spacing={variant === 'pills' ? 5 : 0}
             position={position}
             grow={grow}
           >
@@ -184,7 +182,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         </div>
 
         {content && (
-          <div role="tabpanel" className={classes.body} style={_styles.body}>
+          <div role="tabpanel" className={classes.body}>
             {content}
           </div>
         )}

@@ -40,6 +40,11 @@ export function useListState<T>(initialValue: T[] = []) {
       return cloned;
     });
 
+  const applyWhere = (
+    condition: (item: T, index?: number) => boolean,
+    fn: (item: T, index?: number) => T
+  ) => setState((current) => current.map((item) => (condition(item) ? fn(item) : item)));
+
   return [
     state,
     {
@@ -48,6 +53,7 @@ export function useListState<T>(initialValue: T[] = []) {
       prepend,
       insert,
       apply,
+      applyWhere,
       remove,
       reorder,
       setItem,
