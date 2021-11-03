@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
-import { useMantineTheme, DefaultProps, ClassNames } from '@mantine/styles';
+import React, { forwardRef, useState } from 'react';
+import {
+  useMantineTheme,
+  DefaultProps,
+  ClassNames,
+  PolymorphicComponentProps,
+  PolymorphicRef,
+} from '@mantine/styles';
 import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight, Icon } from 'react-feather';
 import { useDidUpdate, useId } from '@mantine/hooks';
 import useStyles from './DualList.styles';
@@ -46,7 +52,7 @@ const ListItem = ({ item, isSelected, children, ...props }: ListItemProps) => {
   );
 };
 
-interface ListProps {
+interface IListProps {
   position: 'left' | 'right';
   label: string;
   items: IListItem[];
@@ -56,98 +62,110 @@ interface ListProps {
   onMoveAll: () => void;
 }
 
-const RenderList = ({
-  position,
-  label,
-  items,
-  MoveIcon,
-  MoveAllIcon,
-  onMove,
-  onMoveAll,
-}: ListProps) => {
-  const [selectedItems, setSelectedItems] = useState<IListItem[] | null>(null);
-  const [multiSelectionRootIdx, setMultiSelectionRootIdx] = useState<number | null>(null);
+type ListProps<C extends React.ElementType> = PolymorphicComponentProps<C, IListProps>;
+type ListComponent = <C extends React.ElementType>(props: ListProps<C>) => React.ReactElement;
 
-  const { classes } = useStyles();
+const RenderList: ListComponent = forwardRef(
+  <C extends React.ElementType = 'div'>(
+    {
+      component,
+      position,
+      label,
+      items,
+      MoveIcon,
+      MoveAllIcon,
+      onMove,
+      onMoveAll,
+      ...props
+    }: ListProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const [selectedItems, setSelectedItems] = useState<IListItem[] | null>(null);
+    const [multiSelectionRootIdx, setMultiSelectionRootIdx] = useState<number | null>(null);
 
-  const hasItems = (): boolean => items && items.length > 0;
-  const hasSelectedItems = (): boolean => selectedItems && selectedItems.length > 0;
-  const itemIsSelected = (item: IListItem): boolean => selectedItems?.includes(item);
+    const { classes } = useStyles();
 
-  const clearSelection = () => {
-    setSelectedItems(null);
-    setMultiSelectionRootIdx(null);
-  };
+    const Element = component || 'div';
 
-  const handleMove = () => {
-    if (selectedItems) {
-      onMove(selectedItems);
+    const hasItems = (): boolean => items && items.length > 0;
+    const hasSelectedItems = (): boolean => selectedItems && selectedItems.length > 0;
+    const itemIsSelected = (item: IListItem): boolean => selectedItems?.includes(item);
+
+    const clearSelection = () => {
+      setSelectedItems(null);
+      setMultiSelectionRootIdx(null);
+    };
+
+    const handleMove = () => {
+      if (selectedItems) {
+        onMove(selectedItems);
+        clearSelection();
+      }
+    };
+
+    const handleMoveAll = () => {
+      onMoveAll();
       clearSelection();
-    }
-  };
+    };
 
-  const handleMoveAll = () => {
-    onMoveAll();
-    clearSelection();
-  };
+    const handleClickItem = (e: React.MouseEvent, item: IListItem) => {
+      const clickedItemIdx = items.findIndex((_item) => _item.id === item.id);
 
-  const handleClickItem = (e: React.MouseEvent, item: IListItem) => {
-    const clickedItemIdx = items.findIndex((_item) => _item.id === item.id);
+      if (!(multiSelectionRootIdx != null && e.shiftKey)) {
+        setMultiSelectionRootIdx(clickedItemIdx);
+      }
 
-    if (!(multiSelectionRootIdx != null && e.shiftKey)) {
-      setMultiSelectionRootIdx(clickedItemIdx);
-    }
+      if (hasSelectedItems()) {
+        if (e.shiftKey) {
+          const start = Math.min(multiSelectionRootIdx, clickedItemIdx);
+          const end = Math.max(multiSelectionRootIdx, clickedItemIdx) + 1;
+          const newSelection = items.slice(start, end);
 
-    if (hasSelectedItems()) {
-      if (e.shiftKey) {
-        const start = Math.min(multiSelectionRootIdx, clickedItemIdx);
-        const end = Math.max(multiSelectionRootIdx, clickedItemIdx) + 1;
-        const newSelection = items.slice(start, end);
-
-        setSelectedItems(newSelection);
-      } else if (e.ctrlKey) {
-        if (itemIsSelected(item)) {
-          setSelectedItems(selectedItems.filter((_item) => _item.id !== item.id));
+          setSelectedItems(newSelection);
+        } else if (e.ctrlKey) {
+          if (itemIsSelected(item)) {
+            setSelectedItems(selectedItems.filter((_item) => _item.id !== item.id));
+          } else {
+            setSelectedItems([...selectedItems, item]);
+          }
         } else {
-          setSelectedItems([...selectedItems, item]);
+          setSelectedItems([item]);
         }
       } else {
         setSelectedItems([item]);
       }
-    } else {
-      setSelectedItems([item]);
-    }
-  };
+    };
 
-  const RenderMoveIcon = () => (
-    <ActionIcon className={classes.action} onClick={handleMove} disabled={!hasSelectedItems()}>
-      {MoveIcon}
-    </ActionIcon>
-  );
+    const RenderMoveIcon = () => (
+      <ActionIcon className={classes.action} onClick={handleMove} disabled={!hasSelectedItems()}>
+        {MoveIcon}
+      </ActionIcon>
+    );
 
-  const RenderMoveAllIcon = () => (
-    <ActionIcon className={classes.action} onClick={handleMoveAll} disabled={!hasItems()}>
-      {MoveAllIcon}
-    </ActionIcon>
-  );
+    const RenderMoveAllIcon = () => (
+      <ActionIcon className={classes.action} onClick={handleMoveAll} disabled={!hasItems()}>
+        {MoveAllIcon}
+      </ActionIcon>
+    );
 
-  return (
-    <div>
-      <Title order={4}>{label}</Title>
-      <div className={classes.list}>
-        <div className={classes.flex}>
-          {position === 'left' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
-          {position === 'right' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
-        </div>
-        <div>
-          {items.map((item) => (
-            <ListItem item={item} isSelected={itemIsSelected(item)} onClick={handleClickItem} />
-          ))}
+    return (
+      <div>
+        <Title order={4}>{label}</Title>
+        <div className={classes.list}>
+          <div className={classes.flex}>
+            {position === 'left' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
+            {position === 'right' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
+          </div>
+          <Element {...props} ref={ref}>
+            {items.map((item) => (
+              <ListItem item={item} isSelected={itemIsSelected(item)} onClick={handleClickItem} />
+            ))}
+          </Element>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export interface DualListData {
   available: IListItem[];
@@ -155,12 +173,14 @@ export interface DualListData {
 }
 
 export interface DualListProps extends DefaultProps {
+  listComponent?: React.ElementType;
   leftLabel?: string;
   rightLabel?: string;
   available: (IListItem | string)[];
   selected: (IListItem | string)[];
   onChange?: (data: DualListData) => void;
 }
+type DualListComponent = (props: DualListProps) => React.ReactElement;
 
 const initializeItems = (items: (IListItem | string)[]): IListItem[] =>
   items.map((item) => {
@@ -172,26 +192,26 @@ const initializeItems = (items: (IListItem | string)[]): IListItem[] =>
 
 // TODO: properly respect theme
 
-export function DualList({
+export const DualList: DualListComponent & { displayName?: string } = ({
   className,
-  style,
-  classNames,
-  styles,
   leftLabel = 'Available',
   rightLabel = 'Selected',
+  listComponent,
   available,
   selected,
   onChange,
-  ...others
-}: DualListProps) {
+  ...props
+}: DualListProps) => {
   const [data, setData] = useState<DualListData>({
     available: initializeItems(available),
     selected: initializeItems(selected),
   });
 
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
 
   const theme = useMantineTheme();
+
+  const ListElement = listComponent || 'div';
 
   const handleMoveAvailable = (items: IListItem[]) => {
     setData({
@@ -218,8 +238,9 @@ export function DualList({
   );
 
   return (
-    <Paper padding="md" className={classes.flex}>
+    <Paper padding="md" className={cx(classes.flex, className)} {...props}>
       <RenderList
+        component={ListElement}
         position="left"
         label={leftLabel}
         items={data.available}
@@ -229,6 +250,7 @@ export function DualList({
         onMoveAll={handleMoveAllAvailable}
       />
       <RenderList
+        component={ListElement}
         position="right"
         label={rightLabel}
         items={data.selected}
@@ -239,6 +261,6 @@ export function DualList({
       />
     </Paper>
   );
-}
+};
 
 DualList.displayName = '@mantine/core/DualList';
