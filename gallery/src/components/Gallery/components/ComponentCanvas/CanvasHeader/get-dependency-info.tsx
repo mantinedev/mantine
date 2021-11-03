@@ -5,7 +5,7 @@ import { MantineIcon } from '../icons/MantineIcon';
 import { NpmIcon } from '../icons/NpmIcon';
 
 export function getDependencyInfo(url: string) {
-  if (url.startsWith('/core') || url.startsWith('/hooks')) {
+  if (url.startsWith('/core') || url.startsWith('/hooks') || url.startsWith('/others')) {
     const _name = url.split('/')[2];
     const name = url.startsWith('/hooks') ? _name : _name.split('-').map(upperFirst).join('');
 
