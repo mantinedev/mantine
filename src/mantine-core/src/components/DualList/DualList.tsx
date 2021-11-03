@@ -6,6 +6,7 @@ import useStyles from './DualList.styles';
 import { Text, TextProps } from '../Text';
 import { ActionIcon } from '../ActionIcon';
 import { Title } from '../Title';
+import { Paper } from '../Paper';
 
 export type DualListStylesNames = ClassNames<typeof useStyles>;
 
@@ -134,7 +135,7 @@ const RenderList = ({
     <div>
       <Title order={4}>{label}</Title>
       <div className={classes.list}>
-        <div className={classes.actions}>
+        <div className={classes.flex}>
           {position === 'left' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
           {position === 'right' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
         </div>
@@ -217,7 +218,7 @@ export function DualList({
   );
 
   return (
-    <div className={classes.container}>
+    <Paper padding="md" className={classes.flex}>
       <RenderList
         position="left"
         label={leftLabel}
@@ -236,7 +237,7 @@ export function DualList({
         onMove={handleMoveSelected}
         onMoveAll={handleMoveAllSelected}
       />
-    </div>
+    </Paper>
   );
 }
 

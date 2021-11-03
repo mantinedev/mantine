@@ -4,9 +4,8 @@ export default createStyles((theme, _params, getRef) => {
   const border = `1px solid ${theme.colors.gray[3]}`;
 
   return {
-    container: {
+    flex: {
       display: 'flex',
-      padding: 24,
     },
     list: {
       position: 'relative',
@@ -14,9 +13,6 @@ export default createStyles((theme, _params, getRef) => {
       borderRadius: theme.radius.sm,
       minWidth: 350,
       marginRight: 32,
-    },
-    actions: {
-      display: 'flex',
     },
     action: {
       width: '100%',
