@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMantineTheme, DefaultProps, ClassNames } from '@mantine/styles';
 import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight, Icon } from 'react-feather';
-import { useId } from '@mantine/hooks';
+import { useDidUpdate, useId } from '@mantine/hooks';
 import useStyles from './DualList.styles';
 import { Text, TextProps } from '../Text/Text';
 import { ActionIcon } from '../ActionIcon';
@@ -147,11 +147,17 @@ const RenderList = ({
   );
 };
 
+export interface DualListData {
+  available: IListItem[];
+  selected: IListItem[];
+}
+
 export interface DualListProps extends DefaultProps {
   leftLabel?: string;
   rightLabel?: string;
   available: (IListItem | string)[];
   selected: (IListItem | string)[];
+  onChange?: (data: DualListData) => void;
 }
 
 const initializeItems = (items: (IListItem | string)[]): IListItem[] =>
@@ -173,27 +179,37 @@ export function DualList({
   rightLabel = 'Selected',
   available,
   selected,
+  onChange,
   ...others
 }: DualListProps) {
-  const [availableItems, setAvailableItems] = useState<IListItem[]>(initializeItems(available));
-  const [selectedItems, setSelectedItems] = useState<IListItem[]>(initializeItems(selected));
+  const [data, setData] = useState<DualListData>({
+    available: initializeItems(available),
+    selected: initializeItems(selected),
+  });
+
   const { classes } = useStyles();
 
   const theme = useMantineTheme();
 
   const handleMoveAvailable = (items: IListItem[]) => {
-    setSelectedItems([...selectedItems, ...items]);
-    setAvailableItems(availableItems.filter((item) => !items.includes(item)));
+    setData({
+      available: data.available.filter((item) => !items.includes(item)),
+      selected: [...data.selected, ...items],
+    });
   };
 
-  const handleMoveAllAvailable = () => handleMoveAvailable(availableItems);
+  const handleMoveAllAvailable = () => handleMoveAvailable(data.available);
 
   const handleMoveSelected = (items: IListItem[]) => {
-    setAvailableItems([...availableItems, ...items]);
-    setSelectedItems(selectedItems.filter((item) => !items.includes(item)));
+    setData({
+      available: [...data.available, ...items],
+      selected: data.selected.filter((item) => !items.includes(item)),
+    });
   };
 
-  const handleMoveAllSelected = () => handleMoveSelected(selectedItems);
+  const handleMoveAllSelected = () => handleMoveSelected(data.selected);
+
+  useDidUpdate(() => onChange?.(data), [data]);
 
   const RenderIcon = ({ icon: IconComponent }: { icon: Icon }) => (
     <IconComponent width={theme.fontSizes.md} height={theme.fontSizes.md} />
@@ -204,7 +220,7 @@ export function DualList({
       <RenderList
         position="left"
         label={leftLabel}
-        items={availableItems}
+        items={data.available}
         MoveIcon={<RenderIcon icon={ChevronRight} />}
         MoveAllIcon={<RenderIcon icon={ChevronsRight} />}
         onMove={handleMoveAvailable}
@@ -213,7 +229,7 @@ export function DualList({
       <RenderList
         position="right"
         label={rightLabel}
-        items={selectedItems}
+        items={data.selected}
         MoveIcon={<RenderIcon icon={ChevronLeft} />}
         MoveAllIcon={<RenderIcon icon={ChevronsLeft} />}
         onMove={handleMoveSelected}
