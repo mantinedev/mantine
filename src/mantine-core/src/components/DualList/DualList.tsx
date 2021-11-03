@@ -190,8 +190,6 @@ const initializeItems = (items: (IListItem | string)[]): IListItem[] =>
     return item as IListItem;
   });
 
-// TODO: properly respect theme
-
 export const DualList: DualListComponent & { displayName?: string } = ({
   className,
   leftLabel = 'Available',
