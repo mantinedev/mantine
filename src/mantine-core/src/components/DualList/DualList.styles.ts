@@ -28,10 +28,13 @@ export default createStyles((theme) => {
       userSelect: 'none',
     },
     selectedItem: {
-      backgroundColor: getThemeColor({ theme, color: theme.primaryColor, shade: 0 }),
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[4]
+          : getThemeColor({ theme, color: theme.primaryColor, shade: 0 }),
     },
     disabled: {
-      color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
+      color: theme.colors.gray[theme.colorScheme === 'dark' ? 7 : 4],
     },
   };
 });
