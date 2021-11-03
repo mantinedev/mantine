@@ -3,8 +3,9 @@ import { useMantineTheme, DefaultProps, ClassNames } from '@mantine/styles';
 import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight, Icon } from 'react-feather';
 import { useDidUpdate, useId } from '@mantine/hooks';
 import useStyles from './DualList.styles';
-import { Text, TextProps } from '../Text/Text';
+import { Text, TextProps } from '../Text';
 import { ActionIcon } from '../ActionIcon';
+import { Title } from '../Title';
 
 export type DualListStylesNames = ClassNames<typeof useStyles>;
 
@@ -131,7 +132,7 @@ const RenderList = ({
 
   return (
     <div>
-      <h3>{label}</h3>
+      <Title order={4}>{label}</Title>
       <div className={classes.list}>
         <div className={classes.actions}>
           {position === 'left' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
