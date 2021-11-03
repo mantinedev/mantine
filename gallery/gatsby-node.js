@@ -27,6 +27,7 @@ const GALLERY_CATEGORIES = [
       { slug: 'users', name: 'User info and controls' },
       { slug: 'authentication', name: 'Authentication' },
       { slug: 'inputs', name: 'Inputs' },
+      { slug: 'dropzones', name: 'Dropzones' },
     ],
   },
   {
