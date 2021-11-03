@@ -3,6 +3,7 @@ import {
   useMantineTheme,
   DefaultProps,
   ClassNames,
+  MantineSize,
   PolymorphicComponentProps,
   PolymorphicRef,
 } from '@mantine/styles';
@@ -15,7 +16,7 @@ import {
   Icon,
 } from 'react-feather';
 import { useDidUpdate, useId } from '@mantine/hooks';
-import useStyles from './DualList.styles';
+import useStyles, { getIconSize } from './DualList.styles';
 import { Text, TextProps } from '../Text';
 import { ActionIcon } from '../ActionIcon';
 import { Title } from '../Title';
@@ -31,13 +32,14 @@ interface IListItem {
 }
 
 interface ListItemProps extends Omit<TextProps<'div'>, 'onClick'> {
+  size: MantineSize;
   item: IListItem;
   isSelected: boolean;
   onClick?: (e: React.MouseEvent, item: IListItem) => void;
 }
 
-const ListItem = ({ item, isSelected, children, ...props }: ListItemProps) => {
-  const { classes, cx } = useStyles();
+const ListItem = ({ size, item, isSelected, children, ...props }: ListItemProps) => {
+  const { classes, cx } = useStyles({ size });
   const { value, disabled } = item;
 
   const handleClick = (e: React.MouseEvent) => {
@@ -49,6 +51,7 @@ const ListItem = ({ item, isSelected, children, ...props }: ListItemProps) => {
   return (
     <Text
       {...props}
+      size={size}
       className={cx(props.className, classes.item, {
         [classes.selectedItem]: isSelected,
         [classes.disabled]: disabled,
@@ -65,6 +68,7 @@ interface IListProps {
   position: 'left' | 'right';
   label: string;
   items: IListItem[];
+  size: MantineSize;
   showSearchBar?: boolean;
   searchBarProps?: TextInputProps;
   searchItems?: (items: IListItem[], search: string) => IListItem[];
@@ -85,6 +89,7 @@ const RenderList: ListComponent = forwardRef(
       position,
       label,
       items,
+      size,
       showSearchBar = true,
       searchBarProps,
       searchItems,
@@ -100,7 +105,7 @@ const RenderList: ListComponent = forwardRef(
     const [multiSelectionRootIdx, setMultiSelectionRootIdx] = useState<number | null>(null);
     const [search, setSearch] = useState<string>('');
 
-    const { classes, cx } = useStyles();
+    const { classes, cx } = useStyles({ size });
 
     const theme = useMantineTheme();
 
@@ -179,13 +184,22 @@ const RenderList: ListComponent = forwardRef(
       const filtered = filterItems();
 
       if (filtered.length === 0) {
-        return <Text className={cx(classes.item, classes.disabled)}>{emptyPlaceholder}</Text>;
+        return (
+          <Text className={cx(classes.item, classes.disabled)} size={size}>
+            {emptyPlaceholder}
+          </Text>
+        );
       }
 
       return (
         <>
           {filtered.map((item) => (
-            <ListItem item={item} isSelected={itemIsSelected(item)} onClick={handleClickItem} />
+            <ListItem
+              size={size}
+              item={item}
+              isSelected={itemIsSelected(item)}
+              onClick={handleClickItem}
+            />
           ))}
         </>
       );
@@ -194,7 +208,7 @@ const RenderList: ListComponent = forwardRef(
     return (
       <div>
         <Title order={4}>{label}</Title>
-        <div className={classes.list}>
+        <div className={classes.listContainer}>
           <div className={classes.flex}>
             {position === 'left' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
             {position === 'right' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
@@ -202,7 +216,8 @@ const RenderList: ListComponent = forwardRef(
           {showSearchBar && (
             <TextInput
               placeholder="Search..."
-              rightSection={<SearchIcon width={theme.fontSizes.lg} height={theme.fontSizes.lg} />}
+              rightSection={<SearchIcon size={getIconSize({ theme, size })} />}
+              size={size}
               {...searchBarProps}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -214,7 +229,7 @@ const RenderList: ListComponent = forwardRef(
               })}
             />
           )}
-          <Element {...props} ref={ref}>
+          <Element {...props} ref={ref} className={cx(classes.list, props.className)}>
             <RenderItems />
           </Element>
         </div>
@@ -230,6 +245,7 @@ export interface DualListData {
 
 export interface DualListProps extends DefaultProps {
   listComponent?: React.ElementType;
+  size?: MantineSize;
   searchItems?: (items: IListItem[], search: string) => IListItem[];
   leftLabel?: string;
   rightLabel?: string;
@@ -256,6 +272,7 @@ const initializeItems = (items: (IListItem | string)[]): IListItem[] =>
 
 export const DualList: DualListComponent & { displayName?: string } = ({
   className,
+  size = 'md',
   emptyPlaceholder = 'No items found...',
   leftEmptyPlaceholder = emptyPlaceholder,
   rightEmptyPlaceholder = emptyPlaceholder,
@@ -277,7 +294,7 @@ export const DualList: DualListComponent & { displayName?: string } = ({
     selected: initializeItems(selected),
   });
 
-  const { classes, cx } = useStyles();
+  const { classes, cx } = useStyles({ size });
 
   const theme = useMantineTheme();
 
@@ -304,17 +321,18 @@ export const DualList: DualListComponent & { displayName?: string } = ({
   useDidUpdate(() => onChange?.(data), [data]);
 
   const RenderIcon = ({ icon: IconComponent }: { icon: Icon }) => (
-    <IconComponent width={theme.fontSizes.md} height={theme.fontSizes.md} />
+    <IconComponent size={getIconSize({ theme, size })} />
   );
 
   return (
-    <Paper padding="md" className={cx(classes.flex, className)} {...props}>
+    <Paper padding={size} className={cx(classes.flex, className)} {...props}>
       <RenderList
         component={ListElement}
         emptyPlaceholder={leftEmptyPlaceholder}
         position="left"
         label={leftLabel}
         items={data.available}
+        size={size}
         showSearchBar={showLeftSearchBar}
         searchBarProps={leftSearchBarProps}
         searchItems={searchItems}
@@ -329,6 +347,7 @@ export const DualList: DualListComponent & { displayName?: string } = ({
         position="right"
         label={rightLabel}
         items={data.selected}
+        size={size}
         showSearchBar={showRightSearchBar}
         searchBarProps={rightSearchBarProps}
         searchItems={searchItems}
