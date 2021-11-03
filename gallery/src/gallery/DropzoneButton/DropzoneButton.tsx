@@ -6,6 +6,7 @@ import { CloudUpload } from 'tabler-icons-react';
 const useStyles = createStyles((theme) => ({
   wrapper: {
     position: 'relative',
+    marginBottom: 30,
   },
 
   dropzone: {
