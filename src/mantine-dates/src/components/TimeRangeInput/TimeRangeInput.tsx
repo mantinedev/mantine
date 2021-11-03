@@ -12,7 +12,7 @@ import {
   useUuid,
   useExtractedMargins,
 } from '@mantine/core';
-import { useMergedRef, useUncontrolled } from '@mantine/hooks';
+import { useMergedRef, useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import dayjs, { UnitType } from 'dayjs';
 import { TimeField } from '../TimeInput/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInput/create-time-handler/create-time-handler';
@@ -112,6 +112,11 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     const [fromTime, setFromTime] = useState(getTimeValues(_value[0]));
     const [toTime, setToTime] = useState(getTimeValues(_value[1]));
     const [selectedFieldIndex, setSelectedFieldIndex] = useState<0 | 1>(0);
+
+    useDidUpdate(() => {
+      setFromTime(getTimeValues(_value[0]));
+      setToTime(getTimeValues(_value[1]));
+    }, [_value]);
 
     const setTime = (
       cb: (val: ReturnType<typeof getTimeValues>) => ReturnType<typeof getTimeValues>
