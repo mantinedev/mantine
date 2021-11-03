@@ -1,6 +1,6 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, getThemeColor } from '@mantine/styles';
 
-export default createStyles((theme, _params, getRef) => {
+export default createStyles((theme) => {
   const border = `1px solid ${theme.colors.gray[3]}`;
 
   return {
@@ -9,10 +9,10 @@ export default createStyles((theme, _params, getRef) => {
     },
     list: {
       position: 'relative',
+      minWidth: 350,
       border,
       borderRadius: theme.radius.sm,
-      minWidth: 350,
-      marginRight: 32,
+      marginRight: theme.spacing.xl,
     },
     action: {
       width: '100%',
@@ -23,15 +23,12 @@ export default createStyles((theme, _params, getRef) => {
         borderRight: border,
       },
     },
-    items: {
-      width: '100%',
-    },
     item: {
-      padding: '0 10px',
+      padding: `0 ${theme.spacing.sm}px`,
       userSelect: 'none',
     },
     selectedItem: {
-      backgroundColor: theme.colors.gray[1],
+      backgroundColor: getThemeColor({ theme, color: theme.primaryColor, shade: 0 }),
     },
     disabled: {
       color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
