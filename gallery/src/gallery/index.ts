@@ -58,3 +58,6 @@ export { NavbarSegmented } from './NavbarSegmented/NavbarSegmented';
 // Users
 export { UserButton } from './UserButton/UserButton';
 export { UserMenu } from './UserMenu/UserMenu';
+
+// Dropzones
+export { DropzoneButton } from './DropzoneButton/DropzoneButton';
