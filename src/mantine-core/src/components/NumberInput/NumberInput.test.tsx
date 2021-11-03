@@ -111,4 +111,24 @@ describe('@mantine/core/NumberInput', () => {
 
     expect(spy).toHaveBeenLastCalledWith(12);
   });
+
+  it('returns undefined when input is empty', () => {
+    const spy = jest.fn();
+    const element = mount(
+      <NumberInput value={5} max={10} min={0} step={6} onChange={spy} />
+    );
+
+    const input = element.find('input').at(0);
+    input.simulate('change', { target: { value: '6' } });
+    expect(spy).toHaveBeenLastCalledWith(6);
+    input.simulate('change', { target: { value: '6.q' } });
+    expect(spy).toHaveBeenLastCalledWith(6);
+    input.simulate('change', { target: { value: '.q' } });
+    expect(spy).toHaveBeenLastCalledWith(6);
+    input.simulate('change', { target: { value: '' } });
+    expect(spy).toHaveBeenLastCalledWith(undefined);
+    input.simulate('blur', { target: { value: '' } });
+
+    expect(spy).toHaveBeenLastCalledWith(undefined);
+  });
 });
