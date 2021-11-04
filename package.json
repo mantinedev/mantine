@@ -25,6 +25,7 @@
     "storybook:gallery": "esno scripts/storybook-start --gallery",
     "test": "npm run prettier:test && npm run syncpack && npm run typecheck && npm run lint && npm run jest",
     "gallery": "cd gallery && npm start",
+    "gallery:plop": "esno scripts/gallery-plop",
     "docs": "npm run docs:clean && npm run docs:docgen && cd docs && npm start",
     "docs:typecheck": "cd docs && npm run typecheck",
     "docs:lint": "cd docs && npm run lint",
