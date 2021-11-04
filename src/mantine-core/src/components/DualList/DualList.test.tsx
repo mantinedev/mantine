@@ -96,4 +96,23 @@ describe('@mantine/core/DualList', () => {
     expect(withTag.render().find('.mantine-DualList-list')[0].tagName).toBe('ul');
     expect(withComponent.render().find('.mantine-DualList-list')[0].tagName).toBe('ol');
   });
+
+  it('calls onChange when action buttons are clicked', () => {
+    const handleChange = jest.fn();
+
+    const dualList = mount(
+      <DualList
+        available={['abc', 'def', 'ghi']}
+        selected={['123', '456', '789']}
+        onChange={handleChange}
+      />
+    );
+
+    expect(handleChange).not.toBeCalled();
+
+    dualList.find('.mantine-DualList-action').first().simulate('click');
+    dualList.find('.mantine-DualList-action').last().simulate('click');
+
+    expect(handleChange).toBeCalledTimes(2);
+  });
 });
