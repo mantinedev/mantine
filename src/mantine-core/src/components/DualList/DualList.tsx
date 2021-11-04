@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, RefObject, useState } from 'react';
 import {
   useMantineTheme,
   DefaultProps,
@@ -284,6 +284,8 @@ export interface DualListProps extends DefaultProps<DualListStylesNames> {
   showRightSearchBar?: boolean;
   leftSearchBarProps?: TextInputProps;
   rightSearchBarProps?: TextInputProps;
+  leftListRef?: RefObject;
+  rightListRef?: RefObject;
   emptyPlaceholder?: string;
   leftEmptyPlaceholder?: string;
   rightEmptyPlaceholder?: string;
@@ -313,6 +315,8 @@ export const DualList: DualListComponent & { displayName?: string } = ({
   showRightSearchBar = true,
   leftSearchBarProps,
   rightSearchBarProps,
+  leftListRef,
+  rightListRef,
   listComponent,
   searchItems,
   available,
@@ -381,6 +385,7 @@ export const DualList: DualListComponent & { displayName?: string } = ({
         MoveAllIcon={<RenderIcon icon={ChevronsRight} />}
         onMove={handleMoveAvailable}
         onMoveAll={handleMoveAllAvailable}
+        ref={leftListRef}
         {...stylesProps}
       />
       <RenderList
@@ -397,6 +402,7 @@ export const DualList: DualListComponent & { displayName?: string } = ({
         MoveAllIcon={<RenderIcon icon={ChevronsLeft} />}
         onMove={handleMoveSelected}
         onMoveAll={handleMoveAllSelected}
+        ref={rightListRef}
         {...stylesProps}
       />
     </Paper>
