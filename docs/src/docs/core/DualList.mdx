@@ -1,0 +1,125 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: DualList
+order: 1
+slug: /core/dual-list/
+category: 'data-display'
+description: 'Render side-by-side lists with the ability to swap items between them'
+props: ['DualList']
+import: "import { DualList } from '@mantine/core';"
+source: 'mantine-core/src/components/DualList/DualList.tsx'
+docs: 'core/DualList.mdx'
+styles: ['DualList']
+---
+
+import { DualListDemos } from '@demos/core';
+
+## Usage
+
+<Demo data={DualListDemos.usage} />
+
+## Items
+
+DualList can be given two lists of items: `available` and `selected`.
+These items can either be simple strings, or match the following `IListItem` structure:
+
+```
+{
+  "id": string,
+  "value": string,
+  "disabled": boolean,
+}
+```
+
+### Disabled
+
+Items can be disabled by being provided in the above `IListItem` structure with `"disabled": true`. Disabled items cannot be selected or moved between lists.
+
+## OnChange
+
+Items in either list can be selected and moved to the other list. DualList keeps track of the lists internally.
+
+You can subscribe to changes to the lists through the `onChange` prop.
+This prop can be given a function that will be given both the `available` and `selected` lists when either list changes.
+
+<Demo data={DualListDemos.onChange} />
+
+## Search bar
+
+Both lists can individually be filtered by using the respective search bar.
+
+Both search bars can be enabled/disabled and configured indiviudally. This is done using the `show{Left|Right}SearchBar` and `{left|right}SearchBarProps` props.
+
+### searchItems
+
+You can also change how the items are filtered according to the search bar's value through the `searchItems` prop. By default, the lists will show items that match the search term with lower-/uppercasing being ignored.
+
+<Demo data={DualListDemos.searchBar} />
+
+## Empty lists
+
+When given an empty array of items, or when no items match the search terms, an empty placeholder is shown.
+
+The default placeholder for both lists can be overriden using the `emptyPlaceholder` prop. A specific list's placeholder can be overriden using the `{left|right}EmptyPlaceholder` prop. These specific placeholders have precedence over `emptyPlaceholder`.
+
+<Demo data={DualListDemos.emptyLists} />
+
+## Labels
+
+The labels above each list can be customized using the `{left|right}label` props.
+
+<Demo data={DualListDemos.labels} />
+
+## Refs
+
+You can obtain a ref to each list through the `{left|right}ListRef` props.
+
+<Demo data={DualListDemos.refs} />
+
+## Change root list element
+
+The container component of the lists can be customized using the `listComponent` prop.
+
+<Demo data={DualListDemos.listComponent} />
+
+## Size
+
+Control default width and height of the lists with the `size` prop.
+
+This prop can have the following values: `xs`, `sm`, `md`, `lg`, `xl`.
+
+<Demo data={DualListDemos.size} />
+
+You can get predefined list sizes by importing `DUAL_LIST_SIZES`:
+
+```tsx
+import { DUAL_LIST_SIZES } from '@mantine/core';
+```
+
+## TypeScript
+
+### Component props type
+
+Import component props type:
+
+```tsx
+import type { DualListProps, DualListStylesNames, IListItem, DualListData } from '@mantine/core';
+```
+
+### DualListStylesNames type
+
+`DualListStylesNames` type is a union with DualList [Styles API](/theming/styles-api/) names:
+
+```tsx
+import type { DualListStylesNames } from '@mantine/core';
+
+const DualListClasses: Partial<Record<DualListStylesNames, 'string'>> = {
+  actions: 'DualList-actions',
+  item: 'DualList-item',
+};
+
+<DualList available={[]} selected={[]} classNames={DualListClasses} />;
+```
+
+See full styles descriptions list under _Styles API_ tab.

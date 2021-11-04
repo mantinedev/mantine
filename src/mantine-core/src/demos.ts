@@ -25,6 +25,7 @@ export * as ContainerDemos from './components/Container/demos';
 export * as DialogDemos from './components/Dialog/demos';
 export * as DividerDemos from './components/Divider/demos';
 export * as DrawerDemos from './components/Drawer/demos';
+export * as DualListDemos from './components/DualList/demos';
 export * as GridDemos from './components/Grid/demos';
 export * as GroupDemos from './components/Group/demos';
 export * as HighlightDemos from './components/Highlight/demos';

@@ -14,7 +14,7 @@ export const ACTIONS_HEIGHTS: MantineSizes = {
   xl: 40,
 };
 
-export const LIST_SIZES: MantineSizes = {
+export const DUAL_LIST_SIZES: MantineSizes = {
   xs: 200,
   sm: 250,
   md: 300,
@@ -49,8 +49,8 @@ export default createStyles((theme, { size }: DualListStylesProps) => {
       display: 'flex',
       flexDirection: 'column',
       overflow: 'hidden',
-      width: LIST_SIZES[size],
-      height: LIST_SIZES[size],
+      width: DUAL_LIST_SIZES[size],
+      height: DUAL_LIST_SIZES[size],
       border,
       borderRadius: theme.radius.sm,
       marginRight: theme.spacing[size],

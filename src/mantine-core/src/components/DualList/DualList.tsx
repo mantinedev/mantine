@@ -25,7 +25,7 @@ import { TextInput, TextInputProps } from '../TextInput';
 
 export type DualListStylesNames = ClassNames<typeof useStyles>;
 
-interface IListItem {
+export interface IListItem {
   id: string;
   value: string;
   disabled: boolean;
@@ -248,9 +248,9 @@ const RenderList: ListComponent = forwardRef(
               placeholder="Search..."
               rightSection={<SearchIcon size={getIconSize({ theme, size })} />}
               size={size}
+              value={search}
               {...searchBarProps}
               className={cx(classes.searchBar, searchBarProps?.className)}
-              value={search}
               onChange={(e) => setSearch(e.target.value)}
               styles={(_theme) => ({
                 input: {
@@ -275,23 +275,56 @@ export interface DualListData {
 }
 
 export interface DualListProps extends DefaultProps<DualListStylesNames> {
-  listComponent?: React.ElementType;
-  size?: MantineSize;
-  searchItems?: (items: IListItem[], search: string) => IListItem[];
-  leftLabel?: string;
-  rightLabel?: string;
-  showLeftSearchBar?: boolean;
-  showRightSearchBar?: boolean;
-  leftSearchBarProps?: TextInputProps;
-  rightSearchBarProps?: TextInputProps;
-  leftListRef?: RefObject<HTMLElement>;
-  rightListRef?: RefObject<HTMLElement>;
-  emptyPlaceholder?: string;
-  leftEmptyPlaceholder?: string;
-  rightEmptyPlaceholder?: string;
+  /** Items shown in the available (left) list */
   available: (IListItem | string)[];
-  selected: (IListItem | string)[];
+
+  /** Placeholder to be shown when a list is empty */
+  emptyPlaceholder?: string;
+
+  /** Placeholder to be shown in the left list when it is empty */
+  leftEmptyPlaceholder?: string;
+
+  /** Label of the left list */
+  leftLabel?: string;
+
+  /** Props passed to search bar of left list */
+  leftSearchBarProps?: TextInputProps;
+
+  /** ref to left list element */
+  leftListRef?: RefObject<HTMLElement>;
+
+  /** Component to use for left list */
+  listComponent?: React.ElementType;
+
+  /** Called when data changes (moves between lists). */
   onChange?: (data: DualListData) => void;
+
+  /** Placeholder to be shown in the right list when it is empty */
+  rightEmptyPlaceholder?: string;
+
+  /** Label of the right list */
+  rightLabel?: string;
+
+  /** Props passed to search bar of right list */
+  rightSearchBarProps?: TextInputProps;
+
+  /** ref to right list element */
+  rightListRef?: RefObject<HTMLElement>;
+
+  /** Predefined DualList size */
+  size?: MantineSize;
+
+  /** Optional function to customise which elements are shown */
+  searchItems?: (items: IListItem[], search: string) => IListItem[];
+
+  /** Whether the left search bar is shown */
+  showLeftSearchBar?: boolean;
+
+  /** Whether the right search bar is shown */
+  showRightSearchBar?: boolean;
+
+  /** Items shown in the selected (right) list */
+  selected: (IListItem | string)[];
 }
 type DualListComponent = (props: DualListProps) => React.ReactElement;
 
