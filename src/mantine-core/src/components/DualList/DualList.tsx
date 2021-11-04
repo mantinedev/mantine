@@ -221,6 +221,7 @@ const RenderList: ListComponent = forwardRef(
         <>
           {filtered.map((item) => (
             <ListItem
+              key={item.id}
               size={size}
               item={item}
               isSelected={itemIsSelected(item)}
