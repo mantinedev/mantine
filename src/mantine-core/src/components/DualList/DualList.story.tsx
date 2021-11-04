@@ -9,7 +9,7 @@ const Wrapper = (props: Partial<DualListProps>) => {
   const available = Array.from({ length: 9 }, (_, i) => `Item ${i}`);
   const selected = Array.from({ length: 9 }, (_, i) => `Item 0${i}`);
 
-  return <DualList available={available} selected={selected} listComponent="ul" {...props} />;
+  return <DualList available={available} selected={selected} {...props} />;
 };
 
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
