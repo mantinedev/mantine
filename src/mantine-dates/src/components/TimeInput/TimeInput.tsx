@@ -12,7 +12,7 @@ import {
   useUuid,
   useExtractedMargins,
 } from '@mantine/core';
-import { useMergedRef, useUncontrolled } from '@mantine/hooks';
+import { useMergedRef, useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { TimeField } from './TimeField/TimeField';
 import { createTimeHandler } from './create-time-handler/create-time-handler';
@@ -104,6 +104,10 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const minutesRef = useRef<HTMLInputElement>();
     const secondsRef = useRef<HTMLInputElement>();
     const [time, setTime] = useState(getTimeValues(_value));
+
+    useDidUpdate(() => {
+      setTime(getTimeValues(_value));
+    }, [_value]);
 
     const handleHoursChange = createTimeHandler({
       onChange: (val) => {

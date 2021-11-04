@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/core';
@@ -9,7 +10,14 @@ const sizes = MANTINE_SIZES.map((size) => (
 
 function Controlled() {
   const [value, onChange] = useState(new Date());
-  return <TimeInput value={value} onChange={onChange} label="Controlled" />;
+  return (
+    <>
+      <TimeInput value={value} onChange={onChange} label="Controlled" />
+      <button type="button" onClick={() => onChange(dayjs(new Date()).add(15, 'minutes').toDate())}>
+        set date
+      </button>
+    </>
+  );
 }
 
 storiesOf('@mantine/dates/TimeInput', module)

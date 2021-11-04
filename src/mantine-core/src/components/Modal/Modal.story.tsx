@@ -46,7 +46,7 @@ function WrappedModal(
 
 storiesOf('@mantine/core/Modal', module)
   .add('General usage', () => (
-    <WrappedModal title="Authentication form">
+    <WrappedModal title="Authentication form" closeOnClickOutside={false}>
       <AuthenticationForm noPadding noShadow />
     </WrappedModal>
   ))

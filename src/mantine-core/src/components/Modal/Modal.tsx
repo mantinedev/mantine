@@ -69,6 +69,9 @@ export interface ModalProps
 
   /** Modal padding from theme or number value for padding in px */
   padding?: MantineNumberSize;
+
+  /** Should modal be closed when outside click was registered? */
+  closeOnClickOutside?: boolean;
 }
 
 export function MantineModal({
@@ -92,6 +95,7 @@ export function MantineModal({
   classNames,
   styles,
   sx,
+  closeOnClickOutside = true,
   ...others
 }: ModalProps) {
   const baseId = useUuid(id);
@@ -107,12 +111,13 @@ export function MantineModal({
       ? 0.85
       : 0.75;
 
-  useScrollLock(opened);
-
+  const [, lockScroll] = useScrollLock();
   useFocusReturn({ opened, transitionDuration });
 
   return (
     <GroupedTransition
+      onExited={() => lockScroll(false)}
+      onEntered={() => lockScroll(true)}
       mounted={opened}
       transitions={{
         modal: { duration: transitionDuration, transition },
@@ -131,8 +136,10 @@ export function MantineModal({
             style={{ zIndex: zIndex + 1 }}
             ref={focusTrapRef}
           >
-            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
-            <div onClick={onClose} className={classes.clickOutsideOverlay} />
+            {closeOnClickOutside && (
+              // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
+              <div onClick={onClose} className={classes.clickOutsideOverlay} />
+            )}
 
             <Paper<'div'>
               className={classes.modal}
@@ -142,7 +149,10 @@ export function MantineModal({
               aria-labelledby={titleId}
               aria-describedby={bodyId}
               aria-modal
-              style={transitionStyles.modal}
+              style={{
+                ...transitionStyles.modal,
+                marginLeft: 'calc(var(--removed-scroll-width, 0px) * -1)',
+              }}
               tabIndex={-1}
             >
               {(title || !hideCloseButton) && (
