@@ -157,7 +157,8 @@ const RenderList: ListComponent = forwardRef(
     };
 
     const handleClickItem = (e: React.MouseEvent, item: IListItem) => {
-      const clickedItemIdx = items.findIndex((_item) => _item.id === item.id);
+      const filteredItems = filterItems().filter((_item) => _item.disabled === false);
+      const clickedItemIdx = filteredItems.findIndex((_item) => _item.id === item.id);
 
       if (!(multiSelectionRootIdx != null && e.shiftKey)) {
         setMultiSelectionRootIdx(clickedItemIdx);
@@ -167,7 +168,9 @@ const RenderList: ListComponent = forwardRef(
         if (e.shiftKey) {
           const start = Math.min(multiSelectionRootIdx, clickedItemIdx);
           const end = Math.max(multiSelectionRootIdx, clickedItemIdx) + 1;
-          const newSelection = items.slice(start, end).filter((_item) => _item.disabled === false);
+          const newSelection = filteredItems
+            .slice(start, end)
+            .filter((_item) => _item.disabled === false);
 
           setSelectedItems(newSelection);
         } else if (e.ctrlKey) {
