@@ -139,7 +139,6 @@ const RenderList: ListComponent = forwardRef(
     const hasSelectedItems = (): boolean => selectedItems && selectedItems.length > 0;
     const itemIsSelected = (item: IListItem): boolean => selectedItems?.includes(item);
 
-
     const clearSelection = () => {
       setSelectedItems(null);
       setMultiSelectionRootIdx(null);
@@ -191,6 +190,7 @@ const RenderList: ListComponent = forwardRef(
         onClick={handleMove}
         disabled={!hasSelectedItems()}
         aria-label="Move selected items"
+        tabIndex={0}
       >
         {MoveIcon}
       </ActionIcon>

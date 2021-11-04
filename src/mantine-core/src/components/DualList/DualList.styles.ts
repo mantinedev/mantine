@@ -61,16 +61,25 @@ export default createStyles((theme, { size }: DualListStylesProps) => {
     },
     action: {
       width: '100%',
-      height: ACTIONS_HEIGHTS[size],
+      minHeight: ACTIONS_HEIGHTS[size],
+      height: 'auto',
 
       borderBottom: border,
       '&:first-of-type': {
         borderRight: border,
       },
+
+      '&:focus-visible': {
+        margin: 5,
+      },
     },
     item: {
       padding: `0 ${theme.spacing.sm}px`,
       userSelect: 'none',
+
+      '&:focus-visible': {
+        margin: 5,
+      },
     },
     searchBar: {},
     selectedItem: {
