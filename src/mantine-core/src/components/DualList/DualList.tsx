@@ -284,8 +284,8 @@ export interface DualListProps extends DefaultProps<DualListStylesNames> {
   showRightSearchBar?: boolean;
   leftSearchBarProps?: TextInputProps;
   rightSearchBarProps?: TextInputProps;
-  leftListRef?: RefObject;
-  rightListRef?: RefObject;
+  leftListRef?: RefObject<HTMLElement>;
+  rightListRef?: RefObject<HTMLElement>;
   emptyPlaceholder?: string;
   leftEmptyPlaceholder?: string;
   rightEmptyPlaceholder?: string;
@@ -365,12 +365,7 @@ export const DualList: DualListComponent & { displayName?: string } = ({
   );
 
   return (
-    <Paper
-      padding={size}
-      {...others}
-      className={cx(classes.root, className)}
-      style={style}
-    >
+    <Paper padding={size} {...others} className={cx(classes.root, className)} style={style}>
       <RenderList
         component={ListElement}
         emptyPlaceholder={leftEmptyPlaceholder}
