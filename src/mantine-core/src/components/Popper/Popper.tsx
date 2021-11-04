@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePopper } from 'react-popper';
+import { usePopper, StrictModifier } from 'react-popper';
 import { useDidUpdate } from '@mantine/hooks';
 import { Portal } from '../Portal';
 import { Transition, MantineTransition } from '../Transition';
@@ -56,6 +56,9 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
 
   // Called when transition ends
   onTransitionEnd?(): void;
+
+  /** valid popperjs modifiers array */
+  modifiers?: StrictModifier[];
 }
 
 export function Popper<T extends HTMLElement = HTMLDivElement>({
@@ -74,6 +77,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   arrowStyle,
   zIndex = 100,
   forceUpdateDependencies = [],
+  modifiers = [],
   onTransitionEnd,
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
@@ -82,7 +86,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
 
   const { styles, attributes, forceUpdate } = usePopper(referenceElement, popperElement, {
     placement: placement === 'center' ? position : `${position}-${placement}`,
-    modifiers: [{ name: 'offset', options: { offset: [0, padding] } }],
+    modifiers: [{ name: 'offset', options: { offset: [0, padding] } }, ...modifiers],
   });
 
   const parsedAttributes = parsePopperPosition(attributes.popper?.['data-popper-placement']);
