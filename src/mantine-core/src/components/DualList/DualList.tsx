@@ -127,9 +127,18 @@ const RenderList: ListComponent = forwardRef(
 
     const Element = component || 'div';
 
+    const filterItems = (): IListItem[] => {
+      if (searchItems) return searchItems(items, search);
+      if (!showSearchBar) return items;
+
+      return items.filter((item) => item.value.toLowerCase().includes(search));
+    };
+
     const hasItems = (): boolean => items && items.length > 0;
+    const hasMovableItems = (): boolean => filterItems().some((item) => item.disabled === false);
     const hasSelectedItems = (): boolean => selectedItems && selectedItems.length > 0;
     const itemIsSelected = (item: IListItem): boolean => selectedItems?.includes(item);
+
 
     const clearSelection = () => {
       setSelectedItems(null);
@@ -144,7 +153,7 @@ const RenderList: ListComponent = forwardRef(
     };
 
     const handleMoveAll = () => {
-      onMoveAll();
+      onMove(filterItems().filter((item) => item.disabled === false));
       clearSelection();
     };
 
@@ -159,7 +168,7 @@ const RenderList: ListComponent = forwardRef(
         if (e.shiftKey) {
           const start = Math.min(multiSelectionRootIdx, clickedItemIdx);
           const end = Math.max(multiSelectionRootIdx, clickedItemIdx) + 1;
-          const newSelection = items.slice(start, end);
+          const newSelection = items.slice(start, end).filter((_item) => _item.disabled === false);
 
           setSelectedItems(newSelection);
         } else if (e.ctrlKey) {
@@ -187,24 +196,16 @@ const RenderList: ListComponent = forwardRef(
       </ActionIcon>
     );
 
-    // TODO: Should MoveAll move _all_ items or only those shown (filtered)
     const RenderMoveAllIcon = () => (
       <ActionIcon
         className={classes.action}
         onClick={handleMoveAll}
-        disabled={!hasItems()}
+        disabled={!hasMovableItems()}
         aria-label="Move all items"
       >
         {MoveAllIcon}
       </ActionIcon>
     );
-
-    const filterItems = () => {
-      if (!showSearchBar) return items;
-      if (searchItems) return searchItems(items, search);
-
-      return items.filter((item) => item.value.toLowerCase().includes(search));
-    };
 
     const RenderItems = () => {
       const filtered = filterItems();
@@ -381,16 +382,12 @@ export const DualList: DualListComponent & { displayName?: string } = ({
     });
   };
 
-  const handleMoveAllAvailable = () => handleMoveAvailable(data.available);
-
   const handleMoveSelected = (items: IListItem[]) => {
     setData({
       available: [...data.available, ...items],
       selected: data.selected.filter((item) => !items.includes(item)),
     });
   };
-
-  const handleMoveAllSelected = () => handleMoveSelected(data.selected);
 
   useDidUpdate(() => onChange?.(data), [data]);
 
@@ -413,7 +410,6 @@ export const DualList: DualListComponent & { displayName?: string } = ({
         MoveIcon={<RenderIcon icon={ChevronRight} />}
         MoveAllIcon={<RenderIcon icon={ChevronsRight} />}
         onMove={handleMoveAvailable}
-        onMoveAll={handleMoveAllAvailable}
         ref={leftListRef}
         {...stylesProps}
       />
@@ -430,7 +426,6 @@ export const DualList: DualListComponent & { displayName?: string } = ({
         MoveIcon={<RenderIcon icon={ChevronLeft} />}
         MoveAllIcon={<RenderIcon icon={ChevronsLeft} />}
         onMove={handleMoveSelected}
-        onMoveAll={handleMoveAllSelected}
         ref={rightListRef}
         {...stylesProps}
       />
