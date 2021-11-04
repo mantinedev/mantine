@@ -61,4 +61,18 @@ describe('@mantine/core/DualList', () => {
       'Custom empty placeholder'
     );
   });
+
+  it('sets custom list labels', () => {
+    const withDefaultLabels = shallow(<DualList available={[]} selected={[]} />).render();
+    const withCustomAvailableLabel = shallow(<DualList available={[]} selected={[]} leftLabel="Custom label" />).render();
+    const withCustomSelectedLabel = shallow(<DualList available={[]} selected={[]} rightLabel="Custom label" />).render();
+    const defaultLabels = withDefaultLabels.find('.mantine-DualList-listTitle');
+
+    expect(defaultLabels.length).toBe(2);
+    expect(defaultLabels.slice(0, 1).text()).toBe('Available');
+    expect(defaultLabels.slice(1, 2).text()).toBe('Selected');
+
+    expect(withCustomAvailableLabel.find('.mantine-DualList-listTitle').slice(0, 1).text()).toBe('Custom label');
+    expect(withCustomSelectedLabel.find('.mantine-DualList-listTitle').slice(1, 2).text()).toBe('Custom label');
+  });
 });
