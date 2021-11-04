@@ -27,6 +27,8 @@
     "gallery": "cd gallery && npm start",
     "gallery:build": "cd gallery && npm run build",
     "gallery:serve": "cd gallery && npm run serve",
+    "gallery:clean": "cd gallery && npm run clean",
+    "gallery:deploy": "npm run gallery:build && gh-pages -d gallery/public -b gh-pages-gallery",
     "gallery:plop": "esno scripts/gallery-plop",
     "docs": "npm run docs:clean && npm run docs:docgen && cd docs && npm start",
     "docs:typecheck": "cd docs && npm run typecheck",
