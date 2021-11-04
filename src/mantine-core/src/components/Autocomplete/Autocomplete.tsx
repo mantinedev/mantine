@@ -1,5 +1,5 @@
-import React, { useState, forwardRef } from 'react';
-import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
+import React, { useState, forwardRef, useRef } from 'react';
+import { useUncontrolled, useDidUpdate, useMergedRef } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineSize,
@@ -136,6 +136,9 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
+    const [direction, setDirection] = useState<'column' | 'column-reverse'>('column');
+
+    const inputRef = useRef<HTMLInputElement>(null);
     const uuid = useUuid(id);
     const [_value, handleChange] = useUncontrolled({
       value,
@@ -167,16 +170,28 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       typeof onKeyDown === 'function' && onKeyDown(event);
 
+      const isColumn = direction === 'column';
+
+      const handleNext = () => {
+        setHovered((current) => (current < filteredData.length - 1 ? current + 1 : current));
+      };
+
+      const handlePrevious = () => {
+        setHovered((current) => (current > 0 ? current - 1 : current));
+      };
+
       switch (event.nativeEvent.code) {
         case 'ArrowUp': {
           event.preventDefault();
-          setHovered((current) => (current > 0 ? current - 1 : current));
+
+          isColumn ? handlePrevious() : handleNext();
           break;
         }
 
         case 'ArrowDown': {
           event.preventDefault();
-          setHovered((current) => (current < filteredData.length - 1 ? current + 1 : current));
+
+          isColumn ? handleNext() : handlePrevious();
           break;
         }
 
@@ -246,7 +261,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             {...rest}
             data-mantine-stop-propagation={dropdownOpened}
             required={required}
-            ref={ref}
+            ref={useMergedRef(ref, inputRef)}
             id={uuid}
             type="string"
             invalid={!!error}
@@ -280,6 +295,9 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             classNames={classNames}
             styles={styles}
             __staticSelector="Autocomplete"
+            direction={direction}
+            onDirectionChange={setDirection}
+            referenceElement={inputRef.current}
           >
             <SelectItems
               data={filteredData}
