@@ -87,6 +87,7 @@ export function NavbarMinimal() {
       onClick={() => setActive(index)}
     />
   ));
+
   return (
     <Navbar height={750} width={{ base: 80 }} padding="md">
       <Image src={logo} alt="Mantine logo" width={40} mx="auto" />

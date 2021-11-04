@@ -51,6 +51,7 @@ export { FaqWithHeader } from './FaqWithHeader/FaqWithHeader';
 export { FaqWithImage } from './FaqWithImage/FaqWithImage';
 
 // Navbar
+export { DoubleNavbar } from './DoubleNavbar/DoubleNavbar';
 export { NavbarLinksGroup } from './NavbarLinksGroup/NavbarLinksGroup';
 export { NavbarMinimal } from './NavbarMinimal/NavbarMinimal';
 export { NavbarNested } from './NavbarNested/NavbarNested';

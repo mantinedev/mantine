@@ -71,7 +71,6 @@ const useStyles = createStyles((theme) => ({
     marginLeft: -theme.spacing.md,
     marginRight: -theme.spacing.md,
     paddingTop: theme.spacing.xl,
-    // paddingBottom: theme.spacing.xl,
   },
 
   footer: {
