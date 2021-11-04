@@ -37,9 +37,13 @@ export default createStyles((theme, { size }: DualListStylesProps) => {
   const border = `1px solid ${theme.colors.gray[3]}`;
 
   return {
-    flex: {
+    root: {
       display: 'flex',
     },
+    actions: {
+      display: 'flex',
+    },
+    listRoot: {},
     listContainer: {
       position: 'relative',
       display: 'flex',
@@ -51,6 +55,7 @@ export default createStyles((theme, { size }: DualListStylesProps) => {
       borderRadius: theme.radius.sm,
       marginRight: theme.spacing[size],
     },
+    listTitle: {},
     list: {
       overflowY: 'auto',
     },
@@ -67,6 +72,7 @@ export default createStyles((theme, { size }: DualListStylesProps) => {
       padding: `0 ${theme.spacing.sm}px`,
       userSelect: 'none',
     },
+    searchBar: {},
     selectedItem: {
       backgroundColor:
         theme.colorScheme === 'dark'

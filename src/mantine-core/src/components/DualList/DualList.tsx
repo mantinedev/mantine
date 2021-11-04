@@ -38,21 +38,32 @@ interface ListItemProps extends Omit<TextProps<'div'>, 'onClick'> {
   onClick?: (e: React.MouseEvent, item: IListItem) => void;
 }
 
-const ListItem = ({ size, item, isSelected, children, ...props }: ListItemProps) => {
-  const { classes, cx } = useStyles({ size });
+const ListItem = ({
+  size,
+  item,
+  isSelected,
+  className,
+  classNames,
+  styles,
+  children,
+  onClick,
+  ...others
+}: ListItemProps) => {
+  const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'DualListItem' });
   const { value, disabled } = item;
 
   const handleClick = (e: React.MouseEvent) => {
     if (!disabled) {
-      props.onClick?.(e, item);
+      onClick?.(e, item);
     }
   };
 
   return (
     <Text
-      {...props}
+      {...others}
+      styles={styles}
       size={size}
-      className={cx(props.className, classes.item, {
+      className={cx(className, classes.item, {
         [classes.selectedItem]: isSelected,
         [classes.disabled]: disabled,
       })}
@@ -97,7 +108,10 @@ const RenderList: ListComponent = forwardRef(
       MoveAllIcon,
       onMove,
       onMoveAll,
-      ...props
+      classNames,
+      style,
+      styles,
+      ...others
     }: ListProps<C>,
     ref: PolymorphicRef<C>
   ) => {
@@ -105,7 +119,9 @@ const RenderList: ListComponent = forwardRef(
     const [multiSelectionRootIdx, setMultiSelectionRootIdx] = useState<number | null>(null);
     const [search, setSearch] = useState<string>('');
 
-    const { classes, cx } = useStyles({ size });
+    const stylesProps = { styles, classNames };
+
+    const { classes, cx } = useStyles({ size }, { ...stylesProps, name: 'DualList' });
 
     const theme = useMantineTheme();
 
@@ -209,6 +225,8 @@ const RenderList: ListComponent = forwardRef(
               item={item}
               isSelected={itemIsSelected(item)}
               onClick={handleClickItem}
+              style={style}
+              {...stylesProps}
             />
           ))}
         </>
@@ -216,10 +234,12 @@ const RenderList: ListComponent = forwardRef(
     };
 
     return (
-      <div>
-        <Title order={4}>{label}</Title>
+      <div className={classes.listRoot} style={style}>
+        <Title order={4} className={classes.listTitle}>
+          {label}
+        </Title>
         <div className={classes.listContainer}>
-          <div className={classes.flex}>
+          <div className={classes.actions}>
             {position === 'left' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
             {position === 'right' ? <RenderMoveAllIcon /> : <RenderMoveIcon />}
           </div>
@@ -229,6 +249,7 @@ const RenderList: ListComponent = forwardRef(
               rightSection={<SearchIcon size={getIconSize({ theme, size })} />}
               size={size}
               {...searchBarProps}
+              className={cx(classes.searchBar, searchBarProps?.className)}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               styles={(_theme) => ({
@@ -239,7 +260,7 @@ const RenderList: ListComponent = forwardRef(
               })}
             />
           )}
-          <Element {...props} ref={ref} className={cx(classes.list, props.className)}>
+          <Element {...others} ref={ref} className={cx(classes.list, others.className)}>
             <RenderItems />
           </Element>
         </div>
@@ -253,7 +274,7 @@ export interface DualListData {
   selected: IListItem[];
 }
 
-export interface DualListProps extends DefaultProps {
+export interface DualListProps extends DefaultProps<DualListStylesNames> {
   listComponent?: React.ElementType;
   size?: MantineSize;
   searchItems?: (items: IListItem[], search: string) => IListItem[];
@@ -297,14 +318,19 @@ export const DualList: DualListComponent & { displayName?: string } = ({
   available,
   selected,
   onChange,
-  ...props
+  style,
+  classNames,
+  styles,
+  ...others
 }: DualListProps) => {
   const [data, setData] = useState<DualListData>({
     available: initializeItems(available),
     selected: initializeItems(selected),
   });
 
-  const { classes, cx } = useStyles({ size });
+  const stylesProps = { classNames, styles };
+
+  const { classes, cx } = useStyles({ size }, { ...stylesProps, name: 'DualListList' });
 
   const theme = useMantineTheme();
 
@@ -335,7 +361,12 @@ export const DualList: DualListComponent & { displayName?: string } = ({
   );
 
   return (
-    <Paper padding={size} className={cx(classes.flex, className)} {...props}>
+    <Paper
+      padding={size}
+      {...others}
+      className={cx(classes.root, className)}
+      style={style}
+    >
       <RenderList
         component={ListElement}
         emptyPlaceholder={leftEmptyPlaceholder}
@@ -350,6 +381,7 @@ export const DualList: DualListComponent & { displayName?: string } = ({
         MoveAllIcon={<RenderIcon icon={ChevronsRight} />}
         onMove={handleMoveAvailable}
         onMoveAll={handleMoveAllAvailable}
+        {...stylesProps}
       />
       <RenderList
         component={ListElement}
@@ -365,6 +397,7 @@ export const DualList: DualListComponent & { displayName?: string } = ({
         MoveAllIcon={<RenderIcon icon={ChevronsLeft} />}
         onMove={handleMoveSelected}
         onMoveAll={handleMoveAllSelected}
+        {...stylesProps}
       />
     </Paper>
   );
