@@ -211,7 +211,7 @@ const RenderList: ListComponent = forwardRef(
 
       if (filtered.length === 0) {
         return (
-          <Text className={cx(classes.item, classes.disabled)} size={size}>
+          <Text className={cx(classes.item, classes.empty, classes.disabled)} size={size}>
             {emptyPlaceholder}
           </Text>
         );

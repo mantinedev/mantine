@@ -79,6 +79,7 @@ export default createStyles((theme, { size }: DualListStylesProps) => {
           ? theme.colors.dark[4]
           : getThemeColor({ theme, color: theme.primaryColor, shade: 0 }),
     },
+    empty: {},
     disabled: {
       color: theme.colors.gray[theme.colorScheme === 'dark' ? 7 : 4],
     },
