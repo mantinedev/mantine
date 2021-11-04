@@ -59,7 +59,7 @@ export default createStyles((theme, { size }: DualListStylesProps) => {
       height: ACTIONS_HEIGHTS[size],
 
       borderBottom: border,
-      '&:first-child': {
+      '&:first-of-type': {
         borderRight: border,
       },
     },

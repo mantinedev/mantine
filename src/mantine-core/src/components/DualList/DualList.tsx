@@ -161,14 +161,24 @@ const RenderList: ListComponent = forwardRef(
     };
 
     const RenderMoveIcon = () => (
-      <ActionIcon className={classes.action} onClick={handleMove} disabled={!hasSelectedItems()}>
+      <ActionIcon
+        className={classes.action}
+        onClick={handleMove}
+        disabled={!hasSelectedItems()}
+        aria-label="Move selected items"
+      >
         {MoveIcon}
       </ActionIcon>
     );
 
     // TODO: Should MoveAll move _all_ items or only those shown (filtered)
     const RenderMoveAllIcon = () => (
-      <ActionIcon className={classes.action} onClick={handleMoveAll} disabled={!hasItems()}>
+      <ActionIcon
+        className={classes.action}
+        onClick={handleMoveAll}
+        disabled={!hasItems()}
+        aria-label="Move all items"
+      >
         {MoveAllIcon}
       </ActionIcon>
     );
