@@ -64,15 +64,36 @@ describe('@mantine/core/DualList', () => {
 
   it('sets custom list labels', () => {
     const withDefaultLabels = shallow(<DualList available={[]} selected={[]} />).render();
-    const withCustomAvailableLabel = shallow(<DualList available={[]} selected={[]} leftLabel="Custom label" />).render();
-    const withCustomSelectedLabel = shallow(<DualList available={[]} selected={[]} rightLabel="Custom label" />).render();
+    const withCustomAvailableLabel = shallow(
+      <DualList available={[]} selected={[]} leftLabel="Custom label" />
+    ).render();
+    const withCustomSelectedLabel = shallow(
+      <DualList available={[]} selected={[]} rightLabel="Custom label" />
+    ).render();
     const defaultLabels = withDefaultLabels.find('.mantine-DualList-listTitle');
 
     expect(defaultLabels.length).toBe(2);
     expect(defaultLabels.slice(0, 1).text()).toBe('Available');
     expect(defaultLabels.slice(1, 2).text()).toBe('Selected');
 
-    expect(withCustomAvailableLabel.find('.mantine-DualList-listTitle').slice(0, 1).text()).toBe('Custom label');
-    expect(withCustomSelectedLabel.find('.mantine-DualList-listTitle').slice(1, 2).text()).toBe('Custom label');
+    expect(withCustomAvailableLabel.find('.mantine-DualList-listTitle').slice(0, 1).text()).toBe(
+      'Custom label'
+    );
+    expect(withCustomSelectedLabel.find('.mantine-DualList-listTitle').slice(1, 2).text()).toBe(
+      'Custom label'
+    );
+  });
+
+  it('has polymorphic lists', async () => {
+    const TestComponent = (props: any) => <ol {...props} />;
+
+    const withDefaultTag = shallow(<DualList {...requiredProps} />);
+    const withTag = shallow(<DualList listComponent="ul" {...requiredProps} />);
+    const withComponent = shallow(<DualList listComponent={TestComponent} {...requiredProps} />);
+
+    // TODO: Make TypeScript recognize tagName properly
+    expect(withDefaultTag.render().find('.mantine-DualList-list')[0].tagName).toBe('div');
+    expect(withTag.render().find('.mantine-DualList-list')[0].tagName).toBe('ul');
+    expect(withComponent.render().find('.mantine-DualList-list')[0].tagName).toBe('ol');
   });
 });
