@@ -14,7 +14,6 @@ const useStyles = createStyles((theme) => ({
     display: 'block',
     width: '100%',
     padding: theme.spacing.md,
-    borderRadius: theme.radius.sm,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '&:hover': {
@@ -27,9 +26,10 @@ interface UserButtonProps extends UnstyledButtonProps {
   image: string;
   name: string;
   email: string;
+  icon?: React.ReactNode;
 }
 
-export function UserButton({ image, name, email, ...others }: UserButtonProps) {
+export function UserButton({ image, name, email, icon, ...others }: UserButtonProps) {
   const { classes } = useStyles();
 
   return (
@@ -47,7 +47,7 @@ export function UserButton({ image, name, email, ...others }: UserButtonProps) {
           </Text>
         </div>
 
-        <ChevronRightIcon />
+        {icon || <ChevronRightIcon />}
       </Group>
     </UnstyledButton>
   );
