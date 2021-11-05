@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useUncontrolled, useUuid } from '@mantine/hooks';
 import {
   useMantineTheme,
   DefaultProps,
@@ -7,7 +7,6 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  useUuid,
   useExtractedMargins,
 } from '@mantine/styles';
 import { CheckboxIcon } from '../../Checkbox';

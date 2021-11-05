@@ -1,12 +1,11 @@
 import React from 'react';
-import { useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
+import { useScrollLock, useFocusTrap, useFocusReturn, useUuid } from '@mantine/hooks';
 import {
   useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
   ClassNames,
-  useUuid,
   MantineMargin,
 } from '@mantine/styles';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';

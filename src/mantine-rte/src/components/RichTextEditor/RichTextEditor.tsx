@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useEffect } from 'react';
 import Editor, { Quill } from 'react-quill';
-import { DefaultProps, ClassNames, useUuid, useExtractedMargins } from '@mantine/core';
+import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/core';
+import { useUuid } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
