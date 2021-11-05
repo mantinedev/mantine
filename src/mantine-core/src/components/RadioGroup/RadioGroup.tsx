@@ -1,12 +1,6 @@
 import React, { Children, cloneElement, forwardRef } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  MantineSize,
-  MantineColor,
-  useUuid,
-} from '@mantine/styles';
+import { useUncontrolled, useUuid } from '@mantine/hooks';
+import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,

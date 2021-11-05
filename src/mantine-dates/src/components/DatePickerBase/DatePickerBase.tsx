@@ -17,10 +17,15 @@ import {
   getSizeValue,
   MantineShadow,
   ClassNames,
-  useUuid,
   useExtractedMargins,
 } from '@mantine/core';
-import { useClickOutside, useFocusTrap, useMergedRef, useWindowEvent } from '@mantine/hooks';
+import {
+  useClickOutside,
+  useFocusTrap,
+  useMergedRef,
+  useWindowEvent,
+  useUuid,
+} from '@mantine/hooks';
 import { CalendarStylesNames } from '../Calendar/Calendar';
 import useStyles from './DatePickerBase.styles';
 

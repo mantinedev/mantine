@@ -1,6 +1,5 @@
 import React, { createContext, useContext } from 'react';
 import type { Options as EmotionCacheOptions } from '@emotion/cache';
-import { SsrProvider } from './SsrProvider';
 import { DEFAULT_THEME } from './default-theme';
 import type { MantineThemeOverride, MantineTheme } from './types';
 import type { CSSObject } from '../tss';
@@ -49,13 +48,11 @@ export function MantineProvider({
   children,
 }: MantineProviderProps) {
   return (
-    <SsrProvider>
-      <MantineThemeContext.Provider
-        value={{ theme: mergeTheme(DEFAULT_THEME, theme), styles, emotionOptions }}
-      >
-        {children}
-      </MantineThemeContext.Provider>
-    </SsrProvider>
+    <MantineThemeContext.Provider
+      value={{ theme: mergeTheme(DEFAULT_THEME, theme), styles, emotionOptions }}
+    >
+      {children}
+    </MantineThemeContext.Provider>
   );
 }
 

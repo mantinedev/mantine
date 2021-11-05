@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineSize, useUuid, useExtractedMargins } from '@mantine/styles';
+import { useUuid } from '@mantine/hooks';
+import { DefaultProps, MantineSize, useExtractedMargins } from '@mantine/styles';
 import {
   InputWrapperBaseProps,
   InputWrapper,

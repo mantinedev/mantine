@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
-import { useBooleanToggle } from '@mantine/hooks';
-import { getSizeValue, useUuid, useExtractedMargins } from '@mantine/styles';
+import { useBooleanToggle, useUuid } from '@mantine/hooks';
+import { getSizeValue, useExtractedMargins } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { TextInput } from '../TextInput/TextInput';
 import { Input } from '../Input';

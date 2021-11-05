@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
+import { useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
   MantineColor,
   ClassNames,
-  useUuid,
   useExtractedMargins,
 } from '@mantine/styles';
 import useStyles from './Switch.styles';
