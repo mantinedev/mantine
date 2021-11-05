@@ -28,6 +28,9 @@ export interface RangeCalendarProps
 
   /** Static css selector base */
   __staticSelector?: string;
+
+  /** Allow one date to be selected as range */
+  allowSingleDateInRange?: boolean;
 }
 
 export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
@@ -56,6 +59,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       size = 'sm',
       onMouseLeave,
       __staticSelector = 'range-calendar',
+      allowSingleDateInRange = false,
       ...others
     }: RangeCalendarProps,
     ref
@@ -66,7 +70,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
 
     const setRangeDate = (date: Date) => {
       if (pickedDate instanceof Date) {
-        if (isSameDate(date, pickedDate)) {
+        if (isSameDate(date, pickedDate) && !allowSingleDateInRange) {
           setPickedDate(null);
           setHoveredDay(null);
           return null;
