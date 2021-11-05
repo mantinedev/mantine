@@ -1,6 +1,7 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
+import { firstDayOfWeekNames } from '../../types';
 import { Calendar, CalendarSettings } from '../Calendar/Calendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
@@ -25,6 +26,9 @@ export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<Calenda
 
   /** Input name, useful for uncontrolled variant to capture data with native form */
   name?: string;
+
+  /** Set first day of the week */
+  firstDayOfWeek?: firstDayOfWeekNames;
 }
 
 export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
@@ -60,6 +64,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       clearable = true,
       disabled = false,
       clearButtonLabel,
+      firstDayOfWeek = 'monday',
       ...others
     }: DatePickerProps,
     ref
@@ -130,6 +135,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
             __staticSelector="date-picker"
             fullWidth={dropdownType === 'modal'}
             size={dropdownType === 'modal' ? 'lg' : calendarSize}
+            firstDayOfWeek={firstDayOfWeek}
           />
         </DatePickerBase>
 
