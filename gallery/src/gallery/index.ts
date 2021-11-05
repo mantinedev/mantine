@@ -32,7 +32,6 @@ export { ImageCheckboxes } from './ImageCheckboxes/ImageCheckboxes';
 export { InputValidation } from './InputValidation/InputValidation';
 export { InputWithButton } from './InputWithButton/InputWithButton';
 export { QuantityInput } from './QuantityInput/QuantityInput';
-export { SliderInput } from './SliderInput/SliderInput';
 export { TagPicker } from './TagPicker/TagPicker';
 
 // Hero
@@ -68,3 +67,5 @@ export { DropzoneButton } from './DropzoneButton/DropzoneButton';
 
 // Sliders
 export { SliderFilled } from './SliderFilled/SliderFilled';
+export { SliderInput } from './SliderInput/SliderInput';
+export { SliderLabel } from './SliderLabel/SliderLabel';

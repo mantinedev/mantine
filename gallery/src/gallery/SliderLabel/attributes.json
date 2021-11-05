@@ -1,0 +1,12 @@
+{
+  "title": "",
+  "category": "",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dependencies": [],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}
