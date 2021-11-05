@@ -208,7 +208,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     const uuid = useUuid(id);
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
-    const [direction, setDirection] = useState<'column' | 'column-reverse'>('column');
+    const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
     const [searchValue, setSearchValue] = useState('');
     const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
       duration: 0,

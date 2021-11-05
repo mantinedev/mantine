@@ -171,7 +171,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const dropdownRef = useRef<HTMLDivElement>();
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
     const [creatableDataValue, setCreatableDataValue] = useState<string | undefined>(undefined);
-    const [direction, setDirection] = useState<'column' | 'column-reverse'>('column');
+    const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
     const uuid = useUuid(id);
     const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
       duration: 0,

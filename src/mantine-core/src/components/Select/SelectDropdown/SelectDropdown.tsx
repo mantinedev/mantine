@@ -19,8 +19,8 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   __staticSelector: string;
   dropdownComponent?: React.FC<any>;
   referenceElement?: HTMLElement;
-  direction?: 'column' | 'column-reverse';
-  onDirectionChange?: (direction: 'column' | 'column-reverse') => void;
+  direction?: React.CSSProperties['flexDirection'];
+  onDirectionChange?: (direction: React.CSSProperties['flexDirection']) => void;
 }
 
 export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(

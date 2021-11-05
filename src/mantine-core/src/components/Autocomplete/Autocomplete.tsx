@@ -136,7 +136,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
-    const [direction, setDirection] = useState<'column' | 'column-reverse'>('column');
+    const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
 
     const inputRef = useRef<HTMLInputElement>(null);
     const uuid = useUuid(id);
