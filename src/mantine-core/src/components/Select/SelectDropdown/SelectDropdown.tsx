@@ -50,7 +50,6 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       <Popper
         referenceElement={referenceElement}
         mounted={mounted}
-        // mounted
         transition={transition}
         transitionDuration={transitionDuration}
         transitionTimingFunction={transitionTimingFunction}

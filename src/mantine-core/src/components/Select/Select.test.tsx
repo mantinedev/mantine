@@ -63,9 +63,12 @@ describe('@mantine/core/Select', () => {
     'Select'
   );
 
-  it('renders correct amount of items based on data prop', () => {
-    const element = shallow(<Select data={data.slice(0, 5)} initiallyOpened />);
-    expect(element.render().find('.mantine-Select-item')).toHaveLength(5);
+  it('renders correct amount of items based on data prop', async () => {
+    const element = shallow(<Select {...defaultProps} data={data.slice(0, 5)} initiallyOpened />);
+
+    setTimeout(() => {
+      expect(element.find('.mantine-Select-item')).toHaveLength(5);
+    });
   });
 
   it('renders correct amount of items based on filter prop', () => {
