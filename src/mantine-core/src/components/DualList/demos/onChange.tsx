@@ -21,6 +21,7 @@ function Demo() {
 `;
 
 function Demo() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleChange = (data: DualListData) => {
     // console.log(data.available);
   };
