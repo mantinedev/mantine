@@ -38,5 +38,6 @@ export { useHotkeys, getHotkeyHandler } from './use-hotkey/use-hotkeys';
 export { useFullscreen } from './use-fullscreen/use-fullscreen';
 export { useLogger } from './use-logger/use-logger';
 export { useHover } from './use-hover/use-hover';
+export { useUuid } from './use-uuid/use-uuid';
 
 export type { UseMovePosition } from './use-move/use-move';
