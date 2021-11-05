@@ -1,7 +1,7 @@
 {
   "name": "@mantine/rte",
   "description": "Rich text editor built with Mantine components",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -15,8 +15,8 @@
     "directory": "src/mantine-rte"
   },
   "peerDependencies": {
-    "@mantine/core": "3.1.4",
-    "@mantine/hooks": "3.1.4",
+    "@mantine/core": "3.1.5",
+    "@mantine/hooks": "3.1.5",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
