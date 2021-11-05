@@ -79,7 +79,7 @@ export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
             </Button>
             <Button
               className={cx(classes.control, classes.controlSecondary)}
-              leftIcon={<LinkExternalIcon />}
+              rightIcon={<LinkExternalIcon />}
               component="a"
               href="https://mantine.dev/getting-started/"
             >
