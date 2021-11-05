@@ -70,8 +70,8 @@ describe('@mantine/core/DualList', () => {
     const withCustomSelectedLabel = shallow(
       <DualList available={[]} selected={[]} rightLabel="Custom label" />
     ).render();
-    const defaultLabels = withDefaultLabels.find('.mantine-DualList-listTitle');
 
+    const defaultLabels = withDefaultLabels.find('.mantine-DualList-listTitle');
     expect(defaultLabels.length).toBe(2);
     expect(defaultLabels.slice(0, 1).text()).toBe('Available');
     expect(defaultLabels.slice(1, 2).text()).toBe('Selected');
@@ -91,10 +91,9 @@ describe('@mantine/core/DualList', () => {
     const withTag = shallow(<DualList listComponent="ul" {...requiredProps} />);
     const withComponent = shallow(<DualList listComponent={TestComponent} {...requiredProps} />);
 
-    // TODO: Make TypeScript recognize tagName properly
-    expect(withDefaultTag.render().find('.mantine-DualList-list')[0].tagName).toBe('div');
-    expect(withTag.render().find('.mantine-DualList-list')[0].tagName).toBe('ul');
-    expect(withComponent.render().find('.mantine-DualList-list')[0].tagName).toBe('ol');
+    expect(withDefaultTag.render().find('.mantine-DualList-list').is('div')).toBe(true);
+    expect(withTag.render().find('.mantine-DualList-list').is('ul')).toBe(true);
+    expect(withComponent.render().find('.mantine-DualList-list').is('ol')).toBe(true);
   });
 
   it('calls onChange when action buttons are clicked', () => {
