@@ -31,6 +31,7 @@ export { ForgotPasswordInput } from './ForgotPasswordInput/ForgotPasswordInput';
 export { ImageCheckboxes } from './ImageCheckboxes/ImageCheckboxes';
 export { InputValidation } from './InputValidation/InputValidation';
 export { InputWithButton } from './InputWithButton/InputWithButton';
+export { QuantityInput } from './QuantityInput/QuantityInput';
 export { SliderInput } from './SliderInput/SliderInput';
 export { TagPicker } from './TagPicker/TagPicker';
 
