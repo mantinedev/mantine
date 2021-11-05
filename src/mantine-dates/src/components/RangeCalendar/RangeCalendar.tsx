@@ -3,6 +3,7 @@ import { DefaultProps, useMantineTheme, hexToRgba } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { isSameDate } from '../../utils';
+import { FirstDayOfWeekNames } from '../../types';
 import { Month } from '../Month/Month';
 import { DayModifiers } from '../Month/get-day-props/get-day-props';
 import { CalendarHeader } from '../Calendar/CalendarHeader/CalendarHeader';
@@ -28,6 +29,9 @@ export interface RangeCalendarProps
 
   /** Static css selector base */
   __staticSelector?: string;
+
+  /** Set first day of the week */
+  firstDayOfWeek?: FirstDayOfWeekNames;
 
   /** Allow one date to be selected as range */
   allowSingleDateInRange?: boolean;
@@ -59,6 +63,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       size = 'sm',
       onMouseLeave,
       __staticSelector = 'range-calendar',
+      firstDayOfWeek = 'monday',
       allowSingleDateInRange = false,
       ...others
     }: RangeCalendarProps,
@@ -174,6 +179,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
           fullWidth={fullWidth}
           size={size}
           onDayMouseEnter={(date) => setHoveredDay(date)}
+          firstDayOfWeek={firstDayOfWeek}
           __staticSelector={__staticSelector}
         />
       </CalendarWrapper>

@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { DefaultProps, Text, MantineSize, ClassNames, useExtractedMargins } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
+import { FirstDayOfWeekNames } from '../../types';
 import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
 import { Day, DayStylesNames } from './Day/Day';
 import { getDayProps, DayModifiers } from './get-day-props/get-day-props';
@@ -65,6 +66,9 @@ export interface MonthProps
 
   /** Called when onMouseEnter event fired on day button */
   onDayMouseEnter?(date: Date, event: React.MouseEvent): void;
+
+  /** Set first day of the week */
+  firstDayOfWeek?: FirstDayOfWeekNames;
 }
 
 const noop = () => {};
@@ -92,6 +96,7 @@ export function Month({
   size = 'sm',
   fullWidth = false,
   sx,
+  firstDayOfWeek = 'monday',
   ...others
 }: MonthProps) {
   const { classes, cx } = useStyles(
@@ -100,7 +105,7 @@ export function Month({
   );
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
-  const days = getMonthDays(month);
+  const days = getMonthDays(month, firstDayOfWeek);
 
   const focusDay = (date: Date, diff: number) => {
     const offset = new Date(date);
@@ -151,7 +156,7 @@ export function Month({
     }
   }, []);
 
-  const weekdays = getWeekdaysNames(locale).map((weekday) => (
+  const weekdays = getWeekdaysNames(locale, firstDayOfWeek).map((weekday) => (
     <th className={classes.weekdayCell} key={weekday}>
       <Text size={size} className={classes.weekday}>
         {upperFirst(weekday)}

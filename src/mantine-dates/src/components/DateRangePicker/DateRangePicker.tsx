@@ -1,6 +1,7 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
+import { FirstDayOfWeekNames } from '../../types';
 import { CalendarSettings } from '../Calendar/Calendar';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
@@ -31,6 +32,9 @@ export interface DateRangePickerProps
 
   /** Separator between dates */
   labelSeparator?: string;
+
+  /** Set first day of the week */
+  firstDayOfWeek?: FirstDayOfWeekNames;
 
   /** Allow one date to be selected as range */
   allowSingleDateInRange?: boolean;
@@ -72,6 +76,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       labelSeparator = '–',
       clearable = true,
       clearButtonLabel,
+      firstDayOfWeek = 'monday',
       allowSingleDateInRange = false,
       ...others
     }: DateRangePickerProps,
@@ -147,6 +152,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
             excludeDate={excludeDate}
             __staticSelector="date-range-picker"
             fullWidth={dropdownType === 'modal'}
+            firstDayOfWeek={firstDayOfWeek}
             size={dropdownType === 'modal' ? 'lg' : calendarSize}
             allowSingleDateInRange={allowSingleDateInRange}
           />
