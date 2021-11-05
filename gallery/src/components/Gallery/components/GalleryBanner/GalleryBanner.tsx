@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'gatsby';
-import { MarkGithubIcon } from '@primer/octicons-react';
+import { MarkGithubIcon, LinkExternalIcon } from '@primer/octicons-react';
 import {
   Title,
   Overlay,
@@ -80,10 +79,11 @@ export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
             </Button>
             <Button
               className={cx(classes.control, classes.controlSecondary)}
-              component={Link}
-              to="/pages/gallery-faq/"
+              rightIcon={<LinkExternalIcon />}
+              component="a"
+              href="https://mantine.dev/getting-started/"
             >
-              FAQ
+              Get started with Mantine
             </Button>
           </Group>
 

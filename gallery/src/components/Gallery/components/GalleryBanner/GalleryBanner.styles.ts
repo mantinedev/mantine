@@ -1,5 +1,5 @@
 import { createStyles } from '@mantine/core';
-import banner from './banner.png';
+import banner from './banner.webp';
 
 export default createStyles((theme) => ({
   wrapper: {

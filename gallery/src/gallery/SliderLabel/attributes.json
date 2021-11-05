@@ -1,9 +1,10 @@
 {
-  "title": "NumberInput with slider",
+  "title": "Range slider with labels",
   "category": "sliders",
   "author": "rtivital",
   "withColor": true,
-  "dependencies": ["/core/number-input/", "/core/slider/"],
+  "responsive": true,
+  "dependencies": [],
   "canvas": {
     "center": true,
     "maxWidth": 420

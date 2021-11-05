@@ -10,14 +10,13 @@ import {
   defaultInputProps,
 } from '@mantine/tests';
 import { Input } from '../Input/Input';
-import { TextInput } from '../TextInput/TextInput';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { PasswordInput } from './PasswordInput';
 import { Input as InputStylesApi } from '../Input/styles.api';
 import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 // retrieves Input component from nested TextInput component
-const getInput = (element: any) => element.find(TextInput).dive().find(Input);
+const getInput = (element: any) => element.find(Input);
 
 // retrieves ActionIcon node from nested TextInput and Input components
 const getActionIcon = (element: any) => getInput(element).dive().find(ActionIcon);
@@ -43,9 +42,9 @@ describe('@mantine/core/PasswordInput', () => {
 
   it('sets input type based on password visibility state', () => {
     const element = shallow(<PasswordInput />);
-    expect(getInput(element).prop('type')).toBe('password');
+    expect(getInput(element).find('input').prop('type')).toBe('password');
     getActionIcon(element).simulate('mousedown', { preventDefault: jest.fn() });
-    expect(getInput(element).prop('type')).toBe('text');
+    expect(getInput(element).find('input').prop('type')).toBe('text');
   });
 
   it('sets toggle button tabIndex based on toggleTabIndex prop', () => {

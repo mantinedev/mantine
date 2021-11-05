@@ -5,13 +5,13 @@ export { SocialButtons } from './SocialButtons/SocialButtons';
 
 // Banners
 export { EmailBanner } from './EmailBanner/EmailBanner';
+export { ImageActionBanner } from './ImageActionBanner/ImageActionBanner';
 export { ImageBanner } from './ImageBanner/ImageBanner';
 
 // Cards
 export { ArticleCard } from './ArticleCard/ArticleCard';
 export { BadgeCard } from './BadgeCard/BadgeCard';
 export { FeaturesCard } from './FeaturesCard/FeaturesCard';
-export { ImageActionCard } from './ImageActionCard/ImageActionCard';
 export { ImageButtonCards } from './ImageButtonCards/ImageButtonCards';
 export { ImageCard } from './ImageCard/ImageCard';
 
@@ -31,7 +31,7 @@ export { ForgotPasswordInput } from './ForgotPasswordInput/ForgotPasswordInput';
 export { ImageCheckboxes } from './ImageCheckboxes/ImageCheckboxes';
 export { InputValidation } from './InputValidation/InputValidation';
 export { InputWithButton } from './InputWithButton/InputWithButton';
-export { SliderInput } from './SliderInput/SliderInput';
+export { QuantityInput } from './QuantityInput/QuantityInput';
 export { TagPicker } from './TagPicker/TagPicker';
 
 // Hero
@@ -64,3 +64,8 @@ export { UserMenu } from './UserMenu/UserMenu';
 
 // Dropzones
 export { DropzoneButton } from './DropzoneButton/DropzoneButton';
+
+// Sliders
+export { SliderFilled } from './SliderFilled/SliderFilled';
+export { SliderInput } from './SliderInput/SliderInput';
+export { SliderLabel } from './SliderLabel/SliderLabel';

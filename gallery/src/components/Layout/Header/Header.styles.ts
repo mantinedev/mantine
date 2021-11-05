@@ -10,9 +10,9 @@ export default createStyles((theme) => ({
     left: 0,
     right: 0,
     height: HEADER_HEIGHT,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     borderBottom: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
+      theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3]
     }`,
   },
 

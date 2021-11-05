@@ -35,6 +35,9 @@ export interface DateRangePickerProps
 
   /** Set first day of the week */
   firstDayOfWeek?: FirstDayOfWeekNames;
+
+  /** Allow one date to be selected as range */
+  allowSingleDateInRange?: boolean;
 }
 
 const validationRule = (val: any) =>
@@ -74,6 +77,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       clearable = true,
       clearButtonLabel,
       firstDayOfWeek = 'monday',
+      allowSingleDateInRange = false,
       ...others
     }: DateRangePickerProps,
     ref
@@ -150,6 +154,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
             fullWidth={dropdownType === 'modal'}
             firstDayOfWeek={firstDayOfWeek}
             size={dropdownType === 'modal' ? 'lg' : calendarSize}
+            allowSingleDateInRange={allowSingleDateInRange}
           />
         </DatePickerBase>
 
