@@ -22,6 +22,18 @@ storiesOf('@mantine/dates/Month', module)
       <WrappedMonth autoFocus locale="ru" />
     </div>
   ))
+  .add('First day of the week - Sunday', () => (
+    <div style={{ maxWidth: 240, padding: 40 }}>
+      <Month
+        month={new Date()}
+        firstDayOfWeek="sunday"
+        range={[
+          dayjs(new Date()).subtract(7, 'days').toDate(),
+          dayjs(new Date()).add(2, 'days').toDate(),
+        ]}
+      />
+    </div>
+  ))
   .add('With range', () => (
     <div style={{ maxWidth: 240, padding: 40 }}>
       <Month
