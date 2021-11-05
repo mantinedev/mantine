@@ -86,7 +86,6 @@ interface IListProps {
   MoveIcon: JSX.Element;
   MoveAllIcon: JSX.Element;
   onMove: (items: IListItem[]) => void;
-  onMoveAll: () => void;
 }
 
 type ListProps<C extends React.ElementType> = PolymorphicComponentProps<C, IListProps>;
@@ -107,7 +106,6 @@ const RenderList: ListComponent = forwardRef(
       MoveIcon,
       MoveAllIcon,
       onMove,
-      onMoveAll,
       classNames,
       style,
       styles,
@@ -134,7 +132,6 @@ const RenderList: ListComponent = forwardRef(
       return items.filter((item) => item.value.toLowerCase().includes(search));
     };
 
-    const hasItems = (): boolean => items && items.length > 0;
     const hasMovableItems = (): boolean => filterItems().some((item) => item.disabled === false);
     const hasSelectedItems = (): boolean => selectedItems && selectedItems.length > 0;
     const itemIsSelected = (item: IListItem): boolean => selectedItems?.includes(item);
