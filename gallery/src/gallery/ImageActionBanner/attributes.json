@@ -1,6 +1,6 @@
 {
-  "title": "Card with image background and action",
-  "category": "cards",
+  "title": "Banner with image and action",
+  "category": "banners",
   "author": "rtivital",
   "dependencies": ["/core/card/", "/core/text/", "/core/button/", "/core/overlay/"],
   "props": {
