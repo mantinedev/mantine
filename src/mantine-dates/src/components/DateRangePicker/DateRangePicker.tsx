@@ -31,6 +31,9 @@ export interface DateRangePickerProps
 
   /** Separator between dates */
   labelSeparator?: string;
+
+  /** Allow one date to be selected as range */
+  allowSingleDateInRange?: boolean;
 }
 
 const validationRule = (val: any) =>
@@ -69,6 +72,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       labelSeparator = '–',
       clearable = true,
       clearButtonLabel,
+      allowSingleDateInRange = false,
       ...others
     }: DateRangePickerProps,
     ref
@@ -144,6 +148,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
             __staticSelector="date-range-picker"
             fullWidth={dropdownType === 'modal'}
             size={dropdownType === 'modal' ? 'lg' : calendarSize}
+            allowSingleDateInRange={allowSingleDateInRange}
           />
         </DatePickerBase>
 
