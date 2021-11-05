@@ -65,3 +65,6 @@ export { UserMenu } from './UserMenu/UserMenu';
 
 // Dropzones
 export { DropzoneButton } from './DropzoneButton/DropzoneButton';
+
+// Sliders
+export { SliderFilled } from './SliderFilled/SliderFilled';
