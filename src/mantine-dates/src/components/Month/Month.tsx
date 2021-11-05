@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { DefaultProps, Text, MantineSize, ClassNames, useExtractedMargins } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
-import { firstDayOfWeekNames } from '../../types';
+import { FirstDayOfWeekNames } from '../../types';
 import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
 import { Day, DayStylesNames } from './Day/Day';
 import { getDayProps, DayModifiers } from './get-day-props/get-day-props';
@@ -68,7 +68,7 @@ export interface MonthProps
   onDayMouseEnter?(date: Date, event: React.MouseEvent): void;
 
   /** Set first day of the week */
-  firstDayOfWeek?: firstDayOfWeekNames;
+  firstDayOfWeek?: FirstDayOfWeekNames;
 }
 
 const noop = () => {};

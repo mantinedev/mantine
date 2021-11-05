@@ -3,7 +3,7 @@ import { DefaultProps, useMantineTheme, hexToRgba } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { isSameDate } from '../../utils';
-import { firstDayOfWeekNames } from '../../types';
+import { FirstDayOfWeekNames } from '../../types';
 import { Month } from '../Month/Month';
 import { DayModifiers } from '../Month/get-day-props/get-day-props';
 import { CalendarHeader } from '../Calendar/CalendarHeader/CalendarHeader';
@@ -31,7 +31,7 @@ export interface RangeCalendarProps
   __staticSelector?: string;
 
   /** Set first day of the week */
-  firstDayOfWeek?: firstDayOfWeekNames;
+  firstDayOfWeek?: FirstDayOfWeekNames;
 }
 
 export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(

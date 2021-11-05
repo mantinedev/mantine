@@ -1,7 +1,7 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
-import { firstDayOfWeekNames } from '../../types';
+import { FirstDayOfWeekNames } from '../../types';
 import { Calendar, CalendarSettings } from '../Calendar/Calendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
@@ -28,7 +28,7 @@ export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<Calenda
   name?: string;
 
   /** Set first day of the week */
-  firstDayOfWeek?: firstDayOfWeekNames;
+  firstDayOfWeek?: FirstDayOfWeekNames;
 }
 
 export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
