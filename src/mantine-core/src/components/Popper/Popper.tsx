@@ -62,13 +62,13 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
   modifiers?: StrictModifier[];
 
   /** Controls popper flip behavior  */
-  allowDirectionChange?: boolean;
+  allowPlacementChange?: boolean;
 
   /** Controls where popper can flip out */
   placementFallbacks?: Placement[];
 
-  /** Called when popper changes direction */
-  onDirectionChange?(placement: Placement): void;
+  /** Called when popper changes its placement */
+  onPlacementChange?(placement: Placement): void;
 }
 
 export function Popper<T extends HTMLElement = HTMLDivElement>({
@@ -89,9 +89,9 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   forceUpdateDependencies = [],
   modifiers = [],
   onTransitionEnd,
-  allowDirectionChange = true,
+  allowPlacementChange = true,
   placementFallbacks = ['bottom'],
-  onDirectionChange,
+  onPlacementChange,
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
   const { classes, cx } = useStyles({ arrowSize }, { name: 'Popper' });
@@ -106,17 +106,17 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   const directionControlModifier = useMemo(
     () => ({
       name: 'directionControl',
-      enabled: allowDirectionChange && Boolean(onDirectionChange),
+      enabled: allowPlacementChange && Boolean(onPlacementChange),
       phase: 'main',
       fn: ({ state }) => {
-        if (onDirectionChange && previousPlacement.current !== state.placement) {
+        if (onPlacementChange && previousPlacement.current !== state.placement) {
           previousPlacement.current = state.placement;
 
-          onDirectionChange(state.placement);
+          onPlacementChange(state.placement);
         }
       },
     }),
-    [onDirectionChange, allowDirectionChange]
+    [onPlacementChange, allowPlacementChange]
   );
 
   const { styles, attributes, forceUpdate } = usePopper(referenceElement, popperElement, {
@@ -130,7 +130,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
       },
       {
         name: 'flip',
-        enabled: allowDirectionChange,
+        enabled: allowPlacementChange,
         options: {
           fallbackPlacements: placementFallbacks,
         },

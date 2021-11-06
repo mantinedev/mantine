@@ -55,7 +55,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         transitionTimingFunction={transitionTimingFunction}
         position="bottom"
         placementFallbacks={['top']}
-        onDirectionChange={(placement: string) => {
+        onPlacementChange={(placement: string) => {
           const nextDirection = placement === 'top' ? 'column-reverse' : 'column';
 
           if (direction !== nextDirection) {
