@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles, getSizeValue, MantineNumberSize } from '@mantine/styles';
+import { createStyles, getSizeValue, MantineNumberSize } from '@mantine/styles';
 
 export interface HeaderPosition {
   top?: number;

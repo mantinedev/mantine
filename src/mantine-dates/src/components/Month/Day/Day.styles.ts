@@ -1,11 +1,4 @@
-import {
-  getFontStyles,
-  getFocusStyles,
-  createStyles,
-  MantineSize,
-  getSizeValue,
-  hexToRgba,
-} from '@mantine/core';
+import { getFocusStyles, createStyles, MantineSize, getSizeValue, hexToRgba } from '@mantine/core';
 
 interface DayStyles {
   size: MantineSize;

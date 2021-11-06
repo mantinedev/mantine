@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
+import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
 import { getSortedBreakpoints } from '../get-sorted-breakpoints';
 
 export interface NavbarWidth {

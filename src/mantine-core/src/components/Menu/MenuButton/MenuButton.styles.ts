@@ -1,6 +1,5 @@
 import {
   createStyles,
-  getFontStyles,
   getThemeColor,
   MantineNumberSize,
   getSizeValue,

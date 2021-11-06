@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles, getSizeValue, MantineSize, INPUT_SIZES } from '@mantine/core';
+import { createStyles, getSizeValue, MantineSize, INPUT_SIZES } from '@mantine/core';
 
 interface DatePickerBaseStyles {
   size: MantineSize;

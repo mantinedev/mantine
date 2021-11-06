@@ -3,7 +3,6 @@ import {
   MantineNumberSize,
   MantineColor,
   getSizeValue,
-  getFontStyles,
   getSharedColorScheme,
   getFocusStyles,
 } from '@mantine/styles';

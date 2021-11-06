@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue, getFontStyles } from '@mantine/styles';
+import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
 
 interface ImageStyles {
   radius: MantineNumberSize;

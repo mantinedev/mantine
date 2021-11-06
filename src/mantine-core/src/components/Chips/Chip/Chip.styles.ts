@@ -3,7 +3,6 @@ import {
   MantineNumberSize,
   MantineSize,
   getSizeValue,
-  getFontStyles,
   getThemeColor,
   getSharedColorScheme,
   MantineColor,

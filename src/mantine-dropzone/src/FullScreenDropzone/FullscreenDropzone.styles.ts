@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSizeValue,
-  getSharedColorScheme,
-  getFontStyles,
-} from '@mantine/core';
+import { createStyles, MantineNumberSize, getSizeValue, getSharedColorScheme } from '@mantine/core';
 
 interface FullScreenDropzoneStyles {
   offset: MantineNumberSize;

@@ -1,4 +1,4 @@
-import { createStyles, getThemeColor, getFontStyles, MantineColor } from '@mantine/styles';
+import { createStyles, getThemeColor, MantineColor } from '@mantine/styles';
 
 interface TooltipStyles {
   color: MantineColor;

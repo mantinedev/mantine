@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  getFontStyles,
-  getFocusStyles,
-  getThemeColor,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, getFocusStyles, getThemeColor, MantineColor } from '@mantine/styles';
 
 interface TabControlStyles {
   color: MantineColor;

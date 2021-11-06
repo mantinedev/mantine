@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
 type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 

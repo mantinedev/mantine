@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 interface RichTextEditorStyles {
   saveLabel: string;

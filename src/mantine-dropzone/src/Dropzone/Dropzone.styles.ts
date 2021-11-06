@@ -2,7 +2,6 @@ import {
   createStyles,
   MantineNumberSize,
   getSizeValue,
-  getFontStyles,
   getFocusStyles,
   getSharedColorScheme,
 } from '@mantine/core';

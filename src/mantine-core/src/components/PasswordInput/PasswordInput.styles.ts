@@ -1,4 +1,4 @@
-import { createStyles, MantineSize, getSizeValue, getFontStyles } from '@mantine/styles';
+import { createStyles, MantineSize, getSizeValue } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
 interface PasswordInputStyles {

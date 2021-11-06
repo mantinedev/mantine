@@ -1,7 +1,6 @@
 import {
   createStyles,
   MantineSize,
-  getFontStyles,
   getSizeValue,
   getFocusStyles,
   MantineColor,
