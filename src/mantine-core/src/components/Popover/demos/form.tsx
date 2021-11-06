@@ -10,6 +10,7 @@ import {
   Text,
   ActionIcon,
   useMantineTheme,
+  Anchor,
 } from '../../../index';
 
 const code = `
@@ -69,9 +70,9 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
       />
 
       <Group position="apart" style={{ marginTop: 15 }}>
-        <Button variant="link" color="gray" onClick={onCancel}>
+        <Anchor component="button" color="gray" onClick={onCancel}>
           Cancel
-        </Button>
+        </Anchor>
         <Button type="submit" size="sm">
           Save
         </Button>
@@ -191,9 +192,9 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
       />
 
       <Group position="apart" style={{ marginTop: 15 }}>
-        <Button size="sm" variant="link" color="gray" onClick={onCancel}>
+        <Anchor component="button" color="gray" onClick={onCancel}>
           Cancel
-        </Button>
+        </Anchor>
         <Button type="submit">Save</Button>
       </Group>
     </form>

@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "3.1.3",
+  "version": "3.1.6",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
@@ -25,6 +25,11 @@
     "storybook:gallery": "esno scripts/storybook-start --gallery",
     "test": "npm run prettier:test && npm run syncpack && npm run typecheck && npm run lint && npm run jest",
     "gallery": "cd gallery && npm start",
+    "gallery:build": "cd gallery && npm run build",
+    "gallery:serve": "cd gallery && npm run serve",
+    "gallery:clean": "cd gallery && npm run clean",
+    "gallery:deploy": "npm run gallery:build && gh-pages -d gallery/public/ -b gh-pages-gallery",
+    "gallery:plop": "esno scripts/gallery-plop",
     "docs": "npm run docs:clean && npm run docs:docgen && cd docs && npm start",
     "docs:typecheck": "cd docs && npm run typecheck",
     "docs:lint": "cd docs && npm run lint",
@@ -98,6 +103,7 @@
     "rollup-plugin-visualizer": "^5.5.0",
     "simple-git": "^2.39.0",
     "storybook-addon-turbo-build": "^1.0.0-beta.0",
+    "surge": "^0.23.0",
     "syncpack": "^5.7.11",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
     "typescript": "4.3.5",

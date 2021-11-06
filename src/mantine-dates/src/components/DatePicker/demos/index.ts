@@ -7,6 +7,7 @@ export { exclude } from './exclude';
 export { styles } from './styles';
 export { modifiers } from './modifiers';
 export { localization } from './localization';
+export { firstDaySunday } from './firstDaySunday';
 export { format } from './format';
 export { icon } from './icon';
 export { notClearable } from './notClearable';

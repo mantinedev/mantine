@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { useClickOutside, useFocusTrap, useMergedRef, useFocusReturn } from '@mantine/hooks';
+import {
+  useClickOutside,
+  useFocusTrap,
+  useMergedRef,
+  useFocusReturn,
+  useUuid,
+} from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
   ClassNames,
-  useUuid,
   MantineMargin,
 } from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';

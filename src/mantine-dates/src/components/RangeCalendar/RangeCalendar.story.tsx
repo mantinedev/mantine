@@ -9,8 +9,14 @@ function WrappedRangeCalendar(
   return <RangeCalendar month={value[0]} value={value} onChange={onChange} {...props} />;
 }
 
-storiesOf('@mantine/dates/RangeCalendar', module).add('General usage', () => (
-  <div style={{ padding: 40 }}>
-    <WrappedRangeCalendar />
-  </div>
-));
+storiesOf('@mantine/dates/RangeCalendar', module)
+  .add('General usage', () => (
+    <div style={{ padding: 40 }}>
+      <WrappedRangeCalendar />
+    </div>
+  ))
+  .add('First day of the week - Sunday', () => (
+    <div style={{ padding: 40 }}>
+      <WrappedRangeCalendar firstDayOfWeek="sunday" />
+    </div>
+  ));

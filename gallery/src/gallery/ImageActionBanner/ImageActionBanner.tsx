@@ -43,7 +43,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface ImageActionCardProps {
+interface ImageActionBannerProps {
   title: React.ReactNode;
   description: React.ReactNode;
   image: string;
@@ -53,7 +53,7 @@ interface ImageActionCardProps {
   };
 }
 
-export function ImageActionCard({
+export function ImageActionBanner({
   title,
   description,
   image,
@@ -61,7 +61,7 @@ export function ImageActionCard({
   style,
   className,
   ...others
-}: ImageActionCardProps & Omit<CardProps<'div'>, keyof ImageActionCardProps | 'children'>) {
+}: ImageActionBannerProps & Omit<CardProps<'div'>, keyof ImageActionBannerProps | 'children'>) {
   const { classes, cx } = useStyles();
   const theme = useMantineTheme();
 

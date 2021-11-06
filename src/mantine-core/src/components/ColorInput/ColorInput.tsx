@@ -1,12 +1,6 @@
 import React, { useState, useEffect, forwardRef } from 'react';
-import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import {
-  DefaultProps,
-  getSizeValue,
-  ClassNames,
-  useUuid,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
+import { DefaultProps, getSizeValue, ClassNames, useExtractedMargins } from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,

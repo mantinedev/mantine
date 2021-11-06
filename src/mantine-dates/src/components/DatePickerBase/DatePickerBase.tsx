@@ -16,10 +16,15 @@ import {
   getSizeValue,
   MantineShadow,
   ClassNames,
-  useUuid,
   useExtractedMargins,
 } from '@mantine/core';
-import { useClickOutside, useFocusTrap, useMergedRef, useWindowEvent } from '@mantine/hooks';
+import {
+  useClickOutside,
+  useFocusTrap,
+  useMergedRef,
+  useWindowEvent,
+  useUuid,
+} from '@mantine/hooks';
 import { CalendarStylesNames } from '../Calendar/Calendar';
 import useStyles from './DatePickerBase.styles';
 
@@ -143,7 +148,6 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       onClear,
       positionDependencies = [],
       zIndex = 3,
-      onFocus,
       onBlur,
       onChange,
       name = 'date',
@@ -160,13 +164,14 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
     const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
-    const [isFocused, setFocused] = useState(false);
     const uuid = useUuid(id);
 
-    const focusTrapRef = useFocusTrap((!allowManualTyping && !isFocused) || dropdownOpened);
+    const focusTrapRef = useFocusTrap(!allowManualTyping && dropdownOpened);
     const inputRef = useRef<HTMLButtonElement>();
 
-    const closeDropdown = () => setDropdownOpened(false);
+    const closeDropdown = () => {
+      setDropdownOpened(false);
+    };
 
     const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
       event.nativeEvent.code === 'Escape' && closeDropdown();
@@ -187,14 +192,12 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       />
     ) : null;
 
-    const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-      typeof onFocus === 'function' && onFocus(event);
-      setFocused(true);
-    };
-
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
-      setFocused(false);
+
+      if (allowManualTyping) {
+        closeDropdown();
+      }
     };
 
     return (
@@ -232,7 +235,6 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               readOnly={!allowManualTyping}
               rightSection={rightSection}
               rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
-              onFocus={handleInputFocus}
               onBlur={handleInputBlur}
               onChange={onChange}
               autoComplete="off"
@@ -255,7 +257,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               arrowSize={3}
               zIndex={zIndex}
               arrowClassName={classes.arrow}
-              onTransitionEnd={() => inputRef.current?.focus()}
+              onTransitionEnd={() => !allowManualTyping && inputRef.current?.focus()}
             >
               <div
                 className={classes.dropdownWrapper}

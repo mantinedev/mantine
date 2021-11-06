@@ -10,6 +10,7 @@ import {
   Button,
   Divider,
   Checkbox,
+  Anchor,
 } from '@mantine/core';
 import { GoogleButton, TwitterButton } from '../SocialButtons/SocialButtons';
 
@@ -89,11 +90,11 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
         </Group>
 
         <Group position="apart" mt="md">
-          <Button variant="link" color="gray" onClick={() => toggle()} size="xs">
+          <Anchor component="button" color="gray" onClick={() => toggle()} size="xs">
             {type === 'register'
               ? 'Already have an account? Login'
               : "Don't have an account? Register"}
-          </Button>
+          </Anchor>
           <Button type="submit">{upperFirst(type)}</Button>
         </Group>
       </form>

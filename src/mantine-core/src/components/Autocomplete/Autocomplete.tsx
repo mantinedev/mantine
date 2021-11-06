@@ -1,11 +1,10 @@
 import React, { useState, forwardRef } from 'react';
-import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
+import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineSize,
   MantineShadow,
   ClassNames,
-  useUuid,
   useExtractedMargins,
 } from '@mantine/styles';
 import {

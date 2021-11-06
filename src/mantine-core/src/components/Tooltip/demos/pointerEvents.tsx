@@ -47,7 +47,7 @@ function Demo() {
 
       {!opened && (
         <Button
-          variant="link"
+          variant="light"
           color="gray"
           style={{ marginTop: theme.spacing.xs }}
           onClick={() => setOpened(true)}
@@ -90,7 +90,7 @@ function Demo() {
           display: 'flex',
           alignItems: 'center',
           flexDirection: 'column',
-          paddingBottom: opened ? 40 : 0,
+          paddingBottom: opened ? 44 : 0,
         }}
       >
         <Tooltip
@@ -108,8 +108,7 @@ function Demo() {
         </Tooltip>
         {!opened && (
           <Button
-            variant="link"
-            color="gray"
+            variant="light"
             style={{ marginTop: theme.spacing.xs }}
             onClick={() => setOpened(true)}
           >

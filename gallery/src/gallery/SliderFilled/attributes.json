@@ -1,0 +1,11 @@
+{
+  "title": "Slider with contained thumb",
+  "category": "sliders",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": [],
+  "canvas": {
+    "center": true,
+    "maxWidth": 320
+  }
+}

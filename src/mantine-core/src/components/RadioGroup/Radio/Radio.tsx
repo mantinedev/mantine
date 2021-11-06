@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineSize, MantineColor, ClassNames, useUuid } from '@mantine/styles';
+import { useUuid } from '@mantine/hooks';
+import { DefaultProps, MantineSize, MantineColor, ClassNames } from '@mantine/styles';
 import useStyles from './Radio.styles';
 
 export type RadioStylesNames = Exclude<ClassNames<typeof useStyles>, 'labelDisabled'>;

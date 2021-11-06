@@ -49,6 +49,11 @@ storiesOf('@mantine/dates/DatePicker', module)
     <div style={{ padding: 40, maxWidth: 300 }}>
       <DatePicker placeholder="Pick date" label="Date picker" />
       <DatePicker
+        placeholder="Pick date"
+        label="First day of week - sunday"
+        style={{ marginTop: 20 }}
+      />
+      <DatePicker
         placeholder="With month and year"
         label="Date picker"
         withSelect

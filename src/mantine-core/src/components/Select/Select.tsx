@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { useUncontrolled, useMergedRef, useDidUpdate, useScrollIntoView } from '@mantine/hooks';
 import {
-  DefaultProps,
-  MantineSize,
-  MantineShadow,
+  useUncontrolled,
+  useMergedRef,
+  useDidUpdate,
+  useScrollIntoView,
   useUuid,
-  useExtractedMargins,
-} from '@mantine/styles';
+} from '@mantine/hooks';
+import { DefaultProps, MantineSize, MantineShadow, useExtractedMargins } from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { MantineTransition } from '../Transition';

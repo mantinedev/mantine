@@ -4,9 +4,9 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  useUuid,
   useExtractedMargins,
 } from '@mantine/styles';
+import { useUuid } from '@mantine/hooks';
 import { CheckboxIcon } from './CheckboxIcon';
 import useStyles from './Checkbox.styles';
 
