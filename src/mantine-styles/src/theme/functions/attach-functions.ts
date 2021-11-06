@@ -1,0 +1,11 @@
+import { MantineTheme, MantineThemeBase } from '../types';
+import { fns } from './fns';
+
+export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
+  return {
+    ...themeBase,
+    fn: {
+      fontStyles: fns.getFontStyles(themeBase),
+    },
+  };
+}
