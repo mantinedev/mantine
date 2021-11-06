@@ -17,15 +17,6 @@ const useStyles = createStyles((theme) => ({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
     },
   },
-
-  checkbox: {
-    marginRight: theme.spacing.xl,
-  },
-
-  title: {
-    marginBottom: 7,
-    lineHeight: 1,
-  },
 }));
 
 interface CheckboxCardProps {
@@ -59,17 +50,12 @@ export function CheckboxCard({
     <UnstyledButton
       {...others}
       onClick={() => handleChange(!value)}
-      className={cx(classes.button, 'hello', className)}
+      className={cx(classes.button, className)}
     >
-      <Checkbox
-        className={classes.checkbox}
-        checked={value}
-        onChange={() => {}}
-        tabIndex={-1}
-        size="md"
-      />
+      <Checkbox checked={value} onChange={() => {}} tabIndex={-1} size="md" mr="xl" />
+
       <div>
-        <Text weight={500} className={classes.title}>
+        <Text weight={500} mb={7} sx={{ lineHeight: 1 }}>
           {title}
         </Text>
         <Text size="sm" color="dimmed">

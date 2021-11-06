@@ -8,28 +8,28 @@ export function GoogleButton(props: ButtonProps<'button'>) {
   return <Button leftIcon={<GoogleIcon />} variant="default" color="gray" {...props} />;
 }
 
-export function FacebookButton({ style, ...props }: ButtonProps<'button'>) {
-  return <Button style={{ ...style, backgroundColor: '#4267B2', color: '#fff' }} {...props} />;
+export function FacebookButton(props: ButtonProps<'button'>) {
+  return <Button sx={{ backgroundColor: '#4267B2', color: '#fff' }} {...props} />;
 }
 
 // Twitter button as anchor
-export function TwitterButton({ component, ...others }: ButtonProps<'a'>) {
-  return <Button component="a" leftIcon={<TwitterIcon />} variant="default" {...others} />;
+export function TwitterButton(props: ButtonProps<'a'>) {
+  return <Button component="a" leftIcon={<TwitterIcon />} variant="default" {...props} />;
 }
 
-export function GithubButton({ style, ...props }: ButtonProps<'button'>) {
+export function GithubButton(props: ButtonProps<'button'>) {
   return (
     <Button
       {...props}
       leftIcon={<GitHubLogoIcon />}
-      style={{ ...style, backgroundColor: '#000', color: '#fff' }}
+      sx={{ backgroundColor: '#000', color: '#fff' }}
     />
   );
 }
 
 export function SocialButtons() {
   return (
-    <Group position="center" withGutter>
+    <Group position="center">
       <GoogleButton>Continue with Google</GoogleButton>
       <TwitterButton href="https://twitter.com/mantinedev" target="_blank">
         Follow on Twitter

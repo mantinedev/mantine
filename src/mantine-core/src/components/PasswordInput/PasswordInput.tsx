@@ -1,15 +1,14 @@
 import React, { forwardRef } from 'react';
-import { useBooleanToggle } from '@mantine/hooks';
-import { getSizeValue } from '@mantine/styles';
+import { useBooleanToggle, useUuid } from '@mantine/hooks';
+import { getSizeValue, useExtractedMargins } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { TextInput } from '../TextInput/TextInput';
+import { Input } from '../Input';
+import { InputWrapper } from '../InputWrapper';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
+import useStyles from './PasswordInput.styles';
 
-export interface PasswordInputProps
-  extends Omit<
-    React.ComponentPropsWithoutRef<typeof TextInput>,
-    'rightSection' | 'rightSectionProps' | 'rightSectionWidth'
-  > {
+export interface PasswordInputProps extends React.ComponentPropsWithoutRef<typeof TextInput> {
   /** Toggle button tabIndex, set to 0 to make button focusable with tab key */
   toggleTabIndex?: -1 | 0;
 }
@@ -30,7 +29,7 @@ const iconSizes = {
   xl: 21,
 };
 
-const rightSectionWidth = {
+const rightSectionSizes = {
   xs: 28,
   sm: 34,
   md: 34,
@@ -39,7 +38,36 @@ const rightSectionWidth = {
 };
 
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
-  ({ radius, disabled, size = 'sm', toggleTabIndex = -1, ...others }: PasswordInputProps, ref) => {
+  (
+    {
+      radius = 'sm',
+      disabled,
+      size = 'sm',
+      toggleTabIndex = -1,
+      className,
+      id,
+      label,
+      error,
+      required,
+      style,
+      icon,
+      description,
+      wrapperProps,
+      classNames,
+      styles,
+      __staticSelector = 'PasswordInput',
+      rightSection: _rightSection,
+      rightSectionWidth: _rightSectionWidth,
+      rightSectionProps: _rightSectionProps,
+      sx,
+      ...others
+    }: PasswordInputProps,
+    ref
+  ) => {
+    const rightSectionWidth = getSizeValue({ size, sizes: rightSectionSizes });
+    const { classes, cx } = useStyles({ size, rightSectionWidth }, { name: 'PasswordInput' });
+    const uuid = useUuid(id);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [reveal, toggle] = useBooleanToggle(false);
 
     const rightSection = (
@@ -64,17 +92,45 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     );
 
     return (
-      <TextInput
-        {...others}
-        ref={ref}
-        disabled={disabled}
-        type={reveal ? 'text' : 'password'}
-        rightSection={disabled ? null : rightSection}
-        rightSectionWidth={getSizeValue({ size, sizes: rightSectionWidth })}
+      <InputWrapper
+        required={required}
+        id={uuid}
+        label={label}
+        error={error}
+        description={description}
         size={size}
-        radius={radius}
-        __staticSelector="PasswordInput"
-      />
+        className={className}
+        style={mergedStyles}
+        classNames={classNames}
+        styles={styles}
+        __staticSelector={__staticSelector}
+        sx={sx}
+        {...wrapperProps}
+      >
+        <Input<'div'>
+          component="div"
+          required={required}
+          invalid={!!error}
+          icon={icon}
+          size={size}
+          classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
+          styles={styles}
+          radius={radius}
+          disabled={disabled}
+          __staticSelector={__staticSelector}
+          rightSectionWidth={rightSectionWidth}
+          rightSection={!disabled && rightSection}
+        >
+          <input
+            type={reveal ? 'text' : 'password'}
+            className={cx(classes.innerInput, { [classes.withIcon]: icon })}
+            disabled={disabled}
+            id={uuid}
+            ref={ref}
+            {...rest}
+          />
+        </Input>
+      </InputWrapper>
     );
   }
 );

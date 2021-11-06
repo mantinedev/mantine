@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useUuid, useExtractedMargins, useSx } from '@mantine/styles';
+import { DefaultProps, useExtractedMargins, useSx } from '@mantine/styles';
+import { useUuid } from '@mantine/hooks';
 import {
   AccordionItem,
   AccordionItemStylesNames,

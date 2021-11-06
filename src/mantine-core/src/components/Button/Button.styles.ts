@@ -5,7 +5,6 @@ import {
   getFontStyles,
   getSizeValue,
   getFocusStyles,
-  getThemeColor,
   MantineSizes,
   getSharedColorScheme,
   hexToRgba,
@@ -14,14 +13,7 @@ import {
 } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
-export type ButtonVariant =
-  | 'link'
-  | 'filled'
-  | 'outline'
-  | 'light'
-  | 'gradient'
-  | 'white'
-  | 'default';
+export type ButtonVariant = 'filled' | 'outline' | 'light' | 'gradient' | 'white' | 'default';
 
 interface ButtonStylesProps {
   color: MantineColor;
@@ -239,32 +231,6 @@ export default createStyles(
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
-      },
-
-      link: {
-        padding: 0,
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-        backgroundColor: 'transparent',
-        border: 0,
-        display: 'inline-block',
-        color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
-        cursor: 'pointer',
-        height: 'auto',
-        lineHeight: theme.lineHeight,
-        fontWeight: 400,
-
-        '&:hover': {
-          textDecoration: 'underline',
-        },
-
-        '&:disabled': {
-          color: theme.colors.gray[5],
-          cursor: 'not-allowed',
-
-          '&:hover': {
-            textDecoration: 'none',
-          },
-        },
       },
     };
   }

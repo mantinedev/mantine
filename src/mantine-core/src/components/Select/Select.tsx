@@ -4,15 +4,10 @@ import {
   useMergedRef,
   useDidUpdate,
   useScrollIntoView,
+  useUuid,
   useClickOutside,
 } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  MantineShadow,
-  useUuid,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineSize, MantineShadow, useExtractedMargins } from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { MantineTransition } from '../Transition';

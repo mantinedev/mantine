@@ -1,34 +1,33 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useReducedMotion, useUncontrolled } from '@mantine/hooks';
+import { useReducedMotion, useUncontrolled, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
   MantineColor,
   ClassNames,
-  useUuid,
   useExtractedMargins,
 } from '@mantine/styles';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
-export interface SegmentedControlItem {
-  value: string;
+export interface SegmentedControlItem<T extends string> {
+  value: T;
   label: React.ReactNode;
 }
 
 export type SegmentedControlStylesNames = ClassNames<typeof useStyles>;
 
-export interface SegmentedControlProps
+export interface SegmentedControlProps<T extends string>
   extends DefaultProps<SegmentedControlStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Data based on which controls are rendered */
-  data: string[] | SegmentedControlItem[];
+  data: T[] | SegmentedControlItem<T>[];
 
   /** Current selected value */
-  value?: string;
+  value?: T;
 
   /** Called when value changes */
-  onChange?(value: string): void;
+  onChange?(value: T): void;
 
   /** Name of the radio group, default to random id */
   name?: string;
@@ -55,7 +54,7 @@ export interface SegmentedControlProps
   defaultValue?: string;
 }
 
-export function SegmentedControl({
+export function SegmentedControl<T extends string = string>({
   className,
   style,
   data: _data,
@@ -73,7 +72,7 @@ export function SegmentedControl({
   defaultValue,
   sx,
   ...others
-}: SegmentedControlProps) {
+}: SegmentedControlProps<T>) {
   const reduceMotion = useReducedMotion();
   const data = _data.map((item: any) =>
     typeof item === 'string' ? { label: item, value: item } : item

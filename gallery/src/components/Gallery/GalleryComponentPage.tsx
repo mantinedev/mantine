@@ -8,6 +8,32 @@ import { GalleryPreview } from './components/GalleryPreview/GalleryPreview';
 import { ComponentPreviewControls } from './components/ComponentPreviewControls/ComponentPreviewControls';
 import { GalleryComponent } from './types';
 
+interface GalleryComponentPreviewProps {
+  pageContext: GalleryComponent;
+  primaryColor: string;
+  component: any;
+}
+
+function GalleryComponentPreview({
+  pageContext,
+  primaryColor,
+  component: Component,
+}: GalleryComponentPreviewProps) {
+  const theme = useMantineTheme();
+  return (
+    <div style={{ padding: pageContext.attributes.canvas.maxWidth ? theme.spacing.sm : 0 }}>
+      <GalleryPreview
+        canvas={pageContext.attributes.canvas}
+        withSpacing={!!pageContext.attributes.canvas.maxWidth}
+      >
+        <MantineProvider theme={{ colorScheme: theme.colorScheme, primaryColor }}>
+          <Component {...pageContext.attributes.props} />
+        </MantineProvider>
+      </GalleryPreview>
+    </div>
+  );
+}
+
 interface GalleryComponentPageProps {
   pageContext: GalleryComponent;
 }
@@ -15,8 +41,6 @@ interface GalleryComponentPageProps {
 export default function GalleryComponentPage({ pageContext }: GalleryComponentPageProps) {
   const [state, setState] = useState('preview');
   const [primaryColor, setPrimaryColor] = useState('blue');
-  const theme = useMantineTheme();
-  const Component = GalleryComponents[pageContext._component];
 
   return (
     <Layout>
@@ -31,16 +55,11 @@ export default function GalleryComponentPage({ pageContext }: GalleryComponentPa
       />
 
       {state === 'preview' ? (
-        <div style={{ padding: pageContext.attributes.canvas.maxWidth ? theme.spacing.sm : 0 }}>
-          <GalleryPreview
-            canvas={pageContext.attributes.canvas}
-            withSpacing={!!pageContext.attributes.canvas.maxWidth}
-          >
-            <MantineProvider theme={{ colorScheme: theme.colorScheme, primaryColor }}>
-              <Component {...pageContext.attributes.props} />
-            </MantineProvider>
-          </GalleryPreview>
-        </div>
+        <GalleryComponentPreview
+          component={GalleryComponents[pageContext._component]}
+          primaryColor={primaryColor}
+          pageContext={pageContext}
+        />
       ) : (
         <Prism language="tsx">{pageContext.code}</Prism>
       )}

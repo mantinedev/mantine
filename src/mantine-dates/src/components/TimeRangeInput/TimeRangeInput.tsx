@@ -9,10 +9,9 @@ import {
   InputWrapper,
   MantineSize,
   ClassNames,
-  useUuid,
   useExtractedMargins,
 } from '@mantine/core';
-import { useMergedRef, useUncontrolled, useDidUpdate } from '@mantine/hooks';
+import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import dayjs, { UnitType } from 'dayjs';
 import { TimeField } from '../TimeInput/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInput/create-time-handler/create-time-handler';

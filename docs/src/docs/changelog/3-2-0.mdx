@@ -1,0 +1,19 @@
+---
+group: 'changelog'
+title: 'Version 3.2.0'
+order: 1
+slug: /changelog/3-2-0/
+release: https://github.com/mantinedev/mantine/releases/tag/3.2.0
+date: 'November 26th, 2021'
+---
+
+## Breaking changes
+
+- [Group](https://mantine.dev/core/group/) component was migrated to [flexbox gap](https://caniuse.com/flexbox-gap), it no longer uses hack with negative margins, thus `withGutter` prop is not longer supported.
+- [Button](https://mantine.dev/core/button/) component no longer supports `link` variant due to Styles API limitations, use [Anchor](https://mantine.dev/core/anchor/) component instead.
+
+## Other changes
+
+- All date picking components from @mantine/dates package now support first day of week customization (either sunday or monday)
+- [Tabs](https://mantine.dev/core/tabs/) component pills variant was redesigned to be more neutral
+- [SegmentedControl](https://mantine.dev/core/segmented-control/) component is now a generic – it accepts values as single type argument

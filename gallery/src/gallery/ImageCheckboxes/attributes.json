@@ -1,0 +1,19 @@
+{
+  "title": "Checkbox with image",
+  "category": "inputs",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": [
+    "/core/checkbox/",
+    "/core/paper/",
+    "/core/text/",
+    "/core/image/",
+    "/core/simple-grid/",
+    "/core/button/#unstyled-button",
+    "https://icons8.com/"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 1080
+  }
+}

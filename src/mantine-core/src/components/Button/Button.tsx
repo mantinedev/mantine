@@ -101,11 +101,7 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
     ref: PolymorphicRef<C>
   ) => {
     const theme = useMantineTheme();
-    const colors = getSharedColorScheme({
-      color,
-      theme,
-      variant: variant === 'link' ? 'light' : variant,
-    });
+    const colors = getSharedColorScheme({ color, theme, variant });
 
     const { classes, cx } = useStyles(
       {
@@ -133,7 +129,7 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
     return (
       <Element
         {...rest}
-        className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
+        className={cx(classes[variant], { [classes.loading]: loading }, classes.root, className)}
         type={type}
         disabled={disabled || loading}
         ref={ref}

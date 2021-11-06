@@ -1,10 +1,14 @@
 import React from 'react';
-import { createStyles, ThemeIcon, Text, Group, SimpleGrid, useMantineTheme } from '@mantine/core';
+import { createStyles, ThemeIcon, Text, Group, SimpleGrid, Box } from '@mantine/core';
 import { Sun, Phone, MapPin, AtSign } from 'react-feather';
 
-type Variant = 'white' | 'gradient';
+type ContactIconVariant = 'white' | 'gradient';
 
-const useStyles = createStyles((theme, { variant }: { variant: Variant }) => ({
+interface ContactIconStyles {
+  variant: ContactIconVariant;
+}
+
+const useStyles = createStyles((theme, { variant }: ContactIconStyles) => ({
   wrapper: {
     display: 'flex',
     alignItems: 'center',
@@ -35,7 +39,7 @@ interface ContactIconProps extends Omit<React.ComponentPropsWithoutRef<'div'>, '
   icon: React.FC<any>;
   title: React.ReactNode;
   description: React.ReactNode;
-  variant?: Variant;
+  variant?: ContactIconVariant;
 }
 
 function ContactIcon({
@@ -69,7 +73,7 @@ function ContactIcon({
 
 interface ContactIconsListProps {
   data?: ContactIconProps[];
-  variant?: Variant;
+  variant?: ContactIconVariant;
 }
 
 const MOCKDATA = [
@@ -85,24 +89,29 @@ export function ContactIconsList({ data = MOCKDATA, variant }: ContactIconsListP
 }
 
 export function ContactIcons() {
-  const theme = useMantineTheme();
-
   return (
     <SimpleGrid cols={2} breakpoints={[{ maxWidth: 755, cols: 1 }]}>
-      <div style={{ padding: theme.spacing.xl, backgroundColor: theme.white }}>
-        <ContactIconsList />
-      </div>
-
-      <div
-        style={{
+      <Box
+        sx={(theme) => ({
           padding: theme.spacing.xl,
+          borderRadius: theme.radius.md,
+          backgroundColor: theme.white,
+        })}
+      >
+        <ContactIconsList />
+      </Box>
+
+      <Box
+        sx={(theme) => ({
+          padding: theme.spacing.xl,
+          borderRadius: theme.radius.md,
           backgroundImage: `linear-gradient(135deg, ${theme.colors[theme.primaryColor][6]} 0%, ${
             theme.colors[theme.primaryColor][4]
           } 100%)`,
-        }}
+        })}
       >
         <ContactIconsList variant="white" />
-      </div>
+      </Box>
     </SimpleGrid>
   );
 }

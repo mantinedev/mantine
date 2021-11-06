@@ -1,0 +1,11 @@
+{
+  "title": "Features with icons",
+  "category": "features",
+  "author": "rtivital",
+  "responsive": true,
+  "withColor": true,
+  "dependencies": ["/core/text/", "/core/simple-grid/", "/core/container", "tabler-icons-react"],
+  "canvas": {
+    "center": false
+  }
+}
