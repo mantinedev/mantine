@@ -1,0 +1,38 @@
+---
+group: 'theming'
+title: RLT Support
+slug: /theming/rtl/
+order: 6
+---
+
+# RTL Support
+
+Mantine is built with [emotion](https://emotion.sh) supports RTL languages with [stylis-plugin-rtl](https://github.com/styled-components/stylis-plugin-rtl).
+
+Install `stylis-plugin-rtl`:
+
+```bash
+yarn add stylis-plugin-rtl
+
+# or with npm
+npm install stylis-plugin-rtl
+```
+
+Add `stylis-plugin-rtl` to your [MantineProvider](/theming/mantine-provider/):
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import rtlPlugin from 'stylis-plugin-rtl';
+
+function Demo() {
+  return (
+    <MantineProvider emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+You can apply rlt plugin based on locale. Note that you will have to manage popovers positions in some
+components ([Menu](/core/menu/), [Popover](/core/popover/), etc.) on your side as `position` and `placement`
+props are not flipped based on text direction.
