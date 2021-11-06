@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState, useRef } from 'react';
 import { usePopper, StrictModifier } from 'react-popper';
+import type { Placement } from '@popperjs/core';
 import { useDidUpdate } from '@mantine/hooks';
 import { Portal } from '../Portal';
 import { Transition, MantineTransition } from '../Transition';
@@ -59,6 +60,15 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
 
   /** valid popperjs modifiers array */
   modifiers?: StrictModifier[];
+
+  /** Controls popper flip behavior  */
+  allowDirectionChange?: boolean;
+
+  /** Controls where popper can flip out */
+  placementFallbacks?: Placement[];
+
+  /** Called when popper changes direction */
+  onDirectionChange?(placement: Placement): void;
 }
 
 export function Popper<T extends HTMLElement = HTMLDivElement>({
@@ -79,14 +89,56 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   forceUpdateDependencies = [],
   modifiers = [],
   onTransitionEnd,
+  allowDirectionChange = true,
+  placementFallbacks = ['bottom'],
+  onDirectionChange,
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
   const { classes, cx } = useStyles({ arrowSize }, { name: 'Popper' });
   const [popperElement, setPopperElement] = useState(null);
 
+  const initialPlacement: Placement =
+    placement === 'center' ? position : `${position}-${placement}`;
+
+  const previousPlacement = useRef<Placement>(initialPlacement);
+
+  // https://popper.js.org/react-popper/v2/faq/#why-i-get-render-loop-whenever-i-put-a-function-inside-the-popper-configuration
+  const directionControlModifier = useMemo(
+    () => ({
+      name: 'directionControl',
+      enabled: allowDirectionChange && Boolean(onDirectionChange),
+      phase: 'main',
+      fn: ({ state }) => {
+        if (onDirectionChange && previousPlacement.current !== state.placement) {
+          previousPlacement.current = state.placement;
+
+          onDirectionChange(state.placement);
+        }
+      },
+    }),
+    [onDirectionChange, allowDirectionChange]
+  );
+
   const { styles, attributes, forceUpdate } = usePopper(referenceElement, popperElement, {
-    placement: placement === 'center' ? position : `${position}-${placement}`,
-    modifiers: [{ name: 'offset', options: { offset: [0, padding] } }, ...modifiers],
+    placement: initialPlacement,
+    modifiers: [
+      {
+        name: 'offset',
+        options: {
+          offset: [0, padding],
+        },
+      },
+      {
+        name: 'flip',
+        enabled: allowDirectionChange,
+        options: {
+          fallbackPlacements: placementFallbacks,
+        },
+      },
+      // @ts-ignore
+      directionControlModifier,
+      ...modifiers,
+    ],
   });
 
   const parsedAttributes = parsePopperPosition(attributes.popper?.['data-popper-placement']);
