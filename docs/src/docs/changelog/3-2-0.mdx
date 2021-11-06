@@ -7,6 +7,10 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.2.0
 date: 'November 26th, 2021'
 ---
 
+## Breaking changes
+
+- [Group](https://mantine.dev/core/group/) component was migrated to [flexbox gap](https://caniuse.com/flexbox-gap), it no longer uses hack with negative margins, thus `withGutter` prop is not longer supported.
+
 ## Other changes
 
 - All date picking components from @mantine/dates package now support first day of week customization (either sunday or monday)
