@@ -29,7 +29,7 @@ export default createStyles((theme, { offset, padding, radius }: FullScreenDropz
     },
 
     dropzone: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       boxSizing: 'border-box',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       border: `2px dashed ${

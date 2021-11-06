@@ -50,7 +50,7 @@ interface ChipStyles {
 export default createStyles((theme, { radius, size, color }: ChipStyles, getRef) => {
   const label = {
     ref: getRef('label'),
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     boxSizing: 'border-box',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     display: 'inline-block',

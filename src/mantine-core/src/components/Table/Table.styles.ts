@@ -13,7 +13,7 @@ export default createStyles((theme, { captionSide }: TableStyles, getRef) => {
     hover,
 
     root: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       width: '100%',
       borderCollapse: 'collapse',
       captionSide,

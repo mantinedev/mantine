@@ -43,7 +43,7 @@ export default createStyles(
 
     return {
       root: {
-        ...getFontStyles(theme),
+        ...theme.fn.fontStyles(),
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',

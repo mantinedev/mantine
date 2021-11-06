@@ -8,7 +8,7 @@ interface ListStyles {
 
 export default createStyles((theme, { withPadding, size, listStyleType }: ListStyles) => ({
   root: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     listStyleType,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),

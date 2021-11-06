@@ -3,9 +3,9 @@ import {
   MantineTheme,
   MantineSize,
   getFocusStyles,
-  getFontStyles,
   getSharedColorScheme,
   MantineColor,
+  CSSObject,
 } from '@mantine/styles';
 
 interface TextStyles {
@@ -40,7 +40,7 @@ function getTextColor({ theme, color, variant }: GetTextColor) {
     : theme.black;
 }
 
-function getLineClamp(lineClamp: number): React.CSSProperties {
+function getLineClamp(lineClamp: number): CSSObject {
   if (typeof lineClamp === 'number') {
     return {
       overflow: 'hidden',
@@ -77,7 +77,7 @@ export default createStyles(
 
     return {
       root: {
-        ...getFontStyles(theme),
+        ...theme.fn.fontStyles(),
         ...getFocusStyles(theme),
         ...getLineClamp(lineClamp),
         color: getTextColor({ color, theme, variant }),

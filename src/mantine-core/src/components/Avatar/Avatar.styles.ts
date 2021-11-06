@@ -44,7 +44,7 @@ export default createStyles((theme, { size, radius, color }: AvatarStyles) => ({
   },
 
   placeholder: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     fontSize: getSizeValue({ size, sizes }) / 2.5,
     color: getSharedColorScheme({ theme, color, variant: 'light' }).color,
     fontWeight: 700,

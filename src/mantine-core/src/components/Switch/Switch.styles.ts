@@ -120,7 +120,7 @@ export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
     },
 
     label: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       WebkitTapHighlightColor: 'transparent',
       fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
       fontFamily: theme.fontFamily,

@@ -15,7 +15,7 @@ export default createStyles((theme, { radius }: ImageStyles) => ({
   },
 
   image: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     display: 'block',
     width: '100%',
     height: '100%',

@@ -15,7 +15,7 @@ interface MenuButtonStyles {
 
 export default createStyles((theme, { radius, color }: MenuButtonStyles) => ({
   item: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     WebkitTapHighlightColor: 'transparent',
     fontSize: theme.fontSizes.sm,
     border: 0,

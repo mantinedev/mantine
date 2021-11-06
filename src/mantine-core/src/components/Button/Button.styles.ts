@@ -175,7 +175,7 @@ export default createStyles(
 
       root: {
         ...getSizeStyles({ compact, size }),
-        ...getFontStyles(theme),
+        ...theme.fn.fontStyles(),
         ...getFocusStyles(theme),
         ...getWidthStyles(fullWidth),
         borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),

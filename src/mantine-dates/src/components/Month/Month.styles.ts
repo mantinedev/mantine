@@ -10,7 +10,7 @@ export default createStyles((theme, { fullWidth }: MonthStyles) => ({
   },
 
   root: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     borderCollapse: 'collapse',
     width: fullWidth ? '100%' : 'auto',
     tableLayout: 'fixed',

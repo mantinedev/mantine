@@ -7,7 +7,7 @@ interface DatePickerBaseStyles {
 
 export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => ({
   wrapper: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     position: 'relative',
     cursor: 'pointer',
   },

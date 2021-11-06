@@ -46,7 +46,7 @@ export default createStyles(
     const label = {
       ref: getRef('label'),
       ...getFocusStyles(theme),
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       WebkitTapHighlightColor: 'transparent',
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
       fontWeight: 500,

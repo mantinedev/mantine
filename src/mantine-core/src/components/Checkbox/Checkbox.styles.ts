@@ -73,7 +73,7 @@ export default createStyles(
       },
 
       label: {
-        ...getFontStyles(theme),
+        ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
         paddingLeft: theme.spacing.sm,
         fontSize: getSizeValue({ size, sizes: theme.fontSizes }),

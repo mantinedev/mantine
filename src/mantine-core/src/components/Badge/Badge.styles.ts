@@ -89,7 +89,7 @@ export default createStyles(
 
       root: {
         ...getFocusStyles(theme),
-        ...getFontStyles(theme),
+        ...theme.fn.fontStyles(),
         fontSize,
         height,
         WebkitTapHighlightColor: 'transparent',

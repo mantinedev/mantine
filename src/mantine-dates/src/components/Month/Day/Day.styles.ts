@@ -37,7 +37,7 @@ export default createStyles((theme, { size, fullWidth }: DayStyles, getRef) => {
     lastInRange,
 
     day: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       ...getFocusStyles(theme),
       position: 'relative',
       WebkitTapHighlightColor: 'transparent',

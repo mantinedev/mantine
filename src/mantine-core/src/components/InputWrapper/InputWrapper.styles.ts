@@ -6,7 +6,7 @@ interface InputWrapperStyles {
 
 export default createStyles((theme, { size }: InputWrapperStyles) => ({
   root: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     lineHeight: theme.lineHeight,
   },
 

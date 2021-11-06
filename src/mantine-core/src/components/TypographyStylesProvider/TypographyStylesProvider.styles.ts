@@ -21,7 +21,7 @@ export default createStyles((theme) => {
 
   return {
     root: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       lineHeight: theme.lineHeight,
       fontSize: theme.fontSizes.md,

@@ -6,7 +6,7 @@ interface AlertStyles {
 
 export default createStyles((theme, { color }: AlertStyles) => ({
   root: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     position: 'relative',
     overflow: 'hidden',
     padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
@@ -57,7 +57,7 @@ export default createStyles((theme, { color }: AlertStyles) => ({
   },
 
   message: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     lineHeight: theme.lineHeight,
     borderBottomLeftRadius: theme.radius.sm,
     borderBottomRightRadius: theme.radius.sm,

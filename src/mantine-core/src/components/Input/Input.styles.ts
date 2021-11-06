@@ -141,7 +141,7 @@ export default createStyles(
         variant === 'headless'
           ? {}
           : {
-              ...getFontStyles(theme),
+              ...theme.fn.fontStyles(),
               ...getVariantStyles({ variant, theme }),
               height: multiline
                 ? variant === 'unstyled'

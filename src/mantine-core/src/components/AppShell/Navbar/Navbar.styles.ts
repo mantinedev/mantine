@@ -42,7 +42,7 @@ export default createStyles(
 
     return {
       root: {
-        ...getFontStyles(theme),
+        ...theme.fn.fontStyles(),
         ...position,
         zIndex,
         height,

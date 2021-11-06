@@ -18,7 +18,7 @@ interface HeaderStyles {
 export default createStyles(
   (theme, { height, padding, fixed, position, zIndex }: HeaderStyles) => ({
     root: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       ...position,
       zIndex,
       height,

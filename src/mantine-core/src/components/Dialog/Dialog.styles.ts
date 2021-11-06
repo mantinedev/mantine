@@ -14,7 +14,7 @@ const sizes = {
 
 export default createStyles((theme, { size }: DialogStyles) => ({
   root: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     position: 'relative',
     width: getSizeValue({ size, sizes }),

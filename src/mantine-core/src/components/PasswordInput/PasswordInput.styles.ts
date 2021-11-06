@@ -13,7 +13,7 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
   },
 
   innerInput: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     backgroundColor: 'transparent',
     border: 0,
     boxSizing: 'border-box',

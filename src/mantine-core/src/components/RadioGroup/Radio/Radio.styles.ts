@@ -76,7 +76,7 @@ export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
     },
 
     label: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       display: 'flex',
       alignItems: 'center',
       fontSize: theme.fontSizes[size] || theme.fontSizes.md,

@@ -70,7 +70,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
 export default createStyles((theme, { color, size, radius }: ActionIconStyles) => ({
   root: {
     ...getFocusStyles(theme),
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     position: 'relative',
     appearance: 'none',
     WebkitAppearance: 'none',

@@ -17,7 +17,7 @@ export default createStyles((theme, { spacing }: AvatarsGroupStyles) => ({
   },
 
   truncated: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     lineHeight: 1,
     fontSize: `${theme.fontSizes.sm}px !important`,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,

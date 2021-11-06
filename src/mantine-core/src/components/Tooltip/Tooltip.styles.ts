@@ -21,7 +21,7 @@ export default createStyles((theme, { color }: TooltipStyles) => ({
   },
 
   body: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
     lineHeight: theme.lineHeight,
     fontSize: theme.fontSizes.sm,

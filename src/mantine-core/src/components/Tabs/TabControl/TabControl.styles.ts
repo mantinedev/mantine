@@ -19,7 +19,7 @@ export default createStyles((theme, { color, orientation }: TabControlStyles, ge
     tabLabel: {},
 
     tabControl: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       ...getFocusStyles(theme),
       WebkitTapHighlightColor: 'transparent',
       boxSizing: 'border-box',

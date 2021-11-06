@@ -6,7 +6,7 @@ interface BlockquoteStyles {
 
 export default createStyles((theme, { color }: BlockquoteStyles) => ({
   root: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     fontSize: theme.fontSizes.lg,
     lineHeight: theme.lineHeight,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
