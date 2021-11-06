@@ -13,6 +13,7 @@ export interface HeadingStyle {
 
 interface MantineThemeFunctions {
   fontStyles(): CSSObject;
+  themeColor(color: string, shade: number): string;
 }
 
 export interface MantineTheme {
