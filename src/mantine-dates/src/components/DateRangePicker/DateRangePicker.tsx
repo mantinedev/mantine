@@ -86,7 +86,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
     const inputRef = useRef<HTMLInputElement>();
-    const [_value, setValue] = useUncontrolled({
+    const [_value, setValue] = useUncontrolled<[Date, Date]>({
       value,
       defaultValue,
       finalValue: [null, null],
@@ -124,9 +124,9 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
                 )} ${labelSeparator} ${upperFirst(
                   dayjs(_value[1]).locale(locale).format(inputFormat)
                 )}`
-              : null
+              : ''
           }
-          __staticSelector="date-range-picker"
+          __staticSelector="DateRangePicker"
           dropdownType={dropdownType}
           clearable={clearable && valueValid}
           clearButtonLabel={clearButtonLabel}
@@ -151,7 +151,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
             minDate={minDate}
             maxDate={maxDate}
             excludeDate={excludeDate}
-            __staticSelector="date-range-picker"
+            __staticSelector="DateRangePicker"
             fullWidth={dropdownType === 'modal'}
             firstDayOfWeek={firstDayOfWeek}
             size={dropdownType === 'modal' ? 'lg' : calendarSize}
