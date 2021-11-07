@@ -68,10 +68,11 @@ export function CalendarHeader({
 
   return (
     <Group position="apart" noWrap style={{ marginBottom: theme.spacing.xs / 2 }}>
-      <ActionIcon
+      <ActionIcon<'button'>
         aria-label={previousMonthLabel}
         onClick={onPreviousMonth}
         onMouseDown={(event) => preventFocus && event.preventDefault()}
+        tabIndex={preventFocus ? -1 : 0}
         disabled={previousMonthDisabled}
         size={iconButtonSize}
         data-mantine-stop-propagation
@@ -95,9 +96,10 @@ export function CalendarHeader({
         preventFocus={preventFocus}
       />
 
-      <ActionIcon
+      <ActionIcon<'button'>
         aria-label={nextMonthLabel}
         onClick={onNextMonth}
+        tabIndex={preventFocus ? -1 : 0}
         onMouseDown={(event) => preventFocus && event.preventDefault()}
         disabled={nextMonthDisabled}
         size={iconButtonSize}

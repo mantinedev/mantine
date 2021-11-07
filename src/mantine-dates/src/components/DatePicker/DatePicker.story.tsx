@@ -78,7 +78,9 @@ storiesOf('@mantine/dates/DatePicker', module)
         allowManualTyping
         withSelect
         mt={20}
+        mb={40}
       />
+      <button type="button">Focus test</button>
     </div>
   ))
   .add('Sizes', () => <div style={{ maxWidth: 300, padding: 40 }}>{sizes}</div>)

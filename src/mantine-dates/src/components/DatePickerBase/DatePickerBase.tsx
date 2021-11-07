@@ -149,6 +149,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       positionDependencies = [],
       zIndex = 3,
       onBlur,
+      onFocus,
       onChange,
       name = 'date',
       sx,
@@ -201,6 +202,13 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       }
     };
 
+    const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+      typeof onFocus === 'function' && onFocus(event);
+      if (allowManualTyping) {
+        setDropdownOpened(true);
+      }
+    };
+
     return (
       <InputWrapper
         required={required}
@@ -230,7 +238,9 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
                 ),
               }}
               styles={styles}
-              onClick={() => setDropdownOpened(!dropdownOpened)}
+              onClick={() =>
+                !allowManualTyping ? setDropdownOpened(!dropdownOpened) : setDropdownOpened(true)
+              }
               id={uuid}
               ref={useMergedRef(ref, inputRef)}
               __staticSelector={__staticSelector}
@@ -244,6 +254,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               rightSection={rightSection}
               rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
               onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
               onChange={onChange}
               autoComplete="off"
               {...rest}
