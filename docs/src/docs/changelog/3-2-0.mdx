@@ -25,3 +25,4 @@ import { DatePickerDemos } from '@demos/dates';
 - All date picking components from @mantine/dates package now support first day of week customization (either sunday or monday)
 - [Tabs](https://mantine.dev/core/tabs/) component pills variant was redesigned to be more neutral
 - [SegmentedControl](https://mantine.dev/core/segmented-control/) component is now a generic – it accepts values as single type argument
+- [Autocomplete](https://mantine.dev/core/autocomplete/), [Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) dropdowns are now rendered within [Popper](https://mantine.dev/core/popper/). This means that dropdown element is now aware of its position on screen and will change placement based on container scroll position. You should also experience less issues with z-index configuration.
