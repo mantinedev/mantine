@@ -5,7 +5,9 @@ import { FirstDayOfWeekNames } from '../../types';
 import { Calendar, CalendarSettings } from '../Calendar/Calendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
-export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<CalendarSettings, 'size'> {
+export interface DatePickerProps
+  extends Omit<DatePickerBaseSharedProps, 'onChange'>,
+    Omit<CalendarSettings, 'size'> {
   /** Selected date, required with controlled input */
   value?: Date;
 
@@ -23,6 +25,9 @@ export interface DatePickerProps extends DatePickerBaseSharedProps, Omit<Calenda
 
   /** Control initial dropdown opened state */
   initiallyOpened?: boolean;
+
+  /** Parser function for date provided by input typing */
+  dateParser?: (value: string) => Date;
 
   /** Input name, useful for uncontrolled variant to capture data with native form */
   name?: string;
@@ -64,6 +69,9 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       clearable = true,
       disabled = false,
       clearButtonLabel,
+      fixOnBlur = true,
+      allowManualTyping,
+      dateParser,
       firstDayOfWeek = 'monday',
       ...others
     }: DatePickerProps,
@@ -72,7 +80,9 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
     const inputRef = useRef<HTMLInputElement>();
-    const [_value, setValue] = useUncontrolled({
+
+    const [lastValidValue, setLastValidValue] = useState(defaultValue ?? null);
+    const [_value, setValue] = useUncontrolled<Date | string>({
       value,
       defaultValue,
       finalValue: null,
@@ -82,69 +92,85 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
 
     const handleValueChange = (date: Date) => {
       setValue(date);
+
       closeCalendarOnChange && setDropdownOpened(false);
     };
 
     const handleClear = () => {
       setValue(null);
+      setLastValidValue(null);
       inputRef.current?.focus();
     };
 
-    return (
-      <>
-        <DatePickerBase
-          dropdownOpened={dropdownOpened}
-          setDropdownOpened={setDropdownOpened}
-          shadow={shadow}
-          transitionDuration={transitionDuration}
-          ref={useMergedRef(ref, inputRef)}
-          size={size}
-          styles={styles}
-          classNames={classNames}
-          inputLabel={
-            _value instanceof Date
-              ? upperFirst(dayjs(_value).locale(locale).format(inputFormat))
-              : null
-          }
-          __staticSelector="date-picker"
-          dropdownType={dropdownType}
-          clearable={clearable && !!_value && !disabled}
-          clearButtonLabel={clearButtonLabel}
-          onClear={handleClear}
-          disabled={disabled}
-          {...others}
-        >
-          <Calendar
-            classNames={classNames}
-            styles={styles}
-            locale={locale}
-            nextMonthLabel={nextMonthLabel}
-            previousMonthLabel={previousMonthLabel}
-            initialMonth={_value instanceof Date ? _value : initialMonth}
-            value={_value}
-            onChange={handleValueChange}
-            labelFormat={labelFormat}
-            withSelect={withSelect}
-            yearsRange={yearsRange}
-            dayClassName={dayClassName}
-            dayStyle={dayStyle}
-            disableOutsideEvents={disableOutsideEvents}
-            minDate={minDate}
-            maxDate={maxDate}
-            excludeDate={excludeDate}
-            __staticSelector="date-picker"
-            fullWidth={dropdownType === 'modal'}
-            size={dropdownType === 'modal' ? 'lg' : calendarSize}
-            firstDayOfWeek={firstDayOfWeek}
-          />
-        </DatePickerBase>
+    const parseDate = (date: string) =>
+      dateParser ? dateParser(date) : dayjs(date, inputFormat, locale).toDate();
 
-        <input
-          type="hidden"
-          name={name}
-          value={_value instanceof Date ? _value.toISOString() : ''}
+    const handleInputBlur = () => {
+      const date = typeof _value === 'string' ? parseDate(_value) : _value;
+
+      if (dayjs(date, inputFormat, locale).isValid()) {
+        setValue(date);
+        setLastValidValue(date);
+      } else if (fixOnBlur) {
+        setValue(lastValidValue);
+      }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value);
+    };
+
+    return (
+      <DatePickerBase
+        allowManualTyping={allowManualTyping}
+        dropdownOpened={dropdownOpened}
+        setDropdownOpened={setDropdownOpened}
+        shadow={shadow}
+        transitionDuration={transitionDuration}
+        ref={useMergedRef(ref, inputRef)}
+        size={size}
+        styles={styles}
+        classNames={classNames}
+        onChange={handleChange}
+        onBlur={handleInputBlur}
+        name={name}
+        inputLabel={
+          _value instanceof Date
+            ? upperFirst(dayjs(_value).locale(locale).format(inputFormat))
+            : _value ?? ''
+        }
+        __staticSelector="date-picker"
+        dropdownType={dropdownType}
+        clearable={clearable && !!_value && !disabled}
+        clearButtonLabel={clearButtonLabel}
+        onClear={handleClear}
+        disabled={disabled}
+        {...others}
+      >
+        <Calendar
+          classNames={classNames}
+          styles={styles}
+          locale={locale}
+          nextMonthLabel={nextMonthLabel}
+          previousMonthLabel={previousMonthLabel}
+          initialMonth={_value instanceof Date ? _value : initialMonth}
+          value={_value instanceof Date ? _value : dayjs(_value).toDate()}
+          onChange={handleValueChange}
+          labelFormat={labelFormat}
+          withSelect={withSelect}
+          yearsRange={yearsRange}
+          dayClassName={dayClassName}
+          dayStyle={dayStyle}
+          disableOutsideEvents={disableOutsideEvents}
+          minDate={minDate}
+          maxDate={maxDate}
+          excludeDate={excludeDate}
+          __staticSelector="date-picker"
+          fullWidth={dropdownType === 'modal'}
+          size={dropdownType === 'modal' ? 'lg' : calendarSize}
+          firstDayOfWeek={firstDayOfWeek}
         />
-      </>
+      </DatePickerBase>
     );
   }
 );

@@ -35,6 +35,9 @@ export interface MonthSettings {
 
   /** Set to true to make calendar take 100% of container width */
   fullWidth?: boolean;
+
+  /** Prevent focusing upon clicking */
+  preventFocus?: boolean;
 }
 
 export type MonthStylesNames = ClassNames<typeof useStyles> | DayStylesNames;
@@ -95,6 +98,7 @@ export function Month({
   __staticSelector = 'Month',
   size = 'sm',
   fullWidth = false,
+  preventFocus = false,
   sx,
   firstDayOfWeek = 'monday',
   ...others
@@ -191,6 +195,7 @@ export function Month({
               daysRefs.current[date.toISOString()] = button;
             }}
             onClick={() => typeof onChange === 'function' && onChange(date)}
+            onMouseDown={(event) => preventFocus && event.preventDefault()}
             value={date}
             outside={dayProps.outside}
             weekend={dayProps.weekend}

@@ -90,6 +90,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       __staticSelector = 'Calendar',
       monthLabel,
       yearLabel,
+      preventFocus,
       firstDayOfWeek = 'monday',
       ...others
     }: CalendarProps,
@@ -123,6 +124,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           month={_month}
           setMonth={setMonth}
           labelFormat={labelFormat}
+          preventFocus={preventFocus}
           __staticSelector={__staticSelector}
           monthLabel={monthLabel}
           yearLabel={yearLabel}
@@ -141,6 +143,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           classNames={classNames}
           styles={styles}
           fullWidth={fullWidth}
+          preventFocus={preventFocus}
           size={size}
           locale={locale}
           firstDayOfWeek={firstDayOfWeek}
