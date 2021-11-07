@@ -31,6 +31,27 @@ function Controlled() {
   );
 }
 
+function ControlledFreeInput() {
+  const [value, onChange] = useState(new Date());
+
+  return (
+    <>
+      <DatePicker
+        mt={20}
+        mb={10}
+        value={value}
+        onChange={onChange}
+        placeholder="Controlled with free input"
+        label="Date picker"
+        allowManualTyping
+      />
+      <button type="button" onClick={() => onChange(new Date())}>
+        Set date
+      </button>
+    </>
+  );
+}
+
 const sizes = MANTINE_SIZES.map((size) => (
   <DatePicker
     placeholder={`${size} placeholder`}
@@ -81,6 +102,8 @@ storiesOf('@mantine/dates/DatePicker', module)
         mb={40}
       />
       <button type="button">Focus test</button>
+
+      <ControlledFreeInput />
     </div>
   ))
   .add('Sizes', () => <div style={{ maxWidth: 300, padding: 40 }}>{sizes}</div>)
