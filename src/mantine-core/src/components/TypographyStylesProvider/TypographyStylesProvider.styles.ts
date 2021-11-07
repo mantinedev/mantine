@@ -1,4 +1,4 @@
-import { createStyles, getFocusStyles } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
 export default createStyles((theme) => {
   const headings = Object.keys(theme.headings.sizes).reduce((acc, h) => {
@@ -52,7 +52,7 @@ export default createStyles((theme) => {
       },
 
       '& a': {
-        ...getFocusStyles(theme),
+        ...theme.fn.focusStyles(),
         color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6],
         textDecoration: 'none',
 

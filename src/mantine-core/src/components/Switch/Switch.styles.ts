@@ -1,7 +1,6 @@
 import {
   createStyles,
   MantineNumberSize,
-  getFocusStyles,
   getSizeValue,
   MantineSize,
   MantineColor,
@@ -53,7 +52,7 @@ export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
     },
 
     input: {
-      ...getFocusStyles(theme),
+      ...theme.fn.focusStyles(),
       WebkitTapHighlightColor: 'transparent',
       position: 'relative',
       borderRadius,

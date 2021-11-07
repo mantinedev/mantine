@@ -2,7 +2,6 @@ import {
   createStyles,
   MantineSize,
   getSizeValue,
-  getFocusStyles,
   MantineColor,
   getSharedColorScheme,
 } from '@mantine/styles';
@@ -81,7 +80,7 @@ export default createStyles(
       },
 
       input: {
-        ...getFocusStyles(theme),
+        ...theme.fn.focusStyles(),
         appearance: 'none',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
         border: `1px solid ${

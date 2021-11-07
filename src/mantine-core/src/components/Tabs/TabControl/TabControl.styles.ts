@@ -1,4 +1,4 @@
-import { createStyles, getFocusStyles, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor } from '@mantine/styles';
 
 interface TabControlStyles {
   color: MantineColor;
@@ -14,7 +14,7 @@ export default createStyles((theme, { color, orientation }: TabControlStyles, ge
 
     tabControl: {
       ...theme.fn.fontStyles(),
-      ...getFocusStyles(theme),
+      ...theme.fn.focusStyles(),
       WebkitTapHighlightColor: 'transparent',
       boxSizing: 'border-box',
       display: 'block',

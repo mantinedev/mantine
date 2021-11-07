@@ -1,11 +1,11 @@
-import { createStyles, getFocusStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 export default createStyles((theme, _params, getRef) => {
   const body = getRef('body');
 
   return {
     control: {
-      ...getFocusStyles(theme),
+      ...theme.fn.focusStyles(),
       display: 'flex',
       alignItems: 'center',
       textDecoration: 'none',

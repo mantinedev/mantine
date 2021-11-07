@@ -2,7 +2,6 @@ import {
   createStyles,
   MantineNumberSize,
   getSizeValue,
-  getFocusStyles,
   getSharedColorScheme,
   hexToRgba,
   MantineColor,
@@ -65,7 +64,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
 
 export default createStyles((theme, { color, size, radius }: ActionIconStyles) => ({
   root: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     ...theme.fn.fontStyles(),
     position: 'relative',
     appearance: 'none',

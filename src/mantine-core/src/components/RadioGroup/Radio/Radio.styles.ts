@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineSize,
-  getSizeValue,
-  getFocusStyles,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineSize, getSizeValue, MantineColor } from '@mantine/styles';
 
 interface RadioStyles {
   size: MantineSize;
@@ -32,7 +26,7 @@ export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
     },
 
     radio: {
-      ...getFocusStyles(theme),
+      ...theme.fn.focusStyles(),
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]

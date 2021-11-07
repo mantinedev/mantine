@@ -2,7 +2,6 @@ import {
   createStyles,
   MantineTheme,
   MantineSize,
-  getFocusStyles,
   getSharedColorScheme,
   MantineColor,
   CSSObject,
@@ -78,7 +77,7 @@ export default createStyles(
     return {
       root: {
         ...theme.fn.fontStyles(),
-        ...getFocusStyles(theme),
+        ...theme.fn.focusStyles(),
         ...getLineClamp(lineClamp),
         color: getTextColor({ color, theme, variant }),
         fontFamily: inherit ? 'inherit' : theme.fontFamily,

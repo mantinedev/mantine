@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSizeValue,
-  getFocusStyles,
-  MantineShadow,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, getSizeValue, MantineShadow } from '@mantine/styles';
 
 interface PaperStyles {
   radius: MantineNumberSize;
@@ -15,7 +9,7 @@ interface PaperStyles {
 
 export default createStyles((theme, { radius, shadow, padding, withBorder }: PaperStyles) => ({
   root: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     WebkitTapHighlightColor: 'transparent',
     display: 'block',
     textDecoration: 'none',

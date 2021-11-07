@@ -1,8 +1,8 @@
-import { createStyles, getFocusStyles } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
 export default createStyles((theme) => ({
   root: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     ...theme.fn.fontStyles(),
     cursor: 'pointer',
     border: 0,

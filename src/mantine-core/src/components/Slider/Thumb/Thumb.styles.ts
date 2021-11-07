@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  getFocusStyles,
-  getSizeValue,
-  MantineNumberSize,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, getSizeValue, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface ThumbStyles {
@@ -26,7 +20,7 @@ export default createStyles((theme, { color, size }: ThumbStyles) => ({
   },
 
   thumb: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     boxSizing: 'border-box',
     position: 'absolute',
     height: getSizeValue({ sizes, size }) * 2,

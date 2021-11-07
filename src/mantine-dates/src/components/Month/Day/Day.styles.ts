@@ -1,4 +1,4 @@
-import { getFocusStyles, createStyles, MantineSize, getSizeValue, hexToRgba } from '@mantine/core';
+import { createStyles, MantineSize, getSizeValue, hexToRgba } from '@mantine/core';
 
 interface DayStyles {
   size: MantineSize;
@@ -31,7 +31,7 @@ export default createStyles((theme, { size, fullWidth }: DayStyles, getRef) => {
 
     day: {
       ...theme.fn.fontStyles(),
-      ...getFocusStyles(theme),
+      ...theme.fn.focusStyles(),
       position: 'relative',
       WebkitTapHighlightColor: 'transparent',
       backgroundColor: 'transparent',

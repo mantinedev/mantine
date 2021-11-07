@@ -1,4 +1,4 @@
-import { createStyles, getFocusStyles, hexToRgba } from '@mantine/core';
+import { createStyles, hexToRgba } from '@mantine/core';
 
 export default createStyles((theme) => ({
   category: {
@@ -10,7 +10,7 @@ export default createStyles((theme) => ({
   },
 
   header: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
     outline: 0,
     display: 'flex',
@@ -75,7 +75,7 @@ export default createStyles((theme) => ({
   },
 
   link: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     WebkitTapHighlightColor: 'transparent',
     borderLeft: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3]

@@ -4,7 +4,6 @@ import {
   MantineColor,
   getSizeValue,
   getSharedColorScheme,
-  getFocusStyles,
 } from '@mantine/styles';
 
 interface AvatarStyles {
@@ -23,7 +22,7 @@ export const sizes = {
 
 export default createStyles((theme, { size, radius, color }: AvatarStyles) => ({
   root: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     WebkitTapHighlightColor: 'transparent',
     boxSizing: 'border-box',
     position: 'relative',

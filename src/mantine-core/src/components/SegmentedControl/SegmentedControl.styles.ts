@@ -3,7 +3,6 @@ import {
   MantineNumberSize,
   MantineSize,
   getSizeValue,
-  getFocusStyles,
   MantineColor,
 } from '@mantine/styles';
 
@@ -43,7 +42,7 @@ export default createStyles(
   ) => {
     const label = {
       ref: getRef('label'),
-      ...getFocusStyles(theme),
+      ...theme.fn.focusStyles(),
       ...theme.fn.fontStyles(),
       WebkitTapHighlightColor: 'transparent',
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),

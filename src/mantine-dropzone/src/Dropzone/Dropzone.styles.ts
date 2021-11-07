@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSizeValue,
-  getFocusStyles,
-  getSharedColorScheme,
-} from '@mantine/core';
+import { createStyles, MantineNumberSize, getSizeValue, getSharedColorScheme } from '@mantine/core';
 
 interface DropzoneStyles {
   padding: MantineNumberSize;
@@ -18,7 +12,7 @@ export default createStyles((theme, { padding, radius }: DropzoneStyles) => {
   return {
     root: {
       ...theme.fn.fontStyles(),
-      ...getFocusStyles(theme),
+      ...theme.fn.focusStyles(),
       boxSizing: 'border-box',
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       border: `2px dashed ${

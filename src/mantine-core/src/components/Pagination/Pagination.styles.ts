@@ -4,7 +4,6 @@ import {
   MantineNumberSize,
   getSizeValue,
   MantineColor,
-  getFocusStyles,
 } from '@mantine/styles';
 
 interface PaginationStyles {
@@ -37,7 +36,7 @@ export default createStyles((theme, { size, radius, color }: PaginationStyles, g
 
   return {
     item: {
-      ...getFocusStyles(theme),
+      ...theme.fn.focusStyles(),
       cursor: 'pointer',
       userSelect: 'none',
       display: 'flex',

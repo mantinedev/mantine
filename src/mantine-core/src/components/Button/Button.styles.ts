@@ -3,7 +3,6 @@ import {
   MantineSize,
   MantineNumberSize,
   getSizeValue,
-  getFocusStyles,
   MantineSizes,
   getSharedColorScheme,
   hexToRgba,
@@ -175,7 +174,7 @@ export default createStyles(
       root: {
         ...getSizeStyles({ compact, size }),
         ...theme.fn.fontStyles(),
-        ...getFocusStyles(theme),
+        ...theme.fn.focusStyles(),
         ...getWidthStyles(fullWidth),
         borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
         fontWeight: 600,

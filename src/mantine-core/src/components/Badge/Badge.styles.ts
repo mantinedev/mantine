@@ -2,7 +2,6 @@ import {
   createStyles,
   MantineSize,
   MantineNumberSize,
-  getFocusStyles,
   getSizeValue,
   getSharedColorScheme,
   MantineColor,
@@ -86,7 +85,7 @@ export default createStyles(
       },
 
       root: {
-        ...getFocusStyles(theme),
+        ...theme.fn.focusStyles(),
         ...theme.fn.fontStyles(),
         fontSize,
         height,
