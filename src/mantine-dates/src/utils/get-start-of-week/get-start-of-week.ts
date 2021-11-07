@@ -1,6 +1,6 @@
-import { FirstDayOfWeekNames } from '../../types';
+import { FirstDayOfWeek } from '../../types';
 
-export function getStartOfWeek(date: Date, firstDayOfWeek: FirstDayOfWeekNames = 'monday') {
+export function getStartOfWeek(date: Date, firstDayOfWeek: FirstDayOfWeek = 'monday') {
   const value = new Date(date);
   const day = value.getDay() || 7;
   const isSunday = firstDayOfWeek === 'sunday';

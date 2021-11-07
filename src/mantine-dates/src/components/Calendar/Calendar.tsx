@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import dayjs from 'dayjs';
 import { DefaultProps } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import { FirstDayOfWeekNames } from '../../types';
+import { FirstDayOfWeek } from '../../types';
 import { Month, MonthSettings, MonthStylesNames } from '../Month/Month';
 import { CalendarLabelStylesNames } from './CalendarLabel/CalendarLabel';
 import { CalendarHeader } from './CalendarHeader/CalendarHeader';
@@ -38,7 +38,7 @@ export interface CalendarSettings extends MonthSettings {
   yearsRange?: { from: number; to: number };
 
   /** Set first day of the week */
-  firstDayOfWeek?: FirstDayOfWeekNames;
+  firstDayOfWeek?: FirstDayOfWeek;
 }
 
 export type CalendarStylesNames = Exclude<MonthStylesNames, 'root'> | CalendarLabelStylesNames;
