@@ -13,7 +13,7 @@ function Demo() {
   );
 }
 
-export const manualTyping: MantineDemo = {
+export const freeInput: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,
