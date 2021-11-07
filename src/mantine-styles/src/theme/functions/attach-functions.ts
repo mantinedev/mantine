@@ -1,4 +1,4 @@
-import { MantineTheme, MantineThemeBase } from '../types';
+import type { MantineTheme, MantineThemeBase } from '../types';
 import { fns } from './fns';
 
 export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {

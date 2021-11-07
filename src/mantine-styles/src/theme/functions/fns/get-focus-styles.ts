@@ -1,5 +1,5 @@
-import { MantineThemeBase } from '../../types';
-import { CSSObject } from '../../../tss';
+import type { MantineThemeBase } from '../../types';
+import type { CSSObject } from '../../../tss';
 
 export function getFocusStyles(theme: MantineThemeBase) {
   return (): CSSObject => ({
