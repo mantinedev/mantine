@@ -13,6 +13,7 @@ import { DatePickerDemos } from '@demos/dates';
 
 - [Group](https://mantine.dev/core/group/) component was migrated to [flexbox gap](https://caniuse.com/flexbox-gap), it no longer uses hack with negative margins, thus `withGutter` prop is not longer supported.
 - [Button](https://mantine.dev/core/button/) component no longer supports `link` variant due to Styles API limitations, use [Anchor](https://mantine.dev/core/anchor/) component instead.
+- `@mantine/core` package no longer exports `getFontStyles`, `getFocusStyles` and `hexToRgba` functions, replace them with [theme functions](https://mantine.dev/theming/functions/): `theme.fn.fontStyles()`, `theme.fn.focusStyles()`, `theme.fn.rgba()`.
 
 ## New features
 
