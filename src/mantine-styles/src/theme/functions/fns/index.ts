@@ -1,11 +1,11 @@
-import { getFontStyles } from './get-font-styles';
-import { getThemeColor } from './get-theme-color';
-import { getFocusStyles } from './get-focus-styles';
+import { fontStyles } from './font-styles';
+import { themeColor } from './theme-color';
+import { focusStyles } from './focus-styles';
 import { rgba } from './rgba';
 
 export const fns = {
-  getFontStyles,
-  getThemeColor,
-  getFocusStyles,
+  fontStyles,
+  themeColor,
+  focusStyles,
   rgba,
 } as const;

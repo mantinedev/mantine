@@ -1,7 +1,7 @@
 import type { MantineThemeBase } from '../../types';
 import type { CSSObject } from '../../../tss';
 
-export function getFontStyles(theme: MantineThemeBase) {
+export function fontStyles(theme: MantineThemeBase) {
   return (): CSSObject => ({
     WebkitFontSmoothing: 'antialiased',
     MozOsxFontSmoothing: 'grayscale',

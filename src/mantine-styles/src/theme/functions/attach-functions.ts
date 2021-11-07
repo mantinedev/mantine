@@ -5,9 +5,9 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
   return {
     ...themeBase,
     fn: {
-      fontStyles: fns.getFontStyles(themeBase),
-      themeColor: fns.getThemeColor(themeBase),
-      focusStyles: fns.getFocusStyles(themeBase),
+      fontStyles: fns.fontStyles(themeBase),
+      themeColor: fns.themeColor(themeBase),
+      focusStyles: fns.focusStyles(themeBase),
       rgba: fns.rgba,
     },
   };

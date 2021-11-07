@@ -1,7 +1,7 @@
 import type { MantineThemeBase } from '../../types';
 import type { CSSObject } from '../../../tss';
 
-export function getFocusStyles(theme: MantineThemeBase) {
+export function focusStyles(theme: MantineThemeBase) {
   return (): CSSObject => ({
     WebkitTapHighlightColor: 'transparent',
 
