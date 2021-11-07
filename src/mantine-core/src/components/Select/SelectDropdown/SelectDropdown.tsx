@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineShadow, ClassNames } from '@mantine/styles';
-import { Transition, MantineTransition } from '../../Transition';
+import { MantineTransition } from '../../Transition';
 import { Paper } from '../../Paper';
 import useStyles from './SelectDropdown.styles';
+import { Popper } from '../../Popper';
 
 export type SelectDropdownStylesNames = ClassNames<typeof useStyles>;
 
@@ -17,6 +18,9 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   children: React.ReactNode;
   __staticSelector: string;
   dropdownComponent?: React.FC<any>;
+  referenceElement?: HTMLElement;
+  direction?: React.CSSProperties['flexDirection'];
+  onDirectionChange?: (direction: React.CSSProperties['flexDirection']) => void;
 }
 
 export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
@@ -33,6 +37,9 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       classNames,
       styles,
       dropdownComponent,
+      referenceElement,
+      direction = 'column',
+      onDirectionChange,
       __staticSelector,
     }: SelectDropdownProps,
     ref
@@ -40,30 +47,56 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
     const { classes } = useStyles(null, { classNames, styles, name: __staticSelector });
 
     return (
-      <Transition
+      <Popper
+        referenceElement={referenceElement}
         mounted={mounted}
         transition={transition}
-        duration={transitionDuration}
-        timingFunction={transitionTimingFunction}
+        transitionDuration={transitionDuration}
+        transitionTimingFunction={transitionTimingFunction}
+        position="bottom"
+        placementFallbacks={['top']}
+        onPlacementChange={(placement: string) => {
+          const nextDirection = placement === 'top' ? 'column-reverse' : 'column';
+
+          if (direction !== nextDirection) {
+            onDirectionChange && onDirectionChange(nextDirection);
+          }
+        }}
+        modifiers={[
+          {
+            // @ts-ignore
+            name: 'sameWidth',
+            enabled: true,
+            phase: 'beforeWrite',
+            requires: ['computeStyles'],
+            fn: ({ state }) => {
+              // eslint-disable-next-line no-param-reassign
+              state.styles.popper.width = `${state.rects.reference.width}px`;
+            },
+            effect: ({ state }) => {
+              // eslint-disable-next-line no-param-reassign
+              state.elements.popper.style.width = `${state.elements.reference.offsetWidth}px`;
+            },
+          },
+        ]}
       >
-        {(transitionStyles) => (
-          <div style={{ position: 'relative' }}>
-            <Paper<'div'>
-              component={(dropdownComponent || 'div') as any}
-              id={`${uuid}-items`}
-              aria-labelledby={`${uuid}-label`}
-              role="listbox"
-              className={classes.dropdown}
-              shadow={shadow}
-              ref={ref}
-              style={{ ...transitionStyles, maxHeight: maxDropdownHeight }}
-              onMouseDown={(event) => event.preventDefault()}
-            >
-              {children}
-            </Paper>
-          </div>
-        )}
-      </Transition>
+        <Paper<'div'>
+          component={(dropdownComponent || 'div') as any}
+          id={`${uuid}-items`}
+          aria-labelledby={`${uuid}-label`}
+          role="listbox"
+          className={classes.dropdown}
+          shadow={shadow}
+          ref={ref}
+          style={{
+            maxHeight: maxDropdownHeight,
+            flexDirection: direction,
+          }}
+          onMouseDown={(event) => event.preventDefault()}
+        >
+          {children}
+        </Paper>
+      </Popper>
     );
   }
 );

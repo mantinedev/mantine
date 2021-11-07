@@ -208,10 +208,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const dropdownRef = useRef<HTMLDivElement>();
     const inputRef = useRef<HTMLInputElement>();
+    const wrapperRef = useRef<HTMLDivElement>();
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
     const uuid = useUuid(id);
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
+    const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
     const [searchValue, setSearchValue] = useState('');
     const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
       duration: 0,
@@ -314,50 +316,64 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     };
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const isColumn = direction === 'column';
+
+      const handleNext = () => {
+        setHovered((current) => {
+          const nextIndex = getNextIndex(
+            current,
+            (index) => index + 1,
+            (index) => index < filteredData.length - 1
+          );
+
+          if (dropdownOpened) {
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+            scrollIntoView({
+              alignment: isColumn ? 'end' : 'start',
+            });
+          }
+
+          return nextIndex;
+        });
+      };
+
+      const handlePrevious = () => {
+        setHovered((current) => {
+          const nextIndex = getNextIndex(
+            current,
+            (index) => index - 1,
+            (index) => index > 0
+          );
+
+          if (dropdownOpened) {
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+            scrollIntoView({
+              alignment: isColumn ? 'start' : 'end',
+            });
+          }
+
+          return nextIndex;
+        });
+      };
+
       switch (event.nativeEvent.code) {
         case 'ArrowUp': {
           event.preventDefault();
           setDropdownOpened(true);
-          setHovered((current) => {
-            const nextIndex = getNextIndex(
-              current,
-              (index) => index - 1,
-              (index) => index > 0
-            );
 
-            if (dropdownOpened) {
-              targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+          isColumn ? handlePrevious() : handleNext();
 
-              scrollIntoView({
-                alignment: 'start',
-              });
-            }
-
-            return nextIndex;
-          });
           break;
         }
 
         case 'ArrowDown': {
           event.preventDefault();
           setDropdownOpened(true);
-          setHovered((current) => {
-            const nextIndex = getNextIndex(
-              current,
-              (index) => index + 1,
-              (index) => index < filteredData.length - 1
-            );
 
-            if (dropdownOpened) {
-              targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+          isColumn ? handleNext() : handlePrevious();
 
-              scrollIntoView({
-                alignment: 'end',
-              });
-            }
-
-            return nextIndex;
-          });
           break;
         }
 
@@ -454,6 +470,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           aria-expanded={dropdownOpened}
           onMouseLeave={() => setHovered(-1)}
           tabIndex={-1}
+          ref={wrapperRef}
         >
           <Input<'div'>
             __staticSelector="MultiSelect"
@@ -528,6 +545,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             ref={useMergedRef(dropdownRef, scrollableRef)}
             __staticSelector="MultiSelect"
             dropdownComponent={dropdownComponent}
+            referenceElement={wrapperRef.current}
+            direction={direction}
+            onDirectionChange={setDirection}
           >
             <SelectItems
               data={filteredData}
