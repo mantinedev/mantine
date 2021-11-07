@@ -18,8 +18,8 @@ describe('@mantine/dates/DatePicker', () => {
 
   it('passes correct __staticSelector to Calendar and DatePickerBase components', () => {
     const element = shallow(<DatePicker initiallyOpened />);
-    expect(element.find(DatePickerBase).prop('__staticSelector')).toBe('date-picker');
-    expect(element.find(Calendar).prop('__staticSelector')).toBe('date-picker');
+    expect(element.find(DatePickerBase).prop('__staticSelector')).toBe('DatePicker');
+    expect(element.find(Calendar).prop('__staticSelector')).toBe('DatePicker');
   });
 
   it('sets label on DatePickerBase based on inputFormat prop', () => {
