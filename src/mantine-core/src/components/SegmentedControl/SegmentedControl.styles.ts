@@ -3,7 +3,6 @@ import {
   MantineNumberSize,
   MantineSize,
   getSizeValue,
-  getThemeColor,
   getFocusStyles,
   MantineColor,
 } from '@mantine/styles';
@@ -153,7 +152,7 @@ export default createStyles(
         }`,
         backgroundColor:
           color in theme.colors
-            ? getThemeColor({ theme, color, shade: 6 })
+            ? theme.fn.themeColor(color, 6)
             : theme.colorScheme === 'dark'
             ? theme.colors.dark[5]
             : theme.white,

@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSizeValue,
-  getThemeColor,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, getSizeValue, MantineColor } from '@mantine/styles';
 
 interface DividerStyles {
   size: MantineNumberSize;
@@ -40,28 +34,26 @@ export default createStyles((theme, { size, variant, color }: DividerStyles) => 
   label: {
     display: 'flex',
     alignItems: 'center',
-    color: color === 'dark' ? theme.colors.dark[1] : getThemeColor({ theme, color, shade: 6 }),
+    color: color === 'dark' ? theme.colors.dark[1] : theme.fn.themeColor(color, 6),
 
     '&::before': {
       content: '""',
       flex: 1,
       height: 1,
-      borderTop: `1px ${variant} ${getThemeColor({
-        theme,
+      borderTop: `1px ${variant} ${theme.fn.themeColor(
         color,
-        shade: theme.colorScheme === 'dark' ? 3 : 4,
-      })}`,
+        theme.colorScheme === 'dark' ? 3 : 4
+      )}`,
       marginRight: theme.spacing.xs,
     },
 
     '&::after': {
       content: '""',
       flex: 1,
-      borderTop: `1px ${variant} ${getThemeColor({
-        theme,
+      borderTop: `1px ${variant} ${theme.fn.themeColor(
         color,
-        shade: theme.colorScheme === 'dark' ? 3 : 4,
-      })}`,
+        theme.colorScheme === 'dark' ? 3 : 4
+      )}`,
       marginLeft: theme.spacing.xs,
     },
   },
@@ -69,7 +61,7 @@ export default createStyles((theme, { size, variant, color }: DividerStyles) => 
   horizontal: {
     border: 0,
     borderTopWidth: getSizeValue({ size, sizes }),
-    borderTopColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 4 }),
+    borderTopColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 4),
     borderTopStyle: variant as any,
     margin: 0,
   },
@@ -78,7 +70,7 @@ export default createStyles((theme, { size, variant, color }: DividerStyles) => 
     border: 0,
     alignSelf: 'stretch',
     borderLeftWidth: getSizeValue({ size, sizes }),
-    borderLeftColor: getThemeColor({ theme, color, shade: 4 }),
+    borderLeftColor: theme.fn.themeColor(color, 4),
     borderLeftStyle: variant as any,
   },
 }));

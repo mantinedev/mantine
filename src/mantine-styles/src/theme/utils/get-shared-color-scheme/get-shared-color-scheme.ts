@@ -1,5 +1,4 @@
 import { MantineTheme } from '../../types';
-import { getThemeColor } from '../get-theme-color/get-theme-color';
 import { hexToRgba } from '../hex-to-rgba/hex-to-rgba';
 
 interface GetSharedColorScheme {
@@ -30,7 +29,7 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
     return {
       border: 'transparent',
       background: hexToRgba(
-        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+        theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 9 : 0),
         theme.colorScheme === 'dark' ? 0.35 : 1
       ),
       color:
@@ -38,7 +37,7 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
           ? theme.colorScheme === 'dark'
             ? theme.colors.dark[0]
             : theme.colors.dark[9]
-          : getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 2 : 6 }),
+          : theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 2 : 6),
     };
   }
 
@@ -54,18 +53,15 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
     return {
       border: 'transparent',
       background: theme.white,
-      color: getThemeColor({ theme, color, shade: 7 }),
+      color: theme.fn.themeColor(color, 7),
     };
   }
 
   if (variant === 'outline') {
     return {
-      border: hexToRgba(
-        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
-        0.65
-      ),
+      border: hexToRgba(theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 7), 0.65),
       background: 'transparent',
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
+      color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 7),
     };
   }
 
@@ -77,11 +73,10 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
     };
 
     return {
-      background: `linear-gradient(${merged.deg}deg, ${getThemeColor({
-        theme,
-        color: merged.from,
-        shade: 6,
-      })} 0%, ${getThemeColor({ theme, color: merged.to, shade: 6 })} 100%)`,
+      background: `linear-gradient(${merged.deg}deg, ${theme.fn.themeColor(
+        merged.from,
+        6
+      )} 0%, ${theme.fn.themeColor(merged.to, 6)} 100%)`,
       color: theme.white,
       border: 'transparent',
     };
@@ -90,7 +85,7 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
   // Filled variant as default
   return {
     border: 'transparent',
-    background: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 6 }),
+    background: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 8 : 6),
     color: theme.white,
   };
 }

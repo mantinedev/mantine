@@ -1,4 +1,4 @@
-import { createStyles, getFocusStyles, getThemeColor, MantineColor } from '@mantine/styles';
+import { createStyles, getFocusStyles, MantineColor } from '@mantine/styles';
 
 interface TabControlStyles {
   color: MantineColor;
@@ -38,12 +38,9 @@ export default createStyles((theme, { color, orientation }: TabControlStyles, ge
       [orientation === 'horizontal' ? 'borderBottom' : 'borderRight']: '2px solid transparent',
 
       [`&.${tabActive.ref}`]: {
-        color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
-        [orientation === 'horizontal' ? 'borderBottomColor' : 'borderRightColor']: getThemeColor({
-          theme,
-          color,
-          shade: theme.colorScheme === 'dark' ? 4 : 7,
-        }),
+        color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
+        [orientation === 'horizontal' ? 'borderBottomColor' : 'borderRightColor']:
+          theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
       },
     },
 

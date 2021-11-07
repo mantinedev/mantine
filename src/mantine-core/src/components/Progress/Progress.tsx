@@ -3,7 +3,6 @@ import {
   useMantineTheme,
   DefaultProps,
   MantineNumberSize,
-  getThemeColor,
   MantineColor,
   ClassNames,
   useExtractedMargins,
@@ -81,7 +80,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             style={{
               width: `${section.value}%`,
               left: `${section.accumulated}%`,
-              backgroundColor: getThemeColor({ theme, color: section.color, shade: 7 }),
+              backgroundColor: theme.fn.themeColor(section.color, 7),
             }}
           />
         ))

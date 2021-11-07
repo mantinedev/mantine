@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  getSizeValue,
-  getThemeColor,
-  MantineNumberSize,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, getSizeValue, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface TrackStyles {
@@ -27,7 +21,7 @@ export default createStyles((theme, { radius, size, color }: TrackStyles) => ({
     top: 0,
     bottom: 0,
     left: 0,
-    backgroundColor: getThemeColor({ theme, color, shade: 6 }),
+    backgroundColor: theme.fn.themeColor(color, 6),
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
   },
 }));

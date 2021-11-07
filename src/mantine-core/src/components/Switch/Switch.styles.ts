@@ -1,7 +1,6 @@
 import {
   createStyles,
   MantineNumberSize,
-  getThemeColor,
   getFocusStyles,
   getSizeValue,
   MantineSize,
@@ -92,8 +91,8 @@ export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
       },
 
       '&:checked': {
-        backgroundColor: getThemeColor({ theme, color, shade: 6 }),
-        borderColor: getThemeColor({ theme, color, shade: 6 }),
+        backgroundColor: theme.fn.themeColor(color, 6),
+        borderColor: theme.fn.themeColor(color, 6),
 
         '&::before': {
           transform: `translateX(${

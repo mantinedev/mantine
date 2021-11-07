@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSizeValue,
-  getThemeColor,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, getSizeValue, MantineColor } from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface MarksStyles {
@@ -32,7 +26,7 @@ export default createStyles((theme, { size, color }: MarksStyles) => ({
   },
 
   markFilled: {
-    borderColor: getThemeColor({ theme, color, shade: 6 }),
+    borderColor: theme.fn.themeColor(color, 6),
   },
 
   markLabel: {

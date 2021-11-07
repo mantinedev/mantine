@@ -1,6 +1,5 @@
 import {
   createStyles,
-  getThemeColor,
   getFocusStyles,
   getSizeValue,
   MantineNumberSize,
@@ -32,10 +31,9 @@ export default createStyles((theme, { color, size }: ThumbStyles) => ({
     position: 'absolute',
     height: getSizeValue({ sizes, size }) * 2,
     width: getSizeValue({ sizes, size }) * 2,
-    backgroundColor:
-      theme.colorScheme === 'dark' ? getThemeColor({ theme, color, shade: 6 }) : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.fn.themeColor(color, 6) : theme.white,
     border: `4px solid ${
-      theme.colorScheme === 'dark' ? theme.white : getThemeColor({ theme, color, shade: 6 })
+      theme.colorScheme === 'dark' ? theme.white : theme.fn.themeColor(color, 6)
     }`,
     transform: 'translate(-50%, -50%)',
     top: '50%',

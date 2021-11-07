@@ -3,7 +3,6 @@ import {
   MantineSize,
   getSizeValue,
   getFocusStyles,
-  getThemeColor,
   MantineColor,
 } from '@mantine/styles';
 
@@ -50,8 +49,8 @@ export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
       justifyContent: 'center',
 
       '&:checked': {
-        background: getThemeColor({ theme, color, shade: 6 }),
-        borderColor: getThemeColor({ theme, color, shade: 6 }),
+        background: theme.fn.themeColor(color, 6),
+        borderColor: theme.fn.themeColor(color, 6),
 
         '&::before': {
           content: '""',

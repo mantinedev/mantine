@@ -3,7 +3,6 @@ import {
   useMantineTheme,
   DefaultProps,
   MantineNumberSize,
-  getThemeColor,
   getSizeValue,
   MantineColor,
   MantineTheme,
@@ -61,7 +60,7 @@ export function Loader({
       style={mergedStyles}
       color={
         _color in theme.colors
-          ? getThemeColor({ theme, color: _color, shade: theme.colorScheme === 'dark' ? 4 : 6 })
+          ? theme.fn.themeColor(_color, theme.colorScheme === 'dark' ? 4 : 6)
           : color
       }
       role="presentation"

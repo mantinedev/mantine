@@ -1,6 +1,5 @@
 import {
   createStyles,
-  getThemeColor,
   MantineNumberSize,
   getSizeValue,
   hexToRgba,
@@ -29,7 +28,7 @@ export default createStyles((theme, { radius, color }: MenuButtonStyles) => ({
     cursor: 'pointer',
     borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
     color: color
-      ? getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 })
+      ? theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 7)
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[0]
       : theme.black,
@@ -43,7 +42,7 @@ export default createStyles((theme, { radius, color }: MenuButtonStyles) => ({
   itemHovered: {
     backgroundColor: color
       ? hexToRgba(
-          getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+          theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 9 : 0),
           theme.colorScheme === 'dark' ? 0.2 : 1
         )
       : theme.colorScheme === 'dark'

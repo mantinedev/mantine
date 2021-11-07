@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getThemeColor,
-  getSizeValue,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, getSizeValue, MantineColor } from '@mantine/styles';
 
 export const sizes = {
   xs: 3,
@@ -36,7 +30,7 @@ export default createStyles((theme, { color, radius, size, striped }: ProgressSt
     bottom: 0,
     left: 0,
     height: '100%',
-    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 6),
     transition: `width 200ms ${theme.transitionTimingFunction}`,
     backgroundSize: `${theme.spacing.md}px ${theme.spacing.md}px`,
     backgroundImage: striped
