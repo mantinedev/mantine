@@ -3,7 +3,6 @@ import {
   MantineNumberSize,
   getSizeValue,
   getFocusStyles,
-  getThemeColor,
   getSharedColorScheme,
   hexToRgba,
   MantineColor,
@@ -42,7 +41,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
   if (variant === 'hover' || variant === 'transparent') {
     return {
       border: '1px solid transparent',
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
+      color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
       backgroundColor: 'transparent',
 
       '&:hover':
@@ -50,9 +49,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
           ? {}
           : {
               backgroundColor:
-                theme.colorScheme === 'dark'
-                  ? theme.colors.dark[8]
-                  : getThemeColor({ theme, color, shade: 0 }),
+                theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.fn.themeColor(color, 0),
             },
     };
   }
@@ -90,17 +87,8 @@ export default createStyles((theme, { color, size, radius }: ActionIconStyles) =
     '&:disabled': {
       color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
       cursor: 'not-allowed',
-
-      backgroundColor: getThemeColor({
-        theme,
-        color: 'gray',
-        shade: theme.colorScheme === 'dark' ? 8 : 1,
-      }),
-      borderColor: getThemeColor({
-        theme,
-        color: 'gray',
-        shade: theme.colorScheme === 'dark' ? 8 : 1,
-      }),
+      backgroundColor: theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 1),
+      borderColor: theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 1),
     },
 
     '&:not(:disabled):active': {
