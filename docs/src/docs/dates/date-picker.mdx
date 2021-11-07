@@ -88,11 +88,23 @@ Dates which are not included in available interval will be disabled:
 
 <Demo data={DatePickerDemos.boundaries} />
 
-## Manual typing
+## Allow free input
 
-By passing `allowFreeInput` you stop input from being a readonly. User is allowed to type date manually, date is validated after losing focus on input.
+By setting `allowFreeInput` prop you stop input from being readonly.
+With this option user is allowed to type date manually:
 
 <Demo data={DatePickerDemos.manualTyping} />
+
+By default DatePicker will try to parse date using dayjs with given `inputFormat`,
+to change that provide `dateParser` function:
+
+```tsx
+const dateParser = (dateString) => new Date(Date.parse(dateString));
+<DatePicker allowFreeInput dateParser={dateParser} />;
+```
+
+`dateParser` function should always return Date object.
+If parsed date is invalid when input is blurred value will be restored to last valid value.
 
 ## Exclude dates
 
