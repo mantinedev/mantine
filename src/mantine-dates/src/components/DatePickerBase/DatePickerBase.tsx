@@ -176,10 +176,11 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
       event.nativeEvent.code === 'Escape' && closeDropdown();
 
-    useClickOutside(() => dropdownType === 'popover' && closeDropdown(), null, [
-      dropdownElement,
-      rootElement,
-    ]);
+    useClickOutside(
+      () => dropdownType === 'popover' && !allowManualTyping && closeDropdown(),
+      null,
+      [dropdownElement, rootElement]
+    );
 
     useWindowEvent('scroll', () => closeDropdownOnScroll && closeDropdown());
 
@@ -220,7 +221,14 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         <div ref={setRootElement}>
           <div className={classes.wrapper}>
             <Input
-              classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
+              classNames={{
+                ...classNames,
+                input: cx(
+                  classes.input,
+                  { [classes.freeInput]: allowManualTyping },
+                  classNames?.input
+                ),
+              }}
               styles={styles}
               onClick={() => setDropdownOpened(!dropdownOpened)}
               id={uuid}

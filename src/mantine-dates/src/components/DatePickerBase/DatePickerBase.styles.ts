@@ -39,6 +39,10 @@ export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => 
     whiteSpace: 'nowrap',
   },
 
+  freeInput: {
+    cursor: 'text',
+  },
+
   dropdown: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     border: `1px solid ${

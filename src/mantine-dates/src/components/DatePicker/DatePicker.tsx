@@ -139,7 +139,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
             ? upperFirst(dayjs(_value).locale(locale).format(inputFormat))
             : _value ?? ''
         }
-        __staticSelector="date-picker"
+        __staticSelector="DatePicker"
         dropdownType={dropdownType}
         clearable={clearable && !!_value && !disabled}
         clearButtonLabel={clearButtonLabel}
@@ -153,7 +153,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           locale={locale}
           nextMonthLabel={nextMonthLabel}
           previousMonthLabel={previousMonthLabel}
-          initialMonth={_value instanceof Date ? _value : initialMonth}
+          month={_value instanceof Date ? _value : initialMonth}
           value={_value instanceof Date ? _value : dayjs(_value).toDate()}
           onChange={handleValueChange}
           labelFormat={labelFormat}
@@ -169,6 +169,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           fullWidth={dropdownType === 'modal'}
           size={dropdownType === 'modal' ? 'lg' : calendarSize}
           firstDayOfWeek={firstDayOfWeek}
+          preventFocus={allowManualTyping}
         />
       </DatePickerBase>
     );
