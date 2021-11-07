@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles, RangeSlider, hexToRgba } from '@mantine/core';
+import { createStyles, RangeSlider } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   label: {
@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
   bar: {
     backgroundColor:
       theme.colorScheme === 'dark'
-        ? hexToRgba(theme.colors[theme.primaryColor][7], 0.65)
+        ? theme.fn.rgba(theme.colors[theme.primaryColor][7], 0.65)
         : theme.colors[theme.primaryColor][3],
   },
 }));

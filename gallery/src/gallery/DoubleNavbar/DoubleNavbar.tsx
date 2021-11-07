@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  createStyles,
-  Navbar,
-  UnstyledButton,
-  Tooltip,
-  hexToRgba,
-  Title,
-  Image,
-} from '@mantine/core';
+import { createStyles, Navbar, UnstyledButton, Tooltip, Title, Image } from '@mantine/core';
 import {
   Home2,
   Gauge,
@@ -58,7 +50,7 @@ const useStyles = createStyles((theme) => ({
     '&, &:hover': {
       backgroundColor:
         theme.colorScheme === 'dark'
-          ? hexToRgba(theme.colors[theme.primaryColor][9], 0.25)
+          ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.25)
           : theme.colors[theme.primaryColor][0],
       color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7],
     },
@@ -107,7 +99,7 @@ const useStyles = createStyles((theme) => ({
       borderLeftColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 6 : 4],
       backgroundColor:
         theme.colorScheme === 'dark'
-          ? hexToRgba(theme.colors[theme.primaryColor][9], 0.25)
+          ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.25)
           : theme.colors[theme.primaryColor][0],
       color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7],
     },

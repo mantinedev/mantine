@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, hexToRgba } from '@mantine/styles';
+import { DEFAULT_THEME } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { ColorSwatch } from './ColorSwatch';
 
@@ -9,7 +9,11 @@ const swatches = Object.keys(DEFAULT_THEME.colors).map((theme) => (
 ));
 
 const transparent = Object.keys(DEFAULT_THEME.colors).map((theme) => (
-  <ColorSwatch color={hexToRgba(DEFAULT_THEME.colors[theme][5], 0.5)} key={theme} size={20} />
+  <ColorSwatch
+    color={DEFAULT_THEME.fn.rgba(DEFAULT_THEME.colors[theme][5], 0.5)}
+    key={theme}
+    size={20}
+  />
 ));
 
 const radiuses = ([0, 'xs', 'sm', 'md', 'lg', 'xl', 1000] as const).map((radius) => (

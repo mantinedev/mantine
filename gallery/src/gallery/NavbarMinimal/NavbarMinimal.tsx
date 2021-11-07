@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Navbar,
-  Image,
-  Tooltip,
-  UnstyledButton,
-  createStyles,
-  Group,
-  hexToRgba,
-} from '@mantine/core';
+import { Navbar, Image, Tooltip, UnstyledButton, createStyles, Group } from '@mantine/core';
 import {
   Icon as TablerIcon,
   Home2,
@@ -41,7 +33,7 @@ const useStyles = createStyles((theme) => ({
     '&, &:hover': {
       backgroundColor:
         theme.colorScheme === 'dark'
-          ? hexToRgba(theme.colors[theme.primaryColor][9], 0.25)
+          ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.25)
           : theme.colors[theme.primaryColor][0],
       color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7],
     },

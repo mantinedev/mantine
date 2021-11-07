@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar, SegmentedControl, Text, createStyles, hexToRgba } from '@mantine/core';
+import { Navbar, SegmentedControl, Text, createStyles } from '@mantine/core';
 import {
   ShoppingCart,
   License,
@@ -63,7 +63,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
       '&, &:hover': {
         backgroundColor:
           theme.colorScheme === 'dark'
-            ? hexToRgba(theme.colors[theme.primaryColor][9], 0.25)
+            ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.25)
             : theme.colors[theme.primaryColor][0],
         color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7],
         [`& .${icon}`]: {

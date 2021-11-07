@@ -5,7 +5,6 @@ import {
   useMantineTheme,
   Tooltip,
   DefaultProps,
-  hexToRgba,
   MantineColor,
   ClassNames,
   useExtractedMargins,
@@ -118,7 +117,7 @@ export function Prism({
                 const shouldHighlight = lineNumber in highlightLines;
                 const lineColor =
                   theme.colorScheme === 'dark'
-                    ? hexToRgba(theme.fn.themeColor(highlightLines[lineNumber]?.color, 9), 0.25)
+                    ? theme.fn.rgba(theme.fn.themeColor(highlightLines[lineNumber]?.color, 9), 0.25)
                     : theme.fn.themeColor(highlightLines[lineNumber]?.color, 0);
 
                 return (

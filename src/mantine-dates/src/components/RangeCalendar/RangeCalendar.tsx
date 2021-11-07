@@ -1,5 +1,5 @@
 import React, { useState, forwardRef } from 'react';
-import { DefaultProps, useMantineTheme, hexToRgba } from '@mantine/core';
+import { DefaultProps, useMantineTheme } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { isSameDate } from '../../utils';
@@ -162,7 +162,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
                 ...initialStyles,
                 backgroundColor:
                   theme.colorScheme === 'dark'
-                    ? hexToRgba(theme.colors[theme.primaryColor][9], 0.3)
+                    ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.3)
                     : theme.colors[theme.primaryColor][0],
                 borderRadius: 0,
               };

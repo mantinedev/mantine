@@ -15,6 +15,7 @@ interface MantineThemeFunctions {
   fontStyles(): CSSObject;
   focusStyles(): CSSObject;
   themeColor(color: string, shade: number): string;
+  rgba(color: string, alpha: number): string;
 }
 
 export interface MantineTheme {

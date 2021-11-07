@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles, Text, SimpleGrid, Container, hexToRgba } from '@mantine/core';
+import { createStyles, Text, SimpleGrid, Container } from '@mantine/core';
 import { Truck, Certificate, Coin } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => ({
@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
     left: 0,
     backgroundColor:
       theme.colorScheme === 'dark'
-        ? hexToRgba(theme.colors[theme.primaryColor][7], 0.2)
+        ? theme.fn.rgba(theme.colors[theme.primaryColor][7], 0.2)
         : theme.colors[theme.primaryColor][0],
     zIndex: 1,
   },

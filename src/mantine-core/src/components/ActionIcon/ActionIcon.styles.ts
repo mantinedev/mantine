@@ -3,7 +3,6 @@ import {
   MantineNumberSize,
   getSizeValue,
   getSharedColorScheme,
-  hexToRgba,
   MantineColor,
   MantineTheme,
 } from '@mantine/styles';
@@ -112,7 +111,7 @@ export default createStyles((theme, { color, size, radius }: ActionIconStyles) =
       bottom: -1,
       backgroundColor:
         theme.colorScheme === 'dark'
-          ? hexToRgba(theme.colors.dark[7], 0.5)
+          ? theme.fn.rgba(theme.colors.dark[7], 0.5)
           : 'rgba(255, 255, 255, .5)',
       borderRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
       cursor: 'not-allowed',

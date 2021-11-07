@@ -1,11 +1,11 @@
 import React from 'react';
-import { TextInput, createStyles, hexToRgba } from '@mantine/core';
+import { TextInput, createStyles } from '@mantine/core';
 import { XCircleFillIcon } from '@primer/octicons-react';
 
 const useStyles = createStyles((theme) => ({
   invalid: {
     backgroundColor:
-      theme.colorScheme === 'dark' ? hexToRgba(theme.colors.red[8], 0.15) : theme.colors.red[0],
+      theme.colorScheme === 'dark' ? theme.fn.rgba(theme.colors.red[8], 0.15) : theme.colors.red[0],
   },
 
   icon: {

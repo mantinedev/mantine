@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSizeValue,
-  hexToRgba,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, getSizeValue, MantineColor } from '@mantine/styles';
 
 interface MenuButtonStyles {
   radius: MantineNumberSize;
@@ -41,12 +35,12 @@ export default createStyles((theme, { radius, color }: MenuButtonStyles) => ({
 
   itemHovered: {
     backgroundColor: color
-      ? hexToRgba(
+      ? theme.fn.rgba(
           theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 9 : 0),
           theme.colorScheme === 'dark' ? 0.2 : 1
         )
       : theme.colorScheme === 'dark'
-      ? hexToRgba(theme.colors.dark[3], 0.35)
+      ? theme.fn.rgba(theme.colors.dark[3], 0.35)
       : theme.colors.gray[0],
   },
 

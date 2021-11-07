@@ -1,4 +1,4 @@
-import { createStyles, MantineSize, getSizeValue, hexToRgba } from '@mantine/core';
+import { createStyles, MantineSize, getSizeValue } from '@mantine/core';
 
 interface DayStyles {
   size: MantineSize;
@@ -68,7 +68,7 @@ export default createStyles((theme, { size, fullWidth }: DayStyles, getRef) => {
       [`&.${inRange.ref}:not(:disabled)`]: {
         backgroundColor:
           theme.colorScheme === 'dark'
-            ? hexToRgba(theme.colors[theme.primaryColor][9], 0.3)
+            ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.3)
             : theme.colors[theme.primaryColor][0],
         borderRadius: 0,
       },
