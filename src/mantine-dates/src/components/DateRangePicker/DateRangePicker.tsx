@@ -6,6 +6,7 @@ import { CalendarSettings } from '../Calendar/Calendar';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
+// @ts-ignore
 export interface DateRangePickerProps
   extends DatePickerBaseSharedProps,
     Omit<CalendarSettings, 'size'> {

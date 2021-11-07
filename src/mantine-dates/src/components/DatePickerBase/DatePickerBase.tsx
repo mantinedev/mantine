@@ -3,7 +3,6 @@ import {
   DefaultProps,
   Input,
   InputWrapper,
-  Text,
   InputBaseProps,
   InputWrapperBaseProps,
   Paper,
@@ -40,14 +39,14 @@ export interface DatePickerBaseSharedProps
     InputWrapperBaseProps,
     DefaultProps<DatePickerStylesNames>,
     Omit<
-      React.ComponentPropsWithoutRef<'button'>,
-      'value' | 'defaultValue' | 'onChange' | 'placeholder'
+      React.ComponentPropsWithoutRef<'input'>,
+      'value' | 'defaultValue' | 'placeholder' | 'size'
     > {
   /** Props spread to root element (InputWrapper) */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Placeholder, displayed when date is not selected */
-  placeholder?: React.ReactNode;
+  placeholder?: string;
 
   /** Dropdown appear/disappear transition */
   transition?: MantineTransition;
@@ -76,6 +75,9 @@ export interface DatePickerBaseSharedProps
   /** Allow to clear value */
   clearable?: boolean;
 
+  /** Allow manual typing */
+  allowManualTyping?: boolean;
+
   /** aria-label for clear button */
   clearButtonLabel?: string;
 
@@ -84,6 +86,9 @@ export interface DatePickerBaseSharedProps
 
   /** Popper zIndex */
   zIndex?: number;
+
+  /** call onChange with last valid value onBlur */
+  fixOnBlur?: boolean;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -111,7 +116,7 @@ const RIGHT_SECTION_WIDTH = {
   xl: 44,
 };
 
-export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>(
+export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
   (
     {
       classNames,
@@ -120,6 +125,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
       styles,
       wrapperProps,
       required,
+      allowManualTyping = false,
       label,
       error,
       id,
@@ -142,6 +148,9 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
       onClear,
       positionDependencies = [],
       zIndex = 3,
+      onBlur,
+      onChange,
+      name = 'date',
       sx,
       ...others
     }: DatePickerBaseProps,
@@ -157,9 +166,13 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
     const uuid = useUuid(id);
 
-    const focusTrapRef = useFocusTrap(dropdownOpened);
+    const focusTrapRef = useFocusTrap(!allowManualTyping && dropdownOpened);
     const inputRef = useRef<HTMLButtonElement>();
-    const closeDropdown = () => setDropdownOpened(false);
+
+    const closeDropdown = () => {
+      setDropdownOpened(false);
+    };
+
     const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
       event.nativeEvent.code === 'Escape' && closeDropdown();
 
@@ -178,6 +191,14 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
         size={size}
       />
     ) : null;
+
+    const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+      typeof onBlur === 'function' && onBlur(event);
+
+      if (allowManualTyping) {
+        closeDropdown();
+      }
+    };
 
     return (
       <InputWrapper
@@ -199,8 +220,6 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
         <div ref={setRootElement}>
           <div className={classes.wrapper}>
             <Input
-              component="button"
-              type="button"
               classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
               styles={styles}
               onClick={() => setDropdownOpened(!dropdownOpened)}
@@ -208,20 +227,19 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
               ref={useMergedRef(ref, inputRef)}
               __staticSelector={__staticSelector}
               size={size}
+              name={name}
+              placeholder={placeholder}
+              value={inputLabel}
               required={required}
               invalid={!!error}
+              readOnly={!allowManualTyping}
               rightSection={rightSection}
               rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
+              onBlur={handleInputBlur}
+              onChange={onChange}
+              autoComplete="off"
               {...rest}
-            >
-              {inputLabel ? (
-                <div className={classes.value}>{inputLabel}</div>
-              ) : (
-                <Text className={classes.placeholder} size={size}>
-                  {placeholder}
-                </Text>
-              )}
-            </Input>
+            />
           </div>
 
           {dropdownType === 'popover' ? (
@@ -239,13 +257,14 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
               arrowSize={3}
               zIndex={zIndex}
               arrowClassName={classes.arrow}
-              onTransitionEnd={() => inputRef.current?.focus()}
+              onTransitionEnd={() => !allowManualTyping && inputRef.current?.focus()}
             >
               <div
                 className={classes.dropdownWrapper}
                 ref={useMergedRef(focusTrapRef, setDropdownElement)}
                 data-mantine-stop-propagation={dropdownOpened}
                 onKeyDownCapture={closeOnEscape}
+                aria-hidden={allowManualTyping || undefined}
               >
                 <Paper className={classes.dropdown} shadow={shadow}>
                   {children}

@@ -13,3 +13,4 @@ export { icon } from './icon';
 export { notClearable } from './notClearable';
 export { validation } from './validation';
 export { disabled } from './disabled';
+export { manualTyping } from './manualTyping';
