@@ -75,9 +75,6 @@ export interface DatePickerBaseSharedProps
   /** Allow to clear value */
   clearable?: boolean;
 
-  /** Allow manual typing */
-  allowManualTyping?: boolean;
-
   /** aria-label for clear button */
   clearButtonLabel?: string;
 
@@ -106,6 +103,9 @@ export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
 
   /** Called when clear button in clicked */
   onClear(): void;
+
+  /** Allow free input */
+  allowFreeInput?: boolean;
 }
 
 const RIGHT_SECTION_WIDTH = {
@@ -125,7 +125,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       styles,
       wrapperProps,
       required,
-      allowManualTyping = false,
+      allowFreeInput = false,
       label,
       error,
       id,
@@ -167,7 +167,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
     const uuid = useUuid(id);
 
-    const focusTrapRef = useFocusTrap(!allowManualTyping && dropdownOpened);
+    const focusTrapRef = useFocusTrap(!allowFreeInput && dropdownOpened);
     const inputRef = useRef<HTMLButtonElement>();
 
     const closeDropdown = () => {
@@ -177,11 +177,10 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
       event.nativeEvent.code === 'Escape' && closeDropdown();
 
-    useClickOutside(
-      () => dropdownType === 'popover' && !allowManualTyping && closeDropdown(),
-      null,
-      [dropdownElement, rootElement]
-    );
+    useClickOutside(() => dropdownType === 'popover' && !allowFreeInput && closeDropdown(), null, [
+      dropdownElement,
+      rootElement,
+    ]);
 
     useWindowEvent('scroll', () => closeDropdownOnScroll && closeDropdown());
 
@@ -197,14 +196,14 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
 
-      if (allowManualTyping) {
+      if (allowFreeInput) {
         closeDropdown();
       }
     };
 
     const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onFocus === 'function' && onFocus(event);
-      if (allowManualTyping) {
+      if (allowFreeInput) {
         setDropdownOpened(true);
       }
     };
@@ -233,13 +232,13 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
                 ...classNames,
                 input: cx(
                   classes.input,
-                  { [classes.freeInput]: allowManualTyping },
+                  { [classes.freeInput]: allowFreeInput },
                   classNames?.input
                 ),
               }}
               styles={styles}
               onClick={() =>
-                !allowManualTyping ? setDropdownOpened(!dropdownOpened) : setDropdownOpened(true)
+                !allowFreeInput ? setDropdownOpened(!dropdownOpened) : setDropdownOpened(true)
               }
               id={uuid}
               ref={useMergedRef(ref, inputRef)}
@@ -250,7 +249,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               value={inputLabel}
               required={required}
               invalid={!!error}
-              readOnly={!allowManualTyping}
+              readOnly={!allowFreeInput}
               rightSection={rightSection}
               rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
               onBlur={handleInputBlur}
@@ -276,14 +275,14 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               arrowSize={3}
               zIndex={zIndex}
               arrowClassName={classes.arrow}
-              onTransitionEnd={() => !allowManualTyping && inputRef.current?.focus()}
+              onTransitionEnd={() => !allowFreeInput && inputRef.current?.focus()}
             >
               <div
                 className={classes.dropdownWrapper}
                 ref={useMergedRef(focusTrapRef, setDropdownElement)}
                 data-mantine-stop-propagation={dropdownOpened}
                 onKeyDownCapture={closeOnEscape}
-                aria-hidden={allowManualTyping || undefined}
+                aria-hidden={allowFreeInput || undefined}
               >
                 <Paper className={classes.dropdown} shadow={shadow}>
                   {children}

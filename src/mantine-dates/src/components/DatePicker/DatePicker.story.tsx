@@ -43,7 +43,7 @@ function ControlledFreeInput() {
         onChange={onChange}
         placeholder="Controlled with free input"
         label="Date picker"
-        allowManualTyping
+        allowFreeInput
       />
       <button type="button" onClick={() => onChange(new Date())}>
         Set date
@@ -91,12 +91,12 @@ storiesOf('@mantine/dates/DatePicker', module)
   ))
   .add('With free input', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
-      <DatePicker placeholder="Pick date" label="Date picker" allowManualTyping />
+      <DatePicker placeholder="Pick date" label="Date picker" allowFreeInput />
 
       <DatePicker
         placeholder="Pick date"
         label="Date picker"
-        allowManualTyping
+        allowFreeInput
         withSelect
         mt={20}
         mb={40}

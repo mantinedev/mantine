@@ -34,6 +34,9 @@ export interface DatePickerProps
 
   /** Set first day of the week */
   firstDayOfWeek?: FirstDayOfWeek;
+
+  /** Allow free input */
+  allowFreeInput?: boolean;
 }
 
 export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
@@ -70,7 +73,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       disabled = false,
       clearButtonLabel,
       fixOnBlur = true,
-      allowManualTyping,
+      allowFreeInput,
       dateParser,
       firstDayOfWeek = 'monday',
       onFocus,
@@ -154,7 +157,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
 
     return (
       <DatePickerBase
-        allowManualTyping={allowManualTyping}
+        allowFreeInput={allowFreeInput}
         dropdownOpened={dropdownOpened}
         setDropdownOpened={setDropdownOpened}
         shadow={shadow}
@@ -198,7 +201,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           fullWidth={dropdownType === 'modal'}
           size={dropdownType === 'modal' ? 'lg' : calendarSize}
           firstDayOfWeek={firstDayOfWeek}
-          preventFocus={allowManualTyping}
+          preventFocus={allowFreeInput}
         />
       </DatePickerBase>
     );
