@@ -68,6 +68,19 @@ storiesOf('@mantine/dates/DatePicker', module)
       />
     </div>
   ))
+  .add('With free input', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <DatePicker placeholder="Pick date" label="Date picker" allowManualTyping />
+
+      <DatePicker
+        placeholder="Pick date"
+        label="Date picker"
+        allowManualTyping
+        withSelect
+        mt={20}
+      />
+    </div>
+  ))
   .add('Sizes', () => <div style={{ maxWidth: 300, padding: 40 }}>{sizes}</div>)
   .add('Placeholder overflow', () => (
     <div style={{ maxWidth: 200, padding: 30 }}>
