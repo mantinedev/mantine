@@ -150,6 +150,7 @@ const styles = {
 
   '[type=checkbox], [type=radio]': {
     boxSizing: 'border-box',
+    cursor: pointer,
     padding: 0,
   },
 
