@@ -20,7 +20,10 @@ function BaseStory() {
     <div style={{ padding: 40 }}>
       <ColorPicker
         format="rgba"
-        swatches={Object.keys(DEFAULT_THEME.colors).map((color) => DEFAULT_THEME.colors[color][6])}
+        swatches={[
+          ...Object.keys(DEFAULT_THEME.colors).map((color) => DEFAULT_THEME.colors[color][6]),
+          'transparent',
+        ]}
       />
     </div>
   );

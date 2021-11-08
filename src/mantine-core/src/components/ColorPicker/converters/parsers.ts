@@ -133,6 +133,10 @@ export function parseColor(color: string): HsvaColor {
     return { h: 0, s: 0, v: 0, a: 1 };
   }
 
+  if (color === 'transparent') {
+    return { h: 0, s: 0, v: 0, a: 0 };
+  }
+
   const trimmed = color.trim();
 
   // eslint-disable-next-line no-restricted-syntax
