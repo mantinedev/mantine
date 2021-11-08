@@ -6,3 +6,100 @@ order: 3
 ---
 
 # Theme functions
+
+Mantine theme provides several functions that can be used to simplify writing styles.
+All functions available at fn object: `theme.fn.functionName()`.
+
+## focusStyles
+
+All Mantine components have custom focus ring styles which are based on [:focus-visible](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible)
+pseudo-class. It is important to keep styles consistent across all of your application components and you should
+include Mantine focus styles to your custom interactive elements. `focusStyles` function lets you spread Mantine focus styles
+without providing any additional parameters:
+
+```tsx
+import { createStyles } from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+  myCustomButton: {
+    ...theme.fn.focusStyles(),
+  },
+}));
+
+function MyCustomButton() {
+  const { classes } = useStyles();
+  return <button className={classes.myCustomButton}>My custom button</button>;
+}
+```
+
+## fontStyles
+
+With `fontStyles` function you can add font styles from your Mantine theme to any element.
+Function returns font-family and font-smoothing styles:
+
+```tsx
+import { createStyles } from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+  myCustomText: {
+    ...theme.fn.fontStyles(),
+  },
+}));
+
+function MyCustomText() {
+  const { classes } = useStyles();
+  return <div className={classes.myCustomText}>My custom text</div>;
+}
+```
+
+## smallerThan and largerThan
+
+`smallerThan` and `largerThan` function can help you write responsive styles with `theme.breakpoints`:
+
+```tsx
+theme.fn.smallerThan(700); // -> `@media (max-width: 700px)`
+theme.fn.smallerThan('lg'); // -> `@media (max-width: ${theme.breakpoints.lg}px)`
+
+theme.fn.largerThan('sm'); // -> `@media (min-width: ${theme.breakpoints.sm + 1}px)`
+theme.fn.largerThan(700); // -> `@media (min-width: 701px)`
+```
+
+You can use both functions as a replacement for regular media query syntax in `createStyles` function, `styles` and `sx` props:
+
+```tsx
+import { createStyles } from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+  myResponsiveText: {
+    fontSize: theme.fontSizes.md,
+
+    [theme.fn.smallerThan('sm')]: {
+      fontSize: theme.fontSizes.sm,
+    },
+
+    [theme.fn.smallerThan(500)]: {
+      fontSize: theme.fontSizes.xs,
+    },
+  },
+}));
+
+function MyResponsiveText() {
+  const { classes } = useStyles();
+  return <div className={classes.myResponsiveText}>My responsive text</div>;
+}
+```
+
+## linearGradient and radialGradient
+
+`linearGradient` and `radialGradient` can be used to generate simple gradients with equal colors distributions.
+If you need anything more complex – you will need to write it from scratch:
+
+```tsx
+theme.fn.linearGradient(24, '#000', '#fff'); // -> linear-gradient(24deg, #000 0%, #fff 100%)
+theme.fn.linearGradient(133, 'blue', 'red', 'orange', 'cyan', 'white');
+// -> linear-gradient(133deg, blue 0%, red 25%, orange 50%, cyan 75%, white 100%)'
+
+theme.fn.radialGradient(24, '#000', '#fff'); // -> radial-gradient(circle, #000 0%, #fff 100%)
+theme.fn.radialGradient(133, 'blue', 'red', 'orange', 'cyan', 'white');
+// -> radial-gradient(circle, blue 0%, red 25%, orange 50%, cyan 75%, white 100%)
+```
