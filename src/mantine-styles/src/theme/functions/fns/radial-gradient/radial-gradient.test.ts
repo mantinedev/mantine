@@ -7,7 +7,7 @@ describe('@mantine/styles/radial-gradient', () => {
 
   it('returns correct gradient with multiple color stops', () => {
     expect(radialGradient('blue', 'red', 'orange', 'cyan', 'white')).toBe(
-      'radial-gradient(circle, blue 0%, red 25%, orange 50%, cyan 75%, red 100%)'
+      'radial-gradient(circle, blue 0%, red 25%, orange 50%, cyan 75%, white 100%)'
     );
   });
 });

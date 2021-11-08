@@ -4,5 +4,5 @@ export function linearGradient(deg: number, ...colors: string[]) {
     stops += `${colors[i]} ${(i / (colors.length - 1)) * 100}%, `;
   }
 
-  return `linear-gradient(${deg}deg, ${colors[0]} 0%, ${stops}${colors[1]} 100%)`;
+  return `linear-gradient(${deg}deg, ${colors[0]} 0%, ${stops}${colors[colors.length - 1]} 100%)`;
 }
