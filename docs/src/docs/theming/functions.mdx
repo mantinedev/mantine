@@ -10,6 +10,51 @@ order: 3
 Mantine theme provides several functions that can be used to simplify writing styles.
 All functions available at fn object: `theme.fn.functionName()`.
 
+## Accessing theme functions
+
+You can use theme functions wherever Mantine theme is available. There are 4 main ways to work with theme:
+
+- [createStyles](/theming/create-styles) function
+
+```tsx
+import { createStyles } from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+  myCustomButton: {
+    ...theme.fn.focusStyles(),
+  },
+}));
+```
+
+- `sx` component prop
+
+```tsx
+<Box sx={(theme) => ({ [theme.fn.largerThan('md')]: { color: 'red' } })} />
+```
+
+- `styles` component prop
+
+```tsx
+<Slider
+  styles={(theme) => ({
+    track: {
+      background: theme.fn.linearGradient(45, 'red', 'blue'),
+    },
+  })}
+/>
+```
+
+- `useMantineTheme` hook
+
+```tsx
+import { useMantineTheme } from '@mantine/core';
+
+function Demo() {
+  const theme = useMantineTheme();
+  return <div style={{ background: theme.fn.linearGradient(45, 'red', 'blue') }} />;
+}
+```
+
 ## focusStyles
 
 All Mantine components have custom focus ring styles which are based on [:focus-visible](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible)
