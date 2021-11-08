@@ -72,6 +72,8 @@ export const _DEFAULT_THEME: MantineThemeBase = {
       h6: { fontSize: 14, lineHeight: 1.5 },
     },
   },
+
+  other: {},
 };
 
 export const DEFAULT_THEME = attachFunctions(_DEFAULT_THEME);

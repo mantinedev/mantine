@@ -55,6 +55,7 @@ export interface MantineTheme {
   };
 
   fn: MantineThemeFunctions;
+  other: Record<string, any>;
 }
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;

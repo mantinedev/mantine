@@ -61,4 +61,12 @@ describe('@mantine/styles/merge-theme', () => {
       },
     });
   });
+
+  it('merges other property correctly', () => {
+    const themeBase = getThemeBase();
+    expect(getMergedThemeBase(themeBase, { other: { prop: 1, test: { nested: true } } })).toEqual({
+      ...themeBase,
+      other: { prop: 1, test: { nested: true } },
+    });
+  });
 });
