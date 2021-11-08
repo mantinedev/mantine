@@ -11,6 +11,7 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
       rgba: fns.rgba,
       size: fns.size,
       linearGradient: fns.linearGradient,
+      radialGradient: fns.radialGradient,
     },
   };
 }

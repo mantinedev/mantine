@@ -18,6 +18,7 @@ interface MantineThemeFunctions {
   rgba(color: string, alpha: number): string;
   size(props: { size: string | number; sizes: Record<string, any> }): any;
   linearGradient(deg: number, ...colors: string[]): string;
+  radialGradient(...colors: string[]): string;
 }
 
 export interface MantineTheme {
