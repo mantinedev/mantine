@@ -150,3 +150,29 @@ Mantine uses Bootstrap's breakpoint values as defaults:
     `${DEFAULT_THEME.breakpoints[size]}px`,
   ])}
 />
+
+## Add your own properties to theme
+
+You can add any amount of properties using `other`:
+
+```tsx
+// Add any other properties on theme
+<MantineProvider
+  theme={{
+    other: {
+      fontFamilySecondary: 'Arial',
+      lineHeights: [1.2, 1.4, 1.6, 1.8, 1.95],
+      reduceMotion: true,
+    },
+  }}
+>
+  <App />
+</MantineProvider>
+
+// Then use your custom properties
+<Box sx={(theme) => ({
+  fontFamily: theme.other.fontFamilySecondary,
+  lineHeight: theme.other.lineHeight[2],
+  transitionDuration: theme.other.reduceMotion ? '0ms' : '200ms',
+})} />
+```

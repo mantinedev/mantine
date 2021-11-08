@@ -43,6 +43,32 @@ function MyResponsiveText() {
 }
 ```
 
+## Custom properties on theme
+
+You can now add any amount of custom properties on Mantine theme using `other` key:
+
+```tsx
+// Add any other properties on theme
+<MantineProvider
+  theme={{
+    other: {
+      fontFamilySecondary: 'Arial',
+      lineHeights: [1.2, 1.4, 1.6, 1.8, 1.95],
+      reduceMotion: true,
+    },
+  }}
+>
+  <App />
+</MantineProvider>
+
+// Then use your custom properties
+<Box sx={(theme) => ({
+  fontFamily: theme.other.fontFamilySecondary,
+  lineHeight: theme.other.lineHeight[2],
+  transitionDuration: theme.other.reduceMotion ? '0ms' : '200ms',
+})} />
+```
+
 ## New features
 
 [DatePicker](https://mantine.dev/dates/date-picker/) component now supports free input:
