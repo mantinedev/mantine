@@ -1,4 +1,4 @@
-import type { MantineThemeBase } from '../../types';
+import type { MantineThemeBase } from '../../../types';
 
 export function themeColor(theme: MantineThemeBase) {
   return (color: string, shade: number) => {

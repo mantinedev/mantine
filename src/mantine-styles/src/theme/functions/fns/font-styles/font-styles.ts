@@ -1,5 +1,5 @@
-import type { MantineThemeBase } from '../../types';
-import type { CSSObject } from '../../../tss';
+import type { MantineThemeBase } from '../../../types';
+import type { CSSObject } from '../../../../tss';
 
 export function fontStyles(theme: MantineThemeBase) {
   return (): CSSObject => ({

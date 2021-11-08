@@ -8,5 +8,5 @@ export function size(props: GetSize) {
     return props.size;
   }
 
-  return props.sizes[props.size] || size || props.sizes.md;
+  return props.sizes[props.size] || props.size || props.sizes.md;
 }
