@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, ClassNames } from '@mantine/styles';
+import { DefaultProps, ClassNames } from '@mantine/styles';
 import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
@@ -85,8 +85,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     }: NumberInputProps,
     ref
   ) => {
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { radius, size },
       { classNames, styles, name: 'NumberInput' }
     );

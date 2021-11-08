@@ -13,7 +13,6 @@ import {
   MantineSize,
   Modal,
   CloseButton,
-  useMantineTheme,
   MantineShadow,
   ClassNames,
   useExtractedMargins,
@@ -157,8 +156,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     }: DatePickerBaseProps,
     ref
   ) => {
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { size, invalid: !!error },
       { classNames, styles, name: __staticSelector }
     );

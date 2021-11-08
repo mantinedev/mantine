@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   MantineColor,
@@ -65,8 +64,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     }: ProgressProps,
     ref
   ) => {
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { color, size, radius, striped },
       { sx, classNames, styles, name: 'Progress' }
     );

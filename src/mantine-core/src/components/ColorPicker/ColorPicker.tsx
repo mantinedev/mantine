@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  ClassNames,
-  useExtractedMargins,
-  useMantineTheme,
-} from '@mantine/styles';
+import { DefaultProps, MantineSize, ClassNames, useExtractedMargins } from '@mantine/styles';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { ColorSliderStylesNames } from './ColorSlider/ColorSlider';
@@ -108,8 +102,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
     }: ColorPickerProps,
     ref
   ) => {
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { size, fullWidth },
       { classNames, styles, sx, name: __staticSelector }
     );

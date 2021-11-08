@@ -1,12 +1,6 @@
 import React, { forwardRef } from 'react';
 import { usePagination } from '@mantine/hooks';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineNumberSize,
-  MantineColor,
-  ClassNames,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
 import useStyles from './Pagination.styles';
@@ -85,8 +79,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
     }: PaginationProps,
     ref
   ) => {
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { color, size, radius },
       { classNames, styles, name: 'Pagination' }
     );

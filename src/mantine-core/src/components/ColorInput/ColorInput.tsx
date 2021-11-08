@@ -1,6 +1,6 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
-import { DefaultProps, useMantineTheme, ClassNames, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -105,8 +105,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
     }: ColorInputProps,
     ref
   ) => {
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { disallowInput },
       { classNames, styles, name: 'ColorInput' }
     );

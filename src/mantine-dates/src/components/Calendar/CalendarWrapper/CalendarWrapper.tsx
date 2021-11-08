@@ -1,11 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  MantineSize,
-  useMantineTheme,
-  useExtractedMargins,
-  useSx,
-  DefaultProps,
-} from '@mantine/core';
+import { MantineSize, useExtractedMargins, useSx, DefaultProps } from '@mantine/core';
 import { sizes as DAY_SIZES } from '../../Month/Day/Day.styles';
 
 interface CalendarWrapperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -15,9 +9,8 @@ interface CalendarWrapperProps extends DefaultProps, React.ComponentPropsWithout
 
 export const CalendarWrapper = forwardRef<HTMLDivElement, CalendarWrapperProps>(
   ({ size, fullWidth, style, sx, className, ...others }: CalendarWrapperProps, ref) => {
-    const theme = useMantineTheme();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const { sxClassName } = useSx({ sx, className });
+    const { sxClassName, theme } = useSx({ sx, className });
     return (
       <div
         ref={ref}
