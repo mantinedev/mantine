@@ -22,6 +22,8 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
     width: `calc(100% - ${rightSectionWidth}px)`,
     paddingLeft: getSizeValue({ size, sizes: INPUT_SIZES }) / 3,
     fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+    height: getSizeValue({ size, sizes: INPUT_SIZES }),
+    lineHeight: `${getSizeValue({ size, sizes: INPUT_SIZES })}px`,
     top: 0,
     bottom: 0,
     left: 0,
