@@ -15,6 +15,34 @@ import { DatePickerDemos } from '@demos/dates';
 - [Button](https://mantine.dev/core/button/) component no longer supports `link` variant due to Styles API limitations, use [Anchor](https://mantine.dev/core/anchor/) component instead.
 - `@mantine/core` package no longer exports `getFontStyles`, `getFocusStyles` and `hexToRgba` functions, replace them with [theme functions](https://mantine.dev/theming/functions/): `theme.fn.fontStyles()`, `theme.fn.focusStyles()`, `theme.fn.rgba()`.
 
+## Functions on theme
+
+Mantine theme now adds several functions ([full list](https://mantine.dev/theming/function/)) that can help you
+write styles in `createStyles` function, `styles` and `sx` props:
+
+```tsx
+import { createStyles } from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+  myResponsiveText: {
+    fontSize: theme.fontSizes.md,
+
+    [theme.fn.smallerThan('sm')]: {
+      fontSize: theme.fontSizes.sm,
+    },
+
+    [theme.fn.smallerThan(500)]: {
+      fontSize: theme.fontSizes.xs,
+    },
+  },
+}));
+
+function MyResponsiveText() {
+  const { classes } = useStyles();
+  return <div className={classes.myResponsiveText}>My responsive text</div>;
+}
+```
+
 ## New features
 
 [DatePicker](https://mantine.dev/dates/date-picker/) component now supports free input:
