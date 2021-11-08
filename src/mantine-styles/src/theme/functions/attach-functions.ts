@@ -10,6 +10,7 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
       focusStyles: fns.focusStyles(themeBase),
       rgba: fns.rgba,
       size: fns.size,
+      linearGradient: fns.linearGradient,
     },
   };
 }
