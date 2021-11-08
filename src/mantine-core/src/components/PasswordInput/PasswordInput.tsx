@@ -55,6 +55,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       wrapperProps,
       classNames,
       styles,
+      variant,
       __staticSelector = 'PasswordInput',
       rightSection: _rightSection,
       rightSectionWidth: _rightSectionWidth,
@@ -121,6 +122,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           __staticSelector={__staticSelector}
           rightSectionWidth={rightSectionWidth}
           rightSection={!disabled && rightSection}
+          variant={variant}
         >
           <input
             type={reveal ? 'text' : 'password'}
