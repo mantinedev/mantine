@@ -8,10 +8,12 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
       fontStyles: fns.fontStyles(themeBase),
       themeColor: fns.themeColor(themeBase),
       focusStyles: fns.focusStyles(themeBase),
+      largerThan: fns.largerThan(themeBase),
+      smallerThan: fns.smallerThan(themeBase),
+      radialGradient: fns.radialGradient,
+      linearGradient: fns.linearGradient,
       rgba: fns.rgba,
       size: fns.size,
-      linearGradient: fns.linearGradient,
-      radialGradient: fns.radialGradient,
     },
   };
 }

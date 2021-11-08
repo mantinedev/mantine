@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import type { MantineSizes, MantineSize } from './MantineSize';
+import type { MantineSizes, MantineSize, MantineNumberSize } from './MantineSize';
 import type { Tuple } from './Tuple';
 import type { DeepPartial } from './DeepPartial';
 import { CSSObject } from '../../tss';
@@ -19,6 +19,8 @@ interface MantineThemeFunctions {
   size(props: { size: string | number; sizes: Record<string, any> }): any;
   linearGradient(deg: number, ...colors: string[]): string;
   radialGradient(...colors: string[]): string;
+  smallerThan(breakpoint: MantineNumberSize): string;
+  largerThan(breakpoint: MantineNumberSize): string;
 }
 
 export interface MantineTheme {

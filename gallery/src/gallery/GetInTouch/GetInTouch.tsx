@@ -13,7 +13,7 @@ import { ContactIconsList } from '../ContactIcons/ContactIcons';
 import bg from './bg.svg';
 
 const useStyles = createStyles((theme) => {
-  const BREAKPOINT = `@media (max-width: ${theme.breakpoints.sm}px)`;
+  const BREAKPOINT = theme.fn.smallerThan('sm');
 
   return {
     wrapper: {
